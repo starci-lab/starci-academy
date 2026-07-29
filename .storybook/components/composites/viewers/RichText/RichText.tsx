@@ -1,7 +1,7 @@
 "use client"
 
 import React, { type ReactNode } from "react"
-import { Typography, cn } from "@heroui/react"
+import { Typography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -17,21 +17,36 @@ type TypographySize = React.ComponentProps<typeof Typography>["type"]
 /** Typography color token (mirrors HeroUI `Typography` `color`). */
 type TypographyColor = React.ComponentProps<typeof Typography>["color"]
 
-/** Props for {@link RichText}. */
-export interface RichTextProps {
-    /**
-     * Raw text with a SMALL inline-markdown subset:
-     * `` `code` `` · `**bold**` · `_italic_` · `[label](url)` · line breaks (`\n`).
-     * Anything else renders as plain text — this is NOT a full markdown renderer.
-     */
-    text: string
+interface RichTextOwnProps {
     /** Typography scale; defaults to `"body-sm"`. */
     size?: TypographySize
     /** Typography color; defaults to the Typography default (omit for inherited). */
     color?: TypographyColor
     /** Extra classes on the wrapping Typography. */
     className?: string
+    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** `true` → tag the internal skeleton bar with `data-anat-part="Skeleton"`. */
+    showAnatomy?: boolean
 }
+
+/**
+ * Props for {@link RichText}. `text` is REQUIRED unless `isSkeleton` (§12b) —
+ * a shimmer line has no real copy to show yet.
+ */
+export type RichTextProps = RichTextOwnProps &
+    (
+        | { isSkeleton: true; text?: string }
+        | {
+            isSkeleton?: false
+            /**
+             * Raw text with a SMALL inline-markdown subset:
+             * `` `code` `` · `**bold**` · `_italic_` · `[label](url)` · line breaks (`\n`).
+             * Anything else renders as plain text — this is NOT a full markdown renderer.
+             */
+            text: string
+        }
+    )
 
 /** One inline marker → its rendered node. `recurse` = re-parse the captured label (code never does). */
 interface InlineRule {
@@ -135,10 +150,31 @@ const renderInline = (text: string): ReactNode => {
  * `size` and merges `className`. Presentational, no data/i18n.
  * @param props - {@link RichTextProps}
  */
-export const RichText = ({ text, size = "body-sm", color, className }: RichTextProps) => {
+export const RichText = ({
+    text,
+    size = "body-sm",
+    color,
+    isSkeleton = false,
+    className,
+    anatPart,
+    showAnatomy = false,
+}: RichTextProps) => {
+    if (isSkeleton) {
+        return (
+            <HeroSkeleton
+                className={cn("h-4 w-full rounded", className)}
+                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+            />
+        )
+    }
     return (
-        <Typography type={size} color={color} className={cn(className)}>
-            {renderInline(text)}
+        <Typography
+            type={size}
+            color={color}
+            className={cn(className)}
+            data-anat-part={anatPart ?? (showAnatomy ? "RichText" : undefined)}
+        >
+            {renderInline(text ?? "")}
         </Typography>
     )
 }

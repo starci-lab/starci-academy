@@ -1,8 +1,12 @@
 import React from "react"
 import type { ReactNode } from "react"
+import { cn } from "@heroui/react"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { type LayoutAlign, type LayoutJustify, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 import { Flex } from "@sb-components/frames/Flex/Flex"
+
+/** `nested` — see its own prop doc. Centralized so the classes live in exactly one place. */
+const NESTED_CLS = "border-l border-default pl-3 @app-sm:pl-6"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -53,6 +57,15 @@ export interface StackBaseProps {
      * `flex flex-col gap-4` in the first place.
      */
     padding?: InsetScale
+    /**
+     * `true` → a left guide border + matching indent (`pl-3`, `@app-sm:pl-6`),
+     * for a track that is ONE LEVEL DEEPER than its caller (a threaded reply,
+     * a nested tree row) — the frame owns the exact classes so no block ever
+     * hand-writes `border-l`/`pl-*` itself (thầy 2026-07-28). Same vocabulary
+     * as `SurfaceCard`'s own `variant="nested"` (border marks "inside a
+     * parent", not a fresh outer face) — this is that same idea for a track.
+     */
+    nested?: boolean
     /**
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
@@ -116,6 +129,7 @@ const StackV = ({
     align = "stretch",
     justify,
     divider = false,
+    nested = false,
     children,
     padding,
     className,
@@ -128,7 +142,7 @@ const StackV = ({
         padding={padding}
         align={align}
         justify={justify}
-        className={className}
+        className={cn(nested && NESTED_CLS, className)}
         anatPart={anatPart}
     >
         {divider ? interleaveDividers(children, "vertical", showAnatomy) : children}
@@ -141,6 +155,7 @@ const StackH = ({
     justify,
     wrap = false,
     divider = false,
+    nested = false,
     children,
     padding,
     className,
@@ -154,7 +169,7 @@ const StackH = ({
         align={align}
         justify={justify}
         wrap={wrap}
-        className={className}
+        className={cn(nested && NESTED_CLS, className)}
         anatPart={anatPart}
     >
         {divider ? interleaveDividers(children, "horizontal", showAnatomy) : children}

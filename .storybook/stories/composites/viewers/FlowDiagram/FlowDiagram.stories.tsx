@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import type { Edge, Node } from "@xyflow/react"
 import { FlowDiagram, FLOW_DIAGRAM_CARD_NODE_TYPE } from "@sb-components/composites/viewers/FlowDiagram/FlowDiagram"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof FlowDiagram> = {
     title: "Composites/Viewers/FlowDiagram",
@@ -37,7 +38,7 @@ const ARCHITECTURE_EDGES: Array<Edge> = [
 export const Architecture: Story = {
     render: () => (
         <div className="p-8">
-            <FlowDiagram nodes={ARCHITECTURE_NODES} edges={ARCHITECTURE_EDGES} />
+            <FlowDiagram nodes={ARCHITECTURE_NODES} edges={ARCHITECTURE_EDGES} anatPart="FlowDiagram" showAnatomy />
         </div>
     ),
 }
@@ -57,6 +58,37 @@ export const LinearSequence: Story = {
                     { id: "enroll-learn", source: "enroll", target: "learn" },
                     { id: "learn-practice", source: "learn", target: "practice" },
                     { id: "practice-certificate", source: "practice", target: "certificate" },
+                ]}
+                anatPart="FlowDiagram"
+                showAnatomy
+            />
+        </div>
+    ),
+}
+
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "FlowDiagram": { tier: "composite", role: "the canvas itself: a sized, bordered `@xyflow/react` frame that fits the given nodes/edges into view on mount", storyId: "composites-viewers-flowdiagram--architecture" },
+    "Skeleton": { tier: "heroui", role: "the single bordered shimmer block standing in for the whole canvas while `isSkeleton`" },
+}
+
+/** LEAF — the caller flips `isSkeleton`; no `ReactFlow`/`ReactFlowProvider` is mounted at all, since per-node shimmer would require knowing the node/edge shape before the diagram data has arrived, which isn't known. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="FlowDiagram"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="w-full"
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "A per-node shimmer isn't feasible before the graph is fetched — positions and edges are exactly the unknown — so the whole canvas mirrors as ONE bordered block instead, at the same `h-[420px] w-full` footprint, with no `ReactFlow` mounted.",
+                        code: "<FlowDiagram isSkeleton />",
+                        render: <FlowDiagram isSkeleton anatPart="FlowDiagram" showAnatomy />,
+                    },
                 ]}
             />
         </div>

@@ -1,26 +1,26 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ContentDiscussion } from "@sb-components/starci/blocks/learn/ContentDiscussion/ContentDiscussion"
+import type { ContentCommentNode } from "@sb-components/starci/blocks/learn/ContentCommentThread/ContentCommentThread"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentDiscussion`: talk about this lesson. A composer at the top,
- * the comments under it, on their own surface below the reading card.
+ * BLOCK — `ContentDiscussion`: talk about this lesson — label + honest
+ * archive line, an avatar-led collapsible composer, and the threaded comment
+ * list. Sits FRAMELESS directly on the page canvas — no card — see the
+ * component's own file header for the full rebuild against the earlier
+ * flat-list, wrongly-carded cut.
  *
  * ⭐ EMPTY IS DRAWN, ON PURPOSE — the exact OPPOSITE of `ContentRelatedList`,
- * which hides itself when it has nothing. Here nobody having written yet is an
- * INVITATION: the reader is the first, and saying so is what makes them likely
- * to write. Hiding the section would hide the invitation with it.
+ * which hides itself when it has nothing. Here nobody having written yet is
+ * an INVITATION.
  *
- * Same state name in two sibling blocks, opposite behaviour. Read both before
- * touching either.
+ * THE COMPOSER NEVER HIDES — not while loading, not when empty, not on
+ * error. That is also why the error replaces the LIST only.
  *
- * THE COMPOSER NEVER HIDES — not while loading, not when empty, not on error. A
- * reader who wants to write should never wait for a list first. That is also why
- * the error replaces the LIST only.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). The comment count is data ⇒ a state. Losing the
- * list to an empty invitation or to an error, and the caller flipping
- * `isSkeleton`, each change the shape ⇒ their own leaf.
+ * 📐 LEAF by STRUCTURE (§14d.2). The comment count, the archive line, and
+ * `hasMore` are all data ⇒ states of `Full`. Losing the list to an empty
+ * invitation, to an error, or to the loading mirror each change the shape ⇒
+ * their own leaf.
  */
 const meta: Meta<typeof ContentDiscussion> = {
     title: "StarCi/Blocks/Learn/ContentDiscussion/ContentDiscussion",
@@ -33,20 +33,56 @@ export default meta
 
 type Story = StoryObj<typeof ContentDiscussion>
 
-const COMMENTS = [
-    { key: "c1", authorName: "Minh Anh", timeAgo: "2 giờ trước", body: "Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from. Ai vướng giống em thì soi lại dòng cuối." },
-    { key: "c2", authorName: "Tuấn", timeAgo: "hôm qua", body: "Cache bị vỡ mỗi lần sửa code là do COPY . . đứng trước npm ci. Đảo hai dòng là xong." },
+const COMMENTS: Array<ContentCommentNode> = [
+    {
+        id: "c1",
+        author: { id: "u1", username: "Minh Anh" },
+        createdTimeAgo: "2 giờ trước",
+        body: "Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from. Ai vướng giống em thì soi lại dòng cuối.",
+        replyCount: 1,
+        myReaction: null,
+        reactionCounts: [{ type: "like", count: 4 }],
+    },
+    {
+        id: "c2",
+        author: { id: "u2", username: "Tuấn" },
+        createdTimeAgo: "hôm qua",
+        isFounderAuthor: true,
+        body: "Cache bị vỡ mỗi lần sửa code là do COPY . . đứng trước npm ci. Đảo hai dòng là xong.",
+        replyCount: 0,
+        myReaction: "love",
+        reactionCounts: [{ type: "love", count: 2 }],
+    },
 ]
 
+const REPLIES: Record<string, ReadonlyArray<ContentCommentNode>> = {
+    c1: [
+        {
+            id: "r1",
+            author: { id: "u2", username: "Tuấn" },
+            createdTimeAgo: "1 giờ trước",
+            body: "Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất.",
+            replyCount: 0,
+            myReaction: null,
+        },
+    ],
+}
+
+const NOOP_CALLBACKS = {
+    onReply: () => {},
+    onEdit: () => {},
+    onDelete: () => {},
+    onReactComment: () => {},
+    onLoadReplies: () => {},
+}
+
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCard": { tier: "composite", role: "the surface the whole conversation sits on, owning the label row and the padding around composer and comments", storyId: "composites-cards-surfacecard-surfacecard--default" },
-    "StackV": { tier: "frame", role: "a vertical frame — separating composer from comments, stacking the comments, or pairing an author line with its body", storyId: "frames-stack-stackv--default" },
-    "StackH": { tier: "frame", role: "a horizontal frame — pushing the post button to the end of its row, or setting an avatar beside its comment", storyId: "frames-stack-stackh--default" },
-    "InputTextarea": { tier: "atom", role: "the composer field, owning its own box, its focus ring and its row height", storyId: "atoms-forms-input-inputtextarea--default" },
-    "Button": { tier: "atom", role: "the post control, owning its disabled and busy skins; the block only decides when a draft counts as postable", storyId: "atoms-buttons-button-button--default" },
-    "Avatar": { tier: "atom", role: "the commenter's face, falling back to initials when there is no picture, or its own mirror while the thread loads", storyId: "atoms-display-avatar-avatar--default" },
-    "Typography": { tier: "atom", role: "one of a comment's two lines — the muted author-and-time line, or the comment body", storyId: "atoms-text-typography-typography--plain" },
-    "FeedbackEmpty": { tier: "composite", role: "the centred block that carries either the invitation to write first or the message saying the thread could not be loaded", storyId: "composites-feedback-feedback-feedbackempty--title-only" },
+    "StackV": { tier: "frame", role: "several vertical frames — separating label/archive-line/composer from the list, stacking the comments, or pairing the label with its archive line", storyId: "frames-stack-stackv--default" },
+    "Typography": { tier: "atom", role: "the label+count line, or the archive-line fact", storyId: "atoms-text-typography-typography--plain" },
+    "ContentCommentComposer": { tier: "block", role: "the avatar-led, collapsible top-level composer", storyId: "starci-blocks-learn-contentcommentcomposer-contentcommentcomposer--collapsed-pill" },
+    "ContentCommentThread": { tier: "block", role: "one threaded comment — author, reaction, actions, and its own recursive replies", storyId: "starci-blocks-learn-contentcommentthread-contentcommentthread--default" },
+    "Button": { tier: "atom", role: "the \"load more comments\" action, only when a further page remains", storyId: "atoms-buttons-button-button--default" },
+    "FeedbackEmpty": { tier: "composite", role: "the centred block carrying either the invitation to write first or the failed-to-load message", storyId: "composites-feedback-feedback-feedbackempty--title-only" },
 }
 
 /** LEAF — a lesson with a thread on it. */
@@ -62,46 +98,49 @@ export const Full: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "comments.length = 2, draft empty",
-                        why: "Two comments sit under a composer whose post button is off because there is nothing to post yet. The composer leads rather than follows the thread, so a reader who came to ask something does not have to scroll past other people first.",
+                        name: "comments.length = 2, one has a loaded reply",
+                        why: "The label reads \"Thảo luận · 2\", and the archive line honestly counts 1/2 questions answered from what's currently loaded — not a fabricated aggregate. The composer leads as a collapsed pill; the thread follows.",
                         code: `<ContentDiscussion
     label="Thảo luận"
+    currentUserId="viewer-1"
+    currentUser={{ username: "Bạn" }}
     comments={comments}
-    draft=""
-    onDraftChange={setDraft}
-    onSubmit={post}
+    total={2}
+    repliesByParent={repliesByParent}
+    onSubmitComment={post}
+    onReply={reply} onEdit={edit} onDelete={del} onReactComment={react} onLoadReplies={load}
 />`,
                         render: (
                             <ContentDiscussion
                                 anatPart="ContentDiscussion"
                                 showAnatomy
                                 label="Thảo luận"
+                                currentUserId="viewer-1"
+                                currentUser={{ username: "Bạn" }}
                                 comments={COMMENTS}
-                                draft=""
-                                onDraftChange={() => {}}
-                                onSubmit={() => {}}
+                                total={2}
+                                repliesByParent={REPLIES}
+                                onSubmitComment={() => {}}
+                                {...NOOP_CALLBACKS}
                             />
                         ),
                     },
                     {
-                        name: "draft set, isPending = true",
-                        why: "The reader has typed and pressed post, so the button carries the busy affordance while the server answers and the thread below stays exactly where it was. Nothing is optimistically inserted, because a comment that appears and then vanishes reads worse than one that takes a moment.",
-                        code: `<ContentDiscussion
-    label="Thảo luận"
-    comments={comments}
-    draft="Chỗ cache em vẫn chưa rõ…"
-    isPending
-    onDraftChange={setDraft}
-    onSubmit={post}
-/>`,
+                        name: "hasMore = true, isLoadingMore = false",
+                        why: "More top-level pages remain, so a \"Xem thêm bình luận\" action sits under the loaded comments — the same load-more shape `LeaderboardBoard`'s own pager precedent uses elsewhere in this system.",
+                        code: "<ContentDiscussion label=\"Thảo luận\" ... hasMore onLoadMore={loadMore} />",
                         render: (
                             <ContentDiscussion
                                 label="Thảo luận"
+                                currentUserId="viewer-1"
+                                currentUser={{ username: "Bạn" }}
                                 comments={COMMENTS}
-                                draft="Chỗ cache em vẫn chưa rõ…"
-                                isPending
-                                onDraftChange={() => {}}
-                                onSubmit={() => {}}
+                                total={5}
+                                repliesByParent={REPLIES}
+                                onSubmitComment={() => {}}
+                                hasMore
+                                onLoadMore={() => {}}
+                                {...NOOP_CALLBACKS}
                             />
                         ),
                     },
@@ -124,24 +163,20 @@ export const Empty: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "comments = []",
-                        why: "The thread is empty, so the block says the reader would be the first and suggests what to write. This is the opposite call from `ContentRelatedList`, which hides itself when empty: silence there means the course has nothing more to offer, while silence here is an opening the reader can take.",
-                        code: `<ContentDiscussion
-    label="Thảo luận"
-    comments={[]}
-    draft=""
-    onDraftChange={setDraft}
-    onSubmit={post}
-/>`,
+                        name: "comments = [], total = 0",
+                        why: "The thread is empty, so the block says the reader would be the first — no archive line either, since 0/0 would read as a broken fraction rather than an honest fact. Opposite call from ContentRelatedList, which hides itself when empty.",
+                        code: "<ContentDiscussion label=\"Thảo luận\" comments={[]} total={0} repliesByParent={{}} onSubmitComment={post} ... />",
                         render: (
                             <ContentDiscussion
                                 anatPart="ContentDiscussion"
                                 showAnatomy
                                 label="Thảo luận"
+                                currentUserId={null}
                                 comments={[]}
-                                draft=""
-                                onDraftChange={() => {}}
-                                onSubmit={() => {}}
+                                total={0}
+                                repliesByParent={{}}
+                                onSubmitComment={() => {}}
+                                {...NOOP_CALLBACKS}
                             />
                         ),
                     },
@@ -165,25 +200,20 @@ export const Error: Story = {
                 states={[
                     {
                         name: "errorMessage set",
-                        why: "The comments could not be fetched, so the message takes their place and the composer stays where it was. A failed read did not remove the ability to write, and blanking the whole section would take away a control that still works.",
-                        code: `<ContentDiscussion
-    label="Thảo luận"
-    comments={[]}
-    errorMessage="Không tải được bình luận"
-    draft=""
-    onDraftChange={setDraft}
-    onSubmit={post}
-/>`,
+                        why: "The comments could not be fetched, so the message takes their place and the composer stays exactly where it was — a failed read never removes the ability to write.",
+                        code: "<ContentDiscussion label=\"Thảo luận\" comments={[]} total={0} errorMessage=\"Không tải được bình luận\" ... />",
                         render: (
                             <ContentDiscussion
                                 anatPart="ContentDiscussion"
                                 showAnatomy
                                 label="Thảo luận"
+                                currentUserId={null}
                                 comments={[]}
+                                total={0}
+                                repliesByParent={{}}
+                                onSubmitComment={() => {}}
                                 errorMessage="Không tải được bình luận"
-                                draft=""
-                                onDraftChange={() => {}}
-                                onSubmit={() => {}}
+                                {...NOOP_CALLBACKS}
                             />
                         ),
                     },
@@ -193,7 +223,7 @@ export const Error: Story = {
     ),
 }
 
-/** LEAF — the caller flips `isSkeleton`; the comment rows mirror, the composer stays real. */
+/** LEAF — the caller flips `isSkeleton`; two placeholder threads mirror, the composer stays real. */
 export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
@@ -207,25 +237,21 @@ export const Skeleton: Story = {
                 states={[
                     {
                         name: "isSkeleton = true",
-                        why: "Two placeholder rows mirror the shape of a short thread while the first page loads, and the composer above them stays fully real. Shimmering the composer too would take away the one control that was ready before any request finished.",
-                        code: `<ContentDiscussion
-    label="Thảo luận"
-    comments={[]}
-    isSkeleton
-    draft=""
-    onDraftChange={setDraft}
-    onSubmit={post}
-/>`,
+                        why: "Two placeholder threads mirror the shape of a short list while the first page fetches, and the composer above them stays fully real — it is known before any request finishes. Matches every sibling block's own isSkeleton contract in this design system.",
+                        code: "<ContentDiscussion label=\"Thảo luận\" isSkeleton comments={[]} total={0} ... />",
                         render: (
                             <ContentDiscussion
                                 anatPart="ContentDiscussion"
                                 showAnatomy
                                 label="Thảo luận"
+                                currentUserId="viewer-1"
+                                currentUser={{ username: "Bạn" }}
                                 comments={[]}
+                                total={0}
+                                repliesByParent={{}}
+                                onSubmitComment={() => {}}
                                 isSkeleton
-                                draft=""
-                                onDraftChange={() => {}}
-                                onSubmit={() => {}}
+                                {...NOOP_CALLBACKS}
                             />
                         ),
                     },

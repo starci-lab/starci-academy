@@ -43,6 +43,14 @@ export interface ToolbarTabItem {
     key: string
     /** Tab content (text, or an icon + text row). */
     label: ReactNode
+    /**
+     * Set → shown INSTEAD of `label` below `@app-sm` (e.g. "TS" for "TypeScript"),
+     * `label` returns from `@app-sm` up — a deliberate call (thầy 2026-07-29,
+     * "thầy lượng, không tin source"): a shortened tab beats collapsing the group
+     * behind `collapseRightOnMobile`'s dropdown when every option should stay
+     * reachable in one tap. Omit → unchanged (no compact swap).
+     */
+    compactLabel?: ReactNode
     /** Optional leading icon rendered before the label. */
     icon?: ReactNode
     /** Render the tab but block selection. */
@@ -176,7 +184,12 @@ const ToolbarBase = ({
                                 {/* a tab WITH an icon hides its label visually on mobile
                                     (icon-only) and shows it from sm up; `sr-only` keeps the
                                     accessible name on mobile. An icon-less tab always shows it. */}
-                                {item.label ? (
+                                {item.compactLabel != null ? (
+                                    <>
+                                        <span className="@app-sm:hidden">{item.compactLabel}</span>
+                                        <span className="hidden @app-sm:inline">{item.label}</span>
+                                    </>
+                                ) : item.label ? (
                                     <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
                                         {item.label}
                                     </span>
@@ -233,6 +246,11 @@ const ToolbarBase = ({
                     <Select.Indicator />
                 </Select.Trigger>
                 <Select.Popover>
+                    {/* `item.icon` stays OFF each row on purpose — it's the closed trigger's
+                        only content (no room for text there), but once the popover is open
+                        every row already reads its own full label; repeating the same icon
+                        on every row adds no information (§5a.2, "icon quốc dân": no icon
+                        purely decorating text that already reads on its own). */}
                     <ListBox.Root aria-label={group.ariaLabel}>
                         {group.items.map((item) => (
                             <ListBox.Item
@@ -243,10 +261,7 @@ const ToolbarBase = ({
                                     typeof item.label === "string" ? item.label : item.key
                                 }
                             >
-                                <span className="flex items-center gap-2">
-                                    {item.icon}
-                                    {item.label}
-                                </span>
+                                {item.label}
                             </ListBox.Item>
                         ))}
                     </ListBox.Root>

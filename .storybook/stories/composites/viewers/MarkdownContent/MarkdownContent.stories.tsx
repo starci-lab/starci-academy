@@ -10,11 +10,15 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * the shape is decided by the PAYLOAD. That is the whole membership test for the
  * `viewers` group.
  *
- * ⚠️ SCOPE OF THIS PORT: the standard document grammar plus the accordion
- * directive. The legacy renderer's heavy widgets — Mermaid, layout widgets, live
- * React previews, code-preview tabs — are NOT ported. Each is a viewer in its own
- * right with its own runtime, and half-porting one leaves a body that looks
- * finished and renders wrong, which every gate here would pass.
+ * ⭐ SCOPE OF THIS PASS (teacher's call, 2026-07-29, in priority order): Shiki
+ * syntax-highlighted fenced code · mermaid diagrams (SVG, click-to-zoom, caption
+ * pairing) · `:::tab`/`:::code`/`:::preview` → Preview↔Code tabs · GFM tables →
+ * real HeroUI `Table` · `::::accordion`/`:::panel` → the CORRECT HeroUI
+ * `Accordion` (with `bg-surface rounded-3xl border border-default` chrome — the
+ * previous port used the wrong, Disclosure-based `Accordion` atom) · `:::muted` +
+ * `:::chip` + image captions + link routing + heading anchors. Still NOT ported:
+ * `arcSections`, `plain` mode, the ` ```mdx ` live-render fence, the
+ * ` ```layout ` fence — each is a viewer/runtime of its own.
  *
  * ⚠️ THE ONLY PLACE HAND-WRITTEN SPACING IS CORRECT. A viewer cannot reach for
  * frames: it never sees its children as nodes, only as whatever the parser hands
@@ -46,9 +50,12 @@ layer sau không lấy lại chỗ đã chiếm ở layer trước.
 
 > Đọc kỹ thứ tự lệnh trước khi tối ưu bất cứ thứ gì khác.
 
-Xem thêm [tài liệu chính thức](https://docs.docker.com/build/cache/).`
+### Đọc thêm
 
-const CODE = `Sắp lại thứ tự để cache còn dùng được:
+Xem thêm [tài liệu chính thức](https://docs.docker.com/build/cache/) hoặc quay lại
+[bài trước](/lessons/docker-basics).`
+
+const CODE = `Sắp lại thứ tự để cache còn dùng được (tô màu cú pháp thật bằng Shiki):
 
 \`\`\`dockerfile
 FROM node:22-alpine AS build
@@ -60,6 +67,18 @@ RUN npm run build
 \`\`\`
 
 Chỉ \`package*.json\` đổi mới phải cài lại phụ thuộc.`
+
+const MERMAID = `## Luồng build lại image
+
+\`\`\`mermaid
+flowchart LR
+    A[Sửa code] --> B{package.json đổi?}
+    B -- Có --> C[Cài lại phụ thuộc]
+    B -- Không --> D[Dùng cache npm ci]
+    C --> E[Build lại toàn bộ]
+    D --> E
+\`\`\`
+Hình 1: Cache chỉ vỡ khi phần khai báo phụ thuộc thay đổi.`
 
 const TABLE = `| Cách làm | Image | Thời gian build lại |
 |---|---|---|
@@ -80,10 +99,39 @@ Gần như không bao giờ. Squash phá cache và đổi lại rất ít dung l
 
 ::::`
 
+const MUTED_AND_CHIP = `:::muted
+Đầu vào
+:::
+
+Một \`Dockerfile\` cùng một \`.dockerignore\`.
+
+:::chip
+Docker
+BuildKit
+Cache
+:::`
+
+const TABS = `::::tab
+
+:::preview
+\`\`\`mdx
+<Chip color="success">Đã build xong</Chip>
+\`\`\`
+:::
+
+:::code
+\`\`\`tsx
+export const BuildBadge = () => <Chip color="success">Đã build xong</Chip>
+\`\`\`
+:::
+
+::::`
+
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "MarkdownContent": { tier: "composite", role: "the document itself: the viewer repeats whatever the payload contains and owns only the rhythm it is repeated at", storyId: "composites-viewers-markdowncontent--reading" },
-    "Accordion": { tier: "atom", role: "the collapsible panels an `::::accordion` directive turns into, owning the trigger row and the reveal", storyId: "atoms-navigation-accordion-accordion--default" },
     "SnippetIcon": { tier: "atom", role: "the copy control on a fenced code block, owning its own copied confirmation", storyId: "atoms-display-snippeticon-snippeticon--default" },
+    "Chip": { tier: "atom", role: "one keyword pill inside a `:::chip` directive row, soft/neutral tone", storyId: "atoms-chips-chip-chip--default" },
+    "Skeleton": { tier: "heroui", role: "the 2-line shimmer mirror standing in for the document while `isSkeleton`" },
 }
 
 /** LEAF — `reading`: the lesson body, bigger type and a generous rhythm. */
@@ -100,27 +148,45 @@ export const Reading: Story = {
                 states={[
                     {
                         name: "prose document",
-                        why: "Headings, paragraphs, a list, a quote, emphasis, inline code and a link — the grammar most lessons are written in. The viewer decides none of this: it repeats the document and only owns how much room each part gets.",
+                        why: "Headings, paragraphs, a list, a quote, emphasis, inline code and links — the grammar most lessons are written in. Every `h2`/`h3` carries a slug `id` + a hover `#` deep-link (the TOC hook); the internal `/lessons/...` link stays in-tab while the external docs link opens a new tab — both routed through the same `Typography` atom, distinguished only by `target`/`rel`.",
                         code: "<MarkdownContent source={lessonBody} />",
                         render: <MarkdownContent anatPart="MarkdownContent" showAnatomy source={PROSE} />,
                     },
                     {
                         name: "fenced code block",
-                        why: "A fenced block gets its own box, its language named in the corner, and a copy control — because the reader's next move with code is almost always to take it. The block scrolls sideways inside its own box rather than making the article scroll.",
+                        why: "A fenced block is highlighted for real by Shiki (`material-theme-lighter`/`-darker`, following the Storybook toolbar theme), lazily — it only lights up once the block nears the viewport. The language is named in the corner next to a real copy control (the `SnippetIcon` atom).",
                         code: "<MarkdownContent source={lessonWithCode} />",
                         render: <MarkdownContent source={CODE} />,
                     },
                     {
+                        name: "mermaid diagram",
+                        why: "A ` ```mermaid ` fence renders to a real SVG (cached per theme+source), click-to-zoom into a full-screen Modal, with the authored \"Hình N: …\" paragraph lifted into a real `<figcaption>` instead of being shown twice.",
+                        code: "<MarkdownContent source={lessonWithDiagram} />",
+                        render: <MarkdownContent source={MERMAID} />,
+                    },
+                    {
                         name: "table",
-                        why: "A document's table is as wide as its widest row, and that width is not the viewer's to decide, so it scrolls INSIDE its own box. Letting it push the article sideways would make every line of prose on the page scroll too.",
+                        why: "A GFM table renders through the real HeroUI `Table` compound (header/body/cell, `isRowHeader` on the first column) rather than a raw `<table>` — so it gets the same a11y and visual treatment as every other table in the app. It still scrolls INSIDE its own box rather than pushing the article sideways.",
                         code: "<MarkdownContent source={comparisonTable} />",
                         render: <MarkdownContent source={TABLE} />,
                     },
                     {
                         name: "accordion directive",
-                        why: "The `::::accordion` / `:::panel` syntax already in written lessons becomes real collapsible panels. The parser hands back children while the `Accordion` atom takes data, so the viewer reads each panel's title off its props — the one place that bridge can happen, since nothing upstream ever sees these as panels.",
+                        why: "The `::::accordion` / `:::panel` syntax already in written lessons becomes the CORRECT HeroUI `Accordion` compound (`Item`/`Heading`/`Trigger`/`Indicator`/`Panel`/`Body`) with the `bg-surface rounded-3xl border border-default` card chrome and the re-pointed `--separator` hairline — not the Disclosure-based `Accordion` atom this composite used to route through, which is a different primitive with nowhere to hang that chrome.",
                         code: "<MarkdownContent source={lessonWithAccordion} />",
                         render: <MarkdownContent source={ACCORDION} />,
+                    },
+                    {
+                        name: "muted label + chip row",
+                        why: "`:::muted` renders a small muted eyebrow label (the \"Đầu vào\"/\"Đầu ra\" idiom lessons already use); `:::chip` turns a block of keyword lines into a wrapped row of real `Chip` atoms, one pill per line.",
+                        code: "<MarkdownContent source={inputLabelWithChips} />",
+                        render: <MarkdownContent showAnatomy anatPart="MarkdownContent" source={MUTED_AND_CHIP} />,
+                    },
+                    {
+                        name: "tab/code/preview directive",
+                        why: "`::::tab` wrapping a `:::preview`/`:::code` pair becomes [ Preview | Code ] tabs — used for a real component demo alongside its full source, where a single ` ```mdx ` fence can't show both at once. Preview is selected first.",
+                        code: "<MarkdownContent source={lessonWithTabs} />",
+                        render: <MarkdownContent source={TABS} />,
                     },
                 ]}
             />
@@ -142,9 +208,33 @@ export const Compact: Story = {
                 states={[
                     {
                         name: "measure = compact",
-                        why: "Every step of the rhythm tightens for markdown quoted inside another surface, such as a chat answer or a card. The document is a passenger there rather than the page, and reading-page spacing would make the surface around it look broken.",
+                        why: "Every step of the rhythm tightens for markdown quoted inside another surface, such as a chat answer or a card. The document is a passenger there rather than the page, and reading-page spacing would make the surface around it look broken. Code, tables, mermaid and directives all render identically at this measure, just tighter.",
                         code: "<MarkdownContent source={answer} measure=\"compact\" />",
                         render: <MarkdownContent anatPart="MarkdownContent" showAnatomy source={PROSE} measure="compact" />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; a 2-line shimmer mirror stands in for the document (§12c, added 2026-07-29 so callers stop faking it with an unrelated atom). */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="MarkdownContent"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-xl"
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The composite owns its own loading mirror — before this, the one caller that needed it (MockInterviewScorecard's follow-up question) swapped in a bare `Typography isSkeleton` instead, which drew a different shape than the real document ever does.",
+                        code: "<MarkdownContent source={followUp} isSkeleton />",
+                        render: <MarkdownContent anatPart="MarkdownContent" showAnatomy source="" isSkeleton />,
                     },
                 ]}
             />

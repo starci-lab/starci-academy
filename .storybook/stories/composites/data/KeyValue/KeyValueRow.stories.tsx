@@ -43,6 +43,9 @@ const HINT_PARTS: Array<AnatomyNode> = [
 const EMPHASIS_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "atom", role: "label (Sm foreground + medium, total row's label) and value (Base BOLD + tabular-nums, a large number, §9b)", storyId: "atoms-text-typography-typography--bold" },
 ]
+const SKELETON_PARTS: Array<AnatomyNode> = [
+    { name: "Skeleton", tier: "heroui", role: "raw HeroUI `Skeleton` bars the row draws itself: a label bar (+ a second bar when `hint` is set) on the left, one value bar on the right" },
+]
 
 /** Default — muted label left, medium value right; `justify-between` holds both edges. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
@@ -118,6 +121,32 @@ export const Emphasis: Story = {
                         render: (
                             <div className="max-w-sm">
                                 <KeyValueRow showAnatomy emphasis label="Tổng cộng" value="1.000.000 ₫" />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; the row draws its own shimmer (label bar + optional hint bar + value bar) instead of a caller faking it with an unrelated atom (§12g.0a). */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="KeyValueRow"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={SKELETON_PARTS}
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The row mirrors its own loaded shape: a label bar (plus a second, shorter bar when `hint` is set) sits left, a value bar sits right, held apart by the same `justify-between` the loaded row uses — so a column of skeleton rows already sits at the loaded rows' rhythm.",
+                        code: "<KeyValueRow isSkeleton hint=\"Áp dụng đến 31/12\" />",
+                        render: (
+                            <div className="max-w-sm">
+                                <KeyValueRow isSkeleton hint="Áp dụng đến 31/12" anatPart="KeyValueRow" showAnatomy />
                             </div>
                         ),
                     },

@@ -195,3 +195,26 @@ export const Loading: Story = {
         </div>
     ),
 }
+
+/** LEAF — the caller flips `isSkeleton`; the scaffold generates `skeletonRows` placeholder `KeyValueRow` nodes itself (§12g.0a, added 2026-07-29 — before this the composite had no `isSkeleton` of its own and `Loading` above had to mirror the shape by hand into `items`). */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="KeyValueList"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={LIST_PARTS}
+                renderClassName="max-w-sm"
+                states={[
+                    {
+                        name: "isSkeleton = true, default skeletonRows",
+                        why: "Three shimmer `KeyValueRow` nodes stack at the list's own `gap`, standing in for `items` before the real label–value pairs are known — the count comes from `skeletonRows` (default `3`), not from an `items` array the caller no longer has to fake.",
+                        code: "<KeyValueList items={items} isSkeleton />",
+                        render: <KeyValueList items={[]} showAnatomy isSkeleton />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}

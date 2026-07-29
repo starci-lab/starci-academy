@@ -1,5 +1,8 @@
 import React from "react"
+import { LockSimpleIcon } from "@phosphor-icons/react"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -21,6 +24,18 @@ import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/compos
  * blocks, in the nested surface, with no accent and no button. The reader
  * already has one forward step (`ContentPager`); a second loud one would split
  * their attention between two exits.
+ *
+ * ⚠️ NO SNIPPET, ROW = breadcrumb → title → lock line (thầy 2026-07-28: "chế
+ * nhiều quá" — a prior pass invented a `snippet` field this real row never
+ * shows). Real `src`'s `RelatedContentList` calls `EntityResultRow` with
+ * `showSnippet` left at its default `false` — the backend even strips the
+ * snippet for locked rows, so there is nothing to read there anyway. What the
+ * real row DOES show above the title is the item's course breadcrumb, and
+ * below it, when the viewer must enrol first, a quiet lock line — both
+ * missing from the earlier port. `content` (the composite's free-form row
+ * slot) replaces the fixed title/subtitle pair because this shape (an
+ * optional line ABOVE the title, an optional line BELOW it) does not fit
+ * that pair's title/subtitle order.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -30,8 +45,10 @@ export interface ContentRelatedItem {
     key: string
     /** Lesson title. */
     title: string
-    /** One line of context, usually the passage the match was found in. */
-    snippet?: string
+    /** Course trail this result belongs to, e.g. "Container hoá · Docker". Omitted → no line above the title. */
+    breadcrumb?: string
+    /** `true` → the viewer must enrol to open this result; a quiet lock line replaces any snippet. */
+    isLocked?: boolean
     /** Where the row navigates. */
     href: string
 }
@@ -48,6 +65,8 @@ export interface ContentRelatedListProps {
      * "Có thể bạn muốn đọc".
      */
     label: string
+    /** Accessible text for the lock line, e.g. "Vào học để mở". */
+    enrollToOpenLabel?: string
     /**
      * `true` → the list draws its own row mirror. Kept even though the block
      * self-hides when empty: during the fetch we do not yet KNOW it is empty, and
@@ -68,6 +87,7 @@ export interface ContentRelatedListProps {
 const ContentRelatedList = ({
     items,
     label,
+    enrollToOpenLabel = "Vào học để mở",
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
@@ -80,16 +100,34 @@ const ContentRelatedList = ({
 
     const rows: Array<SurfaceCardListItem> = items.map((item) => ({
         key: item.key,
-        title: item.title,
-        subtitle: item.snippet,
         href: item.href,
+        // Row-as-link: hover underlines the title itself, never a full-row fill —
+        // matches the real row's own affordance (no accent, no arrow).
+        hover: "underline",
+        content: (
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
+                {item.breadcrumb ? (
+                    <Typography size="xs" color="muted" truncate text={item.breadcrumb} anatPart={showAnatomy ? "Typography" : undefined} />
+                ) : null}
+                <Typography
+                    size="sm"
+                    weight="medium"
+                    truncate
+                    text={item.title}
+                    underlineOnGroupHover
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+                {item.isLocked ? (
+                    <Typography size="xs" color="warning" prefixIcon={LockSimpleIcon} text={enrollToOpenLabel} anatPart={showAnatomy ? "Typography" : undefined} />
+                ) : null}
+            </StackV>
+        ),
     }))
 
     return (
         <div data-anat-part={anatPart}>
             <SurfaceCardList
                 label={label}
-                variant="nested"
                 items={rows}
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "SurfaceCardList" : undefined}

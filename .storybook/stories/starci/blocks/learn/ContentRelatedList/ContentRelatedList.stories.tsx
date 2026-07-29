@@ -15,8 +15,15 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * Same state NAME, opposite behaviour: worth reading both blocks together before
  * touching either.
  *
- * 📐 LEAF by STRUCTURE (§14d.2). Row count is data ⇒ a state. Rendering nothing,
- * and the caller flipping `isSkeleton`, each change the shape ⇒ their own leaf.
+ * ⚠️ NO SNIPPET (thầy 2026-07-28, "chế nhiều quá"): real `src` never quotes a
+ * passage in this row — see the component's own file header. `breadcrumb`
+ * (course trail, above the title) and `isLocked` (a quiet lock line, below)
+ * replace it.
+ *
+ * 📐 LEAVES by STRUCTURE (§14d.2). Row count is DATA ⇒ a state of `Full`.
+ * Rendering nothing (`Hidden`), the caller flipping `isSkeleton` (`Skeleton`),
+ * and a row gaining the lock line (`Locked`) each add/remove a real node ⇒
+ * their own leaf.
  */
 const meta: Meta<typeof ContentRelatedList> = {
     title: "StarCi/Blocks/Learn/ContentRelatedList/ContentRelatedList",
@@ -30,13 +37,15 @@ export default meta
 type Story = StoryObj<typeof ContentRelatedList>
 
 const ITEMS = [
-    { key: "cache", title: "Image layer và cache hoạt động ra sao", snippet: "Mỗi lệnh trong Dockerfile đẻ một layer, và thứ tự lệnh quyết định cache còn dùng được không.", href: "#cache" },
-    { key: "multistage", title: "Multi-stage build: bỏ toolchain khỏi image chạy thật", snippet: "Stage build giữ compiler, stage cuối chỉ chép ra binary — image rơi từ 1.2GB xuống 40MB.", href: "#multistage" },
+    { key: "cache", title: "Image layer và cache hoạt động ra sao", breadcrumb: "Container hoá · Docker", href: "#cache" },
+    { key: "multistage", title: "Multi-stage build: bỏ toolchain khỏi image chạy thật", breadcrumb: "Container hoá · Docker", href: "#multistage" },
     { key: "registry", title: "Đẩy image lên registry và ghim tag cho production", href: "#registry" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardList": { tier: "composite", role: "the nested list surface, owning the label, the row box, the dividers and the row mirror while loading; the block only hands it lesson rows as data", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
+    "StackV": { tier: "frame", role: "one row's own column — breadcrumb, title, optional lock line", storyId: "frames-stack-stackv--default" },
+    "Typography": { tier: "atom", role: "one line of a row — the breadcrumb, the title (underlines on hover), or the lock line", storyId: "atoms-text-typography-typography--plain" },
 }
 
 /** LEAF — the course has related reading. */
@@ -52,8 +61,8 @@ export const Full: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "items.length = 3",
-                        why: "Three lessons on the same subject are offered under a quiet label, each row carrying the passage the match came from. The rows sit on a nested surface with no accent, because the reader already has one forward step in the pager and a second loud one would split their attention.",
+                        name: "items.length = 3, with breadcrumb",
+                        why: "Three lessons on the same subject are offered under a quiet label, each row carrying the course trail above its title — not a quoted passage, which the real row never shows. The rows sit on a nested surface with no accent, because the reader already has one forward step in the pager and a second loud one would split their attention.",
                         code: `<ContentRelatedList
     label="Có thể bạn muốn đọc"
     items={related}
@@ -68,8 +77,8 @@ export const Full: Story = {
                         ),
                     },
                     {
-                        name: "items.length = 1, no snippet",
-                        why: "One match, and it arrived without a passage to quote, so the row is a single title line. The list keeps its label and its surface, which is what tells the reader this is a short answer rather than a broken one.",
+                        name: "items.length = 1, no breadcrumb",
+                        why: "One match, and it carries no course trail (a top-level lesson), so the row is a single title line. The list keeps its label and its surface, which is what tells the reader this is a short answer rather than a broken one.",
                         code: `<ContentRelatedList
     label="Có thể bạn muốn đọc"
     items={[{ key: "registry", title: "Đẩy image lên registry và ghim tag cho production", href }]}
@@ -78,6 +87,40 @@ export const Full: Story = {
                             <ContentRelatedList
                                 label="Có thể bạn muốn đọc"
                                 items={[ITEMS[2]]}
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — one result the viewer must enrol to open ⇒ **gains** the lock line. */
+export const Locked: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="ContentRelatedList"
+                tier="block"
+                leaf="Locked result"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "items[0].isLocked = true",
+                        why: "A related result the viewer hasn't bought sets expectations before the click — a quiet lock line replaces where a snippet never was anyway (the backend strips it for locked rows too). The row still navigates; landing on the course's own enrol gate is the funnel, this only warns first.",
+                        code: `<ContentRelatedList
+    label="Có thể bạn muốn đọc"
+    items={[{ key: "cache", title: "Image layer và cache hoạt động ra sao", breadcrumb: "Container hoá · Docker", isLocked: true, href }]}
+/>`,
+                        render: (
+                            <ContentRelatedList
+                                anatPart="ContentRelatedList"
+                                showAnatomy
+                                label="Có thể bạn muốn đọc"
+                                items={[{ ...ITEMS[0], isLocked: true }]}
                             />
                         ),
                     },

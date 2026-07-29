@@ -53,7 +53,7 @@ export const Single: Story = {
                         name: "value = \"1,204\", label = \"Followers\"",
                         why: "The render is just one value/label pair with no border or padding around it. Dropping the frame here means a caller wrapping four of these in a Card with `divide-x` gets clean dividers with no doubled-up borders.",
                         code: "<StatPair value=\"1,204\" label=\"Followers\" />",
-                        render: <StatPair value="1,204" label="Followers" showAnatomy />,
+                        render: <StatPair anatPart="StatPair" showAnatomy value="1,204" label="Followers" />,
                     },
                 ]}
             />
@@ -80,7 +80,7 @@ export const Row: Story = {
                                 <div className="flex items-stretch divide-x divide-default">
                                     {STATS.map((stat) => (
                                         <div key={stat.label} className="px-6 first:pl-0 last:pr-0">
-                                            <StatPair value={stat.value} label={stat.label} showAnatomy />
+                                            <StatPair anatPart="StatPair" showAnatomy value={stat.value} label={stat.label} />
                                         </div>
                                     ))}
                                 </div>
@@ -111,11 +111,43 @@ export const Grid: Story = {
                             <Card variant="default" className="w-[420px]">
                                 <div className="grid grid-cols-2 gap-x-8 gap-y-6">
                                     {STATS.map((stat) => (
-                                        <StatPair key={stat.label} value={stat.value} label={stat.label} showAnatomy />
+                                        <StatPair key={stat.label} anatPart="StatPair" showAnatomy value={stat.value} label={stat.label} />
                                     ))}
                                 </div>
                             </Card>
                         ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/**
+ * `StatPair` draws its own shimmer when `isSkeleton` (component code, not this
+ * file): a `h-5` value-sized bar stacked `gap-1` over a shorter `h-3`
+ * label-sized bar, both raw HeroUI `Skeleton`, each tagged `data-anat-part="Skeleton"`
+ * when `showAnatomy` — so the Structure tab now works on this branch too.
+ */
+const SKELETON_PARTS: Array<AnatomyNode> = [
+    { name: "Skeleton", tier: "heroui", role: "the value bar (h-5) and, gap-1 below it, the label bar (h-3)" },
+]
+
+/** LEAF — the caller flips `isSkeleton`; the pair draws its own 2-bar shimmer mirror instead of a caller faking it with an unrelated atom (§12g.0a). */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="StatPair"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={SKELETON_PARTS}
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The pair mirrors its own loaded shape: a value-sized bar sits tight (`gap-1`) over a shorter label-sized bar, the same left-aligned column the loaded value/label pair renders — so a row of skeleton StatPairs already sits at the loaded row's rhythm.",
+                        code: "<StatPair isSkeleton />",
+                        render: <StatPair isSkeleton anatPart="StatPair" showAnatomy />,
                     },
                 ]}
             />

@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Skeleton": { tier: "heroui", role: "the `[dot, label-bar]` row shimmer repeated `skeletonCount` times, standing in for entries whose colour/label pairing isn't known yet" },
+}
 
 const meta: Meta<typeof Legend> = {
     title: "Composites/Stats/Legend",
@@ -18,6 +23,8 @@ export const Basic: Story = {
     render: () => (
         <div className="p-8">
             <Legend
+                anatPart="Legend"
+                showAnatomy
                 items={[
                     { key: "easy", label: "Easy", color: "var(--success)" },
                     { key: "medium", label: "Medium", color: "var(--warning)" },
@@ -34,6 +41,8 @@ export const WrapMany: Story = {
         <div className="p-8">
             <div className="max-w-[220px]">
                 <Legend
+                    anatPart="Legend"
+                    showAnatomy
                     items={[
                         { key: "javascript", label: "JavaScript", color: "var(--warning)" },
                         { key: "typescript", label: "TypeScript", color: "var(--accent)" },
@@ -52,6 +61,8 @@ export const WithSuffix: Story = {
     render: () => (
         <div className="p-8">
             <Legend
+                anatPart="Legend"
+                showAnatomy
                 items={[
                     { key: "content", label: "Content", color: "var(--accent)", suffix: <>&nbsp;·&nbsp;12</> },
                     { key: "challenge", label: "Challenge", color: "var(--success)", suffix: <>&nbsp;·&nbsp;8</> },
@@ -67,6 +78,8 @@ export const Vertical: Story = {
     render: () => (
         <div className="p-8">
             <Legend
+                anatPart="Legend"
+                showAnatomy
                 direction="col"
                 items={[
                     { key: "easy", label: "Easy", color: "var(--success)", suffix: <>&nbsp;·&nbsp;24</> },
@@ -83,6 +96,8 @@ export const TailwindClassColors: Story = {
     render: () => (
         <div className="p-8">
             <Legend
+                anatPart="Legend"
+                showAnatomy
                 items={[
                     { key: "accent", label: "Accent", color: "bg-accent" },
                     { key: "success", label: "Success", color: "bg-success" },
@@ -99,12 +114,38 @@ export const LongLabels: Story = {
         <div className="p-8">
             <div className="max-w-[260px]">
                 <Legend
+                    anatPart="Legend"
+                    showAnatomy
                     items={[
                         { key: "senior", label: "Senior/Staff — architecture-level system design questions", color: "var(--accent)" },
                         { key: "junior", label: "Junior — fundamental basics questions", color: "var(--success)" },
                     ]}
                 />
             </div>
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; a shimmer row (dot + label bar) per entry stands in while the real colour/label pairing isn't known yet. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="Legend"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-xl"
+                states={[
+                    {
+                        name: "isSkeleton = true, default skeletonCount",
+                        why: "Three `[dot, label-bar]` rows shimmer in place of real entries — `items` isn't required while `isSkeleton` (§12b), since a caller loading a chart's breakdown doesn't yet know how many segments or colours it will have.",
+                        code: "<Legend isSkeleton />",
+                        render: <Legend isSkeleton anatPart="Legend" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

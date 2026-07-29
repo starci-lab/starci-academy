@@ -86,7 +86,9 @@ const ContentPaywall = ({
     <div data-anat-part={anatPart}>
         <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
             <IconTile icon={LockIcon} tone="accent" size="sm" showAnatomy={showAnatomy} />
-            <Typography size="lg" weight="semibold" align="center" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
+            {/* src thật (`PremiumPaywall/index.tsx:54`): `text-xl font-semibold` (div trần,
+                không qua Typography) — khớp `size="h4"` (heading, 20px), không phải body `lg`. */}
+            <Typography size="h4" weight="semibold" align="center" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
             {description != null ? (
                 <Typography size="sm" color="muted" align="center" text={description} anatPart={showAnatomy ? "Typography" : undefined} />
             ) : null}

@@ -106,6 +106,39 @@ export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
         ), "isLink renders as HeroUI Link — accent color with a hover underline.", {
             Link: { tier: "heroui", role: "renders the text as HeroUI's own `Link`, for the accent color + hover underline + a11y" },
         }),
+        /**
+         * LinkQuietUnderline — `isLink` + `underlineOnHover` + a muted `color` override: an
+         * external-evidence link that inherits its row's quiet tone instead of calling
+         * attention to itself with accent. Added 2026-07-28 alongside `underlineOnGroupHover`
+         * — same quiet-underline recipe (`offset-4` + muted decoration), self-hover instead
+         * of ancestor-hover. Real anchor from `src`'s own `decoration-[var(--separator-tertiary)]`
+         * convention (`SubmissionResult`, `RichText`) — not invented here.
+         */
+        LinkQuietUnderline: leaf("LinkQuietUnderline", `<${label} text="src/components/Foo.tsx:42" isLink underlineOnHover color="muted" href="#" />`, (
+            <Comp text="src/components/Foo.tsx:42" isLink underlineOnHover color="muted" href="#" showAnatomy />
+        ), "color overrides isLink's default accent, and underlineOnHover swaps its plain underline for the quiet offset-4/muted-decoration recipe — the same one `underlineOnGroupHover` uses, just self-triggered."),
+        /**
+         * Button — a plain pressable action, NOT navigation: no underline (unlike
+         * `isLink`), only an optional `hoverColor` transition. Added 2026-07-28 (thầy —
+         * a block had hand-written `text-xs font-medium text-muted hover:text-foreground`
+         * itself for exactly this shape: "Trả lời"/"Sửa"/"Xóa" action links, which real
+         * `src` never underlines).
+         */
+        Button: leaf("Button", `<${label} text="Trả lời" isButton color="muted" hoverColor="default" onPress={reply} />`, (
+            <Comp text="Trả lời" isButton color="muted" hoverColor="default" onPress={() => {}} showAnatomy />
+        ), "isButton renders a plain <button> — cursor-pointer + an optional hoverColor shift, no underline at all. hoverColor=\"danger\" is the same mechanism for a destructive action like \"Xóa\"."),
+        /**
+         * UnderlineOnGroupHover — underlines when an ANCESTOR `.group` is hovered, not the
+         * text's own hover. Added 2026-07-28 (thầy: a block had hand-written this exact CSS
+         * string itself — "không pass css complex trừ atom và layouts"). The row wrapper
+         * below stands in for a real hoverable row (a list item, a card) that already
+         * carries `.group` from its own composite.
+         */
+        UnderlineOnGroupHover: leaf("UnderlineOnGroupHover", `<div className="group">\n  <${label} text="Multi-stage build: bỏ toolchain khỏi image chạy thật" underlineOnGroupHover />\n</div>`, (
+            <div className="group w-fit cursor-pointer rounded-lg border border-dashed border-accent p-3">
+                <Comp text="Multi-stage build: bỏ toolchain khỏi image chạy thật" underlineOnGroupHover showAnatomy />
+            </div>
+        ), "Foreground color, no accent — unlike isLink, this is only the underline behavior. Hover the dashed box (the stand-in row), not the text itself, to see it underline: the class is group-hover:underline, so any ancestor's .group triggers it."),
         /** WithPrefixIcon — leading icon; text tự font-medium. */
         WithPrefixIcon: leaf("WithPrefixIcon", `<${label} text="Passed" prefixIcon={CheckCircleIcon} />`, (
             <Comp text="Passed" prefixIcon={CheckCircleIcon} showAnatomy />

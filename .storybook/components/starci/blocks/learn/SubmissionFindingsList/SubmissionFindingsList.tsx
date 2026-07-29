@@ -3,6 +3,7 @@ import type { ComponentType, ReactNode, SVGProps } from "react"
 import { InfoIcon, LightbulbIcon, MapPinIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import { cn } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import {
     AsyncContentEmpty,
     AsyncContentError,
@@ -219,19 +220,22 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                 />
             ) : null}
             {finding.location ? (
-                <StackH gap="tight" align="center" className="text-xs text-muted" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <MapPinIcon aria-hidden focusable="false" weight="bold" className="size-3 shrink-0" />
+                <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+                    <MapPinIcon aria-hidden focusable="false" weight="bold" className="size-3 shrink-0 text-muted" />
                     {locationHref ? (
-                        <a
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            isLink
+                            underlineOnHover
                             href={locationHref}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]"
-                        >
-                            {finding.location}
-                        </a>
+                            text={finding.location}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
                     ) : (
-                        <span>{finding.location}</span>
+                        <Typography size="xs" color="muted" text={finding.location} anatPart={showAnatomy ? "Typography" : undefined} />
                     )}
                 </StackH>
             ) : null}

@@ -40,7 +40,7 @@ type Story = StoryObj<typeof ContentModeNav>
 const MODES = [
     { mode: "content" as const },
     { mode: "sandbox" as const },
-    { mode: "challenges" as const, count: 3 },
+    { mode: "challenges" as const },
     { mode: "aiLab" as const },
 ]
 
@@ -52,7 +52,7 @@ const LANGUAGES = [
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Toolbar": { tier: "composite", role: "the two-group tab row: it pins the mode group left and the language group right, owns the neutral-versus-accent chrome per group, and collapses the right group into a dropdown below @app-sm", storyId: "composites-navigation-toolbar-toolbar--two-groups" },
+    "Toolbar": { tier: "composite", role: "the two-group tab row: it pins the mode group left and the language group right, owns the neutral-versus-accent chrome per group, and collapses the language group into an icon-only dropdown below @app-sm so it never crowds the reading column", storyId: "composites-navigation-toolbar-toolbar--right-neutral-collapsed" },
 }
 
 /** LEAF — a single-language lesson ⇒ the row carries only the mode group. */
@@ -69,11 +69,11 @@ export const Full: Story = {
                 states={[
                     {
                         name: "mode = content",
-                        why: "The reader is on the lesson text, so the reading mode holds the indicator and the other three wait beside it. The challenge mode carries its count in the label, so the reader can see there is work waiting without switching to find out.",
+                        why: "The reader is on the lesson text, so the reading mode holds the indicator and the other three wait beside it, each carrying its own icon rather than a count — the real tab row (`ContentTabBar`) has no per-tab number at all.",
                         code: `<ContentModeNav
     ariaLabel="Cách xem bài học"
     mode="content"
-    modes={[{ mode: "content" }, { mode: "sandbox" }, { mode: "challenges", count: 3 }, { mode: "aiLab" }]}
+    modes={[{ mode: "content" }, { mode: "sandbox" }, { mode: "challenges" }, { mode: "aiLab" }]}
     onModeChange={goMode}
 />`,
                         render: (
@@ -142,8 +142,8 @@ export const WithLanguages: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "languages.length = 4",
-                        why: "The lesson exists in four languages, so a second group pins to the right of the row — NEUTRAL rather than accent, because switching language changes how the same lesson is presented, not what the reader is doing. Narrowing past @app-sm collapses this group into a dropdown instead of crowding the reading column with a second tab strip.",
+                        name: "4 available (lesson ships every language)",
+                        why: "The lesson exists in all four catalog languages, so a second group pins to the right of the row — NEUTRAL rather than accent, because switching language changes how the same lesson is presented, not what the reader is doing.",
                         code: `<ContentModeNav
     ariaLabel="Cách xem bài học"
     mode="content"
@@ -170,14 +170,80 @@ export const WithLanguages: Story = {
                         ),
                     },
                     {
-                        name: "languages.length = 1",
-                        why: "Only one language exists, so the right group is not drawn at all — a switcher with a single option is a control that cannot do anything. This is the case that proves the group is driven by the DATA rather than by a flag the caller has to remember to set.",
+                        name: "4 available, narrow column (below @app-sm) ⇒ language group collapses to a dropdown",
+                        why: "Below @app-sm the language group is a set-once preference, not a second navigation choice, so it folds into a compact icon-only dropdown instead of crowding the reading column with 4 inline tabs — the mode group on the left stays inline at every width; only the language group on the right collapses.",
+                        code: `<div className="@container" style={{ width: 375 }}>
+    <ContentModeNav
+        ariaLabel="Cách xem bài học"
+        mode="content"
+        modes={modes}
+        onModeChange={goMode}
+        languages={[{ key: "typescript", label: "TypeScript" }, …]}
+        language="typescript"
+        languageAriaLabel="Ngôn ngữ code"
+        onLanguageChange={setLanguage}
+    />
+</div>`,
+                        render: (
+                            <div className="@container" style={{ width: 375 }}>
+                                <ContentModeNav
+                                    ariaLabel="Cách xem bài học"
+                                    mode="content"
+                                    modes={MODES}
+                                    onModeChange={() => {}}
+                                    languages={LANGUAGES}
+                                    language="typescript"
+                                    languageAriaLabel="Ngôn ngữ code"
+                                    onLanguageChange={() => {}}
+                                />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "2 available, 2 disabled (the real common case)",
+                        why: "The catalog is FIXED — real `src` always lists all four languages, it never shrinks to just what the lesson has. A lesson written in only TypeScript and Go still shows Java and C#, dimmed and unselectable, rather than removing them: the reader can see the full family exists, just not for this lesson.",
                         code: `<ContentModeNav
     ariaLabel="Cách xem bài học"
     mode="content"
     modes={modes}
     onModeChange={goMode}
-    languages={[{ key: "typescript", label: "TypeScript" }]}
+    languages={[
+        { key: "typescript", label: "TypeScript" },
+        { key: "java", label: "Java", isDisabled: true },
+        { key: "csharp", label: "C#", isDisabled: true },
+        { key: "go", label: "Go" },
+    ]}
+    language="typescript"
+    languageAriaLabel="Ngôn ngữ code"
+    onLanguageChange={setLanguage}
+/>`,
+                        render: (
+                            <ContentModeNav
+                                ariaLabel="Cách xem bài học"
+                                mode="content"
+                                modes={MODES}
+                                onModeChange={() => {}}
+                                languages={LANGUAGES.map((entry) => ({ ...entry, isDisabled: entry.key === "java" || entry.key === "csharp" }))}
+                                language="typescript"
+                                languageAriaLabel="Ngôn ngữ code"
+                                onLanguageChange={() => {}}
+                            />
+                        ),
+                    },
+                    {
+                        name: "1 available, 3 disabled ⇒ group not drawn at all",
+                        why: "Only one language is actually available, so the right group is not drawn at all — a switcher with a single live option is a control that cannot do anything. This is the case that proves the group is driven by the AVAILABLE count in the data, not by whether the caller remembered to pass all four.",
+                        code: `<ContentModeNav
+    ariaLabel="Cách xem bài học"
+    mode="content"
+    modes={modes}
+    onModeChange={goMode}
+    languages={[
+        { key: "typescript", label: "TypeScript" },
+        { key: "java", label: "Java", isDisabled: true },
+        { key: "csharp", label: "C#", isDisabled: true },
+        { key: "go", label: "Go", isDisabled: true },
+    ]}
     language="typescript"
     onLanguageChange={setLanguage}
 />`,
@@ -187,7 +253,7 @@ export const WithLanguages: Story = {
                                 mode="content"
                                 modes={MODES}
                                 onModeChange={() => {}}
-                                languages={[LANGUAGES[0]]}
+                                languages={LANGUAGES.map((entry) => ({ ...entry, isDisabled: entry.key !== "typescript" }))}
                                 language="typescript"
                                 languageAriaLabel="Ngôn ngữ code"
                                 onLanguageChange={() => {}}

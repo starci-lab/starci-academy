@@ -1,14 +1,14 @@
 import React from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CaretRightIcon } from "@phosphor-icons/react"
-import { SurfaceCardPressable } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/cards/SummaryCard`. Authored in Storybook (not `src`);
  * synced back to `src` later.
  *
- * - **surface §1a**: leans on {@link SurfaceCardPressable} for the top-level surface look
+ * - **surface §1a**: leans on {@link SurfaceCard} for the top-level surface look
  *   (`shadow-surface` + `rounded-3xl`, NO border — top-level cards carry elevation
  *   via shadow, not a viền). SummaryCard adds only layout + the metric slots.
  * - **icon-own §4/§5a**: the primitive owns the leading-icon size (`[&_svg]:size-6`,
@@ -38,7 +38,7 @@ export interface SummaryCardProps {
 /**
  * A compact pressable metric card (icon + big value + label, with a trailing
  * chevron) used in the profile overview to surface a deeper tab. Built on
- * {@link SurfaceCardPressable} for the whole-card press + top-level surface look
+ * {@link SurfaceCard} for the whole-card press + top-level surface look
  * (`shadow-surface`, `rounded-3xl`). Presentational — the caller wires `onPress`.
  * For a cluster of ≥2 metric cards use {@link SummaryCardGroup} (`SummaryCardGroup`).
  *
@@ -81,7 +81,7 @@ const SummaryCardBase = ({
         )
     }
     return (
-        <SurfaceCardPressable
+        <SurfaceCard
             onPress={onPress}
             className={cn("group flex h-full w-full flex-col gap-3", className)}
         >
@@ -108,7 +108,7 @@ const SummaryCardBase = ({
                 hint={hint}
                 anatPart={showAnatomy ? "TitledText" : undefined}
             />
-        </SurfaceCardPressable>
+        </SurfaceCard>
     )
 }
 /** Props for {@link SummaryCardGroup}. */

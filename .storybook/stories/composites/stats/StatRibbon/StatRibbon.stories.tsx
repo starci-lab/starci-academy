@@ -130,3 +130,25 @@ export const Bordered: Story = {
         </div>
     ),
 }
+
+/** LEAF — the caller flips `isSkeleton`; each cell shimmers via `StatPair`'s OWN `isSkeleton`, not a parallel tree drawn here (§12g.0a). */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="StatRibbon"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={STAT_PARTS}
+                states={[
+                    {
+                        name: "isSkeleton = true, default skeletonCount",
+                        why: "Three cells shimmer in the same Card + divider frame the real ribbon uses, standing in for a stat strip whose numbers haven't loaded yet. Each cell delegates its own shimmer to `StatPair isSkeleton` rather than this composite drawing a parallel skeleton tree — per §12g.0's priority rule, the child that already owns a loading state keeps owning it.",
+                        code: "<StatRibbon isSkeleton />",
+                        render: <StatRibbon isSkeleton showAnatomy />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}

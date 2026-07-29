@@ -6,14 +6,16 @@ import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
  * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `SurfaceCardPressableGroup` does NOT
- * create new meaning per cell — it only LAYS OUT + rebuilds `SurfaceCardPressable`
- * from `items`. So the stories here ONLY render state that BELONGS TO THE GROUP:
- * `items` mapping · `columns` (container query) · group-level `gap` · the `icon` slot
- * whose size/colour the group owns · the 1–N keyboard shortcut · the verdict band ·
- * pinning a position in the grid · skeleton for the WHOLE GROUP.
+ * create new meaning per cell — it only LAYS OUT + rebuilds a `SurfaceCard` tile
+ * from `items` (thầy 2026-07-29: `.Pressable` folded into `SurfaceCard` itself,
+ * this group now renders that same composite per cell, not a separate sibling).
+ * So the stories here ONLY render state that BELONGS TO THE GROUP: `items` mapping ·
+ * `columns` (container query) · group-level `gap` · the `icon` slot whose size/colour
+ * the group owns · the 1–N keyboard shortcut · the verdict band · pinning a position
+ * in the grid · skeleton for the WHOLE GROUP.
  *
- * State PER CELL (`selected` · `isDisabled` · `href` vs `onPress`) lives in the
- * `SurfaceCardPressable` story — NOT repeated here.
+ * State PER CELL (`selected` · `isDisabled` · `href` vs `onPress`) lives in
+ * `SurfaceCard`'s own `Pressable*` leaves — NOT repeated here.
  *
  * 2026-07-26 (teacher) — this member's own grid system (`SurfaceCardPressableGroupColumns`,
  * 7 tiers, HALF-SIZE container scale `@sm`/`@md`) was removed; `columns`/`gap` now use
@@ -69,12 +71,13 @@ const profileItems: Array<SurfaceCardPressableGroupItem> = MENTORS.map((m) => ({
 /** Canvas padding only. Bề ngang của chủ thể đi qua `renderClassName` của từng leaf, không bọc ở đây. */
 const shell = (node: ReactNode) => <div className="p-8">{node}</div>
 /**
- * Live grid leaf: each cell is a REPEATED `SurfaceCardPressable` whose `content`
- * the caller composes freely (a ProfileCard here). It HAS its own story
- * (`SurfaceCardPressable/Default`), so it declares `storyId` to jump to it.
+ * Live grid leaf: each cell is a REPEATED `SurfaceCard` (pressable — `onPress`/
+ * `href` set) whose `content` the caller composes freely (a ProfileCard here). It
+ * HAS its own story (`SurfaceCard/Pressable`), so it declares `storyId` to jump
+ * to it.
  *
  * 2026-07-27: the node's name changed from the role label `"Item"` to the real
- * component being rendered, `"SurfaceCardPressable"` — same reasoning applies to
+ * component being rendered, `"SurfaceCard"` — same reasoning applies to
  * `"Grid"` → `"Grid"` below, the actual frame this wrapper builds.
  *
  * 2026-07-26 (teacher): switched from a hand-written `parts: Array<AnatomyNode>` array
@@ -83,10 +86,10 @@ const shell = (node: ReactNode) => <div className="p-8">{node}</div>
  * and the hand-declared part is now only the WHY.
  */
 const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCardPressable": {
+    "SurfaceCard": {
         tier: "composite",
-        role: "SurfaceCardPressable repeated once per entry, with its own story at SurfaceCardPressable Default.",
-        storyId: "composites-cards-surfacecard-surfacecardpressable--default",
+        role: "SurfaceCard repeated once per entry, each with onPress/href — its own pressable states live at SurfaceCard Pressable.",
+        storyId: "composites-cards-surfacecard-surfacecard--pressable",
     },
     "Grid": {
         tier: "frame",

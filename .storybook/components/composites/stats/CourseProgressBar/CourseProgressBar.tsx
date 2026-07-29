@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
 
 /**
@@ -23,10 +23,8 @@ export interface CourseProgressDimension {
     color?: string
 }
 
-/** Props for the {@link CourseProgressBar} block. */
-export interface CourseProgressBarProps {
-    /** The 3 (or N) progress dimensions, in display order. */
-    dims: Array<CourseProgressDimension>
+/** Props {@link CourseProgressBar} carries regardless of loading state. */
+interface CourseProgressBarOwnProps {
     /** Accessible summary of the whole bar. */
     ariaLabel: string
     /** Hide the legend row under the bar. */
@@ -34,6 +32,16 @@ export interface CourseProgressBarProps {
     /** Extra classes on the root element. */
     className?: string
 }
+
+/**
+ * Props for the {@link CourseProgressBar} block. `dims` is REQUIRED unless
+ * `isSkeleton` (§12b) — a shimmer track has no real ratios to show yet.
+ */
+export type CourseProgressBarProps = CourseProgressBarOwnProps &
+    (
+        | { isSkeleton: true; dims?: Array<CourseProgressDimension> }
+        | { isSkeleton?: false; dims: Array<CourseProgressDimension> }
+    )
 
 /** Default per-dimension colours (semantic tokens) when a dimension has no explicit `color`. */
 const PALETTE = ["var(--accent)", "var(--success)", "var(--warning)", "var(--danger)", "var(--muted)"]
@@ -53,9 +61,24 @@ export const CourseProgressBar = ({
     dims,
     ariaLabel,
     hideLegend,
+    isSkeleton = false,
     className,
 }: CourseProgressBarProps) => {
-    const lanes = dims
+    if (isSkeleton) {
+        return (
+            <div className={cn("flex flex-col gap-2", className)}>
+                <HeroSkeleton className="h-1 w-full rounded-full" />
+                {!hideLegend ? (
+                    <div className="flex flex-wrap gap-3">
+                        <HeroSkeleton className="h-3.5 w-16 rounded" />
+                        <HeroSkeleton className="h-3.5 w-16 rounded" />
+                        <HeroSkeleton className="h-3.5 w-16 rounded" />
+                    </div>
+                ) : null}
+            </div>
+        )
+    }
+    const lanes = (dims ?? [])
         .filter((dim) => dim.total > 0)
         .map((dim, index) => ({
             ...dim,

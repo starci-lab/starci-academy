@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Color System — khi nào muted, khi nào foreground</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+    --app-bg:#141414; --app-surface:#1c1c1c; --app-border:#2c2c2c; --app-fg:#f5f5f5; --app-muted:#9a9a9a; --app-accent:#ff6fa5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 10px;border-top:1px solid var(--line);padding-top:18px}
+  .sub{color:var(--muted);margin:0}
+  code,.mono{font-family:ui-monospace,monospace}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules li{margin:6px 0;color:var(--muted)}
+  .rules b{color:var(--ink)}
+  .note{font-size:12px;color:var(--muted)}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  th:first-child{border-top-left-radius:10px}th:last-child{border-top-right-radius:10px}
+  td{padding:10px 12px;border-bottom:1px solid #1b2436;vertical-align:middle}
+  tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .card .step-tag{display:inline-flex;align-self:flex-start;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent);font-weight:600}
+  .card h3{margin:0;font-size:14px;color:var(--ink)}
+  .card p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .mock{background:var(--app-bg);border:1px solid var(--app-border);border-radius:10px;padding:14px;font-family:ui-sans-serif,system-ui}
+  .app-fg{color:var(--app-fg)}
+  .app-muted{color:var(--app-muted)}
+  .flexrow{display:flex;align-items:center}
+  .watch{background:color-mix(in srgb, var(--warn) 10%, var(--panel));border:1px solid color-mix(in srgb, var(--warn) 40%, var(--line));border-radius:12px;padding:14px 16px}
+  .watch b{color:var(--warn)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Color System — khi nào muted, khi nào foreground</h1>
+  <p class="sub">Nền §9a (chốt 2026-07-23) vẫn đúng — nhưng phép thử "ranh giới hay lẫn" ban đầu (mục 2 cũ) đã bị thầy sửa lưng 2026-07-29: SAI khi gộp mọi con số cạnh 1 hành động vào chung 1 rổ "phụ". Xem §2b cho phép thử đã sửa.</p>
+
+  <h2>1. Luật đã chốt (§9a) — 2 mức, chỉ khai báo khi XUỐNG cấp</h2>
+  <div class="rules">
+    <ul style="margin:0;padding-left:18px">
+      <li><b>foreground = chữ CHÍNH</b> (tiêu đề, giá trị, câu đọc) — MẶC ĐỊNH, KHÔNG khai <code>color</code>.</li>
+      <li><b>muted = chữ PHỤ</b> (hint/mô tả/caption/meta/nhãn-của-giá-trị/timestamp) — chiều DUY NHẤT cần khai <code>color="muted"</code>.</li>
+      <li>Màu semantic (danger/success/warning/accent) là trục TRẠNG THÁI riêng (§2), không thuộc luật nền/phụ này.</li>
+    </ul>
+  </div>
+
+  <h2>2. ⚠️ Phép thử ĐÃ SỬA (thầy sửa lưng 2026-07-29) — bản cũ SAI, xem §2b</h2>
+  <div class="watch">
+    <p style="margin:0"><s>Phép thử CŨ (SAI): con số đó có phải LÝ DO người đọc nhìn vào hàng này không → foreground. Hay nó chỉ là 1 SỰ KIỆN PHỤ đi kèm 1 hành động khác đã là trọng tâm → muted. Số lượt-react đều thuộc nhóm phụ.</s> — bản này gộp NHẦM "128" (lượt reaction) và "lượt xem" vào chung 1 rổ "phụ" chỉ vì cả hai đều là số đứng cạnh 1 hành động/icon. Thầy chỉ ra: đây là 2 loại số KHÁC NHAU, không thể dùng chung 1 phép thử.</p>
+  </div>
+
+  <h2>2b. ✅ Phép thử ĐÚNG — 2 lớp câu hỏi, không chỉ "có phải lý do nhìn vào hàng"</h2>
+  <div class="rules">
+    <ol style="margin:0;padding-left:18px">
+      <li><b>Con số có mang GIÁ TRỊ THÔNG TIN thật</b> mà người đọc cần cân nhắc, hay chỉ là số liệu nền/trivia không ảnh hưởng quyết định gì? (128 lượt reaction = bằng chứng xã hội, ảnh hưởng cảm nhận "nội dung có đáng đọc"; lượt xem = trivia, xem nhiều/ít không nói lên chất lượng)</li>
+      <li><b>Con số có DÍNH LIỀN về cấu trúc với 1 control đang active không</b> — nếu nó nằm NGAY CẠNH/thuộc cùng 1 khối với 1 nút bấm, nó phải "ăn theo" trọng lượng thị giác của nút đó (mờ đi cạnh 1 nút rõ ràng = lệch tông, đọc rời rạc); nếu nó đứng RIÊNG không gắn control nào, nó được phép mờ độc lập.</li>
+    </ol>
+  </div>
+
+  <h3 style="font-size:13px;color:var(--ink);margin:4px 0 0">Render thật — 2 loại số cạnh nhau (đã sửa theo phép thử đúng)</h3>
+  <div class="grid">
+    <div class="card">
+      <span class="step-tag" style="background:color-mix(in srgb,var(--accent) 30%,transparent)">foreground — dính liền control + mang giá trị</span>
+      <div class="mock">
+        <div class="flexrow" style="gap:6px">
+          <span style="font-size:18px">👍❤️😂</span>
+          <span class="app-fg" style="font-size:14px">128</span>
+        </div>
+      </div>
+      <p>Neo: <code>ReactionButton.tsx</code> (Storybook, sửa 2026-07-29) — <code>Typography size="sm"</code>, bỏ <code>color="muted"</code>. Số này là bằng chứng xã hội + đứng dính liền cụm nút "Thích".</p>
+    </div>
+    <div class="card">
+      <span class="step-tag">muted — đứng riêng + trivia</span>
+      <div class="mock">
+        <span class="app-muted" style="font-size:12px">2.481 lượt xem</span>
+      </div>
+      <p>Neo: <code>ContentReaction.tsx</code> — giữ nguyên <code>size="xs" color="muted"</code>. Đứng RIÊNG (bên phải hàng <code>justify-between</code>), không gắn control nào, không ảnh hưởng quyết định đọc.</p>
+    </div>
+    <div class="card">
+      <span class="step-tag">foreground — giá trị chính</span>
+      <div class="mock">
+        <div class="app-fg" style="font-size:20px;font-weight:700">1.290.000₫</div>
+      </div>
+      <p>Neo: giá tiền trong <code>PriceTag</code> — đây LÀ điều người đọc cần biết, không đi kèm hành động nào khác làm trọng tâm.</p>
+    </div>
+  </div>
+
+  <h2>3. Bằng chứng thêm — <code>PriceTag/index.tsx</code>, 1 file có CẢ HAI</h2>
+  <table>
+    <thead><tr><th>Dòng chữ</th><th>Màu thật</th><th>Vì sao</th></tr></thead>
+    <tbody>
+      <tr><td>Nhãn "Giá gốc"/"Giá đã giảm"</td><td><code>foreground</code> (không khai màu)</td><td>Đọc như câu văn bình thường của hàng, không phải chú thích rời</td></tr>
+      <tr><td>Mô tả breakdown (dưới nhãn)</td><td><code>muted</code></td><td>Giải thích thêm cho con số phía trên, không phải bản thân con số</td></tr>
+      <tr><td>Số tiền tiết kiệm được (thành công)</td><td><code>text-success-soft-foreground</code></td><td>Màu TRẠNG THÁI (§2) — khác trục nền/phụ này</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. Case study — "128" cạnh reaction (ĐÃ SỬA 2026-07-29, đảo ngược kết luận cũ)</h2>
+  <div class="mock" style="max-width:360px">
+    <div class="flexrow" style="gap:10px">
+      <div style="background:#ff6fa5;border-radius:999px;padding:8px 16px;display:flex;gap:6px;align-items:center">
+        <span>👍</span><span style="font-size:14px;color:#1a0510">Thích</span>
+      </div>
+      <span style="font-size:20px">👍❤️😂</span>
+      <span class="app-fg" style="font-size:14px">128</span>
+    </div>
+  </div>
+  <p class="note">Kết luận CŨ (verify 2026-07-29 vòng đầu) từng nói đúng — <code>ReactionBar.tsx:60,79</code> (real src) và Storybook trước sửa đều <code>muted</code>+<code>xs</code>, khớp nhau. Nhưng thầy chốt "src không quan trọng" ở đây — Storybook chủ động LỆCH khỏi src theo phép thử §2b: nút "Thích" lên `size="md"` (bỏ `size="sm"`) + `variant="tertiary"` cố định (không đổi theo trạng thái đã/chưa reaction), icon trong nút + icon cụm tóm tắt lên `size-5`, chữ trong nút + số "128" lên `text-sm`, bỏ `color="muted"` ở "128". Số "lượt xem" đứng riêng ở `ContentReaction.tsx` KHÔNG đổi — vẫn `xs`+`muted`.</p>
+
+</div>
+</body>
+</html>

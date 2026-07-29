@@ -43,6 +43,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "LinkBack": { tier: "atom", role: "the quiet way out that keeps the run resumable, owning its own caret and hover", storyId: "atoms-navigation-link-linkback--default" },
     "Typography": { tier: "atom", role: "one of the band's text slots — the session name, the position counter, or the tabular time left", storyId: "atoms-text-typography-typography--plain" },
     "Button": { tier: "atom", role: "the end-now control, deliberately a different weight from the back link because it ends the run rather than pausing it", storyId: "atoms-buttons-button-button--default" },
+    "Skeleton": { tier: "heroui", role: "the shimmer mirror standing in for the band while `isSkeleton` — a back-link-width bar, a counter-width bar, and a flat rail bar with no segments" },
 }
 
 /** LEAF — a live run: both exits, a timer, and a tappable rail. */
@@ -206,6 +207,30 @@ export const NoFinish: Story = {
                                 doneSteps={[1, 2, 3]}
                             />
                         ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; the session's own length/position isn't known before the run data arrives, so the band mirrors its own shape instead of borrowing an unrelated one. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="WorkSessionHeader"
+                tier="block"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Before the session data arrives there is no counter, no total and no current step to draw, so the band mirrors its own shape — a back-link-width bar, a counter-width bar, and a flat rail bar with no segments — rather than showing a blank band or borrowing an unrelated skeleton shape.",
+                        code: "<WorkSessionHeader isSkeleton backLabel=\"Thoát\" onBack={() => {}} />",
+                        render: <WorkSessionHeader isSkeleton backLabel="Thoát" onBack={() => {}} anatPart="WorkSessionHeader" showAnatomy />,
                     },
                 ]}
             />

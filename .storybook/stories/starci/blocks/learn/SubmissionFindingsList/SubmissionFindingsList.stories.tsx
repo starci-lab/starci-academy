@@ -74,6 +74,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the panel's own track holding detail, location and suggestion as peer facts about one finding", storyId: "frames-stack-stackv--default" },
     "MarkdownContent": { tier: "composite", role: "one authored field of a finding — the trigger's clamped message, or the panel's detail/suggestion — rendered faithfully rather than as plain text", storyId: "composites-viewers-markdowncontent--compact" },
     "Chip": { tier: "atom", role: "the finding's file location, riding in the trigger's trailing slot", storyId: "atoms-chips-chip-chip--default" },
+    "Typography": { tier: "atom", role: "the location line's plain text, or the underlined link when the location resolves to a real href", storyId: "atoms-text-typography-typography--plain" },
     "AsyncContentEmpty": { tier: "composite", role: "the no-findings message, hosted inside the accordion's own `emptyState` slot", storyId: "composites-async-asynccontent-asynccontentempty--basic" },
     "AsyncContentError": { tier: "composite", role: "the failed-fetch message with a retry action, hosted inside the same `emptyState` slot", storyId: "composites-async-asynccontent-asynccontenterror--with-retry" },
 }

@@ -10,22 +10,30 @@ import type { ComponentType, SVGProps } from "react"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Semantic action intent → maps straight to the HeroUI fork's `variant`. */
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "danger-soft"
+/**
+ * Semantic action intent → maps straight to the HeroUI fork's `variant`.
+ *
+ * `tertiary`/`outline` thêm 2026-07-29 (deep research, `principles.md` §15) — HeroUI
+ * thật khai đủ 7 (`node_modules/@heroui/styles/.../button.styles.d.ts`), atom trước đó
+ * chỉ có 5. `tertiary` = hành động PHỤ, không cần nổi (§15c) — dùng nhiều nhất trong
+ * `src` thật (77 call-site), atom lại chưa có option để chọn. `outline` hiếm (6
+ * call-site), viền rõ nhưng nền trong suốt.
+ */
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger" | "danger-soft"
 
 /**
- * HeroUI KHÔNG có variant `danger-soft` — chỉ có `danger` đặc. Bản mềm phải mượn một
- * variant trung tính của HeroUI rồi đắp token `danger-soft` lên. Tách hai bảng để khi
- * HeroUI có variant thật thì chỉ xoá đúng một dòng mỗi bảng.
- *
- * Dùng cho hành động phá huỷ ở ngữ cảnh NHẸ (xoá một dòng trong danh sách) — `danger`
- * đặc dành cho nút chốt của hộp thoại xác nhận.
+ * HeroUI thật khai NGUYÊN cả 7 (kể cả `danger-soft` — comment cũ ở đây từng nói HeroUI
+ * không có `danger-soft`, đã LỖI THỜI: bản HeroUI hiện tại cài trong repo đã có sẵn.
+ * Giữ nguyên cách mượn `secondary` + `VARIANT_CLS` cho `danger-soft` ở đây — đổi sang
+ * variant gốc của HeroUI là việc RIÊNG, ngoài phạm vi thêm `tertiary`/`outline` lần này.
  */
-type HeroVariant = "primary" | "secondary" | "ghost" | "danger"
+type HeroVariant = "primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger"
 
 export const HERO_VARIANT: Record<ButtonVariant, HeroVariant> = {
     primary: "primary",
     secondary: "secondary",
+    tertiary: "tertiary",
+    outline: "outline",
     ghost: "ghost",
     danger: "danger",
     "danger-soft": "secondary",

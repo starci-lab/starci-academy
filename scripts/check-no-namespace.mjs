@@ -24,6 +24,12 @@
  *
  *   node scripts/check-no-namespace.mjs            -> report, exit 1 if any found
  *   node scripts/check-no-namespace.mjs --control   -> negative control (must report 1)
+ *
+ * ⚠️ `ContentPage`'s mobile/tablet-only nudge (thầy 2026-07-28) was briefly built as a
+ * `ContentPage.Mobile`/`.Tablet` namespace, allowlisted here — then corrected the SAME day
+ * to a CSS-only fix (`@app-lg:hidden` on the one extra node, one render tree, no namespace at
+ * all). No exception needed. If a future case genuinely needs one, name it explicitly here
+ * with the date and reasoning — do not silently reintroduce the allowlist pattern.
  */
 import fs from "node:fs"
 import path from "node:path"

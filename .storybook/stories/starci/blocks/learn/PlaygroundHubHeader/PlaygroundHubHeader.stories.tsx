@@ -1,0 +1,81 @@
+import type { Meta, StoryObj } from "@storybook/nextjs"
+import { PlaygroundHubHeader } from "@sb-components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * BLOCK — `PlaygroundHubHeader`: the HUB-IDENTITY cluster at the top of the
+ * Docker/Kubernetes exercise grid. It answers one question, "what is this
+ * playground hub", via a title and an optional one-sentence purpose line.
+ *
+ * SIBLING OF `ContentHeader`/`FoundationsHeader`, NOT A COPY of either. All
+ * three place identity into the same `PageHeader` frame, but this one is
+ * deliberately THINNEST: no breadcrumb, no meta row, no secondary card — the
+ * real `PlaygroundHub` renders only an h5 title and a muted body-sm subtitle,
+ * nothing else.
+ *
+ * 📐 ONE LEAF (§14d.2), unlike its siblings' `Full`/`Skeleton` split. Those
+ * blocks lose a whole outcomes card or breadcrumb row under `isSkeleton`; this
+ * block has nothing else to lose — the flag only swaps which state the
+ * composed `Typography` renders inside the same `PageHeader` shape, so real
+ * vs. loading stays a STATE of `Default` rather than its own leaf.
+ */
+const meta: Meta<typeof PlaygroundHubHeader> = {
+    title: "StarCi/Blocks/Learn/PlaygroundHubHeader/PlaygroundHubHeader",
+    component: PlaygroundHubHeader,
+    tags: ["autodocs"],
+    parameters: { layout: "fullscreen" },
+}
+
+export default meta
+
+type Story = StoryObj<typeof PlaygroundHubHeader>
+
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "PageHeader": { tier: "composite", role: "the header frame that lines up the title and description, owning the type scale for both", storyId: "composites-layout-page-pageheader--full" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the hub title or its purpose line, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+}
+
+/** LEAF — the only shape this block has: title + optional purpose line. */
+export const Default: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PlaygroundHubHeader"
+                tier="block"
+                leaf="Default"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "real",
+                        why: "The hub data has loaded, so the title and purpose line render as plain text. This is the shape every learner sees the moment they open the playground hub for their course.",
+                        code: `<PlaygroundHubHeader
+    title="Playground"
+    description="Bài thực hành Docker và Kubernetes. Bạn gõ lệnh thật trên máy mình, có hướng dẫn từng bước."
+/>`,
+                        render: (
+                            <PlaygroundHubHeader
+                                anatPart="PlaygroundHubHeader"
+                                showAnatomy
+                                title="Playground"
+                                description="Bài thực hành Docker và Kubernetes. Bạn gõ lệnh thật trên máy mình, có hướng dẫn từng bước."
+                            />
+                        ),
+                    },
+                    {
+                        name: "isSkeleton = true",
+                        why: "The hub list is still loading, so both text lines swap to their own shimmer while keeping the exact box they will hand back. The flag reaches the real atoms rather than a parallel skeleton tree, which is why the header does not jump when the data lands.",
+                        code: "<PlaygroundHubHeader title=\"\" isSkeleton />",
+                        render: (
+                            <PlaygroundHubHeader
+                                title=""
+                                isSkeleton
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}

@@ -1,5 +1,5 @@
 import React from "react"
-import { cn, Typography } from "@heroui/react"
+import { cn, Typography, Skeleton as HeroSkeleton } from "@heroui/react"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -10,28 +10,42 @@ import { cn, Typography } from "@heroui/react"
 /** Value (title) typography size — `h4` (default) · `h5` · `body` (text-base). */
 export type StatPairValueType = "h4" | "h5" | "body"
 
-/** Props for {@link StatPair}. */
-export interface StatPairProps {
-    /**
-     * The headline statistic — typically a number or short formatted count
-     * (e.g. "1,204" or "12"). Rendered large and emphasized.
-     */
-    value: React.ReactNode
-    /**
-     * The caption describing what the value measures (e.g. "Followers").
-     * Rendered small and muted beneath the value.
-     */
-    label: React.ReactNode
+/** Props {@link StatPair} carries regardless of loading state. */
+interface StatPairOwnProps {
     /** Value (title) size — defaults to `h4`; use `body` (text-base) for a smaller title (long strings). */
     valueType?: StatPairValueType
     /** Extra classes on the root element. */
     className?: string
+    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
     /**
      * Storybook-only: when true, the value/label `Typography` each emit a
      * `data-anat-part` so the anatomy panel can anchor badges. No visual effect.
      */
     showAnatomy?: boolean
 }
+
+/**
+ * Props for {@link StatPair}. `value`/`label` are REQUIRED unless `isSkeleton`
+ * (§12b) — a shimmer pair has no real stat to show yet.
+ */
+export type StatPairProps = StatPairOwnProps &
+    (
+        | { isSkeleton: true; value?: React.ReactNode; label?: React.ReactNode }
+        | {
+            isSkeleton?: false
+            /**
+             * The headline statistic — typically a number or short formatted count
+             * (e.g. "1,204" or "12"). Rendered large and emphasized.
+             */
+            value: React.ReactNode
+            /**
+             * The caption describing what the value measures (e.g. "Followers").
+             * Rendered small and muted beneath the value.
+             */
+            label: React.ReactNode
+        }
+    )
 
 /**
  * A single count + label statistic, stacked vertically and left-aligned (value
@@ -45,11 +59,21 @@ export const StatPair = ({
     value,
     label,
     valueType = "h4",
+    isSkeleton = false,
     className,
+    anatPart,
     showAnatomy,
 }: StatPairProps) => {
+    if (isSkeleton) {
+        return (
+            <div className={cn("flex flex-col items-start gap-1", className)} data-anat-part={anatPart}>
+                <HeroSkeleton className="h-5 w-14 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            </div>
+        )
+    }
     return (
-        <div className={cn("flex flex-col items-start gap-0", className)}>
+        <div className={cn("flex flex-col items-start gap-0", className)} data-anat-part={anatPart}>
             <Typography
                 type={valueType}
                 weight="semibold"

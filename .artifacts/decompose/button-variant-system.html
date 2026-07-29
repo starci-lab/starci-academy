@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Button Variant System — 7 variant thật, atom đang thiếu 2</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+    --app-bg:#141414; --app-surface:#1c1c1c; --app-border:#2c2c2c; --app-fg:#f5f5f5; --app-muted:#9a9a9a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 10px;border-top:1px solid var(--line);padding-top:18px}
+  .sub{color:var(--muted);margin:0}
+  code,.mono{font-family:ui-monospace,monospace}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules li{margin:6px 0;color:var(--muted)}
+  .rules b{color:var(--ink)}
+  .note{font-size:12px;color:var(--muted)}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  th:first-child{border-top-left-radius:10px}th:last-child{border-top-right-radius:10px}
+  td{padding:10px 12px;border-bottom:1px solid #1b2436;vertical-align:middle}
+  tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .card .step-tag{display:inline-flex;align-self:flex-start;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent);font-weight:600}
+  .card p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .mock{background:var(--app-bg);border:1px solid var(--app-border);border-radius:10px;padding:16px;font-family:ui-sans-serif,system-ui;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .cite{font-size:11px;color:var(--muted);font-family:ui-monospace,monospace;margin-top:4px}
+  .watch{background:color-mix(in srgb, var(--warn) 10%, var(--panel));border:1px solid color-mix(in srgb, var(--warn) 40%, var(--line));border-radius:12px;padding:14px 16px}
+  .watch b{color:var(--warn)}
+  .missing{background:color-mix(in srgb, var(--danger) 10%, var(--panel));border:1px solid color-mix(in srgb, var(--danger) 40%, var(--line));border-radius:12px;padding:14px 16px}
+  .missing b{color:var(--danger)}
+  /* mock buttons */
+  .btn{border-radius:999px;padding:8px 18px;font-size:13px;font-weight:600;border:none;cursor:default;display:inline-flex;align-items:center;gap:6px}
+  .btn.primary{background:#ff6fa5;color:#1a0510}
+  .btn.secondary{background:#2c2c2c;color:#f5f5f5;border:1px solid #3a3a3a}
+  .btn.tertiary{background:transparent;color:#f5f5f5;border:1px solid #3a3a3a}
+  .btn.ghost{background:transparent;color:#9a9a9a}
+  .btn.outline{background:transparent;color:#f5f5f5;border:1.5px solid #f5f5f5}
+  .btn.danger{background:var(--danger);color:#fff}
+  .btn.dangersoft{background:color-mix(in srgb,var(--danger) 18%,transparent);color:#ff8fae}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Button Variant System — 7 variant thật trong <code>src</code>, atom hiện chỉ có 5</h1>
+  <p class="sub">Explore agent đọc type definition HeroUI + ~35 file thật (modal/drawer/card/toolbar/empty-state). Verify giả thuyết thầy: "secondary chỉ đi kèm primary, còn lại tertiary" — kết quả: BÁC BỎ bằng số đếm.</p>
+
+  <div class="missing">
+    <p style="margin:0"><b>⚠️ PHÁT HIỆN LỚN NHẤT: atom `Button` (Storybook) đang THIẾU 2 variant thật</b> — `tertiary` (77 lần dùng trong `src`, nhiều hơn cả `ghost`) và `outline` (6 lần). `button-tokens.ts` hiện chỉ có <code>"primary" | "secondary" | "ghost" | "danger" | "danger-soft"</code>. Đây không phải chuyện "chọn variant nào" — atom KHÔNG CÓ option để chọn.</p>
+  </div>
+
+  <h2>1. Bộ giá trị THẬT (đọc type definition HeroUI, không đoán)</h2>
+  <table>
+    <thead><tr><th>variant</th><th>Số lần dùng trong src</th><th>Có trong Button atom Storybook?</th></tr></thead>
+    <tbody>
+      <tr><td><code>primary</code></td><td>136</td><td>✅</td></tr>
+      <tr><td><code>secondary</code></td><td>86</td><td>✅</td></tr>
+      <tr style="outline:2px solid var(--danger);outline-offset:-1px"><td><b><code>tertiary</code></b></td><td><b>77</b></td><td>❌ <b>THIẾU</b></td></tr>
+      <tr><td><code>ghost</code></td><td>38</td><td>✅</td></tr>
+      <tr><td><code>danger-soft</code></td><td>10</td><td>✅</td></tr>
+      <tr style="outline:2px solid var(--danger);outline-offset:-1px"><td><b><code>outline</code></b></td><td><b>6</b></td><td>❌ <b>THIẾU</b></td></tr>
+      <tr><td><code>danger</code></td><td>3</td><td>✅</td></tr>
+      <tr><td>(không khai = mặc định)</td><td>38</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. Render thật — 7 variant cạnh nhau</h2>
+  <div class="mock">
+    <button class="btn primary">Enroll</button>
+    <button class="btn secondary">Try free</button>
+    <button class="btn tertiary">Add item</button>
+    <button class="btn ghost">Back</button>
+    <button class="btn outline">Continue with GitHub</button>
+    <button class="btn danger">Disable 2FA</button>
+    <button class="btn dangersoft">Clear filters</button>
+  </div>
+  <p class="cite">primary · secondary · tertiary · ghost · outline · danger · danger-soft (trái sang phải)</p>
+
+  <h2>3. Giả thuyết "secondary chỉ đi kèm primary" — BÁC BỎ bằng số đếm</h2>
+  <div class="watch">
+    <p style="margin:0"><b>3 cụm CÓ primary sibling</b> vs <b>≥8 cụm secondary đứng MỘT MÌNH</b> (đọc trực tiếp ~35 file). Ví dụ đứng một mình: <code>SystemStatus/index.tsx:67-75</code> (nút "Refresh" đơn độc trong PageHeader), <code>ContactForm/index.tsx:52</code> (action DUY NHẤT của 1 EmptyState), <code>NotificationCenter/index.tsx:402-417</code> (2 nút secondary prev/next phân trang, không hề có primary), <code>ManagePinnedProjectsModal/PinnedProjectCard/index.tsx:90-129</code> (3 nút icon-only secondary reorder + 1 danger, không primary nào).</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <span class="step-tag">secondary + primary (có sibling)</span>
+      <div class="mock" style="padding:12px">
+        <button class="btn secondary" style="padding:6px 14px">Try free</button>
+        <button class="btn primary" style="padding:6px 14px">Enroll</button>
+      </div>
+      <p class="cite">CourseCtaButtons/index.tsx:46,72</p>
+    </div>
+    <div class="card">
+      <span class="step-tag">secondary ĐƠN ĐỘC (bác bỏ giả thuyết)</span>
+      <div class="mock" style="padding:12px">
+        <button class="btn secondary" style="padding:6px 14px">↻ Refresh</button>
+      </div>
+      <p class="cite">SystemStatus/index.tsx:67-75 — PageHeader action, không có primary nào cạnh</p>
+    </div>
+  </div>
+
+  <h2>4. `ghost` vs `tertiary` — KHÔNG có ranh giới sạch, là drift THẬT trong chính src</h2>
+  <div class="watch">
+    <p style="margin:0">2 nơi làm CÙNG 1 việc (nút reorder icon-only trong 1 card) nhưng khác variant: <code>PinnedProjectCard/index.tsx:90-119</code> dùng <code>secondary</code>, <code>RepeatableItemCard.tsx:52-71</code> dùng <code>tertiary</code>. Nút "Huỷ" cạnh primary Confirm cũng lệch: <code>RewardCatalog/index.tsx:400</code> dùng <code>tertiary</code>, <code>Security/index.tsx:311-316</code> dùng <code>ghost</code>. <b>Đây là inconsistency thật giữa các tác giả code, không phải chủ ý thiết kế</b> — không rút ra được luật "X dùng Y" tuyệt đối.</p>
+  </div>
+  <p class="note">Xu hướng YẾU quan sát được (có ngoại lệ cả 2 chiều, không strict): <code>ghost</code> thiên về icon-only CHROMELESS gắn TRONG 1 control khác (mắt xem password, nút back/nav, filter toggle trong Popover) — <code>tertiary</code> thiên về TEXT button đứng cạnh nội dung (add item, retry, reset).</p>
+
+  <h2>5. Ví dụ đầy đủ mỗi variant (≥3 neo mỗi loại)</h2>
+  <table>
+    <thead><tr><th>variant</th><th>Neo file:line</th></tr></thead>
+    <tbody>
+      <tr><td><code>primary</code></td><td class="mono">error.tsx:42 · CourseCtaButtons/index.tsx:46 · ContactForm/index.tsx:149</td></tr>
+      <tr><td><code>secondary</code></td><td class="mono">PinnedProjectCard/index.tsx:90 · SystemStatus/index.tsx:67 · CourseCtaButtons/index.tsx:72</td></tr>
+      <tr><td><code>tertiary</code></td><td class="mono">RewardCatalog/index.tsx:400 · AchievementBlockEditor/index.tsx:87 · RepeatableItemCard.tsx:52</td></tr>
+      <tr><td><code>ghost</code></td><td class="mono">AdminUploadVideo/TopBar/index.tsx:56 · PasswordField/index.tsx:68 · Security/index.tsx:311</td></tr>
+      <tr><td><code>outline</code></td><td class="mono">OauthButtons/index.tsx:43 · SearchButton/index.tsx:33 · QuizSession/index.tsx:1155</td></tr>
+      <tr><td><code>danger</code></td><td class="mono">PinnedProjectCard/index.tsx:121 · Security/index.tsx:254 · PromptPlayground/index.tsx:310</td></tr>
+      <tr><td><code>danger-soft</code></td><td class="mono">ProfileCoding/index.tsx:414 · ProfileChallengeManage/index.tsx:250 · RepeatableItemCard.tsx:72</td></tr>
+    </tbody>
+  </table>
+
+  <h2>6. Đề xuất hành động — CHƯA áp, chờ thầy chốt</h2>
+  <div class="rules">
+    <ul style="margin:0;padding-left:18px">
+      <li>Thêm <code>"tertiary" | "outline"</code> vào <code>ButtonVariant</code> type (`button-tokens.ts`) + bảng <code>HERO_VARIANT</code>/<code>VARIANT_CLS</code> tương ứng.</li>
+      <li>Quét lại mọi chỗ Storybook đang dùng <code>secondary</code> cho 1 nút ĐƠN ĐỘC (không sibling primary) — khả năng cao nhiều chỗ đáng lẽ phải là <code>tertiary</code>, chỉ vì atom chưa có option nên buộc chọn <code>secondary</code>.</li>
+      <li><code>ghost</code> vs <code>tertiary</code>: KHÔNG cố rút luật cứng từ src (chính src cũng không nhất quán) — để THẦY quyết 1 luật MỚI cho Storybook riêng, rồi áp nhất quán từ đó về sau (không cố khớp từng case lẻ của src).</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
@@ -38,12 +38,8 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 // .Row — ONE label–value pair
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link KeyValueRow}. */
-export interface KeyValueRowProps {
-    /** Label (left side) — §9a SECONDARY text ⇒ muted; `emphasis` pulls it up to foreground medium. */
-    label: ReactNode
-    /** Value (right side) — an ALREADY-formatted node; the composite does not format it. */
-    value: ReactNode
+/** Props every {@link KeyValueRow} carries regardless of loading state. */
+interface KeyValueRowOwnProps {
     /** Sub-line below the label (explanation/unit/condition) — muted, smaller size. */
     hint?: ReactNode
     /** `true` → a TOTAL row: label goes to foreground medium, value goes to base size + bold. */
@@ -65,6 +61,16 @@ export interface KeyValueRowProps {
 }
 
 /**
+ * Props for {@link KeyValueRow}. `label`/`value` are REQUIRED unless `isSkeleton`
+ * (§12b) — a shimmer row has no real pair to show yet.
+ */
+export type KeyValueRowProps = KeyValueRowOwnProps &
+    (
+        | { isSkeleton: true; label?: ReactNode; value?: ReactNode }
+        | { isSkeleton?: false; label: ReactNode; value: ReactNode }
+    )
+
+/**
  * One label–value row: label (+`hint`) sits left, value sits right, `tabular-nums`
  * keeps the digits aligned in a column when rows stack (§3). `emphasis` is the
  * STRESS level for a total row.
@@ -77,11 +83,24 @@ const KeyValueRow = ({
     hint,
     emphasis = false,
     divider = false,
-    gap = "grouped",    className,
+    gap = "grouped",
+    isSkeleton = false,
+    className,
     showAnatomy = false,
     anatPart,
 }: KeyValueRowProps) => {
-    const row = (
+    const row = isSkeleton ? (
+        <div
+            className={cn("flex items-start justify-between gap-2", className)}
+            data-anat-part={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
+        >
+            <div className="flex min-w-0 flex-col gap-1">
+                <HeroSkeleton className="h-3.5 w-20 rounded" />
+                {hint != null ? <HeroSkeleton className="h-3 w-14 rounded" /> : null}
+            </div>
+            <HeroSkeleton className="h-3.5 w-12 shrink-0 rounded" />
+        </div>
+    ) : (
         <div
             className={cn("flex items-start justify-between gap-2", className)}
             data-anat-part={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
@@ -150,6 +169,13 @@ export interface KeyValueListProps {
     /** `true` → draws a separator line BETWEEN rows (the last row has none). */
     divider?: boolean
     /**
+     * `true` → render `skeletonRows` placeholder rows instead of `items` (same
+     * contract as `List.Labeled`'s own `isSkeleton`/`skeletonRows` pair).
+     */
+    isSkeleton?: boolean
+    /** Placeholder row count while `isSkeleton`. Defaults to `3`. */
+    skeletonRows?: number
+    /**
      * Anatomy tag for THIS composite itself — lets the PARENT badge it as ONE node (§11a.1).
      * Without this prop the composite doesn't make it into the Deps tree: using a
      * `frame`/`composite` tier node that the panel can't see counts as not using it.
@@ -170,17 +196,30 @@ export interface KeyValueListProps {
  *
  * @param props - {@link KeyValueListProps}
  */
-const KeyValueList = ({ items, gap = "grouped", divider = false, className, showAnatomy = false, anatPart }: KeyValueListProps) => (
+const KeyValueList = ({
+    items,
+    gap = "grouped",
+    divider = false,
+    isSkeleton = false,
+    skeletonRows = 3,
+    className,
+    showAnatomy = false,
+    anatPart,
+}: KeyValueListProps) => (
     <div data-anat-part={anatPart} className={cn("flex flex-col", GAP_CLASS[gap], className)}>
-        {items.map(({ key, ...item }, index) => (
-            <KeyValueRow
-                key={key}
-                {...item}
-                divider={divider && index < items.length - 1}
-                gap={gap}
-                showAnatomy={showAnatomy}
-            />
-        ))}
+        {isSkeleton
+            ? Array.from({ length: skeletonRows }, (_unused, index) => (
+                <KeyValueRow key={index} isSkeleton divider={divider && index < skeletonRows - 1} gap={gap} showAnatomy={showAnatomy} />
+            ))
+            : items.map(({ key, ...item }, index) => (
+                <KeyValueRow
+                    key={key}
+                    {...item}
+                    divider={divider && index < items.length - 1}
+                    gap={gap}
+                    showAnatomy={showAnatomy}
+                />
+            ))}
     </div>
 )
 

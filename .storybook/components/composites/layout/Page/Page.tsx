@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -36,8 +36,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 // .Header — the breadcrumb/title/description/actions/meta block (was `PageHeader`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link PageHeader}. */
-export interface PageHeaderProps {
+/** Props {@link PageHeader} carries regardless of loading state. */
+interface PageHeaderOwnProps {
     /**
      * Anatomy tag for THIS component itself — so the PARENT can badge it as ONE node (§11a.1).
      *
@@ -48,12 +48,6 @@ export interface PageHeaderProps {
      */
     anatPart?: string
 
-    /**
-     * Primary page or section title. Rendered at `text-xl font-medium` in the
-     * foreground tone. Accept a string or any inline React node (e.g. a
-     * title with an inline badge).
-     */
-    title: ReactNode
     /**
      * Optional supporting description placed directly below the title. Rendered
      * at `text-sm` in the muted tone. Omit when the title is self-explanatory.
@@ -93,6 +87,28 @@ export interface PageHeaderProps {
 }
 
 /**
+ * Props for {@link PageHeader}. `title` is REQUIRED unless `isSkeleton` (§12b) —
+ * a shimmer header has no real title to show yet.
+ */
+export type PageHeaderProps = PageHeaderOwnProps &
+    (
+        | {
+            isSkeleton: true
+            /** Primary page or section title. See the live variant's doc for the full contract. */
+            title?: ReactNode
+        }
+        | {
+            isSkeleton?: false
+            /**
+             * Primary page or section title. Rendered at `text-xl font-medium` in the
+             * foreground tone. Accept a string or any inline React node (e.g. a
+             * title with an inline badge).
+             */
+            title: ReactNode
+        }
+    )
+
+/**
  * Page/section header frame. Renders an optional breadcrumb row above a flex
  * row that places a stacked title + description on the left and optional action
  * controls on the right.
@@ -110,10 +126,27 @@ const Header = ({
     actions,
     meta,
     size = "page",
+    isSkeleton = false,
     className,
     showAnatomy,
     anatPart,
 }: PageHeaderProps) => {
+    if (isSkeleton) {
+        // Shape-agnostic mirror: the real shape (breadcrumb/description/meta presence)
+        // isn't known before the route's data arrives, so this assumes the full header.
+        return (
+            <div data-anat-part={anatPart} className={cn("flex flex-col gap-3", className)}>
+                <div className="flex min-w-0 flex-col gap-2">
+                    <HeroSkeleton className={size === "compact" ? "h-4 w-48 rounded" : "h-6 w-64 rounded"} />
+                    <HeroSkeleton className="h-4 w-80 max-w-full rounded" />
+                </div>
+                <div className="flex gap-2">
+                    <HeroSkeleton className="h-6 w-24 rounded-full" />
+                    <HeroSkeleton className="h-6 w-24 rounded-full" />
+                </div>
+            </div>
+        )
+    }
     return (
         // outer gap-3: breadcrumb ↔ title-block ↔ meta (different header tiers);
         // title ↔ description stay a tight gap-2 pair inside the title block.

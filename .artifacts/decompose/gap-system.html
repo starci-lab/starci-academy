@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gap System — hệ thống khoảng cách hoàn chỉnh</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+    /* mock-app tokens — chỉ dùng TRONG khung ví dụ render thật, không lẫn với chrome trang review */
+    --app-bg:#141414; --app-surface:#1c1c1c; --app-border:#2c2c2c; --app-fg:#f5f5f5; --app-muted:#9a9a9a; --app-accent:#ff6fa5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 10px;border-top:1px solid var(--line);padding-top:18px}
+  .sub{color:var(--muted);margin:0}
+  code,.mono{font-family:ui-monospace,monospace}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules li{margin:6px 0;color:var(--muted)}
+  .rules b{color:var(--ink)}
+  .note{font-size:12px;color:var(--muted)}
+
+  /* ── scale table ── */
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  th:first-child{border-top-left-radius:10px}th:last-child{border-top-right-radius:10px}
+  td{padding:10px 12px;border-bottom:1px solid #1b2436;vertical-align:middle}
+  tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  .bar{height:10px;border-radius:4px;background:var(--accent)}
+  .step-name{font-weight:600;color:var(--ink)}
+  .step-px{color:var(--muted);font-family:ui-monospace,monospace;font-size:12px}
+
+  /* ── shape catalog cards ── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .card .step-tag{display:inline-flex;align-self:flex-start;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent);font-weight:600}
+  .card h3{margin:0;font-size:14px;color:var(--ink)}
+  .card p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .mock{background:var(--app-bg);border:1px solid var(--app-border);border-radius:10px;padding:14px;font-family:ui-sans-serif,system-ui}
+
+  /* ── generic mock atoms ── */
+  .avatar{width:32px;height:32px;border-radius:999px;background:#2e5b6b;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .flexrow{display:flex;align-items:center}
+  .flexcol{display:flex;flex-direction:column}
+  .name{color:var(--app-fg);font-size:13px;font-weight:500}
+  .name.bold-wrong{font-weight:400}
+  .time{color:var(--app-muted);font-size:11px}
+  .badge{color:var(--app-accent);font-size:12px}
+  .body-text{color:var(--app-fg);font-size:12.5px;line-height:1.5}
+  .chip{background:var(--app-surface);border:1px solid var(--app-border);color:var(--app-fg);font-size:11px;padding:3px 9px;border-radius:999px}
+  .icon-mark{color:var(--app-muted);font-size:14px}
+  .num{color:var(--app-fg);font-size:20px;font-weight:600}
+  .unit{color:var(--app-muted);font-size:12px}
+
+  /* before/after case study */
+  .case{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .case .lbl{font-size:11px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;display:block}
+  .lbl.bad{color:var(--danger)}
+  .lbl.good{color:var(--success)}
+  .badbox{outline:2px solid var(--danger);outline-offset:-1px}
+  .goodbox{outline:2px solid var(--success);outline-offset:-1px}
+
+  .watch{background:color-mix(in srgb, var(--warn) 10%, var(--panel));border:1px solid color-mix(in srgb, var(--warn) 40%, var(--line));border-radius:12px;padding:14px 16px}
+  .watch b{color:var(--warn)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Gap System — hệ thống khoảng cách hoàn chỉnh</h1>
+  <p class="sub">Scan toàn <code>.storybook/components/**</code> (72 call-site <code>gap="tight"</code>, hàng chục <code>related</code>/<code>grouped</code>) + đối chiếu <code>src</code> thật. Mục tiêu: 1 PHƯƠNG PHÁP quyết định đủ khách quan để không còn đoán — kể cả khi phân tích lại.</p>
+
+  <div class="watch" style="border-color:color-mix(in srgb, var(--danger) 40%, var(--line))">
+    <p style="margin:0"><b style="color:var(--danger)">SỬA LẦN 2, 2026-07-29 (thầy: "chưa hệ thống hoá được, chia block/gap nội bộ vẫn cảm tính"):</b> bản trước dừng ở "sửa đúng 1 điểm + rút 1 luật" — vẫn là PHẢN ỨNG theo từng điểm thầy chỉ, chưa phải HỆ THỐNG áp được cho bất kỳ block nào. Bản này thêm mục 0 (thuật toán phân rã cây + bảng phân loại 5 câu hỏi, dùng lặp lại được) và mục 0b (áp thuật toán đó lên TOÀN BỘ cây <code>ContentCommentThread</code> — cả 5 seam, không chỉ seam byline đã sửa).</p>
+  </div>
+
+  <h2>0. Thuật toán — cách hệ thống hoá MỌI block (không phải ví dụ lẻ)</h2>
+  <div class="rules">
+    <p style="margin:0 0 10px"><b>Bước 1 — Vẽ CÂY tổ hợp.</b> Bất kỳ vùng UI nào phân rã thành 1 cây: mỗi NÚT có ≥2 CON là 1 <b>seam</b> cần quyết định gap. Nút chỉ 1 con, hoặc là leaf (1 chữ/1 icon/1 ảnh đơn), KHÔNG có seam — bỏ qua. Mỗi seam là 1 quyết định ĐỘC LẬP (§10a "1 seam = 1 chủ") — không suy ra seam này từ seam khác, không giả định "nested thì phải nhỏ dần đều".</p>
+    <p style="margin:0 0 10px"><b>Bước 2 — Phân loại QUAN HỆ của từng seam</b> bằng bảng sau, hỏi TỪ TRÊN XUỐNG, dừng ở câu đầu tiên YES (không phải cảm tính chọn theo "nhìn hợp"):</p>
+    <table>
+      <thead><tr><th style="width:6%">#</th><th>Câu hỏi</th><th style="width:16%">Bậc gợi ý</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Xoá 1 phần tử, phần còn lại MẤT NGHĨA/mất ngữ cảnh? (số+đơn vị, icon+nhãn — 1 mark gắn 1 chủ DUY NHẤT)</td><td class="step-name">flush/tight</td></tr>
+        <tr><td>2</td><td>Các phần tử CÙNG LOẠI, lặp lại, không cái nào là "chủ"? (chip row, hàng nút)</td><td class="step-name">related</td></tr>
+        <tr><td>3</td><td>Các phần tử KHÁC VAI nhưng cùng tạo 1 dòng nhận diện/thuộc tính? (tên+badge+giờ — "byline")</td><td class="step-name">related (mặc định — LUÔN đo real-src trước nếu có)</td></tr>
+        <tr><td>4</td><td>Các phần tử là NHIỀU VÙNG khác nhau trong CÙNG 1 đơn vị lớn hơn? (header/body/actions của 1 comment)</td><td class="step-name">grouped</td></tr>
+        <tr><td>5</td><td>Các phần tử là CÁC KHỐI chức năng riêng, tự đứng được như 1 tính năng?</td><td class="step-name">section/page</td></tr>
+      </tbody>
+    </table>
+    <p style="margin:10px 0 0"><b>Bước 3 — Neo real-src, GHI ĐÈ heuristic.</b> Nếu component có nguồn `src` thật (khai trong file header "ported from…") → ĐO gap thật của ĐÚNG seam đó, dùng số đo được thay cho kết quả bước 2. Bước 2 chỉ là fallback khi KHÔNG có nguồn.</p>
+    <p style="margin:6px 0 0"><b>Bước 4 — Áp cho MỌI seam trong cây, không chỉ seam đang bị feedback.</b> 1 điểm sai thường là dấu hiệu cần soát lại CẢ CÂY — xem ví dụ áp đầy đủ ở mục 0b ngay dưới.</p>
+  </div>
+
+  <h2>0b. Áp thuật toán lên TOÀN BỘ cây <code>ContentCommentThread</code> — không chỉ 1 điểm</h2>
+  <div class="rules">
+    <p style="margin:0 0 10px">Cây tổ hợp thật của 1 comment (rút từ chính code + <code>CommentItem.tsx</code>):</p>
+    <div class="mock" style="font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.8;white-space:pre">Comment (root)
+├─ Avatar                                    <span style="color:var(--accent)">seam A</span>
+└─ Cột nội dung                              <span style="color:var(--accent)">seam COL</span>
+   ├─ Header (byline)
+   │  ├─ Tên · Badge · Giờ · "(đã sửa)"       <span style="color:var(--accent)">seam B</span>
+   ├─ Body (nội dung bình luận)
+   ├─ Hàng action                            <span style="color:var(--accent)">seam D</span>
+   │  ├─ ReactionButton · Trả lời · Sửa · Xoá
+   ├─ Composer trả lời (khi mở)
+   ├─ "Xem N câu trả lời" (toggle)
+   └─ Cây replies con (khi mở)               <span style="color:var(--accent)">seam E</span>
+      ├─ reply 1 · reply 2 · …</div>
+
+    <table style="margin-top:12px">
+      <thead><tr><th>Seam</th><th>Vị trí</th><th>Loại quan hệ (bảng bước 2)</th><th>real-src đo được</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td class="step-name">A</td><td>avatar ↔ cột nội dung</td><td>#4 vùng khác nhau trong 1 đơn vị</td><td><code>CommentItem.tsx:92</code> <code>gap-3</code></td><td style="color:var(--success)">✅ khớp (grouped)</td></tr>
+        <tr><td class="step-name">COL</td><td>header↔body↔actions↔… (cùng 1 cột)</td><td>#4 vùng khác nhau trong 1 đơn vị</td><td><code>CommentItem.tsx:99</code> <code>gap-2</code></td><td style="color:var(--success)">✅ khớp (related)</td></tr>
+        <tr><td class="step-name">B</td><td>tên↔badge↔giờ↔"đã sửa"</td><td>#3 byline, khác vai cùng 1 dòng</td><td><code>CommentItem.tsx:101</code> <code>gap-2</code></td><td style="color:var(--warn)">🔧 ĐÃ SỬA — trước lệch `tight`, nay related</td></tr>
+        <tr><td class="step-name">D</td><td>reaction↔Trả lời↔Sửa↔Xoá</td><td>#2 cùng loại, lặp lại (hàng hành động)</td><td><code>CommentItem.tsx:145</code> <code>gap-3</code></td><td style="color:var(--success)">✅ khớp (grouped)</td></tr>
+        <tr><td class="step-name">E</td><td>reply 1 ↔ reply 2 ↔ …</td><td>#4 rows xếp chồng trong 1 mặt</td><td><code>CommentItem.tsx:204</code> <code>gap-3</code></td><td style="color:var(--success)">✅ khớp (grouped)</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:10px">Kết quả soát HẾT cây (không chỉ seam B thầy chỉ ra): 4/5 seam đã khớp sẵn, chỉ seam B lệch — nhưng phải soát cả 5 mới BIẾT chắc điều đó, không suy đoán "chắc chỉ chỗ đó sai".</p>
+  </div>
+
+  <h2>0c. Cross-check thứ 2 — cùng thuật toán, component KHÁC, real-src KHÁC → tự đúng dù số khác nhau</h2>
+  <div class="rules">
+    <p style="margin:0 0 8px">Áp lại đúng bước 1-3 lên <code>QaQuestionThread</code> (nguồn <code>QuestionRow/index.tsx</code>, khai sẵn trong file header) — KHÔNG copy kết quả của `ContentCommentThread`, đo lại từ đầu:</p>
+    <table>
+      <thead><tr><th>Seam</th><th>Loại quan hệ</th><th>real-src đo được</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td>Byline (tên+badge+giờ)</td><td>#3 byline</td><td><code>QuestionRow/index.tsx:173</code> <code>gap-2</code></td><td style="color:var(--warn)">🔧 ĐÃ SỬA — cùng lệch `tight` như `ContentCommentThread`, cùng cách sửa</td></tr>
+        <tr><td>Byline ↔ body (cột nội dung)</td><td>#4 vùng khác nhau</td><td><code>QuestionRow/index.tsx:172</code> <code>gap-1</code></td><td style="color:var(--success)">✅ giữ nguyên `tight` — KHÁC `ContentCommentThread` (related), và ĐÚNG cả hai vì mỗi cái neo real-src riêng</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:10px">Đây chính là bằng chứng thuật toán TỔNG QUÁT HOÁ được: 2 component khác nhau, seam "byline" ra CÙNG kết luận (related — vì cả 2 real-src đều `gap-2` ở đúng vị trí đó), seam "cột nội dung" ra 2 kết luận KHÁC NHAU (related vs tight — vì 2 real-src đo khác nhau thật). Thuật toán không áp đặt 1 số cứng cho 1 cái tên hình; nó áp đặt 1 QUY TRÌNH, kết quả tự khác nhau khi bằng chứng khác nhau.</p>
+  </div>
+
+  <h2>1. Thang 6 bậc (đã có sẵn ở <code>Stack.tsx</code> — không đổi số)</h2>
+  <table>
+    <thead><tr><th>Bậc</th><th>px</th><th style="width:40%">Thanh đo</th><th>Quan hệ</th></tr></thead>
+    <tbody>
+      <tr><td class="step-name">flush</td><td class="step-px">gap-0 · 0px</td><td><div class="bar" style="width:2px"></div></td><td>MỘT đơn vị ngữ nghĩa (title + subtitle của cùng 1 dòng)</td></tr>
+      <tr><td class="step-name">tight</td><td class="step-px">gap-1 · 4px</td><td><div class="bar" style="width:16px"></div></td><td>MARK gắn liền 1 thứ DUY NHẤT (icon+nhãn, số+đơn vị) — <b style="color:var(--danger)">không phải hàng ≥2 peer</b></td></tr>
+      <tr><td class="step-name">related</td><td class="step-px">gap-2 · 8px</td><td><div class="bar" style="width:32px"></div></td><td>PEERS trong 1 tập (chip row, 2 nút) — <b>byline KHÔNG mặc định vào đây nữa, xem mục 3b</b></td></tr>
+      <tr><td class="step-name">grouped</td><td class="step-px">gap-3 · 12px</td><td><div class="bar" style="width:48px"></div></td><td>ROWS xếp chồng trong 1 mặt (avatar+cột nội dung, list rows)</td></tr>
+      <tr><td class="step-name">section</td><td class="step-px">gap-6 · 24px</td><td><div class="bar" style="width:96px"></div></td><td>VÙNG khác nhau của 1 khối (header/body/footer 1 card)</td></tr>
+      <tr><td class="step-name">page</td><td class="step-px">gap-8 · 32px</td><td><div class="bar" style="width:128px"></div></td><td>BLOCK khác nhau trên trang</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. Ranh giới hay lẫn nhất: <code>tight</code> vs <code>related</code></h2>
+  <div class="rules">
+    <ul style="margin:0;padding-left:18px">
+      <li><b>Đếm số phần tử ĐỘC LẬP trong hàng.</b> Đúng 2 phần tử mà 1 cái CHỈ TỒN TẠI để giải thích cái kia (icon không đứng riêng được, đơn vị không đứng riêng được) → <code>tight</code>. Từ 2 phần tử trở lên mà MỖI cái tự đứng được, đọc được riêng, chỉ đang xếp cạnh nhau → <code>related</code>.</li>
+      <li><b>Phép thử:</b> xoá 1 phần tử, phần còn lại có còn NGHĨA không? Xoá icon khỏi "✓ Đã nộp" → "Đã nộp" vẫn nghĩa nhưng MẤT NGỮ CẢNH của icon → <code>tight</code> (icon là mark, không phải peer). Xoá giờ đăng khỏi "Minh Anh 2 giờ trước" → "Minh Anh" vẫn ĐỨNG ĐỘC LẬP hoàn chỉnh → về mặt ĐẾM phần tử là <code>related</code> (2 peer, không phải mark+chủ) — <b>nhưng phép đếm này chỉ là bước 1</b>, xem mục 2a: đếm phần tử KHÔNG tự đủ để chốt số px, còn phải neo vào nguồn thật của đúng component đó nếu có.</li>
+      <li><b>Đã có 2 neo comment sẵn trong code xác nhận đúng luật trên</b> (không phải luật mới bịa): <code>ChallengeDeliverableList.tsx:209</code> — "gap=tight since the icon is a MARK attached…"; <code>ChallengeScoreCard.tsx:94-95</code> — "tight: a mark attached to the number, not a peer of it".</li>
+    </ul>
+  </div>
+
+  <h2>2a. Bằng chứng phản bác claim "byline = related, universal" (thầy chốt, đo lại được)</h2>
+  <div class="rules">
+    <p style="margin:0 0 8px">Đo trực tiếp <code>getComputedStyle</code> trên GitHub thật (PR comment header, class Primer <code>d-flex flex-items-center flex-wrap gap-1</code>, chứa avatar+tên+"commented"+giờ):</p>
+    <div class="mock" style="font-family:ui-monospace,monospace;font-size:12px;color:var(--success)">gap: "4px" · columnGap: "4px"</div>
+    <p style="margin:8px 0 0">→ GitHub tự dùng <code>tight</code> (4px) cho đúng hình "tên + mốc thời gian" — KHÔNG phải <code>related</code>. Kết luận: <b>không có 1 hằng số gap đúng cho MỌI hàng byline trên toàn ngành</b> — nó phụ thuộc cấu trúc câu (GitHub có động từ "commented" nối giữa, đọc như 1 câu liền mạch → hợp lý tight hơn; app này không có động từ nối, tên/badge/giờ liền kề trần).</p>
+    <p style="margin:8px 0 0"><b>PHƯƠNG PHÁP đúng (thay cho bảng tra cứng theo tên-hình):</b> (1) đếm mark-vs-peer (mục 2) để có ƯỚC LƯỢNG ban đầu → (2) tìm nguồn thật CỦA CHÍNH component đang sửa (nếu có, vd component ghi rõ "ported từ `src`") và LUÔN ưu tiên số đo được từ đó → (3) chỉ khi KHÔNG có nguồn thật mới dùng lại kết quả bước (1) làm quyết định cuối. Ví dụ ngoài ngành (Facebook, GitHub…) là DỮ LIỆU THAM KHẢO xem ngành có hội tụ hay không — không phải nguồn thay thế cho `src` của chính app này.</p>
+  </div>
+
+  <h2>3. Catalog hình dạng — mỗi hình 1 ví dụ RENDER THẬT</h2>
+  <div class="grid">
+
+    <div class="card">
+      <span class="step-tag">tight · 4px</span>
+      <h3>Mark + nhãn (icon gắn liền 1 chữ)</h3>
+      <p>Icon KHÔNG đứng được một mình — chỉ có nghĩa khi đọc cùng chữ ngay sau nó.</p>
+      <div class="mock">
+        <div class="flexrow" style="gap:4px">
+          <i class="ph-fill ph-check-circle icon-mark" style="color:#38d39f"></i>
+          <span class="body-text">Đã nộp</span>
+        </div>
+      </div>
+      <p class="note">Neo: <code>ChallengeDeliverableList.tsx:215</code></p>
+    </div>
+
+    <div class="card">
+      <span class="step-tag">tight · 4px</span>
+      <h3>Số + đơn vị</h3>
+      <p>Đơn vị là mark gắn với con số, không phải 1 thực thể riêng đọc được.</p>
+      <div class="mock">
+        <div class="flexrow" style="gap:4px;align-items:baseline">
+          <span class="num">8.5</span>
+          <span class="unit">/10</span>
+        </div>
+      </div>
+      <p class="note">Neo: <code>ChallengeScoreCard.tsx:96</code></p>
+    </div>
+
+    <div class="card badbox">
+      <span class="step-tag" style="background:color-mix(in srgb,var(--danger) 20%,transparent);color:var(--danger)">LỆCH nguồn thật · đang tight</span>
+      <h3>Hàng byline — <code>ContentCommentThread</code></h3>
+      <p>Đang <code>tight</code> (4px) ở <code>ContentCommentThread.tsx:139</code>, nhưng nguồn thật CỦA ĐÚNG component này (<code>src/.../CommentItem.tsx:101</code>) đo được <code>gap-2</code> — lệch so với chính nguồn nó phải port, không phải lệch so với 1 luật chung nào.</p>
+      <div class="mock">
+        <div class="flexrow" style="gap:4px">
+          <span class="name bold-wrong">Minh Anh</span>
+          <i class="ph-fill ph-seal-check badge"></i>
+          <span class="time">2 giờ trước</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card goodbox">
+      <span class="step-tag" style="background:color-mix(in srgb,var(--success) 20%,transparent);color:var(--success)">ĐÚNG · khớp nguồn thật (related · 8px)</span>
+      <h3>Hàng byline — <code>ContentCommentThread</code></h3>
+      <p>Đổi sang <code>related</code> (8px) — lý do là khớp <b>chính nguồn thật của component này</b> (<code>CommentItem.tsx:101</code> <code>gap-2</code>), KHÔNG phải vì "byline luôn là related" (xem mục 2a — GitHub tự chọn 4px cho hình tương tự, mỗi app có lý do riêng).</p>
+      <div class="mock">
+        <div class="flexrow" style="gap:8px">
+          <span class="name" style="font-weight:600">Minh Anh</span>
+          <i class="ph-fill ph-seal-check badge"></i>
+          <span class="time">2 giờ trước</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="step-tag">related · 8px</span>
+      <h3>Hàng chip/tag</h3>
+      <p>Nhiều chip CÙNG LOẠI, mỗi chip tự đứng được, không có "chủ" nào trong đó.</p>
+      <div class="mock">
+        <div class="flexrow" style="gap:8px">
+          <span class="chip">Docker</span>
+          <span class="chip">Kubernetes</span>
+          <span class="chip">CI/CD</span>
+        </div>
+      </div>
+      <p class="note">Neo: <code>FlashcardDeckList.tsx:226</code> <code>Cluster gap="related"</code></p>
+    </div>
+
+    <div class="card">
+      <span class="step-tag">grouped · 12px</span>
+      <h3>Avatar + cột nội dung</h3>
+      <p>Avatar là 1 "hàng" riêng biệt bên cạnh cả khối nội dung (không phải mark của 1 chữ, không phải peer đơn lẻ).</p>
+      <div class="mock">
+        <div class="flexrow" style="gap:12px;align-items:flex-start">
+          <div class="avatar">🙂</div>
+          <div class="flexcol" style="gap:8px;flex:1">
+            <div class="flexrow" style="gap:8px">
+              <span class="name" style="font-weight:600">Minh Anh</span>
+              <span class="time">2 giờ trước</span>
+            </div>
+            <span class="body-text">Chỗ multi-stage em làm theo mà image vẫn 800MB…</span>
+          </div>
+        </div>
+      </div>
+      <p class="note">Neo: <code>src</code> thật <code>CommentItem.tsx:92</code> <code>gap-3</code> — đã khớp đúng trong Storybook.</p>
+    </div>
+
+    <div class="card">
+      <span class="step-tag">grouped · 12px</span>
+      <h3>Các dòng xếp chồng trong 1 mặt</h3>
+      <p>Header-row / body / action-row của CÙNG 1 comment — các "khối" con bên trong 1 đơn vị lớn hơn, không phải section riêng.</p>
+      <div class="mock">
+        <div class="flexcol" style="gap:12px">
+          <div class="flexrow" style="gap:8px">
+            <span class="name" style="font-weight:600">Minh Anh</span><span class="time">2 giờ trước</span>
+          </div>
+          <span class="body-text">Chỗ multi-stage em làm theo mà image vẫn 800MB…</span>
+          <div class="flexrow" style="gap:12px">
+            <span class="time">👍 Bày tỏ cảm xúc</span><span class="time">Trả lời</span>
+          </div>
+        </div>
+      </div>
+      <p class="note">Neo: <code>src</code> thật <code>CommentItem.tsx:99</code> <code>gap-2</code> — LƯU Ý: đây là bậc <b>related</b> ở src thật (không phải grouped), xem mục 4 "khác biệt còn lại".</p>
+    </div>
+
+  </div>
+
+  <h2>4. Case study — đúng ca vừa bắt (before / after)</h2>
+  <div class="case">
+    <div>
+      <span class="lbl bad">TRƯỚC — gap="tight" (4px)</span>
+      <div class="mock badbox">
+        <div class="flexrow" style="gap:12px;align-items:flex-start">
+          <div class="avatar">🙂</div>
+          <div class="flexcol" style="gap:8px;flex:1">
+            <div class="flexrow" style="gap:4px">
+              <span class="name bold-wrong">Minh Anh</span>
+              <i class="ph-fill ph-seal-check badge"></i>
+              <span class="time">2 giờ trước</span>
+            </div>
+            <span class="body-text">Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <span class="lbl good">SAU — gap="related" (8px)</span>
+      <div class="mock goodbox">
+        <div class="flexrow" style="gap:12px;align-items:flex-start">
+          <div class="avatar">🙂</div>
+          <div class="flexcol" style="gap:8px;flex:1">
+            <div class="flexrow" style="gap:8px">
+              <span class="name" style="font-weight:600">Minh Anh</span>
+              <i class="ph-fill ph-seal-check badge"></i>
+              <span class="time">2 giờ trước</span>
+            </div>
+            <span class="body-text">Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note">Tên đã kèm cả fix <code>weight="medium"</code> (vòng feedback trước) — 2 fix cộng lại mới đúng hẳn cảm giác "byline" tách bạch khỏi khối avatar+nội dung.</p>
+
+  <h2>5. ĐÃ ĐÓNG — xác minh xong real-src, áp fix, verify xanh (2026-07-29)</h2>
+  <div class="watch" style="border-color:color-mix(in srgb, var(--success) 40%, var(--line))">
+    <p style="margin:0 0 8px"><b>a. `ContentCommentThread.tsx:139`</b> — hàng byline (tên+badge+giờ) `tight`→<b>related</b>. Neo: `src` thật `CommentItem.tsx:101` `gap-2`.</p>
+    <p style="margin:0 0 8px"><b>b. `QaQuestionThread.tsx:374, 447`</b> — tìm ra real-src (`QuestionRow/index.tsx`, khai trong chính file header): hàng byline `line 173` đo được <code>gap-2</code> → cùng bug, đã sửa `tight`→<b>related</b> ở cả 2 chỗ (biến thể thường + biến thể bong bóng chat "của mình").</p>
+    <p style="margin:0 0 8px"><b>c. `QaQuestionThread.tsx:373, 446` (cột nội dung, byline→body) — GIỮ NGUYÊN `tight`, KHÔNG phải bug.</b> `QuestionRow/index.tsx:172` đo được <code>gap-1</code> (tight) — khác hẳn `CommentItem`'s `gap-2` cho đúng quan hệ này. Hai component thật khác nhau, không bắt buộc đồng nhất — bài học: đừng suy diễn "sibling phải giống nhau", luôn đo lại real-src RIÊNG của từng component.</p>
+    <p style="margin:0">Verify: tsc sạch, gate liên quan xanh, eslint --fix 0 lỗi, Storybook restart không lỗi build.</p>
+  </div>
+
+  <h2>6. `ContentDiscussion` header — 3 seam lệch real-src cùng lúc (thầy: "cảm giác hơi chật")</h2>
+  <div class="rules">
+    <p style="margin:0 0 10px">Nguồn thật <code>Discussion/index.tsx:98-114</code> — TỰ CÓ comment ghi rõ từng seam, dựng lúc
+    đầu buổi (trước khi có quy trình neo real-src) đã đoán sai cả 3, đúng 1 bậc lỏng hơn mỗi chỗ:</p>
+    <table>
+      <thead><tr><th>Seam</th><th>real-src</th><th>Storybook (trước)</th><th>Lệch</th></tr></thead>
+      <tbody>
+        <tr><td>icon ↔ "Thảo luận · N"</td><td><code>gap-2</code> (related)</td><td><code>tight</code></td><td style="color:var(--danger)">lỏng hơn 1 bậc</td></tr>
+        <tr><td>[icon+label] ↔ archive-line</td><td><code>gap-1</code> (tight)</td><td><code>flush</code></td><td style="color:var(--danger)">lỏng hơn 1 bậc — chỗ "chật" nhất vì bị ép 0px</td></tr>
+        <tr><td>[label+archive] ↔ composer</td><td><code>gap-3</code> (grouped)</td><td><code>related</code></td><td style="color:var(--danger)">lỏng hơn 1 bậc</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="case">
+    <div>
+      <span class="lbl bad">TRƯỚC — tight / flush / related</span>
+      <div class="mock badbox">
+        <div class="flexcol" style="gap:8px">
+          <div class="flexcol" style="gap:0px">
+            <div class="flexrow" style="gap:4px">
+              <i class="ph ph-chats-circle icon-mark"></i>
+              <span class="name" style="font-weight:600">Thảo luận · 1</span>
+            </div>
+            <span class="time">0/1 câu hỏi đã được trả lời, tích luỹ theo thời gian</span>
+          </div>
+          <div class="chip" style="width:100%;text-align:left;box-sizing:border-box">Đặt câu hỏi hoặc chia sẻ…</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <span class="lbl good">SAU — related / tight / grouped (khớp real-src)</span>
+      <div class="mock goodbox">
+        <div class="flexcol" style="gap:12px">
+          <div class="flexcol" style="gap:4px">
+            <div class="flexrow" style="gap:8px">
+              <i class="ph ph-chats-circle icon-mark"></i>
+              <span class="name" style="font-weight:600">Thảo luận · 1</span>
+            </div>
+            <span class="time">0/1 câu hỏi đã được trả lời, tích luỹ theo thời gian</span>
+          </div>
+          <div class="chip" style="width:100%;text-align:left;box-sizing:border-box">Đặt câu hỏi hoặc chia sẻ…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="color:var(--success)">✅ ĐÃ ÁP vào <code>ContentDiscussion.tsx</code> (thầy chốt sau khi soi trang này) — verify: tsc sạch, 9/9 gate xanh, eslint 0 lỗi, Storybook restart không lỗi.</p>
+
+</div>
+</body>
+</html>

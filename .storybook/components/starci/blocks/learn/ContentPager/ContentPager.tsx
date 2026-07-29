@@ -25,8 +25,10 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * a viewport one, because the split is decided by the slot this block sits in.
  *
  * CONTRACT: the caller hands over the two neighbours as DATA (`title` + `href`).
- * The words "Bài trước" / "Bài sau" belong to the block (§14d.1) — a caller that
- * passed them would own the wording, and two callers would drift.
+ * The words "Nội dung trước" / "Nội dung tiếp" belong to the block (§14d.1) — a
+ * caller that passed them would own the wording, and two callers would drift.
+ * Matches real `src`'s own `t("content.pager.prevLesson"/"nextLesson")` exactly
+ * (verified 2026-07-28 against a prior pass that had invented "Bài trước/sau").
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -87,11 +89,11 @@ const ContentPager = ({
             key: "previous",
             href: previous.href,
             content: (
-                <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+                <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
                     <CaretLeftIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-muted" />
                     <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="xs" color="muted" text="Bài trước" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" weight="medium" lineClamp={2} text={previous.title} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" text="Nội dung trước" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} anatPart={showAnatomy ? "Typography" : undefined} />
                     </StackV>
                 </StackH>
             ),
@@ -108,10 +110,10 @@ const ContentPager = ({
             // other one.
             className: "@sm:col-start-2",
             content: (
-                <StackH gap="related" align="center" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
+                <StackH gap="grouped" align="center" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
                     <StackV gap="flush" align="end" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="xs" color="muted" align="end" text="Bài sau" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" weight="medium" align="end" lineClamp={2} text={next.title} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" align="end" text="Nội dung tiếp" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} anatPart={showAnatomy ? "Typography" : undefined} />
                     </StackV>
                     <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-muted" />
                 </StackH>

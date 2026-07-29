@@ -93,8 +93,14 @@ type StringFieldProps = StringFieldOwnProps &
         | { isSkeleton?: false; value: string; onValueChange: (value: string) => void }
     )
 
+/** Props for {@link InputText}. */
+type InputTextProps = StringFieldProps & {
+    /** HeroUI field variant — `"secondary"` for a field sitting inside a card/modal surface. @default "primary" */
+    variant?: "primary" | "secondary"
+}
+
 /** `InputText` — single-line text (HeroUI TextField+Input) + nhãn/mô tả/lỗi. */
-const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, showAnatomy, className, label, hint, errorMessage, isRequired }: StringFieldProps) => {
+const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, showAnatomy, className, label, hint, errorMessage, isRequired, variant = "primary" }: InputTextProps) => {
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
@@ -109,7 +115,7 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
             id={controlId}
             skeletonControl={<FieldSkeleton className={className} showAnatomy={showAnatomy} />}
         >
-            <HeroTextField aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className)}>
+            <HeroTextField variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className)}>
                 {/* Node name = the REAL heroui component rendered here (`Input`) — NOT the
                     slot word "Field" it used to carry. */}
                 <HeroInput
@@ -123,6 +129,14 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
             </HeroTextField>
         </FieldFrame>
     )
+}
+
+/** Props for {@link InputTextarea}. */
+type InputTextareaProps = StringFieldProps & {
+    /** Visible rows. @default 3 */
+    rows?: number
+    /** HeroUI field variant — `"secondary"` for a field sitting inside a card/modal surface. @default "primary" */
+    variant?: "primary" | "secondary"
 }
 
 /** `InputTextarea` — multi-line (HeroUI TextArea), `rows` visible lines (default 3). */
@@ -141,7 +155,8 @@ const InputTextarea = ({
     hint,
     errorMessage,
     isRequired,
-}: StringFieldProps & { rows?: number }) => {
+    variant = "primary",
+}: InputTextareaProps) => {
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
@@ -156,7 +171,7 @@ const InputTextarea = ({
             id={controlId}
             skeletonControl={<FieldSkeleton heightCls="h-24" className={className} showAnatomy={showAnatomy} />}
         >
-            <HeroTextField aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className)}>
+            <HeroTextField variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className)}>
                 {/* Node name = the REAL heroui component rendered here (`TextArea`) — NOT the
                     slot word "Field" it used to carry. */}
                 <HeroTextArea

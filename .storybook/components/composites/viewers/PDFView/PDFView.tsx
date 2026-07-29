@@ -132,12 +132,7 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
     )
 }
 
-/** Props for {@link PDFView}. */
-export interface PDFViewProps {
-    /** Source URL of the PDF file to preview. */
-    src: string
-    /** Accessible title for the iframe viewer. */
-    title: string
+interface PDFViewOwnProps {
     /** Optional custom height class for wrapper. */
     heightClassName?: string
     /** Optional page width for PDF rendering. */
@@ -148,9 +143,35 @@ export interface PDFViewProps {
     allowVerticalScroll?: boolean
     /** Auto fit rendered PDF width to container width. */
     fitToContainer?: boolean
+    /**
+     * `true` → shimmer the WHOLE viewer footprint, no `Document` mounted at
+     * all — the per-page `HeroSkeleton` mirror above only covers a page not
+     * yet scrolled into view, not "the file itself hasn't arrived yet".
+     */
+    isSkeleton?: boolean
     /** Extra classes on the wrapper. */
     className?: string
+    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** `true` → tag the whole-file skeleton with `data-anat-part="Skeleton"`. */
+    showAnatomy?: boolean
 }
+
+/**
+ * Props for {@link PDFView}. `src`/`title` are REQUIRED unless `isSkeleton`
+ * (§12b) — a shimmer viewer has no real file to preview yet.
+ */
+export type PDFViewProps = PDFViewOwnProps &
+    (
+        | { isSkeleton: true; src?: string; title?: string }
+        | {
+            isSkeleton?: false
+            /** Source URL of the PDF file to preview. */
+            src: string
+            /** Accessible title for the iframe viewer. */
+            title: string
+        }
+    )
 
 /**
  * Reusable PDF preview viewer built on react-pdf.
@@ -168,7 +189,10 @@ export const PDFView = ({
     showAllPages = true,
     allowVerticalScroll = false,
     fitToContainer = false,
+    isSkeleton = false,
     className,
+    anatPart,
+    showAnatomy = false,
 }: PDFViewProps) => {
     const file = useMemo(() => (src ? src : undefined), [src])
     const [numPages, setNumPages] = useState(0)
@@ -234,6 +258,18 @@ export const PDFView = ({
 
     const pageCount = showAllPages ? numPages : Math.min(1, numPages)
 
+    // Checked AFTER every hook above has run (rules of hooks) — the whole file hasn't
+    // arrived yet, distinct from the per-page mirror `PdfViewportPage` already draws
+    // for a page that just hasn't scrolled into view.
+    if (isSkeleton) {
+        return (
+            <HeroSkeleton
+                className={cn(heightClassName, "w-full rounded-medium", className)}
+                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+            />
+        )
+    }
+
     return (
         <div
             ref={assignContainerRef}
@@ -243,6 +279,7 @@ export const PDFView = ({
                 allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden",
                 className,
             )}
+            data-anat-part={anatPart}
         >
             {file ? (
                 <Document

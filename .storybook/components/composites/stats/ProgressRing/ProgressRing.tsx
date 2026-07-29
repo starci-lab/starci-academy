@@ -1,5 +1,5 @@
 import React from "react"
-import { ProgressCircle, Typography as HeroTypography, cn } from "@heroui/react"
+import { ProgressCircle, Typography as HeroTypography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -24,9 +24,7 @@ const SIZE_MAP = {
  * value label centered inside the ring and an optional caption below. Tier-3
  * presentational — every piece of content arrives via props.
  */
-export interface ProgressRingProps {
-    /** Completion percentage in the range `[0, 100]`. Values outside the range are clamped. */
-    value: number
+interface ProgressRingOwnProps {
     /** Centered label rendered inside the ring. Defaults to the rounded percentage (e.g. `"68%"`). */
     label?: React.ReactNode
     /** Optional caption rendered below the ring — small and muted (`body-xs`). */
@@ -37,7 +35,22 @@ export interface ProgressRingProps {
     tone?: "accent" | "success" | "warning" | "danger"
     /** Extra classes on the root element. */
     className?: string
+    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** `true` → tag the ring/caption skeleton bars with `data-anat-part="Skeleton"`. */
+    showAnatomy?: boolean
 }
+
+/**
+ * Props for {@link ProgressRing}. `value` is REQUIRED unless `isSkeleton`
+ * (§12b) — a shimmer ring has no real percentage to show yet.
+ */
+export type ProgressRingProps = ProgressRingOwnProps &
+    (
+        | { isSkeleton: true; value?: number }
+        | { isSkeleton?: false; value: number }
+    )
+
 /**
  * ProgressRing renders a circular completion indicator: a HeroUI `ProgressCircle`
  * with a value label centered inside the ring and an optional caption underneath.
@@ -52,14 +65,30 @@ export const ProgressRing = ({
     caption,
     size = "md",
     tone = "accent",
+    isSkeleton = false,
     className,
+    anatPart,
+    showAnatomy = false,
 }: ProgressRingProps) => {
-    const safeValue = Math.min(100, Math.max(0, value))
-    const resolvedLabel = label ?? `${Math.round(safeValue)}%`
     const { ring, label: labelType } = SIZE_MAP[size]
+    if (isSkeleton) {
+        return (
+            <div className={cn("inline-flex flex-col items-center gap-2", className)} data-anat-part={anatPart}>
+                <HeroSkeleton className={cn("rounded-full", ring)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                {caption !== undefined ? (
+                    <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                ) : null}
+            </div>
+        )
+    }
+    // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
+    // already guaranteed by the early return at `isSkeleton` — the `?? 0` only satisfies
+    // narrowing across the destructure, it never actually fires.
+    const safeValue = Math.min(100, Math.max(0, value ?? 0))
+    const resolvedLabel = label ?? `${Math.round(safeValue)}%`
     const ariaLabel = typeof caption === "string" ? caption : `${Math.round(safeValue)}%`
     return (
-        <div className={cn("inline-flex flex-col items-center gap-2", className)}>
+        <div className={cn("inline-flex flex-col items-center gap-2", className)} data-anat-part={anatPart}>
             {/* Relative container: the ring fills it, the label overlays its center */}
             <div className={cn("relative inline-flex items-center justify-center", ring)}>
                 <ProgressCircle aria-label={ariaLabel} value={safeValue} color={tone}>

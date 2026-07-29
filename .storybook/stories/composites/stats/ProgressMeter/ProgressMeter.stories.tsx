@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 const meta: Meta<typeof ProgressMeter> = {
     title: "Composites/Stats/ProgressMeter",
     component: ProgressMeter,
@@ -146,6 +147,33 @@ export const CountUnit: Story = {
             <div className="w-80">
                 <ProgressMeter value={7} max={10} label="7 / 10 lessons" showValue />
             </div>
+        </div>
+    ),
+}
+
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "ProgressMeter": { tier: "composite", role: "the meter itself — label row + track", storyId: "composites-stats-progressmeter--bare-bar" },
+}
+
+/** LEAF — the caller flips `isSkeleton`; a two-bar shimmer (label width + full-width track) stands in for the real label row + `ProgressBar` while the ratio isn't known yet. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="ProgressMeter"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                annotate={ANNOTATE}
+                renderClassName="w-80"
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "`value` has no honest ratio to show before data loads, so the meter mirrors its own shape instead of borrowing an unrelated skeleton: a short label-width bar sits above a full-width track bar sized to match the real `ProgressBar`'s `h-1` track.",
+                        code: "<ProgressMeter isSkeleton />",
+                        render: <ProgressMeter isSkeleton anatPart="ProgressMeter" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

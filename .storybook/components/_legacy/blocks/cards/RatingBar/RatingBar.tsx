@@ -9,7 +9,7 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
  * STORYBOOK-LOCAL DESIGN SPEC — the target `RatingBar`. Authored in Storybook
  * (not `src`); synced to `src` later. NO `@/components` imports.
  *
- * Composes the local `SurfaceCardPressableGroup` frame (itself over `SurfaceCardPressable` +
+ * Composes the local `SurfaceCardPressableGroup` frame (itself over `SurfaceCard` +
  * the shared `verdict-band`) for the tile grid, and `StatusChip` for the
  * keyboard-shortcut number pill — no more inlined copies of either primitive.
  */

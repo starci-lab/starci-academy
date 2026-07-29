@@ -60,7 +60,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 export type AiModelCategory = "free" | "economy" | "balanced" | "premium" | "frontier"
 
 /** Category → `EnumChip` presentation. See the file header for why the ramp folds onto 5 semantic tones. */
-const MODEL_CATEGORY_MAP: Record<AiModelCategory, EnumChipEntry> = {
+export const MODEL_CATEGORY_MAP: Record<AiModelCategory, EnumChipEntry> = {
     free: { color: "default", label: "Miễn phí" },
     economy: { color: "success", label: "Tiết kiệm" },
     balanced: { color: "accent", label: "Cân bằng" },

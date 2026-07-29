@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Chip } from "@heroui/react"
+import { Chip, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -21,10 +21,8 @@ interface WithClassNames<T> {
  */
 export type HighlightChipTone = "neutral" | "success" | "warning" | "danger" | "accent"
 
-/**
- * Props for the {@link HighlightChip} block.
- */
-export interface HighlightChipProps extends WithClassNames<undefined> {
+/** Props every {@link HighlightChip} carries regardless of loading state. */
+interface HighlightChipOwnProps extends WithClassNames<undefined> {
     /**
      * Semantic tone driving the soft-tinted color. Defaults to "neutral".
      */
@@ -33,15 +31,17 @@ export interface HighlightChipProps extends WithClassNames<undefined> {
      * Optional leading icon (typically a Phosphor `*Icon`) before the value.
      */
     icon?: ReactNode
-    /**
-     * The highlighted value — rendered bold (the chip's focal number/figure).
-     */
-    value: ReactNode
-    /**
-     * The supporting label rendered after the value (e.g. "Module", "Giờ học").
-     */
-    label: ReactNode
 }
+
+/**
+ * Props for the {@link HighlightChip} block. `value`/`label` are REQUIRED unless
+ * `isSkeleton` (§12b) — a shimmer pill has no figure to show yet.
+ */
+export type HighlightChipProps = HighlightChipOwnProps &
+    (
+        | { isSkeleton: true; value?: ReactNode; label?: ReactNode }
+        | { isSkeleton?: false; value: ReactNode; label: ReactNode }
+    )
 
 /**
  * Maps a {@link HighlightChipTone} to the matching HeroUI Chip color
@@ -61,7 +61,10 @@ const toneToColor: Record<HighlightChipTone, "default" | "success" | "warning" |
  * "276 Bài thực hành". Pure and props-only (tone drives the color). Used in the
  * `PageHeader` meta row to show a course's figures.
  */
-export const HighlightChip = ({ tone = "neutral", icon, value, label, className }: HighlightChipProps) => {
+export const HighlightChip = ({ tone = "neutral", icon, value, label, isSkeleton = false, className }: HighlightChipProps) => {
+    if (isSkeleton) {
+        return <HeroSkeleton className={cn("h-6 w-20 rounded-full", className)} />
+    }
     return (
         <Chip
             color={toneToColor[tone]}

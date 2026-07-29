@@ -42,6 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // system — there's no story to jump to, so standing outside the tree is correct.
     WarningCircleIcon: { tier: "atom", role: "warning mark — opens the line" },
     "Typography": { tier: "atom", role: "one of this line's own clauses — the REQUIRED \"N seats left at the current phase price\", or the OPTIONAL \"price rises to\" clause that follows it", storyId: TYPOGRAPHY_STORY },
+    "Skeleton": { tier: "heroui", role: "the single-bar shimmer standing in for the whole line while `isSkeleton` — the price preview hasn't arrived yet, so there is no phase/seat/price fact to shape a `Cluster` around" },
 }
 
 /**
@@ -133,6 +134,29 @@ export const Default: Story = {
                                 nextPhasePriceVnd={2_990_000}
                             />
                         ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; a single-bar shimmer stands in for the line before the backend's price preview arrives (§12g.0a). */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PhaseScarcityNote"
+                tier="block"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "There is no honest phase/seat/price fact to show yet, so the shimmer is one plain bar rather than mirroring the icon + two-clause `Cluster` shape the real line eventually takes.",
+                        code: "<PhaseScarcityNote isSkeleton />",
+                        render: <PhaseScarcityNote isSkeleton anatPart="PhaseScarcityNote" showAnatomy />,
                     },
                 ]}
             />

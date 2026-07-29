@@ -1,10 +1,9 @@
-import React from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import remarkDirective from "remark-directive"
 import remarkGfm from "remark-gfm"
-import { cn } from "@heroui/react"
-import { Accordion, type AccordionItem } from "@sb-components/atoms/navigation/Accordion/Accordion"
-import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIcon"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { buildMarkdownRenderers } from "@sb-components/composites/viewers/MarkdownContent/map"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -16,24 +15,27 @@ import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIco
  * payload. It receives a document written somewhere else and repeats it without
  * understanding what it says.
  *
- * SCOPE OF THIS PORT (teacher's call 2026-07-28). The standard document grammar
- * plus the accordion directive — headings, paragraphs, lists, emphasis, links,
- * inline code, fenced code, quotes, rules, images, tables, and
- * `::::accordion`/`:::panel`. The heavy widgets from the legacy renderer
- * (Mermaid, layout widgets, live React previews, code-preview tabs) are NOT
- * ported: each is a viewer in its own right and each carries its own runtime.
- * Half-porting one would leave a body that looks finished and renders wrong,
- * which every gate here would pass.
+ * SCOPE OF THIS PASS (teacher's call 2026-07-29, in priority order): Shiki
+ * syntax-highlighted fenced code · mermaid diagrams (SVG, click-to-zoom, caption
+ * pairing, streaming-safe truncation) · `:::tab`/`:::code`/`:::preview` →
+ * Preview↔Code tabs (confirmed used in authored lesson content) · GFM tables →
+ * real HeroUI `Table` · `::::accordion`/`:::panel` → the CORRECT HeroUI
+ * `Accordion` compound with surface chrome · `:::muted` + `:::chip` + image
+ * captions + link routing + heading anchors. Still NOT ported: `arcSections`
+ * (flashcard/mock-interview answer boxing), `plain` mode ("render thô"), the
+ * ` ```mdx ` live-render fence, the ` ```layout ` fence — each is a viewer/runtime
+ * of its own and half-porting one leaves a body that looks finished and renders
+ * wrong, which every gate here would pass.
  *
- * TWO MEASURES. `reading` is the lesson body: bigger type, generous rhythm.
- * `compact` is for markdown quoted inside another surface, such as a chat answer
- * or a card, where the document is a passenger rather than the page.
- *
- * ⚠️ THE CLASSES BELOW ARE THE ONE PLACE HAND-WRITTEN SPACING IS CORRECT. A
+ * ⚠️ THE CLASSES IN `map.tsx` ARE THE ONE PLACE HAND-WRITTEN SPACING IS CORRECT. A
  * viewer cannot reach for frames: it never sees its own children as nodes, only
  * as whatever the parser hands back. This is the same exemption §13z gives the
  * atom tier, for the same reason — there is no seam to own when the tree is not
  * yours.
+ *
+ * TWO MEASURES. `reading` is the lesson body: bigger type, generous rhythm.
+ * `compact` is for markdown quoted inside another surface, such as a chat answer
+ * or a card, where the document is a passenger rather than the page.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -41,18 +43,158 @@ import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIco
 export type MarkdownMeasure = "reading" | "compact"
 
 /**
- * Rewrite the `::::accordion` / `:::panel{title="…"}` container directives into
- * tags the renderer map can pick up. Ported from the legacy renderer unchanged:
- * the authoring syntax is already in written lessons, so it is not ours to change.
+ * A directive node as `remark-directive` parses it — shared shape for the
+ * `:::muted` / `:::tab`/`:::code`/`:::preview` / `::::accordion`/`:::panel`
+ * rewriters below (they all only ever read/write these same four fields).
  */
 interface DirectiveNode {
+    /** mdast node type (`"containerDirective"` / `"leafDirective"` / `"textDirective"` for a directive). */
     type?: string
+    /** Directive name as authored (`"muted"`, `"tab"`, `"code"`, `"preview"`, `"chip"`, `"accordion"`, `"panel"`). */
     name?: string
+    /** Directive attributes (`{title="…"}`). */
     attributes?: Record<string, string>
+    /** hast rewrite instructions (`hName`/`hProperties`) this pass writes into. */
     data?: Record<string, unknown>
+    /** Child mdast nodes. */
     children?: Array<unknown>
 }
 
+/** A directive's inline content node, as read by {@link collectDirectiveText}. */
+interface DirectiveTextNode {
+    /** mdast node type (`"text"`, `"break"`, or a container). */
+    type?: string
+    /** Text value (only on `"text"` nodes). */
+    value?: string
+    /** Child mdast nodes. */
+    children?: Array<unknown>
+}
+
+/**
+ * Recursively rewrites `:::muted` directives (container/leaf/text, parsed by `remark-directive`)
+ * into custom hast tags the renderer map styles as small muted text. Container/leaf → block-level
+ * `mutedblock`; inline `:muted[…]` → `mutedtext`. Directives with any other name are left untouched
+ * (and dropped by the hast conversion since they have no handler).
+ * @param node - Current mdast node being walked.
+ */
+const applyMutedDirective = (node: DirectiveNode): void => {
+    if (
+        (node.type === "containerDirective" || node.type === "leafDirective" || node.type === "textDirective")
+        && node.name === "muted"
+    ) {
+        const data = node.data || (node.data = {})
+        data.hName = node.type === "textDirective" ? "mutedtext" : "mutedblock"
+        data.hProperties = {}
+    }
+    if (Array.isArray(node.children)) {
+        for (const child of node.children) {
+            applyMutedDirective(child as DirectiveNode)
+        }
+    }
+}
+
+/** remark transformer: turn `:::muted` directives into styled custom tags. */
+const remarkMuted = () => (tree: unknown): void => {
+    applyMutedDirective(tree as DirectiveNode)
+}
+
+/**
+ * Recursively rewrites the `:::tab` / `:::code` / `:::preview` container directives into custom
+ * hast tags the renderer map turns into a [Preview|Code] tabs block (see `TabsBlock`):
+ * `tab`→`tabblock`, `code`→`tabcode`, `preview`→`tabpreview`. Each pane's child fence
+ * (` ```tsx ` / ` ```mdx `) still renders through the normal `pre` handler. Other directive names
+ * are left untouched.
+ *
+ * Note: container nesting needs MORE colons on the outer fence — `::::tab` wraps `:::code` /
+ * `:::preview`.
+ * @param node - Current mdast node being walked.
+ */
+const applyTabDirective = (node: DirectiveNode): void => {
+    if (node.type === "containerDirective") {
+        const tag = node.name === "tab"
+            ? "tabblock"
+            : node.name === "code"
+                ? "tabcode"
+                : node.name === "preview"
+                    ? "tabpreview"
+                    : null
+        if (tag) {
+            const data = node.data || (node.data = {})
+            data.hName = tag
+            data.hProperties = {}
+        }
+    }
+    if (Array.isArray(node.children)) {
+        for (const child of node.children) {
+            applyTabDirective(child as DirectiveNode)
+        }
+    }
+}
+
+/** remark transformer: turn `::::tab`/`:::code`/`:::preview` directives into tabs-block tags. */
+const remarkTab = () => (tree: unknown): void => {
+    applyTabDirective(tree as DirectiveNode)
+}
+
+/**
+ * Recursively collects the raw text of a directive subtree, preserving line breaks so each
+ * authored line (one keyword per line) can be split back out into a separate chip.
+ * @param node - Current mdast node.
+ */
+const collectDirectiveText = (node: DirectiveTextNode): string => {
+    if (node.type === "text") {
+        return node.value ?? ""
+    }
+    if (node.type === "break") {
+        return "\n"
+    }
+    if (Array.isArray(node.children)) {
+        return node.children
+            .map((child) => collectDirectiveText(child as DirectiveTextNode))
+            .join("\n")
+    }
+    return ""
+}
+
+/**
+ * Rewrites the `:::chip` container directive into a custom `chipblock` tag (see `map.tsx`),
+ * carrying its keywords (one per authored line) as a newline-split, `|`-joined `items` prop so the
+ * renderer can render each as its own Chip. Other directive names are left untouched.
+ * @param node - Current mdast node being walked.
+ */
+const applyChipDirective = (node: DirectiveNode): void => {
+    if (node.type === "containerDirective" && node.name === "chip") {
+        const items = collectDirectiveText(node as DirectiveTextNode)
+            .split(/[\n·]+/)
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0)
+        const data = node.data || (node.data = {})
+        data.hName = "chipblock"
+        data.hProperties = {
+            items: items.join("|"),
+        }
+    }
+    if (Array.isArray(node.children)) {
+        for (const child of node.children) {
+            applyChipDirective(child as DirectiveNode)
+        }
+    }
+}
+
+/** remark transformer: turn `:::chip` directives into a chips-row tag. */
+const remarkChip = () => (tree: unknown): void => {
+    applyChipDirective(tree as DirectiveNode)
+}
+
+/**
+ * Rewrites the `::::accordion` / `:::panel{title="…"}` container directives into custom hast tags
+ * the renderer map turns into a HeroUI Accordion (see `map.tsx`): `accordion`→`accordionblock`;
+ * each `:::panel{title="…"}`→`accordionpanel` carrying its `title` attribute. Inner panel content
+ * (bullets, code fences) still renders through the normal handlers.
+ *
+ * Note: nesting needs MORE colons on the outer fence — `::::accordion` wraps `:::panel`.
+ * @param node - Current mdast node being walked.
+ */
 const applyAccordionDirective = (node: DirectiveNode): void => {
     if (node.type === "containerDirective") {
         if (node.name === "accordion") {
@@ -75,38 +217,100 @@ const remarkAccordion = () => (tree: unknown): void => {
     applyAccordionDirective(tree as DirectiveNode)
 }
 
-const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkAccordion]
+/**
+ * Module-level constant — NOT recreated every render. If `remarkPlugins={[...]}` were inline, each
+ * `MarkdownContent` re-render would hand `ReactMarkdown` a new array → re-parse the whole markdown.
+ */
+const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab, remarkChip, remarkAccordion]
 
-/** Anything the parser hands back with only children — most of the grammar. */
-interface MarkdownNodeProps {
-    /** Whatever the parser put inside this element. */
-    children?: React.ReactNode
+// Matches each ```mermaid fence and the figure caption paragraph that follows it.
+// Group 1 = diagram source; group 2 = the first non-blank line after the fence.
+const MERMAID_CAPTION_REGEX = /```mermaid[ \t]*\r?\n([\s\S]*?)\r?\n```[ \t]*\r?\n+[ \t]*([^\r\n]+)/g
+
+/**
+ * Cuts off a trailing ```mermaid fence that hasn't been closed yet — markdown fed in
+ * progressively (a typewriter reveal, an AI stream) walks THROUGH every partial length of the
+ * diagram source one tick at a time, and `mermaid.render()` throws "Syntax error in text" for
+ * every one of those incomplete snapshots. Since a reveal only ever GROWS the text, at most the
+ * LAST fence can be unterminated — any earlier one already has content (and therefore its closing
+ * fence) after it.
+ * @param markdown - Raw markdown source, possibly mid-reveal.
+ * @returns `markdown` unchanged, or truncated right before an unterminated trailing mermaid fence.
+ */
+const holdBackIncompleteMermaidFence = (markdown: string): string => {
+    const lines = markdown.split("\n")
+    let lastOpenLine = -1
+    for (let i = 0; i < lines.length; i++) {
+        if (/^```mermaid[ \t]*$/.test(lines[i].trimEnd())) {
+            lastOpenLine = i
+        }
+    }
+    if (lastOpenLine === -1) {
+        return markdown
+    }
+    const isClosed = lines.slice(lastOpenLine + 1).some((line) => line.trim() === "```")
+    return isClosed ? markdown : lines.slice(0, lastOpenLine).join("\n").trimEnd()
 }
 
-/** A link node: the payload decides the target, the viewer only decides the skin. */
-interface MarkdownLinkProps extends MarkdownNodeProps {
-    /** Link target as authored. */
-    href?: string
+/**
+ * Scans markdown for mermaid blocks and pairs each with the caption paragraph that
+ * immediately follows it (a line starting with "Hình"/"Figure"), keyed by trimmed source.
+ * @param markdown - Raw markdown source.
+ * @returns Caption text keyed by trimmed mermaid source.
+ */
+const extractMermaidCaptions = (markdown: string): Record<string, string> => {
+    const captions: Record<string, string> = {}
+    MERMAID_CAPTION_REGEX.lastIndex = 0
+    for (let match = MERMAID_CAPTION_REGEX.exec(markdown); match; match = MERMAID_CAPTION_REGEX.exec(markdown)) {
+        const code = match[1].trim()
+        const caption = match[2].trim().replace(/^\*+|\*+$/g, "").trim()
+        if (/^(Hình|Figure)\b/i.test(caption)) {
+            captions[code] = caption
+        }
+    }
+    return captions
 }
 
-/** An image node — a raw URL plus its alt text, both straight from the payload. */
-interface MarkdownImageProps {
-    /** Image source as authored. */
-    src?: string
-    /** Alt text as authored; missing alt renders an empty string, never a guess. */
-    alt?: string
+/**
+ * Removes each mermaid figure-caption paragraph ("Hình N: …" / "Figure N: …") from the source
+ * so it isn't rendered twice — the diagram now shows it as a real `<figcaption>`.
+ * @param markdown - Raw markdown source.
+ * @returns Markdown with figure-caption paragraphs stripped.
+ */
+const stripMermaidCaptions = (markdown: string): string => {
+    MERMAID_CAPTION_REGEX.lastIndex = 0
+    return markdown.replace(MERMAID_CAPTION_REGEX, (match: string, _code: string, caption: string) => {
+        const clean = caption.trim().replace(/^\*+|\*+$/g, "").trim()
+        if (/^(Hình|Figure)\b/i.test(clean)) {
+            return match.slice(0, match.lastIndexOf(caption))
+        }
+        return match
+    })
 }
 
-/** A code node. A fenced block arrives with `language-*`; anything else is inline. */
-interface MarkdownCodeProps extends MarkdownNodeProps {
-    /** `language-*` for a fenced block, absent for inline code. */
-    className?: string
-}
-
-/** One `:::panel{title="…"}` inside an `::::accordion` block. */
-interface MarkdownPanelProps extends MarkdownNodeProps {
-    /** Trigger-row title carried by the directive attribute. */
-    title?: string
+/**
+ * Storybook has no `next-themes` provider (unlike `src`) — the toolbar's Light/Dark
+ * global instead stamps a `"light"`/`"dark"` class on an ANCESTOR wrapper div (see
+ * `.storybook/preview.tsx`). Read it off the DOM the same way `BlockAnatomy` already
+ * does (`host.closest(".dark")`), and keep it live with a `MutationObserver` so
+ * flipping the toolbar mid-session re-themes Mermaid/Shiki without a remount.
+ * @param ref - Ref on (or inside) the element whose nearest themed ancestor to watch.
+ */
+const useIsDarkTheme = (ref: React.RefObject<HTMLDivElement | null>): boolean => {
+    const [isDark, setIsDark] = useState(false)
+    useEffect(() => {
+        const el = ref.current
+        if (!el) {
+            return
+        }
+        const themeHost = el.closest(".light, .dark") ?? document.documentElement
+        const read = () => setIsDark(themeHost.classList.contains("dark"))
+        read()
+        const observer = new MutationObserver(read)
+        observer.observe(themeHost, { attributes: true, attributeFilter: ["class"] })
+        return () => observer.disconnect()
+    }, [ref])
+    return isDark
 }
 
 /** Props for {@link MarkdownContent}. */
@@ -117,7 +321,15 @@ export interface MarkdownContentProps {
     measure?: MarkdownMeasure
     /** Extra classes on the article wrapper. */
     className?: string
-    /** When on, the article emits `data-anat-part` for a BlockAnatomy panel. */
+    /**
+     * `true` → render a 2-line shimmer mirror instead of the real document
+     * (§12c: the owner of the shape owns the skeleton). Added 2026-07-29 —
+     * before this, callers faked it by swapping in an unrelated `Typography
+     * isSkeleton`, the one call-site left doing that (`MockInterviewScorecard`)
+     * has since been switched to this prop instead.
+     */
+    isSkeleton?: boolean
+    /** When on, the article (and the reused `SnippetIcon`/`Chip` atoms) emit `data-anat-part`. */
     showAnatomy?: boolean
     /** Anatomy tag: names this viewer so a BlockAnatomy panel can badge it. */
     anatPart?: string
@@ -133,111 +345,49 @@ const MarkdownContent = ({
     source,
     measure = "reading",
     className,
+    isSkeleton = false,
     showAnatomy = false,
     anatPart,
 }: MarkdownContentProps) => {
     const reading = measure === "reading"
+    const rootRef = useRef<HTMLDivElement>(null)
+    const isDark = useIsDarkTheme(rootRef)
 
-    const components = {
-        h1: ({ children }: MarkdownNodeProps) => (
-            <h1 className={cn("font-semibold text-foreground", reading ? "mt-8 mb-3 text-2xl" : "mt-6 mb-2 text-xl")}>{children}</h1>
-        ),
-        h2: ({ children }: MarkdownNodeProps) => (
-            <h2 className={cn("font-semibold text-foreground", reading ? "mt-8 mb-3 text-xl" : "mt-6 mb-2 text-lg")}>{children}</h2>
-        ),
-        h3: ({ children }: MarkdownNodeProps) => (
-            <h3 className={cn("font-semibold text-foreground", reading ? "mt-6 mb-2 text-lg" : "mt-4 mb-2 text-base")}>{children}</h3>
-        ),
-        h4: ({ children }: MarkdownNodeProps) => (
-            <h4 className={cn("font-semibold text-foreground", reading ? "mt-6 mb-2 text-base" : "mt-4 mb-2 text-sm")}>{children}</h4>
-        ),
-        p: ({ children }: MarkdownNodeProps) => (
-            <p className={cn("text-foreground", reading ? "my-3 text-base leading-7" : "my-2 text-sm leading-6")}>{children}</p>
-        ),
-        ul: ({ children }: MarkdownNodeProps) => (
-            <ul className={cn("list-disc pl-6", reading ? "my-3 space-y-1" : "my-2 space-y-1")}>{children}</ul>
-        ),
-        ol: ({ children }: MarkdownNodeProps) => (
-            <ol className={cn("list-decimal pl-6", reading ? "my-3 space-y-1" : "my-2 space-y-1")}>{children}</ol>
-        ),
-        li: ({ children }: MarkdownNodeProps) => (
-            <li className={cn("text-foreground", reading ? "text-base leading-7" : "text-sm leading-6")}>{children}</li>
-        ),
-        strong: ({ children }: MarkdownNodeProps) => (
-            <strong className="font-semibold text-foreground">{children}</strong>
-        ),
-        em: ({ children }: MarkdownNodeProps) => <em className="italic">{children}</em>,
-        a: ({ href, children }: MarkdownLinkProps) => (
-            <a href={href} className="text-accent underline underline-offset-2 hover:no-underline">{children}</a>
-        ),
-        blockquote: ({ children }: MarkdownNodeProps) => (
-            <blockquote className={cn("border-l-2 border-default pl-3 text-muted", reading ? "my-4" : "my-3")}>{children}</blockquote>
-        ),
-        hr: () => <hr className={cn("border-default", reading ? "my-8" : "my-6")} />,
-        img: ({ src, alt }: MarkdownImageProps) => (
-            // A document's image is a raw URL from the payload, so `next/image` cannot
-            // size it ahead of time — a plain tag is the honest renderer here.
-            <img src={src} alt={alt ?? ""} className={cn("w-full rounded-2xl", reading ? "my-4" : "my-3")} />
-        ),
-        table: ({ children }: MarkdownNodeProps) => (
-            // A document's table is as wide as its widest row, and that width is not
-            // ours to decide — so it scrolls INSIDE its own box rather than making the
-            // whole article scroll sideways.
-            <div className={cn("overflow-x-auto rounded-2xl border border-default", reading ? "my-4" : "my-3")}>
-                <table className="w-full border-collapse text-sm">{children}</table>
+    // Hold back an unterminated trailing mermaid fence FIRST — see the helper's own JSDoc.
+    // Hooks run UNCONDITIONALLY even on a skeleton call (rules of hooks) — `source` is
+    // just "" on that path (see the call-site), so this is cheap, not wasted real work.
+    const stableSource = useMemo(() => holdBackIncompleteMermaidFence(source), [source])
+    const mermaidCaptions = useMemo(() => extractMermaidCaptions(stableSource), [stableSource])
+    // Strip mermaid figure-captions — they render as a real `<figcaption>` instead.
+    const renderedSource = useMemo(() => stripMermaidCaptions(stableSource), [stableSource])
+
+    const components = useMemo(
+        () => buildMarkdownRenderers({ isDark, reading, mermaidCaptions, showAnatomy }),
+        [isDark, reading, mermaidCaptions, showAnatomy],
+    )
+
+    // Skeleton mirror owned by THIS composite (§12c) — AFTER every hook above has run
+    // (rules of hooks: an early return before a hook call would skip it conditionally).
+    if (isSkeleton) {
+        return (
+            <div
+                className={cn("flex flex-col gap-2", className)}
+                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+            >
+                <HeroSkeleton className="h-4 w-full rounded" />
+                <HeroSkeleton className="h-4 w-2/3 rounded" />
             </div>
-        ),
-        thead: ({ children }: MarkdownNodeProps) => <thead className="bg-default/40">{children}</thead>,
-        tbody: ({ children }: MarkdownNodeProps) => <tbody>{children}</tbody>,
-        tr: ({ children }: MarkdownNodeProps) => <tr className="border-b border-default last:border-0">{children}</tr>,
-        th: ({ children }: MarkdownNodeProps) => <th className="px-3 py-2 text-left font-semibold text-foreground">{children}</th>,
-        td: ({ children }: MarkdownNodeProps) => <td className="px-3 py-2 align-top text-foreground">{children}</td>,
-        code: ({ className: codeClassName, children }: MarkdownCodeProps) => {
-            // A fenced block arrives with `language-*`; anything else is inline code.
-            if (codeClassName?.startsWith("language-")) {
-                return <code className={codeClassName}>{children}</code>
-            }
-            return <code className="rounded bg-default/60 px-2 font-mono text-[0.9em] text-foreground">{children}</code>
-        },
-        pre: ({ children }: MarkdownNodeProps) => {
-            const child = React.Children.only(children) as React.ReactElement<MarkdownCodeProps>
-            const lang = /language-(\w+)/.exec(child.props.className ?? "")?.[1] ?? "text"
-            const code = String(child.props.children ?? "").replace(/\n$/, "")
-            return (
-                <div className={cn("overflow-hidden rounded-2xl border border-default bg-default/30", reading ? "my-4" : "my-3")}>
-                    <div className="flex items-center justify-between border-b border-default px-3 py-2">
-                        <span className="font-mono text-xs text-muted">{lang}</span>
-                        <SnippetIcon copyString={code} />
-                    </div>
-                    <pre className="overflow-x-auto px-3 py-3"><code className="font-mono text-xs leading-6 text-foreground">{code}</code></pre>
-                </div>
-            )
-        },
-        accordionblock: ({ children }: MarkdownNodeProps) => {
-            // The parser hands back CHILDREN; the `Accordion` atom takes DATA. Reading
-            // each panel's props here is the bridge — and it is the only place it can
-            // happen, because nothing upstream ever sees these as panels.
-            const items: Array<AccordionItem> = React.Children
-                .toArray(children)
-                .filter((child): child is React.ReactElement<MarkdownPanelProps> => React.isValidElement(child))
-                .map((child, index) => ({
-                    key: `panel-${index}`,
-                    title: child.props.title ?? "",
-                    content: child.props.children,
-                }))
-            return <div className={reading ? "my-4" : "my-3"}><Accordion items={items} /></div>
-        },
-        // Never rendered on its own — `accordionblock` above reads its props instead.
-        accordionpanel: ({ children }: MarkdownNodeProps) => <>{children}</>,
+        )
     }
 
     return (
         <article
+            ref={rootRef}
             data-anat-part={anatPart ?? (showAnatomy ? "MarkdownContent" : undefined)}
             className={cn("first:*:mt-0 last:*:mb-0", className)}
         >
             <ReactMarkdown remarkPlugins={REMARK_PLUGINS} components={components as never}>
-                {source}
+                {renderedSource}
             </ReactMarkdown>
         </article>
     )

@@ -1,4 +1,5 @@
 import React from "react"
+import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
@@ -43,21 +44,30 @@ export interface QuizRecapCard {
     rating?: number
 }
 
-/** Props for {@link QuizRecapList}. */
-export interface QuizRecapListProps {
-    /** The answered cards, in the order they were asked. */
-    cards: Array<QuizRecapCard>
+interface QuizRecapListOwnProps {
     /** Recall grades offered per card. */
     ratingOptions: Array<RatingOption>
     /** Fired with the card key and the grade the learner picked. */
     onRate: (cardKey: string, grade: number) => void
     /** Accessible name for each card's rating group, localized by the caller. */
     ratingAriaLabel: string
+    /** Card count to shimmer while `isSkeleton` (no real `cards` yet). Defaults to `3`. */
+    skeletonCount?: number
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
+
+/**
+ * Props for {@link QuizRecapList}. `cards` is REQUIRED unless `isSkeleton`
+ * (§12b) — a shimmer recap has no real cards to show yet.
+ */
+export type QuizRecapListProps = QuizRecapListOwnProps &
+    (
+        | { isSkeleton: true; cards?: Array<QuizRecapCard> }
+        | { isSkeleton?: false; cards: Array<QuizRecapCard> }
+    )
 
 /**
  * The end-of-run recap. See the file header for the full contract.
@@ -69,10 +79,30 @@ const QuizRecapList = ({
     ratingOptions,
     onRate,
     ratingAriaLabel,
+    isSkeleton = false,
+    skeletonCount = 3,
     showAnatomy = false,
     anatPart,
 }: QuizRecapListProps) => {
-    const unrated = cards.filter((card) => card.rating == null).length
+    if (isSkeleton) {
+        return (
+            <div data-anat-part={anatPart}>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+                    <HeroSkeleton className="h-3.5 w-40 rounded" />
+                    {Array.from({ length: skeletonCount }, (_unused, index) => (
+                        <SurfaceCard key={index} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+                                <HeroSkeleton className="h-5 w-16 rounded-full" />
+                                <HeroSkeleton className="h-4 w-full rounded" />
+                                <HeroSkeleton className="h-4 w-2/3 rounded" />
+                            </StackV>
+                        </SurfaceCard>
+                    ))}
+                </StackV>
+            </div>
+        )
+    }
+    const unrated = (cards ?? []).filter((card) => card.rating == null).length
 
     return (
         <div data-anat-part={anatPart}>
@@ -82,10 +112,10 @@ const QuizRecapList = ({
                 <Typography
                     size="sm"
                     color="muted"
-                    text={unrated > 0 ? `Còn ${unrated}/${cards.length} thẻ chưa tự chấm` : `Đã tự chấm đủ ${cards.length} thẻ`}
+                    text={unrated > 0 ? `Còn ${unrated}/${(cards ?? []).length} thẻ chưa tự chấm` : `Đã tự chấm đủ ${(cards ?? []).length} thẻ`}
                     anatPart={showAnatomy ? "Typography" : undefined}
                 />
-                {cards.map((card) => (
+                {(cards ?? []).map((card) => (
                     <SurfaceCard key={card.key} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
                         <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
                             <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>

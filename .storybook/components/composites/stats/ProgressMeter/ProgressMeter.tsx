@@ -1,5 +1,5 @@
 import React from "react"
-import { ProgressBar, cn } from "@heroui/react"
+import { ProgressBar, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { ReactNode } from "react"
 import { ProgressMeterTargetMark } from "./TargetMark"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
@@ -12,9 +12,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * A presentational, props-only progress meter that renders an optional
  * label / value row above a HeroUI {@link ProgressBar}.
  */
-export interface ProgressMeterProps {
-    /** Current progress value. Should fall within the range `[0, max]`. */
-    value: number
+interface ProgressMeterOwnProps {
     /** Maximum value representing 100% completion. Defaults to `100`. */
     max?: number
     /**
@@ -40,6 +38,17 @@ export interface ProgressMeterProps {
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
+
+/**
+ * Props for {@link ProgressMeter}. `value` is REQUIRED unless `isSkeleton`
+ * (§12b) — a shimmer track has no real ratio to show yet.
+ */
+export type ProgressMeterProps = ProgressMeterOwnProps &
+    (
+        | { isSkeleton: true; value?: number }
+        | { isSkeleton?: false; value: number }
+    )
+
 /**
  * ProgressMeter renders a labelled, accessible progress bar: an optional top row
  * (label + rounded percentage) above a HeroUI {@link ProgressBar}, with an
@@ -55,12 +64,24 @@ export const ProgressMeter = ({
     color = "accent",
     target,
     targetLabel,
+    isSkeleton = false,
     className,
     showAnatomy = false,
     anatPart,
 }: ProgressMeterProps) => {
+    if (isSkeleton) {
+        return (
+            <div className={cn("flex flex-col gap-2", className)} data-anat-part={anatPart}>
+                <HeroSkeleton className="h-3 w-24 rounded" />
+                <HeroSkeleton className="h-1 w-full rounded-full" />
+            </div>
+        )
+    }
     const safeMax = max > 0 ? max : 1
-    const percent = Math.round((value / safeMax) * 100)
+    // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
+    // already guaranteed by the early return at `isSkeleton` — the `?? 0` only satisfies
+    // narrowing across the destructure, it never actually fires.
+    const percent = Math.round(((value ?? 0) / safeMax) * 100)
     const hasTopRow = label !== undefined || showValue
     // target tick position, clamped into the track (0..100%)
     const targetPercent = target === undefined

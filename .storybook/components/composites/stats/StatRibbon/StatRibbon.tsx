@@ -18,10 +18,8 @@ export interface StatRibbonItem {
     label: React.ReactNode
 }
 
-/** Props for {@link StatRibbon}. */
-export interface StatRibbonProps {
-    /** The stats to lay out (2–4), in order. Each becomes one {@link StatPair} cell. */
-    items: ReadonlyArray<StatRibbonItem>
+/** Props {@link StatRibbon} carries regardless of loading state. */
+interface StatRibbonOwnProps {
     /** Value (title) size for every pair — defaults to `h4`; `body` = text-base. */
     valueType?: StatPairValueType
     /**
@@ -31,11 +29,23 @@ export interface StatRibbonProps {
      * `.card { border: none !important }`.
      */
     bordered?: boolean
+    /** Cell count to shimmer while `isSkeleton` (no real `items` yet). Defaults to `3`. */
+    skeletonCount?: number
     /** Extra classes on the root element. */
     className?: string
     /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
+
+/**
+ * Props for {@link StatRibbon}. `items` is REQUIRED unless `isSkeleton` (§12b)
+ * — a shimmer ribbon has no real stats to show yet.
+ */
+export type StatRibbonProps = StatRibbonOwnProps &
+    (
+        | { isSkeleton: true; items?: ReadonlyArray<StatRibbonItem> }
+        | { isSkeleton?: false; items: ReadonlyArray<StatRibbonItem> }
+    )
 
 /**
  * A profile / hero stat strip: N {@link StatPair}s inside ONE `Card` — a single
@@ -50,9 +60,14 @@ export const StatRibbon = ({
     items,
     valueType,
     bordered = false,
+    isSkeleton = false,
+    skeletonCount = 3,
     className,
     showAnatomy = false,
 }: StatRibbonProps) => {
+    const cells = isSkeleton
+        ? Array.from({ length: skeletonCount }, (_unused, index) => ({ key: String(index) }))
+        : (items ?? [])
     return (
         <Card
             variant="default"
@@ -64,7 +79,7 @@ export const StatRibbon = ({
                 divider is a per-cell `border-l` (Tailwind v4 here emits no `divide-*` rule).
                 Mobile keeps the padded 2-col grid (no dividers there). */}
             <div className="grid grid-cols-2 gap-3 @app-sm:-m-3 @app-sm:flex @app-sm:items-stretch @app-sm:gap-0">
-                {items.map((item, index) => (
+                {cells.map((item, index) => (
                     <div
                         key={item.key}
                         data-anat-part={showAnatomy ? "StatPair" : undefined}
@@ -73,7 +88,11 @@ export const StatRibbon = ({
                             index > 0 && "@app-sm:border-l @app-sm:border-default",
                         )}
                     >
-                        <StatPair value={item.value} label={item.label} valueType={valueType} />
+                        {isSkeleton ? (
+                            <StatPair isSkeleton valueType={valueType} />
+                        ) : (
+                            <StatPair value={(item as StatRibbonItem).value} label={(item as StatRibbonItem).label} valueType={valueType} />
+                        )}
                     </div>
                 ))}
             </div>

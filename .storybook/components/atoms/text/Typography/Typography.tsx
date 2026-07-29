@@ -83,6 +83,15 @@ const COLOR_CLS: Record<TypographyColor, string | null> = {
     warning: "text-warning",
     danger: "text-danger",
 }
+/** Same tokens as {@link COLOR_CLS}, `hover:` prefixed — for `isButton`'s `hoverColor`. */
+const HOVER_COLOR_CLS: Record<TypographyColor, string> = {
+    default: "hover:text-foreground",
+    muted: "hover:text-muted",
+    accent: "hover:text-accent",
+    success: "hover:text-success",
+    warning: "hover:text-warning",
+    danger: "hover:text-danger",
+}
 const CLAMP_CLS: Record<1 | 2 | 3, string> = { 1: "line-clamp-1", 2: "line-clamp-2", 3: "line-clamp-3" }
 
 /**
@@ -103,6 +112,58 @@ const ALIGN_CLS: Record<TypographyAlign, string> = {
     end: "text-end",
 }
 
+/**
+ * `underlineOnGroupHover` — see the prop doc. Centralized so the complex CSS lives in exactly
+ * one place.
+ *
+ * ⚠️ `decoration-[1.5px]` (thầy 2026-07-29, "lấy css của Link underline của heroui mà?"):
+ * real `src`'s "quiet link" call-sites (`CommentItem`, `SubmissionResult`, `RichText`) render
+ * through HeroUI's OWN `Link` component, which bakes `decoration-[1.5px]` into its base `.link`
+ * class (`node_modules/@heroui/styles/.../link.css`) — the className override at those
+ * call-sites only ever touched offset/color, never thickness, because it never needed to.
+ * Copying JUST the visible override (offset+color) here — onto a plain heading/code/body span
+ * that is NOT a `HeroLink` and inherits no such base class — left thickness at the browser's
+ * `auto` default, which reads as thinner/uneven next to the real 1.5px. Pinning it explicitly
+ * here is the one class that source's className string never had to spell out for itself.
+ */
+const GROUP_HOVER_UNDERLINE_CLS = "underline-offset-4 decoration-[1.5px] decoration-[var(--separator-tertiary)] group-hover:underline"
+
+/**
+ * `underlineOnHover` — the SAME quiet-underline recipe as {@link GROUP_HOVER_UNDERLINE_CLS},
+ * triggered by the text's OWN hover instead of an ancestor `.group` (e.g. a plain inline link
+ * that is its own hover target). Real `src` repeats this exact recipe verbatim in several
+ * places (`SubmissionResult`, `RichText`) — this is the canonical "quiet link" underline in
+ * this design system, distinct from `isLink`'s plainer default (`underline-offset-2`).
+ */
+const SELF_HOVER_UNDERLINE_CLS = "underline-offset-4 decoration-[1.5px] decoration-[var(--separator-tertiary)] hover:underline"
+
+/**
+ * `parseInlineCode` — same recipe `MarkdownContent`'s own inline `<code>` renderer
+ * uses (`rounded-md bg-default px-1 py-0 font-mono`), just sized relative to the
+ * SURROUNDING text (`text-[0.9em]`) instead of a fixed `text-sm` — `Typography`
+ * renders at every size from `xs` to a heading, `MarkdownContent` bodies do not.
+ */
+const INLINE_CODE_CLS = "rounded-md bg-default px-1 py-0 font-mono text-[0.9em] [overflow-wrap:anywhere]"
+
+/**
+ * Splits `` `code` `` segments out of otherwise-plain text into styled inline
+ * code, WITHOUT going through full markdown/block parsing (thầy 2026-07-29,
+ * "với accordion title thì không thể render dạng markdown" — an accordion title
+ * sits inside `Accordion.Trigger`, a `<button>`; `MarkdownContent` emits
+ * block-level markup that cannot legally nest there). This is the safe,
+ * span-only alternative — the ONLY markdown syntax it understands is backticks.
+ */
+const renderInlineCode = (raw: string): ReactNode => {
+    if (!raw.includes("`")) return raw
+    const parts = raw.split(/(`[^`]+`)/g)
+    if (parts.length === 1) return raw
+    return parts.map((part, index) => (
+        part.startsWith("`") && part.endsWith("`")
+            ? <code key={index} className={INLINE_CODE_CLS}>{part.slice(1, -1)}</code>
+            : <span key={index}>{part}</span>
+    ))
+}
+
 /** Props for every `Typography.<Size>` member. */
 interface TypographyOwnProps {
     /** Font size — see {@link TypographySize}. Default `"base"`. */
@@ -116,8 +177,53 @@ interface TypographyOwnProps {
      */
     weight?: "medium" | "semibold" | "bold"
     isItalic?: boolean
-    /** Render as a LINK — HeroUI `Link` (accent + hover underline + a11y). No weight/icon alongside. */
+    /**
+     * Render as a LINK — HeroUI `Link` (hover underline + a11y). No weight/icon
+     * alongside. Color defaults to accent; pass {@link TypographyOwnProps.color}
+     * explicitly to override (e.g. a muted external-source link that inherits
+     * its surrounding row's tone rather than calling attention to itself).
+     */
     isLink?: boolean
+    /**
+     * Render as a plain pressable `<button>` — text that DOES something but is
+     * not navigation (a reply/edit/delete action, a view-more toggle). No
+     * underline, no link semantics (unlike {@link isLink}) — only an optional
+     * {@link hoverColor} transition. Fires {@link onPress}.
+     */
+    isButton?: boolean
+    /** Color to transition to on hover (only with `isButton`) — e.g. `muted` at rest, `default` (foreground) or `danger` on hover. */
+    hoverColor?: TypographyColor
+    /** Opens in a new tab (only with `isLink`) — e.g. an external evidence link. */
+    target?: string
+    /** `rel` attribute (only with `isLink` + `target`), e.g. `"noopener noreferrer"`. */
+    rel?: string
+    /**
+     * `true` → underlines when an ANCESTOR with Tailwind's `.group` class is
+     * hovered (not this text's own hover) — the "whole row is the link, only
+     * the title underlines" shape (e.g. a list row where `onPress`/`href`
+     * lives on the row, not on this text). Foreground color, no accent —
+     * unlike {@link isLink}, this does not imply link styling, only the
+     * underline-on-row-hover behavior. The atom owns the `group-hover:`
+     * class; the CALLER only owns putting `.group` on the actual hoverable
+     * ancestor (a composite's row already does this when it says so).
+     */
+    underlineOnGroupHover?: boolean
+    /**
+     * `true` → the quiet underline recipe (`underline-offset-4` + a muted
+     * decoration color), triggered by THIS text's own hover — the "external
+     * evidence link that inherits its row's tone" shape. With {@link isLink},
+     * replaces its plainer default underline; without it, still needs a real
+     * interactive ancestor (this prop draws no `cursor-pointer` on its own).
+     */
+    underlineOnHover?: boolean
+    /**
+     * `true` → `` `code` `` segments inside `text` render as styled inline code
+     * (same recipe `MarkdownContent` uses), WITHOUT any other markdown syntax.
+     * For text that must stay a `<span>`/inline (an accordion trigger title, a
+     * label sitting inside a button) rather than the block-level tree
+     * `MarkdownContent` produces. No effect when `text` is not a plain string.
+     */
+    parseInlineCode?: boolean
     /** Link target (only with `isLink`). */
     href?: string
     /** Link press handler (only with `isLink`). */
@@ -165,7 +271,14 @@ const TypographyBase = ({
     weight,
     isItalic,
     isLink,
+    isButton = false,
+    hoverColor,
+    underlineOnGroupHover = false,
+    underlineOnHover = false,
+    parseInlineCode = false,
     href,
+    target,
+    rel,
     onPress,
     prefixIcon: Prefix,
     suffixIcon: Suffix,
@@ -187,6 +300,7 @@ const TypographyBase = ({
     // keeps the generic "Text" default.
     const partName = (fallback: string) => anatPart ?? (showAnatomy ? fallback : undefined)
     const textPart = partName("Text")
+    const renderedText = parseInlineCode && typeof text === "string" ? renderInlineCode(text) : text
 
     // ── SKELETON branch — checked BEFORE any size branch, because heading/code also
     // need to render a shimmer bar, not empty text. (If placed under the heading branch,
@@ -210,11 +324,12 @@ const TypographyBase = ({
                     color ? COLOR_CLS[color] : null,
                     align ? ALIGN_CLS[align] : null,
                     lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null,
+                    underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
                     className,
                 )}
                 data-anat-part={partName("Typography.Heading")}
             >
-                {text}
+                {renderedText}
             </HeroTypography.Heading>
         )
     }
@@ -228,11 +343,12 @@ const TypographyBase = ({
                     color ? COLOR_CLS[color] : null,
                     align ? ALIGN_CLS[align] : null,
                     lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null,
+                    underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
                     className,
                 )}
                 data-anat-part={partName("Typography")}
             >
-                {text}
+                {renderedText}
             </HeroTypography>
         )
     }
@@ -249,25 +365,62 @@ const TypographyBase = ({
             )
         }
 
-        // isLink → HeroUI Link (leverages HeroUI: accent + hover underline + a11y). Separate state.
+        // isLink → HeroUI Link (leverages HeroUI: hover underline + a11y). Separate state.
+        // Color defaults to accent; an explicit `color` overrides it (e.g. a muted
+        // external-source link that inherits its row's tone). `underlineOnHover` swaps
+        // the plain default underline for the quiet recipe (see its own prop doc).
         if (isLink) {
             return (
                 <HeroLink
                     href={href}
+                    target={target}
+                    rel={rel}
                     onPress={onPress}
-                    className={cn(TEXT_CLS[bodySize], "cursor-pointer text-accent underline-offset-2 hover:underline", className)}
+                    className={cn(
+                        TEXT_CLS[bodySize],
+                        color ? COLOR_CLS[color] : "text-accent",
+                        "cursor-pointer",
+                        underlineOnHover ? SELF_HOVER_UNDERLINE_CLS : "underline-offset-2 hover:underline",
+                        className,
+                    )}
                     data-anat-part={partName("Link")}
                 >
-                    {text}
+                    {renderedText}
                 </HeroLink>
+            )
+        }
+
+        // isButton → a plain pressable button: text that DOES something but is not
+        // navigation. No underline (unlike isLink) — only an optional hover color shift.
+        if (isButton) {
+            return (
+                <button
+                    type="button"
+                    onClick={onPress}
+                    className={cn(
+                        TEXT_CLS[bodySize],
+                        // `semibold` folds to `font-medium` at body scale (§9b, teacher 2026-07-25) —
+                        // it is only a real third tier at heading scale (see the HEADING branch above).
+                        weight === "bold" ? "font-bold" : weight === "medium" || weight === "semibold" ? "font-medium" : null,
+                        color ? COLOR_CLS[color] : null,
+                        "cursor-pointer transition-colors",
+                        hoverColor && HOVER_COLOR_CLS[hoverColor],
+                        className,
+                    )}
+                    data-anat-part={partName("Button")}
+                >
+                    {renderedText}
+                </button>
             )
         }
 
         const hasIcons = Boolean(Prefix || Suffix)
         // RULE (teacher confirmed): has icon → text MUST be `font-medium` (icon strokes fit medium text).
+        // `semibold` folds to `font-medium` at body scale (§9b, teacher 2026-07-25) — it is only
+        // a real third tier at heading scale (see the HEADING branch above).
         const weightCls = hasIcons
             ? "font-medium"
-            : weight === "bold" ? "font-bold" : weight === "medium" ? "font-medium" : null
+            : weight === "bold" ? "font-bold" : weight === "medium" || weight === "semibold" ? "font-medium" : null
         // Clip text: lineClamp wins over truncate. `block` so overflow can clip (needs a bounded parent width).
         const clampCls = lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null
         const baseCls = cn(
@@ -277,6 +430,7 @@ const TypographyBase = ({
             color ? COLOR_CLS[color] : null,
             align ? ALIGN_CLS[align] : null,
             tabularNums && "tabular-nums",
+            underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
             className,
         )
 
@@ -297,14 +451,14 @@ const TypographyBase = ({
                 // `group` so the child arrow can hear `group-hover` when iconSlide is on (§5b).
                 <span className={cn("inline-flex items-center gap-1", iconSlide && "group", baseCls)}>
                     {Prefix ? iconSpan(Prefix, "PrefixIcon", "group-hover:-translate-x-1") : null}
-                    <span data-anat-part={textPart} className={cn("min-w-0", clampCls)}>{text}</span>
+                    <span data-anat-part={textPart} className={cn("min-w-0", clampCls)}>{renderedText}</span>
                     {Suffix ? iconSpan(Suffix, "SuffixIcon", "group-hover:translate-x-1") : null}
                 </span>
             )
         }
         return (
             <span className={cn(baseCls, clampCls)} data-anat-part={textPart}>
-                {text}
+                {renderedText}
             </span>
         )
     }

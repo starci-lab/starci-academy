@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { PDFView } from "@sb-components/composites/viewers/PDFView/PDFView"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof PDFView> = {
     title: "Composites/Viewers/PDFView",
@@ -30,7 +31,7 @@ export const Empty: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-[420px]">
-                <PDFView src="" title="Chưa có tài liệu" heightClassName="h-[200px]" />
+                <PDFView src="" title="Chưa có tài liệu" heightClassName="h-[200px]" anatPart="PDFView" showAnatomy />
             </div>
         </div>
     ),
@@ -46,6 +47,8 @@ export const SinglePage: Story = {
                     title="Slide bài giảng NestJS"
                     showAllPages={false}
                     heightClassName="h-[320px]"
+                    anatPart="PDFView"
+                    showAnatomy
                 />
             </div>
         </div>
@@ -62,6 +65,8 @@ export const AllPagesScroll: Story = {
                     title="Slide bài giảng System Design"
                     allowVerticalScroll
                     heightClassName="h-[420px]"
+                    anatPart="PDFView"
+                    showAnatomy
                 />
             </div>
         </div>
@@ -79,6 +84,8 @@ export const FitToContainer: Story = {
                     fitToContainer
                     allowVerticalScroll
                     heightClassName="h-[400px]"
+                    anatPart="PDFView"
+                    showAnatomy
                 />
             </div>
         </div>
@@ -94,8 +101,39 @@ export const LoadError: Story = {
                     src="https://storage.example.invalid/file-khong-ton-tai.pdf"
                     title="Tài liệu không tải được"
                     heightClassName="h-[200px]"
+                    anatPart="PDFView"
+                    showAnatomy
                 />
             </div>
+        </div>
+    ),
+}
+
+const ANNOTATE_SKELETON: Record<string, AnatomyAnnotation> = {
+    "PDFView": { tier: "composite", role: "the viewer itself: a bordered, scrollable canvas that lazily paints each page of the given PDF file", storyId: "composites-viewers-pdfview--single-page" },
+    "Skeleton": { tier: "heroui", role: "shimmers the WHOLE viewer footprint because the file itself hasn't arrived yet — no `Document` mounted at all; distinct from `PdfViewportPage`'s own per-page `HeroSkeleton`, which only stands in for a page not yet scrolled into view once the file HAS loaded" },
+}
+
+/** LEAF — the caller flips `isSkeleton`; the whole viewer shimmers because the file itself hasn't arrived, distinct from the per-page mirror `PdfViewportPage` already draws for a page not yet scrolled into view once the file HAS loaded. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PDFView"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE_SKELETON}
+                renderClassName="mx-auto max-w-2xl"
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Covers 'the whole PDF file hasn't arrived yet' — no `Document` mounted, just one full-footprint `HeroSkeleton` sized by `heightClassName`. Distinct from the per-page shimmer `PdfViewportPage` draws once the file HAS loaded but a given page hasn't scrolled into view yet.",
+                        code: "<PDFView isSkeleton />",
+                        render: <PDFView isSkeleton anatPart="PDFView" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

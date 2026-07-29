@@ -12,7 +12,7 @@ import {
     ReactFlow,
     ReactFlowProvider,
 } from "@xyflow/react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -70,15 +70,31 @@ const FlowDiagramCardNode = ({ data, selected }: NodeProps) => {
 /** Node type map registered on the canvas. */
 const NODE_TYPES = { [FLOW_DIAGRAM_CARD_NODE_TYPE]: FlowDiagramCardNode }
 
-/** Props for the {@link FlowDiagram} block. */
-export interface FlowDiagramProps {
-    /** Nodes to render. Use {@link FLOW_DIAGRAM_CARD_NODE_TYPE} for the built-in labeled card node. */
-    nodes: Array<Node>
-    /** Edges connecting the given nodes. */
-    edges: Array<Edge>
+/** Props {@link FlowDiagram} carries regardless of loading state. */
+interface FlowDiagramOwnProps {
     /** Extra classes on the outer canvas frame. */
     className?: string
+    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** `true` → tag the skeleton placeholder with `data-anat-part="Skeleton"`. */
+    showAnatomy?: boolean
 }
+
+/**
+ * Props for the {@link FlowDiagram} block. `nodes`/`edges` are REQUIRED unless
+ * `isSkeleton` (§12b) — a shimmer canvas has no real graph to lay out yet.
+ */
+export type FlowDiagramProps = FlowDiagramOwnProps &
+    (
+        | { isSkeleton: true; nodes?: Array<Node>; edges?: Array<Edge> }
+        | {
+            isSkeleton?: false
+            /** Nodes to render. Use {@link FLOW_DIAGRAM_CARD_NODE_TYPE} for the built-in labeled card node. */
+            nodes: Array<Node>
+            /** Edges connecting the given nodes. */
+            edges: Array<Edge>
+        }
+    )
 
 /**
  * Self-contained, presentational `@xyflow/react` rendering block: a sized,
@@ -95,11 +111,26 @@ export interface FlowDiagramProps {
  *
  * @param props - See {@link FlowDiagramProps}.
  */
-export const FlowDiagram = ({ nodes, edges, className }: FlowDiagramProps) => {
+export const FlowDiagram = ({ nodes, edges, isSkeleton = false, className, anatPart, showAnatomy = false }: FlowDiagramProps) => {
     const nodeTypes = useMemo(() => NODE_TYPES, [])
 
+    // A per-node shimmer isn't feasible before the graph is fetched (positions/edges are
+    // exactly the unknown), so the whole canvas mirrors as ONE bordered block instead —
+    // same footprint, no `ReactFlow` mounted (nodes/edges have no real value yet).
+    if (isSkeleton) {
+        return (
+            <HeroSkeleton
+                className={cn("h-[420px] w-full rounded-large", className)}
+                data-anat-part={showAnatomy ? "Skeleton" : anatPart}
+            />
+        )
+    }
+
     return (
-        <div className={cn("h-[420px] w-full overflow-hidden rounded-large border border-default", className)}>
+        <div
+            className={cn("h-[420px] w-full overflow-hidden rounded-large border border-default", className)}
+            data-anat-part={anatPart}
+        >
             <ReactFlowProvider>
                 <ReactFlow
                     className="text-foreground"

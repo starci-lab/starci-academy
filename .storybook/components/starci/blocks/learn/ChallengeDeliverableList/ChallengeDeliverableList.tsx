@@ -214,7 +214,10 @@ const triggerTitle = (item: ChallengeDeliverableItem, index: number, showAnatomy
     return (
         <StackH gap="tight" className="min-w-0" anatPart={showAnatomy ? "StackH" : undefined}>
             <StatusIcon aria-hidden focusable="false" className={cn("size-4 shrink-0", STATUS_ICON_CLASS[item.status])} />
-            <span className="truncate">{index + 1}. {item.title}</span>
+            {/* Through `Typography` (not a raw `<span>`) so `` `code` `` segments in `item.title`
+                get the same accordion-safe inline-code treatment `ChallengeBrief` gets — a
+                hand-rolled span bypasses that atom entirely (§9c: chữ qua Typography). */}
+            <Typography size="sm" truncate parseInlineCode text={`${index + 1}. ${item.title}`} className="min-w-0" />
         </StackH>
     )
 }
@@ -227,6 +230,7 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
         ) : null}
 
         <InputText
+            variant="secondary"
             value={item.url}
             onValueChange={item.onUrlChange}
             errorMessage={item.urlError}
@@ -324,7 +328,7 @@ const ChallengeDeliverableList = ({
                         isIconOnly
                         prefixIcon={GearSixIcon}
                         ariaLabel="Cài đặt chấm điểm"
-                        variant="secondary"
+                        variant="tertiary"
                         size="sm"
                         onPress={onOpenGradingSettings}
                         isSkeleton={isSkeleton}

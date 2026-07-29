@@ -58,7 +58,7 @@ export const Full: Story = {
                         name: "previous set, next set",
                         why: "Both cards render and the pair splits into two columns, the back card reading left-to-right and the forward card mirrored against the right edge. This is the shape for any lesson in the middle of a module, which is most of them.",
                         code: `<ContentPager
-    ariaLabel="Điều hướng bài học"
+    ariaLabel="Chuyển nội dung trước hoặc tiếp"
     previous={{ title: "Image layer và cache hoạt động ra sao", href: prevHref }}
     next={{ title: "Multi-stage build: bỏ toolchain khỏi image chạy thật", href: nextHref }}
 />`,
@@ -66,7 +66,7 @@ export const Full: Story = {
                             <ContentPager
                                 anatPart="ContentPager"
                                 showAnatomy
-                                ariaLabel="Điều hướng bài học"
+                                ariaLabel="Chuyển nội dung trước hoặc tiếp"
                                 previous={PREVIOUS}
                                 next={NEXT}
                             />
@@ -94,14 +94,14 @@ export const NextOnly: Story = {
                         name: "previous = undefined",
                         why: "The back card is not drawn and the forward card still holds the right column, so the empty left half reads as the start of the module rather than as a card that failed to load. Pinning is what makes the gap legible: a forward card sliding left would look like an ordinary single card.",
                         code: `<ContentPager
-    ariaLabel="Điều hướng bài học"
+    ariaLabel="Chuyển nội dung trước hoặc tiếp"
     next={{ title: "Multi-stage build: bỏ toolchain khỏi image chạy thật", href: nextHref }}
 />`,
                         render: (
                             <ContentPager
                                 anatPart="ContentPager"
                                 showAnatomy
-                                ariaLabel="Điều hướng bài học"
+                                ariaLabel="Chuyển nội dung trước hoặc tiếp"
                                 next={NEXT}
                             />
                         ),
@@ -128,14 +128,14 @@ export const PreviousOnly: Story = {
                         name: "next = undefined",
                         why: "Only the back card remains, sitting in the left column where it always sits. The learner has reached the end of the module, and the block says so by leaving the forward half empty instead of offering a dead control.",
                         code: `<ContentPager
-    ariaLabel="Điều hướng bài học"
+    ariaLabel="Chuyển nội dung trước hoặc tiếp"
     previous={{ title: "Image layer và cache hoạt động ra sao", href: prevHref }}
 />`,
                         render: (
                             <ContentPager
                                 anatPart="ContentPager"
                                 showAnatomy
-                                ariaLabel="Điều hướng bài học"
+                                ariaLabel="Chuyển nội dung trước hoặc tiếp"
                                 previous={PREVIOUS}
                             />
                         ),
@@ -161,12 +161,12 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The group draws the shimmer itself, keeping the same two card boxes and the same column split the real pager will take. The flag reaches the composite that owns the box rather than a parallel skeleton tree, so nothing shifts when the neighbours arrive.",
-                        code: "<ContentPager ariaLabel=\"Điều hướng bài học\" isSkeleton />",
+                        code: "<ContentPager ariaLabel=\"Chuyển nội dung trước hoặc tiếp\" isSkeleton />",
                         render: (
                             <ContentPager
                                 anatPart="ContentPager"
                                 showAnatomy
-                                ariaLabel="Điều hướng bài học"
+                                ariaLabel="Chuyển nội dung trước hoặc tiếp"
                                 isSkeleton
                             />
                         ),

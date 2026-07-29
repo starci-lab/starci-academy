@@ -3,20 +3,25 @@ import { ContentReaction } from "@sb-components/starci/blocks/learn/ContentReact
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentReaction`: say how the lesson landed. A reaction control on
- * the left, the quiet view count on the right.
+ * BLOCK — `ContentReaction`: say how the lesson landed. A Facebook-style
+ * six-emotion picker on the left, the quiet view count on the right.
  *
- * ⚠️ TWO WEIGHTS, ON PURPOSE. Reacting is an ACTION, so it is a button; the view
- * count is a FACT the reader can only observe, so it is muted text. Giving both
- * the same weight would ask the reader to choose between a control and a number.
+ * ⭐⭐ REBUILT 2026-07-28 (thầy: "chế nhiều quá" — the first cut was a single
+ * boolean like/unlike toggle; real `src`'s `ReactionBar` is a six-emotion
+ * picker reused for both the content reaction and every comment). See the
+ * component's own file header for the full port + why the animated 6-button
+ * row lives in a separate atom (`ReactionPicker`), not hand-rolled here.
  *
- * COUNTS ARE DATA, THE WORDING IS NOT (§14d.1). The caller hands over numbers
- * and the block adds the unit and the thousands separator, so two callers cannot
- * drift apart on how a count reads.
+ * TWO WEIGHTS, ON PURPOSE. Reacting is an ACTION, so it is a button; the view
+ * count is a FACT the reader can only observe, so it is muted text.
  *
- * 📐 LEAF by STRUCTURE (§14d.2). Reacting, waiting for the server, and having
- * nobody react yet all keep the same two slots ⇒ states. The caller flipping
- * `isSkeleton` is a leaf.
+ * COUNTS ARE DATA, THE VOCABULARY IS NOT (§14d.1). The caller hands over
+ * `counts` (one entry per emotion actually reacted); the block owns the six
+ * fixed labels/emoji and does the sort/cap/total work itself.
+ *
+ * 📐 LEAF by STRUCTURE (§14d.2). Which emotion is picked, whether the summary
+ * is empty, and waiting for the server all keep the same two-slot shape ⇒
+ * states. The caller flipping `isSkeleton` is its own leaf.
  */
 const meta: Meta<typeof ContentReaction> = {
     title: "StarCi/Blocks/Learn/ContentReaction/ContentReaction",
@@ -30,10 +35,16 @@ export default meta
 type Story = StoryObj<typeof ContentReaction>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "StackH": { tier: "frame", role: "the row frame pushing the action to one end and the fact to the other, owning the seam between them", storyId: "frames-stack-stackh--default" },
-    "Button": { tier: "atom", role: "the reaction control, owning its own pressed and busy skins; the block only decides the word and whether it reads as on", storyId: "atoms-buttons-button-button--default" },
+    "StackH": { tier: "frame", role: "the row frame pushing the reaction control to one end and the view-count fact to the other", storyId: "frames-stack-stackh--default" },
+    "ReactionButton": { tier: "block", role: "the pill trigger + six-emotion picker + summary — shared verbatim with each comment row in ContentDiscussion", storyId: "starci-blocks-learn-reactionbutton-reactionbutton--full" },
     "Typography": { tier: "atom", role: "the muted view count with its eye glyph, or its skeleton mirror while the summary is still loading", storyId: "atoms-text-typography-typography--plain" },
 }
+
+const COUNTS = [
+    { type: "like" as const, count: 80 },
+    { type: "love" as const, count: 32 },
+    { type: "haha" as const, count: 16 },
+]
 
 /** LEAF — the reaction row under a lesson. */
 export const Full: Story = {
@@ -48,35 +59,39 @@ export const Full: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "reactionCount = 128, hasReacted = false",
-                        why: "Other readers have reacted but this one has not, so the control shows the running count and stays in its resting skin. The count sits on the button rather than beside it, which keeps the row to one action and one fact.",
-                        code: "<ContentReaction reactionCount={128} viewCount={2481} onReact={react} />",
+                        name: "myReaction = null, counts = 3 kinds",
+                        why: "Other readers have reacted but this one hasn't — the trigger reads as a neutral invitation, and the summary stacks the three busiest emotions with the total beside them. Opening the trigger reveals the full six-emotion picker.",
+                        code: `<ContentReaction
+    counts={[{ type: "like", count: 80 }, { type: "love", count: 32 }, { type: "haha", count: 16 }]}
+    viewCount={2481}
+    onReact={react}
+/>`,
                         render: (
                             <ContentReaction
                                 anatPart="ContentReaction"
                                 showAnatomy
-                                reactionCount={128}
+                                counts={COUNTS}
                                 viewCount={2481}
                                 onReact={() => {}}
                             />
                         ),
                     },
                     {
-                        name: "hasReacted = true",
-                        why: "The reader has reacted, so the control switches to its on skin and the count includes them. Pressing again takes the reaction back, which is why this is one toggle rather than a separate undo.",
-                        code: "<ContentReaction reactionCount={129} viewCount={2481} hasReacted onReact={react} />",
+                        name: "myReaction = 'love'",
+                        why: "The reader picked \"Yêu thích\" — the trigger swaps its emoji and label to that pick and switches to its secondary (on) skin. Picking the same emotion again removes it.",
+                        code: "<ContentReaction myReaction=\"love\" counts={[...]} viewCount={2481} onReact={react} />",
                         render: (
                             <ContentReaction
-                                reactionCount={129}
+                                myReaction="love"
+                                counts={COUNTS.map((c) => (c.type === "love" ? { ...c, count: c.count + 1 } : c))}
                                 viewCount={2481}
-                                hasReacted
                                 onReact={() => {}}
                             />
                         ),
                     },
                     {
-                        name: "reactionCount = 0",
-                        why: "Nobody has reacted yet, so the count is dropped and the button reads as an invitation instead of reporting a score of nil. A zero here would look like a verdict on the lesson rather than an absence of votes.",
+                        name: "counts = []",
+                        why: "Nobody has reacted yet, so the summary is dropped entirely rather than showing a zero, and the trigger reads as a plain invitation — a zero here would look like a verdict on the lesson rather than an absence of reactions.",
                         code: "<ContentReaction viewCount={12} onReact={react} />",
                         render: (
                             <ContentReaction viewCount={12} onReact={() => {}} />
@@ -84,11 +99,11 @@ export const Full: Story = {
                     },
                     {
                         name: "isPending = true",
-                        why: "The reaction is in flight, so the button carries the busy affordance itself and the row keeps its exact width while the server answers. Nothing else moves, which is what stops a double press from feeling like a lost click.",
-                        code: "<ContentReaction reactionCount={128} viewCount={2481} isPending onReact={react} />",
+                        why: "A reaction is in flight, so the trigger disables itself and the row keeps its exact shape while the server answers. Nothing else moves, which is what stops a double press from feeling like a lost click.",
+                        code: "<ContentReaction counts={[...]} viewCount={2481} isPending onReact={react} />",
                         render: (
                             <ContentReaction
-                                reactionCount={128}
+                                counts={COUNTS}
                                 viewCount={2481}
                                 isPending
                                 onReact={() => {}}
@@ -115,7 +130,7 @@ export const Skeleton: Story = {
                 states={[
                     {
                         name: "isSkeleton = true",
-                        why: "Both slots shimmer while the reaction summary is still being fetched. Without this branch the row would render a truthful-looking zero for the length of the request and then jump when the real number lands, which reads as the count changing rather than arriving.",
+                        why: "Both slots shimmer while the reaction summary is still being fetched. Without this branch the row would render a truthful-looking empty state for the length of the request and then jump when the real summary lands, which reads as the count changing rather than arriving.",
                         code: "<ContentReaction isSkeleton onReact={react} />",
                         render: (
                             <ContentReaction

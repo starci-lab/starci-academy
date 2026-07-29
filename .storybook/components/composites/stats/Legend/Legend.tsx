@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -35,18 +35,32 @@ export interface LegendItem {
     suffix?: ReactNode
 }
 
-/** Props for the {@link Legend} block. */
-export interface LegendProps {
-    /** Entries to render, in order. */
-    items: Array<LegendItem>
+/** Props {@link Legend} carries regardless of loading state. */
+interface LegendOwnProps {
     /**
      * Layout of the entries. `"row"` (default) is a `flex-wrap` row that wraps to
      * new lines when narrow; `"col"` stacks entries vertically.
      */
     direction?: "row" | "col"
+    /** Entry count to shimmer while `isSkeleton`. Defaults to `3`. */
+    skeletonCount?: number
     /** Extra classes on the root element. */
     className?: string
+    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** `true` → tag the dot/label skeleton bars with `data-anat-part="Skeleton"`. */
+    showAnatomy?: boolean
 }
+
+/**
+ * Props for the {@link Legend} block. `items` is REQUIRED unless `isSkeleton`
+ * (§12b) — a shimmer legend has no real entries to show yet.
+ */
+export type LegendProps = LegendOwnProps &
+    (
+        | { isSkeleton: true; items?: Array<LegendItem> }
+        | { isSkeleton?: false; items: Array<LegendItem> }
+    )
 
 /**
  * Standalone colour legend — a `flex-wrap` row (or vertical stack) of `dot +
@@ -57,7 +71,15 @@ export interface LegendProps {
  *
  * @param props - {@link LegendProps}
  */
-export const Legend = ({ items, direction = "row", className }: LegendProps) => {
+export const Legend = ({
+    items,
+    direction = "row",
+    isSkeleton = false,
+    skeletonCount = 3,
+    className,
+    anatPart,
+    showAnatomy = false,
+}: LegendProps) => {
     return (
         <div
             className={cn(
@@ -66,20 +88,28 @@ export const Legend = ({ items, direction = "row", className }: LegendProps) => 
                     : "flex flex-wrap gap-x-3 gap-y-2",
                 className,
             )}
+            data-anat-part={anatPart}
         >
-            {items.map((item) => {
-                const dot = resolveDotColor(item.color)
-                return (
-                    <div key={item.key} className="flex items-center gap-2">
-                        <span
-                            aria-hidden
-                            style={dot.style}
-                            className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
-                        />
-                        <Typography size="xs" color="muted" text={<>{item.label}{item.suffix}</>} />
+            {isSkeleton
+                ? Array.from({ length: skeletonCount }, (_unused, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                        <HeroSkeleton className="size-2.5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                     </div>
-                )
-            })}
+                ))
+                : (items ?? []).map((item) => {
+                    const dot = resolveDotColor(item.color)
+                    return (
+                        <div key={item.key} className="flex items-center gap-2">
+                            <span
+                                aria-hidden
+                                style={dot.style}
+                                className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
+                            />
+                            <Typography size="xs" color="muted" text={<>{item.label}{item.suffix}</>} />
+                        </div>
+                    )
+                })}
         </div>
     )
 }

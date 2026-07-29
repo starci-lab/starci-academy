@@ -1,0 +1,229 @@
+import type { Meta, StoryObj } from "@storybook/nextjs"
+import { PersonalProjectResultScreen } from "@sb-components/starci/blocks/learn/PersonalProjectResultScreen/PersonalProjectResultScreen"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * BLOCK — `PersonalProjectResultScreen`: what came back from grading ONE
+ * capstone task attempt — near-total reuse of `ChallengeResultPage`'s own
+ * blocks, plus a capstone-specific "what's next" handoff once the attempt
+ * passes.
+ *
+ * FIVE of six composed leaves are the EXACT SAME blocks `ChallengeResultPage`
+ * calls (`SubmissionResultHeader`, `SubmissionAttemptSelector`,
+ * `SubmissionScoreCard`, `SubmissionFindingsList`, `ContentRelatedList`). The
+ * only new material is the next-task handoff card, which renders inline in
+ * this file (see the component's own file header for why it is not a fourth
+ * file this pass).
+ *
+ * ⭐ THE SCORE CLUSTER IS CONDITIONAL, AND THE CONDITION IS THE POINT. Nothing
+ * about "how did it go" can render before an attempt is actually selected —
+ * `NoSelection` below is what that looks like: two blocks, not five.
+ *
+ * ⭐ THE RELATED-READING NUDGE ONLY APPEARS ON A FAILING ATTEMPT, AND THE
+ * NEXT-TASK HANDOFF ONLY APPEARS ON A PASSING ONE WITH A `nextTask` SET — the
+ * two conditionals never overlap, so `Passing`/`Failing` below each show
+ * exactly one of them.
+ */
+const meta: Meta<typeof PersonalProjectResultScreen> = {
+    title: "StarCi/Blocks/Learn/PersonalProjectResultScreen/PersonalProjectResultScreen",
+    component: PersonalProjectResultScreen,
+    tags: ["autodocs"],
+    parameters: { layout: "fullscreen" },
+}
+
+export default meta
+
+type Story = StoryObj<typeof PersonalProjectResultScreen>
+
+const BASE = {
+    backLabel: "Quay lại nhiệm vụ",
+    onBack: () => {},
+    title: "Mốc 3 — Triển khai hàng đợi xử lý bất đồng bộ",
+    description: "Dựng một worker queue xử lý job chấm điểm, kèm retry và dead-letter queue.",
+    attempts: [
+        { id: "a1", attemptNumber: 1, score: 58, isPassing: false },
+        { id: "a2", attemptNumber: 2, score: 91, isPassing: true },
+    ],
+    selectedAttemptId: "a2",
+    onSelectAttempt: () => {},
+    attemptsAriaLabel: "Các lần làm",
+    scoreLabel: "Kết quả",
+    score: 91,
+    maxScore: 100,
+    shortFeedback: "Queue và retry đúng hướng, dead-letter queue xử lý gọn.",
+    submissionUrl: "https://github.com/starci-academy/capstone-submissions/tree/main/attempt-2",
+    gradedByModel: "qwen2.5-coder-32b",
+    modelCategory: "economy" as const,
+    timeAgo: "12 phút trước",
+    findingsLabel: "Góp ý",
+    findings: [
+        {
+            id: "f1",
+            message: "Chưa giới hạn số lần retry cho một job lỗi",
+            detail: "Một job lỗi liên tục sẽ retry vô hạn, chiếm hết worker.",
+            suggestion: "Thêm `maxAttempts` và đẩy job sang dead-letter queue khi vượt ngưỡng.",
+            location: "src/queue/worker.service.ts",
+            severity: "medium" as const,
+        },
+    ],
+    repositoryUrl: "https://github.com/starci-academy/capstone-submissions",
+    relatedLabel: "Có thể bạn muốn đọc lại",
+    relatedItems: [
+        { key: "queues", title: "Vì sao cần dead-letter queue", snippet: "Job lỗi liên tục sẽ làm nghẽn cả hàng đợi nếu không tách riêng.", href: "#queues" },
+    ],
+    nextTask: { title: "Mốc 4 — Thêm cơ chế idempotency cho job xử lý thanh toán" },
+    onGoToNextTask: () => {},
+}
+
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "StackV": { tier: "frame", role: "the vertical frame that owns every seam on this screen — between the header, the attempt row, and the score/findings/handoff cluster", storyId: "frames-stack-stackv--default" },
+    "SubmissionResultHeader": { tier: "block", role: "where am I, how do I leave — the back-link and the graded task's title/description", storyId: "starci-blocks-learn-submissionresultheader-submissionresultheader--header" },
+    "SubmissionAttemptSelector": { tier: "block", role: "which graded attempt is being looked at, verdict-at-a-glance per attempt", storyId: "starci-blocks-learn-submissionattemptselector-submissionattemptselector--attempt-row" },
+    "SubmissionScoreCard": { tier: "block", role: "how the selected attempt did — the score, the verdict, who graded it", storyId: "starci-blocks-learn-submissionscorecard-submissionscorecard--score-card" },
+    "SubmissionFindingsList": { tier: "block", role: "what to fix — the selected attempt's findings, severity-sorted", storyId: "starci-blocks-learn-submissionfindingslist-submissionfindingslist--findings-accordion" },
+    "ContentRelatedList": { tier: "block", role: "a quiet nudge toward more reading, shown only on a failing attempt", storyId: "starci-blocks-learn-contentrelatedlist-contentrelatedlist--full" },
+    "SurfaceCard": { tier: "composite", role: "the highlight card face for the next-task handoff — isHighlight marks it as the one thing to look at once a milestone closes", storyId: "composites-cards-surfacecard-surfacecard--default" },
+    "StackH": { tier: "frame", role: "the handoff card's own row — eyebrow+title on one side, the forward CTA on the other", storyId: "frames-stack-stackh--default" },
+    "Typography": { tier: "atom", role: "the handoff card's own text — its eyebrow or the next task's title, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Button": { tier: "atom", role: "the handoff card's forward CTA, the only pressable part this new card owns", storyId: "atoms-buttons-button-button--default" },
+}
+
+/** LEAF — no attempt selected yet ⇒ the score/findings/handoff cluster is absent, not empty. */
+export const NoSelection: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PersonalProjectResultScreen"
+                tier="block"
+                leaf="NoSelection"
+                parts={[]}
+                annotate={ANNOTATE}
+                states={[
+                    {
+                        name: "selectedAttemptId = undefined",
+                        why: "Only the identity header and the attempt row draw — nothing about \"how did it go\" can render before the reader has actually picked an attempt to look at, so the whole score/findings/handoff cluster is absent rather than shown empty.",
+                        code: `<PersonalProjectResultScreen
+    {...props}
+    selectedAttemptId={undefined}
+/>`,
+                        render: <PersonalProjectResultScreen {...BASE} showAnatomy selectedAttemptId={undefined} />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — a PASSING attempt with a next task queued ⇒ score + findings + the next-task handoff, no related-reading nudge. */
+export const Passing: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PersonalProjectResultScreen"
+                tier="block"
+                leaf="Passing"
+                parts={[]}
+                annotate={ANNOTATE}
+                states={[
+                    {
+                        name: "isPassing = true, nextTask set",
+                        why: "The selected attempt cleared the pass bar: the score card reads green, findings still show whatever quality-gate notes exist, the related-reading nudge is gone, and in its place the next-task handoff card appears — the one moment a forward pointer to the next milestone earns its place.",
+                        code: `<PersonalProjectResultScreen
+    {...props}
+    isPassing
+    nextTask={{ title: "Mốc 4 — Thêm cơ chế idempotency cho job xử lý thanh toán" }}
+/>`,
+                        render: <PersonalProjectResultScreen {...BASE} showAnatomy isPassing />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — a FAILING attempt ⇒ score + findings + related-reading nudge, no next-task handoff. */
+export const Failing: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PersonalProjectResultScreen"
+                tier="block"
+                leaf="Failing"
+                parts={[]}
+                annotate={ANNOTATE}
+                states={[
+                    {
+                        name: "isPassing = false",
+                        why: "The selected attempt fell short of the pass bar: the score card reads red, the related-reading nudge appears underneath the findings, and the next-task handoff never renders — there is no next milestone to hand the learner off to until this one actually passes.",
+                        code: `<PersonalProjectResultScreen
+    {...props}
+    isPassing={false}
+    score={58}
+/>`,
+                        render: <PersonalProjectResultScreen {...BASE} showAnatomy isPassing={false} score={58} selectedAttemptId="a1" />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — a PASSING attempt with no next task queued ⇒ neither the related-reading nudge nor the handoff appears. */
+export const PassingNoNextTask: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PersonalProjectResultScreen"
+                tier="block"
+                leaf="PassingNoNextTask"
+                parts={[]}
+                annotate={ANNOTATE}
+                states={[
+                    {
+                        name: "isPassing = true, nextTask = undefined",
+                        why: "The attempt passed, but there is no further milestone queued yet (the capstone's last one, or the next one not unlocked yet) — `nextTask` stays unset, so the handoff card never renders rather than pointing the learner at nothing.",
+                        code: `<PersonalProjectResultScreen
+    {...props}
+    isPassing
+    nextTask={undefined}
+/>`,
+                        render: <PersonalProjectResultScreen {...BASE} showAnatomy isPassing nextTask={undefined} />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; every block mirrors, including the still-absent cluster. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PersonalProjectResultScreen"
+                tier="block"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Every block mirrors itself, and the score/findings/handoff cluster reserves its height even though no attempt id has been selected yet — the same reasoning ChallengeResultPage documents for its own cluster, so the page does not jump once the first attempt actually lands.",
+                        code: "<PersonalProjectResultScreen {...props} isSkeleton />",
+                        render: (
+                            <PersonalProjectResultScreen
+                                {...BASE}
+                                showAnatomy
+                                isSkeleton
+                                isPassing
+                                selectedAttemptId={undefined}
+                                findings={[]}
+                                relatedItems={[]}
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}

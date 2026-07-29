@@ -63,6 +63,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": { tier: "atom", role: "the counter line, a section label, or the answer the learner typed during the run", storyId: "atoms-text-typography-typography--plain" },
     "MarkdownContent": { tier: "composite", role: "the viewer repeating the authored question and expected answer at the compact measure, because here a card is a passenger rather than the page", storyId: "composites-viewers-markdowncontent--compact" },
     "RatingBar": { tier: "block", role: "the learner's OWN recall grade for this card, reused unchanged from flashcard review so both places feed the schedule the same way", storyId: "starci-blocks-learn-ratingbar-ratingbar--full" },
+    "Skeleton": { tier: "heroui", role: "the counter-line bar plus, per shimmering card, a chip bar and two text bars, standing in for the recap before real `cards` have arrived" },
 }
 
 /** LEAF — the recap of a finished run. */
@@ -130,6 +131,44 @@ export const Full: Story = {
                                 ratingOptions={RATING_OPTIONS}
                                 ratingAriaLabel="Bạn nhớ tới đâu"
                                 onRate={() => {}}
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; the counter line and `skeletonCount` cards shimmer because there is no real recap to show yet. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="QuizRecapList"
+                tier="block"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "isSkeleton = true, default skeletonCount",
+                        why: "The counter line and three `SurfaceCard` rows shimmer in place of the real recap, each card mirroring its eventual shape as a verdict-chip bar over two text bars — so the layout does not jump once real `cards` land.",
+                        code: `<QuizRecapList
+    ratingOptions={ratingOptions}
+    ratingAriaLabel="Bạn nhớ tới đâu"
+    onRate={rate}
+    isSkeleton
+/>`,
+                        render: (
+                            <QuizRecapList
+                                anatPart="QuizRecapList"
+                                showAnatomy
+                                ratingOptions={RATING_OPTIONS}
+                                ratingAriaLabel="Bạn nhớ tới đâu"
+                                onRate={() => {}}
+                                isSkeleton
                             />
                         ),
                     },

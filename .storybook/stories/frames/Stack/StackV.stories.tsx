@@ -213,6 +213,39 @@ export const WithDivider: Story = {
 }
 
 /**
+ * Nested — `border-l` + a matching indent, for a track that is ONE LEVEL DEEPER than
+ * its caller (a threaded reply, a nested tree row). Added 2026-07-28 after a block
+ * hand-wrote these exact classes itself for a reply thread's own indent guide — the
+ * frame now owns them, same vocabulary as `SurfaceCard`'s `variant="nested"`.
+ */
+export const Nested: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="StackV"
+                tier="frame"
+                leaf="Nested"
+                reason={"The border marks \"this track is inside a parent\" the same way `SurfaceCard`'s `variant=\"nested\"` does for a card face — a caller never writes `border-l`/`pl-*` itself."}
+                states={[
+                    {
+                        name: "nested = true",
+                        why: "A reply one level deeper than its parent comment gets a left guide + indent, so the thread's depth reads at a glance without the caller touching a single className.",
+                        code: `<StackV gap="grouped" nested>
+  <Typography size="sm" text="Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất." />
+</StackV>`,
+                        render: (
+                            <StackV gap="grouped" nested showAnatomy>
+                                <Typography size="sm" text="Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất." />
+                            </StackV>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/**
  * Align — on the VERTICAL axis, `align` aligns along the HORIZONTAL direction. `stretch`
  * (default) stretches children to full width; `start`/`center`/`end` let children keep
  * their natural width.

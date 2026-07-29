@@ -33,6 +33,15 @@ const BAR_LEGEND_CAPTION_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "heroui", role: "an optional muted takeaway sentence below everything" },
 ]
 
+// leaf Skeleton: flat track shimmer + a delegated `<Legend isSkeleton />`, no caption bar (the
+// default call passes no `caption`). Updated 2026-07-29 — the anatPart/showAnatomy sweep gave
+// the track its own `data-anat-part="Skeleton"` (a raw HeroUI bar, no dedicated story), and
+// `Legend`'s own isSkeleton branch is now wired through as its own linked node.
+const BAR_SKELETON_PARTS: Array<AnatomyNode> = [
+    { name: "Skeleton", tier: "heroui", role: "the flat track shimmer standing in for the coloured proportion strip while data loads" },
+    { name: "Legend", tier: "composite", role: "the delegated shimmer legend row — Legend owns its own isSkeleton, not redrawn by hand here", storyId: "composites-stats-legend--skeleton" },
+]
+
 /** No shared total — slices always fill 100% as shares of each other. */
 export const Proportional: Story = {
     render: () => (
@@ -52,6 +61,7 @@ export const Proportional: Story = {
                         render: (
                             <SegmentBar
                                 ariaLabel="Distribution of answers by difficulty"
+                                anatPart="SegmentBar"
                                 showAnatomy
                                 segments={[
                                     { key: "easy", label: "Easy", value: 12 },
@@ -87,6 +97,7 @@ export const WithMax: Story = {
                             <SegmentBar
                                 ariaLabel="Lesson completion progress"
                                 max={50}
+                                anatPart="SegmentBar"
                                 showAnatomy
                                 segments={[
                                     { key: "done", label: "Completed", value: 18, color: "var(--success)" },
@@ -121,6 +132,7 @@ export const HideLegend: Story = {
                             <SegmentBar
                                 hideLegend
                                 ariaLabel="Ratio of correct and incorrect answers"
+                                anatPart="SegmentBar"
                                 showAnatomy
                                 segments={[
                                     { key: "correct", label: "Correct", value: 34, color: "var(--success)" },
@@ -154,6 +166,7 @@ export const ManyGroups: Story = {
                         render: (
                             <SegmentBar
                                 ariaLabel="Distribution of assessed skills"
+                                anatPart="SegmentBar"
                                 showAnatomy
                                 segments={[
                                     { key: "frontend", label: "Frontend", value: 9 },
@@ -197,6 +210,7 @@ export const InlineLabels: Story = {
                                 inlineLabels
                                 ariaLabel="Card maturity breakdown"
                                 caption="Only 8% of cards have matured (retained over a long gap) — that's the real progress, not the raw card count seen."
+                                anatPart="SegmentBar"
                                 showAnatomy
                                 segments={[
                                     { key: "non", label: "Non", value: 52, color: "var(--default)" },
@@ -231,6 +245,7 @@ export const Empty: Story = {
                         render: (
                             <SegmentBar
                                 ariaLabel="No assessment data yet"
+                                anatPart="SegmentBar"
                                 showAnatomy
                                 segments={[
                                     { key: "easy", label: "Easy", value: 0 },
@@ -239,6 +254,30 @@ export const Empty: Story = {
                                 ]}
                             />
                         ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; a flat track shimmer stands in for the coloured proportion strip while data loads. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="SegmentBar"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                renderClassName="w-80"
+                parts={BAR_SKELETON_PARTS}
+                reason="`segments` is only required when `isSkeleton` is falsy (the discriminated union above), so a caller mid-fetch can render the bar before it has a single real slice to measure."
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The flat track bar mirrors the real strip's shape, but the legend row underneath is not redrawn by hand — it delegates straight to `Legend`'s own `isSkeleton`, so the two composites can never drift out of sync (§12g.0's priority rule: the composite that already owns a loading state is the source of truth for its own shimmer, not a shape guessed by its caller).",
+                        code: "<SegmentBar isSkeleton ariaLabel=\"Distribution of answers by difficulty\" />",
+                        render: <SegmentBar isSkeleton ariaLabel="Distribution of answers by difficulty" anatPart="SegmentBar" showAnatomy />,
                     },
                 ]}
             />

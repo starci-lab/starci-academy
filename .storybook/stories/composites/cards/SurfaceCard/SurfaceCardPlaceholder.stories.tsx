@@ -59,7 +59,7 @@ export const CustomIcon: Story = {
         </Cell>
     ),
 }
-/** `isSelected` — the tile is selected within a selection grid (accent ring), same contract as `SurfaceCardPressable`. */
+/** `isSelected` — the tile is selected within a selection grid (accent ring), same contract as `SurfaceCard`'s pressable states. */
 export const Selected: Story = {
     render: () => (
         <Cell>

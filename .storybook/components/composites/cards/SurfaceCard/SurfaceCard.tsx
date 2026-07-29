@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Accordion, Card, cn, Radio, RadioGroup, Skeleton as HeroSkeleton } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckCircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
+import { type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/composites/cards/verdict-band"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
@@ -22,14 +23,27 @@ import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
  *
  * KHUNG API LAW:
  * - Named slots are the main road: `header` / `body` / `footer`.
- * - `children` stays allowed on WRAPPER frames (`.Base` / `.Nested` /
- *   `.Pressable`) — it is shorthand for `body`.
+ * - `children` stays allowed on WRAPPER frames (`.Base` / `.Nested`) — it is
+ *   shorthand for `body`.
  * - A REPEATING LIST must take DATA via `items`; children are forbidden there
  *   (`.List` · `.PressableGroup` · `.SelectableGroup` · `.Accordion` · `.CrossList`).
  * - Namespace only — no bare component export.
  *
  * Behaviour/skin of every member is carried over VERBATIM from its old folder;
  * this is an API refactor, not a visual one. Synced to `src` later.
+ *
+ * ⭐ `.Pressable` REMOVED, FOLDED INTO `.Base` (thầy 2026-07-29: "sao còn
+ * .Pressable, thành isPressable là prop hết rồi mà?"). `Base` derives
+ * `isPressable = Boolean(onPress || href)` internally — same convention
+ * `List.Row` already used — instead of forcing the caller to import a second,
+ * separate component for the exact same card face plus a press target. Every
+ * `onPress`/`href`/`isDisabled`/`isSelected`/`actions`/`ariaLabel` capability
+ * `.Pressable` used to own now lives on `SurfaceCardBaseProps`, unchanged in
+ * behaviour (ripple, `active:scale-[0.97]`, the stretched-link `actions`
+ * pattern) — only the entry point moved. `.PressableGroup` (the GRID of
+ * press-target tiles) still exists — a repeating list is a genuinely different
+ * shape (§13b) — but each tile now renders straight off `.Base`, not a
+ * bespoke sibling.
  *
  * ⭐ NINTH MEMBER (decided 2026-07-26): `.SelectableGroup` — moved in from the
  * atom tier (`atoms/navigation/SelectableCardGroup`). It composes several cards
@@ -124,11 +138,46 @@ const RowAnchor = ({
     }
     return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className} data-anat-part={anatPart}>{children}</a>
 }
+/**
+ * Discriminates the two accessible-name contracts for a PRESSABLE card: without
+ * `actions` the content IS the card's label (optional `ariaLabel` only when the
+ * content carries no readable text — an icon-only tile); WITH `actions` the
+ * whole-card target becomes a transparent overlay with no visible text of its
+ * own, so `ariaLabel` becomes REQUIRED.
+ *
+ * Named `ariaLabel` here (not `label`, thầy 2026-07-29 merge) — `SurfaceCardBaseProps`
+ * already owns `label` for the VISIBLE section header above the card
+ * ({@link SurfaceLabelProps.label}); reusing that name for the invisible
+ * accessible-name of a pressable card would collide two unrelated concepts.
+ */
+type PressableActionsProps =
+    | {
+        /** No secondary controls — the whole card is ONE press target. */
+        actions?: undefined
+        /** Accessible name for the whole-card press target — only when content carries no readable text. */
+        ariaLabel?: string
+    }
+    | {
+        /**
+         * Secondary interactive controls (buttons / menus) that live INSIDE the card
+         * but act INDEPENDENTLY of the whole-card press — e.g. a "Continue" button +
+         * an overflow menu on a course-progress card.
+         *
+         * Providing this switches the card to the accessible **stretched-link**
+         * pattern: the whole-card target becomes a TRANSPARENT overlay that covers
+         * the card, and these actions sit ABOVE it (later in source order + `z-10`)
+         * so each stays separately clickable — instead of illegally nesting a
+         * `<button>` inside the card's own `<button>`/`<a>`.
+         */
+        actions: ReactNode
+        /** Accessible name for the whole-card press target. REQUIRED — the stretched overlay covers the card but has no visible text of its own. */
+        ariaLabel: string
+    }
 // ─────────────────────────────────────────────────────────────────────────────
 // .Base — the generic `bg-surface` content card (was `SurfaceCard`)
 // ─────────────────────────────────────────────────────────────────────────────
 /** Props for {@link SurfaceCard}. */
-export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
+interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     /**
      * Caption text placed OUTSIDE (below) the card, `gap-2` — a hint/note, not
      * chrome inside the card.
@@ -203,6 +252,32 @@ export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
      * that situation.
      */
     isHighlight?: boolean
+    /**
+     * Press handler — set (with or without `href`) to render the WHOLE CARD as a
+     * `<button>`/`<a>` instead of a plain `<div>` (§ "isPressable" convention,
+     * thầy 2026-07-29 merge — matches `List.Row`'s own `const isPressable =
+     * Boolean(onPress || href)`; was a separate component `SurfaceCard.Pressable`
+     * before this). Ripple + `active:scale-[0.97]` press feedback, no hover
+     * effect at rest (hover is inert by design — the only feedback IS the
+     * press). Ignored when `href` is also set.
+     */
+    onPress?: () => void
+    /**
+     * Navigation target — renders the whole card as a link instead of a plain
+     * `<div>`. Wins over `onPress` when both are set.
+     */
+    href?: string
+    /**
+     * Dims the card and blocks the press — only meaningful once the card IS
+     * pressable (`onPress`/`href` set); has no effect on a plain card.
+     */
+    isDisabled?: boolean
+    /**
+     * `true` → mark this card as the CHOSEN one in a selectable grid — an accent
+     * `ring-2` around the face. Use when a group of these cards is a
+     * single/multi-select chooser instead of a fire-and-forget action grid.
+     */
+    isSelected?: boolean
     /** Extra classes on the section wrapper. */
     className?: string
     /** Extra classes on the surface (content) wrapper. */
@@ -216,6 +291,7 @@ export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
      */
     showAnatomy?: boolean
 }
+export type SurfaceCardBaseProps = SurfaceCardBaseOwnProps & PressableActionsProps
 /**
  * The generic `bg-surface` content card of the namespace, with an OPTIONAL section
  * header baked in — pass `label` and it renders a `Label` OUTSIDE (above) the card,
@@ -241,23 +317,150 @@ const Base = ({
     padding = "cozy",
     isSkeleton = false,
     isHighlight = false,
+    onPress,
+    href,
+    isDisabled = false,
+    isSelected = false,
+    actions,
+    ariaLabel,
     className,
     contentClassName,
     anatPart,
     showAnatomy = false,
 }: SurfaceCardBaseProps) => {
+    const { ripples, add: addRipple, clear: clearRipple } = useRipple()
     const content = composeSlots({ header, body, footer, children })
-    const card = (
-        <div
-            className={cn(
-                surfaceFrame(variant),
-                padding === "flush" ? "overflow-hidden" : PADDING_CLASS[padding],
-                contentClassName,
-            )}
-        >
-            {content}
-        </div>
-    )
+    const paddingCls = padding === "flush" ? "overflow-hidden" : PADDING_CLASS[padding]
+    // A card is PRESSABLE the moment it gets `onPress`/`href` — same derived-not-
+    // passed convention `List.Row` already uses (`const isPressable = Boolean(onPress
+    // || href)`). Was a SEPARATE component, `SurfaceCard.Pressable` (thầy 2026-07-29:
+    // "sao còn .Pressable, thành isPressable là prop hết rồi mà?") — folded in here so
+    // every card face (bare or pressable) shares ONE frame/padding/variant path.
+    const isPressable = !isSkeleton && Boolean(onPress || href)
+    // A PRESSABLE card's `isSkeleton` means something DIFFERENT from a plain card's:
+    // a plain `SurfaceCard` shimmers only the parts it OWNS (label/description) and
+    // renders `children` for real (§12c, flows down to whatever the caller composed);
+    // `.Pressable`'s old `isSkeleton` instead swapped in a GENERIC tile mirror (leading
+    // tile + two text bars) INSTEAD of children entirely — carried over VERBATIM here
+    // so `FlashcardDeckList`/`SummaryCard` (which pass `isSkeleton` straight through,
+    // `children={isSkeleton ? null : realBody}`) keep the exact shimmer they already
+    // render, not an empty box.
+    if (isSkeleton && Boolean(onPress || href)) {
+        return (
+            <div className={cn("flex items-center gap-3 rounded-3xl bg-surface p-3 shadow-surface", className)}>
+                <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
+                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                    <Typography size="sm" isSkeleton className="w-2/3" />
+                    <Typography size="xs" isSkeleton className="w-1/3" />
+                </div>
+            </div>
+        )
+    }
+    let card: ReactNode
+    if (!isPressable) {
+        // `relative` — WITHOUT it this div is `static`, and `.highlight-card-sweep`
+        // (`position: absolute`) paints ABOVE any `static` sibling regardless of DOM
+        // order, covering the card's own content instead of sitting behind it
+        // (thầy 2026-07-29, caught live: the sweep visibly cut across the CTA
+        // button). The Pressable branch below already carries `relative` for the
+        // same reason — this branch had simply dropped it.
+        card = (
+            <div
+                className={cn("relative", surfaceFrame(variant), paddingCls, isSelected && "ring-2 ring-accent", contentClassName)}
+            >
+                {content}
+            </div>
+        )
+    } else if (!actions) {
+        // Whole card IS the press target. TWO different hover languages, thầy
+        // 2026-07-29: a real navigation LINK (`href`) reads as a link, not an
+        // action button — no ripple/press-scale, just `.group` so the content
+        // can opt into the quiet `underlineOnGroupHover` convention
+        // (`Typography`'s own prop, shared with `SurfaceCardListItem.hover=
+        // "underline"`). An in-place ACTION (`onPress`, no `href`) keeps the
+        // ripple + `active:scale-[0.97]` push-in carried over VERBATIM from the
+        // old `.Pressable` "simple" branch — no hover effect at rest, the press
+        // IS the only feedback.
+        const isLink = Boolean(href) && !isDisabled
+        const frameCls = cn(
+            "relative block w-full overflow-hidden text-left outline-none focus-visible:ring-2 focus-visible:ring-accent [-webkit-tap-highlight-color:transparent]",
+            surfaceFrame(variant),
+            paddingCls,
+            isSelected && "ring-2 ring-accent",
+            isLink
+                ? "group"
+                : cn(
+                    "transition-[scale] duration-200 ease-out motion-reduce:transition-none",
+                    isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer active:scale-[0.97]",
+                ),
+            contentClassName,
+        )
+        const inner = isLink ? (
+            <span className="relative z-10 block">{content}</span>
+        ) : (
+            <>
+                <span className="relative z-10 block">{content}</span>
+                {!isDisabled ? <Ripple ripples={ripples} onClear={clearRipple} /> : null}
+            </>
+        )
+        card = href && !isDisabled ? (
+            <a href={href} aria-label={ariaLabel} aria-current={isSelected ? "true" : undefined} className={frameCls}>
+                {inner}
+            </a>
+        ) : (
+            <button
+                type="button"
+                onClick={onPress}
+                onPointerDown={isDisabled ? undefined : addRipple}
+                disabled={isDisabled}
+                aria-label={ariaLabel}
+                aria-pressed={isSelected || undefined}
+                className={cn(frameCls, !isDisabled && "cursor-pointer")}
+            >
+                {inner}
+            </button>
+        )
+    } else {
+        // Card WITH its own secondary actions — stretched-link pattern, carried
+        // over VERBATIM from the old `.Pressable` "actions" branch: a transparent
+        // overlay covers the card, actions sit ABOVE it so they stay independently
+        // clickable, and only the OVERLAY press scales the whole card (`:has()`
+        // scopes it — a plain `active:scale` would fire on any inner action too).
+        const overlayCls = cn(
+            "absolute inset-0 rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-accent",
+            isDisabled ? "cursor-not-allowed" : "cursor-pointer",
+        )
+        card = (
+            <div
+                className={cn(
+                    "relative w-full",
+                    surfaceFrame(variant),
+                    paddingCls,
+                    isSelected && "ring-2 ring-accent",
+                    !isDisabled && "has-[[data-card-press]:active]:scale-[0.97]",
+                    contentClassName,
+                )}
+            >
+                <div className="flex items-center gap-3">
+                    <div className="min-w-0 flex-1">{content}</div>
+                    <div className="relative z-10 flex shrink-0 items-center gap-2">{actions}</div>
+                </div>
+                {href && !isDisabled ? (
+                    <a href={href} data-card-press aria-label={ariaLabel} aria-current={isSelected ? "true" : undefined} className={overlayCls} />
+                ) : (
+                    <button
+                        type="button"
+                        data-card-press
+                        onClick={onPress}
+                        disabled={isDisabled}
+                        aria-label={ariaLabel}
+                        aria-pressed={isSelected || undefined}
+                        className={overlayCls}
+                    />
+                )}
+            </div>
+        )
+    }
     // The sweep sits on a SEPARATE layer BEHIND the card face (peeking out 2px past
     // the edge), so it needs a `relative` wrapper to anchor to. Off while
     // `isSkeleton`: at rest there's nothing worth emphasizing yet — running the
@@ -571,221 +774,13 @@ const Ripple = ({ ripples, onClear }: RippleProps) => (
         })}
     </AnimatePresence>
 )
-/** Props shared by both press-target shapes of {@link SurfaceCardPressable}. */
-interface PressableBaseProps extends SlotProps {
-    /**
-     * Press handler for an action card (select / toggle). Ignored when
-     * {@link SurfaceCardPressableProps.href} is set. One of `onPress` / `href`
-     * should be provided for the card to be interactive.
-     */
-    onPress?: () => void
-    /** Navigation target — renders the card as an anchor when provided. */
-    href?: string
-    /** Disables interaction and dims the card (action cards only). */
-    isDisabled?: boolean
-    /**
-     * `true` → mark this card as the CHOSEN one in a selectable grid — an accent
-     * `ring-2 ring-accent` around the card (the card-equivalent of a list row's
-     * trailing check). Sets `aria-pressed`/`aria-current` so it's announced.
-     */
-    isSelected?: boolean
-    /**
-     * `true` → render a generic skeleton mirror (tile-shaped placeholder) instead
-     * of the real press target. The consumer just flips the flag — the mirror
-     * doesn't depend on the real `children`/`actions` (same as base `Button`).
-     */
-    isSkeleton?: boolean
-    /** Extra classes on the card surface. */
-    className?: string
-    /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel to badge on-render. */
-    showAnatomy?: boolean
-}
-/**
- * Discriminates the two accessible-name contracts: without `actions` the
- * content IS the card's label (optional `label` only for icon-only tiles);
- * WITH `actions` the whole-card target becomes a transparent overlay with no
- * visible text of its own, so `label` becomes REQUIRED.
- */
-type PressableActionsProps =
-    | {
-        /** No secondary controls — the whole card is ONE press target. */
-        actions?: undefined
-        /**
-         * Accessible name for the whole-card press target. Optional here —
-         * without `actions` the content IS the card's accessible name, so pass
-         * this only when it carries no readable text (an icon-only tile).
-         */
-        label?: string
-    }
-    | {
-        /**
-         * Secondary interactive controls (buttons / menus) that live INSIDE the card
-         * but act INDEPENDENTLY of the whole-card press — e.g. a "Continue" button +
-         * an overflow menu on a course-progress card.
-         *
-         * Providing this switches the card to the accessible **stretched-link**
-         * pattern: the whole-card target becomes a TRANSPARENT overlay that covers
-         * the card, and these actions sit ABOVE it (later in source order + `z-10`)
-         * so each stays separately clickable — instead of illegally nesting a
-         * `<button>` inside the card's own `<button>`/`<a>`.
-         */
-        actions: ReactNode
-        /**
-         * Accessible name for the whole-card press target. REQUIRED — the stretched
-         * overlay covers the card but has no visible text of its own.
-         */
-        label: string
-    }
-/** Props for {@link SurfaceCardPressable}. */
-export type SurfaceCardPressableProps = PressableBaseProps & PressableActionsProps
-/**
- * A whole-card press target with the default surface card look (surface fill,
- * concentric `rounded-3xl`, fixed `p-3` padding, `shadow-surface` elevation AT
- * REST — per `card.md` §0) plus a hover affordance and keyboard focus ring.
- * Exists because HeroUI v3 `Card` is a non-interactive `<div>` — this frame owns
- * the card styling on a real `<button>` / `<a>`. Hover tints the surface; PRESS
- * scales it to 0.97 (subtle push-in) via native `:active`. Use for navigation
- * tiles, selectable option cards, and bookmark rows.
- *
- * When the card also needs its OWN buttons (a "Continue" CTA, an overflow menu),
- * pass them via `actions` + `label` (TypeScript enforces `label` once `actions`
- * is set): the card renders as the accessible stretched-link pattern.
- *
- * @param props - {@link SurfaceCardPressableProps}
- */
-const Pressable = ({
-    header,
-    body,
-    footer,
-    children,
-    onPress,
-    href,
-    isDisabled = false,
-    isSelected = false,
-    isSkeleton = false,
-    actions,
-    label,
-    className,
-    showAnatomy,
-}: SurfaceCardPressableProps) => {
-    const { ripples, add: addRipple, clear: clearRipple } = useRipple()
-    const content = composeSlots({ header, body, footer, children })
-    // Skeleton mirror — generic tile shape (leading tile + 2 text bars), same
-    // outer frame/padding as the real card, regardless of actions/content.
-    if (isSkeleton) {
-        return (
-            <div
-                className={cn("flex items-center gap-3 rounded-3xl bg-surface p-3 shadow-surface", className)}
-            >
-                <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
-                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <Typography size="sm" isSkeleton className="w-2/3" />
-                    <Typography size="xs" isSkeleton className="w-1/3" />
-                </div>
-            </div>
-        )
-    }
-    // Shared card surface + disabled dim, identical across both render paths.
-    // NO hover effect (like a HeroUI pressable card — hover is inert); the ONLY
-    // feedback is the PRESS: a `active:scale-[0.97]` push-in + ripple. ⚠️ Tailwind
-    // v4: `scale-*` sets the `scale:` property (NOT `transform:`), so the
-    // transition MUST list `scale` — listing `transform` instead makes scale
-    // change instantly (a jump cut). `duration-200 ease-out` for a smooth
-    // push-in; `motion-reduce` turns it off; tap-highlight hidden on mobile.
-    // Shared LOOK only — press-scale is added PER-VARIANT below (simple = element's
-    // own `:active`; stretched = only when the OVERLAY is pressed, NOT the inner
-    // actions — a Continue/menu click must NOT scale the whole card).
-    const surface = cn(
-        "rounded-3xl bg-surface p-3 text-left shadow-surface [-webkit-tap-highlight-color:transparent]",
-        "transition-[scale] duration-200 ease-out motion-reduce:transition-none",
-        // Selected = accent ring around the card (the card-equivalent of a row's check).
-        isSelected && "ring-2 ring-accent",
-        isDisabled && "cursor-not-allowed opacity-60",
-        className,
-    )
-    // ── Simple whole-card target (no secondary actions) — the whole card is ONE
-    // <button>/<a> and its content is its label. ───────────────────────────────
-    if (!actions) {
-        // `relative overflow-hidden` so the ripple clips to the rounded card shape.
-        // Simple variant = the whole element IS the press target → its own `:active`.
-        const base = cn(
-            "relative block w-full overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-accent",
-            surface,
-            !isDisabled && "active:scale-[0.97]",
-        )
-        // Content sits ABOVE the ripple layer (ripple is absolute `z-0`).
-        const inner = (
-            <>
-                <span className="relative z-10 block">{content}</span>
-                {!isDisabled ? <Ripple ripples={ripples} onClear={clearRipple} /> : null}
-            </>
-        )
-        if (href && !isDisabled) {
-            return (
-                <a href={href} aria-label={label} aria-current={isSelected ? "true" : undefined} className={base} onPointerDown={addRipple}>
-                    {inner}
-                </a>
-            )
-        }
-        return (
-            <button
-                type="button"
-                onClick={onPress}
-                onPointerDown={isDisabled ? undefined : addRipple}
-                disabled={isDisabled}
-                aria-label={label}
-                aria-pressed={isSelected || undefined}
-                className={cn(base, !isDisabled && "cursor-pointer")}
-            >
-                {inner}
-            </button>
-        )
-    }
-    // ── Card WITH its own buttons — stretched-link pattern. The card is a plain
-    // relative <div>; a transparent overlay <a>/<button> covers it, and the
-    // actions sit ABOVE the overlay so they stay clickable. ────────────────────
-    const overlay = cn(
-        "absolute inset-0 rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-accent",
-        isDisabled ? "cursor-not-allowed" : "cursor-pointer",
-    )
-    return (
-        // Scale the WHOLE card ONLY when the stretched overlay (`data-card-press`) is
-        // pressed — NOT when an inner action is. Plain `active:scale` would fire on
-        // ANY descendant press (Continue/menu → whole card zooms, wrong). `:has()`
-        // scopes it to just the card region.
-        <div
-            className={cn(
-                "relative w-full",
-                surface,
-                !isDisabled && "has-[[data-card-press]:active]:scale-[0.97]",
-            )}
-        >
-            <div className="flex items-center gap-3">
-                <div className="min-w-0 flex-1">
-                    {content}
-                </div>
-                {/* Secondary actions — later in source order than the overlay AND
-                    `relative z-10`, so they hit-test ABOVE the stretched overlay. */}
-                <div className="relative z-10 flex shrink-0 items-center gap-2">
-                    {actions}
-                </div>
-            </div>
-            {href && !isDisabled ? (
-                <a href={href} data-card-press aria-label={label} aria-current={isSelected ? "true" : undefined} className={overlay} />
-            ) : (
-                <button
-                    type="button"
-                    data-card-press
-                    onClick={onPress}
-                    disabled={isDisabled}
-                    aria-label={label}
-                    aria-pressed={isSelected || undefined}
-                    className={overlay}
-                />
-            )}
-        </div>
-    )
-}
+// ⭐ `SurfaceCard.Pressable` REMOVED (thầy 2026-07-29, "isPressable là prop hết rồi
+// mà?") — its whole render tree (ripple + active:scale simple branch, the
+// stretched-link actions branch) now lives INSIDE `Base` above, reached the same
+// way `List.Row` already reaches it: passing `onPress`/`href` derives
+// `isPressable` internally instead of importing a separate component. Callers
+// that used to write `<SurfaceCardPressable href={x}>` now write
+// `<SurfaceCard href={x}>` — same card, same props, one fewer name to import.
 // ─────────────────────────────────────────────────────────────────────────────
 // .PressableGroup — a grid of press targets (was `GroupPressableCard`)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -879,7 +874,7 @@ export interface SurfaceCardPressableGroupProps {
     /** Extra classes on the container wrapper. */
     className?: string
     /**
-     * Dev/spec: tag each direct tile (`SurfaceCardPressable` / `SkeletonTile`) with an
+     * Dev/spec: tag each direct tile (`SurfaceCard` / `SkeletonTile`) with an
      * {@link AnatomyOverlay} anchor so a BlockAnatomy panel can badge it on-render.
      */
     showAnatomy?: boolean
@@ -1021,27 +1016,27 @@ const PressableGroup = ({
                 gap={gap}
                 items={items.map((item) => {
                     const tile = (
-                        <Pressable
+                        <Base
                             onPress={item.onPress}
                             href={item.href}
                             isDisabled={item.isDisabled}
                             isSelected={item.selected}
-                            label={item.label}
-                            className={cn(
+                            ariaLabel={item.label}
+                            contentClassName={cn(
                                 TILE_CHROME,
                                 verdictBandClassName(item.withVerdict),
                                 item.className,
                             )}
                         >
                             {itemBody(item)}
-                        </Pressable>
+                        </Base>
                     )
                     return {
                         key: item.key,
                         content: showAnatomy ? (
                             <div className="relative" data-anat>
                                 {tile}
-                                <AnatomyOverlay label="SurfaceCardPressable" tier="composite" />
+                                <AnatomyOverlay label="SurfaceCard" tier="composite" />
                             </div>
                         ) : tile,
                     }
@@ -1199,6 +1194,14 @@ export interface SurfaceCardListItem {
      * blocks still use `leading`.
      */
     leadingIcon?: ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
+    /**
+     * Set → the leading icon carries a STATUS meaning (a checklist "done", a
+     * pass/fail row) instead of following the label's colour — reuses `Alert`'s
+     * own `AlertStatus` (§5.0/`Alert.Base`, thầy 2026-07-29) rather than a
+     * bespoke enum, so this row's status vocabulary never drifts from Alert's.
+     * Omit → unchanged existing behaviour (icon follows the label/foreground).
+     */
+    leadingIconColor?: AlertStatus
     /** Optional right-aligned metadata (chips/counts) before the trailing node. */
     meta?: ReactNode
     /**
@@ -1292,6 +1295,18 @@ interface VerdictBearingItem {
 const itemVerdict = (item: VerdictBearingItem): VerdictBand | undefined =>
     item.withVerdict ?? (item.tone != null ? { enable: true, variant: item.tone } : undefined)
 /**
+ * `leadingIconColor` → text class, reusing `Alert`'s own status vocabulary
+ * (same tokens Alert's `STATUS_CLOSE_TONE` paints its icon/× with, minus the
+ * hover-only classes that don't apply to a static leading icon).
+ */
+const LEADING_ICON_COLOR_CLASS: Record<AlertStatus, string> = {
+    default: "text-muted",
+    accent: "text-accent-soft-foreground",
+    success: "text-success-soft-foreground",
+    warning: "text-warning-soft-foreground",
+    danger: "text-danger-soft-foreground",
+}
+/**
  * One FIXED row: leading · title+subtitle · meta+trailing, with a full-bleed inset
  * separator auto-hidden on the last row. STATIC by default (a plain `<div>`);
  * `onPress`/`href` make the whole row a tappable `<button>`/`<a>` with
@@ -1308,6 +1323,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     const {
         leading,
         leadingIcon: LeadingIcon,
+        leadingIconColor,
         title,
         titleClassName,
         subtitle,
@@ -1340,10 +1356,18 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     )
     // §4/§5: when the caller goes the DATA path (`leadingIcon`/`metaText`/`trailingIcon`),
     // the frame owns scale + tone — the caller doesn't paint classes, doesn't hold an atom.
-    // The leading icon matches the TEXT COLOUR (foreground) — decided: an icon
-    // paired with a label follows the label's colour, it doesn't drop to muted on
-    // its own (otherwise it reads as dim/disabled).
-    const leadingSlot = leading ?? (LeadingIcon ? <LeadingIcon aria-hidden focusable="false" className="size-5" /> : null)
+    // The leading icon matches the TEXT COLOUR (foreground) by default — decided: an icon
+    // paired with a label follows the label's colour, it doesn't drop to muted on its own
+    // (otherwise it reads as dim/disabled) — UNLESS `leadingIconColor` says the icon carries
+    // its own status meaning (a checklist "done", a pass/fail row), in which case that status
+    // wins over the label's colour.
+    const leadingSlot = leading ?? (LeadingIcon ? (
+        <LeadingIcon
+            aria-hidden
+            focusable="false"
+            className={cn("size-5", leadingIconColor && LEADING_ICON_COLOR_CLASS[leadingIconColor])}
+        />
+    ) : null)
     const metaSlot = meta ?? (metaText != null
         ? <Typography size="sm" weight="medium" className="text-accent-soft-foreground" text={metaText} />
         : null)
@@ -1588,7 +1612,10 @@ const AccordionFrame = ({
                     <Accordion.Heading>
                         <Accordion.Trigger>
                             <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
-                                <Typography size="sm" weight="medium" truncate text={item.title} />
+                                {/* Trigger is a <button> — full block-level MarkdownContent can't nest
+                                    here, so `` `code` `` segments in a plain-string title go through
+                                    `parseInlineCode` instead (span-only, no other markdown syntax). */}
+                                <Typography size="sm" weight="medium" truncate parseInlineCode text={item.title} />
                                 {item.subtitle != null ? (
                                     <Typography size="xs" color="muted" truncate text={item.subtitle} />
                                 ) : null}
@@ -2008,4 +2035,4 @@ const Placeholder = ({
  * | `.CrossList` | `items` |
  * | `.Placeholder` | none (`icon`/`label`/`onPress`) |
  */
-export { Base as SurfaceCard, Nested as SurfaceCardNested, Pressable as SurfaceCardPressable, PressableGroup as SurfaceCardPressableGroup, SelectableGroup as SurfaceCardSelectableGroup, List as SurfaceCardList, AccordionCard as SurfaceCardAccordion, CrossList as SurfaceCardCrossList, Placeholder as SurfaceCardPlaceholder }
+export { Base as SurfaceCard, Nested as SurfaceCardNested, PressableGroup as SurfaceCardPressableGroup, SelectableGroup as SurfaceCardSelectableGroup, List as SurfaceCardList, AccordionCard as SurfaceCardAccordion, CrossList as SurfaceCardCrossList, Placeholder as SurfaceCardPlaceholder }

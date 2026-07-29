@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CourseProgressBar } from "@sb-components/composites/stats/CourseProgressBar/CourseProgressBar"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof CourseProgressBar> = {
     title: "Composites/Stats/CourseProgressBar",
@@ -65,6 +66,46 @@ export const DimensionNotApplicable: Story = {
                     ]}
                 />
             </div>
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; a flat track shimmer stands in for the equal-width lanes, plus 3 legend-label shimmer chips when `!hideLegend` (they drop out entirely when it's true, the same shape difference the real `HideLegend` leaf shows). */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="CourseProgressBar"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                renderClassName="w-96"
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Dimensions aren't loaded yet, so there are no real ratios to lay out lanes for — the shimmer mirrors the finished shape (one flat rounded track) instead of guessing at lane widths.",
+                        code: "<CourseProgressBar ariaLabel=\"Fullstack course progress by dimension\" isSkeleton />",
+                        render: (
+                            <CourseProgressBar
+                                ariaLabel="Fullstack course progress by dimension"
+                                isSkeleton
+                            />
+                        ),
+                    },
+                    {
+                        name: "isSkeleton = true, hideLegend",
+                        why: "When the parent block already renders its own legend, the legend shimmer chips drop out too — the loading shape stays honest to what `hideLegend` actually removes.",
+                        code: "<CourseProgressBar ariaLabel=\"Fullstack course progress\" isSkeleton hideLegend />",
+                        render: (
+                            <CourseProgressBar
+                                ariaLabel="Fullstack course progress"
+                                isSkeleton
+                                hideLegend
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

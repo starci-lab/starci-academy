@@ -466,3 +466,204 @@ export const Skeleton: Story = {
         </div>
     ),
 }
+
+/**
+ * ⭐ PRESSABLE STATES (thầy 2026-07-29, "sao còn .Pressable, thành isPressable là
+ * prop hết rồi mà?") — `onPress`/`href` fold the WHOLE card into a `<button>`/`<a>`
+ * with ripple + `active:scale-[0.97]` feedback, no hover effect at rest. Was a
+ * separate component/story, `SurfaceCard.Pressable`, before this merge — same
+ * card, same fixture, one fewer name to import. `isSelected`/`isDisabled`/
+ * `actions` only mean anything once the card IS pressable, so they live here,
+ * not beside `Default`.
+ */
+export const Pressable: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard"
+                tier="composite"
+                leaf="Pressable"
+                renderClassName="max-w-md"
+                states={[
+                    {
+                        name: "onPress set, no actions/href",
+                        why: "The card mounts as a single `<button>` where the whole tile is the press target, and `ProfileRow`'s own text becomes its accessible label — the plain navigation-tile shape for when the entire card leads to one action.",
+                        code: `<SurfaceCard onPress={() => {}}>
+  <ProfileRow />
+</SurfaceCard>`,
+                        render: (
+                            <SurfaceCard onPress={() => {}} showAnatomy>
+                                <ProfileRow />
+                            </SurfaceCard>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** `href` — the whole card is ONE a11y link (navigates on click) instead of a button. */
+export const PressableAsLink: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard"
+                tier="composite"
+                leaf="PressableAsLink"
+                renderClassName="max-w-md"
+                states={[
+                    {
+                        name: "href set instead of onPress",
+                        why: "The card mounts an `<a>` in place of the `<button>`, keeping the exact same single Content shape as `Pressable`. A caller that only has a destination URL, not a click handler, needs the card to behave as a real navigation link.",
+                        code: `<SurfaceCard href="#">
+  <ProfileRow />
+</SurfaceCard>`,
+                        render: (
+                            <SurfaceCard href="#" showAnatomy>
+                                <ProfileRow />
+                            </SurfaceCard>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/**
+ * `actions` + `ariaLabel` — a second, independent press area INSIDE the card
+ * (stretched-link): a transparent whole-card press overlay sits underneath, the
+ * CTA + menu sit above it so they stay separately pressable. TypeScript forces
+ * `ariaLabel` to become REQUIRED as soon as `actions` is present.
+ */
+export const PressableWithActions: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard"
+                tier="composite"
+                leaf="PressableWithActions"
+                renderClassName="max-w-md"
+                states={[
+                    {
+                        name: "actions + ariaLabel set",
+                        why: "The card gains a transparent whole-card overlay press target underneath the content, plus a separate Actions node stacked above it so the CTA and the overflow menu stay independently clickable — the stretched-link shape a card needs once it must hold its own buttons.",
+                        code: `<SurfaceCard
+  onPress={() => {}}
+  ariaLabel="Open the StarCi Academy profile"
+  actions={
+    <>
+      <Button size="sm" variant="ghost" label="Continue" onPress={() => {}} />
+    </>
+  }
+>
+  <ProfileRow />
+</SurfaceCard>`,
+                        render: (
+                            <SurfaceCard
+                                onPress={() => {}}
+                                ariaLabel="Open the StarCi Academy profile"
+                                showAnatomy
+                                actions={(
+                                    <Button size="sm" variant="ghost" label="Continue" onPress={() => {}} />
+                                )}
+                            >
+                                <ProfileRow />
+                            </SurfaceCard>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** `isSelected` — a SELECTED tile in a selection grid: an accent ring around the card. */
+export const PressableSelected: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard"
+                tier="composite"
+                leaf="PressableSelected"
+                renderClassName="max-w-md"
+                states={[
+                    {
+                        name: "isSelected = true",
+                        why: "The card keeps the exact same Content node as `Pressable` and only gains a `ring-2 ring-accent` outline plus `aria-pressed`/`aria-current` — a selection grid needs a way to show which tile is chosen without changing what the tile contains.",
+                        code: `<SurfaceCard isSelected onPress={() => {}}>
+  <ProfileRow />
+</SurfaceCard>`,
+                        render: (
+                            <SurfaceCard isSelected onPress={() => {}} showAnatomy>
+                                <ProfileRow />
+                            </SurfaceCard>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** `isDisabled` — a pressable option that's temporarily unavailable: dims + disables interaction, STILL shown. */
+export const PressableDisabled: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard"
+                tier="composite"
+                leaf="PressableDisabled"
+                renderClassName="max-w-md"
+                states={[
+                    {
+                        name: "isDisabled = true (onPress set)",
+                        why: "Nothing mounts or unmounts — the same Content node renders, just dimmed, and the ripple/press-scale feedback stops firing. The option has to stay visible so the reader still knows it exists, even though it can't be chosen right now.",
+                        code: `<SurfaceCard isDisabled onPress={() => {}}>
+  <ProfileRow />
+</SurfaceCard>`,
+                        render: (
+                            <SurfaceCard isDisabled onPress={() => {}} showAnatomy>
+                                <ProfileRow />
+                            </SurfaceCard>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/**
+ * Loading, PRESSABLE shape — `isSkeleton` (with `onPress`/`href` also set) draws a
+ * FIXED generic mirror (icon block + 2 text lines) INSTEAD of `children`, unlike
+ * the plain `Skeleton` leaf above where the frame only shimmers what it owns and
+ * `children` flows its own `isSkeleton` through. The two mean different things by
+ * design (§ file header note in `SurfaceCard.tsx`) — a pressable tile's shape
+ * isn't known yet when loading starts, a plain card's content usually is.
+ */
+export const PressableLoading: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard"
+                tier="composite"
+                leaf="PressableLoading"
+                renderClassName="max-w-md"
+                states={[
+                    {
+                        name: "isSkeleton = true, onPress set",
+                        why: "The entire Content node is replaced by a fixed shimmer mirror — an icon-shaped tile plus two text bars — instead of whatever `children` would eventually hold. The mirror doesn't depend on the real content's shape, so a caller can flip the flag on before it even knows what will load.",
+                        code: "<SurfaceCard isSkeleton onPress={() => {}} />",
+                        render: (
+                            <SurfaceCard isSkeleton onPress={() => {}} showAnatomy>
+                                <ProfileRow />
+                            </SurfaceCard>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}

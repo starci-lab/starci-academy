@@ -147,19 +147,30 @@ const ContainerBase = ({
     const content = body ?? children
 
     return (
-        // `@container` MUST sit on the same element capped by `max-w`: a container
-        // query measures the box of the element that opens the container, so
-        // placing it here is what lets children measure the actual measure.
+        // TWO layers, not one (thầy 2026-07-29, "desktop là phải render flex chứ
+        // nhỉ?" — traced to here). A `@container` measures its QUERY CONTAINER'S
+        // OWN content-box, which EXCLUDES that same element's own padding — so
+        // putting `p-*` on the SAME div that opens `@container` silently shrinks
+        // the measured width by the padding amount. For most `size` steps this
+        // is invisible (there's slack between the cap and the next `@app-*`
+        // tier up), but `size="xl"` caps at EXACTLY `max-w-app-xl` = the SAME
+        // token `@app-xl` itself fires at — so the padded content-box can NEVER
+        // reach 80rem, at ANY viewport width, and `@app-xl:` children never
+        // fire. Confirmed live: `SplitWorkspace` inside `Container size="xl"`
+        // stuck at `flex-col` even at a 1920px window. Split fixes it — the
+        // OUTER div owns `@container`+`max-w` (unpadded, so it can actually
+        // reach the full `size` cap), the INNER div owns padding.
         <div
             data-anat-part={anatPart}
             className={cn(
                 "@container mx-auto w-full",
                 SIZE_CLASS[size],
-                PADDING_CLASS[padding],
                 className,
             )}
         >
-            {content}
+            <div className={PADDING_CLASS[padding]}>
+                {content}
+            </div>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React from "react"
-import { CheckCircleIcon, ClockIcon, FlameIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon } from "@phosphor-icons/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -169,7 +169,6 @@ const ContentHeader = ({
                                         <Typography
                                             size="xs"
                                             color="muted"
-                                            prefixIcon={ClockIcon}
                                             text={`${minutesRead} phút đọc`}
                                             anatPart={showAnatomy ? "Typography" : undefined}
                                         />
@@ -178,7 +177,6 @@ const ContentHeader = ({
                                         <Typography
                                             size="xs"
                                             color="muted"
-                                            prefixIcon={FlameIcon}
                                             text={`${challengeCount} thử thách`}
                                             anatPart={showAnatomy ? "Typography" : undefined}
                                         />
@@ -191,12 +189,12 @@ const ContentHeader = ({
                 {hasOutcomes ? (
                     <SurfaceCardList
                         label="Bạn sẽ học được gì"
-                        variant="nested"
                         isSkeleton={isSkeleton}
                         anatPart={showAnatomy ? "SurfaceCardList" : undefined}
                         items={(outcomes ?? []).map((outcome) => ({
                             key: outcome.key,
                             leadingIcon: CheckCircleIcon,
+                            leadingIconColor: "success",
                             title: outcome.text,
                         }))}
                     />

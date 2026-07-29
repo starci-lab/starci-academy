@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { MetricCard } from "@sb-components/composites/stats/MetricCard/MetricCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof MetricCard> = {
     title: "Composites/Stats/MetricCard",
@@ -17,14 +17,16 @@ type Story = StoryObj<typeof MetricCard>
 
 // SectionCard (frame) contains Value (h4 bold), Label (body-sm, the prominent line), and an
 // optional Hint (body-xs muted).
-// The local `SectionCard` helper (inlined in MetricCard.tsx, a TODO stand-in for the real
-// port) renders straight HeroUI `Card` — so the frame node is named for THAT real import,
-// not the placeholder helper's own name.
+// The root now carries the composite's own `anatPart="MetricCard"` (matching sibling
+// composites' self-naming convention — see ProgressRing/MarkdownContent), rather than naming
+// the underlying `SectionCard`/`Card` import — so the frame node below is named "MetricCard",
+// with a `storyId` back to this leaf so the self-entry is clickable like any other node.
 const FULL_PARTS: Array<AnatomyNode> = [
     {
-        name: "Card",
-        tier: "heroui",
+        name: "MetricCard",
+        tier: "composite",
         role: "the card frame, giving the value its border, background fill and rounded corners",
+        storyId: "composites-stats-metriccard--default",
         children: [
             { name: "Typography", tier: "atom", role: "the highlighted number, rendered semibold at h4 size", storyId: "atoms-text-typography-typography--plain" },
             { name: "Typography", tier: "atom", role: "the description underneath, the prominent foreground line", storyId: "atoms-text-typography-typography--plain" },
@@ -34,9 +36,10 @@ const FULL_PARTS: Array<AnatomyNode> = [
 ]
 const NO_HINT_PARTS: Array<AnatomyNode> = [
     {
-        name: "Card",
-        tier: "heroui",
+        name: "MetricCard",
+        tier: "composite",
         role: "the card frame, giving the value its border, background fill and rounded corners",
+        storyId: "composites-stats-metriccard--default",
         children: [
             { name: "Typography", tier: "atom", role: "the highlighted number, rendered semibold at h4 size", storyId: "atoms-text-typography-typography--plain" },
             { name: "Typography", tier: "atom", role: "the description underneath, the prominent foreground line", storyId: "atoms-text-typography-typography--plain" },
@@ -60,6 +63,7 @@ export const Default: Story = {
                         code: "<MetricCard value=\"1,204\" label=\"Total enrolled students\" hint=\"Updated daily\" />",
                         render: (
                             <MetricCard
+                                anatPart="MetricCard"
                                 showAnatomy
                                 value="1,204"
                                 label="Total enrolled students"
@@ -88,6 +92,7 @@ export const WithHint: Story = {
                         code: "<MetricCard value=\"98%\" label=\"Course completion rate\" hint=\"Vs. last week\" />",
                         render: (
                             <MetricCard
+                                anatPart="MetricCard"
                                 showAnatomy
                                 value="98%"
                                 label="Course completion rate"
@@ -115,12 +120,17 @@ export const WithoutHint: Story = {
                         name: "hint not passed",
                         why: "The `Hint` node disappears entirely and the card ends right after the label, one node fewer than `Default`. A certificate count needs no extra caveat, so the card doesn't reserve empty space for one.",
                         code: "<MetricCard value=\"42\" label=\"Certificates issued\" />",
-                        render: <MetricCard showAnatomy value="42" label="Certificates issued" />,
+                        render: <MetricCard anatPart="MetricCard" showAnatomy value="42" label="Certificates issued" />,
                     },
                 ]}
             />
         </div>
     ),
+}
+
+const SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "MetricCard": { tier: "composite", role: "the card frame, giving the shimmer the same border, background fill and rounded corners the real metric renders inside", storyId: "composites-stats-metriccard--default" },
+    "Skeleton": { tier: "heroui", role: "one of the three shimmer bars standing in for value, label and hint while the metric loads" },
 }
 
 /** Long label + hint — the text wraps cleanly inside the frame. */
@@ -139,12 +149,37 @@ export const LongText: Story = {
                         code: "<MetricCard value=\"3,750\" label=\"Total assignment submissions graded this month\" hint=\"Includes submissions from both trial and paid students\" />",
                         render: (
                             <MetricCard
+                                anatPart="MetricCard"
                                 showAnatomy
                                 value="3,750"
                                 label="Total assignment submissions graded this month"
                                 hint="Includes submissions from both trial and paid students"
                             />
                         ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; three stacked bars mirror the value/label/hint rhythm inside the same `SectionCard` frame while the metric loads. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="MetricCard"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={SKELETON_ANNOTATE}
+                renderClassName="mx-auto max-w-xl"
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Three shimmer bars stand in for value, label and hint, sized to roughly match their real proportions, so the card holds its shape and never jumps in size once the real metric arrives.",
+                        code: "<MetricCard isSkeleton />",
+                        render: <MetricCard isSkeleton anatPart="MetricCard" showAnatomy />,
                     },
                 ]}
             />

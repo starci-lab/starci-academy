@@ -1,5 +1,5 @@
 import React from "react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
@@ -35,14 +35,8 @@ const PHASE_LABEL: Record<PricingPhase, string> = {
     [PricingPhase.Regular]: "Tiêu chuẩn",
 }
 
-/** Props for {@link PhaseScarcityNote}. */
-export interface PhaseScarcityNoteBaseProps {
-    /** The course's current pricing phase (shows its label). */
-    currentPhase: PricingPhase
-    /** Seats left at this phase's price; `null` = unlimited → renders NOTHING. */
-    seatsRemaining: number | null
-    /** VND price after this phase sells out; `null` = no rise to mention. */
-    nextPhasePriceVnd: number | null
+/** Props {@link PhaseScarcityNote} carries regardless of loading state. */
+interface PhaseScarcityNoteOwnProps {
     /** Extra classes on the root. */
     className?: string
     /**
@@ -61,6 +55,25 @@ export interface PhaseScarcityNoteBaseProps {
 }
 
 /**
+ * Props for {@link PhaseScarcityNote}. `currentPhase`/`seatsRemaining`/
+ * `nextPhasePriceVnd` are REQUIRED unless `isSkeleton` (§12b) — the price
+ * preview hasn't arrived yet, so there is no honest phase/seat fact to state.
+ */
+export type PhaseScarcityNoteBaseProps = PhaseScarcityNoteOwnProps &
+    (
+        | { isSkeleton: true; currentPhase?: PricingPhase; seatsRemaining?: number | null; nextPhasePriceVnd?: number | null }
+        | {
+            isSkeleton?: false
+            /** The course's current pricing phase (shows its label). */
+            currentPhase: PricingPhase
+            /** Seats left at this phase's price; `null` = unlimited → renders NOTHING. */
+            seatsRemaining: number | null
+            /** VND price after this phase sells out; `null` = no rise to mention. */
+            nextPhasePriceVnd: number | null
+        }
+    )
+
+/**
  * Honest scarcity line for a paywall. Sits as a DIRECT SIBLING below `PriceTag`
  * (PriceTag handles discounting; scarcity is a different, orthogonal push axis).
  *
@@ -76,10 +89,14 @@ const PhaseScarcityNoteBase = ({
     currentPhase,
     seatsRemaining,
     nextPhasePriceVnd,
+    isSkeleton = false,
     className,
     anatPart,
     showAnatomy,
 }: PhaseScarcityNoteBaseProps) => {
+    if (isSkeleton) {
+        return <HeroSkeleton className={cn("h-4 w-64 max-w-full rounded", className)} data-anat-part={anatPart} />
+    }
     // no seat cap at this phase → no honest scarcity reason → stay silent
     if (seatsRemaining == null) {
         return null
@@ -139,7 +156,7 @@ const PhaseScarcityNoteBase = ({
                         <Typography
                             size="sm"
                             weight="medium"
-                            text={`Còn ${seatsRemaining} suất giá ${PHASE_LABEL[currentPhase]}`}
+                            text={`Còn ${seatsRemaining} suất giá ${currentPhase != null ? PHASE_LABEL[currentPhase] : ""}`}
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     ),

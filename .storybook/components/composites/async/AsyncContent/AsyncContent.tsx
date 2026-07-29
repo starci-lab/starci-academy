@@ -111,7 +111,7 @@ const composeAction = ({ action, onRetry, retryLabel, showAnatomy }: MessageProp
     if (onRetry && retryLabel) {
         return (
             <Button
-                variant="secondary"
+                variant="tertiary"
                 size="sm"
                 onPress={onRetry}
                 label={retryLabel}

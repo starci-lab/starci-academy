@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Breadcrumbs, Button, Chip, Typography } from "@heroui/react"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `PageHeader` — the breadcrumb/title/description/actions/meta frame of a route.
@@ -35,6 +35,10 @@ const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "atom", role: "primary title, an H3 heading", storyId: "atoms-text-typography-typography--plain" },
     { name: "Typography", tier: "atom", role: "supporting line under the title, muted", storyId: "atoms-text-typography-typography--plain" },
 ]
+
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "PageHeader": { tier: "composite", role: "the header itself: while `isSkeleton` it renders a title bar, a description bar, and two pill meta-chip bars in place of real content", storyId: "composites-layout-page-pageheader--skeleton" },
+}
 
 /** Minimal set: a title + one description line — a page entered straight from a menu, no breadcrumb. */
 export const Minimal: Story = {
@@ -198,6 +202,30 @@ export const SizeCompact: Story = {
                                 showAnatomy
                             />
                         ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** LEAF — the caller flips `isSkeleton`; the real shape (breadcrumb/description/meta presence) isn't known before the route's data arrives, so the shimmer assumes the full header shape. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PageHeader"
+                tier="composite"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-xl"
+                states={[
+                    {
+                        name: "isSkeleton = true, size = \"page\"",
+                        why: "The real shape (breadcrumb/description/meta presence) isn't known before the route's data arrives, so the shimmer assumes the full header: a title bar, a description bar, and two pill meta-chip bars below.",
+                        code: "<PageHeader isSkeleton />",
+                        render: <PageHeader isSkeleton size="page" anatPart="PageHeader" showAnatomy />,
                     },
                 ]}
             />

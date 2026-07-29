@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Typography, cn } from "@heroui/react"
+import { Typography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
 
 /**
@@ -21,10 +21,8 @@ export interface SegmentBarSegment {
     color?: string
 }
 
-/** Props for the {@link SegmentBar} block. */
-export interface SegmentBarProps {
-    /** Slices, in display order. */
-    segments: SegmentBarSegment[]
+/** Props {@link SegmentBar} carries regardless of loading state. */
+interface SegmentBarOwnProps {
     /** Accessible summary of the whole bar (screen readers read this instead of the slices). */
     ariaLabel: string
     /**
@@ -51,6 +49,16 @@ export interface SegmentBarProps {
     showAnatomy?: boolean
 }
 
+/**
+ * Props for the {@link SegmentBar} block. `segments` is REQUIRED unless
+ * `isSkeleton` (§12b) — a shimmer bar has no real slices to show yet.
+ */
+export type SegmentBarProps = SegmentBarOwnProps &
+    (
+        | { isSkeleton: true; segments?: SegmentBarSegment[] }
+        | { isSkeleton?: false; segments: SegmentBarSegment[] }
+    )
+
 /** Default slice colours (semantic tokens) when a segment has no explicit `color`. */
 const PALETTE = [
     "var(--accent)",
@@ -76,12 +84,32 @@ export const SegmentBar = ({
     hideLegend,
     inlineLabels,
     caption,
+    isSkeleton = false,
     className,
     anatPart,
     showAnatomy = false,
 }: SegmentBarProps) => {
-    const total = max ?? (segments.reduce((acc, segment) => acc + segment.value, 0) || 1)
-    const colored = segments.map((segment, index) => ({
+    if (isSkeleton) {
+        return (
+            <div className={cn("flex flex-col gap-2", className)} data-anat-part={anatPart}>
+                <HeroSkeleton
+                    className={cn("w-full", inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full")}
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                />
+                {!hideLegend ? (
+                    <Legend isSkeleton anatPart={showAnatomy ? "Legend" : undefined} showAnatomy={showAnatomy} />
+                ) : null}
+                {caption !== undefined ? (
+                    <HeroSkeleton className="h-3 w-32 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                ) : null}
+            </div>
+        )
+    }
+    // `segments` is REQUIRED whenever `isSkeleton` is false (discriminated union above) —
+    // already guaranteed by the early return at `isSkeleton` — the `?? []` only satisfies
+    // narrowing across the destructure, it never actually fires.
+    const total = max ?? ((segments ?? []).reduce((acc, segment) => acc + segment.value, 0) || 1)
+    const colored = (segments ?? []).map((segment, index) => ({
         ...segment,
         color: segment.color ?? PALETTE[index % PALETTE.length],
     }))
@@ -131,18 +159,18 @@ export const SegmentBar = ({
                 ) : null}
             </div>
             {!hideLegend ? (
-                <div data-anat-part={showAnatomy ? "Legend" : undefined}>
-                    <Legend
-                        items={colored.map((segment) => ({
-                            key: segment.key,
-                            label: segment.label,
-                            color: segment.color,
-                            // the strip already prints the % inline in ladder mode, so
-                            // drop the count suffix there; otherwise show the real count.
-                            suffix: !inlineLabels ? <>&nbsp;·&nbsp;{segment.value}</> : undefined,
-                        }))}
-                    />
-                </div>
+                <Legend
+                    anatPart={showAnatomy ? "Legend" : undefined}
+                    showAnatomy={showAnatomy}
+                    items={colored.map((segment) => ({
+                        key: segment.key,
+                        label: segment.label,
+                        color: segment.color,
+                        // the strip already prints the % inline in ladder mode, so
+                        // drop the count suffix there; otherwise show the real count.
+                        suffix: !inlineLabels ? <>&nbsp;·&nbsp;{segment.value}</> : undefined,
+                    }))}
+                />
             ) : null}
             {caption ? (
                 <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>

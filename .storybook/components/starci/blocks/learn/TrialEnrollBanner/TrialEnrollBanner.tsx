@@ -1,50 +1,51 @@
 import React from "react"
-import { LockIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * BLOCK — `TrialEnrollBanner`: the ambient "you're on a trial" nudge. Reused
- * as-is across every free surface a trial learner can reach — foundations,
- * flashcard study, leaderboard — this screen (Quiz) is just one caller among
- * several, which is why the wording lives HERE and not on any one screen.
+ * as-is across every free surface a trial learner can reach — foundations
+ * (both the resource page and the grid), leaderboard — the wording and shape
+ * live HERE, not on any one screen.
  *
- * ⭐ SAME SHAPE AS `CourseTeamGate` — same self-hiding `FeedbackCallout`
- * ambient-nudge pattern, just the opposite audience. `CourseTeamGate` nudges
- * someone who ALREADY PAID toward a follow-up action; this nudges someone who
- * has NOT YET paid toward the purchase itself. Modeled directly on it rather
- * than invented fresh — REUSE FIRST applies to shape/idiom, not only to whole
- * components.
+ * ⭐ CONSOLIDATED FROM THREE BLOCKS INTO ONE (thầy 2026-07-29, "ok làm đi" —
+ * gộp `TrialEnrollNudge`/`FoundationTrialEnrollBanner`/`TrialEnrollBanner`).
+ * All three were independent ports of the SAME real `src` component
+ * (`components/features/learn/shared/TrialEnrollHook`) — a Foundations audit
+ * caught them shipping three different invented Vietnamese strings for the
+ * one real `enrollGate.hookTitle`/`hookDesc`/`hookCta` copy. `LeaderboardPage`
+ * had already independently flagged this exact drift in its own file header
+ * before the audit ran, and chose to reuse this block rather than add a
+ * fourth — this pass finishes what that flag started. Shape decisions below
+ * were picked from whichever of the three sources got it right, not just
+ * "whatever this file already had":
+ *   - `description` — the removed `FoundationTrialEnrollBanner` had a second
+ *     line; the OLD version of THIS block argued "one sentence only" — wrong,
+ *     real `TrialEnrollHook`'s `Callout` always renders both `hookTitle` AND
+ *     `hookDesc`.
+ *   - CTA composed as an explicit `Button` CHILD, not `FeedbackCallout`'s
+ *     `actionLabel`/`onAction` shorthand — kept from the removed
+ *     `TrialEnrollNudge`. That shorthand builds its button internally with NO
+ *     `data-anat-part` (`Feedback.tsx:157`), invisible to a BlockAnatomy deps
+ *     tree; a composed child stays a real, badgeable node.
+ *   - `isSkeleton` — kept from the removed `FoundationTrialEnrollBanner`.
+ *     Copy is fixed (nothing to shimmer about the WORDS), but the enrollment
+ *     check feeding `isVisible` can still be in flight — this reserves the
+ *     banner's footprint for that window so the surrounding list/header does
+ *     not jump once the check resolves. Wins over `isVisible`: while still
+ *     checking, the caller cannot yet compute a meaningful `isVisible`.
  *
- * JUDGEMENT CALL — `actionLabel`/`onAction`, NOT a hand-held `Button`. The
- * file header of `Feedback.tsx` is explicit: "the frame builds the CTA
- * ITSELF from `actionLabel`/`onAction` ⇒ the caller … no longer touches the
- * atom." `QuizEnrollGate` passes a `Button` through `FeedbackEmpty`'s
- * `body`/`children` slot, but that slot renders BELOW the title as its own
- * line — right for a centered placeholder, wrong for a strip that has to
- * read as ONE LINE. `FeedbackCallout`'s `actionLabel` path renders the CTA as
- * a `shrink-0` sibling on the SAME row as the icon + title (see `Alert`'s
- * layout), which is the only path that actually produces "ambient one-line".
- * Reaching for `Button` directly here would rebuild what `FeedbackCallout`
- * already owns — the exact anti-pattern this run exists to avoid.
+ * SELF-GATING, NOT A DUMB WRAPPER. `isVisible` is the caller's RESOLVED
+ * answer to "is this learner an enrolled/known non-trial learner" — the
+ * caller derives it from whatever raw enrolled/trial-known state it holds
+ * (e.g. `isEnrollmentKnown && !isEnrolled`); this block never fetches.
+ * `isVisible = false` is a real STRUCTURAL leaf (the whole node disappears).
  *
- * NO `description` — the whole nudge (situation + what to do about it) is
- * ONE sentence in `title`, on purpose: a second line would make this a small
- * card, not the one-line strip the purpose calls for.
- *
- * SELF-HIDES on two different grounds that land on the same empty tree: not
- * knowing enrollment status yet (`!isKnown`, e.g. the query hasn't returned —
- * showing a wrong nudge is worse than a beat of nothing) and already being
- * enrolled (`isEnrolled`, nothing left to nudge toward). Same idiom as
- * `CourseTeamGate`'s two hide-reasons collapsing into one `Hidden` leaf.
- *
- * NO `isSkeleton` (task-confirmed): unlike `CourseTeamGate`, which renders a
- * shimmer while it can't yet decide whether to hide, this block's caller is
- * expected to hold rendering it at all until `isKnown` flips — the real
- * banner never shimmers, it only appears or stays absent.
- *
- * FIXED VIETNAMESE COPY (§14d.1) — `title`/`actionLabel` are NOT props. A
- * caller-supplied string here would let five different screens drift into
+ * FIXED VIETNAMESE COPY (§14d.1) — `title`/`description`/CTA are NOT props.
+ * A caller-supplied string here would let five different screens drift into
  * five different nudges for the same fact; the block owns the one sentence.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -52,15 +53,21 @@ import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Fee
 /** Props for {@link TrialEnrollBanner}. */
 export interface TrialEnrollBannerProps {
     /**
-     * `true` once enrollment status has actually resolved. `false` while it's
-     * still unknown (query in flight) → the block stays hidden rather than
-     * risk nudging a learner who is, in fact, already enrolled.
+     * `true` → the caller has resolved the learner as a known trial learner
+     * (not yet enrolled) and wants the nudge shown. `false` covers BOTH
+     * "enrolled" and "not yet known" — either way the banner renders nothing
+     * (the "not yet known" window instead goes through {@link isSkeleton}).
      */
-    isKnown: boolean
-    /** Whether the viewer is enrolled in the course. `true` → the block self-hides. */
-    isEnrolled: boolean
-    /** Fired when the learner takes the nudge. */
+    isVisible: boolean
+    /** Fired when the learner taps the CTA (caller owns opening the enroll flow). */
     onEnroll: () => void
+    /**
+     * `true` → the enrollment check that feeds `isVisible` is still in flight.
+     * Reserves the banner's shape without shimmering the copy (fixed, not
+     * fetched) and without a CTA (nothing to press before the check lands).
+     * Wins over `isVisible`.
+     */
+    isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
@@ -68,31 +75,63 @@ export interface TrialEnrollBannerProps {
 }
 
 /**
- * The trial → enroll ambient nudge. See the file header for the full contract.
+ * The trial → enroll ambient nudge. See the file header for the self-gating
+ * condition, the consolidation history, and why `isSkeleton` is a separate
+ * window from `isVisible = false`.
  *
  * @param props - {@link TrialEnrollBannerProps}
  */
 const TrialEnrollBanner = ({
-    isKnown,
-    isEnrolled,
+    isVisible,
     onEnroll,
+    isSkeleton = false,
     showAnatomy = false,
     anatPart,
 }: TrialEnrollBannerProps) => {
+    if (isSkeleton) {
+        // `FeedbackCallout` has no `isSkeleton` of its own (§12c gap, same one
+        // `CourseTeamGate` already documents) — its `title`/`description` slots
+        // render inside `<p>` (`Alert.Title`/`Alert.Description`), which cannot
+        // legally contain the `<div>` a hand-built `Typography isSkeleton` bar
+        // emits (real hydration error, caught live in this exact leaf). `Alert`
+        // itself DOES own `isSkeleton` and draws two safe `<div>` bars straight
+        // inside its content region — call it directly, same precedent as
+        // `CourseTeamGate.tsx`.
+        return (
+            <div data-anat-part={anatPart}>
+                <Alert
+                    isSkeleton
+                    status="accent"
+                    anatPart={showAnatomy ? "Alert" : undefined}
+                />
+            </div>
+        )
+    }
+
     // SELF-HIDE — the block owns its own show condition; the screen doesn't need to ask.
-    if (!isKnown || isEnrolled) {
+    if (!isVisible) {
         return null
     }
 
     return (
-        <FeedbackCallout
-            anatPart={anatPart ?? (showAnatomy ? "FeedbackCallout" : undefined)}
-            status="accent"
-            icon={LockIcon}
-            title="Bạn đang học thử"
-            actionLabel="Mở khóa học"
-            onAction={onEnroll}
-        />
+        <div data-anat-part={anatPart}>
+            <FeedbackCallout
+                status="accent"
+                title="Bạn đang học thử"
+                description="Mở khóa để học trọn khóa + dựng bằng chứng đi làm cho hồ sơ nhà tuyển dụng thấy."
+                anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+            >
+                <Button
+                    label="Mở khóa học"
+                    variant="primary"
+                    size="sm"
+                    suffixIcon={ArrowRightIcon}
+                    iconSlide
+                    onPress={onEnroll}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            </FeedbackCallout>
+        </div>
     )
 }
 

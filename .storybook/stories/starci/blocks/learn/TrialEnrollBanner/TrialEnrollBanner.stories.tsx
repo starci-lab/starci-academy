@@ -4,18 +4,19 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * BLOCK — `TrialEnrollBanner`: the ambient "you're on a trial" nudge, reused
- * verbatim across every free surface a trial learner can reach (foundations,
- * flashcard study, leaderboard, and this Quiz screen).
+ * verbatim across every free surface a trial learner can reach (foundations —
+ * both the resource page and the grid — and leaderboard).
  *
- * 📐 **TWO LEAVES** (§14d.2), same split as its closest relative
- * `CourseTeamGate`: "shown" and "hidden" differ in STRUCTURE (a node vs an
- * empty tree). The two grounds for hiding (status not known yet · already
- * enrolled) land on the exact same empty tree ⇒ they're two `states[]`
- * entries of ONE `Hidden` leaf, not two leaves.
+ * ⭐ CONSOLIDATED FROM THREE BLOCKS (2026-07-29) — see the component's own file
+ * header for the full history. `title = "isKnown"/"isEnrolled"` collapsed into
+ * one caller-resolved `isVisible`; gained `description` (real `src`'s
+ * `TrialEnrollHook` always renders both lines) and `isSkeleton` (the enrollment
+ * check itself can still be in flight).
  *
- * ⛔ No `isSkeleton` leaf — the block deliberately has none (see the
- * component's file header): the real banner only appears or stays absent,
- * it never shimmers.
+ * 📐 **THREE LEAVES** (§14d.2): "shown"/"hidden" differ in STRUCTURE (a node vs
+ * an empty tree — same split as `CourseTeamGate`); `isSkeleton` is its own
+ * third leaf because the shimmer shape (two text bars, no CTA) is a THIRD
+ * structure, not a state of either of the other two.
  */
 const meta: Meta<typeof TrialEnrollBanner> = {
     title: "StarCi/Blocks/Learn/TrialEnrollBanner/TrialEnrollBanner",
@@ -31,8 +32,18 @@ type Story = StoryObj<typeof TrialEnrollBanner>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "FeedbackCallout": {
         tier: "composite",
-        role: "every bit of the visible shape comes from this frame — icon, one-line title and the CTA it builds itself from actionLabel; the block only supplies the fixed copy and the hide condition",
+        role: "the accent-tinted strip shape — icon-less frame holding the fixed title/description and the composed CTA child",
         storyId: "composites-feedback-feedback-feedbackcallout--with-action",
+    },
+    "Button": {
+        tier: "atom",
+        role: "the CTA, composed as a real child (not FeedbackCallout's actionLabel shorthand) so it stays a badgeable node with its own slide-arrow affordance",
+        storyId: "atoms-buttons-button-button--default",
+    },
+    "Alert": {
+        tier: "atom",
+        role: "the skeleton branch calls this directly — FeedbackCallout has no isSkeleton of its own, and Alert already draws two safe shimmer bars in place of title/description",
+        storyId: "atoms-feedback-alert-alert--skeleton",
     },
 }
 
@@ -49,15 +60,14 @@ export const Banner: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "isKnown = true, isEnrolled = false",
-                        why: "Enrollment status has come back and the viewer is on a trial, so the strip renders as one accent-tinted line: lock glyph, the fixed nudge sentence, and an inline \"Mở khoá ngay\" CTA. This is the shape every free surface (foundations, flashcard study, leaderboard) shows a trial learner.",
-                        code: "<TrialEnrollBanner isKnown isEnrolled={false} onEnroll={handleEnroll} />",
+                        name: "isVisible = true",
+                        why: "Enrollment status has come back and the viewer is on a trial, so the strip renders as one accent-tinted line: the fixed nudge sentence, its supporting sentence, and a \"Mở khóa học\" CTA with a slide-arrow. This is the shape every free surface (foundations, leaderboard) shows a trial learner.",
+                        code: "<TrialEnrollBanner isVisible onEnroll={handleEnroll} />",
                         render: (
                             <TrialEnrollBanner
-                                anatPart="FeedbackCallout"
+                                anatPart="TrialEnrollBanner"
                                 showAnatomy
-                                isKnown
-                                isEnrolled={false}
+                                isVisible
                                 onEnroll={() => {}}
                             />
                         ),
@@ -69,8 +79,9 @@ export const Banner: Story = {
 }
 
 /**
- * LEAF — **self-hides**, empty tree. Two different grounds land on the same
- * result: status not resolved yet · already enrolled.
+ * LEAF — **self-hides**, empty tree. The caller has resolved `isVisible` to
+ * `false` (whether because status isn't known yet or the learner is already
+ * enrolled — that resolution happens on the caller's side of the prop now).
  */
 export const Hidden: Story = {
     render: () => (
@@ -84,16 +95,36 @@ export const Hidden: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "isKnown = false",
-                        why: "Enrollment status hasn't resolved yet, so the block renders nothing rather than guess. Showing the nudge and then yanking it away once the real answer turns out to be \"already enrolled\" would be a worse experience than a beat of silence.",
-                        code: "<TrialEnrollBanner isKnown={false} isEnrolled={false} onEnroll={handleEnroll} />",
-                        render: <TrialEnrollBanner isKnown={false} isEnrolled={false} onEnroll={() => {}} />,
+                        name: "isVisible = false",
+                        why: "The caller has resolved this learner as not needing the nudge (already enrolled, or the check simply came back negative), so the block renders nothing rather than an empty-looking strip.",
+                        code: "<TrialEnrollBanner isVisible={false} onEnroll={handleEnroll} />",
+                        render: <TrialEnrollBanner isVisible={false} onEnroll={() => {}} />,
                     },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/**
+ * LEAF — `isSkeleton`, reserves the banner's footprint while the enrollment
+ * check that feeds `isVisible` is still in flight. Wins over `isVisible`.
+ */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="TrialEnrollBanner"
+                tier="block"
+                leaf="Skeleton"
+                parts={[]}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
                     {
-                        name: "isKnown = true, isEnrolled = true",
-                        why: "Status is resolved and the viewer is already enrolled, so there is nothing left to nudge them toward — the block renders the same empty tree as the not-yet-known case above.",
-                        code: "<TrialEnrollBanner isKnown isEnrolled onEnroll={handleEnroll} />",
-                        render: <TrialEnrollBanner isKnown isEnrolled onEnroll={() => {}} />,
+                        name: "isSkeleton = true",
+                        why: "The enrollment check hasn't resolved yet, so the block shimmers two text bars in the strip's exact shape instead of guessing `isVisible` — the surrounding list/header does not jump once the real check lands. Wins over whatever `isVisible` currently holds.",
+                        code: "<TrialEnrollBanner isVisible={false} isSkeleton onEnroll={handleEnroll} />",
+                        render: <TrialEnrollBanner isVisible={false} isSkeleton onEnroll={() => {}} />,
                     },
                 ]}
             />

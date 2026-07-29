@@ -1,6 +1,6 @@
 import React from "react"
 import { FoundationsHeader, type FoundationsHeaderCrumb } from "@sb-components/starci/blocks/learn/FoundationsHeader/FoundationsHeader"
-import { TrialEnrollNudge } from "@sb-components/starci/blocks/commerce/TrialEnrollNudge/TrialEnrollNudge"
+import { TrialEnrollBanner } from "@sb-components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner"
 import { FoundationSearchBar, type FoundationSearchSuggestion } from "@sb-components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar"
 import { FoundationResourceList, type FoundationResourceItem } from "@sb-components/starci/blocks/learn/FoundationResourceList/FoundationResourceList"
 import { Container } from "@sb-components/frames/Container/Container"
@@ -18,7 +18,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * FIVE FUNCTIONS, in the order the reader meets them:
  *   1. Orient — breadcrumb trail + category title/description.  → `FoundationsHeader`
- *   2. Get nudged to unlock the course while still on trial.     → `TrialEnrollNudge`
+ *   2. Get nudged to unlock the course while still on trial.     → `TrialEnrollBanner`
  *   3. See a live match count for the current search.            → `FoundationSearchBar`
  *   4. Search resources by name with autocomplete suggestions.   → `FoundationSearchBar`
  *   5. Browse the resource list, open one, page through it.      → `FoundationResourceList`
@@ -38,13 +38,11 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *     "browse cluster" (search row above the resource list), matching the
  *     source layout's own `gap-6` between that row and the list it filters.
  *
- * ⭐ `TrialEnrollNudge` HAS NO `isSkeleton` OF ITS OWN (see that block's file
- * header — "never skeletonised, on purpose": it only ever mounts once
- * enrolled/trial status is already known). So while THIS screen's own
- * `isSkeleton` is on, the trial status is by definition not yet resolved —
- * the screen forces `isVisible={false}` for the nudge during skeleton,
- * regardless of what `isTrialNudgeVisible` says, rather than asking a block
- * with no loading shape to draw one.
+ * ⭐ `TrialEnrollBanner` (2026-07-29 — was the commerce-tier `TrialEnrollNudge`
+ * before the Foundations trial-nudge consolidation, see that block's own file
+ * header) DOES carry `isSkeleton`, so it flows straight down here alongside
+ * `isVisible` — the block itself resolves which one wins, the screen does not
+ * need the old "force `isVisible={false}` during skeleton" workaround.
  *
  * ⭐ `FoundationResourceList` HAS NO `isSkeleton` PROP EITHER — its OWN loading
  * leaf is `isLoading` (see that block's file header, R0: the caller-flipped
@@ -67,12 +65,6 @@ export interface FoundationsCategoryPageProps {
 
     /** `true` → the caller has resolved the learner as a known, still-on-trial learner. */
     isTrialNudgeVisible: boolean
-    /** Nudge headline, localized by the caller — `TrialEnrollNudge` does not own its own wording. */
-    trialNudgeTitle: string
-    /** Nudge supporting sentence. */
-    trialNudgeDescription: string
-    /** Nudge CTA label. */
-    trialNudgeCtaLabel: string
     /** Fired when the learner takes the trial → enroll nudge. */
     onEnrollTrial: () => void
 
@@ -106,9 +98,9 @@ export interface FoundationsCategoryPageProps {
 
     /**
      * `true` → every block that can mirror itself does. Flows to
-     * `FoundationsHeader` and `FoundationSearchBar` directly; folds into
-     * `FoundationResourceList`'s own `isLoading` leaf and forces
-     * `TrialEnrollNudge`'s `isVisible` to `false` (see file header for both).
+     * `FoundationsHeader`, `FoundationSearchBar`, and `TrialEnrollBanner`
+     * directly; folds into `FoundationResourceList`'s own `isLoading` leaf
+     * (see file header for both non-direct cases).
      */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
@@ -127,9 +119,6 @@ const FoundationsCategoryPage = ({
     title,
     description,
     isTrialNudgeVisible,
-    trialNudgeTitle,
-    trialNudgeDescription,
-    trialNudgeCtaLabel,
     onEnrollTrial,
     searchQuery,
     onSearchQueryChange,
@@ -157,13 +146,11 @@ const FoundationsCategoryPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <TrialEnrollNudge
-                anatPart="TrialEnrollNudge"
-                title={trialNudgeTitle}
-                description={trialNudgeDescription}
-                ctaLabel={trialNudgeCtaLabel}
+            <TrialEnrollBanner
+                anatPart="TrialEnrollBanner"
+                isVisible={isTrialNudgeVisible}
                 onEnroll={onEnrollTrial}
-                isVisible={isSkeleton ? false : isTrialNudgeVisible}
+                isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
             <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>

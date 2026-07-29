@@ -77,9 +77,6 @@ const BASE = {
     breadcrumbItems: BREADCRUMBS,
     title: "Docker",
     description: "Đóng gói và chạy ứng dụng nhất quán trên mọi môi trường.",
-    trialNudgeTitle: "Bạn đang học thử",
-    trialNudgeDescription: "Mở khóa để học trọn khóa + dựng bằng chứng đi làm cho hồ sơ nhà tuyển dụng thấy.",
-    trialNudgeCtaLabel: "Mở khóa học",
     onEnrollTrial: () => {},
     searchQuery: "",
     onSearchQueryChange: () => {},
@@ -92,7 +89,7 @@ const BASE = {
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame owning every seam on this screen — between identity, the trial nudge, and the browse cluster, and the inner seam between the search row and the list", storyId: "frames-stack-stackv--default" },
     "FoundationsHeader": { tier: "block", role: "orient: the breadcrumb trail above the category title and description", storyId: "starci-blocks-learn-foundationsheader-foundationsheader--full" },
-    "TrialEnrollNudge": { tier: "block", role: "get nudged to unlock the course while still on trial; self-hides once the caller resolves the learner as enrolled (or during skeleton, before that status is known)", storyId: "starci-blocks-commerce-trialenrollnudge-trialenrollnudge--visible" },
+    "TrialEnrollBanner": { tier: "block", role: "get nudged to unlock the course while still on trial; self-hides once the caller resolves the learner as enrolled (or during skeleton, before that status is known)", storyId: "starci-blocks-learn-trialenrollbanner-trialenrollbanner--banner" },
     "FoundationSearchBar": { tier: "block", role: "see the live match count and search resources by name with autocomplete suggestions", storyId: "starci-blocks-learn-foundationsearchbar-foundationsearchbar--default" },
     "FoundationResourceList": { tier: "block", role: "browse the resource rows, open one, and page through when there's more than one page", storyId: "starci-blocks-learn-foundationresourcelist-foundationresourcelist--default" },
 }

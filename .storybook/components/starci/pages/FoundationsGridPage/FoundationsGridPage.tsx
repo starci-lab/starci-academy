@@ -2,7 +2,7 @@ import React from "react"
 import { FoundationCategoryHeader, type FoundationCategoryHeaderCrumb } from "@sb-components/starci/blocks/learn/FoundationCategoryHeader/FoundationCategoryHeader"
 import { FoundationCategoryList, type FoundationCategoryListItem, type FoundationCategoryListPagination } from "@sb-components/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList"
 import { FoundationCategorySearchBar, type FoundationCategorySuggestion } from "@sb-components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar"
-import { FoundationTrialEnrollBanner } from "@sb-components/starci/blocks/learn/FoundationTrialEnrollBanner/FoundationTrialEnrollBanner"
+import { TrialEnrollBanner } from "@sb-components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner"
 import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -17,7 +17,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * SIX FUNCTIONS, in the order the reader meets them:
  *   1. Orient — the breadcrumb trail + hub title/description.        → `FoundationCategoryHeader`
- *   2. Get nudged to unlock the course while still on trial.         → `FoundationTrialEnrollBanner`
+ *   2. Get nudged to unlock the course while still on trial.         → `TrialEnrollBanner`
  *   3. See how many categories exist / match, live.                  → `FoundationCategorySearchBar`
  *   4. Search by name with autocomplete suggestions.                 → `FoundationCategorySearchBar`
  *   5. Browse the category list and open one.                        → `FoundationCategoryList`
@@ -38,7 +38,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * `FoundationCategorySearchBar`'s own `StackH gap="grouped"`).
  *
  * ⚠️ `isSkeleton` flows to every block uniformly, INCLUDING the trial banner:
- * `FoundationTrialEnrollBanner` treats `isSkeleton` as a state that WINS over
+ * `TrialEnrollBanner` treats `isSkeleton` as a state that WINS over
  * `isVisible` (see that block's own file header) — the screen does not need to
  * pick one or the other, it hands both down and the block resolves the rest.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -118,8 +118,8 @@ const FoundationsGridPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <FoundationTrialEnrollBanner
-                anatPart="FoundationTrialEnrollBanner"
+            <TrialEnrollBanner
+                anatPart="TrialEnrollBanner"
                 isVisible={isTrialBannerVisible}
                 onEnroll={onEnrollTrial}
                 isSkeleton={isSkeleton}

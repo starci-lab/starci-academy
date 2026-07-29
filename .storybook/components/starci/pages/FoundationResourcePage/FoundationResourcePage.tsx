@@ -26,9 +26,11 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ THE TRIAL BANNER IS ORTHOGONAL TO WHETHER THE RESOURCE WAS FOUND. It sits
  * OUTSIDE the `isEmpty` switch, not inside it — a trial learner who followed a
- * stale link still deserves the "upgrade" nudge, and `TrialEnrollBanner`
- * already self-hides on its own two grounds (`!isKnown`, `isEnrolled`), so the
- * screen does not need a third condition to gate it.
+ * stale link still deserves the "upgrade" nudge. `TrialEnrollBanner` takes a
+ * single resolved `isVisible` — the screen computes it from its own
+ * `isEnrollmentKnown`/`isEnrolled` (`isEnrollmentKnown && !isEnrolled`) so the
+ * block never has to know the raw shape, and also forwards the screen's own
+ * `isSkeleton` so the banner reserves its shape while enrollment resolves.
  *
  * `isEmpty` REPLACES ONLY THE IDENTITY + BODY PAIR, via `FoundationResourceEmpty`
  * — a one-node block wrapping `AsyncContentEmpty`, not the composite itself.
@@ -139,9 +141,9 @@ const FoundationResourcePage = ({
         <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
             <TrialEnrollBanner
                 anatPart="TrialEnrollBanner"
-                isKnown={isEnrollmentKnown}
-                isEnrolled={isEnrolled}
+                isVisible={isEnrollmentKnown && !isEnrolled}
                 onEnroll={onEnroll}
+                isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
             {isEmpty ? (

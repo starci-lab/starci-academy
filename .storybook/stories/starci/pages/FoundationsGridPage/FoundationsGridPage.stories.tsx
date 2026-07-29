@@ -76,7 +76,7 @@ const BASE = {
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame owning every seam on this screen — between identity, the trial nudge, and the browse cluster, and the inner seam between the search row and the list", storyId: "frames-stack-stackv--default" },
     "FoundationCategoryHeader": { tier: "block", role: "orient: the breadcrumb trail above the hub title and description", storyId: "starci-blocks-learn-foundationcategoryheader-foundationcategoryheader--default" },
-    "FoundationTrialEnrollBanner": { tier: "block", role: "get nudged to unlock the course while still on trial; self-hides once the caller resolves the learner as enrolled", storyId: "starci-blocks-learn-foundationtrialenrollbanner-foundationtrialenrollbanner--default" },
+    "TrialEnrollBanner": { tier: "block", role: "get nudged to unlock the course while still on trial; self-hides once the caller resolves the learner as enrolled", storyId: "starci-blocks-learn-trialenrollbanner-trialenrollbanner--banner" },
     "FoundationCategorySearchBar": { tier: "block", role: "see the live match count and search by name with autocomplete suggestions", storyId: "starci-blocks-learn-foundationcategorysearchbar-foundationcategorysearchbar--default" },
     "FoundationCategoryList": { tier: "block", role: "browse the category rows, open one, and page through when there's more than one page", storyId: "starci-blocks-learn-foundationcategorylist-foundationcategorylist--default" },
 }

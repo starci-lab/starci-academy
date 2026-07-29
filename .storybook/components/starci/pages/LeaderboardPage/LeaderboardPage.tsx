@@ -183,8 +183,7 @@ const LeaderboardPage = ({
             />
             <TrialEnrollBanner
                 anatPart="TrialEnrollBanner"
-                isKnown={isEnrollmentKnown}
-                isEnrolled={isEnrolled}
+                isVisible={isEnrollmentKnown && !isEnrolled}
                 onEnroll={onEnroll}
                 showAnatomy={showAnatomy}
             />

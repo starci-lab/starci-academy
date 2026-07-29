@@ -58,21 +58,37 @@ const walk = (dir, out = []) => {
 }
 
 /**
- * Which tier a file belongs to — the hand-rolled-layout rule only applies from design up,
- * because a frame or an atom has nothing lower to delegate its layout to (§13z).
+ * Which tier a file belongs to, read from the FOLDER NAME ON DISK — the only source that
+ * cannot drift. Measured 2026-07-29, the previous version looked for `/screens/` and
+ * `/designs/`, two folders that do not exist: `designs` was deleted and screens live under
+ * `<app>/pages/`. Every page, layout and overlay therefore fell through to `util` and was
+ * exempted by accident, so the rule below covered only `block` — 118 of 258 files, 46 percent.
  *
- * `frame` and `composite` are the real folder names since the `layouts` split. This function
- * still read `/layouts/` afterwards, which meant every frame and composite fell through to
- * `util` — the same exemption by accident rather than by rule.
+ * The shared tiers (`atoms` · `behaviors` · `frames` · `composites`) sit at the root; the
+ * app-specific ones (`blocks` · `layouts` · `overlays` · `pages`) sit under an app folder,
+ * so tier and app are two perpendicular axes and the tier name alone is enough here.
+ *
+ * `behaviors` is a headless primitive: measured, it imports nothing from `@sb-components` at
+ * all and is consumed by blocks, layouts and pages. It draws no layout of its own, so it is
+ * exempt from the hand-rolled rule for the same reason an atom is.
  */
 const tierOf = (rel) =>
-    rel.includes("/screens/") ? "screen"
+    rel.includes("/pages/") ? "page"
+    : rel.includes("/overlays/") ? "overlay"
+    : rel.includes("/layouts/") ? "layout"
     : rel.includes("/blocks/") ? "block"
-    : rel.includes("/designs/") ? "design"
     : rel.includes("/composites/") ? "composite"
     : rel.includes("/frames/") ? "frame"
+    : rel.includes("/behaviors/") ? "behavior"
     : rel.includes("/atoms/") ? "atom"
     : "util"
+
+/**
+ * Tiers that must delegate layout to a frame instead of hand-rolling `flex`/`grid` + `gap-*`
+ * (§13z). An atom, a behavior and a frame itself have nothing lower to delegate to, so they
+ * are the only exemptions; everything from `composite` up owns composition, not geometry.
+ */
+const HAND_ROLL_RULED = ["composite", "block", "layout", "overlay", "page"]
 
 const findings = []
 /** Fractional steps in a file that declared the exception itself — shown, not failed. */
@@ -99,8 +115,8 @@ for (const file of files) {
 
         const at = { file: rel, line: index + 1, tier, code: trimmed.slice(0, 110) }
 
-        // 1 — hand-rolled layout from the design tier up (§13z: atom and layout may do this).
-        if (["design", "block", "screen"].includes(tier)) {
+        // 1 — hand-rolled layout from the composite tier up (§13z: atom, behavior and frame may).
+        if (HAND_ROLL_RULED.includes(tier)) {
             const cls = line.match(/className=(?:"([^"]*)"|\{cn\(\s*"([^"]*)")/)
             const value = cls?.[1] ?? cls?.[2]
             if (value && /\bgap-[\d.]+/.test(value) && /\b(flex|grid)\b/.test(value)) {

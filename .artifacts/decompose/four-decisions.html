@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bốn câu chờ thầy chốt — có bằng chứng đo được</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 12px;border-top:1px solid var(--line);padding-top:18px}
+  h3{font-size:14px;margin:0 0 6px;color:var(--ink)}
+  .sub{color:var(--muted);margin:0}
+  code{font-family:ui-monospace,monospace}
+  .note{font-size:12px;color:var(--muted)}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules b{color:var(--ink)}
+
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  td{padding:8px 10px;border-bottom:1px solid #1b2436;vertical-align:top}
+  .numc{font-family:ui-monospace,monospace}
+  .ok{color:var(--success)} .bad{color:var(--danger)} .warn{color:var(--warn)} .dim{color:#5c6880}
+
+  pre{margin:0;background:#0e1420;border:1px solid var(--line);border-radius:8px;padding:11px 13px;font-family:ui-monospace,monospace;font-size:12px;line-height:1.65;overflow-x:auto;color:var(--muted)}
+  pre b{color:var(--ink)} pre .r{color:var(--danger);font-weight:700} pre .g{color:var(--success);font-weight:700} pre .c{color:#5c6880}
+
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:13px}
+  .qh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .qn{font-family:ui-monospace,monospace;font-weight:700;font-size:11px;letter-spacing:.04em;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .opt{background:#0e1420;border:1px solid var(--line);border-radius:11px;padding:13px;display:flex;flex-direction:column;gap:7px}
+  .opt.pick{border-color:color-mix(in srgb,var(--success) 45%,var(--line));background:color-mix(in srgb,var(--success) 7%,#0e1420)}
+  .on{font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .tag{font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:999px;font-weight:700}
+  .t-pick{background:color-mix(in srgb,var(--success) 22%,transparent);color:var(--success)}
+  .t-no{background:color-mix(in srgb,var(--danger) 18%,transparent);color:var(--danger)}
+  .opt p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+  .hq{font-size:12.5px;line-height:1.6;background:color-mix(in srgb,var(--danger) 9%,transparent);border-left:3px solid var(--danger);border-radius:0 8px 8px 0;padding:9px 12px;color:var(--muted)}
+  .hq b{color:var(--danger)}
+
+  .cov{display:flex;height:30px;border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+  .cov div{display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:10.5px;font-weight:700;color:#0b0e14}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:6px}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Bốn câu chờ thầy chốt — kèm bằng chứng đo được</h1>
+  <p class="sub">Mọi con số dưới đây đọc trực tiếp từ code và đĩa ngày <b>2026-07-29</b>, không suy diễn. Chỗ nào là đề xuất của trò thì ghi rõ là đề xuất.</p>
+
+  <!-- ══════════ Q1 ══════════ -->
+  <h2>Q1 — Gate khai khống</h2>
+  <div class="q">
+    <div class="qh"><span class="qn">Q1</span><h3 style="margin:0">Sửa tài liệu cho khớp gate, hay sửa gate cho khớp luật?</h3></div>
+
+    <p class="note" style="margin:0">Tài liệu <code>seam</code> §6 và <code>frame</code> §6 đều ghi <b>✅ đã có gate</b> cho luật "không viết bố cục tay ở tầng composite/block/screen". Đọc code gate thật:</p>
+    <pre><span class="c">// scripts/check-seams.mjs — hàm quyết định tầng của một file</span>
+const tierOf = (rel) =&gt;
+      rel.includes("<span class="r">/screens/</span>")    ? "screen"     <span class="c">← đĩa KHÔNG có thư mục này</span>
+    : rel.includes("/blocks/")     ? "block"
+    : rel.includes("<span class="r">/designs/</span>")    ? "design"     <span class="c">← đĩa KHÔNG có thư mục này</span>
+    : rel.includes("/composites/") ? "composite"
+    : rel.includes("/frames/")     ? "frame"
+    : rel.includes("/atoms/")      ? "atom"
+    : <span class="r">"util"</span>                                    <span class="c">← mọi thứ còn lại rơi vào đây</span>
+
+<span class="c">// dòng 103 — điều kiện áp luật</span>
+if ([<span class="r">"design", "block", "screen"</span>].includes(tier)) { ... }
+   <span class="c">    ↑ 0 file      ↑ 118 file   ↑ 0 file      ⇒ thực chất chỉ áp cho `block`</span></pre>
+
+    <p class="note" style="margin:0">Chạy chính hàm <code>tierOf</code> đó lên toàn bộ <code>.storybook/components</code> (258 file, bỏ <code>_legacy</code> và story):</p>
+    <div class="cov">
+      <div style="width:45.7%;background:var(--success)">block · 118 · BỊ KIỂM</div>
+      <div style="width:18.6%;background:#3d4666;color:#c9d3e3">composite 48</div>
+      <div style="width:18.2%;background:#333c58;color:#c9d3e3">atom 47</div>
+      <div style="width:14.7%;background:var(--danger)">util 38</div>
+      <div style="width:2.8%;background:#2a3350"></div>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--success)"></span>bị gate kiểm: <b>118 file (46%)</b></span>
+      <span><span class="dot" style="background:#3d4666"></span>miễn: <b>140 file (54%)</b></span>
+      <span><span class="dot" style="background:var(--danger)"></span><code>util</code> = tầng CAO NHẤT nhưng miễn hoàn toàn</span>
+    </div>
+
+    <div class="hq"><b>Nặng hơn con số 54%:</b> nhóm <code>util</code> 38 file chính là <code>starci/pages/*</code>, <code>starci/layouts/*</code>, <code>starci/overlays/*</code> và <code>behaviors/*</code> — tức <b>toàn bộ page, layout, overlay của app</b>. Đó đúng là nơi luật "không viết bố cục tay" nghiêm nhất, và nó đang <b>miễn tuyệt đối</b>, chỉ vì gate đi tìm thư mục <code>/screens/</code> trong khi trên đĩa nó tên là <code>/pages/</code>.</div>
+
+    <div class="opts">
+      <div class="opt pick">
+        <div class="on"><span>A · Sửa GATE</span><span class="tag t-pick">trò nghiêng</span></div>
+        <p>Đổi <code>tierOf</code> nhận đúng tên thư mục thật (<code>pages</code>, <code>layouts</code>, <code>overlays</code>, <code>behaviors</code>), và mở luật ra cho <code>composite</code>.</p>
+        <p><b>Được:</b> phủ từ 46% lên gần 100%. Luật thầy đã chốt được thi hành thật.</p>
+        <p><b>Mất:</b> gate sẽ đỏ lên một loạt chỗ đang vi phạm mà chưa ai biết. Phải dọn.</p>
+      </div>
+      <div class="opt">
+        <div class="on"><span>B · Sửa TÀI LIỆU</span><span class="tag t-no">không nên</span></div>
+        <p>Hạ 3 dòng trong <code>seam</code>/<code>frame</code> từ ✅ xuống ⬜ cho khớp thực tế.</p>
+        <p><b>Được:</b> tài liệu hết nói dối, làm trong 5 phút.</p>
+        <p><b>Mất:</b> hợp thức hoá việc 54% cây không ai gác. Luật vẫn nằm trên giấy.</p>
+      </div>
+      <div class="opt">
+        <div class="on"><span>C · Cả hai, theo thứ tự</span></div>
+        <p>Hạ ✅→⬜ ngay hôm nay cho tài liệu trung thực, ghi nợ, rồi mở gate ở một đợt riêng có kế hoạch dọn.</p>
+        <p><b>Được:</b> không có lúc nào tài liệu nói sai, và không phải dọn gấp.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ Q2 ══════════ -->
+  <h2>Q2 — Nhường quyền giữa hai trục</h2>
+  <div class="q">
+    <div class="qh"><span class="qn">Q2</span><h3 style="margin:0"><code>seam</code> bỏ đoạn Container · <code>frame</code> sửa thang padding về 4 bậc</h3></div>
+
+    <h3 style="margin-top:4px">2a. <code>seam</code> đang mô tả một bug đã được sửa xong</h3>
+    <table>
+      <thead><tr><th style="width:16%">Nguồn</th><th>Nói gì</th></tr></thead>
+      <tbody>
+        <tr><td class="numc bad">seam §4.1</td><td>"<code>Container</code> chỉ áp <code>gap</code> khi dùng slot <code>header</code>/<code>footer</code>; truyền <code>children</code> thẳng thì đo được <b>0px</b>" — mô tả như bug <b>đang xảy ra</b></td></tr>
+        <tr><td class="numc bad">seam §6 #6</td><td>đề xuất <b>viết một gate mới</b> để bắt lỗi truyền <code>gap</code> vào nhánh không nhận</td></tr>
+        <tr><td class="numc ok">frame §4.1</td><td>"bỏ ba prop đó; giờ <b>luôn</b> phải <code>Container &gt; Stack.V</code>" — đã xoá <b>2026-07-27</b></td></tr>
+      </tbody>
+    </table>
+    <div class="hq"><b>Hệ quả nếu không sửa:</b> LLM đọc <code>seam</code> sẽ đi viết một gate canh chừng một prop <b>không còn tồn tại</b>. Tệ hơn nữa, nó có thể "sửa" call-site để dùng lại slot <code>header</code>/<code>footer</code> đã bị bỏ.</div>
+
+    <h3 style="margin-top:8px">2b. Hai trục khai hai thang padding khác nhau</h3>
+    <table>
+      <thead><tr><th style="width:16%">Nguồn</th><th style="width:34%">Thang padding hợp lệ</th><th>Bằng chứng</th></tr></thead>
+      <tbody>
+        <tr><td class="numc bad">frame §6 #2</td><td class="numc">0 · 1 · 2 · 3 · 6 · 8 <span class="dim">(mượn 6 bậc của seam)</span></td><td>không có số đếm kèm theo</td></tr>
+        <tr><td class="numc ok">inset §1</td><td class="numc">0 · 3 · 6 · 8 <span class="dim">(4 bậc InsetScale)</span></td><td>đếm <b>46 call-site padding thật</b>, không chỗ nào dùng <code>1</code> hay <code>2</code></td></tr>
+        <tr><td class="numc warn">code thật</td><td class="numc">export type InsetScale = "flush" | "cozy" | "roomy" | "airy"</td><td><code>frames/_spacing.ts:82</code> — <b>4 giá trị</b>, trọng tài cuối cùng</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin:0">Cùng lỗi đó nằm trong <b>chính gate</b>: <code>check-padding.mjs:43</code> khai <code>SCALE = {"0","1","2","3","6","8"}</code> — nên <code>p-1</code> và <code>p-2</code> viết tay <b>lọt qua</b> dù ngoài thang padding.</p>
+
+    <div class="opts">
+      <div class="opt pick">
+        <div class="on"><span>Đề xuất</span><span class="tag t-pick">trò nghiêng</span></div>
+        <p><code>seam</code> xoá neo <code>Container</code> cụ thể, giữ nguyên tắc "một seam một chủ", trỏ sang <code>frame</code> làm SSOT cho API của khung. Gate #6 đề xuất bị <b>bỏ</b> vì nó canh một prop đã chết.</p>
+        <p><code>frame</code> sửa dòng thang padding về <code>0·3·6·8</code>, và <b>sửa luôn <code>check-padding.mjs</code></b> bỏ <code>1</code>,<code>2</code> khỏi <code>SCALE</code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ Q3 ══════════ -->
+  <h2>Q3 — Tên tầng: năm nguồn, không nguồn nào giống nguồn nào</h2>
+  <div class="q">
+    <div class="qh"><span class="qn">Q3</span><h3 style="margin:0">Đây là gốc của cả xung đột trục lẫn doc rot trong <code>steps/</code></h3></div>
+
+    <table>
+      <thead><tr><th style="width:24%">Nguồn</th><th>Danh sách tầng</th><th style="width:12%">Đo được</th></tr></thead>
+      <tbody>
+        <tr><td class="numc">thư mục trên ĐĨA</td><td class="numc">atoms · behaviors · composites · frames <span class="dim">+ &lt;app&gt;/</span>{blocks · layouts · overlays · pages}</td><td class="ok">sự thật</td></tr>
+        <tr><td class="numc"><code>check-seams.mjs</code></td><td class="numc">screen · block · <span class="bad">design</span> · composite · frame · atom · util</td><td class="bad">2 tầng ma</td></tr>
+        <tr><td class="numc"><code>check-padding.mjs</code></td><td class="numc">frame · composite · <span class="bad">design</span> · block · screen · <span class="bad">viewer</span></td><td class="bad">3 tầng ma</td></tr>
+        <tr><td class="numc"><code>rules/4-organization</code></td><td class="numc">atoms · frames · composites · <span class="bad">designs</span> · blocks · screens</td><td class="bad">2 tầng ma</td></tr>
+        <tr><td class="numc"><code>ANNOTATE</code> thực dùng</td><td class="numc">composite 953 · atom 352 · block 309 · <b>heroui 273</b> · frame 199 · screen 1</td><td class="warn">có <code>heroui</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="hq">
+      <b>Bốn thứ lộ ra khi xếp năm nguồn cạnh nhau:</b><br>
+      1. <code>designs/</code> và <code>screens/</code> <b>không tồn tại trên đĩa</b>, nhưng hai gate và một file rules vẫn đi tìm chúng — đó chính là nguyên nhân lỗ 54% ở Q1.<br>
+      2. <code>behaviors/</code> <b>tồn tại thật</b> (<code>DragScrollArea</code>, <code>ResizableRail</code>) nhưng <b>không nguồn tài liệu nào nhắc tới</b> — một tầng mồ côi.<br>
+      3. <code>heroui</code> được dùng <b>273 lần</b> trong ANNOTATE nhưng không phải thư mục, không có trong gate nào — nó là "tầng ảo" chỉ tồn tại trong panel anatomy.<br>
+      4. <code>layouts</code>, <code>overlays</code>, <code>pages</code> nằm <b>bên trong từng app</b> (<code>starci/</code>, <code>miamia/</code>, <code>nivo/</code>) — tức tầng và app là <b>hai trục vuông góc</b>, chưa tài liệu nào nói ra điều đó.
+    </div>
+
+    <div class="opts">
+      <div class="opt pick">
+        <div class="on"><span>A · Đĩa là trọng tài</span><span class="tag t-pick">trò nghiêng</span></div>
+        <p>Lấy đúng tên thư mục thật làm danh sách chính thức, rồi sửa 2 gate + <code>rules/4</code> + <code>steps/</code> theo nó. <code>heroui</code> khai riêng là "tầng vendor, không có thư mục".</p>
+        <p><b>Vì sao:</b> đĩa là thứ duy nhất không nói dối được. Tài liệu và gate đều đã trôi khỏi nó.</p>
+      </div>
+      <div class="opt">
+        <div class="on"><span>B · Thầy chốt danh sách</span></div>
+        <p>Thầy đọc bảng trên rồi gọi tên chính thức, kể cả khi khác đĩa — rồi trò đổi tên thư mục cho khớp.</p>
+        <p><b>Vì sao có thể đúng:</b> nếu <code>pages</code> đáng lẽ phải là <code>screens</code> thì sửa đĩa mới là sửa gốc.</p>
+      </div>
+      <div class="opt">
+        <div class="on"><span>C · Trò khảo sát rồi trình</span></div>
+        <p>Trò dựng một trang riêng: mỗi tầng ứng viên là gì, chứa gì, ai import ai, rồi đề xuất danh sách kèm lý do từng cái.</p>
+        <p><b>Vì sao có thể đúng:</b> câu <code>behaviors</code> và câu "app × tầng vuông góc" chưa ai trả lời, chốt vội sẽ chốt thiếu.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ Q4 ══════════ -->
+  <h2>Q4 — Số phận <code>principles.md</code></h2>
+  <div class="q">
+    <div class="qh"><span class="qn">Q4</span><h3 style="margin:0">Rã nốt rồi xoá, hay giữ làm file "phần chưa có nhà"?</h3></div>
+
+    <p class="note" style="margin:0">File <b>144 KB · 1 408 dòng</b>. Đối chiếu với 12 trục mới cho ra hai nhóm:</p>
+
+    <table>
+      <thead><tr><th style="width:24%">Nhóm</th><th>Nội dung</th></tr></thead>
+      <tbody>
+        <tr><td class="numc warn">CHƯA CÓ NHÀ<br><span class="dim">5 mảng</span></td><td><code>§2a-b</code> thang prominence (muted→accent→chip→button) · <code>§3</code> reading-flow · <code>§4a</code> cấm đổi thang cỡ atom để chữa một chỗ · <code>§7</code> press feedback (<code>active:scale</code>, ripple, ROW≠CARD) · <code>§13z</code> chiều phụ thuộc frame→atom</td></tr>
+        <tr><td class="numc bad">NÓI NGƯỢC<br><span class="dim">2 chỗ</span></td><td><code>§12a</code> liệt <code>Typography.{Xs,Sm,Base,Lg}</code> là <b>mẫu ĐÚNG</b> — trong khi namespace đã bị <code>check-no-namespace.mjs</code> <b>cấm hẳn</b><br><code>§5a</code> chốt caret điều hướng <code>size-3</code> CỐ ĐỊNH — trong khi <b>5/5 call-site sống</b> đều là <code>size-4</code> + <code>weight="bold"</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="hq"><b>Vì sao "giữ lại cho an toàn" là lựa chọn nguy hiểm nhất:</b> nó không nằm im. Nó nằm <b>trong luồng đọc</b> của agent, và hai chỗ trên sẽ dạy agent làm đúng cái mà gate đang cấm. Một tài liệu chết mà vẫn được đọc thì tệ hơn một tài liệu bị xoá.</div>
+
+    <div class="opts">
+      <div class="opt pick">
+        <div class="on"><span>A · Rã hết rồi XOÁ</span><span class="tag t-pick">trò nghiêng</span></div>
+        <p>5 mảng thiếu thành trục 13-15 (<code>prominence</code> · <code>press</code> · <code>reading-flow</code>), 2 chỗ nói ngược thì sửa theo code thật, phần còn lại đã có ở <code>rules/</code>. Xong thì xoá file.</p>
+        <p><b>Được:</b> mỗi câu hỏi có đúng một nơi trả lời. Không còn nguồn nào nói ngược gate.</p>
+      </div>
+      <div class="opt">
+        <div class="on"><span>B · Đổi tên thành <code>_legacy</code></span></div>
+        <p>Đổi thành <code>_principles-legacy.md</code> + thêm cảnh báo đầu file, gỡ khỏi mọi luồng đọc, rã dần khi rảnh.</p>
+        <p><b>Được:</b> an toàn, không mất gì, làm được ngay.<br><b>Mất:</b> nợ sống lâu, và tên <code>_legacy</code> chưa chắc ngăn được agent grep trúng.</p>
+      </div>
+      <div class="opt">
+        <div class="on"><span>C · Giữ nguyên</span><span class="tag t-no">không nên</span></div>
+        <p>Để nguyên, chỉ sửa 2 chỗ nói ngược.</p>
+        <p><b>Mất:</b> ba nơi cùng chứa luật (<code>principles.md</code> · <code>rules/</code> · <code>principles/</code>) — đúng cái bệnh mà bộ mới sinh ra để chữa.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Tóm tắt để chốt nhanh</h2>
+  <div class="rules">
+    <table>
+      <thead><tr><th style="width:6%">#</th><th style="width:30%">Câu</th><th style="width:24%">Trò nghiêng</th><th>Cái giá phải trả</th></tr></thead>
+      <tbody>
+        <tr><td class="numc">Q1</td><td>gate khai khống</td><td class="ok">A — sửa gate</td><td>gate sẽ đỏ ở nhiều chỗ, phải dọn một đợt</td></tr>
+        <tr><td class="numc">Q2</td><td>nhường quyền trục</td><td class="ok">đồng ý cả hai</td><td>rẻ, sửa vài dòng, không rủi ro</td></tr>
+        <tr><td class="numc">Q3</td><td>tên tầng</td><td class="warn">C rồi A</td><td>khảo sát trước vì <code>behaviors</code> và "app × tầng" chưa ai trả lời</td></tr>
+        <tr><td class="numc">Q4</td><td><code>principles.md</code></td><td class="ok">A — rã rồi xoá</td><td>3 trục mới phải viết, nhưng khuôn đã có sẵn</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin:10px 0 0"><b>Thứ tự làm nếu thầy chốt hết:</b> Q3 trước (tên tầng là gốc, sửa gate ở Q1 cần biết tên đúng) → Q1 → Q2 → Q4.</p>
+  </div>
+
+</div>
+</body>
+</html>

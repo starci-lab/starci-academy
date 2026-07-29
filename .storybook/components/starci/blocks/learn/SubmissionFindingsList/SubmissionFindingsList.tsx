@@ -105,7 +105,12 @@ const SEVERITY_VISUAL: Record<SubmissionFeedbackSeverity, SeverityVisual> = {
 export interface SubmissionFinding {
     /** Stable id — also the accordion row's expand key. */
     id: string
-    /** Short summary, authored as markdown, shown (clamped to one line) in the trigger. */
+    /**
+     * Short summary shown (clamped to one line) in the accordion trigger — plain
+     * text, at most `` `code` `` spans (never bold/italic/link: a trigger title
+     * is tier 1, thầy chốt 2026-07-29, markdown-tier-rules.html). Full markdown
+     * belongs in `detail`/`suggestion`, which render in the panel body instead.
+     */
     message: string
     /** Longer explanation, authored as markdown, shown in the panel. */
     detail?: string
@@ -172,22 +177,20 @@ const buildLocationHref = (location: string, repositoryUrl?: string): string | u
     repositoryUrl ? `${repositoryUrl.replace(/\.git$/, "")}/blob/HEAD/${location.replace(/^\//, "")}` : undefined
 
 /**
- * Trigger content: the severity icon (a MARK attached to the message, `tight`)
- * beside the markdown message, clamped to one line so a long finding never
- * pushes the location chip or the caret out of the row.
+ * Trigger icon: the severity glyph, its OWN tone colour independent of the
+ * title text — rides `titleStart`, not composed into `title` itself (§ same
+ * rule as `ChallengeDeliverableList`'s status icon).
  */
-const findingTrigger = (finding: SubmissionFinding, showAnatomy: boolean): ReactNode => {
+const findingIcon = (finding: SubmissionFinding, showAnatomy: boolean): ReactNode => {
     const { icon: Icon, toneClassName } = SEVERITY_VISUAL[finding.severity]
     return (
-        <StackH gap="tight" align="center" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackH" : undefined}>
-            <Icon aria-hidden focusable="false" weight="bold" className={cn("size-3.5 shrink-0", toneClassName)} />
-            <MarkdownContent
-                source={finding.message}
-                measure="compact"
-                className="min-w-0 flex-1 [&_p]:m-0 [&_p]:truncate"
-                anatPart={showAnatomy ? "MarkdownContent" : undefined}
-            />
-        </StackH>
+        <Icon
+            aria-hidden
+            focusable="false"
+            weight="bold"
+            data-anat-part={showAnatomy ? "SeverityIcon" : undefined}
+            className={cn("size-3.5 shrink-0", toneClassName)}
+        />
     )
 }
 
@@ -195,7 +198,7 @@ const findingTrigger = (finding: SubmissionFinding, showAnatomy: boolean): React
 const findingLocationChip = (finding: SubmissionFinding, showAnatomy: boolean): ReactNode | undefined =>
     finding.location ? (
         <Chip
-            tone="neutral"
+            tone="default"
             text={finding.location}
             className="max-w-40 shrink-0"
             anatPart={showAnatomy ? "Chip" : undefined}
@@ -287,7 +290,8 @@ const SubmissionFindingsList = ({
         ? []
         : sortFindings(findings).map((finding) => ({
             id: finding.id,
-            title: findingTrigger(finding, showAnatomy),
+            titleStart: findingIcon(finding, showAnatomy),
+            title: finding.message,
             titleEnd: findingLocationChip(finding, showAnatomy),
             body: findingPanel(finding, repositoryUrl, showAnatomy),
         }))

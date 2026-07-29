@@ -225,12 +225,12 @@ const buildQuestionChips = (question: QaQuestionThreadQuestion, options: QaQuest
     }
 
     const items: Array<ClusterItem> = [
-        { key: "scope", content: <Chip tone="neutral" text={scopeLabel(question.scope)} anatPart={showAnatomy ? "Chip" : undefined} /> },
+        { key: "scope", content: <Chip tone="default" text={scopeLabel(question.scope)} anatPart={showAnatomy ? "Chip" : undefined} /> },
         {
             key: "status",
             content: (
                 <Chip
-                    tone={question.replyCount > 0 ? "success" : "neutral"}
+                    tone={question.replyCount > 0 ? "success" : "default"}
                     text={statusLabel(question.replyCount, question.answeredByFounder)}
                     anatPart={showAnatomy ? "Chip" : undefined}
                 />

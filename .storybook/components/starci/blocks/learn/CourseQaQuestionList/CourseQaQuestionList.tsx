@@ -274,7 +274,7 @@ const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPr
             key: "status",
             content: (
                 <Chip
-                    tone={isAnswered ? "success" : "neutral"}
+                    tone={isAnswered ? "success" : "default"}
                     text={statusLabel(question.replyCount, question.answeredByFounder)}
                     anatPart={showAnatomy ? "Chip" : undefined}
                 />

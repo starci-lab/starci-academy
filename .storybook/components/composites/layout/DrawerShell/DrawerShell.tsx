@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn, Drawer } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -116,7 +117,7 @@ const Base = ({
                             <Drawer.Header data-anat-part={showAnatomy ? "Drawer.Header" : undefined}>{header}</Drawer.Header>
                         ) : title != null ? (
                             <Drawer.Header>
-                                <div className={cn("flex flex-col gap-1 pr-8", titleClassName)}>
+                                <StackV gap="tight" className={cn("pr-8", titleClassName)}>
                                     <Typography
                                         weight="bold"
                                         showAnatomy={showAnatomy}
@@ -131,7 +132,7 @@ const Base = ({
                                             text={description}
                                         />
                                     ) : null}
-                                </div>
+                                </StackV>
                             </Drawer.Header>
                         ) : null}
                         <Drawer.Body

@@ -45,6 +45,61 @@
   <h1>Text-Size System — siêu chi tiết</h1>
   <p class="sub">Bản nâng cấp — Explore agent đọc ~70 file thật <code>src/components/**</code> (không phải suy diễn từ vài case lẻ như bản trước). Mọi dòng đều trích được <code>file:line</code>.</p>
 
+  <h2 style="border-top:none;padding-top:0">0. Hệ thống quyết đoán — 4 tier + 1 cây quyết định (2026-07-29)</h2>
+  <p class="note" style="margin:0 0 14px">Research: giới hạn <b>3-4 bậc</b> tạo đường đọc rõ (Dropbox mobile giảm 5→3 bậc, conversion +17%); tương phản đến từ <b>size + weight + color cộng dồn</b>, không chỉ 1 kênh. 4 tier dưới đây <b>TỔ CHỨC LẠI</b> đúng dữ liệu thật ở mục 1-6 bên dưới — không thêm case mới, không đổi 1 neo nào, chỉ đặt tên cho hệ thống đã có.</p>
+
+  <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr))">
+    <div class="card">
+      <span class="step-tag">Tier A — khối nổi bật độc lập</span>
+      <div class="mock"><div class="app-fg" style="font-size:20px;font-weight:700">Viết Dockerfile tối ưu</div></div>
+      <p>ĐỨNG MỘT MÌNH trong 1 khối/card/lưới: tiêu đề card, hero, stat, giá chính. Range <code>h3–h6</code> (Storybook gần nhất <code>h5</code>) + luôn <code>bold</code> — cỡ cụ thể co theo BỀ RỘNG khối chứa, nhưng luôn đứng riêng + luôn đậm nhất trang.</p>
+      <p class="cite">CourseCard:285 · MetricCard:67 · PricingCard:108</p>
+    </div>
+    <div class="card">
+      <span class="step-tag">Tier B — tên chính trong hàng dày đặc</span>
+      <div class="mock"><div class="app-fg" style="font-size:14px;font-weight:500">Minh Anh</div></div>
+      <p>1 HÀNG trong list/table, không đứng riêng — vẫn cần nổi hơn phần còn lại của hàng. <code>body-sm</code> + <code>medium</code> (KHÔNG BAO GIỜ bold — bold chỉ dành Tier A).</p>
+      <p class="cite">UserCell:62 · ListRow:78</p>
+    </div>
+    <div class="card">
+      <span class="step-tag">Tier C — văn xuôi / mô tả</span>
+      <div class="mock"><div class="app-fg" style="font-size:14px;font-weight:400">Khoá học giúp bạn làm chủ Docker từ cơ bản đến production.</div></div>
+      <p>Câu/đoạn mô tả dưới 1 title — không phải nhãn, không phải tên. <code>body-sm</code>, không khai weight (regular), thường <code>color="muted"</code>.</p>
+      <p class="cite">CourseCard:222</p>
+    </div>
+    <div class="card">
+      <span class="step-tag">Tier D — meta / nhãn phụ</span>
+      <div class="mock"><div class="app-muted" style="font-size:12px;font-weight:400">2 giờ trước</div></div>
+      <p>Thông tin phụ, quan trọng thấp nhất nhưng vẫn phải đọc được: timestamp, nhãn, caption tầng 2, giá gạch. <code>body-xs</code>, regular.</p>
+      <p class="cite">FeedItem:51 · DifficultyChip:48 · PricingCard:121</p>
+    </div>
+  </div>
+
+  <div class="watch" style="margin-top:14px">
+    <p style="margin:0 0 6px"><b>Ngoại lệ có tên, KHÔNG phải tier thứ 5</b> — Tiêu đề Modal: <code>body</code> + <code>weight="semibold"</code>, KHÔNG BAO GIỜ <code>h*</code> dù nhìn "to đậm" như Tier A. Đây là luật RIÊNG (heading-semantic), không đi qua cây quyết định dưới.</p>
+  </div>
+
+  <h2>0b. Cây quyết định — trả lời 4 câu, ra ĐÚNG 1 tier</h2>
+  <div class="rules">
+    <ol style="margin:0;padding-left:20px">
+      <li style="margin:8px 0">Đây có phải <b>tiêu đề Modal</b> không? → có → <b>Ngoại lệ</b> (<code>body semibold</code>), dừng tại đây.</li>
+      <li style="margin:8px 0">Nó có <b>ĐỨNG MỘT MÌNH</b> làm tâm điểm của 1 khối/card/lưới không? → có → <b>Tier A</b>.</li>
+      <li style="margin:8px 0">Nó có phải <b>1 HÀNG</b> trong list/table dày đặc không? → có → <b>Tier B</b>.</li>
+      <li style="margin:8px 0">Nó có phải <b>câu/đoạn văn xuôi</b> mô tả không? → có → <b>Tier C</b>.</li>
+      <li style="margin:8px 0">Còn lại (nhãn, timestamp, giá phụ, caption) → <b>Tier D</b>.</li>
+    </ol>
+  </div>
+
+  <h2>0c. So sánh xếp chồng — cùng nhìn 1 lúc để thấy bước nhảy tương phản</h2>
+  <div class="card" style="max-width:420px">
+    <div class="mock" style="display:flex;flex-direction:column;gap:10px">
+      <div class="app-fg" style="font-size:20px;font-weight:700">Tier A — Viết Dockerfile tối ưu</div>
+      <div class="app-fg" style="font-size:14px;font-weight:500">Tier B — Minh Anh</div>
+      <div class="app-fg" style="font-size:14px;font-weight:400">Tier C — mô tả 1 dòng dưới title</div>
+      <div class="app-muted" style="font-size:12px;font-weight:400">Tier D — 2 giờ trước</div>
+    </div>
+  </div>
+
   <h2>1. Tần suất thật — xương sống là body-sm/body-xs, KHÔNG phải heading</h2>
   <table>
     <thead><tr><th>type</th><th>Số lần</th><th>Thanh đo</th><th>Vai trò tiêu biểu</th></tr></thead>

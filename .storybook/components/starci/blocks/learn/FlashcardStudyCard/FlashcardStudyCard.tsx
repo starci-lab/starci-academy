@@ -135,7 +135,7 @@ const FlashcardStudyCard = ({
                     {hasMeta ? (
                         <StackH gap="related" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
                             {levelLabel != null ? (
-                                <Chip tone="neutral" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />
+                                <Chip tone="default" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />
                             ) : null}
                             {tagItems.length > 0 ? (
                                 <ChipGroup

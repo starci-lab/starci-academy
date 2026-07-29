@@ -1,13 +1,13 @@
 import React from "react"
-import { cn } from "@heroui/react"
-import { CheckCircleIcon, CircleIcon, GearSixIcon, XCircleIcon } from "@phosphor-icons/react"
-import type { IconComponent } from "@sb-components/atoms/buttons/Button/Button"
+import { GearSixIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
-import { SurfaceCard, SurfaceCardAccordion, type SurfaceCardAccordionItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardAccordion, markIcon, type ListMark, type MarkTone, type SurfaceCardAccordionItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
+import { ScoreValue } from "@sb-components/composites/text/ScoreValue/ScoreValue"
+import { type SubmissionFeedbackSeverity } from "@sb-components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -33,17 +33,13 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * gets the same treatment: the graded block is a STATE inside this leaf, not a
  * second leaf and not a second component.
  *
- * ⭐ THE STATUS ICON LIVES INSIDE `title` (composed JSX), not a slot of its own.
- * `SurfaceCard.Accordion`'s `SurfaceCardAccordionItem` has exactly two text
- * slots — `title` (leading, truncates) and `titleEnd` (trailing, before the
- * caret) — with no separate "leading icon" prop. The real screen needs BOTH an
- * icon before the title AND a score after it, so the icon rides inside the
- * `title` node the block builds, exactly as `SurfaceCardAccordionItem.title`'s
- * own type (`ReactNode`) allows. The icon carries its OWN status colour
- * (muted/success/danger) independent of the title text, which is why it is
- * built here rather than through `Typography`'s `prefixIcon` — that slot forces
- * the icon to the text's `currentColor`, which would recolour "1. Viết API" red
- * along with the icon on a failed row.
+ * ⭐ THE STATUS ICON RIDES `titleStart`, `title` STAYS PLAIN TEXT (thầy chốt
+ * 2026-07-29, markdown-tier-rules.html: a title is never richtext). The icon
+ * needs its OWN status colour (muted/success/danger) independent of the title
+ * text — `Typography`'s `prefixIcon` would force it to the text's `currentColor`,
+ * recolouring "1. Viết API" red along with the icon on a failed row — so it goes
+ * through `titleStart` (a leading slot beside `titleEnd`, both OUTSIDE
+ * `Typography`) instead of composing custom JSX into `title` itself.
  *
  * ⭐ POINTS BECOMES SCORE, NEVER BOTH. Before an attempt the trailing slot reads
  * "N điểm" — what the row is worth. Once `graded` lands it switches to
@@ -75,15 +71,18 @@ export type ChallengeDeliverableStatus = "todo" | "done" | "failed"
 /** How the last graded attempt on a requirement came out. */
 export type ChallengeDeliverableVerdict = "pass" | "fail"
 
-/** How serious one piece of structured feedback is. */
-export type ChallengeDeliverableFeedbackSeverity = "low" | "medium" | "high"
-
-/** One line of AI feedback on a graded attempt. */
+/**
+ * One line of AI feedback on a graded attempt. `severity` reuses
+ * {@link SubmissionFeedbackSeverity} — "how serious one piece of AI-grading
+ * feedback is" is the SAME concept `SubmissionFindingsList` already owns for
+ * the personal-project grading flow, not a second vocabulary for this one
+ * (thầy chốt 2026-07-29: gần giống thì áp dụng lại pattern, không xây mới).
+ */
 export interface ChallengeDeliverableFeedback {
     /** Stable React key. */
     id: string
     /** How serious this finding is. */
-    severity: ChallengeDeliverableFeedbackSeverity
+    severity: SubmissionFeedbackSeverity
     /** What the grader found. */
     message: string
     /** Where in the submission this applies, e.g. a file/line — shown monospace. */
@@ -149,17 +148,24 @@ export interface ChallengeDeliverableListProps {
     anatPart?: string
 }
 
-/** Status → leading icon + its OWN colour, independent of the title text. */
-const STATUS_ICON: Record<ChallengeDeliverableStatus, IconComponent> = {
-    todo: CircleIcon,
-    done: CheckCircleIcon,
-    failed: XCircleIcon,
+/**
+ * Status → the SAME icon-per-status mapping `SurfaceCard.CrossList` already owns
+ * (thầy chốt 2026-07-29): a "not decided yet / passed / failed" row is the same
+ * shape as that composite's check/cross mark, missing only the neutral pending
+ * case — extended there (`ListMark`/`MarkTone` gained `"pending"`/`"neutral"`)
+ * rather than hand-rolled a second time here. `failed` passes `tone="danger"`
+ * explicitly because `markIcon`'s own default for `cross` is `"muted"` (an
+ * EXCLUDED row, not a FAILED one) — this block's `cross` always means failed.
+ */
+const STATUS_MARK: Record<ChallengeDeliverableStatus, ListMark> = {
+    todo: "pending",
+    done: "check",
+    failed: "cross",
 }
-
-const STATUS_ICON_CLASS: Record<ChallengeDeliverableStatus, string> = {
-    todo: "text-muted",
-    done: "text-success",
-    failed: "text-danger",
+const STATUS_TONE: Record<ChallengeDeliverableStatus, MarkTone | undefined> = {
+    todo: undefined,
+    done: undefined,
+    failed: "danger",
 }
 
 /** Verdict wording — the block's own (§4: a caller passes `"pass" | "fail"`, never a string). */
@@ -173,7 +179,7 @@ const VERDICT_MAP: Partial<Record<ChallengeDeliverableVerdict, EnumChipEntry>> =
  * colour set has no info tone, and a neutral chip still reads as the mildest of
  * the three without inventing a colour outside the system.
  */
-const SEVERITY_MAP: Partial<Record<ChallengeDeliverableFeedbackSeverity, EnumChipEntry>> = {
+const SEVERITY_MAP: Partial<Record<SubmissionFeedbackSeverity, EnumChipEntry>> = {
     high: { color: "danger", label: "Nghiêm trọng" },
     medium: { color: "warning", label: "Cần sửa" },
     low: { color: "default", label: "Gợi ý" },
@@ -190,41 +196,20 @@ const scoreEnd = (item: ChallengeDeliverableItem, showAnatomy: boolean) =>
             anatPart={showAnatomy ? "Typography" : undefined}
         />
     ) : (
-        <Typography
-            size="xs"
-            color="accent"
-            weight="medium"
-            tabularNums
-            text={`${item.points} điểm`}
-            anatPart={showAnatomy ? "Typography" : undefined}
-        />
+        <ScoreValue points={item.points} anatPart={showAnatomy ? "ScoreValue" : undefined} />
     )
 
 /**
- * Leading trigger slot: status icon (its own colour) + "index. title" (the
- * text that truncates). Built here rather than through `Typography.prefixIcon`
- * so the icon's colour stays independent of the title (see file header).
- *
- * Laid out with `StackH` (§13z: hand-rolled `flex`/`gap-*` above the layout
- * tier is a gate violation) — `gap="tight"` since the icon is a MARK attached
- * to the title, not a peer beside it.
+ * Leading trigger icon: status icon, its OWN colour, independent of the title
+ * text — rides `titleStart`, not composed into `title` itself (see file header).
+ * Delegates the actual icon+tone to `SurfaceCard`'s `markIcon` (see `STATUS_MARK`).
  */
-const triggerTitle = (item: ChallengeDeliverableItem, index: number, showAnatomy: boolean) => {
-    const StatusIcon = STATUS_ICON[item.status]
-    return (
-        <StackH gap="tight" className="min-w-0" anatPart={showAnatomy ? "StackH" : undefined}>
-            <StatusIcon aria-hidden focusable="false" className={cn("size-4 shrink-0", STATUS_ICON_CLASS[item.status])} />
-            {/* Through `Typography` (not a raw `<span>`) so `` `code` `` segments in `item.title`
-                get the same accordion-safe inline-code treatment `ChallengeBrief` gets — a
-                hand-rolled span bypasses that atom entirely (§9c: chữ qua Typography). */}
-            <Typography size="sm" truncate parseInlineCode text={`${index + 1}. ${item.title}`} className="min-w-0" />
-        </StackH>
-    )
-}
+const triggerIcon = (item: ChallengeDeliverableItem, showAnatomy: boolean) =>
+    markIcon(STATUS_MARK[item.status], STATUS_TONE[item.status], showAnatomy ? "StatusIcon" : undefined)
 
 /** One requirement's panel: description → URL field → actions → the graded result once it exists. */
 const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) => (
-    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
         {item.description != null ? (
             <MarkdownContent source={item.description} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
         ) : null}
@@ -314,40 +299,40 @@ const ChallengeDeliverableList = ({
 
     const accordionItems: Array<SurfaceCardAccordionItem> = items.map((item, index) => ({
         id: item.id,
-        title: triggerTitle(item, index, showAnatomy),
+        titleStart: triggerIcon(item, showAnatomy),
+        title: `${index + 1}. ${item.title}`,
         titleEnd: scoreEnd(item, showAnatomy),
         body: deliverableBody(item, showAnatomy),
     }))
 
+    // ONE surface, not two (thầy chốt 2026-07-29): the accordion IS the card's entire
+    // content — nothing else sits inside "Nộp bài" beside it — so it draws its own
+    // top-level frame directly (`label`/`action` are its own header slots) instead of
+    // a `SurfaceCard` wrapping a `variant="nested"` child. Surface-in-surface is only
+    // for a part that stays SMALL relative to a parent holding other things too;
+    // nesting a border around content that already equals the whole parent just
+    // draws the same outline twice.
     return (
-        <div data-anat-part={anatPart}>
-            <SurfaceCard
-                label="Nộp bài"
-                action={
-                    <Button
-                        isIconOnly
-                        prefixIcon={GearSixIcon}
-                        ariaLabel="Cài đặt chấm điểm"
-                        variant="tertiary"
-                        size="sm"
-                        onPress={onOpenGradingSettings}
-                        isSkeleton={isSkeleton}
-                        anatPart={showAnatomy ? "Button" : undefined}
-                    />
-                }
-                isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-            >
-                <SurfaceCardAccordion
-                    variant="nested"
-                    items={accordionItems}
-                    defaultExpandedKeys={firstOpenId != null ? new Set([firstOpenId]) : undefined}
+        <SurfaceCardAccordion
+            label="Nộp bài"
+            action={
+                <Button
+                    isIconOnly
+                    prefixIcon={GearSixIcon}
+                    ariaLabel="Cài đặt chấm điểm"
+                    variant="tertiary"
+                    size="sm"
+                    onPress={onOpenGradingSettings}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
+                    anatPart={showAnatomy ? "Button" : undefined}
                 />
-            </SurfaceCard>
-        </div>
+            }
+            items={accordionItems}
+            defaultExpandedKeys={firstOpenId != null ? new Set([firstOpenId]) : undefined}
+            isSkeleton={isSkeleton}
+            showAnatomy={showAnatomy}
+            anatPart={anatPart}
+        />
     )
 }
 

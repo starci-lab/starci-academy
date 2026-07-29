@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
@@ -90,23 +91,29 @@ const KeyValueRow = ({
     anatPart,
 }: KeyValueRowProps) => {
     const row = isSkeleton ? (
-        <div
-            className={cn("flex items-start justify-between gap-2", className)}
-            data-anat-part={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
+        <StackH
+            align="start"
+            justify="between"
+            gap="related"
+            className={className}
+            anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
         >
-            <div className="flex min-w-0 flex-col gap-1">
+            <StackV gap="tight" className="min-w-0">
                 <HeroSkeleton className="h-3.5 w-20 rounded" />
                 {hint != null ? <HeroSkeleton className="h-3 w-14 rounded" /> : null}
-            </div>
+            </StackV>
             <HeroSkeleton className="h-3.5 w-12 shrink-0 rounded" />
-        </div>
+        </StackH>
     ) : (
-        <div
-            className={cn("flex items-start justify-between gap-2", className)}
-            data-anat-part={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
+        <StackH
+            align="start"
+            justify="between"
+            gap="related"
+            className={className}
+            anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
         >
             {/* Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1). */}
-            <div className="flex min-w-0 flex-col gap-1">
+            <StackV gap="tight" className="min-w-0">
                 <span data-anat-part={showAnatomy ? "Typography" : undefined}>
                     <Typography size="sm"
                         text={label}
@@ -119,7 +126,7 @@ const KeyValueRow = ({
                         <Typography size="xs" text={hint} color="muted" />
                     </span>
                 ) : null}
-            </div>
+            </StackV>
             <span className="shrink-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
                 {emphasis ? (
                     <Typography text={value} weight="bold" tabularNums />
@@ -127,7 +134,7 @@ const KeyValueRow = ({
                     <Typography size="sm" text={value} weight="medium" tabularNums />
                 )}
             </span>
-        </div>
+        </StackH>
     )
     if (!divider) {
         return row

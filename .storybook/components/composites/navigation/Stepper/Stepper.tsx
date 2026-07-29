@@ -2,6 +2,7 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { CheckIcon } from "@phosphor-icons/react"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -128,7 +129,7 @@ const StepperBase = ({
                         <div
                             className={cn(
                                 "flex flex-col gap-0",
-                                isVertical ? "pt-1" : "items-center text-center",
+                                isVertical ? "" : "items-center text-center",
                             )}
                         >
                             <span data-anat-part={showAnatomy ? "Typography" : undefined}>
@@ -166,14 +167,16 @@ const StepperBase = ({
                                 <button
                                     type="button"
                                     onClick={() => onStepPress(index)}
-                                    className="flex flex-col items-center gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                    className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                 >
-                                    {indicatorAndCopy}
+                                    <StackV gap="related" align="center">
+                                        {indicatorAndCopy}
+                                    </StackV>
                                 </button>
                             ) : (
-                                <div className="flex flex-col items-center gap-2">
+                                <StackV gap="related" align="center">
                                     {indicatorAndCopy}
-                                </div>
+                                </StackV>
                             )}
                         </React.Fragment>
                     )
@@ -181,13 +184,8 @@ const StepperBase = ({
 
                 // Vertical: indicator + a vertical connector down its left rail, copy on the right.
                 return (
-                    <div key={step.id} className="flex gap-3">
-                        <div
-                            className={cn(
-                                "flex flex-col items-center gap-1",
-                                index < steps.length - 1 && "pb-1",
-                            )}
-                        >
+                    <StackH key={step.id} gap="grouped" align="stretch">
+                        <StackV gap="tight" align="center">
                             <StepIndicator state={state} index={index} showAnatomy={showAnatomy} />
                             {index < steps.length - 1 ? (
                                 <span
@@ -198,24 +196,28 @@ const StepperBase = ({
                                     )}
                                 />
                             ) : null}
-                        </div>
+                        </StackV>
                         {isClickable ? (
                             <button
                                 type="button"
                                 onClick={() => onStepPress(index)}
-                                className="flex flex-col gap-0 pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                // inset-exception: optical nudge lining the label up with the step dot, not a surface inset
+                                className="pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
-                                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                                    <Typography size="sm" text={step.label} />
-                                </span>
-                                {step.description ? (
+                                <StackV gap="flush">
                                     <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                                        <Typography size="xs" text={step.description} color="muted" />
+                                        <Typography size="sm" text={step.label} />
                                     </span>
-                                ) : null}
+                                    {step.description ? (
+                                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                            <Typography size="xs" text={step.description} color="muted" />
+                                        </span>
+                                    ) : null}
+                                </StackV>
                             </button>
                         ) : (
-                            <div className="flex flex-col gap-0 pt-1">
+                            // inset-exception: optical nudge lining the label up with the step dot
+                            <StackV gap="flush" className="pt-1">
                                 <span data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     <Typography size="sm"
                                         text={step.label}
@@ -228,9 +230,9 @@ const StepperBase = ({
                                         <Typography size="xs" text={step.description} color="muted" />
                                     </span>
                                 ) : null}
-                            </div>
+                            </StackV>
                         )}
-                    </div>
+                    </StackH>
                 )
             })}
         </div>

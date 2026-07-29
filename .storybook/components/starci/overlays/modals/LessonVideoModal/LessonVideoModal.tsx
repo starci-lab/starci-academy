@@ -272,7 +272,7 @@ const LessonVideoModal = ({
                             content: (
                                 <InlineIconLabel
                                     icon={<ClockIcon />}
-                                    tone="muted"
+                                    tone="default"
                                     size="sm"
                                     isSkeleton={isLoading}
                                     anatPart={showAnatomy ? "InlineIconLabel" : undefined}

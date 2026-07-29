@@ -127,12 +127,12 @@ const DANGER_STATUS = /\b(exited|dead|error|failed?|crash(ed)?|unhealthy|stopped
 const WARNING_STATUS = /\b(restarting|creating|pending|paused|starting|stopping|degraded)\b/i
 const SUCCESS_STATUS = /\b(running|ready|active|healthy|up)\b/i
 
-/** Free-form CLI status text → chip tone. Unrecognized text degrades to `"neutral"`, never throws. */
+/** Free-form CLI status text → chip tone. Unrecognized text degrades to `"default"`, never throws. */
 const toneForStatus = (status: string): ChipTone => {
     if (DANGER_STATUS.test(status)) return "danger"
     if (WARNING_STATUS.test(status)) return "warning"
     if (SUCCESS_STATUS.test(status)) return "success"
-    return "neutral"
+    return "default"
 }
 
 /** Builds one kind group's accordion row: trigger = kind + count, panel = one `List.Row` per resource. */
@@ -141,7 +141,7 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup, showAnatomy: boole
     title: titleCaseKind(group.kind),
     titleEnd: (
         <Chip
-            tone="neutral"
+            tone="default"
             text={String(group.resources.length)}
             anatPart={showAnatomy ? "Chip" : undefined}
         />

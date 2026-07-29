@@ -67,6 +67,19 @@ export interface StackBaseProps {
      */
     nested?: boolean
     /**
+     * The HTML element to render, forwarded to `Flex`. Defaults to `div`.
+     *
+     * Added 2026-07-29 for the same reason `padding` was: a stack that also needed a real tag
+     * (`section`, `figure`, `span`) had to DROP to hand-written classes and lose the axis
+     * semantics along the way. Three call-sites sat outside the frame tier for exactly that.
+     */
+    as?: "div" | "section" | "figure" | "span" | "li"
+    /**
+     * `true` → the track hugs its content (`inline-flex`) instead of taking the whole line.
+     * Measured on the same content: the block box came out 503px, the inline box 136px.
+     */
+    inline?: boolean
+    /**
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
      */
@@ -125,6 +138,8 @@ const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal"
  * @param props - {@link StackVProps}
  */
 const StackV = ({
+    as: Tag,
+    inline,
     gap,
     align = "stretch",
     justify,
@@ -137,6 +152,8 @@ const StackV = ({
     anatPart,
 }: StackVProps) => (
     <Flex
+        as={Tag}
+        inline={inline}
         direction="col"
         gap={gap}
         padding={padding}
@@ -150,6 +167,8 @@ const StackV = ({
 )
 
 const StackH = ({
+    as: Tag,
+    inline,
     gap,
     align = "center",
     justify,
@@ -163,6 +182,8 @@ const StackH = ({
     anatPart,
 }: StackHProps) => (
     <Flex
+        as={Tag}
+        inline={inline}
         direction="row"
         gap={gap}
         padding={padding}

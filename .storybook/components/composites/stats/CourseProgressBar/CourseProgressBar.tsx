@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
+import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -66,16 +67,16 @@ export const CourseProgressBar = ({
 }: CourseProgressBarProps) => {
     if (isSkeleton) {
         return (
-            <div className={cn("flex flex-col gap-2", className)}>
+            <StackV gap="related" className={className}>
                 <HeroSkeleton className="h-1 w-full rounded-full" />
                 {!hideLegend ? (
-                    <div className="flex flex-wrap gap-3">
+                    <StackH wrap gap="grouped" align="stretch">
                         <HeroSkeleton className="h-3.5 w-16 rounded" />
                         <HeroSkeleton className="h-3.5 w-16 rounded" />
                         <HeroSkeleton className="h-3.5 w-16 rounded" />
-                    </div>
+                    </StackH>
                 ) : null}
-            </div>
+            </StackV>
         )
     }
     const lanes = (dims ?? [])
@@ -87,7 +88,7 @@ export const CourseProgressBar = ({
         }))
 
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <StackV gap="related" className={className}>
             <div
                 role="img"
                 aria-label={ariaLabel}
@@ -115,6 +116,6 @@ export const CourseProgressBar = ({
                     }))}
                 />
             ) : null}
-        </div>
+        </StackV>
     )
 }

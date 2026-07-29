@@ -4,6 +4,7 @@ import { Button, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { XIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
+import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -83,10 +84,10 @@ export const RemovableToken = ({
                     className,
                 )}
             >
-                <div className="flex min-w-0 items-center gap-2">
+                <StackH gap="related" className="min-w-0">
                     <HeroSkeleton className="size-4 shrink-0 rounded" />
                     <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
-                </div>
+                </StackH>
                 <HeroSkeleton className="h-9 w-20 shrink-0 rounded-full" />
             </div>
         )
@@ -101,7 +102,7 @@ export const RemovableToken = ({
                 className,
             )}
         >
-            <div className="flex min-w-0 items-center gap-2">
+            <StackH gap="related" className="min-w-0">
                 {icon ? (
                     // COMPOSITE owns the size (§4) — force the caller's bare icon
                     // down to the row's glyph scale (matches the body-sm label).
@@ -110,10 +111,10 @@ export const RemovableToken = ({
                     </span>
                 ) : null}
                 <Typography size="sm" weight="medium" truncate text={label} />
-            </div>
+            </StackH>
 
             {(onEdit || onRemove) && (
-                <div className="flex shrink-0 items-center gap-2">
+                <StackH gap="related" className="shrink-0">
                     {onEdit ? (
                         <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit}>
                             <XIcon aria-hidden focusable="false" className="size-4" />
@@ -133,7 +134,7 @@ export const RemovableToken = ({
                             <XIcon aria-hidden focusable="false" />
                         </button>
                     ) : null}
-                </div>
+                </StackH>
             )}
         </div>
     )

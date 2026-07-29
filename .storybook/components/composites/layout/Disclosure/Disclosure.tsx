@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
 import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -107,12 +108,12 @@ const Base = ({
         // text-sm = 14/20 → h-[14px] my-[3px] keeps the 20px line box, so
         // toggling isSkeleton does not shift layout (§8).
         return (
-            <div className={cn("flex flex-col gap-3", className)}>
-                <div className="flex w-fit items-center gap-2 text-muted">
+            <StackV gap="grouped" className={className}>
+                <StackH gap="related" className="w-fit text-muted">
                     <CaretDownIcon className="size-4 shrink-0" weight="bold" aria-hidden focusable="false" />
                     <HeroSkeleton className={cn(SKELETON_TEXT_BAR_SM, "w-24")} />
-                </div>
-            </div>
+                </StackH>
+            </StackV>
         )
     }
 
@@ -124,7 +125,7 @@ const Base = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <StackV gap="grouped" className={className}>
             <button
                 type="button"
                 onClick={toggle}
@@ -144,11 +145,11 @@ const Base = ({
                 <span className="text-sm">{title}</span>
             </button>
             {open ? (
-                <div className="flex flex-col gap-3">
+                <StackV gap="grouped">
                     {content}
-                </div>
+                </StackV>
             ) : null}
-        </div>
+        </StackV>
     )
 }
 

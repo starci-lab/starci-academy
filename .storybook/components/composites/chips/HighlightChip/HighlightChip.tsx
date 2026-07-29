@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Chip, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -18,13 +19,17 @@ interface WithClassNames<T> {
 /**
  * Semantic tone of the highlight chip — drives the soft tint
  * (`bg-<tone>/10 text-<tone>`). Neutral maps to the default color.
+ *
+ * Alias, not a redeclaration (thầy chốt 2026-07-29): the atom {@link ChipTone}
+ * already carries these exact five values in this exact order — a hand-typed
+ * copy here was a second source of truth for the same vocabulary.
  */
-export type HighlightChipTone = "neutral" | "success" | "warning" | "danger" | "accent"
+export type HighlightChipTone = ChipTone
 
 /** Props every {@link HighlightChip} carries regardless of loading state. */
 interface HighlightChipOwnProps extends WithClassNames<undefined> {
     /**
-     * Semantic tone driving the soft-tinted color. Defaults to "neutral".
+     * Semantic tone driving the soft-tinted color. Defaults to "default" (trung lập).
      */
     tone?: HighlightChipTone
     /**
@@ -44,30 +49,18 @@ export type HighlightChipProps = HighlightChipOwnProps &
     )
 
 /**
- * Maps a {@link HighlightChipTone} to the matching HeroUI Chip color
- * (the `soft` variant renders the `bg-<tone>/10 text-<tone>` tint).
- */
-const toneToColor: Record<HighlightChipTone, "default" | "success" | "warning" | "danger" | "accent"> = {
-    neutral: "default",
-    success: "success",
-    warning: "warning",
-    danger: "danger",
-    accent: "accent",
-}
-
-/**
  * Stat / meta chip with a highlighted value: a soft-tinted pill rendering an
  * optional leading icon, a bold `value`, then a `label` — e.g. "24 Module",
  * "276 Bài thực hành". Pure and props-only (tone drives the color). Used in the
  * `PageHeader` meta row to show a course's figures.
  */
-export const HighlightChip = ({ tone = "neutral", icon, value, label, isSkeleton = false, className }: HighlightChipProps) => {
+export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, className }: HighlightChipProps) => {
     if (isSkeleton) {
         return <HeroSkeleton className={cn("h-6 w-20 rounded-full", className)} />
     }
     return (
         <Chip
-            color={toneToColor[tone]}
+            color={tone}
             variant="soft"
             size="sm"
             className={className}

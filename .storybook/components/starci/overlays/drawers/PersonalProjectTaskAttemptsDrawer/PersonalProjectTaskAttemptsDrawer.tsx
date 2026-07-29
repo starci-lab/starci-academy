@@ -148,7 +148,7 @@ interface AttemptRowProps {
  * parts shimmer) — no second, hand-drawn placeholder tree (§6b).
  */
 const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: AttemptRowProps) => {
-    const scoreTone: ChipTone = attempt?.score != null ? "accent" : "neutral"
+    const scoreTone: ChipTone = attempt?.score != null ? "accent" : "default"
     const scoreLabel = attempt?.score != null ? `${attempt.score} điểm` : "Đang chấm"
     // A missing attempt (real, §2) drops the line; the skeleton branch always
     // reserves it so the mirror's footprint matches a typical populated row.
@@ -192,7 +192,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
             ) : null}
             <InlineIconLabel
                 icon={<ClockIcon aria-hidden focusable="false" />}
-                tone="muted"
+                tone="default"
                 size="xs"
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "InlineIconLabel" : undefined}

@@ -142,8 +142,11 @@ const renderInline = (text: string): ReactNode => {
 
 /**
  * Lightweight rich-text typography — a tiny inline-markdown renderer for short copy
- * (titles, descriptions, captions) where `MarkdownContent` (full react-markdown +
- * remark plugins, block elements) is overkill.
+ * (descriptions, captions, hints) where `MarkdownContent` (full react-markdown +
+ * remark plugins, block elements) is overkill. NOT for `title`/headline fields —
+ * a title identifies a block and stays plain (at most `` `backtick` `` code via
+ * `Typography.parseInlineCode`), it never carries bold/italic/link (thầy chốt
+ * 2026-07-29, markdown-tier-rules.html).
  *
  * Renders ONLY a small inline subset (`code` · **bold** · _italic_ · `[link](url)` ·
  * line breaks) inside one HeroUI `Typography`, so it carries the house type scale via

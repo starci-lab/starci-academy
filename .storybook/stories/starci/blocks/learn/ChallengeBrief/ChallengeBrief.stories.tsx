@@ -73,8 +73,9 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardList": { tier: "composite", role: "the prerequisites/outputs card — free-form rows so this block can lead an outputs row with a check and leave a prerequisites row bare", storyId: "composites-cards-surfacecard-surfacecardlist--free-form" },
     "SurfaceCardAccordion": { tier: "composite", role: "the requirements/steps/hint card — collapsible rows, the requirements instance carrying a points chip on its trigger via `titleEnd`", storyId: "composites-cards-surfacecard-surfacecardaccordion--with-title-end" },
     "MarkdownContent": { tier: "composite", role: "one section row's body, at the compact measure this reading column uses throughout", storyId: "composites-viewers-markdowncontent--compact" },
-    "Chip": { tier: "atom", role: "a requirement's point value, riding on its accordion trigger", storyId: "atoms-chips-chip-chip--default" },
+    "ScoreValue": { tier: "composite", role: "a requirement's point value, riding on its accordion trigger via `titleEnd`", storyId: "composites-texts-scorevalue--default" },
     "CheckCircleIcon": { tier: "heroui", role: "the leading mark on an expected-output row — only drawn once the row is real, never on its shimmer" },
+    "LightbulbIcon": { tier: "heroui", role: "the hint accordion's leading mark, riding in `titleStart` beside the plain \"Gợi ý\" title" },
 }
 
 /** LEAF — full set: prerequisites → requirements → steps → outputs → hint. */

@@ -29,6 +29,37 @@ export type FlexDirection = "row" | "col"
 
 /** Props for {@link Flex}. */
 export interface FlexBaseProps {
+    /**
+     * The HTML element to render. Defaults to `div`.
+     *
+     * Added 2026-07-29. A frame owns the SHAPE of a box, never the MEANING of its tag, but this
+     * one rendered a hard `div` and so decided both. Measured that day, three call-sites could
+     * not migrate onto a frame for that reason alone: a list needed `section`, a diagram needed
+     * `figure`, and a markdown renderer needed `span` — the last one load-bearing, because that
+     * row of chips sits INSIDE a sentence and a block-level `div` cuts the sentence in three.
+     *
+     * Screen readers are the other half: `figure` announces a captioned illustration and
+     * `section` announces a jumpable region, while `div` announces nothing at all. Forcing every
+     * frame to be a `div` quietly took that choice away from the call-site.
+     *
+     * Typed as a NARROW literal union, not `keyof JSX.IntrinsicElements`. TypeScript resolves a
+     * dynamic JSX tag's props as the INTERSECTION of every member of the union, and that
+     * intersection includes void elements (`img`, `br`, `input`…) whose `children` type is
+     * `never` — so the full intrinsic-elements union collapses `children`/`className` to `never`
+     * for every tag, `div` included. The union here stops at the tags this box actually renders,
+     * all of which accept children.
+     */
+    as?: "div" | "section" | "figure" | "span" | "li"
+    /**
+     * Render as `inline-flex` instead of `flex`, so the box hugs its content rather than taking
+     * the whole line.
+     *
+     * Added 2026-07-29 alongside `as`. These are two DIFFERENT kinds of box, not two spellings
+     * of one: measured on the same content, the block version came out 503px wide and the inline
+     * version 136px. `ProgressRing` sits beside running text and must hug — with only `flex` on
+     * offer it wrote the class by hand, twice.
+     */
+    inline?: boolean
     /** Main axis. Defaults to `row`, the browser default, so the prop reads as an override. */
     direction?: FlexDirection
     /** Space between children, pinned to the 10 scale. Required so nobody leaves it to chance. */
@@ -78,6 +109,8 @@ const DIRECTION_CLASS: Record<FlexDirection, string> = {
  * @param props - {@link FlexBaseProps}
  */
 const FlexBase = ({
+    as: Tag = "div",
+    inline = false,
     direction = "row",
     gap,
     padding,
@@ -93,10 +126,10 @@ const FlexBase = ({
     // no story of its own, so a default badge here would only ever point nowhere (§11a.1 rule
     // on undeclared parts). A caller that needs THIS box badged as a node passes `anatPart`
     // explicitly, same contract as `Split`/`Cluster`/`SurfaceCard.*`.
-    <div
+    <Tag
         data-anat-part={anatPart}
         className={cn(
-            "flex",
+            inline ? "inline-flex" : "flex",
             DIRECTION_CLASS[direction],
             GAP_CLASS[gap],
             padding != null && PADDING_CLASS[padding],
@@ -109,7 +142,7 @@ const FlexBase = ({
         )}
     >
         {children}
-    </div>
+    </Tag>
 )
 
 /** `Flex.*` namespace. One shape, so only `.Base`. */

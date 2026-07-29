@@ -72,6 +72,7 @@ const QaReactionBar = ({
             aria-pressed={hasReacted}
             aria-label={hasReacted ? "Bỏ thích" : "Thích"}
             className={cn(
+                // inset-exception: pill geometry, the same px-2 py-1 HeroUI ships in chip.css
                 "inline-flex items-center gap-1 rounded-full px-2 py-1 transition-colors hover:bg-default",
                 hasReacted && "text-danger-soft-foreground",
             )}

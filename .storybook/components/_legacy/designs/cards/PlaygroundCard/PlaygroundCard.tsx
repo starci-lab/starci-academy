@@ -73,7 +73,7 @@ export const PlaygroundCard = ({
                         {title}
                     </Typography>
                     <Chip
-                        tone="neutral"
+                        tone="default"
                         icon={ListChecksIcon}
                         anatPart={showAnatomy ? "StatusChip" : undefined}
                         text={stepCountLabel(stepCount)}

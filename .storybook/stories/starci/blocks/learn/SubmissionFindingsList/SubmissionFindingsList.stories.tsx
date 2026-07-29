@@ -4,9 +4,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * BLOCK — `SubmissionFindingsList`: "Góp ý" — one accordion row per quality-gate
- * finding on a graded attempt: severity icon + markdown message + location chip
- * in the trigger, markdown detail + a linked file location + a markdown
- * suggestion in the panel.
+ * finding on a graded attempt: severity icon + plain-text message (backtick
+ * code only — a trigger title is never richtext) + location chip in the
+ * trigger, markdown detail + a linked file location + a markdown suggestion
+ * in the panel.
  *
  * REUSE, NOT A NEW ACCORDION: the frame is `SurfaceCard.Accordion` end to end —
  * this block only supplies the DOMAIN (severity → icon/tone/sort-rank, the
@@ -70,9 +71,10 @@ const FINDINGS: Array<SubmissionFinding> = [
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardAccordion": { tier: "composite", role: "the bounded card frame — one collapsible row per finding, self-mirroring while loading and self-hosting the empty/error message, so this block never owns a second frame", storyId: "composites-cards-surfacecard-surfacecardaccordion--with-title-end" },
-    "StackH": { tier: "frame", role: "the icon-plus-text row used for the trigger's severity mark and the panel's location/suggestion rows — a MARK attached to its label, `tight`", storyId: "frames-stack-stackh--default" },
+    "StackH": { tier: "frame", role: "the panel's location/suggestion rows — an icon or link as a MARK attached to its label, `tight`", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "the panel's own track holding detail, location and suggestion as peer facts about one finding", storyId: "frames-stack-stackv--default" },
-    "MarkdownContent": { tier: "composite", role: "one authored field of a finding — the trigger's clamped message, or the panel's detail/suggestion — rendered faithfully rather than as plain text", storyId: "composites-viewers-markdowncontent--compact" },
+    "MarkdownContent": { tier: "composite", role: "the panel's detail/suggestion — rendered faithfully rather than as plain text (the trigger's own message stays plain, see file header)", storyId: "composites-viewers-markdowncontent--compact" },
+    "SeverityIcon": { tier: "heroui", role: "the trigger's severity mark, riding in `titleStart` — its own tone colour, independent of the message text" },
     "Chip": { tier: "atom", role: "the finding's file location, riding in the trigger's trailing slot", storyId: "atoms-chips-chip-chip--default" },
     "Typography": { tier: "atom", role: "the location line's plain text, or the underlined link when the location resolves to a real href", storyId: "atoms-text-typography-typography--plain" },
     "AsyncContentEmpty": { tier: "composite", role: "the no-findings message, hosted inside the accordion's own `emptyState` slot", storyId: "composites-async-asynccontent-asynccontentempty--basic" },

@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — TitledText: a primary line + optional muted
@@ -137,17 +138,17 @@ export const TitledText = ({
 
     if (isSkeleton) {
         return (
-            <div className={cn("flex min-w-0 flex-col gap-0", className)} data-anat-part={anatPart}>
+            <StackV gap="flush" className={cn("min-w-0", className)} anatPart={anatPart}>
                 {/* §12c: whoever owns the shape owns the skeleton — each line draws its own bar with its own atom. */}
                 <Typography size={cfg.titleSize} isSkeleton className={cfg.skeleton.title} anatPart={part("Title")} />
                 {subtitle ? <Typography size={cfg.subSize} isSkeleton className={cfg.skeleton.sub} anatPart={part("Subtitle")} /> : null}
                 {hint ? <Typography size="xs" isSkeleton className={cfg.skeleton.hint} anatPart={part("Hint")} /> : null}
-            </div>
+            </StackV>
         )
     }
 
     return (
-        <div className={cn("flex min-w-0 flex-col gap-0", className)} data-anat-part={anatPart}>
+        <StackV gap="flush" className={cn("min-w-0", className)} anatPart={anatPart}>
             {/* Text goes through the `Typography` ATOM (same `size` axis as the skeleton branch above), not raw HeroUI. */}
             <Typography size={cfg.titleSize} weight={weight ?? cfg.titleWeight} truncate={truncate} text={title} anatPart={part("Title")} />
             {subtitle ? (
@@ -156,6 +157,6 @@ export const TitledText = ({
             {hint ? (
                 <Typography size="xs" color="muted" truncate={truncate} text={hint} anatPart={part("Hint")} />
             ) : null}
-        </div>
+        </StackV>
     )
 }

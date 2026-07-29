@@ -97,7 +97,7 @@ const QuizQuestion = ({
                 <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
                     {levelLabel != null ? (
                         <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <Chip tone="neutral" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />
+                            <Chip tone="default" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />
                         </StackH>
                     ) : null}
 

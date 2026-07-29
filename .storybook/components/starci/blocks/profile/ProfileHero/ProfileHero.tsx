@@ -547,7 +547,7 @@ const ProfileHero = ({
                                 ))}
                                 <InlineIconLabel
                                     icon={<CalendarBlankIcon />}
-                                    tone="muted"
+                                    tone="default"
                                     isSkeleton={isSkeleton}
                                     anatPart={showAnatomy ? "InlineIconLabel" : undefined}
                                 >

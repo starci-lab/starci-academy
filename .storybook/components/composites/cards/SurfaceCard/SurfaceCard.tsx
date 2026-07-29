@@ -3,7 +3,7 @@ import type { ComponentType, ReactNode, SVGProps } from "react"
 import Link from "next/link"
 import { Accordion, Card, cn, Radio, RadioGroup, Skeleton as HeroSkeleton } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
-import { CheckCircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon, CircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
 import { type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/composites/cards/verdict-band"
@@ -12,6 +12,7 @@ import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { PADDING_CLASS, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
+import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `SurfaceCard.*`, the ONE card KHUNG namespace
@@ -107,11 +108,11 @@ const composeSlots = ({ header, body, footer, children }: SlotProps): ReactNode 
         return main
     }
     return (
-        <div className="flex flex-col gap-3">
+        <StackV gap="grouped">
             {header != null ? <div>{header}</div> : null}
             {main != null ? <div>{main}</div> : null}
             {footer != null ? <div>{footer}</div> : null}
-        </div>
+        </StackV>
     )
 }
 /**
@@ -347,13 +348,13 @@ const Base = ({
     // render, not an empty box.
     if (isSkeleton && Boolean(onPress || href)) {
         return (
-            <div className={cn("flex items-center gap-3 rounded-3xl bg-surface p-3 shadow-surface", className)}>
+            <StackH gap="grouped" padding="cozy" className={cn("rounded-3xl bg-surface shadow-surface", className)}>
                 <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
-                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                <StackV gap="related" className="min-w-0 flex-1">
                     <Typography size="sm" isSkeleton className="w-2/3" />
                     <Typography size="xs" isSkeleton className="w-1/3" />
-                </div>
-            </div>
+                </StackV>
+            </StackH>
         )
     }
     let card: ReactNode
@@ -441,10 +442,10 @@ const Base = ({
                     contentClassName,
                 )}
             >
-                <div className="flex items-center gap-3">
+                <StackH gap="grouped">
                     <div className="min-w-0 flex-1">{content}</div>
-                    <div className="relative z-10 flex shrink-0 items-center gap-2">{actions}</div>
-                </div>
+                    <StackH gap="related" className="relative z-10 shrink-0">{actions}</StackH>
+                </StackH>
                 {href && !isDisabled ? (
                     <a href={href} data-card-press aria-label={ariaLabel} aria-current={isSelected ? "true" : undefined} className={overlayCls} />
                 ) : (
@@ -476,10 +477,10 @@ const Base = ({
     // separate shimmer bar.
     const caption = <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
     const cardWithCaption = description != null ? (
-        <div className="flex flex-col gap-2">
+        <StackV gap="related">
             {highlighted}
             {showAnatomy ? <div data-anat-part="Typography">{caption}</div> : caption}
-        </div>
+        </StackV>
     ) : highlighted
     const labelRow = (
         <SurfaceCardHeader
@@ -583,7 +584,7 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
     const interactive = Boolean(onPress || href)
     // §10: parent owns the gap (tight) — eyebrow/title/content no longer self-margin.
     const body = (
-        <div className="flex min-w-0 flex-col gap-1">
+        <StackV gap="tight" className="min-w-0">
             {eyebrow ? (
                 <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
             ) : null}
@@ -598,7 +599,7 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
                 text={title}
             />
             {content ? <div>{content}</div> : null}
-        </div>
+        </StackV>
     )
     if (href) {
         return (
@@ -679,20 +680,22 @@ const Nested = ({
             )}
         >
             {hasHeader ? (
-                <div className="flex min-w-0 items-center justify-between gap-2 border-b border-default px-3 py-2">
+                // ⚠️ Padding stays literal (`px-3 py-2`, ASYMMETRIC): `InsetScale` only
+                // covers a symmetric `p-*` step, so there is no scale value for a
+                // separate x/y pair — flagged to the teacher, not converted (only the
+                // `flex`/`gap` layout below is routed through the frame).
+                <StackH gap="related" justify="between" className="min-w-0 border-b border-default px-3 py-2">
                     {header ?? (
-                        // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via the span
-                        <span
-                            className="flex min-w-0 items-center gap-2 text-muted [&_svg]:size-4"
-                        >
+                        // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
+                        <StackH gap="related" className="min-w-0 text-muted [&_svg]:size-4">
                             {icon}
                             {isSkeleton
                                 ? <Typography size="xs" isSkeleton className="w-28" />
                                 : <Typography size="xs" color="muted" truncate text={title} />}
-                        </span>
+                        </StackH>
                     )}
                     {meta ? <span className="shrink-0">{meta}</span> : null}
-                </div>
+                </StackH>
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {footer ? (
@@ -893,11 +896,11 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
     }
     const iconSlot = <span className={ITEM_ICON_CLS}>{item.icon}</span>
     return (
-        <div className="flex items-center gap-3">
+        <StackH gap="grouped">
             {item.iconPosition === "trailing" ? null : iconSlot}
             <div className="min-w-0 flex-1">{item.content}</div>
             {item.iconPosition === "trailing" ? iconSlot : null}
-        </div>
+        </StackH>
     )
 }
 /**
@@ -1083,11 +1086,16 @@ export interface SurfaceCardSelectableGroupProps<T extends string> {
      */
     showAnatomy?: boolean
 }
-/** Tailwind grid-template class per supported column count. */
-const SELECTABLE_GROUP_COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
-    1: "grid-cols-1",
-    2: "grid-cols-2",
-    3: "grid-cols-3",
+/**
+ * Fixed column count → the responsive {@link GridColumns} step-set that reads as that count
+ * from `@app-sm` up. `columns` here is a caller DECISION (not a breakpoint), so every step is
+ * pinned to the same number — except `3`, which `GridColumns.base` cannot express (capped at
+ * `1 | 2`, §13z on `Grid`), so the narrowest container gets `2` and `3` lands from `@app-sm`.
+ */
+const SELECTABLE_GROUP_COLUMNS: Record<1 | 2 | 3, GridColumns> = {
+    1: { base: 1, sm: 1, md: 1, lg: 1 },
+    2: { base: 2, sm: 2, md: 2, lg: 2 },
+    3: { base: 2, sm: 3, md: 3, lg: 3 },
 }
 /**
  * A single-select group of surface cards: each option is a canonical HeroUI `Card`;
@@ -1123,48 +1131,55 @@ const SelectableGroup = <T extends string>({
             aria-label={ariaLabel}
             value={value}
             onChange={(next) => onChange(next as T)}
-            className={cn("grid gap-2", SELECTABLE_GROUP_COLUMNS_CLASS[columns], className)}
         >
-            {items.map((item) => (
-                <Radio key={item.value} value={item.value} isDisabled={item.isDisabled} className="w-full">
-                    <Radio.Content className="block w-full">
-                        {({ isSelected, isDisabled, isFocusVisible }) => (
-                            <Card
-                                variant="default"
-                                className={cn(
-                                    "w-full text-sm text-foreground transition-colors",
-                                    // selection & keyboard focus = an accent OUTLINE ring, NO
-                                    // fill / colour change. Drop the card's `shadow-surface`
-                                    // while the ring is up so the two elevations don't stack.
-                                    (isSelected || isFocusVisible) &&
-                                    "outline outline-2 outline-accent outline-offset-0 !shadow-none",
-                                    !isSelected && !isDisabled && "hover:bg-default",
-                                    isDisabled && "opacity-60",
+            <Grid
+                gap="related"
+                columns={SELECTABLE_GROUP_COLUMNS[columns]}
+                className={className}
+                items={items.map((item) => ({
+                    key: item.value,
+                    content: (
+                        <Radio value={item.value} isDisabled={item.isDisabled} className="w-full">
+                            <Radio.Content className="block w-full">
+                                {({ isSelected, isDisabled, isFocusVisible }) => (
+                                    <Card
+                                        variant="default"
+                                        className={cn(
+                                            "w-full text-sm text-foreground transition-colors",
+                                            // selection & keyboard focus = an accent OUTLINE ring, NO
+                                            // fill / colour change. Drop the card's `shadow-surface`
+                                            // while the ring is up so the two elevations don't stack.
+                                            (isSelected || isFocusVisible) &&
+                                            "outline outline-2 outline-accent outline-offset-0 !shadow-none",
+                                            !isSelected && !isDisabled && "hover:bg-default",
+                                            isDisabled && "opacity-60",
+                                        )}
+                                    >
+                                        <StackH gap="related" className="w-full">
+                                            {item.icon ? (
+                                                <span className="shrink-0" aria-hidden>
+                                                    {item.icon}
+                                                </span>
+                                            ) : null}
+                                            <span className="flex min-w-0 flex-col">
+                                                <span className="truncate">{item.label}</span>
+                                                {item.description ? (
+                                                    <span className="truncate text-xs text-muted">{item.description}</span>
+                                                ) : null}
+                                            </span>
+                                            {item.badge ? (
+                                                <span className="ml-auto shrink-0">
+                                                    {item.badge}
+                                                </span>
+                                            ) : null}
+                                        </StackH>
+                                    </Card>
                                 )}
-                            >
-                                <div className="flex w-full items-center gap-2">
-                                    {item.icon ? (
-                                        <span className="shrink-0" aria-hidden>
-                                            {item.icon}
-                                        </span>
-                                    ) : null}
-                                    <span className="flex min-w-0 flex-col">
-                                        <span className="truncate">{item.label}</span>
-                                        {item.description ? (
-                                            <span className="truncate text-xs text-muted">{item.description}</span>
-                                        ) : null}
-                                    </span>
-                                    {item.badge ? (
-                                        <span className="ml-auto shrink-0">
-                                            {item.badge}
-                                        </span>
-                                    ) : null}
-                                </div>
-                            </Card>
-                        )}
-                    </Radio.Content>
-                </Radio>
-            ))}
+                            </Radio.Content>
+                        </Radio>
+                    ),
+                }))}
+            />
         </RadioGroup>
     )
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1378,7 +1393,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     const content = (
         <>
             {leadingSlot ? <div className="shrink-0">{leadingSlot}</div> : null}
-            <div className="flex min-w-0 flex-col gap-0">
+            <StackV gap="flush" className="min-w-0">
                 <Typography size="sm"
                     truncate
                     isSkeleton={isSkeleton}
@@ -1388,16 +1403,16 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 {subtitle ? (
                     <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
                 ) : null}
-            </div>
+            </StackV>
             {metaSlot || trailingSlot || selected ? (
-                <div className="ml-auto flex shrink-0 items-center gap-2">
+                <StackH gap="related" className="ml-auto shrink-0">
                     {metaSlot}
                     {trailingSlot}
                     {/* Single-select indicator — trailing accent CheckCircleIcon (B). */}
                     {selected ? (
                         <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
                     ) : null}
-                </div>
+                </StackH>
             ) : null}
         </>
     )
@@ -1492,10 +1507,10 @@ const List = ({
     if (bare) return surface
     const caption = <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
     const withCaption = description != null ? (
-        <div className="flex flex-col gap-2">
+        <StackV gap="related">
             {surface}
             <div data-anat-part={showAnatomy ? "Typography" : undefined}>{caption}</div>
-        </div>
+        </StackV>
     ) : surface
     return (
         <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
@@ -1522,10 +1537,20 @@ const List = ({
 export interface SurfaceCardAccordionItem {
     /** Stable id — also the expand key. */
     id: string
-    /** Trigger headline (the always-visible row). */
-    title: ReactNode
+    /**
+     * Trigger headline (the always-visible row). Plain string — goes through
+     * `Typography.parseInlineCode` (`` `backtick` `` only), never bold/italic/link
+     * (thầy chốt 2026-07-29: title tier stays plain, markdown-tier-rules.html).
+     */
+    title: string
     /** Optional muted second line in the trigger. */
     subtitle?: ReactNode
+    /**
+     * Optional leading node before the title text (e.g. a status icon with its
+     * own colour) — kept OUTSIDE `Typography` so it never inherits `currentColor`
+     * from the title text, mirroring `titleEnd` on the trailing side.
+     */
+    titleStart?: ReactNode
     /** Optional trailing node in the trigger, left of the caret (a chip/count). */
     titleEnd?: ReactNode
     /** Panel content, revealed when the item expands. */
@@ -1606,24 +1631,27 @@ const AccordionFrame = ({
                 <Accordion.Item
                     key={item.id}
                     id={item.id}
-                    aria-label={typeof item.title === "string" ? item.title : item.id}
+                    aria-label={item.title}
                     data-anat-part={showAnatomy ? "Accordion.Item" : undefined}
                 >
                     <Accordion.Heading>
                         <Accordion.Trigger>
-                            <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
-                                {/* Trigger is a <button> — full block-level MarkdownContent can't nest
-                                    here, so `` `code` `` segments in a plain-string title go through
-                                    `parseInlineCode` instead (span-only, no other markdown syntax). */}
-                                <Typography size="sm" weight="medium" truncate parseInlineCode text={item.title} />
-                                {item.subtitle != null ? (
-                                    <Typography size="xs" color="muted" truncate text={item.subtitle} />
-                                ) : null}
-                            </div>
-                            <div className="flex shrink-0 items-center gap-3">
+                            <StackH gap="tight" className="min-w-0 flex-1">
+                                {item.titleStart}
+                                <StackV gap="flush" className="min-w-0 flex-1 text-left">
+                                    {/* Trigger is a <button> — full block-level MarkdownContent can't nest
+                                        here, so `` `code` `` segments in the title go through
+                                        `parseInlineCode` instead (span-only, no other markdown syntax). */}
+                                    <Typography size="sm" weight="medium" truncate parseInlineCode text={item.title} />
+                                    {item.subtitle != null ? (
+                                        <Typography size="xs" color="muted" truncate text={item.subtitle} />
+                                    ) : null}
+                                </StackV>
+                            </StackH>
+                            <StackH gap="grouped" className="shrink-0">
                                 {item.titleEnd}
                                 <Accordion.Indicator />
-                            </div>
+                            </StackH>
                         </Accordion.Trigger>
                     </Accordion.Heading>
                     <Accordion.Panel>
@@ -1665,7 +1693,7 @@ const AccordionFrameSkeleton = ({
             {rows.map((item, index) => (
                 <div key={item?.id ?? index} className="relative">
                     <div className="flex items-center p-3">
-                        <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
+                        <StackV gap="flush" className="min-w-0 flex-1 text-left">
                             {/* Row box height EXACTLY matches the real text's line-height (sm=20px · xs=16px) —
                                 the shimmer bar is only glyph-height, so without this wrapper the
                                 loading row would sit shorter than the real row. */}
@@ -1677,7 +1705,7 @@ const AccordionFrameSkeleton = ({
                                     <Typography size="xs" isSkeleton className="w-1/4" />
                                 </span>
                             ) : null}
-                        </div>
+                        </StackV>
                         {/* Caret: the real row ALWAYS has `Accordion.Indicator` (`ml-auto size-4`) → the mirror keeps the exact same slot. */}
                         <HeroSkeleton className="ml-auto size-4 shrink-0 rounded" />
                     </div>
@@ -1747,10 +1775,10 @@ const AccordionCard = ({
     if (bare) return <div className={cn(className)}>{frame}</div>
     // description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface
     const withCaption = description != null ? (
-        <div className="flex flex-col gap-2">
+        <StackV gap="related">
             {frame}
             <div>{description}</div>
-        </div>
+        </StackV>
     ) : frame
     return (
         <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
@@ -1771,20 +1799,26 @@ const AccordionCard = ({
 // ─────────────────────────────────────────────────────────────────────────────
 // .CrossList — static marked (✓/✗) list card (was `CrossListCard`)
 // ─────────────────────────────────────────────────────────────────────────────
-/** Per-row mark: success check · muted cross · none. */
-export type ListMark = "check" | "cross" | "none"
+/** Per-row mark: success check · muted cross · NEUTRAL pending (not yet decided) · none. */
+export type ListMark = "check" | "cross" | "pending" | "none"
 /**
  * Tone of the mark — prominence climbs by TONE, the element stays (§2d):
  * `success` (green ✓ signal) · `muted` (recede, text leads) · `danger` (red — a hard
- * NEGATIVE signal: lost/blocked/warning row, not just "not included").
+ * NEGATIVE signal: lost/blocked/warning row, not just "not included") · `neutral`
+ * (`text-foreground`, same weight as body text — "not decided yet", NOT "unimportant";
+ * §5a.3, teacher 2026-07-29: an icon carrying STATUS meaning must read the status, and
+ * `muted` reads as the latter).
  */
-export type MarkTone = "success" | "muted" | "danger"
+export type MarkTone = "success" | "muted" | "danger" | "neutral"
 const TONE_CLS: Record<MarkTone, string> = {
     success: "text-success-soft-foreground",
     muted: "text-muted",
     danger: "text-danger-soft-foreground",
+    neutral: "text-foreground",
 }
-const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: string | undefined): ReactNode => {
+/** {@link markIcon} — exported so a caller (e.g. a progress row) can reuse the ONE
+ * icon-per-status mapping instead of hand-rolling a parallel one (thầy chốt 2026-07-29). */
+export const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: string | undefined): ReactNode => {
     if (mark === "check") {
         return (
             <CheckCircleIcon
@@ -1802,6 +1836,16 @@ const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: string |
                 focusable="false"
                 data-anat-part={anatPart}
                 className={cn("size-5 shrink-0", TONE_CLS[tone ?? "muted"])}
+            />
+        )
+    }
+    if (mark === "pending") {
+        return (
+            <CircleIcon
+                aria-hidden
+                focusable="false"
+                data-anat-part={anatPart}
+                className={cn("size-5 shrink-0", TONE_CLS[tone ?? "neutral"])}
             />
         )
     }
@@ -1873,9 +1917,13 @@ const CrossListRow = ({
     anatPart,
     markAnatPart,
 }: Omit<SurfaceCardCrossListItem, "key" | "text"> & { text?: ReactNode; isSkeleton?: boolean }) => (
-    <li
-        className="relative flex items-start gap-3 p-3 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-        data-anat-part={anatPart}
+    <StackH
+        as="li"
+        gap="grouped"
+        align="start"
+        padding="cozy"
+        className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
+        anatPart={anatPart}
     >
         {isSkeleton ? (
             <>
@@ -1890,7 +1938,7 @@ const CrossListRow = ({
                 <div className="min-w-0 flex-1">{text}</div>
             </>
         )}
-    </li>
+    </StackH>
 )
 /**
  * Static "brief list" of MARKED rows (✓ / ✗ / none) in a bounded `bg-surface` card with

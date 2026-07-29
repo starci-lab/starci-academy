@@ -97,7 +97,7 @@ const RatingBar = ({
                     <Typography size="sm" weight="medium" text={option.label} anatPart={showAnatomy ? "Typography" : undefined} />
                     {/* One chip per tile, and it goes to the KEY — that is the classifying
                         mark. The interval below is a quiet fact, so it stays as text. */}
-                    <Chip tone="neutral" text={String(position + 1)} anatPart={showAnatomy ? "Chip" : undefined} />
+                    <Chip tone="default" text={String(position + 1)} anatPart={showAnatomy ? "Chip" : undefined} />
                 </StackH>
                 {option.hint != null ? (
                     <Typography size="xs" color="muted" text={option.hint} anatPart={showAnatomy ? "Typography" : undefined} />

@@ -38,7 +38,7 @@ export const WithIcon: Story = {
 export const Neutral: Story = {
     render: () => (
         <div className="rounded-2xl border p-8">
-            <HighlightChip tone="neutral" value={24} label="Module" />
+            <HighlightChip tone="default" value={24} label="Module" />
         </div>
     ),
 }

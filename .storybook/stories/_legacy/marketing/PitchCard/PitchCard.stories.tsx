@@ -163,7 +163,7 @@ export const RemainingTones: Story = {
                     <PitchCard
                         showAnatomy
                         icon={StackIcon}
-                        tone="neutral"
+                        tone="default"
                         title="Tự học theo nhịp riêng"
                         body="Không ép tiến độ — mỗi module có deadline mềm, học viên tự sắp xếp thời gian."
                     />

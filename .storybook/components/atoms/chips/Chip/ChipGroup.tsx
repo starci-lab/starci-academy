@@ -42,7 +42,7 @@ export interface ChipGroupProps {
      */
     maxVisible?: number
     /**
-     * Tone CHUNG cả hàng (default `neutral`) — hàng token phải ĐỒNG MÀU thì mới đọc ra là
+     * Tone CHUNG cả hàng (default `default`) — hàng token phải ĐỒNG MÀU thì mới đọc ra là
      * một tập; mỗi chip một tone là hàng cầu vồng. Vì thế `tone` ở cụm, không ở từng item
      * (cùng lý do `size` nằm ở cụm bên `ButtonGroup`, §12d).
      */
@@ -57,7 +57,7 @@ export interface ChipGroupProps {
 export const ChipGroup = ({
     items,
     maxVisible = 3,
-    tone = "neutral",
+    tone = "default",
     isSkeleton = false,
     showAnatomy = false,
     anatPart,

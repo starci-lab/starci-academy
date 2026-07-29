@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>15 hit check-seams — không phải ngoại lệ, là 3 năng lực frame còn thiếu</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+    --app-bg:#141414; --app-surface:#1c1c1c; --app-surface2:#242424; --app-border:#2c2c2c;
+    --app-fg:#f5f5f5; --app-muted:#9a9a9a; --app-accent:#ff6fa5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 12px;border-top:1px solid var(--line);padding-top:18px}
+  h3{font-size:14px;margin:0 0 6px;color:var(--ink)}
+  .sub{color:var(--muted);margin:0}
+  code{font-family:ui-monospace,monospace}
+  .note{font-size:12px;color:var(--muted)}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules b{color:var(--ink)}
+
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  td{padding:8px 10px;border-bottom:1px solid #1b2436;vertical-align:top}
+  .numc{font-family:ui-monospace,monospace;font-size:12px}
+  .ok{color:var(--success)} .bad{color:var(--danger)} .warn{color:var(--warn)} .dim{color:#5c6880}
+
+  .case{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+  .case-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .tag{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.03em;text-transform:uppercase;padding:3px 10px;border-radius:999px;font-weight:700}
+  .t-block{background:color-mix(in srgb,var(--danger) 20%,transparent);color:var(--danger)}
+  .t-fix{background:color-mix(in srgb,var(--success) 20%,transparent);color:var(--success)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:760px){.split{grid-template-columns:1fr}}
+  .side{display:flex;flex-direction:column;gap:7px}
+  .lbl{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:6px}
+  .lbl.bad{color:var(--danger)} .lbl.good{color:var(--success)}
+  .mock{background:var(--app-bg);border:1px solid var(--app-border);border-radius:10px;padding:16px;font-family:ui-sans-serif,system-ui}
+  .mock.bad{outline:2px solid var(--danger);outline-offset:-1px}
+  .mock.good{outline:2px solid var(--success);outline-offset:-1px}
+  .why{font-size:12.5px;color:var(--muted);line-height:1.6}
+  .why b{color:var(--ink)}
+  .prin{font-size:12.5px;line-height:1.6;background:#0e1420;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:9px 12px;color:var(--muted)}
+  .prin b{color:var(--accent)}
+  pre{margin:0;background:#0e1420;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-family:ui-monospace,monospace;font-size:11.5px;line-height:1.6;overflow-x:auto;color:var(--muted)}
+  pre .r{color:var(--danger)} pre .g{color:var(--success)} pre .c{color:#5c6880}
+
+  /* mock atoms */
+  .prose{color:var(--app-fg);font-size:13px;line-height:1.9}
+  .chip{background:var(--app-surface2);border:1px solid var(--app-border);color:var(--app-fg);font-size:11px;padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .ring{width:38px;height:38px;border-radius:999px;border:4px solid var(--app-surface2);border-top-color:var(--app-accent);flex:0 0 auto}
+  .rlabel{color:var(--app-muted);font-size:11.5px}
+  .stat{background:var(--app-surface);border-radius:8px;padding:10px;color:var(--app-fg);font-size:12px}
+  .statn{font-size:17px;font-weight:600;display:block}
+  .statl{color:var(--app-muted);font-size:11px}
+  .fig{background:var(--app-surface2);border-radius:8px;height:56px;display:flex;align-items:center;justify-content:center;color:var(--app-muted);font-size:11.5px}
+  .cap{color:var(--app-muted);font-size:11.5px}
+  .measure{font-family:ui-monospace,monospace;font-size:10.5px;color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent);padding:1px 6px;border-radius:4px}
+  .bar{height:9px;border-radius:3px;display:inline-block;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>15 hit <code>check-seams</code> — không phải ngoại lệ, là <b>ba năng lực frame còn thiếu</b></h1>
+  <p class="sub">Trò từng báo gọn là "ca cố ý để lại". Đọc kỹ từng chỗ thì cách gọi đó <b>sai</b>: chỉ 6 ca thật sự không diễn đạt nổi bằng frame, và cả 6 dồn vào đúng ba thứ frame chưa làm được. 9 ca còn lại sửa được ngay.</p>
+
+  <h2>0. Phân loại lại 15 hit</h2>
+  <div class="rules">
+    <div style="display:flex;height:32px;border-radius:7px;overflow:hidden;border:1px solid var(--line)">
+      <div style="width:40%;background:var(--danger);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:11px;font-weight:700;color:#0b0e14">6 · BLOCKER THẬT</div>
+      <div style="width:60%;background:var(--success);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:11px;font-weight:700;color:#0b0e14">9 · SỬA ĐƯỢC NGAY</div>
+    </div>
+    <table style="margin-top:12px">
+      <thead><tr><th style="width:22%">Thiếu năng lực</th><th style="width:8%">Ca</th><th>Ở đâu</th></tr></thead>
+      <tbody>
+        <tr><td class="numc bad">thẻ ngữ nghĩa (<code>as</code>)</td><td class="numc">3</td><td class="numc"><code>List.tsx:309</code> &lt;section&gt; · <code>MermaidDiagram.tsx:115</code> &lt;figure&gt; · <code>map.tsx:328</code> &lt;span&gt;</td></tr>
+        <tr><td class="numc bad"><code>inline-flex</code></td><td class="numc">2</td><td class="numc"><code>ProgressRing.tsx:76</code> · <code>:91</code></td></tr>
+        <tr><td class="numc bad">đổi hướng theo breakpoint</td><td class="numc">1</td><td class="numc"><code>StatRibbon.tsx:81</code></td></tr>
+        <tr><td class="numc ok">(không thiếu gì — sửa được)</td><td class="numc">9</td><td class="numc">Stepper · Toolbar · ProgressMeter · TitledText×2 · map:357 · MetricCard · SurfaceCard×2</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin:10px 0 0">Đo được: <code>Flex.tsx</code> render <b>cứng một <code>&lt;div&gt;</code></b>, không có prop <code>as</code>. Và <code>inline-flex</code> xuất hiện <b>0 lần</b> trong cả <code>Flex</code>, <code>Stack</code>, <code>Cluster</code>.</p>
+  </div>
+
+  <h2>1. Ba năng lực còn thiếu — mỗi cái render thật cái sẽ vỡ</h2>
+
+  <!-- GAP 1 -->
+  <div class="case">
+    <div class="case-h"><h3>Thiếu 1 · <code>as</code> — frame luôn phát <code>&lt;div&gt;</code></h3><span class="tag t-block">3 ca</span></div>
+    <p class="why">Ca nặng nhất là <code>map.tsx:328</code>: renderer markdown vẽ một <b>hàng chip nằm GIỮA câu văn</b>, nên nó phải là <code>&lt;span&gt;</code> (inline). Frame ép thành <code>&lt;div&gt;</code> (block) thì câu bị cắt làm ba.</p>
+    <div class="split">
+      <div class="side">
+        <span class="lbl bad">✕ ép dùng frame · <code>&lt;div&gt;</code> block</span>
+        <div class="mock bad">
+          <div class="prose">Bài này yêu cầu</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0"><span class="chip">Docker</span><span class="chip">Kubernetes</span></div>
+          <div class="prose">trước khi bắt đầu.</div>
+        </div>
+      </div>
+      <div class="side">
+        <span class="lbl good">✓ giữ <code>&lt;span&gt;</code> · inline</span>
+        <div class="mock good">
+          <span class="prose">Bài này yêu cầu <span style="display:inline-flex;flex-wrap:wrap;gap:8px;vertical-align:middle"><span class="chip">Docker</span><span class="chip">Kubernetes</span></span> trước khi bắt đầu.</span>
+        </div>
+      </div>
+    </div>
+    <p class="why"><b>Hai ca kia nhẹ hơn nhưng cùng gốc:</b> <code>List.tsx</code> cần <code>&lt;section&gt;</code> và <code>MermaidDiagram.tsx</code> cần <code>&lt;figure&gt;</code>. Nhìn thì giống hệt <code>&lt;div&gt;</code>, nhưng trình đọc màn hình đọc chúng khác nhau: <code>&lt;figure&gt;</code> báo "đây là hình minh hoạ có chú thích", <code>&lt;section&gt;</code> báo "đây là một vùng có thể nhảy tới".</p>
+    <div class="prin"><b>Nguyên lý:</b> frame sở hữu <b>hình</b>, không được quyền quyết định <b>ngữ nghĩa</b> của thẻ. Ép mọi thứ thành <code>&lt;div&gt;</code> là lấy mất quyền đó của call-site.</div>
+  </div>
+
+  <!-- GAP 2 -->
+  <div class="case">
+    <div class="case-h"><h3>Thiếu 2 · <code>inline-flex</code> — frame luôn chiếm trọn dòng</h3><span class="tag t-block">2 ca</span></div>
+    <p class="why"><code>ProgressRing</code> là vòng nhẫn tiến độ kèm nhãn, dùng cạnh chữ hoặc trong một hàng. Nó phải <b>co đúng bằng nội dung</b>. <code>flex</code> là block: chiếm hết bề ngang, đẩy mọi thứ xuống dòng.</p>
+    <div class="split">
+      <div class="side">
+        <span class="lbl bad">✕ ép dùng frame · <code>flex</code> <span class="measure">chiếm 100%</span></span>
+        <div class="mock bad">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px;outline:1px dashed var(--danger);outline-offset:3px"><span class="ring"></span><span class="rlabel">68%</span></div>
+          <div class="prose" style="margin-top:14px">Đã hoàn thành 12/18 bài</div>
+        </div>
+      </div>
+      <div class="side">
+        <span class="lbl good">✓ <code>inline-flex</code> <span class="measure">co theo nội dung</span></span>
+        <div class="mock good">
+          <span style="display:inline-flex;flex-direction:column;align-items:center;gap:8px;outline:1px dashed var(--success);outline-offset:3px"><span class="ring"></span><span class="rlabel">68%</span></span>
+          <span class="prose" style="margin-left:14px">Đã hoàn thành 12/18 bài</span>
+        </div>
+      </div>
+    </div>
+    <p class="why">Đường đứt nét là <b>bề ngang thật</b> của phần tử. Bên trái nó nuốt cả dòng dù nội dung chỉ rộng 38px, nên câu chữ bị đẩy xuống. Bên phải nó ôm sát nội dung và câu chữ đứng cạnh được.</p>
+    <div class="prin"><b>Nguyên lý:</b> <code>flex</code> và <code>inline-flex</code> không phải hai cách viết của một thứ — chúng là <b>hai loại hộp khác nhau</b>. Một thang bố cục thiếu <code>inline</code> thì mọi thứ nhỏ nằm-trong-dòng đều phải viết tay.</div>
+  </div>
+
+  <!-- GAP 3 -->
+  <div class="case">
+    <div class="case-h"><h3>Thiếu 3 · đổi HƯỚNG theo breakpoint</h3><span class="tag t-block">1 ca</span></div>
+    <p class="why"><code>StatRibbon.tsx:81</code> viết <code>grid grid-cols-2 gap-3 @app-sm:-m-3 @app-sm:flex @app-sm:items-stretch @app-sm:gap-0</code>: màn hẹp là <b>lưới 2 cột có khe</b>, màn rộng thành <b>một dải liền không khe</b>, cộng lề âm để dán sát mép card.</p>
+    <div class="split">
+      <div class="side">
+        <span class="lbl" style="color:var(--warn)">◆ hẹp · lưới 2 cột <span class="measure">gap-3</span></span>
+        <div class="mock" style="outline:2px solid var(--warn);outline-offset:-1px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <span class="stat"><span class="statn">128</span><span class="statl">bài đã học</span></span>
+            <span class="stat"><span class="statn">7</span><span class="statl">ngày liên tục</span></span>
+            <span class="stat"><span class="statn">92%</span><span class="statl">đúng</span></span>
+            <span class="stat"><span class="statn">14</span><span class="statl">huy hiệu</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="side">
+        <span class="lbl" style="color:var(--warn)">◆ rộng · dải liền <span class="measure">gap-0 · -m-3</span></span>
+        <div class="mock" style="outline:2px solid var(--warn);outline-offset:-1px">
+          <div style="display:flex;align-items:stretch;gap:0;margin:-12px -12px">
+            <span class="stat" style="flex:1;border-radius:0;border-right:1px solid var(--app-border)"><span class="statn">128</span><span class="statl">bài</span></span>
+            <span class="stat" style="flex:1;border-radius:0;border-right:1px solid var(--app-border)"><span class="statn">7</span><span class="statl">ngày</span></span>
+            <span class="stat" style="flex:1;border-radius:0;border-right:1px solid var(--app-border)"><span class="statn">92%</span><span class="statl">đúng</span></span>
+            <span class="stat" style="flex:1;border-radius:0"><span class="statn">14</span><span class="statl">huy hiệu</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="why">Đây <b>không phải một bố cục đổi số đo</b> — nó là <b>hai bố cục khác nhau</b> của cùng một dữ liệu, cộng một mẹo lề âm để tràn ra mép card. Không frame nào trong hệ diễn đạt được, và trò <b>không đề xuất thêm</b>: nó đắt và mới dùng đúng một lần.</p>
+    <div class="prin"><b>Nguyên lý:</b> một năng lực chỉ đáng thêm vào frame khi nó <b>lặp lại</b>. Dùng một lần thì khai ngoại lệ có tên rẻ hơn nhiều so với dạy cả hệ một khái niệm mới.</div>
+  </div>
+
+  <h2>2. Chín ca sửa được — trò từng gộp nhầm chúng vào "ngoại lệ"</h2>
+  <div class="rules">
+    <table>
+      <thead><tr><th style="width:26%">Chỗ</th><th style="width:30%">Đang viết tay</th><th>Thay bằng</th></tr></thead>
+      <tbody>
+        <tr><td class="numc">Stepper.tsx:188</td><td class="numc">flex flex-col items-center gap-1</td><td class="numc ok">StackV align="center" gap="tight"</td></tr>
+        <tr><td class="numc">Toolbar.tsx:274</td><td class="numc">flex items-center justify-between gap-3</td><td class="numc ok">StackH justify="between" gap="grouped"</td></tr>
+        <tr><td class="numc">ProgressMeter.tsx:92</td><td class="numc">flex flex-col gap-2</td><td class="numc ok">StackV gap="related"</td></tr>
+        <tr><td class="numc">TitledText.tsx:140</td><td class="numc">flex min-w-0 flex-col gap-0</td><td class="numc ok">StackV gap="flush" className="min-w-0"</td></tr>
+        <tr><td class="numc">TitledText.tsx:150</td><td class="numc">flex min-w-0 flex-col gap-0</td><td class="numc ok">StackV gap="flush" className="min-w-0"</td></tr>
+        <tr><td class="numc">map.tsx:357</td><td class="numc">flex w-full items-center justify-between gap-3</td><td class="numc ok">StackH justify="between" gap="grouped"</td></tr>
+        <tr><td class="numc">MetricCard.tsx:28</td><td class="numc">CardContent className="flex flex-col gap-3"</td><td class="numc warn">StackV gap="grouped" đặt BÊN TRONG CardContent (thêm 1 node DOM)</td></tr>
+        <tr><td class="numc">SurfaceCard.tsx:1129</td><td class="numc">grid gap-2 + bảng cột động</td><td class="numc ok">Grid — <b>đã có sẵn</b> hỗ trợ cột <code>@app-sm:grid-cols-*</code></td></tr>
+        <tr><td class="numc">SurfaceCard.tsx:1909</td><td class="numc">flex items-start gap-3 p-3 after:absolute…</td><td class="numc ok">StackH align="start" padding="cozy", phần <code>after:*</code> đi qua className</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin:10px 0 0">Riêng <code>TitledText</code>: lý do trò đưa lúc trước — <i>"bọc frame cho <code>gap-0</code> thì rườm hơn là rõ hơn"</i> — <b>yếu</b>. Nó vẫn là bố cục viết tay ở đúng tầng bị cấm; nhỏ không làm nó thành ngoại lệ.</p>
+  </div>
+
+  <h2>3. Đề xuất</h2>
+  <div class="rules">
+    <table>
+      <thead><tr><th style="width:6%">#</th><th style="width:26%">Việc</th><th style="width:14%">Công</th><th>Gỡ được gì</th></tr></thead>
+      <tbody>
+        <tr><td class="numc">1</td><td class="numc ok">thêm <code>as?: ElementType</code> cho <code>Flex</code></td><td>~5 dòng</td><td><b>3 blocker</b>, và mở đường cho mọi <code>&lt;section&gt;</code>/<code>&lt;figure&gt;</code>/<code>&lt;nav&gt;</code> về sau</td></tr>
+        <tr><td class="numc">2</td><td class="numc ok">thêm <code>inline?: boolean</code></td><td>~3 dòng</td><td><b>2 blocker</b>, và mọi thứ nhỏ nằm-trong-dòng sau này</td></tr>
+        <tr><td class="numc">3</td><td class="numc ok">dọn 9 ca sửa được</td><td>9 chỗ</td><td><b>9 hit</b></td></tr>
+        <tr><td class="numc">4</td><td class="numc warn"><code>StatRibbon</code> đổi hướng theo breakpoint</td><td>—</td><td>KHÔNG thêm năng lực. Khai <b>ngoại lệ có tên kèm lý do</b>, đúng cơ chế vừa dựng cho padding</td></tr>
+      </tbody>
+    </table>
+    <p style="margin:12px 0 0"><b>Làm 1+2+3 thì <code>check-seams</code> đi từ 15 xuống 1</b>, và chỗ duy nhất còn lại là chỗ có lý do viết ra thành chữ, không phải chỗ im lặng.</p>
+    <p class="note" style="margin:8px 0 0">Chi phí thật của #1 và #2 không nằm ở số dòng, mà ở chỗ chúng thêm bề mặt API cho tầng frame — thứ cả hệ dùng. Đổi lại, cả hai đều là khái niệm CSS có sẵn ai cũng biết (<code>as</code> và <code>inline</code>), không phải từ vựng nhà tự đặt.</p>
+  </div>
+
+</div>
+</body>
+</html>

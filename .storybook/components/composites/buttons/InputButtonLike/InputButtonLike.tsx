@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Button, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `InputButtonLike`. Authored in
@@ -108,7 +109,7 @@ export const InputButtonLike = ({
                 className,
             )}
         >
-            <span className="inline-flex min-w-0 items-center gap-2">
+            <StackH gap="related" className="min-w-0">
                 {icon ? (
                     <span className="inline-flex shrink-0 items-center text-field-placeholder">
                         {icon}
@@ -117,11 +118,11 @@ export const InputButtonLike = ({
                 <span className={cn("truncate text-field-placeholder", TEXT_CLS[size])}>
                     {placeholder}
                 </span>
-            </span>
+            </StackH>
             {suffix ? (
-                <span className="inline-flex shrink-0 items-center gap-2">
+                <StackH gap="related" className="shrink-0">
                     {suffix}
-                </span>
+                </StackH>
             ) : null}
         </Button>
     )

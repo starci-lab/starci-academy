@@ -145,10 +145,10 @@ export const Tones: Story = {
                         render: <IconTile tone="danger" icon={FolderIcon} />,
                     },
                     {
-                        name: "tone = \"neutral\"",
+                        name: "tone = \"default\"",
                         why: "The tile lands on a soft neutral tint, the low-emphasis colour for something archived. Only the tint differs from the accent state.",
-                        code: "<IconTile tone=\"neutral\" icon={FolderIcon} />",
-                        render: <IconTile tone="neutral" icon={FolderIcon} />,
+                        code: "<IconTile tone=\"default\" icon={FolderIcon} />",
+                        render: <IconTile tone="default" icon={FolderIcon} />,
                     },
                 ]}
             />

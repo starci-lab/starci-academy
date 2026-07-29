@@ -65,7 +65,7 @@ const CHIP_LABEL_DEP: Record<string, AnatomyAnnotation> = {
 const CHIP_SKELETON_DEP: Record<string, AnatomyAnnotation> = {
     "Chip": { tier: "heroui", role: "the chip shell itself, HeroUI's `Chip`, in its loading look" },
 }
-/** BARE leaf — no prop turned on, to see the default look (`tone="neutral"`, no glyph, no ×). */
+/** BARE leaf — no prop turned on, to see the default look (`tone="default"`, no glyph, no ×). */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -77,7 +77,7 @@ export const Default: Story = {
                 reason="The one chip in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
                 states={[
                     {
-                        name: "no prop turned on (tone = neutral, empty leading slot, no remove)",
+                        name: "no prop turned on (tone = default, empty leading slot, no remove)",
                         why: "The DOM is just the pill and its Label, nothing leading and no × trailing. This is the plainest shape the chip can take, the baseline every other leaf differs from by exactly one prop.",
                         code: "<Chip text=\"Draft\" />",
                         render: <Chip text="Draft" showAnatomy />,
@@ -99,10 +99,10 @@ export const Tones: Story = {
                 reason="Tone is meaning, not colour. Pick it from what the chip says; a red chip that means nothing bad is noise the reader has to learn to ignore."
                 states={[
                     {
-                        name: "tone = \"neutral\"",
-                        why: "The chip renders on the plain default soft surface with no colour signal at all. Reach for neutral on tokens that carry no verdict, such as a draft label, so the reader does not hunt for a meaning that is not there.",
-                        code: "<Chip tone=\"neutral\" text=\"Draft\" />",
-                        render: <Chip tone="neutral" text="Draft" showAnatomy />,
+                        name: "tone = \"default\"",
+                        why: "The chip renders on the plain default soft surface with no colour signal at all. Reach for default on tokens that carry no verdict, such as a draft label, so the reader does not hunt for a meaning that is not there.",
+                        code: "<Chip tone=\"default\" text=\"Draft\" />",
+                        render: <Chip tone="default" text="Draft" showAnatomy />,
                     },
                     {
                         name: "tone = \"success\"",
@@ -163,7 +163,7 @@ export const Icon: Story = {
                         render: <Chip tone="warning" icon={ClockIcon} text="Pending review" showAnatomy />,
                     },
                     {
-                        name: "icon = LockIcon, tone not set (default neutral)",
+                        name: "icon = LockIcon, tone not set (default \"default\")",
                         why: "A lock glyph grows before the label while the chip keeps its default neutral tone, since the glyph alone already carries the meaning. Reach for it when the state is about access rather than an outcome, so no success or danger colour is warranted.",
                         code: "<Chip icon={LockIcon} text=\"Locked\" />",
                         render: <Chip icon={LockIcon} text="Locked" showAnatomy />,

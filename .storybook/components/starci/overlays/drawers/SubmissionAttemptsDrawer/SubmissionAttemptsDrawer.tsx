@@ -115,9 +115,9 @@ const HISTORY_PAGE_SIZE = 6
 const SKELETON_ATTEMPT_COUNT = 3
 
 /** One attempt's verdict `Chip` shape — tone/icon/text, all derived from data. */
-const scoreChipFor = (attempt: SubmissionAttemptRecord): { tone: "success" | "danger" | "neutral"; icon?: typeof CheckCircleIcon; text: string } => {
+const scoreChipFor = (attempt: SubmissionAttemptRecord): { tone: "success" | "danger" | "default"; icon?: typeof CheckCircleIcon; text: string } => {
     if (attempt.score == null) {
-        return { tone: "neutral", text: UNGRADED_LABEL }
+        return { tone: "default", text: UNGRADED_LABEL }
     }
     return {
         tone: attempt.isPassing ? "success" : "danger",
@@ -153,7 +153,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
                 <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH (byline)" : undefined}>
                     <InlineIconLabel
                         icon={<SparkleIcon aria-hidden focusable="false" />}
-                        tone="muted"
+                        tone="default"
                         size="xs"
                         anatPart={showAnatomy ? "InlineIconLabel" : undefined}
                     >

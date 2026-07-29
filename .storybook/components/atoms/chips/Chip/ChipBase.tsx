@@ -1,6 +1,7 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import { Chip as HeroChip, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { CircleIcon, XIcon } from "@phosphor-icons/react"
+import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -44,17 +45,16 @@ import { CircleIcon, XIcon } from "@phosphor-icons/react"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Tone NGỮ NGHĨA của chip → màu soft của HeroUI. */
-export type ChipTone = "neutral" | "success" | "warning" | "danger" | "accent"
-
-/** Map tone → `color` của HeroUI Chip. `neutral` không có tên riêng bên HeroUI nên về `default`. */
-const TONE_COLOR: Record<ChipTone, "default" | "success" | "warning" | "danger" | "accent"> = {
-    neutral: "default",
-    success: "success",
-    warning: "warning",
-    danger: "danger",
-    accent: "accent",
-}
+/**
+ * Tone NGỮ NGHĨA của chip → màu soft của HeroUI.
+ *
+ * Alias, not a redeclaration (thầy chốt 2026-07-29): cùng năm giá trị
+ * {@link AlertStatus} đã sở hữu — trung lập gọi là `default`, đúng tên HeroUI's
+ * `color` prop tự dùng, không phải `neutral` tự đặt. Trước bản này bảng
+ * `TONE_COLOR` phải DỊCH `neutral → default` mỗi lần render; alias thẳng xoá
+ * luôn tầng dịch đó, không chỉ đổi tên.
+ */
+export type ChipTone = AlertStatus
 
 /**
  * Icon truyền vào dạng COMPONENT (vd `CheckCircleIcon`), atom tự render ở cỡ chip.
@@ -88,7 +88,7 @@ const SKELETON_W = ["w-16", "w-20", "w-24"] as const
 
 /** Props chung — TRỪ cụm `text`/`isSkeleton` và ô glyph dẫn đầu, xem {@link ChipBaseProps}. */
 interface ChipBaseOwnProps {
-    /** Tone ngữ nghĩa → màu soft. Default `neutral`. */
+    /** Tone ngữ nghĩa → màu soft. Default `default` (trung lập). */
     tone?: ChipTone
     /** Có hàm này → chip mọc nút × ở đuôi, bấm thì gọi hàm. */
     onRemove?: () => void
@@ -138,7 +138,7 @@ export type ChipBaseProps = ChipBaseOwnProps &
     ({ isSkeleton: true; text?: ReactNode } | { isSkeleton?: false; text: ReactNode })
 
 export const ChipBase = ({
-    tone = "neutral",
+    tone = "default",
     text,
     icon: Icon,
     dotColor,
@@ -167,7 +167,7 @@ export const ChipBase = ({
         const slots = (hasDot || Icon ? 1 : 0) + (onRemove ? 1 : 0)
         return (
             <HeroChip
-                color={TONE_COLOR[tone]}
+                color={tone}
                 variant="soft"
                 className={cn("w-fit", className)}
                 // Node name = the REAL component rendered here (HeroUI `Chip`, in its
@@ -211,7 +211,7 @@ export const ChipBase = ({
 
     return (
         <HeroChip
-            color={TONE_COLOR[tone]}
+            color={tone}
             variant="soft"
             // ⭐ KHÔNG truyền `size` — đây là CỠ GỐC của HeroUI (thầy chốt 2026-07-27).
             //

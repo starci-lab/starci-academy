@@ -130,6 +130,8 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "MarkdownContent": { tier: "composite", role: "the requirement's own description, at the compact measure since it is a passenger inside the accordion rather than the page", storyId: "composites-viewers-markdowncontent--compact" },
     "EnumChip": { tier: "composite", role: "the pass/fail verdict chip, or one feedback item's severity chip", storyId: "composites-chips-enumchip--overview" },
     "Typography": { tier: "atom", role: "the trigger's points-or-score line, the graded score line, or one line of feedback text", storyId: "atoms-text-typography-typography--plain" },
+    "ScoreValue": { tier: "composite", role: "the trigger's points-before-grading or earned/required-after-grading line, riding in `titleEnd`", storyId: "composites-texts-scorevalue--default" },
+    "StatusIcon": { tier: "heroui", role: "the requirement's todo/done/failed mark, riding in `titleStart` — its own colour, independent of the title text" },
 }
 
 /** LEAF — the deliverables card. */

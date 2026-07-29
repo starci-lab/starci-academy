@@ -120,7 +120,7 @@ const checklistRow = (
                 // circle-check, not a bare tick — icon.md §2: every "done / passed"
                 // mark is `CheckCircleIcon`. Carried over from the ported source.
                 icon={item.ready ? CheckCircleIcon : KIND_ICON[item.kind]}
-                tone={item.ready ? "success" : "neutral"}
+                tone={item.ready ? "success" : "default"}
                 size="sm"
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}

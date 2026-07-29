@@ -344,7 +344,7 @@ const PersonalProjectDashboard = ({
                             <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
                         ) : (
                             <Chip
-                                tone={githubStatus.isConnected ? "success" : "neutral"}
+                                tone={githubStatus.isConnected ? "success" : "default"}
                                 icon={GithubLogoIcon}
                                 text={githubStatus.label}
                                 anatPart={showAnatomy ? "Chip" : undefined}

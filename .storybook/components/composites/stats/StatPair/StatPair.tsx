@@ -1,5 +1,6 @@
 import React from "react"
-import { cn, Typography, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Typography, Skeleton as HeroSkeleton } from "@heroui/react"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -66,14 +67,14 @@ export const StatPair = ({
 }: StatPairProps) => {
     if (isSkeleton) {
         return (
-            <div className={cn("flex flex-col items-start gap-1", className)} data-anat-part={anatPart}>
+            <StackV gap="tight" align="start" anatPart={anatPart} className={className}>
                 <HeroSkeleton className="h-5 w-14 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-            </div>
+            </StackV>
         )
     }
     return (
-        <div className={cn("flex flex-col items-start gap-0", className)} data-anat-part={anatPart}>
+        <StackV gap="flush" align="start" anatPart={anatPart} className={className}>
             <Typography
                 type={valueType}
                 weight="semibold"
@@ -88,6 +89,6 @@ export const StatPair = ({
             >
                 {label}
             </Typography>
-        </div>
+        </StackV>
     )
 }

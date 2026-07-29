@@ -162,6 +162,7 @@ const ReactionButton = ({
                         </span>
                     </HeroButton>
                 </HeroPopover.Trigger>
+                {/* inset-exception: pill geometry of the vendor popover body, the shape HeroUI ships */}
                 <HeroPopover.Content className="overflow-visible rounded-full px-2 py-1" data-anat-part={showAnatomy ? "Popover.Content" : undefined}>
                     <ReactionPicker
                         items={REACTIONS.map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}

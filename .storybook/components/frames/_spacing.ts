@@ -67,19 +67,33 @@ export const GAP_CLASS: Record<SeamScale, string> = {
  * `padding="related"` would be a sentence with no meaning. An inset word answers a different
  * question: how tightly does this surface hold what it contains.
  *
- * FOUR steps, not six. Measured across the tree before naming: 46 call sites use exactly
- * `0`, `3`, `6`, `8` and NOT ONE uses `1` or `2`. Two steps nobody reached for were two more
- * ways to be arbitrary, so they are gone. A scale earns a step by being chosen, not by
- * existing in Tailwind.
+ * FIVE steps, not six. A scale earns a step by being chosen, not by existing in Tailwind.
  *
  * | word | class | what it is for |
  * |---|---|---|
  * | `flush` | `p-0` | content touches the edge: a cover image, a table that scrolls |
+ * | `snug`  | `p-2` | compact chrome: a collapsed sidebar item, a small icon button, a chip |
  * | `cozy`  | `p-3` | the interior of a card, the house rule |
  * | `roomy` | `p-6` | a page measure or a container |
  * | `airy`  | `p-8` | a hero or an empty state that wants to breathe |
+ *
+ * HOW `snug` WAS FOUND, because the mistake is more useful than the fix. The first count
+ * behind this scale said 46 call sites use exactly `0·3·6·8` and NOT ONE uses `2`, so the
+ * scale shipped with four steps. That count only looked at the `padding` PROP. The gate meant
+ * to catch hand-written classes was meanwhile checking against the SIX steps of
+ * {@link SeamScale} rather than these, so `p-2` written by hand passed a check built to reject
+ * it — and 34 real call sites had settled on exactly that value, every one of them compact
+ * chrome. Once the gate was tightened on 2026-07-29 those 34 had nowhere legitimate to go: the
+ * scale jumped from `0` straight to `12`. The evidence said the scale was short a step, not
+ * that 34 call sites were wrong.
+ *
+ * Two lessons worth keeping. A count that covers one spelling of a thing (the prop) and not
+ * the other (the class) will under-report, and a scale derived from that count inherits the
+ * blind spot. And a gate checking the WRONG scale is worse than no gate, because the silence
+ * reads as agreement. Adding a value is additive: the compiler forces every
+ * `Record<InsetScale, …>` table to cover the new member.
  */
-export type InsetScale = "flush" | "cozy" | "roomy" | "airy"
+export type InsetScale = "flush" | "snug" | "cozy" | "roomy" | "airy"
 
 /**
  * Cross-axis alignment of a track.
@@ -126,6 +140,7 @@ export const JUSTIFY_CLASS: Record<LayoutJustify, string> = {
  */
 export const PADDING_CLASS: Record<InsetScale, string> = {
     flush: "p-0",
+    snug: "p-2",
     cozy: "p-3",
     roomy: "p-6",
     airy: "p-8",

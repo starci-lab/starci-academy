@@ -23,7 +23,7 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 /** COUNT — the default: an icon + a muted count (e.g. learner count on a card). */
 export const Count: Story = {
     render: () => shell(
-        <InlineIconLabel icon={<UsersIcon aria-hidden focusable="false" />} tone="muted">
+        <InlineIconLabel icon={<UsersIcon aria-hidden focusable="false" />} tone="default">
             1.284 học viên
         </InlineIconLabel>,
     ),
@@ -32,13 +32,13 @@ export const Count: Story = {
 /** EYEBROW — a muted kind label above content. */
 export const Eyebrow: Story = {
     render: () => shell(
-        <InlineIconLabel icon={<SparkleIcon aria-hidden focusable="false" />} tone="muted">
+        <InlineIconLabel icon={<SparkleIcon aria-hidden focusable="false" />} tone="default">
             Chấm bằng AI
         </InlineIconLabel>,
     ),
 }
 
-/** TONES — muted · accent · warning · danger · success (icon + text share ONE colour). */
+/** TONES — default (neutral) · accent · warning · danger · success (icon + text share ONE colour). */
 export const Tones: Story = {
     render: () => shell(
         <div className="flex flex-col gap-3">
@@ -54,8 +54,8 @@ export const Tones: Story = {
 export const Sizes: Story = {
     render: () => shell(
         <div className="flex flex-col gap-3">
-            <InlineIconLabel icon={<ChatCircleIcon aria-hidden focusable="false" />} tone="muted" size="xs">128 bình luận</InlineIconLabel>
-            <InlineIconLabel icon={<ChatCircleIcon aria-hidden focusable="false" />} tone="muted" size="sm">128 bình luận</InlineIconLabel>
+            <InlineIconLabel icon={<ChatCircleIcon aria-hidden focusable="false" />} tone="default" size="xs">128 bình luận</InlineIconLabel>
+            <InlineIconLabel icon={<ChatCircleIcon aria-hidden focusable="false" />} tone="default" size="sm">128 bình luận</InlineIconLabel>
         </div>,
     ),
 }
@@ -71,7 +71,7 @@ export const Foreground: Story = {
 export const Truncate: Story = {
     render: () => shell(
         <div className="w-44 rounded-2xl border border-separator p-3">
-            <InlineIconLabel icon={<SparkleIcon aria-hidden focusable="false" />} tone="muted" truncate>
+            <InlineIconLabel icon={<SparkleIcon aria-hidden focusable="false" />} tone="default" truncate>
                 Một nhãn rất dài sẽ bị cắt ở cuối dòng
             </InlineIconLabel>
         </div>,

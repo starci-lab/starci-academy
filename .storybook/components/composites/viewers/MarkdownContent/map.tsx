@@ -12,6 +12,7 @@ import {
     MarkdownTableHead,
     MarkdownTableRow,
 } from "@sb-components/composites/viewers/MarkdownContent/MarkdownTableParts"
+import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -280,6 +281,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
                 return children
             }
             return (
+                // inset-exception: inline-code geometry, wider than tall by nature, not a surface inset
                 <code className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
                     {children}
                 </code>
@@ -324,11 +326,11 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
         // Custom `:::chip` directive tag: a wrapped row of chips, one per authored keyword line.
         // Reuses the `Chip` ATOM (soft/neutral) rather than HeroUI `Chip` directly.
         chipblock: ({ items }: MarkdownChipBlockProps) => (
-            <span className="my-2 flex flex-wrap gap-2">
+            <StackH as="span" wrap gap="related" className="my-2">
                 {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
-                    <Chip key={index} tone="neutral" text={keyword} anatPart={showAnatomy ? "Chip" : undefined} />
+                    <Chip key={index} tone="default" text={keyword} anatPart={showAnatomy ? "Chip" : undefined} />
                 ))}
-            </span>
+            </StackH>
         ),
         // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so `TabsBlock` matches them.
         tabblock: ({ children }: MarkdownNodeProps) => <TabsBlock>{children}</TabsBlock>,
@@ -353,10 +355,10 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
             <Accordion.Item aria-label={String(title ?? "")}>
                 <Accordion.Heading>
                     <Accordion.Trigger>
-                        <div className="flex w-full items-center justify-between gap-3 text-start">
+                        <StackH gap="grouped" justify="between" className="w-full text-start">
                             <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>
                             <Accordion.Indicator />
-                        </div>
+                        </StackH>
                     </Accordion.Trigger>
                 </Accordion.Heading>
                 <Accordion.Panel>

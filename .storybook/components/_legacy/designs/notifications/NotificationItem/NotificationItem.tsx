@@ -96,7 +96,7 @@ export interface NotificationItemProps {
  * the other three tones are byte-identical token pairs).
  */
 const TONE_TO_ICON_TILE: Record<NotificationTone, IconTileTone> = {
-    default: "neutral",
+    default: "default",
     success: "success",
     warning: "warning",
     accent: "accent",

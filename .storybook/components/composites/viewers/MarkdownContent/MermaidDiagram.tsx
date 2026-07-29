@@ -5,6 +5,7 @@ import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
 import mermaid from "mermaid"
 import useSWR from "swr"
 import { Modal, cn } from "@heroui/react"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -112,7 +113,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                         closest generous step instead. */}
                                     <Modal.Body className="p-6">
                                         {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
-                                        <figure className="flex h-full flex-col items-center justify-center gap-2">
+                                        <StackV as="figure" gap="related" align="center" justify="center" className="h-full">
                                             <div className="flex w-full flex-1 items-center justify-center overflow-auto">
                                                 <div
                                                     className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"
@@ -122,7 +123,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                             <figcaption className="text-center text-sm italic text-muted">
                                                 {figureCaption}
                                             </figcaption>
-                                        </figure>
+                                        </StackV>
                                     </Modal.Body>
                                 </Modal.Dialog>
                             </Modal.Container>

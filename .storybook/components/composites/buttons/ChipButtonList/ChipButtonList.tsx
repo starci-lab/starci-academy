@@ -4,6 +4,7 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { Button as ButtonAtom } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — a NEW composite (no `src` yet; synced later).
@@ -102,7 +103,7 @@ export const ChipButtonList = ({
             <div className={cn(CONTAINER_CLS[direction], className)} data-anat-part={anatPart}>
                 {direction === "column"
                     ? Array.from({ length: skeletonCount }).map((_, index) => (
-                        <div key={index} className="flex items-center gap-3 px-3 py-2">
+                        <StackH key={index} gap="grouped" className="px-3 py-2">
                             <HeroSkeleton className="size-4 shrink-0 rounded" />
                             {/* §12c: chủ của hình là chủ của skeleton — Typography tự vẽ gạch của nó */}
                             <Typography
@@ -111,7 +112,7 @@ export const ChipButtonList = ({
                                 showAnatomy={showAnatomy}
                                 className={index % 2 === 0 ? "w-2/3" : "w-1/2"}
                             />
-                        </div>
+                        </StackH>
                     ))
                     : Array.from({ length: skeletonCount }).map((_, index) => (
                         <ButtonAtom

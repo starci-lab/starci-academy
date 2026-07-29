@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Typography as HeroTypography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — InlineIconLabel: a leading icon + an inline text
@@ -15,15 +16,22 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * ChatToolResult/UpNextCard eyebrow, PhaseScarcityNote notice…). NO `@/components`
  * imports.
  *
- * TONE — `muted` flows through Typography's `color` prop (§9-clean); the other tones
+ * TONE — trung lập (`default`) flows through Typography's `color="muted"` prop
+ * (§9-clean, Typography's OWN vocabulary — not this tone's name); the other tones
  * (warning/danger/success/accent) have no Typography colour token, so they ride the
  * repo's accepted `text-*-soft-foreground` className on the Typography (mirrors
  * PriceTag/FieldShell/DeadlineCallout). The leading icon gets the SAME tone via a
  * className on its own plain span (currentColor), so icon + text stay in lockstep.
  */
 
-/** Semantic tone — colours icon + text together. Omit for foreground (inherits currentColor). */
-export type InlineIconLabelTone = "muted" | "warning" | "danger" | "success" | "accent"
+/**
+ * Semantic tone — colours icon + text together. Omit for foreground (inherits currentColor).
+ *
+ * Alias, not a redeclaration (thầy chốt 2026-07-29): the same five values
+ * {@link AlertStatus} already carries — trung lập is `default`, matching every
+ * other status-driven prop in the system instead of this composite's own `muted`.
+ */
+export type InlineIconLabelTone = AlertStatus
 
 /** Text scale — `xs` (body-xs) · `sm` (body-sm). Icon stays size-4 (the app's
  * inline-meta glyph size, used with BOTH text scales — count/eyebrow/caption/notice). */
@@ -47,7 +55,7 @@ const SIZE_CONFIG: Record<InlineIconLabelSize, SizeConfig> = {
 
 /** Tone → wrapper text-colour class (icon + `color="current"` text both inherit it). */
 const TONE_CLASS: Record<InlineIconLabelTone, string> = {
-    muted: "text-muted",
+    default: "text-muted",
     warning: "text-warning-soft-foreground",
     danger: "text-danger-soft-foreground",
     success: "text-success-soft-foreground",
@@ -95,9 +103,9 @@ export const InlineIconLabel = ({
     className,
 }: InlineIconLabelProps) => {
     const cfg = SIZE_CONFIG[size]
-    // muted → Typography color prop; other tones → className (no Typography token for them).
+    // default (trung lập) → Typography color prop; other tones → className (no Typography token for them).
     const toneClass = tone ? TONE_CLASS[tone] : undefined
-    const textToneClass = tone && tone !== "muted" ? TONE_CLASS[tone] : undefined
+    const textToneClass = tone && tone !== "default" ? TONE_CLASS[tone] : undefined
 
     if (isSkeleton) {
         return (
@@ -115,7 +123,7 @@ export const InlineIconLabel = ({
             <span className={cn("shrink-0", ICON_BOX, toneClass)}>{icon}</span>
             <HeroTypography
                 type={cfg.text}
-                color={tone === "muted" ? "muted" : undefined}
+                color={tone === "default" ? "muted" : undefined}
                 className={textToneClass}
                 truncate={truncate}
             >

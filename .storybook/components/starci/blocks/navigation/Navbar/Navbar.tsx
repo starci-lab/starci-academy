@@ -469,6 +469,7 @@ const Navbar = ({
                                 </Badge>
                             </HeroButton>
                             <PopoverContent placement="bottom right" className="w-[360px]" data-anat-part={showAnatomy ? "PopoverContent" : undefined}>
+                                {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
                                 <StackV gap="tight" className="px-2 py-1" anatPart={showAnatomy ? "StackV" : undefined}>
                                     <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
                                         <Typography size="sm" weight="bold" text="Thông báo" anatPart={showAnatomy ? "Typography" : undefined} />

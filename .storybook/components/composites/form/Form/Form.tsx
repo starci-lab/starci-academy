@@ -3,6 +3,7 @@ import { cn } from "@heroui/react"
 import { ButtonGroup, type ButtonGroupItem } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `Form.*`, the ONE form composite namespace
@@ -173,7 +174,7 @@ const Section = ({
                 `Typography` nodes inside already say on their own (§11a.1 LOẠI 2/3 — a
                 badge with nowhere to link is worse than no badge; those two atoms keep their
                 own badge below and surface as top-level nodes instead). */}
-            <div className="flex min-w-0 flex-col gap-1">
+            <StackV gap="tight" className="min-w-0">
                 <span data-anat-part={showAnatomy ? "Typography" : undefined}>
                     <Typography size="sm" text={title} weight="medium" />
                 </span>
@@ -182,7 +183,7 @@ const Section = ({
                         <Typography size="xs" text={description} color="muted" />
                     </span>
                 ) : null}
-            </div>
+            </StackV>
             {/* No `data-anat-part="Body"` here either: `body`/`children` is arbitrary
                 caller-supplied field content (§11a.1 LOẠI 3 — caller slot). */}
             {main != null ? (

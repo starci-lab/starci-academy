@@ -203,7 +203,7 @@ const SubmissionScoreCard = ({
                         <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
                             <InlineIconLabel
                                 icon={<SparkleIcon aria-hidden focusable="false" />}
-                                tone="muted"
+                                tone="default"
                                 size="xs"
                                 isSkeleton={isSkeleton}
                                 anatPart={showAnatomy ? "InlineIconLabel" : undefined}

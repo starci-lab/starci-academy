@@ -1,24 +1,24 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
-import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
+import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/chips/EnumChip`. Authored in Storybook (not `src`); synced later.
  */
 
-/** HeroUI soft-chip colors usable by an {@link EnumChip}. */
-export type EnumChipColor = "default" | "success" | "warning" | "danger" | "accent"
-
-/** Maps a raw {@link EnumChipColor} to the `Chip` tone it composes onto. */
-const COLOR_TO_TONE: Record<EnumChipColor, ChipTone> = {
-    default: "neutral",
-    success: "success",
-    warning: "warning",
-    danger: "danger",
-    accent: "accent",
-}
+/**
+ * HeroUI soft-chip colors usable by an {@link EnumChip}.
+ *
+ * Alias, not a redeclaration (thầy chốt 2026-07-29): the exact same five
+ * values {@link AlertStatus} and `Chip`'s own `ChipTone` already carry — this
+ * used to need `COLOR_TO_TONE` to translate `default → neutral` between two
+ * hand-typed copies of the same vocabulary. Both sides being the same alias
+ * makes the translation a no-op, so it is gone, not renamed.
+ */
+export type EnumChipColor = AlertStatus
 
 /** One enum value's chip presentation. */
 export interface EnumChipEntry {
@@ -68,7 +68,7 @@ export const EnumChip = <E extends string>({ value, map, className, isSkeleton, 
     }
     const chip = (
         <Chip
-            tone={entry.color ? COLOR_TO_TONE[entry.color] : "neutral"}
+            tone={entry.color ?? "default"}
             className={className}
             anatPart={anatPart}
             text={entry.label}

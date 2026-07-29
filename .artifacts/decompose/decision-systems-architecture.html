@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kiến trúc DECISION SYSTEMS — brainstorm, chờ thầy chốt</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 10px;border-top:1px solid var(--line);padding-top:18px}
+  .sub{color:var(--muted);margin:0}
+  code,.mono{font-family:ui-monospace,monospace}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules li{margin:6px 0;color:var(--muted)}
+  .rules b{color:var(--ink)}
+  .note{font-size:12px;color:var(--muted)}
+
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  th:first-child{border-top-left-radius:10px}th:last-child{border-top-right-radius:10px}
+  td{padding:9px 12px;border-bottom:1px solid #1b2436;vertical-align:top}
+  tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  .num{font-family:ui-monospace,monospace;font-weight:600}
+  .ok{color:var(--success)} .bad{color:var(--danger)} .warn{color:var(--warn)}
+
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:16px}
+  .opt{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+  .opt.pick{border-color:color-mix(in srgb,var(--success) 45%,var(--line));background:color-mix(in srgb,var(--success) 6%,var(--panel))}
+  .opt-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .opt-n{font-weight:700;font-size:13.5px}
+  .badge{font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;font-weight:700}
+  .b-pick{background:color-mix(in srgb,var(--success) 20%,transparent);color:var(--success)}
+  .b-no{background:color-mix(in srgb,var(--danger) 16%,transparent);color:var(--danger)}
+  .opt p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.55}
+  .pro{color:var(--success);font-size:12.5px} .con{color:var(--danger);font-size:12.5px}
+
+  .skel{background:#0e1420;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-family:ui-monospace,monospace;font-size:12px;line-height:1.75;white-space:pre;overflow-x:auto;color:var(--muted)}
+  .skel b{color:var(--ink)}
+  .skel .c{color:var(--accent)}
+
+  .q{background:color-mix(in srgb, var(--warn) 9%, var(--panel));border:1px solid color-mix(in srgb, var(--warn) 40%, var(--line));border-radius:12px;padding:14px 16px}
+  .q b{color:var(--warn)}
+  .bar{height:9px;border-radius:4px;display:inline-block;vertical-align:middle;background:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Kiến trúc DECISION SYSTEMS — brainstorm, CHƯA làm gì, chờ thầy chốt</h1>
+  <p class="sub">Thầy đề xuất: xây principles/rules mới để LLM <b>nắm hết context và quyết đoán</b> (gap · button · accent · text size · text font…). Trang này brainstorm KIẾN TRÚC trước khi viết một dòng nào.</p>
+
+  <h2>0. Vì sao ý thầy nhắm đúng chỗ mà phân tích trước của trò bỏ sót</h2>
+  <div class="rules">
+    <p style="margin:0 0 10px">Hai cơ chế giải hai loại lỗi <b>khác hẳn nhau</b>, không thay thế nhau:</p>
+    <table>
+      <thead><tr><th style="width:16%">Cơ chế</th><th style="width:22%">Trả lời câu gì</th><th style="width:16%">Chạy lúc nào</th><th style="width:24%">Bắt được bucket nào</th><th>Số vòng</th></tr></thead>
+      <tbody>
+        <tr><td class="num">GATE script</td><td>"cái này <b>SAI</b> hay đúng?"</td><td>SAU khi viết code</td><td>R1 (tái phạm luật) · R4 (quét thiếu)</td><td class="num">~14</td></tr>
+        <tr><td class="num">DECISION SYSTEM</td><td>"nên <b>CHỌN</b> cái nào?"</td><td>TRƯỚC khi viết code</td><td>R3 (suy diễn sai) · R6 (thầy phải đảo) · R7 (mắt bắt)</td><td class="num">~18</td></tr>
+      </tbody>
+    </table>
+    <p style="margin:10px 0 0"><b>R3 = 9 vòng, bucket LỚN NHẤT, và gate không bao giờ chặn được.</b> Không script nào phán được "chỗ này nên Chip hay Typography" — đó là lỗi CHỌN, không phải lỗi VIẾT. Đề xuất "wire gate" của trò bỏ trống đúng bucket này. Ý thầy lấp vào đó.</p>
+  </div>
+
+  <h2>1. Bằng chứng: 8 hệ thống ĐÃ TỒN TẠI, nhưng chưa phải kiến trúc</h2>
+  <table>
+    <thead><tr><th style="width:26%">Trang</th><th style="width:9%">Dòng</th><th style="width:20%">Có CÂY QUYẾT ĐỊNH?</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+      <tr><td class="num">gap-system</td><td class="num">373</td><td class="ok">CÓ — §0, 4 bước + bảng 5 câu</td><td class="ok">chín nhất, dùng làm KHUÔN MẪU</td></tr>
+      <tr><td class="num">text-size-system</td><td class="num">214</td><td class="ok">CÓ — §0b, 4 câu ra 1 tier</td><td class="ok">chín</td></tr>
+      <tr><td class="num">icon-system</td><td class="num">214</td><td class="bad">KHÔNG — chỉ bảng tra</td><td class="warn">§7 "chưa xác minh, chỉ tên" — treo</td></tr>
+      <tr><td class="num">button-variant-system</td><td class="num">140</td><td class="bad">KHÔNG</td><td class="bad">§6 "CHƯA áp, chờ thầy chốt" — treo</td></tr>
+      <tr><td class="num">ghost-vs-tertiary-system</td><td class="num">140</td><td class="warn">NỬA — §4 phép thử đếm nút</td><td class="ok">đã chốt 4 tầng</td></tr>
+      <tr><td class="num">color-system</td><td class="num">122</td><td class="warn">NỬA — §2b phép thử 2 lớp</td><td class="warn">phép thử §2 cũ đã SAI, phải sửa</td></tr>
+      <tr><td class="num">markdown-tier-rules</td><td class="num">182</td><td class="warn">NỬA — §2 ranh giới</td><td class="ok">chốt hôm nay</td></tr>
+      <tr><td class="num">storybook-naming</td><td class="num">130</td><td class="bad">KHÔNG</td><td class="bad"><code>index.html</code> là bản COPY y hệt của nó ⇒ <b>bộ này chưa hề có trang index</b></td></tr>
+    </tbody>
+  </table>
+  <div class="rules" style="margin-top:12px">
+    <p style="margin:0"><b>Chẩn đoán:</b> 8 trang, <b>chỉ 2</b> có cây quyết định tất định, <b>2 treo chưa chốt</b>, <b>1 phép thử từng sai</b>, <b>0 trang index</b>, nằm ở <code>.artifacts/</code> (không phải canon), và <b>không skill/step nào chỉ LLM đọc chúng</b>. Đây không phải "chưa có gì" — đây là <b>có vật liệu, thiếu kiến trúc</b>.</p>
+  </div>
+
+  <h2>2. Khuôn chuẩn đề xuất — rút từ <code>gap-system §0</code>, 6 phần cố định</h2>
+  <div class="skel"><b>SYSTEM: &lt;tên trục&gt;</b>            <span class="c">// vd SEAM · TEXT-SIZE · BUTTON-VARIANT</span>
+
+<b>1. THANG</b>          bộ giá trị HỮU HẠN. Không có giá trị ngoài thang.
+<b>2. CÂY QUYẾT ĐỊNH</b>  hỏi TỪ TRÊN XUỐNG, dừng ở câu YES đầu tiên, ra ĐÚNG 1 đáp án.
+                    <span class="c">// đây là thứ làm LLM quyết đoán — thiếu phần này thì trang chỉ là mô tả</span>
+<b>3. NEO REAL-SRC</b>    có nguồn `src` thật ⇒ ĐO nó, ghi đè kết quả bước 2.
+<b>4. CATALOG</b>         mỗi nhánh của cây ⇒ 1 ví dụ RENDER THẬT + neo `file:line`.
+<b>5. CA SAI ĐÃ CẮN</b>   before/after thật, kèm ngày. Chống tái phạm.
+<b>6. VẠCH CẤM</b>        <span class="c">// trò ĐỀ XUẤT THÊM — gap-system chưa có</span>
+                    thứ KHÔNG BAO GIỜ được làm, dù cây quyết định có ra gì.
+                    Đây là phần gate script đọc được để sinh luật máy.</div>
+  <p class="note" style="margin-top:8px">Phần 6 là cầu nối sang gate: mỗi "vạch cấm" viết ra là một script kiểm được. Tức bộ systems <b>tự sinh danh sách gate cần viết</b>, thay vì hai việc rời nhau.</p>
+
+  <h2>3. Câu kiến trúc #1 — SSOT đặt ở đâu? (chờ thầy chọn)</h2>
+  <div class="opts">
+    <div class="opt">
+      <div class="opt-h"><span class="opt-n">A · HTML là SSOT</span><span class="badge b-no">không nên</span></div>
+      <p>Giữ nguyên như hiện tại, chỉ chuẩn hoá khuôn + thêm index.</p>
+      <span class="pro">+ Render thật, mắt thầy soi được ngay</span>
+      <span class="con">− LLM đọc 373 dòng HTML để lấy ~40 dòng luật: tốn token, dễ bỏ qua</span>
+      <span class="con">− Không phải canon ⇒ không vào git canon repo, không ai bắt đọc</span>
+    </div>
+    <div class="opt pick">
+      <div class="opt-h"><span class="opt-n">B · Chia theo NGƯỜI ĐỌC</span><span class="badge b-pick">trò nghiêng</span></div>
+      <p><code>.claude/fe/systems/&lt;trục&gt;.md</code> giữ phần <b>1·2·3·6</b> (thang · cây · neo · vạch cấm) — cho LLM.<br/><code>.artifacts/decompose/&lt;trục&gt;.html</code> giữ phần <b>4·5</b> (catalog render · ca sai) — cho mắt thầy.</p>
+      <span class="pro">+ Hai bên KHÔNG trùng nội dung ⇒ không thể lệch nhau</span>
+      <span class="pro">+ LLM nạp ~40 dòng md thay vì 373 dòng html</span>
+      <span class="pro">+ md vào canon repo, html vẫn xem tại 8081</span>
+      <span class="con">− Mỗi trục phải sờ 2 file</span>
+    </div>
+    <div class="opt">
+      <div class="opt-h"><span class="opt-n">C · MD sinh ra HTML</span><span class="badge b-no">quá sớm</span></div>
+      <p>MD là SSOT duy nhất, script generate HTML.</p>
+      <span class="pro">+ Một nguồn tuyệt đối</span>
+      <span class="con">− Phần giá trị nhất của HTML là <b>render component thật</b> (nút thật, gap thật) — generator không sinh được từ markdown</span>
+      <span class="con">− Phải viết + nuôi generator</span>
+    </div>
+  </div>
+
+  <h2>4. Câu kiến trúc #2 — quan hệ với canon cũ (<code>principles.md</code> 1 408 dòng + <code>rules/</code> 4 file)</h2>
+  <div class="opts">
+    <div class="opt">
+      <div class="opt-h"><span class="opt-n">A · systems/ nằm CẠNH, canon giữ nguyên</span></div>
+      <p>Thêm thư mục thứ ba, không đụng gì.</p>
+      <span class="pro">+ Rẻ nhất, không rủi ro</span>
+      <span class="con">− Thành 3 nơi chứa luật (<code>principles</code> · <code>rules</code> · <code>systems</code>) ⇒ đúng bệnh đang mắc, nặng thêm</span>
+    </div>
+    <div class="opt pick">
+      <div class="opt-h"><span class="opt-n">B · systems/ HÚT phần "chọn cái nào" ra khỏi cả hai</span><span class="badge b-pick">trò nghiêng</span></div>
+      <p>Chia theo <b>loại câu hỏi</b>, không theo file cũ:<br/>
+      <code>rules/</code> = ĐÚNG/SAI (chấm được, gate được)<br/>
+      <code>systems/</code> = CHỌN CÁI NÀO (cây quyết định)<br/>
+      <code>steps/</code> = LÀM GÌ TRƯỚC (trình tự)<br/>
+      <code>principles.md</code> ⇒ <b>rã ra hết rồi XOÁ</b>.</p>
+      <span class="pro">+ Mỗi câu hỏi có đúng 1 nơi trả lời</span>
+      <span class="pro">+ Giết được <code>principles.md</code> — hiện đã lạc hậu 3 điểm mà <code>index.md</code> tự cấm sửa</span>
+      <span class="con">− Việc rã 1 408 dòng là công lớn, phải làm cẩn thận</span>
+    </div>
+    <div class="opt">
+      <div class="opt-h"><span class="opt-n">C · systems/ THAY LUÔN rules/</span><span class="badge b-no">không nên</span></div>
+      <p>Gộp tất cả vào systems.</p>
+      <span class="con">− Luật đúng/sai (vd "cấm <code>index.ts</code> barrel") không có "cây quyết định" nào cả, nhét vào khuôn 6 phần là gượng</span>
+    </div>
+  </div>
+
+  <h2>5. Câu kiến trúc #3 — danh sách trục, xếp theo TẦN SUẤT thầy đã phải feedback</h2>
+  <table>
+    <thead><tr><th style="width:6%">#</th><th style="width:22%">Trục</th><th style="width:14%">Vòng đã tốn</th><th style="width:16%">Đã có trang?</th><th>Cần bổ sung gì</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="num">seam (gap)</td><td><span class="bar" style="width:60px"></span> ~6</td><td class="ok">có, chín</td><td>chỉ thêm §6 vạch cấm + rút md</td></tr>
+      <tr><td class="num">2</td><td class="num">button variant</td><td><span class="bar" style="width:40px"></span> ~4</td><td class="warn">có, TREO</td><td><b>cây quyết định</b> + chốt §6 đang treo</td></tr>
+      <tr><td class="num">3</td><td class="num">icon</td><td><span class="bar" style="width:40px"></span> ~4</td><td class="warn">có, TREO</td><td><b>cây quyết định</b> + đóng §7</td></tr>
+      <tr><td class="num">4</td><td class="num">text size + weight</td><td><span class="bar" style="width:30px"></span> ~3</td><td class="ok">có, chín</td><td>gộp weight vào cùng cây</td></tr>
+      <tr><td class="num">5</td><td class="num">color / accent</td><td><span class="bar" style="width:20px"></span> ~2</td><td class="warn">có, phép thử từng sai</td><td>viết lại cây cho chắc</td></tr>
+      <tr><td class="num">6</td><td class="num">skeleton</td><td><span class="bar" style="width:20px"></span> ~2</td><td class="bad">CHƯA</td><td>dựng mới (luật rải rác §12c)</td></tr>
+      <tr><td class="num">7</td><td class="num">markdown tier</td><td><span class="bar" style="width:20px"></span> ~2</td><td class="ok">có, mới chốt</td><td>rút md</td></tr>
+      <tr><td class="num">8</td><td class="num">naming</td><td><span class="bar" style="width:20px"></span> ~2</td><td class="warn">có, không cây</td><td>thêm cây + dọn file trùng</td></tr>
+      <tr><td class="num">9</td><td class="num">padding (inset)</td><td><span class="bar" style="width:10px"></span> ~1</td><td class="bad">CHƯA</td><td>dựng mới, cặp đôi với seam</td></tr>
+      <tr><td class="num">10</td><td class="num">chọn KHUNG (frame)</td><td><span class="bar" style="width:10px"></span> ~1</td><td class="bad">CHƯA</td><td>đã có cây thô ở <code>rules/3 §3</code>, nâng lên</td></tr>
+      <tr><td class="num">11</td><td class="num">empty · error · loading</td><td><span class="bar" style="width:10px"></span> ~1</td><td class="bad">CHƯA</td><td>dựng mới</td></tr>
+      <tr><td class="num">12</td><td class="num">radius · border · shadow</td><td>—</td><td class="bad">CHƯA</td><td>chưa tốn vòng nào, làm sau</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Trục 1-5 chiếm ~19/40 vòng feedback đã ghi sổ. Làm xong 5 trục đầu là chạm phần lớn nợ.</p>
+
+  <h2>6. Câu kiến trúc #4 — cơ chế "rà từng lượt" (thầy nhấn mạnh)</h2>
+  <div class="rules">
+    <p style="margin:0 0 10px">Vấn đề số học: 12 hệ thống × ~60 dòng = <b>720 dòng</b>. Nạp hết mỗi lượt là quay lại đúng bệnh của <code>principles.md</code> 1 408 dòng — dài quá nên không ai đọc.</p>
+    <p style="margin:0 0 10px"><b>Đề xuất 2 tầng:</b></p>
+    <div class="skel"><b>systems/INDEX.md</b>  <span class="c">// ~25 dòng — LUÔN nạp mỗi lượt</span>
+  bảng 2 cột: "đang phân vân về X"  →  "mở systems/Y.md"
+  + checklist ship: 12 dòng, mỗi trục 1 dòng, tick trước khi báo xong
+
+<b>systems/&lt;trục&gt;.md</b>   <span class="c">// ~60 dòng — CHỈ mở khi chạm đúng trục đó</span></div>
+    <p style="margin:10px 0 0">Cộng thêm: skill <code>starci-fe-story-feedback</code> bước 1b <b>bắt buộc khai</b> "câu này thuộc trục nào, đã mở <code>systems/&lt;trục&gt;.md</code> chưa, cây quyết định ra đáp án gì" — trước khi được đề xuất fix. Đó là chỗ biến bộ systems từ tài liệu thành <b>quy trình bắt buộc</b>.</p>
+  </div>
+
+  <h2>7. Sáu câu chờ thầy chốt</h2>
+  <div class="q">
+    <table>
+      <thead><tr><th style="width:5%">#</th><th style="width:34%">Câu</th><th>Lựa chọn</th></tr></thead>
+      <tbody>
+        <tr><td class="num">Q1</td><td>SSOT đặt đâu?</td><td><b>A</b> html là SSOT · <b>B</b> chia theo người đọc (md=cây, html=render) <i>← trò nghiêng</i> · <b>C</b> md sinh html</td></tr>
+        <tr><td class="num">Q2</td><td>Quan hệ với canon cũ?</td><td><b>A</b> nằm cạnh · <b>B</b> hút "chọn cái nào" ra, XOÁ <code>principles.md</code> <i>← trò nghiêng</i> · <b>C</b> thay luôn <code>rules/</code></td></tr>
+        <tr><td class="num">Q3</td><td>Khuôn 6 phần có đúng không? Thêm/bớt phần nào?</td><td>đặc biệt: <b>§6 VẠCH CẤM</b> là phần trò tự đề xuất thêm — thầy thấy cần không?</td></tr>
+        <tr><td class="num">Q4</td><td>Làm bao nhiêu trục đợt đầu?</td><td><b>5 trục</b> tần suất cao nhất · hay <b>12 trục</b> làm hết một lượt</td></tr>
+        <tr><td class="num">Q5</td><td>Thứ tự: làm systems TRƯỚC hay wire gate TRƯỚC?</td><td>trò nghiêng <b>systems trước</b> — vì §6 vạch cấm của nó chính là danh sách gate cần viết, làm ngược sẽ viết gate thiếu</td></tr>
+        <tr><td class="num">Q6</td><td>2 trang đang TREO (<code>button-variant §6</code>, <code>icon §7</code>) — chốt luôn trong đợt này chứ?</td><td>chúng đang chặn đúng trục #2 và #3 tần suất cao</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

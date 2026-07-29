@@ -10,6 +10,7 @@ import React, {
 } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -290,7 +291,7 @@ export const PDFView = ({
                     noData={<div className="text-sm text-muted">No PDF selected.</div>}
                     onLoadSuccess={(pdf) => setNumPages(pdf.numPages)}
                 >
-                    <div className="flex flex-col gap-3">
+                    <StackV gap="grouped">
                         {Array.from({ length: pageCount }, (_, index) => {
                             const pageNumber = index + 1
                             const eager = !showAllPages || pageNumber <= 2
@@ -304,7 +305,7 @@ export const PDFView = ({
                                 />
                             )
                         })}
-                    </div>
+                    </StackV>
                 </Document>
             ) : (
                 <div className="text-sm text-muted">No PDF selected.</div>

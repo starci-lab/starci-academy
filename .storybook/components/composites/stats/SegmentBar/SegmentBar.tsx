@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Typography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -91,7 +92,7 @@ export const SegmentBar = ({
 }: SegmentBarProps) => {
     if (isSkeleton) {
         return (
-            <div className={cn("flex flex-col gap-2", className)} data-anat-part={anatPart}>
+            <StackV gap="related" anatPart={anatPart} className={className}>
                 <HeroSkeleton
                     className={cn("w-full", inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full")}
                     data-anat-part={showAnatomy ? "Skeleton" : undefined}
@@ -102,7 +103,7 @@ export const SegmentBar = ({
                 {caption !== undefined ? (
                     <HeroSkeleton className="h-3 w-32 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 ) : null}
-            </div>
+            </StackV>
         )
     }
     // `segments` is REQUIRED whenever `isSkeleton` is false (discriminated union above) —
@@ -118,7 +119,7 @@ export const SegmentBar = ({
     const remainder = Math.max(0, total - filledSum)
 
     return (
-        <div className={cn("flex flex-col gap-2", className)} data-anat-part={anatPart}>
+        <StackV gap="related" anatPart={anatPart} className={className}>
             <div
                 role="img"
                 aria-label={ariaLabel}
@@ -132,6 +133,7 @@ export const SegmentBar = ({
                         key={segment.key}
                         className={cn(
                             "h-full min-w-0",
+                            // inset-exception: optical nudge keeping the inline label off the segment edge
                             inlineLabels && "flex items-center justify-center overflow-hidden px-1",
                         )}
                         style={{
@@ -177,6 +179,6 @@ export const SegmentBar = ({
                     {caption}
                 </Typography>
             ) : null}
-        </div>
+        </StackV>
     )
 }

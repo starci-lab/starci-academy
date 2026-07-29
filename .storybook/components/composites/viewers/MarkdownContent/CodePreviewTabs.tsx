@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { Tabs, cn } from "@heroui/react"
 import { CodeIcon, SidebarIcon } from "@phosphor-icons/react"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -32,7 +33,7 @@ export interface CodePreviewTabsProps {
 export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsProps) => {
     const [tab, setTab] = useState<"preview" | "code">("preview")
     return (
-        <div className={cn("not-prose flex flex-col gap-2", className)}>
+        <StackV gap="related" className={className ? cn("not-prose", className) : "not-prose"}>
             <Tabs
                 selectedKey={tab}
                 variant="secondary"
@@ -62,6 +63,6 @@ export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsPro
             <div className={tab === "preview" ? "rounded-xl border border-divider p-3" : undefined}>
                 {tab === "preview" ? preview : code}
             </div>
-        </div>
+        </StackV>
     )
 }

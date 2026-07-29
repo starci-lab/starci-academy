@@ -4,6 +4,7 @@ import remarkDirective from "remark-directive"
 import remarkGfm from "remark-gfm"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { buildMarkdownRenderers } from "@sb-components/composites/viewers/MarkdownContent/map"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -370,13 +371,14 @@ const MarkdownContent = ({
     // (rules of hooks: an early return before a hook call would skip it conditionally).
     if (isSkeleton) {
         return (
-            <div
-                className={cn("flex flex-col gap-2", className)}
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+            <StackV
+                gap="related"
+                className={className}
+                anatPart={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
             >
                 <HeroSkeleton className="h-4 w-full rounded" />
                 <HeroSkeleton className="h-4 w-2/3 rounded" />
-            </div>
+            </StackV>
         )
     }
 

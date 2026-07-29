@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { LinkSeeMore } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -68,8 +69,8 @@ export const SurfaceCardHeader = ({
     // so the two sides can never drift apart.
     const textSize = subtleLabel ? "xs" : "sm"
     return (
-        <div className="flex items-center justify-between gap-3">
-            <div className="flex min-w-0 items-center gap-2">
+        <StackH gap="grouped" justify="between">
+            <StackH gap="related" className="min-w-0">
                 {/* Text goes through the ATOM (§9c), NOT HeroUI `Label` or a `<span>`
                     with classes slapped on. `Label` renders exactly 14px/500/lh-20 =
                     `size="sm" weight="medium"` so the shape doesn't change — but
@@ -85,7 +86,7 @@ export const SurfaceCardHeader = ({
                     className={isSkeleton ? "w-32" : undefined}
                     text={label}
                 />
-            </div>
+            </StackH>
             {action ?? (onSeeMore ? (
                 // This is an ATOM with its own story ⇒ the node is named so it becomes a
                 // clickable DEP in the panel; the badge stops here, no drilling into the
@@ -103,7 +104,7 @@ export const SurfaceCardHeader = ({
                     text={labelEnd}
                 />
             ) : null)}
-        </div>
+        </StackH>
     )
 }
 

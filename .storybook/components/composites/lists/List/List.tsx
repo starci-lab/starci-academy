@@ -4,6 +4,7 @@ import { Label, Switch, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -115,7 +116,9 @@ const RowSkeleton = ({
     className?: string
     showAnatomy?: boolean
 }) => (
-    <div className={cn("flex min-w-0 items-center gap-3 py-2", className)}>
+    // `py-2` stays a raw class here: InsetScale only covers symmetric `p-*`, it has
+    // no vertical-only step, so this vertical rhythm can't move onto a frame prop yet.
+    <StackH gap="grouped" className={cn("min-w-0 py-2", className)}>
         {hasLeading ? (
             <HeroSkeleton className="size-5 shrink-0 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
         ) : null}
@@ -128,7 +131,7 @@ const RowSkeleton = ({
             className="flex-1"
             anatPart={showAnatomy ? "TitledText" : undefined}
         />
-    </div>
+    </StackH>
 )
 
 /**
@@ -184,12 +187,10 @@ const Row = ({
             {/* title (body-sm medium) + muted subtitle = one TitledText, truncated */}
             <TitledText title={title} subtitle={subtitle} truncate anatPart={showAnatomy ? "TitledText" : undefined} />
             {meta || trailing ? (
-                <div
-                    className="ml-auto flex shrink-0 items-center gap-2"
-                >
+                <StackH gap="related" className="ml-auto shrink-0">
                     {meta}
                     {trailing}
-                </div>
+                </StackH>
             ) : null}
         </>
     )
@@ -302,14 +303,16 @@ const Labeled = ({
             : items.map(({ key, ...item }) => <Row key={key} {...item} showAnatomy={showAnatomy} />)
 
     return (
-        <section className={cn("flex flex-col gap-3", className)}>
-            <div className="flex items-center gap-2">
+        // `as="section"` keeps the landmark tag while still routing the seam through the
+        // frame (§13z) — `Stack`'s `as` prop was added 2026-07-29 for exactly this case.
+        <StackV as="section" gap="grouped" className={className}>
+            <StackH gap="related">
                 {icon}
                 <Label>{label}</Label>
-            </div>
-            <div className="flex flex-col gap-2">{rows}</div>
+            </StackH>
+            <StackV gap="related">{rows}</StackV>
             {action ? <div>{action}</div> : null}
-        </section>
+        </StackV>
     )
 }
 
@@ -351,7 +354,7 @@ export interface ListMetaProps {
  * @param props - {@link ListMetaProps}
  */
 const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMetaProps) => (
-    <div className={cn("flex min-w-0 items-center gap-2", className)} data-anat-part={anatPart}>
+    <StackH gap="related" className={cn("min-w-0", className)} anatPart={anatPart}>
         {chip ? <span className="shrink-0">{chip}</span> : null}
         {items.length > 0 ? (
             <Typography size="xs"
@@ -374,7 +377,7 @@ const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMet
                 showAnatomy={showAnatomy}
             />
         ) : null}
-    </div>
+    </StackH>
 )
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -440,7 +443,7 @@ const ToggleRow = ({
 }: ListToggleRowProps) => {
     if (isSkeleton) {
         return (
-            <div className={cn("flex items-center gap-3", className)}>
+            <StackH gap="grouped" className={className}>
                 {/* title↔description stack = TitledText (skeleton mirror delegated) */}
                 <TitledText
                     title={label}
@@ -456,11 +459,11 @@ const ToggleRow = ({
                     className="shrink-0"
                     anatPart={showAnatomy ? "ChoiceSwitch" : undefined}
                 />
-            </div>
+            </StackH>
         )
     }
     return (
-        <div className={cn("flex items-center gap-3", isDisabled && "opacity-50", className)}>
+        <StackH gap="grouped" className={cn(isDisabled && "opacity-50", className)}>
             {/* label (body-sm medium) + muted description = one TitledText row */}
             <TitledText
                 title={label}
@@ -482,7 +485,7 @@ const ToggleRow = ({
                     </Switch.Control>
                 </Switch.Content>
             </Switch>
-        </div>
+        </StackH>
     )
 }
 

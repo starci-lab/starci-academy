@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bộ principles markdown — khuôn + 1 mẫu thật, chờ chốt</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 10px;border-top:1px solid var(--line);padding-top:18px}
+  .sub{color:var(--muted);margin:0}
+  code,.mono{font-family:ui-monospace,monospace}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules b{color:var(--ink)}
+  .note{font-size:12px;color:var(--muted)}
+
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  th:first-child{border-top-left-radius:10px}th:last-child{border-top-right-radius:10px}
+  td{padding:9px 12px;border-bottom:1px solid #1b2436;vertical-align:top}
+  tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  .num{font-family:ui-monospace,monospace;font-weight:600}
+  .ok{color:var(--success)} .bad{color:var(--danger)} .warn{color:var(--warn)}
+
+  .tree{background:#0e1420;border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.85;white-space:pre;overflow-x:auto;color:var(--muted)}
+  .tree b{color:var(--ink)} .tree .c{color:var(--accent)} .tree .g{color:var(--success)} .tree .d{color:#5b6舗}
+  .tree .dim{color:#5c6880}
+
+  .pairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+  .pgroup{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px}
+  .pgroup.hot{border-color:color-mix(in srgb,var(--danger) 45%,var(--line));background:color-mix(in srgb,var(--danger) 6%,var(--panel))}
+  .pgroup.cold{opacity:.72}
+  .ph{font-weight:700;font-size:13px}
+  .pcount{font-family:ui-monospace,monospace;font-size:22px;font-weight:700}
+  .pitem{font-family:ui-monospace,monospace;font-size:11.5px;color:var(--muted)}
+  .pgroup p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+
+  .q{background:color-mix(in srgb, var(--warn) 9%, var(--panel));border:1px solid color-mix(in srgb, var(--warn) 40%, var(--line));border-radius:12px;padding:14px 16px}
+  .q b{color:var(--warn)}
+  .done{background:color-mix(in srgb, var(--success) 8%, var(--panel));border:1px solid color-mix(in srgb, var(--success) 35%, var(--line));border-radius:12px;padding:14px 16px}
+  .done b{color:var(--success)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Bộ principles markdown — khuôn + <b>một mẫu thật đã viết xong</b> để soi</h1>
+  <p class="sub">Thầy chốt: markdown là SSOT, mỗi trục một thư mục <code>context.md</code> + <code>example.md</code>, <b>vét cạn all case</b>. Trò viết <b>đúng 1 trục mẫu</b> (<code>seam</code>) thay vì 12 trục — để thầy soi khuôn trước khi nhân bản một cái khuôn có thể sai.</p>
+
+  <h2>1. Cây thư mục đề xuất</h2>
+  <div class="tree"><b>.claude/fe/principles/</b>
+├─ <b>INDEX.md</b>              <span class="c">// ~55 dòng — LUÔN nạp mỗi lượt</span>
+│                          <span class="dim">bảng "phân vân về X → mở Y" · checklist ship 12 dòng</span>
+│                          <span class="dim">3 luật xuyên trục · khuôn 6 phần bắt buộc</span>
+│
+├─ <span class="g">seam/</span>                   <span class="g">// ĐÃ VIẾT XONG — mẫu để thầy soi</span>
+│   ├─ <span class="g">context.md</span>          <span class="dim">thang · cây · vét cạn 15 cặp · 6 bẫy · 8 vạch cấm</span>
+│   └─ <span class="g">example.md</span>          <span class="dim">neo src đã đo lại · 4 lỗi thật · cách đo DOM</span>
+│
+├─ inset/                  <span class="dim">⬜ padding</span>
+├─ text/                   <span class="dim">⬜ cỡ chữ + độ đậm</span>
+├─ button/                 <span class="dim">⬜ variant  (đang TREO ở button-variant-system §6)</span>
+├─ color/                  <span class="dim">⬜ accent   (phép thử cũ từng SAI, phải viết lại)</span>
+├─ icon/                   <span class="dim">⬜ bộ · size · weight  (đang TREO ở icon-system §7)</span>
+├─ markdown/               <span class="dim">⬜ 3 tầng — chốt hôm nay, chỉ cần rút md</span>
+├─ frame/                  <span class="dim">⬜ chọn khung</span>
+├─ skeleton/               <span class="dim">⬜</span>
+├─ async/                  <span class="dim">⬜ rỗng · lỗi · đang tải</span>
+├─ naming/                 <span class="dim">⬜</span>
+└─ surface/                <span class="dim">⬜ radius · border · shadow</span></div>
+
+  <h2>2. Khuôn 6 phần của mỗi <code>context.md</code></h2>
+  <table>
+    <thead><tr><th style="width:5%">#</th><th style="width:20%">Phần</th><th style="width:40%">Trả lời câu gì</th><th>Thiếu thì sao</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="num">THANG</td><td>có bao nhiêu lựa chọn, hữu hạn</td><td>giá trị lạ lọt vào bằng cửa trước</td></tr>
+      <tr><td class="num">2</td><td class="num">CÂY QUYẾT ĐỊNH</td><td>hỏi từ trên xuống, dừng ở YES đầu, ra <b>đúng 1</b> đáp án</td><td class="bad">trang chỉ là MÔ TẢ — LLM vẫn phải đoán. Đây là phần <b>6/8 trang hiện tại đang thiếu</b></td></tr>
+      <tr><td class="num">3</td><td class="num">VÉT CẠN CA DỄ LẪN</td><td>mọi CẶP giá trị có thể lẫn + phép phân định dứt khoát</td><td class="bad">LLM vẫn lẫn đúng chỗ hay lẫn — chính là bucket R3, 9 vòng feedback</td></tr>
+      <tr><td class="num">4</td><td class="num">BẪY CẤU TRÚC</td><td>lỗi không ở chọn giá trị mà ở đọc sai cây</td><td>chọn đúng số trên một cây sai</td></tr>
+      <tr><td class="num">5</td><td class="num">NEO THẬT</td><td>thứ tự ưu tiên khi hai nguồn đá nhau</td><td>suy diễn thắng đo đạc</td></tr>
+      <tr><td class="num">6</td><td class="num">VẠCH CẤM</td><td>thứ không bao giờ được làm</td><td class="warn">mất cầu nối sang gate — <b>mỗi dòng ở đây là một script viết được</b></td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. "Vét cạn" nghĩa là gì — phải có tiêu chí dừng KHÁCH QUAN</h2>
+  <div class="rules">
+    <p style="margin:0 0 10px">Liệt kê "vài ví dụ hay gặp" <b>không phải</b> vét cạn — không ai biết khi nào đủ. Tiêu chí trò đề xuất: thang <b>N</b> giá trị ⇒ số cặp là <b>C(N,2)</b>, liệt kê đủ từng đó cặp rồi phân nhóm. Đó là lúc được phép dừng, và kiểm được bằng phép đếm.</p>
+    <p style="margin:0"><b>Áp cho <code>seam</code>: 6 bậc ⇒ C(6,2) = 15 cặp.</b> Phân ba nhóm:</p>
+  </div>
+  <div class="pairs" style="margin-top:14px">
+    <div class="pgroup hot">
+      <span class="ph">KỀ NHAU — toàn bộ trận đánh</span>
+      <span class="pcount bad">5 cặp</span>
+      <p>Mỗi cặp có <b>một phép phân định dứt khoát</b>, phát biểu thành câu hỏi trả lời được bằng có/không.</p>
+      <span class="pitem">flush↔tight · tight↔related</span>
+      <span class="pitem">related↔grouped · grouped↔section</span>
+      <span class="pitem">section↔page</span>
+    </div>
+    <div class="pgroup">
+      <span class="ph">CÁCH 1 BẬC — hiếm</span>
+      <span class="pcount warn">4 cặp</span>
+      <p>Không có phép thử riêng; mỗi cặp chỉ ra <b>câu hỏi cấp trên chưa trả lời</b>, quay lại nhóm kề nhau.</p>
+      <span class="pitem">flush↔related · tight↔grouped</span>
+      <span class="pitem">related↔section · grouped↔page</span>
+    </div>
+    <div class="pgroup cold">
+      <span class="ph">CÁCH ≥2 BẬC — cố ý KHÔNG có phép thử</span>
+      <span class="pcount">6 cặp</span>
+      <p>Phân vân ở đây là <b>dấu hiệu cây vẽ sai</b>, không phải chọn sai. Viết phép phân định cho chúng là hợp thức hoá một lỗi cấu trúc.</p>
+      <span class="pitem">flush↔grouped · flush↔section · flush↔page</span>
+      <span class="pitem">tight↔section · tight↔page · related↔page</span>
+    </div>
+  </div>
+
+  <h2>4. Hai thứ chỉ lộ ra KHI vét cạn — không đoán được nếu chỉ viết ví dụ</h2>
+  <div class="done">
+    <p style="margin:0 0 10px"><b>a. 4/4 lỗi seam thật đều là cặp KỀ NHAU.</b> Chưa từng có lỗi nào lệch ≥2 bậc. ⇒ Toàn bộ giá trị của trang nằm ở 5 cặp kề nhau; 6 cặp xa <b>không cần</b> phép thử, và biết điều đó giúp trang ngắn lại thay vì dài ra.</p>
+    <p style="margin:0"><b>b. Cả 4 lỗi đều CHẶT HƠN nguồn thật đúng một bậc.</b> Không phải sai ngẫu nhiên — là <b>thiên lệch có hệ thống</b> của người dựng (3/4 ca chọn <code>tight</code> khi nguồn là <code>related</code>; ca còn lại <code>related</code> khi nguồn là <code>grouped</code>). Biết điều này thì luật rút ra rất cụ thể: <b>khi định chọn bậc chặt hơn, nghi ngờ chính mình trước</b>. Đây là loại luật chỉ hiện ra khi xếp cả 4 ca cạnh nhau.</p>
+  </div>
+
+  <h2>5. Việc phụ mà bộ này tự làm được: sinh danh sách gate còn thiếu</h2>
+  <div class="rules">
+    <p style="margin:0 0 8px">Phần 6 (VẠCH CẤM) của <code>seam/context.md</code> có 8 dòng. Đối chiếu với script thật:</p>
+    <table>
+      <thead><tr><th style="width:60%">Vạch cấm</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td>viết SỐ cho <code>gap</code></td><td class="ok">✅ tsc (union literal)</td></tr>
+        <tr><td>con của khung mang <code>margin</code></td><td class="ok">✅ check-padding</td></tr>
+        <tr><td>bố cục viết tay ở composite/block/screen</td><td class="ok">✅ check-seams</td></tr>
+        <tr><td>hai chủ một seam</td><td class="ok">✅ check-seams</td></tr>
+        <tr><td>giá trị ngoài thang</td><td class="ok">✅ check-seams</td></tr>
+        <tr><td><b>truyền <code>gap</code> vào khung/nhánh không nhận nó</b></td><td class="bad">⬜ <b>CHƯA — gate mới lộ ra</b></td></tr>
+        <tr><td>chép seam từ component khác không cùng src</td><td class="warn">⛔ không gate được</td></tr>
+        <tr><td>báo xong khi chưa đo <code>getComputedStyle</code></td><td class="warn">⛔ không gate được</td></tr>
+      </tbody>
+    </table>
+    <p style="margin:10px 0 0">Một trục ⇒ lộ ra <b>một gate còn thiếu</b>, kèm mô tả đủ để viết ngay. Đó là lý do trò nghiêng <b>làm principles TRƯỚC, wire gate SAU</b> — làm ngược sẽ viết gate thiếu.</p>
+  </div>
+
+  <h2>6. Xung đột tên phải xử ngay</h2>
+  <div class="q">
+    <p style="margin:0"><code>.claude/fe/<b>principles.md</b></code> (file cũ, <b>144 KB</b>, đã lạc hậu 3 điểm mà <code>index.md</code> lại tự ghi <i>"KHÔNG được sửa"</i>) và <code>.claude/fe/<b>principles/</b></code> (thư mục mới) nằm cạnh nhau ⇒ agent nền sẽ nhầm. Đề xuất: đổi tên file cũ thành <code>_principles-legacy.md</code> <b>ngay hôm nay</b>, rồi rã dần vào <code>principles/</code> + <code>rules/</code>, rã xong thì xoá.</p>
+  </div>
+
+  <h2>7. Chờ thầy chốt</h2>
+  <div class="q">
+    <table>
+      <thead><tr><th style="width:5%">#</th><th style="width:38%">Câu</th><th>Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="num">Q1</td><td><b>Khuôn 6 phần</b> có đúng ý thầy không? Đọc <code>seam/context.md</code> rồi bảo trò sửa khuôn.</td><td>sửa khuôn bây giờ rẻ; sửa sau khi có 12 trục thì đắt gấp 12</td></tr>
+        <tr><td class="num">Q2</td><td><b>Tiêu chí vét cạn C(N,2)</b> có đủ chặt không, hay thầy muốn vét theo trục khác (vd theo TẦNG, theo LOẠI component)?</td><td>trò chọn cặp-giá-trị vì nó có tiêu chí dừng đếm được</td></tr>
+        <tr><td class="num">Q3</td><td>Viết bằng <b>tiếng Việt</b> như mẫu, hay tiếng Anh?</td><td>mẫu đang tiếng Việt cho khớp <code>rules/</code>; code comment vẫn tiếng Anh</td></tr>
+        <tr><td class="num">Q4</td><td>Đợt này làm <b>mấy trục</b>? 5 trục tần suất cao, hay cả 12?</td><td>5 trục đầu chạm ~19/40 vòng feedback đã ghi sổ</td></tr>
+        <tr><td class="num">Q5</td><td>Đổi tên <code>principles.md</code> → <code>_principles-legacy.md</code> ngay chứ?</td><td>xung đột tên ở §6</td></tr>
+        <tr><td class="num">Q6</td><td>Hai trang đang TREO (<code>button-variant §6</code>, <code>icon §7</code>) — chốt luôn khi dựng trục đó?</td><td>không chốt thì hai trục #2 và #3 viết ra vẫn treo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="note">Đã viết thật, đọc được ngay: <code>.claude/fe/principles/INDEX.md</code> · <code>.claude/fe/principles/seam/context.md</code> · <code>.claude/fe/principles/seam/example.md</code>. Chưa đụng <code>principles.md</code>, chưa đụng <code>rules/</code>, chưa đụng code.</p>
+
+</div>
+</body>
+</html>

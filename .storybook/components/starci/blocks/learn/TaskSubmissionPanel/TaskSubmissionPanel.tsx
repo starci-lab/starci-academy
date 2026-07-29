@@ -166,7 +166,7 @@ const AUTOSAVE_ICON: Record<Exclude<TaskSubmissionAutosaveStatus, "idle">, IconC
     error: WarningCircleIcon,
 }
 const AUTOSAVE_TONE: Record<Exclude<TaskSubmissionAutosaveStatus, "idle">, InlineIconLabelTone> = {
-    saving: "muted",
+    saving: "default",
     saved: "success",
     error: "danger",
 }
@@ -242,7 +242,7 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton, showA
         <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
             <InlineIconLabel
                 icon={<CodeIcon aria-hidden focusable="false" />}
-                tone="muted"
+                tone="default"
                 size="xs"
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "InlineIconLabel" : undefined}
@@ -251,7 +251,7 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton, showA
             </InlineIconLabel>
             <InlineIconLabel
                 icon={<GitBranchIcon aria-hidden focusable="false" />}
-                tone="muted"
+                tone="default"
                 size="xs"
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "InlineIconLabel" : undefined}
@@ -287,7 +287,7 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton,
         {aiStatusText != null ? (
             <InlineIconLabel
                 icon={<SparkleIcon aria-hidden focusable="false" />}
-                tone="muted"
+                tone="default"
                 size="xs"
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "InlineIconLabel" : undefined}

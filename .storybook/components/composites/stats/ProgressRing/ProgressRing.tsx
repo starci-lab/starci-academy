@@ -1,6 +1,7 @@
 import React from "react"
 import { ProgressCircle, Typography as HeroTypography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/ProgressRing`. Authored in Storybook (not `src`);
@@ -73,12 +74,12 @@ export const ProgressRing = ({
     const { ring, label: labelType } = SIZE_MAP[size]
     if (isSkeleton) {
         return (
-            <div className={cn("inline-flex flex-col items-center gap-2", className)} data-anat-part={anatPart}>
+            <StackV gap="related" align="center" className={className} anatPart={anatPart}>
                 <HeroSkeleton className={cn("rounded-full", ring)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 {caption !== undefined ? (
                     <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 ) : null}
-            </div>
+            </StackV>
         )
     }
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
@@ -88,7 +89,7 @@ export const ProgressRing = ({
     const resolvedLabel = label ?? `${Math.round(safeValue)}%`
     const ariaLabel = typeof caption === "string" ? caption : `${Math.round(safeValue)}%`
     return (
-        <div className={cn("inline-flex flex-col items-center gap-2", className)} data-anat-part={anatPart}>
+        <StackV gap="related" align="center" className={className} anatPart={anatPart}>
             {/* Relative container: the ring fills it, the label overlays its center */}
             <div className={cn("relative inline-flex items-center justify-center", ring)}>
                 <ProgressCircle aria-label={ariaLabel} value={safeValue} color={tone}>
@@ -108,6 +109,6 @@ export const ProgressRing = ({
             {caption ? (
                 <Typography size="xs" color="muted" className="text-center" text={caption} />
             ) : null}
-        </div>
+        </StackV>
     )
 }

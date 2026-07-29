@@ -8,7 +8,7 @@ import {
     type SurfaceCardAccordionItem,
 } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
-import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
+import { ScoreValue } from "@sb-components/composites/text/ScoreValue/ScoreValue"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
@@ -38,8 +38,10 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  *     (free-form) and this block builds the row body itself: prerequisites =
  *     bare markdown, outputs = a leading `CheckCircleIcon` + markdown.
  *   - requirements / guided steps → `SurfaceCardAccordion` (was
- *     `LabeledAccordionCard`), `titleEnd` carrying the per-requirement points
- *     chip, steps numbered `"1. …"` by this block (the caller never hands over
+ *     `LabeledAccordionCard`), `titleEnd` carrying the per-requirement
+ *     `ScoreValue` (accent text, never a chip — §2a: a point count is a
+ *     free-form scalar, not an enum/status/badge), steps numbered `"1. …"` by
+ *     this block (the caller never hands over
  *     a pre-numbered string, per §14d.1 — it hands `title?` and an index, this
  *     block composes the sentence).
  *   - hint → `SurfaceCardAccordion` with exactly one item, bare (no `label`,
@@ -207,7 +209,7 @@ const ChallengeBrief = ({
         id: item.key,
         title: item.title,
         titleEnd: item.points != null
-            ? <Chip tone="accent" text={`${item.points} điểm`} anatPart={showAnatomy ? "Chip" : undefined} />
+            ? <ScoreValue points={item.points} anatPart={showAnatomy ? "ScoreValue" : undefined} />
             : undefined,
         body: markdownBody(item.body, showAnatomy),
     }))
@@ -225,12 +227,16 @@ const ChallengeBrief = ({
     const hintItems: Array<SurfaceCardAccordionItem> = trimmedHint.length > 0
         ? [{
             id: "hint",
-            title: (
-                <StackH gap="tight" align="center">
-                    <LightbulbIcon aria-hidden focusable="false" weight="bold" className="size-5 text-warning-soft-foreground" />
-                    <span>Gợi ý</span>
-                </StackH>
+            titleStart: (
+                <LightbulbIcon
+                    aria-hidden
+                    focusable="false"
+                    weight="bold"
+                    data-anat-part={showAnatomy ? "LightbulbIcon" : undefined}
+                    className="size-5 text-warning-soft-foreground"
+                />
             ),
+            title: "Gợi ý",
             body: markdownBody(trimmedHint, showAnatomy),
         }]
         : isSkeleton

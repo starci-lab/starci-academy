@@ -130,7 +130,7 @@ export const RatingBar = ({
                                 {option.label}
                             </span>
                             <Chip
-                                tone="neutral"
+                                tone="default"
                                 anatPart={showAnatomy ? "StatusChip" : undefined}
                                 text={position + 1}
                             />

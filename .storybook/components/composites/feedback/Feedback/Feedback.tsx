@@ -3,6 +3,7 @@ import { AlertDialog, Typography as HeroTypography, cn } from "@heroui/react"
 import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button, ButtonGroup } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -299,7 +300,7 @@ const Empty = ({
                 </span>
             ) : null}
             {isPage ? (
-                <div className="flex flex-col gap-2">
+                <StackV gap="related">
                     <div data-anat-part={showAnatomy ? "HeroTypography" : undefined}>
                         <HeroTypography type="h4" weight="semibold" align="center">{title}</HeroTypography>
                     </div>
@@ -308,7 +309,7 @@ const Empty = ({
                             <Typography size="sm" text={description} color="muted" />
                         </div>
                     ) : null}
-                </div>
+                </StackV>
             ) : (
                 <>
                     <div data-anat-part={showAnatomy ? "Typography" : undefined}>

@@ -140,10 +140,10 @@ const CardBody = ({
                         chip={
                             timeLeft ? (
                                 // Same kind of information (time left) ⇒ the same element in
-                                // EVERY case; only the TONE escalates: `neutral` while time
+                                // EVERY case; only the TONE escalates: `default` while time
                                 // remains, `warning` when it's about to run out.
                                 <Chip
-                                    tone={urgent ? "warning" : "neutral"}
+                                    tone={urgent ? "warning" : "default"}
                                     anatPart={showAnatomy ? "Chip" : undefined}
                                     text={timeLeft}
                                 />

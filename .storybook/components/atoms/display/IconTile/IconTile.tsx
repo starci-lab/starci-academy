@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import type { ComponentType, SVGProps } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -10,8 +11,14 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
  * synced to `src` later.
  */
 
-/** Visual tone of the tile (drives the tinted background + icon colour). */
-export type IconTileTone = "accent" | "success" | "warning" | "danger" | "neutral"
+/**
+ * Visual tone of the tile (drives the tinted background + icon colour).
+ *
+ * Alias, not a redeclaration (thầy chốt 2026-07-29): the same five values
+ * {@link AlertStatus} already carries — trung lập is `default`, matching every
+ * other status-driven prop in the system instead of this atom's own `neutral`.
+ */
+export type IconTileTone = AlertStatus
 
 /** Size of the tile. */
 export type IconTileSize = "sm" | "md" | "lg"
@@ -75,7 +82,7 @@ const TONE: Record<IconTileTone, string> = {
     success: "bg-success-soft text-success-soft-foreground",
     warning: "bg-warning-soft text-warning-soft-foreground",
     danger: "bg-danger-soft text-danger-soft-foreground",
-    neutral: "bg-default text-muted",
+    default: "bg-default text-muted",
 }
 
 /**

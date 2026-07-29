@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -92,22 +93,22 @@ export const Legend = ({
         >
             {isSkeleton
                 ? Array.from({ length: skeletonCount }, (_unused, index) => (
-                    <div key={index} className="flex items-center gap-2">
+                    <StackH key={index} gap="related">
                         <HeroSkeleton className="size-2.5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                         <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                    </div>
+                    </StackH>
                 ))
                 : (items ?? []).map((item) => {
                     const dot = resolveDotColor(item.color)
                     return (
-                        <div key={item.key} className="flex items-center gap-2">
+                        <StackH key={item.key} gap="related">
                             <span
                                 aria-hidden
                                 style={dot.style}
                                 className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
                             />
                             <Typography size="xs" color="muted" text={<>{item.label}{item.suffix}</>} />
-                        </div>
+                        </StackH>
                     )
                 })}
         </div>

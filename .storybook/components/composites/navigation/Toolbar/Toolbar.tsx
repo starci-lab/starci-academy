@@ -2,6 +2,7 @@ import React, { type Key, type ReactNode } from "react"
 import { ListBox, Select, Tabs, cn } from "@heroui/react"
 import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
+import { StackH } from "@sb-components/frames/Stack/Stack"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * COMPOSITE TIER (§13) — `Toolbar.*`, the KHUNG of a nav/control ROW above a panel.
@@ -179,7 +180,7 @@ const ToolbarBase = ({
                                 item.muted && "text-muted",
                             )}
                         >
-                            <span className="flex items-center gap-2">
+                            <StackH gap="related">
                                 {item.icon}
                                 {/* a tab WITH an icon hides its label visually on mobile
                                     (icon-only) and shows it from sm up; `sr-only` keeps the
@@ -194,7 +195,7 @@ const ToolbarBase = ({
                                         {item.label}
                                     </span>
                                 ) : null}
-                            </span>
+                            </StackH>
                             {/* REQUIRED for "primary" and secondary-ACCENT — HeroUI Tabs
                                 renders no selected-state chrome of its own. Suppressed for
                                 secondary-NEUTRAL: `.tabs--secondary`'s indicator is hardcoded
@@ -270,7 +271,7 @@ const ToolbarBase = ({
         )
     }
     return (
-        <div className={cn("flex items-center justify-between gap-3", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined} data-anat-part={anatPart}>
+        <StackH gap="grouped" justify="between" className={cn(showAnatomy && "relative", className)} anatPart={anatPart}>
             {/* Self-tag: lets a PARENT composite (e.g. FlashcardDeckList) cascade
                 `showAnatomy` down and badge Toolbar as ONE opaque part in ITS OWN
                 tree, without drilling into left/right groups (§11a). Harmless when
@@ -278,10 +279,10 @@ const ToolbarBase = ({
                 absent from that leaf's own `parts`, so it's measured then filtered out. */}
             {showAnatomy ? <AnatomyOverlay label="Toolbar" tier="composite" href="/?path=/docs/composites-navigation-toolbar-toolbar-base--docs" /> : null}
             {leftEnd ? (
-                <div className="flex min-w-0 items-center gap-1">
+                <StackH gap="tight" className="min-w-0">
                     <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
                     <div>{leftEnd}</div>
-                </div>
+                </StackH>
             ) : (
                 <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
             )}
@@ -299,7 +300,7 @@ const ToolbarBase = ({
                     )
                     : <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
                 : null}
-        </div>
+        </StackH>
     )
 }
 /**

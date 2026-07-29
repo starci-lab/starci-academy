@@ -29,13 +29,12 @@ export default meta
 
 type Story = StoryObj<typeof AiQuotaLane>
 
+// Two calls of the SAME block, not a hand-drawn leaf of its own (thầy chốt 2026-07-29,
+// see AiQuotaLane's own file header) — the tree stops at `QuotaBar`'s real story instead
+// of listing the label row / bar / caption it used to hand-draw internally.
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "StackV": { tier: "frame", role: "the vertical track stacking the two bars, and — inside each bar — the label row above the bar above the reset line", storyId: "frames-stack-stackv--default" },
-    "StackH": { tier: "frame", role: "the label row inside one bar, pushing the window name to one end and its used/limit count to the other", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the window label, its used/limit count, or the muted reset line under the bar", storyId: "atoms-text-typography-typography--plain" },
-    "ProgressBar.Track": { tier: "heroui", role: "the neutral rail the fill sits inside" },
-    "ProgressBar.Fill": { tier: "heroui", role: "the filled portion, coloured by the consumed-share threshold this block resolves" },
-    "Skeleton": { tier: "heroui", role: "the resting shimmer bar, drawn in place of the track/fill pair while the lane is loading" },
+    "StackV": { tier: "frame", role: "the vertical track stacking the two QuotaBar blocks", storyId: "frames-stack-stackv--default" },
+    "QuotaBar": { tier: "block", role: "one labelled rolling-window bar — the next-5-hours row or the this-week row, called twice with only the label/window swapped", storyId: "starci-blocks-ai-quotabar-quotabar--default" },
 }
 
 const MOSTLY_FREE: AiQuotaLaneData = {

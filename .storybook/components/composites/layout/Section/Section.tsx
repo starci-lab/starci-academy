@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Typography, type TypographySize } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -116,11 +117,11 @@ const Header = ({
     const descriptionSize = DESCRIPTION_SIZE[level]
     const eyebrowSize = EYEBROW_SIZE[level]
     return (
-        // items-start: a 2-line title block keeps the action anchored at the top.
-        <div className={cn("flex items-start justify-between gap-3", className)} data-anat-part={anatPart}>
-            {/* eyebrow ↔ title ↔ description are ONE text unit → tight gap-1 (§10b
-                "inside a lower-tier component"), not the grouped gap-3 used BETWEEN regions. */}
-            <div className="flex min-w-0 flex-col gap-1">
+        // align="start": a 2-line title block keeps the action anchored at the top.
+        <StackH align="start" justify="between" gap="grouped" className={className} anatPart={anatPart}>
+            {/* eyebrow ↔ title ↔ description are ONE text unit → tight gap="tight" (§10b
+                "inside a lower-tier component"), not the grouped gap="grouped" used BETWEEN regions. */}
+            <StackV gap="tight" className="min-w-0">
                 {eyebrow != null ? (
                     <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
                         <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate />
@@ -134,11 +135,11 @@ const Header = ({
                         <Typography size={descriptionSize} text={description} color="muted" />
                     </span>
                 ) : null}
-            </div>
+            </StackV>
             {action != null ? (
                 <div className="shrink-0">{action}</div>
             ) : null}
-        </div>
+        </StackH>
     )
 }
 

@@ -40,7 +40,19 @@ import { join, relative } from "node:path"
 
 const ROOT = process.cwd()
 const SB = join(ROOT, ".storybook")
-const SCALE = new Set(["0", "1", "2", "3", "6", "8"])
+/**
+ * The PADDING scale, which is NOT the seam scale. `InsetScale` has five steps
+ * (`flush·snug·cozy·roomy·airy` = `0·2·3·6·8`); `SeamScale` has six and differs by carrying
+ * `1` while lacking nothing else.
+ *
+ * This set held the SIX seam steps until 2026-07-29, so `p-1` and `p-2` written by hand passed
+ * a gate built to reject them. Tightening it to the four steps the scale had at that moment
+ * turned 34 real call sites red at once — every one of them compact chrome sitting on `p-2`,
+ * with the scale offering nothing between `0` and `12`. That was the scale being short a step,
+ * not 34 call sites being wrong, so `snug` was added and this set follows it. `p-1` stays out:
+ * nothing reached for it.
+ */
+const SCALE = new Set(["0", "2", "3", "6", "8"])
 /**
  * Tiers that must route spacing through a frame. `atom` and `util` own their own insides.
  *
@@ -50,7 +62,7 @@ const SCALE = new Set(["0", "1", "2", "3", "6", "8"])
  * it. That exact mistake shipped green on 2026-07-28 and was caught only by planting a bad
  * class on purpose and watching the gate stay silent.
  */
-const GUARDED = new Set(["frame", "composite", "design", "block", "screen", "viewer"])
+const GUARDED = new Set(["frame", "composite", "viewer", "block", "layout", "overlay", "page"])
 
 /**
  * Tiers exempt from the CHILD-MARGIN rule for a STRUCTURAL reason, not a convenient one.
@@ -76,16 +88,46 @@ const walk = (dir, out = []) => {
 
 /** Tier from the path. Must be updated the same day the tree moves, or the gate goes blind. */
 const tierOf = (rel) =>
-    rel.includes("/screens/") ? "screen"
+    rel.includes("/pages/") ? "page"
+    : rel.includes("/overlays/") ? "overlay"
+    : rel.includes("/layouts/") ? "layout"
     : rel.includes("/blocks/") ? "block"
-    : rel.includes("/designs/") ? "design"
     : rel.includes("/composites/viewers/") ? "viewer"
     : rel.includes("/composites/") ? "composite"
     : rel.includes("/frames/") ? "frame"
+    : rel.includes("/behaviors/") ? "behavior"
     : rel.includes("/atoms/") ? "atom"
     : "util"
 
 const findings = []
+/** Off-scale steps whose file declared the exception AND gave a reason — shown, never failed. */
+const exempt = []
+
+/**
+ * A DECLARED exception, mirroring `check-seams.mjs`'s `no-fractional-spacing` escape hatch but
+ * anchored to a LINE rather than a whole file, because a file-wide switch would exempt padding
+ * the author never looked at.
+ *
+ * Written as a comment on the line itself or the line directly above:
+ *
+ *     // inset-exception: pill geometry owned by HeroUI, not a surface inset
+ *     <span className="rounded-full px-2 py-1">
+ *
+ * WHAT IT IS FOR, and what it is NOT for. `InsetScale` models ONE thing: how much air a SURFACE
+ * gives its content, the same on every side. Two real shapes fall outside that by nature, and
+ * measured 2026-07-29 they are the only two left after the scale gained `snug`:
+ *
+ *   1. VENDOR GEOMETRY — a pill, an inline `<code>`, a popover body. HeroUI's own `chip.css`
+ *      ships `px-2 py-1`, so the horizontal-wider-than-vertical shape belongs to the vendor and
+ *      the house scale deliberately does not model it.
+ *   2. OPTICAL NUDGE — a single-axis `pt-1`/`pb-1` lining text up with a dot or a connector.
+ *      Local, one-off, and not a surface inset at all.
+ *
+ * The reason text is REQUIRED. An exception with no reason is a silent one, and a silent
+ * exception is the thing this gate exists to prevent.
+ */
+const EXCEPTION = /inset-exception:\s*\S/
+
 const files = walk(SB).filter((f) => !f.includes("_legacy") && !f.includes(".stories."))
 
 for (const file of files) {
@@ -95,7 +137,8 @@ for (const file of files) {
         continue
     }
     let inBlockComment = false
-    readFileSync(file, "utf8").split("\n").forEach((line, index) => {
+    const allLines = readFileSync(file, "utf8").split("\n")
+    allLines.forEach((line, index) => {
         const trimmed = line.trim()
         if (trimmed.startsWith("/*") || trimmed.startsWith("{/*")) {
             inBlockComment = true
@@ -109,9 +152,11 @@ for (const file of files) {
         }
         const at = { file: rel, line: index + 1, tier, code: trimmed.slice(0, 96) }
 
+        const declared = EXCEPTION.test(line) || EXCEPTION.test(allLines[index - 1] ?? "")
+
         for (const match of line.matchAll(/\bp[trblxy]?-(\d+(?:\.\d+)?)\b/g)) {
             if (!SCALE.has(match[1])) {
-                findings.push({ ...at, rule: "padding-off-scale", detail: match[0] })
+                (declared ? exempt : findings).push({ ...at, rule: "padding-off-scale", detail: match[0] })
             }
         }
         // ⚠️ `\b` before `m` does NOT stop a match inside `-m-3`: the boundary sits between the
@@ -173,7 +218,17 @@ for (const rule of Object.keys(LABEL)) {
     }
 }
 
+// Shown, never failed. A declared exception that stays INVISIBLE would be indistinguishable
+// from a rule nobody wrote, and the count is the thing to watch: it creeping upward means the
+// scale is short a step again, the way it was short `snug` until 2026-07-29.
+if (exempt.length) {
+    console.log(`\n── ngoại lệ ĐÃ KHAI (hiện ra, không đánh trượt): ${exempt.length}`)
+    for (const f of exempt) {
+        console.log(`  [${f.tier}] ${f.file}:${f.line}  ${f.detail}\n        ${f.code}`)
+    }
+}
+
 if (findings.length) {
     process.exit(1)
 }
-console.log("\n✅ Không có padding off-scale, không có margin của con.")
+console.log(`\n✅ Không có padding off-scale, không có margin của con.${exempt.length ? ` (${exempt.length} ngoại lệ đã khai)` : ""}`)

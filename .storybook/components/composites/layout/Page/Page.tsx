@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -135,31 +136,34 @@ const Header = ({
         // Shape-agnostic mirror: the real shape (breadcrumb/description/meta presence)
         // isn't known before the route's data arrives, so this assumes the full header.
         return (
-            <div data-anat-part={anatPart} className={cn("flex flex-col gap-3", className)}>
-                <div className="flex min-w-0 flex-col gap-2">
+            <StackV gap="grouped" anatPart={anatPart} className={className}>
+                <StackV gap="related" className="min-w-0">
                     <HeroSkeleton className={size === "compact" ? "h-4 w-48 rounded" : "h-6 w-64 rounded"} />
                     <HeroSkeleton className="h-4 w-80 max-w-full rounded" />
-                </div>
-                <div className="flex gap-2">
+                </StackV>
+                {/* No `items-*` in the old hand-rolled row → browser default was `stretch`,
+                    not `StackH`'s `center` default (both skeleton pills share one height so it
+                    reads the same, but `align="stretch"` keeps the DOM contract honest). */}
+                <StackH gap="related" align="stretch">
                     <HeroSkeleton className="h-6 w-24 rounded-full" />
                     <HeroSkeleton className="h-6 w-24 rounded-full" />
-                </div>
-            </div>
+                </StackH>
+            </StackV>
         )
     }
     return (
-        // outer gap-3: breadcrumb ↔ title-block ↔ meta (different header tiers);
-        // title ↔ description stay a tight gap-2 pair inside the title block.
-        <div data-anat-part={anatPart} className={cn("flex flex-col gap-3", className)}>
+        // outer gap="grouped": breadcrumb ↔ title-block ↔ meta (different header tiers);
+        // title ↔ description stay a related gap="related" pair inside the title block.
+        <StackV gap="grouped" anatPart={anatPart} className={className}>
             {/* Breadcrumb row — rendered only when provided, sits above the main title row */}
             {breadcrumb ? (
                 <div>{breadcrumb}</div>
             ) : null}
 
             {/* Main row: title+description stack on the left, actions pinned to the right */}
-            <div className="flex items-start justify-between gap-3">
+            <StackH align="start" justify="between" gap="grouped">
                 {/* Left column: stacked title and optional description */}
-                <div className="flex min-w-0 flex-col gap-2">
+                <StackV gap="related" className="min-w-0">
                     {size === "compact" ? (
                         <Typography weight="bold" anatPart={showAnatomy ? "Typography" : undefined} text={title} />
                     ) : (
@@ -174,19 +178,19 @@ const Header = ({
                             text={description}
                         />
                     ) : null}
-                </div>
+                </StackV>
 
                 {/* Right slot: shrink-0 prevents action buttons from being squeezed */}
                 {actions ? (
                     <div className="shrink-0">{actions}</div>
                 ) : null}
-            </div>
+            </StackH>
 
-            {/* Meta row: stat/meta chips below the title block (gap-3 from outer) */}
+            {/* Meta row: stat/meta chips below the title block (gap="grouped" from outer) */}
             {meta ? (
                 <div>{meta}</div>
             ) : null}
-        </div>
+        </StackV>
     )
 }
 
@@ -254,10 +258,10 @@ const BottomBar = ({
 
     return (
         <div className={cn(chrome, className)}>
-            <div className="flex items-center justify-between gap-3">
+            <StackH align="center" justify="between" gap="grouped">
                 <div className="min-w-0">{main}</div>
                 <div className="shrink-0">{actions}</div>
-            </div>
+            </StackH>
         </div>
     )
 }

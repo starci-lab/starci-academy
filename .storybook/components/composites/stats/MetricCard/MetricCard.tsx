@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, CardContent, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -24,7 +25,9 @@ const SectionCard = ({
     anatPart?: string
 }) => (
     <Card className={cn(className)} data-anat-part={anatPart}>
-        <CardContent className="flex flex-col gap-3">{children}</CardContent>
+        <CardContent>
+            <StackV gap="grouped">{children}</StackV>
+        </CardContent>
     </Card>
 )
 
@@ -89,7 +92,7 @@ export const MetricCard = ({
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
         <SectionCard className={cn(className)} anatPart={anatPart}>
-            <div className="flex flex-col gap-2">
+            <StackV gap="related">
                 {isSkeleton ? (
                     <>
                         <HeroSkeleton className="h-6 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
@@ -110,7 +113,7 @@ export const MetricCard = ({
                         ) : null}
                     </>
                 )}
-            </div>
+            </StackV>
         </SectionCard>
     )
 }

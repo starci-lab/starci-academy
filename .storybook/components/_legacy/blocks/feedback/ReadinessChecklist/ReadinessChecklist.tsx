@@ -75,7 +75,7 @@ export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className,
                                 // circle-check, not a bare tick — icon.md §2: every
                                 // "done / passed" mark is `CheckCircleIcon`.
                                 icon={item.ready ? CheckCircleIcon : item.icon}
-                                tone={item.ready ? "success" : "neutral"}
+                                tone={item.ready ? "success" : "default"}
                                 size="sm"
                                 anatPart={showAnatomy ? "IconTile" : undefined}
                             />
@@ -84,7 +84,7 @@ export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className,
                         subtitle={item.ready ? item.readyDescription : item.pendingDescription}
                         trailing={(
                             <Chip
-                                tone={item.ready ? "success" : "neutral"}
+                                tone={item.ready ? "success" : "default"}
                                 anatPart={showAnatomy ? "StatusChip" : undefined}
                                 text={item.ready ? readyLabel : pendingLabel}
                             />

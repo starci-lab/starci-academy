@@ -60,7 +60,7 @@ interface ToneRow {
     hint: string
 }
 const TONES: Array<ToneRow> = [
-    { tone: "neutral", hint: "plain tags" },
+    { tone: "default", hint: "plain tags" },
     { tone: "success", hint: "everything checked out" },
     { tone: "warning", hint: "needs a look" },
     { tone: "danger", hint: "blocking" },

@@ -79,7 +79,7 @@ export interface FoundationSearchBarProps {
 }
 
 /** Vietnamese count wording — this block's own vocabulary, never handed in by the caller. */
-const resultCountLabel = (count: number): string => (count === 0 ? "Không có kết quả phù hợp" : `${count} kết quả phù hợp`)
+const resultCountLabel = (count: number): string => (count === 0 ? "Chưa có tài liệu" : `${count} tài liệu`)
 
 /**
  * The search row: typeahead field left, live match count right. See the file
@@ -93,7 +93,7 @@ const FoundationSearchBar = ({
     onQueryChange,
     suggestions,
     onSelectSuggestion,
-    placeholder = "Tìm kiếm...",
+    placeholder = "Tìm tài liệu...",
     resultCount,
     isCountLoading = false,
     isSkeleton = false,

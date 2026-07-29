@@ -62,12 +62,11 @@ kill -TERM 1234
 Đọc tiếp phần dưới để hiểu cách shell theo dõi tiến trình con.`
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Container": { tier: "frame", role: "the content measure the whole page reads inside — width-capped, self-padding", storyId: "frames-container-container--default" },
     "StackV": { tier: "frame", role: "the vertical frame owning the seam between the trial banner and the resource below it, and again between the resource's identity and its body", storyId: "frames-stack-stackv--default" },
     "TrialEnrollBanner": { tier: "block", role: "say if this trial learner should upgrade; self-hides once enrolled or before status is known", storyId: "starci-blocks-learn-trialenrollbanner-trialenrollbanner--banner" },
     "FoundationHeader": { tier: "block", role: "what this resource is: trail, title, description, kind, recommended flag, tags and author", storyId: "starci-blocks-learn-foundationheader-foundationheader--overview" },
     "FoundationResourceBody": { tier: "block", role: "the resource itself, shaped by its kind: a reading article, an honestly-gapped video slot, or an open-link button", storyId: "starci-blocks-learn-foundationresourcebody-foundationresourcebody--document" },
-    "AsyncContentEmpty": { tier: "composite", role: "the resource id resolved to nothing; replaces the identity + body pair wholesale", storyId: "composites-async-asynccontent-asynccontentempty--basic" },
+    "FoundationResourceEmpty": { tier: "block", role: "the resource id resolved to nothing; replaces the identity + body pair wholesale", storyId: "starci-blocks-learn-foundationresourceempty-foundationresourceempty--empty" },
 }
 
 /** LEAF — the resource open: trial banner (if applicable), identity, then body. Kind is a DATA condition, not a structural one — the screen's own tree never changes across it. */

@@ -1,5 +1,4 @@
 import React from "react"
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import {
     FoundationHeader,
     FoundationKind,
@@ -11,7 +10,7 @@ import {
     type FoundationKind as FoundationResourceKind,
 } from "@sb-components/starci/blocks/learn/FoundationResourceBody/FoundationResourceBody"
 import { TrialEnrollBanner } from "@sb-components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner"
-import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/AsyncContent"
+import { FoundationResourceEmpty } from "@sb-components/starci/blocks/learn/FoundationResourceEmpty/FoundationResourceEmpty"
 import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -31,9 +30,12 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * already self-hides on its own two grounds (`!isKnown`, `isEnrolled`), so the
  * screen does not need a third condition to gate it.
  *
- * `isEmpty` REPLACES ONLY THE IDENTITY + BODY PAIR — same idiom `CourseContents`
- * uses for its own `AsyncContentEmpty` swap, scoped to the part that actually
- * has nothing to show once a resource id resolves to nothing.
+ * `isEmpty` REPLACES ONLY THE IDENTITY + BODY PAIR, via `FoundationResourceEmpty`
+ * — a one-node block wrapping `AsyncContentEmpty`, not the composite itself.
+ * §0's import boundary is exact: a screen calls blocks and frames, never a
+ * composite directly (the one documented exception, `CourseContents`'s own
+ * `AsyncContentEmpty`, replaces the ENTIRE screen, not one phase's one node —
+ * see `FoundationResourceEmpty`'s own file header for the full rationale).
  *
  * ⭐ TWO DIFFERENT `FoundationKind` TYPES COLLIDE ON PURPOSE. `FoundationHeader`
  * exports a closed 3-value ENUM (nominal, used for the kind chip's color/label
@@ -95,7 +97,7 @@ export interface FoundationResourcePageProps {
     /** Fired when the learner takes the trial→enroll nudge. */
     onEnroll: () => void
 
-    /** `true` → the resource id resolved to nothing; `AsyncContentEmpty` replaces the identity + body pair. */
+    /** `true` → the resource id resolved to nothing; `FoundationResourceEmpty` replaces the identity + body pair. */
     isEmpty?: boolean
     /**
      * `true` → every block that can mirror itself does. The flag flows
@@ -107,27 +109,6 @@ export interface FoundationResourcePageProps {
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
-
-/** Props for the internal {@link FoundationResourceEmpty} helper. */
-interface FoundationResourceEmptyProps {
-    /** When on, the empty-message frame emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy: boolean
-}
-
-/**
- * Empty state — the resource id resolved to nothing.
- *
- * Scoped to the identity + body pair only, per the file header: the trial
- * banner keeps its own place above this in the caller.
- */
-const FoundationResourceEmpty = ({ showAnatomy }: FoundationResourceEmptyProps) => (
-    <AsyncContentEmpty
-        anatPart={showAnatomy ? "AsyncContentEmpty" : undefined}
-        icon={MagnifyingGlassIcon}
-        title="Không tìm thấy tài nguyên này"
-        description="Tài nguyên có thể đã bị gỡ hoặc đường dẫn không còn đúng — quay lại danh mục để tìm tài nguyên khác."
-    />
-)
 
 /**
  * One foundation resource's own page. See the file header for the function
@@ -154,7 +135,7 @@ const FoundationResourcePage = ({
     isSkeleton = false,
     showAnatomy = false,
 }: FoundationResourcePageProps) => (
-    <Container size="md" padding="roomy" anatPart={showAnatomy ? "Container" : undefined}>
+    <Container size="md" padding="roomy">
         <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
             <TrialEnrollBanner
                 anatPart="TrialEnrollBanner"
@@ -164,7 +145,7 @@ const FoundationResourcePage = ({
                 showAnatomy={showAnatomy}
             />
             {isEmpty ? (
-                <FoundationResourceEmpty showAnatomy={showAnatomy} />
+                <FoundationResourceEmpty anatPart="FoundationResourceEmpty" showAnatomy={showAnatomy} />
             ) : (
                 <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
                     <FoundationHeader

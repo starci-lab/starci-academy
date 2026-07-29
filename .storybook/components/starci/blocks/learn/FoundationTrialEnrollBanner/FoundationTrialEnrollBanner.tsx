@@ -1,5 +1,4 @@
 import React from "react"
-import { LockIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
 
@@ -87,7 +86,6 @@ const FoundationTrialEnrollBanner = ({
             <div data-anat-part={anatPart}>
                 <FeedbackCallout
                     status="accent"
-                    icon={LockIcon}
                     title={<Typography isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />}
                     description={<Typography isSkeleton size="xs" className="w-72" anatPart={showAnatomy ? "Typography" : undefined} />}
                     anatPart={showAnatomy ? "FeedbackCallout" : undefined}
@@ -106,10 +104,9 @@ const FoundationTrialEnrollBanner = ({
         <div data-anat-part={anatPart}>
             <FeedbackCallout
                 status="accent"
-                icon={LockIcon}
                 title="Bạn đang học thử"
-                description="Ghi danh để mở khoá toàn bộ khoá học, không giới hạn số bài học được đọc."
-                actionLabel="Ghi danh ngay"
+                description="Mở khóa để học trọn khóa + dựng bằng chứng đi làm cho hồ sơ nhà tuyển dụng thấy."
+                actionLabel="Mở khóa học"
                 onAction={onEnroll}
                 anatPart={showAnatomy ? "FeedbackCallout" : undefined}
             />

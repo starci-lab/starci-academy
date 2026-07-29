@@ -31,23 +31,26 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  *   1. THE THUMBNAIL-PRIORITY CHAIN. A category may carry a dedicated
  *      `thumbnailUrl`, a `logoSrc` (the underlying tech/brand mark), both, or
- *      neither. The chain: `thumbnailUrl` wins when present; `logoSrc` rides as
- *      the `Image` atom's OWN `fallbackSrc` (used if the thumbnail 404s, or
- *      immediately as `src` when there is no thumbnail at all); neither present
- *      → the atom's own built-in glyph. This is not a new fallback mechanism —
- *      it is the priority chain expressed entirely through `Image`'s existing
- *      `src`/`fallbackSrc` contract, so the block adds a naming decision, not a
- *      second rendering path.
+ *      neither. The chain: `logoSrc` wins when present (ported verbatim from
+ *      `FoundationCategoryThumbnail` in `src`, which always prefers the brand
+ *      mark); `thumbnailUrl` rides as the `Image` atom's OWN `fallbackSrc`
+ *      (used if the logo 404s, or immediately as `src` when there is no logo
+ *      at all); neither present → the atom's own built-in glyph. This is not
+ *      a new fallback mechanism — it is the priority chain expressed entirely
+ *      through `Image`'s existing `src`/`fallbackSrc` contract, so the block
+ *      adds a naming decision, not a second rendering path.
  *
  *   2. THE TWO EMPTY REASONS (the domain reason this needs its own frame-facing
  *      wording rather than a caller-supplied string, §14d.1). An empty row set
  *      means one of two different things and reads differently for each:
  *        - `searchQuery` blank/absent → "the library itself has nothing yet",
- *          no icon, no hint (nothing to try differently).
- *        - `searchQuery` non-blank    → "this search matched nothing", a
- *          magnifying-glass icon, and a "try another word" hint — same
- *          reasoning `FlashcardDeckList`'s search-empty branch already uses on
- *          a sibling list.
+ *          no icon (nothing to try differently).
+ *        - `searchQuery` non-blank    → "this search matched nothing", quoting
+ *          the trimmed query, with a magnifying-glass icon — no second-line
+ *          hint, matching the real `foundations.searchEmpty` copy (one line,
+ *          no icon in `src` either — the icon here stays a Storybook-local
+ *          empty-state affordance, ported per this block's own icon judgement,
+ *          not from real copy).
  *      `searchQuery` only ever DRIVES this choice — the block never renders it
  *      back verbatim beyond quoting it in its own title sentence.
  *
@@ -133,10 +136,8 @@ export interface FoundationCategoryListProps {
     anatPart?: string
 }
 
-/** The library-itself-is-empty title — no search was involved, so no "try another word" hint applies. */
-const LIBRARY_EMPTY_TITLE = "Chưa có danh mục nào trong thư viện này"
-/** The search-matched-nothing hint — pairs only with the query-specific title below. */
-const SEARCH_EMPTY_DESCRIPTION = "Thử một từ khoá khác."
+/** The library-itself-is-empty title — no search was involved, so no "try another word" hint applies. Ported verbatim from `foundations.emptyCategories`. */
+const LIBRARY_EMPTY_TITLE = "Chưa có chủ đề nền tảng nào."
 
 /** Placeholder rows for the guessed skeleton count (§12c) — never carry a press handler or a thumbnail. */
 const SKELETON_CATEGORIES: Array<FoundationCategoryListItem> = Array.from({ length: 3 }, (_unused, index) => ({
@@ -150,9 +151,9 @@ const SKELETON_CATEGORIES: Array<FoundationCategoryListItem> = Array.from({ leng
  * rendering path.
  */
 const resolveThumbnail = (category: FoundationCategoryListItem): { src?: string; fallbackSrc?: string } =>
-    category.thumbnailUrl
-        ? { src: category.thumbnailUrl, fallbackSrc: category.logoSrc }
-        : { src: category.logoSrc, fallbackSrc: undefined }
+    category.logoSrc
+        ? { src: category.logoSrc, fallbackSrc: category.thumbnailUrl }
+        : { src: category.thumbnailUrl, fallbackSrc: undefined }
 
 /**
  * The Foundations library's browse-and-drill-in list. See the file header for
@@ -211,8 +212,7 @@ const FoundationCategoryList = ({
         !isSkeleton && categories.length === 0 ? (
             <FeedbackEmpty
                 icon={hasQuery ? MagnifyingGlassIcon : undefined}
-                title={hasQuery ? `Không tìm thấy danh mục nào khớp “${searchQuery}”` : LIBRARY_EMPTY_TITLE}
-                description={hasQuery ? SEARCH_EMPTY_DESCRIPTION : undefined}
+                title={hasQuery ? `Không có chủ đề nào khớp với "${searchQuery?.trim()}".` : LIBRARY_EMPTY_TITLE}
                 anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
                 showAnatomy={showAnatomy}
             />

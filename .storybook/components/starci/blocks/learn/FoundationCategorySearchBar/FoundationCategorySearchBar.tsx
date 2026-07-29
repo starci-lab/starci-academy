@@ -96,15 +96,17 @@ const FoundationCategorySearchBar = ({
     return (
         <div data-anat-part={anatPart}>
             <StackH gap="grouped" justify="between" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackH" : undefined}>
-                <SearchAutocomplete
-                    items={items}
-                    inputValue={query}
-                    onInputChange={onQueryChange}
-                    onSelect={onSelectSuggestion}
-                    placeholder="Tìm chủ đề..."
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
+                <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "SearchAutocomplete" : undefined}>
+                    <SearchAutocomplete
+                        items={items}
+                        inputValue={query}
+                        onInputChange={onQueryChange}
+                        onSelect={onSelectSuggestion}
+                        placeholder="Tìm chủ đề..."
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                </div>
                 {isSkeleton ? (
                     <Typography size="sm" color="muted" isSkeleton className="shrink-0" showAnatomy={showAnatomy} />
                 ) : count !== undefined ? (

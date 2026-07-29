@@ -89,8 +89,8 @@ const TrialEnrollBanner = ({
             anatPart={anatPart ?? (showAnatomy ? "FeedbackCallout" : undefined)}
             status="accent"
             icon={LockIcon}
-            title="Bạn đang dùng bản dùng thử — mở khoá khoá học để học không giới hạn"
-            actionLabel="Mở khoá ngay"
+            title="Bạn đang học thử"
+            actionLabel="Mở khóa học"
             onAction={onEnroll}
         />
     )

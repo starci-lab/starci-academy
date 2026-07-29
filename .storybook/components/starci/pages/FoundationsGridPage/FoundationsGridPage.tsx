@@ -30,11 +30,12 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * TWO SEAMS, TWO OWNERS (§10a). The outer `StackV gap="section"` separates the
  * three REGIONS of the page — identity, the trial nudge, and the browse
- * cluster. The inner `StackV gap="grouped"` is its own separate owner for the
+ * cluster. The inner `StackV gap="section"` is its own separate owner for the
  * "browse cluster" — search row above list — mirroring the real
- * `FoundationsCategoryGrid` layout's own inner `gap-3` cluster between its
- * search row and its grid (search bar + count sit one `grouped` seam above the
- * rows they filter).
+ * `FoundationsCategoryGrid` layout's own inner `gap-6` cluster between its
+ * search row and its grid/pager (the `gap-3` inside that layout is a
+ * DIFFERENT seam, internal to the search row itself, already handled by
+ * `FoundationCategorySearchBar`'s own `StackH gap="grouped"`).
  *
  * ⚠️ `isSkeleton` flows to every block uniformly, INCLUDING the trial banner:
  * `FoundationTrialEnrollBanner` treats `isSkeleton` as a state that WINS over
@@ -124,7 +125,7 @@ const FoundationsGridPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
                 <FoundationCategorySearchBar
                     anatPart="FoundationCategorySearchBar"
                     query={searchQuery}

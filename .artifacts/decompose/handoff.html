@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bàn giao — phiên 2026-07-29</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 12px;border-top:1px solid var(--line);padding-top:18px}
+  .sub{color:var(--muted);margin:0}
+  code{font-family:ui-monospace,monospace}
+  .note{font-size:12px;color:var(--muted)}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules b{color:var(--ink)}
+
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  td{padding:8px 10px;border-bottom:1px solid #1b2436;vertical-align:top}
+  .numc{font-family:ui-monospace,monospace;font-size:12px}
+  .ok{color:var(--success)} .bad{color:var(--danger)} .warn{color:var(--warn)} .dim{color:#5c6880}
+
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .k{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:5px}
+  .kn{font-size:26px;font-weight:700;font-family:ui-monospace,monospace;line-height:1}
+  .kl{font-size:11.5px;color:var(--muted);line-height:1.4}
+
+  .ba{display:flex;height:26px;border-radius:6px;overflow:hidden;border:1px solid var(--line);font-family:ui-monospace,monospace;font-size:10.5px;font-weight:700}
+  .ba div{display:flex;align-items:center;justify-content:center;color:#0b0e14}
+
+  .todo{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+  .ti{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+  .ti:first-of-type{border-top:none}
+  .tn{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;flex:0 0 auto}
+  .t1{background:color-mix(in srgb,var(--danger) 20%,transparent);color:var(--danger)}
+  .t2{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+  .t3{background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent)}
+  .ti p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.55}
+  .ti b{color:var(--ink)}
+
+  .les{background:#0e1420;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 13px;font-size:12.5px;color:var(--muted);line-height:1.6}
+  .les b{color:var(--accent)}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Bàn giao — phiên 2026-07-29</h1>
+  <p class="sub">Đã push cả hai repo lên <code>mtp</code>, <code>0 0</code> với origin. Trang này để lúc quay lại khỏi phải dò.</p>
+
+  <h2>Đã đẩy lên</h2>
+  <div class="rules">
+    <table>
+      <thead><tr><th style="width:12%">Repo</th><th style="width:22%">Commit</th><th>Nội dung</th></tr></thead>
+      <tbody>
+        <tr><td class="numc">FE</td><td class="numc">bff8fbb2</td><td>siết 2 gate theo tầng thật · thang inset thêm <code>snug</code> · frame nhận <code>as</code>/<code>inline</code></td></tr>
+        <tr><td class="numc">FE</td><td class="numc">f9b8201e</td><td>caret theo cỡ chữ nó đứng cạnh · override glyph HeroUI sang Phosphor</td></tr>
+        <tr><td class="numc">canon</td><td class="numc">82b002fb3</td><td>rã <code>principles.md</code> thành 15 trục · <code>rules/0-boundary.md</code> · chốt tên tầng</td></tr>
+        <tr><td class="numc">canon</td><td class="numc">ecf62e8b9</td><td>rà câu chờ thầy, đóng 13 câu bằng luật sẵn có và bằng số đo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Bộ principles</h2>
+  <div class="kpi">
+    <div class="k"><span class="kn" style="color:var(--success)">15</span><span class="kl">trục quyết định, mỗi trục 2 file</span></div>
+    <div class="k"><span class="kn">2 608</span><span class="kl">dòng <code>context.md</code> cho LLM đọc để quyết</span></div>
+    <div class="k"><span class="kn">8 213</span><span class="kl">dòng <code>example.html</code> render thật cho mắt soi</span></div>
+    <div class="k"><span class="kn">19</span><span class="kl">trang phân tích ở <code>.artifacts/decompose</code></span></div>
+  </div>
+  <p class="note" style="margin-top:10px">Xem: <b>cổng 8083</b> cho bộ principles · <b>cổng 8081</b> cho các trang phân tích.</p>
+
+  <h2>Hai cổng gác, trước và sau</h2>
+  <div class="rules">
+    <p style="margin:0 0 8px;font-size:12.5px"><b><code>check-seams</code></b> — luật "không viết bố cục tay" phủ được bao nhiêu phần cây</p>
+    <div class="ba">
+      <div style="width:46%;background:#3d4666;color:#c9d3e3">TRƯỚC · 46% (118/258)</div>
+      <div style="width:54%;background:var(--success)">SAU · 97%</div>
+    </div>
+    <p class="note" style="margin:8px 0 14px">Gate đi tìm thư mục <code>/screens/</code> và <code>/designs/</code> — cái đầu tên thật là <code>pages/</code>, cái sau đã xoá. Nên <b>toàn bộ page, layout, overlay được miễn do TAI NẠN</b>, đúng nơi luật nghiêm nhất.</p>
+
+    <table>
+      <thead><tr><th style="width:26%">Cổng</th><th style="width:14%">Trước</th><th style="width:14%">Sau</th><th>Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="numc">check-seams (hit)</td><td class="numc bad">91</td><td class="numc ok">0</td><td>dọn 91 vi phạm CÓ SẴN mà gate cũ không thấy</td></tr>
+        <tr><td class="numc">check-padding (hit)</td><td class="numc bad">34</td><td class="numc ok">0</td><td>thêm bậc <code>snug</code> gỡ 25 · 9 chỗ còn lại khai ngoại lệ kèm lý do</td></tr>
+        <tr><td class="numc">tsc</td><td class="numc">—</td><td class="numc ok">0 lỗi</td><td>kiểm lại sau khi rebase gộp code hai phía</td></tr>
+        <tr><td class="numc">câu chờ thầy</td><td class="numc bad">17</td><td class="numc ok">4</td><td>13 câu hoá ra luật đã trả lời, hoặc đo code là ra</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Còn lại, xếp theo thứ tự nên làm</h2>
+  <div class="todo">
+    <div class="ti"><span class="tn t1">1</span><p><b>Caret trong control: <code>size-4</code> hay <code>size-5</code>?</b> Bảng <code>§1c</code> nói vị trí <code>DIV</code> tra theo line-height ⇒ <code>size-5</code>, nhưng <code>Select</code> đang <code>size-4</code> và <code>Accordion</code> thì vendor tự áp <code>size-4</code>. Nếu bảng đúng thì <b>mọi caret trong control toàn app đang nhỏ hơn một bậc</b>; nếu sai thì phải sửa bảng. Trò nghiêng <b>đo trên browser rồi mới chốt</b> — bảng dựng hôm nay, chưa thử lửa.</p></div>
+    <div class="ti"><span class="tn t2">2</span><p><b>4 câu thật sự cần mắt thầy</b>, rải ở <code>async</code> · <code>frame</code> · <code>naming</code> · <code>reading-flow</code> · <code>surface</code>. Đều đúng loại cần thầy: hai đường ra hai kết quả <b>nhìn khác nhau</b>, hoặc là quyết định về sản phẩm chứ không phải về sự thật.</p></div>
+    <div class="ti"><span class="tn t3">3</span><p><b>44 gate chưa viết.</b> Mỗi trục tự liệt ra vạch cấm nào <b>viết script được mà chưa ai viết</b>. Nặng nhất là <code>icon</code> và <code>skeleton</code>. Đây chính là thứ phân tích 40 vòng feedback chỉ ra: <b>50% số lần thầy phải feedback thuộc loại máy bắt được</b> — giờ nó là danh sách đếm được, không còn là cảm giác.</p></div>
+    <div class="ti"><span class="tn t3">4</span><p><b>Một mâu thuẫn chủ ý còn đứng.</b> <code>rules/1-decompose.md</code> §2 cấm screen import composite, §5 lại liệt cùng câu đó là "chờ chốt" — <code>git blame</code> cho thấy hai dòng sửa trong <b>CÙNG một commit</b>. Không phải sót do quên dọn.</p></div>
+  </div>
+
+  <h2>Ba bài học đắt nhất của phiên</h2>
+  <div class="rules" style="display:flex;flex-direction:column;gap:10px">
+    <div class="les"><b>Thấy neo lệch luật thì nghi CÁI NEO trước, đừng nghi cái luật.</b> Trò từng treo câu "Tier A dùng <code>bold</code> hay <code>semibold</code>" và đi hỏi thầy, trong khi luật ở ngay §3b của chính file đó đã trả lời. Cái tưởng là mâu thuẫn chỉ là canon <b>trích neo nhầm</b> — lấy 2 file trong <code>src</code> đang <code>semibold</code> ra minh hoạ cho luật <code>bold</code>, mà <code>src</code> là công trình, được phép lệch bản vẽ.</div>
+    <div class="les"><b>Code trả lời câu "có làm được không", không trả lời câu "có nên không".</b> Tài liệu cũ nói chip cấm icon; đọc code thấy <code>ChipBase</code> có <code>icon</code> nên trò kết luận ngược lại là chip nhận icon. Cả hai đều sai một nửa. Ranh giới thật (icon trạng thái được, icon miền không) <b>không nằm trong type, không grep ra được</b> — phải người chốt.</div>
+    <div class="les"><b>Một phép đếm phủ một cách viết mà bỏ cách kia thì luôn báo thiếu.</b> Thang <code>InsetScale</code> dựng trên phép đếm chỉ đếm prop <code>padding=</code>, bỏ qua class viết tay, nên kết luận "không ai dùng <code>2</code>" trong khi 34 call-site đang dùng. Cùng lỗi ở chỗ khác: "5/5 caret đều <code>size-4</code>" đếm đúng nhưng đọc sai, vì 5 chỗ đó <b>không cùng một loại</b>.</div>
+  </div>
+
+  <h2>Hai va chạm phiên song song, và cách xử</h2>
+  <div class="rules">
+    <p style="margin:0 0 8px;font-size:12.5px">Suốt phiên có một phiên khác ghi cùng repo. Ba lần chạm mặt, cả ba lần <b>chờ hoặc nhường đều đúng</b>:</p>
+    <table>
+      <thead><tr><th style="width:26%">Lúc</th><th>Xử</th></tr></thead>
+      <tbody>
+        <tr><td class="numc">SeamScale, đầu phiên</td><td>chờ — họ tự hoàn tất</td></tr>
+        <tr><td class="numc">InlineIconLabel 7 lỗi tsc</td><td>không đụng — họ sửa xong, <code>tsc</code> tự xanh</td></tr>
+        <tr><td class="numc"><code>Flex</code>/<code>Stack</code> cùng lúc</td><td>dừng tay — bản của họ dùng union hẹp hơn, <b>đúng hơn bản của trò</b>, lấy bản họ</td></tr>
+        <tr><td class="numc">rebase canon, cuối phiên</td><td>đụng thật ở <code>principles.md</code>. Không lấy đại một bên — mở diff, tìm thấy <b>3 bài học</b> họ thêm vào file trò vừa khai tử, chuyển từng cái về nhà mới</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin:10px 0 0">Push lần đầu <b>bị từ chối ở cả hai repo</b> vì behind origin. Đó là may: push thẳng được thì đã đè mất việc của người khác.</p>
+  </div>
+
+</div>
+</body>
+</html>

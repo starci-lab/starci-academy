@@ -110,7 +110,12 @@ const Base = ({
         return (
             <StackV gap="grouped" className={className}>
                 <StackH gap="related" className="w-fit text-muted">
-                    <CaretDownIcon className="size-4 shrink-0" weight="bold" aria-hidden focusable="false" />
+                    {/* Caret is TRẦN cạnh nhãn `text-sm` (icon/§1c TEXT position — the
+                        trigger `<button>` is `w-fit`, no padding of its own, so it hugs
+                        the icon+label pair exactly like running text): size = font-size
+                        1:1 of `text-sm` → `size-3.5`, not the flat `size-4` this used to
+                        be (thầy chốt 2026-07-29, canon icon §4.2). */}
+                    <CaretDownIcon className="size-3.5 shrink-0" weight="bold" aria-hidden focusable="false" />
                     <HeroSkeleton className={cn(SKELETON_TEXT_BAR_SM, "w-24")} />
                 </StackH>
             </StackV>
@@ -136,8 +141,12 @@ const Base = ({
                     isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
                 )}
             >
+                {/* TEXT position (icon §1c/§4.2): TRẦN cạnh nhãn `text-sm`, no Ô/control
+                    bọc riêng — trigger is `w-fit`, hugs content like running text. Size =
+                    font-size 1:1 of `text-sm` → `size-3.5` (was flat `size-4`, thầy chốt
+                    2026-07-29). Weight stays `bold` — `size-3.5` < `size-5` (§3.2). */}
                 <CaretDownIcon
-                    className={cn("size-4 shrink-0 transition-transform", open && "rotate-180")}
+                    className={cn("size-3.5 shrink-0 transition-transform", open && "rotate-180")}
                     weight="bold"
                     aria-hidden
                     focusable="false"

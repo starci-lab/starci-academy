@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Disclosure as HeroDisclosure, DisclosureGroup as HeroDisclosureGroup, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import { CaretDownIcon } from "@phosphor-icons/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -97,7 +98,14 @@ const AccordionBase = ({
                     <HeroDisclosure.Heading>
                         <HeroDisclosure.Trigger data-anat-part={showAnatomy ? "Disclosure.Trigger" : undefined}>
                             {item.title}
-                            <HeroDisclosure.Indicator data-anat-part={showAnatomy ? "Disclosure.Indicator" : undefined} />
+                            <HeroDisclosure.Indicator data-anat-part={showAnatomy ? "Disclosure.Indicator" : undefined}>
+                                {/* Bỏ trống slot này thì vendor tự vẽ IconChevronDown (bộ icon thứ hai lọt
+                                    cửa sau, §1a.1 icon/context.md) — truyền Phosphor để chỉ còn MỘT bộ icon.
+                                    Vendor `cloneElement` giữ nguyên `data-expanded`/`data-slot` và tự áp class
+                                    `disclosure__indicator` (size-4 + rotate-180 khi mở), nên KHÔNG cần className
+                                    ở đây — animation xoay vẫn chạy nguyên. */}
+                                <CaretDownIcon aria-hidden weight="bold" />
+                            </HeroDisclosure.Indicator>
                         </HeroDisclosure.Trigger>
                     </HeroDisclosure.Heading>
                     <HeroDisclosure.Content data-anat-part={showAnatomy ? "Disclosure.Content" : undefined}>

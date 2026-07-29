@@ -8,6 +8,7 @@ import {
     Skeleton as HeroSkeleton,
     cn,
 } from "@heroui/react"
+import { CheckIcon, MinusIcon } from "@phosphor-icons/react"
 import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
 import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
 
@@ -96,7 +97,19 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
                 {/* Node name = the REAL heroui component rendered here (`Checkbox.Control`/
                     `Checkbox.Content`) — NOT the slot word "Control"/"Label" it used to carry. */}
                 <HeroCheckbox.Control data-anat-part={showAnatomy ? "Checkbox.Control" : undefined}>
-                    <HeroCheckbox.Indicator />
+                    {/* §1a.1: HeroUI vẽ HAI svg khác nhau cho selected/indeterminate khi slot
+                        bỏ trống — đó là bộ icon thứ hai lọt qua cửa sau. Override BẮT BUỘC dạng
+                        HÀM: truyền thẳng một node sẽ khiến indeterminate cũng hiện dấu check
+                        (sai trạng thái, sai im lặng — không lỗi biên dịch, không lỗi lint). */}
+                    <HeroCheckbox.Indicator>
+                        {({ isIndeterminate }) =>
+                            isIndeterminate ? (
+                                <MinusIcon weight="bold" aria-hidden focusable="false" />
+                            ) : (
+                                <CheckIcon weight="bold" aria-hidden focusable="false" />
+                            )
+                        }
+                    </HeroCheckbox.Indicator>
                 </HeroCheckbox.Control>
                 <HeroCheckbox.Content data-anat-part={showAnatomy ? "Checkbox.Content" : undefined}>{withRequired(label, isRequired)}</HeroCheckbox.Content>
             </HeroCheckbox>

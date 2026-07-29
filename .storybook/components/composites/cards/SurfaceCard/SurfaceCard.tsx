@@ -3,7 +3,7 @@ import type { ComponentType, ReactNode, SVGProps } from "react"
 import Link from "next/link"
 import { Accordion, Card, cn, Radio, RadioGroup, Skeleton as HeroSkeleton } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
-import { CheckCircleIcon, CircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
+import { CaretDownIcon, CheckCircleIcon, CircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
 import { type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/composites/cards/verdict-band"
@@ -1386,10 +1386,14 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     const metaSlot = meta ?? (metaText != null
         ? <Typography size="sm" weight="medium" className="text-accent-soft-foreground" text={metaText} />
         : null)
-    // §5.0a: `size-4` < `size-5` ⇒ the stroke gets thinner, so `weight="bold"` must be
-    // forced to compensate — otherwise the trailing glyph reads noticeably fainter
-    // than the `LeadingIcon` (`size-5`, regular) at the start of the same row.
-    const trailingSlot = trailing ?? (TrailingIcon ? <TrailingIcon aria-hidden focusable="false" weight="bold" className="size-4 text-muted" /> : null)
+    // DIV position (icon §1c/§4.2): the row is a control with FIXED `p-3` padding (not
+    // hug-content), and its title is `text-sm` ⇒ line-height size = `size-5` — the SAME
+    // formula the row's own `LeadingIcon` (line above) and the `selected` `CheckCircleIcon`
+    // below already use. The previous `size-4` + forced `weight="bold"` was compensating
+    // for the WRONG size (comparing against `size-5` neighbours in the same row) rather
+    // than fixing the size itself (thầy chốt 2026-07-29) — at `size-5`, weight defaults
+    // to Phosphor's `regular` (§3.2), matching `LeadingIcon`.
+    const trailingSlot = trailing ?? (TrailingIcon ? <TrailingIcon aria-hidden focusable="false" className="size-5 text-muted" /> : null)
     const content = (
         <>
             {leadingSlot ? <div className="shrink-0">{leadingSlot}</div> : null}
@@ -1650,7 +1654,22 @@ const AccordionFrame = ({
                             </StackH>
                             <StackH gap="grouped" className="shrink-0">
                                 {item.titleEnd}
-                                <Accordion.Indicator />
+                                {/* Vendor draws its OWN `IconChevronDown` glyph when this slot is left
+                                    empty (verified: `@heroui/react/dist/components/accordion/accordion.js`
+                                    — a second icon set with no `import` to grep, icon §1a.1) — override
+                                    with Phosphor. `cloneElement` keeps `data-expanded`/`data-slot` so the
+                                    180° rotation (`accordion.css` `.accordion__indicator[data-expanded]`)
+                                    still runs off the SAME class, unaffected by the swap. `cloneElement`
+                                    also REPLACES the child's own `className` with the slot's — so the
+                                    size override goes on the WRAPPER, not the icon (same convention as
+                                    `Alert.Base`'s `HeroAlert.Indicator className={GLYPH_SCALE}`).
+                                    DIV position (icon §1c/§4.2): trigger has fixed `px-4 py-4` (not
+                                    hug-content) — `text-sm` title → `size-5` line-height, not the flat
+                                    `size-4` vendor default (thầy chốt 2026-07-29). Weight omitted →
+                                    Phosphor default `regular`, correct at `size-5` (§3.2). */}
+                                <Accordion.Indicator className="size-5">
+                                    <CaretDownIcon aria-hidden focusable="false" />
+                                </Accordion.Indicator>
                             </StackH>
                         </Accordion.Trigger>
                     </Accordion.Heading>
@@ -1706,8 +1725,9 @@ const AccordionFrameSkeleton = ({
                                 </span>
                             ) : null}
                         </StackV>
-                        {/* Caret: the real row ALWAYS has `Accordion.Indicator` (`ml-auto size-4`) → the mirror keeps the exact same slot. */}
-                        <HeroSkeleton className="ml-auto size-4 shrink-0 rounded" />
+                        {/* Caret: the real row ALWAYS has `Accordion.Indicator` (`ml-auto size-5`,
+                            thầy chốt 2026-07-29 — was `size-4`) → the mirror keeps the exact same slot. */}
+                        <HeroSkeleton className="ml-auto size-5 shrink-0 rounded" />
                     </div>
                     {index < rows.length - 1 ? (
                         <div className="absolute bottom-0 left-0 h-px w-full rounded-xs bg-[var(--separator)]" />

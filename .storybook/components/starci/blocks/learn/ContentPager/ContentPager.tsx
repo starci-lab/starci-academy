@@ -90,7 +90,14 @@ const ContentPager = ({
             href: previous.href,
             content: (
                 <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <CaretLeftIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-muted" />
+                    {/* DIV position (icon §1c/§4.2): this card is a control with its own FIXED
+                        padding (`SurfaceCardPressableGroup` tile, `cozy` inset) — not hug-content
+                        — so size tracks line-height, not font-size. Title is `text-sm` ⇒ `size-5`,
+                        matching the sibling `ITEM_ICON_CLS` convention this same file's parent
+                        (`SurfaceCard.tsx`) already forces for icons in this exact tile shape
+                        (was flat `size-4`, thầy chốt 2026-07-29). Weight omitted → Phosphor
+                        default `regular`, correct at `size-5` (§3.2, was `bold`). */}
+                    <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                     <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
                         <Typography size="xs" color="muted" text="Nội dung trước" anatPart={showAnatomy ? "Typography" : undefined} />
                         <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} anatPart={showAnatomy ? "Typography" : undefined} />
@@ -115,7 +122,8 @@ const ContentPager = ({
                         <Typography size="xs" color="muted" align="end" text="Nội dung tiếp" anatPart={showAnatomy ? "Typography" : undefined} />
                         <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} anatPart={showAnatomy ? "Typography" : undefined} />
                     </StackV>
-                    <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-muted" />
+                    {/* Same DIV position/size reasoning as the mirrored left caret above. */}
+                    <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                 </StackH>
             ),
         })

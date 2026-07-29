@@ -315,10 +315,13 @@ const SelectCombobox = ({
                         to carry. */}
                     <HeroInput placeholder={placeholder} className="w-full pr-9" data-anat-part={showAnatomy ? "Input" : undefined} />
                     <HeroComboBox.Trigger
-                        className="text-muted absolute right-1 top-1/2 -translate-y-1/2 inline-flex size-7 items-center justify-center rounded-lg [&_svg]:size-4"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex size-7 items-center justify-center rounded-lg"
                         data-anat-part={showAnatomy ? "ComboBox.Trigger" : undefined}
                     >
-                        <CaretDownIcon aria-hidden weight="bold" />
+                        {/* size-4 + text-muted khai TRỰC TIẾP trên icon — khớp 2 chỗ trên (`Select.Indicator`
+                            của SelectSingle/SelectMulti), thay vì để lọt qua `[&_svg]:size-4` trên Trigger cha
+                            (cùng kết quả hình ảnh nhưng khác kiểu viết, không nhất quán). */}
+                        <CaretDownIcon aria-hidden weight="bold" className="text-muted size-4" />
                     </HeroComboBox.Trigger>
                 </HeroComboBox.InputGroup>
                 <HeroComboBox.Popover>

@@ -60,6 +60,7 @@ const TONE_CLASS: Record<InlineIconLabelTone, string> = {
     danger: "text-danger-soft-foreground",
     success: "text-success-soft-foreground",
     accent: "text-accent-soft-foreground",
+    info: "text-info-soft-foreground",
 }
 
 /** Props for the {@link InlineIconLabel} composite. */

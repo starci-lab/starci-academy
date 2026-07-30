@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ChallengeDeliverableList, type ChallengeDeliverableItem } from "@sb-components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -67,26 +68,9 @@ const BASE_ITEMS: Array<ChallengeDeliverableItem> = [
             verdict: "fail",
             earnedScore: 12,
             requiredScore: 24,
-            feedback: [
-                {
-                    id: "f1",
-                    severity: "high",
-                    message: "Không có test cho trường hợp trùng SKU.",
-                    location: "test/order.spec.ts:42",
-                    suggestion: "Thêm case tạo đơn với SKU đã tồn tại.",
-                },
-                {
-                    id: "f2",
-                    severity: "medium",
-                    message: "Test bỏ qua nhánh timeout khi gọi payment service.",
-                    location: "test/order.spec.ts:88",
-                },
-                {
-                    id: "f3",
-                    severity: "low",
-                    message: "Tên test chưa mô tả rõ hành vi đang kiểm.",
-                },
-            ],
+            attemptNumber: 2,
+            processedAt: "09:12 15/07",
+            shortFeedback: "Logic tạo đơn ổn, nhưng bộ test còn thiếu các nhánh lỗi quan trọng.",
         },
     },
     {
@@ -102,14 +86,9 @@ const BASE_ITEMS: Array<ChallengeDeliverableItem> = [
             verdict: "pass",
             earnedScore: 20,
             requiredScore: 16,
-            feedback: [
-                {
-                    id: "f4",
-                    severity: "low",
-                    message: "Health check endpoint phản hồi hơi chậm khi cold start.",
-                    suggestion: "Cân nhắc warm-up job sau deploy.",
-                },
-            ],
+            attemptNumber: 1,
+            processedAt: "14:03 15/07",
+            shortFeedback: "Triển khai chạy ổn định, chỉ còn một điểm nhỏ cần lưu ý.",
         },
     },
 ]
@@ -117,6 +96,29 @@ const BASE_ITEMS: Array<ChallengeDeliverableItem> = [
 const PENDING_ITEMS: Array<ChallengeDeliverableItem> = BASE_ITEMS.map((item) =>
     item.id === "api-design"
         ? { ...item, url: "https://github.com/hocvien/api-design/pull/1", isPending: true }
+        : item,
+)
+
+/**
+ * AUDIT 2026-07-30 (round-15): ba state `.artifacts/domain/challenge-and-milestone.md` §3
+ * liệt kê là PHẢI VẼ mà bản vẽ từng thiếu. Chấm bài chạy NỀN nên một hàng phải chịu được đủ
+ * bốn ngả job; đây là hai ngả đáng nhìn nhất — đang chạy và thất bại.
+ */
+const GRADING_ITEMS: Array<ChallengeDeliverableItem> = BASE_ITEMS.map((item) =>
+    item.id === "api-design"
+        ? { ...item, url: "https://github.com/hocvien/api-design/pull/1", isPending: true, jobStatus: "processing" as const }
+        : item,
+)
+
+const JOB_FAILED_ITEMS: Array<ChallengeDeliverableItem> = BASE_ITEMS.map((item) =>
+    item.id === "api-design"
+        ? {
+            ...item,
+            url: "https://github.com/hocvien/api-design/pull/1",
+            jobStatus: "failed" as const,
+            // Chuỗi lỗi server THÔ, không dịch — đúng như `src` in ra (`activeJobError`).
+            jobError: "Repository not accessible: 404 Not Found (github.com/hocvien/api-design)",
+        }
         : item,
 )
 
@@ -128,10 +130,12 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "InputText": { tier: "atom", role: "the submission URL field, its error line driven by `urlError`", storyId: "atoms-forms-input-inputtext--default" },
     "Button": { tier: "atom", role: "the settings trigger, or a panel's submit / view-history action", storyId: "atoms-buttons-button-button--default" },
     "MarkdownContent": { tier: "composite", role: "the requirement's own description, at the compact measure since it is a passenger inside the accordion rather than the page", storyId: "composites-viewers-markdowncontent--compact" },
-    "EnumChip": { tier: "composite", role: "the pass/fail verdict chip, or one feedback item's severity chip", storyId: "composites-chips-enumchip--overview" },
-    "Typography": { tier: "atom", role: "the trigger's points-or-score line, the graded score line, or one line of feedback text", storyId: "atoms-text-typography-typography--plain" },
+    "EnumChip": { tier: "composite", role: "the pass/fail verdict chip", storyId: "composites-chips-enumchip--overview" },
+    "Typography": { tier: "atom", role: "the trigger's points-or-score line, the graded score/requirement sentence, `shortFeedback`, or one feedback item's message/location/suggestion — flat list inside the graded `Disclosure`, ground truth `src`'s `LastAttemptResult.tsx` (AUDIT 2026-07-30, feedback ChallengePage/Graded round-8)", storyId: "atoms-text-typography-typography--plain" },
     "ScoreValue": { tier: "composite", role: "the trigger's points-before-grading or earned/required-after-grading line, riding in `titleEnd`", storyId: "composites-texts-scorevalue--default" },
     "StatusIcon": { tier: "heroui", role: "the requirement's todo/done/failed mark, riding in `titleStart` — its own colour, independent of the title text" },
+    "Disclosure": { tier: "composite", role: "the \"Phản hồi gần nhất\" trigger — collapses `shortFeedback` + the itemized feedback list behind a click, since it's SECONDARY detail (AUDIT 2026-07-30, feedback ChallengePage/Graded round-10, thầy chốt)", storyId: "composites-layout-disclosure-disclosure--default" },
+    "FeedbackCallout": { tier: "composite", role: "the background grading job's status strip — warning while queued/processing, success once done, danger on failure with the raw server error as its body (AUDIT 2026-07-30, round-15)", storyId: "composites-feedback-feedback-feedbackcallout--with-body" },
 }
 
 /** LEAF — the deliverables card. */
@@ -190,6 +194,61 @@ export const Full: Story = {
                                 onOpenGradingSettings={() => {}}
                                 isSkeleton
                             />
+                        ),
+                    },
+                    {
+                        name: "jobStatus = \"processing\" — AI đang chấm",
+                        why: "Grading runs in the BACKGROUND: the submit mutation hands back a job id and the screen listens on a socket, so a row has to say where that job stands while nothing else about it has changed yet. The callout sits between the URL field and the action row — exactly where `src`'s `SubmissionRow` puts its own processing strip — and the row keeps `isPending` so the field stays locked underneath it.",
+                        code: `<ChallengeDeliverableList
+    items={items.map((item) => item.id === "api-design"
+        ? { ...item, isPending: true, jobStatus: "processing" }
+        : item)}
+    onOpenGradingSettings={openSettings}
+/>`,
+                        render: (
+                            <ChallengeDeliverableList
+                                items={GRADING_ITEMS}
+                                onOpenGradingSettings={() => {}}
+                            />
+                        ),
+                    },
+                    {
+                        name: "jobStatus = \"failed\" + jobError",
+                        why: "A failed grading job is not a validation error — the URL was fine, the run itself broke — so it reads as a danger callout rather than a red field. `jobError` prints VERBATIM: it is the server's own untranslated string, and dressing it up as friendly copy would hide which repository actually failed. The field unlocks again so the learner can fix the link and retry.",
+                        code: `<ChallengeDeliverableList
+    items={items.map((item) => item.id === "api-design"
+        ? { ...item, jobStatus: "failed", jobError: "Repository not accessible: 404 Not Found" }
+        : item)}
+    onOpenGradingSettings={openSettings}
+/>`,
+                        render: (
+                            <ChallengeDeliverableList
+                                items={JOB_FAILED_ITEMS}
+                                onOpenGradingSettings={() => {}}
+                            />
+                        ),
+                    },
+                    {
+                        name: "autosaveStatus = \"saving\" · \"failed\"",
+                        why: "Autosave is a PANEL-wide fact, not a per-row one: every URL field debounces into one batch sync, so one quiet line above the whole list carries it. `\"idle\"` has no member — the real panel draws nothing at all then, so \"no line\" is said by omitting the prop instead of by a value meaning \"draw nothing\". Only `failed` turns danger; `saving`/`saved` stay muted, since a save in progress is not a problem.",
+                        code: `<ChallengeDeliverableList
+    items={items}
+    autosaveStatus="saving"
+    onOpenGradingSettings={openSettings}
+/>`,
+                        render: (
+                            <StackV gap="section">
+                                <ChallengeDeliverableList
+                                    items={BASE_ITEMS}
+                                    autosaveStatus="saving"
+                                    onOpenGradingSettings={() => {}}
+                                />
+                                <ChallengeDeliverableList
+                                    items={BASE_ITEMS}
+                                    autosaveStatus="failed"
+                                    onOpenGradingSettings={() => {}}
+                                />
+                            </StackV>
                         ),
                     },
                 ]}

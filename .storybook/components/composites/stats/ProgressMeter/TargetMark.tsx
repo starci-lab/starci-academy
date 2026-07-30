@@ -20,13 +20,30 @@ export interface ProgressMeterTargetMarkProps {
 }
 
 /**
- * The target / goal marker on a {@link ProgressMeter} track — a rounded pill
- * (`w-1 h-5`, `bg-accent`) that overshoots the thin bar so it reads as a clean
- * "notch" at the goal position, with an optional short label floating above it.
- * `bg-accent` — the goal marker is a neutral brand tone, distinct from the bar's
- * own value band (danger/warning/success), so it reads as "the line to reach" not
- * another value. Centered on the bar via `top-1/2 -translate-y-1/2`, on `percent`
- * via `-translate-x-1/2`. Pure/props-only.
+ * The target / goal marker on a {@link ProgressMeter} track — a thin gray tick
+ * (`w-0.5 h-3`) standing just proud of the `h-1` track, with an optional short
+ * label floating above it. Centered on the bar via `top-1/2 -translate-y-1/2`, on
+ * `percent` via `-translate-x-1/2`. Pure/props-only.
+ *
+ * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-14, thầy: "cái anchor
+ * có vẻ hơi dài, với màu sắc không make sense lắm"). Was `h-5 w-1 bg-accent` —
+ * 20px tall on a 4px track (5× the thing it marks) in the SAME brand tone the
+ * fill uses. Two faults, one visual: the height made it read as part of the bar
+ * rather than a mark on it, and sharing `accent` with the fill meant one colour
+ * carried two different meanings ("what you scored" vs "what you need"), so the
+ * eye could not separate them.
+ *
+ * Now `bg-muted` — a NEUTRAL, deliberately outside the fill's semantic set
+ * (danger/warning/success), which is what lets the fill alone answer "did I
+ * pass". Height is FLUSH with the track (`h-1`, 4px): the tick marks a position
+ * ON the bar, so standing proud of it was the source of the "reads as part of
+ * the bar" problem. Flush still separates cleanly because the remaining
+ * difference is contrast, not size — `--muted` sits at ~55% lightness against a
+ * ~94% track. `rounded-none` — a rounded 4px-tall sliver reads as a dot, not a
+ * tick (thầy 2026-07-30: "rounded-none nhé").
+ *
+ * The label sits DIRECTLY on the tick, no gap (thầy 2026-07-30: "offset chi ông?
+ * không offset") — label and tick are ONE mark, so nothing should separate them.
  *
  * @param props - {@link ProgressMeterTargetMarkProps}
  */
@@ -35,11 +52,11 @@ export const ProgressMeterTargetMark = ({ percent, label, className }: ProgressM
         className={cn("pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2", className)}
         style={{ left: `${percent}%` }}
     >
-        <div className="h-5 w-1 rounded bg-accent" />
+        <div className="h-1 w-0.5 rounded-none bg-muted" />
         {label === undefined ? null : (
             <Typography size="xs"
                 color="muted"
-                className="absolute bottom-[calc(100%+3px)] left-1/2 -translate-x-1/2 whitespace-nowrap"
+                className="absolute bottom-full left-1/2 -translate-x-1/2 whitespace-nowrap"
                 text={label}
             />
         )}

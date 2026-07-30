@@ -5,9 +5,10 @@ import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 import { SurfaceCardAccordion, markIcon, type ListMark, type MarkTone, type SurfaceCardAccordionItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { FeedbackCallout, type FeedbackCalloutStatus } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Disclosure } from "@sb-components/composites/layout/Disclosure/Disclosure"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 import { ScoreValue } from "@sb-components/composites/text/ScoreValue/ScoreValue"
-import { type SubmissionFeedbackSeverity } from "@sb-components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -72,26 +73,18 @@ export type ChallengeDeliverableStatus = "todo" | "done" | "failed"
 export type ChallengeDeliverableVerdict = "pass" | "fail"
 
 /**
- * One line of AI feedback on a graded attempt. `severity` reuses
- * {@link SubmissionFeedbackSeverity} — "how serious one piece of AI-grading
- * feedback is" is the SAME concept `SubmissionFindingsList` already owns for
- * the personal-project grading flow, not a second vocabulary for this one
- * (thầy chốt 2026-07-29: gần giống thì áp dụng lại pattern, không xây mới).
+ * The last graded attempt's result for one requirement.
+ *
+ * ⭐ NO ITEMIZED FINDINGS HERE (thầy chốt 2026-07-30, round-13: "ở đây thì
+ * shortFeedback thôi là được"). This type used to carry
+ * `feedback?: Array<ChallengeDeliverableFeedbackItem>` — message + severity +
+ * location + suggestion per finding — and the panel rendered every one of them
+ * inline. Measured against the real DB (`docker exec starci-postgres psql`): an
+ * attempt can carry up to EIGHT findings × 3 text fields, so rendering them here
+ * buried the submission form under two dozen lines. The itemized list belongs to
+ * the dedicated result surface (`src`'s `SubmissionResult`, reachable from the
+ * "Xem lịch sử" action right above); this panel keeps only the one-line summary.
  */
-export interface ChallengeDeliverableFeedback {
-    /** Stable React key. */
-    id: string
-    /** How serious this finding is. */
-    severity: SubmissionFeedbackSeverity
-    /** What the grader found. */
-    message: string
-    /** Where in the submission this applies, e.g. a file/line — shown monospace. */
-    location?: string
-    /** How to fix it. */
-    suggestion?: string
-}
-
-/** The last graded attempt's result for one requirement. */
 export interface ChallengeDeliverableGrade {
     /** Pass/fail for this requirement's last attempt. */
     verdict: ChallengeDeliverableVerdict
@@ -99,9 +92,46 @@ export interface ChallengeDeliverableGrade {
     earnedScore: number
     /** Score needed to pass. */
     requiredScore: number
-    /** Structured findings behind the verdict, in report order. */
-    feedback?: Array<ChallengeDeliverableFeedback>
+    /**
+     * Which numbered attempt this grade came from (1-based) — the learner may
+     * have submitted more than once. GROUND TRUTH: backend
+     * `UserChallengeSubmissionAttemptEntity.attemptNumber` (AUDIT 2026-07-30,
+     * feedback ChallengePage/Graded round-11 — real field, not rendered yet).
+     */
+    attemptNumber?: number
+    /**
+     * When this attempt was graded, PRE-FORMATTED for display — this block
+     * does not own date/locale formatting, the caller does (§14d.1, same
+     * boundary as every other display string in this file). GROUND TRUTH:
+     * `UserChallengeSubmissionAttemptEntity.processedAt`.
+     */
+    processedAt?: string
+    /**
+     * One-line take on the WHOLE attempt — the ONLY feedback this panel shows
+     * (see the type doc above on why the itemized findings live elsewhere).
+     * GROUND TRUTH: backend `UserChallengeSubmissionAttemptEntity.shortFeedback`
+     * (AUDIT 2026-07-30, round-9). Measured on 111 real attempt rows: this
+     * column is filled on ALL of them, never null — so in practice the panel
+     * always has something to reveal. Still optional in the type: a grading run
+     * that failed mid-way could leave it empty, and the panel must not break.
+     */
+    shortFeedback?: string
 }
+
+/**
+ * Where this row's GRADING JOB stands. Grading runs in the BACKGROUND (the submit
+ * mutation returns a `jobId`, the screen subscribes to a socket), so a row must be
+ * able to say "đang chờ / đang chấm / xong / thất bại" while nothing else about it
+ * changed yet.
+ *
+ * GROUND TRUTH: backend `JobStatus` (`src/modules/types/enums/job-status.ts`) —
+ * all four members, spelled the same. Omit the prop when no job is in flight.
+ * AUDIT 2026-07-30 (round-15): trước bản này block chỉ có `isPending` (boolean),
+ * đủ để khoá ô nhập nhưng KHÔNG diễn đạt được ba trong bốn ngả — `.artifacts/domain/
+ * challenge-and-milestone.md` §3 liệt kê cả "đang chấm" lẫn "chấm lỗi" là state
+ * PHẢI VẼ, và bản vẽ đang thiếu.
+ */
+export type ChallengeDeliverableJobStatus = "queued" | "processing" | "completed" | "failed"
 
 /** One challenge requirement and its submission form. */
 export interface ChallengeDeliverableItem {
@@ -125,16 +155,46 @@ export interface ChallengeDeliverableItem {
     onSubmit: () => void
     /** `true` → this requirement's grading job is in flight. */
     isPending?: boolean
+    /**
+     * Where this row's background grading job stands — drives the status callout
+     * between the URL field and the action row. Omit when no job is running.
+     */
+    jobStatus?: ChallengeDeliverableJobStatus
+    /**
+     * Raw server error for a `failed` job, shown as a third line under the
+     * callout's description. GROUND TRUTH: `activeJobError` in `src`'s
+     * `ChallengeSubmissionPanel` is a plain UNTRANSLATED string straight off
+     * `jobStatusByJobId[id].data.error` — so the block prints it as-is and never
+     * pretends to localise it. Ignored unless `jobStatus` is `"failed"`.
+     */
+    jobError?: string
     /** Fired to open this requirement's attempt history. */
     onViewHistory: () => void
     /** The last graded attempt. Present → the panel shows the verdict + feedback. */
     graded?: ChallengeDeliverableGrade
 }
 
+/**
+ * Where the URL autosave stands — a PANEL-WIDE fact, not a per-row one.
+ *
+ * GROUND TRUTH: `src`'s `ChallengeSubmissionPanel` (`AutosaveStatus` in
+ * `hooks/rhf/useEditSubmissionForm.ts`) debounces every row's URL into ONE batch
+ * sync, so one status covers the whole panel and the line renders ABOVE the
+ * accordion, not inside a row. `"idle"` is deliberately NOT a member here: the
+ * real panel renders nothing at all in that case, so "no line" is expressed by
+ * omitting the prop rather than by a member that means "draw nothing".
+ */
+export type ChallengeDeliverableAutosaveStatus = "saving" | "saved" | "failed"
+
 /** Props for {@link ChallengeDeliverableList}. */
 export interface ChallengeDeliverableListProps {
     /** The challenge's requirements, in display order. */
     items: Array<ChallengeDeliverableItem>
+    /**
+     * Autosave state of the URL fields, shown as one quiet line above the list.
+     * Omit while idle — see {@link ChallengeDeliverableAutosaveStatus}.
+     */
+    autosaveStatus?: ChallengeDeliverableAutosaveStatus
     /**
      * Fired when the learner opens the grading-lane settings from the card
      * header. Chrome trigger only this pass — see the file header's scope cut.
@@ -168,29 +228,98 @@ const STATUS_TONE: Record<ChallengeDeliverableStatus, MarkTone | undefined> = {
     failed: "danger",
 }
 
-/** Verdict wording — the block's own (§4: a caller passes `"pass" | "fail"`, never a string). */
+/**
+ * Verdict wording — the block's own (§4: a caller passes `"pass" | "fail"`, never a string).
+ *
+ * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): `fail` gets a leading
+ * icon (`EnumChipIcon`'s closed "check"/"cross" set, not a raw component — same
+ * fix as `ChallengeHeader.STATUS_MAP.failed`). `pass` stays text-only for now.
+ */
 const VERDICT_MAP: Partial<Record<ChallengeDeliverableVerdict, EnumChipEntry>> = {
     pass: { color: "success", label: "Đạt" },
-    fail: { color: "danger", label: "Chưa đạt" },
+    fail: { color: "danger", label: "Chưa đạt", icon: "cross" },
 }
 
 /**
- * Severity wording. `low` reads as neutral rather than "info" — `EnumChip`'s
- * colour set has no info tone, and a neutral chip still reads as the mildest of
- * the three without inventing a colour outside the system.
+ * Job status → nội dung của dải trạng thái chấm bài (`FeedbackCallout`).
+ *
+ * Chữ lấy ĐÚNG bộ `aiProcessing.submitChallenge.*` của `src/messages/vi.json` —
+ * không tự soạn lại câu, vì đây là chữ học viên đã đọc trong app thật.
+ *
+ * `status` theo đúng sắc thái `AIProcessingText` dùng: hai ngả đang-chạy đều
+ * WARNING (chưa có gì sai, chỉ là chưa xong), `completed` SUCCESS, `failed`
+ * DANGER. Không dùng `accent` cho ngả nào — accent là hồng active-state của
+ * brand, không phải một sắc thái trạng thái (`matrix.md` §11).
+ *
+ * ⭐ CỐ Ý KHÔNG bê viền conic-gradient xoay của `AIProcessingText` sang. Đó là
+ * IMPLEMENTATION riêng của `src` (một `motion.div` gradient quay 2.8s), không
+ * phải hình mà hệ này có cửa cho — chép sang là đúng Bẫy 3 của
+ * `.claude/fe/boundary.md` (chép hành vi/cấu trúc thì đúng, chép giá trị/hiệu
+ * ứng thô thì sai). Mặt của hệ cho ca "ghi chú có sắc thái nằm trong một mặt"
+ * là `FeedbackCallout`, và đó là thứ dùng ở đây.
  */
-const SEVERITY_MAP: Partial<Record<SubmissionFeedbackSeverity, EnumChipEntry>> = {
-    high: { color: "danger", label: "Nghiêm trọng" },
-    medium: { color: "warning", label: "Cần sửa" },
-    low: { color: "default", label: "Gợi ý" },
+const JOB_STATUS_CALLOUT: Record<
+    ChallengeDeliverableJobStatus,
+    { status: FeedbackCalloutStatus, title: string, description: string }
+> = {
+    queued: {
+        status: "warning",
+        title: "Đang chờ xử lý",
+        description: "Bài nộp của bạn đang trong hàng đợi và sẽ được xử lý ngay.",
+    },
+    processing: {
+        status: "warning",
+        title: "StarCI AI đang chấm bài",
+        description: "StarCI AI đang phân tích bài nộp của bạn. Vui lòng chờ trong giây lát.",
+    },
+    completed: {
+        status: "success",
+        title: "Chấm bài hoàn tất",
+        description: "Bài nộp đã được chấm xong. Bạn có thể xem kết quả ngay.",
+    },
+    failed: {
+        status: "danger",
+        title: "Chấm bài thất bại",
+        description: "Đã xảy ra lỗi khi chấm bài. Vui lòng thử lại.",
+    },
 }
 
-/** Trailing trigger slot: points before an attempt, earned/required once graded — never both. */
+/**
+ * Autosave status → một dòng chữ lặng phía trên danh sách.
+ *
+ * Chữ lấy đúng `autosave.*` của `src/messages/vi.json`. Màu: `failed` là DANGER,
+ * hai ngả còn lại MUTED — `src` dùng `text-default-500` cho ngả thường, tức một
+ * lớp Tailwind thô; ở đây đi qua `color` của atom `Typography` (`muted`) thay vì
+ * bê nguyên class, đúng Bẫy 3 `boundary.md`.
+ */
+const AUTOSAVE_LABEL: Record<ChallengeDeliverableAutosaveStatus, string> = {
+    saving: "Đang lưu…",
+    saved: "Đã lưu",
+    failed: "Lưu thất bại",
+}
+
+/**
+ * Trailing trigger slot: points before an attempt, earned/required once
+ * graded — never both.
+ *
+ * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): gỡ
+ * `color="muted"` khỏi nhánh graded — cùng lý lẽ với `ScoreValue.tsx`, số
+ * dính liền `Accordion.Trigger` đang active + mang giá trị thông tin thật
+ * ⇒ `default`, không phải `muted`. Xem `.artifacts/feedback/
+ * 2026-07-29-challengepage-graded/round-1.md`.
+ *
+ * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, "sao 4 cái xanh
+ * không cùng size thế"): thêm `weight="medium"` — thiếu nó nhánh này rơi về
+ * `font-normal` mặc định của atom trong khi `ScoreValue` (nhánh dưới, VÀ cùng
+ * info-type "điểm số" ở `ChallengeBrief`'s Yêu cầu) luôn `weight="medium"`.
+ * Cùng `size="xs"` nhưng khác weight đọc như khác cỡ chữ — đồng bộ lại cho
+ * đúng info-type dùng chung một kiểu chữ (§2d).
+ */
 const scoreEnd = (item: ChallengeDeliverableItem, showAnatomy: boolean) =>
     item.graded != null ? (
         <Typography
             size="xs"
-            color="muted"
+            weight="medium"
             tabularNums
             text={`${item.graded.earnedScore}/${item.graded.requiredScore}`}
             anatPart={showAnatomy ? "Typography" : undefined}
@@ -225,7 +354,32 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
             showAnatomy={showAnatomy}
         />
 
-        <StackH gap="related" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
+        {/* Dải trạng thái chấm bài — GIỮA ô URL và hàng nút, đúng vị trí `src`'s `SubmissionRow`
+            đặt `AIProcessingText` (dòng 173-195: sau `TextField`, trước `GradeModelDropdown`).
+            AUDIT 2026-07-30 round-15: state này `.artifacts/domain/challenge-and-milestone.md` §3
+            liệt kê là PHẢI VẼ ("đang chấm" + "chấm lỗi") mà bản vẽ thiếu — chỉ có `isPending`
+            khoá được ô nhập, không nói được đang ở ngả nào. `jobError` in THÔ (không dịch) vì
+            `src` cũng in thô: đó là chuỗi lỗi server, không phải câu cho người đọc. */}
+        {item.jobStatus != null ? (
+            <FeedbackCallout
+                status={JOB_STATUS_CALLOUT[item.jobStatus].status}
+                title={JOB_STATUS_CALLOUT[item.jobStatus].title}
+                description={JOB_STATUS_CALLOUT[item.jobStatus].description}
+                body={item.jobStatus === "failed" && item.jobError != null
+                    ? <Typography size="xs" color="danger" text={item.jobError} anatPart={showAnatomy ? "Typography" : undefined} />
+                    : undefined}
+                anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                showAnatomy={showAnatomy}
+            />
+        ) : null}
+
+        {/* AUDIT 2026-07-30 round-14 (thầy chốt sau khi em phản biện): bỏ `justify="end"` —
+            mọi thứ khác trong panel (description, ô URL, chip verdict, trigger "Phản hồi gần
+            nhất") đều bám lề trái, chỉ hàng nút này dạt phải nên đọc như của một khối khác.
+            KHÔNG dùng `flex-1`: neo `src` (`SubmissionRow`: primary `shrink-0` + secondary
+            `min-w-0 flex-1`) làm nút PHỤ rộng hơn nút CHÍNH — ngược trọng số thị giác, thầy
+            chốt bỏ. Cả hai ôm chữ, không nút nào giãn. */}
+        <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
             <Button
                 label="Nộp bài"
                 variant="primary"
@@ -243,38 +397,55 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
         </StackH>
 
         {/* Graded is a STATE of this same leaf (mirrors QuizQuestion's `verdict` toggle),
-            never a second component — see file header. */}
+            never a second component — see file header.
+
+            SHAPE SETTLED 2026-07-30 (feedback ChallengePage/Graded, rounds 8→13). Two lines
+            only, and the trimming is the whole story:
+            · MỘT hàng meta luôn hiện — verdict Chip + "lần #N · HH:mm dd/MM"
+              (`attemptNumber`/`processedAt`, field thật, xác nhận sống trong Postgres qua
+              `docker exec starci-postgres psql`).
+            · MỘT `Disclosure` "Phản hồi gần nhất" → mở ra `shortFeedback`, một câu.
+
+            Đã BỎ trên đường tới hình này (ghi lại để không ai dựng lại):
+            · Câu "Điểm lần thử gần nhất của bạn là N/M. Yêu cầu tối thiểu R." — N/M đã nằm ở
+              `titleEnd` của hàng accordion ngay trên đầu (xem `scoreEnd`) và chip đã trả lời
+              "đạt hay chưa"; câu đó nói lại cùng một fact bằng hai dòng chữ (round-13).
+            · Danh sách finding từng dòng (dot severity + message + location + gợi ý) — đo DB
+              thật: một attempt tới TÁM finding × 3 field, dựng ở đây thì form nộp bài bị chôn
+              dưới hai chục dòng. Chi tiết thuộc trang kết quả riêng (`src`'s `SubmissionResult`),
+              vào từ nút "Xem lịch sử" ngay trên (thầy chốt: "ở đây thì shortFeedback thôi là được").
+            · Accordion đệ quy / severity chữ-màu+`|` (round 4-7) — dựng khi chưa có neo thật.
+
+            `Disclosure` ở đây là quyết định TRÌNH BÀY, không phải field bịa: nội dung bên trong
+            vẫn đúng một field thật, chỉ nằm sau một cái bấm vì nó là chi tiết phụ (thầy chốt
+            round-10, giữ nguyên qua round-13). */}
         {item.graded != null ? (
             <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+                {/* AUDIT 2026-07-30 round-13 (thầy: "phần xanh rườm rà quá", chốt phương án B):
+                    MỘT hàng meta duy nhất — chip verdict + "lần #N · HH:mm dd/MM" — thay vì ba
+                    tầng chồng nhau như trước. Bỏ HẲN câu "Điểm lần thử gần nhất của bạn là N/M.
+                    Yêu cầu tối thiểu R.": chính con số N/M đã nằm ở `titleEnd` của hàng accordion
+                    ngay trên đầu (xem `scoreEnd`), và chip đã trả lời "đạt hay chưa" — câu văn đó
+                    nói lại lần thứ hai cùng một fact bằng cả hai dòng chữ. `earnedScore`/
+                    `requiredScore` VẪN là field thật và vẫn render, chỉ ở đúng MỘT chỗ. */}
+                <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
                     <EnumChip value={item.graded.verdict} map={VERDICT_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        tabularNums
-                        text={`${item.graded.earnedScore}/${item.graded.requiredScore} điểm`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
+                    {item.graded.attemptNumber != null ? (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            text={item.graded.processedAt != null
+                                ? `lần #${item.graded.attemptNumber} · ${item.graded.processedAt}`
+                                : `lần #${item.graded.attemptNumber}`}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    ) : null}
                 </StackH>
 
-                {item.graded.feedback != null && item.graded.feedback.length > 0 ? (
-                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="xs" weight="medium" color="muted" text="Phản hồi" anatPart={showAnatomy ? "Typography" : undefined} />
-                        {item.graded.feedback.map((entry) => (
-                            <StackH key={entry.id} gap="related" align="start" anatPart={showAnatomy ? "StackH" : undefined}>
-                                <EnumChip value={entry.severity} map={SEVERITY_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />
-                                <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                                    <Typography size="xs" text={entry.message} anatPart={showAnatomy ? "Typography" : undefined} />
-                                    {entry.location != null ? (
-                                        <Typography size="xs" color="muted" className="font-mono" text={entry.location} anatPart={showAnatomy ? "Typography" : undefined} />
-                                    ) : null}
-                                    {entry.suggestion != null ? (
-                                        <Typography size="xs" color="muted" text={`Gợi ý: ${entry.suggestion}`} anatPart={showAnatomy ? "Typography" : undefined} />
-                                    ) : null}
-                                </StackV>
-                            </StackH>
-                        ))}
-                    </StackV>
+                {item.graded.shortFeedback != null ? (
+                    <Disclosure title="Phản hồi gần nhất" showAnatomy={showAnatomy}>
+                        <Typography size="sm" text={item.graded.shortFeedback} anatPart={showAnatomy ? "Typography" : undefined} />
+                    </Disclosure>
                 ) : null}
             </StackV>
         ) : null}
@@ -288,6 +459,7 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
  */
 const ChallengeDeliverableList = ({
     items,
+    autosaveStatus,
     onOpenGradingSettings,
     isSkeleton = false,
     showAnatomy = false,
@@ -312,27 +484,42 @@ const ChallengeDeliverableList = ({
     // for a part that stays SMALL relative to a parent holding other things too;
     // nesting a border around content that already equals the whole parent just
     // draws the same outline twice.
+    // Dòng autosave đứng TRÊN accordion, đúng vị trí `src`'s `ChallengeSubmissionPanel`
+    // (dòng 388-398: con đầu của panel wrapper, ngay trước `<Accordion>`) — nó là fact của
+    // CẢ PANEL (một lượt sync gộp mọi ô URL), nên không thể là part của một hàng.
+    // Không đi qua `labelEnd` của header dù chỗ đó nhìn có vẻ hợp: `action` (nút bánh răng)
+    // THẮNG `labelEnd` trong `surface-card-header.tsx:90-104`, nên nhãn sẽ không bao giờ render.
     return (
-        <SurfaceCardAccordion
-            label="Nộp bài"
-            action={
-                <Button
-                    isIconOnly
-                    prefixIcon={GearSixIcon}
-                    ariaLabel="Cài đặt chấm điểm"
-                    variant="tertiary"
-                    size="sm"
-                    onPress={onOpenGradingSettings}
-                    isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "Button" : undefined}
+        <StackV gap="related" anatPart={anatPart} showAnatomy={showAnatomy}>
+            {autosaveStatus != null ? (
+                <Typography
+                    size="xs"
+                    color={autosaveStatus === "failed" ? "danger" : "muted"}
+                    text={AUTOSAVE_LABEL[autosaveStatus]}
+                    anatPart={showAnatomy ? "Typography" : undefined}
                 />
-            }
-            items={accordionItems}
-            defaultExpandedKeys={firstOpenId != null ? new Set([firstOpenId]) : undefined}
-            isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            anatPart={anatPart}
-        />
+            ) : null}
+            <SurfaceCardAccordion
+                label="Nộp bài"
+                action={
+                    <Button
+                        isIconOnly
+                        prefixIcon={GearSixIcon}
+                        ariaLabel="Cài đặt chấm điểm"
+                        variant="tertiary"
+                        size="sm"
+                        onPress={onOpenGradingSettings}
+                        isSkeleton={isSkeleton}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                }
+                items={accordionItems}
+                defaultExpandedKeys={firstOpenId != null ? new Set([firstOpenId]) : undefined}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
+            />
+        </StackV>
     )
 }
 

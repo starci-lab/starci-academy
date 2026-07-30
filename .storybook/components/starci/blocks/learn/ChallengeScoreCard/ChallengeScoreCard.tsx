@@ -80,6 +80,14 @@ const ChallengeScoreCard = ({
     // meter — same defensive floor `ProgressMeter` itself applies internally.
     const safeMax = maxScore > 0 ? maxScore : 1
     const targetScore = passThreshold * safeMax
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-14, thầy: "màu sắc không make
+    // sense lắm"): the fill now ANSWERS the question this card exists to answer. It used to
+    // ride `ProgressMeter`'s default `accent` — the brand tone — so a 52/70 attempt sitting
+    // BELOW its own 80% pass line looked exactly like one sitting above it: the bar carried
+    // a ratio but no verdict. `ProgressMeter`'s own prop doc already reserves the semantic
+    // tones for "when the bar's VALUE carries meaning", which is precisely this case.
+    // The target tick stays NEUTRAL (see `TargetMark`) so the two never compete for meaning.
+    const meterColor = earnedScore >= targetScore ? "success" : "danger"
 
     return (
         <SurfaceCard
@@ -92,10 +100,16 @@ const ChallengeScoreCard = ({
             <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
                 {/* Score reading — earned score prominent, "/ max điểm" riding beside it as
                     the unit that gives it meaning (`tight`: a mark attached to the number,
-                    not a peer of it). */}
+                    not a peer of it).
+                    AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): thêm
+                    `weight="bold"` — con số ĐỨNG RIÊNG làm tâm điểm của card = Tier A,
+                    luôn bold; thiếu weight thì HeroUI mặc định 600 (semibold), không phải
+                    700 (bold) canon đòi. Đối chứng: `ChallengeHeader.tsx` cùng vai trò đã
+                    khai đúng weight="bold". */}
                 <StackH gap="tight" align="baseline" anatPart={showAnatomy ? "StackH" : undefined}>
                     <Typography
                         size="h3"
+                        weight="bold"
                         tabularNums
                         isSkeleton={isSkeleton}
                         text={earnedScore}
@@ -119,6 +133,7 @@ const ChallengeScoreCard = ({
                     <ProgressMeter
                         value={earnedScore}
                         max={safeMax}
+                        color={meterColor}
                         target={targetScore}
                         targetLabel={`${Math.round(passThreshold * 100)}%`}
                         anatPart={showAnatomy ? "ProgressMeter" : undefined}

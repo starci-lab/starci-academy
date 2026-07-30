@@ -39,8 +39,17 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
  */
 export type AlertIcon = ComponentType<SVGProps<SVGSVGElement>>
 
-/** Semantic tone — drives tint, default icon and close-button skin. */
-export type AlertStatus = "default" | "accent" | "success" | "warning" | "danger"
+/**
+ * Semantic tone — drives tint, default icon and close-button skin.
+ *
+ * AUDIT 2026-07-30 (feedback ChallengePage/Graded round-9): `info` added — a
+ * calm/neutral status distinct from `accent` (the brand's active-state pink),
+ * needed for a low-severity AI-grading finding (`bg-info` dot, ground truth
+ * `src`'s `LastAttemptResult.tsx`). Token declared in `src/app/globals.css`
+ * alongside `success`/`warning` (no prior `--info` value existed anywhere to
+ * copy — a genuinely new tone, not a port).
+ */
+export type AlertStatus = "default" | "accent" | "success" | "warning" | "danger" | "info"
 
 /**
  * Fill strategy. `soft` forces a flat `bg-<status>-soft` tint strip (reads like a
@@ -59,6 +68,7 @@ const STATUS_ICON: Record<AlertStatus, AlertIcon> = {
     success: CheckCircleIcon,
     warning: WarningIcon,
     danger: XCircleIcon,
+    info: InfoIcon,
 }
 
 /** Soft tint per status — the ONE table (was duplicated in Callout + Toast). */
@@ -68,6 +78,7 @@ const STATUS_TINT: Record<AlertStatus, string> = {
     success: "bg-success-soft",
     warning: "bg-warning-soft",
     danger: "bg-danger-soft",
+    info: "bg-info-soft",
 }
 
 /**
@@ -81,6 +92,7 @@ const STATUS_CLOSE_TONE: Record<AlertStatus, string> = {
     success: "!text-success-soft-foreground hover:!bg-success-soft",
     warning: "!text-warning-soft-foreground hover:!bg-warning-soft",
     danger: "!text-danger-soft-foreground hover:!bg-danger-soft",
+    info: "!text-info-soft-foreground hover:!bg-info-soft",
 }
 
 /**
@@ -162,7 +174,13 @@ const AlertBase = ({
     const Icon = icon ?? STATUS_ICON[status]
     return (
         <HeroAlert
-            status={status}
+            // Vendor `HeroAlert.status` is a CLOSED union that never gained `info`
+            // (same hard constraint as `HeroChip.color` — see `ChipTone`'s own note).
+            // `"default"` is a safe stand-in here ONLY because this atom's own
+            // `STATUS_TINT`/`STATUS_ICON`/`STATUS_CLOSE_TONE` (all `info`-aware)
+            // drive the actual paint via explicit className — vendor `status` just
+            // needs a value it accepts, not the real answer.
+            status={status === "info" ? "default" : status}
             className={cn("shadow-none", tone === "soft" && STATUS_TINT[status], className)}
             data-anat-part={anatPart}
         >

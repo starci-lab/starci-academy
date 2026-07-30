@@ -1,0 +1,61 @@
+{
+  "viewport": { "w": 1280, "h": 720, "note": "document.hidden=true (pane background tab) nhưng rect khác 0 và khác nhau theo từng vùng — không degenerate" },
+  "measuredAt": "2026-07-30",
+  "regions": {
+    "R1_FlashcardModeSwitch": {
+      "storyId": "starci-pages-quizpage-quizpage--setup-enrolled",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 40, "top": 56, "left": 272.4 }
+    },
+    "R2_QuizEnrollGate": {
+      "storyId": "starci-pages-quizpage-quizpage--setup-trial",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 200, "top": 120, "left": 272.5 }
+    },
+    "R3_QuizSetup": {
+      "storyId": "starci-pages-quizpage-quizpage--setup-enrolled",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 348, "top": 120, "left": 272.4 }
+    },
+    "R4_QuizProgressPanel": {
+      "storyId": "starci-pages-quizpage-quizpage--setup-enrolled",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 266.4, "top": 492, "left": 272.4 }
+    },
+    "R5_WorkSessionHeader": {
+      "storyId": "starci-pages-quizpage-quizpage--active + --recap (2 lần khai, đo giống hệt nhau ở cả 2)",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 55, "top": 56, "left": 272.5 }
+    },
+    "R6_QuizQuestion": {
+      "storyId": "starci-pages-quizpage-quizpage--active",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 304, "top": 135, "left": 272.5 }
+    },
+    "R7_QuizRecapList": {
+      "storyId": "starci-pages-quizpage-quizpage--recap",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 780, "top": 135, "left": 272.5 }
+    },
+    "R8_StackV_outer": {
+      "storyId": "starci-pages-quizpage-quizpage--setup-enrolled",
+      "note": "story SetupEnrolled là gallery gồm 12 node data-anat-part=\"StackV\" (nhiều biến thể progressView xếp cạnh nhau) — đo node ĐẦU TIÊN (khung ngoài gap=page của instance đầu), không phải toàn bộ 12. Đây là mẫu đại diện, không phải liệt kê hết mọi instance trong gallery.",
+      "fontSize": "16px", "gap": "32px", "padding": "0px",
+      "rect": { "w": 720, "h": 702.4, "top": 56, "left": 272.4 }
+    }
+  }
+}

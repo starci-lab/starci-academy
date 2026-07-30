@@ -82,6 +82,7 @@ const TONE: Record<IconTileTone, string> = {
     success: "bg-success-soft text-success-soft-foreground",
     warning: "bg-warning-soft text-warning-soft-foreground",
     danger: "bg-danger-soft text-danger-soft-foreground",
+    info: "bg-info-soft text-info-soft-foreground",
     default: "bg-default text-muted",
 }
 

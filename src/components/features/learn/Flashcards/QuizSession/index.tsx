@@ -289,7 +289,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // guards the one-shot resume rehydration to run at most once per mounted instance
     const resumeAttemptedRef = useRef(false)
     // set when `resumeSessionId` couldn't be resumed (no matching session / expired
-    // past its 24h TTL) — shown as an inline note on the setup screen it falls back to
+    // past its 60min TTL) — shown as an inline note on the setup screen it falls back to
     const [resumeError, setResumeError] = useState<string | null>(null)
     // server-issued deadline for THIS run (createdAt + duration) — set on start AND
     // on resume rehydrate; drives the WorkSessionHeader countdown below, same

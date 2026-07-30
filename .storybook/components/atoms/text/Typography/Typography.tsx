@@ -29,8 +29,13 @@ import { Link as HeroLink, Skeleton as HeroSkeleton, Typography as HeroTypograph
  */
 export type TypographyIcon = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
 
-/** Semantic text color (default = foreground). */
-export type TypographyColor = "default" | "muted" | "accent" | "success" | "warning" | "danger"
+/**
+ * Semantic text color (default = foreground).
+ *
+ * AUDIT 2026-07-30 (feedback ChallengePage/Graded round-9): `info` added,
+ * mirrors `AlertStatus`'s addition in `Alert.tsx` — same new `--info` token.
+ */
+export type TypographyColor = "default" | "muted" | "accent" | "success" | "warning" | "danger" | "info"
 
 /**
  * ONE SIZE AXIS for the whole system (teacher confirmed 2026-07-25 — merged the namespace,
@@ -75,13 +80,28 @@ const SKEL_H: Record<TypographySize, string> = {
     h5: "h-[18px]",
     code: "h-[14px]",
 }
+// AUDIT 2026-07-30 (feedback ChallengePage/Graded round-3 + round-6): `default` used to be
+// `null` ("foreground — not declared", §9a) — relied on CSS inheritance instead of an
+// explicit class. HeroUI's vendor `.accordion__body-inner { color: var(--muted) }` bleeds
+// through exactly that gap: any Typography inside an accordion PANEL with no explicit
+// `color` silently rendered muted, including a nested `.Accordion`'s own trigger title.
+// Same class of bug as `weightCls` (round-1) — an atom must own its own value defensively,
+// not assume no ancestor will ever override it.
+//
+// round-3 only fixed the VALUE in this table (`null` → `"text-foreground"`) but every call
+// site read it through `color ? COLOR_CLS[color] : null` — when a caller omits `color`
+// entirely (the common case, e.g. an accordion trigger title), that ternary never even
+// looks at the table, so the bug survived unchanged for every "no color passed" call site.
+// round-6 fixed the READ side too: every branch below now does `COLOR_CLS[color ?? "default"]`
+// so an unset `color` explicitly resolves through this table instead of skipping it.
 const COLOR_CLS: Record<TypographyColor, string | null> = {
-    default: null, // foreground — not declared (§9a)
+    default: "text-foreground",
     muted: "text-muted",
     accent: "text-accent",
     success: "text-success",
     warning: "text-warning",
     danger: "text-danger",
+    info: "text-info",
 }
 /** Same tokens as {@link COLOR_CLS}, `hover:` prefixed — for `isButton`'s `hoverColor`. */
 const HOVER_COLOR_CLS: Record<TypographyColor, string> = {
@@ -91,6 +111,7 @@ const HOVER_COLOR_CLS: Record<TypographyColor, string> = {
     success: "hover:text-success",
     warning: "hover:text-warning",
     danger: "hover:text-danger",
+    info: "hover:text-info",
 }
 const CLAMP_CLS: Record<1 | 2 | 3, string> = { 1: "line-clamp-1", 2: "line-clamp-2", 3: "line-clamp-3" }
 
@@ -321,7 +342,7 @@ const TypographyBase = ({
                 level={HEADING_LEVEL[size]}
                 weight={weight}
                 className={cn(
-                    color ? COLOR_CLS[color] : null,
+                    COLOR_CLS[color ?? "default"],
                     align ? ALIGN_CLS[align] : null,
                     lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null,
                     underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
@@ -340,7 +361,7 @@ const TypographyBase = ({
             <HeroTypography
                 type="code"
                 className={cn(
-                    color ? COLOR_CLS[color] : null,
+                    COLOR_CLS[color ?? "default"],
                     align ? ALIGN_CLS[align] : null,
                     lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null,
                     underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
@@ -402,7 +423,7 @@ const TypographyBase = ({
                         // `semibold` folds to `font-medium` at body scale (§9b, teacher 2026-07-25) —
                         // it is only a real third tier at heading scale (see the HEADING branch above).
                         weight === "bold" ? "font-bold" : weight === "medium" || weight === "semibold" ? "font-medium" : null,
-                        color ? COLOR_CLS[color] : null,
+                        COLOR_CLS[color ?? "default"],
                         "cursor-pointer transition-colors",
                         hoverColor && HOVER_COLOR_CLS[hoverColor],
                         className,
@@ -418,16 +439,22 @@ const TypographyBase = ({
         // RULE (teacher confirmed): has icon → text MUST be `font-medium` (icon strokes fit medium text).
         // `semibold` folds to `font-medium` at body scale (§9b, teacher 2026-07-25) — it is only
         // a real third tier at heading scale (see the HEADING branch above).
+        // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): the "no weight" branch
+        // used to emit `null` (no class), letting an ancestor's own font-weight bleed through
+        // (neo: HeroUI's `.accordion__trigger { font-medium }` leaked into a plain-regular
+        // Typography sitting inside an accordion trigger's `titleEnd` slot — measured 500 on
+        // the DOM though the atom never asked for it). Emit `font-normal` explicitly so this
+        // atom always owns its own weight regardless of what wraps it.
         const weightCls = hasIcons
             ? "font-medium"
-            : weight === "bold" ? "font-bold" : weight === "medium" || weight === "semibold" ? "font-medium" : null
+            : weight === "bold" ? "font-bold" : weight === "medium" || weight === "semibold" ? "font-medium" : "font-normal"
         // Clip text: lineClamp wins over truncate. `block` so overflow can clip (needs a bounded parent width).
         const clampCls = lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null
         const baseCls = cn(
             TEXT_CLS[bodySize],
             weightCls,
             isItalic && "italic",
-            color ? COLOR_CLS[color] : null,
+            COLOR_CLS[color ?? "default"],
             align ? ALIGN_CLS[align] : null,
             tabularNums && "tabular-nums",
             underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,

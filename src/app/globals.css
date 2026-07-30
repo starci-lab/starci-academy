@@ -187,6 +187,15 @@ html {
   --field-placeholder: oklch(55.17% 0.0030 354.13);
   --focus: oklch(70.03% 0.2092 354.13);
   --foreground: oklch(21.03% 0.0015 354.13);
+  /* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-9): new tone, no prior
+     value anywhere to copy — `src`'s own `LastAttemptResult.tsx` references
+     `bg-info` but never declared it (grepped globals.css + HeroUI theme: zero
+     hits before this edit), so this is a genuinely new pick, not a port. Same
+     shape as `--success`/`--warning` (identical light/dark, pastel + dark
+     foreground) since info reads as a calm status tone, not a loud brand color
+     like `--accent`/`--danger`. Hue 250 = blue, this palette's only blue tone. */
+  --info: oklch(72.00% 0.1700 250.00);
+  --info-foreground: oklch(21.03% 0.0059 250.00);
   --muted: oklch(55.17% 0.0030 354.13);
   --overlay: oklch(100.00% 0.0004 354.13);
   --overlay-foreground: oklch(21.03% 0.0015 354.13);
@@ -242,6 +251,8 @@ html {
   --field-placeholder: oklch(70.50% 0.0030 354.13);
   --focus: oklch(70.03% 0.2092 354.13);
   --foreground: oklch(99.11% 0.0015 354.13);
+  --info: oklch(72.00% 0.1700 250.00);
+  --info-foreground: oklch(21.03% 0.0059 250.00);
   --muted: oklch(70.50% 0.0030 354.13);
   --overlay: oklch(21.03% 0.0030 354.13);
   --overlay-foreground: oklch(99.11% 0.0015 354.13);

@@ -1,8 +1,8 @@
 import React from "react"
-import { TrophyIcon } from "@phosphor-icons/react"
 import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { RichText } from "@sb-components/composites/viewers/RichText/RichText"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
@@ -67,10 +67,17 @@ const DIFFICULTY_MAP: Record<ChallengeDifficulty, EnumChipEntry> = {
     hard: { color: "danger", label: "Khó" },
 }
 
-/** Attempt status → chip presentation. */
+/**
+ * Attempt status → chip presentation.
+ *
+ * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): `failed` gets a
+ * leading icon — a failed/not-passed verdict is a "quốc dân" symbol (cross),
+ * not decoration. `completed`/`inProgress` stay text-only; extend the day a
+ * screen actually asks for their icon too, not preemptively.
+ */
 const STATUS_MAP: Record<ChallengeStatus, EnumChipEntry> = {
     completed: { color: "success", label: "Đạt" },
-    failed: { color: "danger", label: "Trượt" },
+    failed: { color: "danger", label: "Trượt", icon: "cross" },
     inProgress: { color: "warning", label: "Đang làm" },
 }
 
@@ -156,23 +163,45 @@ const ChallengeHeader = ({
                     )
                 }
                 description={
-                    isSkeleton ? (
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        description
-                    )
+                    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): field
+                    // "one-sentence summary" là tầng "richtext nhỏ" — bọc RichText tại ĐÂY
+                    // (call-site của block), không sửa `Page.tsx` dùng chung, vì
+                    // `PageHeader.description` nhận `ReactNode` (nhiều consumer khác có thể
+                    // truyền JSX thật, không phải string). Một quyết định duy nhất ở đây là
+                    // "có hiện slot này không" (isSkeleton hoặc có description thật);
+                    // `isSkeleton` sau đó CHẢY THẲNG xuống làm prop của RichText (§12c),
+                    // không branching hai component khác nhau cho hai trạng thái.
+                    isSkeleton || description != null ? (
+                        <RichText
+                            isSkeleton={isSkeleton}
+                            text={description ?? ""}
+                            color="muted"
+                            anatPart={showAnatomy ? "RichText" : undefined}
+                        />
+                    ) : undefined
                 }
+                // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, thầy chốt trả lời
+                // điểm-1-còn-treo round-3: "đỏ dời qua bên trái, vàng dời qua sát đó, rồi gap
+                // đều 3 cái này" — rồi sửa lại thứ tự: "chip nằm bên trái, plain text bên
+                // phải"): bỏ `justify="between"` + StackH lồng hai tầng (từng đẩy score sang
+                // mép trái, status/difficulty sang mép phải) — gộp thành MỘT hàng, cùng
+                // `gap="related"`, đứng sát nhau bên trái, CHIP TRƯỚC (status, difficulty) rồi
+                // mới tới score dạng chữ thường. Vẫn gỡ `prefixIcon={TrophyIcon}` (round-2) và
+                // giữ thứ tự status trước difficulty (round-2).
                 meta={
                     <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
                         {isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton className="w-16" anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : scoreValue != null ? (
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                prefixIcon={TrophyIcon}
-                                text={`${scoreValue} điểm`}
-                                anatPart={showAnatomy ? "Typography" : undefined}
+                            <EnumChip
+                                value="inProgress"
+                                map={STATUS_MAP}
+                                isSkeleton
+                                anatPart={showAnatomy ? "EnumChip" : undefined}
+                            />
+                        ) : status != null ? (
+                            <EnumChip
+                                value={status}
+                                map={STATUS_MAP}
+                                anatPart={showAnatomy ? "EnumChip" : undefined}
                             />
                         ) : null}
                         {isSkeleton ? (
@@ -190,17 +219,13 @@ const ChallengeHeader = ({
                             />
                         )}
                         {isSkeleton ? (
-                            <EnumChip
-                                value="inProgress"
-                                map={STATUS_MAP}
-                                isSkeleton
-                                anatPart={showAnatomy ? "EnumChip" : undefined}
-                            />
-                        ) : status != null ? (
-                            <EnumChip
-                                value={status}
-                                map={STATUS_MAP}
-                                anatPart={showAnatomy ? "EnumChip" : undefined}
+                            <Typography size="xs" color="muted" isSkeleton className="w-16" anatPart={showAnatomy ? "Typography" : undefined} />
+                        ) : scoreValue != null ? (
+                            <Typography
+                                size="xs"
+                                color="muted"
+                                text={`${scoreValue} điểm`}
+                                anatPart={showAnatomy ? "Typography" : undefined}
                             />
                         ) : null}
                     </StackH>

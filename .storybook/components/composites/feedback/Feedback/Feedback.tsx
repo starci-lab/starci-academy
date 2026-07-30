@@ -69,6 +69,7 @@ const CALLOUT_ACTION_CLASS: Record<FeedbackCalloutStatus, string> = {
     success: "bg-success text-success-foreground",
     warning: "bg-warning text-warning-foreground",
     danger: "bg-danger text-danger-foreground",
+    info: "bg-info text-info-foreground",
 }
 
 /** Props for {@link FeedbackCallout}. */

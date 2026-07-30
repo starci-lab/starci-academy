@@ -59,15 +59,19 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * `description` renders through `Typography` itself (§4 — the frame owns
- * scale/tone for this caption), so the "Description" node it wraps gets a real
+ * `description` renders through `RichText` (§4 — the frame owns scale/tone
+ * for this caption), so the "Description" node it wraps gets a real
  * `storyId` to jump to.
+ *
+ * AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): was `Typography`
+ * trần — description là tầng "richtext nhỏ", đổi sang `RichText`. Xem
+ * `.artifacts/feedback/2026-07-29-challengepage-graded/round-1.md`.
  */
 const DESCRIPTION_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Typography": {
-        tier: "atom",
-        role: "the caption below Content, built by the frame from Typography (size xs, muted).",
-        storyId: "atoms-text-typography-typography--plain",
+    "RichText": {
+        tier: "composite",
+        role: "the caption below Content, built by the frame from RichText (size body-xs, muted).",
+        storyId: "composites-viewers-richtext--plain-text",
     },
 }
 

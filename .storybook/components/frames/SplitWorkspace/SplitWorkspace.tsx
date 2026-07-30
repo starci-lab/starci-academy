@@ -3,9 +3,16 @@ import { cn } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (khung) — `SplitWorkspace.*`: the READ-COLUMN + STICKY-ASIDE workspace
+ * FRAME (khung) — `SplitWorkspace`: the READ-COLUMN + STICKY-ASIDE workspace
  * shape — a brief/content column that grows, beside a fixed-width action column
  * that pins to the viewport once there's room for both side by side.
+ *
+ * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): đổi nhãn tầng
+ * "LAYOUT" → "FRAME" — file này nằm ở thư mục `frames/`, và `principles/
+ * naming` §6 đã CHỐT (2026-07-29, đĩa làm trọng tài): `frame` = `frames/`,
+ * `layout` = `<app>/layouts/`, hai tầng khác nhau. Cũng gỡ khai báo namespace
+ * `.Base` giả bên dưới — file này export BARE thật (xác nhận qua mọi
+ * call-site), không phải namespace.
  *
  * ⭐ WHY THIS KHUNG EXISTS (thầy 2026-07-29, "desktop là phải render flex chứ
  * nhỉ?"). Real `src` has this EXACT shape TWICE, byte-for-byte identical CSS —
@@ -39,7 +46,7 @@ import { cn } from "@heroui/react"
  */
 
 /** Props for {@link SplitWorkspace}. */
-export interface SplitWorkspaceBaseProps {
+export interface SplitWorkspaceProps {
     /** The reading column — grows, shrinks without limit (`min-w-0 flex-1`). */
     main: ReactNode
     /**
@@ -57,14 +64,14 @@ export interface SplitWorkspaceBaseProps {
  * The read-column + sticky-aside split. See the file header for why this is
  * its own khung and why every size is hard-owned rather than a prop.
  *
- * @param props - {@link SplitWorkspaceBaseProps}
+ * @param props - {@link SplitWorkspaceProps}
  */
-const SplitWorkspaceBase = ({
+const SplitWorkspace = ({
     main,
     aside,
     className,
     anatPart,
-}: SplitWorkspaceBaseProps) => (
+}: SplitWorkspaceProps) => (
     <div
         data-anat-part={anatPart}
         className={cn("flex flex-col gap-6 @app-xl:flex-row @app-xl:items-start @app-xl:gap-8", className)}
@@ -82,12 +89,4 @@ const SplitWorkspaceBase = ({
     </div>
 )
 
-/**
- * `SplitWorkspace.*` — read-column + sticky-aside khung. Namespace, no bare
- * component export (§13a).
- *
- * | Member | Content entry point |
- * |---|---|
- * | `.Base` | named slots `main` + `aside` |
- */
-export { SplitWorkspaceBase as SplitWorkspace }
+export { SplitWorkspace }

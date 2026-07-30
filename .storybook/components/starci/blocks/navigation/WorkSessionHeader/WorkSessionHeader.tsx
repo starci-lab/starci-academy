@@ -130,7 +130,10 @@ const WorkSessionHeader = ({
                 ) : null}
                 <span className="flex-1" />
                 {onFinish != null && finishLabel != null ? (
-                    <Button label={finishLabel} variant="secondary" size="sm" onPress={onFinish} anatPart={showAnatomy ? "Button" : undefined} />
+                    // AUDIT 2026-07-30 (QuizPage feedback, B2b): "END IT NOW" (dòng 20) là hành
+                    // động chấm dứt phiên giữa chừng — thầy chốt `danger-soft` thay vì `secondary`
+                    // trung tính đang có trước đó.
+                    <Button label={finishLabel} variant="danger-soft" size="sm" onPress={onFinish} anatPart={showAnatomy ? "Button" : undefined} />
                 ) : null}
             </StackH>
             {/* The rail. Segments are laid out by a frame so the seam stays on scale; each

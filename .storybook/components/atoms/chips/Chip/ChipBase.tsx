@@ -1,7 +1,6 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import { Chip as HeroChip, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { CircleIcon, XIcon } from "@phosphor-icons/react"
-import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -48,13 +47,18 @@ import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 /**
  * Tone NGỮ NGHĨA của chip → màu soft của HeroUI.
  *
- * Alias, not a redeclaration (thầy chốt 2026-07-29): cùng năm giá trị
- * {@link AlertStatus} đã sở hữu — trung lập gọi là `default`, đúng tên HeroUI's
- * `color` prop tự dùng, không phải `neutral` tự đặt. Trước bản này bảng
- * `TONE_COLOR` phải DỊCH `neutral → default` mỗi lần render; alias thẳng xoá
- * luôn tầng dịch đó, không chỉ đổi tên.
+ * Từng alias thẳng `AlertStatus` (`Alert.tsx`, thầy chốt 2026-07-29) — cùng năm
+ * giá trị, trung lập gọi là `default`, đúng tên HeroUI's `color` prop tự dùng.
+ *
+ * TÁCH RA khỏi alias đó ở round-9 (2026-07-30, feedback ChallengePage/Graded):
+ * `AlertStatus` thêm `"info"`, nhưng `tone` đổ THẲNG vào HeroUI's `HeroChip.color`
+ * — một prop của VENDOR, union đóng cứng của chính `@heroui/react`, không có
+ * `"info"`. Giữ alias sẽ khiến `Chip`/`EnumChip` cho phép gõ `tone="info"` ở
+ * compile-time rồi vỡ ngay tại `HeroChip` — một ràng buộc vendor không thể mở
+ * rộng bằng cách sửa type nhà mình. `ChipTone` giờ khai riêng, LUÔN đồng bộ 1:1
+ * với `HeroChip.color`'s union thật (5 giá trị, không có `info`).
  */
-export type ChipTone = AlertStatus
+export type ChipTone = "default" | "accent" | "success" | "warning" | "danger"
 
 /**
  * Icon truyền vào dạng COMPONENT (vd `CheckCircleIcon`), atom tự render ở cỡ chip.

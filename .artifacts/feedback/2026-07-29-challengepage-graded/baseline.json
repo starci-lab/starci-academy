@@ -1,0 +1,32 @@
+{
+  "storyId": "starci-pages-challengepage-challengepage--graded",
+  "measuredAt": "2026-07-29",
+  "note": "Đo bằng getComputedStyle trên DOM thật. Viewport lần đo đầu bị degenerate (hidden=true, w=0) nên mọi rect trả 0; đã ép 1280x900 bằng resize_window rồi đo lại. Con số dưới là lần đo SAU khi ép.",
+  "viewport": { "w": 1280, "h": 900 },
+
+  "blocks": {
+    "SplitWorkspace":           { "w": 1153, "h": 1384, "gap": "24px", "flexDirection": "column" },
+    "ChallengeHeader":          { "w": 1153, "h": 128,  "gap": "normal", "flexDirection": "row" },
+    "ChallengeBrief":           { "w": 1153, "h": 652,  "gap": "24px", "flexDirection": "column" },
+    "ChallengeDeliverableList": { "w": 1153, "h": 348,  "gap": "12px", "flexDirection": "column" },
+    "ChallengeScoreCard":       { "w": 1153, "h": 176,  "gap": "12px", "flexDirection": "column" }
+  },
+
+  "atoms": {
+    "Input":        { "w": 1129, "h": 36, "fontSize": "14px", "padding": "8px 12px", "borderRadius": "12px" },
+    "ScoreValue":   { "w": 44, "h": 16, "fontSize": "12px", "fontWeight": "500", "color": "oklch(0.7003 0.2092 354.13)" },
+    "ProgressMeter":{ "w": 1129, "h": 44, "gap": "8px", "flexDirection": "column" }
+  },
+
+  "icons": [
+    { "cls": "size-3.5 transition-[translate] group-hover", "px": 14 },
+    { "cls": "size-3", "px": 12 },
+    { "cls": "accordion__indicator size-5", "px": 20, "count": 6 },
+    { "cls": "size-5 shrink-0 text-success-soft-foreground", "px": 20, "count": 3 },
+    { "cls": "size-5 text-warning-soft-foreground", "px": 20 },
+    { "cls": "size-5 shrink-0 text-danger-soft-foreground", "px": 20 },
+    { "cls": "", "px": 14, "flag": "icon KHÔNG có class nào — nghi vendor tự vẽ hoặc class bị cloneElement nuốt, xem trục icon §1a.1" }
+  ],
+
+  "anatPartsCount": 76
+}

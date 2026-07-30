@@ -1,0 +1,63 @@
+{
+  "viewport": { "w": 1280, "h": 720, "note": "document.hidden=true (pane background tab) nhưng rect khác 0 và khác nhau theo từng vùng — không degenerate" },
+  "measuredAt": "2026-07-30",
+  "regions": {
+    "R1_PlaygroundSetupHeader": {
+      "storyId": "starci-pages-mockinterviewpage-mockinterviewpage--setup",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 92, "top": 56, "left": 272.5 }
+    },
+    "R2_MockInterviewSetup": {
+      "storyId": "starci-pages-mockinterviewpage-mockinterviewpage--setup",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 334, "top": 172, "left": 272.5 }
+    },
+    "R3_WorkSessionHeader": {
+      "storyId": "starci-pages-mockinterviewpage-mockinterviewpage--live",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 54.8, "top": 56, "left": 272.4 }
+    },
+    "R4_InterviewerPresence": {
+      "storyId": "starci-pages-mockinterviewpage-mockinterviewpage--live",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 84, "top": 134.8, "left": 272.4 }
+    },
+    "R5_VoiceHero": {
+      "storyId": "starci-pages-mockinterviewpage-mockinterviewpage--live",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 108, "top": 242.8, "left": 272.4 }
+    },
+    "R6_MockInterviewAnswerAction": {
+      "storyId": "starci-pages-mockinterviewpage-mockinterviewpage--live",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "500",
+      "gap": "8px", "padding": "0px 16px", "borderRadius": "24px",
+      "color": "oklch(1 0 0)",
+      "rect": { "w": 171.74, "h": 40, "top": 374.8, "left": 546.53 },
+      "note": "duy nhất trong 8 vùng có padding/borderRadius/gap khác 0 — vì đây là node BUTTON thật (MockInterviewAnswerAction bọc Button), 7 vùng còn lại đo trên node StackV/div bọc ngoài của block, không phải chính bề mặt căn styling"
+    },
+    "R7_SubmissionResultHeader": {
+      "storyId": "starci-pages-mockinterviewpage-mockinterviewpage--result",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 91.99, "top": 56, "left": 272.4 }
+    },
+    "R8_MockInterviewScorecard": {
+      "storyId": "starci-pages-mockinterviewpage-mockinterviewpage--result",
+      "fontSize": "16px", "lineHeight": "24px", "fontWeight": "400",
+      "gap": "normal", "padding": "0px", "borderRadius": "0px",
+      "color": "oklch(0.2103 0.0015 354.13)",
+      "rect": { "w": 720, "h": 792, "top": 171.99, "left": 272.4 }
+    }
+  }
+}

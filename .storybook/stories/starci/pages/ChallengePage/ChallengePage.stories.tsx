@@ -49,7 +49,7 @@ const PREREQUISITES = [
 const REQUIREMENTS = [
     {
         key: "req-1",
-        title: "Dựng API CRUD cho `Task`",
+        title: "Dựng API CRUD cho Task",
         points: 40,
         body: "Xây REST API `/tasks` hỗ trợ tạo, đọc, sửa, xoá — mỗi route trả đúng mã trạng thái HTTP.",
     },
@@ -76,7 +76,7 @@ const HINT = "Nếu route trả 500 khi test, kiểm tra lại xem đã `await` 
 const TODO_DELIVERABLES: Array<ChallengeDeliverableItem> = [
     {
         id: "api-design",
-        title: "Dựng API CRUD cho `Task`",
+        title: "Dựng API CRUD cho Task",
         points: 40,
         status: "todo",
         description: "Vẽ sơ đồ **resource** và liệt kê method/status code cho từng endpoint.",
@@ -90,6 +90,7 @@ const TODO_DELIVERABLES: Array<ChallengeDeliverableItem> = [
         title: "Viết test cho từng route",
         points: 30,
         status: "todo",
+        description: "Ít nhất một test integration cho mỗi route, chạy được bằng `npm test`.",
         url: "",
         onUrlChange: () => {},
         onSubmit: () => {},
@@ -100,9 +101,10 @@ const TODO_DELIVERABLES: Array<ChallengeDeliverableItem> = [
 const GRADED_DELIVERABLES: Array<ChallengeDeliverableItem> = [
     {
         id: "api-design",
-        title: "Dựng API CRUD cho `Task`",
+        title: "Dựng API CRUD cho Task",
         points: 40,
         status: "done",
+        description: "Vẽ sơ đồ **resource** và liệt kê method/status code cho từng endpoint.",
         url: "https://github.com/hocvien/task-api",
         onUrlChange: () => {},
         onSubmit: () => {},
@@ -111,6 +113,9 @@ const GRADED_DELIVERABLES: Array<ChallengeDeliverableItem> = [
             verdict: "pass",
             earnedScore: 40,
             requiredScore: 32,
+            attemptNumber: 1,
+            processedAt: "17:24 23/06",
+            shortFeedback: "Đủ bốn route CRUD, mã trạng thái đúng chuẩn.",
         },
     },
     {
@@ -118,6 +123,7 @@ const GRADED_DELIVERABLES: Array<ChallengeDeliverableItem> = [
         title: "Viết test cho từng route",
         points: 30,
         status: "failed",
+        description: "Ít nhất một test integration cho mỗi route, chạy được bằng `npm test`.",
         url: "https://github.com/hocvien/task-api/pull/3",
         onUrlChange: () => {},
         onSubmit: () => {},
@@ -126,15 +132,9 @@ const GRADED_DELIVERABLES: Array<ChallengeDeliverableItem> = [
             verdict: "fail",
             earnedScore: 12,
             requiredScore: 24,
-            feedback: [
-                {
-                    id: "f1",
-                    severity: "high",
-                    message: "Không có test cho route `DELETE /tasks/:id` khi id không tồn tại.",
-                    location: "test/tasks.spec.ts:58",
-                    suggestion: "Thêm case xoá một id chưa từng được tạo, kỳ vọng 404.",
-                },
-            ],
+            attemptNumber: 2,
+            processedAt: "18:44 23/06",
+            shortFeedback: "Bộ test chưa phủ nhánh id không tồn tại của route xoá.",
         },
     },
 ]

@@ -10,6 +10,7 @@ import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from 
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { RichText } from "@sb-components/composites/viewers/RichText/RichText"
 import { PADDING_CLASS, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
@@ -475,11 +476,14 @@ const Base = ({
     // The frame owns this text so it wraps the atom (§4) — and so the flag simply
     // flows straight into that same atom, instead of branching off to build a
     // separate shimmer bar.
-    const caption = <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): Typography trần →
+    // RichText — description là tầng "richtext nhỏ". Cùng khuôn cũ: isSkeleton chảy
+    // thẳng xuống làm prop, không branching hai component.
+    const caption = <RichText size="body-xs" color="muted" isSkeleton={isSkeleton} text={description ?? ""} />
     const cardWithCaption = description != null ? (
         <StackV gap="related">
             {highlighted}
-            {showAnatomy ? <div data-anat-part="Typography">{caption}</div> : caption}
+            {showAnatomy ? <div data-anat-part="RichText">{caption}</div> : caption}
         </StackV>
     ) : highlighted
     const labelRow = (
@@ -1320,6 +1324,7 @@ const LEADING_ICON_COLOR_CLASS: Record<AlertStatus, string> = {
     success: "text-success-soft-foreground",
     warning: "text-warning-soft-foreground",
     danger: "text-danger-soft-foreground",
+    info: "text-info-soft-foreground",
 }
 /**
  * One FIXED row: leading · title+subtitle · meta+trailing, with a full-bleed inset
@@ -1509,11 +1514,13 @@ const List = ({
         </div>
     )
     if (bare) return surface
-    const caption = <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): Typography trần →
+    // RichText, cùng lý lẽ với caption ở trên.
+    const caption = <RichText size="body-xs" color="muted" isSkeleton={isSkeleton} text={description ?? ""} />
     const withCaption = description != null ? (
         <StackV gap="related">
             {surface}
-            <div data-anat-part={showAnatomy ? "Typography" : undefined}>{caption}</div>
+            <div data-anat-part={showAnatomy ? "RichText" : undefined}>{caption}</div>
         </StackV>
     ) : surface
     return (
@@ -1542,9 +1549,10 @@ export interface SurfaceCardAccordionItem {
     /** Stable id — also the expand key. */
     id: string
     /**
-     * Trigger headline (the always-visible row). Plain string — goes through
-     * `Typography.parseInlineCode` (`` `backtick` `` only), never bold/italic/link
-     * (thầy chốt 2026-07-29: title tier stays plain, markdown-tier-rules.html).
+     * Trigger headline (the always-visible row). Plain string, no markdown at
+     * all — not even backtick code (thầy chốt 2026-07-30, feedback
+     * ChallengePage/Graded round-2, reversing the 2026-07-29 backtick
+     * exception: title tier is plain, full stop).
      */
     title: string
     /** Optional muted second line in the trigger. */
@@ -1643,10 +1651,10 @@ const AccordionFrame = ({
                             <StackH gap="tight" className="min-w-0 flex-1">
                                 {item.titleStart}
                                 <StackV gap="flush" className="min-w-0 flex-1 text-left">
-                                    {/* Trigger is a <button> — full block-level MarkdownContent can't nest
-                                        here, so `` `code` `` segments in the title go through
-                                        `parseInlineCode` instead (span-only, no other markdown syntax). */}
-                                    <Typography size="sm" weight="medium" truncate parseInlineCode text={item.title} />
+                                    {/* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2, thầy chốt):
+                                        đảo quyết định 2026-07-29 — title KHÔNG render markdown, kể cả
+                                        backtick-only qua `parseInlineCode`. Title tier giờ plain TUYỆT ĐỐI. */}
+                                    <Typography size="sm" weight="medium" truncate text={item.title} />
                                     {item.subtitle != null ? (
                                         <Typography size="xs" color="muted" truncate text={item.subtitle} />
                                     ) : null}

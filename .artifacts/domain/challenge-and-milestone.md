@@ -102,3 +102,20 @@
 - Bài nộp đồ án là của CẢ ĐỒ ÁN, không phải của từng nhiệm vụ: một repo, một nhánh, một token dùng chung cho mọi nhiệm vụ trong khóa. Panel phải giữ nguyên khi đổi nhiệm vụ, chỉ cột đọc bên trái đổi.
 - Token repo riêng chỉ ghi được, không đọc lại; backend chỉ trả về 4 ký tự cuối để nhận diện. Đừng dựng ô nhập kiểu "đọc rồi sửa". Neo: `src/modules/databases/postgresql/primary/entities/enrollment.entity.ts:206`.
 - Góp ý AI mới là giá trị chính, không phải con số điểm. Mỗi ý có `severity`, có thể có vị trí file và đề xuất sửa; màn kết quả sắp xếp theo `severity` giảm dần rồi tới thứ tự lưu, và biến vị trí file thành link vào repo khi biết URL.
+- `ChallengeSubmissionEntity` còn hai cột `approachScore`/`outcomeScore` (tỉ trọng chấm approach/outcome, không phải rubric — khác `outcomeCriteria`/`approachCriteria` jsonb ở dòng trên, cột đó mới là thứ bị giấu GraphQL). Đo trực tiếp Postgres 2026-07-30 (`docker exec starci-postgres psql`): LUÔN `70/30` ở mọi dòng đã sample — chưa quan sát được ca nào khác, nên hiện là hằng số chứ chưa phải thông tin biến thiên đáng vẽ riêng.
+
+## 5. Bản vẽ `.storybook` đã chốt khác mục 3, ghi lại để không đọc nhầm là doc sai
+
+`.storybook` là bản vẽ, được quyền dẫn trước `src` khi thầy chốt lại một quyết định
+(`.claude/fe/boundary.md`). Hai chỗ dưới đây bản vẽ đã đi khác dòng tương ứng ở mục 3 — mục 3 vẫn
+tả ĐÚNG `src` hiện tại, không sửa lại, chỉ ghi thêm ở đây để không ai đọc lệch thành "doc lạc hậu
+so với code":
+
+- **"Kết quả lần chấm gần nhất" (dòng 62)** — `src` thật (`LastAttemptResult.tsx`) render "chip
+  đạt/trượt, dòng điểm, rồi TỪNG DÒNG góp ý với chấm màu severity", luôn hiện. Bản vẽ
+  `ChallengeDeliverableList` (feedback `ChallengePage/Graded`, round-13, 2026-07-30, thầy chốt:
+  "ở đây thì shortFeedback thôi là được") CHỈ còn verdict chip + `shortFeedback` một câu, gói
+  trong một `Disclosure` — bỏ hẳn danh sách từng dòng góp ý ở khối này. Lý do: đo Postgres thật
+  cho thấy một attempt có thể tới 8 finding × 3 field, render hết ở panel nộp bài (đang cần gọn
+  để còn thao tác nộp) thì chôn mất form dưới hai chục dòng; danh sách chi tiết vẫn có nơi khác
+  phục vụ (route `.../result`, dòng 34 mục 2).

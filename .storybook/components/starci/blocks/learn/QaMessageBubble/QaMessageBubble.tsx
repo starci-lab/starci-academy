@@ -89,43 +89,67 @@ const MessageRow = ({
     const isMine = currentUserId != null && currentUserId === answer.author.id
     const displayName = isMine ? "Bạn" : answer.author.displayName
 
-    return (
-        <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
-            <StackV gap="tight" className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+    const authorRow = (
+        <StackH
+            gap="tight"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
                     <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" showAnatomy={showAnatomy} />
                     <Typography size="xs" weight="medium" text={displayName} anatPart={showAnatomy ? "Typography" : undefined} />
                     <Typography size="xs" color="muted" text={answer.createdTimeAgo} anatPart={showAnatomy ? "Typography" : undefined} />
                     {answer.isAcceptedAnswer ? (
                         <Chip tone="success" text="Câu trả lời được chọn" anatPart={showAnatomy ? "Chip" : undefined} />
                     ) : null}
-                </StackH>
+                </>
+            }
+        />
+    )
 
-                <QaChatBubble role={isMine ? "user" : "assistant"} anatPart={showAnatomy ? "QaChatBubble" : undefined}>
-                    <MarkdownContent source={answer.body} measure="compact" className="[&_p]:m-0" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
-                </QaChatBubble>
-
-                {interactive ? (
-                    <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <QaReactionBar
-                            count={answer.reactionCount}
-                            myReaction={answer.myReaction}
-                            onReact={interactive.onReact}
-                            showAnatomy={showAnatomy}
+    const reactionRow = interactive ? (
+        <StackH
+            gap="related"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <QaReactionBar
+                        count={answer.reactionCount}
+                        myReaction={answer.myReaction}
+                        onReact={interactive.onReact}
+                        showAnatomy={showAnatomy}
+                    />
+                    {interactive.canAccept ? (
+                        <Button
+                            variant={answer.isAcceptedAnswer ? "secondary" : "ghost"}
+                            size="sm"
+                            prefixIcon={CheckCircleIcon}
+                            label={answer.isAcceptedAnswer ? "Bỏ chọn" : "Chọn làm câu trả lời đúng"}
+                            onPress={() => interactive.onAcceptAnswer(!answer.isAcceptedAnswer)}
+                            anatPart={showAnatomy ? "Button" : undefined}
                         />
-                        {interactive.canAccept ? (
-                            <Button
-                                variant={answer.isAcceptedAnswer ? "secondary" : "ghost"}
-                                size="sm"
-                                prefixIcon={CheckCircleIcon}
-                                label={answer.isAcceptedAnswer ? "Bỏ chọn" : "Chọn làm câu trả lời đúng"}
-                                onPress={() => interactive.onAcceptAnswer(!answer.isAcceptedAnswer)}
-                                anatPart={showAnatomy ? "Button" : undefined}
-                            />
-                        ) : null}
-                    </StackH>
-                ) : null}
-            </StackV>
+                    ) : null}
+                </>
+            }
+        />
+    ) : null
+
+    const bubbleBody = (
+        <>
+            {authorRow}
+
+            <QaChatBubble role={isMine ? "user" : "assistant"} anatPart={showAnatomy ? "QaChatBubble" : undefined}>
+                <MarkdownContent source={answer.body} measure="compact" className="[&_p]:m-0" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+            </QaChatBubble>
+
+            {reactionRow}
+        </>
+    )
+
+    return (
+        <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
+            <StackV gap="tight" className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} anatPart={showAnatomy ? "StackV" : undefined} body={bubbleBody} />
         </div>
     )
 }
@@ -146,16 +170,26 @@ const QaMessageBubble = ({
     anatPart,
 }: QaMessageBubbleProps) => {
     if (isSkeleton) {
+        const skeletonBody = (
+            <>
+                <StackH
+                    gap="tight"
+                    align="center"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <>
+                            <Avatar isSkeleton size="sm" showAnatomy={showAnatomy} />
+                            <HeroSkeleton className="h-3 w-16 rounded" />
+                            <HeroSkeleton className="h-3 w-10 rounded" />
+                        </>
+                    }
+                />
+                <HeroSkeleton className="h-16 w-full rounded-2xl" />
+            </>
+        )
         return (
             <div data-anat-part={anatPart}>
-                <StackV gap="tight" className="max-w-[92%]" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <Avatar isSkeleton size="sm" showAnatomy={showAnatomy} />
-                        <HeroSkeleton className="h-3 w-16 rounded" />
-                        <HeroSkeleton className="h-3 w-10 rounded" />
-                    </StackH>
-                    <HeroSkeleton className="h-16 w-full rounded-2xl" />
-                </StackV>
+                <StackV gap="tight" className="max-w-[92%]" anatPart={showAnatomy ? "StackV" : undefined} body={skeletonBody} />
             </div>
         )
     }
@@ -163,21 +197,28 @@ const QaMessageBubble = ({
     // above, already guaranteed by the early return) — `!` only satisfies narrowing
     // across the destructure, it never actually fires.
     const realAnswer = answer!
+
+    const replyRows = (realAnswer.replies ?? []).map((reply) => (
+        <div key={reply.id} className="pl-8">
+            <MessageRow answer={reply} currentUserId={currentUserId} showAnatomy={showAnatomy} interactive={null} />
+        </div>
+    ))
+
+    const threadBody = (
+        <>
+            <MessageRow
+                answer={realAnswer}
+                currentUserId={currentUserId}
+                showAnatomy={showAnatomy}
+                interactive={{ canAccept, onAcceptAnswer, onReact }}
+            />
+            {replyRows}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                <MessageRow
-                    answer={realAnswer}
-                    currentUserId={currentUserId}
-                    showAnatomy={showAnatomy}
-                    interactive={{ canAccept, onAcceptAnswer, onReact }}
-                />
-                {(realAnswer.replies ?? []).map((reply) => (
-                    <div key={reply.id} className="pl-8">
-                        <MessageRow answer={reply} currentUserId={currentUserId} showAnatomy={showAnatomy} interactive={null} />
-                    </div>
-                ))}
-            </StackV>
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={threadBody} />
         </div>
     )
 }

@@ -183,61 +183,81 @@ const CourseQaComposer = ({
     if (mode === "collapsible" && !expanded) {
         return (
             <div data-anat-part={anatPart}>
-                <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                    {avatar}
-                    <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputButtonLike" : undefined}>
-                        <InputButtonLike
-                            placeholder={placeholder ?? "Đặt câu hỏi cho khoá học này…"}
-                            onPress={() => setExpanded(true)}
-                            isSkeleton={isSkeleton}
-                        />
-                    </div>
-                </StackH>
+                <StackH
+                    gap="related"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <>
+                            {avatar}
+                            <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputButtonLike" : undefined}>
+                                <InputButtonLike
+                                    placeholder={placeholder ?? "Đặt câu hỏi cho khoá học này…"}
+                                    onPress={() => setExpanded(true)}
+                                    isSkeleton={isSkeleton}
+                                />
+                            </div>
+                        </>
+                    }
+                />
             </div>
         )
     }
 
     // ── LEAF — ExpandedForm: avatar + textarea + action row ───────────────────
+    const actionRow = (
+        <>
+            {showCancel ? (
+                <Button
+                    label="Huỷ"
+                    variant="tertiary"
+                    size="sm"
+                    onPress={handleCancel}
+                    isDisabled={isPending}
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            ) : null}
+            <Button
+                label={submitLabel}
+                variant="primary"
+                size="sm"
+                onPress={handleSubmit}
+                isDisabled={!canSubmit}
+                isPending={isPending}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+        </>
+    )
+
+    const form = (
+        <>
+            <InputTextarea
+                value={value}
+                onValueChange={onValueChange}
+                placeholder={placeholder}
+                ariaLabel={placeholder ?? "Nội dung"}
+                rows={3}
+                isDisabled={isPending}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <StackH gap="related" justify="end" anatPart={showAnatomy ? "StackH" : undefined} body={actionRow} />
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                {avatar}
-                <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <InputTextarea
-                        value={value}
-                        onValueChange={onValueChange}
-                        placeholder={placeholder}
-                        ariaLabel={placeholder ?? "Nội dung"}
-                        rows={3}
-                        isDisabled={isPending}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <StackH gap="related" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
-                        {showCancel ? (
-                            <Button
-                                label="Huỷ"
-                                variant="tertiary"
-                                size="sm"
-                                onPress={handleCancel}
-                                isDisabled={isPending}
-                                isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "Button" : undefined}
-                            />
-                        ) : null}
-                        <Button
-                            label={submitLabel}
-                            variant="primary"
-                            size="sm"
-                            onPress={handleSubmit}
-                            isDisabled={!canSubmit}
-                            isPending={isPending}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    </StackH>
-                </StackV>
-            </StackH>
+            <StackH
+                gap="related"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        {avatar}
+                        <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={form} />
+                    </>
+                }
+            />
         </div>
     )
 }

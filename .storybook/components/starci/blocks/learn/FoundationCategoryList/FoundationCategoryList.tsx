@@ -223,24 +223,30 @@ const FoundationCategoryList = ({
     const showPager = !isSkeleton && categories.length > 0 && pagination != null
 
     return (
-        <StackV gap="grouped" anatPart={anatPart}>
-            <SurfaceCardList
-                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                isSkeleton={isSkeleton}
-                items={rows}
-                emptyState={emptyState}
-            />
-            {showPager ? (
-                <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
-                    <Pagination
-                        currentPage={pagination.currentPage}
-                        totalPages={pagination.totalPages}
-                        onPageChange={pagination.onPageChange}
-                        showAnatomy={showAnatomy}
+        <StackV
+            gap="grouped"
+            anatPart={anatPart}
+            body={
+                <>
+                    <SurfaceCardList
+                        anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+                        isSkeleton={isSkeleton}
+                        items={rows}
+                        emptyState={emptyState}
                     />
-                </div>
-            ) : null}
-        </StackV>
+                    {showPager ? (
+                        <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
+                            <Pagination
+                                currentPage={pagination.currentPage}
+                                totalPages={pagination.totalPages}
+                                onPageChange={pagination.onPageChange}
+                                showAnatomy={showAnatomy}
+                            />
+                        </div>
+                    ) : null}
+                </>
+            }
+        />
     )
 }
 

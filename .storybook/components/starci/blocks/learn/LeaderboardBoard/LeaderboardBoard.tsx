@@ -171,12 +171,32 @@ interface PodiumProps {
     showAnatomy: boolean
 }
 
-const Podium = ({ entries, meLabel, isSkeleton, showAnatomy }: PodiumProps) => (
-    <StackH gap="related" justify="center" align="end" anatPart={showAnatomy ? "StackH" : undefined}>
-        {[...entries]
-            .sort((a, b) => PODIUM_VISUAL_ORDER[a.rank] - PODIUM_VISUAL_ORDER[b.rank])
-            .map((entry) => (
-                <StackV key={entry.rank} gap="tight" align="center" className="w-24" anatPart={showAnatomy ? "StackV" : undefined}>
+/** One podium dais entry: avatar, username, score line, ranked riser. */
+const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkeleton: boolean, showAnatomy: boolean) => {
+    const riser = (
+        <div className={`flex w-full items-center justify-center rounded-t-xl bg-accent-soft ${PODIUM_RISER_HEIGHT[entry.rank]}`}>
+            {/* src thật (`Podium/index.tsx:103-112`): số hạng là 1 div TRẦN, không
+                khai size nào (kế thừa base/16px), chỉ `font-bold` — không phải `lg`. */}
+            <Typography
+                size="base"
+                weight="bold"
+                tabularNums
+                isSkeleton={isSkeleton}
+                text={isSkeleton ? undefined : String(entry.rank)}
+                color="accent-soft"
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+        </div>
+    )
+    return (
+        <StackV
+            key={entry.rank}
+            gap="tight"
+            align="center"
+            className="w-24"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
                     <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
                         <Avatar
                             name={entry.username}
@@ -205,23 +225,24 @@ const Podium = ({ entries, meLabel, isSkeleton, showAnatomy }: PodiumProps) => (
                         text={isSkeleton ? undefined : entry.pointsLabel}
                         anatPart={showAnatomy ? "Typography" : undefined}
                     />
-                    <div className={`flex w-full items-center justify-center rounded-t-xl bg-accent-soft ${PODIUM_RISER_HEIGHT[entry.rank]}`}>
-                        {/* src thật (`Podium/index.tsx:103-112`): số hạng là 1 div TRẦN, không
-                            khai size nào (kế thừa base/16px), chỉ `font-bold` — không phải `lg`. */}
-                        <Typography
-                            size="base"
-                            weight="bold"
-                            tabularNums
-                            isSkeleton={isSkeleton}
-                            text={isSkeleton ? undefined : String(entry.rank)}
-                            color="accent-soft"
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    </div>
+                    {riser}
                     {entry.isMe ? <span className="sr-only">{meLabel}</span> : null}
-                </StackV>
-            ))}
-    </StackH>
+                </>
+            }
+        />
+    )
+}
+
+const Podium = ({ entries, meLabel, isSkeleton, showAnatomy }: PodiumProps) => (
+    <StackH
+        gap="related"
+        justify="center"
+        align="end"
+        anatPart={showAnatomy ? "StackH" : undefined}
+        body={[...entries]
+            .sort((a, b) => PODIUM_VISUAL_ORDER[a.rank] - PODIUM_VISUAL_ORDER[b.rank])
+            .map((entry) => podiumEntryCard(entry, meLabel, isSkeleton, showAnatomy))}
+    />
 )
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -306,38 +327,45 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean, show
     key: row.key,
     href: row.profileHref,
     content: (
-        <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-            <Typography
-                size="sm"
-                color="muted"
-                tabularNums
-                align="center"
-                isSkeleton={isSkeleton}
-                text={isSkeleton ? undefined : `#${row.rank}`}
-                classNames={["w-1/4", "shrink-0"]}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-            <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "UserCell" : undefined}>
-                <UserCell
-                    username={row.username}
-                    avatar={row.avatar}
-                    isOwnRow={row.isMe}
-                    trailing={
-                        <Typography
-                            size="sm"
-                            weight="medium"
-                            tabularNums
+        <StackH
+            gap="related"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        tabularNums
+                        align="center"
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : `#${row.rank}`}
+                        classNames={["w-1/4", "shrink-0"]}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "UserCell" : undefined}>
+                        <UserCell
+                            username={row.username}
+                            avatar={row.avatar}
+                            isOwnRow={row.isMe}
+                            trailing={
+                                <Typography
+                                    size="sm"
+                                    weight="medium"
+                                    tabularNums
+                                    isSkeleton={isSkeleton}
+                                    text={isSkeleton ? undefined : row.valueLabel}
+                                    anatPart={showAnatomy ? "Typography" : undefined}
+                                />
+                            }
                             isSkeleton={isSkeleton}
-                            text={isSkeleton ? undefined : row.valueLabel}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
-                    }
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-            </div>
-            {row.isMe ? <span className="sr-only">{meLabel}</span> : null}
-        </StackH>
+                    </div>
+                    {row.isMe ? <span className="sr-only">{meLabel}</span> : null}
+                </>
+            }
+        />
     ),
 })
 
@@ -389,51 +417,78 @@ interface BoardProps {
     showAnatomy: boolean
 }
 
-const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton, showAnatomy }: BoardProps) => (
-    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-        {standing ? (
-            <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} anatPart={showAnatomy ? "IconTile" : undefined} />
-                    <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {/* The rank NUMBER is typed data; "Hạng #N" is the block's own wording (§14d.1). */}
+const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton, showAnatomy }: BoardProps) => {
+    const standingLabels = standing ? (
+        <StackV
+            gap="flush"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {/* The rank NUMBER is typed data; "Hạng #N" is the block's own wording (§14d.1). */}
+                    <Typography
+                        size="base"
+                        weight="bold"
+                        tabularNums
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : `Hạng #${standing.rank}`}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    <Typography
+                        size="sm"
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : standing.primaryLabel}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    {standing.secondaryLabel ? (
                         <Typography
-                            size="base"
-                            weight="bold"
-                            tabularNums
+                            size="xs"
+                            color="muted"
                             isSkeleton={isSkeleton}
-                            text={isSkeleton ? undefined : `Hạng #${standing.rank}`}
+                            text={isSkeleton ? undefined : standing.secondaryLabel}
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />
-                        <Typography
-                            size="sm"
-                            isSkeleton={isSkeleton}
-                            text={isSkeleton ? undefined : standing.primaryLabel}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                        {standing.secondaryLabel ? (
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                isSkeleton={isSkeleton}
-                                text={isSkeleton ? undefined : standing.secondaryLabel}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : null}
-                    </StackV>
-                </StackH>
-            </SurfaceCard>
-        ) : null}
-        {podiumEntries.length > 0 ? (
-            <Podium entries={podiumEntries} meLabel={meLabel} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
-        ) : null}
-        <SurfaceCardList
-            items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton, showAnatomy)}
-            anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-            showAnatomy={showAnatomy}
+                    ) : null}
+                </>
+            }
         />
-    </StackV>
-)
+    ) : null
+
+    const standingCard = standing ? (
+        <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+            <StackH
+                gap="related"
+                align="center"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} anatPart={showAnatomy ? "IconTile" : undefined} />
+                        {standingLabels}
+                    </>
+                }
+            />
+        </SurfaceCard>
+    ) : null
+
+    return (
+        <StackV
+            gap="section"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {standingCard}
+                    {podiumEntries.length > 0 ? (
+                        <Podium entries={podiumEntries} meLabel={meLabel} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                    ) : null}
+                    <SurfaceCardList
+                        items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton, showAnatomy)}
+                        anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+                        showAnatomy={showAnatomy}
+                    />
+                </>
+            }
+        />
+    )
+}
 
 /** Fixed-shape placeholder rendered while {@link AsyncContentBaseProps.isLoading} — no real data exists yet. */
 const LOADING_PODIUM: Array<LeaderboardPodiumEntry> = [

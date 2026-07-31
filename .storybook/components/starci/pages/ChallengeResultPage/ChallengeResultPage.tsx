@@ -219,84 +219,96 @@ const ChallengeResultPage = ({
     // cluster's height so the page does not jump once the first attempt lands.
     const hasSelection = isSkeleton || selectedAttemptId != null
 
+    const scoreSection = (
+        <>
+            <SubmissionScoreCard
+                anatPart="SubmissionScoreCard"
+                label={scoreLabel}
+                score={score ?? 0}
+                maxScore={maxScore}
+                isPassing={isPassing}
+                passScore={passScore}
+                shortFeedback={shortFeedback}
+                submissionUrl={submissionUrl}
+                submissionLabel={submissionLabel}
+                gradedByModel={gradedByModel}
+                modelCategory={modelCategory}
+                gradedByLabel={gradedByLabel}
+                timeAgo={timeAgo}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <SubmissionFindingsList
+                anatPart="SubmissionFindingsList"
+                label={findingsLabel}
+                findings={findings}
+                repositoryUrl={repositoryUrl}
+                isLoading={isFindingsLoading}
+                isEmpty={isFindingsEmpty}
+                error={findingsError}
+                onRetry={onRetryFindings}
+                retryLabel={retryFindingsLabel}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            {/* Nothing left to fix on a passing attempt — see file header. */}
+            {!isPassing ? (
+                <ContentRelatedList
+                    anatPart="ContentRelatedList"
+                    items={relatedItems}
+                    label={relatedLabel}
+                    isSkeleton={isSkeleton}
+                    showAnatomy={showAnatomy}
+                />
+            ) : null}
+        </>
+    )
+
+    const attemptsSection = (
+        <>
+            <SubmissionAttemptSelector
+                anatPart="SubmissionAttemptSelector"
+                attempts={attempts}
+                selectedId={selectedAttemptId}
+                onSelect={onSelectAttempt}
+                ariaLabel={attemptsAriaLabel}
+                overflowCount={overflowCount}
+                overflowLabel={overflowLabel}
+                onOverflowPress={onOverflowPress}
+                isLoading={isAttemptsLoading}
+                isEmpty={isAttemptsEmpty}
+                error={attemptsError}
+                onRetry={onRetryAttempts}
+                retryLabel={retryAttemptsLabel}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            {hasSelection ? (
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={scoreSection} />
+            ) : null}
+        </>
+    )
+
+    const pageSections = (
+        <>
+            <SubmissionResultHeader
+                anatPart="SubmissionResultHeader"
+                backLabel={backLabel}
+                onBack={onBack}
+                title={title}
+                description={description}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={attemptsSection} />
+        </>
+    )
+
+    const resultBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={pageSections} />
+
     return (
         <>
-            <Container size="xl" padding="roomy">
-                <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <SubmissionResultHeader
-                        anatPart="SubmissionResultHeader"
-                        backLabel={backLabel}
-                        onBack={onBack}
-                        title={title}
-                        description={description}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <SubmissionAttemptSelector
-                            anatPart="SubmissionAttemptSelector"
-                            attempts={attempts}
-                            selectedId={selectedAttemptId}
-                            onSelect={onSelectAttempt}
-                            ariaLabel={attemptsAriaLabel}
-                            overflowCount={overflowCount}
-                            overflowLabel={overflowLabel}
-                            onOverflowPress={onOverflowPress}
-                            isLoading={isAttemptsLoading}
-                            isEmpty={isAttemptsEmpty}
-                            error={attemptsError}
-                            onRetry={onRetryAttempts}
-                            retryLabel={retryAttemptsLabel}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        {hasSelection ? (
-                            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                                <SubmissionScoreCard
-                                    anatPart="SubmissionScoreCard"
-                                    label={scoreLabel}
-                                    score={score ?? 0}
-                                    maxScore={maxScore}
-                                    isPassing={isPassing}
-                                    passScore={passScore}
-                                    shortFeedback={shortFeedback}
-                                    submissionUrl={submissionUrl}
-                                    submissionLabel={submissionLabel}
-                                    gradedByModel={gradedByModel}
-                                    modelCategory={modelCategory}
-                                    gradedByLabel={gradedByLabel}
-                                    timeAgo={timeAgo}
-                                    isSkeleton={isSkeleton}
-                                    showAnatomy={showAnatomy}
-                                />
-                                <SubmissionFindingsList
-                                    anatPart="SubmissionFindingsList"
-                                    label={findingsLabel}
-                                    findings={findings}
-                                    repositoryUrl={repositoryUrl}
-                                    isLoading={isFindingsLoading}
-                                    isEmpty={isFindingsEmpty}
-                                    error={findingsError}
-                                    onRetry={onRetryFindings}
-                                    retryLabel={retryFindingsLabel}
-                                    isSkeleton={isSkeleton}
-                                    showAnatomy={showAnatomy}
-                                />
-                                {/* Nothing left to fix on a passing attempt — see file header. */}
-                                {!isPassing ? (
-                                    <ContentRelatedList
-                                        anatPart="ContentRelatedList"
-                                        items={relatedItems}
-                                        label={relatedLabel}
-                                        isSkeleton={isSkeleton}
-                                        showAnatomy={showAnatomy}
-                                    />
-                                ) : null}
-                            </StackV>
-                        ) : null}
-                    </StackV>
-                </StackV>
-            </Container>
+            <Container size="xl" padding="roomy" body={resultBody} />
             <SubmissionAttemptsDrawer
                 anatPart={showAnatomy ? "SubmissionAttemptsDrawer" : undefined}
                 isOpen={isHistoryOpen}

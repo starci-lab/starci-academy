@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, PADDING_CLASS, type LayoutAlign, type LayoutJustify, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 
 /**
@@ -87,13 +88,16 @@ export interface FlexBaseProps {
      */
     wrap?: boolean
     /** The content being laid out. */
-    children: ReactNode
-    /** Placement only, never a way to restyle the box. */
+    body?: ReactNode
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Name this box in a BlockAnatomy panel. */
     anatPart?: string
-    /** Story only: emit `data-anat-part` so a panel can badge the box. */
-    showAnatomy?: boolean
 }
 
 /** Direction to its literal class. Tailwind never emits an interpolated `flex-${x}`. */
@@ -117,10 +121,10 @@ const FlexBase = ({
     align,
     justify,
     wrap = false,
-    children,
+    body,
     className,
+    classNames,
     anatPart,
-    showAnatomy = false,
 }: FlexBaseProps) => (
     // No self-name fallback: `Flex` is internal-only (see the export note below) and has
     // no story of its own, so a default badge here would only ever point nowhere (§11a.1 rule
@@ -139,9 +143,10 @@ const FlexBase = ({
             // never fire. Ignoring it here keeps the rendered class list honest.
             wrap && direction === "row" && "flex-wrap",
             className,
+            classNames,
         )}
     >
-        {children}
+        {body}
     </Tag>
 )
 

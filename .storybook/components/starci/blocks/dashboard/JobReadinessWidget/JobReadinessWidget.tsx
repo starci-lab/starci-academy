@@ -120,10 +120,16 @@ const pillarMeter = (label: string, score: number | null, isSkeleton: boolean, s
         return null
     }
     return isSkeleton ? (
-        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-            <Typography size="xs" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-            <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-        </StackV>
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography size="xs" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+                    <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                </>
+            }
+        />
     ) : (
         <ProgressMeter
             label={label}
@@ -143,41 +149,52 @@ interface ContentProps {
     showAnatomy: boolean
 }
 
-const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentProps) => (
-    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-        <StackH gap="grouped" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-            <StatPair
-                value={isSkeleton ? undefined : (track.depthScore ?? 0)}
-                label={isSkeleton ? undefined : track.courseTitle}
-                isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "StatPair" : undefined}
+const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentProps) => {
+    const trackSummary = (
+        <>
+            <StackH
+                gap="grouped"
+                wrap
+                align="center"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        <StatPair
+                            value={isSkeleton ? undefined : (track.depthScore ?? 0)}
+                            label={isSkeleton ? undefined : track.courseTitle}
+                            isSkeleton={isSkeleton}
+                            anatPart={showAnatomy ? "StatPair" : undefined}
+                        />
+                        <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} anatPart={showAnatomy ? "EnumChip" : undefined} />
+                    </>
+                }
             />
-            <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} anatPart={showAnatomy ? "EnumChip" : undefined} />
-        </StackH>
-        {!isSkeleton && codingPercentile != null ? (
-            <Typography
-                size="xs"
-                color="muted"
-                text={`Vượt qua ${codingPercentile}% học viên về coding`}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-        ) : null}
-        {pillarMeter("Dự án cuối khoá", track.capstoneScore, isSkeleton, showAnatomy)}
-        {pillarMeter("Phỏng vấn thử", track.interviewScore, isSkeleton, showAnatomy)}
-        {pillarMeter("CV", track.cvScore, isSkeleton, showAnatomy)}
-        {isSkeleton ? (
-            <Button isSkeleton classNames={["self-start"]} />
-        ) : track.nextAction ? (
-            <Button
-                variant="primary"
-                classNames={["self-start"]}
-                label={track.nextAction.label}
-                onPress={track.nextAction.onPress}
-                anatPart={showAnatomy ? "Button" : undefined}
-            />
-        ) : null}
-    </StackV>
-)
+            {!isSkeleton && codingPercentile != null ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    text={`Vượt qua ${codingPercentile}% học viên về coding`}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+            {pillarMeter("Dự án cuối khoá", track.capstoneScore, isSkeleton, showAnatomy)}
+            {pillarMeter("Phỏng vấn thử", track.interviewScore, isSkeleton, showAnatomy)}
+            {pillarMeter("CV", track.cvScore, isSkeleton, showAnatomy)}
+            {isSkeleton ? (
+                <Button isSkeleton classNames={["self-start"]} />
+            ) : track.nextAction ? (
+                <Button
+                    variant="primary"
+                    classNames={["self-start"]}
+                    label={track.nextAction.label}
+                    onPress={track.nextAction.onPress}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            ) : null}
+        </>
+    )
+    return <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={trackSummary} />
+}
 
 /** Fixed-shape placeholder rendered while {@link JobReadinessWidgetProps.isLoading} — no real track exists yet. */
 const LOADING_TRACK: JobReadinessTrack = {

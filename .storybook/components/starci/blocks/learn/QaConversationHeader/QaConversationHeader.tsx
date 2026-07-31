@@ -84,9 +84,47 @@ const QaConversationHeader = ({
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
-}: QaConversationHeaderProps) => (
-    <div data-anat-part={anatPart}>
-        <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+}: QaConversationHeaderProps) => {
+    const nameRow = (
+        <StackH
+            gap="tight"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                isSkeleton ? (
+                    <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                ) : (
+                    <>
+                        <Typography size="sm" weight="medium" text={asker.displayName} anatPart={showAnatomy ? "Typography" : undefined} />
+                        {isFounderAsker ? (
+                            <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                        ) : null}
+                    </>
+                )
+            }
+        />
+    )
+
+    const identityColumn = (
+        <StackV
+            gap="flush"
+            className="min-w-0 flex-1"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {nameRow}
+                    {isSkeleton ? (
+                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    ) : (
+                        <Typography size="xs" color="muted" text={replyLabel(replyCount)} anatPart={showAnatomy ? "Typography" : undefined} />
+                    )}
+                </>
+            }
+        />
+    )
+
+    const headerRow = (
+        <>
             <Button
                 isIconOnly
                 variant="ghost"
@@ -107,25 +145,7 @@ const QaConversationHeader = ({
                 showAnatomy={showAnatomy}
             />
 
-            <StackV gap="flush" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    {isSkeleton ? (
-                        <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <>
-                            <Typography size="sm" weight="medium" text={asker.displayName} anatPart={showAnatomy ? "Typography" : undefined} />
-                            {isFounderAsker ? (
-                                <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                            ) : null}
-                        </>
-                    )}
-                </StackH>
-                {isSkeleton ? (
-                    <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                ) : (
-                    <Typography size="xs" color="muted" text={replyLabel(replyCount)} anatPart={showAnatomy ? "Typography" : undefined} />
-                )}
-            </StackV>
+            {identityColumn}
 
             {participants.length > 0 ? (
                 <AvatarGroup
@@ -146,8 +166,14 @@ const QaConversationHeader = ({
                     anatPart={showAnatomy ? "Button" : undefined}
                 />
             ) : null}
-        </StackH>
-    </div>
-)
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={headerRow} />
+        </div>
+    )
+}
 
 export { QaConversationHeader }

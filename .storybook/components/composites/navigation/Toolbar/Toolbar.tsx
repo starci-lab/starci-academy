@@ -179,22 +179,27 @@ const ToolbarBase = ({
                                 size === "sm" && TAB_SIZE_SM,
                             )}
                         >
-                            <StackH gap="related">
-                                {item.icon}
-                                {/* a tab WITH an icon hides its label visually on mobile
-                                    (icon-only) and shows it from sm up; `sr-only` keeps the
-                                    accessible name on mobile. An icon-less tab always shows it. */}
-                                {item.compactLabel != null ? (
+                            <StackH
+                                gap="related"
+                                body={
                                     <>
-                                        <span className="@app-sm:hidden">{item.compactLabel}</span>
-                                        <span className="hidden @app-sm:inline">{item.label}</span>
+                                        {item.icon}
+                                        {/* a tab WITH an icon hides its label visually on mobile
+                                            (icon-only) and shows it from sm up; `sr-only` keeps the
+                                            accessible name on mobile. An icon-less tab always shows it. */}
+                                        {item.compactLabel != null ? (
+                                            <>
+                                                <span className="@app-sm:hidden">{item.compactLabel}</span>
+                                                <span className="hidden @app-sm:inline">{item.label}</span>
+                                            </>
+                                        ) : item.label ? (
+                                            <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
+                                                {item.label}
+                                            </span>
+                                        ) : null}
                                     </>
-                                ) : item.label ? (
-                                    <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
-                                        {item.label}
-                                    </span>
-                                ) : null}
-                            </StackH>
+                                }
+                            />
                             {/* REQUIRED for "primary" and secondary-ACCENT — HeroUI Tabs
                                 renders no selected-state chrome of its own. Suppressed for
                                 secondary-NEUTRAL: `.tabs--secondary`'s indicator is hardcoded
@@ -269,37 +274,53 @@ const ToolbarBase = ({
             </Select.Root>
         )
     }
-    return (
-        <StackH gap="grouped" justify="between" className={cn(showAnatomy && "relative", className)} anatPart={anatPart}>
-            {/* Self-tag: lets a PARENT composite (e.g. FlashcardDeckList) cascade
-                `showAnatomy` down and badge Toolbar as ONE opaque part in ITS OWN
-                tree, without drilling into left/right groups (§11a). Harmless when
-                Toolbar is the anatomy SUBJECT itself (below): the name "Toolbar" is
-                absent from that leaf's own `parts`, so it's measured then filtered out. */}
-            {showAnatomy ? <AnatomyOverlay label="Toolbar" tier="composite" href="/?path=/docs/composites-navigation-toolbar-toolbar-base--docs" /> : null}
-            {leftEnd ? (
-                <StackH gap="tight" className="min-w-0">
+    const leftGroup = leftEnd ? (
+        <StackH
+            gap="tight"
+            classNames={["min-w-0"]}
+            body={
+                <>
                     <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
                     <div>{leftEnd}</div>
-                </StackH>
-            ) : (
-                <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
-            )}
-            {rightTabs
-                ? collapseRightOnMobile
-                    ? (
-                        <div>
-                            {/* mobile: collapse to a dropdown (HeroUI Select.Root); sm+: inline tabs
-                                (atom Tabs.Extended) — BOTH real components mount at once (one hidden
-                                via CSS), so each gets its OWN badge instead of one wrapper name that
-                                could only honestly describe one of them. */}
-                            <div className="@app-sm:hidden" data-anat-part={showAnatomy ? "Select.Root" : undefined}>{renderSelect(rightTabs)}</div>
-                            <div className="hidden @app-sm:block" data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
-                        </div>
-                    )
-                    : <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
-                : null}
-        </StackH>
+                </>
+            }
+        />
+    ) : (
+        <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
+    )
+    const rightGroup = rightTabs
+        ? collapseRightOnMobile
+            ? (
+                <div>
+                    {/* mobile: collapse to a dropdown (HeroUI Select.Root); sm+: inline tabs
+                        (atom Tabs.Extended) — BOTH real components mount at once (one hidden
+                        via CSS), so each gets its OWN badge instead of one wrapper name that
+                        could only honestly describe one of them. */}
+                    <div className="@app-sm:hidden" data-anat-part={showAnatomy ? "Select.Root" : undefined}>{renderSelect(rightTabs)}</div>
+                    <div className="hidden @app-sm:block" data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+                </div>
+            )
+            : <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+        : null
+    return (
+        <StackH
+            gap="grouped"
+            justify="between"
+            className={cn(showAnatomy && "relative", className)}
+            anatPart={anatPart}
+            body={
+                <>
+                    {/* Self-tag: lets a PARENT composite (e.g. FlashcardDeckList) cascade
+                        `showAnatomy` down and badge Toolbar as ONE opaque part in ITS OWN
+                        tree, without drilling into left/right groups (§11a). Harmless when
+                        Toolbar is the anatomy SUBJECT itself (below): the name "Toolbar" is
+                        absent from that leaf's own `parts`, so it's measured then filtered out. */}
+                    {showAnatomy ? <AnatomyOverlay label="Toolbar" tier="composite" href="/?path=/docs/composites-navigation-toolbar-toolbar-base--docs" /> : null}
+                    {leftGroup}
+                    {rightGroup}
+                </>
+            }
+        />
     )
 }
 /**

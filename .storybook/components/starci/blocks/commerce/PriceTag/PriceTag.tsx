@@ -172,57 +172,146 @@ const PriceTagBase = ({
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped` (§10b), not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <StackV gap="grouped" className="p-3">
-            <Typography size="xs" color="muted" text="Chi tiết giá" />
-            {/* No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
-                is the §10b `grouped` step). Passing one from here overrides the composite's
-                spacing from OUTSIDE, which §10 forbids — a composite owns its internal
-                spacing and must not receive it. */}
-            <KeyValueList
-                anatPart={showAnatomy ? "KeyValueList" : undefined}
-                items={[
-                    {
-                        key: "list",
-                        label: "Giá gốc",
-                        value: formatPrice(original ?? discounted, currency),
-                    },
-                    ...(breakdown && original != null && original > breakdown.phase
+        <StackV gap="grouped" className="p-3" body={(
+            <>
+                <Typography size="xs" color="muted" text="Chi tiết giá" />
+                {/* No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
+                    is the §10b `grouped` step). Passing one from here overrides the composite's
+                    spacing from OUTSIDE, which §10 forbids — a composite owns its internal
+                    spacing and must not receive it. */}
+                <KeyValueList
+                    anatPart={showAnatomy ? "KeyValueList" : undefined}
+                    items={[
+                        {
+                            key: "list",
+                            label: "Giá gốc",
+                            value: formatPrice(original ?? discounted, currency),
+                        },
+                        ...(breakdown && original != null && original > breakdown.phase
+                            ? [{
+                                key: "phase",
+                                label: breakdown.phaseLabel ? `Giai đoạn ${breakdown.phaseLabel}` : "Ưu đãi giai đoạn",
+                                value: (
+                                    <Typography
+                                        size="sm"
+                                        color="success-soft"
+                                        text={`−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`}
+                                    />
+                                ),
+                            }]
+                            : []),
+                        ...(breakdown && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted
+                            ? [{
+                                key: "loyalty",
+                                label: breakdown.loyaltyNote ? `Ưu đãi thành viên · ${breakdown.loyaltyNote}` : "Ưu đãi thành viên",
+                                value: (
+                                    <Typography
+                                        size="sm"
+                                        color="success-soft"
+                                        classNames={["shrink-0"]}
+                                        text={`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
+                                    />
+                                ),
+                            }]
+                            : []),
+                        {
+                            key: "total",
+                            label: "Bạn trả",
+                            value: formatPrice(discounted, currency),
+                            // the TOTAL row: the frame handles the emphasis, replacing a hand-typed `border-t … pt-1`
+                            emphasis: true,
+                        },
+                    ]}
+                />
+            </>
+        )} />
+    ) : null
+
+    // The price row aligns on BASELINE (big number, struck number, chip share the
+    // same text baseline) and wraps on its own when tight ⇒ exactly `Cluster`.
+    // The three elements are THREE separate items, not merged into one
+    // fragment — merging them leaves the frame's `gap` with nowhere to apply.
+    const priceRow = (
+        <Cluster
+            gap="related"
+            align="baseline"
+            anatPart={showAnatomy ? "Cluster" : undefined}
+            items={[
+                {
+                    key: "amount",
+                    // The amount goes through the ATOM `Typography` (§9c), NOT raw
+                    // HeroUI — thanks to that, `isSkeleton` flows straight into it instead
+                    // of branching off to build a separate shimmer bar.
+                    content: (
+                        <Typography
+                            size={AMOUNT_TYPE[emphasis]}
+                            weight="bold"
+                            isSkeleton={isSkeleton}
+                            classNames={isSkeleton ? ["w-2/3"] : undefined}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                            text={formatPrice(discounted, currency)}
+                        />
+                    ),
+                },
+                ...(hasSaving
+                    ? [{
+                        key: "original",
+                        content: (
+                            <Typography
+                                size={ORIGINAL_TYPE[emphasis]}
+                                color="muted"
+                                isSkeleton={isSkeleton}
+                                isStruck
+                                classNames={isSkeleton ? ["w-1/3"] : undefined}
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                                text={formatPrice(original, currency)}
+                            />
+                        ),
+                    }]
+                    : []),
+                // While resting: the chip still holds its place but is NOT wrapped in a
+                // Popover — there's no data yet to open, and a pressable control while
+                // loading is a false promise.
+                ...(isSkeleton
+                    ? [{
+                        key: "chip",
+                        content: <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />,
+                    }]
+                    : savePercent > 0
                         ? [{
-                            key: "phase",
-                            label: breakdown.phaseLabel ? `Giai đoạn ${breakdown.phaseLabel}` : "Ưu đãi giai đoạn",
-                            value: (
-                                <Typography
-                                    size="sm"
-                                    color="success-soft"
-                                    text={`−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`}
-                                />
+                            key: "chip",
+                            content: (
+                                <Popover>
+                                    <Popover.Trigger
+                                        aria-label="Chi tiết giá"
+                                        className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                        data-anat-part={showAnatomy ? "Popover.Trigger" : undefined}
+                                    >
+                                        {chip}
+                                    </Popover.Trigger>
+                                    <Popover.Content
+                                        className="max-w-xs"
+                                        data-anat-part={showAnatomy ? "Popover.Content" : undefined}
+                                    >
+                                        {breakdownContent}
+                                    </Popover.Content>
+                                </Popover>
                             ),
                         }]
                         : []),
-                    ...(breakdown && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted
-                        ? [{
-                            key: "loyalty",
-                            label: breakdown.loyaltyNote ? `Ưu đãi thành viên · ${breakdown.loyaltyNote}` : "Ưu đãi thành viên",
-                            value: (
-                                <Typography
-                                    size="sm"
-                                    color="success-soft"
-                                    classNames={["shrink-0"]}
-                                    text={`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
-                                />
-                            ),
-                        }]
-                        : []),
-                    {
-                        key: "total",
-                        label: "Bạn trả",
-                        value: formatPrice(discounted, currency),
-                        // the TOTAL row: the frame handles the emphasis, replacing a hand-typed `border-t … pt-1`
-                        emphasis: true,
-                    },
-                ]}
-            />
-        </StackV>
+            ]}
+        />
+    )
+
+    const savingLine = showSavingLine && (isSkeleton || hasSaving) ? (
+        <Typography
+            size="xs"
+            color="muted"
+            isSkeleton={isSkeleton}
+            classNames={isSkeleton ? ["w-1/2"] : undefined}
+            anatPart={showAnatomy ? "Typography" : undefined}
+            text={hasSaving ? `Tiết kiệm ${formatPrice(original - discounted, currency)}` : undefined}
+        />
     ) : null
 
     return (
@@ -235,91 +324,13 @@ const PriceTagBase = ({
             gap="grouped"
             className={className}
             anatPart={anatPart ?? (showAnatomy ? "StackV" : undefined)}
-        >
-            {/* The price row aligns on BASELINE (big number, struck number, chip share the
-                same text baseline) and wraps on its own when tight ⇒ exactly `Cluster`.
-                The three elements are THREE separate items, not merged into one
-                fragment — merging them leaves the frame's `gap` with nowhere to apply. */}
-            <Cluster
-                gap="related"
-                align="baseline"
-                anatPart={showAnatomy ? "Cluster" : undefined}
-                items={[
-                    {
-                        key: "amount",
-                        // The amount goes through the ATOM `Typography` (§9c), NOT raw
-                        // HeroUI — thanks to that, `isSkeleton` flows straight into it instead
-                        // of branching off to build a separate shimmer bar.
-                        content: (
-                            <Typography
-                                size={AMOUNT_TYPE[emphasis]}
-                                weight="bold"
-                                isSkeleton={isSkeleton}
-                                classNames={isSkeleton ? ["w-2/3"] : undefined}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                                text={formatPrice(discounted, currency)}
-                            />
-                        ),
-                    },
-                    ...(hasSaving
-                        ? [{
-                            key: "original",
-                            content: (
-                                <Typography
-                                    size={ORIGINAL_TYPE[emphasis]}
-                                    color="muted"
-                                    isSkeleton={isSkeleton}
-                                    isStruck
-                                    classNames={isSkeleton ? ["w-1/3"] : undefined}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
-                                    text={formatPrice(original, currency)}
-                                />
-                            ),
-                        }]
-                        : []),
-                    // While resting: the chip still holds its place but is NOT wrapped in a
-                    // Popover — there's no data yet to open, and a pressable control while
-                    // loading is a false promise.
-                    ...(isSkeleton
-                        ? [{
-                            key: "chip",
-                            content: <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />,
-                        }]
-                        : savePercent > 0
-                            ? [{
-                                key: "chip",
-                                content: (
-                                    <Popover>
-                                        <Popover.Trigger
-                                            aria-label="Chi tiết giá"
-                                            className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                                            data-anat-part={showAnatomy ? "Popover.Trigger" : undefined}
-                                        >
-                                            {chip}
-                                        </Popover.Trigger>
-                                        <Popover.Content
-                                            className="max-w-xs"
-                                            data-anat-part={showAnatomy ? "Popover.Content" : undefined}
-                                        >
-                                            {breakdownContent}
-                                        </Popover.Content>
-                                    </Popover>
-                                ),
-                            }]
-                            : []),
-                ]}
-            />
-            {showSavingLine && (isSkeleton || hasSaving) ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/2"] : undefined}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                    text={hasSaving ? `Tiết kiệm ${formatPrice(original - discounted, currency)}` : undefined}
-                />
-            ) : null}
-        </StackV>
+            body={(
+                <>
+                    {priceRow}
+                    {savingLine}
+                </>
+            )}
+        />
     )
 }
 

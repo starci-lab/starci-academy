@@ -94,107 +94,102 @@ const TrialConversionStripBase = ({
         }
         : undefined
 
-    return (
-        // ⭐ 2026-07-27 (instructor: "layout built with layout components"): this block
-        // used to DRAW ITS OWN surface — `rounded-3xl bg-surface p-5 shadow-surface`
-        // hand-typed — exactly what `SurfaceCard` exists to do. Precisely because
-        // it drew its own frame, it also decided `p-5` on its own (OFF the §10c scale:
-        // 0·1·2·3·6·8) and hand-drew a `border-t` between the two regions.
-        // Going through the frame now, radius/shadow/padding come from ONE source:
-        // `padding` defaults to `3` — the system's actual `p-3` card rule.
-        <SurfaceCard
-            // `anatPart` from the PARENT wins; running in ITS OWN story it names itself
-            // so the Deps tree can see the surface FRAME (otherwise the root node is
-            // missing and the tree reads as if the block still drew its own surface).
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
-            className={className}
-        >
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <IconTile
-                        icon={LockIcon}
-                        tone="accent"
-                        size="sm"
-                        anatPart={showAnatomy ? "IconTile" : undefined}
+    const headerRow = (
+        <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={(
+            <>
+                <IconTile
+                    icon={LockIcon}
+                    tone="accent"
+                    size="sm"
+                    anatPart={showAnatomy ? "IconTile" : undefined}
+                />
+                {/* The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
+                ONE frame, not two separate `Typography` (decided 2026-07-27).
+                `TitledText size="row"` (default) already OWNS exactly this scale:
+                title `sm` medium · subtitle `xs` muted. Hand-building two atoms means
+                the block decides its own font sizes — one style per spot, with
+                nothing keeping them in sync.
+                NOTE: the old version had the title at `base` (16px) + description `sm` —
+                one step larger than the row's standard scale. */}
+                <TitledText
+                    className="flex-1"
+                    anatPart={showAnatomy ? "TitledText" : undefined}
+                    isSkeleton={isSkeleton && !price}
+                    title="Học thử — mở khoá toàn bộ khoá học"
+                    subtitle={
+                        hasFreeLeft
+                            ? `Còn ${freeLessonsRemaining} bài miễn phí chưa đọc — đọc tiếp hoặc mở khoá toàn bộ ngay.`
+                            : "Bạn đã đọc hết bài học miễn phí — mở khoá toàn bộ khoá học để tiếp tục."
+                    }
+                />
+            </>
+        )} />
+    )
+
+    // `grouped` (§10b). Read the seam by RELATIONSHIP, not by tier: the
+    // scarcity line is a CAPTION OF THE PRICE, so price + scarcity are one
+    // cluster and this is an INTRA-cluster seam. `section` (6) belongs to the
+    // seams AROUND this cluster — to the lead cluster above and to the CTA
+    // beside it.
+    // Measured (2026-07-27) why this matters: applying "design ↔ design = 6"
+    // mechanically here produced the rhythm 24/12/24/24, i.e. the caption ended
+    // up as far from its own price as the CTA is from everything, and §10 bans a
+    // uniform rhythm precisely because it stops reading as groups. With 3 the
+    // card reads 24/12/12/24 — two groups, which is what it is. It was `tight`
+    // (1) before either fix, a step §10b reserves for pairs inside an atom.
+    const priceColumn = (
+        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+            isSkeleton && !price ? (
+                // 2026-07-12: the CTA card renders instantly once the outline
+                // resolves, but the price is a second fetch — mirror the price
+                // line instead of showing an empty gap until it lands.
+                <>
+                    <Typography size="h4" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                </>
+            ) : price?.discountedPriceVnd != null ? (
+                <>
+                    <PriceTagProminent
+                        discounted={price.discountedPriceVnd}
+                        original={price.originalPriceVnd}
+                        breakdown={breakdown}
+                        anatPart={showAnatomy ? "PriceTagProminent" : undefined}
                     />
-                    {/* The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
-                    ONE frame, not two separate `Typography` (decided 2026-07-27).
-                    `TitledText size="row"` (default) already OWNS exactly this scale:
-                    title `sm` medium · subtitle `xs` muted. Hand-building two atoms means
-                    the block decides its own font sizes — one style per spot, with
-                    nothing keeping them in sync.
-                    NOTE: the old version had the title at `base` (16px) + description `sm` —
-                    one step larger than the row's standard scale. */}
-                    <TitledText
-                        className="flex-1"
-                        anatPart={showAnatomy ? "TitledText" : undefined}
-                        isSkeleton={isSkeleton && !price}
-                        title="Học thử — mở khoá toàn bộ khoá học"
-                        subtitle={
-                            hasFreeLeft
-                                ? `Còn ${freeLessonsRemaining} bài miễn phí chưa đọc — đọc tiếp hoặc mở khoá toàn bộ ngay.`
-                                : "Bạn đã đọc hết bài học miễn phí — mở khoá toàn bộ khoá học để tiếp tục."
-                        }
+                    <PhaseScarcityNote
+                        anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
+                        currentPhase={price.currentPhase}
+                        seatsRemaining={price.seatsRemainingInCurrentPhase}
+                        nextPhasePriceVnd={price.nextPhasePriceVnd}
                     />
-                </StackH>
-                {/* ⚠️ TRIED `Split` (2026-07-27) and it was WRONG — caught immediately: the
-                    −33% chip dropped to its own line. `Split`'s contract is "the `start`
-                    side is ALLOWED TO SHRINK (`min-w-0`), the `end` side never shrinks" ⇒
-                    when tight it SQUEEZES the left side. Measured: the left side was left
-                    at 216px while the button took 248px, the price row grew to 61px tall
-                    (two lines).
-                    Price is a NUMBER — shrinking it means nothing, unlike a long title that
-                    can truncate. The correct behaviour for this row is to WRAP when tight
-                    (the original: `flex-wrap`), i.e. the button drops to the next line
-                    instead of the price getting squeezed. That's `StackH` with `wrap` —
-                    children are ARBITRARY so it fits §13b.
-                    The seam between the lead cluster and the price block is a SEAM, not a
-                    BOUNDARY: `gap-6` on the parent stack already separates the two regions;
-                    adding a `border-t` on top says the same thing twice in two languages. */}
-                <StackH
-                    gap="section"
-                    align="end"
-                    justify="between"
-                    wrap
-                    anatPart={showAnatomy ? "StackH" : undefined}
-                >
-                    {/* `grouped` (§10b). Read the seam by RELATIONSHIP, not by tier: the
-                    scarcity line is a CAPTION OF THE PRICE, so price + scarcity are one
-                    cluster and this is an INTRA-cluster seam. `section` (6) belongs to the
-                    seams AROUND this cluster — to the lead cluster above and to the CTA
-                    beside it.
-                    Measured (2026-07-27) why this matters: applying "design ↔ design = 6"
-                    mechanically here produced the rhythm 24/12/24/24, i.e. the caption ended
-                    up as far from its own price as the CTA is from everything, and §10 bans a
-                    uniform rhythm precisely because it stops reading as groups. With 3 the
-                    card reads 24/12/12/24 — two groups, which is what it is. It was `tight`
-                    (1) before either fix, a step §10b reserves for pairs inside an atom. */}
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {isSkeleton && !price ? (
-                        // 2026-07-12: the CTA card renders instantly once the outline
-                        // resolves, but the price is a second fetch — mirror the price
-                        // line instead of showing an empty gap until it lands.
-                            <>
-                                <Typography size="h4" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                <Typography size="xs" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            </>
-                        ) : price?.discountedPriceVnd != null ? (
-                            <>
-                                <PriceTagProminent
-                                    discounted={price.discountedPriceVnd}
-                                    original={price.originalPriceVnd}
-                                    breakdown={breakdown}
-                                    anatPart={showAnatomy ? "PriceTagProminent" : undefined}
-                                />
-                                <PhaseScarcityNote
-                                    anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
-                                    currentPhase={price.currentPhase}
-                                    seatsRemaining={price.seatsRemainingInCurrentPhase}
-                                    nextPhasePriceVnd={price.nextPhasePriceVnd}
-                                />
-                            </>
-                        ) : null}
-                    </StackV>
+                </>
+            ) : null
+        } />
+    )
+
+    // ⚠️ TRIED `Split` (2026-07-27) and it was WRONG — caught immediately: the
+    // −33% chip dropped to its own line. `Split`'s contract is "the `start`
+    // side is ALLOWED TO SHRINK (`min-w-0`), the `end` side never shrinks" ⇒
+    // when tight it SQUEEZES the left side. Measured: the left side was left
+    // at 216px while the button took 248px, the price row grew to 61px tall
+    // (two lines).
+    // Price is a NUMBER — shrinking it means nothing, unlike a long title that
+    // can truncate. The correct behaviour for this row is to WRAP when tight
+    // (the original: `flex-wrap`), i.e. the button drops to the next line
+    // instead of the price getting squeezed. That's `StackH` with `wrap` —
+    // children are ARBITRARY so it fits §13b.
+    // The seam between the lead cluster and the price block is a SEAM, not a
+    // BOUNDARY: `gap-6` on the parent stack already separates the two regions;
+    // adding a `border-t` on top says the same thing twice in two languages.
+    const footerRow = (
+        <StackH
+            gap="section"
+            align="end"
+            justify="between"
+            wrap
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={(
+                <>
+                    {priceColumn}
                     {/* ATOM `Button`, NOT the `_legacy` version (instructor, 2026-07-26):
                         going around the port is drift — fixing the atom in one place
                         won't propagate here.
@@ -210,8 +205,32 @@ const TrialConversionStripBase = ({
                         onPress={onEnroll}
                         anatPart={showAnatomy ? "Button" : undefined}
                     />
-                </StackH>
-            </StackV>
+                </>
+            )}
+        />
+    )
+
+    return (
+        // ⭐ 2026-07-27 (instructor: "layout built with layout components"): this block
+        // used to DRAW ITS OWN surface — `rounded-3xl bg-surface p-5 shadow-surface`
+        // hand-typed — exactly what `SurfaceCard` exists to do. Precisely because
+        // it drew its own frame, it also decided `p-5` on its own (OFF the §10c scale:
+        // 0·1·2·3·6·8) and hand-drew a `border-t` between the two regions.
+        // Going through the frame now, radius/shadow/padding come from ONE source:
+        // `padding` defaults to `3` — the system's actual `p-3` card rule.
+        <SurfaceCard
+            // `anatPart` from the PARENT wins; running in ITS OWN story it names itself
+            // so the Deps tree can see the surface FRAME (otherwise the root node is
+            // missing and the tree reads as if the block still drew its own surface).
+            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+            className={className}
+        >
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={(
+                <>
+                    {headerRow}
+                    {footerRow}
+                </>
+            )} />
         </SurfaceCard>
     )
 }

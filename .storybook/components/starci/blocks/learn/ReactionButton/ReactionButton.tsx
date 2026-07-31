@@ -145,8 +145,27 @@ const ReactionButton = ({
         return <span data-anat-part={anatPart} className="inline-block h-8 w-28 animate-pulse rounded-full bg-default" />
     }
 
-    return (
-        <StackH gap="related" align="center" anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)}>
+    // compact summary: stacked top emojis + total — dropped entirely at zero
+    const summaryRow = total > 0 ? (
+        <StackH
+            gap="related"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <span className="flex items-center -space-x-1">
+                        {topReactions.map((reaction) => (
+                            <ReactionGlyph key={reaction.type} type={reaction.type} size="sm" />
+                        ))}
+                    </span>
+                    <Typography size="sm" text={String(total)} anatPart={showAnatomy ? "Typography" : undefined} />
+                </>
+            }
+        />
+    ) : null
+
+    const triggerAndSummary = (
+        <>
             {/* trigger: opens the 6-emotion picker; shows the viewer's own pick once set */}
             <HeroPopover isOpen={isOpen} onOpenChange={setIsOpen}>
                 <HeroPopover.Trigger>
@@ -172,18 +191,12 @@ const ReactionButton = ({
                 </HeroPopover.Content>
             </HeroPopover>
 
-            {/* compact summary: stacked top emojis + total — dropped entirely at zero */}
-            {total > 0 ? (
-                <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <span className="flex items-center -space-x-1">
-                        {topReactions.map((reaction) => (
-                            <ReactionGlyph key={reaction.type} type={reaction.type} size="sm" />
-                        ))}
-                    </span>
-                    <Typography size="sm" text={String(total)} anatPart={showAnatomy ? "Typography" : undefined} />
-                </StackH>
-            ) : null}
-        </StackH>
+            {summaryRow}
+        </>
+    )
+
+    return (
+        <StackH gap="related" align="center" anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)} body={triggerAndSummary} />
     )
 }
 

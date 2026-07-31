@@ -337,49 +337,15 @@ const triggerIcon = (item: ChallengeDeliverableItem, showAnatomy: boolean) =>
     markIcon(STATUS_MARK[item.status], STATUS_TONE[item.status], showAnatomy ? "StatusIcon" : undefined)
 
 /** One requirement's panel: description → URL field → actions → the graded result once it exists. */
-const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) => (
-    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-        {item.description != null ? (
-            <MarkdownContent source={item.description} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
-        ) : null}
-
-        <InputText
-            variant="secondary"
-            value={item.url}
-            onValueChange={item.onUrlChange}
-            errorMessage={item.urlError}
-            placeholder="https://github.com/…"
-            ariaLabel={`URL nộp bài — ${item.title}`}
-            isDisabled={item.isPending}
-            showAnatomy={showAnatomy}
-        />
-
-        {/* Dải trạng thái chấm bài — GIỮA ô URL và hàng nút, đúng vị trí `src`'s `SubmissionRow`
-            đặt `AIProcessingText` (dòng 173-195: sau `TextField`, trước `GradeModelDropdown`).
-            AUDIT 2026-07-30 round-15: state này `.artifacts/domain/challenge-and-milestone.md` §3
-            liệt kê là PHẢI VẼ ("đang chấm" + "chấm lỗi") mà bản vẽ thiếu — chỉ có `isPending`
-            khoá được ô nhập, không nói được đang ở ngả nào. `jobError` in THÔ (không dịch) vì
-            `src` cũng in thô: đó là chuỗi lỗi server, không phải câu cho người đọc. */}
-        {item.jobStatus != null ? (
-            <FeedbackCallout
-                status={JOB_STATUS_CALLOUT[item.jobStatus].status}
-                title={JOB_STATUS_CALLOUT[item.jobStatus].title}
-                description={JOB_STATUS_CALLOUT[item.jobStatus].description}
-                body={item.jobStatus === "failed" && item.jobError != null
-                    ? <Typography size="xs" color="danger" text={item.jobError} anatPart={showAnatomy ? "Typography" : undefined} />
-                    : undefined}
-                anatPart={showAnatomy ? "FeedbackCallout" : undefined}
-                showAnatomy={showAnatomy}
-            />
-        ) : null}
-
-        {/* AUDIT 2026-07-30 round-14 (thầy chốt sau khi em phản biện): bỏ `justify="end"` —
-            mọi thứ khác trong panel (description, ô URL, chip verdict, trigger "Phản hồi gần
-            nhất") đều bám lề trái, chỉ hàng nút này dạt phải nên đọc như của một khối khác.
-            KHÔNG dùng `flex-1`: neo `src` (`SubmissionRow`: primary `shrink-0` + secondary
-            `min-w-0 flex-1`) làm nút PHỤ rộng hơn nút CHÍNH — ngược trọng số thị giác, thầy
-            chốt bỏ. Cả hai ôm chữ, không nút nào giãn. */}
-        <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
+const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) => {
+    // AUDIT 2026-07-30 round-14 (thầy chốt sau khi em phản biện): bỏ `justify="end"` —
+    // mọi thứ khác trong panel (description, ô URL, chip verdict, trigger "Phản hồi gần
+    // nhất") đều bám lề trái, chỉ hàng nút này dạt phải nên đọc như của một khối khác.
+    // KHÔNG dùng `flex-1`: neo `src` (`SubmissionRow`: primary `shrink-0` + secondary
+    // `min-w-0 flex-1`) làm nút PHỤ rộng hơn nút CHÍNH — ngược trọng số thị giác, thầy
+    // chốt bỏ. Cả hai ôm chữ, không nút nào giãn.
+    const actions = (
+        <>
             <Button
                 label="Nộp bài"
                 variant="primary"
@@ -394,63 +360,121 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
                 onPress={item.onViewHistory}
                 anatPart={showAnatomy ? "Button" : undefined}
             />
-        </StackH>
+        </>
+    )
 
-        {/* Graded is a STATE of this same leaf (mirrors QuizQuestion's `verdict` toggle),
-            never a second component — see file header.
+    // Graded is a STATE of this same leaf (mirrors QuizQuestion's `verdict` toggle),
+    // never a second component — see file header.
+    //
+    // SHAPE SETTLED 2026-07-30 (feedback ChallengePage/Graded, rounds 8→13). Two lines
+    // only, and the trimming is the whole story:
+    // · MỘT hàng meta luôn hiện — verdict Chip + "lần #N · HH:mm dd/MM"
+    //   (`attemptNumber`/`processedAt`, field thật, xác nhận sống trong Postgres qua
+    //   `docker exec starci-postgres psql`).
+    // · MỘT `Disclosure` "Phản hồi gần nhất" → mở ra `shortFeedback`, một câu.
+    //
+    // Đã BỎ trên đường tới hình này (ghi lại để không ai dựng lại):
+    // · Câu "Điểm lần thử gần nhất của bạn là N/M. Yêu cầu tối thiểu R." — N/M đã nằm ở
+    //   `titleEnd` của hàng accordion ngay trên đầu (xem `scoreEnd`) và chip đã trả lời
+    //   "đạt hay chưa"; câu đó nói lại cùng một fact bằng hai dòng chữ (round-13).
+    // · Danh sách finding từng dòng (dot severity + message + location + gợi ý) — đo DB
+    //   thật: một attempt tới TÁM finding × 3 field, dựng ở đây thì form nộp bài bị chôn
+    //   dưới hai chục dòng. Chi tiết thuộc trang kết quả riêng (`src`'s `SubmissionResult`),
+    //   vào từ nút "Xem lịch sử" ngay trên (thầy chốt: "ở đây thì shortFeedback thôi là được").
+    // · Accordion đệ quy / severity chữ-màu+`|` (round 4-7) — dựng khi chưa có neo thật.
+    //
+    // `Disclosure` ở đây là quyết định TRÌNH BÀY, không phải field bịa: nội dung bên trong
+    // vẫn đúng một field thật, chỉ nằm sau một cái bấm vì nó là chi tiết phụ (thầy chốt
+    // round-10, giữ nguyên qua round-13).
+    const gradedSection = item.graded != null ? (
+        <StackV
+            gap="grouped"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {/* AUDIT 2026-07-30 round-13 (thầy: "phần xanh rườm rà quá", chốt phương án B):
+                        MỘT hàng meta duy nhất — chip verdict + "lần #N · HH:mm dd/MM" — thay vì ba
+                        tầng chồng nhau như trước. Bỏ HẲN câu "Điểm lần thử gần nhất của bạn là N/M.
+                        Yêu cầu tối thiểu R.": chính con số N/M đã nằm ở `titleEnd` của hàng accordion
+                        ngay trên đầu (xem `scoreEnd`), và chip đã trả lời "đạt hay chưa" — câu văn đó
+                        nói lại lần thứ hai cùng một fact bằng cả hai dòng chữ. `earnedScore`/
+                        `requiredScore` VẪN là field thật và vẫn render, chỉ ở đúng MỘT chỗ. */}
+                    <StackH
+                        gap="related"
+                        align="center"
+                        wrap
+                        anatPart={showAnatomy ? "StackH" : undefined}
+                        body={
+                            <>
+                                <EnumChip value={item.graded.verdict} map={VERDICT_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />
+                                {item.graded.attemptNumber != null ? (
+                                    <Typography
+                                        size="xs"
+                                        color="muted"
+                                        text={item.graded.processedAt != null
+                                            ? `lần #${item.graded.attemptNumber} · ${item.graded.processedAt}`
+                                            : `lần #${item.graded.attemptNumber}`}
+                                        anatPart={showAnatomy ? "Typography" : undefined}
+                                    />
+                                ) : null}
+                            </>
+                        }
+                    />
 
-            SHAPE SETTLED 2026-07-30 (feedback ChallengePage/Graded, rounds 8→13). Two lines
-            only, and the trimming is the whole story:
-            · MỘT hàng meta luôn hiện — verdict Chip + "lần #N · HH:mm dd/MM"
-              (`attemptNumber`/`processedAt`, field thật, xác nhận sống trong Postgres qua
-              `docker exec starci-postgres psql`).
-            · MỘT `Disclosure` "Phản hồi gần nhất" → mở ra `shortFeedback`, một câu.
-
-            Đã BỎ trên đường tới hình này (ghi lại để không ai dựng lại):
-            · Câu "Điểm lần thử gần nhất của bạn là N/M. Yêu cầu tối thiểu R." — N/M đã nằm ở
-              `titleEnd` của hàng accordion ngay trên đầu (xem `scoreEnd`) và chip đã trả lời
-              "đạt hay chưa"; câu đó nói lại cùng một fact bằng hai dòng chữ (round-13).
-            · Danh sách finding từng dòng (dot severity + message + location + gợi ý) — đo DB
-              thật: một attempt tới TÁM finding × 3 field, dựng ở đây thì form nộp bài bị chôn
-              dưới hai chục dòng. Chi tiết thuộc trang kết quả riêng (`src`'s `SubmissionResult`),
-              vào từ nút "Xem lịch sử" ngay trên (thầy chốt: "ở đây thì shortFeedback thôi là được").
-            · Accordion đệ quy / severity chữ-màu+`|` (round 4-7) — dựng khi chưa có neo thật.
-
-            `Disclosure` ở đây là quyết định TRÌNH BÀY, không phải field bịa: nội dung bên trong
-            vẫn đúng một field thật, chỉ nằm sau một cái bấm vì nó là chi tiết phụ (thầy chốt
-            round-10, giữ nguyên qua round-13). */}
-        {item.graded != null ? (
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                {/* AUDIT 2026-07-30 round-13 (thầy: "phần xanh rườm rà quá", chốt phương án B):
-                    MỘT hàng meta duy nhất — chip verdict + "lần #N · HH:mm dd/MM" — thay vì ba
-                    tầng chồng nhau như trước. Bỏ HẲN câu "Điểm lần thử gần nhất của bạn là N/M.
-                    Yêu cầu tối thiểu R.": chính con số N/M đã nằm ở `titleEnd` của hàng accordion
-                    ngay trên đầu (xem `scoreEnd`), và chip đã trả lời "đạt hay chưa" — câu văn đó
-                    nói lại lần thứ hai cùng một fact bằng cả hai dòng chữ. `earnedScore`/
-                    `requiredScore` VẪN là field thật và vẫn render, chỉ ở đúng MỘT chỗ. */}
-                <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                    <EnumChip value={item.graded.verdict} map={VERDICT_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />
-                    {item.graded.attemptNumber != null ? (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            text={item.graded.processedAt != null
-                                ? `lần #${item.graded.attemptNumber} · ${item.graded.processedAt}`
-                                : `lần #${item.graded.attemptNumber}`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
+                    {item.graded.shortFeedback != null ? (
+                        <Disclosure title="Phản hồi gần nhất" showAnatomy={showAnatomy}>
+                            <Typography size="sm" text={item.graded.shortFeedback} anatPart={showAnatomy ? "Typography" : undefined} />
+                        </Disclosure>
                     ) : null}
-                </StackH>
+                </>
+            }
+        />
+    ) : null
 
-                {item.graded.shortFeedback != null ? (
-                    <Disclosure title="Phản hồi gần nhất" showAnatomy={showAnatomy}>
-                        <Typography size="sm" text={item.graded.shortFeedback} anatPart={showAnatomy ? "Typography" : undefined} />
-                    </Disclosure>
-                ) : null}
-            </StackV>
-        ) : null}
-    </StackV>
-)
+    const panel = (
+        <>
+            {item.description != null ? (
+                <MarkdownContent source={item.description} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+            ) : null}
+
+            <InputText
+                variant="secondary"
+                value={item.url}
+                onValueChange={item.onUrlChange}
+                errorMessage={item.urlError}
+                placeholder="https://github.com/…"
+                ariaLabel={`URL nộp bài — ${item.title}`}
+                isDisabled={item.isPending}
+                showAnatomy={showAnatomy}
+            />
+
+            {/* Dải trạng thái chấm bài — GIỮA ô URL và hàng nút, đúng vị trí `src`'s `SubmissionRow`
+                đặt `AIProcessingText` (dòng 173-195: sau `TextField`, trước `GradeModelDropdown`).
+                AUDIT 2026-07-30 round-15: state này `.artifacts/domain/challenge-and-milestone.md` §3
+                liệt kê là PHẢI VẼ ("đang chấm" + "chấm lỗi") mà bản vẽ thiếu — chỉ có `isPending`
+                khoá được ô nhập, không nói được đang ở ngả nào. `jobError` in THÔ (không dịch) vì
+                `src` cũng in thô: đó là chuỗi lỗi server, không phải câu cho người đọc. */}
+            {item.jobStatus != null ? (
+                <FeedbackCallout
+                    status={JOB_STATUS_CALLOUT[item.jobStatus].status}
+                    title={JOB_STATUS_CALLOUT[item.jobStatus].title}
+                    description={JOB_STATUS_CALLOUT[item.jobStatus].description}
+                    body={item.jobStatus === "failed" && item.jobError != null
+                        ? <Typography size="xs" color="danger" text={item.jobError} anatPart={showAnatomy ? "Typography" : undefined} />
+                        : undefined}
+                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            ) : null}
+
+            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={actions} />
+
+            {gradedSection}
+        </>
+    )
+
+    return <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={panel} />
+}
 
 /**
  * The "Nộp bài" card. See the file header for the full contract.
@@ -489,8 +513,8 @@ const ChallengeDeliverableList = ({
     // CẢ PANEL (một lượt sync gộp mọi ô URL), nên không thể là part của một hàng.
     // Không đi qua `labelEnd` của header dù chỗ đó nhìn có vẻ hợp: `action` (nút bánh răng)
     // THẮNG `labelEnd` trong `surface-card-header.tsx:90-104`, nên nhãn sẽ không bao giờ render.
-    return (
-        <StackV gap="related" anatPart={anatPart} showAnatomy={showAnatomy}>
+    const listBody = (
+        <>
             {autosaveStatus != null ? (
                 <Typography
                     size="xs"
@@ -519,7 +543,11 @@ const ChallengeDeliverableList = ({
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
             />
-        </StackV>
+        </>
+    )
+
+    return (
+        <StackV gap="related" anatPart={anatPart} showAnatomy={showAnatomy} body={listBody} />
     )
 }
 

@@ -140,100 +140,116 @@ const ConsultantProfileBody = ({
 }: ConsultantProfileBodyProps) => {
     const { fullName, jobTitle, companyTitle, description, avatarUrl, contactUnlocked, contactLinks } = consultant
 
-    return (
-        <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                {/* identity: centered photo, name+role, pressable company row */}
-                <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                    <div data-anat-part={showAnatomy ? "Image" : undefined}>
-                        <Image
-                            src={avatarUrl}
-                            alt={fullName}
-                            ratio="square"
-                            radius="full"
-                            className="w-28"
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                    </div>
-                    <StackV gap="flush" align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                        <Typography
-                            size="h4"
-                            weight="bold"
-                            align="center"
-                            isSkeleton={isSkeleton}
-                            text={fullName}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                        {isSkeleton || jobTitle ? (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                align="center"
-                                isSkeleton={isSkeleton}
-                                text={jobTitle}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : null}
-                    </StackV>
-                    {isSkeleton || companyTitle ? (
-                        <Button
-                            isSkeleton={isSkeleton}
-                            variant="secondary"
-                            size="sm"
-                            label={companyTitle ?? ""}
-                            prefixIcon={BuildingsIcon}
-                            onPress={onOpenCompany}
-                            isDisabled={isSkeleton || !onOpenCompany}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    ) : null}
-                </StackV>
-
-                {/* full bio — no clamp, unlike ConsultantCard's directory teaser */}
-                {isSkeleton || description ? (
+    const nameRow = (
+        <StackV gap="flush" align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+            <>
+                <Typography
+                    size="h4"
+                    weight="bold"
+                    align="center"
+                    isSkeleton={isSkeleton}
+                    text={fullName}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+                {isSkeleton || jobTitle ? (
                     <Typography
                         size="sm"
                         color="muted"
+                        align="center"
                         isSkeleton={isSkeleton}
-                        text={description}
+                        text={jobTitle}
                         anatPart={showAnatomy ? "Typography" : undefined}
                     />
                 ) : null}
+            </>
+        )} />
+    )
 
-                {/* contact fork — see file header for why loading shimmers neutrally */}
-                {isSkeleton ? (
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                        <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                    </StackV>
-                ) : contactUnlocked ? (
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                        {(contactLinks ?? []).map((link) => (
-                            <Typography
-                                key={link.key}
-                                size="sm"
-                                isLink
-                                href={link.href}
-                                prefixIcon={link.icon}
-                                text={link.label}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ))}
-                    </StackV>
-                ) : (
-                    <FeedbackCallout
-                        status="warning"
-                        icon={LockIcon}
-                        title={LOCKED_TITLE}
-                        description={LOCKED_DESCRIPTION}
-                        actionLabel={onImproveCv ? LOCKED_CTA_LABEL : undefined}
-                        onAction={onImproveCv}
+    // identity: centered photo, name+role, pressable company row
+    const identity = (
+        <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+            <>
+                <div data-anat-part={showAnatomy ? "Image" : undefined}>
+                    <Image
+                        src={avatarUrl}
+                        alt={fullName}
+                        ratio="square"
+                        radius="full"
+                        className="w-28"
+                        isSkeleton={isSkeleton}
                         showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "FeedbackCallout" : undefined}
                     />
-                )}
-            </StackV>
+                </div>
+                {nameRow}
+                {isSkeleton || companyTitle ? (
+                    <Button
+                        isSkeleton={isSkeleton}
+                        variant="secondary"
+                        size="sm"
+                        label={companyTitle ?? ""}
+                        prefixIcon={BuildingsIcon}
+                        onPress={onOpenCompany}
+                        isDisabled={isSkeleton || !onOpenCompany}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                ) : null}
+            </>
+        )} />
+    )
+
+    // contact fork — see file header for why loading shimmers neutrally
+    const contactFork = isSkeleton ? (
+        <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+            <>
+                <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            </>
+        )} />
+    ) : contactUnlocked ? (
+        <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={
+            (contactLinks ?? []).map((link) => (
+                <Typography
+                    key={link.key}
+                    size="sm"
+                    isLink
+                    href={link.href}
+                    prefixIcon={link.icon}
+                    text={link.label}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ))
+        } />
+    ) : (
+        <FeedbackCallout
+            status="warning"
+            icon={LockIcon}
+            title={LOCKED_TITLE}
+            description={LOCKED_DESCRIPTION}
+            actionLabel={onImproveCv ? LOCKED_CTA_LABEL : undefined}
+            onAction={onImproveCv}
+            showAnatomy={showAnatomy}
+            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+        />
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+                <>
+                    {identity}
+                    {/* full bio — no clamp, unlike ConsultantCard's directory teaser */}
+                    {isSkeleton || description ? (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text={description}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    ) : null}
+                    {contactFork}
+                </>
+            )} />
         </div>
     )
 }

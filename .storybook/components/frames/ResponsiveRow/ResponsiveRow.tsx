@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
@@ -39,8 +40,14 @@ export interface ResponsiveRowItem {
     content: ReactNode
 }
 
-/** Container step the row leaves the grid for the flex row at. */
-export type ResponsiveRowSwitch = "sm" | "md" | "lg"
+/**
+ * Container step the row leaves the grid for the flex row at.
+ *
+ * The shared width-switch scale for the frame tier — any frame naming the container step it
+ * changes shape at (FRAME-10) reuses this union rather than minting its own. `xl` exists for
+ * `SplitWorkspace`, whose real `src` sources both switch at `@app-xl`.
+ */
+export type ResponsiveRowSwitch = "sm" | "md" | "lg" | "xl"
 
 /** Props for {@link ResponsiveRow}. */
 export interface ResponsiveRowProps {
@@ -58,7 +65,18 @@ export interface ResponsiveRowProps {
     at: ResponsiveRowSwitch
     /** Seam BELOW `at` (the grid gap). At/above `at` the row goes flush — see the file header. */
     gap: SeamScale
+    /**
+     * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
+     * Missing this prop means the frame is used but the panel cannot see it.
+     */
+    anatPart?: string
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** Grid column count → literal class. Tailwind never emits an interpolated `grid-cols-${n}`. */
@@ -76,6 +94,7 @@ const SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
     sm: "@app-sm:flex @app-sm:items-stretch @app-sm:gap-0",
     md: "@app-md:flex @app-md:items-stretch @app-md:gap-0",
     lg: "@app-lg:flex @app-lg:items-stretch @app-lg:gap-0",
+    xl: "@app-xl:flex @app-xl:items-stretch @app-xl:gap-0",
 }
 
 /**
@@ -89,15 +108,19 @@ const ResponsiveRowBase = ({
     columns,
     at,
     gap,
+    anatPart,
     className,
+    classNames,
 }: ResponsiveRowProps) => (
     <div
+        data-anat-part={anatPart}
         className={cn(
             "grid",
             COLUMNS_CLASS[columns],
             GAP_CLASS[gap],
             SWITCH_CLASS[at],
             className,
+            classNames,
         )}
     >
         {items.map((item) => (

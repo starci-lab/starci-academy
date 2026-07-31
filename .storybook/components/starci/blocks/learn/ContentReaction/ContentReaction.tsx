@@ -64,9 +64,9 @@ const ContentReaction = ({
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
-}: ContentReactionProps) => (
-    <div data-anat-part={anatPart}>
-        <StackH gap="related" align="center" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
+}: ContentReactionProps) => {
+    const row = (
+        <>
             <ReactionButton
                 myReaction={myReaction}
                 counts={counts}
@@ -86,8 +86,14 @@ const ContentReaction = ({
                     anatPart={showAnatomy ? "Typography" : undefined}
                 />
             ) : null}
-        </StackH>
-    </div>
-)
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <StackH gap="related" align="center" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={row} />
+        </div>
+    )
+}
 
 export { ContentReaction }

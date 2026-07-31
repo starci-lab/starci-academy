@@ -263,17 +263,23 @@ const FoundationResourceList = ({
                 errorContent={errorContent}
                 showAnatomy={showAnatomy}
                 content={
-                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <SurfaceCardList items={rows} anatPart={showAnatomy ? "SurfaceCardList" : undefined} />
-                        <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
-                            <Pagination
-                                currentPage={currentPage}
-                                totalPages={totalPages}
-                                onPageChange={onPageChange}
-                                showAnatomy={showAnatomy}
-                            />
-                        </div>
-                    </StackV>
+                    <StackV
+                        gap="related"
+                        anatPart={showAnatomy ? "StackV" : undefined}
+                        body={
+                            <>
+                                <SurfaceCardList items={rows} anatPart={showAnatomy ? "SurfaceCardList" : undefined} />
+                                <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
+                                    <Pagination
+                                        currentPage={currentPage}
+                                        totalPages={totalPages}
+                                        onPageChange={onPageChange}
+                                        showAnatomy={showAnatomy}
+                                    />
+                                </div>
+                            </>
+                        }
+                    />
                 }
             />
         </div>

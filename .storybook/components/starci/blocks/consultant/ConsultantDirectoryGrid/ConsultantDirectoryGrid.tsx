@@ -188,14 +188,16 @@ const ConsultantDirectoryGrid = ({
                 emptyContent={emptyContent}
                 showAnatomy={showAnatomy}
                 content={
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {count !== undefined ? (
-                            <Typography size="sm" color="muted" text={countLabel(count)} showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : null}
-                        <div data-anat-part={showAnatomy ? "Grid" : undefined}>
-                            <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap="grouped" items={tiles} showAnatomy={showAnatomy} />
-                        </div>
-                    </StackV>
+                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+                        <>
+                            {count !== undefined ? (
+                                <Typography size="sm" color="muted" text={countLabel(count)} showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
+                            ) : null}
+                            <div data-anat-part={showAnatomy ? "Grid" : undefined}>
+                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap="grouped" items={tiles} showAnatomy={showAnatomy} />
+                            </div>
+                        </>
+                    } />
                 }
             />
         </div>

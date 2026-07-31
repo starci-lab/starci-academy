@@ -75,20 +75,36 @@ const IdentityContentRow = ({
     showAnatomy = false,
     anatPart,
 }: IdentityContentRowProps) => (
-    <StackH gap="grouped" align="start" nested={nested} className={className} anatPart={anatPart}>
-        <Avatar
-            src={avatarSrc}
-            name={avatarName}
-            seed={avatarSeed}
-            size={avatarSize}
-            isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-        />
-        <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-            {byline}
-            {children}
-        </StackV>
-    </StackH>
+    <StackH
+        gap="grouped"
+        align="start"
+        nested={nested}
+        className={className}
+        anatPart={anatPart}
+        body={
+            <>
+                <Avatar
+                    src={avatarSrc}
+                    name={avatarName}
+                    seed={avatarSeed}
+                    size={avatarSize}
+                    isSkeleton={isSkeleton}
+                    showAnatomy={showAnatomy}
+                />
+                <StackV
+                    gap="tight"
+                    classNames={["min-w-0", "flex-1"]}
+                    anatPart={showAnatomy ? "StackV" : undefined}
+                    body={
+                        <>
+                            {byline}
+                            {children}
+                        </>
+                    }
+                />
+            </>
+        }
+    />
 )
 
 export { IdentityContentRow }

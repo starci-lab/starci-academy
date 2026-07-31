@@ -115,33 +115,39 @@ const InnerLayout = ({
     showAnatomy = false,
     anatPart,
     ...navbarProps
-}: InnerLayoutProps) => (
-    <StackV gap="flush" className={cn("min-h-dvh", className)} anatPart={anatPart}>
-        {/* Sticky positioning is a SHELL concern (only the root scroll container knows
-            where the nav should pin) — Navbar itself owns its own border/background. */}
-        <div className="sticky top-0 z-40">
-            <Navbar
-                {...(navbarProps as NavbarProps)}
-                anatPart={showAnatomy ? "Navbar" : undefined}
-                showAnatomy={showAnatomy}
-            />
-        </div>
-        {/* CALLER SLOT — deliberately unbadged, see file header. */}
-        <main className="min-w-0 flex-1">{children}</main>
-        {showFooter ? (
-            <Footer
-                exploreLinks={exploreLinks}
-                supportLinks={supportLinks}
-                socials={socials}
-                onTermsPress={onTermsPress}
-                onPrivacyPress={onPrivacyPress}
-                anatPart={showAnatomy ? "Footer" : undefined}
-                showAnatomy={showAnatomy}
-            />
-        ) : null}
-        {/* Overlay/chat-rail/provider global mount points — intentionally NOT
-            rendered here, see file header's §B3 gap note. */}
-    </StackV>
-)
+}: InnerLayoutProps) => {
+    const navMainFooter = (
+        <>
+            {/* Sticky positioning is a SHELL concern (only the root scroll container knows
+                where the nav should pin) — Navbar itself owns its own border/background. */}
+            <div className="sticky top-0 z-40">
+                <Navbar
+                    {...(navbarProps as NavbarProps)}
+                    anatPart={showAnatomy ? "Navbar" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+            {/* CALLER SLOT — deliberately unbadged, see file header. */}
+            <main className="min-w-0 flex-1">{children}</main>
+            {showFooter ? (
+                <Footer
+                    exploreLinks={exploreLinks}
+                    supportLinks={supportLinks}
+                    socials={socials}
+                    onTermsPress={onTermsPress}
+                    onPrivacyPress={onPrivacyPress}
+                    anatPart={showAnatomy ? "Footer" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            ) : null}
+            {/* Overlay/chat-rail/provider global mount points — intentionally NOT
+                rendered here, see file header's §B3 gap note. */}
+        </>
+    )
+
+    return (
+        <StackV gap="flush" className={cn("min-h-dvh", className)} anatPart={anatPart} body={navMainFooter} />
+    )
+}
 
 export { InnerLayout }

@@ -129,6 +129,42 @@ const FlashcardMasteryStrip = ({
         ? "Đang tải tiến độ ghi nhớ"
         : `Tiến độ ghi nhớ: ${mastered} thành thạo, ${learning} đang học, ${newCount} mới, trên tổng ${total} thẻ`
 
+    const masteryReadout = (
+        <>
+            <StackH
+                gap="tight"
+                align="baseline"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        <Typography
+                            size="h3"
+                            weight="bold"
+                            isSkeleton={isSkeleton}
+                            text={`${mastered}/${total}`}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text={`${pct}%`}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    </>
+                }
+            />
+            <SegmentBar
+                segments={isSkeleton ? SKELETON_SEGMENTS : segments}
+                max={isSkeleton ? undefined : total}
+                hideLegend={isSkeleton}
+                ariaLabel={ariaLabel}
+                caption={isSkeleton ? undefined : masteryCaption(totalReviewed, retention)}
+                anatPart={showAnatomy ? "SegmentBar" : undefined}
+            />
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <SurfaceCard
@@ -149,32 +185,7 @@ const FlashcardMasteryStrip = ({
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "SurfaceCard" : undefined}
             >
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <StackH gap="tight" align="baseline" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <Typography
-                            size="h3"
-                            weight="bold"
-                            isSkeleton={isSkeleton}
-                            text={`${mastered}/${total}`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            isSkeleton={isSkeleton}
-                            text={`${pct}%`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    </StackH>
-                    <SegmentBar
-                        segments={isSkeleton ? SKELETON_SEGMENTS : segments}
-                        max={isSkeleton ? undefined : total}
-                        hideLegend={isSkeleton}
-                        ariaLabel={ariaLabel}
-                        caption={isSkeleton ? undefined : masteryCaption(totalReviewed, retention)}
-                        anatPart={showAnatomy ? "SegmentBar" : undefined}
-                    />
-                </StackV>
+                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={masteryReadout} />
             </SurfaceCard>
         </div>
     )

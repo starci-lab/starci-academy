@@ -154,14 +154,19 @@ export interface PlaygroundPreparePageProps {
  * the other's name.
  */
 const PlaygroundPreparePageEmpty = () => (
-    <Container anatPart="Container" size="md" padding="roomy">
-        <AsyncContentEmpty
-            anatPart="AsyncContentEmpty"
-            icon={TerminalWindowIcon}
-            title="Không tìm thấy bài thực hành này"
-            description="Bài thực hành có thể đã bị gỡ hoặc đường dẫn không còn đúng — quay lại Playground để chọn bài khác."
-        />
-    </Container>
+    <Container
+        anatPart="Container"
+        size="md"
+        padding="roomy"
+        body={
+            <AsyncContentEmpty
+                anatPart="AsyncContentEmpty"
+                icon={TerminalWindowIcon}
+                title="Không tìm thấy bài thực hành này"
+                description="Bài thực hành có thể đã bị gỡ hoặc đường dẫn không còn đúng — quay lại Playground để chọn bài khác."
+            />
+        }
+    />
 )
 
 /**
@@ -201,66 +206,72 @@ const PlaygroundPreparePage = ({
     const allReady = checklistItems.length > 0 && checklistItems.every((item) => item.ready)
     const pendingCount = checklistItems.filter((item) => !item.ready).length
 
-    return (
-        <Container size="md" padding="roomy" anatPart={showAnatomy ? "Container" : undefined}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <PlaygroundSetupHeader
-                    anatPart="PlaygroundSetupHeader"
-                    breadcrumbLabel={breadcrumbLabel}
-                    onBack={onBack}
-                    title={title}
-                    description={description}
+    const readinessSection = (
+        <>
+            <PlaygroundEnterBanner
+                anatPart="PlaygroundEnterBanner"
+                allReady={allReady}
+                pendingCount={pendingCount}
+                onEnter={onEnter}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            {deviceInfo ? (
+                <PlaygroundDeviceSnapshot
+                    anatPart="PlaygroundDeviceSnapshot"
+                    deviceInfo={deviceInfo}
                     isSkeleton={isSkeleton}
                     showAnatomy={showAnatomy}
                 />
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <PlaygroundEnterBanner
-                        anatPart="PlaygroundEnterBanner"
-                        allReady={allReady}
-                        pendingCount={pendingCount}
-                        onEnter={onEnter}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    {deviceInfo ? (
-                        <PlaygroundDeviceSnapshot
-                            anatPart="PlaygroundDeviceSnapshot"
-                            deviceInfo={deviceInfo}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                    ) : null}
-                    <PlaygroundSetupSteps
-                        anatPart="PlaygroundSetupSteps"
-                        flavor={flavor}
-                        engineName={engineName}
-                        osGuides={osGuides}
-                        pairCommand={pairCommand}
-                        pairingCodeSecondsLeft={pairingCodeSecondsLeft}
-                        pairingCodeExpired={pairingCodeExpired}
-                        onRefreshPairingCode={onRefreshPairingCode}
-                        isRefreshingPairingCode={isRefreshingPairingCode}
-                        agentReady={readinessOf(checklistItems, "agent")}
-                        engineReady={readinessOf(checklistItems, "engine")}
-                        genModelReady={readinessOf(checklistItems, "genModel")}
-                        embedModelReady={readinessOf(checklistItems, "embedModel")}
-                        recommendedGenModel={recommendedGenModel}
-                        deviceKnown={deviceInfo != null}
-                        engineDetail={engineDetail}
-                        onVerify={onVerify}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <PlaygroundReadinessChecklist
-                        anatPart="PlaygroundReadinessChecklist"
-                        items={checklistItems}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
-            </StackV>
-        </Container>
+            ) : null}
+            <PlaygroundSetupSteps
+                anatPart="PlaygroundSetupSteps"
+                flavor={flavor}
+                engineName={engineName}
+                osGuides={osGuides}
+                pairCommand={pairCommand}
+                pairingCodeSecondsLeft={pairingCodeSecondsLeft}
+                pairingCodeExpired={pairingCodeExpired}
+                onRefreshPairingCode={onRefreshPairingCode}
+                isRefreshingPairingCode={isRefreshingPairingCode}
+                agentReady={readinessOf(checklistItems, "agent")}
+                engineReady={readinessOf(checklistItems, "engine")}
+                genModelReady={readinessOf(checklistItems, "genModel")}
+                embedModelReady={readinessOf(checklistItems, "embedModel")}
+                recommendedGenModel={recommendedGenModel}
+                deviceKnown={deviceInfo != null}
+                engineDetail={engineDetail}
+                onVerify={onVerify}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <PlaygroundReadinessChecklist
+                anatPart="PlaygroundReadinessChecklist"
+                items={checklistItems}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
     )
+
+    const prepareSections = (
+        <>
+            <PlaygroundSetupHeader
+                anatPart="PlaygroundSetupHeader"
+                breadcrumbLabel={breadcrumbLabel}
+                onBack={onBack}
+                title={title}
+                description={description}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={readinessSection} />
+        </>
+    )
+
+    const prepareBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={prepareSections} />
+
+    return <Container size="md" padding="roomy" anatPart={showAnatomy ? "Container" : undefined} body={prepareBody} />
 }
 
 export { PlaygroundPreparePage }

@@ -270,7 +270,6 @@ const PublicProfileLayout = ({
         return (
             <div data-anat-part={anatPart}>
                 <ProfileLoadingState
-                    showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "ProfileLoadingState" : undefined}
                 />
             </div>
@@ -284,7 +283,6 @@ const PublicProfileLayout = ({
                     title={NOT_FOUND_TITLE}
                     description={NOT_FOUND_DESCRIPTION}
                     onGoHome={onGoHome}
-                    showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "ProfileNotFoundState" : undefined}
                 />
             </div>
@@ -298,7 +296,6 @@ const PublicProfileLayout = ({
                 <ProfileLockedState
                     user={user}
                     onGoCourses={onGoCourses}
-                    showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "ProfileLockedState" : undefined}
                 />
             </div>
@@ -309,59 +306,68 @@ const PublicProfileLayout = ({
     // mirrors the real `PublicProfile`'s own `canHire` gate — see file header
     const canHire = !isSelf && Boolean(user.openToWork) && Boolean(user.social?.github)
 
+    // aside + routed panel — the pair the identity/content two-column body composes
+    const asideAndPanel = (
+        <>
+            <aside className="w-full @app-md:w-72 @app-md:shrink-0">
+                <ProfileHero
+                    user={user}
+                    isSelf={isSelf}
+                    canHire={canHire}
+                    following={following}
+                    isFollowPending={isFollowPending}
+                    onToggleFollow={onToggleFollow}
+                    onHire={onHire}
+                    onEdit={onEditProfile}
+                    onShare={onShare}
+                    anatPart={showAnatomy ? "ProfileHero" : undefined}
+                />
+            </aside>
+
+            <main className="min-w-0 flex-1">
+                {children}
+            </main>
+        </>
+    )
+
+    // column-first, becomes a row from @app-md — same technique SettingsLayout uses for its own outer switch (see file header)
+    const profileBody = (
+        <StackV
+            gap="page"
+            className="@app-md:flex-row @app-md:items-start"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={asideAndPanel}
+        />
+    )
+
+    // chrome above the body — mirrors the real Navbar bottom-layer position; see file header
+    const tabsAndBody = (
+        <>
+            <ProfileTabsBar
+                activeTab={activeTab}
+                visibleTabs={visibleTabs}
+                onTabChange={onTabChange}
+                hiddenTabs={hiddenTabs}
+                ariaLabel={PROFILE_TABS_ARIA_LABEL}
+                anatPart={showAnatomy ? "ProfileTabsBar" : undefined}
+            />
+
+            <Container
+                size="xl"
+                padding="roomy"
+                anatPart={showAnatomy ? "Container" : undefined}
+                body={profileBody}
+            />
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <StackV
                 gap="flush"
                 anatPart={showAnatomy ? "StackV" : undefined}
-                showAnatomy={showAnatomy}
-            >
-                {/* chrome above the body — mirrors the real Navbar bottom-layer position; see file header */}
-                <ProfileTabsBar
-                    activeTab={activeTab}
-                    visibleTabs={visibleTabs}
-                    onTabChange={onTabChange}
-                    hiddenTabs={hiddenTabs}
-                    ariaLabel={PROFILE_TABS_ARIA_LABEL}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "ProfileTabsBar" : undefined}
-                />
-
-                <Container
-                    size="xl"
-                    padding="roomy"
-                    anatPart={showAnatomy ? "Container" : undefined}
-                    showAnatomy={showAnatomy}
-                >
-                    {/* column-first, becomes a row from @app-md — same technique SettingsLayout uses for its own outer switch (see file header) */}
-                    <StackV
-                        gap="page"
-                        className="@app-md:flex-row @app-md:items-start"
-                        anatPart={showAnatomy ? "StackV" : undefined}
-                        showAnatomy={showAnatomy}
-                    >
-                        <aside className="w-full @app-md:w-72 @app-md:shrink-0">
-                            <ProfileHero
-                                user={user}
-                                isSelf={isSelf}
-                                canHire={canHire}
-                                following={following}
-                                isFollowPending={isFollowPending}
-                                onToggleFollow={onToggleFollow}
-                                onHire={onHire}
-                                onEdit={onEditProfile}
-                                onShare={onShare}
-                                showAnatomy={showAnatomy}
-                                anatPart={showAnatomy ? "ProfileHero" : undefined}
-                            />
-                        </aside>
-
-                        <main className="min-w-0 flex-1">
-                            {children}
-                        </main>
-                    </StackV>
-                </Container>
-            </StackV>
+                body={tabsAndBody}
+            />
         </div>
     )
 }

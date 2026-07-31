@@ -202,6 +202,83 @@ const PremiumGateModal = ({
         }
         : undefined
 
+    const unlockItems = GATE_UNLOCKS.map((item) => (
+        <Cluster
+            key={item.key}
+            gap="related"
+            align="center"
+            anatPart={showAnatomy ? "Cluster" : undefined}
+            items={[
+                {
+                    key: "icon",
+                    content: (
+                        <CheckCircleIcon
+                            aria-hidden
+                            focusable="false"
+                            weight="bold"
+                            // No `data-anat-part`: a bare Phosphor glyph has no
+                            // story to jump to (`PhaseScarcityNote`'s own
+                            // convention) — badging it would dead-end the tree.
+                            className="size-3.5 shrink-0 text-success-soft-foreground"
+                        />
+                    ),
+                },
+                {
+                    key: "label",
+                    content: (
+                        <Typography
+                            size="sm"
+                            text={item.label}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    ),
+                },
+            ]}
+        />
+    ))
+
+    const skeletonPrice = (
+        <>
+            <Typography size="h4" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+
+    const gateBody = (
+        <>
+            {/* "What unlocks" — static chrome, never skeletonised: known before
+                any price data lands, exactly like `ContentModeNav`'s own row. */}
+            <StackV gap="related" body={unlockItems} />
+
+            {/* Price + scarcity — the ONLY region `isSkeleton` reaches, same
+                `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
+                `TrialConversionStrip` uses for its own price region. */}
+            {isSkeleton && !price ? (
+                <StackV gap="grouped" body={skeletonPrice} />
+            ) : price?.discountedPriceVnd != null ? (
+                <StackV
+                    gap="grouped"
+                    body={
+                        <>
+                            <PriceTagProminent
+                                discounted={price.discountedPriceVnd}
+                                original={price.originalPriceVnd}
+                                breakdown={breakdown}
+                                anatPart={showAnatomy ? "PriceTagProminent" : undefined}
+                            />
+                            <PhaseScarcityNote
+                                anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
+                                currentPhase={price.currentPhase}
+                                seatsRemaining={price.seatsRemaining}
+                                nextPhasePriceVnd={price.nextPhasePriceVnd}
+                            />
+                        </>
+                    }
+                />
+            ) : null}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart} className={className}>
             <ModalShell
@@ -222,71 +299,7 @@ const PremiumGateModal = ({
                     />
                 }
             >
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    {/* "What unlocks" — static chrome, never skeletonised: known before
-                        any price data lands, exactly like `ContentModeNav`'s own row. */}
-                    <StackV gap="related">
-                        {GATE_UNLOCKS.map((item) => (
-                            <Cluster
-                                key={item.key}
-                                gap="related"
-                                align="center"
-                                anatPart={showAnatomy ? "Cluster" : undefined}
-                                items={[
-                                    {
-                                        key: "icon",
-                                        content: (
-                                            <CheckCircleIcon
-                                                aria-hidden
-                                                focusable="false"
-                                                weight="bold"
-                                                // No `data-anat-part`: a bare Phosphor glyph has no
-                                                // story to jump to (`PhaseScarcityNote`'s own
-                                                // convention) — badging it would dead-end the tree.
-                                                className="size-3.5 shrink-0 text-success-soft-foreground"
-                                            />
-                                        ),
-                                    },
-                                    {
-                                        key: "label",
-                                        content: (
-                                            <Typography
-                                                size="sm"
-                                                text={item.label}
-                                                anatPart={showAnatomy ? "Typography" : undefined}
-                                            />
-                                        ),
-                                    },
-                                ]}
-                            />
-                        ))}
-                    </StackV>
-
-                    {/* Price + scarcity — the ONLY region `isSkeleton` reaches, same
-                        `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
-                        `TrialConversionStrip` uses for its own price region. */}
-                    {isSkeleton && !price ? (
-                        <StackV gap="grouped">
-                            <Typography size="h4" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="xs" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        </StackV>
-                    ) : price?.discountedPriceVnd != null ? (
-                        <StackV gap="grouped">
-                            <PriceTagProminent
-                                discounted={price.discountedPriceVnd}
-                                original={price.originalPriceVnd}
-                                breakdown={breakdown}
-                                anatPart={showAnatomy ? "PriceTagProminent" : undefined}
-                            />
-                            <PhaseScarcityNote
-                                anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
-                                currentPhase={price.currentPhase}
-                                seatsRemaining={price.seatsRemaining}
-                                nextPhasePriceVnd={price.nextPhasePriceVnd}
-                            />
-                        </StackV>
-                    ) : null}
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={gateBody} />
             </ModalShell>
         </div>
     )

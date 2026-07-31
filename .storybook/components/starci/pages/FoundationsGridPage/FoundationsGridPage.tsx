@@ -107,9 +107,33 @@ const FoundationsGridPage = ({
     pagination,
     isSkeleton = false,
     showAnatomy = false,
-}: FoundationsGridPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+}: FoundationsGridPageProps) => {
+    const categoriesSection = (
+        <>
+            <FoundationCategorySearchBar
+                anatPart="FoundationCategorySearchBar"
+                query={searchQuery}
+                onQueryChange={onSearchQueryChange}
+                suggestions={suggestions}
+                onSelectSuggestion={onSelectSuggestion}
+                count={categoryCount}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <FoundationCategoryList
+                anatPart="FoundationCategoryList"
+                categories={categories}
+                searchQuery={searchQuery}
+                onSelectCategory={onSelectCategory}
+                pagination={pagination}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const gridSections = (
+        <>
             <FoundationCategoryHeader
                 anatPart="FoundationCategoryHeader"
                 breadcrumbItems={breadcrumbItems}
@@ -125,29 +149,13 @@ const FoundationsGridPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <FoundationCategorySearchBar
-                    anatPart="FoundationCategorySearchBar"
-                    query={searchQuery}
-                    onQueryChange={onSearchQueryChange}
-                    suggestions={suggestions}
-                    onSelectSuggestion={onSelectSuggestion}
-                    count={categoryCount}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                <FoundationCategoryList
-                    anatPart="FoundationCategoryList"
-                    categories={categories}
-                    searchQuery={searchQuery}
-                    onSelectCategory={onSelectCategory}
-                    pagination={pagination}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-            </StackV>
-        </StackV>
-    </Container>
-)
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={categoriesSection} />
+        </>
+    )
+
+    const gridBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={gridSections} />
+
+    return <Container size="md" padding="roomy" body={gridBody} />
+}
 
 export { FoundationsGridPage }

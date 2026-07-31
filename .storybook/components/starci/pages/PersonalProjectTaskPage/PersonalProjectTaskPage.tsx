@@ -245,6 +245,34 @@ const legacyMarkdown = (body: string, showAnatomy: boolean) => (
     <MarkdownContent source={body} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
 )
 
+/** One legacy code-implementation accordion panel body: guide, then a worked example. */
+const legacyCodeBody = (item: PersonalProjectTaskLegacyCodeImplementationItem, showAnatomy: boolean) => {
+    const guideSection = (
+        <>
+            <Typography size="xs" weight="medium" color="muted" text="Hướng dẫn" anatPart={showAnatomy ? "Typography" : undefined} />
+            {legacyMarkdown(item.guide, showAnatomy)}
+        </>
+    )
+    const exampleSection = (
+        <>
+            <Typography size="xs" weight="medium" color="muted" text="Ví dụ" anatPart={showAnatomy ? "Typography" : undefined} />
+            {legacyMarkdown(item.example, showAnatomy)}
+        </>
+    )
+    return (
+        <StackV
+            gap="grouped"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={guideSection} />
+                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={exampleSection} />
+                </>
+            }
+        />
+    )
+}
+
 /**
  * The reading column: task identity (`PageHeader`) + the locked banner + the
  * brief itself + the legacy rubric/implementation guides + related lessons.
@@ -302,25 +330,39 @@ const readingColumn = (props: {
         ? (legacyCodeImplementations ?? []).map((item) => ({
             id: item.key,
             title: item.lang,
-            body: (
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="xs" weight="medium" color="muted" text="Hướng dẫn" anatPart={showAnatomy ? "Typography" : undefined} />
-                        {legacyMarkdown(item.guide, showAnatomy)}
-                    </StackV>
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="xs" weight="medium" color="muted" text="Ví dụ" anatPart={showAnatomy ? "Typography" : undefined} />
-                        {legacyMarkdown(item.example, showAnatomy)}
-                    </StackV>
-                </StackV>
-            ),
+            body: legacyCodeBody(item, showAnatomy),
         }))
         : isSkeleton
             ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `code-skeleton-${index}`, title: "", body: null }))
             : []
 
-    return (
-        <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
+    const legacyAccordions = (
+        <>
+            {hasLegacyCriteria || isSkeleton ? (
+                <SurfaceCardAccordion
+                    variant="nested"
+                    items={criteriaItems}
+                    allowsMultipleExpanded
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            ) : null}
+            {hasLegacyCode || isSkeleton ? (
+                <SurfaceCardAccordion
+                    variant="nested"
+                    items={codeItems}
+                    allowsMultipleExpanded
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            ) : null}
+        </>
+    )
+
+    const readingSections = (
+        <>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
                 breadcrumb={
@@ -363,28 +405,7 @@ const readingColumn = (props: {
 
             {showLegacy ? (
                 <SurfaceCard label="Tiêu chí đánh giá (bản cũ)" isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {hasLegacyCriteria || isSkeleton ? (
-                            <SurfaceCardAccordion
-                                variant="nested"
-                                items={criteriaItems}
-                                allowsMultipleExpanded
-                                isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                                showAnatomy={showAnatomy}
-                            />
-                        ) : null}
-                        {hasLegacyCode || isSkeleton ? (
-                            <SurfaceCardAccordion
-                                variant="nested"
-                                items={codeItems}
-                                allowsMultipleExpanded
-                                isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                                showAnatomy={showAnatomy}
-                            />
-                        ) : null}
-                    </StackV>
+                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={legacyAccordions} />
                 </SurfaceCard>
             ) : null}
 
@@ -394,8 +415,10 @@ const readingColumn = (props: {
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "ContentRelatedList" : undefined}
             />
-        </StackV>
+        </>
     )
+
+    return <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={readingSections} />
 }
 
 /**
@@ -411,59 +434,67 @@ const submissionPanel = (props: {
     const { panel, isSkeleton, showAnatomy } = props
     const hasAttempts = panel.hasAttempts ?? false
 
-    return (
-        <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+    const evaluateActions = (
+        <>
+            <Button
+                label={hasAttempts ? "Đánh giá lại" : "Đánh giá"}
+                prefixIcon={SparkleIcon}
+                onPress={panel.onEvaluate}
+                isPending={panel.isEvaluatePending}
+                isDisabled={panel.isEvaluateDisabled}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+            <Button
+                label="Xem phản hồi"
+                variant="tertiary"
+                onPress={panel.onOpenFeedbackDetails}
+                isDisabled={!hasAttempts}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+            <Button
+                label="Xem lịch sử nộp"
+                variant="tertiary"
+                onPress={panel.onOpenAttempts}
+                isDisabled={!hasAttempts}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+        </>
+    )
+
+    const githubFields = (
+        <>
+            <InputText
+                label="URL repo GitHub"
+                value={panel.repoUrl}
+                onValueChange={panel.onRepoUrlChange}
+                errorMessage={panel.repoUrlError}
+                placeholder="https://github.com/…"
+                ariaLabel="URL repo GitHub"
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <div data-anat-part={showAnatomy ? "ListRow" : undefined}>
+                <ListRow
+                    leading={<GearSixIcon aria-hidden focusable="false" className="size-4" />}
+                    title="Cài đặt chấm điểm"
+                    meta={`${panel.settingsLangLabel} · ${panel.settingsBranch}`}
+                    trailing={<CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />}
+                    onPress={panel.onOpenSettings}
+                    isSkeleton={isSkeleton}
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined} body={evaluateActions} />
+        </>
+    )
+
+    const panelSections = (
+        <>
             <SurfaceCard label="Github dự án" isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <InputText
-                        label="URL repo GitHub"
-                        value={panel.repoUrl}
-                        onValueChange={panel.onRepoUrlChange}
-                        errorMessage={panel.repoUrlError}
-                        placeholder="https://github.com/…"
-                        ariaLabel="URL repo GitHub"
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <div data-anat-part={showAnatomy ? "ListRow" : undefined}>
-                        <ListRow
-                            leading={<GearSixIcon aria-hidden focusable="false" className="size-4" />}
-                            title="Cài đặt chấm điểm"
-                            meta={`${panel.settingsLangLabel} · ${panel.settingsBranch}`}
-                            trailing={<CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />}
-                            onPress={panel.onOpenSettings}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                    </div>
-                    <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                        <Button
-                            label={hasAttempts ? "Đánh giá lại" : "Đánh giá"}
-                            prefixIcon={SparkleIcon}
-                            onPress={panel.onEvaluate}
-                            isPending={panel.isEvaluatePending}
-                            isDisabled={panel.isEvaluateDisabled}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                        <Button
-                            label="Xem phản hồi"
-                            variant="tertiary"
-                            onPress={panel.onOpenFeedbackDetails}
-                            isDisabled={!hasAttempts}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                        <Button
-                            label="Xem lịch sử nộp"
-                            variant="tertiary"
-                            onPress={panel.onOpenAttempts}
-                            isDisabled={!hasAttempts}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    </StackH>
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={githubFields} />
             </SurfaceCard>
 
             {isSkeleton || panel.result != null ? (
@@ -482,8 +513,10 @@ const submissionPanel = (props: {
                     showAnatomy={showAnatomy}
                 />
             ) : null}
-        </StackV>
+        </>
     )
+
+    return <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={panelSections} />
 }
 
 /**
@@ -505,24 +538,28 @@ const PersonalProjectTaskPage = ({
     isSkeleton = false,
     showAnatomy = false,
 }: PersonalProjectTaskPageProps) => (
-    <Container size="xl" padding="roomy">
-        <SplitWorkspace
-            anatPart={showAnatomy ? "SplitWorkspace" : undefined}
-            main={readingColumn({
-                breadcrumbItems,
-                task,
-                isLocked,
-                brief,
-                legacyCriteria,
-                legacyCodeImplementations,
-                relatedItems,
-                relatedLabel,
-                isSkeleton,
-                showAnatomy,
-            })}
-            aside={submissionPanel({ panel: submissionPanelProps, isSkeleton, showAnatomy })}
-        />
-    </Container>
+    <Container
+        size="xl"
+        padding="roomy"
+        body={
+            <SplitWorkspace
+                anatPart={showAnatomy ? "SplitWorkspace" : undefined}
+                main={readingColumn({
+                    breadcrumbItems,
+                    task,
+                    isLocked,
+                    brief,
+                    legacyCriteria,
+                    legacyCodeImplementations,
+                    relatedItems,
+                    relatedLabel,
+                    isSkeleton,
+                    showAnatomy,
+                })}
+                aside={submissionPanel({ panel: submissionPanelProps, isSkeleton, showAnatomy })}
+            />
+        }
+    />
 )
 
 export { PersonalProjectTaskPage }

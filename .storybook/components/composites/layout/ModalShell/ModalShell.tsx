@@ -138,22 +138,28 @@ const Base = ({
                             <Modal.Header data-anat-part={showAnatomy ? "Modal.Header" : undefined}>{header}</Modal.Header>
                         ) : title != null ? (
                             <Modal.Header>
-                                <StackV gap="tight" className={cn("pr-8", titleClassName)}>
-                                    <Typography
-                                        weight="bold"
-                                        showAnatomy={showAnatomy}
-                                        anatPart={showAnatomy ? "Typography" : undefined}
-                                        text={title}
-                                    />
-                                    {description != null ? (
-                                        <Typography size="sm"
-                                            color="muted"
-                                            showAnatomy={showAnatomy}
-                                            anatPart={showAnatomy ? "Typography" : undefined}
-                                            text={description}
-                                        />
-                                    ) : null}
-                                </StackV>
+                                <StackV
+                                    gap="tight"
+                                    className={cn("pr-8", titleClassName)}
+                                    body={
+                                        <>
+                                            <Typography
+                                                weight="bold"
+                                                showAnatomy={showAnatomy}
+                                                anatPart={showAnatomy ? "Typography" : undefined}
+                                                text={title}
+                                            />
+                                            {description != null ? (
+                                                <Typography size="sm"
+                                                    color="muted"
+                                                    showAnatomy={showAnatomy}
+                                                    anatPart={showAnatomy ? "Typography" : undefined}
+                                                    text={description}
+                                                />
+                                            ) : null}
+                                        </>
+                                    }
+                                />
                             </Modal.Header>
                         ) : null}
                         {/* ⚠️ `bodyStartsWithTabs` ĐÃ XOÁ cùng lượt này. Nó bắt caller khai "body

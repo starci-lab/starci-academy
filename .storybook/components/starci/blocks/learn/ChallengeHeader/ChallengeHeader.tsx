@@ -137,6 +137,57 @@ const ChallengeHeader = ({
     showAnatomy = false,
     anatPart,
 }: ChallengeHeaderProps) => {
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, thầy chốt trả lời
+    // điểm-1-còn-treo round-3: "đỏ dời qua bên trái, vàng dời qua sát đó, rồi gap
+    // đều 3 cái này" — rồi sửa lại thứ tự: "chip nằm bên trái, plain text bên
+    // phải"): bỏ `justify="between"` + StackH lồng hai tầng (từng đẩy score sang
+    // mép trái, status/difficulty sang mép phải) — gộp thành MỘT hàng, cùng
+    // `gap="related"`, đứng sát nhau bên trái, CHIP TRƯỚC (status, difficulty) rồi
+    // mới tới score dạng chữ thường. Vẫn gỡ `prefixIcon={TrophyIcon}` (round-2) và
+    // giữ thứ tự status trước difficulty (round-2).
+    const metaRow = (
+        <>
+            {isSkeleton ? (
+                <EnumChip
+                    value="inProgress"
+                    map={STATUS_MAP}
+                    isSkeleton
+                    anatPart={showAnatomy ? "EnumChip" : undefined}
+                />
+            ) : status != null ? (
+                <EnumChip
+                    value={status}
+                    map={STATUS_MAP}
+                    anatPart={showAnatomy ? "EnumChip" : undefined}
+                />
+            ) : null}
+            {isSkeleton ? (
+                <EnumChip
+                    value="easy"
+                    map={DIFFICULTY_MAP}
+                    isSkeleton
+                    anatPart={showAnatomy ? "EnumChip" : undefined}
+                />
+            ) : (
+                <EnumChip
+                    value={difficulty}
+                    map={DIFFICULTY_MAP}
+                    anatPart={showAnatomy ? "EnumChip" : undefined}
+                />
+            )}
+            {isSkeleton ? (
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : scoreValue != null ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    text={`${scoreValue} điểm`}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <PageHeader
@@ -180,55 +231,8 @@ const ChallengeHeader = ({
                         />
                     ) : undefined
                 }
-                // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, thầy chốt trả lời
-                // điểm-1-còn-treo round-3: "đỏ dời qua bên trái, vàng dời qua sát đó, rồi gap
-                // đều 3 cái này" — rồi sửa lại thứ tự: "chip nằm bên trái, plain text bên
-                // phải"): bỏ `justify="between"` + StackH lồng hai tầng (từng đẩy score sang
-                // mép trái, status/difficulty sang mép phải) — gộp thành MỘT hàng, cùng
-                // `gap="related"`, đứng sát nhau bên trái, CHIP TRƯỚC (status, difficulty) rồi
-                // mới tới score dạng chữ thường. Vẫn gỡ `prefixIcon={TrophyIcon}` (round-2) và
-                // giữ thứ tự status trước difficulty (round-2).
                 meta={
-                    <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                        {isSkeleton ? (
-                            <EnumChip
-                                value="inProgress"
-                                map={STATUS_MAP}
-                                isSkeleton
-                                anatPart={showAnatomy ? "EnumChip" : undefined}
-                            />
-                        ) : status != null ? (
-                            <EnumChip
-                                value={status}
-                                map={STATUS_MAP}
-                                anatPart={showAnatomy ? "EnumChip" : undefined}
-                            />
-                        ) : null}
-                        {isSkeleton ? (
-                            <EnumChip
-                                value="easy"
-                                map={DIFFICULTY_MAP}
-                                isSkeleton
-                                anatPart={showAnatomy ? "EnumChip" : undefined}
-                            />
-                        ) : (
-                            <EnumChip
-                                value={difficulty}
-                                map={DIFFICULTY_MAP}
-                                anatPart={showAnatomy ? "EnumChip" : undefined}
-                            />
-                        )}
-                        {isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : scoreValue != null ? (
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                text={`${scoreValue} điểm`}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : null}
-                    </StackH>
+                    <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
                 }
             />
         </div>

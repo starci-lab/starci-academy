@@ -32,8 +32,8 @@ export interface CodePreviewTabsProps {
  */
 export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsProps) => {
     const [tab, setTab] = useState<"preview" | "code">("preview")
-    return (
-        <StackV gap="related" className={className ? cn("not-prose", className) : "not-prose"}>
+    const panes = (
+        <>
             <Tabs
                 selectedKey={tab}
                 variant="secondary"
@@ -63,6 +63,9 @@ export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsPro
             <div className={tab === "preview" ? "rounded-xl border border-divider p-3" : undefined}>
                 {tab === "preview" ? preview : code}
             </div>
-        </StackV>
+        </>
+    )
+    return (
+        <StackV gap="related" className={className ? cn("not-prose", className) : "not-prose"} body={panes} />
     )
 }

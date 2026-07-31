@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { type LayoutAlign, type LayoutJustify, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 import { Flex } from "@sb-components/frames/Flex/Flex"
@@ -84,9 +85,15 @@ export interface StackBaseProps {
      * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
      */
     anatPart?: string
-    /** The stacked content. A wrapper frame takes children (§13b). */
-    children: ReactNode
+    /** The stacked content. A wrapper frame takes a named slot (§13b). */
+    body?: ReactNode
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** `true` → tag this frame's parts with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
@@ -145,9 +152,10 @@ const StackV = ({
     justify,
     divider = false,
     nested = false,
-    children,
+    body,
     padding,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: StackVProps) => (
@@ -160,10 +168,10 @@ const StackV = ({
         align={align}
         justify={justify}
         className={cn(nested && NESTED_CLS, className)}
+        classNames={classNames}
         anatPart={anatPart}
-    >
-        {divider ? interleaveDividers(children, "vertical", showAnatomy) : children}
-    </Flex>
+        body={divider ? interleaveDividers(body, "vertical", showAnatomy) : body}
+    />
 )
 
 const StackH = ({
@@ -175,9 +183,10 @@ const StackH = ({
     wrap = false,
     divider = false,
     nested = false,
-    children,
+    body,
     padding,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: StackHProps) => (
@@ -191,10 +200,10 @@ const StackH = ({
         justify={justify}
         wrap={wrap}
         className={cn(nested && NESTED_CLS, className)}
+        classNames={classNames}
         anatPart={anatPart}
-    >
-        {divider ? interleaveDividers(children, "horizontal", showAnatomy) : children}
-    </Flex>
+        body={divider ? interleaveDividers(body, "horizontal", showAnatomy) : body}
+    />
 )
 
 export { StackV, StackH }

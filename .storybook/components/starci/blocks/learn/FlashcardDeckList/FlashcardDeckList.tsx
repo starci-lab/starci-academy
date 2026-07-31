@@ -215,44 +215,60 @@ const FlashcardDeckList = ({
                 content: <Chip tone="warning" text={`${deck.dueCount} đến hạn`} anatPart={showAnatomy ? "Chip" : undefined} />,
             })
         }
-        return (
-            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <Typography size="sm" weight="medium" truncate text={deck.title} anatPart={showAnatomy ? "Typography" : undefined} />
-                    {deck.description ? (
-                        <Typography size="xs" color="muted" lineClamp={2} text={deck.description} anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : null}
-                </StackV>
+        const titleAndDescription = (
+            <>
+                <Typography size="sm" weight="medium" truncate text={deck.title} anatPart={showAnatomy ? "Typography" : undefined} />
+                {deck.description ? (
+                    <Typography size="xs" color="muted" lineClamp={2} text={deck.description} anatPart={showAnatomy ? "Typography" : undefined} />
+                ) : null}
+            </>
+        )
+
+        const progressRow = (
+            <>
+                <div className="flex-1" data-anat-part={showAnatomy ? "ProgressGauge" : undefined}>
+                    <ProgressGauge
+                        value={((deck.masteredCount ?? 0) / deck.totalCount) * 100}
+                        size="sm"
+                        ariaLabel={`Mức độ thuộc bộ thẻ ${deck.title}`}
+                        showAnatomy={showAnatomy}
+                    />
+                </div>
+                <Typography
+                    size="xs"
+                    color="muted"
+                    text={`${deck.masteredCount ?? 0}/${deck.totalCount}`}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            </>
+        )
+
+        const ctaRow = (
+            <>
+                <Typography
+                    size="sm"
+                    weight="medium"
+                    color="accent-soft"
+                    text={ctaLabel ?? DEFAULT_CTA_LABEL}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+                <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-accent-soft-foreground" />
+            </>
+        )
+
+        const tileBody = (
+            <>
+                <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={titleAndDescription} />
                 <Cluster gap="related" items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
                 {showProgress && deck.totalCount > 0 ? (
-                    <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <div className="flex-1" data-anat-part={showAnatomy ? "ProgressGauge" : undefined}>
-                            <ProgressGauge
-                                value={((deck.masteredCount ?? 0) / deck.totalCount) * 100}
-                                size="sm"
-                                ariaLabel={`Mức độ thuộc bộ thẻ ${deck.title}`}
-                                showAnatomy={showAnatomy}
-                            />
-                        </div>
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            text={`${deck.masteredCount ?? 0}/${deck.totalCount}`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    </StackH>
+                    <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={progressRow} />
                 ) : null}
-                <StackH gap="tight" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <Typography
-                        size="sm"
-                        weight="medium"
-                        color="accent-soft"
-                        text={ctaLabel ?? DEFAULT_CTA_LABEL}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                    <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-accent-soft-foreground" />
-                </StackH>
-            </StackV>
+                <StackH gap="tight" justify="end" anatPart={showAnatomy ? "StackH" : undefined} body={ctaRow} />
+            </>
+        )
+
+        return (
+            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={tileBody} />
         )
     }
 
@@ -323,35 +339,43 @@ const FlashcardDeckList = ({
         <SurfaceCardList anatPart={showAnatomy ? "SurfaceCardList" : undefined} isSkeleton={isSkeleton} items={rows} />
     )
 
-    return (
-        <StackV gap="grouped" anatPart={anatPart}>
-            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
-                    <InputSearch
-                        value={query}
-                        onValueChange={onQueryChange}
-                        placeholder="Tìm bộ thẻ"
-                        ariaLabel="Tìm bộ thẻ"
-                        showAnatomy={showAnatomy}
-                    />
-                </div>
-                <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
-                    <Tabs
-                        items={VIEW_ITEMS}
-                        selectedKey={view}
-                        onSelectionChange={(key) => onViewChange(key as FlashcardDeckListView)}
-                        ariaLabel="Kiểu hiển thị"
-                        showAnatomy={showAnatomy}
-                    />
-                </div>
-            </StackH>
+    const searchAndView = (
+        <>
+            <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
+                <InputSearch
+                    value={query}
+                    onValueChange={onQueryChange}
+                    placeholder="Tìm bộ thẻ"
+                    ariaLabel="Tìm bộ thẻ"
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+            <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
+                <Tabs
+                    items={VIEW_ITEMS}
+                    selectedKey={view}
+                    onSelectionChange={(key) => onViewChange(key as FlashcardDeckListView)}
+                    ariaLabel="Kiểu hiển thị"
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+        </>
+    )
+
+    const listBody = (
+        <>
+            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined} body={searchAndView} />
             {track}
             {!isSkeleton && decks.length > 0 ? (
                 <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
                     <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} showAnatomy={showAnatomy} />
                 </div>
             ) : null}
-        </StackV>
+        </>
+    )
+
+    return (
+        <StackV gap="grouped" anatPart={anatPart} body={listBody} />
     )
 }
 

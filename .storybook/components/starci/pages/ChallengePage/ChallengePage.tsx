@@ -136,57 +136,63 @@ const ChallengePage = ({
     passThreshold,
     isSkeleton = false,
     showAnatomy = false,
-}: ChallengePageProps) => (
-    <Container size="xl" padding="roomy">
+}: ChallengePageProps) => {
+    const readColumn = (
+        <>
+            <ChallengeHeader
+                anatPart="ChallengeHeader"
+                onBackPress={onBackPress}
+                backLabel={backLabel}
+                title={title}
+                description={description}
+                scoreValue={scoreValue}
+                difficulty={difficulty}
+                status={status}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <ChallengeBrief
+                anatPart="ChallengeBrief"
+                prerequisites={prerequisites}
+                requirements={requirements}
+                steps={steps}
+                outputs={outputs}
+                hint={hint}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const actColumn = (
+        <>
+            <ChallengeDeliverableList
+                anatPart="ChallengeDeliverableList"
+                items={deliverables}
+                onOpenGradingSettings={onOpenGradingSettings}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <ChallengeScoreCard
+                anatPart="ChallengeScoreCard"
+                earnedScore={earnedScore}
+                maxScore={maxScore}
+                passThreshold={passThreshold}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const challengeBody = (
         <SplitWorkspace
             anatPart={showAnatomy ? "SplitWorkspace" : undefined}
-            main={
-                <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <ChallengeHeader
-                        anatPart="ChallengeHeader"
-                        onBackPress={onBackPress}
-                        backLabel={backLabel}
-                        title={title}
-                        description={description}
-                        scoreValue={scoreValue}
-                        difficulty={difficulty}
-                        status={status}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <ChallengeBrief
-                        anatPart="ChallengeBrief"
-                        prerequisites={prerequisites}
-                        requirements={requirements}
-                        steps={steps}
-                        outputs={outputs}
-                        hint={hint}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
-            }
-            aside={
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <ChallengeDeliverableList
-                        anatPart="ChallengeDeliverableList"
-                        items={deliverables}
-                        onOpenGradingSettings={onOpenGradingSettings}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <ChallengeScoreCard
-                        anatPart="ChallengeScoreCard"
-                        earnedScore={earnedScore}
-                        maxScore={maxScore}
-                        passThreshold={passThreshold}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
-            }
+            main={<StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={readColumn} />}
+            aside={<StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={actColumn} />}
         />
-    </Container>
-)
+    )
+
+    return <Container size="xl" padding="roomy" body={challengeBody} />
+}
 
 export { ChallengePage }

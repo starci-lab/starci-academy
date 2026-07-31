@@ -118,20 +118,27 @@ const RowSkeleton = ({
 }) => (
     // `py-2` stays a raw class here: InsetScale only covers symmetric `p-*`, it has
     // no vertical-only step, so this vertical rhythm can't move onto a frame prop yet.
-    <StackH gap="grouped" className={cn("min-w-0 py-2", className)}>
-        {hasLeading ? (
-            <HeroSkeleton className="size-5 shrink-0 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-        ) : null}
-        {/* `TitledText` mirrors per LINE PRESENCE, so the placeholder text just has
-            to be non-empty — it is never rendered while `isSkeleton` is on. */}
-        <TitledText
-            title={SKELETON_LINE}
-            subtitle={hasSubtitle ? SKELETON_LINE : undefined}
-            isSkeleton
-            className="flex-1"
-            anatPart={showAnatomy ? "TitledText" : undefined}
-        />
-    </StackH>
+    <StackH
+        gap="grouped"
+        classNames={["min-w-0"]}
+        className={cn("py-2", className)}
+        body={
+            <>
+                {hasLeading ? (
+                    <HeroSkeleton className="size-5 shrink-0 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                ) : null}
+                {/* `TitledText` mirrors per LINE PRESENCE, so the placeholder text just has
+                    to be non-empty — it is never rendered while `isSkeleton` is on. */}
+                <TitledText
+                    title={SKELETON_LINE}
+                    subtitle={hasSubtitle ? SKELETON_LINE : undefined}
+                    isSkeleton
+                    className="flex-1"
+                    anatPart={showAnatomy ? "TitledText" : undefined}
+                />
+            </>
+        }
+    />
 )
 
 /**
@@ -187,10 +194,17 @@ const Row = ({
             {/* title (body-sm medium) + muted subtitle = one TitledText, truncated */}
             <TitledText title={title} subtitle={subtitle} truncate anatPart={showAnatomy ? "TitledText" : undefined} />
             {meta || trailing ? (
-                <StackH gap="related" className="ml-auto shrink-0">
-                    {meta}
-                    {trailing}
-                </StackH>
+                <StackH
+                    gap="related"
+                    classNames={["shrink-0"]}
+                    className="ml-auto"
+                    body={
+                        <>
+                            {meta}
+                            {trailing}
+                        </>
+                    }
+                />
             ) : null}
         </>
     )
@@ -305,14 +319,26 @@ const Labeled = ({
     return (
         // `as="section"` keeps the landmark tag while still routing the seam through the
         // frame (§13z) — `Stack`'s `as` prop was added 2026-07-29 for exactly this case.
-        <StackV as="section" gap="grouped" className={className}>
-            <StackH gap="related">
-                {icon}
-                <Label>{label}</Label>
-            </StackH>
-            <StackV gap="related">{rows}</StackV>
-            {action ? <div>{action}</div> : null}
-        </StackV>
+        <StackV
+            as="section"
+            gap="grouped"
+            className={className}
+            body={
+                <>
+                    <StackH
+                        gap="related"
+                        body={
+                            <>
+                                {icon}
+                                <Label>{label}</Label>
+                            </>
+                        }
+                    />
+                    <StackV gap="related" body={rows} />
+                    {action ? <div>{action}</div> : null}
+                </>
+            }
+        />
     )
 }
 
@@ -354,30 +380,38 @@ export interface ListMetaProps {
  * @param props - {@link ListMetaProps}
  */
 const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMetaProps) => (
-    <StackH gap="related" className={cn("min-w-0", className)} anatPart={anatPart}>
-        {chip ? <span className="shrink-0">{chip}</span> : null}
-        {items.length > 0 ? (
-            <Typography size="xs"
-                text={(
-                    <>
-                        {items.map((item, index) => (
-                            <React.Fragment key={index}>
-                                {/* Khoảng thở của dấu `·` đến từ khoảng trắng của chính chuỗi,
-                                    KHÔNG từ `mx-1` gõ tay: margin của con là seam hai chủ (§10a),
-                                    và cổng `check-padding` bắt đúng chỗ này 2026-07-27. */}
-                                {index > 0 ? <span aria-hidden>{" · "}</span> : null}
-                                {item}
-                            </React.Fragment>
-                        ))}
-                    </>
-                )}
-                color="muted"
-                truncate
-                classNames={["min-w-0"]}
-                showAnatomy={showAnatomy}
-            />
-        ) : null}
-    </StackH>
+    <StackH
+        gap="related"
+        classNames={["min-w-0"]}
+        className={className}
+        anatPart={anatPart}
+        body={
+            <>
+                {chip ? <span className="shrink-0">{chip}</span> : null}
+                {items.length > 0 ? (
+                    <Typography size="xs"
+                        text={(
+                            <>
+                                {items.map((item, index) => (
+                                    <React.Fragment key={index}>
+                                        {/* Khoảng thở của dấu `·` đến từ khoảng trắng của chính chuỗi,
+                                            KHÔNG từ `mx-1` gõ tay: margin của con là seam hai chủ (§10a),
+                                            và cổng `check-padding` bắt đúng chỗ này 2026-07-27. */}
+                                        {index > 0 ? <span aria-hidden>{" · "}</span> : null}
+                                        {item}
+                                    </React.Fragment>
+                                ))}
+                            </>
+                        )}
+                        color="muted"
+                        truncate
+                        classNames={["min-w-0"]}
+                        showAnatomy={showAnatomy}
+                    />
+                ) : null}
+            </>
+        }
+    />
 )
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -443,49 +477,61 @@ const ToggleRow = ({
 }: ListToggleRowProps) => {
     if (isSkeleton) {
         return (
-            <StackH gap="grouped" className={className}>
-                {/* title↔description stack = TitledText (skeleton mirror delegated) */}
-                <TitledText
-                    title={label}
-                    subtitle={description}
-                    isSkeleton
-                    className="flex-1"
-                    anatPart={showAnatomy ? "TitledText" : undefined}
-                />
-                <ChoiceSwitch
-                    isSkeleton
-                    isSelected={false}
-                    onValueChange={() => undefined}
-                    classNames={["shrink-0"]}
-                    anatPart={showAnatomy ? "ChoiceSwitch" : undefined}
-                />
-            </StackH>
+            <StackH
+                gap="grouped"
+                className={className}
+                body={
+                    <>
+                        {/* title↔description stack = TitledText (skeleton mirror delegated) */}
+                        <TitledText
+                            title={label}
+                            subtitle={description}
+                            isSkeleton
+                            className="flex-1"
+                            anatPart={showAnatomy ? "TitledText" : undefined}
+                        />
+                        <ChoiceSwitch
+                            isSkeleton
+                            isSelected={false}
+                            onValueChange={() => undefined}
+                            classNames={["shrink-0"]}
+                            anatPart={showAnatomy ? "ChoiceSwitch" : undefined}
+                        />
+                    </>
+                }
+            />
         )
     }
     return (
-        <StackH gap="grouped" className={cn(isDisabled && "opacity-50", className)}>
-            {/* label (body-sm medium) + muted description = one TitledText row */}
-            <TitledText
-                title={label}
-                subtitle={description}
-                className="flex-1"
-                anatPart={showAnatomy ? "TitledText" : undefined}
-            />
-            <Switch
-                className="shrink-0"
-                isSelected={checked}
-                isDisabled={isDisabled}
-                onChange={onCheckedChange}
-                aria-label={label}
-                data-anat-part={showAnatomy ? "Switch" : undefined}
-            >
-                <Switch.Content>
-                    <Switch.Control>
-                        <Switch.Thumb />
-                    </Switch.Control>
-                </Switch.Content>
-            </Switch>
-        </StackH>
+        <StackH
+            gap="grouped"
+            className={cn(isDisabled && "opacity-50", className)}
+            body={
+                <>
+                    {/* label (body-sm medium) + muted description = one TitledText row */}
+                    <TitledText
+                        title={label}
+                        subtitle={description}
+                        className="flex-1"
+                        anatPart={showAnatomy ? "TitledText" : undefined}
+                    />
+                    <Switch
+                        className="shrink-0"
+                        isSelected={checked}
+                        isDisabled={isDisabled}
+                        onChange={onCheckedChange}
+                        aria-label={label}
+                        data-anat-part={showAnatomy ? "Switch" : undefined}
+                    >
+                        <Switch.Content>
+                            <Switch.Control>
+                                <Switch.Thumb />
+                            </Switch.Control>
+                        </Switch.Content>
+                    </Switch>
+                </>
+            }
+        />
     )
 }
 

@@ -175,6 +175,53 @@ const FlashcardDueHero = ({
 
     // LEAF 1 (also the isSkeleton mirror) — the due-count cluster + Start CTA.
     const breakdown = buildBreakdown(dueReviewCount, newCount)
+
+    const dueCountLines = (
+        <>
+            <Typography
+                size="h2"
+                weight="bold"
+                tabularNums
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Typography" : undefined}
+                text={String(dueCount)}
+            />
+            <Typography
+                size="sm"
+                color="muted"
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Typography" : undefined}
+                text="thẻ đến hạn hôm nay"
+            />
+            {breakdown ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={breakdown}
+                />
+            ) : null}
+        </>
+    )
+
+    const heroBody = (
+        <>
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={dueCountLines} />
+            <Button
+                variant="primary"
+                label="Bắt đầu ôn tập"
+                suffixIcon={ArrowRightIcon}
+                iconSlide
+                onPress={onStart}
+                isPending={isStarting}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Button" : undefined}
+                classNames={["w-fit"]}
+            />
+        </>
+    )
+
     return (
         <SurfaceCard
             label={SECTION_LABEL}
@@ -182,45 +229,7 @@ const FlashcardDueHero = ({
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
         >
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <Typography
-                        size="h2"
-                        weight="bold"
-                        tabularNums
-                        isSkeleton={isSkeleton}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                        text={String(dueCount)}
-                    />
-                    <Typography
-                        size="sm"
-                        color="muted"
-                        isSkeleton={isSkeleton}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                        text="thẻ đến hạn hôm nay"
-                    />
-                    {breakdown ? (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                            text={breakdown}
-                        />
-                    ) : null}
-                </StackV>
-                <Button
-                    variant="primary"
-                    label="Bắt đầu ôn tập"
-                    suffixIcon={ArrowRightIcon}
-                    iconSlide
-                    onPress={onStart}
-                    isPending={isStarting}
-                    isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "Button" : undefined}
-                    classNames={["w-fit"]}
-                />
-            </StackV>
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={heroBody} />
         </SurfaceCard>
     )
 }

@@ -68,43 +68,50 @@ export const SurfaceCardHeader = ({
     // Both sides of the row follow `subtleLabel` for text size — ONE shared variable
     // so the two sides can never drift apart.
     const textSize = subtleLabel ? "xs" : "sm"
+    // Text goes through the ATOM (§9c), NOT HeroUI `Label` or a `<span>` with
+    // classes slapped on. `Label` renders exactly 14px/500/lh-20 =
+    // `size="sm" weight="medium"` so the shape doesn't change — but because
+    // it's an atom, `isSkeleton` FLOWS STRAIGHT into it instead of forcing
+    // the header row to branch off and build its own shimmer bar.
+    const labelSlot = (
+        <Typography
+            size={textSize}
+            weight={subtleLabel ? undefined : "medium"}
+            color={subtleLabel ? "muted" : undefined}
+            truncate
+            isSkeleton={isSkeleton}
+            classNames={isSkeleton ? ["w-1/2"] : undefined}
+            text={label}
+        />
+    )
+    const endSlot = action ?? (onSeeMore ? (
+        // This is an ATOM with its own story ⇒ the node is named so it becomes a
+        // clickable DEP in the panel; the badge stops here, no drilling into the
+        // atom's insides (§11a).
+        <span className="shrink-0" data-anat-part={showAnatomy ? "LinkSeeMore" : undefined}>
+            <LinkSeeMore onPress={onSeeMore} size={textSize} label={seeMoreLabel} />
+        </span>
+    ) : labelEnd != null ? (
+        // Also goes through the atom, same reason — the flag keeps flowing, not branching.
+        <Typography
+            size={textSize}
+            color="muted"
+            isSkeleton={isSkeleton}
+            classNames={isSkeleton ? ["shrink-0", "w-1/4"] : ["shrink-0"]}
+            text={labelEnd}
+        />
+    ) : null)
     return (
-        <StackH gap="grouped" justify="between">
-            <StackH gap="related" className="min-w-0">
-                {/* Text goes through the ATOM (§9c), NOT HeroUI `Label` or a `<span>`
-                    with classes slapped on. `Label` renders exactly 14px/500/lh-20 =
-                    `size="sm" weight="medium"` so the shape doesn't change — but
-                    because it's an atom, `isSkeleton` FLOWS STRAIGHT into it instead
-                    of forcing the header row to branch off and build its own shimmer
-                    bar. */}
-                <Typography
-                    size={textSize}
-                    weight={subtleLabel ? undefined : "medium"}
-                    color={subtleLabel ? "muted" : undefined}
-                    truncate
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/2"] : undefined}
-                    text={label}
-                />
-            </StackH>
-            {action ?? (onSeeMore ? (
-                // This is an ATOM with its own story ⇒ the node is named so it becomes a
-                // clickable DEP in the panel; the badge stops here, no drilling into the
-                // atom's insides (§11a).
-                <span className="shrink-0" data-anat-part={showAnatomy ? "LinkSeeMore" : undefined}>
-                    <LinkSeeMore onPress={onSeeMore} size={textSize} label={seeMoreLabel} />
-                </span>
-            ) : labelEnd != null ? (
-                // Also goes through the atom, same reason — the flag keeps flowing, not branching.
-                <Typography
-                    size={textSize}
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["shrink-0", "w-1/4"] : ["shrink-0"]}
-                    text={labelEnd}
-                />
-            ) : null)}
-        </StackH>
+        <StackH
+            gap="grouped"
+            justify="between"
+            body={
+                <>
+                    <StackH gap="related" classNames={["min-w-0"]} body={labelSlot} />
+                    {endSlot}
+                </>
+            }
+        />
     )
 }
 

@@ -220,10 +220,19 @@ const PlaygroundConnectSheet = ({
     if (isSkeleton) {
         return (
             <div data-anat-part={anatPart} className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
-                <StackH gap="grouped" align="center" justify="between" padding="cozy" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <HeroSkeleton className="h-5 w-24 rounded-full" />
-                    <HeroSkeleton className="h-8 w-24 rounded-xl" />
-                </StackH>
+                <StackH
+                    gap="grouped"
+                    align="center"
+                    justify="between"
+                    padding="cozy"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <>
+                            <HeroSkeleton className="h-5 w-24 rounded-full" />
+                            <HeroSkeleton className="h-8 w-24 rounded-xl" />
+                        </>
+                    }
+                />
             </div>
         )
     }
@@ -234,11 +243,13 @@ const PlaygroundConnectSheet = ({
     const isConnected = safeConnection === "connected"
     const showDeviceBody = isConnected && device != null
 
-    return (
-        <div data-anat-part={anatPart} className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
-            {/* PEEK — always visible: status + reconnect, plus the toggle that opens the body. */}
-            <StackH gap="grouped" align="center" justify="between" padding="cozy" anatPart={showAnatomy ? "StackH" : undefined}>
-                <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+    const statusGroup = (
+        <StackH
+            gap="related"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
                     <Chip
                         tone={STATUS_TONE[safeConnection]}
                         dotClassName={STATUS_DOT_CLASS[safeConnection]}
@@ -255,8 +266,18 @@ const PlaygroundConnectSheet = ({
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     ) : null}
-                </StackH>
-                <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+                </>
+            }
+        />
+    )
+
+    const actionsGroup = (
+        <StackH
+            gap="related"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
                     <Button
                         label="Kết nối lại"
                         variant="secondary"
@@ -274,34 +295,55 @@ const PlaygroundConnectSheet = ({
                         onPress={() => onOpenChange(!open)}
                         anatPart={showAnatomy ? "Button" : undefined}
                     />
-                </StackH>
-            </StackH>
+                </>
+            }
+        />
+    )
+
+    // Depends on the loop variable, so it cannot be hoisted to a const above the
+    // return — a small named helper instead, in the style this file already uses.
+    const renderLogLine = (entry: PlaygroundAgentLogLine, index: number) => (
+        <Typography
+            key={index}
+            size="xs"
+            color={LOG_COLOR[entry.level]}
+            tabularNums={false}
+            text={entry.line}
+            anatPart={showAnatomy ? "Typography" : undefined}
+        />
+    )
+
+    const sheetBody = showDeviceBody ? (
+        <>
+            <div data-anat-part={showAnatomy ? "StatRibbon" : undefined}>
+                <StatRibbon items={buildDeviceItems(device)} valueType="body" bordered showAnatomy={showAnatomy} />
+            </div>
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={(agentLog ?? []).map(renderLogLine)} />
+        </>
+    ) : (
+        <Typography size="sm" color="muted" text={NOT_CONNECTED_HINT} anatPart={showAnatomy ? "Typography" : undefined} />
+    )
+
+    return (
+        <div data-anat-part={anatPart} className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
+            {/* PEEK — always visible: status + reconnect, plus the toggle that opens the body. */}
+            <StackH
+                gap="grouped"
+                align="center"
+                justify="between"
+                padding="cozy"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        {statusGroup}
+                        {actionsGroup}
+                    </>
+                }
+            />
             {/* BODY — mounted only while open, matching a real bottom-sheet's collapsed state. */}
             {open ? (
                 <div className="border-t border-default">
-                    <StackV gap="grouped" padding="cozy" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {showDeviceBody ? (
-                            <>
-                                <div data-anat-part={showAnatomy ? "StatRibbon" : undefined}>
-                                    <StatRibbon items={buildDeviceItems(device)} valueType="body" bordered showAnatomy={showAnatomy} />
-                                </div>
-                                <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                                    {(agentLog ?? []).map((entry, index) => (
-                                        <Typography
-                                            key={index}
-                                            size="xs"
-                                            color={LOG_COLOR[entry.level]}
-                                            tabularNums={false}
-                                            text={entry.line}
-                                            anatPart={showAnatomy ? "Typography" : undefined}
-                                        />
-                                    ))}
-                                </StackV>
-                            </>
-                        ) : (
-                            <Typography size="sm" color="muted" text={NOT_CONNECTED_HINT} anatPart={showAnatomy ? "Typography" : undefined} />
-                        )}
-                    </StackV>
+                    <StackV gap="grouped" padding="cozy" anatPart={showAnatomy ? "StackV" : undefined} body={sheetBody} />
                 </div>
             ) : null}
         </div>

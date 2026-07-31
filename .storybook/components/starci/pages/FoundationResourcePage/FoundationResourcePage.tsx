@@ -136,9 +136,36 @@ const FoundationResourcePage = ({
     isEmpty = false,
     isSkeleton = false,
     showAnatomy = false,
-}: FoundationResourcePageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+}: FoundationResourcePageProps) => {
+    const resourceSection = (
+        <>
+            <FoundationHeader
+                anatPart="FoundationHeader"
+                breadcrumbItems={breadcrumbItems}
+                title={title}
+                description={description}
+                kind={kind}
+                isRecommended={isRecommended}
+                tags={tags}
+                author={author}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <FoundationResourceBody
+                anatPart="FoundationResourceBody"
+                kind={KIND_TO_RESOURCE_KIND[kind]}
+                markdownBody={markdownBody}
+                linkTitle={linkTitle}
+                linkUrl={linkUrl}
+                onOpenLink={onOpenLink}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const resourceSections = (
+        <>
             <TrialEnrollBanner
                 anatPart="TrialEnrollBanner"
                 isVisible={isEnrollmentKnown && !isEnrolled}
@@ -149,33 +176,14 @@ const FoundationResourcePage = ({
             {isEmpty ? (
                 <FoundationResourceEmpty anatPart="FoundationResourceEmpty" showAnatomy={showAnatomy} />
             ) : (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <FoundationHeader
-                        anatPart="FoundationHeader"
-                        breadcrumbItems={breadcrumbItems}
-                        title={title}
-                        description={description}
-                        kind={kind}
-                        isRecommended={isRecommended}
-                        tags={tags}
-                        author={author}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <FoundationResourceBody
-                        anatPart="FoundationResourceBody"
-                        kind={KIND_TO_RESOURCE_KIND[kind]}
-                        markdownBody={markdownBody}
-                        linkTitle={linkTitle}
-                        linkUrl={linkUrl}
-                        onOpenLink={onOpenLink}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={resourceSection} />
             )}
-        </StackV>
-    </Container>
-)
+        </>
+    )
+
+    const resourceBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={resourceSections} />
+
+    return <Container size="md" padding="roomy" body={resourceBody} />
+}
 
 export { FoundationResourcePage }

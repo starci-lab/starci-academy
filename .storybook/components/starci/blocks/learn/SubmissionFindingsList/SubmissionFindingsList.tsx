@@ -212,18 +212,13 @@ const findingLocationChip = (finding: SubmissionFinding, showAnatomy: boolean): 
  */
 const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefined, showAnatomy: boolean): ReactNode => {
     const locationHref = finding.location ? buildLocationHref(finding.location, repositoryUrl) : undefined
-    return (
-        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-            {finding.detail ? (
-                <MarkdownContent
-                    source={finding.detail}
-                    measure="compact"
-                    className="text-muted [&_p]:m-0"
-                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                />
-            ) : null}
-            {finding.location ? (
-                <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+    const locationRow = finding.location ? (
+        <StackH
+            gap="tight"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
                     <MapPinIcon aria-hidden focusable="false" weight="bold" className="size-3 shrink-0 text-muted" />
                     {locationHref ? (
                         <Typography
@@ -240,10 +235,17 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                     ) : (
                         <Typography size="xs" color="muted" text={finding.location} anatPart={showAnatomy ? "Typography" : undefined} />
                     )}
-                </StackH>
-            ) : null}
-            {finding.suggestion ? (
-                <StackH gap="tight" align="start" anatPart={showAnatomy ? "StackH" : undefined}>
+                </>
+            }
+        />
+    ) : null
+    const suggestionRow = finding.suggestion ? (
+        <StackH
+            gap="tight"
+            align="start"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
                     <LightbulbIcon aria-hidden focusable="false" weight="bold" className="size-3.5 shrink-0 text-muted" />
                     <MarkdownContent
                         source={finding.suggestion}
@@ -251,9 +253,29 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                         className="min-w-0 flex-1 text-muted [&_p]:m-0"
                         anatPart={showAnatomy ? "MarkdownContent" : undefined}
                     />
-                </StackH>
-            ) : null}
-        </StackV>
+                </>
+            }
+        />
+    ) : null
+    return (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {finding.detail ? (
+                        <MarkdownContent
+                            source={finding.detail}
+                            measure="compact"
+                            className="text-muted [&_p]:m-0"
+                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                        />
+                    ) : null}
+                    {locationRow}
+                    {suggestionRow}
+                </>
+            }
+        />
     )
 }
 

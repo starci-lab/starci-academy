@@ -74,12 +74,20 @@ export const ProgressRing = ({
     const { ring, label: labelType } = SIZE_MAP[size]
     if (isSkeleton) {
         return (
-            <StackV gap="related" align="center" className={className} anatPart={anatPart}>
-                <HeroSkeleton className={cn("rounded-full", ring)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                {caption !== undefined ? (
-                    <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                ) : null}
-            </StackV>
+            <StackV
+                gap="related"
+                align="center"
+                className={className}
+                anatPart={anatPart}
+                body={
+                    <>
+                        <HeroSkeleton className={cn("rounded-full", ring)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        {caption !== undefined ? (
+                            <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        ) : null}
+                    </>
+                }
+            />
         )
     }
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
@@ -88,8 +96,8 @@ export const ProgressRing = ({
     const safeValue = Math.min(100, Math.max(0, value ?? 0))
     const resolvedLabel = label ?? `${Math.round(safeValue)}%`
     const ariaLabel = typeof caption === "string" ? caption : `${Math.round(safeValue)}%`
-    return (
-        <StackV gap="related" align="center" className={className} anatPart={anatPart}>
+    const ringVisual = (
+        <>
             {/* Relative container: the ring fills it, the label overlays its center */}
             <div className={cn("relative inline-flex items-center justify-center", ring)}>
                 <ProgressCircle aria-label={ariaLabel} value={safeValue} color={tone}>
@@ -110,6 +118,9 @@ export const ProgressRing = ({
                 <Typography size="xs" color="muted"
  align="center" text={caption} />
             ) : null}
-        </StackV>
+        </>
+    )
+    return (
+        <StackV gap="related" align="center" className={className} anatPart={anatPart} body={ringVisual} />
     )
 }

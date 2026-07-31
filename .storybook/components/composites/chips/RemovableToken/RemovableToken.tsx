@@ -84,10 +84,16 @@ export const RemovableToken = ({
                     className,
                 )}
             >
-                <StackH gap="related" className="min-w-0">
-                    <HeroSkeleton className="size-4 shrink-0 rounded" />
-                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/3")} />
-                </StackH>
+                <StackH
+                    gap="related"
+                    classNames={["min-w-0"]}
+                    body={
+                        <>
+                            <HeroSkeleton className="size-4 shrink-0 rounded" />
+                            <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/3")} />
+                        </>
+                    }
+                />
                 <HeroSkeleton className="h-9 w-20 shrink-0 rounded-full" />
             </div>
         )
@@ -102,39 +108,51 @@ export const RemovableToken = ({
                 className,
             )}
         >
-            <StackH gap="related" className="min-w-0">
-                {icon ? (
-                    // COMPOSITE owns the size (§4) — force the caller's bare icon
-                    // down to the row's glyph scale (matches the body-sm label).
-                    <span aria-hidden className="inline-flex shrink-0 [&_svg]:size-4">
-                        {icon}
-                    </span>
-                ) : null}
-                <Typography size="sm" weight="medium" truncate text={label} />
-            </StackH>
+            <StackH
+                gap="related"
+                classNames={["min-w-0"]}
+                body={
+                    <>
+                        {icon ? (
+                            // COMPOSITE owns the size (§4) — force the caller's bare icon
+                            // down to the row's glyph scale (matches the body-sm label).
+                            <span aria-hidden className="inline-flex shrink-0 [&_svg]:size-4">
+                                {icon}
+                            </span>
+                        ) : null}
+                        <Typography size="sm" weight="medium" truncate text={label} />
+                    </>
+                }
+            />
 
             {(onEdit || onRemove) && (
-                <StackH gap="related" className="shrink-0">
-                    {onEdit ? (
-                        <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit}>
-                            <XIcon aria-hidden focusable="false" className="size-4" />
-                            {editLabel}
-                        </Button>
-                    ) : null}
-                    {onRemove ? (
-                        // Compact chip-scale close × (NOT the button-scale edit
-                        // affordance above) — a real <button> for a11y.
-                        <button
-                            type="button"
-                            aria-label={removeLabel}
-                            disabled={isDisabled}
-                            onClick={onRemove}
-                            className="inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted outline-none transition hover:bg-default hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed [&_svg]:size-4"
-                        >
-                            <XIcon aria-hidden focusable="false" />
-                        </button>
-                    ) : null}
-                </StackH>
+                <StackH
+                    gap="related"
+                    classNames={["shrink-0"]}
+                    body={
+                        <>
+                            {onEdit ? (
+                                <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit}>
+                                    <XIcon aria-hidden focusable="false" className="size-4" />
+                                    {editLabel}
+                                </Button>
+                            ) : null}
+                            {onRemove ? (
+                                // Compact chip-scale close × (NOT the button-scale edit
+                                // affordance above) — a real <button> for a11y.
+                                <button
+                                    type="button"
+                                    aria-label={removeLabel}
+                                    disabled={isDisabled}
+                                    onClick={onRemove}
+                                    className="inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted outline-none transition hover:bg-default hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed [&_svg]:size-4"
+                                >
+                                    <XIcon aria-hidden focusable="false" />
+                                </button>
+                            ) : null}
+                        </>
+                    }
+                />
             )}
         </div>
     )

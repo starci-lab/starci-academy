@@ -326,11 +326,15 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
         // Custom `:::chip` directive tag: a wrapped row of chips, one per authored keyword line.
         // Reuses the `Chip` ATOM (soft/neutral) rather than HeroUI `Chip` directly.
         chipblock: ({ items }: MarkdownChipBlockProps) => (
-            <StackH as="span" wrap gap="related" className="my-2">
-                {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
+            <StackH
+                as="span"
+                wrap
+                gap="related"
+                className="my-2"
+                body={String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
                     <Chip key={index} tone="default" text={keyword} anatPart={showAnatomy ? "Chip" : undefined} />
                 ))}
-            </StackH>
+            />
         ),
         // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so `TabsBlock` matches them.
         tabblock: ({ children }: MarkdownNodeProps) => <TabsBlock>{children}</TabsBlock>,
@@ -355,10 +359,18 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
             <Accordion.Item aria-label={String(title ?? "")}>
                 <Accordion.Heading>
                     <Accordion.Trigger>
-                        <StackH gap="grouped" justify="between" className="w-full text-start">
-                            <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>
-                            <Accordion.Indicator />
-                        </StackH>
+                        <StackH
+                            gap="grouped"
+                            justify="between"
+                            classNames={["w-full"]}
+                            className="text-start"
+                            body={
+                                <>
+                                    <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>
+                                    <Accordion.Indicator />
+                                </>
+                            }
+                        />
                     </Accordion.Trigger>
                 </Accordion.Heading>
                 <Accordion.Panel>

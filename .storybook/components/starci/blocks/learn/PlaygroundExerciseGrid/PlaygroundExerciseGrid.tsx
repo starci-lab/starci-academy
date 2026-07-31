@@ -142,33 +142,53 @@ const PlaygroundExerciseGrid = ({
     const usingPlaceholders = isSkeleton && exercises.length === 0
     const source = usingPlaceholders ? SKELETON_EXERCISES : exercises
 
+    // Depends on the loop variable, so it cannot be hoisted to a const above the
+    // return — a small named helper instead, in the style this file already uses.
+    const renderExerciseContent = (exercise: PlaygroundExerciseGridItem) => {
+        const titleAndSteps = (
+            <StackV
+                gap="tight"
+                body={
+                    <>
+                        <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <Typography size="base" weight="bold" truncate text={exercise.title} />
+                        </div>
+                        <div data-anat-part={showAnatomy ? "Chip" : undefined}>
+                            <Chip tone="default" icon={ListChecksIcon} text={stepCountLabel(exercise.stepCount)} classNames={["w-fit"]} />
+                        </div>
+                    </>
+                }
+            />
+        )
+
+        return (
+            <StackV
+                gap="grouped"
+                body={
+                    <>
+                        <div data-anat-part={showAnatomy ? "IconTile" : undefined}>
+                            <IconTile icon={TerminalWindowIcon} tone="accent" size="lg" />
+                        </div>
+                        {titleAndSteps}
+                        <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <Typography
+                                size="sm"
+                                weight="medium"
+                                color="accent"
+                                suffixIcon={ArrowRightIcon}
+                                iconSlide
+                                text={CUE_LABEL}
+                            />
+                        </div>
+                    </>
+                }
+            />
+        )
+    }
+
     const items: Array<SurfaceCardPressableGroupItem> = source.map((exercise) => ({
         key: exercise.id,
-        content: (
-            <StackV gap="grouped">
-                <div data-anat-part={showAnatomy ? "IconTile" : undefined}>
-                    <IconTile icon={TerminalWindowIcon} tone="accent" size="lg" />
-                </div>
-                <StackV gap="tight">
-                    <div data-anat-part={showAnatomy ? "Typography" : undefined}>
-                        <Typography size="base" weight="bold" truncate text={exercise.title} />
-                    </div>
-                    <div data-anat-part={showAnatomy ? "Chip" : undefined}>
-                        <Chip tone="default" icon={ListChecksIcon} text={stepCountLabel(exercise.stepCount)} classNames={["w-fit"]} />
-                    </div>
-                </StackV>
-                <div data-anat-part={showAnatomy ? "Typography" : undefined}>
-                    <Typography
-                        size="sm"
-                        weight="medium"
-                        color="accent"
-                        suffixIcon={ArrowRightIcon}
-                        iconSlide
-                        text={CUE_LABEL}
-                    />
-                </div>
-            </StackV>
-        ),
+        content: renderExerciseContent(exercise),
         // Guessed placeholder tiles never become press targets — nothing
         // underneath can act yet, and a clickable shimmer tile would be a
         // false affordance (rule 7's boundary: this is NOT a business lock).

@@ -93,22 +93,34 @@ export const Legend = ({
         >
             {isSkeleton
                 ? Array.from({ length: skeletonCount }, (_unused, index) => (
-                    <StackH key={index} gap="related">
-                        <HeroSkeleton className="size-2.5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                    </StackH>
+                    <StackH
+                        key={index}
+                        gap="related"
+                        body={
+                            <>
+                                <HeroSkeleton className="size-2.5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                                <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                            </>
+                        }
+                    />
                 ))
                 : (items ?? []).map((item) => {
                     const dot = resolveDotColor(item.color)
                     return (
-                        <StackH key={item.key} gap="related">
-                            <span
-                                aria-hidden
-                                style={dot.style}
-                                className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
-                            />
-                            <Typography size="xs" color="muted" text={<>{item.label}{item.suffix}</>} />
-                        </StackH>
+                        <StackH
+                            key={item.key}
+                            gap="related"
+                            body={
+                                <>
+                                    <span
+                                        aria-hidden
+                                        style={dot.style}
+                                        className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
+                                    />
+                                    <Typography size="xs" color="muted" text={<>{item.label}{item.suffix}</>} />
+                                </>
+                            }
+                        />
                     )
                 })}
         </div>

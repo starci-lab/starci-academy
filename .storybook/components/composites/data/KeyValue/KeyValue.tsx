@@ -90,43 +90,44 @@ const KeyValueRow = ({
     showAnatomy = false,
     anatPart,
 }: KeyValueRowProps) => {
-    const row = isSkeleton ? (
-        <StackH
-            align="start"
-            justify="between"
-            gap="related"
-            className={className}
-            anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
-        >
-            <StackV gap="tight" className="min-w-0">
-                <HeroSkeleton className="h-3.5 w-1/3 rounded" />
-                {hint != null ? <HeroSkeleton className="h-3 w-1/4 rounded" /> : null}
-            </StackV>
+    const skeletonPair = (
+        <>
+            <StackV
+                gap="tight"
+                classNames={["min-w-0"]}
+                body={
+                    <>
+                        <HeroSkeleton className="h-3.5 w-1/3 rounded" />
+                        {hint != null ? <HeroSkeleton className="h-3 w-1/4 rounded" /> : null}
+                    </>
+                }
+            />
             <HeroSkeleton className="h-3.5 w-1/4 shrink-0 rounded" />
-        </StackH>
-    ) : (
-        <StackH
-            align="start"
-            justify="between"
-            gap="related"
-            className={className}
-            anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
-        >
-            {/* Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1). */}
-            <StackV gap="tight" className="min-w-0">
-                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                    <Typography size="sm"
-                        text={label}
-                        color={emphasis ? undefined : "muted"}
-                        weight={emphasis ? "medium" : undefined}
-                    />
-                </span>
-                {hint != null ? (
-                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                        <Typography size="xs" text={hint} color="muted" />
-                    </span>
-                ) : null}
-            </StackV>
+        </>
+    )
+    // Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1).
+    const pairContent = (
+        <>
+            <StackV
+                gap="tight"
+                classNames={["min-w-0"]}
+                body={
+                    <>
+                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <Typography size="sm"
+                                text={label}
+                                color={emphasis ? undefined : "muted"}
+                                weight={emphasis ? "medium" : undefined}
+                            />
+                        </span>
+                        {hint != null ? (
+                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography size="xs" text={hint} color="muted" />
+                            </span>
+                        ) : null}
+                    </>
+                }
+            />
             <span className="shrink-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
                 {emphasis ? (
                     <Typography text={value} weight="bold" tabularNums />
@@ -134,7 +135,26 @@ const KeyValueRow = ({
                     <Typography size="sm" text={value} weight="medium" tabularNums />
                 )}
             </span>
-        </StackH>
+        </>
+    )
+    const row = isSkeleton ? (
+        <StackH
+            align="start"
+            justify="between"
+            gap="related"
+            className={className}
+            anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
+            body={skeletonPair}
+        />
+    ) : (
+        <StackH
+            align="start"
+            justify="between"
+            gap="related"
+            className={className}
+            anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
+            body={pairContent}
+        />
     )
     if (!divider) {
         return row

@@ -151,6 +151,52 @@ const FoundationHeader = ({
     const hasTags = (tags?.length ?? 0) > 0
     const hasAuthor = author != null && author.trim().length > 0
 
+    const metaCluster = (
+        <>
+            <StackH
+                gap="related"
+                align="center"
+                wrap
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        <EnumChip
+                            value={isSkeleton ? FoundationKind.Document : kind}
+                            map={KIND_MAP}
+                            isSkeleton={isSkeleton}
+                            anatPart={showAnatomy ? "EnumChip" : undefined}
+                        />
+                        {isSkeleton ? (
+                            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                        ) : isRecommended ? (
+                            <Chip tone="success" text="Nên xem" anatPart={showAnatomy ? "Chip" : undefined} />
+                        ) : null}
+                        {isSkeleton ? (
+                            <>
+                                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                            </>
+                        ) : hasTags ? (
+                            (tags ?? []).map((tag) => (
+                                <Chip key={tag.key} text={tag.label} anatPart={showAnatomy ? "Chip" : undefined} />
+                            ))
+                        ) : null}
+                    </>
+                }
+            />
+            {isSkeleton ? (
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : hasAuthor ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    text={`Tác giả: ${author}`}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <PageHeader
@@ -183,41 +229,7 @@ const FoundationHeader = ({
                     )
                 }
                 meta={
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                            <EnumChip
-                                value={isSkeleton ? FoundationKind.Document : kind}
-                                map={KIND_MAP}
-                                isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "EnumChip" : undefined}
-                            />
-                            {isSkeleton ? (
-                                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-                            ) : isRecommended ? (
-                                <Chip tone="success" text="Nên xem" anatPart={showAnatomy ? "Chip" : undefined} />
-                            ) : null}
-                            {isSkeleton ? (
-                                <>
-                                    <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-                                    <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-                                </>
-                            ) : hasTags ? (
-                                (tags ?? []).map((tag) => (
-                                    <Chip key={tag.key} text={tag.label} anatPart={showAnatomy ? "Chip" : undefined} />
-                                ))
-                            ) : null}
-                        </StackH>
-                        {isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : hasAuthor ? (
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                text={`Tác giả: ${author}`}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : null}
-                    </StackV>
+                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={metaCluster} />
                 }
             />
         </div>

@@ -113,17 +113,26 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                         closest generous step instead. */}
                                     <Modal.Body className="p-6">
                                         {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
-                                        <StackV as="figure" gap="related" align="center" justify="center" className="h-full">
-                                            <div className="flex w-full flex-1 items-center justify-center overflow-auto">
-                                                <div
-                                                    className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"
-                                                    dangerouslySetInnerHTML={{ __html: data }}
-                                                />
-                                            </div>
-                                            <figcaption className="text-center text-sm italic text-muted">
-                                                {figureCaption}
-                                            </figcaption>
-                                        </StackV>
+                                        <StackV
+                                            as="figure"
+                                            gap="related"
+                                            align="center"
+                                            justify="center"
+                                            classNames={["h-full"]}
+                                            body={
+                                                <>
+                                                    <div className="flex w-full flex-1 items-center justify-center overflow-auto">
+                                                        <div
+                                                            className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"
+                                                            dangerouslySetInnerHTML={{ __html: data }}
+                                                        />
+                                                    </div>
+                                                    <figcaption className="text-center text-sm italic text-muted">
+                                                        {figureCaption}
+                                                    </figcaption>
+                                                </>
+                                            }
+                                        />
                                     </Modal.Body>
                                 </Modal.Dialog>
                             </Modal.Container>

@@ -99,40 +99,46 @@ const MindMapFullscreenButton = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="tight" showAnatomy={showAnatomy}>
-                <ButtonBase
-                    isIconOnly
-                    isSkeleton={isSkeleton}
-                    variant="ghost"
-                    size="sm"
-                    prefixIcon={MagnifyingGlassPlusIcon}
-                    ariaLabel={ariaLabels.zoomIn}
-                    onPress={onZoomIn}
-                    anatPart={buttonAnatPart}
-                />
-                <ButtonBase
-                    isIconOnly
-                    isSkeleton={isSkeleton}
-                    variant="ghost"
-                    size="sm"
-                    prefixIcon={MagnifyingGlassMinusIcon}
-                    ariaLabel={ariaLabels.zoomOut}
-                    onPress={onZoomOut}
-                    anatPart={buttonAnatPart}
-                />
-                <ButtonBase
-                    isIconOnly
-                    isSkeleton={isSkeleton}
-                    variant="ghost"
-                    size="sm"
-                    // Collapse glyph while fullscreen (this button now means "exit"),
-                    // expand glyph otherwise — the one real judgement call this block owns.
-                    prefixIcon={isFullscreen ? ArrowsInIcon : ArrowsOutIcon}
-                    ariaLabel={ariaLabels.toggleFullscreen}
-                    onPress={onToggleFullscreen}
-                    anatPart={buttonAnatPart}
-                />
-            </StackV>
+            <StackV
+                gap="tight"
+                showAnatomy={showAnatomy}
+                body={
+                    <>
+                        <ButtonBase
+                            isIconOnly
+                            isSkeleton={isSkeleton}
+                            variant="ghost"
+                            size="sm"
+                            prefixIcon={MagnifyingGlassPlusIcon}
+                            ariaLabel={ariaLabels.zoomIn}
+                            onPress={onZoomIn}
+                            anatPart={buttonAnatPart}
+                        />
+                        <ButtonBase
+                            isIconOnly
+                            isSkeleton={isSkeleton}
+                            variant="ghost"
+                            size="sm"
+                            prefixIcon={MagnifyingGlassMinusIcon}
+                            ariaLabel={ariaLabels.zoomOut}
+                            onPress={onZoomOut}
+                            anatPart={buttonAnatPart}
+                        />
+                        <ButtonBase
+                            isIconOnly
+                            isSkeleton={isSkeleton}
+                            variant="ghost"
+                            size="sm"
+                            // Collapse glyph while fullscreen (this button now means "exit"),
+                            // expand glyph otherwise — the one real judgement call this block owns.
+                            prefixIcon={isFullscreen ? ArrowsInIcon : ArrowsOutIcon}
+                            ariaLabel={ariaLabels.toggleFullscreen}
+                            onPress={onToggleFullscreen}
+                            anatPart={buttonAnatPart}
+                        />
+                    </>
+                }
+            />
         </div>
     )
 }

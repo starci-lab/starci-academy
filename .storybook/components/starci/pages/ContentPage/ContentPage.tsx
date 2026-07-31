@@ -231,9 +231,111 @@ const ContentPage = ({
     tabsAriaLabel,
     isSkeleton = false,
     showAnatomy = false,
-}: ContentPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+}: ContentPageProps) => {
+    const lessonFooter = (
+        <>
+            <ContentReaction
+                anatPart="ContentReaction"
+                myReaction={myReaction}
+                counts={reactionCounts}
+                viewCount={viewCount}
+                onReact={onReact}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            {/* MOBILE/TABLET-ONLY, via CSS not a second component tree: on desktop
+            the right rail's own "Luyện tập bài này" already surfaces this, so
+            `@app-lg:hidden` removes it from view above that width rather than
+            the screen mounting two different trees. Mode/challenge gate mirrors
+            `src`'s `UpNextCard` exactly; `isHighlight` does NOT (thầy 2026-07-29,
+            deliberate — `src`'s own card is unaccented here, but this nudge is
+            the one focal action a mobile reader sees after the reaction bar). */}
+            {!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0 ? (
+                <MilestoneUpNextCard
+                    anatPart="MilestoneUpNextCard"
+                    className="@app-lg:hidden"
+                    isHighlight
+                    eyebrow="Tiếp theo · Luyện tập bài này"
+                    title={`Làm ${challengeCount} thử thách của bài này`}
+                    description="Áp dụng ngay điều vừa học. Thử thách được chấm tự động và tính vào tiến độ của bạn."
+                    ctaLabel="Làm thử thách"
+                    onPress={() => onModeChange("challenges")}
+                    showAnatomy={showAnatomy}
+                />
+            ) : null}
+            <ContentRelatedList
+                anatPart="ContentRelatedList"
+                items={relatedItems}
+                label={relatedLabel}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <ContentDiscussion
+                anatPart="ContentDiscussion"
+                label={discussionLabel}
+                currentUserId={currentUserId}
+                currentUser={currentUser}
+                comments={comments}
+                total={commentsTotal}
+                repliesByParent={repliesByParent}
+                onSubmitComment={onSubmitComment}
+                onReply={onReply}
+                onEdit={onEditComment}
+                onDelete={onDeleteComment}
+                onReactComment={onReactComment}
+                onLoadReplies={onLoadReplies}
+                hasMore={hasMoreComments}
+                isLoadingMore={isLoadingMoreComments}
+                onLoadMore={onLoadMoreComments}
+                errorMessage={discussionErrorMessage}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <ContentPager
+                anatPart="ContentPager"
+                previous={previous}
+                next={next}
+                ariaLabel={pagerAriaLabel}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const readingSection = (
+        <>
+            <ContentModeNav
+                anatPart="ContentModeNav"
+                modes={modes}
+                mode={mode}
+                onModeChange={onModeChange}
+                languages={languages}
+                language={language}
+                onLanguageChange={onLanguageChange}
+                languageAriaLabel={languageAriaLabel}
+                ariaLabel={tabsAriaLabel}
+                showAnatomy={showAnatomy}
+            />
+            <ContentArticle
+                anatPart="ContentArticle"
+                body={body}
+                isLocked={isLocked}
+                offer={offer}
+                hintText={hintText}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            {/* A reader stopped by the paywall has ONE decision in front of them. Four more
+                things to do underneath would compete with it, so the whole footer waits
+                until the lesson is actually open. */}
+            {!isLocked ? (
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={lessonFooter} />
+            ) : null}
+        </>
+    )
+
+    const contentSections = (
+        <>
             <ContentHeader
                 anatPart="ContentHeader"
                 breadcrumbItems={breadcrumbItems}
@@ -250,103 +352,13 @@ const ContentPage = ({
                 block above (thầy 2026-07-29, deliberate — a chosen tightening, not a copy of
                 `src`'s uniform `gap-6`): they are all "reading this lesson", one continuous
                 surface, not separate regions. */}
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                <ContentModeNav
-                    anatPart="ContentModeNav"
-                    modes={modes}
-                    mode={mode}
-                    onModeChange={onModeChange}
-                    languages={languages}
-                    language={language}
-                    onLanguageChange={onLanguageChange}
-                    languageAriaLabel={languageAriaLabel}
-                    ariaLabel={tabsAriaLabel}
-                    showAnatomy={showAnatomy}
-                />
-                <ContentArticle
-                    anatPart="ContentArticle"
-                    body={body}
-                    isLocked={isLocked}
-                    offer={offer}
-                    hintText={hintText}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                {/* A reader stopped by the paywall has ONE decision in front of them. Four more
-                    things to do underneath would compete with it, so the whole footer waits
-                    until the lesson is actually open. */}
-                {!isLocked ? (
-                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <ContentReaction
-                            anatPart="ContentReaction"
-                            myReaction={myReaction}
-                            counts={reactionCounts}
-                            viewCount={viewCount}
-                            onReact={onReact}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        {/* MOBILE/TABLET-ONLY, via CSS not a second component tree: on desktop
-                        the right rail's own "Luyện tập bài này" already surfaces this, so
-                        `@app-lg:hidden` removes it from view above that width rather than
-                        the screen mounting two different trees. Mode/challenge gate mirrors
-                        `src`'s `UpNextCard` exactly; `isHighlight` does NOT (thầy 2026-07-29,
-                        deliberate — `src`'s own card is unaccented here, but this nudge is
-                        the one focal action a mobile reader sees after the reaction bar). */}
-                        {!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0 ? (
-                            <MilestoneUpNextCard
-                                anatPart="MilestoneUpNextCard"
-                                className="@app-lg:hidden"
-                                isHighlight
-                                eyebrow="Tiếp theo · Luyện tập bài này"
-                                title={`Làm ${challengeCount} thử thách của bài này`}
-                                description="Áp dụng ngay điều vừa học. Thử thách được chấm tự động và tính vào tiến độ của bạn."
-                                ctaLabel="Làm thử thách"
-                                onPress={() => onModeChange("challenges")}
-                                showAnatomy={showAnatomy}
-                            />
-                        ) : null}
-                        <ContentRelatedList
-                            anatPart="ContentRelatedList"
-                            items={relatedItems}
-                            label={relatedLabel}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <ContentDiscussion
-                            anatPart="ContentDiscussion"
-                            label={discussionLabel}
-                            currentUserId={currentUserId}
-                            currentUser={currentUser}
-                            comments={comments}
-                            total={commentsTotal}
-                            repliesByParent={repliesByParent}
-                            onSubmitComment={onSubmitComment}
-                            onReply={onReply}
-                            onEdit={onEditComment}
-                            onDelete={onDeleteComment}
-                            onReactComment={onReactComment}
-                            onLoadReplies={onLoadReplies}
-                            hasMore={hasMoreComments}
-                            isLoadingMore={isLoadingMoreComments}
-                            onLoadMore={onLoadMoreComments}
-                            errorMessage={discussionErrorMessage}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <ContentPager
-                            anatPart="ContentPager"
-                            previous={previous}
-                            next={next}
-                            ariaLabel={pagerAriaLabel}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                    </StackV>
-                ) : null}
-            </StackV>
-        </StackV>
-    </Container>
-)
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={readingSection} />
+        </>
+    )
+
+    const contentBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={contentSections} />
+
+    return <Container size="md" padding="roomy" body={contentBody} />
+}
 
 export { ContentPage }

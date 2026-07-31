@@ -152,25 +152,32 @@ const goalCellContent = (
 ) => {
     const Icon = KPI_ICON[item.key]
     const effectiveTarget = item.target ?? defaultTargets[item.key]
-    return (
-        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-            <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
-                <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined}>
-                    {isSkeleton ? (
-                        <HeroSkeleton
-                            className="size-5 shrink-0 rounded-full"
-                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
-                        />
-                    ) : (
-                        <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                    )}
-                    <Typography
-                        size="sm"
-                        isSkeleton={isSkeleton}
-                        text={item.label}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+
+    const iconLabel = (
+        <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={(
+            <>
+                {isSkeleton ? (
+                    <HeroSkeleton
+                        className="size-5 shrink-0 rounded-full"
+                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
                     />
-                </StackH>
+                ) : (
+                    <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                )}
+                <Typography
+                    size="sm"
+                    isSkeleton={isSkeleton}
+                    text={item.label}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            </>
+        )} />
+    )
+
+    const labelRow = (
+        <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={(
+            <>
+                {iconLabel}
                 <Typography
                     size="xs"
                     color="muted"
@@ -179,28 +186,36 @@ const goalCellContent = (
                     text={isSkeleton ? undefined : `${item.current}/${effectiveTarget}`}
                     anatPart={showAnatomy ? "Typography" : undefined}
                 />
-            </StackH>
-            {isSkeleton ? (
-                <HeroSkeleton
-                    className="h-1 w-full rounded-full"
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
-                />
-            ) : (
-                <ProgressMeter
-                    value={item.current}
-                    max={effectiveTarget > 0 ? effectiveTarget : 1}
-                    anatPart={showAnatomy ? "ProgressMeter" : undefined}
-                />
-            )}
-            {!isSkeleton && item.coinReward != null ? (
-                <Typography
-                    size="xs"
-                    color={item.canClaim ? "accent" : "muted"}
-                    text={`+${item.coinReward} xu khi đạt`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-            ) : null}
-        </StackV>
+            </>
+        )} />
+    )
+
+    return (
+        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={(
+            <>
+                {labelRow}
+                {isSkeleton ? (
+                    <HeroSkeleton
+                        className="h-1 w-full rounded-full"
+                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                    />
+                ) : (
+                    <ProgressMeter
+                        value={item.current}
+                        max={effectiveTarget > 0 ? effectiveTarget : 1}
+                        anatPart={showAnatomy ? "ProgressMeter" : undefined}
+                    />
+                )}
+                {!isSkeleton && item.coinReward != null ? (
+                    <Typography
+                        size="xs"
+                        color={item.canClaim ? "accent" : "muted"}
+                        text={`+${item.coinReward} xu khi đạt`}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                ) : null}
+            </>
+        )} />
     )
 }
 
@@ -234,18 +249,20 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton, s
         content: goalCellContent(item, defaultTargets, isSkeleton, showAnatomy),
     }))
     return (
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-            <Typography
-                size="sm"
-                weight="medium"
-                isSkeleton={isSkeleton}
-                text={summary}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-            <div data-anat-part={showAnatomy ? "StatGridCard" : undefined}>
-                <StatGridCard items={gridItems} showAnatomy={showAnatomy} />
-            </div>
-        </StackV>
+        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={(
+            <>
+                <Typography
+                    size="sm"
+                    weight="medium"
+                    isSkeleton={isSkeleton}
+                    text={summary}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+                <div data-anat-part={showAnatomy ? "StatGridCard" : undefined}>
+                    <StatGridCard items={gridItems} showAnatomy={showAnatomy} />
+                </div>
+            </>
+        )} />
     )
 }
 

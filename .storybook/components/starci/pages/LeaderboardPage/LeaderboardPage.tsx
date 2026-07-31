@@ -170,9 +170,48 @@ const LeaderboardPage = ({
     meLabel,
     isSkeleton = false,
     showAnatomy = false,
-}: LeaderboardPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
+}: LeaderboardPageProps) => {
+    const boardSection = (
+        <>
+            <LeaderboardCategoryNav
+                anatPart="LeaderboardCategoryNav"
+                className="@app-lg:hidden"
+                items={categoryItems}
+                selected={selectedCategory}
+                onSelect={onCategorySelect}
+                ariaLabel={categoryAriaLabel}
+                showAnatomy={showAnatomy}
+            />
+            <LeaderboardToolbar
+                anatPart="LeaderboardToolbar"
+                categoryLabel={categoryLabel}
+                updatedAt={updatedAt}
+                onRefresh={onRefresh}
+                isRefreshing={isRefreshing}
+                refreshLabel={refreshLabel}
+                showAnatomy={showAnatomy}
+            />
+            <LeaderboardBoard
+                anatPart="LeaderboardBoard"
+                isLoading={isBoardLoading}
+                isEmpty={isBoardEmpty}
+                error={boardError}
+                onRetry={onBoardRetry}
+                standing={standing}
+                podiumEntries={podiumEntries}
+                rows={rows}
+                selfRow={selfRow}
+                hiddenBetweenCount={hiddenBetweenCount}
+                celebrateKey={celebrateKey}
+                meLabel={meLabel}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const leaderboardSections = (
+        <>
             <LeaderboardHeader
                 anatPart="LeaderboardHeader"
                 breadcrumbItems={breadcrumbItems}
@@ -187,44 +226,13 @@ const LeaderboardPage = ({
                 onEnroll={onEnroll}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <LeaderboardCategoryNav
-                    anatPart="LeaderboardCategoryNav"
-                    className="@app-lg:hidden"
-                    items={categoryItems}
-                    selected={selectedCategory}
-                    onSelect={onCategorySelect}
-                    ariaLabel={categoryAriaLabel}
-                    showAnatomy={showAnatomy}
-                />
-                <LeaderboardToolbar
-                    anatPart="LeaderboardToolbar"
-                    categoryLabel={categoryLabel}
-                    updatedAt={updatedAt}
-                    onRefresh={onRefresh}
-                    isRefreshing={isRefreshing}
-                    refreshLabel={refreshLabel}
-                    showAnatomy={showAnatomy}
-                />
-                <LeaderboardBoard
-                    anatPart="LeaderboardBoard"
-                    isLoading={isBoardLoading}
-                    isEmpty={isBoardEmpty}
-                    error={boardError}
-                    onRetry={onBoardRetry}
-                    standing={standing}
-                    podiumEntries={podiumEntries}
-                    rows={rows}
-                    selfRow={selfRow}
-                    hiddenBetweenCount={hiddenBetweenCount}
-                    celebrateKey={celebrateKey}
-                    meLabel={meLabel}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-            </StackV>
-        </StackV>
-    </Container>
-)
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={boardSection} />
+        </>
+    )
+
+    const leaderboardBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={leaderboardSections} />
+
+    return <Container size="md" padding="roomy" body={leaderboardBody} />
+}
 
 export { LeaderboardPage }

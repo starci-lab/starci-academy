@@ -129,50 +129,73 @@ const scoreChipFor = (attempt: SubmissionAttemptRecord): { tone: "success" | "da
 /** Turns one attempt into a {@link SurfaceCardListItem}'s free-form `content` — mirrors real `src`'s row exactly: attempt line + verdict chip + time-ago on line 1, model byline on line 2. */
 const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolean) => {
     const chip = scoreChipFor(attempt)
-    return (
-        <StackV gap="tight" anatPart={showAnatomy ? "StackV (row)" : undefined}>
-            {/* justify="between" pushes the timeago to the far edge — the PARENT does the
-            pushing, not a child margin; the label+chip stay grouped in their own inner track
-            so `between` only ever splits two things, not three. */}
-            <StackH gap="related" align="center" justify="between" anatPart={showAnatomy ? "StackH (attempt line)" : undefined}>
-                <StackH gap="related" align="center">
-                    <Typography
-                        text={`Lần ${attempt.attemptNumber}`}
-                        size="sm"
-                        weight="medium"
-                        anatPart={showAnatomy ? "Typography (attempt line)" : undefined}
-                    />
-                    <Chip tone={chip.tone} icon={chip.icon} text={chip.text} anatPart={showAnatomy ? "Chip" : undefined} />
-                </StackH>
-                {attempt.processedTimeAgo != null ? (
-                    <Typography
-                        text={attempt.processedTimeAgo}
-                        size="xs"
-                        color="muted"
-                        anatPart={showAnatomy ? "Typography (timeago)" : undefined}
-                    />
-                ) : null}
-            </StackH>
-            {attempt.gradedByModel != null ? (
-                <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH (byline)" : undefined}>
-                    <InlineIconLabel
-                        icon={<SparkleIcon aria-hidden focusable="false" />}
-                        tone="default"
-                        size="xs"
-                        anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-                    >
-                        {`Đã chấm bởi ${attempt.gradedByModel}`}
-                    </InlineIconLabel>
-                    {attempt.modelCategory != null ? (
-                        <EnumChip
-                            value={attempt.modelCategory}
-                            map={MODEL_CATEGORY_MAP}
-                            anatPart={showAnatomy ? "EnumChip" : undefined}
-                        />
-                    ) : null}
-                </StackH>
+
+    const attemptLabelAndChip = (
+        <>
+            <Typography
+                text={`Lần ${attempt.attemptNumber}`}
+                size="sm"
+                weight="medium"
+                anatPart={showAnatomy ? "Typography (attempt line)" : undefined}
+            />
+            <Chip tone={chip.tone} icon={chip.icon} text={chip.text} anatPart={showAnatomy ? "Chip" : undefined} />
+        </>
+    )
+
+    // justify="between" pushes the timeago to the far edge — the PARENT does the
+    // pushing, not a child margin; the label+chip stay grouped in their own inner track
+    // so `between` only ever splits two things, not three.
+    const attemptLineContent = (
+        <>
+            <StackH gap="related" align="center" body={attemptLabelAndChip} />
+            {attempt.processedTimeAgo != null ? (
+                <Typography
+                    text={attempt.processedTimeAgo}
+                    size="xs"
+                    color="muted"
+                    anatPart={showAnatomy ? "Typography (timeago)" : undefined}
+                />
             ) : null}
-        </StackV>
+        </>
+    )
+
+    const bylineContent = (
+        <>
+            <InlineIconLabel
+                icon={<SparkleIcon aria-hidden focusable="false" />}
+                tone="default"
+                size="xs"
+                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+            >
+                {`Đã chấm bởi ${attempt.gradedByModel}`}
+            </InlineIconLabel>
+            {attempt.modelCategory != null ? (
+                <EnumChip
+                    value={attempt.modelCategory}
+                    map={MODEL_CATEGORY_MAP}
+                    anatPart={showAnatomy ? "EnumChip" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
+    const rowContent = (
+        <>
+            <StackH
+                gap="related"
+                align="center"
+                justify="between"
+                anatPart={showAnatomy ? "StackH (attempt line)" : undefined}
+                body={attemptLineContent}
+            />
+            {attempt.gradedByModel != null ? (
+                <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH (byline)" : undefined} body={bylineContent} />
+            ) : null}
+        </>
+    )
+
+    return (
+        <StackV gap="tight" anatPart={showAnatomy ? "StackV (row)" : undefined} body={rowContent} />
     )
 }
 
@@ -226,6 +249,10 @@ const SubmissionAttemptsDrawer = ({
         showAnatomy,
     }
 
+    const skeletonRows = Array.from({ length: SKELETON_ATTEMPT_COUNT }, (_, index) => (
+        <div key={index} className="h-16 w-full rounded-2xl bg-default/40" />
+    ))
+
     // `selected` (a trailing check) is only wired for the FIXED title/subtitle row
     // shape — this row uses free-form `content` instead (2 lines, richer than that
     // shape fits), so the highlight goes through `className` on the row itself,
@@ -240,6 +267,29 @@ const SubmissionAttemptsDrawer = ({
         },
     }))
 
+    const listAndPager = (
+        <>
+            <SurfaceCardList
+                items={items}
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+            />
+            {totalPages > 1 ? (
+                // `Pagination` hard-codes its own internal `aria-label` (§4) — the
+                // wrapping `<nav>` is how this block's own accessible name still
+                // gets attached, same convention `CourseQaQuestionList` uses.
+                <nav aria-label={PAGER_ARIA_LABEL} data-anat-part={showAnatomy ? "Pagination" : undefined}>
+                    <Pagination
+                        currentPage={page}
+                        totalPages={totalPages}
+                        onPageChange={setPage}
+                        showAnatomy={showAnatomy}
+                    />
+                </nav>
+            ) : null}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <DrawerShell
@@ -252,11 +302,11 @@ const SubmissionAttemptsDrawer = ({
                 <AsyncContent
                     isLoading={isLoading}
                     skeleton={
-                        <StackV gap="related" anatPart={showAnatomy ? "StackV (skeleton list)" : undefined}>
-                            {Array.from({ length: SKELETON_ATTEMPT_COUNT }, (_, index) => (
-                                <div key={index} className="h-16 w-full rounded-2xl bg-default/40" />
-                            ))}
-                        </StackV>
+                        <StackV
+                            gap="related"
+                            anatPart={showAnatomy ? "StackV (skeleton list)" : undefined}
+                            body={skeletonRows}
+                        />
                     }
                     isEmpty={isEmpty}
                     emptyContent={emptyContent}
@@ -264,26 +314,12 @@ const SubmissionAttemptsDrawer = ({
                     errorContent={errorContent}
                     showAnatomy={showAnatomy}
                     content={
-                        <StackV gap="grouped" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV (list + pager)" : undefined}>
-                            <SurfaceCardList
-                                items={items}
-                                showAnatomy={showAnatomy}
-                                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                            />
-                            {totalPages > 1 ? (
-                                // `Pagination` hard-codes its own internal `aria-label` (§4) — the
-                                // wrapping `<nav>` is how this block's own accessible name still
-                                // gets attached, same convention `CourseQaQuestionList` uses.
-                                <nav aria-label={PAGER_ARIA_LABEL} data-anat-part={showAnatomy ? "Pagination" : undefined}>
-                                    <Pagination
-                                        currentPage={page}
-                                        totalPages={totalPages}
-                                        onPageChange={setPage}
-                                        showAnatomy={showAnatomy}
-                                    />
-                                </nav>
-                            ) : null}
-                        </StackV>
+                        <StackV
+                            gap="grouped"
+                            showAnatomy={showAnatomy}
+                            anatPart={showAnatomy ? "StackV (list + pager)" : undefined}
+                            body={listAndPager}
+                        />
                     }
                 />
             </DrawerShell>

@@ -139,25 +139,41 @@ export const TitledText = ({
 
     if (isSkeleton) {
         return (
-            <StackV gap="flush" className={cn("min-w-0", className)} anatPart={anatPart}>
-                {/* §12c: whoever owns the shape owns the skeleton — each line draws its own bar with its own atom. */}
-                <Typography size={cfg.titleSize} isSkeleton classNames={[cfg.skeleton.title]} anatPart={part("Title")} />
-                {subtitle ? <Typography size={cfg.subSize} isSkeleton classNames={[cfg.skeleton.sub]} anatPart={part("Subtitle")} /> : null}
-                {hint ? <Typography size="xs" isSkeleton classNames={[cfg.skeleton.hint]} anatPart={part("Hint")} /> : null}
-            </StackV>
+            <StackV
+                gap="flush"
+                classNames={["min-w-0"]}
+                className={className}
+                anatPart={anatPart}
+                body={
+                    <>
+                        {/* §12c: whoever owns the shape owns the skeleton — each line draws its own bar with its own atom. */}
+                        <Typography size={cfg.titleSize} isSkeleton classNames={[cfg.skeleton.title]} anatPart={part("Title")} />
+                        {subtitle ? <Typography size={cfg.subSize} isSkeleton classNames={[cfg.skeleton.sub]} anatPart={part("Subtitle")} /> : null}
+                        {hint ? <Typography size="xs" isSkeleton classNames={[cfg.skeleton.hint]} anatPart={part("Hint")} /> : null}
+                    </>
+                }
+            />
         )
     }
 
     return (
-        <StackV gap="flush" className={cn("min-w-0", className)} anatPart={anatPart}>
-            {/* Text goes through the `Typography` ATOM (same `size` axis as the skeleton branch above), not raw HeroUI. */}
-            <Typography size={cfg.titleSize} weight={weight ?? cfg.titleWeight} truncate={truncate} text={title} anatPart={part("Title")} />
-            {subtitle ? (
-                <Typography size={cfg.subSize} color={cfg.subColor} weight={cfg.subWeight} truncate={truncate} text={subtitle} anatPart={part("Subtitle")} />
-            ) : null}
-            {hint ? (
-                <Typography size="xs" color="muted" truncate={truncate} text={hint} anatPart={part("Hint")} />
-            ) : null}
-        </StackV>
+        <StackV
+            gap="flush"
+            classNames={["min-w-0"]}
+            className={className}
+            anatPart={anatPart}
+            body={
+                <>
+                    {/* Text goes through the `Typography` ATOM (same `size` axis as the skeleton branch above), not raw HeroUI. */}
+                    <Typography size={cfg.titleSize} weight={weight ?? cfg.titleWeight} truncate={truncate} text={title} anatPart={part("Title")} />
+                    {subtitle ? (
+                        <Typography size={cfg.subSize} color={cfg.subColor} weight={cfg.subWeight} truncate={truncate} text={subtitle} anatPart={part("Subtitle")} />
+                    ) : null}
+                    {hint ? (
+                        <Typography size="xs" color="muted" truncate={truncate} text={hint} anatPart={part("Hint")} />
+                    ) : null}
+                </>
+            }
+        />
     )
 }

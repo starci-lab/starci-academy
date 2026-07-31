@@ -216,32 +216,53 @@ interface SkeletonQuestionRowProps {
  * (§10a — the padding gate only allows a parent's `gap`/surface `padding` to
  * own a seam).
  */
-const SkeletonQuestionRow = ({ showAnatomy }: SkeletonQuestionRowProps) => (
-    <StackH gap="grouped" align="start" anatPart={showAnatomy ? "StackH" : undefined}>
-        {/* Avatar has no `anatPart` of its own — the row wraps it, same convention `SurfaceCard.PressableGroup`'s own skeleton tile uses. */}
-        <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
-            <Avatar isSkeleton size="sm" showAnatomy={showAnatomy} />
-        </div>
-        <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
+const SkeletonQuestionRow = ({ showAnatomy }: SkeletonQuestionRowProps) => {
+    const previewLines = (
+        <>
+            <Typography size="sm" isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+
+    const chipRow = (
+        <>
+            <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+        </>
+    )
+
+    const textColumn = (
+        <>
             {/* asker + time line */}
             <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
             {/* two-line preview */}
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Typography size="sm" isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-            </StackV>
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={previewLines} />
             {/* chip-pill row — ONE chip (status, the classification axis) + the scope
                 as a plain shimmer bar, matching the real row's own text-inline treatment
                 (eslint `starci-fe/no-adjacent-chip`, ★7 below). */}
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-            </StackH>
-        </StackV>
-        {/* status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares */}
-        <HeroSkeleton className="size-2 shrink-0 rounded-full" />
-    </StackH>
-)
+            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={chipRow} />
+        </>
+    )
+
+    return (
+        <StackH
+            gap="grouped"
+            align="start"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {/* Avatar has no `anatPart` of its own — the row wraps it, same convention `SurfaceCard.PressableGroup`'s own skeleton tile uses. */}
+                    <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                        <Avatar isSkeleton size="sm" showAnatomy={showAnatomy} />
+                    </div>
+                    <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={textColumn} />
+                    {/* status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares */}
+                    <HeroSkeleton className="size-2 shrink-0 rounded-full" />
+                </>
+            }
+        />
+    )
+}
 
 /** Props for the local {@link QuestionPreviewRow}. */
 interface QuestionPreviewRowProps {
@@ -293,37 +314,52 @@ const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPr
         })
     }
 
+    const nameLine = (
+        <>
+            {question.isPinned ? (
+                <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+            ) : null}
+            <Typography size="xs" weight="medium" text={askerName} anatPart={showAnatomy ? "Typography" : undefined} />
+            {question.isFounderAuthor ? (
+                <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+            ) : null}
+            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+
+    const textColumn = (
+        <>
+            <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={nameLine} />
+            <Typography size="sm" lineClamp={2} text={question.preview} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Cluster gap="related" items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
+        </>
+    )
+
     return (
-        <StackH gap="grouped" align="start" anatPart={showAnatomy ? "StackH" : undefined}>
-            {/* Avatar has no `anatPart` of its own — the row wraps it (same convention as the skeleton twin above). */}
-            <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
-                <Avatar
-                    src={question.author.avatarUrl}
-                    name={question.author.displayName}
-                    seed={question.author.id}
-                    size="sm"
-                    showAnatomy={showAnatomy}
-                />
-            </div>
-            <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined}>
-                    {question.isPinned ? (
-                        <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                    ) : null}
-                    <Typography size="xs" weight="medium" text={askerName} anatPart={showAnatomy ? "Typography" : undefined} />
-                    {question.isFounderAuthor ? (
-                        <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                    ) : null}
-                    <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} anatPart={showAnatomy ? "Typography" : undefined} />
-                </StackH>
-                <Typography size="sm" lineClamp={2} text={question.preview} anatPart={showAnatomy ? "Typography" : undefined} />
-                <Cluster gap="related" items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
-            </StackV>
-            <span
-                aria-hidden
-                className={`size-2 shrink-0 rounded-full ${isAnswered ? "bg-success" : "bg-warning"}`}
-            />
-        </StackH>
+        <StackH
+            gap="grouped"
+            align="start"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {/* Avatar has no `anatPart` of its own — the row wraps it (same convention as the skeleton twin above). */}
+                    <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                        <Avatar
+                            src={question.author.avatarUrl}
+                            name={question.author.displayName}
+                            seed={question.author.id}
+                            size="sm"
+                            showAnatomy={showAnatomy}
+                        />
+                    </div>
+                    <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={textColumn} />
+                    <span
+                        aria-hidden
+                        className={`size-2 shrink-0 rounded-full ${isAnswered ? "bg-success" : "bg-warning"}`}
+                    />
+                </>
+            }
+        />
     )
 }
 
@@ -406,24 +442,30 @@ const CourseQaQuestionList = ({
                 errorContent={errorContent}
                 showAnatomy={showAnatomy}
                 content={
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <SurfaceCardList
-                            items={questionItems(questions, currentUserId, showAnatomy)}
-                            anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                        />
-                        {totalPages > 1 ? (
-                            // ★4 — `Pagination` hard-codes its own aria-label; a wrapping
-                            // <nav> is how the caller's `pagerAriaLabel` still names the region.
-                            <nav aria-label={pagerAriaLabel} data-anat-part={showAnatomy ? "Pagination" : undefined}>
-                                <Pagination
-                                    currentPage={page}
-                                    totalPages={totalPages}
-                                    onPageChange={onPageChange}
-                                    showAnatomy={showAnatomy}
+                    <StackV
+                        gap="grouped"
+                        anatPart={showAnatomy ? "StackV" : undefined}
+                        body={
+                            <>
+                                <SurfaceCardList
+                                    items={questionItems(questions, currentUserId, showAnatomy)}
+                                    anatPart={showAnatomy ? "SurfaceCardList" : undefined}
                                 />
-                            </nav>
-                        ) : null}
-                    </StackV>
+                                {totalPages > 1 ? (
+                                    // ★4 — `Pagination` hard-codes its own aria-label; a wrapping
+                                    // <nav> is how the caller's `pagerAriaLabel` still names the region.
+                                    <nav aria-label={pagerAriaLabel} data-anat-part={showAnatomy ? "Pagination" : undefined}>
+                                        <Pagination
+                                            currentPage={page}
+                                            totalPages={totalPages}
+                                            onPageChange={onPageChange}
+                                            showAnatomy={showAnatomy}
+                                        />
+                                    </nav>
+                                ) : null}
+                            </>
+                        }
+                    />
                 }
             />
         </div>

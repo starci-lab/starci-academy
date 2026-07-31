@@ -121,90 +121,106 @@ const ContentDiscussion = ({
     // tradeoff real `Discussion` documents for its own archive line
     const answeredCount = comments.filter((comment) => comment.replyCount > 0).length
 
+    // no icon here — §5a.2 (thầy 2026-07-29): a chat-bubble icon needs an ASSOCIATION
+    // step to read as "discussion" (not a universal symbol like ✓/🔒), and the label
+    // text already carries the full fact on its own.
+    const labelLines = (
+        <>
+            {isSkeleton ? (
+                <Typography weight="medium" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : (
+                <Typography weight="medium" text={`${label} · ${total}`} anatPart={showAnatomy ? "Typography" : undefined} />
+            )}
+            {isSkeleton || total > 0 ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    isSkeleton={isSkeleton}
+                    classNames={isSkeleton ? ["w-2/3"] : undefined}
+                    text={`${answeredCount}/${total} câu hỏi đã được trả lời, tích luỹ theo thời gian`}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
+    const discussionHeader = (
+        <>
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={labelLines} />
+            <ContentCommentComposer
+                onSubmit={onSubmitComment}
+                currentUser={currentUser}
+                collapsible
+                ariaLabel="Viết bình luận"
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "ContentCommentComposer" : undefined}
+            />
+        </>
+    )
+
+    const commentList = (
+        <>
+            {(isSkeleton ? SKELETON_ROWS : comments).map((comment) => (
+                <ContentCommentThread
+                    key={comment.id}
+                    comment={comment}
+                    currentUserId={currentUserId}
+                    currentUser={currentUser}
+                    depth={0}
+                    repliesByParent={repliesByParent}
+                    onReply={onReply}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                    onReactComment={onReactComment}
+                    onLoadReplies={onLoadReplies}
+                    showAnatomy={showAnatomy}
+                />
+            ))}
+            {!isSkeleton && hasMore ? (
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    classNames={["self-center"]}
+                    label={isLoadingMore ? "Đang tải…" : "Xem thêm bình luận"}
+                    isDisabled={isLoadingMore}
+                    onPress={onLoadMore}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
+    const discussionBody = (
+        <>
+            {/* 3 seam ở đây khớp đúng real-src `Discussion/index.tsx:98-114` (thầy 2026-07-29,
+                "cảm giác hơi chật" — bản cũ lỏng hơn 1 bậc ở cả 3 chỗ): [label+archive]↔composer
+                = grouped (gap-3) · [icon+label]↔archive-line = tight (gap-1) · icon↔label = related (gap-2). */}
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={discussionHeader} />
+
+            {errorMessage != null ? (
+                <FeedbackEmpty
+                    icon={WarningCircleIcon}
+                    title={errorMessage}
+                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+                />
+            ) : !isSkeleton && comments.length === 0 ? (
+                // Nobody has written yet. This is an INVITATION, so it is drawn —
+                // hiding the section would hide the invitation with it.
+                <FeedbackEmpty
+                    icon={ChatsCircleIcon}
+                    title="Chưa có thảo luận"
+                    description="Đặt câu hỏi đầu tiên về bài này"
+                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+                />
+            ) : (
+                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={commentList} />
+            )}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                {/* 3 seam ở đây khớp đúng real-src `Discussion/index.tsx:98-114` (thầy 2026-07-29,
-                    "cảm giác hơi chật" — bản cũ lỏng hơn 1 bậc ở cả 3 chỗ): [label+archive]↔composer
-                    = grouped (gap-3) · [icon+label]↔archive-line = tight (gap-1) · icon↔label = related (gap-2). */}
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {/* no icon here — §5a.2 (thầy 2026-07-29): a chat-bubble icon needs an
-                            ASSOCIATION step to read as "discussion" (not a universal symbol like
-                            ✓/🔒), and the label text already carries the full fact on its own. */}
-                        {isSkeleton ? (
-                            <Typography weight="medium" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : (
-                            <Typography weight="medium" text={`${label} · ${total}`} anatPart={showAnatomy ? "Typography" : undefined} />
-                        )}
-                        {isSkeleton || total > 0 ? (
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                isSkeleton={isSkeleton}
-                                classNames={isSkeleton ? ["w-2/3"] : undefined}
-                                text={`${answeredCount}/${total} câu hỏi đã được trả lời, tích luỹ theo thời gian`}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : null}
-                    </StackV>
-                    <ContentCommentComposer
-                        onSubmit={onSubmitComment}
-                        currentUser={currentUser}
-                        collapsible
-                        ariaLabel="Viết bình luận"
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "ContentCommentComposer" : undefined}
-                    />
-                </StackV>
-
-                {errorMessage != null ? (
-                    <FeedbackEmpty
-                        icon={WarningCircleIcon}
-                        title={errorMessage}
-                        anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-                    />
-                ) : !isSkeleton && comments.length === 0 ? (
-                    // Nobody has written yet. This is an INVITATION, so it is drawn —
-                    // hiding the section would hide the invitation with it.
-                    <FeedbackEmpty
-                        icon={ChatsCircleIcon}
-                        title="Chưa có thảo luận"
-                        description="Đặt câu hỏi đầu tiên về bài này"
-                        anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-                    />
-                ) : (
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {(isSkeleton ? SKELETON_ROWS : comments).map((comment) => (
-                            <ContentCommentThread
-                                key={comment.id}
-                                comment={comment}
-                                currentUserId={currentUserId}
-                                currentUser={currentUser}
-                                depth={0}
-                                repliesByParent={repliesByParent}
-                                onReply={onReply}
-                                onEdit={onEdit}
-                                onDelete={onDelete}
-                                onReactComment={onReactComment}
-                                onLoadReplies={onLoadReplies}
-                                showAnatomy={showAnatomy}
-                            />
-                        ))}
-                        {!isSkeleton && hasMore ? (
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                classNames={["self-center"]}
-                                label={isLoadingMore ? "Đang tải…" : "Xem thêm bình luận"}
-                                isDisabled={isLoadingMore}
-                                onPress={onLoadMore}
-                                anatPart={showAnatomy ? "Button" : undefined}
-                            />
-                        ) : null}
-                    </StackV>
-                )}
-            </StackV>
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={discussionBody} />
         </div>
     )
 }

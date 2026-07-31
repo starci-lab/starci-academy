@@ -125,23 +125,25 @@ const AiQuotaSubscriptionPanel = ({
                     showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "SurfaceCard" : undefined}
                 >
-                    <StackV gap="grouped" align="start" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            text="Bạn chưa có gói trả phí. Nâng cấp để mở khoá credit Premium và chấm bài bằng model cao cấp."
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                        <Button
-                            label="Đăng ký gói trả phí"
-                            variant="primary"
-                            size="lg"
-                            suffixIcon={ArrowRightIcon}
-                            iconSlide
-                            onPress={onSubscribe}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    </StackV>
+                    <StackV gap="grouped" align="start" anatPart={showAnatomy ? "StackV" : undefined} body={
+                        <>
+                            <Typography
+                                size="sm"
+                                color="muted"
+                                text="Bạn chưa có gói trả phí. Nâng cấp để mở khoá credit Premium và chấm bài bằng model cao cấp."
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                            />
+                            <Button
+                                label="Đăng ký gói trả phí"
+                                variant="primary"
+                                size="lg"
+                                suffixIcon={ArrowRightIcon}
+                                iconSlide
+                                onPress={onSubscribe}
+                                anatPart={showAnatomy ? "Button" : undefined}
+                            />
+                        </>
+                    } />
                 </SurfaceCard>
             </div>
         )
@@ -149,20 +151,22 @@ const AiQuotaSubscriptionPanel = ({
 
     return (
         <div className={className} data-anat-part={anatPart}>
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                <AiQuotaLane
-                    data={premiumLane?.data}
-                    isLoading={premiumLane?.isLoading ?? false}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "AiQuotaLane" : undefined}
-                />
-                <Typography
-                    size="sm"
-                    color="muted"
-                    text={`Bạn đang dùng gói ${TIER_LABEL[tier]}.`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-            </StackV>
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+                <>
+                    <AiQuotaLane
+                        data={premiumLane?.data}
+                        isLoading={premiumLane?.isLoading ?? false}
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "AiQuotaLane" : undefined}
+                    />
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        text={`Bạn đang dùng gói ${TIER_LABEL[tier]}.`}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                </>
+            } />
         </div>
     )
 }

@@ -101,6 +101,68 @@ const ConsultantCard = ({
 }: ConsultantCardProps) => {
     const { id, fullName, jobTitle, companyTitle, description, avatarUrl } = consultant
 
+    const nameRow = (
+        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={(
+            <>
+                <Typography
+                    size="sm"
+                    weight="medium"
+                    truncate
+                    isSkeleton={isSkeleton}
+                    text={fullName}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+                {isSkeleton || jobTitle ? (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        truncate
+                        isSkeleton={isSkeleton}
+                        text={jobTitle}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                ) : null}
+            </>
+        )} />
+    )
+
+    const consultantInfo = (
+        <>
+            <div data-anat-part={showAnatomy ? "Image" : undefined}>
+                <Image
+                    src={avatarUrl}
+                    alt={fullName}
+                    ratio="square"
+                    radius="lg"
+                    isSkeleton={isSkeleton}
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+            {nameRow}
+            {isSkeleton || companyTitle ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    truncate
+                    prefixIcon={BuildingsIcon}
+                    isSkeleton={isSkeleton}
+                    text={companyTitle}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+            {isSkeleton || description ? (
+                <Typography
+                    size="sm"
+                    color="muted"
+                    lineClamp={2}
+                    isSkeleton={isSkeleton}
+                    text={description}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <div data-anat-part={showAnatomy ? "SurfaceCard" : undefined}>
@@ -109,59 +171,7 @@ const ConsultantCard = ({
                     isDisabled={isSkeleton}
                     showAnatomy={showAnatomy}
                 >
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <div data-anat-part={showAnatomy ? "Image" : undefined}>
-                            <Image
-                                src={avatarUrl}
-                                alt={fullName}
-                                ratio="square"
-                                radius="lg"
-                                isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
-                            />
-                        </div>
-                        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <Typography
-                                size="sm"
-                                weight="medium"
-                                truncate
-                                isSkeleton={isSkeleton}
-                                text={fullName}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            {isSkeleton || jobTitle ? (
-                                <Typography
-                                    size="xs"
-                                    color="muted"
-                                    truncate
-                                    isSkeleton={isSkeleton}
-                                    text={jobTitle}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
-                                />
-                            ) : null}
-                        </StackV>
-                        {isSkeleton || companyTitle ? (
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                truncate
-                                prefixIcon={BuildingsIcon}
-                                isSkeleton={isSkeleton}
-                                text={companyTitle}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : null}
-                        {isSkeleton || description ? (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                lineClamp={2}
-                                isSkeleton={isSkeleton}
-                                text={description}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : null}
-                    </StackV>
+                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={consultantInfo} />
                 </SurfaceCard>
             </div>
         </div>

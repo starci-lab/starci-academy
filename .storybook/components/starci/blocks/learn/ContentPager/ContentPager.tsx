@@ -85,28 +85,60 @@ const ContentPager = ({
 
     const items: Array<SurfaceCardPressableGroupItem> = []
     if (previous) {
+        const previousLabel = (
+            <>
+                <Typography size="xs" color="muted" text="Nội dung trước" anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} anatPart={showAnatomy ? "Typography" : undefined} />
+            </>
+        )
+        const previousCard = (
+            <StackH
+                gap="grouped"
+                align="center"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        {/* DIV position (icon §1c/§4.2): this card is a control with its own FIXED
+                            padding (`SurfaceCardPressableGroup` tile, `cozy` inset) — not hug-content
+                            — so size tracks line-height, not font-size. Title is `text-sm` ⇒ `size-5`,
+                            matching the sibling `ITEM_ICON_CLS` convention this same file's parent
+                            (`SurfaceCard.tsx`) already forces for icons in this exact tile shape
+                            (was flat `size-4`, thầy chốt 2026-07-29). Weight omitted → Phosphor
+                            default `regular`, correct at `size-5` (§3.2, was `bold`). */}
+                        <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={previousLabel} />
+                    </>
+                }
+            />
+        )
         items.push({
             key: "previous",
             href: previous.href,
-            content: (
-                <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    {/* DIV position (icon §1c/§4.2): this card is a control with its own FIXED
-                        padding (`SurfaceCardPressableGroup` tile, `cozy` inset) — not hug-content
-                        — so size tracks line-height, not font-size. Title is `text-sm` ⇒ `size-5`,
-                        matching the sibling `ITEM_ICON_CLS` convention this same file's parent
-                        (`SurfaceCard.tsx`) already forces for icons in this exact tile shape
-                        (was flat `size-4`, thầy chốt 2026-07-29). Weight omitted → Phosphor
-                        default `regular`, correct at `size-5` (§3.2, was `bold`). */}
-                    <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                    <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="xs" color="muted" text="Nội dung trước" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} anatPart={showAnatomy ? "Typography" : undefined} />
-                    </StackV>
-                </StackH>
-            ),
+            content: previousCard,
         })
     }
     if (next) {
+        const nextLabel = (
+            <>
+                <Typography size="xs" color="muted" align="end" text="Nội dung tiếp" anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} anatPart={showAnatomy ? "Typography" : undefined} />
+            </>
+        )
+        const nextCard = (
+            <StackH
+                gap="grouped"
+                align="center"
+                justify="end"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        <StackV gap="flush" align="end" anatPart={showAnatomy ? "StackV" : undefined} body={nextLabel} />
+                        {/* Same DIV position/size reasoning as the mirrored left caret above. */}
+                        <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                    </>
+                }
+            />
+        )
         items.push({
             key: "next",
             href: next.href,
@@ -116,16 +148,7 @@ const ContentPager = ({
             // that content-sizes down to a sliver, dragging this card up beside the
             // other one.
             className: "@sm:col-start-2",
-            content: (
-                <StackH gap="grouped" align="center" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <StackV gap="flush" align="end" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="xs" color="muted" align="end" text="Nội dung tiếp" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} anatPart={showAnatomy ? "Typography" : undefined} />
-                    </StackV>
-                    {/* Same DIV position/size reasoning as the mirrored left caret above. */}
-                    <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                </StackH>
-            ),
+            content: nextCard,
         })
     }
 

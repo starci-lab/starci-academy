@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -33,12 +35,14 @@ import { cn } from "@heroui/react"
  * content and pushes the rail off-screen — a failure that only shows up once
  * real long content arrives.
  *
- * ⭐ `@app-md` IS HARD-OWNED, `isRailSticky` IS A PROP. Both real sources agree
- * on the breakpoint and on the 288px rail, so those are not props (§6c: a khung
- * owns its own sizing). They DISAGREE on sticky — dashboard scrolls its rail
- * with the page, settings pins its rail to the viewport — so that one, and only
- * that one, is a prop. A number becomes a prop when a real consumer disagrees,
- * not before.
+ * ⭐ `at` NAMES THE BREAKPOINT (FRAME-10), 288px IS STILL HARD-OWNED. Both real
+ * sources agree on the switch step and on the rail width, so the width stays a
+ * constant (§6c: a khung owns its own sizing) — but the STEP itself is a
+ * `ResponsiveRowSwitch` prop, defaulting to `md` (both sources' step), so the
+ * threshold is readable from the prop list instead of buried in a class string.
+ * They DISAGREE on sticky — dashboard scrolls its rail with the page, settings
+ * pins its rail to the viewport — so `isRailSticky` is a prop for the same
+ * reason. A number becomes a prop when a real consumer disagrees, not before.
  *
  * ⭐ NO `wrap`. The breakpoint is declared, not hoped for. `wrap` carries no
  * threshold: the body shrinks without limit so the row almost never wraps, which
@@ -65,41 +69,76 @@ export interface RailShellProps {
      */
     body: ReactNode
     /**
+     * Container step the rail drops below `body` and becomes a side-by-side row at.
+     * Defaults to `md` — the step both real sources agree on.
+     */
+    at?: ResponsiveRowSwitch
+    /**
      * Pin the rail to the viewport once the two sit side by side. Off by default:
      * the rail scrolls with the page. Turn it on only when the rail is navigation
      * the reader returns to while the body scrolls past it.
      */
     isRailSticky?: boolean
-    /** Extra classes on the shell root. */
-    className?: string
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this khung so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
 
 /**
+ * Switch step → the wrapper classes that flip the shell from stacked to a side-by-side
+ * row from that step up. Written out per step for the same reason `ResponsiveRow`'s table
+ * is: Tailwind never emits an interpolated `@app-${step}:flex-row`.
+ */
+const SHELL_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
+    sm: "@app-sm:flex-row @app-sm:items-start @app-sm:gap-8",
+    md: "@app-md:flex-row @app-md:items-start @app-md:gap-8",
+    lg: "@app-lg:flex-row @app-lg:items-start @app-lg:gap-8",
+    xl: "@app-xl:flex-row @app-xl:items-start @app-xl:gap-8",
+}
+
+/** Switch step → the fixed `288px` rail width from that step up. */
+const RAIL_WIDTH_CLASS: Record<ResponsiveRowSwitch, string> = {
+    sm: "@app-sm:w-72",
+    md: "@app-md:w-72",
+    lg: "@app-lg:w-72",
+    xl: "@app-xl:w-72",
+}
+
+/** Switch step → the sticky-rail classes, applied only when `isRailSticky`. */
+const RAIL_STICKY_CLASS: Record<ResponsiveRowSwitch, string> = {
+    sm: "@app-sm:sticky @app-sm:top-24 @app-sm:max-h-[calc(100dvh-7rem)] @app-sm:self-start @app-sm:overflow-y-auto",
+    md: "@app-md:sticky @app-md:top-24 @app-md:max-h-[calc(100dvh-7rem)] @app-md:self-start @app-md:overflow-y-auto",
+    lg: "@app-lg:sticky @app-lg:top-24 @app-lg:max-h-[calc(100dvh-7rem)] @app-lg:self-start @app-lg:overflow-y-auto",
+    xl: "@app-xl:sticky @app-xl:top-24 @app-xl:max-h-[calc(100dvh-7rem)] @app-xl:self-start @app-xl:overflow-y-auto",
+}
+
+/**
  * The leading-rail shell. See the file header for why this is its own khung and
- * why only `isRailSticky` is a prop.
+ * why `at` and `isRailSticky` are its only props beyond the two slots.
  *
  * @param props - {@link RailShellProps}
  */
 const RailShell = ({
     rail,
     body,
+    at = "md",
     isRailSticky = false,
-    className,
+    classNames,
     anatPart,
 }: RailShellProps) => (
     <div
         data-anat-part={anatPart}
-        className={cn("flex flex-col gap-6 @app-md:flex-row @app-md:items-start @app-md:gap-8", className)}
+        className={cn("flex flex-col gap-6", SHELL_SWITCH_CLASS[at], classNames)}
     >
         {/* `rail`/`body` are CALLER SLOTS — whatever sits inside belongs to whoever passed
             it, so neither gets an anatomy badge of its own (same restraint as
             `SplitWorkspace`'s two slots). */}
         <aside
             className={cn(
-                "flex w-full shrink-0 flex-col @app-md:w-72",
-                isRailSticky && "@app-md:sticky @app-md:top-24 @app-md:max-h-[calc(100dvh-7rem)] @app-md:self-start @app-md:overflow-y-auto",
+                "flex w-full shrink-0 flex-col",
+                RAIL_WIDTH_CLASS[at],
+                isRailSticky && RAIL_STICKY_CLASS[at],
             )}
         >
             {rail}

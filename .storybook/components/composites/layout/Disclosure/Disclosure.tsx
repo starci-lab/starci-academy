@@ -108,17 +108,28 @@ const Base = ({
         // text-sm = 14/20 → h-[14px] my-[3px] keeps the 20px line box, so
         // toggling isSkeleton does not shift layout (§8).
         return (
-            <StackV gap="grouped" className={className}>
-                <StackH gap="related" className="w-fit text-muted">
-                    {/* Caret is TRẦN cạnh nhãn `text-sm` (icon/§1c TEXT position — the
-                        trigger `<button>` is `w-fit`, no padding of its own, so it hugs
-                        the icon+label pair exactly like running text): size = font-size
-                        1:1 of `text-sm` → `size-3.5`, not the flat `size-4` this used to
-                        be (thầy chốt 2026-07-29, canon icon §4.2). */}
-                    <CaretDownIcon className="size-3.5 shrink-0" weight="bold" aria-hidden focusable="false" />
-                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR_SM, "w-24")} />
-                </StackH>
-            </StackV>
+            <StackV
+                gap="grouped"
+                className={className}
+                body={
+                    <StackH
+                        gap="related"
+                        classNames={["w-fit"]}
+                        className="text-muted"
+                        body={
+                            <>
+                                {/* Caret is TRẦN cạnh nhãn `text-sm` (icon/§1c TEXT position — the
+                                    trigger `<button>` is `w-fit`, no padding of its own, so it hugs
+                                    the icon+label pair exactly like running text): size = font-size
+                                    1:1 of `text-sm` → `size-3.5`, not the flat `size-4` this used to
+                                    be (thầy chốt 2026-07-29, canon icon §4.2). */}
+                                <CaretDownIcon className="size-3.5 shrink-0" weight="bold" aria-hidden focusable="false" />
+                                <HeroSkeleton className={cn(SKELETON_TEXT_BAR_SM, "w-24")} />
+                            </>
+                        }
+                    />
+                }
+            />
         )
     }
 
@@ -130,35 +141,39 @@ const Base = ({
     }
 
     return (
-        <StackV gap="grouped" className={className}>
-            <button
-                type="button"
-                onClick={toggle}
-                aria-expanded={open}
-                disabled={isDisabled}
-                className={cn(
-                    "group flex w-fit items-center gap-2 text-muted outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent",
-                    isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
-                )}
-            >
-                {/* TEXT position (icon §1c/§4.2): TRẦN cạnh nhãn `text-sm`, no Ô/control
-                    bọc riêng — trigger is `w-fit`, hugs content like running text. Size =
-                    font-size 1:1 of `text-sm` → `size-3.5` (was flat `size-4`, thầy chốt
-                    2026-07-29). Weight stays `bold` — `size-3.5` < `size-5` (§3.2). */}
-                <CaretDownIcon
-                    className={cn("size-3.5 shrink-0 transition-transform", open && "rotate-180")}
-                    weight="bold"
-                    aria-hidden
-                    focusable="false"
-                />
-                <span className="text-sm">{title}</span>
-            </button>
-            {open ? (
-                <StackV gap="grouped">
-                    {content}
-                </StackV>
-            ) : null}
-        </StackV>
+        <StackV
+            gap="grouped"
+            className={className}
+            body={
+                <>
+                    <button
+                        type="button"
+                        onClick={toggle}
+                        aria-expanded={open}
+                        disabled={isDisabled}
+                        className={cn(
+                            "group flex w-fit items-center gap-2 text-muted outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent",
+                            isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
+                        )}
+                    >
+                        {/* TEXT position (icon §1c/§4.2): TRẦN cạnh nhãn `text-sm`, no Ô/control
+                            bọc riêng — trigger is `w-fit`, hugs content like running text. Size =
+                            font-size 1:1 of `text-sm` → `size-3.5` (was flat `size-4`, thầy chốt
+                            2026-07-29). Weight stays `bold` — `size-3.5` < `size-5` (§3.2). */}
+                        <CaretDownIcon
+                            className={cn("size-3.5 shrink-0 transition-transform", open && "rotate-180")}
+                            weight="bold"
+                            aria-hidden
+                            focusable="false"
+                        />
+                        <span className="text-sm">{title}</span>
+                    </button>
+                    {open ? (
+                        <StackV gap="grouped" body={content} />
+                    ) : null}
+                </>
+            }
+        />
     )
 }
 

@@ -127,40 +127,62 @@ const MilestoneUpNextCard = ({
     onGoToNextTask,
     isSkeleton = false,
     showAnatomy = false,
-}: MilestoneUpNextCardProps) => (
-    <SurfaceCard isHighlight isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-        <StackH gap="grouped" justify="between" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-            <StackV gap="flush" className="min-w-0" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    text={NEXT_TASK_EYEBROW}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-                <Typography
-                    size="base"
-                    weight="semibold"
-                    truncate
-                    isSkeleton={isSkeleton}
-                    text={task.title}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-            </StackV>
-            <Button
-                isSkeleton={isSkeleton}
-                variant="primary"
-                size="sm"
-                label={NEXT_TASK_CTA_LABEL}
-                suffixIcon={ArrowRightIcon}
-                iconSlide
-                onPress={onGoToNextTask}
-                classNames={["w-fit", "shrink-0"]}
-                anatPart={showAnatomy ? "Button" : undefined}
+}: MilestoneUpNextCardProps) => {
+    const titleColumn = (
+        <StackV
+            gap="flush"
+            className="min-w-0"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={NEXT_TASK_EYEBROW}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    <Typography
+                        size="base"
+                        weight="semibold"
+                        truncate
+                        isSkeleton={isSkeleton}
+                        text={task.title}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                </>
+            }
+        />
+    )
+
+    return (
+        <SurfaceCard isHighlight isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+            <StackH
+                gap="grouped"
+                justify="between"
+                align="center"
+                wrap
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        {titleColumn}
+                        <Button
+                            isSkeleton={isSkeleton}
+                            variant="primary"
+                            size="sm"
+                            label={NEXT_TASK_CTA_LABEL}
+                            suffixIcon={ArrowRightIcon}
+                            iconSlide
+                            onPress={onGoToNextTask}
+                            classNames={["w-fit", "shrink-0"]}
+                            anatPart={showAnatomy ? "Button" : undefined}
+                        />
+                    </>
+                }
             />
-        </StackH>
-    </SurfaceCard>
-)
+        </SurfaceCard>
+    )
+}
 
 /** Props for {@link PersonalProjectResultScreen}. */
 export interface PersonalProjectResultScreenProps {
@@ -282,78 +304,94 @@ const PersonalProjectResultScreen = ({
     // same treatment ChallengeResultPage gives its related-reading nudge.
     const showNextTaskHandoff = isPassing && nextTask != null
 
-    return (
-        <Container size="md" padding="roomy">
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <SubmissionResultHeader
-                    anatPart="SubmissionResultHeader"
-                    backLabel={backLabel}
-                    onBack={onBack}
-                    title={title}
-                    description={description}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                <SubmissionAttemptSelector
-                    anatPart="SubmissionAttemptSelector"
-                    attempts={attempts}
-                    selectedId={selectedAttemptId}
-                    onSelect={onSelectAttempt}
-                    ariaLabel={attemptsAriaLabel}
-                    overflowCount={overflowCount}
-                    onOverflowPress={onOverflowPress}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                {hasSelection ? (
-                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <SubmissionScoreCard
-                            anatPart="SubmissionScoreCard"
-                            label={scoreLabel}
-                            score={score ?? 0}
-                            maxScore={maxScore}
-                            isPassing={isPassing}
-                            shortFeedback={shortFeedback}
-                            submissionUrl={submissionUrl}
-                            submissionLabel={GITHUB_LINK_LABEL}
-                            gradedByModel={gradedByModel}
-                            modelCategory={modelCategory}
-                            timeAgo={timeAgo}
+    // Nothing about "how did it go" can render before an attempt is actually
+    // selected — see the file header.
+    const scoreCluster = hasSelection ? (
+        <StackV
+            gap="section"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <SubmissionScoreCard
+                        anatPart="SubmissionScoreCard"
+                        label={scoreLabel}
+                        score={score ?? 0}
+                        maxScore={maxScore}
+                        isPassing={isPassing}
+                        shortFeedback={shortFeedback}
+                        submissionUrl={submissionUrl}
+                        submissionLabel={GITHUB_LINK_LABEL}
+                        gradedByModel={gradedByModel}
+                        modelCategory={modelCategory}
+                        timeAgo={timeAgo}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                    <SubmissionFindingsList
+                        anatPart="SubmissionFindingsList"
+                        label={findingsLabel}
+                        findings={findings}
+                        repositoryUrl={repositoryUrl}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                    {/* Nothing left to fix on a passing attempt — see file header. */}
+                    {!isPassing ? (
+                        <ContentRelatedList
+                            anatPart="ContentRelatedList"
+                            items={relatedItems}
+                            label={relatedLabel}
                             isSkeleton={isSkeleton}
                             showAnatomy={showAnatomy}
                         />
-                        <SubmissionFindingsList
-                            anatPart="SubmissionFindingsList"
-                            label={findingsLabel}
-                            findings={findings}
-                            repositoryUrl={repositoryUrl}
+                    ) : null}
+                    {/* Forward handoff to the next milestone task — only once this one passed. */}
+                    {showNextTaskHandoff ? (
+                        <MilestoneUpNextCard
+                            task={nextTask as PersonalProjectNextTask}
+                            onGoToNextTask={onGoToNextTask}
                             isSkeleton={isSkeleton}
                             showAnatomy={showAnatomy}
                         />
-                        {/* Nothing left to fix on a passing attempt — see file header. */}
-                        {!isPassing ? (
-                            <ContentRelatedList
-                                anatPart="ContentRelatedList"
-                                items={relatedItems}
-                                label={relatedLabel}
-                                isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
-                            />
-                        ) : null}
-                        {/* Forward handoff to the next milestone task — only once this one passed. */}
-                        {showNextTaskHandoff ? (
-                            <MilestoneUpNextCard
-                                task={nextTask as PersonalProjectNextTask}
-                                onGoToNextTask={onGoToNextTask}
-                                isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
-                            />
-                        ) : null}
-                    </StackV>
-                ) : null}
-            </StackV>
-        </Container>
+                    ) : null}
+                </>
+            }
+        />
+    ) : null
+
+    const screenBody = (
+        <StackV
+            gap="section"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <SubmissionResultHeader
+                        anatPart="SubmissionResultHeader"
+                        backLabel={backLabel}
+                        onBack={onBack}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                    <SubmissionAttemptSelector
+                        anatPart="SubmissionAttemptSelector"
+                        attempts={attempts}
+                        selectedId={selectedAttemptId}
+                        onSelect={onSelectAttempt}
+                        ariaLabel={attemptsAriaLabel}
+                        overflowCount={overflowCount}
+                        onOverflowPress={onOverflowPress}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                    {scoreCluster}
+                </>
+            }
+        />
     )
+
+    return <Container size="md" padding="roomy" body={screenBody} />
 }
 
 export { PersonalProjectResultScreen }

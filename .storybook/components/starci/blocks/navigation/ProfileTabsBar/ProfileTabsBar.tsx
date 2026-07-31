@@ -167,20 +167,27 @@ const ProfileTabsBar = ({
                                     id={tabId}
                                     data-anat-part={showAnatomy ? "Tabs.Tab" : undefined}
                                 >
-                                    <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                        <Icon aria-hidden focusable="false" className={TAB_ICON_CLASS} weight={TAB_ICON_WEIGHT} />
-                                        {/* Icon-only below @app-md — label (and its marker) only
-                                            from a tablet-wide profile strip up. */}
-                                        <span className="hidden @app-md:inline">
-                                            <Typography size="sm" text={TAB_LABEL[tabId]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                            {isHidden ? (
-                                                <>
-                                                    {" "}
-                                                    <Typography size="sm" color="muted" text={HIDDEN_MARKER} anatPart={showAnatomy ? "Typography" : undefined} />
-                                                </>
-                                            ) : null}
-                                        </span>
-                                    </StackH>
+                                    <StackH
+                                        gap="tight"
+                                        align="center"
+                                        anatPart={showAnatomy ? "StackH" : undefined}
+                                        body={(
+                                            <>
+                                                <Icon aria-hidden focusable="false" className={TAB_ICON_CLASS} weight={TAB_ICON_WEIGHT} />
+                                                {/* Icon-only below @app-md — label (and its marker) only
+                                                    from a tablet-wide profile strip up. */}
+                                                <span className="hidden @app-md:inline">
+                                                    <Typography size="sm" text={TAB_LABEL[tabId]} anatPart={showAnatomy ? "Typography" : undefined} />
+                                                    {isHidden ? (
+                                                        <>
+                                                            {" "}
+                                                            <Typography size="sm" color="muted" text={HIDDEN_MARKER} anatPart={showAnatomy ? "Typography" : undefined} />
+                                                        </>
+                                                    ) : null}
+                                                </span>
+                                            </>
+                                        )}
+                                    />
                                     <HeroTabs.Indicator data-anat-part={showAnatomy ? "Tabs.Indicator" : undefined} />
                                 </HeroTabs.Tab>
                             )

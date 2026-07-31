@@ -293,125 +293,141 @@ const QuizPage = ({
     onRecapRate,
     recapRatingAriaLabel,
     showAnatomy = false,
-}: QuizPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
-            {phase === "setup" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <FlashcardModeSwitch
-                        anatPart="FlashcardModeSwitch"
-                        mode={flashcardMode}
-                        onModeChange={onFlashcardModeChange}
-                        ariaLabel={flashcardModeAriaLabel}
-                        showAnatomy={showAnatomy}
-                    />
-                    {!isEnrolled ? (
-                        <QuizEnrollGate
-                            anatPart="QuizEnrollGate"
-                            title={enrollTitle}
-                            description={enrollDescription}
-                            ctaLabel={enrollCtaLabel}
-                            onEnroll={onEnroll}
-                            showAnatomy={showAnatomy}
-                        />
-                    ) : (
-                        <>
-                            <QuizSetup
-                                anatPart="QuizSetup"
-                                label={setupLabel}
-                                name={setupName}
-                                onNameChange={onSetupNameChange}
-                                length={setupLength}
-                                onLengthChange={onSetupLengthChange}
-                                level={setupLevel}
-                                onLevelChange={onSetupLevelChange}
-                                onStart={onSetupStart}
-                                resumable={setupResumable}
-                                isPending={isSetupPending}
-                                errorMessage={setupErrorMessage}
-                                isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
-                            />
-                            <QuizProgressPanel
-                                anatPart="QuizProgressPanel"
-                                label={progressLabel}
-                                view={progressView}
-                                onViewChange={onProgressViewChange}
-                                viewAriaLabel={progressViewAriaLabel}
-                                stats={progressStats}
-                                sessions={progressSessions}
-                                isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
-                            />
-                        </>
-                    )}
-                </StackV>
-            ) : null}
-
-            {phase === "active" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <WorkSessionHeader
-                        anatPart="WorkSessionHeader"
-                        backLabel={activeBackLabel}
-                        onBack={onActiveBack}
-                        title={activeTitle}
-                        counter={activeCounter}
-                        timeLeft={activeTimeLeft}
-                        total={activeTotal}
-                        current={activeCurrent}
-                        doneSteps={activeDoneSteps}
-                        onStepPress={onActiveStepPress}
-                        finishLabel={activeFinishLabel}
-                        onFinish={onActiveFinish}
-                        showAnatomy={showAnatomy}
-                    />
-                    <QuizQuestion
-                        anatPart="QuizQuestion"
-                        question={question}
-                        levelLabel={questionLevelLabel}
-                        answer={answer}
-                        onAnswerChange={onAnswerChange}
-                        onSubmit={onAnswerSubmit}
-                        verdict={verdict}
-                        expectedAnswer={expectedAnswer}
-                        explanation={explanation}
-                        submitLabel={answerSubmitLabel}
-                        nextLabel={answerNextLabel}
-                        onNext={onAnswerNext}
-                        isPending={isAnswerPending}
+}: QuizPageProps) => {
+    const setupSection = (
+        <>
+            <FlashcardModeSwitch
+                anatPart="FlashcardModeSwitch"
+                mode={flashcardMode}
+                onModeChange={onFlashcardModeChange}
+                ariaLabel={flashcardModeAriaLabel}
+                showAnatomy={showAnatomy}
+            />
+            {!isEnrolled ? (
+                <QuizEnrollGate
+                    anatPart="QuizEnrollGate"
+                    title={enrollTitle}
+                    description={enrollDescription}
+                    ctaLabel={enrollCtaLabel}
+                    onEnroll={onEnroll}
+                    showAnatomy={showAnatomy}
+                />
+            ) : (
+                <>
+                    <QuizSetup
+                        anatPart="QuizSetup"
+                        label={setupLabel}
+                        name={setupName}
+                        onNameChange={onSetupNameChange}
+                        length={setupLength}
+                        onLengthChange={onSetupLengthChange}
+                        level={setupLevel}
+                        onLevelChange={onSetupLevelChange}
+                        onStart={onSetupStart}
+                        resumable={setupResumable}
+                        isPending={isSetupPending}
+                        errorMessage={setupErrorMessage}
                         isSkeleton={isSkeleton}
                         showAnatomy={showAnatomy}
                     />
-                </StackV>
+                    <QuizProgressPanel
+                        anatPart="QuizProgressPanel"
+                        label={progressLabel}
+                        view={progressView}
+                        onViewChange={onProgressViewChange}
+                        viewAriaLabel={progressViewAriaLabel}
+                        stats={progressStats}
+                        sessions={progressSessions}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                </>
+            )}
+        </>
+    )
+
+    const activeSection = (
+        <>
+            <WorkSessionHeader
+                anatPart="WorkSessionHeader"
+                backLabel={activeBackLabel}
+                onBack={onActiveBack}
+                title={activeTitle}
+                counter={activeCounter}
+                timeLeft={activeTimeLeft}
+                total={activeTotal}
+                current={activeCurrent}
+                doneSteps={activeDoneSteps}
+                onStepPress={onActiveStepPress}
+                finishLabel={activeFinishLabel}
+                onFinish={onActiveFinish}
+                showAnatomy={showAnatomy}
+            />
+            <QuizQuestion
+                anatPart="QuizQuestion"
+                question={question}
+                levelLabel={questionLevelLabel}
+                answer={answer}
+                onAnswerChange={onAnswerChange}
+                onSubmit={onAnswerSubmit}
+                verdict={verdict}
+                expectedAnswer={expectedAnswer}
+                explanation={explanation}
+                submitLabel={answerSubmitLabel}
+                nextLabel={answerNextLabel}
+                onNext={onAnswerNext}
+                isPending={isAnswerPending}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const recapSection = (
+        <>
+            <WorkSessionHeader
+                anatPart="WorkSessionHeader"
+                backLabel={recapBackLabel}
+                onBack={onRecapBack}
+                title={recapTitle}
+                counter={recapCounter}
+                total={recapTotal}
+                current={recapCurrent}
+                doneSteps={recapDoneSteps}
+                finishLabel={recapFinishLabel}
+                onFinish={onRecapFinish}
+                showAnatomy={showAnatomy}
+            />
+            <QuizRecapList
+                anatPart="QuizRecapList"
+                cards={recapCards}
+                ratingOptions={recapRatingOptions}
+                onRate={onRecapRate}
+                ratingAriaLabel={recapRatingAriaLabel}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const quizPhases = (
+        <>
+            {phase === "setup" ? (
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={setupSection} />
+            ) : null}
+
+            {phase === "active" ? (
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={activeSection} />
             ) : null}
 
             {phase === "recap" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <WorkSessionHeader
-                        anatPart="WorkSessionHeader"
-                        backLabel={recapBackLabel}
-                        onBack={onRecapBack}
-                        title={recapTitle}
-                        counter={recapCounter}
-                        total={recapTotal}
-                        current={recapCurrent}
-                        doneSteps={recapDoneSteps}
-                        finishLabel={recapFinishLabel}
-                        onFinish={onRecapFinish}
-                        showAnatomy={showAnatomy}
-                    />
-                    <QuizRecapList
-                        anatPart="QuizRecapList"
-                        cards={recapCards}
-                        ratingOptions={recapRatingOptions}
-                        onRate={onRecapRate}
-                        ratingAriaLabel={recapRatingAriaLabel}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={recapSection} />
             ) : null}
-        </StackV>
-    </Container>
-)
+        </>
+    )
+
+    const quizBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={quizPhases} />
+
+    return <Container size="md" padding="roomy" body={quizBody} />
+}
 
 export { QuizPage }

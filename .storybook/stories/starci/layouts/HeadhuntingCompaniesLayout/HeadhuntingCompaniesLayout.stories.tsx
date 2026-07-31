@@ -37,12 +37,16 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "CourseNavSidebarGap": { tier: "composite", role: "the §B3 stand-in for the real course-nav rail content, which is out of reach in this pass — an `AsyncContentEmpty` badged under this leaf's own part name rather than its generic one", storyId: "composites-async-asynccontent-asynccontentempty--basic" },
 }
 
-/** A stand-in for whatever `page.tsx` mounts inside `children` — this layout never learns what it is. */
-const RoutedPage = () => (
-    <StackV gap="grouped">
+const routedPageContent = (
+    <>
         <Typography size="lg" weight="bold" text="Headhunting Company: Coup Fund" />
         <Typography size="sm" color="muted" text="Đây là placeholder cho nội dung `page.tsx` thật của route này — layout không biết và không cần biết bên trong nó vẽ gì." />
-    </StackV>
+    </>
+)
+
+/** A stand-in for whatever `page.tsx` mounts inside `children` — this layout never learns what it is. */
+const RoutedPage = () => (
+    <StackV gap="grouped" body={routedPageContent} />
 )
 
 /** LEAF — the only shape this layout has: rail beside routed content, over two container widths. */

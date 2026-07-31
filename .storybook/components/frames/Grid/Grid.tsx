@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
@@ -112,7 +113,18 @@ export interface GridBaseProps {
     columns: GridColumns
     /** Seam between cells on the §10 scale — REQUIRED, union literal only. Both axes. */
     gap: SeamScale
+    /**
+     * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
+     * Missing this prop means the frame is used but the panel cannot see it.
+     */
+    anatPart?: string
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** `true` → tag each cell with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
@@ -123,8 +135,9 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, className, showAnatomy = false }: GridBaseProps) => (
+const GridBase = ({ items, columns, gap, anatPart, className, classNames, showAnatomy = false }: GridBaseProps) => (
     <div
+        data-anat-part={anatPart}
         className={cn(
             "grid",
             GAP_CLASS[gap],
@@ -134,6 +147,7 @@ const GridBase = ({ items, columns, gap, className, showAnatomy = false }: GridB
             columns.md != null && MD_COLUMNS_CLASS[columns.md],
             columns.lg != null && LG_COLUMNS_CLASS[columns.lg],
             className,
+            classNames,
         )}
     >
         {items.map((item) => {

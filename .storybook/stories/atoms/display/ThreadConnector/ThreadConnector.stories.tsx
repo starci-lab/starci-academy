@@ -40,15 +40,15 @@ export const Default: Story = {
                     {
                         name: "beside a reply composer's avatar",
                         why: "`ml-4` centers the line under a `size=\"sm\"` avatar's own center (32px wide); `self-stretch` fills whatever height the reply row ends up being, curving into the reply avatar's left edge.",
-                        code: `<StackH gap="tight" align="stretch">
+                        code: `<StackH gap="tight" align="stretch" body={<>
     <ThreadConnector />
     <Avatar name="Bạn" seed="viewer-1" size="sm" />
-</StackH>`,
+</>} />`,
                         render: (
-                            <StackH gap="tight" align="stretch">
+                            <StackH gap="tight" align="stretch" body={<>
                                 <ThreadConnector />
                                 <Avatar name="Bạn" seed="viewer-1" size="sm" />
-                            </StackH>
+                            </>} />
                         ),
                     },
                 ]}

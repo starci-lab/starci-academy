@@ -24,6 +24,29 @@ export default meta
 
 type Story = StoryObj<typeof StackH>
 
+const startAndOverview = (
+    <>
+        <Button label="Bắt đầu" />
+        <Button label="Xem đề cương" variant="secondary" />
+    </>
+)
+
+const filterButtons = (
+    <>
+        <Button label="Tất cả" variant="secondary" size="sm" />
+        <Button label="Đang học" variant="secondary" size="sm" />
+        <Button label="Đã hoàn thành" variant="secondary" size="sm" />
+        <Button label="Đã lưu" variant="secondary" size="sm" />
+    </>
+)
+
+const cancelSaveActions = (
+    <>
+        <Button label="Huỷ" variant="secondary" size="sm" />
+        <Button label="Lưu" size="sm" />
+    </>
+)
+
 // No `Flex` node here (2026-07-28): same reasoning as `StackV` — the track's own root no
 // longer self-badges with the internal box's name, since `Flex` has no story of its own.
 const DIVIDER_PARTS: Array<AnatomyNode> = [
@@ -48,12 +71,9 @@ export const Default: Story = {
                     {
                         name: "2 buttons, gap = 2",
                         why: "Two buttons sit in a single row with a `related(2)` gap between them, the spacing for elements that belong to the same cluster. A row this size needs nothing more than the default axis: no wrap, no justify, no divider.",
-                        code: "<StackH gap=\"related\">\n  <Button label=\"Bắt đầu\" />\n  <Button label=\"Xem đề cương\" variant=\"secondary\" />\n</StackH>",
+                        code: "<StackH gap=\"related\" body={<>\n  <Button label=\"Bắt đầu\" />\n  <Button label=\"Xem đề cương\" variant=\"secondary\" />\n</>} />",
                         render: (
-                            <StackH gap="related" showAnatomy>
-                                <Button label="Bắt đầu" />
-                                <Button label="Xem đề cương" variant="secondary" />
-                            </StackH>
+                            <StackH gap="related" showAnatomy body={startAndOverview} />
                         ),
                     },
                 ]}
@@ -79,30 +99,20 @@ export const Wrap: Story = {
                     {
                         name: "wrap = true",
                         why: "Inside the narrow `w-80` frame the four filter buttons flow onto a new line instead of shrinking, and each button keeps its own natural width. `gap` applies to both axes, so the space between the two lines matches the space between the buttons on each line.",
-                        code: "<StackH gap=\"related\" wrap>\n  …\n</StackH>",
+                        code: "<StackH gap=\"related\" wrap body={<>…</>} />",
                         render: (
                             <div className="w-80 rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap="related" wrap showAnatomy>
-                                    <Button label="Tất cả" variant="secondary" size="sm" />
-                                    <Button label="Đang học" variant="secondary" size="sm" />
-                                    <Button label="Đã hoàn thành" variant="secondary" size="sm" />
-                                    <Button label="Đã lưu" variant="secondary" size="sm" />
-                                </StackH>
+                                <StackH gap="related" wrap showAnatomy body={filterButtons} />
                             </div>
                         ),
                     },
                     {
                         name: "wrap = false (default)",
                         why: "In the identical `w-80` frame the same four buttons shrink and spill past the dashed border instead of moving to a new line. A horizontal frame does not shrink or wrap its children on its own, so this is the shape every row falls back to unless `wrap` is turned on.",
-                        code: "<StackH gap=\"related\">\n  …\n</StackH>",
+                        code: "<StackH gap=\"related\" body={<>…</>} />",
                         render: (
                             <div className="w-80 rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap="related" showAnatomy>
-                                    <Button label="Tất cả" variant="secondary" size="sm" />
-                                    <Button label="Đang học" variant="secondary" size="sm" />
-                                    <Button label="Đã hoàn thành" variant="secondary" size="sm" />
-                                    <Button label="Đã lưu" variant="secondary" size="sm" />
-                                </StackH>
+                                <StackH gap="related" showAnatomy body={filterButtons} />
                             </div>
                         ),
                     },
@@ -129,52 +139,40 @@ export const Justify: Story = {
                     {
                         name: "justify = start",
                         why: "The two buttons pack against the left edge of the row, leaving the leftover space empty on the right. Use it when the row's content should read as one left-aligned cluster instead of spreading across the available width.",
-                        code: "<StackH gap=\"related\" justify=\"start\">\n  …\n</StackH>",
+                        code: "<StackH gap=\"related\" justify=\"start\" body={<>…</>} />",
                         render: (
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap="related" justify="start" showAnatomy>
-                                    <Button label="Huỷ" variant="secondary" size="sm" />
-                                    <Button label="Lưu" size="sm" />
-                                </StackH>
+                                <StackH gap="related" justify="start" showAnatomy body={cancelSaveActions} />
                             </div>
                         ),
                     },
                     {
                         name: "justify = center",
                         why: "The two buttons shift to the middle of the row, with equal empty space left on both sides. Centering suits a row that is not the layout's primary focus, so it does not need to claim either edge.",
-                        code: "<StackH gap=\"related\" justify=\"center\">\n  …\n</StackH>",
+                        code: "<StackH gap=\"related\" justify=\"center\" body={<>…</>} />",
                         render: (
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap="related" justify="center" showAnatomy>
-                                    <Button label="Huỷ" variant="secondary" size="sm" />
-                                    <Button label="Lưu" size="sm" />
-                                </StackH>
+                                <StackH gap="related" justify="center" showAnatomy body={cancelSaveActions} />
                             </div>
                         ),
                     },
                     {
                         name: "justify = end",
                         why: "The two buttons pack against the right edge of the row, mirroring `start`. A form's cancel/save pair often sits here, aligned under content that itself reads out to the same edge.",
-                        code: "<StackH gap=\"related\" justify=\"end\">\n  …\n</StackH>",
+                        code: "<StackH gap=\"related\" justify=\"end\" body={<>…</>} />",
                         render: (
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap="related" justify="end" showAnatomy>
-                                    <Button label="Huỷ" variant="secondary" size="sm" />
-                                    <Button label="Lưu" size="sm" />
-                                </StackH>
+                                <StackH gap="related" justify="end" showAnatomy body={cancelSaveActions} />
                             </div>
                         ),
                     },
                     {
                         name: "justify = between",
                         why: "The two buttons are pushed to opposite ends of the row, with all the leftover space landing between them instead of around them. `between` only reads legibly because a row always has space left over to distribute, which is exactly why this state lives on `StackH` and not `StackV`.",
-                        code: "<StackH gap=\"related\" justify=\"between\">\n  …\n</StackH>",
+                        code: "<StackH gap=\"related\" justify=\"between\" body={<>…</>} />",
                         render: (
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap="related" justify="between" showAnatomy>
-                                    <Button label="Huỷ" variant="secondary" size="sm" />
-                                    <Button label="Lưu" size="sm" />
-                                </StackH>
+                                <StackH gap="related" justify="between" showAnatomy body={cancelSaveActions} />
                             </div>
                         ),
                     },
@@ -201,14 +199,14 @@ export const WithDivider: Story = {
                     {
                         name: "divider = true, 3 children",
                         why: "A vertical rule appears between each pair of the three text items, standing the row's full height even though the row itself is `items-center`. `align-self: stretch` wins over that centering on purpose, so the rule always spans the row's full height without the caller ever having to set one.",
-                        code: "<StackH gap=\"grouped\" divider>\n  <Typography size=\"sm\" text=\"12 bài\" />\n  <Typography size=\"sm\" text=\"4 giờ\" />\n  <Typography size=\"sm\" text=\"Trung cấp\" />\n</StackH>",
+                        code: "<StackH gap=\"grouped\" divider body={<>\n  <Typography size=\"sm\" text=\"12 bài\" />\n  <Typography size=\"sm\" text=\"4 giờ\" />\n  <Typography size=\"sm\" text=\"Trung cấp\" />\n</>} />",
                         render: (
                             <div className="w-fit rounded-3xl bg-surface p-3 shadow-surface">
-                                <StackH gap="grouped" divider showAnatomy>
+                                <StackH gap="grouped" divider showAnatomy body={<>
                                     <Typography size="sm" text="12 bài" color="muted" />
                                     <Typography size="sm" text="4 giờ" color="muted" />
                                     <Typography size="sm" text="Trung cấp" color="muted" />
-                                </StackH>
+                                </>} />
                             </div>
                         ),
                     },

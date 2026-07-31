@@ -39,6 +39,28 @@ const Panel = ({ text }: PanelProps) => (
     </SurfaceCard>
 )
 
+const threePanels = (
+    <>
+        <Panel text="Tổng quan" />
+        <Panel text="Lộ trình" />
+        <Panel text="Bài tập" />
+    </>
+)
+
+const twoPanels = (
+    <>
+        <Panel text="Một" />
+        <Panel text="Hai" />
+    </>
+)
+
+const continueAndSaveButtons = (
+    <>
+        <Button label="Tiếp tục học" variant="secondary" size="sm" />
+        <Button label="Lưu" variant="secondary" size="sm" />
+    </>
+)
+
 // No `Flex` node here (2026-07-28): the track's own root no longer self-badges with the
 // internal box's name — `Flex` has no story of its own (it's not a public frame, see its
 // own file), so a node pointing there would never be clickable. `StackV`'s identity is already
@@ -65,18 +87,14 @@ export const Default: Story = {
                     {
                         name: "rows inside one surface",
                         why: "Three panels stack as rows of one card, the grouped relationship most stacked content has. This is the shape every gap state below either narrows down from or opens up from.",
-                        code: `<StackV gap="grouped">
+                        code: `<StackV gap="grouped" body={<>
   <Panel text="Tổng quan" />
   <Panel text="Lộ trình" />
   <Panel text="Bài tập" />
-</StackV>`,
+</>} />`,
                         render: (
                             <div className="w-96 max-w-full">
-                                <StackV gap="grouped" showAnatomy>
-                                    <Panel text="Tổng quan" />
-                                    <Panel text="Lộ trình" />
-                                    <Panel text="Bài tập" />
-                                </StackV>
+                                <StackV gap="grouped" showAnatomy body={threePanels} />
                             </div>
                         ),
                     },
@@ -104,67 +122,49 @@ export const Gaps: Story = {
                     {
                         name: "one continuous thing",
                         why: "The two panels touch with no seam at all, so they read as a single surface rather than two children. Reach for flush only when a seam would be a lie about the content, as in a table body or a stack of rows sharing one border.",
-                        code: "<StackV gap=\"flush\">…</StackV>   // flush",
+                        code: "<StackV gap=\"flush\" body={<>…</>} />   // flush",
                         render: (
-                            <StackV gap="flush" showAnatomy>
-                                <Panel text="Một" />
-                                <Panel text="Hai" />
-                            </StackV>
+                            <StackV gap="flush" showAnatomy body={twoPanels} />
                         ),
                     },
                     {
                         name: "a mark and its label",
                         why: "The seam is just wide enough to keep the two apart while the pair still reads as one thing, the relationship a badge has with the text it sits against. If either child could be read on its own, tight is too close.",
-                        code: "<StackV gap=\"tight\">…</StackV>",
+                        code: "<StackV gap=\"tight\" body={<>…</>} />",
                         render: (
-                            <StackV gap="tight" showAnatomy>
-                                <Panel text="Một" />
-                                <Panel text="Hai" />
-                            </StackV>
+                            <StackV gap="tight" showAnatomy body={twoPanels} />
                         ),
                     },
                     {
                         name: "peers in one set",
                         why: "The two panels read as members of the same set, each one whole but none of them standing alone. This is the step for a title with its supporting line, where the two are siblings rather than one unit.",
-                        code: "<StackV gap=\"related\">…</StackV>",
+                        code: "<StackV gap=\"related\" body={<>…</>} />",
                         render: (
-                            <StackV gap="related" showAnatomy>
-                                <Panel text="Một" />
-                                <Panel text="Hai" />
-                            </StackV>
+                            <StackV gap="related" showAnatomy body={twoPanels} />
                         ),
                     },
                     {
                         name: "rows inside one surface",
                         why: "The two panels are separate rows that happen to live in the same card, the most common relationship in the whole system and the step `Default` above uses. Order matters here: if swapping the two children would confuse a reader they are peers, and peers belong at related instead.",
-                        code: "<StackV gap=\"grouped\">…</StackV>",
+                        code: "<StackV gap=\"grouped\" body={<>…</>} />",
                         render: (
-                            <StackV gap="grouped" showAnatomy>
-                                <Panel text="Một" />
-                                <Panel text="Hai" />
-                            </StackV>
+                            <StackV gap="grouped" showAnatomy body={twoPanels} />
                         ),
                     },
                     {
                         name: "regions of one page",
                         why: "The seam is wide enough that each panel reads as its own region with its own heading, no longer rows of a shared surface. Use it between the parts of a screen a reader would name separately.",
-                        code: "<StackV gap=\"section\">…</StackV>   // section",
+                        code: "<StackV gap=\"section\" body={<>…</>} />   // section",
                         render: (
-                            <StackV gap="section" showAnatomy>
-                                <Panel text="Một" />
-                                <Panel text="Hai" />
-                            </StackV>
+                            <StackV gap="section" showAnatomy body={twoPanels} />
                         ),
                     },
                     {
                         name: "features standing apart",
                         why: "The widest step, for two things that merely share a page and have no relationship beyond that. If a reader can explain how the two connect, the honest step is narrower than page.",
-                        code: "<StackV gap=\"page\">…</StackV>",
+                        code: "<StackV gap=\"page\" body={<>…</>} />",
                         render: (
-                            <StackV gap="page" showAnatomy>
-                                <Panel text="Một" />
-                                <Panel text="Hai" />
-                            </StackV>
+                            <StackV gap="page" showAnatomy body={twoPanels} />
                         ),
                     },
                 ]}
@@ -191,18 +191,18 @@ export const WithDivider: Story = {
                     {
                         name: "divider = true, 3 children",
                         why: "Two lines grow between the three children, one before the second and one before the third, with none at the very start or end. Three text rows read as one bounded group when the seams between them are visibly marked, instead of only implied by whitespace.",
-                        code: `<StackV gap="grouped" divider>
+                        code: `<StackV gap="grouped" divider body={<>
   <Typography size="sm" text="Đã hoàn thành 12 bài" />
   <Typography size="sm" text="Chuỗi 5 ngày" />
   <Typography size="sm" text="Xếp hạng 34/120" />
-</StackV>`,
+</>} />`,
                         render: (
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
-                                <StackV gap="grouped" divider showAnatomy>
+                                <StackV gap="grouped" divider showAnatomy body={<>
                                     <Typography size="sm" text="Đã hoàn thành 12 bài" />
                                     <Typography size="sm" text="Chuỗi 5 ngày" />
                                     <Typography size="sm" text="Xếp hạng 34/120" />
-                                </StackV>
+                                </>} />
                             </div>
                         ),
                     },
@@ -230,13 +230,9 @@ export const Nested: Story = {
                     {
                         name: "nested = true",
                         why: "A reply one level deeper than its parent comment gets a left guide + indent, so the thread's depth reads at a glance without the caller touching a single className.",
-                        code: `<StackV gap="grouped" nested>
-  <Typography size="sm" text="Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất." />
-</StackV>`,
+                        code: `<StackV gap="grouped" nested body={<Typography size="sm" text="Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất." />} />`,
                         render: (
-                            <StackV gap="grouped" nested showAnatomy>
-                                <Typography size="sm" text="Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất." />
-                            </StackV>
+                            <StackV gap="grouped" nested showAnatomy body={<Typography size="sm" text="Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất." />} />
                         ),
                     },
                 ]}
@@ -262,60 +258,40 @@ export const Align: Story = {
                     {
                         name: "align = stretch (default)",
                         why: "Both buttons grow to the full width of the dashed frame around them. This is the alignment a column gets without passing `align` at all.",
-                        code: `<StackV gap="related" align="stretch">
-  …
-</StackV>`,
+                        code: `<StackV gap="related" align="stretch" body={<>…</>} />`,
                         render: (
                             <div className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <StackV gap="related" align="stretch" showAnatomy>
-                                    <Button label="Tiếp tục học" variant="secondary" size="sm" />
-                                    <Button label="Lưu" variant="secondary" size="sm" />
-                                </StackV>
+                                <StackV gap="related" align="stretch" showAnatomy body={continueAndSaveButtons} />
                             </div>
                         ),
                     },
                     {
                         name: "align = start",
                         why: "Both buttons keep their natural width and sit flush against the left edge of the frame. Neither button stretches to fill the column.",
-                        code: `<StackV gap="related" align="start">
-  …
-</StackV>`,
+                        code: `<StackV gap="related" align="start" body={<>…</>} />`,
                         render: (
                             <div className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <StackV gap="related" align="start">
-                                    <Button label="Tiếp tục học" variant="secondary" size="sm" />
-                                    <Button label="Lưu" variant="secondary" size="sm" />
-                                </StackV>
+                                <StackV gap="related" align="start" body={continueAndSaveButtons} />
                             </div>
                         ),
                     },
                     {
                         name: "align = center",
                         why: "Both buttons keep their natural width and sit centered inside the frame. Neither button stretches, but both share the same horizontal midpoint.",
-                        code: `<StackV gap="related" align="center">
-  …
-</StackV>`,
+                        code: `<StackV gap="related" align="center" body={<>…</>} />`,
                         render: (
                             <div className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <StackV gap="related" align="center">
-                                    <Button label="Tiếp tục học" variant="secondary" size="sm" />
-                                    <Button label="Lưu" variant="secondary" size="sm" />
-                                </StackV>
+                                <StackV gap="related" align="center" body={continueAndSaveButtons} />
                             </div>
                         ),
                     },
                     {
                         name: "align = end",
                         why: "Both buttons keep their natural width and sit flush against the right edge of the frame. Neither button stretches to fill the column.",
-                        code: `<StackV gap="related" align="end">
-  …
-</StackV>`,
+                        code: `<StackV gap="related" align="end" body={<>…</>} />`,
                         render: (
                             <div className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <StackV gap="related" align="end">
-                                    <Button label="Tiếp tục học" variant="secondary" size="sm" />
-                                    <Button label="Lưu" variant="secondary" size="sm" />
-                                </StackV>
+                                <StackV gap="related" align="end" body={continueAndSaveButtons} />
                             </div>
                         ),
                     },

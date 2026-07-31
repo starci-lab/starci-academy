@@ -114,51 +114,75 @@ const PersonalProjectGatePreview = ({
     className,
     showAnatomy = false,
     anatPart,
-}: PersonalProjectGatePreviewProps) => (
-    <StackV gap="section" className={className} anatPart={anatPart} showAnatomy={showAnatomy}>
-        <ContinueCardHero
-            title={heroTitle}
-            subtitle={heroSubtitle}
-            isSkeleton={isSkeleton}
+}: PersonalProjectGatePreviewProps) => {
+    // Depends on the loop variable, so it cannot be hoisted to a const above the
+    // return — a small named helper instead, in the style this file already uses.
+    const renderTaskRow = (item: PersonalProjectGatePreviewTask, index: number) => (
+        <StackH
+            key={index}
+            gap="tight"
+            align="center"
             showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "ContinueCardHero" : undefined}
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+                    <Typography
+                        size="sm"
+                        truncate
+                        isSkeleton={isSkeleton}
+                        text={item.title}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                </>
+            }
         />
-        <ProgressMeter
-            value={progress.value}
-            max={progress.max}
-            label={progress.label}
-            showValue
+    )
+
+    const taskList = (
+        <StackV
+            gap="grouped"
             showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "ProgressMeter" : undefined}
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={items.map(renderTaskRow)}
         />
-        <SurfaceCard
-            label={TASK_LABEL}
-            isSkeleton={isSkeleton}
+    )
+
+    return (
+        <StackV
+            gap="section"
+            className={className}
+            anatPart={anatPart}
             showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
-        >
-            <StackV gap="grouped" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined}>
-                {items.map((item, index) => (
-                    <StackH
-                        key={index}
-                        gap="tight"
-                        align="center"
+            body={
+                <>
+                    <ContinueCardHero
+                        title={heroTitle}
+                        subtitle={heroSubtitle}
+                        isSkeleton={isSkeleton}
                         showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "StackH" : undefined}
+                        anatPart={showAnatomy ? "ContinueCardHero" : undefined}
+                    />
+                    <ProgressMeter
+                        value={progress.value}
+                        max={progress.max}
+                        label={progress.label}
+                        showValue
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "ProgressMeter" : undefined}
+                    />
+                    <SurfaceCard
+                        label={TASK_LABEL}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "SurfaceCard" : undefined}
                     >
-                        <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
-                        <Typography
-                            size="sm"
-                            truncate
-                            isSkeleton={isSkeleton}
-                            text={item.title}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    </StackH>
-                ))}
-            </StackV>
-        </SurfaceCard>
-    </StackV>
-)
+                        {taskList}
+                    </SurfaceCard>
+                </>
+            }
+        />
+    )
+}
 
 export { PersonalProjectGatePreview }

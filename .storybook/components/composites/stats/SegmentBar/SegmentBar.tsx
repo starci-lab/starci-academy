@@ -92,18 +92,25 @@ export const SegmentBar = ({
 }: SegmentBarProps) => {
     if (isSkeleton) {
         return (
-            <StackV gap="related" anatPart={anatPart} className={className}>
-                <HeroSkeleton
-                    className={cn("w-full", inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full")}
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
-                />
-                {!hideLegend ? (
-                    <Legend isSkeleton anatPart={showAnatomy ? "Legend" : undefined} showAnatomy={showAnatomy} />
-                ) : null}
-                {caption !== undefined ? (
-                    <HeroSkeleton className="h-3 w-32 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                ) : null}
-            </StackV>
+            <StackV
+                gap="related"
+                anatPart={anatPart}
+                className={className}
+                body={
+                    <>
+                        <HeroSkeleton
+                            className={cn("w-full", inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full")}
+                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                        />
+                        {!hideLegend ? (
+                            <Legend isSkeleton anatPart={showAnatomy ? "Legend" : undefined} showAnatomy={showAnatomy} />
+                        ) : null}
+                        {caption !== undefined ? (
+                            <HeroSkeleton className="h-3 w-32 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        ) : null}
+                    </>
+                }
+            />
         )
     }
     // `segments` is REQUIRED whenever `isSkeleton` is false (discriminated union above) —
@@ -118,8 +125,8 @@ export const SegmentBar = ({
     const filledSum = filled.reduce((acc, segment) => acc + segment.value, 0)
     const remainder = Math.max(0, total - filledSum)
 
-    return (
-        <StackV gap="related" anatPart={anatPart} className={className}>
+    const barContent = (
+        <>
             <div
                 role="img"
                 aria-label={ariaLabel}
@@ -179,6 +186,7 @@ export const SegmentBar = ({
                     {caption}
                 </Typography>
             ) : null}
-        </StackV>
+        </>
     )
+    return <StackV gap="related" anatPart={anatPart} className={className} body={barContent} />
 }

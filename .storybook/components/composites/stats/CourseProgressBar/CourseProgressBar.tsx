@@ -67,16 +67,29 @@ export const CourseProgressBar = ({
 }: CourseProgressBarProps) => {
     if (isSkeleton) {
         return (
-            <StackV gap="related" className={className}>
-                <HeroSkeleton className="h-1 w-full rounded-full" />
-                {!hideLegend ? (
-                    <StackH wrap gap="grouped" align="stretch">
-                        <HeroSkeleton className="h-3.5 w-16 rounded" />
-                        <HeroSkeleton className="h-3.5 w-16 rounded" />
-                        <HeroSkeleton className="h-3.5 w-16 rounded" />
-                    </StackH>
-                ) : null}
-            </StackV>
+            <StackV
+                gap="related"
+                className={className}
+                body={
+                    <>
+                        <HeroSkeleton className="h-1 w-full rounded-full" />
+                        {!hideLegend ? (
+                            <StackH
+                                wrap
+                                gap="grouped"
+                                align="stretch"
+                                body={
+                                    <>
+                                        <HeroSkeleton className="h-3.5 w-16 rounded" />
+                                        <HeroSkeleton className="h-3.5 w-16 rounded" />
+                                        <HeroSkeleton className="h-3.5 w-16 rounded" />
+                                    </>
+                                }
+                            />
+                        ) : null}
+                    </>
+                }
+            />
         )
     }
     const lanes = (dims ?? [])
@@ -88,34 +101,40 @@ export const CourseProgressBar = ({
         }))
 
     return (
-        <StackV gap="related" className={className}>
-            <div
-                role="img"
-                aria-label={ariaLabel}
-                className="flex h-1 w-full overflow-hidden rounded-full bg-default"
-            >
-                {lanes.map((lane, index) => (
+        <StackV
+            gap="related"
+            className={className}
+            body={
+                <>
                     <div
-                        key={lane.key}
-                        className={cn("h-full flex-1", index > 0 && "border-l border-default")}
+                        role="img"
+                        aria-label={ariaLabel}
+                        className="flex h-1 w-full overflow-hidden rounded-full bg-default"
                     >
-                        <div
-                            className="h-full"
-                            style={{ width: `${lane.ratio * 100}%`, backgroundColor: lane.color }}
-                        />
+                        {lanes.map((lane, index) => (
+                            <div
+                                key={lane.key}
+                                className={cn("h-full flex-1", index > 0 && "border-l border-default")}
+                            >
+                                <div
+                                    className="h-full"
+                                    style={{ width: `${lane.ratio * 100}%`, backgroundColor: lane.color }}
+                                />
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            {!hideLegend ? (
-                <Legend
-                    items={lanes.map((lane) => ({
-                        key: lane.key,
-                        label: lane.label,
-                        color: lane.color,
-                        suffix: <>&nbsp;·&nbsp;{lane.completed}</>,
-                    }))}
-                />
-            ) : null}
-        </StackV>
+                    {!hideLegend ? (
+                        <Legend
+                            items={lanes.map((lane) => ({
+                                key: lane.key,
+                                label: lane.label,
+                                color: lane.color,
+                                suffix: <>&nbsp;·&nbsp;{lane.completed}</>,
+                            }))}
+                        />
+                    ) : null}
+                </>
+            }
+        />
     )
 }

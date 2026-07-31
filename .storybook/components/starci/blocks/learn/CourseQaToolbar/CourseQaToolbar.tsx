@@ -116,52 +116,60 @@ const CourseQaToolbar = ({
         label: FILTER_LABEL[value],
     }))
 
+    const searchAndCount = (
+        <>
+            <div className="min-w-0 flex-1 @app-sm:max-w-sm" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
+                <InputSearch
+                    value={searchValue}
+                    onValueChange={onSearchChange}
+                    placeholder="Tìm câu hỏi..."
+                    ariaLabel="Tìm câu hỏi"
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+            {isSkeleton ? (
+                <Typography
+                    size="sm"
+                    color="muted"
+                    isSkeleton
+                    classNames={["shrink-0"]}
+                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : (
+                <Typography
+                    size="sm"
+                    color="muted"
+                    tabularNums
+                    text={resultCountLabel(resultCount)}
+                    classNames={["shrink-0"]}
+                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            )}
+        </>
+    )
+
+    const strip = (
+        <>
+            <div data-anat-part={showAnatomy ? "Toolbar" : undefined}>
+                <Toolbar
+                    leftTabs={{
+                        items,
+                        selectedKey: filter,
+                        ariaLabel: filterAriaLabel,
+                        onSelectionChange: (key) => onFilterChange(String(key) as CourseQaFilter),
+                    }}
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+            <StackH gap="related" justify="between" wrap showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackH" : undefined} body={searchAndCount} />
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="grouped" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined}>
-                <div data-anat-part={showAnatomy ? "Toolbar" : undefined}>
-                    <Toolbar
-                        leftTabs={{
-                            items,
-                            selectedKey: filter,
-                            ariaLabel: filterAriaLabel,
-                            onSelectionChange: (key) => onFilterChange(String(key) as CourseQaFilter),
-                        }}
-                        showAnatomy={showAnatomy}
-                    />
-                </div>
-                <StackH gap="related" justify="between" wrap showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackH" : undefined}>
-                    <div className="min-w-0 flex-1 @app-sm:max-w-sm" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
-                        <InputSearch
-                            value={searchValue}
-                            onValueChange={onSearchChange}
-                            placeholder="Tìm câu hỏi..."
-                            ariaLabel="Tìm câu hỏi"
-                            showAnatomy={showAnatomy}
-                        />
-                    </div>
-                    {isSkeleton ? (
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            isSkeleton
-                            classNames={["shrink-0"]}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    ) : (
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            tabularNums
-                            text={resultCountLabel(resultCount)}
-                            classNames={["shrink-0"]}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    )}
-                </StackH>
-            </StackV>
+            <StackV gap="grouped" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={strip} />
         </div>
     )
 }

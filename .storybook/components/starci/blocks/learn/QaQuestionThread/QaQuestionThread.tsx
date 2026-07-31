@@ -349,6 +349,101 @@ const QaQuestionThread = ({
 
     // ── LEAF — Collapsed: a private social inbox row, the whole row pressable ──
     if (!isExpanded) {
+        const askerNameRow = (
+            <StackH
+                gap="related"
+                wrap
+                align="center"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    isSkeleton ? (
+                        <Typography size="xs" weight="medium" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    ) : (
+                        <>
+                            {question.isPinned ? (
+                                <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                            ) : null}
+                            <Typography size="xs" weight="medium" text={askerDisplayName} anatPart={showAnatomy ? "Typography" : undefined} />
+                            {question.isFounderAuthor ? (
+                                <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                            ) : null}
+                            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} anatPart={showAnatomy ? "Typography" : undefined} />
+                        </>
+                    )
+                }
+            />
+        )
+
+        const questionPreview = isSkeleton ? (
+            <StackV
+                gap="tight"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        <Typography size="sm" isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    </>
+                }
+            />
+        ) : (
+            <MarkdownContent
+                source={question.body}
+                measure="compact"
+                className="[&_p]:m-0 [&_p]:line-clamp-2"
+                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+            />
+        )
+
+        const previewColumn = (
+            <StackV
+                gap="tight"
+                className="min-w-0 flex-1"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        {askerNameRow}
+                        {questionPreview}
+                        <Cluster
+                            gap="related"
+                            items={buildQuestionChips(question, { isSkeleton, showAnatomy, includeReplyCount: true })}
+                            anatPart={showAnatomy ? "Cluster" : undefined}
+                        />
+                    </>
+                }
+            />
+        )
+
+        const collapsedRow = (
+            <StackH
+                gap="grouped"
+                align="start"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                            <Avatar
+                                src={question.author.avatarUrl}
+                                name={question.author.displayName}
+                                seed={question.author.id}
+                                size="sm"
+                                isSkeleton={isSkeleton}
+                                showAnatomy={showAnatomy}
+                            />
+                        </div>
+
+                        {previewColumn}
+
+                        {!isSkeleton ? (
+                            <span
+                                aria-hidden
+                                className={cn("size-2 shrink-0 rounded-full", question.replyCount > 0 ? "bg-success" : "bg-warning")}
+                            />
+                        ) : null}
+                    </>
+                }
+            />
+        )
+
         return (
             <div data-anat-part={anatPart}>
                 <div data-anat-part={showAnatomy ? "SurfaceCard" : undefined}>
@@ -357,64 +452,7 @@ const QaQuestionThread = ({
                         isDisabled={isSkeleton}
                         showAnatomy={showAnatomy}
                     >
-                        <StackH gap="grouped" align="start" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
-                                <Avatar
-                                    src={question.author.avatarUrl}
-                                    name={question.author.displayName}
-                                    seed={question.author.id}
-                                    size="sm"
-                                    isSkeleton={isSkeleton}
-                                    showAnatomy={showAnatomy}
-                                />
-                            </div>
-
-                            <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                                <StackH gap="related" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                    {isSkeleton ? (
-                                        <Typography size="xs" weight="medium" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                    ) : (
-                                        <>
-                                            {question.isPinned ? (
-                                                <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                                            ) : null}
-                                            <Typography size="xs" weight="medium" text={askerDisplayName} anatPart={showAnatomy ? "Typography" : undefined} />
-                                            {question.isFounderAuthor ? (
-                                                <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                                            ) : null}
-                                            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} anatPart={showAnatomy ? "Typography" : undefined} />
-                                        </>
-                                    )}
-                                </StackH>
-
-                                {isSkeleton ? (
-                                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                                        <Typography size="sm" isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                    </StackV>
-                                ) : (
-                                    <MarkdownContent
-                                        source={question.body}
-                                        measure="compact"
-                                        className="[&_p]:m-0 [&_p]:line-clamp-2"
-                                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                                    />
-                                )}
-
-                                <Cluster
-                                    gap="related"
-                                    items={buildQuestionChips(question, { isSkeleton, showAnatomy, includeReplyCount: true })}
-                                    anatPart={showAnatomy ? "Cluster" : undefined}
-                                />
-                            </StackV>
-
-                            {!isSkeleton ? (
-                                <span
-                                    aria-hidden
-                                    className={cn("size-2 shrink-0 rounded-full", question.replyCount > 0 ? "bg-success" : "bg-warning")}
-                                />
-                            ) : null}
-                        </StackH>
+                        {collapsedRow}
                     </SurfaceCard>
                 </div>
             </div>
@@ -422,10 +460,119 @@ const QaQuestionThread = ({
     }
 
     // ── LEAF — Expanded: the full conversation ─────────────────────────────────
-    return (
-        <div data-anat-part={anatPart}>
-            <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+    const questionMetaRow = (
+        <StackH
+            gap="related"
+            wrap
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <Typography size="xs" weight="medium" text={askerDisplayName} anatPart={showAnatomy ? "Typography" : undefined} />
+                    {question.isFounderAuthor ? (
+                        <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                    ) : null}
+                    {question.isPinned ? (
+                        <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                    ) : null}
+                    <Typography size="xs" color="muted" text={question.createdTimeAgo} anatPart={showAnatomy ? "Typography" : undefined} />
+                </>
+            }
+        />
+    )
+
+    const questionFooterRow = (
+        <StackH
+            gap="related"
+            wrap
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <Cluster
+                        gap="related"
+                        items={buildQuestionChips(question, { isSkeleton: false, showAnatomy, includeReplyCount: false })}
+                        anatPart={showAnatomy ? "Cluster" : undefined}
+                    />
+                    <QaReactionBar
+                        count={questionReaction.count}
+                        myReaction={questionReaction.myReaction}
+                        onReact={onReactQuestion}
+                        showAnatomy={showAnatomy}
+                    />
+                </>
+            }
+        />
+    )
+
+    // the question itself, as the first bubble of the conversation
+    const questionBubble = (
+        <div className={cn("flex w-full", isMineQuestion ? "justify-end" : "justify-start")}>
+            <StackV
+                gap="tight"
+                className={cn("min-w-0 max-w-[92%]", isMineQuestion && "items-end")}
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        {questionMetaRow}
+
+                        <QaChatBubble role={isMineQuestion ? "user" : "assistant"}>
+                            <MarkdownContent
+                                source={question.body}
+                                measure="compact"
+                                className="[&_p]:m-0"
+                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                            />
+                        </QaChatBubble>
+
+                        {questionFooterRow}
+                    </>
+                }
+            />
+        </div>
+    )
+
+    // answers — QaMessageBubble recurses internally for flattened reply-to-reply
+    const answerRows = answers.length === 0 ? (
+        <Typography
+            size="sm"
+            color="muted"
+            text="Chưa có câu trả lời nào — hãy là người đầu tiên."
+            anatPart={showAnatomy ? "Typography" : undefined}
+        />
+    ) : (
+        answers.map((answer) => (
+            <QaMessageBubble
+                key={answer.id}
+                answer={answer}
+                currentUserId={currentUserId}
+                canAccept={isMineQuestion}
+                onAcceptAnswer={(accepted: boolean) => onAcceptAnswer(answer.id, accepted)}
+                onReact={(type: QaReactionType | null) => onReactAnswer(answer.id, type)}
+                showAnatomy={showAnatomy}
+            />
+        ))
+    )
+
+    const conversationBody = (
+        <StackV
+            gap="grouped"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {questionBubble}
+                    {answerRows}
+                </>
+            }
+        />
+    )
+
+    const threadPanel = (
+        <StackV
+            gap="section"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
                     <QaConversationHeader
                         asker={{
                             id: question.author.id,
@@ -439,68 +586,7 @@ const QaQuestionThread = ({
                         showAnatomy={showAnatomy}
                     />
 
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {/* the question itself, as the first bubble of the conversation */}
-                        <div className={cn("flex w-full", isMineQuestion ? "justify-end" : "justify-start")}>
-                            <StackV gap="tight" className={cn("min-w-0 max-w-[92%]", isMineQuestion && "items-end")} anatPart={showAnatomy ? "StackV" : undefined}>
-                                <StackH gap="related" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                    <Typography size="xs" weight="medium" text={askerDisplayName} anatPart={showAnatomy ? "Typography" : undefined} />
-                                    {question.isFounderAuthor ? (
-                                        <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                                    ) : null}
-                                    {question.isPinned ? (
-                                        <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                                    ) : null}
-                                    <Typography size="xs" color="muted" text={question.createdTimeAgo} anatPart={showAnatomy ? "Typography" : undefined} />
-                                </StackH>
-
-                                <QaChatBubble role={isMineQuestion ? "user" : "assistant"}>
-                                    <MarkdownContent
-                                        source={question.body}
-                                        measure="compact"
-                                        className="[&_p]:m-0"
-                                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                                    />
-                                </QaChatBubble>
-
-                                <StackH gap="related" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                    <Cluster
-                                        gap="related"
-                                        items={buildQuestionChips(question, { isSkeleton: false, showAnatomy, includeReplyCount: false })}
-                                        anatPart={showAnatomy ? "Cluster" : undefined}
-                                    />
-                                    <QaReactionBar
-                                        count={questionReaction.count}
-                                        myReaction={questionReaction.myReaction}
-                                        onReact={onReactQuestion}
-                                        showAnatomy={showAnatomy}
-                                    />
-                                </StackH>
-                            </StackV>
-                        </div>
-
-                        {/* answers — QaMessageBubble recurses internally for flattened reply-to-reply */}
-                        {answers.length === 0 ? (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                text="Chưa có câu trả lời nào — hãy là người đầu tiên."
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : (
-                            answers.map((answer) => (
-                                <QaMessageBubble
-                                    key={answer.id}
-                                    answer={answer}
-                                    currentUserId={currentUserId}
-                                    canAccept={isMineQuestion}
-                                    onAcceptAnswer={(accepted: boolean) => onAcceptAnswer(answer.id, accepted)}
-                                    onReact={(type: QaReactionType | null) => onReactAnswer(answer.id, type)}
-                                    showAnatomy={showAnatomy}
-                                />
-                            ))
-                        )}
-                    </StackV>
+                    {conversationBody}
 
                     {/* bottom composer — the only way to answer a course-general question */}
                     <CourseQaComposer
@@ -514,7 +600,15 @@ const QaQuestionThread = ({
                         showAnatomy={showAnatomy}
                         anatPart={showAnatomy ? "CourseQaComposer" : undefined}
                     />
-                </StackV>
+                </>
+            }
+        />
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                {threadPanel}
             </SurfaceCard>
         </div>
     )

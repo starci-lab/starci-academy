@@ -135,9 +135,37 @@ const FoundationsCategoryPage = ({
     resourceListAriaLabel,
     isSkeleton = false,
     showAnatomy = false,
-}: FoundationsCategoryPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
+}: FoundationsCategoryPageProps) => {
+    const resourcesSection = (
+        <>
+            <FoundationSearchBar
+                anatPart="FoundationSearchBar"
+                query={searchQuery}
+                onQueryChange={onSearchQueryChange}
+                suggestions={suggestions}
+                onSelectSuggestion={onSelectSuggestion}
+                resultCount={resultCount}
+                isCountLoading={isResultCountLoading}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <FoundationResourceList
+                anatPart="FoundationResourceList"
+                resources={resources}
+                isLoading={isSkeleton || isResourcesLoading}
+                error={resourcesError}
+                searchQuery={searchQuery}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={onPageChange}
+                ariaLabel={resourceListAriaLabel}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const categorySections = (
+        <>
             <FoundationsHeader
                 anatPart="FoundationsHeader"
                 breadcrumbItems={breadcrumbItems}
@@ -153,33 +181,13 @@ const FoundationsCategoryPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <FoundationSearchBar
-                    anatPart="FoundationSearchBar"
-                    query={searchQuery}
-                    onQueryChange={onSearchQueryChange}
-                    suggestions={suggestions}
-                    onSelectSuggestion={onSelectSuggestion}
-                    resultCount={resultCount}
-                    isCountLoading={isResultCountLoading}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                <FoundationResourceList
-                    anatPart="FoundationResourceList"
-                    resources={resources}
-                    isLoading={isSkeleton || isResourcesLoading}
-                    error={resourcesError}
-                    searchQuery={searchQuery}
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={onPageChange}
-                    ariaLabel={resourceListAriaLabel}
-                    showAnatomy={showAnatomy}
-                />
-            </StackV>
-        </StackV>
-    </Container>
-)
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={resourcesSection} />
+        </>
+    )
+
+    const categoryBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={categorySections} />
+
+    return <Container size="md" padding="roomy" body={categoryBody} />
+}
 
 export { FoundationsCategoryPage }

@@ -107,10 +107,13 @@ const ModuleContinueBand = ({
     // shows the fuller "still has a lesson to resume" shape (see file header).
     const showResumeRow = isSkeleton || resumeLessonTitle !== undefined
 
-    return (
-        <StackV gap="grouped" anatPart={anatPart}>
-            <StackH gap="grouped" justify="between" align="start" anatPart={showAnatomy ? "StackH" : undefined}>
-                <StackV gap="flush" className="min-w-0" anatPart={showAnatomy ? "StackV" : undefined}>
+    const eyebrowAndTitle = (
+        <StackV
+            gap="flush"
+            className="min-w-0"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
                     <Typography
                         size="xs"
                         color="muted"
@@ -128,41 +131,73 @@ const ModuleContinueBand = ({
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     ) : null}
-                </StackV>
-                {showResumeRow ? (
-                    <Button
-                        isSkeleton={isSkeleton}
-                        variant="primary"
-                        size="lg"
-                        label={RESUME_LABEL}
-                        suffixIcon={ArrowRightIcon}
-                        onPress={onResume}
-                        classNames={["shrink-0"]}
-                        anatPart={showAnatomy ? "Button" : undefined}
-                    />
-                ) : null}
-            </StackH>
-            {isSkeleton ? (
-                // `ProgressMeter` has no `isSkeleton` of its own (same gap `ContinueCard`
-                // documents) — a bare track-height bar stands in for it here.
-                <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-            ) : (
-                <ProgressMeter
-                    value={lessonsRead}
-                    max={lessonsTotal}
-                    label="Hoàn thành"
-                    showValue
-                    anatPart={showAnatomy ? "ProgressMeter" : undefined}
-                />
-            )}
-            <Typography
-                size="xs"
-                color="muted"
-                isSkeleton={isSkeleton}
-                text={`Đã đọc ${lessonsRead}/${lessonsTotal} bài · Hoàn thành ${challengesDone}/${challengesTotal} thử thách`}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-        </StackV>
+                </>
+            }
+        />
+    )
+
+    const headerRow = (
+        <StackH
+            gap="grouped"
+            justify="between"
+            align="start"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {eyebrowAndTitle}
+                    {showResumeRow ? (
+                        <Button
+                            isSkeleton={isSkeleton}
+                            variant="primary"
+                            size="lg"
+                            label={RESUME_LABEL}
+                            suffixIcon={ArrowRightIcon}
+                            onPress={onResume}
+                            classNames={["shrink-0"]}
+                            anatPart={showAnatomy ? "Button" : undefined}
+                        />
+                    ) : null}
+                </>
+            }
+        />
+    )
+
+    const progress = isSkeleton ? (
+        // `ProgressMeter` has no `isSkeleton` of its own (same gap `ContinueCard`
+        // documents) — a bare track-height bar stands in for it here.
+        <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+    ) : (
+        <ProgressMeter
+            value={lessonsRead}
+            max={lessonsTotal}
+            label="Hoàn thành"
+            showValue
+            anatPart={showAnatomy ? "ProgressMeter" : undefined}
+        />
+    )
+
+    const statLine = (
+        <Typography
+            size="xs"
+            color="muted"
+            isSkeleton={isSkeleton}
+            text={`Đã đọc ${lessonsRead}/${lessonsTotal} bài · Hoàn thành ${challengesDone}/${challengesTotal} thử thách`}
+            anatPart={showAnatomy ? "Typography" : undefined}
+        />
+    )
+
+    return (
+        <StackV
+            gap="grouped"
+            anatPart={anatPart}
+            body={
+                <>
+                    {headerRow}
+                    {progress}
+                    {statLine}
+                </>
+            }
+        />
     )
 }
 

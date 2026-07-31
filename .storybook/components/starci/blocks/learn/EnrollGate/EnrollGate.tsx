@@ -144,6 +144,86 @@ const EnrollGateBase = ({
     // either way the price region falls to the AsyncContent shimmer branch.
     const priceLoading = isSkeleton || price == null
 
+    // The price group only exists once `price` has resolved — kept as its own
+    // named const because it depends on `price` and is only used inside the
+    // `AsyncContent` content branch below.
+    const priceGroup = price != null ? (
+        <>
+            <PriceTagProminent
+                discounted={price.discountedVnd}
+                original={price.originalVnd}
+                breakdown={price.breakdown}
+                className="justify-center"
+                anatPart={showAnatomy ? "PriceTagProminent" : undefined}
+            />
+            {price.currentPhase != null ? (
+                <PhaseScarcityNote
+                    currentPhase={price.currentPhase}
+                    seatsRemaining={price.seatsRemaining ?? null}
+                    nextPhasePriceVnd={price.nextPhasePriceVnd ?? null}
+                    className="justify-center"
+                    anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            ) : null}
+        </>
+    ) : null
+
+    // lock identity + outcome copy + price + scarcity + one CTA — everything
+    // the conversion card's own `StackV` arranges.
+    const offerBody = (
+        <>
+            <IconTile
+                icon={LockIcon}
+                tone="accent"
+                size="sm"
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "IconTile" : undefined}
+            />
+            {/* src thật (`EnrollGate/index.tsx:67`): `type="h4" weight="bold"` — HEADING
+                thật (20px), không phải body `lg` (18px). */}
+            <Typography
+                size="h4"
+                weight="bold"
+                align="center"
+                text={title}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <Typography
+                size="sm"
+                color="muted"
+                align="center"
+                className="max-w-[400px]"
+                text={description}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <AsyncContent
+                isLoading={priceLoading}
+                // Plain HeroUI skeleton, NOT badged: it's a raw library primitive with
+                // no owning story to jump to (same call as `PhaseScarcityNote`'s
+                // decorative glyph — "can't badge it, so don't badge it"). `AsyncContent`
+                // itself also can't be badged as a tree NODE (its `.Base` member takes no
+                // `anatPart` — only `.Empty`/`.Error` do); it self-labels its active
+                // branch via its own dev overlay when `showAnatomy` is on.
+                skeleton={<HeroSkeleton className="h-7 w-32 rounded-xl" />}
+                showAnatomy={showAnatomy}
+            >
+                <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={priceGroup} />
+            </AsyncContent>
+            <Button
+                label="Ghi danh ngay"
+                variant="primary"
+                size="lg"
+                suffixIcon={ArrowRightIcon}
+                iconSlide
+                onPress={onEnroll}
+                className="max-w-[300px]"
+                classNames={["w-full"]}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+        </>
+    )
+
     // the conversion card itself: lock identity + outcome copy + price + scarcity
     // + one CTA. A real SurfaceCard so it "floats up" whether it sits alone on
     // the canvas or over the faded teaser.
@@ -153,76 +233,7 @@ const EnrollGateBase = ({
             className="mx-auto w-full max-w-[480px]"
             anatPart={showAnatomy ? "SurfaceCard" : undefined}
         >
-            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
-                <IconTile
-                    icon={LockIcon}
-                    tone="accent"
-                    size="sm"
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "IconTile" : undefined}
-                />
-                {/* src thật (`EnrollGate/index.tsx:67`): `type="h4" weight="bold"` — HEADING
-                    thật (20px), không phải body `lg` (18px). */}
-                <Typography
-                    size="h4"
-                    weight="bold"
-                    align="center"
-                    text={title}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-                <Typography
-                    size="sm"
-                    color="muted"
-                    align="center"
-                    className="max-w-[400px]"
-                    text={description}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-                <AsyncContent
-                    isLoading={priceLoading}
-                    // Plain HeroUI skeleton, NOT badged: it's a raw library primitive with
-                    // no owning story to jump to (same call as `PhaseScarcityNote`'s
-                    // decorative glyph — "can't badge it, so don't badge it"). `AsyncContent`
-                    // itself also can't be badged as a tree NODE (its `.Base` member takes no
-                    // `anatPart` — only `.Empty`/`.Error` do); it self-labels its active
-                    // branch via its own dev overlay when `showAnatomy` is on.
-                    skeleton={<HeroSkeleton className="h-7 w-32 rounded-xl" />}
-                    showAnatomy={showAnatomy}
-                >
-                    {price != null ? (
-                        <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <PriceTagProminent
-                                discounted={price.discountedVnd}
-                                original={price.originalVnd}
-                                breakdown={price.breakdown}
-                                className="justify-center"
-                                anatPart={showAnatomy ? "PriceTagProminent" : undefined}
-                            />
-                            {price.currentPhase != null ? (
-                                <PhaseScarcityNote
-                                    currentPhase={price.currentPhase}
-                                    seatsRemaining={price.seatsRemaining ?? null}
-                                    nextPhasePriceVnd={price.nextPhasePriceVnd ?? null}
-                                    className="justify-center"
-                                    anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
-                                    showAnatomy={showAnatomy}
-                                />
-                            ) : null}
-                        </StackV>
-                    ) : null}
-                </AsyncContent>
-                <Button
-                    label="Ghi danh ngay"
-                    variant="primary"
-                    size="lg"
-                    suffixIcon={ArrowRightIcon}
-                    iconSlide
-                    onPress={onEnroll}
-                    className="max-w-[300px]"
-                    classNames={["w-full"]}
-                    anatPart={showAnatomy ? "Button" : undefined}
-                />
-            </StackV>
+            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={offerBody} />
         </SurfaceCard>
     )
 
@@ -231,9 +242,7 @@ const EnrollGateBase = ({
     // governs the wrapper's padding instead of a hand-typed `p-*` value.
     if (preview == null) {
         return (
-            <StackH gap="flush" justify="center" padding="airy" className={className} anatPart={anatPart}>
-                {card}
-            </StackH>
+            <StackH gap="flush" justify="center" padding="airy" className={className} anatPart={anatPart} body={card} />
         )
     }
 
@@ -254,9 +263,7 @@ const EnrollGateBase = ({
                 port, since the scale is symmetric and has no asymmetric step. `-mt-32` stays
                 hand-written: it is the float-over-the-fade OVERLAP effect itself, not a seam
                 between siblings, the same idiom as `SurfaceCard.Pressable`'s highlight layer. */}
-            <StackH gap="flush" justify="center" padding="roomy" className="relative z-10 -mt-32">
-                {card}
-            </StackH>
+            <StackH gap="flush" justify="center" padding="roomy" className="relative z-10 -mt-32" body={card} />
         </div>
     )
 }

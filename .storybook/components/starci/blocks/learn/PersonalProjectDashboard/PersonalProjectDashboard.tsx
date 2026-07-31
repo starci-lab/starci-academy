@@ -237,65 +237,83 @@ const Body = ({
     stats,
     isSkeleton,
     showAnatomy,
-}: BodyProps) => (
-    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-            {isSkeleton || currentTask ? (
-                <ContinueCardHero
-                    title={currentTask ? `${currentTask.sortIndex}. ${currentTask.title}` : ""}
-                    subtitle={NEXT_TASK_SUBTITLE}
-                    isSkeleton={isSkeleton}
-                    onPress={onContinue}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "ContinueCardHero" : undefined}
-                />
-            ) : (
-                <Typography weight="semibold" text={ALL_DONE_TEXT} anatPart={showAnatomy ? "Typography" : undefined} />
-            )}
-            <ProgressMeter
-                value={stats.done}
-                max={stats.total || 1}
-                label={PROGRESS_LABEL}
-                showValue
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "ProgressMeter" : undefined}
-            />
-            <Typography
-                size="xs"
-                color="muted"
-                isSkeleton={isSkeleton}
-                classNames={isSkeleton ? ["w-3/4"] : undefined}
-                text={statsLine(stats)}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-        </StackV>
-        <SurfaceCard
-            label={keepGoingLabel(milestoneLabel)}
-            isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
-        >
-            <Grid
-                columns={{ base: 1, sm: 2 }}
-                gap="grouped"
-                showAnatomy={showAnatomy}
-                items={tasks.map((task) => ({
-                    key: task.id,
-                    content: (
-                        <ContinueCardItem
-                            title={`${task.sortIndex}. ${task.title}`}
-                            subtitle={TASK_SUBTITLE[task.subtitleState]}
+}: BodyProps) => {
+    const heroSection = (
+        <StackV
+            gap="grouped"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {isSkeleton || currentTask ? (
+                        <ContinueCardHero
+                            title={currentTask ? `${currentTask.sortIndex}. ${currentTask.title}` : ""}
+                            subtitle={NEXT_TASK_SUBTITLE}
                             isSkeleton={isSkeleton}
-                            onPress={() => onSelectTask(task.id)}
+                            onPress={onContinue}
                             showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "ContinueCardItem" : undefined}
+                            anatPart={showAnatomy ? "ContinueCardHero" : undefined}
                         />
-                    ),
-                }))}
-            />
-        </SurfaceCard>
-    </StackV>
-)
+                    ) : (
+                        <Typography weight="semibold" text={ALL_DONE_TEXT} anatPart={showAnatomy ? "Typography" : undefined} />
+                    )}
+                    <ProgressMeter
+                        value={stats.done}
+                        max={stats.total || 1}
+                        label={PROGRESS_LABEL}
+                        showValue
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "ProgressMeter" : undefined}
+                    />
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? ["w-3/4"] : undefined}
+                        text={statsLine(stats)}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                </>
+            }
+        />
+    )
+
+    return (
+        <StackV
+            gap="section"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {heroSection}
+                    <SurfaceCard
+                        label={keepGoingLabel(milestoneLabel)}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                    >
+                        <Grid
+                            columns={{ base: 1, sm: 2 }}
+                            gap="grouped"
+                            showAnatomy={showAnatomy}
+                            items={tasks.map((task) => ({
+                                key: task.id,
+                                content: (
+                                    <ContinueCardItem
+                                        title={`${task.sortIndex}. ${task.title}`}
+                                        subtitle={TASK_SUBTITLE[task.subtitleState]}
+                                        isSkeleton={isSkeleton}
+                                        onPress={() => onSelectTask(task.id)}
+                                        showAnatomy={showAnatomy}
+                                        anatPart={showAnatomy ? "ContinueCardItem" : undefined}
+                                    />
+                                ),
+                            }))}
+                        />
+                    </SurfaceCard>
+                </>
+            }
+        />
+    )
+}
 
 /**
  * The capstone landing overview. See the file header for the full contract.
@@ -325,63 +343,77 @@ const PersonalProjectDashboard = ({
         onPress: crumb.onPress,
     }))
 
+    const header = (
+        <PageHeader
+            anatPart={showAnatomy ? "PageHeader" : undefined}
+            breadcrumb={
+                isSkeleton || crumbs.length ? (
+                    <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                        <Breadcrumbs collapseOnMobile items={crumbs} isSkeleton={isSkeleton} />
+                    </div>
+                ) : undefined
+            }
+            title={title}
+            description={description}
+            meta={
+                isSkeleton ? (
+                    <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                ) : (
+                    <Chip
+                        tone={githubStatus.isConnected ? "success" : "default"}
+                        icon={GithubLogoIcon}
+                        text={githubStatus.label}
+                        anatPart={showAnatomy ? "Chip" : undefined}
+                    />
+                )
+            }
+        />
+    )
+
+    const asyncBody = (
+        <AsyncContent
+            isLoading={isLoading}
+            skeleton={
+                <Body
+                    currentTask={{ sortIndex: 1, title: "" }}
+                    onContinue={onContinue}
+                    milestoneLabel={milestoneLabel}
+                    tasks={SKELETON_TASKS}
+                    onSelectTask={onSelectTask}
+                    stats={{ done: 0, total: 0, attempts: 0, avgLabel: "" }}
+                    isSkeleton
+                    showAnatomy={showAnatomy}
+                />
+            }
+            isEmpty={isEmpty}
+            emptyContent={EMPTY_STATE}
+            showAnatomy={showAnatomy}
+        >
+            <Body
+                currentTask={currentTask}
+                onContinue={onContinue}
+                milestoneLabel={milestoneLabel}
+                tasks={tasks}
+                onSelectTask={onSelectTask}
+                stats={stats}
+                isSkeleton={false}
+                showAnatomy={showAnatomy}
+            />
+        </AsyncContent>
+    )
+
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <PageHeader
-                    anatPart={showAnatomy ? "PageHeader" : undefined}
-                    breadcrumb={
-                        isSkeleton || crumbs.length ? (
-                            <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
-                                <Breadcrumbs collapseOnMobile items={crumbs} isSkeleton={isSkeleton} />
-                            </div>
-                        ) : undefined
-                    }
-                    title={title}
-                    description={description}
-                    meta={
-                        isSkeleton ? (
-                            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-                        ) : (
-                            <Chip
-                                tone={githubStatus.isConnected ? "success" : "default"}
-                                icon={GithubLogoIcon}
-                                text={githubStatus.label}
-                                anatPart={showAnatomy ? "Chip" : undefined}
-                            />
-                        )
-                    }
-                />
-                <AsyncContent
-                    isLoading={isLoading}
-                    skeleton={
-                        <Body
-                            currentTask={{ sortIndex: 1, title: "" }}
-                            onContinue={onContinue}
-                            milestoneLabel={milestoneLabel}
-                            tasks={SKELETON_TASKS}
-                            onSelectTask={onSelectTask}
-                            stats={{ done: 0, total: 0, attempts: 0, avgLabel: "" }}
-                            isSkeleton
-                            showAnatomy={showAnatomy}
-                        />
-                    }
-                    isEmpty={isEmpty}
-                    emptyContent={EMPTY_STATE}
-                    showAnatomy={showAnatomy}
-                >
-                    <Body
-                        currentTask={currentTask}
-                        onContinue={onContinue}
-                        milestoneLabel={milestoneLabel}
-                        tasks={tasks}
-                        onSelectTask={onSelectTask}
-                        stats={stats}
-                        isSkeleton={false}
-                        showAnatomy={showAnatomy}
-                    />
-                </AsyncContent>
-            </StackV>
+            <StackV
+                gap="section"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        {header}
+                        {asyncBody}
+                    </>
+                }
+            />
         </div>
     )
 }

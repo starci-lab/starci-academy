@@ -122,9 +122,33 @@ const HeadhuntingsPage = ({
     consultantsAriaLabel,
     isSkeleton = false,
     showAnatomy = false,
-}: HeadhuntingsPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+}: HeadhuntingsPageProps) => {
+    const directorySection = (
+        <>
+            <ConsultantDirectoryCompanySearch
+                anatPart="ConsultantDirectoryCompanySearch"
+                query={companyQuery}
+                onQueryChange={onCompanyQueryChange}
+                suggestions={companySuggestions}
+                isLoadingSuggestions={isLoadingCompanySuggestions}
+                onSelectCompany={onSelectCompany}
+                showAnatomy={showAnatomy}
+            />
+            <ConsultantDirectoryGrid
+                anatPart="ConsultantDirectoryGrid"
+                consultants={consultants}
+                count={consultantCount}
+                isLoading={isLoadingConsultants}
+                onOpenConsultant={onOpenConsultant}
+                emptyTitle={consultantsEmptyTitle}
+                ariaLabel={consultantsAriaLabel}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const headhuntingsSections = (
+        <>
             <ConsultantDirectoryHeader
                 anatPart="ConsultantDirectoryHeader"
                 breadcrumbItems={breadcrumbItems}
@@ -133,29 +157,13 @@ const HeadhuntingsPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                <ConsultantDirectoryCompanySearch
-                    anatPart="ConsultantDirectoryCompanySearch"
-                    query={companyQuery}
-                    onQueryChange={onCompanyQueryChange}
-                    suggestions={companySuggestions}
-                    isLoadingSuggestions={isLoadingCompanySuggestions}
-                    onSelectCompany={onSelectCompany}
-                    showAnatomy={showAnatomy}
-                />
-                <ConsultantDirectoryGrid
-                    anatPart="ConsultantDirectoryGrid"
-                    consultants={consultants}
-                    count={consultantCount}
-                    isLoading={isLoadingConsultants}
-                    onOpenConsultant={onOpenConsultant}
-                    emptyTitle={consultantsEmptyTitle}
-                    ariaLabel={consultantsAriaLabel}
-                    showAnatomy={showAnatomy}
-                />
-            </StackV>
-        </StackV>
-    </Container>
-)
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={directorySection} />
+        </>
+    )
+
+    const headhuntingsBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={headhuntingsSections} />
+
+    return <Container size="md" padding="roomy" body={headhuntingsBody} />
+}
 
 export { HeadhuntingsPage }

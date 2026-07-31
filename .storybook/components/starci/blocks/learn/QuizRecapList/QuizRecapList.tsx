@@ -1,4 +1,5 @@
 import React from "react"
+import type { ReactNode } from "react"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -70,6 +71,81 @@ export type QuizRecapListProps = QuizRecapListOwnProps &
     )
 
 /**
+ * One recap card's content — verdict chip, question, given/expected answers,
+ * rating bar. Extracted to a helper (rather than hoisted to a const) because
+ * it depends on the loop variable `card` from the `.map()` that calls it.
+ */
+const recapCardBody = (
+    card: QuizRecapCard,
+    ratingOptions: Array<RatingOption>,
+    onRate: (cardKey: string, grade: number) => void,
+    ratingAriaLabel: string,
+    showAnatomy: boolean,
+): ReactNode => (
+    <StackV
+        gap="section"
+        anatPart={showAnatomy ? "StackV" : undefined}
+        body={
+            <>
+                <StackH
+                    gap="related"
+                    align="center"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <Chip
+                            tone={card.wasCorrect ? "success" : "danger"}
+                            text={card.wasCorrect ? "Đúng" : "Chưa đúng"}
+                            anatPart={showAnatomy ? "Chip" : undefined}
+                        />
+                    }
+                />
+                <MarkdownContent
+                    source={card.question}
+                    measure="compact"
+                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                />
+                {card.givenAnswer != null ? (
+                    <StackV
+                        gap="related"
+                        anatPart={showAnatomy ? "StackV" : undefined}
+                        body={
+                            <>
+                                <Typography size="xs" color="muted" text="Bạn đã trả lời" anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="sm" text={card.givenAnswer} anatPart={showAnatomy ? "Typography" : undefined} />
+                            </>
+                        }
+                    />
+                ) : null}
+                <StackV
+                    gap="related"
+                    anatPart={showAnatomy ? "StackV" : undefined}
+                    body={
+                        <>
+                            <Typography size="xs" color="muted" text="Đáp án mong đợi" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <MarkdownContent
+                                source={card.expectedAnswer}
+                                measure="compact"
+                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                            />
+                        </>
+                    }
+                />
+                {/* Stays put after a tap. A learner going back over a run changes
+                    their mind, and removing the control would make the first tap
+                    final without ever saying so. */}
+                <RatingBar
+                    options={ratingOptions}
+                    onRate={(grade) => onRate(card.key, grade)}
+                    ariaLabel={ratingAriaLabel}
+                    anatPart={showAnatomy ? "RatingBar" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            </>
+        }
+    />
+)
+
+/**
  * The end-of-run recap. See the file header for the full contract.
  *
  * @param props - {@link QuizRecapListProps}
@@ -85,79 +161,55 @@ const QuizRecapList = ({
     anatPart,
 }: QuizRecapListProps) => {
     if (isSkeleton) {
+        const skeletonCardBody = (
+            <>
+                <HeroSkeleton className="h-5 w-16 rounded-full" />
+                <HeroSkeleton className="h-4 w-full rounded" />
+                <HeroSkeleton className="h-4 w-2/3 rounded" />
+            </>
+        )
+        const skeletonCards = Array.from({ length: skeletonCount }, (_unused, index) => (
+            <SurfaceCard key={index} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={skeletonCardBody} />
+            </SurfaceCard>
+        ))
+        const loadingBody = (
+            <>
+                <HeroSkeleton className="h-3.5 w-40 rounded" />
+                {skeletonCards}
+            </>
+        )
         return (
             <div data-anat-part={anatPart}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <HeroSkeleton className="h-3.5 w-40 rounded" />
-                    {Array.from({ length: skeletonCount }, (_unused, index) => (
-                        <SurfaceCard key={index} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                                <HeroSkeleton className="h-5 w-16 rounded-full" />
-                                <HeroSkeleton className="h-4 w-full rounded" />
-                                <HeroSkeleton className="h-4 w-2/3 rounded" />
-                            </StackV>
-                        </SurfaceCard>
-                    ))}
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={loadingBody} />
             </div>
         )
     }
     const unrated = (cards ?? []).filter((card) => card.rating == null).length
 
+    const recapCards = (cards ?? []).map((card) => (
+        <SurfaceCard key={card.key} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+            {recapCardBody(card, ratingOptions, onRate, ratingAriaLabel, showAnatomy)}
+        </SurfaceCard>
+    ))
+
+    const recapBody = (
+        <>
+            {/* Counted, not celebrated. The recap is work; the learner is here to finish
+                it, not to be congratulated for starting it. */}
+            <Typography
+                size="sm"
+                color="muted"
+                text={unrated > 0 ? `Còn ${unrated}/${(cards ?? []).length} thẻ chưa tự chấm` : `Đã tự chấm đủ ${(cards ?? []).length} thẻ`}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            {recapCards}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                {/* Counted, not celebrated. The recap is work; the learner is here to finish
-                    it, not to be congratulated for starting it. */}
-                <Typography
-                    size="sm"
-                    color="muted"
-                    text={unrated > 0 ? `Còn ${unrated}/${(cards ?? []).length} thẻ chưa tự chấm` : `Đã tự chấm đủ ${(cards ?? []).length} thẻ`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-                {(cards ?? []).map((card) => (
-                    <SurfaceCard key={card.key} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                        <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                <Chip
-                                    tone={card.wasCorrect ? "success" : "danger"}
-                                    text={card.wasCorrect ? "Đúng" : "Chưa đúng"}
-                                    anatPart={showAnatomy ? "Chip" : undefined}
-                                />
-                            </StackH>
-                            <MarkdownContent
-                                source={card.question}
-                                measure="compact"
-                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                            />
-                            {card.givenAnswer != null ? (
-                                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                                    <Typography size="xs" color="muted" text="Bạn đã trả lời" anatPart={showAnatomy ? "Typography" : undefined} />
-                                    <Typography size="sm" text={card.givenAnswer} anatPart={showAnatomy ? "Typography" : undefined} />
-                                </StackV>
-                            ) : null}
-                            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                                <Typography size="xs" color="muted" text="Đáp án mong đợi" anatPart={showAnatomy ? "Typography" : undefined} />
-                                <MarkdownContent
-                                    source={card.expectedAnswer}
-                                    measure="compact"
-                                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                                />
-                            </StackV>
-                            {/* Stays put after a tap. A learner going back over a run changes
-                                their mind, and removing the control would make the first tap
-                                final without ever saying so. */}
-                            <RatingBar
-                                options={ratingOptions}
-                                onRate={(grade) => onRate(card.key, grade)}
-                                ariaLabel={ratingAriaLabel}
-                                anatPart={showAnatomy ? "RatingBar" : undefined}
-                                showAnatomy={showAnatomy}
-                            />
-                        </StackV>
-                    </SurfaceCard>
-                ))}
-            </StackV>
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={recapBody} />
         </div>
     )
 }

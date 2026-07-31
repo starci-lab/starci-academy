@@ -162,58 +162,59 @@ export const AiQuotaHistoryPanel = ({
     const isEmpty = !isLoading && (items?.length ?? 0) === 0
 
     const chart = (
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-            <Typography size="sm" weight="medium" text="Credit tiêu mỗi ngày (7 ngày gần nhất)" anatPart={showAnatomy ? "Typography" : undefined} />
-            <SurfaceCard variant="nested" padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <div className="h-44 w-full text-accent-soft-foreground">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={chartPoints} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
-                            <CartesianGrid
-                                strokeDasharray="3 3"
-                                stroke="currentColor"
-                                className="text-divider"
-                                vertical={false}
-                            />
-                            <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={0} tickLine={false} axisLine={false} />
-                            <YAxis allowDecimals={false} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={28} />
-                            <Tooltip
-                                cursor={{ fill: "currentColor", opacity: 0.08 }}
-                                formatter={(value) => [`${value} ${CREDITS_UNIT}`, ""]}
-                            />
-                            <Bar dataKey="credits" fill="currentColor" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
-            </SurfaceCard>
-        </StackV>
+        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+            <>
+                <Typography size="sm" weight="medium" text="Credit tiêu mỗi ngày (7 ngày gần nhất)" anatPart={showAnatomy ? "Typography" : undefined} />
+                <SurfaceCard variant="nested" padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                    <div className="h-44 w-full text-accent-soft-foreground">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={chartPoints} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
+                                <CartesianGrid
+                                    strokeDasharray="3 3"
+                                    stroke="currentColor"
+                                    className="text-divider"
+                                    vertical={false}
+                                />
+                                <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={0} tickLine={false} axisLine={false} />
+                                <YAxis allowDecimals={false} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={28} />
+                                <Tooltip
+                                    cursor={{ fill: "currentColor", opacity: 0.08 }}
+                                    formatter={(value) => [`${value} ${CREDITS_UNIT}`, ""]}
+                                />
+                                <Bar dataKey="credits" fill="currentColor" radius={[4, 4, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </SurfaceCard>
+            </>
+        } />
     )
 
     const chargesList = (
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-            <Typography size="sm" weight="medium" text="Lịch sử dùng AI" anatPart={showAnatomy ? "Typography" : undefined} />
-            <div className="max-h-64 overflow-y-auto">
-                <AsyncContent
-                    isLoading={isLoading}
-                    skeleton={<SurfaceCardList variant="nested" items={skeletonItems(showAnatomy)} isSkeleton anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
-                    isEmpty={isEmpty}
-                    emptyContent={{
-                        title: "Chưa có lượt dùng AI nào.",
-                        anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-                        showAnatomy,
-                    }}
-                    content={<SurfaceCardList variant="nested" items={(items ?? []).map((item) => toListItem(item, showAnatomy))} anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
-                    showAnatomy={showAnatomy}
-                />
-            </div>
-        </StackV>
+        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+            <>
+                <Typography size="sm" weight="medium" text="Lịch sử dùng AI" anatPart={showAnatomy ? "Typography" : undefined} />
+                <div className="max-h-64 overflow-y-auto">
+                    <AsyncContent
+                        isLoading={isLoading}
+                        skeleton={<SurfaceCardList variant="nested" items={skeletonItems(showAnatomy)} isSkeleton anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
+                        isEmpty={isEmpty}
+                        emptyContent={{
+                            title: "Chưa có lượt dùng AI nào.",
+                            anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
+                            showAnatomy,
+                        }}
+                        content={<SurfaceCardList variant="nested" items={(items ?? []).map((item) => toListItem(item, showAnatomy))} anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
+                        showAnatomy={showAnatomy}
+                    />
+                </div>
+            </>
+        } />
     )
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" className={className} anatPart={showAnatomy ? "StackV" : undefined}>
-                {chart}
-                {chargesList}
-            </StackV>
+            <StackV gap="section" className={className} anatPart={showAnatomy ? "StackV" : undefined} body={<>{chart}{chargesList}</>} />
         </div>
     )
 }

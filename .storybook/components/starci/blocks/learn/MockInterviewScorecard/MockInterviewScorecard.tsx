@@ -194,20 +194,33 @@ const ScoreRow = ({
     max: number
     showAnatomy: boolean
 }) => (
-    <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-        <Typography size="sm" truncate className="w-32" classNames={["shrink-0"]} text={label} anatPart={showAnatomy ? "Typography" : undefined} />
-        <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} className="flex-1" anatPart={showAnatomy ? "ProgressMeter" : undefined} showAnatomy={showAnatomy} />
-        <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} anatPart={showAnatomy ? "Typography" : undefined} />
-    </StackH>
+    <StackH
+        gap="grouped"
+        align="center"
+        anatPart={showAnatomy ? "StackH" : undefined}
+        body={
+            <>
+                <Typography size="sm" truncate className="w-32" classNames={["shrink-0"]} text={label} anatPart={showAnatomy ? "Typography" : undefined} />
+                <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} className="flex-1" anatPart={showAnatomy ? "ProgressMeter" : undefined} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} anatPart={showAnatomy ? "Typography" : undefined} />
+            </>
+        }
+    />
 )
 
 /** Same shape as {@link ScoreRow}, shimmering — `ProgressMeter` has no `isSkeleton` of its own (see file header). */
 const ScoreRowSkeleton = () => (
-    <StackH gap="grouped" align="center">
-        <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />
-        <HeroSkeleton className="h-1 flex-1 rounded-full" />
-        <Typography size="xs" isSkeleton classNames={["shrink-0", "w-1/4"]} />
-    </StackH>
+    <StackH
+        gap="grouped"
+        align="center"
+        body={
+            <>
+                <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />
+                <HeroSkeleton className="h-1 flex-1 rounded-full" />
+                <Typography size="xs" isSkeleton classNames={["shrink-0", "w-1/4"]} />
+            </>
+        }
+    />
 )
 
 /**
@@ -258,133 +271,187 @@ const MockInterviewScorecard = ({
 
     const primaryCtaLabel = weakAreaLabel ? `Ôn lại: ${weakAreaLabel}` : "Ôn lại phần bạn còn yếu"
 
+    const bylineRow = hasByline ? (
+        <StackH
+            gap="grouped"
+            justify="between"
+            wrap
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {isSkeleton ? (
+                        <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    ) : promptTitle != null ? (
+                        <Typography size="sm" weight="medium" text={promptTitle} anatPart={showAnatomy ? "Typography" : undefined} />
+                    ) : null}
+                    {isSkeleton ? (
+                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    ) : createdAt != null ? (
+                        <Typography size="xs" color="muted" text={createdAt} anatPart={showAnatomy ? "Typography" : undefined} />
+                    ) : null}
+                </>
+            }
+        />
+    ) : null
+
+    const scoreBreakdownBody = (
+        <>
+            {isSkeleton
+                ? Array.from({ length: SKELETON_SCORE_ROWS }, (_, index) => (
+                    <ScoreRowSkeleton key={`score-skeleton-${index}`} />
+                ))
+                : phaseOrQuestionScores.map((row) => (
+                    <ScoreRow key={row.key} label={row.label} score={row.score} max={row.max} showAnatomy={showAnatomy} />
+                ))}
+        </>
+    )
+
+    const attributeBreakdownBody = (
+        <>
+            {isSkeleton
+                ? Array.from({ length: SKELETON_ATTRIBUTE_ROWS }, (_, index) => (
+                    <ScoreRowSkeleton key={`attribute-skeleton-${index}`} />
+                ))
+                : attributeScores.map((row) => (
+                    <ScoreRow key={row.key} label={row.label} score={row.score} max={100} showAnatomy={showAnatomy} />
+                ))}
+        </>
+    )
+
+    const strengthsBody = (
+        <>
+            <Typography size="sm" weight="medium" text="Điểm mạnh" anatPart={showAnatomy ? "Typography" : undefined} />
+            <SurfaceCardCrossList items={strengthItems} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} showAnatomy={showAnatomy} />
+        </>
+    )
+
+    const gapsBody = (
+        <>
+            <Typography size="sm" weight="medium" text="Cần cải thiện" anatPart={showAnatomy ? "Typography" : undefined} />
+            <SurfaceCardCrossList items={gapItems} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} showAnatomy={showAnatomy} />
+        </>
+    )
+
+    const weakAreaRow = weakAreaLabel != null && !isSkeleton ? (
+        <StackH
+            gap="tight"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <Typography size="xs" color="muted" text="Yếu nhất:" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Chip tone="warning" text={weakAreaLabel} anatPart={showAnatomy ? "Chip" : undefined} />
+                </>
+            }
+        />
+    ) : null
+
+    const ctaButtonRow = (
+        <StackH
+            gap="grouped"
+            wrap
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <Button
+                        isSkeleton={isSkeleton}
+                        variant="primary"
+                        size="lg"
+                        label={primaryCtaLabel}
+                        suffixIcon={ArrowRightIcon}
+                        iconSlide
+                        onPress={onStudyWeakArea}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                    <Button
+                        isSkeleton={isSkeleton}
+                        variant="secondary"
+                        size="lg"
+                        label="Làm dự án cá nhân"
+                        onPress={onCapstone}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                    {onRetry != null || isSkeleton ? (
+                        <Button
+                            isSkeleton={isSkeleton}
+                            variant="ghost"
+                            size="lg"
+                            label="Phỏng vấn lại"
+                            onPress={onRetry}
+                            anatPart={showAnatomy ? "Button" : undefined}
+                        />
+                    ) : null}
+                </>
+            }
+        />
+    )
+
+    const ctaSection = (
+        <>
+            {weakAreaRow}
+            {ctaButtonRow}
+        </>
+    )
+
+    const scorecardBody = (
+        <>
+            {bylineRow}
+
+            {/* Verdict banner. `FeedbackCallout` has no `isSkeleton` of its own (a message
+                frame, not a data-bearing one) — a bare bar stands in, in the same slot. */}
+            {isSkeleton ? (
+                <HeroSkeleton className="h-20 w-full rounded-2xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            ) : (
+                <FeedbackCallout
+                    status={VERDICT_STATUS[verdict]}
+                    icon={VERDICT_ICON[verdict]}
+                    title={`${overallScore}/100 · ${VERDICT_LABEL[verdict]}`}
+                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                />
+            )}
+
+            {hasScoreRows ? (
+                <SurfaceCard label="Điểm theo từng phần" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
+                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={scoreBreakdownBody} />
+                </SurfaceCard>
+            ) : null}
+
+            {hasAttributeRows ? (
+                <SurfaceCard label="Điểm theo tiêu chí" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
+                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={attributeBreakdownBody} />
+                </SurfaceCard>
+            ) : null}
+
+            {hasStrengths ? (
+                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={strengthsBody} />
+            ) : null}
+
+            {hasGaps ? (
+                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={gapsBody} />
+            ) : null}
+
+            {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
+                "a question" (not a universal symbol like ✓/🔒), and the card's own
+                label="Câu hỏi tiếp theo" already carries the fact. */}
+            {hasFollowUp ? (
+                <SurfaceCard label="Câu hỏi tiếp theo" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
+                    <MarkdownContent
+                        source={followUpQuestion ?? ""}
+                        measure="compact"
+                        isSkeleton={isSkeleton}
+                        className="italic [&_p]:m-0"
+                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                    />
+                </SurfaceCard>
+            ) : null}
+
+            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={ctaSection} />
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                {hasByline ? (
-                    <StackH gap="grouped" justify="between" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                        {isSkeleton ? (
-                            <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : promptTitle != null ? (
-                            <Typography size="sm" weight="medium" text={promptTitle} anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : null}
-                        {isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : createdAt != null ? (
-                            <Typography size="xs" color="muted" text={createdAt} anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : null}
-                    </StackH>
-                ) : null}
-
-                {/* Verdict banner. `FeedbackCallout` has no `isSkeleton` of its own (a message
-                    frame, not a data-bearing one) — a bare bar stands in, in the same slot. */}
-                {isSkeleton ? (
-                    <HeroSkeleton className="h-20 w-full rounded-2xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                ) : (
-                    <FeedbackCallout
-                        status={VERDICT_STATUS[verdict]}
-                        icon={VERDICT_ICON[verdict]}
-                        title={`${overallScore}/100 · ${VERDICT_LABEL[verdict]}`}
-                        anatPart={showAnatomy ? "FeedbackCallout" : undefined}
-                    />
-                )}
-
-                {hasScoreRows ? (
-                    <SurfaceCard label="Điểm theo từng phần" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                            {isSkeleton
-                                ? Array.from({ length: SKELETON_SCORE_ROWS }, (_, index) => (
-                                    <ScoreRowSkeleton key={`score-skeleton-${index}`} />
-                                ))
-                                : phaseOrQuestionScores.map((row) => (
-                                    <ScoreRow key={row.key} label={row.label} score={row.score} max={row.max} showAnatomy={showAnatomy} />
-                                ))}
-                        </StackV>
-                    </SurfaceCard>
-                ) : null}
-
-                {hasAttributeRows ? (
-                    <SurfaceCard label="Điểm theo tiêu chí" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                            {isSkeleton
-                                ? Array.from({ length: SKELETON_ATTRIBUTE_ROWS }, (_, index) => (
-                                    <ScoreRowSkeleton key={`attribute-skeleton-${index}`} />
-                                ))
-                                : attributeScores.map((row) => (
-                                    <ScoreRow key={row.key} label={row.label} score={row.score} max={100} showAnatomy={showAnatomy} />
-                                ))}
-                        </StackV>
-                    </SurfaceCard>
-                ) : null}
-
-                {hasStrengths ? (
-                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="sm" weight="medium" text="Điểm mạnh" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <SurfaceCardCrossList items={strengthItems} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} showAnatomy={showAnatomy} />
-                    </StackV>
-                ) : null}
-
-                {hasGaps ? (
-                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="sm" weight="medium" text="Cần cải thiện" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <SurfaceCardCrossList items={gapItems} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} showAnatomy={showAnatomy} />
-                    </StackV>
-                ) : null}
-
-                {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
-                    "a question" (not a universal symbol like ✓/🔒), and the card's own
-                    label="Câu hỏi tiếp theo" already carries the fact. */}
-                {hasFollowUp ? (
-                    <SurfaceCard label="Câu hỏi tiếp theo" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                        <MarkdownContent
-                            source={followUpQuestion ?? ""}
-                            measure="compact"
-                            isSkeleton={isSkeleton}
-                            className="italic [&_p]:m-0"
-                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                        />
-                    </SurfaceCard>
-                ) : null}
-
-                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                    {weakAreaLabel != null && !isSkeleton ? (
-                        <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <Typography size="xs" color="muted" text="Yếu nhất:" anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Chip tone="warning" text={weakAreaLabel} anatPart={showAnatomy ? "Chip" : undefined} />
-                        </StackH>
-                    ) : null}
-                    <StackH gap="grouped" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                        <Button
-                            isSkeleton={isSkeleton}
-                            variant="primary"
-                            size="lg"
-                            label={primaryCtaLabel}
-                            suffixIcon={ArrowRightIcon}
-                            iconSlide
-                            onPress={onStudyWeakArea}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                        <Button
-                            isSkeleton={isSkeleton}
-                            variant="secondary"
-                            size="lg"
-                            label="Làm dự án cá nhân"
-                            onPress={onCapstone}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                        {onRetry != null || isSkeleton ? (
-                            <Button
-                                isSkeleton={isSkeleton}
-                                variant="ghost"
-                                size="lg"
-                                label="Phỏng vấn lại"
-                                onPress={onRetry}
-                                anatPart={showAnatomy ? "Button" : undefined}
-                            />
-                        ) : null}
-                    </StackH>
-                </StackV>
-            </StackV>
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={scorecardBody} />
         </div>
     )
 }

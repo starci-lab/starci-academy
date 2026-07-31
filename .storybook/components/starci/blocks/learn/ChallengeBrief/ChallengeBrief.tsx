@@ -161,6 +161,25 @@ const skeletonListRows = (count: number, keyPrefix: string): Array<SurfaceCardLi
         content: <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
     }))
 
+/** One expected-output row: a leading check plus the stripped output text. */
+const outputRow = (body: string, showAnatomy: boolean) => (
+    <StackH
+        gap="tight"
+        align="start"
+        body={
+            <>
+                <CheckCircleIcon
+                    aria-hidden
+                    focusable="false"
+                    data-anat-part={showAnatomy ? "CheckCircleIcon" : undefined}
+                    className="size-5 shrink-0 text-success-soft-foreground"
+                />
+                <Typography size="sm" text={stripMarkdown(body)} anatPart={showAnatomy ? "Typography" : undefined} />
+            </>
+        }
+    />
+)
+
 /**
  * The challenge reading column. See the file header for why this stays one leaf across
  * five optional sections, and how each section's skeleton mirror is built.
@@ -207,17 +226,7 @@ const ChallengeBrief = ({
         ? skeletonListRows(OUTPUT_SKELETON_ROWS, "output-skeleton")
         : (outputs ?? []).map((item) => ({
             key: item.key,
-            content: (
-                <StackH gap="tight" align="start">
-                    <CheckCircleIcon
-                        aria-hidden
-                        focusable="false"
-                        data-anat-part={showAnatomy ? "CheckCircleIcon" : undefined}
-                        className="size-5 shrink-0 text-success-soft-foreground"
-                    />
-                    <Typography size="sm" text={stripMarkdown(item.body)} anatPart={showAnatomy ? "Typography" : undefined} />
-                </StackH>
-            ),
+            content: outputRow(item.body, showAnatomy),
         }))
 
     const requirementItems: Array<SurfaceCardAccordionItem> = (requirements ?? []).map((item) => ({
@@ -258,8 +267,8 @@ const ChallengeBrief = ({
     // các nhãn cùng cấp mà một cái đeo icon là lệch nhịp, và bản thân chữ "Gợi ý" đã đủ nghĩa
     // (icon §2a: chỉ ký hiệu quốc dân mới xứng một glyph, một nhãn văn xuôi thì không).
 
-    return (
-        <StackV gap="section" anatPart={anatPart} showAnatomy={showAnatomy}>
+    const sections = (
+        <>
             {showPrerequisites ? (
                 <SurfaceCardList
                     label="Điều kiện tiên quyết"
@@ -310,7 +319,11 @@ const ChallengeBrief = ({
                         : markdownBody(trimmedHint, showAnatomy)}
                 </SurfaceCard>
             ) : null}
-        </StackV>
+        </>
+    )
+
+    return (
+        <StackV gap="section" anatPart={anatPart} showAnatomy={showAnatomy} body={sections} />
     )
 }
 

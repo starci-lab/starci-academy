@@ -85,50 +85,242 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
     // the courses/readiness rows carry BESPOKE content (an IconTile, a progress
     // bar), not the composite's fixed leading/title/subtitle slots, so each row
     // passes `content` and stays untouched by the list's own shimmer branch.
+    const readinessTrack = (
+        <>
+            <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <ProgressBar isSkeleton showAnatomy={showAnatomy} />
+            <ProgressBar isSkeleton showAnatomy={showAnatomy} />
+        </>
+    )
+
     const readinessItems: Array<SurfaceCardListItem> = [
         {
             key: "readiness-track",
-            content: (
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                    <ProgressBar isSkeleton showAnatomy={showAnatomy} />
-                    <ProgressBar isSkeleton showAnatomy={showAnatomy} />
-                </StackV>
-            ),
+            content: <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={readinessTrack} />,
         },
     ]
 
-    const courseItems: Array<SurfaceCardListItem> = [0, 1].map((i) => ({
-        key: `course-${i}`,
-        content: (
-            <StackH gap="grouped" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
+    const courseItems: Array<SurfaceCardListItem> = [0, 1].map((i) => {
+        const progressHeader = (
+            <>
+                <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" isSkeleton classNames={["w-1/4", "shrink-0"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            </>
+        )
+        const courseDetails = (
+            <>
+                <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={progressHeader} />
+                <ProgressBar isSkeleton showAnatomy={showAnatomy} />
+            </>
+        )
+        const courseRow = (
+            <>
                 <IconTile isSkeleton size="sm" anatPart={showAnatomy ? "IconTile" : undefined} />
-                <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                    <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
-                        <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="xs" isSkeleton classNames={["w-1/4", "shrink-0"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                    </StackH>
-                    <ProgressBar isSkeleton showAnatomy={showAnatomy} />
-                </StackV>
-            </StackH>
-        ),
-    }))
+                <StackV gap="related" classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={courseDetails} />
+            </>
+        )
+        return {
+            key: `course-${i}`,
+            content: <StackH gap="grouped" anatPart={showAnatomy ? "StackH" : undefined} body={courseRow} />,
+        }
+    })
 
-    const skillItems: Array<GridItem> = [0, 1].map((i) => ({
-        key: `skill-${i}`,
-        content: (
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
+    const skillItems: Array<GridItem> = [0, 1].map((i) => {
+        const statCardBody = (
+            <>
+                <Typography size="h3" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            </>
+        )
+        const skillCard = (
+            <>
                 <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                <SurfaceCard padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                        <Typography size="h3" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                    </StackV>
+                <SurfaceCard padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={statCardBody} />
                 </SurfaceCard>
-            </StackV>
-        ),
-    }))
+            </>
+        )
+        return {
+            key: `skill-${i}`,
+            content: <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={skillCard} />,
+        }
+    })
+
+    // ── identity column — bare, no card face (matches `ProfileHeroSkeleton`) ──
+
+    // rank-framed avatar + rank pill — 128px avatar has no matching `Avatar`
+    // preset (sm/md/lg cap at 48px), so this spot builds its own shimmer.
+    const rankAvatarRow = (
+        <>
+            <HeroSkeleton className="size-32 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+        </>
+    )
+
+    // name (h3) + role title + @handle — one unit of meaning, flush
+    const nameBlock = (
+        <>
+            <Typography size="h3" isSkeleton classNames={["w-3/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+
+    // location · preferred work mode
+    const locationLabel = (
+        <>
+            <HeroSkeleton className="size-5 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+    const locationRow = (
+        <>
+            <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={locationLabel} />
+            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+        </>
+    )
+
+    // follower / following line
+    const followRow = (
+        <>
+            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+
+    // action cluster — two full-width buttons
+    const actionButtons = (
+        <>
+            <Button isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Button" : undefined} />
+            <Button isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Button" : undefined} />
+        </>
+    )
+
+    // meta: github · linkedin · website — leading icon + text rows
+    const metaRows = META_ROWS.map((key) => {
+        const metaRow = (
+            <>
+                <HeroSkeleton className="size-5 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            </>
+        )
+        return <StackH key={key} gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
+    })
+
+    const identityColumnBody = (
+        <>
+            <StackV gap="tight" align="start" anatPart={showAnatomy ? "StackV" : undefined} body={rankAvatarRow} />
+            <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={nameBlock} />
+
+            {/* short bio */}
+            <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+
+            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined} body={locationRow} />
+            <StackH gap="grouped" anatPart={showAnatomy ? "StackH" : undefined} body={followRow} />
+
+            {/* earned-badge medal strip — `AvatarGroup` already owns the overlap look */}
+            <AvatarGroup items={MEDAL_ITEMS} size="sm" isSkeleton showAnatomy={showAnatomy} />
+
+            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={actionButtons} />
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={metaRows} />
+        </>
+    )
+
+    // ── overview body — the four sections, in the real screen's own order ──
+
+    const readinessCard = (
+        <>
+            <Typography size="h3" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+    const readinessGroup = (
+        <>
+            <SurfaceCard padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={readinessCard} />
+            </SurfaceCard>
+            <SurfaceCardList
+                items={readinessItems}
+                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+            />
+        </>
+    )
+    // job readiness — headline metric card + a tracked-goal row
+    const readinessSection = (
+        <>
+            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={readinessGroup} />
+        </>
+    )
+
+    // courses — icon tile + title/percent + progress rows
+    const coursesSection = (
+        <>
+            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <SurfaceCardList
+                items={courseItems}
+                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+            />
+        </>
+    )
+
+    const contributionStreak = (
+        <>
+            <HeroSkeleton className="size-4 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+    const contributionGroup = (
+        <>
+            <HeroSkeleton className="h-40 w-full rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={contributionStreak} />
+        </>
+    )
+    // contributions — heatmap grid + streak line
+    const contributionsSection = (
+        <>
+            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={contributionGroup} />
+        </>
+    )
+
+    const overviewSections = (
+        <>
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={readinessSection} />
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={coursesSection} />
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={contributionsSection} />
+            {/* skills — 2-col grid of stat cards */}
+            <Grid columns={{ base: 1, md: 2 }} gap="section" items={skillItems} showAnatomy={showAnatomy} />
+        </>
+    )
+
+    // outer split: identity column first (mobile), row from `@app-md` — same
+    // `StackV` + breakpoint-override road `SettingsLayout` already uses instead of
+    // `Split` (its two sides bake in the OPPOSITE width strategy from what a fixed
+    // identity column + a flexing content column need).
+    const outerRow = (
+        <>
+            <StackV
+                gap="grouped"
+                classNames={["w-full"]}
+                className="@app-md:w-72 @app-md:shrink-0"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={identityColumnBody}
+            />
+            <StackV gap="section" classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={overviewSections} />
+        </>
+    )
+
+    const overviewBody = (
+        <StackV
+            gap="section"
+            className="@app-md:flex-row @app-md:items-start"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={outerRow}
+        />
+    )
 
     return (
         <div
@@ -149,128 +341,10 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
                     ariaLabel="Profile sections loading"
                     variant="secondary"
                     isSkeleton
-                    showAnatomy={showAnatomy}
                 />
             </div>
 
-            <Container size="lg" padding="roomy" anatPart={showAnatomy ? "Container" : undefined} showAnatomy={showAnatomy}>
-                {/* outer split: identity column first (mobile), row from `@app-md` — same
-                    `StackV` + breakpoint-override road `SettingsLayout` already uses instead of
-                    `Split` (its two sides bake in the OPPOSITE width strategy from what a fixed
-                    identity column + a flexing content column need). */}
-                <StackV
-                    gap="section"
-                    className="@app-md:flex-row @app-md:items-start"
-                    anatPart={showAnatomy ? "StackV" : undefined}
-                    showAnatomy={showAnatomy}
-                >
-                    {/* identity column — bare, no card face (matches `ProfileHeroSkeleton`) */}
-                    <StackV
-                        gap="grouped"
-                        className="w-full @app-md:w-72 @app-md:shrink-0"
-                        anatPart={showAnatomy ? "StackV" : undefined}
-                        showAnatomy={showAnatomy}
-                    >
-                        {/* rank-framed avatar + rank pill — 128px avatar has no matching `Avatar`
-                            preset (sm/md/lg cap at 48px), so this spot builds its own shimmer. */}
-                        <StackV gap="tight" align="start" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <HeroSkeleton className="size-32 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-                        </StackV>
-
-                        {/* name (h3) + role title + @handle — one unit of meaning, flush */}
-                        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="h3" isSkeleton classNames={["w-3/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        </StackV>
-
-                        {/* short bio */}
-                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-
-                        {/* location · preferred work mode */}
-                        <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
-                            <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
-                                <HeroSkeleton className="size-5 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                                <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            </StackH>
-                            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-                        </StackH>
-
-                        {/* follower / following line */}
-                        <StackH gap="grouped" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        </StackH>
-
-                        {/* earned-badge medal strip — `AvatarGroup` already owns the overlap look */}
-                        <AvatarGroup items={MEDAL_ITEMS} size="sm" isSkeleton showAnatomy={showAnatomy} />
-
-                        {/* action cluster — two full-width buttons */}
-                        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Button isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Button" : undefined} />
-                            <Button isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Button" : undefined} />
-                        </StackV>
-
-                        {/* meta: github · linkedin · website — leading icon + text rows */}
-                        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            {META_ROWS.map((key) => (
-                                <StackH key={key} gap="tight" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
-                                    <HeroSkeleton className="size-5 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                </StackH>
-                            ))}
-                        </StackV>
-                    </StackV>
-
-                    {/* overview body — the four sections, in the real screen's own order */}
-                    <StackV gap="section" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                        {/* job readiness — headline metric card + a tracked-goal row */}
-                        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                                <SurfaceCard padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                                        <Typography size="h3" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                        <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                    </StackV>
-                                </SurfaceCard>
-                                <SurfaceCardList
-                                    items={readinessItems}
-                                    anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                                    showAnatomy={showAnatomy}
-                                />
-                            </StackV>
-                        </StackV>
-
-                        {/* courses — icon tile + title/percent + progress rows */}
-                        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <SurfaceCardList
-                                items={courseItems}
-                                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                                showAnatomy={showAnatomy}
-                            />
-                        </StackV>
-
-                        {/* contributions — heatmap grid + streak line */}
-                        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                                <HeroSkeleton className="h-40 w-full rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                                <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
-                                    <HeroSkeleton className="size-4 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                                </StackH>
-                            </StackV>
-                        </StackV>
-
-                        {/* skills — 2-col grid of stat cards */}
-                        <Grid columns={{ base: 1, md: 2 }} gap="section" items={skillItems} showAnatomy={showAnatomy} />
-                    </StackV>
-                </StackV>
-            </Container>
+            <Container size="lg" padding="roomy" anatPart={showAnatomy ? "Container" : undefined} body={overviewBody} />
         </div>
     )
 }

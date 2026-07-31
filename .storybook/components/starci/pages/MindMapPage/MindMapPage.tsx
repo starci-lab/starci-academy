@@ -185,14 +185,21 @@ interface MindMapCanvasGapProps {
  * "CANVAS GAP" note for why `AsyncContentEmpty` is the reused shape here.
  */
 const MindMapCanvasGap = ({ isLoading = false, showAnatomy = false }: MindMapCanvasGapProps) => (
-    <StackV gap="flush" align="center" justify="center" className="h-full" anatPart={showAnatomy ? "StackV" : undefined}>
-        <AsyncContentEmpty
-            anatPart={showAnatomy ? "AsyncContentEmpty" : undefined}
-            icon={ShareNetworkIcon}
-            title={isLoading ? CANVAS_GAP_LOADING_TITLE : CANVAS_GAP_TITLE}
-            description={isLoading ? undefined : CANVAS_GAP_DESCRIPTION}
-        />
-    </StackV>
+    <StackV
+        gap="flush"
+        align="center"
+        justify="center"
+        classNames={["h-full"]}
+        anatPart={showAnatomy ? "StackV" : undefined}
+        body={
+            <AsyncContentEmpty
+                anatPart={showAnatomy ? "AsyncContentEmpty" : undefined}
+                icon={ShareNetworkIcon}
+                title={isLoading ? CANVAS_GAP_LOADING_TITLE : CANVAS_GAP_TITLE}
+                description={isLoading ? undefined : CANVAS_GAP_DESCRIPTION}
+            />
+        }
+    />
 )
 
 /**
@@ -201,14 +208,21 @@ const MindMapCanvasGap = ({ isLoading = false, showAnatomy = false }: MindMapCan
  * `CourseContents`/`ModulePage` already established for this exact case.
  */
 const MindMapWorkspaceEmpty = () => (
-    <StackV gap="flush" align="center" justify="center" className="h-[calc(100dvh-4rem)]" anatPart="StackV">
-        <AsyncContentEmpty
-            anatPart="AsyncContentEmpty"
-            icon={MapTrifoldIcon}
-            title={WORKSPACE_EMPTY_TITLE}
-            description={WORKSPACE_EMPTY_DESCRIPTION}
-        />
-    </StackV>
+    <StackV
+        gap="flush"
+        align="center"
+        justify="center"
+        className="h-[calc(100dvh-4rem)]"
+        anatPart="StackV"
+        body={
+            <AsyncContentEmpty
+                anatPart="AsyncContentEmpty"
+                icon={MapTrifoldIcon}
+                title={WORKSPACE_EMPTY_TITLE}
+                description={WORKSPACE_EMPTY_DESCRIPTION}
+            />
+        }
+    />
 )
 
 /**
@@ -249,81 +263,123 @@ const MindMapPage = ({
         return <MindMapWorkspaceEmpty />
     }
 
-    return (
-        <StackH gap="flush" className="h-[calc(100dvh-4rem)]" anatPart={showAnatomy ? "StackH" : undefined}>
-            {variant === "workspace" ? (
-                <ResizableRail
-                    storageKey={RAIL_STORAGE_KEY}
-                    defaultWidth={RAIL_DEFAULT_WIDTH}
-                    minWidth={RAIL_MIN_WIDTH}
-                    maxWidth={RAIL_MAX_WIDTH}
-                    ariaLabel={railResizeAriaLabel}
-                    handleSide="right"
-                    className="h-full shrink-0 border-r border-default"
-                    showAnatomy={showAnatomy}
-                >
-                    <StackV padding="roomy" gap="flush" className="h-full overflow-y-auto" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <MindMapRail
-                            anatPart="MindMapRail"
-                            query={query}
-                            onQuery={onQuery}
-                            tier={tier}
-                            onTier={onTier}
-                            items={items}
-                            selectedId={selectedId}
-                            onPick={onPick}
-                            isLoading={isRailLoading}
-                            ariaLabel={railAriaLabel}
-                            tierAriaLabel={railTierAriaLabel}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                    </StackV>
-                </ResizableRail>
-            ) : null}
+    const railSection = (
+        <MindMapRail
+            anatPart="MindMapRail"
+            query={query}
+            onQuery={onQuery}
+            tier={tier}
+            onTier={onTier}
+            items={items}
+            selectedId={selectedId}
+            onPick={onPick}
+            isLoading={isRailLoading}
+            ariaLabel={railAriaLabel}
+            tierAriaLabel={railTierAriaLabel}
+            isSkeleton={isSkeleton}
+            showAnatomy={showAnatomy}
+        />
+    )
 
+    // The canvas region's floating chrome — in the real app these render as the
+    // SAME ReactFlow engine's own Panel children, see the file header's
+    // "OVERLAYS ARE FRAMES" note.
+    const canvasOverlays = (
+        <>
+            <StackV
+                gap="flush"
+                align="center"
+                className="absolute inset-x-0 top-4 z-10"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <MindMapContinueButton
+                        anatPart="MindMapContinueButton"
+                        resumeHref={resumeHref}
+                        allContentDone={allContentDone}
+                        onResume={onResume}
+                        continueAriaLabel={continueAriaLabel}
+                        showAnatomy={showAnatomy}
+                    />
+                }
+            />
+            <StackV
+                gap="flush"
+                className="absolute bottom-4 left-4 z-10"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    // `Legend` carries no `anatPart` of its own — same bare, class-free
+                    // anatomy marker `MindMapRail`'s own file already uses for the same
+                    // reason (naming a node without laying anything out).
+                    <div data-anat-part={showAnatomy ? "Legend" : undefined}>
+                        <Legend items={legendItems} />
+                    </div>
+                }
+            />
+            <StackV
+                gap="flush"
+                className="absolute bottom-4 right-4 z-10"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <MindMapFullscreenButton
+                        anatPart="MindMapFullscreenButton"
+                        onZoomIn={onZoomIn}
+                        onZoomOut={onZoomOut}
+                        onToggleFullscreen={onToggleFullscreen}
+                        isFullscreen={isFullscreen}
+                        ariaLabels={fullscreenAriaLabels}
+                        showAnatomy={showAnatomy}
+                    />
+                }
+            />
+        </>
+    )
+
+    const canvasRegion = (
+        <>
+            <MindMapCanvasGap isLoading={isSkeleton} showAnatomy={showAnatomy} />
+            {variant === "standalone" && !isSkeleton ? canvasOverlays : null}
+        </>
+    )
+
+    const workspaceRail = (
+        <ResizableRail
+            storageKey={RAIL_STORAGE_KEY}
+            defaultWidth={RAIL_DEFAULT_WIDTH}
+            minWidth={RAIL_MIN_WIDTH}
+            maxWidth={RAIL_MAX_WIDTH}
+            ariaLabel={railResizeAriaLabel}
+            handleSide="right"
+            className="h-full shrink-0 border-r border-default"
+            showAnatomy={showAnatomy}
+        >
+            <StackV
+                padding="roomy"
+                gap="flush"
+                className="overflow-y-auto"
+                classNames={["h-full"]}
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={railSection}
+            />
+        </ResizableRail>
+    )
+
+    const workspaceSections = (
+        <>
+            {variant === "workspace" ? workspaceRail : null}
             {/* The canvas region: the out-of-reach engine's gap, plus (standalone only) the
                 floating chrome that in the real app renders as the SAME engine's own Panel
                 children — see the file header's "OVERLAYS ARE FRAMES" note. */}
-            <StackV gap="flush" className="relative min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                <MindMapCanvasGap isLoading={isSkeleton} showAnatomy={showAnatomy} />
-
-                {variant === "standalone" && !isSkeleton ? (
-                    <>
-                        <StackV gap="flush" align="center" className="absolute inset-x-0 top-4 z-10" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <MindMapContinueButton
-                                anatPart="MindMapContinueButton"
-                                resumeHref={resumeHref}
-                                allContentDone={allContentDone}
-                                onResume={onResume}
-                                continueAriaLabel={continueAriaLabel}
-                                showAnatomy={showAnatomy}
-                            />
-                        </StackV>
-                        <StackV gap="flush" className="absolute bottom-4 left-4 z-10" anatPart={showAnatomy ? "StackV" : undefined}>
-                            {/* `Legend` carries no `anatPart` of its own — same bare, class-free
-                                anatomy marker `MindMapRail`'s own file already uses for the same
-                                reason (naming a node without laying anything out). */}
-                            <div data-anat-part={showAnatomy ? "Legend" : undefined}>
-                                <Legend items={legendItems} />
-                            </div>
-                        </StackV>
-                        <StackV gap="flush" className="absolute bottom-4 right-4 z-10" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <MindMapFullscreenButton
-                                anatPart="MindMapFullscreenButton"
-                                onZoomIn={onZoomIn}
-                                onZoomOut={onZoomOut}
-                                onToggleFullscreen={onToggleFullscreen}
-                                isFullscreen={isFullscreen}
-                                ariaLabels={fullscreenAriaLabels}
-                                showAnatomy={showAnatomy}
-                            />
-                        </StackV>
-                    </>
-                ) : null}
-            </StackV>
-        </StackH>
+            <StackV
+                gap="flush"
+                className="relative"
+                classNames={["min-w-0", "flex-1"]}
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={canvasRegion}
+            />
+        </>
     )
+
+    return <StackH gap="flush" className="h-[calc(100dvh-4rem)]" anatPart={showAnatomy ? "StackH" : undefined} body={workspaceSections} />
 }
 
 export { MindMapPage }

@@ -218,22 +218,22 @@ export const PageRegions: Story = {
                         why: "The measure renders its single region raw and adds no node of its own, so the nested stack is what decides the seam between the three tiles. Keeping the rhythm in one place is what stops a page from having two owners for the same gap, which is exactly how the old `gap` prop came to be written in code and measured as 0px on screen.",
                         code: `<Container
   body={
-    <StackV gap="page">
+    <StackV gap="page" body={<>
       <PageHeader title="Courses" />
       <CourseList />
       <Pagination />
-    </StackV>
+    </>} />
   }
 />`,
                         render: (
                             <Bleed>
                                 <Container
                                     body={
-                                        <StackV gap="page">
+                                        <StackV gap="page" body={<>
                                             <Tile label="Header" />
                                             <Tile label="Body" />
                                             <Tile label="Footer" />
-                                        </StackV>
+                                        </>} />
                                     }
                                 />
                             </Bleed>
@@ -290,11 +290,15 @@ export const ContainerQuery: Story = {
 <Container size="md" body={<Grid columns={columns} gap="grouped" items={cells} />} />`,
                             render: (
                                 <Bleed>
-                                    <Container size="md" padding="cozy">
-                                        <span className="block" data-anat-part="Grid">
-                                            <Grid columns={columns} gap="grouped" items={cells} />
-                                        </span>
-                                    </Container>
+                                    <Container
+                                        size="md"
+                                        padding="cozy"
+                                        body={
+                                            <span className="block" data-anat-part="Grid">
+                                                <Grid columns={columns} gap="grouped" items={cells} />
+                                            </span>
+                                        }
+                                    />
                                 </Bleed>
                             ),
                         },
@@ -306,11 +310,15 @@ export const ContainerQuery: Story = {
 <Container size="xl" body={<Grid columns={columns} gap="grouped" items={cells} />} />`,
                             render: (
                                 <Bleed>
-                                    <Container size="xl" padding="cozy">
-                                        <span className="block" data-anat-part="Grid">
-                                            <Grid columns={columns} gap="grouped" items={cells} />
-                                        </span>
-                                    </Container>
+                                    <Container
+                                        size="xl"
+                                        padding="cozy"
+                                        body={
+                                            <span className="block" data-anat-part="Grid">
+                                                <Grid columns={columns} gap="grouped" items={cells} />
+                                            </span>
+                                        }
+                                    />
                                 </Bleed>
                             ),
                         },

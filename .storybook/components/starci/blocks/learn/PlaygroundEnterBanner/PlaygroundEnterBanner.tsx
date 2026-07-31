@@ -96,28 +96,34 @@ const PlaygroundEnterBanner = ({
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
         >
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Typography
-                    size="sm"
-                    color={allReady ? "success" : "muted"}
-                    weight={allReady ? "medium" : undefined}
-                    prefixIcon={allReady ? CheckCircleIcon : undefined}
-                    isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                    text={readiness}
-                />
-                <Button
-                    variant="primary"
-                    label={SECTION_LABEL}
-                    suffixIcon={ArrowRightIcon}
-                    iconSlide
-                    onPress={onEnter}
-                    isDisabled={!allReady}
-                    isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "Button" : undefined}
-                    classNames={["w-fit"]}
-                />
-            </StackV>
+            <StackV
+                gap="grouped"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        <Typography
+                            size="sm"
+                            color={allReady ? "success" : "muted"}
+                            weight={allReady ? "medium" : undefined}
+                            prefixIcon={allReady ? CheckCircleIcon : undefined}
+                            isSkeleton={isSkeleton}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                            text={readiness}
+                        />
+                        <Button
+                            variant="primary"
+                            label={SECTION_LABEL}
+                            suffixIcon={ArrowRightIcon}
+                            iconSlide
+                            onPress={onEnter}
+                            isDisabled={!allReady}
+                            isSkeleton={isSkeleton}
+                            anatPart={showAnatomy ? "Button" : undefined}
+                            classNames={["w-fit"]}
+                        />
+                    </>
+                }
+            />
         </SurfaceCard>
     )
 }

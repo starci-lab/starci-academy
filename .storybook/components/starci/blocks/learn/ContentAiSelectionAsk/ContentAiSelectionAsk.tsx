@@ -81,25 +81,31 @@ const ContentAiSelectionAsk = ({
         className={cn("z-50 -translate-x-1/2 -translate-y-full", className)}
         data-anat-part={anatPart}
     >
-        <StackH gap="tight" align="center">
-            <Button
-                label="Hỏi AI"
-                variant="primary"
-                size="sm"
-                prefixIcon={SparkleIcon}
-                onPress={onOpen}
-                isElevated
-                anatPart={showAnatomy ? "Button" : undefined}
-            />
-            {isNew ? (
-                <Chip
-                    text="Mới"
-                    tone="accent"
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Chip" : undefined}
-                />
-            ) : null}
-        </StackH>
+        <StackH
+            gap="tight"
+            align="center"
+            body={
+                <>
+                    <Button
+                        label="Hỏi AI"
+                        variant="primary"
+                        size="sm"
+                        prefixIcon={SparkleIcon}
+                        onPress={onOpen}
+                        isElevated
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                    {isNew ? (
+                        <Chip
+                            text="Mới"
+                            tone="accent"
+                            showAnatomy={showAnatomy}
+                            anatPart={showAnatomy ? "Chip" : undefined}
+                        />
+                    ) : null}
+                </>
+            }
+        />
     </div>
 )
 

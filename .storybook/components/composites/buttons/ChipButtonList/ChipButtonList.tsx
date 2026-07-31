@@ -103,16 +103,23 @@ export const ChipButtonList = ({
             <div className={cn(CONTAINER_CLS[direction], className)} data-anat-part={anatPart}>
                 {direction === "column"
                     ? Array.from({ length: skeletonCount }).map((_, index) => (
-                        <StackH key={index} gap="grouped" className="px-3 py-2">
-                            <HeroSkeleton className="size-4 shrink-0 rounded" />
-                            {/* §12c: chủ của hình là chủ của skeleton — Typography tự vẽ gạch của nó */}
-                            <Typography
-                                size="sm"
-                                isSkeleton
-                                showAnatomy={showAnatomy}
-                                classNames={[index % 2 === 0 ? "w-2/3" : "w-1/2"]}
-                            />
-                        </StackH>
+                        <StackH
+                            key={index}
+                            gap="grouped"
+                            className="px-3 py-2"
+                            body={
+                                <>
+                                    <HeroSkeleton className="size-4 shrink-0 rounded" />
+                                    {/* §12c: chủ của hình là chủ của skeleton — Typography tự vẽ gạch của nó */}
+                                    <Typography
+                                        size="sm"
+                                        isSkeleton
+                                        showAnatomy={showAnatomy}
+                                        classNames={[index % 2 === 0 ? "w-2/3" : "w-1/2"]}
+                                    />
+                                </>
+                            }
+                        />
                     ))
                     : Array.from({ length: skeletonCount }).map((_, index) => (
                         <ButtonAtom

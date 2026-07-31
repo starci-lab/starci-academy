@@ -154,8 +154,28 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
     // reserves it so the mirror's footprint matches a typical populated row.
     const showFeedback = isSkeleton || attempt?.shortFeedback != null
 
-    return (
-        <StackV gap="tight" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined}>
+    const attemptLabelAndChip = (
+        <>
+            <Typography
+                size="sm"
+                weight="medium"
+                isSkeleton={isSkeleton}
+                classNames={isSkeleton ? ["w-1/4"] : undefined}
+                text={attempt != null ? `Lần ${attempt.attemptNumber}` : undefined}
+                anatPart={showAnatomy ? "Typography (attempt label)" : undefined}
+            />
+            <Chip
+                icon={SparkleIcon}
+                tone={scoreTone}
+                isSkeleton={isSkeleton}
+                text={scoreLabel}
+                anatPart={showAnatomy ? "Chip" : undefined}
+            />
+        </>
+    )
+
+    const rowLines = (
+        <>
             <StackH
                 gap="grouped"
                 align="center"
@@ -163,23 +183,8 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                 wrap
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "StackH (attempt)" : undefined}
-            >
-                <Typography
-                    size="sm"
-                    weight="medium"
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/4"] : undefined}
-                    text={attempt != null ? `Lần ${attempt.attemptNumber}` : undefined}
-                    anatPart={showAnatomy ? "Typography (attempt label)" : undefined}
-                />
-                <Chip
-                    icon={SparkleIcon}
-                    tone={scoreTone}
-                    isSkeleton={isSkeleton}
-                    text={scoreLabel}
-                    anatPart={showAnatomy ? "Chip" : undefined}
-                />
-            </StackH>
+                body={attemptLabelAndChip}
+            />
             {showFeedback ? (
                 <Typography
                     size="sm"
@@ -199,7 +204,11 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
             >
                 {attempt?.processedAtLabel ?? ""}
             </InlineIconLabel>
-        </StackV>
+        </>
+    )
+
+    return (
+        <StackV gap="tight" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={rowLines} />
     )
 }
 

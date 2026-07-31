@@ -80,6 +80,29 @@ export interface ContentRelatedListProps {
 }
 
 /**
+ * One related-lesson row's content — extracted because it depends on the loop
+ * variable (`item`) and so cannot be hoisted to a module-level const.
+ */
+const relatedItemBody = (item: ContentRelatedItem, enrollToOpenLabel: string, showAnatomy: boolean) => (
+    <>
+        {item.breadcrumb ? (
+            <Typography size="xs" color="muted" truncate text={item.breadcrumb} anatPart={showAnatomy ? "Typography" : undefined} />
+        ) : null}
+        <Typography
+            size="sm"
+            weight="medium"
+            truncate
+            text={item.title}
+            underlineOnGroupHover
+            anatPart={showAnatomy ? "Typography" : undefined}
+        />
+        {item.isLocked ? (
+            <Typography size="xs" color="warning" prefixIcon={LockSimpleIcon} text={enrollToOpenLabel} anatPart={showAnatomy ? "Typography" : undefined} />
+        ) : null}
+    </>
+)
+
+/**
  * Related-reading list under a lesson. See the file header for the full contract.
  *
  * @param props - {@link ContentRelatedListProps}
@@ -105,22 +128,7 @@ const ContentRelatedList = ({
         // matches the real row's own affordance (no accent, no arrow).
         hover: "underline",
         content: (
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                {item.breadcrumb ? (
-                    <Typography size="xs" color="muted" truncate text={item.breadcrumb} anatPart={showAnatomy ? "Typography" : undefined} />
-                ) : null}
-                <Typography
-                    size="sm"
-                    weight="medium"
-                    truncate
-                    text={item.title}
-                    underlineOnGroupHover
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-                {item.isLocked ? (
-                    <Typography size="xs" color="warning" prefixIcon={LockSimpleIcon} text={enrollToOpenLabel} anatPart={showAnatomy ? "Typography" : undefined} />
-                ) : null}
-            </StackV>
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={relatedItemBody(item, enrollToOpenLabel, showAnatomy)} />
         ),
     }))
 

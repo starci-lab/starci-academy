@@ -82,9 +82,9 @@ const ContentPaywall = ({
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
-}: ContentPaywallProps) => (
-    <div data-anat-part={anatPart}>
-        <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
+}: ContentPaywallProps) => {
+    const offer = (
+        <>
             <IconTile icon={LockIcon} tone="accent" size="sm" showAnatomy={showAnatomy} />
             {/* src thật (`PremiumPaywall/index.tsx:54`): `text-xl font-semibold` (div trần,
                 không qua Typography) — khớp `size="h4"` (heading, 20px), không phải body `lg`. */}
@@ -115,8 +115,14 @@ const ContentPaywall = ({
                 onPress={onPurchase}
                 anatPart={showAnatomy ? "Button" : undefined}
             />
-        </StackV>
-    </div>
-)
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={offer} />
+        </div>
+    )
+}
 
 export { ContentPaywall }

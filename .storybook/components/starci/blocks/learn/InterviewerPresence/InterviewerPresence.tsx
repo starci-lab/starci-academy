@@ -138,37 +138,65 @@ const InterviewerPresence = ({
     // The icon shows the CURRENT state; the label names the ACTION the press performs.
     const ttsAriaLabel = ttsEnabled ? muteLabel : unmuteLabel
 
-    return (
-        <div data-anat-part={anatPart}>
-            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH gap="related" align="center" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                        {/* Relative wrapper only to anchor the decorative pulse ring — not a
-                            spacing seam, so it stays a plain span rather than a frame. */}
-                        <span className="relative inline-flex shrink-0">
-                            {speaking ? (
-                                <span
-                                    aria-hidden
-                                    className="absolute -inset-1 animate-ping rounded-full ring-2 ring-accent"
-                                />
-                            ) : null}
-                            <Avatar
-                                name={persona.name}
-                                src={persona.avatarSrc}
-                                seed={persona.name}
-                                size="lg"
-                                showAnatomy={showAnatomy}
-                            />
-                        </span>
+    // Relative wrapper only to anchor the decorative pulse ring — not a
+    // spacing seam, so it stays a plain span rather than a frame.
+    const avatarWithPulse = (
+        <span className="relative inline-flex shrink-0">
+            {speaking ? (
+                <span
+                    aria-hidden
+                    className="absolute -inset-1 animate-ping rounded-full ring-2 ring-accent"
+                />
+            ) : null}
+            <Avatar
+                name={persona.name}
+                src={persona.avatarSrc}
+                seed={persona.name}
+                size="lg"
+                showAnatomy={showAnatomy}
+            />
+        </span>
+    )
 
-                        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <Typography
-                                text={persona.name}
-                                weight="medium"
-                                showAnatomy={showAnatomy}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+    const speakingStatus = speaking ? (
+        <StackH
+            gap="tight"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-accent" />
+                    <Typography
+                        text={speakingLabel}
+                        size="sm"
+                        color="accent"
+                        weight="medium"
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                </>
+            }
+        />
+    ) : null
+
+    const nameAndRole = (
+        <StackV
+            gap="flush"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography
+                        text={persona.name}
+                        weight="medium"
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    <StackH
+                        gap="related"
+                        align="center"
+                        anatPart={showAnatomy ? "StackH" : undefined}
+                        body={
+                            <>
                                 <Typography
                                     text={persona.role}
                                     size="sm"
@@ -176,54 +204,101 @@ const InterviewerPresence = ({
                                     showAnatomy={showAnatomy}
                                     anatPart={showAnatomy ? "Typography" : undefined}
                                 />
-                                {speaking ? (
-                                    <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                        <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-accent" />
-                                        <Typography
-                                            text={speakingLabel}
-                                            size="sm"
-                                            color="accent"
-                                            weight="medium"
-                                            showAnatomy={showAnatomy}
-                                            anatPart={showAnatomy ? "Typography" : undefined}
-                                        />
-                                    </StackH>
-                                ) : null}
-                            </StackH>
-                        </StackV>
-                    </StackH>
+                                {speakingStatus}
+                            </>
+                        }
+                    />
+                </>
+            }
+        />
+    )
 
-                    {canToggleTts ? (
-                        <Button
-                            isIconOnly
-                            variant="ghost"
-                            prefixIcon={TtsIcon}
-                            ariaLabel={ttsAriaLabel}
-                            onPress={onToggleTts}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    ) : null}
-                </StackH>
+    const identity = (
+        <StackH
+            gap="related"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {avatarWithPulse}
+                    {nameAndRole}
+                </>
+            }
+        />
+    )
 
-                {hasQuestion ? (
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <MarkdownContent
-                            source={questionMarkdown as string}
-                            measure="reading"
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                        />
-                        {isAsking ? (
-                            <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted" />
-                                <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted [animation-delay:150ms]" />
-                                <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted [animation-delay:300ms]" />
-                            </StackH>
-                        ) : null}
-                    </StackV>
-                ) : null}
-            </StackV>
+    const toggleButton = canToggleTts ? (
+        <Button
+            isIconOnly
+            variant="ghost"
+            prefixIcon={TtsIcon}
+            ariaLabel={ttsAriaLabel}
+            onPress={onToggleTts}
+            showAnatomy={showAnatomy}
+            anatPart={showAnatomy ? "Button" : undefined}
+        />
+    ) : null
+
+    const headerRow = (
+        <StackH
+            gap="related"
+            align="center"
+            justify="between"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {identity}
+                    {toggleButton}
+                </>
+            }
+        />
+    )
+
+    const typingDots = isAsking ? (
+        <StackH
+            gap="tight"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted" />
+                    <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted [animation-delay:150ms]" />
+                    <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted [animation-delay:300ms]" />
+                </>
+            }
+        />
+    ) : null
+
+    const questionRegion = hasQuestion ? (
+        <StackV
+            gap="tight"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <MarkdownContent
+                        source={questionMarkdown as string}
+                        measure="reading"
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                    />
+                    {typingDots}
+                </>
+            }
+        />
+    ) : null
+
+    return (
+        <div data-anat-part={anatPart}>
+            <StackV
+                gap="related"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        {headerRow}
+                        {questionRegion}
+                    </>
+                }
+            />
         </div>
     )
 }

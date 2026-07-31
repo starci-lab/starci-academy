@@ -115,24 +115,13 @@ const QuizSetup = ({
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
-}: QuizSetupProps) => (
-    <div data-anat-part={anatPart}>
-        <SurfaceCard label={label} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                {resumable != null ? (
-                    // A learner who left mid-run almost always means to come back. Making
-                    // them scroll past a start button to find their own session is how one
-                    // run gets abandoned twice.
-                    <FeedbackCallout
-                        title={resumable.name}
-                        description={`Đang dở ${resumable.answered}/${resumable.total} câu`}
-                        actionLabel="Tiếp tục"
-                        onAction={resumable.onResume}
-                        anatPart={showAnatomy ? "FeedbackCallout" : undefined}
-                    />
-                ) : null}
-
-                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
+}: QuizSetupProps) => {
+    const nameField = (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
                     <Typography size="sm" weight="medium" text="Tên phiên" anatPart={showAnatomy ? "Typography" : undefined} />
                     <InputText
                         value={name}
@@ -141,9 +130,17 @@ const QuizSetup = ({
                         ariaLabel="Tên phiên"
                         showAnatomy={showAnatomy}
                     />
-                </StackV>
+                </>
+            }
+        />
+    )
 
-                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
+    const lengthField = (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
                     <Typography size="sm" weight="medium" text="Độ dài" anatPart={showAnatomy ? "Typography" : undefined} />
                     <ButtonRadioGroup
                         ariaLabel="Độ dài phiên"
@@ -155,9 +152,17 @@ const QuizSetup = ({
                             content: `${LENGTH_LABEL[key]} · ${LENGTH_CARDS[key]} câu`,
                         }))}
                     />
-                </StackV>
+                </>
+            }
+        />
+    )
 
-                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
+    const levelField = (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
                     <Typography size="sm" weight="medium" text="Cấp độ" anatPart={showAnatomy ? "Typography" : undefined} />
                     <ButtonRadioGroup
                         ariaLabel="Cấp độ câu hỏi"
@@ -169,11 +174,37 @@ const QuizSetup = ({
                             content: LEVEL_LABEL[key],
                         }))}
                     />
-                </StackV>
+                </>
+            }
+        />
+    )
 
-                {/* The error sits WITH the action that failed. At the top of the card it
-                    would read as a problem with the whole form. */}
-                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
+    const submitRow = (
+        <StackH
+            gap="related"
+            justify="end"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <Button
+                    label={`Bắt đầu · ${LENGTH_CARDS[length]} câu`}
+                    variant="primary"
+                    prefixIcon={PlayIcon}
+                    onPress={onStart}
+                    isPending={isPending}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            }
+        />
+    )
+
+    // The error sits WITH the action that failed. At the top of the card it
+    // would read as a problem with the whole form.
+    const actionField = (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
                     {errorMessage != null ? (
                         <FeedbackCallout
                             status="danger"
@@ -181,20 +212,41 @@ const QuizSetup = ({
                             anatPart={showAnatomy ? "FeedbackCallout" : undefined}
                         />
                     ) : null}
-                    <StackH gap="related" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <Button
-                            label={`Bắt đầu · ${LENGTH_CARDS[length]} câu`}
-                            variant="primary"
-                            prefixIcon={PlayIcon}
-                            onPress={onStart}
-                            isPending={isPending}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    </StackH>
-                </StackV>
-            </StackV>
-        </SurfaceCard>
-    </div>
-)
+                    {submitRow}
+                </>
+            }
+        />
+    )
+
+    const formBody = (
+        <>
+            {resumable != null ? (
+                // A learner who left mid-run almost always means to come back. Making
+                // them scroll past a start button to find their own session is how one
+                // run gets abandoned twice.
+                <FeedbackCallout
+                    title={resumable.name}
+                    description={`Đang dở ${resumable.answered}/${resumable.total} câu`}
+                    actionLabel="Tiếp tục"
+                    onAction={resumable.onResume}
+                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                />
+            ) : null}
+
+            {nameField}
+            {lengthField}
+            {levelField}
+            {actionField}
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <SurfaceCard label={label} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={formBody} />
+            </SurfaceCard>
+        </div>
+    )
+}
 
 export { QuizSetup }

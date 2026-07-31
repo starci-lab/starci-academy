@@ -122,79 +122,91 @@ const QuotaBar = ({
     // reset time to show.
     const showCaption = isSkeleton || resetLabel != null
 
+    // LabelRow — the window label on the left, the "used / limit" count on the
+    // right. Peers on one baseline row (§13b), same shape as `RatingBar`'s own
+    // label+key row: `StackH` with `justify="between"`, not `Cluster` — there
+    // are exactly two fixed slots here, not a repeating same-kind list.
+    const labelRow = (
+        <StackH
+            gap="related"
+            align="center"
+            justify="between"
+            anatPart={showAnatomy ? "LabelRow" : undefined}
+            body={(
+                <>
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? ["w-1/4"] : undefined}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text={label}
+                    />
+                    <Typography
+                        size="sm"
+                        weight="medium"
+                        tabularNums
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? ["w-1/3"] : undefined}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text={(
+                            <>
+                                {used}
+                                {" / "}
+                                {limit}
+                                {showUnit && unit ? (
+                                    <>
+                                        {" "}
+                                        <Typography size="sm" color="muted" isInline text={unit} />
+                                    </>
+                                ) : null}
+                            </>
+                        )}
+                    />
+                </>
+            )}
+        />
+    )
+
+    // `ProgressBar` (atom) has no `anatPart` prop of its own — only `showAnatomy`,
+    // which tags its OWN internal track/fill parts. A wrapping `div` is how
+    // `RatingBar` names a same-shaped atom/composite for the parent's tree too.
+    const bar = (
+        <div data-anat-part={showAnatomy ? "Bar" : undefined}>
+            <ProgressBar
+                value={value}
+                max={100}
+                color={fillTone}
+                size="sm"
+                ariaLabel={label}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </div>
+    )
+
     return (
         <StackV
             gap="grouped"
             className={className}
             anatPart={anatPart ?? (showAnatomy ? "StackV" : undefined)}
-        >
-            {/* LabelRow — the window label on the left, the "used / limit" count on the
-                right. Peers on one baseline row (§13b), same shape as `RatingBar`'s own
-                label+key row: `StackH` with `justify="between"`, not `Cluster` — there
-                are exactly two fixed slots here, not a repeating same-kind list. */}
-            <StackH
-                gap="related"
-                align="center"
-                justify="between"
-                anatPart={showAnatomy ? "LabelRow" : undefined}
-            >
-                <Typography
-                    size="sm"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/4"] : undefined}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                    text={label}
-                />
-                <Typography
-                    size="sm"
-                    weight="medium"
-                    tabularNums
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/3"] : undefined}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                    text={(
-                        <>
-                            {used}
-                            {" / "}
-                            {limit}
-                            {showUnit && unit ? (
-                                <>
-                                    {" "}
-                                    <Typography size="sm" color="muted" isInline text={unit} />
-                                </>
-                            ) : null}
-                        </>
-                    )}
-                />
-            </StackH>
-
-            {/* `ProgressBar` (atom) has no `anatPart` prop of its own — only `showAnatomy`,
-                which tags its OWN internal track/fill parts. A wrapping `div` is how
-                `RatingBar` names a same-shaped atom/composite for the parent's tree too. */}
-            <div data-anat-part={showAnatomy ? "Bar" : undefined}>
-                <ProgressBar
-                    value={value}
-                    max={100}
-                    color={fillTone}
-                    size="sm"
-                    ariaLabel={label}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-            </div>
-
-            {showCaption ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/2"] : undefined}
-                    anatPart={showAnatomy ? "ResetCaption" : undefined}
-                    text={resetLabel ?? undefined}
-                />
-            ) : null}
-        </StackV>
+            body={(
+                <>
+                    {labelRow}
+                    {bar}
+                    {showCaption ? (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            classNames={isSkeleton ? ["w-1/2"] : undefined}
+                            anatPart={showAnatomy ? "ResetCaption" : undefined}
+                            text={resetLabel ?? undefined}
+                        />
+                    ) : null}
+                </>
+            )}
+        />
     )
 }
 

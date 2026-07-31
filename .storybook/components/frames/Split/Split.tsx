@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ALIGN_CLASS, GAP_CLASS, type LayoutAlign, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
@@ -23,22 +24,6 @@ import { ALIGN_CLASS, GAP_CLASS, type LayoutAlign, type SeamScale } from "@sb-co
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/**
- * Cross-axis alignment applied once the row IS a row — mirrors {@link ALIGN_CLASS}
- * at the `@app-sm` CONTAINER step, for {@link SplitBaseProps.stackOnMobile}.
- *
- * `@app-*` (not `sm:`) on purpose: the app shell is a split column that a docked
- * rail can narrow, so a khung must respond to ITS CONTAINER's width, never to the
- * window's (see `globals.css` → `--container-app-*`, pinned to the viewport scale).
- */
-const SM_ALIGN_CLASS: Record<LayoutAlign, string> = {
-    start: "@app-sm:items-start",
-    center: "@app-sm:items-center",
-    end: "@app-sm:items-end",
-    stretch: "@app-sm:items-stretch",
-    baseline: "@app-sm:items-baseline",
-}
-
 /** Props for {@link Split}. */
 export interface SplitBaseProps {
     /**
@@ -59,20 +44,13 @@ export interface SplitBaseProps {
     /** Cross-axis alignment of the two sides. Default `center` (the split row's normal). */
     align?: LayoutAlign
     /**
-     * `true` → below the `@app-sm` container step the row becomes a COLUMN
-     * (`start` above `end`, both full width) and returns to a split row from
-     * `@app-sm` up. For rows whose trailing side is too wide for a narrow shell.
-     */
-    stackOnMobile?: boolean
-    /**
      * Anatomy tag cho CHÍNH khung này — để CHA badge nó như MỘT node (§11a.1).
      * Thiếu prop này thì khung không vào được cây Deps: dùng khung tầng `layouts` mà
      * panel không thấy nó thì coi như chưa dùng.
      */
     anatPart?: string
-    className?: string
-    /** `true` → tag this khung's parts with `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -85,9 +63,7 @@ const SplitBase = ({
     end,
     gap,
     align = "center",
-    stackOnMobile = false,
-    className,
-    showAnatomy = false,
+    classNames,
     anatPart,
 }: SplitBaseProps) => (
     <div
@@ -95,11 +71,9 @@ const SplitBase = ({
         className={cn(
             "flex w-full",
             GAP_CLASS[gap],
-            stackOnMobile
-                // Stacked first: full-width column, then the split row from `@app-sm`.
-                ? ["flex-col items-stretch", "@app-sm:flex-row @app-sm:justify-between", SM_ALIGN_CLASS[align]]
-                : ["flex-row justify-between", ALIGN_CLASS[align]],
-            className,
+            "flex-row justify-between",
+            ALIGN_CLASS[align],
+            classNames,
         )}
     >
         {/* No `data-anat-part` on these two wrappers (2026-07-28): `start`/`end` are CALLER

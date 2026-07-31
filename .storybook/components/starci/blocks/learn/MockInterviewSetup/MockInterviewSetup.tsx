@@ -162,114 +162,171 @@ const MockInterviewSetup = ({
 }: MockInterviewSetupProps) => {
     const showDesignStart = isDesignAvailable && onStartDesign != null
 
-    return (
-        <div data-anat-part={anatPart}>
-            <SurfaceCard label={label} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    {resumable != null ? (
-                        // A candidate who left mid-interview almost always means to come back.
-                        // Making them scroll past a start button to find their own session is
-                        // how a run gets abandoned twice — same reasoning as `QuizSetup`.
-                        <FeedbackCallout
-                            title={resumable.name}
-                            description={resumable.progressLabel}
-                            actionLabel="Tiếp tục"
-                            onAction={resumable.onResume}
-                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
-                        />
-                    ) : null}
+    // A candidate who left mid-interview almost always means to come back.
+    // Making them scroll past a start button to find their own session is
+    // how a run gets abandoned twice — same reasoning as `QuizSetup`.
+    const resumeBanner = resumable != null ? (
+        <FeedbackCallout
+            title={resumable.name}
+            description={resumable.progressLabel}
+            actionLabel="Tiếp tục"
+            onAction={resumable.onResume}
+            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+        />
+    ) : null
 
-                    {/* Interviewer identity — built from Avatar + Typography directly (not
-                        `UserCell`): the second line is a ROLE, not an `@handle`. */}
-                    <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
-                            <Avatar
-                                name={persona.name}
-                                src={persona.avatarSrc}
-                                seed={persona.name}
-                                size="md"
-                                isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
-                            />
-                        </div>
-                        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <Typography
-                                size="sm"
-                                weight="medium"
-                                isSkeleton={isSkeleton}
-                                text={persona.name}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                isSkeleton={isSkeleton}
-                                text={persona.role}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        </StackV>
-                    </StackH>
+    const personaDetails = (
+        <>
+            <Typography
+                size="sm"
+                weight="medium"
+                isSkeleton={isSkeleton}
+                text={persona.name}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <Typography
+                size="xs"
+                color="muted"
+                isSkeleton={isSkeleton}
+                text={persona.role}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+        </>
+    )
 
-                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="sm" weight="medium" text="Tên phiên" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <InputText
-                            value={sessionName}
-                            onValueChange={onSessionNameChange}
-                            placeholder="Ví dụ: Vòng 1 - Backend"
-                            ariaLabel="Tên phiên"
+    // Interviewer identity — built from Avatar + Typography directly (not
+    // `UserCell`): the second line is a ROLE, not an `@handle`.
+    const identityRow = (
+        <StackH
+            gap="related"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                        <Avatar
+                            name={persona.name}
+                            src={persona.avatarSrc}
+                            seed={persona.name}
+                            size="md"
                             isSkeleton={isSkeleton}
                             showAnatomy={showAnatomy}
                         />
-                    </StackV>
+                    </div>
+                    <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={personaDetails} />
+                </>
+            }
+        />
+    )
 
-                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="sm" weight="medium" text="Cấp độ" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <ButtonRadioGroup
-                            ariaLabel="Cấp độ phỏng vấn"
-                            value={tier}
-                            onChange={onTierChange}
-                            showAnatomy={showAnatomy}
-                            items={(Object.keys(TIER_LABEL) as Array<MockInterviewTier>).map((key) => ({
-                                value: key,
-                                content: TIER_LABEL[key],
-                            }))}
+    const sessionNameField = (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography size="sm" weight="medium" text="Tên phiên" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <InputText
+                        value={sessionName}
+                        onValueChange={onSessionNameChange}
+                        placeholder="Ví dụ: Vòng 1 - Backend"
+                        ariaLabel="Tên phiên"
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                </>
+            }
+        />
+    )
+
+    const tierField = (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography size="sm" weight="medium" text="Cấp độ" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <ButtonRadioGroup
+                        ariaLabel="Cấp độ phỏng vấn"
+                        value={tier}
+                        onChange={onTierChange}
+                        showAnatomy={showAnatomy}
+                        items={(Object.keys(TIER_LABEL) as Array<MockInterviewTier>).map((key) => ({
+                            value: key,
+                            content: TIER_LABEL[key],
+                        }))}
+                    />
+                </>
+            }
+        />
+    )
+
+    const actionsRow = (
+        <StackH
+            gap="related"
+            justify="end"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {showDesignStart ? (
+                        <Button
+                            label="Bắt đầu Design"
+                            variant="secondary"
+                            prefixIcon={FlowArrowIcon}
+                            onPress={onStartDesign}
+                            isPending={isPending && startingMode === "design"}
+                            isDisabled={isPending && startingMode !== "design"}
+                            anatPart={showAnatomy ? "Button" : undefined}
                         />
-                    </StackV>
+                    ) : null}
+                    <Button
+                        label="Bắt đầu Q&A"
+                        variant="primary"
+                        prefixIcon={PlayIcon}
+                        onPress={onStartQna}
+                        isPending={isPending && startingMode === "qna"}
+                        isDisabled={isPending && startingMode !== "qna"}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                </>
+            }
+        />
+    )
 
-                    {/* The error sits WITH the action row that failed. At the top of the
-                        card it would read as a problem with the whole form. */}
-                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {errorMessage != null ? (
-                            <FeedbackCallout
-                                status="danger"
-                                title={errorMessage}
-                                anatPart={showAnatomy ? "FeedbackCallout" : undefined}
-                            />
-                        ) : null}
-                        <StackH gap="related" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
-                            {showDesignStart ? (
-                                <Button
-                                    label="Bắt đầu Design"
-                                    variant="secondary"
-                                    prefixIcon={FlowArrowIcon}
-                                    onPress={onStartDesign}
-                                    isPending={isPending && startingMode === "design"}
-                                    isDisabled={isPending && startingMode !== "design"}
-                                    anatPart={showAnatomy ? "Button" : undefined}
-                                />
-                            ) : null}
-                            <Button
-                                label="Bắt đầu Q&A"
-                                variant="primary"
-                                prefixIcon={PlayIcon}
-                                onPress={onStartQna}
-                                isPending={isPending && startingMode === "qna"}
-                                isDisabled={isPending && startingMode !== "qna"}
-                                anatPart={showAnatomy ? "Button" : undefined}
-                            />
-                        </StackH>
-                    </StackV>
-                </StackV>
+    // The error sits WITH the action row that failed. At the top of the
+    // card it would read as a problem with the whole form.
+    const footer = (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {errorMessage != null ? (
+                        <FeedbackCallout
+                            status="danger"
+                            title={errorMessage}
+                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                        />
+                    ) : null}
+                    {actionsRow}
+                </>
+            }
+        />
+    )
+
+    const setupBody = (
+        <>
+            {resumeBanner}
+            {identityRow}
+            {sessionNameField}
+            {tierField}
+            {footer}
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <SurfaceCard label={label} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={setupBody} />
             </SurfaceCard>
         </div>
     )

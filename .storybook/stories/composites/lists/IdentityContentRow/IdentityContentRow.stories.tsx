@@ -32,12 +32,16 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": { tier: "atom", role: "byline text / body text", storyId: "atoms-text-typography-typography--plain" },
 }
 
-const Byline = (
-    <StackH gap="tight" wrap align="center">
+const bylineRow = (
+    <>
         <Typography size="sm" weight="medium" text="Minh Anh" />
         <SealCheckIcon weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
         <Typography size="xs" color="muted" text="2 giờ trước" />
-    </StackH>
+    </>
+)
+
+const Byline = (
+    <StackH gap="tight" wrap align="center" body={bylineRow} />
 )
 
 /** LEAF — avatar + byline + free-form content (here, a comment body). */
@@ -55,7 +59,7 @@ export const Default: Story = {
                     {
                         name: "byline + content children",
                         why: "Both seams (avatar↔column, byline↔children) are `tight` — a deliberate denser standalone treatment (thầy 2026-07-29), not a `src`-fidelity port.",
-                        code: `<IdentityContentRow avatarName="Minh Anh" avatarSeed="u1" byline={<StackH gap="tight">...</StackH>}>
+                        code: `<IdentityContentRow avatarName="Minh Anh" avatarSeed="u1" byline={<StackH gap="tight" body={<>…</>} />}>
     <Typography size="sm" text="Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from." />
 </IdentityContentRow>`,
                         render: (

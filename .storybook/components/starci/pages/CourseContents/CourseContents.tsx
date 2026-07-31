@@ -97,14 +97,19 @@ export interface CourseContentsLayoutProps {
  * from this state even though the content state declares it.
  */
 const CourseContentsEmpty = () => (
-    <Container anatPart="Container" size="md" padding="roomy">
-        <AsyncContentEmpty
-            anatPart="AsyncContentEmpty"
-            icon={StackIcon}
-            title="Khoá này chưa có bài học nào"
-            description="Nội dung đang được biên soạn — quay lại sau nhé."
-        />
-    </Container>
+    <Container
+        anatPart="Container"
+        size="md"
+        padding="roomy"
+        body={
+            <AsyncContentEmpty
+                anatPart="AsyncContentEmpty"
+                icon={StackIcon}
+                title="Khoá này chưa có bài học nào"
+                description="Nội dung đang được biên soạn — quay lại sau nhé."
+            />
+        }
+    />
 )
 /**
  * The `/learn/content` dashboard leaf.
@@ -121,6 +126,94 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     // hand, and it HAD DRIFTED: the mirror drew 2 blocks while the real tree has 5.
     // Now every block takes `isSkeleton` and draws its OWN resting shape (§12c), so
     // there's only ONE tree left — it can no longer drift.
+    //
+    // VERTICAL rhythm owned by ONE party (§10a). Two deliberately different steps:
+    // `8` separates the course IDENTITY cluster from the content below (seam between two
+    // REGIONS), `6` is the rhythm between blocks within the same region — §10
+    // "sections-wide vs related-tight", uniform spacing is forbidden.
+    const learnSection = (
+        <>
+            {/* Gate is for people who ALREADY BOUGHT (backend scopes the team by
+            is_enrolled). The old version gated it backwards, on `viewer === "trial"`. The
+            block hides itself, so the screen just hands over the facts. */}
+            <CourseTeamGate
+                anatPart="CourseTeamGate"
+                isEnrolled={viewer === "paid"}
+                isInTeam={false}
+                onJoin={() => {}}
+                isSkeleton={isSkeleton}
+            />
+            {viewer === "trial" ? (
+                <TrialConversionStrip
+                    anatPart="TrialConversionStrip"
+                    freeLessonsRemaining={9}
+                    price={SAMPLE_PRICE}
+                    onEnroll={() => {}}
+                    isSkeleton={isSkeleton}
+                />
+            ) : null}
+            {/* `hero`, NOT `plain` (teacher's call 2026-07-25): the frameless version
+            lets the progress bar drift outside, with nothing holding it in place so it
+            reads as belonging to the block below. The hero frame gathers title · meta ·
+            progress · CTA into ONE block — this is also the canonical case for
+            `HighlightCard`: a single "resume the in-progress session" highlight on the page.
+            NO `eyebrow` (teacher's eye check 2026-07-25): eyebrow exists to STAND IN for
+            the frame — a frameless block is what needs a light label line saying what this
+            cluster is. The hero already has a frame + arc ring + a "Continue" button, so
+            adding "Continue learning" would be saying it twice. */}
+            <ContinueLearning
+                anatPart="ContinueLearning"
+                lessonIndex={4}
+                lessonTitle="Viết Dockerfile tối ưu"
+                lessonsRead={8}
+                lessonsTotal={23}
+                challengesDone={2}
+                challengesTotal={9}
+                progressPercent={34}
+                onResume={() => {}}
+                isSkeleton={isSkeleton}
+            />
+            <LearnNudges
+                anatPart="LearnNudges"
+                items={NUDGES}
+                isSkeleton={isSkeleton}
+            />
+            <KeepGoingPath
+                anatPart="KeepGoingPath"
+                module={{ index: 2, name: "Container hoá" }}
+                contents={KEEP_GOING}
+                isSkeleton={isSkeleton}
+            />
+        </>
+    )
+
+    const courseContentsSections = (
+        <>
+            {/* 2026-07-26: dropped the old note "blocks have no `anatPart` yet so they need
+            a div wrapper" — all six blocks now take `anatPart` directly, no wrapper left. */}
+            {/* §11a — the badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
+            `PageHeader` composite lives INSIDE that block → drill down in CourseBrief's own
+            story, NOT here. Teacher's call 2026-07-25: this cluster carries business meaning
+            (read/unread) so it's a BLOCK, the screen no longer calls the composite directly. */}
+            <CourseBrief
+                anatPart="CourseBrief"
+                breadcrumbItems={[
+                    { key: "courses", label: "Khoá học", onPress: () => {} },
+                    { key: "course", label: "DevOps Mastery" },
+                ]}
+                title="DevOps Mastery"
+                description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
+                moduleCount={8}
+                hours={14}
+                learnerCount={2481}
+                isSkeleton={isSkeleton}
+            />
+            <StackV gap="section" anatPart="StackV" body={learnSection} />
+        </>
+    )
+
+    const courseContentsBody = <StackV gap="page" anatPart="StackV" body={courseContentsSections} />
+
     return (
         // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div` (§13):
         //   • `mx-auto max-w-3xl p-6` → `Container size="md" padding="roomy"` — `md` reads
@@ -131,90 +224,11 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
         //     `InsetScale` type means an off-scale value is now a TYPE ERROR at the call site,
         //     it can no longer slip through. This is exactly where the §10 rule gets enforced.
         // WARNING, 2026-07-27 — `gap` has been REMOVED from this call: `Container` only applies
-        // `gap` when using the `header`/`footer` slots; passing `children` directly means that
+        // `gap` when using the `header`/`footer` slots; passing `body` directly means that
         // prop is DROPPED SILENTLY. Measured consequence: the seam between `CourseBrief` and
         // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
         // card. Writing `gap="page"` with nothing to receive it is worse than not writing it at
         // all: reading the code makes it look like the rhythm was already set.
-        <Container size="md" padding="roomy" anatPart="Container">
-            {/* VERTICAL rhythm owned by ONE party (§10a). Two deliberately different steps:
-            `8` separates the course IDENTITY cluster from the content below (seam between two
-            REGIONS), `6` is the rhythm between blocks within the same region — §10
-            "sections-wide vs related-tight", uniform spacing is forbidden. */}
-            <StackV gap="page" anatPart="StackV">
-                {/* 2026-07-26: dropped the old note "blocks have no `anatPart` yet so they need
-            a div wrapper" — all six blocks now take `anatPart` directly, no wrapper left. */}
-                {/* §11a — the badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
-            `PageHeader` composite lives INSIDE that block → drill down in CourseBrief's own
-            story, NOT here. Teacher's call 2026-07-25: this cluster carries business meaning
-            (read/unread) so it's a BLOCK, the screen no longer calls the composite directly. */}
-                <CourseBrief
-                    anatPart="CourseBrief"
-                    breadcrumbItems={[
-                        { key: "courses", label: "Khoá học", onPress: () => {} },
-                        { key: "course", label: "DevOps Mastery" },
-                    ]}
-                    title="DevOps Mastery"
-                    description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
-                    moduleCount={8}
-                    hours={14}
-                    learnerCount={2481}
-                    isSkeleton={isSkeleton}
-                />
-                <StackV gap="section" anatPart="StackV">
-                    {/* Gate is for people who ALREADY BOUGHT (backend scopes the team by
-                is_enrolled). The old version gated it backwards, on `viewer === "trial"`. The
-                block hides itself, so the screen just hands over the facts. */}
-                    <CourseTeamGate
-                        anatPart="CourseTeamGate"
-                        isEnrolled={viewer === "paid"}
-                        isInTeam={false}
-                        onJoin={() => {}}
-                        isSkeleton={isSkeleton}
-                    />
-                    {viewer === "trial" ? (
-                        <TrialConversionStrip
-                            anatPart="TrialConversionStrip"
-                            freeLessonsRemaining={9}
-                            price={SAMPLE_PRICE}
-                            onEnroll={() => {}}
-                            isSkeleton={isSkeleton}
-                        />
-                    ) : null}
-                    {/* `hero`, NOT `plain` (teacher's call 2026-07-25): the frameless version
-                lets the progress bar drift outside, with nothing holding it in place so it
-                reads as belonging to the block below. The hero frame gathers title · meta ·
-                progress · CTA into ONE block — this is also the canonical case for
-                `HighlightCard`: a single "resume the in-progress session" highlight on the page.
-                NO `eyebrow` (teacher's eye check 2026-07-25): eyebrow exists to STAND IN for
-                the frame — a frameless block is what needs a light label line saying what this
-                cluster is. The hero already has a frame + arc ring + a "Continue" button, so
-                adding "Continue learning" would be saying it twice. */}
-                    <ContinueLearning
-                        anatPart="ContinueLearning"
-                        lessonIndex={4}
-                        lessonTitle="Viết Dockerfile tối ưu"
-                        lessonsRead={8}
-                        lessonsTotal={23}
-                        challengesDone={2}
-                        challengesTotal={9}
-                        progressPercent={34}
-                        onResume={() => {}}
-                        isSkeleton={isSkeleton}
-                    />
-                    <LearnNudges
-                        anatPart="LearnNudges"
-                        items={NUDGES}
-                        isSkeleton={isSkeleton}
-                    />
-                    <KeepGoingPath
-                        anatPart="KeepGoingPath"
-                        module={{ index: 2, name: "Container hoá" }}
-                        contents={KEEP_GOING}
-                        isSkeleton={isSkeleton}
-                    />
-                </StackV>
-            </StackV>
-        </Container>
+        <Container size="md" padding="roomy" anatPart="Container" body={courseContentsBody} />
     )
 }

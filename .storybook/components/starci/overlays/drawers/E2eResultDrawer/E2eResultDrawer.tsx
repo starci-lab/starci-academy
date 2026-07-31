@@ -134,15 +134,19 @@ const E2eResultDrawer = ({
     // root guard below: `isSkeleton` means "still fetching", the guard means
     // "fetch finished, genuinely nothing recorded".
     if (isSkeleton) {
+        const skeletonRows = (
+            <>
+                <HeroSkeleton className="h-4 w-64 max-w-full rounded" />
+                {Array.from({ length: skeletonCount }, (_unused, index) => (
+                    <HeroSkeleton key={index} className="h-11 w-full rounded-xl" />
+                ))}
+            </>
+        )
+
         return (
             <div data-anat-part={anatPart}>
                 <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} showAnatomy={showAnatomy}>
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV (root)" : undefined}>
-                        <HeroSkeleton className="h-4 w-64 max-w-full rounded" />
-                        {Array.from({ length: skeletonCount }, (_unused, index) => (
-                            <HeroSkeleton key={index} className="h-11 w-full rounded-xl" />
-                        ))}
-                    </StackV>
+                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV (root)" : undefined} body={skeletonRows} />
                 </DrawerShell>
             </div>
         )
@@ -161,6 +165,23 @@ const E2eResultDrawer = ({
 
     const items: Array<AccordionItem> = visible.map((flow) => {
         const isPass = flow.status === "passed"
+        const chipAndTitle = (
+            <>
+                <ChipBase
+                    tone={isPass ? "success" : "danger"}
+                    text={isPass ? "pass" : "fail"}
+                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "Chip" : undefined}
+                />
+                <Typography
+                    text={flow.title}
+                    size="sm"
+                    weight="medium"
+                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "Typography (flow title)" : undefined}
+                />
+            </>
+        )
         return {
             key: flow.id,
             title: (
@@ -168,21 +189,8 @@ const E2eResultDrawer = ({
                     gap="tight"
                     showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "StackH (flow title)" : undefined}
-                >
-                    <ChipBase
-                        tone={isPass ? "success" : "danger"}
-                        text={isPass ? "pass" : "fail"}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Chip" : undefined}
-                    />
-                    <Typography
-                        text={flow.title}
-                        size="sm"
-                        weight="medium"
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Typography (flow title)" : undefined}
-                    />
-                </StackH>
+                    body={chipAndTitle}
+                />
             ),
             content: flow.markdown ? (
                 <MarkdownContent
@@ -194,6 +202,34 @@ const E2eResultDrawer = ({
             ) : null,
         }
     })
+
+    const countFilterAndAccordion = (
+        <>
+            <Typography
+                text={`${passed}/${visible.length} luồng pass, log thật ghi lại từ lần chạy E2E trên backend và UI thật.`}
+                size="sm"
+                color="muted"
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "Typography (count)" : undefined}
+            />
+            {hasLangFilter ? (
+                <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
+                    <TabsBase
+                        items={langs.map((lang) => ({ key: lang, label: langLabel(lang) }))}
+                        selectedKey={activeLang}
+                        onSelectionChange={setActiveLang}
+                        ariaLabel="Ngôn ngữ E2E"
+                        variant="secondary"
+                        showAnatomy={showAnatomy}
+                    />
+                </div>
+            ) : null}
+            <Accordion
+                items={items}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
 
     return (
         <div data-anat-part={anatPart}>
@@ -208,31 +244,8 @@ const E2eResultDrawer = ({
                     gap="grouped"
                     showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "StackV (root)" : undefined}
-                >
-                    <Typography
-                        text={`${passed}/${visible.length} luồng pass, log thật ghi lại từ lần chạy E2E trên backend và UI thật.`}
-                        size="sm"
-                        color="muted"
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Typography (count)" : undefined}
-                    />
-                    {hasLangFilter ? (
-                        <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
-                            <TabsBase
-                                items={langs.map((lang) => ({ key: lang, label: langLabel(lang) }))}
-                                selectedKey={activeLang}
-                                onSelectionChange={setActiveLang}
-                                ariaLabel="Ngôn ngữ E2E"
-                                variant="secondary"
-                                showAnatomy={showAnatomy}
-                            />
-                        </div>
-                    ) : null}
-                    <Accordion
-                        items={items}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
+                    body={countFilterAndAccordion}
+                />
             </DrawerShell>
         </div>
     )

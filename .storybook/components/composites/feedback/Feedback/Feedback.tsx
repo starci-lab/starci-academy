@@ -301,16 +301,21 @@ const Empty = ({
                 </span>
             ) : null}
             {isPage ? (
-                <StackV gap="related">
-                    <div data-anat-part={showAnatomy ? "HeroTypography" : undefined}>
-                        <HeroTypography type="h4" weight="semibold" align="center">{title}</HeroTypography>
-                    </div>
-                    {description ? (
-                        <div data-anat-part={showAnatomy ? "Typography" : undefined}>
-                            <Typography size="sm" text={description} color="muted" />
-                        </div>
-                    ) : null}
-                </StackV>
+                <StackV
+                    gap="related"
+                    body={
+                        <>
+                            <div data-anat-part={showAnatomy ? "HeroTypography" : undefined}>
+                                <HeroTypography type="h4" weight="semibold" align="center">{title}</HeroTypography>
+                            </div>
+                            {description ? (
+                                <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                    <Typography size="sm" text={description} color="muted" />
+                                </div>
+                            ) : null}
+                        </>
+                    }
+                />
             ) : (
                 <>
                     <div data-anat-part={showAnatomy ? "Typography" : undefined}>

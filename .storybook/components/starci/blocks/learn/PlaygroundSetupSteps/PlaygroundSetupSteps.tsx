@@ -194,24 +194,35 @@ const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
         <div className="flex items-center justify-between border-b border-default px-3 py-2">
             <Typography size="xs" isSkeleton classNames={["w-1/4"]} />
         </div>
-        <StackV gap="related" padding="cozy">
-            {Array.from({ length: lines }, (_unused, index) => (
+        <StackV
+            gap="related"
+            padding="cozy"
+            body={Array.from({ length: lines }, (_unused, index) => (
                 <Typography key={index} size="xs" isSkeleton classNames={[index === lines - 1 ? "w-1/2" : "w-3/4"]} />
             ))}
-        </StackV>
+        />
     </div>
+)
+
+// Depends on the loop variable, so it cannot be hoisted to a const above the
+// return — a small named helper instead, in the style this file already uses.
+const renderOsTabSkeleton = (key: PlaygroundSetupOs) => (
+    <StackV
+        key={key}
+        gap="tight"
+        align="center"
+        body={
+            <>
+                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+                <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+            </>
+        }
+    />
 )
 
 /** Placeholder mirror of the OS tab row — label+underline bar per OS, matching `Tabs`'s own `secondary` skeleton shape. */
 const OsTabsSkeleton = () => (
-    <StackH gap="related">
-        {OS_ORDER.map((key) => (
-            <StackV key={key} gap="tight" align="center">
-                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-                <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-            </StackV>
-        ))}
-    </StackH>
+    <StackH gap="related" body={OS_ORDER.map(renderOsTabSkeleton)} />
 )
 
 /**
@@ -312,23 +323,36 @@ const PlaygroundSetupSteps = ({
             : null
 
     const pairStepBody: ReactNode = (
-        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-            <Typography
-                size="sm"
-                color="muted"
-                isSkeleton={isSkeleton}
-                text="Agent cục bộ là cầu nối để Playground điều khiển máy bạn — thiếu bước này, mọi lệnh ở các bước sau đều không chạy được."
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-            {isSkeleton
-                ? <CommandSkeleton />
-                : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
-            {!isSkeleton ? pairingCodeNote : null}
-            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                {renderVerifyButton()}
-                {renderRotateButton()}
-            </StackH>
-        </StackV>
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text="Agent cục bộ là cầu nối để Playground điều khiển máy bạn — thiếu bước này, mọi lệnh ở các bước sau đều không chạy được."
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    {isSkeleton
+                        ? <CommandSkeleton />
+                        : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
+                    {!isSkeleton ? pairingCodeNote : null}
+                    <StackH
+                        gap="related"
+                        wrap
+                        anatPart={showAnatomy ? "StackH" : undefined}
+                        body={
+                            <>
+                                {renderVerifyButton()}
+                                {renderRotateButton()}
+                            </>
+                        }
+                    />
+                </>
+            }
+        />
     )
 
     const engineLabel = engineName ?? "engine"
@@ -364,95 +388,140 @@ const PlaygroundSetupSteps = ({
     )
 
     const engineStepBody: ReactNode = (
-        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-            <Typography
-                size="sm"
-                color="muted"
-                isSkeleton={isSkeleton}
-                text={`${engineLabel} là nơi mô hình thực sự chạy trên máy bạn — cài xong thì Playground mới xử lý được các tác vụ AI cục bộ.`}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-            {osTabsRow}
-            {isSkeleton
-                ? <CommandSkeleton lines={3} />
-                : <MarkdownContent source={osGuides[os]} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
-            {!isSkeleton && engineReady && engineDetail ? (
-                <FeedbackCallout
-                    status="success"
-                    title={`${engineLabel} đã sẵn sàng`}
-                    description={engineDetail}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
-                />
-            ) : null}
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                {renderVerifyButton()}
-            </StackH>
-        </StackV>
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={`${engineLabel} là nơi mô hình thực sự chạy trên máy bạn — cài xong thì Playground mới xử lý được các tác vụ AI cục bộ.`}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    {osTabsRow}
+                    {isSkeleton
+                        ? <CommandSkeleton lines={3} />
+                        : <MarkdownContent source={osGuides[os]} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
+                    {!isSkeleton && engineReady && engineDetail ? (
+                        <FeedbackCallout
+                            status="success"
+                            title={`${engineLabel} đã sẵn sàng`}
+                            description={engineDetail}
+                            showAnatomy={showAnatomy}
+                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                        />
+                    ) : null}
+                    <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={renderVerifyButton()} />
+                </>
+            }
+        />
     )
 
     const genModelCommand = recommendedGenModel != null ? bashBlock(`ollama pull ${recommendedGenModel}`) : null
     const embedModelCommand = bashBlock(`ollama pull ${EMBEDDING_MODEL_NAME}`)
     const modelsReady = genModelReady && embedModelReady
 
+    const genModelSection = genModelCommand != null ? (
+        <StackV
+            gap="tight"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        text={`Model sinh — ${recommendedGenModel}`}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    <MarkdownContent source={genModelCommand} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                </>
+            }
+        />
+    ) : null
+
+    const embedModelSection = (
+        <StackV
+            gap="tight"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        text={`Model embedding — ${EMBEDDING_MODEL_NAME}`}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    <MarkdownContent source={embedModelCommand} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                </>
+            }
+        />
+    )
+
+    const modelsCommandsSection = (
+        <StackV
+            gap="grouped"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    {genModelSection}
+                    {embedModelSection}
+                </>
+            }
+        />
+    )
+
+    const modelsSkeletonCommands = (
+        <StackV
+            gap="related"
+            body={
+                <>
+                    <CommandSkeleton />
+                    <CommandSkeleton />
+                </>
+            }
+        />
+    )
+
     const modelsStepBody: ReactNode = (
-        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-            <Typography
-                size="sm"
-                color="muted"
-                isSkeleton={isSkeleton}
-                text="Model cần tải về máy trước khi dùng — đúng cỡ theo VRAM giúp máy chạy mượt, không treo hay tràn bộ nhớ."
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-            {isSkeleton ? (
-                <StackV gap="related">
-                    <CommandSkeleton />
-                    <CommandSkeleton />
-                </StackV>
-            ) : deviceKnown === false ? (
-                <FeedbackCallout
-                    status="warning"
-                    title="Chưa xác định được cấu hình máy"
-                    description="Cài xong engine rồi bấm Kiểm tra lại — Playground sẽ dò VRAM và gợi ý đúng cỡ model."
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
-                />
-            ) : modelsReady ? (
-                <FeedbackCallout
-                    status="success"
-                    title="Đã có đủ model"
-                    description="Model sinh văn bản và model embedding đều đã tải xong trên máy bạn."
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
-                />
-            ) : (
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                    {genModelCommand != null ? (
-                        <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                text={`Model sinh — ${recommendedGenModel}`}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            <MarkdownContent source={genModelCommand} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
-                        </StackV>
-                    ) : null}
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            text={`Model embedding — ${EMBEDDING_MODEL_NAME}`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text="Model cần tải về máy trước khi dùng — đúng cỡ theo VRAM giúp máy chạy mượt, không treo hay tràn bộ nhớ."
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    {isSkeleton ? (
+                        modelsSkeletonCommands
+                    ) : deviceKnown === false ? (
+                        <FeedbackCallout
+                            status="warning"
+                            title="Chưa xác định được cấu hình máy"
+                            description="Cài xong engine rồi bấm Kiểm tra lại — Playground sẽ dò VRAM và gợi ý đúng cỡ model."
+                            showAnatomy={showAnatomy}
+                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
                         />
-                        <MarkdownContent source={embedModelCommand} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
-                    </StackV>
-                </StackV>
-            )}
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                {renderVerifyButton()}
-            </StackH>
-        </StackV>
+                    ) : modelsReady ? (
+                        <FeedbackCallout
+                            status="success"
+                            title="Đã có đủ model"
+                            description="Model sinh văn bản và model embedding đều đã tải xong trên máy bạn."
+                            showAnatomy={showAnatomy}
+                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                        />
+                    ) : (
+                        modelsCommandsSection
+                    )}
+                    <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={renderVerifyButton()} />
+                </>
+            }
+        />
     )
 
     const agentStatus: StepStatus = agentReady ? "ready" : "pending"
@@ -467,41 +536,54 @@ const PlaygroundSetupSteps = ({
         steps.push({ key: "models", title: "3. Tải model theo cấu hình máy", status: modelsStatus, body: modelsStepBody })
     }
 
-    return (
-        <StackV gap="grouped" anatPart={anatPart} showAnatomy={showAnatomy}>
-            {steps.map((step) => (
-                <SurfaceCard
-                    key={step.key}
-                    label={step.title}
-                    action={
-                        <EnumChip
-                            value={step.status}
-                            map={STEP_STATUS_MAP}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "EnumChip" : undefined}
-                        />
-                    }
+    // Depends on the loop variable, so it cannot be hoisted to a const above the
+    // return — a small named helper instead, in the style this file already uses.
+    const renderStep = (step: StepEntry) => (
+        <SurfaceCard
+            key={step.key}
+            label={step.title}
+            action={
+                <EnumChip
+                    value={step.status}
+                    map={STEP_STATUS_MAP}
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    showAnatomy={showAnatomy}
-                >
-                    {step.body}
-                </SurfaceCard>
-            ))}
-            {onRefreshPairingCode ? (
-                <FeedbackConfirm
-                    isOpen={isRotateConfirmOpen}
-                    onOpenChange={setRotateConfirmOpen}
-                    title="Làm mã mới trong khi agent đang kết nối?"
-                    description="Agent hiện đang dùng mã cũ để giữ kết nối — làm mã mới sẽ ngắt phiên hiện tại cho tới khi bạn dán mã mới vào agent."
-                    confirmLabel="Làm mã mới"
-                    cancelLabel="Để sau"
-                    onConfirm={handleConfirmRotate}
-                    isConfirming={isRefreshingPairingCode}
-                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "EnumChip" : undefined}
                 />
-            ) : null}
-        </StackV>
+            }
+            isSkeleton={isSkeleton}
+            anatPart={showAnatomy ? "SurfaceCard" : undefined}
+            showAnatomy={showAnatomy}
+        >
+            {step.body}
+        </SurfaceCard>
+    )
+
+    const rotateConfirm = onRefreshPairingCode ? (
+        <FeedbackConfirm
+            isOpen={isRotateConfirmOpen}
+            onOpenChange={setRotateConfirmOpen}
+            title="Làm mã mới trong khi agent đang kết nối?"
+            description="Agent hiện đang dùng mã cũ để giữ kết nối — làm mã mới sẽ ngắt phiên hiện tại cho tới khi bạn dán mã mới vào agent."
+            confirmLabel="Làm mã mới"
+            cancelLabel="Để sau"
+            onConfirm={handleConfirmRotate}
+            isConfirming={isRefreshingPairingCode}
+            showAnatomy={showAnatomy}
+        />
+    ) : null
+
+    return (
+        <StackV
+            gap="grouped"
+            anatPart={anatPart}
+            showAnatomy={showAnatomy}
+            body={
+                <>
+                    {steps.map(renderStep)}
+                    {rotateConfirm}
+                </>
+            }
+        />
     )
 }
 

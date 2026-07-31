@@ -26,7 +26,7 @@ const SectionCard = ({
 }) => (
     <Card className={cn(className)} data-anat-part={anatPart}>
         <CardContent>
-            <StackV gap="grouped">{children}</StackV>
+            <StackV gap="grouped" body={children} />
         </CardContent>
     </Card>
 )
@@ -92,28 +92,31 @@ export const MetricCard = ({
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
         <SectionCard className={cn(className)} anatPart={anatPart}>
-            <StackV gap="related">
-                {isSkeleton ? (
-                    <>
-                        <HeroSkeleton className="h-6 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        <HeroSkeleton className="h-4 w-24 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        <HeroSkeleton className="h-3 w-20 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                    </>
-                ) : (
-                    <>
-                        {/* Primary metric value — large and visually prominent */}
-                        <Typography size="h4" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={value} />
+            <StackV
+                gap="related"
+                body={
+                    isSkeleton ? (
+                        <>
+                            <HeroSkeleton className="h-6 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                            <HeroSkeleton className="h-4 w-24 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                            <HeroSkeleton className="h-3 w-20 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        </>
+                    ) : (
+                        <>
+                            {/* Primary metric value — large and visually prominent */}
+                            <Typography size="h4" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={value} />
 
-                        {/* Descriptive label — body-sm foreground, the prominent line */}
-                        <Typography size="sm" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={label} />
+                            {/* Descriptive label — body-sm foreground, the prominent line */}
+                            <Typography size="sm" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={label} />
 
-                        {/* Optional hint — small + muted footnote, DISTINCT from the label */}
-                        {hint ? (
-                            <Typography size="xs" color="muted" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={hint} />
-                        ) : null}
-                    </>
-                )}
-            </StackV>
+                            {/* Optional hint — small + muted footnote, DISTINCT from the label */}
+                            {hint ? (
+                                <Typography size="xs" color="muted" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={hint} />
+                            ) : null}
+                        </>
+                    )
+                }
+            />
         </SectionCard>
     )
 }

@@ -116,30 +116,42 @@ const Header = ({
     const titleSize = TITLE_SIZE[level]
     const descriptionSize = DESCRIPTION_SIZE[level]
     const eyebrowSize = EYEBROW_SIZE[level]
+    // eyebrow ↔ title ↔ description are ONE text unit → tight gap="tight" (§10b
+    // "inside a lower-tier component"), not the grouped gap="grouped" used BETWEEN regions.
+    const titleBlock = (
+        <>
+            {eyebrow != null ? (
+                <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate />
+                </span>
+            ) : null}
+            <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} />
+            </span>
+            {description != null ? (
+                <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography size={descriptionSize} text={description} color="muted" />
+                </span>
+            ) : null}
+        </>
+    )
     return (
         // align="start": a 2-line title block keeps the action anchored at the top.
-        <StackH align="start" justify="between" gap="grouped" className={className} anatPart={anatPart}>
-            {/* eyebrow ↔ title ↔ description are ONE text unit → tight gap="tight" (§10b
-                "inside a lower-tier component"), not the grouped gap="grouped" used BETWEEN regions. */}
-            <StackV gap="tight" className="min-w-0">
-                {eyebrow != null ? (
-                    <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
-                        <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate />
-                    </span>
-                ) : null}
-                <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
-                    <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} />
-                </span>
-                {description != null ? (
-                    <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
-                        <Typography size={descriptionSize} text={description} color="muted" />
-                    </span>
-                ) : null}
-            </StackV>
-            {action != null ? (
-                <div className="shrink-0">{action}</div>
-            ) : null}
-        </StackH>
+        <StackH
+            align="start"
+            justify="between"
+            gap="grouped"
+            className={className}
+            anatPart={anatPart}
+            body={
+                <>
+                    <StackV gap="tight" classNames={["min-w-0"]} body={titleBlock} />
+                    {action != null ? (
+                        <div className="shrink-0">{action}</div>
+                    ) : null}
+                </>
+            }
+        />
     )
 }
 

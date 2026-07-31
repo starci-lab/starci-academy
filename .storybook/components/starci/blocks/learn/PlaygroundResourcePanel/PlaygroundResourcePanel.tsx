@@ -147,8 +147,10 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup, showAnatomy: boole
         />
     ),
     body: (
-        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-            {group.resources.map((resource, index) => (
+        <StackV
+            gap="flush"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={group.resources.map((resource, index) => (
                 <ListRow
                     key={`${group.kind}:${resource.name}`}
                     title={resource.name}
@@ -163,7 +165,7 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup, showAnatomy: boole
                     showAnatomy={showAnatomy}
                 />
             ))}
-        </StackV>
+        />
     ),
 })
 
@@ -208,31 +210,49 @@ const PlaygroundResourcePanel = ({
         />
     )
 
-    return (
-        <StackV gap="grouped" anatPart={anatPart}>
-            <StackH gap="related" justify="between" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                <Typography
-                    size="sm"
-                    weight="medium"
-                    prefixIcon={CubeIcon}
-                    text={PANEL_LABEL}
-                    showAnatomy={showAnatomy}
-                />
-                {/* A count of zero (or no snapshot at all) is not news — see `ContentModeNav`'s
-                    "a count of zero is not news" convention — so it only appears once there's
-                    something real to count. */}
-                {hasResources ? (
+    const headerRow = (
+        <StackH
+            gap="related"
+            justify="between"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
                     <Typography
-                        size="xs"
-                        color="muted"
-                        tabularNums
-                        text={String(resources.length)}
+                        size="sm"
+                        weight="medium"
+                        prefixIcon={CubeIcon}
+                        text={PANEL_LABEL}
                         showAnatomy={showAnatomy}
                     />
-                ) : null}
-            </StackH>
-            {body}
-        </StackV>
+                    {/* A count of zero (or no snapshot at all) is not news — see `ContentModeNav`'s
+                        "a count of zero is not news" convention — so it only appears once there's
+                        something real to count. */}
+                    {hasResources ? (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            tabularNums
+                            text={String(resources.length)}
+                            showAnatomy={showAnatomy}
+                        />
+                    ) : null}
+                </>
+            }
+        />
+    )
+
+    return (
+        <StackV
+            gap="grouped"
+            anatPart={anatPart}
+            body={
+                <>
+                    {headerRow}
+                    {body}
+                </>
+            }
+        />
     )
 }
 

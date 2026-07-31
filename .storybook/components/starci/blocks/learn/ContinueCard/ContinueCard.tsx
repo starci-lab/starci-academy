@@ -115,60 +115,72 @@ const CardBody = ({
     isSkeleton = false,
     showAnatomy,
     cta,
-}: ContinueCardDataProps & { cta: React.ReactNode }) => (
-    <>
-        {/* ⭐ 2026-07-27 (teacher: "layout is built from layouts components"): this used to
-            be `<div className="relative flex items-center gap-3">` ⊃ `<div className="flex
-            min-w-0 flex-1 flex-col gap-2">` hand-rolled.
-            The outer row = ONE horizontal track ⇒ `StackH` (children are ARBITRARY, not a
-            repeating list so NOT `Cluster` — §13b). The inner column = a vertical track ⇒ `StackV`.
-            `min-w-0 flex-1` stays in `className`: that's its PLACEMENT within the parent row
-            (§14d.1 allows `className` for placement), not the scaffold's own shape. */}
-        <StackH gap="grouped" align="center" className="relative" anatPart={showAnatomy ? "StackH" : undefined}>
-            <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Typography weight="medium" truncate anatPart={showAnatomy ? "Typography" : undefined} isSkeleton={isSkeleton} text={title} />
-                {isSkeleton ? (
-                    // `ListMeta` (the scaffold the live branch uses here) has no `isSkeleton`
-                    // yet and sits outside this round's boundary — CardBody calls that scaffold
-                    // DIRECTLY so it builds ONE shimmer bar in place of the meta/subtitle row
-                    // (the real shape always has EXACTLY ONE of the two) using atom `Typography`.
-                    <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                ) : meta?.length || timeLeft ? (
-                    <ListMeta
-                        items={meta ?? []}
-                        anatPart={showAnatomy ? "ListMeta" : undefined}
-                        chip={
-                            timeLeft ? (
-                                // Same kind of information (time left) ⇒ the same element in
-                                // EVERY case; only the TONE escalates: `default` while time
-                                // remains, `warning` when it's about to run out.
-                                <Chip
-                                    tone={urgent ? "warning" : "default"}
-                                    anatPart={showAnatomy ? "Chip" : undefined}
-                                    text={timeLeft}
-                                />
-                            ) : undefined
-                        }
-                    />
-                ) : subtitle ? (
-                    <Typography size="xs" color="muted" truncate anatPart={showAnatomy ? "Typography" : undefined} text={subtitle} />
-                ) : null}
-            </StackV>
-        </StackH>
-        {/* Progress SITS right under the text cluster, BEFORE the button (teacher
-        eyeballed 2026-07-25): where am I → how much progress → what's next. Put it
-        after the CTA and it reads as detached from the card, misread as belonging to the block below. */}
-        {value === undefined ? null : isSkeleton ? (
-            // `ProgressMeter` (scaffold) has no `isSkeleton` yet and sits outside this
-            // round's boundary — CardBody calls that scaffold directly so it builds a
-            // track shimmer bar matching the real track height (`h-1`, see `ProgressMeter.tsx`).
-            <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-        ) : (
-            <ProgressMeter value={value} max={max} anatPart={showAnatomy ? "ProgressMeter" : undefined} />
-        )}
-        <div className="relative">{cta}</div>
-    </>
-)
+}: ContinueCardDataProps & { cta: React.ReactNode }) => {
+    const titleAndMeta = (
+        <>
+            <Typography weight="medium" truncate anatPart={showAnatomy ? "Typography" : undefined} isSkeleton={isSkeleton} text={title} />
+            {isSkeleton ? (
+                // `ListMeta` (the scaffold the live branch uses here) has no `isSkeleton`
+                // yet and sits outside this round's boundary — CardBody calls that scaffold
+                // DIRECTLY so it builds ONE shimmer bar in place of the meta/subtitle row
+                // (the real shape always has EXACTLY ONE of the two) using atom `Typography`.
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : meta?.length || timeLeft ? (
+                <ListMeta
+                    items={meta ?? []}
+                    anatPart={showAnatomy ? "ListMeta" : undefined}
+                    chip={
+                        timeLeft ? (
+                            // Same kind of information (time left) ⇒ the same element in
+                            // EVERY case; only the TONE escalates: `default` while time
+                            // remains, `warning` when it's about to run out.
+                            <Chip
+                                tone={urgent ? "warning" : "default"}
+                                anatPart={showAnatomy ? "Chip" : undefined}
+                                text={timeLeft}
+                            />
+                        ) : undefined
+                    }
+                />
+            ) : subtitle ? (
+                <Typography size="xs" color="muted" truncate anatPart={showAnatomy ? "Typography" : undefined} text={subtitle} />
+            ) : null}
+        </>
+    )
+
+    return (
+        <>
+            {/* ⭐ 2026-07-27 (teacher: "layout is built from layouts components"): this used to
+                be `<div className="relative flex items-center gap-3">` ⊃ `<div className="flex
+                min-w-0 flex-1 flex-col gap-2">` hand-rolled.
+                The outer row = ONE horizontal track ⇒ `StackH` (children are ARBITRARY, not a
+                repeating list so NOT `Cluster` — §13b). The inner column = a vertical track ⇒ `StackV`.
+                `min-w-0 flex-1` stays in `className`: that's its PLACEMENT within the parent row
+                (§14d.1 allows `className` for placement), not the scaffold's own shape. */}
+            <StackH
+                gap="grouped"
+                align="center"
+                className="relative"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={titleAndMeta} />
+                }
+            />
+            {/* Progress SITS right under the text cluster, BEFORE the button (teacher
+            eyeballed 2026-07-25): where am I → how much progress → what's next. Put it
+            after the CTA and it reads as detached from the card, misread as belonging to the block below. */}
+            {value === undefined ? null : isSkeleton ? (
+                // `ProgressMeter` (scaffold) has no `isSkeleton` yet and sits outside this
+                // round's boundary — CardBody calls that scaffold directly so it builds a
+                // track shimmer bar matching the real track height (`h-1`, see `ProgressMeter.tsx`).
+                <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            ) : (
+                <ProgressMeter value={value} max={max} anatPart={showAnatomy ? "ProgressMeter" : undefined} />
+            )}
+            <div className="relative">{cta}</div>
+        </>
+    )
+}
 /**
  * `.Hero` — ONE "continue the session in progress" highlight on a surface.
  *

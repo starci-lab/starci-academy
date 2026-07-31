@@ -278,104 +278,120 @@ const FlashcardReviewPage = ({
     onCardNext,
     isSessionSkeleton = false,
     showAnatomy = false,
-}: FlashcardReviewPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
+}: FlashcardReviewPageProps) => {
+    const overviewDeck = (
+        <>
+            <FlashcardDueHero
+                anatPart="FlashcardDueHero"
+                dueCount={dueCount}
+                dueReviewCount={dueReviewCount}
+                newCount={dueNewCount}
+                resume={dueResume}
+                onStart={onDueStart}
+                isStarting={isDueStarting}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <FlashcardMasteryStrip
+                anatPart="FlashcardMasteryStrip"
+                mastered={masteryMastered}
+                total={masteryTotal}
+                learning={masteryLearning}
+                newCount={masteryNewCount}
+                streak={masteryStreak}
+                retention={masteryRetention}
+                totalReviewed={masteryTotalReviewed}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <FlashcardDeckList
+                anatPart="FlashcardDeckList"
+                decks={decks}
+                query={deckQuery}
+                onQueryChange={onDeckQueryChange}
+                view={deckView}
+                onViewChange={onDeckViewChange}
+                page={deckPage}
+                totalPages={deckTotalPages}
+                onPageChange={onDeckPageChange}
+                onSelectDeck={onSelectDeck}
+                ctaLabel={deckCtaLabel}
+                showProgress={showDeckProgress}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const overviewSection = (
+        <>
+            <FlashcardModeSwitch
+                anatPart="FlashcardModeSwitch"
+                mode={flashcardMode}
+                onModeChange={onFlashcardModeChange}
+                ariaLabel={flashcardModeAriaLabel}
+                showAnatomy={showAnatomy}
+            />
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={overviewDeck} />
+        </>
+    )
+
+    const sessionSection = (
+        <>
+            <WorkSessionHeader
+                anatPart="WorkSessionHeader"
+                backLabel={sessionBackLabel}
+                onBack={onSessionBack}
+                title={sessionTitle}
+                counter={sessionCounter}
+                timeLeft={sessionTimeLeft}
+                total={sessionTotal}
+                current={sessionCurrent}
+                doneSteps={sessionDoneSteps}
+                onStepPress={onSessionStepPress}
+                finishLabel={sessionFinishLabel}
+                onFinish={onSessionFinish}
+                showAnatomy={showAnatomy}
+            />
+            <FlashcardStudyCard
+                anatPart="FlashcardStudyCard"
+                question={cardQuestion}
+                levelLabel={cardLevelLabel}
+                tags={cardTags}
+                revealed={cardRevealed}
+                onReveal={onCardReveal}
+                answer={cardAnswer}
+                explanation={cardExplanation}
+                isLocked={cardIsLocked}
+                onUnlock={onCardUnlock}
+                ratingOptions={cardRatingOptions}
+                onRate={onCardRate}
+                isRatingPending={isCardRatingPending}
+                isFirst={isCardFirst}
+                isLast={isCardLast}
+                onPrev={onCardPrev}
+                onNext={onCardNext}
+                isSkeleton={isSessionSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const reviewPhases = (
+        <>
             {phase === "overview" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <FlashcardModeSwitch
-                        anatPart="FlashcardModeSwitch"
-                        mode={flashcardMode}
-                        onModeChange={onFlashcardModeChange}
-                        ariaLabel={flashcardModeAriaLabel}
-                        showAnatomy={showAnatomy}
-                    />
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <FlashcardDueHero
-                            anatPart="FlashcardDueHero"
-                            dueCount={dueCount}
-                            dueReviewCount={dueReviewCount}
-                            newCount={dueNewCount}
-                            resume={dueResume}
-                            onStart={onDueStart}
-                            isStarting={isDueStarting}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <FlashcardMasteryStrip
-                            anatPart="FlashcardMasteryStrip"
-                            mastered={masteryMastered}
-                            total={masteryTotal}
-                            learning={masteryLearning}
-                            newCount={masteryNewCount}
-                            streak={masteryStreak}
-                            retention={masteryRetention}
-                            totalReviewed={masteryTotalReviewed}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <FlashcardDeckList
-                            anatPart="FlashcardDeckList"
-                            decks={decks}
-                            query={deckQuery}
-                            onQueryChange={onDeckQueryChange}
-                            view={deckView}
-                            onViewChange={onDeckViewChange}
-                            page={deckPage}
-                            totalPages={deckTotalPages}
-                            onPageChange={onDeckPageChange}
-                            onSelectDeck={onSelectDeck}
-                            ctaLabel={deckCtaLabel}
-                            showProgress={showDeckProgress}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                    </StackV>
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={overviewSection} />
             ) : null}
 
             {phase === "session" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <WorkSessionHeader
-                        anatPart="WorkSessionHeader"
-                        backLabel={sessionBackLabel}
-                        onBack={onSessionBack}
-                        title={sessionTitle}
-                        counter={sessionCounter}
-                        timeLeft={sessionTimeLeft}
-                        total={sessionTotal}
-                        current={sessionCurrent}
-                        doneSteps={sessionDoneSteps}
-                        onStepPress={onSessionStepPress}
-                        finishLabel={sessionFinishLabel}
-                        onFinish={onSessionFinish}
-                        showAnatomy={showAnatomy}
-                    />
-                    <FlashcardStudyCard
-                        anatPart="FlashcardStudyCard"
-                        question={cardQuestion}
-                        levelLabel={cardLevelLabel}
-                        tags={cardTags}
-                        revealed={cardRevealed}
-                        onReveal={onCardReveal}
-                        answer={cardAnswer}
-                        explanation={cardExplanation}
-                        isLocked={cardIsLocked}
-                        onUnlock={onCardUnlock}
-                        ratingOptions={cardRatingOptions}
-                        onRate={onCardRate}
-                        isRatingPending={isCardRatingPending}
-                        isFirst={isCardFirst}
-                        isLast={isCardLast}
-                        onPrev={onCardPrev}
-                        onNext={onCardNext}
-                        isSkeleton={isSessionSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={sessionSection} />
             ) : null}
-        </StackV>
-    </Container>
-)
+        </>
+    )
+
+    const reviewBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={reviewPhases} />
+
+    return <Container size="md" padding="roomy" body={reviewBody} />
+}
 
 export { FlashcardReviewPage }

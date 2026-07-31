@@ -113,23 +113,27 @@ interface FooterLinkColumnProps {
  * (same convention `Navbar`'s internal `NavbarLanguageMenu`/`NavbarThemeSwitch`
  * use) — its own `StackV`/`Typography`/`Link` parts are tagged directly.
  */
-const FooterLinkColumn = ({ title, links, showAnatomy }: FooterLinkColumnProps) => (
-    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-        <Typography size="sm" weight="bold" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
-        <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-            {links.map((link) => (
-                <HeroUILink
-                    key={link.id}
-                    onPress={link.onPress}
-                    className="w-fit cursor-pointer text-sm text-muted transition-colors hover:text-foreground"
-                    data-anat-part={showAnatomy ? "Link" : undefined}
-                >
-                    {link.label}
-                </HeroUILink>
-            ))}
-        </StackV>
-    </StackV>
-)
+const FooterLinkColumn = ({ title, links, showAnatomy }: FooterLinkColumnProps) => {
+    const rows = links.map((link) => (
+        <HeroUILink
+            key={link.id}
+            onPress={link.onPress}
+            className="w-fit cursor-pointer text-sm text-muted transition-colors hover:text-foreground"
+            data-anat-part={showAnatomy ? "Link" : undefined}
+        >
+            {link.label}
+        </HeroUILink>
+    ))
+
+    const column = (
+        <>
+            <Typography size="sm" weight="bold" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={rows} />
+        </>
+    )
+
+    return <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={column} />
+}
 
 /**
  * The marketing site footer. See the file header for the static-vs-prop copy
@@ -149,93 +153,127 @@ const Footer = ({
 }: FooterProps) => {
     const year = new Date().getFullYear()
 
+    const wordmark = (
+        <>
+            <div className="text-sm font-semibold leading-none text-foreground">StarCi</div>
+            <div className="text-[8px] uppercase leading-none text-muted">Academy</div>
+        </>
+    )
+
+    // brand mark + wordmark, inlined (see file header: BrandLockup not
+    // promoted). `StackH`/`StackV` (not a hand-rolled flex span) per §13z —
+    // spacing is words. `Logo` itself stays unbadged here, same as `Navbar`'s
+    // own brand-mark span (not in either block's ANNOTATE map).
+    const brandMark = (
+        <>
+            <Logo size="footer" />
+            <StackV gap="flush" className="hidden @app-md:flex" anatPart={showAnatomy ? "StackV" : undefined} body={wordmark} />
+        </>
+    )
+
+    const socialLinks = socials.map((social) => {
+        const Icon = social.icon
+        return (
+            <HeroUILink
+                key={social.id}
+                onPress={social.onPress}
+                aria-label={social.label}
+                className="text-muted transition-colors hover:text-foreground"
+                data-anat-part={showAnatomy ? "Link" : undefined}
+            >
+                <Icon className="size-5" aria-hidden />
+            </HeroUILink>
+        )
+    })
+
+    const brandColumn = (
+        <>
+            <StackH gap="flush" classNames={["w-fit", "self-start"]} anatPart={showAnatomy ? "StackH" : undefined} body={brandMark} />
+            <Typography
+                size="sm"
+                color="muted"
+                text="Học bằng cách tự tay dựng hệ thống thật, đủ trình cho mọi vòng phỏng vấn kỹ thuật."
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={socialLinks} />
+        </>
+    )
+
+    const linkColumns = (
+        <>
+            <FooterLinkColumn title="Khám phá" links={exploreLinks} showAnatomy={showAnatomy} />
+            <FooterLinkColumn title="Hỗ trợ" links={supportLinks} showAnatomy={showAnatomy} />
+        </>
+    )
+
+    // top region: brand + tagline + socials (left) · two link columns (right)
+    const topRegion = (
+        <>
+            <StackV gap="grouped" className="max-w-sm" anatPart={showAnatomy ? "StackV" : undefined} body={brandColumn} />
+            <StackH gap="page" wrap anatPart={showAnatomy ? "StackH" : undefined} body={linkColumns} />
+        </>
+    )
+
+    const legalLinks = (
+        <>
+            <HeroUILink
+                onPress={onTermsPress}
+                className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
+                data-anat-part={showAnatomy ? "Link" : undefined}
+            >
+                Điều khoản
+            </HeroUILink>
+            <HeroUILink
+                onPress={onPrivacyPress}
+                className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
+                data-anat-part={showAnatomy ? "Link" : undefined}
+            >
+                Bảo mật
+            </HeroUILink>
+        </>
+    )
+
+    // bottom bar: copyright + credit (left) · legal stubs (right)
+    const bottomBar = (
+        <>
+            <Typography
+                size="xs"
+                color="muted"
+                text={`© ${year} StarCi Academy · Được phát triển bởi Nguyễn Văn Tự Cường`}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={legalLinks} />
+        </>
+    )
+
+    const sections = (
+        <>
+            <StackH
+                gap="page"
+                justify="between"
+                wrap
+                className="flex-col @app-md:flex-row"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={topRegion}
+            />
+            <StackH
+                gap="related"
+                justify="between"
+                wrap
+                className="flex-col items-start @app-sm:flex-row @app-sm:items-center"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={bottomBar}
+            />
+        </>
+    )
+
+    const footerBody = (
+        <StackV gap="section" divider showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={sections} />
+    )
+
     return (
         <footer data-anat-part={anatPart} className={cn("border-t border-default bg-surface", className)}>
-            <Container size="xl" padding="roomy" anatPart={showAnatomy ? "Container" : undefined}>
-                <StackV gap="section" divider showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined}>
-                    {/* top region: brand + tagline + socials (left) · two link columns (right) */}
-                    <StackH
-                        gap="page"
-                        justify="between"
-                        wrap
-                        className="flex-col @app-md:flex-row"
-                        anatPart={showAnatomy ? "StackH" : undefined}
-                    >
-                        <StackV gap="grouped" className="max-w-sm" anatPart={showAnatomy ? "StackV" : undefined}>
-                            {/* brand mark + wordmark, inlined (see file header: BrandLockup not
-                                promoted). `StackH`/`StackV` (not a hand-rolled flex span) per §13z —
-                                spacing is words. `Logo` itself stays unbadged here, same as `Navbar`'s
-                                own brand-mark span (not in either block's ANNOTATE map). */}
-                            <StackH gap="flush" className="w-fit self-start" anatPart={showAnatomy ? "StackH" : undefined}>
-                                <Logo size="footer" />
-                                <StackV gap="flush" className="hidden @app-md:flex" anatPart={showAnatomy ? "StackV" : undefined}>
-                                    <div className="text-sm font-semibold leading-none text-foreground">StarCi</div>
-                                    <div className="text-[8px] uppercase leading-none text-muted">Academy</div>
-                                </StackV>
-                            </StackH>
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                text="Học bằng cách tự tay dựng hệ thống thật, đủ trình cho mọi vòng phỏng vấn kỹ thuật."
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                                {socials.map((social) => {
-                                    const Icon = social.icon
-                                    return (
-                                        <HeroUILink
-                                            key={social.id}
-                                            onPress={social.onPress}
-                                            aria-label={social.label}
-                                            className="text-muted transition-colors hover:text-foreground"
-                                            data-anat-part={showAnatomy ? "Link" : undefined}
-                                        >
-                                            <Icon className="size-5" aria-hidden />
-                                        </HeroUILink>
-                                    )
-                                })}
-                            </StackH>
-                        </StackV>
-
-                        <StackH gap="page" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                            <FooterLinkColumn title="Khám phá" links={exploreLinks} showAnatomy={showAnatomy} />
-                            <FooterLinkColumn title="Hỗ trợ" links={supportLinks} showAnatomy={showAnatomy} />
-                        </StackH>
-                    </StackH>
-
-                    {/* bottom bar: copyright + credit (left) · legal stubs (right) */}
-                    <StackH
-                        gap="related"
-                        justify="between"
-                        wrap
-                        className="flex-col items-start @app-sm:flex-row @app-sm:items-center"
-                        anatPart={showAnatomy ? "StackH" : undefined}
-                    >
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            text={`© ${year} StarCi Academy · Được phát triển bởi Nguyễn Văn Tự Cường`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                        <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <HeroUILink
-                                onPress={onTermsPress}
-                                className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
-                                data-anat-part={showAnatomy ? "Link" : undefined}
-                            >
-                                Điều khoản
-                            </HeroUILink>
-                            <HeroUILink
-                                onPress={onPrivacyPress}
-                                className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
-                                data-anat-part={showAnatomy ? "Link" : undefined}
-                            >
-                                Bảo mật
-                            </HeroUILink>
-                        </StackH>
-                    </StackH>
-                </StackV>
-            </Container>
+            <Container size="xl" padding="roomy" anatPart={showAnatomy ? "Container" : undefined} body={footerBody} />
         </footer>
     )
 }

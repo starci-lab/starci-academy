@@ -197,10 +197,12 @@ const DailyQuest = ({
                 }}
                 showAnatomy={showAnatomy}
             >
-                <StackV gap="grouped">
-                    <SurfaceCardCrossList items={items} showAnatomy={showAnatomy} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} />
-                    {claimSlot}
-                </StackV>
+                <StackV gap="grouped" body={
+                    <>
+                        <SurfaceCardCrossList items={items} showAnatomy={showAnatomy} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} />
+                        {claimSlot}
+                    </>
+                } />
             </AsyncContent>
         </div>
     )

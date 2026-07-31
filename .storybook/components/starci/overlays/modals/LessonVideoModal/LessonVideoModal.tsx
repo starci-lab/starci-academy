@@ -230,123 +230,137 @@ const LessonVideoModal = ({
     isLoading = false,
     showAnatomy = false,
     anatPart,
-}: LessonVideoModalProps) => (
-    <div data-anat-part={anatPart}>
-        <ModalShell
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            size="lg"
-            scroll="inside"
-            title={
-                // `ModalShell` has no `isSkeleton` of its own (composite tier, out of scope
-                // here) — the block calls the atom directly with the title's real weight and
-                // feeds the result into the slot, same idiom as `ContentHeader`'s `PageHeader`
-                // title skeleton.
-                isLoading ? (
-                    <Typography weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                ) : (
-                    video?.title ?? ""
-                )
-            }
-            showAnatomy={showAnatomy}
-        >
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Cluster
-                    gap="related"
-                    justify="center"
-                    anatPart={showAnatomy ? "Cluster" : undefined}
-                    items={[
-                        {
-                            key: "kind",
-                            content: (
-                                <EnumChip
-                                    value={video?.kind ?? LessonVideoKind.RawStream}
-                                    map={KIND_MAP}
-                                    isSkeleton={isLoading}
-                                    anatPart={showAnatomy ? "EnumChip" : undefined}
-                                />
-                            ),
-                        },
-                        {
-                            key: "duration",
-                            content: (
-                                <InlineIconLabel
-                                    icon={<ClockIcon />}
-                                    tone="default"
-                                    size="sm"
-                                    isSkeleton={isLoading}
-                                    anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-                                >
-                                    {formatDuration(video?.durationMs ?? 0)}
-                                </InlineIconLabel>
-                            ),
-                        },
-                        {
-                            key: "hostPlatform",
-                            content: isLoading ? (
-                                <Typography
-                                    size="sm"
-                                    color="muted"
-                                    isSkeleton
-                                    classNames={["w-1/3"]}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
-                                />
-                            ) : (
-                                <Typography
-                                    size="sm"
-                                    color="muted"
-                                    text={HOST_PLATFORM_LABEL[video?.hostPlatform ?? VideoHostPlatform.Youtube]}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
-                                />
-                            ),
-                        },
-                    ]}
+}: LessonVideoModalProps) => {
+    const playerAndLink = (
+        <>
+            <PlayerGap showAnatomy={showAnatomy} />
+            {isLoading ? (
+                <Typography size="sm" isSkeleton classNames={["w-3/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : (
+                <Typography
+                    size="sm"
+                    isLink
+                    href={video?.url ?? ""}
+                    text={video?.url ?? ""}
+                    anatPart={showAnatomy ? "Typography" : undefined}
                 />
-                <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <PlayerGap showAnatomy={showAnatomy} />
-                    {isLoading ? (
-                        <Typography size="sm" isSkeleton classNames={["w-3/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            )}
+        </>
+    )
+
+    const descriptionAndCaption = (
+        <>
+            {video?.description?.trim() ? (
+                <MarkdownContent
+                    source={video.description}
+                    measure="compact"
+                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "MarkdownContent (description)" : undefined}
+                />
+            ) : null}
+            {video?.caption?.trim() ? (
+                <MarkdownContent
+                    source={video.caption}
+                    measure="compact"
+                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "MarkdownContent (caption)" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
+    const metaAndPlayer = (
+        <>
+            <Cluster
+                gap="related"
+                justify="center"
+                anatPart={showAnatomy ? "Cluster" : undefined}
+                items={[
+                    {
+                        key: "kind",
+                        content: (
+                            <EnumChip
+                                value={video?.kind ?? LessonVideoKind.RawStream}
+                                map={KIND_MAP}
+                                isSkeleton={isLoading}
+                                anatPart={showAnatomy ? "EnumChip" : undefined}
+                            />
+                        ),
+                    },
+                    {
+                        key: "duration",
+                        content: (
+                            <InlineIconLabel
+                                icon={<ClockIcon />}
+                                tone="default"
+                                size="sm"
+                                isSkeleton={isLoading}
+                                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+                            >
+                                {formatDuration(video?.durationMs ?? 0)}
+                            </InlineIconLabel>
+                        ),
+                    },
+                    {
+                        key: "hostPlatform",
+                        content: isLoading ? (
+                            <Typography
+                                size="sm"
+                                color="muted"
+                                isSkeleton
+                                classNames={["w-1/3"]}
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                            />
+                        ) : (
+                            <Typography
+                                size="sm"
+                                color="muted"
+                                text={HOST_PLATFORM_LABEL[video?.hostPlatform ?? VideoHostPlatform.Youtube]}
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                            />
+                        ),
+                    },
+                ]}
+            />
+            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={playerAndLink} />
+            {!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? (
+                // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
+                // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
+                // WRAPPER — every child element (`p`, `em`…) hardcodes `text-foreground`
+                // inside the viewer itself (§13z: the viewer owns its own tree, out of a
+                // caller's reach), so a wrapper-level color/italic class here would be dead
+                // code. Left at the composite's default tone rather than shipping a
+                // className that silently does nothing — a real, marked gap, not this
+                // port's to close (`MarkdownContent` is composite tier, out of scope here).
+                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={descriptionAndCaption} />
+            ) : null}
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <ModalShell
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                size="lg"
+                scroll="inside"
+                title={
+                    // `ModalShell` has no `isSkeleton` of its own (composite tier, out of scope
+                    // here) — the block calls the atom directly with the title's real weight and
+                    // feeds the result into the slot, same idiom as `ContentHeader`'s `PageHeader`
+                    // title skeleton.
+                    isLoading ? (
+                        <Typography weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
                     ) : (
-                        <Typography
-                            size="sm"
-                            isLink
-                            href={video?.url ?? ""}
-                            text={video?.url ?? ""}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    )}
-                </StackV>
-                {!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? (
-                    // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
-                    // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
-                    // WRAPPER — every child element (`p`, `em`…) hardcodes `text-foreground`
-                    // inside the viewer itself (§13z: the viewer owns its own tree, out of a
-                    // caller's reach), so a wrapper-level color/italic class here would be dead
-                    // code. Left at the composite's default tone rather than shipping a
-                    // className that silently does nothing — a real, marked gap, not this
-                    // port's to close (`MarkdownContent` is composite tier, out of scope here).
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {video?.description?.trim() ? (
-                            <MarkdownContent
-                                source={video.description}
-                                measure="compact"
-                                showAnatomy={showAnatomy}
-                                anatPart={showAnatomy ? "MarkdownContent (description)" : undefined}
-                            />
-                        ) : null}
-                        {video?.caption?.trim() ? (
-                            <MarkdownContent
-                                source={video.caption}
-                                measure="compact"
-                                showAnatomy={showAnatomy}
-                                anatPart={showAnatomy ? "MarkdownContent (caption)" : undefined}
-                            />
-                        ) : null}
-                    </StackV>
-                ) : null}
-            </StackV>
-        </ModalShell>
-    </div>
-)
+                        video?.title ?? ""
+                    )
+                }
+                showAnatomy={showAnatomy}
+            >
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={metaAndPlayer} />
+            </ModalShell>
+        </div>
+    )
+}
 
 export { LessonVideoModal }

@@ -174,16 +174,22 @@ const Section = ({
                 `Typography` nodes inside already say on their own (§11a.1 LOẠI 2/3 — a
                 badge with nowhere to link is worse than no badge; those two atoms keep their
                 own badge below and surface as top-level nodes instead). */}
-            <StackV gap="tight" className="min-w-0">
-                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                    <Typography size="sm" text={title} weight="medium" />
-                </span>
-                {description != null ? (
-                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                        <Typography size="xs" text={description} color="muted" />
-                    </span>
-                ) : null}
-            </StackV>
+            <StackV
+                gap="tight"
+                classNames={["min-w-0"]}
+                body={
+                    <>
+                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <Typography size="sm" text={title} weight="medium" />
+                        </span>
+                        {description != null ? (
+                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography size="xs" text={description} color="muted" />
+                            </span>
+                        ) : null}
+                    </>
+                }
+            />
             {/* No `data-anat-part="Body"` here either: `body`/`children` is arbitrary
                 caller-supplied field content (§11a.1 LOẠI 3 — caller slot). */}
             {main != null ? (

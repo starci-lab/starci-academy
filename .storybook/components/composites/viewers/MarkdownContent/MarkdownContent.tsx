@@ -375,10 +375,13 @@ const MarkdownContent = ({
                 gap="related"
                 className={className}
                 anatPart={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
-            >
-                <HeroSkeleton className="h-4 w-full rounded" />
-                <HeroSkeleton className="h-4 w-2/3 rounded" />
-            </StackV>
+                body={
+                    <>
+                        <HeroSkeleton className="h-4 w-full rounded" />
+                        <HeroSkeleton className="h-4 w-2/3 rounded" />
+                    </>
+                }
+            />
         )
     }
 

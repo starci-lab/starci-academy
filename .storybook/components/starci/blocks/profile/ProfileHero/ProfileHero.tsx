@@ -189,30 +189,33 @@ interface ProfileRankAvatarProps {
 }
 
 /** Avatar with an optional rank-tinted ring, plus the "Hạng #N" caption underneath. */
-const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false, showAnatomy = false }: ProfileRankAvatarProps) => (
-    <StackV gap="tight" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
-        <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
-            <Avatar
-                name={name}
-                src={avatarUrl}
-                size="lg"
-                isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
-                ring={isSkeleton ? undefined : rankRingTone(rank)}
-            />
-        </div>
-        {isSkeleton || rank != null ? (
-            <Typography
-                size="xs"
-                color="muted"
-                weight="medium"
-                isSkeleton={isSkeleton}
-                text={rank != null ? `Hạng #${rank}` : undefined}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-        ) : null}
-    </StackV>
-)
+const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false, showAnatomy = false }: ProfileRankAvatarProps) => {
+    const rankBody = (
+        <>
+            <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                <Avatar
+                    name={name}
+                    src={avatarUrl}
+                    size="lg"
+                    isSkeleton={isSkeleton}
+                    showAnatomy={showAnatomy}
+                    ring={isSkeleton ? undefined : rankRingTone(rank)}
+                />
+            </div>
+            {isSkeleton || rank != null ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    weight="medium"
+                    isSkeleton={isSkeleton}
+                    text={rank != null ? `Hạng #${rank}` : undefined}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+        </>
+    )
+    return <StackV gap="tight" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={rankBody} />
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Leaf — ProfileFollowers: the follower count stat.
@@ -225,25 +228,28 @@ interface ProfileFollowersProps {
 }
 
 /** Follower count + caption, same "big tabular number over a muted label" idiom `FlashcardDueHero` uses for its due-count (file header, judgement call 4). */
-const ProfileFollowers = ({ followersCount, isSkeleton = false, showAnatomy = false }: ProfileFollowersProps) => (
-    <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-        <Typography
-            size="h5"
-            weight="bold"
-            tabularNums
-            isSkeleton={isSkeleton}
-            text={isSkeleton ? undefined : String(followersCount ?? 0)}
-            anatPart={showAnatomy ? "Typography" : undefined}
-        />
-        <Typography
-            size="xs"
-            color="muted"
-            isSkeleton={isSkeleton}
-            text="Người theo dõi"
-            anatPart={showAnatomy ? "Typography" : undefined}
-        />
-    </StackV>
-)
+const ProfileFollowers = ({ followersCount, isSkeleton = false, showAnatomy = false }: ProfileFollowersProps) => {
+    const followersBody = (
+        <>
+            <Typography
+                size="h5"
+                weight="bold"
+                tabularNums
+                isSkeleton={isSkeleton}
+                text={isSkeleton ? undefined : String(followersCount ?? 0)}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <Typography
+                size="xs"
+                color="muted"
+                isSkeleton={isSkeleton}
+                text="Người theo dõi"
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+        </>
+    )
+    return <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={followersBody} />
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Leaf — ProfileBadges: the earned-achievement chip row.
@@ -408,155 +414,184 @@ const ProfileHero = ({
     const socialEntries = SOCIAL_META.filter((entry) => Boolean(socialLinks[entry.key]))
     const hasMetaList = isSkeleton || socialEntries.length > 0 || Boolean(joinedAt)
 
+    const nameBlock = (
+        <>
+            <Typography
+                size="h5"
+                weight="bold"
+                align="center"
+                isSkeleton={isSkeleton}
+                text={fullName}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <Typography
+                size="sm"
+                color="muted"
+                align="center"
+                isSkeleton={isSkeleton}
+                text={isSkeleton ? undefined : `@${handle}`}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            {isSkeleton || roleTitle ? (
+                <Typography
+                    size="sm"
+                    weight="medium"
+                    align="center"
+                    isSkeleton={isSkeleton}
+                    text={roleTitle}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
+    const identitySection = (
+        <>
+            <ProfileRankAvatar
+                name={fullName}
+                avatarUrl={avatarUrl}
+                rank={rank}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <StackV gap="flush" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={nameBlock} />
+        </>
+    )
+
+    const statsRow = (
+        <>
+            <ProfileFollowers followersCount={followersCount} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+            {hasBadgesRow ? (
+                <ProfileBadges badges={badges} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+            ) : null}
+        </>
+    )
+
+    const actionsRow = (
+        <>
+            <Button
+                classNames={["flex-1"]}
+                variant={action.variant}
+                label={action.label}
+                prefixIcon={action.prefixIcon}
+                onPress={action.onPress}
+                isPending={action.isPending}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+            <ShareProfileButton onShare={onShare} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+        </>
+    )
+
+    const metaList = (
+        <>
+            {(isSkeleton ? SOCIAL_META : socialEntries).map((entry) => {
+                const socialRow = (
+                    <>
+                        <span aria-hidden className="inline-flex shrink-0 text-muted [&_svg]:size-4">
+                            <entry.icon />
+                        </span>
+                        <Typography
+                            size="xs"
+                            isLink={!isSkeleton}
+                            href={isSkeleton ? undefined : socialLinks[entry.key]}
+                            isSkeleton={isSkeleton}
+                            truncate
+                            text={isSkeleton ? undefined : entry.label}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    </>
+                )
+                return <StackH key={entry.key} gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={socialRow} />
+            })}
+            <InlineIconLabel
+                icon={<CalendarBlankIcon />}
+                tone="default"
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+            >
+                {isSkeleton ? undefined : `Tham gia ${formatJoinedDate(joinedAt)}`}
+            </InlineIconLabel>
+        </>
+    )
+
+    const metaSection = hasMetaList ? (
+        <>
+            <Divider anatPart={showAnatomy ? "Divider" : undefined} />
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={metaList} />
+        </>
+    ) : null
+
+    const cardBody = (
+        <>
+            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={identitySection} />
+
+            {isSkeleton || bio ? (
+                <Typography
+                    size="sm"
+                    color="muted"
+                    align="center"
+                    lineClamp={3}
+                    isSkeleton={isSkeleton}
+                    text={bio}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+
+            {hasLocationRow ? (
+                <Cluster
+                    gap="related"
+                    justify="center"
+                    anatPart={showAnatomy ? "Cluster" : undefined}
+                    showAnatomy={showAnatomy}
+                    items={[
+                        ...(isSkeleton || location
+                            ? [
+                                {
+                                    key: "location",
+                                    content: (
+                                        <InlineIconLabel
+                                            icon={<MapPinIcon />}
+                                            isSkeleton={isSkeleton}
+                                            anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+                                        >
+                                            {location}
+                                        </InlineIconLabel>
+                                    ),
+                                },
+                            ]
+                            : []),
+                        ...(isSkeleton || workMode
+                            ? [
+                                {
+                                    key: "workMode",
+                                    content: (
+                                        <EnumChip
+                                            value={(workMode ?? "remote") as ProfileWorkMode}
+                                            map={WORK_MODE_MAP}
+                                            isSkeleton={isSkeleton}
+                                            anatPart={showAnatomy ? "EnumChip" : undefined}
+                                        />
+                                    ),
+                                },
+                            ]
+                            : []),
+                    ]}
+                />
+            ) : null}
+
+            <StackH gap="related" divider anatPart={showAnatomy ? "StackH" : undefined} body={statsRow} />
+
+            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={actionsRow} />
+
+            {metaSection}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <ProfileRankAvatar
-                            name={fullName}
-                            avatarUrl={avatarUrl}
-                            rank={rank}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <StackV gap="flush" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <Typography
-                                size="h5"
-                                weight="bold"
-                                align="center"
-                                isSkeleton={isSkeleton}
-                                text={fullName}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                align="center"
-                                isSkeleton={isSkeleton}
-                                text={isSkeleton ? undefined : `@${handle}`}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            {isSkeleton || roleTitle ? (
-                                <Typography
-                                    size="sm"
-                                    weight="medium"
-                                    align="center"
-                                    isSkeleton={isSkeleton}
-                                    text={roleTitle}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
-                                />
-                            ) : null}
-                        </StackV>
-                    </StackV>
-
-                    {isSkeleton || bio ? (
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            align="center"
-                            lineClamp={3}
-                            isSkeleton={isSkeleton}
-                            text={bio}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    ) : null}
-
-                    {hasLocationRow ? (
-                        <Cluster
-                            gap="related"
-                            justify="center"
-                            anatPart={showAnatomy ? "Cluster" : undefined}
-                            showAnatomy={showAnatomy}
-                            items={[
-                                ...(isSkeleton || location
-                                    ? [
-                                        {
-                                            key: "location",
-                                            content: (
-                                                <InlineIconLabel
-                                                    icon={<MapPinIcon />}
-                                                    isSkeleton={isSkeleton}
-                                                    anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-                                                >
-                                                    {location}
-                                                </InlineIconLabel>
-                                            ),
-                                        },
-                                    ]
-                                    : []),
-                                ...(isSkeleton || workMode
-                                    ? [
-                                        {
-                                            key: "workMode",
-                                            content: (
-                                                <EnumChip
-                                                    value={(workMode ?? "remote") as ProfileWorkMode}
-                                                    map={WORK_MODE_MAP}
-                                                    isSkeleton={isSkeleton}
-                                                    anatPart={showAnatomy ? "EnumChip" : undefined}
-                                                />
-                                            ),
-                                        },
-                                    ]
-                                    : []),
-                            ]}
-                        />
-                    ) : null}
-
-                    <StackH gap="related" divider anatPart={showAnatomy ? "StackH" : undefined}>
-                        <ProfileFollowers followersCount={followersCount} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
-                        {hasBadgesRow ? (
-                            <ProfileBadges badges={badges} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
-                        ) : null}
-                    </StackH>
-
-                    <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <Button
-                            classNames={["flex-1"]}
-                            variant={action.variant}
-                            label={action.label}
-                            prefixIcon={action.prefixIcon}
-                            onPress={action.onPress}
-                            isPending={action.isPending}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                        <ShareProfileButton onShare={onShare} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
-                    </StackH>
-
-                    {hasMetaList ? (
-                        <>
-                            <Divider anatPart={showAnatomy ? "Divider" : undefined} />
-                            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                                {(isSkeleton ? SOCIAL_META : socialEntries).map((entry) => (
-                                    <StackH key={entry.key} gap="tight" anatPart={showAnatomy ? "StackH" : undefined}>
-                                        <span aria-hidden className="inline-flex shrink-0 text-muted [&_svg]:size-4">
-                                            <entry.icon />
-                                        </span>
-                                        <Typography
-                                            size="xs"
-                                            isLink={!isSkeleton}
-                                            href={isSkeleton ? undefined : socialLinks[entry.key]}
-                                            isSkeleton={isSkeleton}
-                                            truncate
-                                            text={isSkeleton ? undefined : entry.label}
-                                            anatPart={showAnatomy ? "Typography" : undefined}
-                                        />
-                                    </StackH>
-                                ))}
-                                <InlineIconLabel
-                                    icon={<CalendarBlankIcon />}
-                                    tone="default"
-                                    isSkeleton={isSkeleton}
-                                    anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-                                >
-                                    {isSkeleton ? undefined : `Tham gia ${formatJoinedDate(joinedAt)}`}
-                                </InlineIconLabel>
-                            </StackV>
-                        </>
-                    ) : null}
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={cardBody} />
             </SurfaceCard>
         </div>
     )

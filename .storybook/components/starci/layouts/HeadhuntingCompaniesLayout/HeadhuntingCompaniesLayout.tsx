@@ -78,23 +78,29 @@ const HeadhuntingCompaniesLayout = ({
     className,
     showAnatomy = false,
     anatPart,
-}: HeadhuntingCompaniesLayoutProps) => (
-    <StackH gap="section" align="start" className={className} anatPart={anatPart}>
-        {/* Desktop-only rail: below the `@app-lg` tier it does not collapse into
-            anything, it is simply absent — the real screen has no mobile bar. */}
-        <div className="hidden shrink-0 @app-lg:sticky @app-lg:top-0 @app-lg:block @app-lg:w-64">
-            <AsyncContentEmpty
-                title="Điều hướng khoá học"
-                description="Cây chương/bài của khoá học chưa dựng ở lượt này — chỗ đứng đã có, nội dung để lượt sau."
-                icon={SidebarIcon}
-                anatPart={showAnatomy ? "CourseNavSidebarGap" : undefined}
-            />
-        </div>
-        {/* CALLER SLOT — deliberately unbadged, see file header. */}
-        <div className="min-w-0 flex-1">
-            {children}
-        </div>
-    </StackH>
-)
+}: HeadhuntingCompaniesLayoutProps) => {
+    const navAndContent = (
+        <>
+            {/* Desktop-only rail: below the `@app-lg` tier it does not collapse into
+                anything, it is simply absent — the real screen has no mobile bar. */}
+            <div className="hidden shrink-0 @app-lg:sticky @app-lg:top-0 @app-lg:block @app-lg:w-64">
+                <AsyncContentEmpty
+                    title="Điều hướng khoá học"
+                    description="Cây chương/bài của khoá học chưa dựng ở lượt này — chỗ đứng đã có, nội dung để lượt sau."
+                    icon={SidebarIcon}
+                    anatPart={showAnatomy ? "CourseNavSidebarGap" : undefined}
+                />
+            </div>
+            {/* CALLER SLOT — deliberately unbadged, see file header. */}
+            <div className="min-w-0 flex-1">
+                {children}
+            </div>
+        </>
+    )
+
+    return (
+        <StackH gap="section" align="start" className={className} anatPart={anatPart} body={navAndContent} />
+    )
+}
 
 export { HeadhuntingCompaniesLayout }

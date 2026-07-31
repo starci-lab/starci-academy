@@ -3,6 +3,7 @@ import { ArrowClockwiseIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -62,7 +63,8 @@ export interface LeaderboardToolbarProps {
     isRefreshing?: boolean
     /** Localized trigger word for the refresh button, e.g. "Làm mới" (blocks carry no i18n). */
     refreshLabel: string
-    className?: string
+    /** Extra classes on the row, from the closed atom/frame union. */
+    classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
@@ -95,45 +97,48 @@ const LeaderboardToolbar = ({
     onRefresh,
     isRefreshing = false,
     refreshLabel,
-    className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: LeaderboardToolbarProps) => (
     <StackH
         gap="related"
         align="center"
-        className={className}
+        classNames={classNames}
         anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)}
-    >
-        <Typography
-            size="sm"
-            weight="medium"
-            text={`Xếp hạng theo ${categoryLabel}`}
-            anatPart={showAnatomy ? "Typography" : undefined}
-        />
-        {/* no icon here — §5a.2: a clock needs an ASSOCIATION step to read as "time"
-            (not a universal symbol like ✓/🔒), and the text already carries the fact. */}
-        {updatedAt != null ? (
-            <Typography
-                size="xs"
-                color="muted"
-                text={formatUpdatedAt(updatedAt)}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
-        ) : null}
-        {/* Pushes the refresh button to the row's trailing edge without a second
-            nested track — same spacer idiom `WorkSessionHeader` already uses. */}
-        <span aria-hidden className="flex-1" />
-        <Button
-            label={refreshLabel}
-            variant="secondary"
-            size="sm"
-            prefixIcon={ArrowClockwiseIcon}
-            isPending={isRefreshing}
-            onPress={onRefresh}
-            anatPart={showAnatomy ? "Button" : undefined}
-        />
-    </StackH>
+        body={
+            <>
+                <Typography
+                    size="sm"
+                    weight="medium"
+                    text={`Xếp hạng theo ${categoryLabel}`}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+                {/* no icon here — §5a.2: a clock needs an ASSOCIATION step to read as "time"
+                    (not a universal symbol like ✓/🔒), and the text already carries the fact. */}
+                {updatedAt != null ? (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        text={formatUpdatedAt(updatedAt)}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                ) : null}
+                {/* Pushes the refresh button to the row's trailing edge without a second
+                    nested track — same spacer idiom `WorkSessionHeader` already uses. */}
+                <span aria-hidden className="flex-1" />
+                <Button
+                    label={refreshLabel}
+                    variant="secondary"
+                    size="sm"
+                    prefixIcon={ArrowClockwiseIcon}
+                    isPending={isRefreshing}
+                    onPress={onRefresh}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            </>
+        }
+    />
 )
 
 export { LeaderboardToolbar }

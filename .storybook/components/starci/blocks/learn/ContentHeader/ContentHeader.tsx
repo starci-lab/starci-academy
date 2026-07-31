@@ -114,92 +114,100 @@ const ContentHeader = ({
 }: ContentHeaderProps) => {
     const hasOutcomes = isSkeleton || (outcomes?.length ?? 0) > 0
 
+    const metaRow = (
+        <>
+            {isSkeleton ? (
+                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+            ) : isRead ? (
+                <Chip
+                    tone="success"
+                    icon={CheckCircleIcon}
+                    text="Đã đọc"
+                    anatPart={showAnatomy ? "Chip" : undefined}
+                />
+            ) : null}
+            {isSkeleton ? (
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : (
+                <>
+                    {minutesRead != null ? (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            text={`${minutesRead} phút đọc`}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    ) : null}
+                    {challengeCount != null ? (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            text={`${challengeCount} thử thách`}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    ) : null}
+                </>
+            )}
+        </>
+    )
+
+    const headerBody = (
+        <>
+            <PageHeader
+                anatPart={showAnatomy ? "PageHeader" : undefined}
+                breadcrumb={
+                    isSkeleton || breadcrumbItems?.length ? (
+                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                            <Breadcrumbs
+                                collapseOnMobile
+                                collapseFrom={4}
+                                items={breadcrumbItems ?? []}
+                                isSkeleton={isSkeleton}
+                            />
+                        </div>
+                    ) : undefined
+                }
+                title={
+                    isSkeleton ? (
+                        // `PageHeader` has no `isSkeleton` of its own, so the block calls the
+                        // atom directly with the EXACT size/weight the frame uses for a title
+                        // and feeds the result into the slot — still "the flag reaches the
+                        // atom", just from a different caller.
+                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+                    ) : (
+                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
+                    )
+                }
+                description={
+                    isSkeleton ? (
+                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+                    ) : (
+                        description
+                    )
+                }
+                meta={
+                    <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
+                }
+            />
+            {hasOutcomes ? (
+                <SurfaceCardList
+                    label="Bạn sẽ học được gì"
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+                    items={(outcomes ?? []).map((outcome) => ({
+                        key: outcome.key,
+                        leadingIcon: CheckCircleIcon,
+                        leadingIconColor: "success",
+                        title: outcome.text,
+                    }))}
+                />
+            ) : null}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <PageHeader
-                    anatPart={showAnatomy ? "PageHeader" : undefined}
-                    breadcrumb={
-                        isSkeleton || breadcrumbItems?.length ? (
-                            <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
-                                <Breadcrumbs
-                                    collapseOnMobile
-                                    collapseFrom={4}
-                                    items={breadcrumbItems ?? []}
-                                    isSkeleton={isSkeleton}
-                                />
-                            </div>
-                        ) : undefined
-                    }
-                    title={
-                        isSkeleton ? (
-                            // `PageHeader` has no `isSkeleton` of its own, so the block calls the
-                            // atom directly with the EXACT size/weight the frame uses for a title
-                            // and feeds the result into the slot — still "the flag reaches the
-                            // atom", just from a different caller.
-                            <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : (
-                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                        )
-                    }
-                    description={
-                        isSkeleton ? (
-                            <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                        ) : (
-                            description
-                        )
-                    }
-                    meta={
-                        <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                            {isSkeleton ? (
-                                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-                            ) : isRead ? (
-                                <Chip
-                                    tone="success"
-                                    icon={CheckCircleIcon}
-                                    text="Đã đọc"
-                                    anatPart={showAnatomy ? "Chip" : undefined}
-                                />
-                            ) : null}
-                            {isSkeleton ? (
-                                <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                            ) : (
-                                <>
-                                    {minutesRead != null ? (
-                                        <Typography
-                                            size="xs"
-                                            color="muted"
-                                            text={`${minutesRead} phút đọc`}
-                                            anatPart={showAnatomy ? "Typography" : undefined}
-                                        />
-                                    ) : null}
-                                    {challengeCount != null ? (
-                                        <Typography
-                                            size="xs"
-                                            color="muted"
-                                            text={`${challengeCount} thử thách`}
-                                            anatPart={showAnatomy ? "Typography" : undefined}
-                                        />
-                                    ) : null}
-                                </>
-                            )}
-                        </StackH>
-                    }
-                />
-                {hasOutcomes ? (
-                    <SurfaceCardList
-                        label="Bạn sẽ học được gì"
-                        isSkeleton={isSkeleton}
-                        anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                        items={(outcomes ?? []).map((outcome) => ({
-                            key: outcome.key,
-                            leadingIcon: CheckCircleIcon,
-                            leadingIconColor: "success",
-                            title: outcome.text,
-                        }))}
-                    />
-                ) : null}
-            </StackV>
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={headerBody} />
         </div>
     )
 }

@@ -173,6 +173,36 @@ const LearnShell = ({
     // brief's own `isAssessmentLive` suppression.
     const showAiTriggers = !isEnrollGated && !isAssessmentLive
 
+    const railAndContent = (
+        <>
+            {RAIL_SURFACES.has(activeSurface) ? (
+                <ResizableRail
+                    storageKey={RAIL_STORAGE_KEY}
+                    defaultWidth={RAIL_DEFAULT_WIDTH}
+                    minWidth={RAIL_MIN_WIDTH}
+                    maxWidth={RAIL_MAX_WIDTH}
+                    ariaLabel={RAIL_ARIA_LABEL}
+                    handleSide="right"
+                    className="h-full shrink-0 border-r border-default"
+                    showAnatomy={showAnatomy}
+                >
+                    <StackV
+                        gap="flush"
+                        align="center"
+                        justify="center"
+                        classNames={["h-full"]}
+                        anatPart={showAnatomy ? "StackV" : undefined}
+                        body={<Spinner label={RAIL_LOADING_LABEL} showAnatomy={showAnatomy} />}
+                    />
+                </ResizableRail>
+            ) : null}
+
+            <div className="min-w-0 flex-1">
+                {children}
+            </div>
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             {isEnrollGated && enrollGateProps != null ? (
@@ -186,28 +216,12 @@ const LearnShell = ({
                     anatPart={showAnatomy ? "EnrollGate" : undefined}
                 />
             ) : (
-                <StackH gap="flush" className="min-h-[calc(100dvh-4rem)]" anatPart={showAnatomy ? "StackH" : undefined}>
-                    {RAIL_SURFACES.has(activeSurface) ? (
-                        <ResizableRail
-                            storageKey={RAIL_STORAGE_KEY}
-                            defaultWidth={RAIL_DEFAULT_WIDTH}
-                            minWidth={RAIL_MIN_WIDTH}
-                            maxWidth={RAIL_MAX_WIDTH}
-                            ariaLabel={RAIL_ARIA_LABEL}
-                            handleSide="right"
-                            className="h-full shrink-0 border-r border-default"
-                            showAnatomy={showAnatomy}
-                        >
-                            <StackV gap="flush" align="center" justify="center" className="h-full" anatPart={showAnatomy ? "StackV" : undefined}>
-                                <Spinner label={RAIL_LOADING_LABEL} showAnatomy={showAnatomy} />
-                            </StackV>
-                        </ResizableRail>
-                    ) : null}
-
-                    <div className="min-w-0 flex-1">
-                        {children}
-                    </div>
-                </StackH>
+                <StackH
+                    gap="flush"
+                    className="min-h-[calc(100dvh-4rem)]"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={railAndContent}
+                />
             )}
 
             {showAiTriggers ? (

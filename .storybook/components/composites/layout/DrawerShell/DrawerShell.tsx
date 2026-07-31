@@ -117,22 +117,28 @@ const Base = ({
                             <Drawer.Header data-anat-part={showAnatomy ? "Drawer.Header" : undefined}>{header}</Drawer.Header>
                         ) : title != null ? (
                             <Drawer.Header>
-                                <StackV gap="tight" className={cn("pr-8", titleClassName)}>
-                                    <Typography
-                                        weight="bold"
-                                        showAnatomy={showAnatomy}
-                                        anatPart={showAnatomy ? "Typography" : undefined}
-                                        text={title}
-                                    />
-                                    {description != null ? (
-                                        <Typography size="sm"
-                                            color="muted"
-                                            showAnatomy={showAnatomy}
-                                            anatPart={showAnatomy ? "Typography" : undefined}
-                                            text={description}
-                                        />
-                                    ) : null}
-                                </StackV>
+                                <StackV
+                                    gap="tight"
+                                    className={cn("pr-8", titleClassName)}
+                                    body={
+                                        <>
+                                            <Typography
+                                                weight="bold"
+                                                showAnatomy={showAnatomy}
+                                                anatPart={showAnatomy ? "Typography" : undefined}
+                                                text={title}
+                                            />
+                                            {description != null ? (
+                                                <Typography size="sm"
+                                                    color="muted"
+                                                    showAnatomy={showAnatomy}
+                                                    anatPart={showAnatomy ? "Typography" : undefined}
+                                                    text={description}
+                                                />
+                                            ) : null}
+                                        </>
+                                    }
+                                />
                             </Drawer.Header>
                         ) : null}
                         <Drawer.Body

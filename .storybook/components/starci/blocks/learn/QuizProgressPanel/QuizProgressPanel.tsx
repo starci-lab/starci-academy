@@ -144,13 +144,26 @@ const statCell = (stat: QuizProgressStat, isSkeleton: boolean, showAnatomy: bool
     return {
         key: stat.key,
         content: (
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    {Icon ? <Icon aria-hidden focusable="false" className="size-4 text-muted" /> : null}
-                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={stat.label} anatPart={showAnatomy ? "Typography" : undefined} />
-                </StackH>
-                <Typography size="lg" weight="semibold" isSkeleton={isSkeleton} text={stat.value} anatPart={showAnatomy ? "Typography" : undefined} />
-            </StackV>
+            <StackV
+                gap="tight"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        <StackH
+                            gap="tight"
+                            align="center"
+                            anatPart={showAnatomy ? "StackH" : undefined}
+                            body={
+                                <>
+                                    {Icon ? <Icon aria-hidden focusable="false" className="size-4 text-muted" /> : null}
+                                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={stat.label} anatPart={showAnatomy ? "Typography" : undefined} />
+                                </>
+                            }
+                        />
+                        <Typography size="lg" weight="semibold" isSkeleton={isSkeleton} text={stat.value} anatPart={showAnatomy ? "Typography" : undefined} />
+                    </>
+                }
+            />
         ),
     }
 }
@@ -190,6 +203,36 @@ const QuizProgressPanel = ({
         onPress: isSkeleton ? undefined : session.onPress,
     }))
 
+    const panelBody = (
+        <>
+            {/* `Tabs` carries no `anatPart` of its own (§ pattern, same as `Toolbar` in
+                `ContentModeNav`) — the wrapping div is the badge anchor. */}
+            <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
+                <Tabs
+                    items={tabItems}
+                    selectedKey={view}
+                    onSelectionChange={(key) => onViewChange(key as QuizProgressView)}
+                    ariaLabel={viewAriaLabel}
+                    isSkeleton={isSkeleton}
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+            {view === "stats" ? (
+                // `StatGridCard` carries no `anatPart` of its own either — same wrap.
+                <div data-anat-part={showAnatomy ? "StatGridCard" : undefined}>
+                    <StatGridCard items={statItems} showAnatomy={showAnatomy} />
+                </div>
+            ) : (
+                <SurfaceCardList
+                    items={historyItems}
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            )}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <SurfaceCard label={label} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
@@ -201,33 +244,7 @@ const QuizProgressPanel = ({
                         anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
                     />
                 ) : (
-                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {/* `Tabs` carries no `anatPart` of its own (§ pattern, same as `Toolbar` in
-                            `ContentModeNav`) — the wrapping div is the badge anchor. */}
-                        <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
-                            <Tabs
-                                items={tabItems}
-                                selectedKey={view}
-                                onSelectionChange={(key) => onViewChange(key as QuizProgressView)}
-                                ariaLabel={viewAriaLabel}
-                                isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
-                            />
-                        </div>
-                        {view === "stats" ? (
-                            // `StatGridCard` carries no `anatPart` of its own either — same wrap.
-                            <div data-anat-part={showAnatomy ? "StatGridCard" : undefined}>
-                                <StatGridCard items={statItems} showAnatomy={showAnatomy} />
-                            </div>
-                        ) : (
-                            <SurfaceCardList
-                                items={historyItems}
-                                isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                                showAnatomy={showAnatomy}
-                            />
-                        )}
-                    </StackV>
+                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={panelBody} />
                 )}
             </SurfaceCard>
         </div>

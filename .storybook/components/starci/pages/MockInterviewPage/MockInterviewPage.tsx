@@ -367,128 +367,144 @@ const MockInterviewPage = ({
     createdAt,
     isResultSkeleton = false,
     showAnatomy = false,
-}: MockInterviewPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
+}: MockInterviewPageProps) => {
+    const setupSection = (
+        <>
+            <PlaygroundSetupHeader
+                anatPart="PlaygroundSetupHeader"
+                breadcrumbLabel={setupBackLabel}
+                onBack={onSetupBack}
+                title={setupTitle}
+                description={setupDescription}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <MockInterviewSetup
+                anatPart="MockInterviewSetup"
+                label={setupLabel}
+                persona={persona}
+                sessionName={sessionName}
+                onSessionNameChange={onSessionNameChange}
+                tier={tier}
+                onTierChange={onTierChange}
+                isDesignAvailable={isDesignAvailable}
+                onStartQna={onStartQna}
+                onStartDesign={onStartDesign}
+                resumable={resumable}
+                startingMode={startingMode}
+                isPending={isSetupPending}
+                errorMessage={setupErrorMessage}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const liveSection = (
+        <>
+            <WorkSessionHeader
+                anatPart="WorkSessionHeader"
+                backLabel={liveBackLabel}
+                onBack={onLiveBack}
+                title={liveTitle}
+                counter={liveCounter}
+                timeLeft={liveTimeLeft}
+                total={liveTotal}
+                current={liveCurrent}
+                doneSteps={liveDoneSteps}
+                onStepPress={onLiveStepPress}
+                finishLabel={liveFinishLabel}
+                onFinish={onLiveFinish}
+                showAnatomy={showAnatomy}
+            />
+            <InterviewerPresence
+                anatPart="InterviewerPresence"
+                persona={interviewerPersona}
+                speaking={speaking}
+                speakingLabel={speakingLabel}
+                ttsSupported={ttsSupported}
+                ttsEnabled={ttsEnabled}
+                onToggleTts={onToggleTts}
+                muteLabel={muteLabel}
+                unmuteLabel={unmuteLabel}
+                questionMarkdown={questionMarkdown}
+                isAsking={isAsking}
+                showAnatomy={showAnatomy}
+            />
+            <VoiceHero
+                anatPart="VoiceHero"
+                sttSupported={sttSupported}
+                listening={listening}
+                interimTranscript={interimTranscript}
+                value={answerValue}
+                onValueChange={onAnswerValueChange}
+                onToggleListen={onToggleListen}
+                answerMode={answerMode}
+                labels={voiceLabels}
+                showAnatomy={showAnatomy}
+            />
+            <MockInterviewAnswerAction
+                anatPart="MockInterviewAnswerAction"
+                isLastQuestion={isLastQuestion}
+                onSubmit={onAnswerSubmit}
+                isDisabled={isAnswerSubmitDisabled}
+                isPending={isAnswerSubmitPending}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const resultSection = (
+        <>
+            <SubmissionResultHeader
+                anatPart="SubmissionResultHeader"
+                backLabel={resultBackLabel}
+                onBack={onResultBack}
+                title={resultTitle}
+                description={resultDescription}
+                isSkeleton={isResultSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <MockInterviewScorecard
+                anatPart="MockInterviewScorecard"
+                verdict={verdict}
+                overallScore={overallScore}
+                phaseOrQuestionScores={phaseOrQuestionScores}
+                attributeScores={attributeScores}
+                strengths={strengths}
+                gaps={gaps}
+                followUpQuestion={followUpQuestion}
+                weakAreaLabel={weakAreaLabel}
+                onStudyWeakArea={onStudyWeakArea}
+                onCapstone={onCapstone}
+                onRetry={onRetry}
+                promptTitle={promptTitle}
+                createdAt={createdAt}
+                isSkeleton={isResultSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const interviewPhases = (
+        <>
             {phase === "setup" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <PlaygroundSetupHeader
-                        anatPart="PlaygroundSetupHeader"
-                        breadcrumbLabel={setupBackLabel}
-                        onBack={onSetupBack}
-                        title={setupTitle}
-                        description={setupDescription}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <MockInterviewSetup
-                        anatPart="MockInterviewSetup"
-                        label={setupLabel}
-                        persona={persona}
-                        sessionName={sessionName}
-                        onSessionNameChange={onSessionNameChange}
-                        tier={tier}
-                        onTierChange={onTierChange}
-                        isDesignAvailable={isDesignAvailable}
-                        onStartQna={onStartQna}
-                        onStartDesign={onStartDesign}
-                        resumable={resumable}
-                        startingMode={startingMode}
-                        isPending={isSetupPending}
-                        errorMessage={setupErrorMessage}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={setupSection} />
             ) : null}
 
             {phase === "live" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <WorkSessionHeader
-                        anatPart="WorkSessionHeader"
-                        backLabel={liveBackLabel}
-                        onBack={onLiveBack}
-                        title={liveTitle}
-                        counter={liveCounter}
-                        timeLeft={liveTimeLeft}
-                        total={liveTotal}
-                        current={liveCurrent}
-                        doneSteps={liveDoneSteps}
-                        onStepPress={onLiveStepPress}
-                        finishLabel={liveFinishLabel}
-                        onFinish={onLiveFinish}
-                        showAnatomy={showAnatomy}
-                    />
-                    <InterviewerPresence
-                        anatPart="InterviewerPresence"
-                        persona={interviewerPersona}
-                        speaking={speaking}
-                        speakingLabel={speakingLabel}
-                        ttsSupported={ttsSupported}
-                        ttsEnabled={ttsEnabled}
-                        onToggleTts={onToggleTts}
-                        muteLabel={muteLabel}
-                        unmuteLabel={unmuteLabel}
-                        questionMarkdown={questionMarkdown}
-                        isAsking={isAsking}
-                        showAnatomy={showAnatomy}
-                    />
-                    <VoiceHero
-                        anatPart="VoiceHero"
-                        sttSupported={sttSupported}
-                        listening={listening}
-                        interimTranscript={interimTranscript}
-                        value={answerValue}
-                        onValueChange={onAnswerValueChange}
-                        onToggleListen={onToggleListen}
-                        answerMode={answerMode}
-                        labels={voiceLabels}
-                        showAnatomy={showAnatomy}
-                    />
-                    <MockInterviewAnswerAction
-                        anatPart="MockInterviewAnswerAction"
-                        isLastQuestion={isLastQuestion}
-                        onSubmit={onAnswerSubmit}
-                        isDisabled={isAnswerSubmitDisabled}
-                        isPending={isAnswerSubmitPending}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={liveSection} />
             ) : null}
 
             {phase === "result" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <SubmissionResultHeader
-                        anatPart="SubmissionResultHeader"
-                        backLabel={resultBackLabel}
-                        onBack={onResultBack}
-                        title={resultTitle}
-                        description={resultDescription}
-                        isSkeleton={isResultSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                    <MockInterviewScorecard
-                        anatPart="MockInterviewScorecard"
-                        verdict={verdict}
-                        overallScore={overallScore}
-                        phaseOrQuestionScores={phaseOrQuestionScores}
-                        attributeScores={attributeScores}
-                        strengths={strengths}
-                        gaps={gaps}
-                        followUpQuestion={followUpQuestion}
-                        weakAreaLabel={weakAreaLabel}
-                        onStudyWeakArea={onStudyWeakArea}
-                        onCapstone={onCapstone}
-                        onRetry={onRetry}
-                        promptTitle={promptTitle}
-                        createdAt={createdAt}
-                        isSkeleton={isResultSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={resultSection} />
             ) : null}
-        </StackV>
-    </Container>
-)
+        </>
+    )
+
+    const interviewBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={interviewPhases} />
+
+    return <Container size="md" padding="roomy" body={interviewBody} />
+}
 
 export { MockInterviewPage }

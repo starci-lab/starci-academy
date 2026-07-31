@@ -102,13 +102,16 @@ const WorkSessionHeader = ({
     anatPart,
 }: WorkSessionHeaderProps) => {
     if (isSkeleton) {
+        const skeletonRow = (
+            <>
+                <HeroSkeleton className="h-4 w-16 rounded" />
+                <HeroSkeleton className="h-4 w-24 rounded" />
+                <span className="flex-1" />
+            </>
+        )
         return (
             <div data-anat-part={anatPart} className="border-b border-default bg-surface">
-                <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <HeroSkeleton className="h-4 w-16 rounded" />
-                    <HeroSkeleton className="h-4 w-24 rounded" />
-                    <span className="flex-1" />
-                </StackH>
+                <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={skeletonRow} />
                 <div className="p-2">
                     <HeroSkeleton className="h-1 w-full rounded-full" />
                 </div>
@@ -117,61 +120,65 @@ const WorkSessionHeader = ({
     }
     const done = new Set(doneSteps ?? [])
 
+    const headerRow = (
+        <>
+            <LinkBack label={backLabel} onPress={onBack} anatPart={showAnatomy ? "LinkBack" : undefined} />
+            {title != null ? (
+                <Typography size="sm" weight="bold" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : null}
+            <Typography size="sm" color="muted" text={counter} anatPart={showAnatomy ? "Typography" : undefined} />
+            {timeLeft != null ? (
+                <Typography size="sm" weight="medium" text={timeLeft} tabularNums anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : null}
+            <span className="flex-1" />
+            {onFinish != null && finishLabel != null ? (
+                // AUDIT 2026-07-30 (QuizPage feedback, B2b): "END IT NOW" (dòng 20) là hành
+                // động chấm dứt phiên giữa chừng — thầy chốt `danger-soft` thay vì `secondary`
+                // trung tính đang có trước đó.
+                <Button label={finishLabel} variant="danger-soft" size="sm" onPress={onFinish} anatPart={showAnatomy ? "Button" : undefined} />
+            ) : null}
+        </>
+    )
+
+    // `total` is REQUIRED whenever `isSkeleton` is false (discriminated union
+    // above) — already guaranteed by the early return at `isSkeleton`; the
+    // `?? 0` only satisfies narrowing across the destructure, never actually fires.
+    const railSegments = Array.from({ length: total ?? 0 }, (_, index) => {
+        const step = index + 1
+        const isDone = done.has(step)
+        const isCurrent = step === current
+        const segment = (
+            <span
+                className={cn(
+                    "block w-full rounded-full",
+                    // TALLER means VIEWING; FILLED means GRADED. Two signals, and
+                    // neither is allowed to overwrite the other.
+                    isCurrent ? "h-1.5" : "h-1",
+                    isDone ? "bg-success" : "bg-default",
+                )}
+            />
+        )
+        return onStepPress != null ? (
+            <button
+                key={step}
+                type="button"
+                aria-label={`${counter} — ${step}`}
+                className="flex-1 py-2"
+                onClick={() => onStepPress(step)}
+            >
+                {segment}
+            </button>
+        ) : (
+            <span key={step} className="flex-1 py-2">{segment}</span>
+        )
+    })
+
     return (
         <div data-anat-part={anatPart} className="border-b border-default bg-surface">
-            <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                <LinkBack label={backLabel} onPress={onBack} anatPart={showAnatomy ? "LinkBack" : undefined} />
-                {title != null ? (
-                    <Typography size="sm" weight="bold" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
-                ) : null}
-                <Typography size="sm" color="muted" text={counter} anatPart={showAnatomy ? "Typography" : undefined} />
-                {timeLeft != null ? (
-                    <Typography size="sm" weight="medium" text={timeLeft} tabularNums anatPart={showAnatomy ? "Typography" : undefined} />
-                ) : null}
-                <span className="flex-1" />
-                {onFinish != null && finishLabel != null ? (
-                    // AUDIT 2026-07-30 (QuizPage feedback, B2b): "END IT NOW" (dòng 20) là hành
-                    // động chấm dứt phiên giữa chừng — thầy chốt `danger-soft` thay vì `secondary`
-                    // trung tính đang có trước đó.
-                    <Button label={finishLabel} variant="danger-soft" size="sm" onPress={onFinish} anatPart={showAnatomy ? "Button" : undefined} />
-                ) : null}
-            </StackH>
+            <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={headerRow} />
             {/* The rail. Segments are laid out by a frame so the seam stays on scale; each
                 segment carries its own hit zone, because a 4px bar is not a touch target. */}
-            <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                {/* `total` is REQUIRED whenever `isSkeleton` is false (discriminated union
-                    above) — already guaranteed by the early return at `isSkeleton`; the
-                    `?? 0` only satisfies narrowing across the destructure, never actually fires. */}
-                {Array.from({ length: total ?? 0 }, (_, index) => {
-                    const step = index + 1
-                    const isDone = done.has(step)
-                    const isCurrent = step === current
-                    const segment = (
-                        <span
-                            className={cn(
-                                "block w-full rounded-full",
-                                // TALLER means VIEWING; FILLED means GRADED. Two signals, and
-                                // neither is allowed to overwrite the other.
-                                isCurrent ? "h-1.5" : "h-1",
-                                isDone ? "bg-success" : "bg-default",
-                            )}
-                        />
-                    )
-                    return onStepPress != null ? (
-                        <button
-                            key={step}
-                            type="button"
-                            aria-label={`${counter} — ${step}`}
-                            className="flex-1 py-2"
-                            onClick={() => onStepPress(step)}
-                        >
-                            {segment}
-                        </button>
-                    ) : (
-                        <span key={step} className="flex-1 py-2">{segment}</span>
-                    )
-                })}
-            </StackH>
+            <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={railSegments} />
         </div>
     )
 }

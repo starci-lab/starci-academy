@@ -136,14 +136,19 @@ export interface ModulePageProps {
  * anatomy tree wearing the other's name.
  */
 const ModulePageEmpty = () => (
-    <Container anatPart="Container" size="md" padding="roomy">
-        <AsyncContentEmpty
-            anatPart="AsyncContentEmpty"
-            icon={StackIcon}
-            title="Chương này chưa có bài học nào"
-            description="Nội dung đang được biên soạn — quay lại sau nhé."
-        />
-    </Container>
+    <Container
+        anatPart="Container"
+        size="md"
+        padding="roomy"
+        body={
+            <AsyncContentEmpty
+                anatPart="AsyncContentEmpty"
+                icon={StackIcon}
+                title="Chương này chưa có bài học nào"
+                description="Nội dung đang được biên soạn — quay lại sau nhé."
+            />
+        }
+    />
 )
 
 /**
@@ -189,74 +194,80 @@ const ModulePage = ({
         return <ModulePageEmpty />
     }
 
-    return (
-        <Container size="md" padding="roomy" anatPart={showAnatomy ? "Container" : undefined}>
-            <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined}>
-                <ModuleHeader
-                    anatPart="ModuleHeader"
-                    breadcrumbItems={breadcrumbItems}
-                    title={title}
-                    description={description}
-                    tier={tier}
-                    lessonCount={lessonCount}
-                    minutesTotal={minutesTotal}
-                    challengeCount={challengeCount}
+    const moduleContent = (
+        <>
+            <ModuleContinueBand
+                anatPart="ModuleContinueBand"
+                resumeLessonTitle={resumeLessonTitle}
+                lessonsRead={lessonsRead}
+                lessonsTotal={lessonsTotal}
+                challengesDone={challengesDone}
+                challengesTotal={challengesTotal}
+                onResume={onResume}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <ModuleLessonList
+                anatPart="ModuleLessonList"
+                lessons={lessons}
+                resumeLessonId={resumeLessonId}
+                onSelectLesson={onSelectLesson}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            {/* A count of zero is not news (`ModuleHeader`/`ContentModeNav` idiom) —
+            extended here to a whole block's presence: a module with no challenges
+            yet does not earn an empty challenge list on its own page. */}
+            {isSkeleton || challenges.length > 0 ? (
+                <ModuleChallengeList
+                    anatPart="ModuleChallengeList"
+                    challenges={challenges}
+                    onSelectChallenge={onSelectChallenge}
                     isSkeleton={isSkeleton}
                     showAnatomy={showAnatomy}
                 />
-                {isLocked ? (
-                    <ContentPaywall
-                        anatPart="ContentPaywall"
-                        title={paywallTitle ?? ""}
-                        description={paywallDescription}
-                        discountedPriceVnd={discountedPriceVnd ?? 0}
-                        originalPriceVnd={originalPriceVnd}
-                        currentPhase={currentPhase}
-                        seatsRemaining={seatsRemaining}
-                        nextPhasePriceVnd={nextPhasePriceVnd}
-                        ctaLabel={paywallCtaLabel ?? ""}
-                        onPurchase={onPurchase ?? (() => {})}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                ) : (
-                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <ModuleContinueBand
-                            anatPart="ModuleContinueBand"
-                            resumeLessonTitle={resumeLessonTitle}
-                            lessonsRead={lessonsRead}
-                            lessonsTotal={lessonsTotal}
-                            challengesDone={challengesDone}
-                            challengesTotal={challengesTotal}
-                            onResume={onResume}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <ModuleLessonList
-                            anatPart="ModuleLessonList"
-                            lessons={lessons}
-                            resumeLessonId={resumeLessonId}
-                            onSelectLesson={onSelectLesson}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        {/* A count of zero is not news (`ModuleHeader`/`ContentModeNav` idiom) —
-                        extended here to a whole block's presence: a module with no challenges
-                        yet does not earn an empty challenge list on its own page. */}
-                        {isSkeleton || challenges.length > 0 ? (
-                            <ModuleChallengeList
-                                anatPart="ModuleChallengeList"
-                                challenges={challenges}
-                                onSelectChallenge={onSelectChallenge}
-                                isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
-                            />
-                        ) : null}
-                    </StackV>
-                )}
-            </StackV>
-        </Container>
+            ) : null}
+        </>
     )
+
+    const moduleSections = (
+        <>
+            <ModuleHeader
+                anatPart="ModuleHeader"
+                breadcrumbItems={breadcrumbItems}
+                title={title}
+                description={description}
+                tier={tier}
+                lessonCount={lessonCount}
+                minutesTotal={minutesTotal}
+                challengeCount={challengeCount}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            {isLocked ? (
+                <ContentPaywall
+                    anatPart="ContentPaywall"
+                    title={paywallTitle ?? ""}
+                    description={paywallDescription}
+                    discountedPriceVnd={discountedPriceVnd ?? 0}
+                    originalPriceVnd={originalPriceVnd}
+                    currentPhase={currentPhase}
+                    seatsRemaining={seatsRemaining}
+                    nextPhasePriceVnd={nextPhasePriceVnd}
+                    ctaLabel={paywallCtaLabel ?? ""}
+                    onPurchase={onPurchase ?? (() => {})}
+                    isSkeleton={isSkeleton}
+                    showAnatomy={showAnatomy}
+                />
+            ) : (
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={moduleContent} />
+            )}
+        </>
+    )
+
+    const moduleBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={moduleSections} />
+
+    return <Container size="md" padding="roomy" anatPart={showAnatomy ? "Container" : undefined} body={moduleBody} />
 }
 
 export { ModulePage }

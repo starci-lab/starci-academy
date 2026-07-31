@@ -80,36 +80,39 @@ const ProfileLockedState = ({
     className,
     anatPart,
     showAnatomy = false,
-}: ProfileLockedStateProps) => (
-    <StackV gap="section" padding="roomy" className={className} anatPart={anatPart}>
-        {/* No `anatPart` here (yet, deliberately): `ProfileHero` has no story of its own at
-            the time of writing, so `check-orphan-parts` treats a badge with no `storyId` to
-            point to as worse than no badge at all — declare it here the moment that story
-            lands, rather than pre-badging a link that goes nowhere. */}
-        <ProfileHero
-            user={user}
-            showAnatomy={showAnatomy}
-        />
-        <SurfaceCard
-            padding="airy"
-            showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
-        >
-            <FeedbackEmpty
-                icon={LockIcon}
-                title="Hồ sơ này đang ở chế độ riêng tư"
-                description="Chủ hồ sơ đã ẩn hoạt động công khai — bạn vẫn có thể khám phá các khoá học khác."
-                anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+}: ProfileLockedStateProps) => {
+    // No `anatPart` here (yet, deliberately): `ProfileHero` has no story of its own at
+    // the time of writing, so `check-orphan-parts` treats a badge with no `storyId` to
+    // point to as worse than no badge at all — declare it here the moment that story
+    // lands, rather than pre-badging a link that goes nowhere.
+    const lockedBody = (
+        <>
+            <ProfileHero
+                user={user}
+                showAnatomy={showAnatomy}
+            />
+            <SurfaceCard
+                padding="airy"
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
             >
-                <Button
-                    label="Xem khoá học"
-                    variant="primary"
-                    onPress={onGoCourses}
-                    anatPart={showAnatomy ? "Button" : undefined}
-                />
-            </FeedbackEmpty>
-        </SurfaceCard>
-    </StackV>
-)
+                <FeedbackEmpty
+                    icon={LockIcon}
+                    title="Hồ sơ này đang ở chế độ riêng tư"
+                    description="Chủ hồ sơ đã ẩn hoạt động công khai — bạn vẫn có thể khám phá các khoá học khác."
+                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+                >
+                    <Button
+                        label="Xem khoá học"
+                        variant="primary"
+                        onPress={onGoCourses}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                </FeedbackEmpty>
+            </SurfaceCard>
+        </>
+    )
+    return <StackV gap="section" padding="roomy" className={className} anatPart={anatPart} body={lockedBody} />
+}
 
 export { ProfileLockedState }

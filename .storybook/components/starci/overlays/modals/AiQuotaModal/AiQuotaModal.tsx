@@ -191,8 +191,8 @@ const AiQuotaModal = ({
     // Typography node, so a second element beside it (the chip) has to compose its own
     // wrapper — which then owns its own `pr-8` for the close button, per ModalShell's
     // caller-built-header contract.
-    const header = (
-        <StackH gap="related" align="center" className="pr-8" anatPart={showAnatomy ? "StackH" : undefined}>
+    const titleAndTierChip = (
+        <>
             <Typography
                 size="base"
                 weight="bold"
@@ -202,7 +202,17 @@ const AiQuotaModal = ({
             {tier != null ? (
                 <Chip tone="accent" text={TIER_LABEL[tier]} anatPart={showAnatomy ? "Chip" : undefined} />
             ) : null}
-        </StackH>
+        </>
+    )
+
+    const header = (
+        <StackH
+            gap="related"
+            align="center"
+            className="pr-8"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={titleAndTierChip}
+        />
     )
 
     // The one panel slot, filled by whichever sibling block the active tab names. The wrapper
@@ -233,6 +243,22 @@ const AiQuotaModal = ({
             />
         )
 
+    const tabsAndPanel = (
+        <>
+            {/* Tabs (atom) carries no `anatPart` prop of its own (unlike Typography/Chip) —
+                same wrapping convention `ContentModeNav` uses around its `Toolbar`. */}
+            <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
+                <Tabs
+                    items={TAB_ITEMS}
+                    selectedKey={activeTab}
+                    onSelectionChange={(key) => onTabChange(key as AiQuotaModalTab)}
+                    ariaLabel="Mức sử dụng AI"
+                />
+            </div>
+            {panel}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <ModalShell
@@ -252,19 +278,7 @@ const AiQuotaModal = ({
                 }
                 showAnatomy={showAnatomy}
             >
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    {/* Tabs (atom) carries no `anatPart` prop of its own (unlike Typography/Chip) —
-                        same wrapping convention `ContentModeNav` uses around its `Toolbar`. */}
-                    <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
-                        <Tabs
-                            items={TAB_ITEMS}
-                            selectedKey={activeTab}
-                            onSelectionChange={(key) => onTabChange(key as AiQuotaModalTab)}
-                            ariaLabel="Mức sử dụng AI"
-                        />
-                    </div>
-                    {panel}
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={tabsAndPanel} />
             </ModalShell>
         </div>
     )

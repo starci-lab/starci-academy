@@ -132,6 +132,114 @@ const SubmissionScoreCard = ({
     // so there is nothing left to need.
     const pointsNeeded = !isPassing && passScore != null ? Math.max(passScore - score, 0) : null
 
+    const scoreRow = (
+        <>
+            <Typography
+                size="h2"
+                weight="bold"
+                tabularNums
+                color={verdictTone}
+                isSkeleton={isSkeleton}
+                text={String(score)}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            {maxScore != null ? (
+                <Typography
+                    size="sm"
+                    color="muted"
+                    tabularNums
+                    isSkeleton={isSkeleton}
+                    text={`/ ${maxScore}`}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+            <Chip
+                tone={verdictTone}
+                icon={isPassing ? CheckCircleIcon : XCircleIcon}
+                text={isPassing ? "Đạt" : "Chưa đạt"}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "Chip" : undefined}
+            />
+        </>
+    )
+
+    const modelByline = gradedByModel != null ? (
+        <StackH
+            gap="related"
+            align="center"
+            wrap
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <InlineIconLabel
+                        icon={<SparkleIcon aria-hidden focusable="false" />}
+                        tone="default"
+                        size="xs"
+                        isSkeleton={isSkeleton}
+                        anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+                    >
+                        {`${gradedByLabel ?? "Đã chấm bởi"} ${gradedByModel}`}
+                    </InlineIconLabel>
+                    {modelCategory != null ? (
+                        <EnumChip
+                            value={modelCategory}
+                            map={MODEL_CATEGORY_MAP}
+                            isSkeleton={isSkeleton}
+                            anatPart={showAnatomy ? "EnumChip" : undefined}
+                        />
+                    ) : null}
+                    {timeAgo != null ? (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text={timeAgo}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    ) : null}
+                </>
+            }
+        />
+    ) : null
+
+    const scoreSummary = (
+        <>
+            <StackH gap="grouped" align="baseline" wrap anatPart={showAnatomy ? "StackH" : undefined} body={scoreRow} />
+
+            {pointsNeeded != null && pointsNeeded > 0 ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    isSkeleton={isSkeleton}
+                    text={`Cần thêm ${pointsNeeded} điểm để đạt mốc ${passScore} điểm`}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+
+            {shortFeedback != null ? (
+                <Typography
+                    size="sm"
+                    isSkeleton={isSkeleton}
+                    text={shortFeedback}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+
+            {submissionUrl != null ? (
+                <Typography
+                    size="sm"
+                    isLink
+                    href={submissionUrl}
+                    isSkeleton={isSkeleton}
+                    text={submissionLabel ?? "Xem bài nộp"}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+
+            {modelByline}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <SurfaceCard
@@ -139,97 +247,7 @@ const SubmissionScoreCard = ({
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "SurfaceCard" : undefined}
             >
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <StackH gap="grouped" align="baseline" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                        <Typography
-                            size="h2"
-                            weight="bold"
-                            tabularNums
-                            color={verdictTone}
-                            isSkeleton={isSkeleton}
-                            text={String(score)}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                        {maxScore != null ? (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                tabularNums
-                                isSkeleton={isSkeleton}
-                                text={`/ ${maxScore}`}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        ) : null}
-                        <Chip
-                            tone={verdictTone}
-                            icon={isPassing ? CheckCircleIcon : XCircleIcon}
-                            text={isPassing ? "Đạt" : "Chưa đạt"}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Chip" : undefined}
-                        />
-                    </StackH>
-
-                    {pointsNeeded != null && pointsNeeded > 0 ? (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            isSkeleton={isSkeleton}
-                            text={`Cần thêm ${pointsNeeded} điểm để đạt mốc ${passScore} điểm`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    ) : null}
-
-                    {shortFeedback != null ? (
-                        <Typography
-                            size="sm"
-                            isSkeleton={isSkeleton}
-                            text={shortFeedback}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    ) : null}
-
-                    {submissionUrl != null ? (
-                        <Typography
-                            size="sm"
-                            isLink
-                            href={submissionUrl}
-                            isSkeleton={isSkeleton}
-                            text={submissionLabel ?? "Xem bài nộp"}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    ) : null}
-
-                    {gradedByModel != null ? (
-                        <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                            <InlineIconLabel
-                                icon={<SparkleIcon aria-hidden focusable="false" />}
-                                tone="default"
-                                size="xs"
-                                isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-                            >
-                                {`${gradedByLabel ?? "Đã chấm bởi"} ${gradedByModel}`}
-                            </InlineIconLabel>
-                            {modelCategory != null ? (
-                                <EnumChip
-                                    value={modelCategory}
-                                    map={MODEL_CATEGORY_MAP}
-                                    isSkeleton={isSkeleton}
-                                    anatPart={showAnatomy ? "EnumChip" : undefined}
-                                />
-                            ) : null}
-                            {timeAgo != null ? (
-                                <Typography
-                                    size="xs"
-                                    color="muted"
-                                    isSkeleton={isSkeleton}
-                                    text={timeAgo}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
-                                />
-                            ) : null}
-                        </StackH>
-                    ) : null}
-                </StackV>
+                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={scoreSummary} />
             </SurfaceCard>
         </div>
     )

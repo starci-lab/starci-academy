@@ -248,26 +248,30 @@ const MindMapRail = ({
         />
     )
 
-    return (
-        <StackV gap="related" anatPart={anatPart}>
-            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
-                    <InputSearch
-                        value={query}
-                        onValueChange={onQuery}
-                        placeholder={SEARCH_PLACEHOLDER}
-                        ariaLabel={ariaLabel}
-                        showAnatomy={showAnatomy}
-                    />
-                </div>
-                <div data-anat-part={showAnatomy ? (isFiltered ? "Badge" : "Popover") : undefined}>
-                    {/* `Badge` only wraps the trigger when a non-default tier is active — `dot` has
-                        no built-in "hide me" reading the way `count` does (§ Badge file header: count
-                        ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
-                        block's own condition instead of a prop the atom could resolve alone. */}
-                    {isFiltered ? <Badge dot showAnatomy={showAnatomy}>{filterTrigger}</Badge> : filterTrigger}
-                </div>
-            </StackH>
+    const searchRow = (
+        <>
+            <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
+                <InputSearch
+                    value={query}
+                    onValueChange={onQuery}
+                    placeholder={SEARCH_PLACEHOLDER}
+                    ariaLabel={ariaLabel}
+                    showAnatomy={showAnatomy}
+                />
+            </div>
+            <div data-anat-part={showAnatomy ? (isFiltered ? "Badge" : "Popover") : undefined}>
+                {/* `Badge` only wraps the trigger when a non-default tier is active — `dot` has
+                    no built-in "hide me" reading the way `count` does (§ Badge file header: count
+                    ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
+                    block's own condition instead of a prop the atom could resolve alone. */}
+                {isFiltered ? <Badge dot showAnatomy={showAnatomy}>{filterTrigger}</Badge> : filterTrigger}
+            </div>
+        </>
+    )
+
+    const railBody = (
+        <>
+            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined} body={searchRow} />
             <AsyncContent
                 isLoading={isLoading || isSkeleton}
                 skeleton={<SurfaceCardList items={skeletonRows()} isSkeleton anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
@@ -276,8 +280,10 @@ const MindMapRail = ({
                 showAnatomy={showAnatomy}
                 content={<SurfaceCardList items={rows} anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
             />
-        </StackV>
+        </>
     )
+
+    return <StackV gap="related" anatPart={anatPart} body={railBody} />
 }
 
 export { MindMapRail }

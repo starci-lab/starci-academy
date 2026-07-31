@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { PADDING_CLASS, type InsetScale } from "@sb-components/frames/_spacing"
 
 /**
@@ -101,10 +102,8 @@ export interface ContainerBaseProps {
      * A measure now owns exactly one thing: how wide the reading column is.
      */
     body?: ReactNode
-    /** Shorthand for {@link ContainerBaseProps.body}. */
-    children?: ReactNode
-    /** Extra class for the measure. */
-    className?: string
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
     /**
      * Name THIS measure itself in the BlockAnatomy panel, so a PARENT composition can badge
      * it as one node (§11a.1) — exactly `SurfaceCard.*`'s own contract: no default guess, the
@@ -116,19 +115,13 @@ export interface ContainerBaseProps {
      * "badge that leads nowhere" the anatomy gate exists to catch.
      */
     anatPart?: string
-    /**
-     * `true` → each region emits `data-anat-part` so the BlockAnatomy panel can attach
-     * a badge. Off in production.
-     */
-    showAnatomy?: boolean
 }
 
 /**
  * Content measure: centered, width-capped by `size`, self-padding, and OPENS
  * `@container` so every `@app-*` inside measures itself (see header).
  *
- * With no `header` and no `footer`, `body` renders RAW — a children-only call gets
- * the minimal DOM tree, no extra wrapping `div`.
+ * With no `header` and no `footer`, `body` renders RAW — no extra wrapping `div`.
  *
  * @param props - {@link ContainerBaseProps}
  */
@@ -136,16 +129,9 @@ const ContainerBase = ({
     size = "md",
     padding = "roomy",
     body,
-    children,
-    className,
+    classNames,
     anatPart,
-    showAnatomy = false,
 }: ContainerBaseProps) => {
-    // ONE region, rendered RAW. No wrapper div, so the measure adds no node of its own
-    // and whatever the caller nests (usually a `StackV`) owns the rhythm — §10a, one
-    // seam one owner.
-    const content = body ?? children
-
     return (
         // TWO layers, not one (thầy 2026-07-29, "desktop là phải render flex chứ
         // nhỉ?" — traced to here). A `@container` measures its QUERY CONTAINER'S
@@ -165,11 +151,11 @@ const ContainerBase = ({
             className={cn(
                 "@container mx-auto w-full",
                 SIZE_CLASS[size],
-                className,
+                classNames,
             )}
         >
             <div className={PADDING_CLASS[padding]}>
-                {content}
+                {body}
             </div>
         </div>
     )

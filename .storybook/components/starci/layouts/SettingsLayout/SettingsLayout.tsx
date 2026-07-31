@@ -52,8 +52,8 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * CONTENT COLUMN = `Container` DEFAULTS. `size="md"` is `max-w-app-md`
  * (48rem, the same measure `max-w-3xl` names, see `Container`'s own file
  * header) and `padding="roomy"` is `p-6` — exactly the "p-6/max-w-3xl" the
- * spec calls for, with no hand-written class needed. `className="min-w-0
- * flex-1"` is placement (letting the column claim the row's remaining width
+ * spec calls for, with no hand-written class needed. `classNames={["min-w-0",
+ * "flex-1"]}` is placement (letting the column claim the row's remaining width
  * once the nav's own fixed rail has taken its share) — not a seam, so it
  * does not trip `check-seams`' hand-rolled-layout rule (no `gap-*` alongside
  * `flex`).
@@ -109,14 +109,9 @@ const SettingsLayout = ({
     storageKey,
     showAnatomy = false,
     anatPart,
-}: SettingsLayoutProps) => (
-    <div data-anat-part={anatPart}>
-        <StackV
-            gap="flush"
-            className="@app-md:flex-row @app-md:items-start"
-            anatPart={showAnatomy ? "StackV" : undefined}
-            showAnatomy={showAnatomy}
-        >
+}: SettingsLayoutProps) => {
+    const navAndContent = (
+        <>
             <SettingsSidebarNav
                 anatPart={showAnatomy ? "SettingsSidebarNav" : undefined}
                 groups={groups}
@@ -126,19 +121,27 @@ const SettingsLayout = ({
                 collapseLabel={collapseLabel}
                 expandLabel={expandLabel}
                 storageKey={storageKey}
-                showAnatomy={showAnatomy}
             />
             <Container
                 anatPart={showAnatomy ? "Container" : undefined}
                 size="md"
                 padding="roomy"
-                className="min-w-0 flex-1"
-                showAnatomy={showAnatomy}
-            >
-                {children}
-            </Container>
-        </StackV>
-    </div>
-)
+                classNames={["min-w-0", "flex-1"]}
+                body={children}
+            />
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <StackV
+                gap="flush"
+                className="@app-md:flex-row @app-md:items-start"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={navAndContent}
+            />
+        </div>
+    )
+}
 
 export { SettingsLayout }

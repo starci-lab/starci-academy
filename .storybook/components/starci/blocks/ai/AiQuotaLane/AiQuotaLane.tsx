@@ -76,26 +76,28 @@ const AiQuotaLane = ({ data, isLoading, showAnatomy = false, anatPart }: AiQuota
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                <QuotaBar
-                    label="Trong 5 giờ"
-                    used={data?.window5h.used ?? 0}
-                    limit={data?.window5h.limit ?? 0}
-                    resetLabel={data?.window5h.resetLabel}
-                    isSkeleton={showSkeleton}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "QuotaBar" : undefined}
-                />
-                <QuotaBar
-                    label="Trong 7 ngày"
-                    used={data?.windowWeek.used ?? 0}
-                    limit={data?.windowWeek.limit ?? 0}
-                    resetLabel={data?.windowWeek.resetLabel}
-                    isSkeleton={showSkeleton}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "QuotaBar" : undefined}
-                />
-            </StackV>
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={
+                <>
+                    <QuotaBar
+                        label="Trong 5 giờ"
+                        used={data?.window5h.used ?? 0}
+                        limit={data?.window5h.limit ?? 0}
+                        resetLabel={data?.window5h.resetLabel}
+                        isSkeleton={showSkeleton}
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "QuotaBar" : undefined}
+                    />
+                    <QuotaBar
+                        label="Trong 7 ngày"
+                        used={data?.windowWeek.used ?? 0}
+                        limit={data?.windowWeek.limit ?? 0}
+                        resetLabel={data?.windowWeek.resetLabel}
+                        isSkeleton={showSkeleton}
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "QuotaBar" : undefined}
+                    />
+                </>
+            } />
         </div>
     )
 }

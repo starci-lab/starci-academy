@@ -65,9 +65,9 @@ const PlaygroundHubPage = ({
     exerciseGridAriaLabel,
     isSkeleton = false,
     showAnatomy = false,
-}: PlaygroundHubPageProps) => (
-    <Container size="md" padding="roomy">
-        <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+}: PlaygroundHubPageProps) => {
+    const hubSection = (
+        <>
             <PlaygroundHubHeader
                 anatPart="PlaygroundHubHeader"
                 title={title}
@@ -83,8 +83,16 @@ const PlaygroundHubPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-        </StackV>
-    </Container>
-)
+        </>
+    )
+
+    return (
+        <Container
+            size="md"
+            padding="roomy"
+            body={<StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={hubSection} />}
+        />
+    )
+}
 
 export { PlaygroundHubPage }

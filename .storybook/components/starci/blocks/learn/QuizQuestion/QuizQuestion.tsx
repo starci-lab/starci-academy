@@ -91,83 +91,122 @@ const QuizQuestion = ({
 }: QuizQuestionProps) => {
     const isGraded = verdict != null
 
+    const levelRow = levelLabel != null ? (
+        <StackH
+            gap="related"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={<Chip tone="default" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />}
+        />
+    ) : null
+
+    const expectedAnswerBlock = expectedAnswer != null ? (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography size="sm" weight="medium" text="Đáp án mong đợi" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <MarkdownContent
+                        source={expectedAnswer}
+                        measure="compact"
+                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                    />
+                </>
+            }
+        />
+    ) : null
+
+    const gradedDetails = isGraded ? (
+        <StackV
+            gap="section"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <StackH
+                        gap="related"
+                        align="center"
+                        anatPart={showAnatomy ? "StackH" : undefined}
+                        body={
+                            // One chip for the classifying axis. The reasoning below is an
+                            // ordinary document — two loud signals and the learner reads the
+                            // verdict twice.
+                            <Chip
+                                tone={verdict === "correct" ? "success" : "danger"}
+                                icon={verdict === "correct" ? CheckCircleIcon : XCircleIcon}
+                                text={verdict === "correct" ? "Đúng" : "Chưa đúng"}
+                                anatPart={showAnatomy ? "Chip" : undefined}
+                            />
+                        }
+                    />
+                    {expectedAnswerBlock}
+                    {explanation != null ? (
+                        <MarkdownContent
+                            source={explanation}
+                            measure="compact"
+                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                        />
+                    ) : null}
+                </>
+            }
+        />
+    ) : null
+
+    const actionRow = (
+        <StackH
+            gap="related"
+            justify="end"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                isGraded ? (
+                    <Button label={nextLabel} variant="primary" onPress={onNext} anatPart={showAnatomy ? "Button" : undefined} />
+                ) : (
+                    <Button
+                        label={submitLabel}
+                        variant="primary"
+                        onPress={onSubmit}
+                        isDisabled={answer.trim().length === 0}
+                        isPending={isPending}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                )
+            }
+        />
+    )
+
+    const questionBody = (
+        <>
+            {levelRow}
+
+            <MarkdownContent
+                source={question}
+                measure="reading"
+                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+            />
+
+            {/* Read-only rather than emptied: the whole value of a drill is comparing
+                what you SAID with what was expected, and clearing the field takes that
+                comparison away exactly when it becomes useful. */}
+            <InputTextarea
+                value={answer}
+                onValueChange={onAnswerChange}
+                placeholder="Trả lời như đang nói với người phỏng vấn"
+                ariaLabel="Câu trả lời"
+                rows={4}
+                isDisabled={isGraded}
+                showAnatomy={showAnatomy}
+            />
+
+            {gradedDetails}
+
+            {actionRow}
+        </>
+    )
+
     return (
         <div data-anat-part={anatPart}>
             <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    {levelLabel != null ? (
-                        <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <Chip tone="default" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />
-                        </StackH>
-                    ) : null}
-
-                    <MarkdownContent
-                        source={question}
-                        measure="reading"
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                    />
-
-                    {/* Read-only rather than emptied: the whole value of a drill is comparing
-                        what you SAID with what was expected, and clearing the field takes that
-                        comparison away exactly when it becomes useful. */}
-                    <InputTextarea
-                        value={answer}
-                        onValueChange={onAnswerChange}
-                        placeholder="Trả lời như đang nói với người phỏng vấn"
-                        ariaLabel="Câu trả lời"
-                        rows={4}
-                        isDisabled={isGraded}
-                        showAnatomy={showAnatomy}
-                    />
-
-                    {isGraded ? (
-                        <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                            <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                {/* One chip for the classifying axis. The reasoning below is an
-                                    ordinary document — two loud signals and the learner reads
-                                    the verdict twice. */}
-                                <Chip
-                                    tone={verdict === "correct" ? "success" : "danger"}
-                                    icon={verdict === "correct" ? CheckCircleIcon : XCircleIcon}
-                                    text={verdict === "correct" ? "Đúng" : "Chưa đúng"}
-                                    anatPart={showAnatomy ? "Chip" : undefined}
-                                />
-                            </StackH>
-                            {expectedAnswer != null ? (
-                                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                                    <Typography size="sm" weight="medium" text="Đáp án mong đợi" anatPart={showAnatomy ? "Typography" : undefined} />
-                                    <MarkdownContent
-                                        source={expectedAnswer}
-                                        measure="compact"
-                                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                                    />
-                                </StackV>
-                            ) : null}
-                            {explanation != null ? (
-                                <MarkdownContent
-                                    source={explanation}
-                                    measure="compact"
-                                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                                />
-                            ) : null}
-                        </StackV>
-                    ) : null}
-
-                    <StackH gap="related" justify="end" anatPart={showAnatomy ? "StackH" : undefined}>
-                        {isGraded ? (
-                            <Button label={nextLabel} variant="primary" onPress={onNext} anatPart={showAnatomy ? "Button" : undefined} />
-                        ) : (
-                            <Button
-                                label={submitLabel}
-                                variant="primary"
-                                onPress={onSubmit}
-                                isDisabled={answer.trim().length === 0}
-                                isPending={isPending}
-                                anatPart={showAnatomy ? "Button" : undefined}
-                            />
-                        )}
-                    </StackH>
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={questionBody} />
             </SurfaceCard>
         </div>
     )

@@ -109,11 +109,16 @@ const composeSlots = ({ header, body, footer, children }: SlotProps): ReactNode 
         return main
     }
     return (
-        <StackV gap="grouped">
-            {header != null ? <div>{header}</div> : null}
-            {main != null ? <div>{main}</div> : null}
-            {footer != null ? <div>{footer}</div> : null}
-        </StackV>
+        <StackV
+            gap="grouped"
+            body={
+                <>
+                    {header != null ? <div>{header}</div> : null}
+                    {main != null ? <div>{main}</div> : null}
+                    {footer != null ? <div>{footer}</div> : null}
+                </>
+            }
+        />
     )
 }
 /**
@@ -349,13 +354,26 @@ const Base = ({
     // render, not an empty box.
     if (isSkeleton && Boolean(onPress || href)) {
         return (
-            <StackH gap="grouped" padding="cozy" className={cn("rounded-3xl bg-surface shadow-surface", className)}>
-                <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
-                <StackV gap="related" className="min-w-0 flex-1">
-                    <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
-                    <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-                </StackV>
-            </StackH>
+            <StackH
+                gap="grouped"
+                padding="cozy"
+                className={cn("rounded-3xl bg-surface shadow-surface", className)}
+                body={
+                    <>
+                        <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
+                        <StackV
+                            gap="related"
+                            classNames={["min-w-0", "flex-1"]}
+                            body={
+                                <>
+                                    <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
+                                    <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+                                </>
+                            }
+                        />
+                    </>
+                }
+            />
         )
     }
     let card: ReactNode
@@ -443,10 +461,15 @@ const Base = ({
                     contentClassName,
                 )}
             >
-                <StackH gap="grouped">
-                    <div className="min-w-0 flex-1">{content}</div>
-                    <StackH gap="related" className="relative z-10 shrink-0">{actions}</StackH>
-                </StackH>
+                <StackH
+                    gap="grouped"
+                    body={
+                        <>
+                            <div className="min-w-0 flex-1">{content}</div>
+                            <StackH gap="related" classNames={["shrink-0"]} className="relative z-10" body={actions} />
+                        </>
+                    }
+                />
                 {href && !isDisabled ? (
                     <a href={href} data-card-press aria-label={ariaLabel} aria-current={isSelected ? "true" : undefined} className={overlayCls} />
                 ) : (
@@ -481,10 +504,15 @@ const Base = ({
     // thẳng xuống làm prop, không branching hai component.
     const caption = <RichText size="body-xs" color="muted" isSkeleton={isSkeleton} text={description ?? ""} />
     const cardWithCaption = description != null ? (
-        <StackV gap="related">
-            {highlighted}
-            {showAnatomy ? <div data-anat-part="RichText">{caption}</div> : caption}
-        </StackV>
+        <StackV
+            gap="related"
+            body={
+                <>
+                    {highlighted}
+                    {showAnatomy ? <div data-anat-part="RichText">{caption}</div> : caption}
+                </>
+            }
+        />
     ) : highlighted
     const labelRow = (
         <SurfaceCardHeader
@@ -588,19 +616,25 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
     const interactive = Boolean(onPress || href)
     // §10: parent owns the gap (tight) — eyebrow/title/content no longer self-margin.
     const body = (
-        <StackV gap="tight" className="min-w-0">
-            {eyebrow ? (
-                <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
-            ) : null}
-            <Typography size="sm"
-                weight="medium"
-                truncate
-                isSkeleton={isSkeleton}
-                underlineOnGroupHover={interactive}
-                text={title}
-            />
-            {content ? <div>{content}</div> : null}
-        </StackV>
+        <StackV
+            gap="tight"
+            classNames={["min-w-0"]}
+            body={
+                <>
+                    {eyebrow ? (
+                        <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
+                    ) : null}
+                    <Typography size="sm"
+                        weight="medium"
+                        truncate
+                        isSkeleton={isSkeleton}
+                        underlineOnGroupHover={interactive}
+                        text={title}
+                    />
+                    {content ? <div>{content}</div> : null}
+                </>
+            }
+        />
     )
     if (href) {
         return (
@@ -685,18 +719,33 @@ const Nested = ({
                 // covers a symmetric `p-*` step, so there is no scale value for a
                 // separate x/y pair — flagged to the teacher, not converted (only the
                 // `flex`/`gap` layout below is routed through the frame).
-                <StackH gap="related" justify="between" className="min-w-0 border-b border-default px-3 py-2">
-                    {header ?? (
-                        // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
-                        <StackH gap="related" className="min-w-0 text-muted [&_svg]:size-4">
-                            {icon}
-                            {isSkeleton
-                                ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-                                : <Typography size="xs" color="muted" truncate text={title} />}
-                        </StackH>
-                    )}
-                    {meta ? <span className="shrink-0">{meta}</span> : null}
-                </StackH>
+                <StackH
+                    gap="related"
+                    justify="between"
+                    classNames={["min-w-0"]}
+                    className="border-b border-default px-3 py-2"
+                    body={
+                        <>
+                            {header ?? (
+                                // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
+                                <StackH
+                                    gap="related"
+                                    classNames={["min-w-0"]}
+                                    className="text-muted [&_svg]:size-4"
+                                    body={
+                                        <>
+                                            {icon}
+                                            {isSkeleton
+                                                ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+                                                : <Typography size="xs" color="muted" truncate text={title} />}
+                                        </>
+                                    }
+                                />
+                            )}
+                            {meta ? <span className="shrink-0">{meta}</span> : null}
+                        </>
+                    }
+                />
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {footer ? (
@@ -897,11 +946,16 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
     }
     const iconSlot = <span className={ITEM_ICON_CLS}>{item.icon}</span>
     return (
-        <StackH gap="grouped">
-            {item.iconPosition === "trailing" ? null : iconSlot}
-            <div className="min-w-0 flex-1">{item.content}</div>
-            {item.iconPosition === "trailing" ? iconSlot : null}
-        </StackH>
+        <StackH
+            gap="grouped"
+            body={
+                <>
+                    {item.iconPosition === "trailing" ? null : iconSlot}
+                    <div className="min-w-0 flex-1">{item.content}</div>
+                    {item.iconPosition === "trailing" ? iconSlot : null}
+                </>
+            }
+        />
     )
 }
 /**
@@ -1142,21 +1196,9 @@ const SelectableGroup = <T extends string>({
                     content: (
                         <Radio value={item.value} isDisabled={item.isDisabled} className="w-full">
                             <Radio.Content className="block w-full">
-                                {({ isSelected, isDisabled, isFocusVisible }) => (
-                                    <Card
-                                        variant="default"
-                                        className={cn(
-                                            "w-full text-sm text-foreground transition-colors",
-                                            // selection & keyboard focus = an accent OUTLINE ring, NO
-                                            // fill / colour change. Drop the card's `shadow-surface`
-                                            // while the ring is up so the two elevations don't stack.
-                                            (isSelected || isFocusVisible) &&
-                                            "outline outline-2 outline-accent outline-offset-0 !shadow-none",
-                                            !isSelected && !isDisabled && "hover:bg-default",
-                                            isDisabled && "opacity-60",
-                                        )}
-                                    >
-                                        <StackH gap="related" className="w-full">
+                                {({ isSelected, isDisabled, isFocusVisible }) => {
+                                    const optionRow = (
+                                        <>
                                             {item.icon ? (
                                                 <span className="shrink-0" aria-hidden>
                                                     {item.icon}
@@ -1173,9 +1215,26 @@ const SelectableGroup = <T extends string>({
                                                     {item.badge}
                                                 </span>
                                             ) : null}
-                                        </StackH>
-                                    </Card>
-                                )}
+                                        </>
+                                    )
+                                    return (
+                                        <Card
+                                            variant="default"
+                                            className={cn(
+                                                "w-full text-sm text-foreground transition-colors",
+                                                // selection & keyboard focus = an accent OUTLINE ring, NO
+                                                // fill / colour change. Drop the card's `shadow-surface`
+                                                // while the ring is up so the two elevations don't stack.
+                                                (isSelected || isFocusVisible) &&
+                                                "outline outline-2 outline-accent outline-offset-0 !shadow-none",
+                                                !isSelected && !isDisabled && "hover:bg-default",
+                                                isDisabled && "opacity-60",
+                                            )}
+                                        >
+                                            <StackH gap="related" classNames={["w-full"]} body={optionRow} />
+                                        </Card>
+                                    )
+                                }}
                             </Radio.Content>
                         </Radio>
                     ),
@@ -1400,27 +1459,40 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     const content = (
         <>
             {leadingSlot ? <div className="shrink-0">{leadingSlot}</div> : null}
-            <StackV gap="flush" className="min-w-0">
-                <Typography size="sm"
-                    truncate
-                    isSkeleton={isSkeleton}
-                    underlineOnGroupHover={underlineHover}
-                    className={titleClassName}
-                    text={title}
-                />
-                {subtitle ? (
-                    <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
-                ) : null}
-            </StackV>
+            <StackV
+                gap="flush"
+                classNames={["min-w-0"]}
+                body={
+                    <>
+                        <Typography size="sm"
+                            truncate
+                            isSkeleton={isSkeleton}
+                            underlineOnGroupHover={underlineHover}
+                            className={titleClassName}
+                            text={title}
+                        />
+                        {subtitle ? (
+                            <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
+                        ) : null}
+                    </>
+                }
+            />
             {metaSlot || trailingSlot || selected ? (
-                <StackH gap="related" className="ml-auto shrink-0">
-                    {metaSlot}
-                    {trailingSlot}
-                    {/* Single-select indicator — trailing accent CheckCircleIcon (B). */}
-                    {selected ? (
-                        <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
-                    ) : null}
-                </StackH>
+                <StackH
+                    gap="related"
+                    classNames={["shrink-0"]}
+                    className="ml-auto"
+                    body={
+                        <>
+                            {metaSlot}
+                            {trailingSlot}
+                            {/* Single-select indicator — trailing accent CheckCircleIcon (B). */}
+                            {selected ? (
+                                <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
+                            ) : null}
+                        </>
+                    }
+                />
             ) : null}
         </>
     )
@@ -1517,10 +1589,15 @@ const List = ({
     // RichText, cùng lý lẽ với caption ở trên.
     const caption = <RichText size="body-xs" color="muted" isSkeleton={isSkeleton} text={description ?? ""} />
     const withCaption = description != null ? (
-        <StackV gap="related">
-            {surface}
-            <div data-anat-part={showAnatomy ? "RichText" : undefined}>{caption}</div>
-        </StackV>
+        <StackV
+            gap="related"
+            body={
+                <>
+                    {surface}
+                    <div data-anat-part={showAnatomy ? "RichText" : undefined}>{caption}</div>
+                </>
+            }
+        />
     ) : surface
     return (
         <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
@@ -1647,37 +1724,56 @@ const AccordionFrame = ({
                 >
                     <Accordion.Heading>
                         <Accordion.Trigger>
-                            <StackH gap="tight" className="min-w-0 flex-1">
-                                {item.titleStart}
-                                <StackV gap="flush" className="min-w-0 flex-1 text-left">
-                                    {/* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2, thầy chốt):
-                                        đảo quyết định 2026-07-29 — title KHÔNG render markdown, kể cả
-                                        backtick-only qua `parseInlineCode`. Title tier giờ plain TUYỆT ĐỐI. */}
-                                    <Typography size="sm" weight="medium" truncate text={item.title} />
-                                    {item.subtitle != null ? (
-                                        <Typography size="xs" color="muted" truncate text={item.subtitle} />
-                                    ) : null}
-                                </StackV>
-                            </StackH>
-                            <StackH gap="grouped" className="shrink-0">
-                                {item.titleEnd}
-                                {/* Vendor draws its OWN `IconChevronDown` glyph when this slot is left
-                                    empty (verified: `@heroui/react/dist/components/accordion/accordion.js`
-                                    — a second icon set with no `import` to grep, icon §1a.1) — override
-                                    with Phosphor. `cloneElement` keeps `data-expanded`/`data-slot` so the
-                                    180° rotation (`accordion.css` `.accordion__indicator[data-expanded]`)
-                                    still runs off the SAME class, unaffected by the swap. `cloneElement`
-                                    also REPLACES the child's own `className` with the slot's — so the
-                                    size override goes on the WRAPPER, not the icon (same convention as
-                                    `Alert.Base`'s `HeroAlert.Indicator className={GLYPH_SCALE}`).
-                                    DIV position (icon §1c/§4.2): trigger has fixed `px-4 py-4` (not
-                                    hug-content) — `text-sm` title → `size-5` line-height, not the flat
-                                    `size-4` vendor default (thầy chốt 2026-07-29). Weight omitted →
-                                    Phosphor default `regular`, correct at `size-5` (§3.2). */}
-                                <Accordion.Indicator className="size-5">
-                                    <CaretDownIcon aria-hidden focusable="false" />
-                                </Accordion.Indicator>
-                            </StackH>
+                            <StackH
+                                gap="tight"
+                                classNames={["min-w-0", "flex-1"]}
+                                body={
+                                    <>
+                                        {item.titleStart}
+                                        <StackV
+                                            gap="flush"
+                                            classNames={["min-w-0", "flex-1"]}
+                                            className="text-left"
+                                            body={
+                                                <>
+                                                    {/* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2, thầy chốt):
+                                                        đảo quyết định 2026-07-29 — title KHÔNG render markdown, kể cả
+                                                        backtick-only qua `parseInlineCode`. Title tier giờ plain TUYỆT ĐỐI. */}
+                                                    <Typography size="sm" weight="medium" truncate text={item.title} />
+                                                    {item.subtitle != null ? (
+                                                        <Typography size="xs" color="muted" truncate text={item.subtitle} />
+                                                    ) : null}
+                                                </>
+                                            }
+                                        />
+                                    </>
+                                }
+                            />
+                            <StackH
+                                gap="grouped"
+                                classNames={["shrink-0"]}
+                                body={
+                                    <>
+                                        {item.titleEnd}
+                                        {/* Vendor draws its OWN `IconChevronDown` glyph when this slot is left
+                                            empty (verified: `@heroui/react/dist/components/accordion/accordion.js`
+                                            — a second icon set with no `import` to grep, icon §1a.1) — override
+                                            with Phosphor. `cloneElement` keeps `data-expanded`/`data-slot` so the
+                                            180° rotation (`accordion.css` `.accordion__indicator[data-expanded]`)
+                                            still runs off the SAME class, unaffected by the swap. `cloneElement`
+                                            also REPLACES the child's own `className` with the slot's — so the
+                                            size override goes on the WRAPPER, not the icon (same convention as
+                                            `Alert.Base`'s `HeroAlert.Indicator className={GLYPH_SCALE}`).
+                                            DIV position (icon §1c/§4.2): trigger has fixed `px-4 py-4` (not
+                                            hug-content) — `text-sm` title → `size-5` line-height, not the flat
+                                            `size-4` vendor default (thầy chốt 2026-07-29). Weight omitted →
+                                            Phosphor default `regular`, correct at `size-5` (§3.2). */}
+                                        <Accordion.Indicator className="size-5">
+                                            <CaretDownIcon aria-hidden focusable="false" />
+                                        </Accordion.Indicator>
+                                    </>
+                                }
+                            />
                         </Accordion.Trigger>
                     </Accordion.Heading>
                     <Accordion.Panel>
@@ -1719,19 +1815,26 @@ const AccordionFrameSkeleton = ({
             {rows.map((item, index) => (
                 <div key={item?.id ?? index} className="relative">
                     <div className="flex items-center p-3">
-                        <StackV gap="flush" className="min-w-0 flex-1 text-left">
-                            {/* Row box height EXACTLY matches the real text's line-height (sm=20px · xs=16px) —
-                                the shimmer bar is only glyph-height, so without this wrapper the
-                                loading row would sit shorter than the real row. */}
-                            <span className="flex h-5 items-center">
-                                <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                            </span>
-                            {item?.subtitle != null ? (
-                                <span className="flex h-4 items-center">
-                                    <Typography size="xs" isSkeleton classNames={["w-1/4"]} />
-                                </span>
-                            ) : null}
-                        </StackV>
+                        <StackV
+                            gap="flush"
+                            classNames={["min-w-0", "flex-1"]}
+                            className="text-left"
+                            body={
+                                <>
+                                    {/* Row box height EXACTLY matches the real text's line-height (sm=20px · xs=16px) —
+                                        the shimmer bar is only glyph-height, so without this wrapper the
+                                        loading row would sit shorter than the real row. */}
+                                    <span className="flex h-5 items-center">
+                                        <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
+                                    </span>
+                                    {item?.subtitle != null ? (
+                                        <span className="flex h-4 items-center">
+                                            <Typography size="xs" isSkeleton classNames={["w-1/4"]} />
+                                        </span>
+                                    ) : null}
+                                </>
+                            }
+                        />
                         {/* Caret: the real row ALWAYS has `Accordion.Indicator` (`ml-auto size-5`,
                             thầy chốt 2026-07-29 — was `size-4`) → the mirror keeps the exact same slot. */}
                         <HeroSkeleton className="ml-auto size-5 shrink-0 rounded" />
@@ -1802,10 +1905,15 @@ const AccordionCard = ({
     if (bare) return <div className={cn(className)}>{frame}</div>
     // description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface
     const withCaption = description != null ? (
-        <StackV gap="related">
-            {frame}
-            <div>{description}</div>
-        </StackV>
+        <StackV
+            gap="related"
+            body={
+                <>
+                    {frame}
+                    <div>{description}</div>
+                </>
+            }
+        />
     ) : frame
     return (
         <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
@@ -1951,21 +2059,22 @@ const CrossListRow = ({
         padding="cozy"
         className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
         anatPart={anatPart}
-    >
-        {isSkeleton ? (
-            <>
-                <HeroSkeleton className="size-5 shrink-0 rounded-full" />
-                <div className="min-w-0 flex-1">
-                    <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                </div>
-            </>
-        ) : (
-            <>
-                {markIcon(mark, tone, markAnatPart)}
-                <div className="min-w-0 flex-1">{text}</div>
-            </>
-        )}
-    </StackH>
+        body={
+            isSkeleton ? (
+                <>
+                    <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                    <div className="min-w-0 flex-1">
+                        <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
+                    </div>
+                </>
+            ) : (
+                <>
+                    {markIcon(mark, tone, markAnatPart)}
+                    <div className="min-w-0 flex-1">{text}</div>
+                </>
+            )
+        }
+    />
 )
 /**
  * Static "brief list" of MARKED rows (✓ / ✗ / none) in a bounded `bg-surface` card with

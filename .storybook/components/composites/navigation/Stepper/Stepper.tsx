@@ -169,70 +169,84 @@ const StepperBase = ({
                                     onClick={() => onStepPress(index)}
                                     className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                 >
-                                    <StackV gap="related" align="center">
-                                        {indicatorAndCopy}
-                                    </StackV>
+                                    <StackV gap="related" align="center" body={indicatorAndCopy} />
                                 </button>
                             ) : (
-                                <StackV gap="related" align="center">
-                                    {indicatorAndCopy}
-                                </StackV>
+                                <StackV gap="related" align="center" body={indicatorAndCopy} />
                             )}
                         </React.Fragment>
                     )
                 }
 
                 // Vertical: indicator + a vertical connector down its left rail, copy on the right.
+                // The step's clickable copy vs. static copy are the SAME shape (label
+                // + optional description) — one node, only the wrapping tag differs.
+                const clickableCopy = (
+                    <>
+                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <Typography size="sm" text={step.label} />
+                        </span>
+                        {step.description ? (
+                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography size="xs" text={step.description} color="muted" />
+                            </span>
+                        ) : null}
+                    </>
+                )
+                const staticCopy = (
+                    <>
+                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <Typography size="sm"
+                                text={step.label}
+                                weight={state === "current" ? "medium" : undefined}
+                                color={state === "upcoming" ? "muted" : undefined}
+                            />
+                        </span>
+                        {step.description ? (
+                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography size="xs" text={step.description} color="muted" />
+                            </span>
+                        ) : null}
+                    </>
+                )
+                const railAndConnector = (
+                    <>
+                        <StepIndicator state={state} index={index} showAnatomy={showAnatomy} />
+                        {index < steps.length - 1 ? (
+                            <span
+                                aria-hidden
+                                className={cn(
+                                    "w-0.5 flex-1",
+                                    index < safeIndex ? "bg-success" : "bg-default",
+                                )}
+                            />
+                        ) : null}
+                    </>
+                )
                 return (
-                    <StackH key={step.id} gap="grouped" align="stretch">
-                        <StackV gap="tight" align="center">
-                            <StepIndicator state={state} index={index} showAnatomy={showAnatomy} />
-                            {index < steps.length - 1 ? (
-                                <span
-                                    aria-hidden
-                                    className={cn(
-                                        "w-0.5 flex-1",
-                                        index < safeIndex ? "bg-success" : "bg-default",
-                                    )}
-                                />
-                            ) : null}
-                        </StackV>
-                        {isClickable ? (
-                            <button
-                                type="button"
-                                onClick={() => onStepPress(index)}
-                                // inset-exception: optical nudge lining the label up with the step dot, not a surface inset
-                                className="pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                            >
-                                <StackV gap="flush">
-                                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                                        <Typography size="sm" text={step.label} />
-                                    </span>
-                                    {step.description ? (
-                                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                                            <Typography size="xs" text={step.description} color="muted" />
-                                        </span>
-                                    ) : null}
-                                </StackV>
-                            </button>
-                        ) : (
-                            // inset-exception: optical nudge lining the label up with the step dot
-                            <StackV gap="flush" className="pt-1">
-                                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                                    <Typography size="sm"
-                                        text={step.label}
-                                        weight={state === "current" ? "medium" : undefined}
-                                        color={state === "upcoming" ? "muted" : undefined}
-                                    />
-                                </span>
-                                {step.description ? (
-                                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                                        <Typography size="xs" text={step.description} color="muted" />
-                                    </span>
-                                ) : null}
-                            </StackV>
-                        )}
-                    </StackH>
+                    <StackH
+                        key={step.id}
+                        gap="grouped"
+                        align="stretch"
+                        body={
+                            <>
+                                <StackV gap="tight" align="center" body={railAndConnector} />
+                                {isClickable ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => onStepPress(index)}
+                                        // inset-exception: optical nudge lining the label up with the step dot, not a surface inset
+                                        className="pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                    >
+                                        <StackV gap="flush" body={clickableCopy} />
+                                    </button>
+                                ) : (
+                                    // inset-exception: optical nudge lining the label up with the step dot
+                                    <StackV gap="flush" className="pt-1" body={staticCopy} />
+                                )}
+                            </>
+                        }
+                    />
                 )
             })}
         </div>

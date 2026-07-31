@@ -81,8 +81,7 @@ const NavLinks = ({ items, onNavigate, className, showAnatomy = false, anatPart 
             justify="center"
             className={cn("hidden @app-md:flex", className)}
             anatPart={showAnatomy ? "StackH" : undefined}
-        >
-            {items.map((item) => (
+            body={items.map((item) => (
                 <HeroUILink
                     key={item.path}
                     onPress={() => onNavigate(item.path)}
@@ -99,7 +98,7 @@ const NavLinks = ({ items, onNavigate, className, showAnatomy = false, anatPart 
                     </span>
                 </HeroUILink>
             ))}
-        </StackH>
+        />
     </div>
 )
 

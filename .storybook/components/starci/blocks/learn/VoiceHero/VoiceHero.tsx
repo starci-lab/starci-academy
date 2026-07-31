@@ -124,25 +124,31 @@ const VoiceHero = ({
     if (showTypedFallback) {
         return (
             <div data-anat-part={anatPart}>
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <InputTextarea
-                        value={value}
-                        onValueChange={onValueChange}
-                        placeholder={labels.placeholder}
-                        ariaLabel={labels.placeholder}
-                        rows={5}
-                        showAnatomy={showAnatomy}
-                    />
-                    {canToggle ? (
-                        <Typography
-                            size="sm"
-                            isLink
-                            text={labels.useVoice}
-                            onPress={() => setManualTyped(false)}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                        />
-                    ) : null}
-                </StackV>
+                <StackV
+                    gap="grouped"
+                    anatPart={showAnatomy ? "StackV" : undefined}
+                    body={
+                        <>
+                            <InputTextarea
+                                value={value}
+                                onValueChange={onValueChange}
+                                placeholder={labels.placeholder}
+                                ariaLabel={labels.placeholder}
+                                rows={5}
+                                showAnatomy={showAnatomy}
+                            />
+                            {canToggle ? (
+                                <Typography
+                                    size="sm"
+                                    isLink
+                                    text={labels.useVoice}
+                                    onPress={() => setManualTyped(false)}
+                                    anatPart={showAnatomy ? "Typography" : undefined}
+                                />
+                            ) : null}
+                        </>
+                    }
+                />
             </div>
         )
     }
@@ -156,37 +162,44 @@ const VoiceHero = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Button
-                    isIconOnly
-                    size="lg"
-                    variant={listening ? "danger" : "primary"}
-                    prefixIcon={MicrophoneIcon}
-                    ariaLabel={listening ? labels.listening : labels.pushToTalk}
-                    onPress={onToggleListen}
-                    anatPart={showAnatomy ? "Button" : undefined}
-                />
-                {/* src thật (`VoiceHero/index.tsx:136`): `<Typography
+            <StackV
+                gap="grouped"
+                align="center"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        <Button
+                            isIconOnly
+                            size="lg"
+                            variant={listening ? "danger" : "primary"}
+                            prefixIcon={MicrophoneIcon}
+                            ariaLabel={listening ? labels.listening : labels.pushToTalk}
+                            onPress={onToggleListen}
+                            anatPart={showAnatomy ? "Button" : undefined}
+                        />
+                        {/* src thật (`VoiceHero/index.tsx:136`): `<Typography
  color="default">`
-                    KHÔNG khai `type` ⇒ mặc định base (16px), không phải `lg`. */}
-                <Typography
-                    size="base"
-                    align="center"
-                    color={transcriptIsProvisional ? "muted" : "default"}
-                    isItalic={transcriptIsProvisional}
-                    text={transcriptText}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-                {canToggle ? (
-                    <Typography
-                        size="sm"
-                        isLink
-                        text={labels.typeInstead}
-                        onPress={() => setManualTyped(true)}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                ) : null}
-            </StackV>
+                            KHÔNG khai `type` ⇒ mặc định base (16px), không phải `lg`. */}
+                        <Typography
+                            size="base"
+                            align="center"
+                            color={transcriptIsProvisional ? "muted" : "default"}
+                            isItalic={transcriptIsProvisional}
+                            text={transcriptText}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                        {canToggle ? (
+                            <Typography
+                                size="sm"
+                                isLink
+                                text={labels.typeInstead}
+                                onPress={() => setManualTyped(true)}
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                            />
+                        ) : null}
+                    </>
+                }
+            />
         </div>
     )
 }

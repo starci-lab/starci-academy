@@ -1,4 +1,5 @@
 import React from "react"
+import type { ReactNode } from "react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
@@ -73,6 +74,40 @@ export interface RatingBarProps {
 }
 
 /**
+ * One rating tile's content — label + key-hint chip, plus an optional interval
+ * hint. Extracted to a helper (rather than hoisted to a const) because it
+ * depends on the loop variables `option`/`position` from the `.map()` that
+ * calls it.
+ */
+const ratingTileBody = (option: RatingOption, position: number, showAnatomy: boolean): ReactNode => (
+    <StackV
+        gap="related"
+        anatPart={showAnatomy ? "StackV" : undefined}
+        body={
+            <>
+                <StackH
+                    gap="related"
+                    align="center"
+                    justify="between"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <>
+                            <Typography size="sm" weight="medium" text={option.label} anatPart={showAnatomy ? "Typography" : undefined} />
+                            {/* One chip per tile, and it goes to the KEY — that is the classifying
+                                mark. The interval below is a quiet fact, so it stays as text. */}
+                            <Chip tone="default" text={String(position + 1)} anatPart={showAnatomy ? "Chip" : undefined} />
+                        </>
+                    }
+                />
+                {option.hint != null ? (
+                    <Typography size="xs" color="muted" text={option.hint} anatPart={showAnatomy ? "Typography" : undefined} />
+                ) : null}
+            </>
+        }
+    />
+)
+
+/**
  * The recall-grade row. See the file header for the full contract.
  *
  * @param props - {@link RatingBarProps}
@@ -91,19 +126,7 @@ const RatingBar = ({
         onPress: () => onRate(option.grade),
         isDisabled: isPending,
         withVerdict: { enable: true, color: GRADE_COLOR[option.grade] },
-        content: (
-            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH gap="related" align="center" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <Typography size="sm" weight="medium" text={option.label} anatPart={showAnatomy ? "Typography" : undefined} />
-                    {/* One chip per tile, and it goes to the KEY — that is the classifying
-                        mark. The interval below is a quiet fact, so it stays as text. */}
-                    <Chip tone="default" text={String(position + 1)} anatPart={showAnatomy ? "Chip" : undefined} />
-                </StackH>
-                {option.hint != null ? (
-                    <Typography size="xs" color="muted" text={option.hint} anatPart={showAnatomy ? "Typography" : undefined} />
-                ) : null}
-            </StackV>
-        ),
+        content: ratingTileBody(option, position, showAnatomy),
     }))
 
     return (

@@ -114,58 +114,77 @@ const ContentCommentComposer = ({
     // collapsed pill: avatar + placeholder, the whole row opens the composer
     if (collapsible && !expanded) {
         return (
-            <StackH gap="grouped" align="center" anatPart={anatPart}>
-                {currentUser ? (
-                    <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" showAnatomy={showAnatomy} />
-                ) : null}
-                <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputButtonLike" : undefined}>
-                    <InputButtonLike
-                        placeholder={placeholder}
-                        ariaLabel={ariaLabel}
-                        onPress={() => setExpanded(true)}
-                    />
-                </div>
-            </StackH>
+            <StackH
+                gap="grouped"
+                align="center"
+                anatPart={anatPart}
+                body={
+                    <>
+                        {currentUser ? (
+                            <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" showAnatomy={showAnatomy} />
+                        ) : null}
+                        <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputButtonLike" : undefined}>
+                            <InputButtonLike
+                                placeholder={placeholder}
+                                ariaLabel={ariaLabel}
+                                onPress={() => setExpanded(true)}
+                            />
+                        </div>
+                    </>
+                }
+            />
         )
     }
 
-    return (
-        <StackH gap="grouped" align="start" className={className} anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)}>
+    const buttonRow = (
+        <>
+            <Button
+                label={submitLabel}
+                size="sm"
+                onPress={handleSubmit}
+                isDisabled={!trimmed}
+                isPending={isPending}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+            {onCancel || collapsible ? (
+                <Button
+                    label="Hủy"
+                    variant="tertiary"
+                    size="sm"
+                    onPress={handleCancel}
+                    isDisabled={isPending}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
+    const fieldColumn = (
+        <>
+            <InputTextarea
+                value={body}
+                onValueChange={setBody}
+                placeholder={placeholder}
+                ariaLabel={ariaLabel}
+                rows={3}
+                variant="primary"
+                showAnatomy={showAnatomy}
+            />
+            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={buttonRow} />
+        </>
+    )
+
+    const composerRow = (
+        <>
             {currentUser ? (
                 <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" showAnatomy={showAnatomy} />
             ) : null}
-            <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                <InputTextarea
-                    value={body}
-                    onValueChange={setBody}
-                    placeholder={placeholder}
-                    ariaLabel={ariaLabel}
-                    rows={3}
-                    variant="primary"
-                    showAnatomy={showAnatomy}
-                />
-                <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <Button
-                        label={submitLabel}
-                        size="sm"
-                        onPress={handleSubmit}
-                        isDisabled={!trimmed}
-                        isPending={isPending}
-                        anatPart={showAnatomy ? "Button" : undefined}
-                    />
-                    {onCancel || collapsible ? (
-                        <Button
-                            label="Hủy"
-                            variant="tertiary"
-                            size="sm"
-                            onPress={handleCancel}
-                            isDisabled={isPending}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    ) : null}
-                </StackH>
-            </StackV>
-        </StackH>
+            <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={fieldColumn} />
+        </>
+    )
+
+    return (
+        <StackH gap="grouped" align="start" className={className} anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)} body={composerRow} />
     )
 }
 

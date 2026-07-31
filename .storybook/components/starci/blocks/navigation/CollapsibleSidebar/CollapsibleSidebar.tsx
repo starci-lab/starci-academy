@@ -152,6 +152,77 @@ export const CollapsibleSidebar = ({
         })
     }
 
+    // header: toggle always present; title fades out while collapsed
+    const headerRow = (
+        <>
+            <AnimatePresence initial={false}>
+                {!collapsed ? (
+                    <motion.div
+                        key="title"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={reduceMotion ? INSTANT_TRANSITION : FADE_TRANSITION}
+                        className="min-w-0"
+                    >
+                        <Typography
+                            size="h5"
+                            weight="bold"
+                            truncate
+                            text={title}
+                            showAnatomy={showAnatomy}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    </motion.div>
+                ) : null}
+            </AnimatePresence>
+            <ButtonBase
+                isIconOnly
+                variant="ghost"
+                size="sm"
+                ariaLabel={collapsed ? expandLabel : collapseLabel}
+                prefixIcon={SidebarSimpleIcon}
+                onPress={toggle}
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "ButtonBase" : undefined}
+            />
+        </>
+    )
+
+    // §10a: the vertical rhythm between header / topSlot / nav is owned by THIS
+    // StackV's gap — no section carries its own margin (a prior draft put
+    // `mb-6` on the header row itself, flagged by check-padding as a second
+    // owner for the same seam).
+    const panel = (
+        <>
+            <StackH gap="related" justify={collapsed ? "center" : "between"} body={headerRow} />
+
+            {/* pinned top slot (e.g. resume pill) — above the scroll area, always
+                visible. min-w-0: a column-flex item defaults to content-width
+                (min-width: auto), which would let it overflow the rail and get
+                hard-clipped by overflow-hidden instead of shrinking so its own
+                `truncate` text can ellipsize. */}
+            <div className="min-w-0">
+                {topSlot}
+            </div>
+
+            {/* body: the nav — ALWAYS rendered; row content decides its own icon-only
+                look off `useSidebarCollapsed`. `DragScrollArea` owns the overflow
+                (hidden scrollbar + Windows-safe pointer-pan); `StackV` gives the
+                column its `gap="grouped"` rhythm and default `align="stretch"` (rows
+                fill the rail's width whether expanded or collapsed), since the scroll
+                frame itself lays out nothing. */}
+            <nav
+                className="flex min-h-0 flex-1 flex-col"
+                data-anat-part={showAnatomy ? "DragScrollArea" : undefined}
+            >
+                <DragScrollArea size={40} className="flex-1">
+                    <StackV gap="grouped" body={children} />
+                </DragScrollArea>
+            </nav>
+        </>
+    )
+
     return (
         <SidebarCollapsedContext.Provider value={collapsed}>
             <motion.aside
@@ -169,70 +240,7 @@ export const CollapsibleSidebar = ({
                     className,
                 )}
             >
-                {/* §10a: the vertical rhythm between header / topSlot / nav is owned by THIS
-                    StackV's gap — no section carries its own margin (a prior draft put
-                    `mb-6` on the header row itself, flagged by check-padding as a second
-                    owner for the same seam). */}
-                <StackV gap="section" className="min-h-0 flex-1">
-                    {/* header: toggle always present; title fades out while collapsed */}
-                    <StackH gap="related" justify={collapsed ? "center" : "between"}>
-                        <AnimatePresence initial={false}>
-                            {!collapsed ? (
-                                <motion.div
-                                    key="title"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={reduceMotion ? INSTANT_TRANSITION : FADE_TRANSITION}
-                                    className="min-w-0"
-                                >
-                                    <Typography
-                                        size="h5"
-                                        weight="bold"
-                                        truncate
-                                        text={title}
-                                        showAnatomy={showAnatomy}
-                                        anatPart={showAnatomy ? "Typography" : undefined}
-                                    />
-                                </motion.div>
-                            ) : null}
-                        </AnimatePresence>
-                        <ButtonBase
-                            isIconOnly
-                            variant="ghost"
-                            size="sm"
-                            ariaLabel={collapsed ? expandLabel : collapseLabel}
-                            prefixIcon={SidebarSimpleIcon}
-                            onPress={toggle}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "ButtonBase" : undefined}
-                        />
-                    </StackH>
-
-                    {/* pinned top slot (e.g. resume pill) — above the scroll area, always
-                        visible. min-w-0: a column-flex item defaults to content-width
-                        (min-width: auto), which would let it overflow the rail and get
-                        hard-clipped by overflow-hidden instead of shrinking so its own
-                        `truncate` text can ellipsize. */}
-                    <div className="min-w-0">
-                        {topSlot}
-                    </div>
-
-                    {/* body: the nav — ALWAYS rendered; row content decides its own icon-only
-                        look off `useSidebarCollapsed`. `DragScrollArea` owns the overflow
-                        (hidden scrollbar + Windows-safe pointer-pan); `StackV` gives the
-                        column its `gap="grouped"` rhythm and default `align="stretch"` (rows
-                        fill the rail's width whether expanded or collapsed), since the scroll
-                        frame itself lays out nothing. */}
-                    <nav
-                        className="flex min-h-0 flex-1 flex-col"
-                        data-anat-part={showAnatomy ? "DragScrollArea" : undefined}
-                    >
-                        <DragScrollArea size={40} className="flex-1">
-                            <StackV gap="grouped">{children}</StackV>
-                        </DragScrollArea>
-                    </nav>
-                </StackV>
+                <StackV gap="section" classNames={["min-h-0", "flex-1"]} body={panel} />
             </motion.aside>
         </SidebarCollapsedContext.Provider>
     )

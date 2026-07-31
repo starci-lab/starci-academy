@@ -153,8 +153,8 @@ const ContentAiChatDrawer = ({
     // neither renders unless both do.
     const hasModeSwitch = mode != null && onModeChange != null
 
-    const header: ReactNode = (
-        <StackH gap="related" justify="between" className="pr-8" anatPart={showAnatomy ? "StackH" : undefined}>
+    const titleAndModeSwitch = (
+        <>
             <span className="min-w-0 flex-1" data-anat-part={showAnatomy ? "Typography" : undefined}>
                 <Typography text={title ?? FALLBACK_TITLE} weight="bold" truncate />
             </span>
@@ -169,7 +169,17 @@ const ContentAiChatDrawer = ({
                     />
                 </span>
             ) : null}
-        </StackH>
+        </>
+    )
+
+    const header: ReactNode = (
+        <StackH
+            gap="related"
+            justify="between"
+            className="pr-8"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={titleAndModeSwitch}
+        />
     )
 
     return (

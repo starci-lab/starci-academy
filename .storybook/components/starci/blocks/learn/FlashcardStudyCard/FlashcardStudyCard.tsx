@@ -128,106 +128,168 @@ const FlashcardStudyCard = ({
     const hasMeta = levelLabel != null || (tags != null && tags.length > 0)
     const tagItems: Array<ChipGroupItem> = (tags ?? []).map((tag) => ({ key: tag, text: tag }))
 
-    return (
-        <div data-anat-part={anatPart}>
-            <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    {hasMeta ? (
-                        <StackH gap="related" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                            {levelLabel != null ? (
-                                <Chip tone="default" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />
-                            ) : null}
-                            {tagItems.length > 0 ? (
-                                <ChipGroup
-                                    items={tagItems}
-                                    anatPart={showAnatomy ? "ChipGroup" : undefined}
-                                    showAnatomy={showAnatomy}
-                                />
-                            ) : null}
-                        </StackH>
+    const metaRow = hasMeta ? (
+        <StackH
+            gap="related"
+            wrap
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {levelLabel != null ? (
+                        <Chip tone="default" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />
                     ) : null}
+                    {tagItems.length > 0 ? (
+                        <ChipGroup
+                            items={tagItems}
+                            anatPart={showAnatomy ? "ChipGroup" : undefined}
+                            showAnatomy={showAnatomy}
+                        />
+                    ) : null}
+                </>
+            }
+        />
+    ) : null
 
-                    <MarkdownContent
-                        source={question}
-                        measure="compact"
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+    // The one hand-rolled part of this block (see file header): no existing
+    // composite draws a lock message sized for ONE card face that still has a
+    // question and nav controls around it — `FeedbackEmpty` fills a whole
+    // pane, which is the wrong weight here.
+    const lockNotice = (
+        <StackV
+            gap="related"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <StackH
+                        gap="related"
+                        align="center"
+                        anatPart={showAnatomy ? "StackH" : undefined}
+                        body={
+                            <>
+                                <LockIcon aria-hidden focusable="false" weight="bold" className="size-5 shrink-0 text-muted" />
+                                <StackV
+                                    gap="flush"
+                                    anatPart={showAnatomy ? "StackV" : undefined}
+                                    body={
+                                        <>
+                                            <Typography size="sm" weight="medium" text="Đáp án bị khoá" anatPart={showAnatomy ? "Typography" : undefined} />
+                                            <Typography size="xs" color="muted" text="Nâng cấp Premium để xem đáp án và lời giải của thẻ này" anatPart={showAnatomy ? "Typography" : undefined} />
+                                        </>
+                                    }
+                                />
+                            </>
+                        }
                     />
+                    <Button label="Mở khoá thẻ này" variant="primary" onPress={onUnlock} anatPart={showAnatomy ? "Button" : undefined} />
+                </>
+            }
+        />
+    )
 
-                    {revealed ? (
-                        isLocked ? (
-                            // The one hand-rolled part of this block (see file header): no
-                            // existing composite draws a lock message sized for ONE card face
-                            // that still has a question and nav controls around it —
-                            // `FeedbackEmpty` fills a whole pane, which is the wrong weight here.
-                            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                                <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                    <LockIcon aria-hidden focusable="false" weight="bold" className="size-5 shrink-0 text-muted" />
-                                    <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                                        <Typography size="sm" weight="medium" text="Đáp án bị khoá" anatPart={showAnatomy ? "Typography" : undefined} />
-                                        <Typography size="xs" color="muted" text="Nâng cấp Premium để xem đáp án và lời giải của thẻ này" anatPart={showAnatomy ? "Typography" : undefined} />
-                                    </StackV>
-                                </StackH>
-                                <Button label="Mở khoá thẻ này" variant="primary" onPress={onUnlock} anatPart={showAnatomy ? "Button" : undefined} />
-                            </StackV>
-                        ) : (
-                            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                                    <Typography size="xs" color="muted" text="Đáp án" anatPart={showAnatomy ? "Typography" : undefined} />
+    const answerBody = (
+        <StackV
+            gap="section"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <StackV
+                        gap="related"
+                        anatPart={showAnatomy ? "StackV" : undefined}
+                        body={
+                            <>
+                                <Typography size="xs" color="muted" text="Đáp án" anatPart={showAnatomy ? "Typography" : undefined} />
+                                <MarkdownContent
+                                    source={answer ?? ""}
+                                    measure="compact"
+                                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                                />
+                            </>
+                        }
+                    />
+                    {explanation != null ? (
+                        <StackV
+                            gap="related"
+                            anatPart={showAnatomy ? "StackV" : undefined}
+                            body={
+                                <>
+                                    <Typography size="xs" color="muted" text="Giải thích" anatPart={showAnatomy ? "Typography" : undefined} />
                                     <MarkdownContent
-                                        source={answer ?? ""}
+                                        source={explanation}
                                         measure="compact"
                                         anatPart={showAnatomy ? "MarkdownContent" : undefined}
                                     />
-                                </StackV>
-                                {explanation != null ? (
-                                    <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined}>
-                                        <Typography size="xs" color="muted" text="Giải thích" anatPart={showAnatomy ? "Typography" : undefined} />
-                                        <MarkdownContent
-                                            source={explanation}
-                                            measure="compact"
-                                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                                        />
-                                    </StackV>
-                                ) : null}
-                                {/* The recall grade, not the run's right/wrong — same shared block
-                                    and same reasoning as `QuizRecapList`'s use of it. */}
-                                <RatingBar
-                                    options={ratingOptions}
-                                    onRate={onRate}
-                                    ariaLabel="Chọn mức độ nhớ"
-                                    isPending={isRatingPending}
-                                    anatPart={showAnatomy ? "RatingBar" : undefined}
-                                    showAnatomy={showAnatomy}
-                                />
-                            </StackV>
-                        )
+                                </>
+                            }
+                        />
                     ) : null}
+                    {/* The recall grade, not the run's right/wrong — same shared block
+                        and same reasoning as `QuizRecapList`'s use of it. */}
+                    <RatingBar
+                        options={ratingOptions}
+                        onRate={onRate}
+                        ariaLabel="Chọn mức độ nhớ"
+                        isPending={isRatingPending}
+                        anatPart={showAnatomy ? "RatingBar" : undefined}
+                        showAnatomy={showAnatomy}
+                    />
+                </>
+            }
+        />
+    )
 
-                    {/* Prev/next live beside reveal but never gate on it — see file header. */}
-                    <StackH gap="related" justify="between" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <Button
-                            isIconOnly
-                            prefixIcon={CaretLeftIcon}
-                            ariaLabel="Thẻ trước"
-                            variant="tertiary"
-                            isDisabled={isFirst}
-                            onPress={onPrev}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                        {!revealed ? (
-                            <Button label="Xem đáp án" variant="primary" onPress={onReveal} anatPart={showAnatomy ? "Button" : undefined} />
-                        ) : null}
-                        <Button
-                            isIconOnly
-                            prefixIcon={CaretRightIcon}
-                            ariaLabel="Thẻ sau"
-                            variant="tertiary"
-                            isDisabled={isLast}
-                            onPress={onNext}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    </StackH>
-                </StackV>
+    // Prev/next live beside reveal but never gate on it — see file header.
+    const navRow = (
+        <StackH
+            gap="related"
+            justify="between"
+            align="center"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <Button
+                        isIconOnly
+                        prefixIcon={CaretLeftIcon}
+                        ariaLabel="Thẻ trước"
+                        variant="tertiary"
+                        isDisabled={isFirst}
+                        onPress={onPrev}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                    {!revealed ? (
+                        <Button label="Xem đáp án" variant="primary" onPress={onReveal} anatPart={showAnatomy ? "Button" : undefined} />
+                    ) : null}
+                    <Button
+                        isIconOnly
+                        prefixIcon={CaretRightIcon}
+                        ariaLabel="Thẻ sau"
+                        variant="tertiary"
+                        isDisabled={isLast}
+                        onPress={onNext}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                </>
+            }
+        />
+    )
+
+    const cardBody = (
+        <>
+            {metaRow}
+            <MarkdownContent
+                source={question}
+                measure="compact"
+                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+            />
+            {revealed ? (isLocked ? lockNotice : answerBody) : null}
+            {navRow}
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={cardBody} />
             </SurfaceCard>
         </div>
     )

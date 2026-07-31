@@ -183,8 +183,85 @@ const PlaygroundSessionPage = ({
     const resourcePanelConnection: PlaygroundResourcePanelConnection =
         connection === "connected" ? "connected" : "notConnected"
 
-    return (
-        <StackV gap="flush" className="h-[calc(100vh-4rem)]" anatPart={showAnatomy ? "StackV" : undefined}>
+    const guidePane = (
+        <StackV
+            gap="flush"
+            padding="roomy"
+            className="overflow-y-auto"
+            classNames={["min-w-0", "flex-1"]}
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <PlaygroundStepGuide
+                    anatPart="PlaygroundStepGuide"
+                    step={step}
+                    verifyState={verifyState}
+                    onVerify={onVerify}
+                    onLeaveComplete={onLeaveGuideComplete}
+                    showAnatomy={showAnatomy}
+                />
+            }
+        />
+    )
+
+    const resourcePane = (
+        <StackV
+            gap="flush"
+            padding="roomy"
+            className="overflow-y-auto @app-xl:w-[24rem]"
+            classNames={["w-full", "shrink-0"]}
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <PlaygroundResourcePanel
+                    anatPart="PlaygroundResourcePanel"
+                    connection={resourcePanelConnection}
+                    resources={resources}
+                    showAnatomy={showAnatomy}
+                />
+            }
+        />
+    )
+
+    // The workspace region: two panes side by side, plus the docked sheet
+    // anchored (not laid out) against this box — see the file header.
+    const workspaceRegion = (
+        <>
+            <StackH
+                gap="section"
+                align="start"
+                divider
+                className="overflow-hidden"
+                classNames={["h-full", "min-h-0"]}
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        {guidePane}
+                        {resourcePane}
+                    </>
+                }
+            />
+            <StackV
+                gap="flush"
+                className="absolute inset-x-0 bottom-0 z-10"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <PlaygroundConnectSheet
+                        anatPart="PlaygroundConnectSheet"
+                        connection={connection}
+                        latencyMs={latencyMs}
+                        device={device}
+                        agentLog={agentLog}
+                        onReconnect={onReconnect}
+                        open={isConnectSheetOpen}
+                        onOpenChange={onConnectSheetOpenChange}
+                        showAnatomy={showAnatomy}
+                    />
+                }
+            />
+        </>
+    )
+
+    const sessionSections = (
+        <>
             <WorkSessionHeader
                 anatPart="WorkSessionHeader"
                 backLabel={backLabel}
@@ -199,65 +276,17 @@ const PlaygroundSessionPage = ({
                 onFinish={onFinish}
                 showAnatomy={showAnatomy}
             />
-            {/* The workspace region: two panes side by side, plus the docked sheet
-                anchored (not laid out) against this box — see the file header. */}
-            <StackV gap="flush" className="relative min-h-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackH
-                    gap="section"
-                    align="start"
-                    divider
-                    className="h-full min-h-0 overflow-hidden"
-                    anatPart={showAnatomy ? "StackH" : undefined}
-                >
-                    <StackV
-                        gap="flush"
-                        padding="roomy"
-                        className="min-w-0 flex-1 overflow-y-auto"
-                        anatPart={showAnatomy ? "StackV" : undefined}
-                    >
-                        <PlaygroundStepGuide
-                            anatPart="PlaygroundStepGuide"
-                            step={step}
-                            verifyState={verifyState}
-                            onVerify={onVerify}
-                            onLeaveComplete={onLeaveGuideComplete}
-                            showAnatomy={showAnatomy}
-                        />
-                    </StackV>
-                    <StackV
-                        gap="flush"
-                        padding="roomy"
-                        className="w-full shrink-0 overflow-y-auto @app-xl:w-[24rem]"
-                        anatPart={showAnatomy ? "StackV" : undefined}
-                    >
-                        <PlaygroundResourcePanel
-                            anatPart="PlaygroundResourcePanel"
-                            connection={resourcePanelConnection}
-                            resources={resources}
-                            showAnatomy={showAnatomy}
-                        />
-                    </StackV>
-                </StackH>
-                <StackV
-                    gap="flush"
-                    className="absolute inset-x-0 bottom-0 z-10"
-                    anatPart={showAnatomy ? "StackV" : undefined}
-                >
-                    <PlaygroundConnectSheet
-                        anatPart="PlaygroundConnectSheet"
-                        connection={connection}
-                        latencyMs={latencyMs}
-                        device={device}
-                        agentLog={agentLog}
-                        onReconnect={onReconnect}
-                        open={isConnectSheetOpen}
-                        onOpenChange={onConnectSheetOpenChange}
-                        showAnatomy={showAnatomy}
-                    />
-                </StackV>
-            </StackV>
-        </StackV>
+            <StackV
+                gap="flush"
+                className="relative"
+                classNames={["min-h-0", "flex-1"]}
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={workspaceRegion}
+            />
+        </>
     )
+
+    return <StackV gap="flush" className="h-[calc(100vh-4rem)]" anatPart={showAnatomy ? "StackV" : undefined} body={sessionSections} />
 }
 
 export { PlaygroundSessionPage }

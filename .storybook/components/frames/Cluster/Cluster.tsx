@@ -1,6 +1,8 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, type LayoutAlign, type LayoutJustify, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
@@ -72,7 +74,13 @@ export interface ClusterBaseProps {
      * `PageHeader`/`Divider`/`ChoiceSwitch`.
      */
     anatPart?: string
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** `true` → tag each item with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
@@ -91,6 +99,7 @@ const ClusterBase = ({
     justify = "start",
     separator = false,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: ClusterBaseProps) => (
@@ -102,6 +111,7 @@ const ClusterBase = ({
             ALIGN_CLASS[align],
             JUSTIFY_CLASS[justify],
             className,
+            classNames,
         )}
     >
         {items.map((item, index) => {
@@ -110,9 +120,9 @@ const ClusterBase = ({
                 : item.content
             return (
                 <React.Fragment key={item.key}>
-                    {/* `aria-hidden`: the mark is a visual boundary, a screen reader already
-                        gets the items as separate nodes and would only hear noise. */}
-                    {separator && index > 0 ? <span aria-hidden>·</span> : null}
+                    {/* The mark carries no margin of its own — the track's `gap` already
+                        spaces it — so `Divider`'s inline shape reproduces it exactly. */}
+                    {separator && index > 0 ? <Divider shape="inline" /> : null}
                     {body}
                 </React.Fragment>
             )

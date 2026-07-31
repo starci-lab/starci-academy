@@ -371,255 +371,343 @@ const Navbar = ({
 
     const activeNavId = navItems.find((item) => item.isActive)?.id ?? ""
 
+    // desktop-only route pills; the mobile drawer renders the same `navItems` as full rows.
+    // `hidden @app-md:flex` is the WRAPPER's call (showing/hiding at a breakpoint is the
+    // surrounding frame's decision, not the atom's — ATOM-5), so it sits on this span,
+    // not on `ButtonRadioGroup`'s own `className`.
+    const logoAndNavPills = (
+        <>
+            <span
+                role="button"
+                tabIndex={0}
+                aria-label="StarCi Academy"
+                onClick={onLogoPress}
+                onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") onLogoPress()
+                }}
+                className="inline-flex cursor-pointer items-center"
+            >
+                <Logo />
+            </span>
+            <span className="hidden @app-md:flex">
+                <ButtonRadioGroup
+                    items={navItems.map((item) => ({
+                        value: item.id,
+                        content: <Typography size="sm" text={item.label} anatPart={showAnatomy ? "Typography" : undefined} />,
+                    }))}
+                    value={activeNavId}
+                    onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
+                    ariaLabel="Điều hướng chính"
+                />
+            </span>
+        </>
+    )
+
+    // desktop: language + theme inline; the mobile drawer carries them instead
+    const quickControls = (
+        <>
+            <NavbarLanguageMenu
+                languages={languages}
+                activeLocale={activeLocale}
+                onLocaleChange={onLocaleChange}
+                showAnatomy={showAnatomy}
+            />
+            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} showAnatomy={showAnatomy} />
+        </>
+    )
+
+    const notificationSkeletonRows = [0, 1, 2].map((row) => (
+        <ListRow key={row} title="" isSkeleton showAnatomy={showAnatomy} />
+    ))
+
+    const notificationRows = notifications.items.map((item, index) => (
+        <ListRow
+            key={item.id}
+            leading={!item.isRead ? (
+                <CircleIcon weight="fill" aria-hidden focusable="false" className="size-2 text-accent-soft-foreground" />
+            ) : undefined}
+            title={item.title}
+            subtitle={item.subtitle}
+            meta={<Typography size="xs" color="muted" text={item.timeLabel} anatPart={showAnatomy ? "Typography" : undefined} />}
+            onPress={() => notifications.onItemPress(item)}
+            divider={index < notifications.items.length - 1}
+            showAnatomy={showAnatomy}
+        />
+    ))
+
+    const notificationHeader = (
+        <>
+            <Typography size="sm" weight="bold" text="Thông báo" anatPart={showAnatomy ? "Typography" : undefined} />
+            {notifications.unreadCount > 0 ? (
+                <Button
+                    isIconOnly
+                    variant="ghost"
+                    size="sm"
+                    prefixIcon={ChecksIcon}
+                    ariaLabel="Đánh dấu tất cả đã đọc"
+                    onPress={notifications.onMarkAllRead}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            ) : null}
+        </>
+    )
+
+    // notification popover body: header row → async list → footer link
+    const notificationPanel = (
+        <>
+            <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={notificationHeader} />
+            <AsyncContent
+                isLoading={notifications.isLoading && notifications.items.length === 0}
+                skeleton={<StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={notificationSkeletonRows} />}
+                isEmpty={notifications.items.length === 0}
+                emptyContent={{ title: "Chưa có thông báo nào" }}
+                error={notifications.error}
+                errorContent={{
+                    title: notifications.error ?? "",
+                    onRetry: notifications.onRetry,
+                    retryLabel: "Thử lại",
+                }}
+            >
+                <StackV gap="flush" className="max-h-[420px] overflow-y-auto" anatPart={showAnatomy ? "StackV" : undefined} body={notificationRows} />
+            </AsyncContent>
+            <Button
+                variant="ghost"
+                size="sm"
+                classNames={["w-full"]}
+                label="Xem tất cả"
+                onPress={notifications.onSeeAll}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+        </>
+    )
+
+    const guestAccountRow = (
+        <>
+            <Avatar icon={UserIcon} fallback="icon" />
+            <Typography size="sm" color="muted" text="Đăng nhập để lưu tiến trình học tập" anatPart={showAnatomy ? "Typography" : undefined} />
+        </>
+    )
+
+    const accountMenuHeader = (
+        <AsyncContent
+            isLoading={account.isLoading}
+            skeleton={<UserCell username="" isSkeleton />}
+        >
+            {account.isAuthed && account.user ? (
+                <UserCell
+                    username={account.user.username}
+                    avatar={account.user.avatarUrl}
+                    handle={account.user.email}
+                />
+            ) : (
+                <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={guestAccountRow} />
+            )}
+        </AsyncContent>
+    )
+
+    // actions cluster: search · language/theme · cart · notifications · account · mobile menu
+    const barActions = (
+        <>
+            {/* desktop: full input-style search field; mobile: icon only */}
+            <InputButtonLike
+                placeholder={searchPlaceholder}
+                icon={<MagnifyingGlassIcon className="size-5 text-muted" />}
+                suffix={<Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>}
+                onPress={onSearchPress}
+                className="hidden w-[260px] @app-md:flex"
+            />
+            {/* `@app-md:hidden` moved off the atom onto this wrapper — a breakpoint
+                show/hide is the surrounding frame's decision, not the atom's (ATOM-5). */}
+            <span className="@app-md:hidden">
+                <Button
+                    isIconOnly
+                    variant="ghost"
+                    prefixIcon={MagnifyingGlassIcon}
+                    ariaLabel={searchPlaceholder}
+                    onPress={onSearchPress}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            </span>
+
+            <StackH gap="related" className="hidden @app-md:flex" anatPart={showAnatomy ? "StackH" : undefined} body={quickControls} />
+
+            {/* cart — always shown (guests included), count badge only when non-empty.
+                Raw HeroUI `Button` (not our atom, see file header): the atom's
+                `isIconOnly` mode takes a single bare `prefixIcon` COMPONENT, with no
+                room for the `Badge` this trigger anchors around its glyph. */}
+            <HeroButton
+                isIconOnly
+                variant="tertiary"
+                className="rounded-full"
+                aria-label="Giỏ hàng"
+                onPress={onCartPress}
+                data-anat-part={showAnatomy ? "Button" : undefined}
+            >
+                <Badge color="accent" count={cartCount}>
+                    <ShoppingCartIcon className="size-5" />
+                </Badge>
+            </HeroButton>
+
+            {/* notification bell — only meaningful for a signed-in viewer (carried over
+                from the real component's own `if (!authenticated) return null`). Raw
+                HeroUI Popover + Button (see file header: same badge-around-glyph gap as
+                the cart trigger above). */}
+            {account.isAuthed ? (
+                <Popover isOpen={isNotificationsOpen} onOpenChange={setNotificationsOpen}>
+                    <HeroButton
+                        isIconOnly
+                        variant="tertiary"
+                        className="rounded-full"
+                        aria-label="Thông báo"
+                        data-anat-part={showAnatomy ? "Button" : undefined}
+                    >
+                        <Badge color="danger" count={notifications.unreadCount}>
+                            <BellIcon className="size-5" />
+                        </Badge>
+                    </HeroButton>
+                    <PopoverContent placement="bottom right" className="w-[360px]" data-anat-part={showAnatomy ? "PopoverContent" : undefined}>
+                        {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
+                        <StackV gap="tight" className="px-2 py-1" anatPart={showAnatomy ? "StackV" : undefined} body={notificationPanel} />
+                    </PopoverContent>
+                </Popover>
+            ) : null}
+
+            {/* account menu — raw HeroUI Dropdown + Button (see file header): the
+                authed trigger swaps its glyph for an `Avatar`, another shape the
+                atom's bare-`IconComponent` slot cannot host. */}
+            <Dropdown isOpen={isAccountOpen} onOpenChange={setAccountOpen}>
+                <HeroButton
+                    isIconOnly
+                    variant="tertiary"
+                    className="rounded-full"
+                    aria-label="Tài khoản"
+                    data-anat-part={showAnatomy ? "Button" : undefined}
+                >
+                    {account.isAuthed ? (
+                        <Avatar
+                            size="sm"
+                            name={account.user?.username}
+                            src={account.user?.avatarUrl ?? undefined}
+                            seed={account.user?.email ?? account.user?.username}
+                        />
+                    ) : (
+                        <UserIcon className="size-5" />
+                    )}
+                </HeroButton>
+                <Dropdown.Popover placement="bottom right" className="w-[300px]" data-anat-part={showAnatomy ? "Dropdown.Popover" : undefined}>
+                    <div className="p-3">
+                        {accountMenuHeader}
+                    </div>
+                    <Divider anatPart={showAnatomy ? "Divider" : undefined} />
+                    <Dropdown.Menu aria-label="Tài khoản" data-anat-part={showAnatomy ? "Dropdown.Menu" : undefined}>
+                        <Dropdown.Section data-anat-part={showAnatomy ? "Dropdown.Section" : undefined}>
+                            {account.menuItems.map((item) => {
+                                const Icon = item.icon
+                                return (
+                                    <Dropdown.Item
+                                        key={item.id}
+                                        id={item.id}
+                                        textValue={item.label}
+                                        className={item.isDanger ? "text-danger-soft-foreground" : undefined}
+                                        onPress={item.onPress}
+                                        data-anat-part={showAnatomy ? "Dropdown.Item" : undefined}
+                                    >
+                                        {Icon ? <Icon className="size-5" /> : null}
+                                        <Label className={item.isDanger ? "text-danger-soft-foreground" : undefined}>{item.label}</Label>
+                                    </Dropdown.Item>
+                                )
+                            })}
+                        </Dropdown.Section>
+                    </Dropdown.Menu>
+                </Dropdown.Popover>
+            </Dropdown>
+
+            {/* mobile: expand icon → the navigation drawer. `@app-md:hidden` moved off the
+                atom onto this wrapper (ATOM-5 — breakpoint visibility is the frame's call). */}
+            <span className="@app-md:hidden">
+                <Button
+                    isIconOnly
+                    variant="ghost"
+                    prefixIcon={SidebarSimpleIcon}
+                    ariaLabel="Mở menu di động"
+                    onPress={() => onMobileDrawerOpenChange(true)}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            </span>
+        </>
+    )
+
+    // primary row — fixed 4rem tall, matching the real bar's height contract
+    const primaryRow = (
+        <>
+            <StackH gap="section" anatPart={showAnatomy ? "StackH" : undefined} body={logoAndNavPills} />
+            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={barActions} />
+        </>
+    )
+
+    const mobileNavRows = navItems.map((item) => (
+        <Button
+            key={item.id}
+            variant={item.isActive ? "secondary" : "ghost"}
+            align="start"
+            classNames={["w-full"]}
+            label={item.label}
+            onPress={() => {
+                item.onPress()
+                onMobileDrawerOpenChange(false)
+            }}
+            anatPart={showAnatomy ? "Button" : undefined}
+        />
+    ))
+
+    const languageRow = (
+        <>
+            <Typography size="sm" text="Ngôn ngữ" anatPart={showAnatomy ? "Typography" : undefined} />
+            <NavbarLanguageMenu
+                languages={languages}
+                activeLocale={activeLocale}
+                onLocaleChange={onLocaleChange}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const themeRow = (
+        <>
+            <Typography size="sm" text="Giao diện" anatPart={showAnatomy ? "Typography" : undefined} />
+            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} showAnatomy={showAnatomy} />
+        </>
+    )
+
+    // controls hidden from the mobile bar live here: language + theme
+    const drawerControls = (
+        <>
+            <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={languageRow} />
+            <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={themeRow} />
+        </>
+    )
+
+    const drawerNav = (
+        <>
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={mobileNavRows} />
+            <Divider anatPart={showAnatomy ? "Divider" : undefined} />
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={drawerControls} />
+        </>
+    )
+
     return (
         <nav
             data-anat-part={anatPart}
             className={cn("sticky top-0 z-50 border-b border-default bg-surface", className)}
         >
             {/* primary row — fixed 4rem tall, matching the real bar's height contract */}
-            <StackH gap="section" justify="between" className="h-16 min-h-16 px-3" anatPart={showAnatomy ? "StackH" : undefined}>
-                <StackH gap="section" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <span
-                        role="button"
-                        tabIndex={0}
-                        aria-label="StarCi Academy"
-                        onClick={onLogoPress}
-                        onKeyDown={(event) => {
-                            if (event.key === "Enter" || event.key === " ") onLogoPress()
-                        }}
-                        className="inline-flex cursor-pointer items-center"
-                    >
-                        <Logo />
-                    </span>
-                    {/* desktop-only route pills; the mobile drawer renders the same `navItems` as full rows.
-                        `hidden @app-md:flex` is the WRAPPER's call (showing/hiding at a breakpoint is the
-                        surrounding frame's decision, not the atom's — ATOM-5), so it sits on this span,
-                        not on `ButtonRadioGroup`'s own `className`. */}
-                    <span className="hidden @app-md:flex">
-                        <ButtonRadioGroup
-                            items={navItems.map((item) => ({
-                                value: item.id,
-                                content: <Typography size="sm" text={item.label} anatPart={showAnatomy ? "Typography" : undefined} />,
-                            }))}
-                            value={activeNavId}
-                            onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
-                            ariaLabel="Điều hướng chính"
-                        />
-                    </span>
-                </StackH>
-
-                <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                    {/* desktop: full input-style search field; mobile: icon only */}
-                    <InputButtonLike
-                        placeholder={searchPlaceholder}
-                        icon={<MagnifyingGlassIcon className="size-5 text-muted" />}
-                        suffix={<Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>}
-                        onPress={onSearchPress}
-                        className="hidden w-[260px] @app-md:flex"
-                    />
-                    {/* `@app-md:hidden` moved off the atom onto this wrapper — a breakpoint
-                        show/hide is the surrounding frame's decision, not the atom's (ATOM-5). */}
-                    <span className="@app-md:hidden">
-                        <Button
-                            isIconOnly
-                            variant="ghost"
-                            prefixIcon={MagnifyingGlassIcon}
-                            ariaLabel={searchPlaceholder}
-                            onPress={onSearchPress}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    </span>
-
-                    {/* desktop: language + theme inline; the mobile drawer carries them instead */}
-                    <StackH gap="related" className="hidden @app-md:flex" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <NavbarLanguageMenu
-                            languages={languages}
-                            activeLocale={activeLocale}
-                            onLocaleChange={onLocaleChange}
-                            showAnatomy={showAnatomy}
-                        />
-                        <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} showAnatomy={showAnatomy} />
-                    </StackH>
-
-                    {/* cart — always shown (guests included), count badge only when non-empty.
-                        Raw HeroUI `Button` (not our atom, see file header): the atom's
-                        `isIconOnly` mode takes a single bare `prefixIcon` COMPONENT, with no
-                        room for the `Badge` this trigger anchors around its glyph. */}
-                    <HeroButton
-                        isIconOnly
-                        variant="tertiary"
-                        className="rounded-full"
-                        aria-label="Giỏ hàng"
-                        onPress={onCartPress}
-                        data-anat-part={showAnatomy ? "Button" : undefined}
-                    >
-                        <Badge color="accent" count={cartCount}>
-                            <ShoppingCartIcon className="size-5" />
-                        </Badge>
-                    </HeroButton>
-
-                    {/* notification bell — only meaningful for a signed-in viewer (carried over
-                        from the real component's own `if (!authenticated) return null`). Raw
-                        HeroUI Popover + Button (see file header: same badge-around-glyph gap as
-                        the cart trigger above). */}
-                    {account.isAuthed ? (
-                        <Popover isOpen={isNotificationsOpen} onOpenChange={setNotificationsOpen}>
-                            <HeroButton
-                                isIconOnly
-                                variant="tertiary"
-                                className="rounded-full"
-                                aria-label="Thông báo"
-                                data-anat-part={showAnatomy ? "Button" : undefined}
-                            >
-                                <Badge color="danger" count={notifications.unreadCount}>
-                                    <BellIcon className="size-5" />
-                                </Badge>
-                            </HeroButton>
-                            <PopoverContent placement="bottom right" className="w-[360px]" data-anat-part={showAnatomy ? "PopoverContent" : undefined}>
-                                {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
-                                <StackV gap="tight" className="px-2 py-1" anatPart={showAnatomy ? "StackV" : undefined}>
-                                    <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
-                                        <Typography size="sm" weight="bold" text="Thông báo" anatPart={showAnatomy ? "Typography" : undefined} />
-                                        {notifications.unreadCount > 0 ? (
-                                            <Button
-                                                isIconOnly
-                                                variant="ghost"
-                                                size="sm"
-                                                prefixIcon={ChecksIcon}
-                                                ariaLabel="Đánh dấu tất cả đã đọc"
-                                                onPress={notifications.onMarkAllRead}
-                                                anatPart={showAnatomy ? "Button" : undefined}
-                                            />
-                                        ) : null}
-                                    </StackH>
-                                    <AsyncContent
-                                        isLoading={notifications.isLoading && notifications.items.length === 0}
-                                        skeleton={(
-                                            <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                                                {[0, 1, 2].map((row) => (
-                                                    <ListRow key={row} title="" isSkeleton showAnatomy={showAnatomy} />
-                                                ))}
-                                            </StackV>
-                                        )}
-                                        isEmpty={notifications.items.length === 0}
-                                        emptyContent={{ title: "Chưa có thông báo nào" }}
-                                        error={notifications.error}
-                                        errorContent={{
-                                            title: notifications.error ?? "",
-                                            onRetry: notifications.onRetry,
-                                            retryLabel: "Thử lại",
-                                        }}
-                                    >
-                                        <StackV gap="flush" className="max-h-[420px] overflow-y-auto" anatPart={showAnatomy ? "StackV" : undefined}>
-                                            {notifications.items.map((item, index) => (
-                                                <ListRow
-                                                    key={item.id}
-                                                    leading={!item.isRead ? (
-                                                        <CircleIcon weight="fill" aria-hidden focusable="false" className="size-2 text-accent-soft-foreground" />
-                                                    ) : undefined}
-                                                    title={item.title}
-                                                    subtitle={item.subtitle}
-                                                    meta={<Typography size="xs" color="muted" text={item.timeLabel} anatPart={showAnatomy ? "Typography" : undefined} />}
-                                                    onPress={() => notifications.onItemPress(item)}
-                                                    divider={index < notifications.items.length - 1}
-                                                    showAnatomy={showAnatomy}
-                                                />
-                                            ))}
-                                        </StackV>
-                                    </AsyncContent>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        classNames={["w-full"]}
-                                        label="Xem tất cả"
-                                        onPress={notifications.onSeeAll}
-                                        anatPart={showAnatomy ? "Button" : undefined}
-                                    />
-                                </StackV>
-                            </PopoverContent>
-                        </Popover>
-                    ) : null}
-
-                    {/* account menu — raw HeroUI Dropdown + Button (see file header): the
-                        authed trigger swaps its glyph for an `Avatar`, another shape the
-                        atom's bare-`IconComponent` slot cannot host. */}
-                    <Dropdown isOpen={isAccountOpen} onOpenChange={setAccountOpen}>
-                        <HeroButton
-                            isIconOnly
-                            variant="tertiary"
-                            className="rounded-full"
-                            aria-label="Tài khoản"
-                            data-anat-part={showAnatomy ? "Button" : undefined}
-                        >
-                            {account.isAuthed ? (
-                                <Avatar
-                                    size="sm"
-                                    name={account.user?.username}
-                                    src={account.user?.avatarUrl ?? undefined}
-                                    seed={account.user?.email ?? account.user?.username}
-                                />
-                            ) : (
-                                <UserIcon className="size-5" />
-                            )}
-                        </HeroButton>
-                        <Dropdown.Popover placement="bottom right" className="w-[300px]" data-anat-part={showAnatomy ? "Dropdown.Popover" : undefined}>
-                            <div className="p-3">
-                                <AsyncContent
-                                    isLoading={account.isLoading}
-                                    skeleton={<UserCell username="" isSkeleton />}
-                                >
-                                    {account.isAuthed && account.user ? (
-                                        <UserCell
-                                            username={account.user.username}
-                                            avatar={account.user.avatarUrl}
-                                            handle={account.user.email}
-                                        />
-                                    ) : (
-                                        <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                                            <Avatar icon={UserIcon} fallback="icon" />
-                                            <Typography size="sm" color="muted" text="Đăng nhập để lưu tiến trình học tập" anatPart={showAnatomy ? "Typography" : undefined} />
-                                        </StackH>
-                                    )}
-                                </AsyncContent>
-                            </div>
-                            <Divider anatPart={showAnatomy ? "Divider" : undefined} />
-                            <Dropdown.Menu aria-label="Tài khoản" data-anat-part={showAnatomy ? "Dropdown.Menu" : undefined}>
-                                <Dropdown.Section data-anat-part={showAnatomy ? "Dropdown.Section" : undefined}>
-                                    {account.menuItems.map((item) => {
-                                        const Icon = item.icon
-                                        return (
-                                            <Dropdown.Item
-                                                key={item.id}
-                                                id={item.id}
-                                                textValue={item.label}
-                                                className={item.isDanger ? "text-danger-soft-foreground" : undefined}
-                                                onPress={item.onPress}
-                                                data-anat-part={showAnatomy ? "Dropdown.Item" : undefined}
-                                            >
-                                                {Icon ? <Icon className="size-5" /> : null}
-                                                <Label className={item.isDanger ? "text-danger-soft-foreground" : undefined}>{item.label}</Label>
-                                            </Dropdown.Item>
-                                        )
-                                    })}
-                                </Dropdown.Section>
-                            </Dropdown.Menu>
-                        </Dropdown.Popover>
-                    </Dropdown>
-
-                    {/* mobile: expand icon → the navigation drawer. `@app-md:hidden` moved off the
-                        atom onto this wrapper (ATOM-5 — breakpoint visibility is the frame's call). */}
-                    <span className="@app-md:hidden">
-                        <Button
-                            isIconOnly
-                            variant="ghost"
-                            prefixIcon={SidebarSimpleIcon}
-                            ariaLabel="Mở menu di động"
-                            onPress={() => onMobileDrawerOpenChange(true)}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    </span>
-                </StackH>
-            </StackH>
+            <StackH
+                gap="section"
+                justify="between"
+                className="h-16 min-h-16 px-3"
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={primaryRow}
+            />
 
             {/* mobile navigation drawer — the ONE local (non-overlay-store) drawer this run's
                 contract calls for; every other overlay in this system opens through the global
@@ -631,41 +719,7 @@ const Navbar = ({
                 title="Menu di động"
                 showAnatomy={showAnatomy}
             >
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {navItems.map((item) => (
-                            <Button
-                                key={item.id}
-                                variant={item.isActive ? "secondary" : "ghost"}
-                                align="start"
-                                classNames={["w-full"]}
-                                label={item.label}
-                                onPress={() => {
-                                    item.onPress()
-                                    onMobileDrawerOpenChange(false)
-                                }}
-                                anatPart={showAnatomy ? "Button" : undefined}
-                            />
-                        ))}
-                    </StackV>
-                    <Divider anatPart={showAnatomy ? "Divider" : undefined} />
-                    {/* controls hidden from the mobile bar live here: language + theme */}
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <Typography size="sm" text="Ngôn ngữ" anatPart={showAnatomy ? "Typography" : undefined} />
-                            <NavbarLanguageMenu
-                                languages={languages}
-                                activeLocale={activeLocale}
-                                onLocaleChange={onLocaleChange}
-                                showAnatomy={showAnatomy}
-                            />
-                        </StackH>
-                        <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <Typography size="sm" text="Giao diện" anatPart={showAnatomy ? "Typography" : undefined} />
-                            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} showAnatomy={showAnatomy} />
-                        </StackH>
-                    </StackV>
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={drawerNav} />
             </DrawerShell>
         </nav>
     )

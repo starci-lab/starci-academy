@@ -184,6 +184,20 @@ interface DesktopNavRowProps {
 const DesktopNavRow = ({ item, isActive, onNavigate, showAnatomy }: DesktopNavRowProps) => {
     const collapsed = useSidebarCollapsed()
     const Icon = DESTINATION_ICON[item.key]
+    const rowContent = (
+        <>
+            <Icon aria-hidden focusable="false" className="size-5 shrink-0" />
+            {!collapsed ? (
+                <Typography
+                    size="sm"
+                    weight={isActive ? "medium" : undefined}
+                    text={DESTINATION_LABEL[item.key]}
+                    truncate
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+        </>
+    )
     return (
         <button
             type="button"
@@ -196,18 +210,7 @@ const DesktopNavRow = ({ item, isActive, onNavigate, showAnatomy }: DesktopNavRo
                 isActive ? "bg-accent-soft text-accent-soft-foreground" : "text-foreground hover:bg-default/40",
             )}
         >
-            <StackH gap="tight" align="center" justify={collapsed ? "center" : "start"} anatPart={showAnatomy ? "StackH" : undefined}>
-                <Icon aria-hidden focusable="false" className="size-5 shrink-0" />
-                {!collapsed ? (
-                    <Typography
-                        size="sm"
-                        weight={isActive ? "medium" : undefined}
-                        text={DESTINATION_LABEL[item.key]}
-                        truncate
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                ) : null}
-            </StackH>
+            <StackH gap="tight" align="center" justify={collapsed ? "center" : "start"} anatPart={showAnatomy ? "StackH" : undefined} body={rowContent} />
         </button>
     )
 }
@@ -280,8 +283,10 @@ const SettingsSidebarNav = ({
                                 and its neighbours is owned by `CollapsibleSidebar`'s own
                                 `StackV gap="grouped"`, not a margin on this Divider. */}
                             {index > 0 ? <Divider anatPart={showAnatomy ? "Divider" : undefined} /> : null}
-                            <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                                {group.items.map((item) => (
+                            <StackV
+                                gap="flush"
+                                anatPart={showAnatomy ? "StackV" : undefined}
+                                body={group.items.map((item) => (
                                     <DesktopNavRow
                                         key={item.key}
                                         item={item}
@@ -290,7 +295,7 @@ const SettingsSidebarNav = ({
                                         showAnatomy={showAnatomy}
                                     />
                                 ))}
-                            </StackV>
+                            />
                         </React.Fragment>
                     ))}
                 </CollapsibleSidebar>
@@ -303,10 +308,15 @@ const SettingsSidebarNav = ({
                     gap="related"
                     className="overflow-x-auto border-b border-default bg-background/80 px-3 py-2 backdrop-blur-xl"
                     anatPart={showAnatomy ? "StackH" : undefined}
-                >
-                    {flatItems.map((item) => {
+                    body={flatItems.map((item) => {
                         const isActive = item.href === activeHref
                         const Icon = DESTINATION_ICON[item.key]
+                        const pillContent = (
+                            <>
+                                <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
+                                <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap anatPart={showAnatomy ? "Typography" : undefined} />
+                            </>
+                        )
                         return (
                             <button
                                 key={item.key}
@@ -318,14 +328,11 @@ const SettingsSidebarNav = ({
                                     isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
                                 )}
                             >
-                                <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                                    <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
-                                    <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap anatPart={showAnatomy ? "Typography" : undefined} />
-                                </StackH>
+                                <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={pillContent} />
                             </button>
                         )
                     })}
-                </StackH>
+                />
             </nav>
         </div>
     )

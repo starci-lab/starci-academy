@@ -109,20 +109,24 @@ export const InputButtonLike = ({
                 className,
             )}
         >
-            <StackH gap="related" className="min-w-0">
-                {icon ? (
-                    <span className="inline-flex shrink-0 items-center text-field-placeholder">
-                        {icon}
-                    </span>
-                ) : null}
-                <span className={cn("truncate text-field-placeholder", TEXT_CLS[size])}>
-                    {placeholder}
-                </span>
-            </StackH>
+            <StackH
+                gap="related"
+                classNames={["min-w-0"]}
+                body={
+                    <>
+                        {icon ? (
+                            <span className="inline-flex shrink-0 items-center text-field-placeholder">
+                                {icon}
+                            </span>
+                        ) : null}
+                        <span className={cn("truncate text-field-placeholder", TEXT_CLS[size])}>
+                            {placeholder}
+                        </span>
+                    </>
+                }
+            />
             {suffix ? (
-                <StackH gap="related" className="shrink-0">
-                    {suffix}
-                </StackH>
+                <StackH gap="related" classNames={["shrink-0"]} body={suffix} />
             ) : null}
         </Button>
     )

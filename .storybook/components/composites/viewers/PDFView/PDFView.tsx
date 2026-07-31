@@ -291,8 +291,9 @@ export const PDFView = ({
                     noData={<div className="text-sm text-muted">No PDF selected.</div>}
                     onLoadSuccess={(pdf) => setNumPages(pdf.numPages)}
                 >
-                    <StackV gap="grouped">
-                        {Array.from({ length: pageCount }, (_, index) => {
+                    <StackV
+                        gap="grouped"
+                        body={Array.from({ length: pageCount }, (_, index) => {
                             const pageNumber = index + 1
                             const eager = !showAllPages || pageNumber <= 2
                             return (
@@ -305,7 +306,7 @@ export const PDFView = ({
                                 />
                             )
                         })}
-                    </StackV>
+                    />
                 </Document>
             ) : (
                 <div className="text-sm text-muted">No PDF selected.</div>

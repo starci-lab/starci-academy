@@ -128,6 +128,170 @@ const ContentCommentThread = ({
         }
     }
 
+    const authorLine = (
+        <>
+            <Typography size="sm" weight="medium" text={comment.author.username} anatPart={showAnatomy ? "Typography" : undefined} />
+            {comment.isFounderAuthor ? (
+                <SealCheckIcon weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+            ) : null}
+            <Typography size="xs" color="muted" text={comment.createdTimeAgo} anatPart={showAnatomy ? "Typography" : undefined} />
+            {comment.isEdited ? (
+                <Typography size="xs" color="muted" text="(đã sửa)" anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : null}
+        </>
+    )
+
+    // action row: reaction + reply + owner edit/delete. `isButton`, NOT `isLink` — real
+    // src's own action links carry no underline at all, only a resting→hover COLOR
+    // shift, which isLink's underline treatment would misrepresent.
+    const actionRow = (
+        <>
+            <ReactionButton
+                myReaction={comment.myReaction}
+                counts={comment.reactionCounts}
+                onReact={(type) => onReactComment(comment.id, type)}
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "ReactionButton" : undefined}
+            />
+            <Typography
+                size="xs"
+                weight="medium"
+                color="muted"
+                isButton
+                hoverColor="default"
+                text="Trả lời"
+                onPress={() => setReplying((prev) => !prev)}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            {isOwner ? (
+                <>
+                    <Typography
+                        size="xs"
+                        weight="medium"
+                        color="muted"
+                        isButton
+                        hoverColor="default"
+                        text="Sửa"
+                        onPress={() => setEditing(true)}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                    <Typography
+                        size="xs"
+                        weight="medium"
+                        color="muted"
+                        isButton
+                        hoverColor="danger"
+                        text="Xóa"
+                        onPress={() => onDelete(comment.id)}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                </>
+            ) : null}
+        </>
+    )
+
+    const bodyAndActions = (
+        <>
+            {/* body, edit form, or deleted placeholder */}
+            {comment.isDeleted ? (
+                <Typography size="sm" color="muted" isItalic text="[Bình luận đã bị xóa]" anatPart={showAnatomy ? "Typography" : undefined} />
+            ) : editing ? (
+                <ContentCommentComposer
+                    initialValue={comment.body}
+                    submitLabel="Lưu"
+                    ariaLabel="Sửa bình luận"
+                    onCancel={() => setEditing(false)}
+                    onSubmit={(body) => {
+                        onEdit(comment.id, body)
+                        setEditing(false)
+                    }}
+                    showAnatomy={showAnatomy}
+                />
+            ) : (
+                <Typography size="sm" preserveWhitespace text={comment.body} anatPart={showAnatomy ? "Typography" : undefined} />
+            )}
+
+            {!comment.isDeleted && !editing ? (
+                <StackH gap="grouped" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined} body={actionRow} />
+            ) : null}
+        </>
+    )
+
+    const threadBody = (
+        <>
+            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={bodyAndActions} />
+
+            {/* reply composer — `ThreadConnector` draws the Facebook-style curved
+                guide from this comment down into the reply's own avatar (thầy
+                2026-07-29); `currentUser` is what gives the composer an avatar to
+                connect TO in the first place (see its own file header). */}
+            {replying ? (
+                <StackH
+                    gap="tight"
+                    align="start"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <>
+                            <ThreadConnector />
+                            <ContentCommentComposer
+                                placeholder="Viết câu trả lời..."
+                                submitLabel="Trả lời"
+                                ariaLabel="Viết câu trả lời"
+                                currentUser={currentUser}
+                                className="min-w-0 flex-1"
+                                onCancel={() => setReplying(false)}
+                                onSubmit={(body) => {
+                                    onReply(comment.id, body)
+                                    setReplying(false)
+                                    setExpanded(true)
+                                    onLoadReplies(comment.id)
+                                }}
+                                showAnatomy={showAnatomy}
+                            />
+                        </>
+                    }
+                />
+            ) : null}
+
+            {/* replies toggle + recursive subtree */}
+            {comment.replyCount > 0 ? (
+                <Typography
+                    size="xs"
+                    weight="medium"
+                    color="accent"
+                    isLink
+                    underlineOnHover
+                    text={expanded ? "Ẩn câu trả lời" : `Xem ${comment.replyCount} câu trả lời`}
+                    onPress={toggleReplies}
+                    anatPart={showAnatomy ? "Typography" : undefined}
+                />
+            ) : null}
+
+            {expanded && replies.length > 0 ? (
+                <StackV
+                    gap="grouped"
+                    anatPart={showAnatomy ? "StackV" : undefined}
+                    body={replies.map((reply) => (
+                        <ContentCommentThread
+                            key={reply.id}
+                            comment={reply}
+                            currentUserId={currentUserId}
+                            currentUser={currentUser}
+                            depth={depth + 1}
+                            repliesByParent={repliesByParent}
+                            onReply={onReply}
+                            onEdit={onEdit}
+                            onDelete={onDelete}
+                            onReactComment={onReactComment}
+                            onLoadReplies={onLoadReplies}
+                            showAnatomy={showAnatomy}
+                        />
+                    ))}
+                />
+            ) : null}
+        </>
+    )
+
     return (
         // `IdentityContentRow` (composite, thầy 2026-07-29 "gom màu đen thành block
         // riêng") owns the avatar+byline+column shape — both its seams are `tight`
@@ -143,16 +307,7 @@ const ContentCommentThread = ({
             anatPart={anatPart}
             showAnatomy={showAnatomy}
             byline={
-                <StackH gap="tight" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <Typography size="sm" weight="medium" text={comment.author.username} anatPart={showAnatomy ? "Typography" : undefined} />
-                    {comment.isFounderAuthor ? (
-                        <SealCheckIcon weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                    ) : null}
-                    <Typography size="xs" color="muted" text={comment.createdTimeAgo} anatPart={showAnatomy ? "Typography" : undefined} />
-                    {comment.isEdited ? (
-                        <Typography size="xs" color="muted" text="(đã sửa)" anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : null}
-                </StackH>
+                <StackH gap="tight" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined} body={authorLine} />
             }
         >
             {/* `grouped` — separates [body+actions, tight together] from whatever
@@ -160,138 +315,7 @@ const ContentCommentThread = ({
                 vẫn gap-3": the seam right before a reply composer appears needs more
                 room than the tight identity block above it (also where the
                 Facebook-style connector line will run). */}
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                    {/* body, edit form, or deleted placeholder */}
-                    {comment.isDeleted ? (
-                        <Typography size="sm" color="muted" isItalic text="[Bình luận đã bị xóa]" anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : editing ? (
-                        <ContentCommentComposer
-                            initialValue={comment.body}
-                            submitLabel="Lưu"
-                            ariaLabel="Sửa bình luận"
-                            onCancel={() => setEditing(false)}
-                            onSubmit={(body) => {
-                                onEdit(comment.id, body)
-                                setEditing(false)
-                            }}
-                            showAnatomy={showAnatomy}
-                        />
-                    ) : (
-                        <Typography size="sm" preserveWhitespace text={comment.body} anatPart={showAnatomy ? "Typography" : undefined} />
-                    )}
-
-                    {/* action row: reaction + reply + owner edit/delete. `isButton`, NOT
-                    `isLink` — real src's own action links carry no underline at all,
-                    only a resting→hover COLOR shift, which isLink's underline
-                    treatment would misrepresent. */}
-                    {!comment.isDeleted && !editing ? (
-                        <StackH gap="grouped" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <ReactionButton
-                                myReaction={comment.myReaction}
-                                counts={comment.reactionCounts}
-                                onReact={(type) => onReactComment(comment.id, type)}
-                                showAnatomy={showAnatomy}
-                                anatPart={showAnatomy ? "ReactionButton" : undefined}
-                            />
-                            <Typography
-                                size="xs"
-                                weight="medium"
-                                color="muted"
-                                isButton
-                                hoverColor="default"
-                                text="Trả lời"
-                                onPress={() => setReplying((prev) => !prev)}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            {isOwner ? (
-                                <>
-                                    <Typography
-                                        size="xs"
-                                        weight="medium"
-                                        color="muted"
-                                        isButton
-                                        hoverColor="default"
-                                        text="Sửa"
-                                        onPress={() => setEditing(true)}
-                                        anatPart={showAnatomy ? "Typography" : undefined}
-                                    />
-                                    <Typography
-                                        size="xs"
-                                        weight="medium"
-                                        color="muted"
-                                        isButton
-                                        hoverColor="danger"
-                                        text="Xóa"
-                                        onPress={() => onDelete(comment.id)}
-                                        anatPart={showAnatomy ? "Typography" : undefined}
-                                    />
-                                </>
-                            ) : null}
-                        </StackH>
-                    ) : null}
-                </StackV>
-
-                {/* reply composer — `ThreadConnector` draws the Facebook-style curved
-                    guide from this comment down into the reply's own avatar (thầy
-                    2026-07-29); `currentUser` is what gives the composer an avatar to
-                    connect TO in the first place (see its own file header). */}
-                {replying ? (
-                    <StackH gap="tight" align="start" anatPart={showAnatomy ? "StackH" : undefined}>
-                        <ThreadConnector />
-                        <ContentCommentComposer
-                            placeholder="Viết câu trả lời..."
-                            submitLabel="Trả lời"
-                            ariaLabel="Viết câu trả lời"
-                            currentUser={currentUser}
-                            className="min-w-0 flex-1"
-                            onCancel={() => setReplying(false)}
-                            onSubmit={(body) => {
-                                onReply(comment.id, body)
-                                setReplying(false)
-                                setExpanded(true)
-                                onLoadReplies(comment.id)
-                            }}
-                            showAnatomy={showAnatomy}
-                        />
-                    </StackH>
-                ) : null}
-
-                {/* replies toggle + recursive subtree */}
-                {comment.replyCount > 0 ? (
-                    <Typography
-                        size="xs"
-                        weight="medium"
-                        color="accent"
-                        isLink
-                        underlineOnHover
-                        text={expanded ? "Ẩn câu trả lời" : `Xem ${comment.replyCount} câu trả lời`}
-                        onPress={toggleReplies}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                ) : null}
-
-                {expanded && replies.length > 0 ? (
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                        {replies.map((reply) => (
-                            <ContentCommentThread
-                                key={reply.id}
-                                comment={reply}
-                                currentUserId={currentUserId}
-                                currentUser={currentUser}
-                                depth={depth + 1}
-                                repliesByParent={repliesByParent}
-                                onReply={onReply}
-                                onEdit={onEdit}
-                                onDelete={onDelete}
-                                onReactComment={onReactComment}
-                                onLoadReplies={onLoadReplies}
-                                showAnatomy={showAnatomy}
-                            />
-                        ))}
-                    </StackV>
-                ) : null}
-            </StackV>
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={threadBody} />
         </IdentityContentRow>
     )
 }

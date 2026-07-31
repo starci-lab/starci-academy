@@ -142,6 +142,68 @@ const ModuleHeader = ({
     // gets `undefined` and drops the whole slot instead of an empty row with nothing in it.
     const hasMeta = isSkeleton || tier != null || hasLessons || hasMinutes || hasChallenges
 
+    const metaRow = hasMeta ? (
+        <StackH
+            gap="related"
+            align="center"
+            wrap
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    {isSkeleton ? (
+                        <EnumChip
+                            value={CourseContentTier.Foundation}
+                            map={TIER_MAP}
+                            isSkeleton
+                            anatPart={showAnatomy ? "EnumChip" : undefined}
+                        />
+                    ) : tier != null ? (
+                        <EnumChip value={tier} map={TIER_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />
+                    ) : null}
+                    {isSkeleton ? (
+                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                            <Chip isSkeleton icon={StackIcon} />
+                        </span>
+                    ) : hasLessons ? (
+                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                            <HighlightChip
+                                icon={<StackIcon aria-hidden focusable="false" className="size-4" />}
+                                value={lessonCount}
+                                label="bài"
+                            />
+                        </span>
+                    ) : null}
+                    {isSkeleton ? (
+                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                            <Chip isSkeleton icon={ClockIcon} />
+                        </span>
+                    ) : hasMinutes ? (
+                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                            <HighlightChip
+                                icon={<ClockIcon aria-hidden focusable="false" className="size-4" />}
+                                value={minutesTotal}
+                                label="phút học"
+                            />
+                        </span>
+                    ) : null}
+                    {isSkeleton ? (
+                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                            <Chip isSkeleton icon={PuzzlePieceIcon} />
+                        </span>
+                    ) : hasChallenges ? (
+                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                            <HighlightChip
+                                icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-4" />}
+                                value={challengeCount}
+                                label="thử thách"
+                            />
+                        </span>
+                    ) : null}
+                </>
+            }
+        />
+    ) : undefined
+
     return (
         <div data-anat-part={anatPart}>
             <PageHeader
@@ -173,61 +235,7 @@ const ModuleHeader = ({
                         description
                     )
                 }
-                meta={
-                    hasMeta ? (
-                        <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                            {isSkeleton ? (
-                                <EnumChip
-                                    value={CourseContentTier.Foundation}
-                                    map={TIER_MAP}
-                                    isSkeleton
-                                    anatPart={showAnatomy ? "EnumChip" : undefined}
-                                />
-                            ) : tier != null ? (
-                                <EnumChip value={tier} map={TIER_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />
-                            ) : null}
-                            {isSkeleton ? (
-                                <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
-                                    <Chip isSkeleton icon={StackIcon} />
-                                </span>
-                            ) : hasLessons ? (
-                                <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
-                                    <HighlightChip
-                                        icon={<StackIcon aria-hidden focusable="false" className="size-4" />}
-                                        value={lessonCount}
-                                        label="bài"
-                                    />
-                                </span>
-                            ) : null}
-                            {isSkeleton ? (
-                                <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
-                                    <Chip isSkeleton icon={ClockIcon} />
-                                </span>
-                            ) : hasMinutes ? (
-                                <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
-                                    <HighlightChip
-                                        icon={<ClockIcon aria-hidden focusable="false" className="size-4" />}
-                                        value={minutesTotal}
-                                        label="phút học"
-                                    />
-                                </span>
-                            ) : null}
-                            {isSkeleton ? (
-                                <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
-                                    <Chip isSkeleton icon={PuzzlePieceIcon} />
-                                </span>
-                            ) : hasChallenges ? (
-                                <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
-                                    <HighlightChip
-                                        icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-4" />}
-                                        value={challengeCount}
-                                        label="thử thách"
-                                    />
-                                </span>
-                            ) : null}
-                        </StackH>
-                    ) : undefined
-                }
+                meta={metaRow}
             />
         </div>
     )

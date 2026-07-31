@@ -95,26 +95,30 @@ const CourseQaEngagementStrip = ({
 }: CourseQaEngagementStripProps) => {
     const hasEnrollment = enrollmentCount != null
 
-    return (
-        <div data-anat-part={anatPart}>
-            <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined}>
-                {isSkeleton || hasEnrollment ? (
-                    <Typography
-                        size="sm"
-                        color="muted"
-                        isSkeleton={isSkeleton}
-                        text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} học viên đã ghi danh khoá học này` : undefined}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                ) : null}
+    const lines = (
+        <>
+            {isSkeleton || hasEnrollment ? (
                 <Typography
                     size="sm"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    text={isSkeleton ? undefined : questionLine(totalQuestions, answeredQuestions)}
+                    text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} học viên đã ghi danh khoá học này` : undefined}
                     anatPart={showAnatomy ? "Typography" : undefined}
                 />
-            </StackV>
+            ) : null}
+            <Typography
+                size="sm"
+                color="muted"
+                isSkeleton={isSkeleton}
+                text={isSkeleton ? undefined : questionLine(totalQuestions, answeredQuestions)}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={lines} />
         </div>
     )
 }

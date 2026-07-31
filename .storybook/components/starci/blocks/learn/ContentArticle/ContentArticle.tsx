@@ -94,49 +94,55 @@ const ContentArticle = ({
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
-}: ContentArticleProps) => (
-    <div data-anat-part={anatPart}>
-        <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                {hintText != null && !isLocked ? (
-                    <FeedbackCallout
-                        title={hintText}
-                        anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+}: ContentArticleProps) => {
+    const lessonBody = (
+        <>
+            {hintText != null && !isLocked ? (
+                <FeedbackCallout
+                    title={hintText}
+                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                />
+            ) : null}
+            <div className="relative">
+                <div className={cn(isLocked && "select-none")}>
+                    <MarkdownContent
+                        source={body}
+                        measure="reading"
+                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
                     />
-                ) : null}
-                <div className="relative">
-                    <div className={cn(isLocked && "select-none")}>
-                        <MarkdownContent
-                            source={body}
-                            measure="reading"
-                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                        />
-                    </div>
-                    {isLocked ? (
-                        // Pure opacity fade over the tail. The body stays mounted so the
-                        // reader can see the lesson CONTINUES — truncating would tell them
-                        // nothing about what they are being asked to buy.
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
-                    ) : null}
                 </div>
-                {isLocked && offer != null ? (
-                    <ContentPaywall
-                        title={offer.title}
-                        description={offer.description}
-                        discountedPriceVnd={offer.discountedPriceVnd}
-                        originalPriceVnd={offer.originalPriceVnd}
-                        currentPhase={offer.currentPhase}
-                        seatsRemaining={offer.seatsRemaining}
-                        nextPhasePriceVnd={offer.nextPhasePriceVnd}
-                        ctaLabel={offer.ctaLabel}
-                        onPurchase={offer.onPurchase}
-                        anatPart={showAnatomy ? "ContentPaywall" : undefined}
-                        showAnatomy={showAnatomy}
-                    />
+                {isLocked ? (
+                    // Pure opacity fade over the tail. The body stays mounted so the
+                    // reader can see the lesson CONTINUES — truncating would tell them
+                    // nothing about what they are being asked to buy.
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
                 ) : null}
-            </StackV>
-        </SurfaceCard>
-    </div>
-)
+            </div>
+            {isLocked && offer != null ? (
+                <ContentPaywall
+                    title={offer.title}
+                    description={offer.description}
+                    discountedPriceVnd={offer.discountedPriceVnd}
+                    originalPriceVnd={offer.originalPriceVnd}
+                    currentPhase={offer.currentPhase}
+                    seatsRemaining={offer.seatsRemaining}
+                    nextPhasePriceVnd={offer.nextPhasePriceVnd}
+                    ctaLabel={offer.ctaLabel}
+                    onPurchase={offer.onPurchase}
+                    anatPart={showAnatomy ? "ContentPaywall" : undefined}
+                    showAnatomy={showAnatomy}
+                />
+            ) : null}
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={lessonBody} />
+            </SurfaceCard>
+        </div>
+    )
+}
 
 export { ContentArticle }

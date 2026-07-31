@@ -11,27 +11,44 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  *   • horizontal            → `<Divider />` (default)
  *   • vertical              → `<Divider orientation="vertical" />` (needs a parent with height)
  *   • with a centered label → `<Divider label="OR" />` (rule | label | rule)
+ *   • inline mark           → `<Divider shape="inline" />` (a glyph sitting inside running text)
  *
  * HeroUI has NO `Divider` — the atom wraps `Separator` (renamed for the app's
  * vocabulary). A label is only valid when `orientation="horizontal"` (ignored on
- * vertical). The atom has NO skeleton (a static line, nothing to load).
+ * vertical). `shape="inline"` skips `Separator` entirely: `orientation` and
+ * `variant` describe a line's geometry, and an inline mark has neither — it is a
+ * glyph the width of a character, not a track the width of its container. The atom
+ * has NO skeleton (a static line, nothing to load).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Divider orientation. */
 export type DividerOrientation = "horizontal" | "vertical"
 
-/** Line weight/tone (HeroUI Separator `variant`). */
+/** Line weight/tone (HeroUI Separator `variant`). Ignored when `shape` is `inline`. */
 export type DividerVariant = "default" | "secondary" | "tertiary"
+
+/** Visual form the divider takes. */
+export type DividerShape =
+    /** A HeroUI Separator line — stretches to fill its track. */
+    | "rule"
+    /** A small glyph sitting on the surrounding text's baseline, sized and coloured for running text. */
+    | "inline"
 
 /** Props for {@link DividerBase}. */
 export interface DividerBaseProps {
-    /** Orientation. Default `horizontal`. */
+    /** Orientation. Default `horizontal`. Ignored when `shape` is `inline`. */
     orientation?: DividerOrientation
-    /** Line tone. Default `default`. */
+    /** Line tone. Default `default`. Ignored when `shape` is `inline`. */
     variant?: DividerVariant
-    /** Optional centered label (horizontal only) → rule · label · rule. */
+    /** Optional centered label (horizontal only) → rule · label · rule. Ignored when `shape` is `inline`. */
     label?: ReactNode
+    /**
+     * Visual form. Default `rule`. `inline` renders a baseline mark sized for
+     * running text and coloured `currentColor`, for a divider that sits between
+     * two pieces of text rather than a track spanning a container.
+     */
+    shape?: DividerShape
     /**
      * Anatomy tag for this component itself, so a parent can badge it as one
      * node. Without it, a parent would have to pass `showAnatomy` down instead,
@@ -58,11 +75,26 @@ const DividerBase = ({
     orientation = "horizontal",
     variant = "default",
     label,
+    shape = "rule",
     showAnatomy = false,
     anatPart,
     className,
     classNames,
 }: DividerBaseProps) => {
+    // An inline mark: a glyph on the surrounding text's baseline, not a Separator
+    // track — it takes `currentColor` and no fixed size, so it tints and scales
+    // with whatever row it sits in.
+    if (shape === "inline") {
+        return (
+            <span
+                aria-hidden
+                data-anat-part={anatPart ?? (showAnatomy ? "Separator" : undefined)}
+                className={cn("text-current select-none", className, classNames)}
+            >
+                ·
+            </span>
+        )
+    }
     // A labelled divider (horizontal only): a rule on each side of centered text.
     if (label !== undefined && orientation === "horizontal") {
         return (

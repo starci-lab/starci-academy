@@ -1,0 +1,209 @@
+import React from "react"
+import type { ReactNode } from "react"
+import { Breadcrumbs as HeroBreadcrumbs, Link as HeroLink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import { ArrowLeftIcon } from "@phosphor-icons/react"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+
+/**
+ * `Breadcrumbs` — the single breadcrumb-trail atom wrapping HeroUI `Breadcrumbs`.
+ *
+ * Data-driven: pass `items` (root → current). Renders `HeroBreadcrumbs >
+ * HeroBreadcrumbs.Item`. The last item is the current page, usually without
+ * `onPress` (read-only). `maxItems` truncates a longer trail to a single
+ * non-pressable "…" crumb in the middle (first + ellipsis + tail).
+ *
+ * Responsive collapse also lives here: a narrow column can't hold a trail, and
+ * a deep trail wraps and eats vertical space, so the atom can swap the whole
+ * trail for a single back affordance ("← Back") pointing at the deepest
+ * pressable ancestor:
+ *   • `collapseOnMobile` → back link below `@app-sm`, trail from `@app-sm` up.
+ *   • `collapseFrom={n}` → back link at every width once the trail has ≥ n crumbs.
+ * The back link is built inline here (HeroUI `Link` + Phosphor `ArrowLeftIcon`)
+ * rather than reusing the `BackLink` block, since an atom must not import
+ * `blocks/`.
+ *
+ * Only `Breadcrumbs` is exported — no bare component. `items`/`label` are data
+ * props, not `children`. The atom owns separators, truncation, and
+ * current-crumb styling. `isSkeleton` renders a co-located trail skeleton whose
+ * shape follows `collapseFrom`/`collapseOnMobile`.
+ */
+
+/** One crumb in a {@link BreadcrumbsBase} trail. */
+export interface BreadcrumbItem {
+    /** Stable key for the list. */
+    key: string | number
+    /** Crumb label. */
+    label: ReactNode
+    /** Navigate handler — omit on the current (last, read-only) crumb. */
+    onPress?: () => void
+}
+
+/** Props for {@link BreadcrumbsBase}. */
+export interface BreadcrumbsBaseProps {
+    /** The full trail, root → current (current last, usually without `onPress`). */
+    items: Array<BreadcrumbItem>
+    /**
+     * When the trail has MORE than this many crumbs, collapse the middle into a
+     * single "…" crumb: `first › … › last two`. Omit to always show every crumb.
+     */
+    maxItems?: number
+    /**
+     * Below the `@app-sm` breakpoint, replace the whole trail with a single back
+     * link to the deepest pressable ancestor (a narrow column can't hold a trail).
+     * Ignored when no item has `onPress` — the trail then stays visible.
+     */
+    collapseOnMobile?: boolean
+    /**
+     * Once the trail has AT LEAST this many crumbs, replace it with the back link
+     * at EVERY width — a long trail wraps and eats vertical space, and deep
+     * ancestors are already reachable from top nav. Omit to never collapse by length.
+     */
+    collapseFrom?: number
+    /** Label of the collapsed back link. Default `"Back"`. */
+    backLabel?: string
+    /**
+     * Render the trail shimmer instead of the crumbs. Shape follows
+     * `collapseFrom`/`collapseOnMobile` + trail depth — a back-link shimmer when
+     * the config resolves to the collapsed form, bar-row shimmer otherwise — so
+     * the loading shape matches what the real trail is about to become.
+     */
+    isSkeleton?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
+    className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
+}
+
+/** The collapsed placeholder key (stable, never collides with a real crumb key). */
+const ELLIPSIS_KEY = "__ellipsis__"
+
+/**
+ * The breadcrumb-trail atom. See file header for the strict data-driven contract.
+ *
+ * @param props - {@link BreadcrumbsBaseProps}
+ */
+const BreadcrumbsBase = ({
+    items,
+    maxItems,
+    collapseOnMobile = false,
+    collapseFrom,
+    backLabel = "Back",
+    isSkeleton = false,
+    className,
+    classNames,
+}: BreadcrumbsBaseProps) => {
+    if (isSkeleton) {
+        // Collapse shape is known ahead of load (driven by `collapseFrom`/
+        // `collapseOnMobile` + trail depth), so the shimmer must match the shape
+        // the real trail resolves to — a mismatched shimmer causes a layout jump
+        // once data lands. `items.length` stands in for "has a navigable
+        // ancestor" since skeleton items rarely carry a real `onPress` yet.
+        const canCollapse = items.length > 1
+        const isLongTrail = collapseFrom !== undefined && items.length >= collapseFrom
+        const collapseAlways = canCollapse && isLongTrail
+        const collapseMobile = canCollapse && collapseOnMobile && !collapseAlways
+
+        const trailBars = (
+            <div className={cn("flex items-center gap-2", className, classNames)}>
+                <HeroSkeleton className="h-4 w-1/4 rounded-md" />
+                <HeroSkeleton className="h-4 w-1/3 rounded-md" />
+                <HeroSkeleton className="h-4 w-1/2 rounded-md" />
+            </div>
+        )
+        const backBar = (
+            <div className={cn("flex w-fit items-center gap-2", className, classNames)}>
+                <HeroSkeleton className="size-3.5 rounded-full" />
+                <HeroSkeleton className="h-4 w-1/3 rounded-md" />
+            </div>
+        )
+
+        if (collapseAlways) {
+            return backBar
+        }
+        if (collapseMobile) {
+            return (
+                <>
+                    <div className="hidden @app-sm:flex">{trailBars}</div>
+                    <div className="@app-sm:hidden">{backBar}</div>
+                </>
+            )
+        }
+        return trailBars
+    }
+
+    // Truncate: keep the first crumb + the last two, drop the middle behind a "…".
+    const shouldTruncate = maxItems !== undefined && items.length > maxItems
+    const rendered: Array<BreadcrumbItem | typeof ELLIPSIS_KEY> = shouldTruncate
+        ? [items[0], ELLIPSIS_KEY, ...items.slice(-2)]
+        : items
+
+    // Back target = deepest ancestor we can navigate to (the current crumb has no onPress).
+    const parent = [...items].reverse().find((item) => item.onPress)
+    // Collapsing needs somewhere to go back TO; without it the trail always stays.
+    const canCollapse = parent !== undefined
+    const isLongTrail = collapseFrom !== undefined && items.length >= collapseFrom
+    const collapseAlways = canCollapse && isLongTrail
+    const collapseMobile = canCollapse && collapseOnMobile && !collapseAlways
+
+    const trail = (
+        <HeroBreadcrumbs className={cn(collapseMobile && "hidden @app-sm:flex", className, classNames)}>
+            {rendered.map((entry) =>
+                entry === ELLIPSIS_KEY ? (
+                    <HeroBreadcrumbs.Item key={ELLIPSIS_KEY}>
+                        …
+                    </HeroBreadcrumbs.Item>
+                ) : (
+                    <HeroBreadcrumbs.Item key={entry.key} onPress={entry.onPress}>
+                        {entry.label}
+                    </HeroBreadcrumbs.Item>
+                ),
+            )}
+        </HeroBreadcrumbs>
+    )
+
+    if (!collapseAlways && !collapseMobile) {
+        return trail
+    }
+
+    return (
+        <>
+            {collapseAlways ? null : trail}
+            {/*
+              A quiet back affordance, not a pill. Icon sized `size-3.5` to
+              match `text-sm`; smaller than `size-5` so `weight="bold"`
+              compensates the stroke. Tailwind v4 treats `translate` as its
+              own property, so the transition must target `[translate]` —
+              `transition-transform` won't animate it.
+            */}
+            <HeroLink
+                onPress={parent?.onPress}
+                className={cn(
+                    "group text-muted hover:text-foreground flex w-fit cursor-pointer items-center gap-2 text-sm no-underline transition-colors",
+                    collapseMobile && "@app-sm:hidden",
+                    className,
+                    classNames,
+                )}
+            >
+                <ArrowLeftIcon
+                    aria-hidden
+                    focusable="false"
+                    weight="bold"
+                    className="size-3.5 transition-[translate] group-hover:-translate-x-1"
+                />
+                <span className="decoration-[var(--separator-tertiary)] underline-offset-4 group-hover:underline">
+                    {backLabel}
+                </span>
+            </HeroLink>
+        </>
+    )
+}
+
+/**
+ * `Breadcrumbs.*` — the breadcrumb ATOM namespace. `Breadcrumbs` is the
+ * single constrained trail; truncation (`maxItems`) and the responsive back-link
+ * collapse (`collapseOnMobile` / `collapseFrom`) are LEAVES of it, prop-driven.
+ */
+export { BreadcrumbsBase as Breadcrumbs }

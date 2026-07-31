@@ -203,28 +203,34 @@ const GithubUrlField = ({
 }: GithubUrlFieldProps) => {
     const AutosaveIcon = autosaveStatus === "idle" ? null : AUTOSAVE_ICON[autosaveStatus]
     return (
-        <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-            <InputText
-                label="Repo GitHub"
-                value={githubUrl}
-                onValueChange={onGithubUrlChange}
-                errorMessage={urlError}
-                placeholder="https://github.com/ten-nhom/du-an"
-                ariaLabel="URL repo GitHub"
-                isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
-            />
-            {!isSkeleton && AutosaveIcon != null ? (
-                <InlineIconLabel
-                    icon={<AutosaveIcon aria-hidden focusable="false" />}
-                    tone={AUTOSAVE_TONE[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
-                    size="xs"
-                    anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-                >
-                    {AUTOSAVE_LABEL[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
-                </InlineIconLabel>
-            ) : null}
-        </StackV>
+        <StackV
+            gap="tight"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <InputText
+                        label="Repo GitHub"
+                        value={githubUrl}
+                        onValueChange={onGithubUrlChange}
+                        errorMessage={urlError}
+                        placeholder="https://github.com/ten-nhom/du-an"
+                        ariaLabel="URL repo GitHub"
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                    {!isSkeleton && AutosaveIcon != null ? (
+                        <InlineIconLabel
+                            icon={<AutosaveIcon aria-hidden focusable="false" />}
+                            tone={AUTOSAVE_TONE[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
+                            size="xs"
+                            anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+                        >
+                            {AUTOSAVE_LABEL[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
+                        </InlineIconLabel>
+                    ) : null}
+                </>
+            }
+        />
     )
 }
 
@@ -238,38 +244,54 @@ interface SettingsSummaryRowProps {
 
 /** Compact "what am I grading against" line + the gear that opens the settings drawer. */
 const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton, showAnatomy }: SettingsSummaryRowProps) => (
-    <StackH gap="related" align="center" justify="between" anatPart={showAnatomy ? "StackH" : undefined}>
-        <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-            <InlineIconLabel
-                icon={<CodeIcon aria-hidden focusable="false" />}
-                tone="default"
-                size="xs"
-                isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-            >
-                {settingsSummary.langLabel}
-            </InlineIconLabel>
-            <InlineIconLabel
-                icon={<GitBranchIcon aria-hidden focusable="false" />}
-                tone="default"
-                size="xs"
-                isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-            >
-                {settingsSummary.branch}
-            </InlineIconLabel>
-        </StackH>
-        <Button
-            isIconOnly
-            prefixIcon={GearSixIcon}
-            ariaLabel="Cài đặt chấm điểm"
-            variant="tertiary"
-            size="sm"
-            onPress={onOpenSettings}
-            isSkeleton={isSkeleton}
-            anatPart={showAnatomy ? "Button" : undefined}
-        />
-    </StackH>
+    <StackH
+        gap="related"
+        align="center"
+        justify="between"
+        anatPart={showAnatomy ? "StackH" : undefined}
+        body={
+            <>
+                <StackH
+                    gap="related"
+                    align="center"
+                    wrap
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <>
+                            <InlineIconLabel
+                                icon={<CodeIcon aria-hidden focusable="false" />}
+                                tone="default"
+                                size="xs"
+                                isSkeleton={isSkeleton}
+                                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+                            >
+                                {settingsSummary.langLabel}
+                            </InlineIconLabel>
+                            <InlineIconLabel
+                                icon={<GitBranchIcon aria-hidden focusable="false" />}
+                                tone="default"
+                                size="xs"
+                                isSkeleton={isSkeleton}
+                                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+                            >
+                                {settingsSummary.branch}
+                            </InlineIconLabel>
+                        </>
+                    }
+                />
+                <Button
+                    isIconOnly
+                    prefixIcon={GearSixIcon}
+                    ariaLabel="Cài đặt chấm điểm"
+                    variant="tertiary"
+                    size="sm"
+                    onPress={onOpenSettings}
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            </>
+        }
+    />
 )
 
 /** Props for the local {@link EvaluateActionRow} leaf. */
@@ -283,31 +305,40 @@ interface EvaluateActionRowProps {
 
 /** The evaluate CTA + an optional AI status line beside it. */
 const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton, showAnatomy }: EvaluateActionRowProps) => (
-    <StackH gap="related" align="center" justify="between" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-        {aiStatusText != null ? (
-            <InlineIconLabel
-                icon={<SparkleIcon aria-hidden focusable="false" />}
-                tone="default"
-                size="xs"
-                isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
-            >
-                {aiStatusText}
-            </InlineIconLabel>
-        ) : (
-            // Keeps the row's justify-between shape even with no status text to show.
-            <span />
-        )}
-        <Button
-            label="Chấm điểm"
-            variant="primary"
-            prefixIcon={PlayIcon}
-            onPress={onEvaluate}
-            isPending={isEvaluating}
-            isSkeleton={isSkeleton}
-            anatPart={showAnatomy ? "Button" : undefined}
-        />
-    </StackH>
+    <StackH
+        gap="related"
+        align="center"
+        justify="between"
+        wrap
+        anatPart={showAnatomy ? "StackH" : undefined}
+        body={
+            <>
+                {aiStatusText != null ? (
+                    <InlineIconLabel
+                        icon={<SparkleIcon aria-hidden focusable="false" />}
+                        tone="default"
+                        size="xs"
+                        isSkeleton={isSkeleton}
+                        anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+                    >
+                        {aiStatusText}
+                    </InlineIconLabel>
+                ) : (
+                    // Keeps the row's justify-between shape even with no status text to show.
+                    <span />
+                )}
+                <Button
+                    label="Chấm điểm"
+                    variant="primary"
+                    prefixIcon={PlayIcon}
+                    onPress={onEvaluate}
+                    isPending={isEvaluating}
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                />
+            </>
+        }
+    />
 )
 
 /** Props for the local {@link TaskResultSummary} leaf. */
@@ -334,44 +365,54 @@ const TaskResultSummary = ({ result, isSkeleton, showAnatomy }: TaskResultSummar
             />
         )
     }
-    return (
-        <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-            <StackH gap="grouped" align="baseline" wrap anatPart={showAnatomy ? "StackH" : undefined}>
-                <Typography
-                    size="h3"
-                    weight="bold"
-                    tabularNums
+    const scoreRow = (
+        <>
+            <Typography
+                size="h3"
+                weight="bold"
+                tabularNums
+                isSkeleton={isSkeleton}
+                text={String(result.score)}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <Typography
+                size="sm"
+                color="muted"
+                tabularNums
+                isSkeleton={isSkeleton}
+                text={`/ ${result.maxScore}`}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            {result.aiBadge != null ? (
+                <Chip
+                    tone="accent"
+                    icon={SparkleIcon}
+                    text={result.aiBadge}
                     isSkeleton={isSkeleton}
-                    text={String(result.score)}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-                <Typography
-                    size="sm"
-                    color="muted"
-                    tabularNums
-                    isSkeleton={isSkeleton}
-                    text={`/ ${result.maxScore}`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
-                {result.aiBadge != null ? (
-                    <Chip
-                        tone="accent"
-                        icon={SparkleIcon}
-                        text={result.aiBadge}
-                        isSkeleton={isSkeleton}
-                        anatPart={showAnatomy ? "Chip" : undefined}
-                    />
-                ) : null}
-            </StackH>
-            {result.shortFeedback != null ? (
-                <Typography
-                    size="sm"
-                    isSkeleton={isSkeleton}
-                    text={result.shortFeedback}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    anatPart={showAnatomy ? "Chip" : undefined}
                 />
             ) : null}
-        </StackV>
+        </>
+    )
+
+    return (
+        <StackV
+            gap="tight"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <StackH gap="grouped" align="baseline" wrap anatPart={showAnatomy ? "StackH" : undefined} body={scoreRow} />
+                    {result.shortFeedback != null ? (
+                        <Typography
+                            size="sm"
+                            isSkeleton={isSkeleton}
+                            text={result.shortFeedback}
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    ) : null}
+                </>
+            }
+        />
     )
 }
 
@@ -383,30 +424,36 @@ interface GithubGradingSettingsBodyProps {
 
 /** The `GithubGradingSettings` form body: language / branch / token, mounted inside {@link DrawerShell}. */
 const GithubGradingSettingsBody = ({ form, showAnatomy }: GithubGradingSettingsBodyProps) => (
-    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-        <SelectSingle
-            label="Ngôn ngữ chấm điểm"
-            options={form.languageOptions}
-            value={form.language}
-            onValueChange={form.onLanguageChange}
-            showAnatomy={showAnatomy}
-        />
-        <InputText
-            label="Nhánh (branch)"
-            value={form.branch}
-            onValueChange={form.onBranchChange}
-            placeholder="main"
-            showAnatomy={showAnatomy}
-        />
-        <InputPassword
-            label="GitHub token"
-            value={form.token}
-            onValueChange={form.onTokenChange}
-            hint={form.tokenHint ?? DEFAULT_TOKEN_HINT}
-            placeholder="ghp_…"
-            showAnatomy={showAnatomy}
-        />
-    </StackV>
+    <StackV
+        gap="grouped"
+        anatPart={showAnatomy ? "StackV" : undefined}
+        body={
+            <>
+                <SelectSingle
+                    label="Ngôn ngữ chấm điểm"
+                    options={form.languageOptions}
+                    value={form.language}
+                    onValueChange={form.onLanguageChange}
+                    showAnatomy={showAnatomy}
+                />
+                <InputText
+                    label="Nhánh (branch)"
+                    value={form.branch}
+                    onValueChange={form.onBranchChange}
+                    placeholder="main"
+                    showAnatomy={showAnatomy}
+                />
+                <InputPassword
+                    label="GitHub token"
+                    value={form.token}
+                    onValueChange={form.onTokenChange}
+                    hint={form.tokenHint ?? DEFAULT_TOKEN_HINT}
+                    placeholder="ghp_…"
+                    showAnatomy={showAnatomy}
+                />
+            </>
+        }
+    />
 )
 
 /**
@@ -439,30 +486,36 @@ const TaskSubmissionPanel = ({
             isSkeleton={isSkeleton}
             anatPart={showAnatomy ? "SurfaceCard" : undefined}
         >
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                <GithubUrlField
-                    githubUrl={githubUrl}
-                    onGithubUrlChange={onGithubUrlChange}
-                    urlError={urlError}
-                    autosaveStatus={autosaveStatus}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                <SettingsSummaryRow
-                    settingsSummary={settingsSummary}
-                    onOpenSettings={() => onSettingsOpenChange(true)}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                <EvaluateActionRow
-                    onEvaluate={onEvaluate}
-                    isEvaluating={isEvaluating}
-                    aiStatusText={aiStatusText}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                <TaskResultSummary result={latestResult} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
-            </StackV>
+            <StackV
+                gap="grouped"
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        <GithubUrlField
+                            githubUrl={githubUrl}
+                            onGithubUrlChange={onGithubUrlChange}
+                            urlError={urlError}
+                            autosaveStatus={autosaveStatus}
+                            isSkeleton={isSkeleton}
+                            showAnatomy={showAnatomy}
+                        />
+                        <SettingsSummaryRow
+                            settingsSummary={settingsSummary}
+                            onOpenSettings={() => onSettingsOpenChange(true)}
+                            isSkeleton={isSkeleton}
+                            showAnatomy={showAnatomy}
+                        />
+                        <EvaluateActionRow
+                            onEvaluate={onEvaluate}
+                            isEvaluating={isEvaluating}
+                            aiStatusText={aiStatusText}
+                            isSkeleton={isSkeleton}
+                            showAnatomy={showAnatomy}
+                        />
+                        <TaskResultSummary result={latestResult} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                    </>
+                }
+            />
         </SurfaceCard>
 
         <DrawerShell

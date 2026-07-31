@@ -48,12 +48,12 @@ const Frame = ({ width, label, children }: FrameProps) => (
 
 /** A stand-in for whatever the caller puts in a slot — never real content. */
 const Box = ({ label, lines }: { label: string; lines: number }) => (
-    <StackV gap="grouped">
+    <StackV gap="grouped" body={<>
         <Typography size="sm" text={label} weight="medium" />
         {Array.from({ length: lines }, (_, index) => (
             <div key={index} className="h-10 rounded-2xl bg-surface-secondary" />
         ))}
-    </StackV>
+    </>} />
 )
 
 /**

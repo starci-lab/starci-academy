@@ -131,16 +131,25 @@ const PlaygroundStepGuide = ({
     anatPart,
 }: PlaygroundStepGuideProps) => {
     if (isSkeleton) {
+        const loadingStep = (
+            <>
+                <HeroSkeleton className="h-6 w-48 rounded" />
+                <StackV
+                    gap="tight"
+                    anatPart={showAnatomy ? "StackV" : undefined}
+                    body={
+                        <>
+                            <HeroSkeleton className="h-4 w-full rounded" />
+                            <HeroSkeleton className="h-4 w-2/3 rounded" />
+                        </>
+                    }
+                />
+                <HeroSkeleton className="h-9 w-36 rounded-xl" />
+            </>
+        )
         return (
             <div data-anat-part={anatPart}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                    <HeroSkeleton className="h-6 w-48 rounded" />
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <HeroSkeleton className="h-4 w-full rounded" />
-                        <HeroSkeleton className="h-4 w-2/3 rounded" />
-                    </StackV>
-                    <HeroSkeleton className="h-9 w-36 rounded-xl" />
-                </StackV>
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={loadingStep} />
             </div>
         )
     }
@@ -165,25 +174,28 @@ const PlaygroundStepGuide = ({
         )
     }
 
-    return (
-        <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Typography size="h4" weight="bold" text={step.title} anatPart={showAnatomy ? "Typography" : undefined} />
+    // Manual spinner, not `Button`'s own `isPending` skin — see the file header
+    // for why an open-ended remote check gets a status row instead of a parked
+    // button.
+    const verifyPendingStatus = (
+        <StackH
+            gap="related"
+            anatPart={showAnatomy ? "StackH" : undefined}
+            body={
+                <>
+                    <Spinner size="sm" tone="accent" showAnatomy={showAnatomy} />
+                    <Typography size="sm" color="muted" text="Đang kiểm tra…" anatPart={showAnatomy ? "Typography" : undefined} />
+                </>
+            }
+        />
+    )
 
-                <MarkdownContent source={step.body} measure="reading" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
-
-                {step.commandHint != null ? (
-                    <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <Typography size="xs" weight="medium" color="muted" text="Lệnh cần chạy" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <MarkdownContent
-                            source={commandFence(step.commandHint)}
-                            measure="compact"
-                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                        />
-                    </StackV>
-                ) : null}
-
-                <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
+    const verifyControls = (
+        <StackV
+            gap="tight"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
                     {verifyState === "waitingForConnection" ? (
                         <Typography
                             size="sm"
@@ -202,15 +214,7 @@ const PlaygroundStepGuide = ({
                         />
                     ) : null}
 
-                    {verifyState === "pending" ? (
-                        // Manual spinner, not `Button`'s own `isPending` skin — see the file
-                        // header for why an open-ended remote check gets a status row instead
-                        // of a parked button.
-                        <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                            <Spinner size="sm" tone="accent" showAnatomy={showAnatomy} />
-                            <Typography size="sm" color="muted" text="Đang kiểm tra…" anatPart={showAnatomy ? "Typography" : undefined} />
-                        </StackH>
-                    ) : null}
+                    {verifyState === "pending" ? verifyPendingStatus : null}
 
                     {verifyState === "missed" ? (
                         <Typography
@@ -220,8 +224,40 @@ const PlaygroundStepGuide = ({
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     ) : null}
-                </StackV>
-            </StackV>
+                </>
+            }
+        />
+    )
+
+    const commandSection = step.commandHint != null ? (
+        <StackV
+            gap="tight"
+            anatPart={showAnatomy ? "StackV" : undefined}
+            body={
+                <>
+                    <Typography size="xs" weight="medium" color="muted" text="Lệnh cần chạy" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <MarkdownContent
+                        source={commandFence(step.commandHint)}
+                        measure="compact"
+                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                    />
+                </>
+            }
+        />
+    ) : null
+
+    const guideBody = (
+        <>
+            <Typography size="h4" weight="bold" text={step.title} anatPart={showAnatomy ? "Typography" : undefined} />
+            <MarkdownContent source={step.body} measure="reading" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+            {commandSection}
+            {verifyControls}
+        </>
+    )
+
+    return (
+        <div data-anat-part={anatPart}>
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={guideBody} />
         </div>
     )
 }

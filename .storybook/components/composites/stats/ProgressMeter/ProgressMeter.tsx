@@ -72,10 +72,17 @@ export const ProgressMeter = ({
 }: ProgressMeterProps) => {
     if (isSkeleton) {
         return (
-            <StackV gap="related" anatPart={anatPart} className={className}>
-                <HeroSkeleton className="h-3 w-24 rounded" />
-                <HeroSkeleton className="h-1 w-full rounded-full" />
-            </StackV>
+            <StackV
+                gap="related"
+                anatPart={anatPart}
+                className={className}
+                body={
+                    <>
+                        <HeroSkeleton className="h-3 w-24 rounded" />
+                        <HeroSkeleton className="h-1 w-full rounded-full" />
+                    </>
+                }
+            />
         )
     }
     const safeMax = max > 0 ? max : 1
@@ -88,57 +95,74 @@ export const ProgressMeter = ({
     const targetPercent = target === undefined
         ? null
         : Math.min(Math.max((target / safeMax) * 100, 0), 100)
-    return (
-        <StackV gap="related" className={cn(showAnatomy && "relative", className)} anatPart={anatPart}>
-            {showAnatomy ? <AnatomyOverlay label="ProgressMeter" tier="composite" href="/?path=/docs/primitives-stats-progressmeter--docs" /> : null}
-            {hasTopRow ? (
-                <StackH gap="related" justify="between">
+    const topRow = hasTopRow ? (
+        <StackH
+            gap="related"
+            justify="between"
+            body={
+                <>
                     <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} text={label} />
                     {showValue ? (
                         <Typography size="xs" color="muted" classNames={["shrink-0"]} text={<>{percent}%</>} />
                     ) : null}
-                </StackH>
-            ) : null}
-            {/* Two DIFFERENT jobs, so two boxes — a fix landed 2026-07-29 after the target pill
-                measured 14px off the track's own midline (44 vs 58 on a 1280px viewport).
-                One div was doing both: `pt-6` (24px, room for the floating label) and
-                `flex h-5 items-center` (20px, the pill's reference frame) on the SAME element.
-                Padding that exceeds the declared height forces the browser to grow the outer
-                box to fit it (24px, not 20), and the two children then read TWO DIFFERENT
-                origins on that grown box — the track (normal flow) starts AFTER the padding,
-                at y=56, while the pill (`absolute top-1/2`) measures against the WHOLE padding
-                box, landing at y=44. Nothing here was wrong on its own; stacking both jobs on
-                one element is what broke the promise below.
-                OUTER box owns the label's clearance only (`pt-6`, still the scale's first
-                step that clears a `h-5`/20px obstacle — no exception, teacher 2026-07-27).
-                INNER box is `relative flex h-5 items-center` — the pill's containing block
-                AND the track's flex-center axis, both measured against the SAME 20px frame,
-                so the `h-5` pill sits EXACTLY on the track midline again. */}
-            <div className={cn(targetPercent !== null && targetLabel !== undefined && "pt-6")}>
-                <div
-                    className={cn(
-                        "relative",
-                        targetPercent !== null && "flex h-5 items-center",
-                    )}
-                >
-                    <div className="w-full">
-                        <ProgressBar
-                            aria-label={typeof label === "string" ? label : "Progress"}
-                            value={value}
-                            maxValue={safeMax}
-                            color={color}
-                            size="sm"
-                        >
-                            <ProgressBar.Track className="h-1">
-                                <ProgressBar.Fill />
-                            </ProgressBar.Track>
-                        </ProgressBar>
-                    </div>
-                    {targetPercent === null ? null : (
-                        <ProgressMeterTargetMark percent={targetPercent} label={targetLabel} />
-                    )}
+                </>
+            }
+        />
+    ) : null
+    // Two DIFFERENT jobs, so two boxes — a fix landed 2026-07-29 after the target pill
+    // measured 14px off the track's own midline (44 vs 58 on a 1280px viewport).
+    // One div was doing both: `pt-6` (24px, room for the floating label) and
+    // `flex h-5 items-center` (20px, the pill's reference frame) on the SAME element.
+    // Padding that exceeds the declared height forces the browser to grow the outer
+    // box to fit it (24px, not 20), and the two children then read TWO DIFFERENT
+    // origins on that grown box — the track (normal flow) starts AFTER the padding,
+    // at y=56, while the pill (`absolute top-1/2`) measures against the WHOLE padding
+    // box, landing at y=44. Nothing here was wrong on its own; stacking both jobs on
+    // one element is what broke the promise below.
+    // OUTER box owns the label's clearance only (`pt-6`, still the scale's first
+    // step that clears a `h-5`/20px obstacle — no exception, teacher 2026-07-27).
+    // INNER box is `relative flex h-5 items-center` — the pill's containing block
+    // AND the track's flex-center axis, both measured against the SAME 20px frame,
+    // so the `h-5` pill sits EXACTLY on the track midline again.
+    const trackSection = (
+        <div className={cn(targetPercent !== null && targetLabel !== undefined && "pt-6")}>
+            <div
+                className={cn(
+                    "relative",
+                    targetPercent !== null && "flex h-5 items-center",
+                )}
+            >
+                <div className="w-full">
+                    <ProgressBar
+                        aria-label={typeof label === "string" ? label : "Progress"}
+                        value={value}
+                        maxValue={safeMax}
+                        color={color}
+                        size="sm"
+                    >
+                        <ProgressBar.Track className="h-1">
+                            <ProgressBar.Fill />
+                        </ProgressBar.Track>
+                    </ProgressBar>
                 </div>
+                {targetPercent === null ? null : (
+                    <ProgressMeterTargetMark percent={targetPercent} label={targetLabel} />
+                )}
             </div>
-        </StackV>
+        </div>
+    )
+    return (
+        <StackV
+            gap="related"
+            className={cn(showAnatomy && "relative", className)}
+            anatPart={anatPart}
+            body={
+                <>
+                    {showAnatomy ? <AnatomyOverlay label="ProgressMeter" tier="composite" href="/?path=/docs/primitives-stats-progressmeter--docs" /> : null}
+                    {topRow}
+                    {trackSection}
+                </>
+            }
+        />
     )
 }

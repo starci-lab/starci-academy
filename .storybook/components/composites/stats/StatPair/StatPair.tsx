@@ -67,28 +67,44 @@ export const StatPair = ({
 }: StatPairProps) => {
     if (isSkeleton) {
         return (
-            <StackV gap="tight" align="start" anatPart={anatPart} className={className}>
-                <HeroSkeleton className="h-5 w-14 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-            </StackV>
+            <StackV
+                gap="tight"
+                align="start"
+                anatPart={anatPart}
+                className={className}
+                body={
+                    <>
+                        <HeroSkeleton className="h-5 w-14 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                    </>
+                }
+            />
         )
     }
     return (
-        <StackV gap="flush" align="start" anatPart={anatPart} className={className}>
-            <Typography
-                type={valueType}
-                weight="semibold"
-                data-anat-part={showAnatomy ? "Typography" : undefined}
-            >
-                {value}
-            </Typography>
-            <Typography
-                type="body-xs"
-                color="muted"
-                data-anat-part={showAnatomy ? "Typography" : undefined}
-            >
-                {label}
-            </Typography>
-        </StackV>
+        <StackV
+            gap="flush"
+            align="start"
+            anatPart={anatPart}
+            className={className}
+            body={
+                <>
+                    <Typography
+                        type={valueType}
+                        weight="semibold"
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                    >
+                        {value}
+                    </Typography>
+                    <Typography
+                        type="body-xs"
+                        color="muted"
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                    >
+                        {label}
+                    </Typography>
+                </>
+            }
+        />
     )
 }

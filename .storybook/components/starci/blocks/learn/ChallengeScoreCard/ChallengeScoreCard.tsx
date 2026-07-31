@@ -89,6 +89,54 @@ const ChallengeScoreCard = ({
     // The target tick stays NEUTRAL (see `TargetMark`) so the two never compete for meaning.
     const meterColor = earnedScore >= targetScore ? "success" : "danger"
 
+    // Score reading — earned score prominent, "/ max điểm" riding beside it as the unit
+    // that gives it meaning (`tight`: a mark attached to the number, not a peer of it).
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): thêm `weight="bold"` —
+    // con số ĐỨNG RIÊNG làm tâm điểm của card = Tier A, luôn bold; thiếu weight thì HeroUI
+    // mặc định 600 (semibold), không phải 700 (bold) canon đòi. Đối chứng:
+    // `ChallengeHeader.tsx` cùng vai trò đã khai đúng weight="bold".
+    const scoreReading = (
+        <>
+            <Typography
+                size="h3"
+                weight="bold"
+                tabularNums
+                isSkeleton={isSkeleton}
+                text={earnedScore}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+            <Typography
+                size="sm"
+                color="muted"
+                tabularNums
+                isSkeleton={isSkeleton}
+                text={`/ ${maxScore} điểm`}
+                anatPart={showAnatomy ? "Typography" : undefined}
+            />
+        </>
+    )
+
+    const scoreBody = (
+        <>
+            <StackH gap="tight" align="baseline" anatPart={showAnatomy ? "StackH" : undefined} body={scoreReading} />
+            {isSkeleton ? (
+                <HeroSkeleton
+                    className="h-1 w-full rounded-full"
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                />
+            ) : (
+                <ProgressMeter
+                    value={earnedScore}
+                    max={safeMax}
+                    color={meterColor}
+                    target={targetScore}
+                    targetLabel={`${Math.round(passThreshold * 100)}%`}
+                    anatPart={showAnatomy ? "ProgressMeter" : undefined}
+                />
+            )}
+        </>
+    )
+
     return (
         <SurfaceCard
             label="Kết quả của bạn"
@@ -97,49 +145,7 @@ const ChallengeScoreCard = ({
             anatPart={anatPart}
             showAnatomy={showAnatomy}
         >
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-                {/* Score reading — earned score prominent, "/ max điểm" riding beside it as
-                    the unit that gives it meaning (`tight`: a mark attached to the number,
-                    not a peer of it).
-                    AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): thêm
-                    `weight="bold"` — con số ĐỨNG RIÊNG làm tâm điểm của card = Tier A,
-                    luôn bold; thiếu weight thì HeroUI mặc định 600 (semibold), không phải
-                    700 (bold) canon đòi. Đối chứng: `ChallengeHeader.tsx` cùng vai trò đã
-                    khai đúng weight="bold". */}
-                <StackH gap="tight" align="baseline" anatPart={showAnatomy ? "StackH" : undefined}>
-                    <Typography
-                        size="h3"
-                        weight="bold"
-                        tabularNums
-                        isSkeleton={isSkeleton}
-                        text={earnedScore}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                    <Typography
-                        size="sm"
-                        color="muted"
-                        tabularNums
-                        isSkeleton={isSkeleton}
-                        text={`/ ${maxScore} điểm`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                </StackH>
-                {isSkeleton ? (
-                    <HeroSkeleton
-                        className="h-1 w-full rounded-full"
-                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
-                    />
-                ) : (
-                    <ProgressMeter
-                        value={earnedScore}
-                        max={safeMax}
-                        color={meterColor}
-                        target={targetScore}
-                        targetLabel={`${Math.round(passThreshold * 100)}%`}
-                        anatPart={showAnatomy ? "ProgressMeter" : undefined}
-                    />
-                )}
-            </StackV>
+            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={scoreBody} />
         </SurfaceCard>
     )
 }

@@ -109,37 +109,45 @@ const FoundationSearchBar = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackH gap="related" justify="between" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackH" : undefined}>
-                <SearchAutocomplete
-                    items={items}
-                    inputValue={query}
-                    onInputChange={onQueryChange}
-                    onSelect={onSelectSuggestion}
-                    placeholder={placeholder}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-                {isSkeleton || isCountLoading ? (
-                    <Typography
-                        size="sm"
-                        color="muted"
-                        isSkeleton
-                        classNames={["shrink-0"]}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                ) : resultCount !== undefined ? (
-                    <Typography
-                        size="sm"
-                        color="muted"
-                        tabularNums
-                        text={resultCountLabel(resultCount)}
-                        classNames={["shrink-0"]}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                ) : null}
-            </StackH>
+            <StackH
+                gap="related"
+                justify="between"
+                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "StackH" : undefined}
+                body={
+                    <>
+                        <SearchAutocomplete
+                            items={items}
+                            inputValue={query}
+                            onInputChange={onQueryChange}
+                            onSelect={onSelectSuggestion}
+                            placeholder={placeholder}
+                            isSkeleton={isSkeleton}
+                            showAnatomy={showAnatomy}
+                        />
+                        {isSkeleton || isCountLoading ? (
+                            <Typography
+                                size="sm"
+                                color="muted"
+                                isSkeleton
+                                classNames={["shrink-0"]}
+                                showAnatomy={showAnatomy}
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                            />
+                        ) : resultCount !== undefined ? (
+                            <Typography
+                                size="sm"
+                                color="muted"
+                                tabularNums
+                                text={resultCountLabel(resultCount)}
+                                classNames={["shrink-0"]}
+                                showAnatomy={showAnatomy}
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                            />
+                        ) : null}
+                    </>
+                }
+            />
         </div>
     )
 }

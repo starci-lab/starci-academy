@@ -210,39 +210,49 @@ interface ContentProps {
     showAnatomy: boolean
 }
 
-const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => (
-    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
-        {titleText(data, isSkeleton, showAnatomy)}
-        <StackH gap="grouped" justify="between" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-            {data.endsInLabel != null || isSkeleton ? (
+const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => {
+    const statusRow = (
+        <StackH gap="grouped" justify="between" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={(
+            <>
+                {data.endsInLabel != null || isSkeleton ? (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : data.endsInLabel}
+                        anatPart={showAnatomy ? "Typography" : undefined}
+                    />
+                ) : <span />}
+                {statusSlot(data, isSkeleton, showAnatomy)}
+            </>
+        )} />
+    )
+
+    return (
+        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={(
+            <>
+                {titleText(data, isSkeleton, showAnatomy)}
+                {statusRow}
                 <Typography
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    text={isSkeleton ? undefined : data.endsInLabel}
+                    text={isSkeleton ? undefined : `${data.passedCount} người đã vượt qua`}
                     anatPart={showAnatomy ? "Typography" : undefined}
                 />
-            ) : <span />}
-            {statusSlot(data, isSkeleton, showAnatomy)}
-        </StackH>
-        <Typography
-            size="xs"
-            color="muted"
-            isSkeleton={isSkeleton}
-            text={isSkeleton ? undefined : `${data.passedCount} người đã vượt qua`}
-            anatPart={showAnatomy ? "Typography" : undefined}
-        />
-        {data.leaderboard.length > 0 ? (
-            <div data-anat-part={showAnatomy ? "SurfaceCardList" : undefined}>
-                <SurfaceCardList
-                    variant="nested"
-                    items={data.leaderboard.map((entry) => finisherItem(entry, isSkeleton, showAnatomy))}
-                    showAnatomy={showAnatomy}
-                />
-            </div>
-        ) : null}
-    </StackV>
-)
+                {data.leaderboard.length > 0 ? (
+                    <div data-anat-part={showAnatomy ? "SurfaceCardList" : undefined}>
+                        <SurfaceCardList
+                            variant="nested"
+                            items={data.leaderboard.map((entry) => finisherItem(entry, isSkeleton, showAnatomy))}
+                            showAnatomy={showAnatomy}
+                        />
+                    </div>
+                ) : null}
+            </>
+        )} />
+    )
+}
 
 /**
  * "Thử thách tuần" — the featured weekly-challenge card. See the file header

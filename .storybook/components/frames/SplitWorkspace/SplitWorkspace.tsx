@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -33,11 +35,15 @@ import { cn } from "@heroui/react"
  * shape, so it gets its own khung instead of a new prop bolted onto `Stack.*`
  * that would blur what "two axes" means there.
  *
- * ⭐ SIZING IS HARD-OWNED, NOT A PROP (§6c: a layout khung owns its internal
- * sizing). Every number below (`gap-6`/`gap-8`, `w-[360px]`, `top-24`,
- * `max-h-[calc(100dvh-7rem)]`) is the SAME in both real `src` sources — there
- * is no second shape to generalize for yet. Add a prop only when a THIRD real
- * consumer actually disagrees with one of these numbers.
+ * ⭐ `at` NAMES THE BREAKPOINT (FRAME-10), EVERY OTHER NUMBER STAYS HARD-OWNED
+ * (§6c: a layout khung owns its internal sizing). Both real `src` sources agree
+ * on `@app-xl` as the switch step, so `at` defaults to `xl` and an unmigrated
+ * caller renders identically — but the step itself is now a
+ * `ResponsiveRowSwitch` prop instead of a bare string in `cn(...)`, so it is
+ * readable from the prop list. `gap-6`/`gap-8`, `w-[360px]`, `top-24` and
+ * `max-h-[calc(100dvh-7rem)]` are the SAME in both sources — there is no second
+ * shape to generalize for yet. Add a prop for one of those only when a THIRD
+ * real consumer actually disagrees with it.
  *
  * KHUNG API LAW (§13b): two DISTINCT roles ⇒ two NAMED slots (`main`/`aside`),
  * not a single `children` — a workspace has no "one obvious slot" the way
@@ -54,27 +60,53 @@ export interface SplitWorkspaceProps {
      * pins to a `360px` sticky rail beside it from `@app-xl` up.
      */
     aside: ReactNode
-    /** Extra classes on the workspace root. */
-    className?: string
+    /**
+     * Container step `aside` drops below `main` and pins beside it at.
+     * Defaults to `xl` — the step both real sources agree on.
+     */
+    at?: ResponsiveRowSwitch
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this khung so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
 
 /**
+ * Switch step → the wrapper classes that flip the workspace from stacked to a
+ * side-by-side row from that step up. Written out per step for the same reason
+ * `ResponsiveRow`'s table is: Tailwind never emits an interpolated `@app-${step}:flex-row`.
+ */
+const WORKSPACE_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
+    sm: "@app-sm:flex-row @app-sm:items-start @app-sm:gap-8",
+    md: "@app-md:flex-row @app-md:items-start @app-md:gap-8",
+    lg: "@app-lg:flex-row @app-lg:items-start @app-lg:gap-8",
+    xl: "@app-xl:flex-row @app-xl:items-start @app-xl:gap-8",
+}
+
+/** Switch step → the sticky, fixed-width `aside` classes from that step up. */
+const ASIDE_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
+    sm: "@app-sm:sticky @app-sm:top-24 @app-sm:max-h-[calc(100dvh-7rem)] @app-sm:w-[360px] @app-sm:self-start @app-sm:overflow-y-auto",
+    md: "@app-md:sticky @app-md:top-24 @app-md:max-h-[calc(100dvh-7rem)] @app-md:w-[360px] @app-md:self-start @app-md:overflow-y-auto",
+    lg: "@app-lg:sticky @app-lg:top-24 @app-lg:max-h-[calc(100dvh-7rem)] @app-lg:w-[360px] @app-lg:self-start @app-lg:overflow-y-auto",
+    xl: "@app-xl:sticky @app-xl:top-24 @app-xl:max-h-[calc(100dvh-7rem)] @app-xl:w-[360px] @app-xl:self-start @app-xl:overflow-y-auto",
+}
+
+/**
  * The read-column + sticky-aside split. See the file header for why this is
- * its own khung and why every size is hard-owned rather than a prop.
+ * its own khung and why `at` is its only sizing prop.
  *
  * @param props - {@link SplitWorkspaceProps}
  */
 const SplitWorkspace = ({
     main,
     aside,
-    className,
+    at = "xl",
+    classNames,
     anatPart,
 }: SplitWorkspaceProps) => (
     <div
         data-anat-part={anatPart}
-        className={cn("flex flex-col gap-6 @app-xl:flex-row @app-xl:items-start @app-xl:gap-8", className)}
+        className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
     >
         {/* `main`/`aside` are CALLER SLOTS — the node inside belongs to whoever passed it, not
             to this frame, so neither gets a badge of its own (same as `Container.body`'s bare
@@ -83,7 +115,7 @@ const SplitWorkspace = ({
         <div className="min-w-0 flex-1">
             {main}
         </div>
-        <aside className="w-full shrink-0 @app-xl:sticky @app-xl:top-24 @app-xl:max-h-[calc(100dvh-7rem)] @app-xl:w-[360px] @app-xl:self-start @app-xl:overflow-y-auto">
+        <aside className={cn("w-full shrink-0", ASIDE_SWITCH_CLASS[at])}>
             {aside}
         </aside>
     </div>

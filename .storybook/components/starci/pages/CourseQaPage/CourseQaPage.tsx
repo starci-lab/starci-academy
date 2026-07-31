@@ -210,78 +210,84 @@ const CourseQaPage = ({
         setDraft("")
     }
 
-    return (
-        <Container size="md" padding="roomy">
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                <CourseQaHeader
-                    anatPart="CourseQaHeader"
-                    breadcrumbItems={breadcrumbItems}
-                    title={title}
-                    description={description}
+    const questionSection = (
+        <>
+            <CourseQaEngagementStrip
+                anatPart="CourseQaEngagementStrip"
+                enrollmentCount={enrollmentCount}
+                totalQuestions={totalQuestions}
+                answeredQuestions={answeredQuestions}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <CourseQaComposer
+                anatPart="CourseQaComposer"
+                mode="collapsible"
+                currentUser={composerUser}
+                value={draft}
+                onValueChange={setDraft}
+                placeholder="Đặt câu hỏi cho khoá học này…"
+                onSubmit={handleAskQuestion}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <CourseQaToolbar
+                anatPart="CourseQaToolbar"
+                filter={filter}
+                onFilterChange={onFilterChange}
+                searchValue={searchValue}
+                onSearchChange={onSearchChange}
+                resultCount={totalQuestions}
+                filterAriaLabel={FILTER_ARIA_LABEL}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            <CourseQaQuestionList
+                anatPart="CourseQaQuestionList"
+                questions={questions}
+                isLoading={isSkeleton}
+                page={page}
+                totalPages={totalPages}
+                onPageChange={onPageChange}
+                currentUserId={currentUserId}
+                currentUser={listCurrentUser}
+                onAnswered={onAnswered}
+                pagerAriaLabel={PAGER_ARIA_LABEL}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+        </>
+    )
+
+    const courseQaSections = (
+        <>
+            <CourseQaHeader
+                anatPart="CourseQaHeader"
+                breadcrumbItems={breadcrumbItems}
+                title={title}
+                description={description}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+            />
+            {isInvitationEmpty ? (
+                <CourseQaInvite
+                    anatPart="CourseQaInvite"
+                    title={INVITE_TITLE}
+                    hint={INVITE_HINT}
+                    ctaLabel={INVITE_CTA}
+                    onGoToContent={onGoToContent}
                     isSkeleton={isSkeleton}
                     showAnatomy={showAnatomy}
                 />
-                {isInvitationEmpty ? (
-                    <CourseQaInvite
-                        anatPart="CourseQaInvite"
-                        title={INVITE_TITLE}
-                        hint={INVITE_HINT}
-                        ctaLabel={INVITE_CTA}
-                        onGoToContent={onGoToContent}
-                        isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                    />
-                ) : (
-                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
-                        <CourseQaEngagementStrip
-                            anatPart="CourseQaEngagementStrip"
-                            enrollmentCount={enrollmentCount}
-                            totalQuestions={totalQuestions}
-                            answeredQuestions={answeredQuestions}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <CourseQaComposer
-                            anatPart="CourseQaComposer"
-                            mode="collapsible"
-                            currentUser={composerUser}
-                            value={draft}
-                            onValueChange={setDraft}
-                            placeholder="Đặt câu hỏi cho khoá học này…"
-                            onSubmit={handleAskQuestion}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <CourseQaToolbar
-                            anatPart="CourseQaToolbar"
-                            filter={filter}
-                            onFilterChange={onFilterChange}
-                            searchValue={searchValue}
-                            onSearchChange={onSearchChange}
-                            resultCount={totalQuestions}
-                            filterAriaLabel={FILTER_ARIA_LABEL}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                        <CourseQaQuestionList
-                            anatPart="CourseQaQuestionList"
-                            questions={questions}
-                            isLoading={isSkeleton}
-                            page={page}
-                            totalPages={totalPages}
-                            onPageChange={onPageChange}
-                            currentUserId={currentUserId}
-                            currentUser={listCurrentUser}
-                            onAnswered={onAnswered}
-                            pagerAriaLabel={PAGER_ARIA_LABEL}
-                            isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
-                        />
-                    </StackV>
-                )}
-            </StackV>
-        </Container>
+            ) : (
+                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={questionSection} />
+            )}
+        </>
     )
+
+    const courseQaBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={courseQaSections} />
+
+    return <Container size="md" padding="roomy" body={courseQaBody} />
 }
 
 export { CourseQaPage }

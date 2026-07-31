@@ -2,14 +2,20 @@
 
 > Bàn giao để máy khác làm tiếp. Đọc mục **0** và **1** trước khi gõ dòng code nào.
 >
-> 🔴 **File này ĐÃ BỊ VƯỢT một phần.** Bàn giao hiện hành là
-> `starci-academy-backend/.claude/fe/continue.md` (2026-07-27). Chỗ nào hai bên đá nhau thì
-> **continue.md đúng**. Ba chỗ trong file này đã lạc hậu, đã đánh dấu tại chỗ:
+> 🔴 **File này ĐÃ BỊ VƯỢT một phần.** Bàn giao hiện hành là [`continue.md`](continue.md)
+> (2026-07-31), ngay cạnh file này. Chỗ nào hai bên đá nhau thì **`continue.md` đúng**.
+>
+> *(Bản 2026-07-27 từng trỏ sang `starci-academy-backend/.claude/fe/continue.md`. Đường dẫn đó
+> **không còn tồn tại** — `.claude` đã thành repo skill riêng và `fe/` bị thay. Bàn giao dời về
+> cạnh code để không trỏ ra ngoài repo được nữa.)*
+>
+> Bốn chỗ trong file này đã lạc hậu, đã đánh dấu tại chỗ:
 >
 > | Chỗ | File này ghi | Thật ra |
 > |---|---|---|
+> | mục 0 | *"CẤM codemod `src/`"* | **hết hiệu lực 2026-07-31** — atom + frame đã chép sang `src/components/`, cắt anatomy |
 > | mục 1, dòng `panel` | *"tab States đã BỎ, thêm lại là vỡ tsc"* | **`states[]` là API hiện hành**, 109 story đã di trú. ĐỪNG THÁO |
-> | mục 0 + 2 | tầng `layout` | đã tách **`frame` (7) + `composite` (37)** ⇒ 6 tầng |
+> | mục 0 + 2 | tầng `layout` | đã tách **`frame` + `composite`** ⇒ 7 tầng |
 > | mục 2 + 3.1 | `layouts/_spacing.ts`, `stories/layouts/**` | nay là `frames/_spacing.ts`, `stories/frames/**` + `stories/composites/**` |
 
 ---

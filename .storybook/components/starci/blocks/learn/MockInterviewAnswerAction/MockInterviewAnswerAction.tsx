@@ -83,7 +83,7 @@ const MockInterviewAnswerAction = ({
         onPress={onSubmit}
         isDisabled={isDisabled}
         isPending={isPending}
-        className="self-center"
+        classNames={["self-center"]}
         anatPart={anatPart ?? (showAnatomy ? "Button" : undefined)}
     />
 )

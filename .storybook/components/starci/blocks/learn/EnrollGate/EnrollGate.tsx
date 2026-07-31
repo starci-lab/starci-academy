@@ -218,7 +218,8 @@ const EnrollGateBase = ({
                     suffixIcon={ArrowRightIcon}
                     iconSlide
                     onPress={onEnroll}
-                    className="w-full max-w-[300px]"
+                    className="max-w-[300px]"
+                    classNames={["w-full"]}
                     anatPart={showAnatomy ? "Button" : undefined}
                 />
             </StackV>

@@ -166,7 +166,8 @@ const VoiceHero = ({
                     onPress={onToggleListen}
                     anatPart={showAnatomy ? "Button" : undefined}
                 />
-                {/* src thật (`VoiceHero/index.tsx:136`): `<Typography className="text-foreground">`
+                {/* src thật (`VoiceHero/index.tsx:136`): `<Typography
+ color="default">`
                     KHÔNG khai `type` ⇒ mặc định base (16px), không phải `lg`. */}
                 <Typography
                     size="base"

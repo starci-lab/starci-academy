@@ -160,7 +160,7 @@ const DailyQuest = ({
                 label={`Nhận ${quest.reward} xu`}
                 isPending={isClaiming}
                 onPress={onClaim}
-                className="w-fit"
+                classNames={["w-fit"]}
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "Button" : undefined}
             />

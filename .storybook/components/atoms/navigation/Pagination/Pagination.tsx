@@ -1,28 +1,21 @@
 import React, { useCallback, useMemo } from "react"
 import { Pagination as HeroPagination, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Pagination`: the ONE constrained page-nav atom over HeroUI
- * `Pagination`.
+ * `Pagination` — the single page-nav atom wrapping HeroUI `Pagination`.
  *
- * Controlled + presentational: the caller passes `currentPage` / `totalPages` and
- * a raw `onPageChange`; the atom renders the FULL HeroUI compound —
+ * Controlled + presentational: pass `currentPage` / `totalPages` and a raw
+ * `onPageChange`; the atom renders the full HeroUI compound —
  * `Pagination.Content > Item > (Previous | Link | Ellipsis | Next)` — and owns
- * prev/next clamping and the windowing. When the page count is large it collapses
- * distant pages behind `Pagination.Ellipsis` (first · … · current±siblings · … ·
- * last); a short list shows every page. The window is a LEAF of the same atom
- * (§6 granularity), not a separate component.
+ * prev/next clamping and windowing. When the page count is large it collapses
+ * distant pages behind `Pagination.Ellipsis` (first · … · current±siblings ·
+ * … · last); a short list shows every page.
  *
- * Rules (Chip/Input):
- *   • NAMESPACE bắt buộc — chỉ export `Pagination = { Base }`, không export
- *     component trần (thầy chốt 2026-07-25).
- *   • KHÔNG `children` — pager hoàn toàn dữ liệu (`currentPage`/`totalPages`).
- *   • Bọc HeroUI TỐI ĐA (`Pagination`), alias `Hero*`.
- *   • STRICT §4: `currentPage` + `totalPages` + `onPageChange` TRẦN — the atom
- *     owns clamping/windowing/aria; the consumer never touches the compound.
- *   • `isSkeleton` → control skeleton co-located (HeroSkeleton, hybrid C).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Only `Pagination` is exported — no bare component. No `children` — the
+ * pager is fully data-driven (`currentPage`/`totalPages`). The atom owns
+ * clamping/windowing/aria; the consumer never touches the compound.
+ * `isSkeleton` renders a co-located control skeleton.
  */
 
 /** A rendered slot: a concrete 1-based page, or a collapsed gap. */
@@ -45,7 +38,13 @@ export interface PaginationBaseProps {
     isSkeleton?: boolean
     /** When on, emit `data-anat-part` on this control's own sub-parts (`Pagination.Previous` · `Pagination.Link` · `Pagination.Ellipsis` · `Pagination.Next`). */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -88,6 +87,7 @@ const PaginationBase = ({
     isSkeleton = false,
     showAnatomy = false,
     className,
+    classNames,
 }: PaginationBaseProps) => {
     const slots = useMemo(() => buildSlots(currentPage, totalPages, siblings), [currentPage, totalPages, siblings])
 
@@ -97,11 +97,11 @@ const PaginationBase = ({
     const onNext = useCallback(() => onPageChange(Math.min(totalPages, currentPage + 1)), [currentPage, totalPages, onPageChange])
 
     if (isSkeleton) {
-        // Leaf skeleton OWNED by the atom (hybrid C) — prev + a few page squares + next.
-        // The real heroui render is each `HeroSkeleton` (`Skeleton`) square itself, NOT the
-        // plain wrapping `<div>` — tagging the div would be a made-up name (2026-07-27).
+        // Prev + a few page squares + next. Only the HeroSkeleton squares get
+        // data-anat-part — the wrapping div isn't a real component, tagging it
+        // would be a made-up name.
         return (
-            <div className={cn("flex items-center justify-center gap-1", className)}>
+            <div className={cn("flex items-center justify-center gap-1", className, classNames)}>
                 {Array.from({ length: 5 }, (_, index) => (
                     <HeroSkeleton key={index} className="size-9 rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 ))}
@@ -110,7 +110,7 @@ const PaginationBase = ({
     }
 
     return (
-        <div className={cn("flex justify-center", className)}>
+        <div className={cn("flex justify-center", className, classNames)}>
             <HeroPagination aria-label="Pagination" size="sm">
                 <HeroPagination.Content className="flex flex-wrap justify-center gap-1">
                     <HeroPagination.Item>

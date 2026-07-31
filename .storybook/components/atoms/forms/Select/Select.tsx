@@ -10,91 +10,99 @@ import {
 } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
 import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Select.*`: the choose-from-a-list field-control atom namespace (bọc
+ * `Select.*` — the choose-from-a-list field-control atom namespace (wraps
  * HeroUI `Select` + `ComboBox`).
  *
- * Members theo CÁCH chọn — `SelectSingle` (dropdown 1) · `SelectMulti` (nhiều) ·
- * `SelectCombobox` (autocomplete gõ-lọc). Atom TỰ mang nhãn/mô tả/lỗi/bắt buộc qua
- * `FieldFrame` (thầy chốt 2026-07-25: label/errorMessage tính VÀO atom, KHÔNG tách
- * Field composite). Bỏ hết frame-prop → atom là ô control TRẦN (FieldFrame render
- * thẳng trigger).
+ * Members are grouped by selection mode — `SelectSingle` (one) · `SelectMulti`
+ * (many) · `SelectCombobox` (type-to-filter autocomplete). Each carries its own
+ * label, hint, error, and required mark via `FieldFrame`.
  *
- * Rules chung (Input/Chip):
- *   • Bọc HeroUI TỐI ĐA (`Select.Root`/`ComboBox`), alias `Hero*`. KHÔNG hand-roll
- *     dropdown/popover/keyboard — react-aria đã lo.
- *   • STRICT §4: `value` + `onValueChange` TRẦN + `options: {value,label}[]` phẳng —
- *     consumer KHÔNG đụng structure (Trigger/Popover/ListBox nội bộ).
- *   • `isSkeleton` → trigger-box skeleton co-located (hybrid C, không `Skeleton.*`).
- *   • Anatomy tier `atom` (part `Field` = ô control · `Trigger` = actuator mở list;
- *     FieldFrame thêm `Label`/`Description`/`Error`).
+ * `isSkeleton` renders a trigger-box skeleton co-located on the atom, without
+ * importing the `Skeleton.*` compound.
  *
- * Icon lib = Phosphor (`@phosphor-icons/react`) — MỘT BỘ DUY NHẤT (§5.0). Caret ở
- * đây là `size-4` (nhỏ hơn `size-5`) nên phải `weight="bold"` để nét không mảnh đi
- * so với icon cỡ chuẩn (§5.0a).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Icons use Phosphor (`@phosphor-icons/react`). The caret here is `size-4`
+ * (below `size-5`), so it needs `weight="bold"` to keep its stroke from
+ * looking thinner than the standard icon size.
  */
 
 /**
- * Field-frame props mọi atom form nhận để TỰ mang nhãn/mô tả/lỗi/bắt buộc (thầy chốt
- * 2026-07-25). Bỏ hết → atom là ô TRẦN (FieldFrame render thẳng control).
+ * Field-frame props every form atom accepts to carry its own label, hint,
+ * error, and required mark. Omit them all and the atom renders as a bare
+ * control (FieldFrame renders the control straight through).
  */
 interface FrameProps {
-    /** Nhãn trên control. */
+    /** Label above the control. */
     label?: ReactNode
-    /** Mô tả dưới nhãn (luôn hiện). */
+    /** Description below the label (always visible). */
     hint?: ReactNode
-    /** Dòng lỗi dưới control (set → viền lỗi). */
+    /** Error line below the control (set it to show an error border). */
     errorMessage?: ReactNode
-    /** Thêm dấu `*` bắt buộc. */
+    /** Adds a required `*` mark. */
     isRequired?: boolean
 }
 
-/** One selectable option — `value` là payload, `label` là nhãn render. */
+/** One selectable option — `value` is the payload, `label` is the rendered text. */
 export interface SelectOption {
-    /** Giá trị option — thứ `onValueChange` bắn ra + React key. */
+    /** Option value — what `onValueChange` fires and the React key. */
     value: string
-    /** Nhãn hiển thị (trong trigger khi chọn, và trong dòng list). */
+    /** Displayed label (in the trigger when selected, and in the list row). */
     label: ReactNode
 }
 
-/** A trigger-box skeleton owned by the atom (hybrid C). */
-/** Props for the local {@link TriggerSkeleton} mirror. */
+/** Props for the {@link TriggerSkeleton} mirror — a trigger-box skeleton owned by the atom. */
 interface TriggerSkeletonProps {
-    /** Placement class only. */
+    /**
+     * Placement class only.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
     showAnatomy?: boolean
 }
 
-const TriggerSkeleton = ({ className, showAnatomy }: TriggerSkeletonProps) => (
-    <HeroSkeleton className={cn("h-9 w-full rounded-xl", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+const TriggerSkeleton = ({ className, classNames, showAnatomy }: TriggerSkeletonProps) => (
+    <HeroSkeleton className={cn("h-9 w-full rounded-xl", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
 )
 
 /** Shared props across the members. */
 interface BaseSelectProps extends FrameProps {
-    /** Danh sách option phẳng để chọn. */
+    /** Flat list of options to choose from. */
     options: Array<SelectOption>
-    /** Placeholder khi chưa chọn gì. */
+    /** Placeholder shown when nothing is selected. */
     placeholder?: string
-    /** Khoá control. */
+    /** Disables the control. */
     isDisabled?: boolean
-    /** Field invalid (viền lỗi) — errorMessage cũng bật viền qua FieldFrame. */
+    /** Field invalid (error border) — `errorMessage` also triggers the border via FieldFrame. */
     isInvalid?: boolean
-    /** Accessible name khi KHÔNG có `label` (có label thì label lo). */
+    /** Accessible name used when there's no `label` (otherwise the label handles it). */
     ariaLabel?: string
-    /** Render trigger-box skeleton thay control. */
+    /** Renders the trigger-box skeleton instead of the control. */
     isSkeleton?: boolean
-    /** `true` → tag `data-anat-part` cho BlockAnatomy panel badge. */
+    /** `true` tags `data-anat-part` for a BlockAnatomy panel to badge. */
     showAnatomy?: boolean
+    /**
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
- * `SelectSingle` — dropdown chọn MỘT (HeroUI Select single). Trigger hiện nhãn
- * option đang chọn (hoặc placeholder), popover là ListBox các dòng.
+ * `SelectSingle` — single-select dropdown (HeroUI Select single). The trigger
+ * shows the selected option's label (or the placeholder); the popover is a
+ * ListBox of rows.
  */
 const SelectSingle = ({
     value,
@@ -107,14 +115,15 @@ const SelectSingle = ({
     isSkeleton,
     showAnatomy,
     className,
+    classNames,
     label,
     hint,
     errorMessage,
     isRequired,
 }: BaseSelectProps & {
-    /** Value đang chọn (controlled), `null` khi chưa chọn. */
+    /** Selected value (controlled), `null` when nothing is selected. */
     value: string | null
-    /** Bắn khi người dùng chọn 1 option. */
+    /** Fires when the user picks an option. */
     onValueChange: (value: string) => void
 }) => {
     const invalid = isInvalid || errorMessage != null
@@ -128,7 +137,7 @@ const SelectSingle = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton className={className} showAnatomy={showAnatomy} />}
+            skeletonControl={<TriggerSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroSelect.Root<SelectOption, "single">
                 aria-label={fieldName(label, ariaLabel ?? placeholder)}
@@ -138,10 +147,10 @@ const SelectSingle = ({
                 selectedKey={value}
                 onSelectionChange={(key) => onValueChange(String(key))}
                 fullWidth
-                className={className}
+                className={cn(className, classNames)}
             >
-                {/* Node names = the REAL heroui components rendered here (`Select.Trigger` /
-                    `Select.Value`) — NOT the slot words "Trigger"/"Field" they used to carry. */}
+                {/* data-anat-part uses the real HeroUI component names (`Select.Trigger`/
+                    `Select.Value`), not generic slot words. */}
                 <HeroSelect.Trigger data-anat-part={showAnatomy ? "Select.Trigger" : undefined}>
                     <HeroSelect.Value data-anat-part={showAnatomy ? "Select.Value" : undefined}>
                         {() => (
@@ -173,8 +182,9 @@ const SelectSingle = ({
 }
 
 /**
- * `SelectMulti` — dropdown chọn NHIỀU (HeroUI Select `selectionMode="multiple"`).
- * Trigger tóm tắt số/nhãn đã chọn; mỗi dòng list toggle bật/tắt.
+ * `SelectMulti` — multi-select dropdown (HeroUI Select `selectionMode="multiple"`).
+ * The trigger summarizes the count/label of selected options; each list row
+ * toggles on and off.
  */
 const SelectMulti = ({
     value,
@@ -187,21 +197,22 @@ const SelectMulti = ({
     isSkeleton,
     showAnatomy,
     className,
+    classNames,
     label,
     hint,
     errorMessage,
     isRequired,
 }: BaseSelectProps & {
-    /** Các value đang chọn (controlled). */
+    /** Selected values (controlled). */
     value: Array<string>
-    /** Bắn với mảng value mới mỗi lần toggle. */
+    /** Fires with the new value array on every toggle. */
     onValueChange: (value: Array<string>) => void
 }) => {
     const invalid = isInvalid || errorMessage != null
     const chosen = options.filter((option) => value.includes(option.value))
-    // Nhãn trigger: "n selected" khi ≥2, nhãn đơn khi =1, placeholder khi rỗng.
-    // Chữ HIỆN RA UI viết tiếng Anh (thầy chốt 2026-07-26) — đây là chuỗi MẶC ĐỊNH nên
-    // call-site không truyền tay là nó lộ thẳng lên màn hình.
+    // Trigger label: "n selected" when 2 or more are chosen, the single label
+    // when exactly 1, the placeholder when empty. This default string is
+    // hardcoded in English — call sites that don't override it show it verbatim.
     const summary =
         chosen.length === 0 ? null : chosen.length === 1 ? chosen[0].label : `${chosen.length} selected`
     return (
@@ -213,7 +224,7 @@ const SelectMulti = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton className={className} showAnatomy={showAnatomy} />}
+            skeletonControl={<TriggerSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroSelect.Root<SelectOption, "multiple">
                 selectionMode="multiple"
@@ -224,12 +235,11 @@ const SelectMulti = ({
                 value={value}
                 onChange={(keys) => onValueChange(keys.map(String))}
                 fullWidth
-                className={className}
+                className={cn(className, classNames)}
             >
-                {/* Node name = the REAL heroui component rendered here (`Select.Trigger`) —
-                    NOT the slot word "Trigger" it used to carry. The summary `<span>` below
-                    stays untagged: it's a plain hand-rolled text slot, not a real component
-                    (SelectMulti doesn't compose `Select.Value` — see the JSDoc above). */}
+                {/* data-anat-part uses the real HeroUI component name (`Select.Trigger`). The
+                    summary `<span>` below stays untagged — it's a plain hand-rolled text slot,
+                    not a real component (SelectMulti doesn't compose `Select.Value`). */}
                 <HeroSelect.Trigger data-anat-part={showAnatomy ? "Select.Trigger" : undefined}>
                     <span className={cn("text-sm", summary == null && "text-field-placeholder")}>
                         {summary ?? placeholder}
@@ -257,8 +267,9 @@ const SelectMulti = ({
 }
 
 /**
- * `SelectCombobox` — autocomplete gõ-lọc chọn MỘT (HeroUI ComboBox). Input cho gõ,
- * react-aria tự lọc `defaultItems` theo text; caret mở toàn bộ danh sách.
+ * `SelectCombobox` — type-to-filter single-select (HeroUI ComboBox). Typing in
+ * the input lets react-aria filter `defaultItems` by text; the caret opens the
+ * full list.
  */
 const SelectCombobox = ({
     value,
@@ -271,14 +282,15 @@ const SelectCombobox = ({
     isSkeleton,
     showAnatomy,
     className,
+    classNames,
     label,
     hint,
     errorMessage,
     isRequired,
 }: BaseSelectProps & {
-    /** Value đang chọn (controlled), `null` khi chưa chọn. */
+    /** Selected value (controlled), `null` when nothing is selected. */
     value: string | null
-    /** Bắn khi người dùng chọn 1 gợi ý. */
+    /** Fires when the user picks a suggestion. */
     onValueChange: (value: string) => void
 }) => {
     const invalid = isInvalid || errorMessage != null
@@ -291,7 +303,7 @@ const SelectCombobox = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton className={className} showAnatomy={showAnatomy} />}
+            skeletonControl={<TriggerSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroComboBox
                 aria-label={fieldName(label, ariaLabel ?? placeholder)}
@@ -307,20 +319,19 @@ const SelectCombobox = ({
                         onValueChange(String(key))
                     }
                 }}
-                className={cn("w-full", className)}
+                className={cn("w-full", className, classNames)}
             >
                 <HeroComboBox.InputGroup className="relative">
-                    {/* Node names = the REAL heroui components rendered here (`Input` /
-                        `ComboBox.Trigger`) — NOT the slot words "Field"/"Trigger" they used
-                        to carry. */}
+                    {/* data-anat-part uses the real HeroUI component names (`Input`/
+                        `ComboBox.Trigger`), not generic slot words. */}
                     <HeroInput placeholder={placeholder} className="w-full pr-9" data-anat-part={showAnatomy ? "Input" : undefined} />
                     <HeroComboBox.Trigger
                         className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex size-7 items-center justify-center rounded-lg"
                         data-anat-part={showAnatomy ? "ComboBox.Trigger" : undefined}
                     >
-                        {/* size-4 + text-muted khai TRỰC TIẾP trên icon — khớp 2 chỗ trên (`Select.Indicator`
-                            của SelectSingle/SelectMulti), thay vì để lọt qua `[&_svg]:size-4` trên Trigger cha
-                            (cùng kết quả hình ảnh nhưng khác kiểu viết, không nhất quán). */}
+                        {/* size-4 + text-muted declared directly on the icon, matching the two
+                            `Select.Indicator` instances above (SelectSingle/SelectMulti) rather
+                            than relying on `[&_svg]:size-4` on the parent Trigger. */}
                         <CaretDownIcon aria-hidden weight="bold" className="text-muted size-4" />
                     </HeroComboBox.Trigger>
                 </HeroComboBox.InputGroup>
@@ -339,8 +350,7 @@ const SelectCombobox = ({
 }
 
 /**
- * `Select.*` — the choose-from-a-list field-control atom namespace. Single/Multi
- * over HeroUI `Select`, Combobox over HeroUI `ComboBox`; atom fields compose
- * these members (xem block `Select`).
+ * `Select.*` — the choose-from-a-list field-control atom namespace. Single/
+ * Multi wrap HeroUI `Select`, Combobox wraps HeroUI `ComboBox`.
  */
 export { SelectSingle, SelectMulti, SelectCombobox }

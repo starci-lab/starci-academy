@@ -195,18 +195,18 @@ const ScoreRow = ({
     showAnatomy: boolean
 }) => (
     <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
-        <Typography size="sm" truncate className="w-32 shrink-0" text={label} anatPart={showAnatomy ? "Typography" : undefined} />
+        <Typography size="sm" truncate className="w-32" classNames={["shrink-0"]} text={label} anatPart={showAnatomy ? "Typography" : undefined} />
         <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} className="flex-1" anatPart={showAnatomy ? "ProgressMeter" : undefined} showAnatomy={showAnatomy} />
-        <Typography size="xs" color="muted" tabularNums className="shrink-0" text={`${score}/${max}`} anatPart={showAnatomy ? "Typography" : undefined} />
+        <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} anatPart={showAnatomy ? "Typography" : undefined} />
     </StackH>
 )
 
 /** Same shape as {@link ScoreRow}, shimmering — `ProgressMeter` has no `isSkeleton` of its own (see file header). */
 const ScoreRowSkeleton = () => (
     <StackH gap="grouped" align="center">
-        <Typography size="sm" isSkeleton className="w-32 shrink-0" />
+        <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />
         <HeroSkeleton className="h-1 flex-1 rounded-full" />
-        <Typography size="xs" isSkeleton className="w-10 shrink-0" />
+        <Typography size="xs" isSkeleton classNames={["shrink-0", "w-1/4"]} />
     </StackH>
 )
 
@@ -264,12 +264,12 @@ const MockInterviewScorecard = ({
                 {hasByline ? (
                     <StackH gap="grouped" justify="between" wrap anatPart={showAnatomy ? "StackH" : undefined}>
                         {isSkeleton ? (
-                            <Typography size="sm" weight="medium" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                         ) : promptTitle != null ? (
                             <Typography size="sm" weight="medium" text={promptTitle} anatPart={showAnatomy ? "Typography" : undefined} />
                         ) : null}
                         {isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton className="w-24" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                         ) : createdAt != null ? (
                             <Typography size="xs" color="muted" text={createdAt} anatPart={showAnatomy ? "Typography" : undefined} />
                         ) : null}

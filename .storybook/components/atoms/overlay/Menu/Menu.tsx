@@ -14,43 +14,38 @@ import {
 // `DropdownSection` (react-aria MenuSection) does not expose a `title` prop, so the
 // header is composed as its first child — exactly how HeroUI builds sections internally.
 import { Header as HeroMenuHeader } from "react-aria-components"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Menu`: the ONE constrained action-menu atom over HeroUI Dropdown.
+ * ATOM — `Menu`: the constrained action-menu atom over HeroUI Dropdown.
  *
- * Bọc HeroUI `Dropdown` TỐI ĐA (Trigger · Popover · Menu · Section · Item) + một
- * `Button` (alias `HeroButton`) làm trigger. Atom SỞ HỮU chrome: popover surface,
- * placement, item layout, icon scale (size-4).
+ * Wraps HeroUI `Dropdown` (Trigger · Popover · Menu · Section · Item) with
+ * a `Button` (aliased `HeroButton`) as trigger. This atom owns the chrome:
+ * popover surface, placement, item layout, icon scale.
  *
- * NAMESPACE (thầy chốt 2026-07-25): atom KHÔNG export component trần — mọi thành
- * viên đi qua `Menu.*` (hôm nay chỉ có `Base`), khớp `Chip.*` / `Button.*`.
+ * All exports go through `Menu.*` (currently only `Base`).
  *
- * KHÔNG `children` (luật ② thầy chốt 2026-07-25): nhãn nút mở đi bằng PROP DỮ LIỆU
- * `triggerLabel` (+ `triggerIcon` là COMPONENT, atom tự ép scale). Menu KHÔNG buộc
- * phải bọc phần tử khác — trigger do chính atom dựng — nên KHÔNG thuộc ngoại lệ
- * wrapper (chỉ `Tooltip`/`Badge` được giữ `children`).
+ * No `children`: the open-button label is the data prop `triggerLabel`
+ * (`triggerIcon` is a component, rendered at trigger scale by the atom).
  *
- * STRICT §4: consumer truyền DỮ LIỆU (`items` phẳng HOẶC `sections` gộp), KHÔNG dựng
- * `DropdownItem` tay. Mỗi item = `{ key, label, icon?, isDisabled? }`; `icon` truyền
- * COMPONENT (Phosphor), atom render size-4. Chọn item → `onAction(key)`.
+ * A caller passes data (flat `items` or grouped `sections`) rather than
+ * building `DropdownItem` by hand. Each item is
+ * `{ key, label, icon?, isDisabled? }`; `icon` is a component reference
+ * (Phosphor), rendered by the atom. Selecting an item fires `onAction(key)`.
  *
- * Overlay portal: `DropdownPopover` render RA NGOÀI render-box nên badge on-render chỉ
- * neo được `Trigger`; các part menu vẫn hiện trong legend + Cây.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `DropdownPopover` renders through a portal outside this component's own
+ * render box, so an on-render anatomy badge can only anchor to `Trigger`;
+ * the menu parts still show in the legend and tree.
  */
 
 /** An icon passed as a COMPONENT (e.g. `Gear`), rendered by the atom at menu scale. */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
 
 /**
- * Glyph của Menu — cỡ + nét, MỘT chỗ duy nhất (§4: atom sở hữu scale, caller đưa icon TRẦN).
- *
- * Nhãn item VÀ nhãn trigger đều `text-sm` (14px, đo DOM 2026-07-26) ⇒ `size-3.5`
- * (§5a — đối chiếu FONT-SIZE, 1:1) + `weight="bold"` (§5.0a — nhỏ hơn `size-5`).
- *
- * ❌ neo (2026-07-26): icon ITEM để `size-4` trần trong khi icon TRIGGER cùng file đã
- * là `size-3.5` — hai thang sống trong MỘT atom mà không ai thấy.
+ * Menu glyph scale, defined once — the atom owns scale, callers pass a
+ * bare icon. Item and trigger labels are both `text-sm` (14px), so glyphs
+ * are `size-3.5` to match 1:1, with `bold` weight to keep the stroke
+ * visible at that size.
  */
 const MENU_ICON_CLASS = "size-3.5"
 const MENU_ICON_WEIGHT = "bold" as const
@@ -61,7 +56,7 @@ export interface MenuItemModel {
     key: string
     /** Row label. */
     label: string
-    /** Leading icon as a COMPONENT reference. Atom renders it at `size-3.5` + `bold` (§5a/§5.0a). */
+    /** Leading icon as a component reference, rendered at `size-3.5` with `bold` weight. */
     icon?: IconComponent
     /** Non-selectable (dimmed) row. */
     isDisabled?: boolean
@@ -79,9 +74,9 @@ export interface MenuSectionModel {
 
 /** Props for {@link MenuBase}. */
 export interface MenuBaseProps {
-    /** Trigger button label (nhãn, KHÔNG phải children). */
+    /** Trigger button label (not children). */
     triggerLabel: ReactNode
-    /** Leading icon of the trigger as a COMPONENT reference. Atom ép `size-3.5` (scale chữ nút). */
+    /** Leading icon of the trigger as a component reference, rendered at `size-3.5` to match the button text scale. */
     triggerIcon?: IconComponent
     /** Flat rows — mutually exclusive with {@link MenuBaseProps.sections}. */
     items?: Array<MenuItemModel>
@@ -103,13 +98,18 @@ export interface MenuBaseProps {
     onOpenChange?: (isOpen: boolean) => void
     /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `DropdownTrigger`/`DropdownPopover`/`DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`/`Skeleton`) so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /**
-     * Render the leaf skeleton (rows of icon + label bars) instead of the real dropdown — atom SỞ HỮU skeleton của
-     * chính nó (canon §12c, hybrid C).
-     */
+    /** Render the leaf skeleton (rows of icon + label bars) instead of the real dropdown; the atom owns its own skeleton. */
     isSkeleton?: boolean
-    /** Extra classes on the trigger. */
+    /**
+     * Extra classes on the trigger.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** Render one menu row (shared by flat + sectioned modes). */
@@ -151,22 +151,25 @@ const MenuBase = ({
     showAnatomy = false,
     isSkeleton = false,
     className,
+    classNames,
 }: MenuBaseProps) => {
     if (isSkeleton) {
-        // Leaf skeleton CO-LOCATED — chủ của hình là chủ của skeleton (§12c). KHÔNG có
-        // component skeleton dùng chung; atom tự vẽ bằng `HeroSkeleton`: container `p-1`
-        // + mỗi row là icon `size-5 rounded-full` cạnh nhãn `h-[14px] w-24`. Số row =
-        // tổng items thật (flat hoặc gộp từ sections) để không lệch chiều cao khi data
-        // thật vào; fallback 4 (mặc định cũ) khi chưa biết trước.
+        // This atom draws its own skeleton with `HeroSkeleton` (no shared skeleton
+        // component): container `p-1`, each row an icon `size-5 rounded-full`
+        // beside a label `h-[14px] w-1/3`. Item labels are usually one word
+        // ("Edit", "Settings", "Sign out"), so the label bar is fractional width
+        // rather than fixed. Row count matches the real item count (flat or
+        // summed across sections) so the skeleton height matches once real data
+        // lands; falls back to 4 rows when the count is unknown.
         const rowCount = sections
             ? sections.reduce((total, section) => total + section.items.length, 0)
             : (items?.length ?? 4)
         return (
-            <div className={cn("flex w-full flex-col gap-1 p-1", className)}>
+            <div className={cn("flex w-full flex-col gap-1 p-1", className, classNames)}>
                 {Array.from({ length: rowCount || 4 }).map((_, index) => (
                     <div key={index} className="flex items-center gap-2 px-2 py-2">
                         <HeroSkeleton className="size-5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        <HeroSkeleton className="h-[14px] w-24 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        <HeroSkeleton className="h-[14px] w-1/3 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                     </div>
                 ))}
             </div>
@@ -174,13 +177,12 @@ const MenuBase = ({
     }
     return (
         <HeroDropdown isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroDropdownTrigger className={className} data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}>
+            <HeroDropdownTrigger className={cn(className, classNames)} data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}>
                 <HeroButton variant={triggerVariant}>
                     {TriggerIcon ? (
-                        // Atom sở hữu glyph scale — `!` bắt buộc vì HeroUI có rule `.button svg` specificity cao hơn.
-                        // Span thuần bọc icon TRẦN (bất kỳ Phosphor nào caller đưa) — không phải một
-                        // component có tên riêng nên KHÔNG phát `data-anat-part` (§ luật ①: tên phải là
-                        // component thật, span glue này không phải).
+                        // `!` needed: HeroUI's `.button svg` rule has higher specificity. This
+                        // span is a plain wrapper around a caller-supplied icon, not a named
+                        // component, so it does not emit `data-anat-part`.
                         <span aria-hidden className="inline-flex shrink-0 [&_svg]:!size-3.5">
                             <TriggerIcon weight={MENU_ICON_WEIGHT} />
                         </span>
@@ -215,8 +217,5 @@ const MenuBase = ({
     )
 }
 
-/**
- * `Menu.*` — the action-menu ATOM namespace. `Menu` là atom menu DUY NHẤT
- * (flat `items` hay `sections` gộp đều là LEAF prop-driven của nó).
- */
+/** `Menu.*` — the action-menu atom namespace. Flat `items` or grouped `sections` are both leaf props. */
 export { MenuBase as Menu }

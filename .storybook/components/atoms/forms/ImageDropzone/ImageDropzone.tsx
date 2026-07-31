@@ -2,33 +2,23 @@
 
 import React from "react"
 import type { ComponentType, ReactNode, SVGProps } from "react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { ImageIcon } from "@phosphor-icons/react"
 import { useDropzone } from "react-dropzone"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/identity/ImageDropzone`. Authored in Storybook (not
- * `src`); synced to `src` later.
- *
- * Sửa 2026-07-26 (dọn nhóm A/B/F):
- *   • A — bỏ `WithClassNames` local + `classNames` chết (kiểu `undefined`, không gán
- *     được gì); chỉ còn `className?: string` khai thẳng.
- *   • B — `icon` đổi từ `ReactNode` sang `IconComponent`: atom nhận COMPONENT rồi tự
- *     ép size (`size-8`, khớp `[&_svg]:size-8` cũ) + weight (§5.0a: từ `size-5` trở
- *     lên KHÔNG truyền `weight`, để glyph giữ nét `regular` mặc định).
- *   • F — `isDragActive` vốn chỉ sống trong state nội bộ của `useDropzone`, nên viền
- *     đặc + nền tint khi kéo file qua là một HÌNH THẬT không story nào ép được. Mở
- *     `isDragActive?: boolean` để GHIM: không truyền ⇒ atom tự quản như cũ (hành vi
- *     không đổi); truyền ⇒ đè state nội bộ, cùng lối `isPending` của `Button`.
+ * `ImageDropzone` — single-image drop target (react-dropzone): dashed-border
+ * box with an icon, CTA label, and format hint.
  */
 
 /**
- * Icon truyền vào dạng COMPONENT (vd `CameraIcon`), atom tự render ở cỡ dropzone.
+ * Icon passed as a component reference (e.g. `CameraIcon`); the atom renders it
+ * at the dropzone's own size.
  *
- * Kiểu để MỞ (`SVGProps` + `weight` tuỳ chọn), KHÔNG khai `Icon` của Phosphor — khai
- * chặt theo một thư viện là khoá cả cây vào một nhà cung cấp (§5.0).
+ * The type stays generic (`SVGProps` + optional `weight`) rather than importing
+ * Phosphor's `Icon` type, so this atom isn't locked to one icon library.
  */
 export type IconWeight = "regular" | "bold"
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: IconWeight }>
@@ -48,24 +38,39 @@ const ACCEPT = {
 export interface ImageDropzoneProps {
     /** Called with the dropped / picked image file (type + size filtered). */
     onFile: (file: File) => void
-    /** Primary CTA (e.g. "Kéo thả ảnh vào đây, hoặc bấm để chọn"). */
+    /** Primary CTA (e.g. "Drag and drop an image, or click to browse"). */
     label: ReactNode
-    /** Format/size hint below the CTA (e.g. "PNG, JPG, WEBP, GIF · tối đa 5 MB"). */
+    /** Format/size hint below the CTA (e.g. "PNG, JPG, WEBP, GIF · max 5 MB"). */
     hint?: ReactNode
     /** Override the default {@link ImageIcon} — component reference, not JSX. */
     icon?: IconComponent
     /**
-     * Ghim state kéo-thả từ NGOÀI (Storybook không ép được `useDropzone`
-     * kéo file thật). Không truyền ⇒ atom tự lấy từ `useDropzone` như cũ; truyền ⇒
-     * đè state nội bộ. Cùng lối `isPending` của `Button`.
+     * Pins the drag-active visual state from outside — real drag-and-drop can't
+     * be triggered programmatically, so Storybook has no other way to show this
+     * state. Unset, the atom tracks it internally via `useDropzone`; set, it
+     * overrides the internal state (same pattern as `Button`'s `isPending`).
      */
     isDragActive?: boolean
+    /**
+     * `true` renders the skeleton mirror instead of the live drop target: same
+     * dashed frame, radius, and padding as the live box. The icon slot becomes a
+     * circular dot, `label` a text bar, and `hint` a second bar only when a
+     * `hint` was passed — gated on the same prop the live branch below gates its
+     * line on.
+     */
+    isSkeleton?: boolean
     /**
      * When `true`, each composed part emits `data-anat-part="<name>"` so a
      * BlockAnatomy panel can badge it on-render. Off by default (production).
      */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -83,7 +88,9 @@ const ImageDropzoneBase = ({
     hint,
     icon: Icon,
     isDragActive: isDragActiveProp,
+    isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
 }: ImageDropzoneProps) => {
     const { getRootProps, getInputProps, isDragActive: isDragActiveInternal } = useDropzone({
@@ -97,8 +104,34 @@ const ImageDropzoneBase = ({
             }
         },
     })
-    // Ghim từ ngoài thắng state nội bộ (xem {@link ImageDropzoneProps.isDragActive}).
+    // The external pin wins over internal state (see {@link ImageDropzoneProps.isDragActive}).
     const isDragActive = isDragActiveProp ?? isDragActiveInternal
+
+    if (isSkeleton) {
+        // Same frame as the live box below (border-dashed + rounded-2xl + px-6 py-8 +
+        // flex-col items-center gap-2) minus the interactive bits — nothing here is
+        // clickable. Icon becomes a circular dot at the icon's own size-8 footprint;
+        // `label`/`hint` delegate to `Typography isSkeleton` so this box is never
+        // taller or shorter than the live one that follows it.
+        return (
+            <div
+                className={cn(
+                    "flex flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center",
+                    className,
+                    classNames,
+                )}
+            >
+                <HeroSkeleton
+                    className="size-8 rounded-full"
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                />
+                <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                {hint ? (
+                    <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                ) : null}
+            </div>
+        )
+    }
 
     return (
         <div
@@ -107,6 +140,7 @@ const ImageDropzoneBase = ({
                 "flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center transition-colors hover:border-accent",
                 isDragActive && "border-solid border-accent bg-accent-soft",
                 className,
+                classNames,
             )}
         >
             <input {...getInputProps()} />
@@ -114,7 +148,7 @@ const ImageDropzoneBase = ({
                 aria-hidden
                 className={cn("text-muted [&_svg]:size-8", isDragActive && "text-accent-soft-foreground")}
             >
-                {/* `size-8` >= `size-5` ⇒ KHÔNG truyền `weight` (§5.0a), glyph giữ nét `regular`. */}
+                {/* size-8 is above the size-5 threshold, so no `weight` is passed — the glyph stays regular. */}
                 {Icon ? <Icon /> : <ImageIcon focusable="false" />}
             </span>
             {/* `anatPart` pinned explicitly — the REAL component rendered here is `Typography`
@@ -124,7 +158,7 @@ const ImageDropzoneBase = ({
                 text={label}
                 weight="medium"
                 align="center"
-                className={cn(isDragActive && "text-accent-soft-foreground")}
+                color={isDragActive ? "accent-soft" : "default"}
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "Typography" : undefined}
             />

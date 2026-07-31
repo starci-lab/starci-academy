@@ -125,7 +125,7 @@ const MindMapContinueButton = ({
                 iconSlide
                 ariaLabel={continueAriaLabel}
                 onPress={onResume}
-                className="shadow-lg"
+                isElevated
                 anatPart={anatPart ?? (showAnatomy ? "Button" : undefined)}
             />
         )

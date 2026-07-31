@@ -11,37 +11,30 @@ import {
 import { CheckIcon, MinusIcon } from "@phosphor-icons/react"
 import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
 import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Choice.*`: the boolean / single-select control atom namespace (wraps
+ * `Choice.*` — the boolean / single-select control atom namespace (wraps
  * HeroUI Checkbox · Radio · RadioGroup · Switch).
  *
- * These are INLINE controls — the label sits BESIDE the control (Checkbox.Content /
- * Radio.Content owns the native label; Switch's label = sibling `<Label>` per house note).
- * It's a BARE field (no group heading / hint / error) — the atom field (FieldShell)
- * COMPOSES this atom to add a group label / description / error.
+ * These are inline controls: the label sits beside the control (Checkbox.Content /
+ * Radio.Content own the native label; Switch's label is a sibling `<Label>`). Each
+ * is a bare field with no group heading, hint, or error — `FieldShell` composes
+ * this atom to add those.
  *
- * Shared rules (Chip/Input):
- *   • Wrap HeroUI to the MAX (Checkbox/RadioGroup/Radio/Switch), alias `Hero*`.
- *   • STRICT §4: `isSelected|value` + `onValueChange` BARE — the consumer doesn't touch
- *     structure (no manual Checkbox.Control/Indicator/Content).
- *   • NO `children` (rule decided 2026-07-25): the control doesn't wrap any element
- *     so the label goes via the `label` prop; a radio group is described via `options` DATA.
- *   • `isSkeleton` → control-shaped skeleton co-located (hybrid C, `HeroSkeleton`
- *     sized to the control — NO importing the `Skeleton.*` compound).
- *   • Anatomy tier `atom`; the composed heroui parts each badge under their OWN real
- *     name (`Checkbox.Control`/`Checkbox.Content`, `Radio.Control`/`Radio.Content`,
- *     `Switch`, `Label`) — never a generic slot word (§ two-law pass, 2026-07-28).
- * ─────────────────────────────────────────────────────────────────────────────
+ * There is no `children` prop: the label goes via the `label` prop, and a radio
+ * group is described via `options` data. `isSkeleton` renders a control-shaped
+ * skeleton sized to match, without importing the `Skeleton.*` compound. Each
+ * composed HeroUI part badges under its own real name (`Checkbox.Control`/
+ * `Checkbox.Content`, `Radio.Control`/`Radio.Content`, `Switch`, `Label`) when
+ * `showAnatomy` is set.
  */
 
 /**
- * Extra field-frame props INLINE controls take (decided 2026-07-25): `hint` +
- * `errorMessage` render via FieldFrame around the control (the main label stays
- * INLINE next to the control — NOT passed into FieldFrame's `label`). `isRequired`
- * attaches a `*` mark to the inline label. Leave them all off → the control stays
- * bare as before (FieldFrame renders children straight through).
+ * Extra field-frame props inline controls take: `hint` and `errorMessage` render
+ * via FieldFrame around the control (the main label stays inline next to the
+ * control, not passed into FieldFrame's `label`). `isRequired` attaches a `*`
+ * mark to the inline label. Leave them all off and the control renders bare.
  */
 interface InlineFrameProps {
     /** Secondary description (via FieldFrame). */
@@ -78,29 +71,35 @@ export interface ChoiceCheckboxProps extends InlineFrameProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** `ChoiceCheckbox` — single boolean checkbox with an inline label (HeroUI Checkbox compound). */
-const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvalid, isSkeleton, showAnatomy, className, hint, errorMessage, isRequired }: ChoiceCheckboxProps) => {
+const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvalid, isSkeleton, showAnatomy, className, classNames, hint, errorMessage, isRequired }: ChoiceCheckboxProps) => {
     const invalid = isInvalid || errorMessage != null
     // Control = size-4 rounded-md · label = body-sm glyph bar (14/24), row gap-3 (matches Checkbox.Content gap).
     const skeletonControl = (
-        <div className={cn("flex items-center gap-3", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+        <div className={cn("flex items-center gap-3", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
             <HeroSkeleton className="size-4 shrink-0 rounded-md" />
-            <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
+            <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/2")} />
         </div>
     )
     return (
         <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
-            <HeroCheckbox isSelected={isSelected} onChange={onValueChange} isInvalid={invalid} isDisabled={isDisabled} className={className}>
-                {/* Node name = the REAL heroui component rendered here (`Checkbox.Control`/
-                    `Checkbox.Content`) — NOT the slot word "Control"/"Label" it used to carry. */}
+            <HeroCheckbox isSelected={isSelected} onChange={onValueChange} isInvalid={invalid} isDisabled={isDisabled} className={cn(className, classNames)}>
+                {/* data-anat-part uses the real HeroUI component name (`Checkbox.Control`/
+                    `Checkbox.Content`), not a generic slot word. */}
                 <HeroCheckbox.Control data-anat-part={showAnatomy ? "Checkbox.Control" : undefined}>
-                    {/* §1a.1: HeroUI vẽ HAI svg khác nhau cho selected/indeterminate khi slot
-                        bỏ trống — đó là bộ icon thứ hai lọt qua cửa sau. Override BẮT BUỘC dạng
-                        HÀM: truyền thẳng một node sẽ khiến indeterminate cũng hiện dấu check
-                        (sai trạng thái, sai im lặng — không lỗi biên dịch, không lỗi lint). */}
+                    {/* HeroUI renders a different icon for selected vs indeterminate when this
+                        slot is left empty. The override must stay a function — passing a plain
+                        node here makes indeterminate render the check icon too, with no
+                        compiler or lint error to catch it. */}
                     <HeroCheckbox.Indicator>
                         {({ isIndeterminate }) =>
                             isIndeterminate ? (
@@ -120,12 +119,11 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
 /* ── Radio ─────────────────────────────────────────────────────────────────── */
 
 /**
- * Props for {@link ChoiceRadio} — ONE option row; must live inside a
+ * Props for {@link ChoiceRadio} — one option row; must live inside a
  * {@link ChoiceRadioGroup}.
  *
- * ⚠️ NO `hint`/`errorMessage`/`isRequired` (decided 2026-07-25): a lone radio
- * can't stand on its own — description · error · required are the GROUP's
- * business, so those 3 props live on {@link ChoiceRadioGroup}.
+ * No `hint`/`errorMessage`/`isRequired`: those describe the group, not a single
+ * option, so they live on {@link ChoiceRadioGroup} instead.
  */
 export interface ChoiceRadioProps {
     /** Value reported to the group's `onValueChange` when this option is picked. */
@@ -138,24 +136,30 @@ export interface ChoiceRadioProps {
     isSkeleton?: boolean
     /** `true` → tag `Radio.Content` · `Radio.Control` for BlockAnatomy. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** `ChoiceRadio` — one radio option row (HeroUI Radio compound). Renders inside `ChoiceRadioGroup`. */
-const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, showAnatomy, className }: ChoiceRadioProps) => {
+const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, showAnatomy, className, classNames }: ChoiceRadioProps) => {
     if (isSkeleton) {
-        // One row: size-4 rounded-full dot + body-sm label bar, gap-3 (co-located, hybrid C).
+        // Row: size-4 rounded-full dot + body-sm label bar, gap-3.
         return (
-            <div className={cn("flex items-center gap-3", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+            <div className={cn("flex items-center gap-3", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
                 <HeroSkeleton className="size-4 shrink-0 rounded-full" />
-                <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
+                <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/3")} />
             </div>
         )
     }
     return (
-        <HeroRadio value={value} isDisabled={isDisabled} className={className}>
-            {/* Node name = the REAL heroui component rendered here (`Radio.Content` wraps
-                `Radio.Control` + the label span) — NOT the slot words "Control"/"Label". */}
+        <HeroRadio value={value} isDisabled={isDisabled} className={cn(className, classNames)}>
+            {/* data-anat-part uses the real HeroUI component names (`Radio.Content` wraps
+                `Radio.Control` + the label span), not generic slot words. */}
             <HeroRadio.Content data-anat-part={showAnatomy ? "Radio.Content" : undefined}>
                 <HeroRadio.Control data-anat-part={showAnatomy ? "Radio.Control" : undefined}>
                     <HeroRadio.Indicator />
@@ -184,8 +188,8 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
     /** Fires with the newly selected option's value. */
     onValueChange: (value: string) => void
     /**
-     * List of options as DATA — the atom builds one {@link ChoiceRadio} per
-     * entry. NO `children`: the consumer doesn't attach child JSX (§4 STRICT).
+     * List of options as data — the atom builds one {@link ChoiceRadio} per
+     * entry; there is no `children` prop for attaching JSX directly.
      */
     options: Array<ChoiceRadioOption>
     /** Heading label ABOVE the group (maps to FieldFrame's `label`) — leave blank → `ariaLabel` only. */
@@ -200,7 +204,13 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
     skeletonRows?: number
     /** `true` → tag each option's `Radio.Content` · `Radio.Control` for BlockAnatomy. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** `ChoiceRadioGroup` — mutually-exclusive single-select group (HeroUI RadioGroup + `ChoiceRadio` rows). */
@@ -216,6 +226,7 @@ const ChoiceRadioGroup = ({
     skeletonRows,
     showAnatomy,
     className,
+    classNames,
     hint,
     errorMessage,
     isRequired,
@@ -224,11 +235,11 @@ const ChoiceRadioGroup = ({
     const rows = skeletonRows ?? options.length
     // Each row: size-4 rounded-full dot + body-sm label bar, gap-3; group stacks gap-2.
     const skeletonControl = (
-        <div className={cn("flex flex-col gap-2", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+        <div className={cn("flex flex-col gap-2", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
             {Array.from({ length: rows }).map((_, index) => (
                 <div key={index} className="flex items-center gap-3">
                     <HeroSkeleton className="size-4 shrink-0 rounded-full" />
-                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
+                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/3")} />
                 </div>
             ))}
         </div>
@@ -250,7 +261,7 @@ const ChoiceRadioGroup = ({
                 onChange={onValueChange}
                 isInvalid={invalid}
                 isDisabled={isDisabled}
-                className={cn("flex flex-col gap-2", className)}
+                className={cn("flex flex-col gap-2", className, classNames)}
             >
                 {options.map((option) => (
                     <ChoiceRadio key={option.value} value={option.value} label={option.label} isDisabled={option.isDisabled} showAnatomy={showAnatomy} />
@@ -265,8 +276,8 @@ const ChoiceRadioGroup = ({
 /** Props for {@link ChoiceSwitch}. */
 export interface ChoiceSwitchProps extends InlineFrameProps {
     /**
-     * Anatomy tag for THIS control itself — so the PARENT can badge it as ONE node (§11a.1).
-     * Without this prop the parent is forced to pass `showAnatomy` down, i.e. OPEN UP the child's insides.
+     * Anatomy tag for this control as a single node, so a parent can badge it
+     * without passing `showAnatomy` down into its internals.
      */
     anatPart?: string
     /** On/off state (controlled). */
@@ -283,25 +294,30 @@ export interface ChoiceSwitchProps extends InlineFrameProps {
     isSkeleton?: boolean
     /** `true` → tag `Switch` · `Label` for BlockAnatomy. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** `ChoiceSwitch` — boolean toggle with the label BESIDE the track (HeroUI Switch compound). */
-const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid, size, isSkeleton, showAnatomy, anatPart, className, hint, errorMessage, isRequired }: ChoiceSwitchProps) => {
+const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid, size, isSkeleton, showAnatomy, anatPart, className, classNames, hint, errorMessage, isRequired }: ChoiceSwitchProps) => {
     const invalid = isInvalid || errorMessage != null
-    // Track = h-9 w-16 pill (app override) · optional label bar (body-sm).
+    // Track = h-9 w-16 pill (overrides HeroUI's default size) · optional label bar (body-sm).
     const skeletonControl = (
-        <div className={cn("flex items-center gap-3", className)} data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}>
+        <div className={cn("flex items-center gap-3", className, classNames)} data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}>
             <HeroSkeleton className="h-9 w-16 shrink-0 rounded-full" />
-            {label != null ? <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} /> : null}
+            {label != null ? <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/2")} /> : null}
         </div>
     )
     return (
         <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
-            <div data-anat-part={anatPart} className={cn("flex items-center gap-3", className)}>
+            <div data-anat-part={anatPart} className={cn("flex items-center gap-3", className, classNames)}>
                 <HeroSwitch
-                    // Node name = the REAL heroui component rendered here (`Switch`) — NOT
-                    // the slot word "Control" it used to carry.
+                    // data-anat-part uses the real HeroUI component name (`Switch`), not a slot word.
                     data-anat-part={showAnatomy ? "Switch" : undefined}
                     size={size}
                     isSelected={isSelected}
@@ -327,14 +343,8 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
 }
 
 /**
- * `Choice.*` — boolean / single-select control atom namespace. Each member is the
+ * `Choice.*` — boolean / single-select control atom namespace. Each member is a
  * bare inline control; atom fields (FieldShell) compose them for the group
- * heading / hint / error column.
- *
- * §12a: declared via `Object.assign` like the other 42 atoms (NOT a bare object
- * literal) — the root must be a callable namespace. Calling the root directly =
- * `ChoiceCheckbox`, the most basic shape of the family (same approach as
- * `Select` taking `SelectSingle` as its root). Every member's API STAYS THE
- * SAME, only the export SHAPE changes.
+ * heading, hint, and error column.
  */
 export { ChoiceCheckbox, ChoiceRadio, ChoiceRadioGroup, ChoiceSwitch }

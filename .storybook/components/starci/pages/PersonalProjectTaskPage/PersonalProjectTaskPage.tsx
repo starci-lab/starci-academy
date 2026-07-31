@@ -291,7 +291,8 @@ const readingColumn = (props: {
             titleEnd: <Chip tone="accent" text={`${item.score} điểm`} anatPart={showAnatomy ? "Chip" : undefined} />,
             body: item.hint
                 ? legacyMarkdown(item.hint, showAnatomy)
-                : <Typography size="sm" color="muted" className="italic" text="Chưa có gợi ý chấm điểm" anatPart={showAnatomy ? "Typography" : undefined} />,
+                : <Typography size="sm" color="muted"
+ isItalic text="Chưa có gợi ý chấm điểm" anatPart={showAnatomy ? "Typography" : undefined} />,
         }))
         : isSkeleton
             ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `criteria-skeleton-${index}`, title: "", body: null }))

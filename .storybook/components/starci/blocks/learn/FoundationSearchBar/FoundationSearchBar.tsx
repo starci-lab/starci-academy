@@ -124,7 +124,7 @@ const FoundationSearchBar = ({
                         size="sm"
                         color="muted"
                         isSkeleton
-                        className="shrink-0"
+                        classNames={["shrink-0"]}
                         showAnatomy={showAnatomy}
                         anatPart={showAnatomy ? "Typography" : undefined}
                     />
@@ -134,7 +134,7 @@ const FoundationSearchBar = ({
                         color="muted"
                         tabularNums
                         text={resultCountLabel(resultCount)}
-                        className="shrink-0"
+                        classNames={["shrink-0"]}
                         showAnatomy={showAnatomy}
                         anatPart={showAnatomy ? "Typography" : undefined}
                     />

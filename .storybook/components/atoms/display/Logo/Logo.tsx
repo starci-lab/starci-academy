@@ -1,19 +1,44 @@
+/** @noSkeleton renders the brand mark, which is always present and never loading. */
 import React from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/identity/Logo`. Authored in Storybook (not `src`);
  * synced to `src` later.
- *
- * ⚠️ Sửa 2026-07-26 (canon §4): trước đó `LogoProps = WithClassNames<undefined>`
- * ⇒ prop `classNames` có kiểu `undefined`, không gán được giá trị nào — bề mặt
- * API chết. Xoá interface local, khai thẳng `className`.
  */
+
+/**
+ * The two real hosts this mark sits in: the navbar (short bar, `h-8 w-auto`)
+ * and the footer (taller block, `h-10 w-auto`). Not a general size scale —
+ * a caller in a third context still has none of these fit and should get a
+ * new named value added here, not a raw height passed through `className`.
+ */
+export type LogoSize = "navbar" | "footer"
+
+/** `size` → the exact height utility each host already relies on. */
+const sizeClassName: Record<LogoSize, string> = {
+    navbar: "h-8 w-auto",
+    footer: "h-10 w-auto",
+}
 
 /** Props for the {@link Logo} block. */
 export interface LogoProps {
+    /**
+     * Which host bar this mark sits in — drives the root height (width follows,
+     * `w-auto`). Defaults to `"navbar"` (`h-8 w-auto`), matching the prior
+     * hard-coded size. Height is a `size` prop rather than a `classNames`
+     * utility — `h-8`/`h-10` are not in {@link AllowedClassName}.
+     */
+    size?: LogoSize
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -23,20 +48,22 @@ export interface LogoProps {
  * HTTP round-trip).
  *
  * Square (1:1), single fixed colour (brand pink — reads on light OR dark surface).
- * Sizing is caller-controlled: pass a height (e.g. `h-8`) and the width follows
- * (`w-auto`). Under a `flex-col` / `items-stretch` ancestor the browser still
- * stretches width regardless of ratio — such callers add `self-start` themselves.
+ * Sizing is host-controlled via {@link LogoProps.size} (`"navbar"` → `h-8`,
+ * `"footer"` → `h-10`); width follows (`w-auto`). Under a `flex-col` /
+ * `items-stretch` ancestor the browser still stretches width regardless of
+ * ratio — such callers add `self-start` themselves.
  *
- * @param props.className - sizing / placement utilities for the root svg.
+ * @param props.size - which host bar this sits in; picks the root height.
+ * @param props.className - additional sizing / placement utilities for the root svg.
  */
-const LogoBase = ({ className }: LogoProps) => {
+const LogoBase = ({ size = "navbar", className, classNames }: LogoProps) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
             width="512"
             height="512"
-            className={cn("h-8 w-auto shrink-0", className)}
+            className={cn(sizeClassName[size], "shrink-0", className, classNames)}
             role="img"
             aria-label="StarCi Academy"
         >

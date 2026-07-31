@@ -192,11 +192,11 @@ interface CommandSkeletonProps {
 const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
     <div className="overflow-hidden rounded-2xl border border-default bg-default/30">
         <div className="flex items-center justify-between border-b border-default px-3 py-2">
-            <Typography size="xs" isSkeleton className="w-10" />
+            <Typography size="xs" isSkeleton classNames={["w-1/4"]} />
         </div>
         <StackV gap="related" padding="cozy">
             {Array.from({ length: lines }, (_unused, index) => (
-                <Typography key={index} size="xs" isSkeleton className={index === lines - 1 ? "w-1/2" : "w-3/4"} />
+                <Typography key={index} size="xs" isSkeleton classNames={[index === lines - 1 ? "w-1/2" : "w-3/4"]} />
             ))}
         </StackV>
     </div>
@@ -207,8 +207,8 @@ const OsTabsSkeleton = () => (
     <StackH gap="related">
         {OS_ORDER.map((key) => (
             <StackV key={key} gap="tight" align="center">
-                <Typography size="sm" isSkeleton className="w-12" />
-                <Typography size="xs" isSkeleton className="w-12" />
+                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+                <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
             </StackV>
         ))}
     </StackH>

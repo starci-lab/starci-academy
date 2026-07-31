@@ -167,7 +167,7 @@ const Footer = ({
                                 spacing is words. `Logo` itself stays unbadged here, same as `Navbar`'s
                                 own brand-mark span (not in either block's ANNOTATE map). */}
                             <StackH gap="flush" className="w-fit self-start" anatPart={showAnatomy ? "StackH" : undefined}>
-                                <Logo className="h-10 w-auto" />
+                                <Logo size="footer" />
                                 <StackV gap="flush" className="hidden @app-md:flex" anatPart={showAnatomy ? "StackV" : undefined}>
                                     <div className="text-sm font-semibold leading-none text-foreground">StarCi</div>
                                     <div className="text-[8px] uppercase leading-none text-muted">Academy</div>

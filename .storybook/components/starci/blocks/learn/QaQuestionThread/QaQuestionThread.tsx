@@ -372,7 +372,7 @@ const QaQuestionThread = ({
                             <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
                                 <StackH gap="related" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined}>
                                     {isSkeleton ? (
-                                        <Typography size="xs" weight="medium" isSkeleton className="w-24" anatPart={showAnatomy ? "Typography" : undefined} />
+                                        <Typography size="xs" weight="medium" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
                                     ) : (
                                         <>
                                             {question.isPinned ? (
@@ -389,8 +389,8 @@ const QaQuestionThread = ({
 
                                 {isSkeleton ? (
                                     <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                                        <Typography size="sm" isSkeleton className="w-full" anatPart={showAnatomy ? "Typography" : undefined} />
-                                        <Typography size="sm" isSkeleton className="w-2/3" anatPart={showAnatomy ? "Typography" : undefined} />
+                                        <Typography size="sm" isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                                     </StackV>
                                 ) : (
                                     <MarkdownContent

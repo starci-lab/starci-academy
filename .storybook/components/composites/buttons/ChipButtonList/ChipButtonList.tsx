@@ -110,7 +110,7 @@ export const ChipButtonList = ({
                                 size="sm"
                                 isSkeleton
                                 showAnatomy={showAnatomy}
-                                className={index % 2 === 0 ? "w-2/3" : "w-1/2"}
+                                classNames={[index % 2 === 0 ? "w-2/3" : "w-1/2"]}
                             />
                         </StackH>
                     ))
@@ -120,7 +120,7 @@ export const ChipButtonList = ({
                             isSkeleton
                             showAnatomy={showAnatomy}
                             label=""
-                            className={index % 2 === 0 ? "w-40" : "w-28"}
+                            classNames={[index % 2 === 0 ? "w-1/2" : "w-1/3"]}
                         />
                     ))}
             </div>
@@ -148,7 +148,7 @@ export const ChipButtonList = ({
                         <Typography size="sm"
                             weight="medium"
                             truncate
-                            className="min-w-0 flex-1"
+                            classNames={["min-w-0", "flex-1"]}
                             anatPart={showAnatomy ? "Typography" : undefined}
                             showAnatomy={showAnatomy}
                             text={item.label}

@@ -1,26 +1,20 @@
 import { useEffect, useState } from "react"
 import { Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { ImageIcon } from "@phosphor-icons/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Image`: framed image bọc `<img>` (HeroUI v3 KHÔNG có Image nên tự
- * thân), TỰ lo skeleton lúc fetch (như HeroUI v2 Image) + fallback khi lỗi/rỗng.
+ * `Image` — framed image wrapping `<img>` (HeroUI v3 has no Image component).
+ * Manages its own load state:
+ *   - loading → skeleton overlay, image hidden until `onLoad`.
+ *   - loaded  → image shown.
+ *   - error/empty → `fallbackSrc` if given, otherwise a placeholder glyph.
  *
- * 3 trạng thái tải (atom tự quản, hybrid C — không đẩy lên consumer):
- *   • loading  → HeroUI Skeleton phủ khung (ảnh opacity-0 tới khi onLoad).
- *   • loaded   → ảnh hiện.
- *   • error/rỗng → `fallbackSrc` (nếu có) hoặc glyph ảnh trên surface — KHÔNG
- *     bao giờ để khung trắng trống.
- *
- * `isSkeleton` = ép skeleton từ NGOÀI (parent còn fetch data) — cộng dồn với
- * loading nội bộ. STRICT §4: consumer chỉ truyền `src`/`alt`/tỉ-lệ, không đụng
- * cấu trúc khung. Icon lib = `@phosphor-icons/react` (MỘT bộ duy nhất, §5.0);
- * weight theo size (§5.0a): glyph fallback luôn ≥ `size-5` nên giữ `regular`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `isSkeleton` forces the skeleton from outside (e.g. while a parent is still
+ * fetching data), in addition to the internal loading state.
  */
 
-/** Tỉ lệ khung phổ biến → aspect class. */
+/** Common frame ratios → aspect class. */
 const RATIO_CLS: Record<NonNullable<ImageBaseProps["ratio"]>, string> = {
     square: "aspect-square",
     video: "aspect-video",
@@ -29,7 +23,7 @@ const RATIO_CLS: Record<NonNullable<ImageBaseProps["ratio"]>, string> = {
     photo: "aspect-[4/3]",
 }
 
-/** Bo góc khung → radius class (khớp scale card §). */
+/** Frame corner radius → radius class. */
 const RADIUS_CLS = {
     none: "rounded-none",
     md: "rounded-lg",
@@ -39,33 +33,39 @@ const RADIUS_CLS = {
 
 /** Props for {@link ImageBase}. */
 export interface ImageBaseProps {
-    /** URL ảnh. `null`/rỗng → coi như lỗi → fallback. */
+    /** Image URL. `null`/empty is treated as an error and falls back. */
     src?: string | null
-    /** Alt text (bắt buộc cho a11y). */
+    /** Alt text (required for accessibility). */
     alt: string
-    /** Tỉ lệ khung. Bỏ trống → không ép tỉ lệ (theo className/ảnh). */
+    /** Frame aspect ratio. Omit to not force a ratio (falls back to className/image). */
     ratio?: "square" | "video" | "wide" | "portrait" | "photo"
-    /** Cách lấp khung. Default `cover`. */
+    /** How the image fills the frame. Default `cover`. */
     fit?: "cover" | "contain"
-    /** Bo góc khung. Default `lg`. */
+    /** Frame corner radius. Default `lg`. */
     radius?: keyof typeof RADIUS_CLS
-    /** Ảnh thay thế khi lỗi/rỗng. Bỏ trống → glyph ảnh (`ImageIcon`) trên surface. */
+    /** Replacement image on error/empty. Omit to show a placeholder glyph (`ImageIcon`) instead. */
     fallbackSrc?: string
-    /** Chiến lược tải native. Default `lazy` (perf cover-image); `eager` khi ảnh above-the-fold. */
+    /** Native loading strategy. Default `lazy`; use `eager` for above-the-fold images. */
     loading?: "lazy" | "eager"
-    /** Ép skeleton từ ngoài (parent còn fetch). Cộng dồn loading nội bộ. */
+    /** Forces the skeleton state from outside, in addition to internal loading. */
     isSkeleton?: boolean
-    /** `true` → tag `data-anat-part` cho BlockAnatomy panel. */
+    /** `true` → tags `data-anat-part` for the BlockAnatomy panel. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
  * The framed image atom. See file header for the load/fallback contract.
  * @param props - {@link ImageBaseProps}
  */
-const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc, loading = "lazy", isSkeleton = false, showAnatomy = false, className }: ImageBaseProps) => {
-    // Trạng thái tải nội bộ; reset về "loading" mỗi khi `src` đổi.
+const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc, loading = "lazy", isSkeleton = false, showAnatomy = false, className, classNames }: ImageBaseProps) => {
+    // Internal load state; resets to "loading" whenever `src` changes.
     const [status, setStatus] = useState<"loading" | "loaded" | "error">(src ? "loading" : "error")
     useEffect(() => {
         setStatus(src ? "loading" : "error")
@@ -82,30 +82,30 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
         RADIUS_CLS[radius],
         "w-full",
         className,
+        classNames,
     )
     const imgFit = fit === "cover" ? "object-cover" : "object-contain"
 
     return (
-        // §11a: `Frame` (this wrapper) and `Img` below are internal geometry of this atom,
-        // not a component with a story of its own to jump to — not badged (LOẠI 2b).
+        // `Frame` (this wrapper) and `Img` below are internal geometry of this
+        // atom, not badged.
         <div className={frameCls}>
             {showSkeleton ? (
-                // `Skeleton` IS a real HeroUI `Skeleton` render — badged + declared `tier: "heroui"`
-                // in the story's `annotate` (LOẠI 2a).
+                // Renders a real HeroUI `Skeleton` — badged and declared `tier: "heroui"` in the story's `annotate`.
                 <HeroSkeleton className="absolute inset-0 size-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             ) : null}
 
             {showFallbackGlyph ? (
-                // `Fallback` is a plain div holding the glyph — internal geometry, not badged (LOẠI 2b).
+                // Plain div holding the glyph — internal geometry, not badged.
                 <div className="text-muted absolute inset-0 flex items-center justify-center">
-                    {/* Glyph co theo khung (1/4), CHẶN SÀN `min-*-5` = size-5 để luôn ở nấc
-                        weight `regular` (§5.0a: dưới size-5 mới phải bold) và không teo mất hình. */}
+                    {/* Glyph scales with the frame (1/4), floored at `size-5` so
+                        weight stays `regular` and the icon never shrinks away. */}
                     <ImageIcon className="size-1/4 max-h-10 max-w-10 min-h-5 min-w-5" aria-hidden />
                     <span className="sr-only">{alt}</span>
                 </div>
             ) : (
                 <img
-                    // key theo src để onLoad/onError của ảnh cũ không rớt vào ảnh mới
+                    // Keyed by src so a stale image's onLoad/onError can't land on the new one.
                     key={showFallbackImg ? fallbackSrc : src ?? "none"}
                     src={showFallbackImg ? fallbackSrc : (src ?? undefined)}
                     alt={alt}
@@ -121,9 +121,6 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
 
 /**
  * `Image` — framed-image atom. Wraps `<img>` with a loading skeleton and a
- * fallback on error/empty — a low-level media atom; no composite currently composes it.
- *
- * §12a: root GỌI THẲNG được (`<Image …/>`); `Image` chỉ là alias giữ cho
- * call-site cũ — atom này một hình thái nên không mở thêm member.
+ * fallback on error/empty. Used directly as `<Image …/>`.
  */
 export { ImageBase as Image }

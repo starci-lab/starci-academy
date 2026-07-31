@@ -320,7 +320,7 @@ const SettingsSidebarNav = ({
                             >
                                 <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
                                     <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
-                                    <Typography size="sm" text={DESTINATION_LABEL[item.key]} className="whitespace-nowrap" anatPart={showAnatomy ? "Typography" : undefined} />
+                                    <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap anatPart={showAnatomy ? "Typography" : undefined} />
                                 </StackH>
                             </button>
                         )

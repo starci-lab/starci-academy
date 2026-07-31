@@ -39,11 +39,11 @@ export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsPro
                 variant="secondary"
                 onSelectionChange={(key) => setTab(String(key) === "code" ? "code" : "preview")}
             >
-                <Tabs.ListContainer className="w-fit bg-transparent">
-                    <Tabs.List aria-label="Preview / Code" className="w-fit bg-transparent">
+                <Tabs.ListContainer className="w-fit">
+                    <Tabs.List aria-label="Preview / Code" className="w-fit">
                         <Tabs.Tab
                             id="preview"
-                            className="gap-2 rounded-none data-[selected=true]:text-accent-soft-foreground"
+                            className="data-[selected=true]:text-accent-soft-foreground"
                         >
                             <SidebarIcon />
                             Preview
@@ -51,7 +51,7 @@ export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsPro
                         </Tabs.Tab>
                         <Tabs.Tab
                             id="code"
-                            className="gap-2 rounded-none data-[selected=true]:text-accent-soft-foreground"
+                            className="data-[selected=true]:text-accent-soft-foreground"
                         >
                             <CodeIcon />
                             Code

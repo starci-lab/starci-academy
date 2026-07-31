@@ -373,7 +373,7 @@ const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMet
                 )}
                 color="muted"
                 truncate
-                className="min-w-0"
+                classNames={["min-w-0"]}
                 showAnatomy={showAnatomy}
             />
         ) : null}
@@ -456,7 +456,7 @@ const ToggleRow = ({
                     isSkeleton
                     isSelected={false}
                     onValueChange={() => undefined}
-                    className="shrink-0"
+                    classNames={["shrink-0"]}
                     anatPart={showAnatomy ? "ChoiceSwitch" : undefined}
                 />
             </StackH>

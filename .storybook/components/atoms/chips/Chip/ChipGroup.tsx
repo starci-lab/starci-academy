@@ -1,58 +1,54 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ChipBase, type ChipTone } from "./ChipBase"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `ChipGroup`: HÀNG chip (cluster) mô tả bằng `items` DỮ LIỆU, cắt bớt khi tràn.
+ * `ChipGroup` — a row of chips described by `items` data, truncated when it overflows.
  *
- * ⭐ COMPONENT DUY NHẤT trong họ Chip CÓ DEPS: nó `import { ChipBase }` + `Tooltip` ở
- * trên. Trước 2026-07-26 hàng chip này sống ở một component RIÊNG tên `TagChips`, tự
- * gọi thẳng HeroUI Chip — nên nó trôi khỏi atom (chip trong hàng không có ô ×, không
- * theo tone, skeleton tự vẽ một cỡ khác). Giờ hàng chip dựng lại đúng `ChipBase`.
+ * The only member of the chip family with dependencies: it imports `ChipBase` and
+ * `Tooltip`. Shows up to `maxVisible` chips; the rest collapse into a single `+N` chip
+ * whose tooltip lists the full set.
  *
- * HÀNH VI giữ nguyên của `TagChips`: hiện tối đa `maxVisible` chip, phần còn lại gom
- * thành một chip `+N`; rê vào `+N` thì Tooltip liệt kê ĐỦ danh sách. Đây mới là lý do
- * cụm này tồn tại (đếm · cắt · tràn) — khác `StatusChip`, thứ chỉ khoá cứng một prop
- * nên đã bị xoá.
- *
- * Group KHÔNG đẻ nghĩa mới: chỉ layout gap + dựng lại `ChipBase`. State của TỪNG chip
- * (`icon`/`onRemove`/chấm màu) thuộc về `ChipBase` (§12f) — story của cụm KHÔNG lặp lại.
- *
- * ⚠️ ĐÃ BỎ so với `TagChips`: prop `classNames.{trigger,content}` (mở CSS nội bộ của
- * tooltip cho caller — đúng thứ §4 cấm) và `variant` truyền thẳng xuống HeroUI (giờ đi
- * qua `tone` của atom). Cả hai không phải hành vi, chỉ là lối vá từ ngoài.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The group carries no meaning of its own — just layout gap plus `ChipBase` instances.
+ * Per-chip state (`icon`/`onRemove`/dot color) belongs to `ChipBase`; the group's story
+ * doesn't repeat it.
  */
-/** Một chip trong {@link ChipGroup} — mô tả bằng DỮ LIỆU, không phải JSX (§12b). */
+/** One chip in {@link ChipGroup} — described as data, not JSX. */
 export interface ChipGroupItem {
-    /** Khoá React. Đặt tay để hai chip trùng chữ không đụng nhau. */
+    /** React key. Set explicitly so two chips with identical text don't collide. */
     key: string
-    /** Nhãn chip. */
+    /** Chip label. */
     text: ReactNode
 }
 /** Props for {@link ChipGroup} — a row of chips that collapses overflow into "+N". */
 export interface ChipGroupProps {
     /**
-     * Hàng chip mô tả bằng DỮ LIỆU (§4 STRICT — consumer KHÔNG truyền structure/JSX con).
+     * The row of chips, described as data — not structure or child JSX.
      */
     items: Array<ChipGroupItem>
     /**
-     * Bao nhiêu chip hiện ra trước khi phần còn lại gom vào `+N`. Default `3`.
+     * How many chips show before the rest collapse into `+N`. Default `3`.
      */
     maxVisible?: number
     /**
-     * Tone CHUNG cả hàng (default `default`) — hàng token phải ĐỒNG MÀU thì mới đọc ra là
-     * một tập; mỗi chip một tone là hàng cầu vồng. Vì thế `tone` ở cụm, không ở từng item
-     * (cùng lý do `size` nằm ở cụm bên `ButtonGroup`, §12d).
+     * Tone for the whole row (default `default`) — a row reads as one set only when
+     * every chip shares a color; one tone per item would look like a rainbow. So `tone`
+     * lives on the group, not on each item.
      */
     tone?: ChipTone
-    /** `true` → skeleton mirror đúng số ô lúc nghỉ (mỗi ô là một `ChipBase` tự vẽ). */
+    /** `true` → skeleton mirrors the resting-state cell count (each cell is its own `ChipBase`). */
     isSkeleton?: boolean
     showAnatomy?: boolean
-    /** Tên `data-anat-part` gắn ở GỐC hàng, cho component bọc ngoài gọi tên cụm này. */
+    /** `data-anat-part` name on the row's root, so a wrapping component can name this cluster. */
     anatPart?: string
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 export const ChipGroup = ({
     items,
@@ -62,27 +58,30 @@ export const ChipGroup = ({
     showAnatomy = false,
     anatPart,
     className,
+    classNames,
 }: ChipGroupProps) => {
-    // Nhãn deps: cây đọc từ DOM nên cụm phải GỌI TÊN cái nó dựng lại.
+    // Dependency-tree label: the tree is built from the DOM, so the group must name
+    // what it renders.
     const chipPart = showAnatomy ? "Chip" : undefined
     if (isSkeleton) {
         return (
-            <div className={cn("flex flex-wrap items-center gap-2", className)} data-anat-part={anatPart}>
-                {/* Giữ đúng footprint lúc nghỉ: `maxVisible` viên, mỗi viên tự vẽ shimmer
-                    của CHÍNH nó (§12c) — cụm không vẽ hộ, nếu không hai hình sẽ trôi khỏi nhau. */}
+            <div className={cn("flex flex-wrap items-center gap-2", className, classNames)} data-anat-part={anatPart}>
+                {/* Matches the resting footprint: `maxVisible` cells, each drawing its own
+                    shimmer — the group doesn't draw it for them, or the two shapes would
+                    drift apart. */}
                 {Array.from({ length: maxVisible }).map((_, index) => (
-                    // Shimmer không mang tone (viên xám thuần) nên KHÔNG truyền `tone` xuống —
-                    // truyền một prop không có tác dụng chỉ làm người đọc tưởng nó có.
+                    // Shimmer carries no tone (plain gray), so `tone` isn't passed down —
+                    // passing a prop with no effect would make a reader think it does something.
                     <ChipBase key={index} isSkeleton anatPart={chipPart} />
                 ))}
             </div>
         )
     }
     const visibleItems = items.slice(0, maxVisible)
-    // Chỉ > 0 mới có tràn THẬT để hiện `+N` (tránh số âm khi hàng ngắn hơn maxVisible).
+    // Only counts real overflow for `+N`; clamped to 0 so a shorter row doesn't go negative.
     const overflowCount = Math.max(0, items.length - maxVisible)
     return (
-        <div className={cn("flex flex-wrap items-center gap-2", className)} data-anat-part={anatPart}>
+        <div className={cn("flex flex-wrap items-center gap-2", className, classNames)} data-anat-part={anatPart}>
             {visibleItems.map(({ key, text }) => (
                 <ChipBase key={key} text={text} tone={tone} anatPart={chipPart} />
             ))}
@@ -90,8 +89,8 @@ export const ChipGroup = ({
                 <Tooltip
                     showAnatomy={showAnatomy}
                     label={
-                        // Tooltip liệt kê ĐỦ hàng, kể cả phần đang hiện — người đọc mở ra để
-                        // xem "tất cả là những gì", không phải "phần bị giấu là gì".
+                        // Tooltip lists the full row, including the visible part —
+                        // opening it shows "everything", not just "what's hidden".
                         <div className="flex max-h-[200px] flex-col gap-2 overflow-y-auto">
                             {items.map(({ key, text }) => (
                                 <span key={key}>{text}</span>

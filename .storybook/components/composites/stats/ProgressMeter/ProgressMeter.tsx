@@ -93,9 +93,9 @@ export const ProgressMeter = ({
             {showAnatomy ? <AnatomyOverlay label="ProgressMeter" tier="composite" href="/?path=/docs/primitives-stats-progressmeter--docs" /> : null}
             {hasTopRow ? (
                 <StackH gap="related" justify="between">
-                    <Typography size="xs" color="muted" className="min-w-0 truncate" text={label} />
+                    <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} text={label} />
                     {showValue ? (
-                        <Typography size="xs" color="muted" className="shrink-0" text={<>{percent}%</>} />
+                        <Typography size="xs" color="muted" classNames={["shrink-0"]} text={<>{percent}%</>} />
                     ) : null}
                 </StackH>
             ) : null}

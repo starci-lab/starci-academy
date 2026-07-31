@@ -137,7 +137,7 @@ const ModuleContinueBand = ({
                         label={RESUME_LABEL}
                         suffixIcon={ArrowRightIcon}
                         onPress={onResume}
-                        className="shrink-0"
+                        classNames={["shrink-0"]}
                         anatPart={showAnatomy ? "Button" : undefined}
                     />
                 ) : null}

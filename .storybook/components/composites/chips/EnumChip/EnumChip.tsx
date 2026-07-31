@@ -4,6 +4,7 @@ import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import type { ChipTone, IconComponent } from "@sb-components/atoms/chips/Chip/Chip"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -65,8 +66,19 @@ export interface EnumChipProps<E extends string> {
     value: E
     /** Map from enum value to presentation (accepts Partial — unhandled values throw). */
     map: Partial<Record<E, EnumChipEntry>>
-    /** Extra classes on the chip. */
+    /**
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     * Kept only for the two `_legacy` callers (`HostPlatformChip`, `EntityResultRow`)
+     * that still pass a free-form string; `_legacy` is off-limits to edit, so this
+     * escape stays until those callers are retired (ATOM-5 narrowing pass, 2026-07-31).
+     */
     className?: string
+    /**
+     * Extra classes on the chip. Prefer this over `className`; the string form is going
+     * away. This value is handed straight to `Chip`'s own closed `classNames` union, so
+     * an unconstrained string here would only fail one tier down.
+     */
+    classNames?: Array<AllowedClassName>
     /** When `true`, renders the skeleton placeholder (a chip-shaped pill) instead of the real chip. */
     isSkeleton?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
@@ -88,12 +100,12 @@ export interface EnumChipProps<E extends string> {
  *
  * @param props - {@link EnumChipProps}
  */
-export const EnumChip = <E extends string>({ value, map, className, isSkeleton, anatPart }: EnumChipProps<E>) => {
+export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton, anatPart }: EnumChipProps<E>) => {
     if (isSkeleton) {
         // KHÔNG còn đắp `h-6` ở đây nữa: shimmer của atom trước kia cao `h-7`, lệch 4px
         // so với hộp chip thật, nên call-site phải vá hình hộ. Atom đã sửa (2026-07-26) —
         // call-site phải vá hình của atom chính là dấu hiệu atom sai, không phải chỗ này sai.
-        return <Chip isSkeleton className={className} anatPart={anatPart} />
+        return <Chip isSkeleton className={className} classNames={classNames} anatPart={anatPart} />
     }
     const entry = map[value]
     if (!entry) {
@@ -103,6 +115,7 @@ export const EnumChip = <E extends string>({ value, map, className, isSkeleton, 
         <Chip
             tone={entry.color ?? "default"}
             className={className}
+            classNames={classNames}
             anatPart={anatPart}
             text={entry.label}
             icon={entry.icon != null ? ENUM_CHIP_ICON_MAP[entry.icon] : undefined}

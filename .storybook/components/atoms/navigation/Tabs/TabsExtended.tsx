@@ -1,39 +1,19 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Tabs as HeroTabs, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `TabsExtended`: full port of `@/components/blocks/navigation/ExtendedTabs`,
- * gộp vào namespace `Tabs.*` bên cạnh `Tabs` (2026-07-26, thầy chốt: hai
- * component cùng bọc HeroUI `Tabs` phải sống chung một namespace).
+ * `TabsExtended` — wrapper atom over HeroUI `Tabs`, for callers that build the
+ * `Tabs.*` compound tree themselves (e.g. `Toolbar`, where each tab carries
+ * chrome — accent/muted styling, responsive label hiding, size — that a
+ * `TabItem` data shape cannot carry). Use `Tabs` (`items`) instead when tabs
+ * are pure content. Same wrapper-atom shape as `Tooltip` (wraps an arbitrary
+ * trigger) / `Badge`.
  *
- * The `.extended-tabs` hug-content override lives in the app globals.css (kept in
- * `src`), so the `variant="secondary"` look renders here only when Storybook loads
- * those globals — the class name is preserved verbatim for fidelity.
- *
- * ✅ `children` Ở ĐÂY LÀ NGOẠI LỆ §12b CÓ TÊN — atom-WRAPPER (thẩm tra lại 2026-07-26).
- *
- *   Bản ghi trước gọi đây là "VI PHẠM §12b thật", lý lẽ: *`Tabs` đã chứng minh
- *   cùng bài toán chọn-1-trong-N đi được bằng `items`*. Lý lẽ đó **SAI**, vì nó chỉ
- *   nhìn `Tabs` mà không nhìn consumer. Đọc `Toolbar` (layout, consumer thật)
- *   thì mỗi `Tabs.Tab` nó dựng mang ba thứ mà `TabItem` KHÔNG chở nổi:
- *     • class theo `accent` / `muted` — hình của Toolbar, không phải của atom;
- *     • ẩn nhãn trên mobile khi có icon (`sr-only @app-sm:not-sr-only`) — hành vi
- *       responsive của Toolbar;
- *     • `size="sm"` bơm class riêng vào từng tab.
- *
- *   Ép sang `items` nghĩa là nhồi ba trục ấy vào atom, tức atom gánh ngữ nghĩa của
- *   caller — vi phạm §12b theo CHIỀU NGƯỢC LẠI, nặng hơn. Nên hai member cùng bọc
- *   HeroUI `Tabs` mà khác đường vào là ĐÚNG, không phải nợ:
- *     • `Tabs`     — DỮ LIỆU (`items`), atom tự dựng, dùng khi tab là nội dung thuần.
- *     • `TabsExtended` — WRAPPER, caller dựng cây `Tabs.*` khi cần chrome riêng.
- *   Cùng nhóm ngoại lệ với `Tooltip` (bọc trigger bất kỳ) / `Badge`.
- *
- * ⚠️ Nợ THẬT còn lại (khác cái trên): hình của `variant="secondary"` dựa vào class
- * GLOBAL `.extended-tabs` nằm ở `src/app/globals.css`, KHÔNG ở bản vẽ — sửa hình
- * phải sang `src` (§0). Cùng bệnh với `.highlight-card-sweep`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The `variant="secondary"` look depends on the `.extended-tabs` class defined
+ * in `src/app/globals.css`, not in this file — it renders correctly in
+ * Storybook only when those globals are loaded.
  */
 
 /** Props for {@link TabsExtended}. */
@@ -43,24 +23,20 @@ export interface TabsExtendedProps {
     /** Fired with the newly selected tab id. */
     onSelectionChange: (key: string) => void
     /**
-     * Tab anatomy — keep using the HeroUI compound parts inside:
-     * `Tabs.ListContainer` > `Tabs.List` > `Tabs.Tab` (+ `Tabs.Indicator`).
-     *
-     * ✅ NGOẠI LỆ §12b có tên (atom-WRAPPER) — KHÔNG phải nợ. Caller dựng cây `Tabs.*`
-     * vì mỗi tab có thể mang chrome riêng của nó (class theo accent/muted, ẩn nhãn
-     * responsive) mà một `TabItem` dữ liệu không chở nổi. Cần tab thuần nội dung thì
-     * dùng `Tabs` (`items`). Xem header file để đọc bằng chứng.
+     * Build the HeroUI compound tree directly: `Tabs.ListContainer` >
+     * `Tabs.List` > `Tabs.Tab` (+ `Tabs.Indicator`). See file header for why
+     * this atom takes `children` instead of `items`.
      */
     children: ReactNode
     /**
-     * HeroUI `Tabs` variant. `"secondary"` (default) = in-page CONTENT tabs —
+     * HeroUI `Tabs` variant. `"secondary"` (default) = in-page content tabs —
      * hugs its own label width (packs left, `.extended-tabs` override), no
-     * outer baseline (the feature wrapper owns any full-width chrome; see
-     * `Toolbar` §1). `"primary"` = page-FEATURE tabs that switch the ENTIRE
-     * panel content — HeroUI's own default rendering (segmented pill,
-     * full-width, evenly-stretched tabs), untouched by the `.extended-tabs`
-     * hug-content override. Use `"primary"` for top-level section switches
-     * (e.g. Bắt đầu/Lịch sử/Thống kê), `"secondary"` for a content filter/
+     * outer baseline (the feature wrapper owns any full-width chrome).
+     * `"primary"` = page-feature tabs that switch the entire panel content —
+     * HeroUI's own default rendering (segmented pill, full-width,
+     * evenly-stretched tabs), untouched by the `.extended-tabs` hug-content
+     * override. Use `"primary"` for top-level section switches (e.g.
+     * Start/History/Statistics), `"secondary"` for a content filter/
      * language-switcher riding alongside a reading column.
      */
     variant?: "primary" | "secondary"
@@ -74,13 +50,21 @@ export interface TabsExtendedProps {
      */
     size?: "sm" | "md"
     /**
-     * `true` → tag the root `HeroTabs` with `data-anat-part="Tabs"` so a BlockAnatomy
-     * panel can badge it (heroui tier, 2026-07-27). The `children` tree is the
-     * CALLER's own — it stays untagged here, since it isn't this atom's own render.
+     * `true` → tag the root `HeroTabs` with `data-anat-part="Tabs"` so a
+     * BlockAnatomy panel can badge it. The `children` tree is the caller's
+     * own — it stays untagged here, since it isn't this atom's own render.
      */
     showAnatomy?: boolean
-    /** Extra classes on the root `Tabs`. */
+    /**
+     * Extra classes on the root `Tabs`.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -98,6 +82,7 @@ export const TabsExtended = ({
     onSelectionChange,
     children,
     className,
+    classNames,
     variant = "secondary",
     size = "md",
     showAnatomy = false,
@@ -114,6 +99,7 @@ export const TabsExtended = ({
                 "whitespace-nowrap",
                 variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
                 className,
+                classNames,
             )}
             data-anat-part={showAnatomy ? "Tabs" : undefined}
         >

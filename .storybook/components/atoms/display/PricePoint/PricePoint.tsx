@@ -2,29 +2,24 @@ import type { ReactNode } from "react"
 import { Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { TypographySize } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — PricePoint: the tier / subscription price display
- * as ONE atom — a prominent amount + optional struck original + optional
- * billing period, on one baseline. A "price" is a semantic UNIT, so it is a single
- * component (one anatomy node), NOT three raw `<Typography>` hand-rolled at the
- * call-site.
+ * PricePoint: the tier / subscription price display as one atom — a prominent
+ * amount + optional struck original + optional billing period, on one baseline.
  *
- * NOTE — distinct from `commerce/PriceTag`: PriceTag is a PRODUCT-discount price
- * (VND/USD numbers + a −X% chip + a breakdown popover). PricePoint is a TIER price
- * (a pre-formatted amount + a billing `/period`) — different concept, own atom.
- * NO `@/components` imports.
+ * Distinct from `commerce/PriceTag`, which is a product-discount price (VND/USD
+ * numbers + a −X% chip + a breakdown popover). PricePoint takes a pre-formatted
+ * amount plus a billing `/period`.
  */
 
 /** Amount type scale — drives the main amount's size, and (via {@link SIZE_TO_TOKENS}) the original/period sizes riding along with it. */
 export type PricePointSize = "sm" | "md" | "lg"
 
 /**
- * MỘT BẢNG DUY NHẤT theo `size` cho cả ba phần — amount (Typography heading) +
- * original + period (Typography body). Trước đây `original`/`period` khoá cứng
- * `sm`/`xs` bất kể `size`, nên ở `size="lg"` (amount to bằng h2) chúng nhỏ lạc lõng
- * bên cạnh con số lớn. `periodBarH` là chiều cao thanh skeleton của `period`, đi kèm
- * để bar MIRROR đúng cỡ chữ thật của bậc đó (§12d) thay vì khoá cứng một cỡ.
+ * One table per `size` for all three parts — amount (Typography heading) +
+ * original + period (Typography body). `periodBarH` is the skeleton bar height
+ * for `period`, kept in step so the bar mirrors that size's real text height.
  */
 const SIZE_TO_TOKENS: Record<
     PricePointSize,
@@ -58,14 +53,18 @@ interface PricePointOwnProps {
     anatPart?: string
     /** `true` → tag `Amount`/`Original`/`Period` with `data-anat-part`, and forward down into the composed `Typography` calls. */
     showAnatomy?: boolean
-    /** Extra classes on the root. */
+    /** Extra classes on the root. @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
- * `amount` BẮT BUỘC khi render giá thật, KHÔNG cần khi `isSkeleton` — thanh
- * shimmer không có nội dung để đọc. Union ép luật đó ở compile-time (§12c), thay vì
- * hạ `amount` xuống optional đại trà và mất lưới an toàn.
+ * `amount` is required to render the live price, optional when `isSkeleton` —
+ * the shimmer bar has no content to read.
  */
 export type PricePointProps = PricePointOwnProps &
     (
@@ -89,16 +88,16 @@ const PricePointBase = ({
     anatPart,
     showAnatomy = false,
     className,
+    classNames,
 }: PricePointProps) => {
     const tokens = SIZE_TO_TOKENS[size]
 
     if (isSkeleton) {
-        // Leaf skeleton OWNED by this atom (hybrid C) — bars sized to MIRROR the
-        // real amount/period boxes (amount bar follows `size`; period bar follows
-        // the SAME size table as the real `period` Typography), not a shared,
-        // one-size-fits-all Skeleton registry entry.
+        // Bars are sized to mirror the real amount/period boxes: the amount bar
+        // follows `size`, and the period bar follows the same size table as the
+        // real `period` Typography, rather than a fixed one-size skeleton.
         return (
-            <div className={cn("flex flex-wrap items-baseline gap-2", className)} data-anat-part={anatPart}>
+            <div className={cn("flex flex-wrap items-baseline gap-2", className, classNames)} data-anat-part={anatPart}>
                 <HeroSkeleton
                     className={cn("w-1/3 rounded", SIZE_TO_BAR[size])}
                     data-anat-part={showAnatomy ? "Skeleton" : undefined}
@@ -113,10 +112,8 @@ const PricePointBase = ({
         )
     }
     return (
-        <div className={cn("flex flex-wrap items-baseline gap-2", className)} data-anat-part={anatPart}>
-            {/* Main amount — prominent, sized off {@link SIZE_TO_TOKENS}. Composed via
-                `Typography` (which now covers h1–h5) instead of raw HeroUI
-                `Typography`, so `showAnatomy` forwards down like `original`/`period`. */}
+        <div className={cn("flex flex-wrap items-baseline gap-2", className, classNames)} data-anat-part={anatPart}>
+            {/* Main amount — prominent, sized off {@link SIZE_TO_TOKENS}. */}
             <Typography
                 size={tokens.amount}
                 weight="semibold"
@@ -129,7 +126,7 @@ const PricePointBase = ({
                 <Typography
                     size={tokens.original}
                     color="muted"
-                    className="line-through"
+                    isStruck
                     text={original}
                     showAnatomy={showAnatomy}
                     anatPart="Typography"

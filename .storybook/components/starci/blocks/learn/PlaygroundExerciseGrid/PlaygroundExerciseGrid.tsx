@@ -154,7 +154,7 @@ const PlaygroundExerciseGrid = ({
                         <Typography size="base" weight="bold" truncate text={exercise.title} />
                     </div>
                     <div data-anat-part={showAnatomy ? "Chip" : undefined}>
-                        <Chip tone="default" icon={ListChecksIcon} text={stepCountLabel(exercise.stepCount)} className="w-fit" />
+                        <Chip tone="default" icon={ListChecksIcon} text={stepCountLabel(exercise.stepCount)} classNames={["w-fit"]} />
                     </div>
                 </StackV>
                 <div data-anat-part={showAnatomy ? "Typography" : undefined}>

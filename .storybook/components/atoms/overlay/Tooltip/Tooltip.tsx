@@ -1,31 +1,35 @@
+/** @noSkeleton renders a floating surface; the content is handed in and shimmers on its own. */
 import type { ReactNode } from "react"
-import { Tooltip as HeroTooltip } from "@heroui/react"
+import { Tooltip as HeroTooltip, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Tooltip`: the ONE constrained hover-hint atom over HeroUI Tooltip.
+ * ATOM — `Tooltip`: the constrained hover-hint atom over HeroUI Tooltip.
  *
- * Bọc HeroUI `Tooltip` TỐI ĐA (alias `HeroTooltip`) và SỞ HỮU toàn bộ chrome của
- * tooltip: inset, max-width, arrow. Consumer chỉ truyền `label` (nội dung) + trigger
- * (`children`) + `placement` — KHÔNG tự dựng panel/arrow.
+ * Wraps HeroUI `Tooltip` (aliased `HeroTooltip`) and owns all of the
+ * tooltip's chrome: inset, max-width, arrow. A caller passes only `label`
+ * (content), a trigger (`children`), and `placement` — it does not build
+ * the panel or arrow itself.
  *
- * NAMESPACE (thầy chốt 2026-07-25): atom KHÔNG export component trần — mọi thành
- * viên đi qua `Tooltip.*` (hôm nay chỉ có `Base`), khớp `Chip.*` / `Button.*`.
+ * All exports go through `Tooltip.*` (currently only `Base`).
  *
- * ⚠️ `children` GIỮ vì atom-wrapper BUỘC bọc phần tử khác — NGOẠI LỆ CÓ TÊN, atom
- * khác CẤM TUYỆT ĐỐI. Tooltip không tự dựng được trigger: nó giải thích một phần tử
- * BẤT KỲ do consumer đưa (chip · icon-button · thuật ngữ inline · ô số), và
- * react-aria phải gắn hover/focus/aria-describedby thẳng lên chính phần tử đó. Ép
- * thành `triggerLabel` sẽ khoá trigger về đúng một hình thái text ⇒ mất khả năng
- * bọc. (Ngoại lệ này chỉ gồm `Tooltip` và `Badge` — mọi atom khác dùng prop dữ liệu.)
+ * `children` is kept as a named exception. `Tooltip` cannot build its own
+ * trigger: it explains an arbitrary element the caller supplies (chip,
+ * icon button, inline term, number field), and react-aria must attach
+ * hover/focus/`aria-describedby` directly onto that element. Forcing a
+ * `triggerLabel` would lock the trigger to one text shape and lose the
+ * ability to wrap. (Only `Tooltip` and `Badge` keep `children`; every
+ * other atom uses data props.)
  *
- * STRICT §4: `label` là nhãn giải thích (ReactNode text — NỘI DUNG, được phép),
- * `children` là trigger TRẦN. `placement` giới hạn 4 phía. `isOpen`/`defaultOpen` để
- * STORY pin panel mở (soi tĩnh) — production để react-aria tự mở khi hover.
+ * `label` is the explanatory content (ReactNode text), `children` is the
+ * bare trigger. `placement` is limited to 4 sides. `isOpen`/`defaultOpen`
+ * let a story pin the panel open; in production react-aria opens it on
+ * hover.
  *
- * Overlay portal: `Tooltip.Content` render RA NGOÀI render-box (body portal) nên badge
- * on-render chỉ neo được `Trigger`; `Content`/`Arrow` vẫn hiện trong legend + Cây.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `Tooltip.Content` renders through a body portal outside this
+ * component's own render box, so an on-render anatomy badge can only
+ * anchor to `Trigger`; `Content`/`Arrow` still show in the legend and
+ * tree.
  */
 
 /** Props for {@link TooltipBase}. */
@@ -33,7 +37,8 @@ export interface TooltipBaseProps {
     /**
      * The trigger element the tooltip explains (term / chip / icon button).
      *
-     * NGOẠI LỆ children — xem doc header: atom-wrapper buộc bọc phần tử bất kỳ.
+     * Kept as a named exception — see file header: this atom must wrap an
+     * arbitrary caller-supplied element.
      */
     children: ReactNode
     /** Tooltip body — plain-language hint. */
@@ -50,8 +55,16 @@ export interface TooltipBaseProps {
     defaultOpen?: boolean
     /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Tooltip.Trigger`/`Tooltip.Content`/`Tooltip.Arrow`) so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** Extra classes on the trigger wrapper. */
+    /**
+     * Extra classes on the trigger wrapper.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -70,10 +83,11 @@ const TooltipBase = ({
     defaultOpen,
     showAnatomy = false,
     className,
+    classNames,
 }: TooltipBaseProps) => {
     return (
         <HeroTooltip delay={delay} isOpen={isOpen} defaultOpen={defaultOpen}>
-            <HeroTooltip.Trigger className={className} data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}>
+            <HeroTooltip.Trigger className={cn(className, classNames)} data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}>
                 {children}
             </HeroTooltip.Trigger>
             <HeroTooltip.Content
@@ -89,8 +103,5 @@ const TooltipBase = ({
     )
 }
 
-/**
- * `Tooltip.*` — the hover-hint ATOM namespace. `Tooltip` là atom tooltip DUY
- * NHẤT và là một trong hai atom được GIỮ `children` (wrapper bắt buộc).
- */
+/** `Tooltip.*` — the hover-hint atom namespace. One of two atoms that keep `children` (wrapper required). */
 export { TooltipBase as Tooltip }

@@ -426,7 +426,8 @@ const Confirm = ({
                             {/* Footer forwards showAnatomy so the REAL nodes (Button × 2) show up, instead of
                                 mislabeling this heroui Footer wrapper as if it were ButtonGroup itself. */}
                             <ButtonGroup
-                                className="w-full justify-end"
+                                align="end"
+                                classNames={["w-full"]}
                                 showAnatomy={showAnatomy}
                                 items={[
                                     {

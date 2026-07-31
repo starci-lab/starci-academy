@@ -11,14 +11,10 @@ import {
     Typography,
 } from "@heroui/react"
 import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — full port of
- * `@/components/blocks/form/SearchAutocomplete`. Authored in Storybook (not
- * `src`); synced to `src` later. Faithful port of the whole prop API + ComboBox
- * anatomy + class names; no `@/components` import.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `SearchAutocomplete` — suggest-as-you-type search field on HeroUI `ComboBox`.
  */
 
 /** One suggestion row in a {@link SearchAutocomplete} dropdown. */
@@ -50,34 +46,39 @@ export interface SearchAutocompleteProps {
     onInputChange: (value: string) => void
     /** Fired with the chosen suggestion's id when a row is selected. */
     onSelect: (id: string) => void
-    /** Placeholder for the empty field. Defaults to "Tìm khoá học, chủ đề...". */
+    /** Placeholder for the empty field. Defaults to "Search courses, topics…". */
     placeholder?: string
     /**
      * When true, a spinner replaces the suggestion list — use it while the parent
      * is fetching results for the current query.
      */
     isLoading?: boolean
-    /** Message shown when there are no suggestions. Defaults to "Không có gợi ý nào". */
+    /** Message shown when there are no suggestions. Defaults to "No suggestions". */
     emptyLabel?: string
     /**
      * Renders the loading mirror — a field-box skeleton matching the search
-     * field's resting shape (canon §8). The dropdown has no resting shape, so
-     * only the field is mirrored.
+     * field's resting shape. The dropdown has no resting shape, so only the
+     * field is mirrored.
      */
     isSkeleton?: boolean
-    /**
-     * Nhãn trên field (§12e — atom tự mang nhãn, không để caller tự dựng khung
-     * nhãn bên ngoài). Bỏ trống → ô "trần" như trước (không đổi hình mặc định).
-     */
+    /** Label above the field. Leave it unset and the field renders bare. */
     label?: ReactNode
-    /** Mô tả dưới nhãn (luôn hiện, khác `errorMessage`). */
+    /** Description below the label (always visible, distinct from `errorMessage`). */
     hint?: ReactNode
-    /** Dòng lỗi dưới field — set → viền lỗi + hiện dòng lỗi. */
+    /** Error line below the field — set it to show an error border and the error line. */
     errorMessage?: ReactNode
-    /** Thêm dấu `*` bắt buộc sau nhãn. */
+    /** Adds a required `*` mark after the label. */
     isRequired?: boolean
-    /** Extra classes on the root ComboBox. */
+    /**
+     * Extra classes on the root ComboBox.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel to badge on-render. */
     showAnatomy?: boolean
 }
@@ -107,6 +108,7 @@ const SearchAutocompleteBase = ({
     errorMessage,
     isRequired,
     className,
+    classNames,
     showAnatomy,
 }: SearchAutocompleteProps) => {
     const controlId = useId()
@@ -129,11 +131,11 @@ const SearchAutocompleteBase = ({
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
             id={controlId}
-            // Field-box skeleton owned by this atom (hybrid C, §12c) — mirrors only
-            // the search field's resting shape; the popover has no resting shape.
+            // Field-box skeleton owned by this atom — mirrors only the search
+            // field's resting shape; the popover has no resting shape.
             skeletonControl={
                 <HeroSkeleton
-                    className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm", className)}
+                    className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm", className, classNames)}
                     data-anat-part={showAnatomy ? "Skeleton" : undefined}
                 />
             }
@@ -141,7 +143,7 @@ const SearchAutocompleteBase = ({
             <ComboBox
                 aria-label={fieldName(label, placeholder)}
                 isInvalid={invalid}
-                className={cn("w-full @app-sm:max-w-sm", className)}
+                className={cn("w-full @app-sm:max-w-sm", className, classNames)}
                 variant="secondary"
                 allowsEmptyCollection
                 items={items}
@@ -149,8 +151,7 @@ const SearchAutocompleteBase = ({
                 onInputChange={onInputChange}
                 onSelectionChange={onSelectionChange}
             >
-                {/* Node name = the REAL heroui component rendered here (`ComboBox.InputGroup`) —
-                    NOT the shortened word "InputGroup" it used to carry. */}
+                {/* data-anat-part uses the real HeroUI component name (`ComboBox.InputGroup`). */}
                 <ComboBox.InputGroup className="relative" data-anat-part={showAnatomy ? "ComboBox.InputGroup" : undefined}>
                     <Input
                         id={controlId}
@@ -161,8 +162,7 @@ const SearchAutocompleteBase = ({
                     />
                     <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2" />
                 </ComboBox.InputGroup>
-                {/* Node name = the REAL heroui component rendered here (`ComboBox.Popover`) —
-                    NOT the shortened word "Popover" it used to carry. */}
+                {/* data-anat-part uses the real HeroUI component name (`ComboBox.Popover`). */}
                 <ComboBox.Popover data-anat-part={showAnatomy ? "ComboBox.Popover" : undefined}>
                     <ListBox
                         // empty the collection while loading so `renderEmptyState` shows

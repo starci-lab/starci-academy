@@ -215,7 +215,7 @@ const PremiumGateModal = ({
                     <Button
                         variant="primary"
                         size="lg"
-                        className="w-full"
+                        classNames={["w-full"]}
                         label="Mở khoá ngay"
                         onPress={onUpgrade}
                         anatPart={showAnatomy ? "Button" : undefined}
@@ -267,8 +267,8 @@ const PremiumGateModal = ({
                         `TrialConversionStrip` uses for its own price region. */}
                     {isSkeleton && !price ? (
                         <StackV gap="grouped">
-                            <Typography size="h4" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="xs" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="h4" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="xs" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                         </StackV>
                     ) : price?.discountedPriceVnd != null ? (
                         <StackV gap="grouped">

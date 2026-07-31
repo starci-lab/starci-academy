@@ -1,6 +1,8 @@
 import type { ReactNode } from "react"
 import { Button as HeroUIButton, Spinner, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import {
+    ALIGN_CLS,
     HERO_VARIANT,
     ICON_CLS,
     ICON_WEIGHT,
@@ -8,78 +10,85 @@ import {
     SKELETON_SQUARE,
     SKELETON_W,
     VARIANT_CLS,
+    type ButtonAlign,
     type ButtonSize,
     type ButtonVariant,
     type IconComponent,
 } from "./button-tokens"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `ButtonBase`: nút DUY NHẤT của hệ. Bọc HeroUI Button.
+ * `ButtonBase` — the one button in the system. Wraps HeroUI's `Button`.
  *
- * HAI THAY ĐỔI LỚN 2026-07-26 (thầy chốt):
- *
- * 1. **`Button.Icon` XOÁ, gộp vào đây bằng `isIconOnly`.** Nút chỉ-icon không phải
- *    một hình thái khác — nó là cùng cái nút, bỏ nhãn đi. Nuôi hai component song
- *    song nghĩa là mọi luật (variant · size · weight · skeleton) phải sửa hai chỗ.
- *
- * 2. **`icon` đổi tên thành `prefixIcon`.** Có `suffixIcon` rồi mà đầu kia vẫn tên
- *    `icon` thì đọc không ra cặp; giờ hai ô glyph gọi tên đối xứng, khớp luôn từ
- *    vựng của `Typography` (§5b).
+ * An icon-only button is not a different shape — it's the same button with the
+ * label dropped, selected via `isIconOnly` rather than a separate component.
  *
  * Rules:
- *   • STRICT §4: prop hẹp, KHÔNG mở structure. KHÔNG `children` (§12b) — nhãn đi
- *     bằng prop dữ liệu `label`.
- *   • `isIconOnly` ⇒ `prefixIcon` + `ariaLabel` BẮT BUỘC (nút không có chữ thì
- *     screen-reader câm), `label` vô nghĩa.
- *   • `isSkeleton` → shimmer CO-LOCATED (§12c): pill khi có nhãn, VUÔNG khi iconOnly.
- *   • `isPending`: react-aria KHÔNG tự vẽ spinner — atom render TAY + khoá press.
- *   • Glyph: scale + `weight` do ATOM ép theo `size` (§5.0a) — caller chọn "hình gì".
- * ─────────────────────────────────────────────────────────────────────────────
+ *   - Props stay narrow; no `children` — the label goes through the `label` prop.
+ *   - `isIconOnly` requires `prefixIcon` + `ariaLabel` (a screen reader needs a
+ *     name when there is no visible text); `label` is meaningless in that mode.
+ *   - `isSkeleton` renders a shimmer co-located with the real button: a pill when
+ *     labeled, a square when icon-only.
+ *   - `isPending`: react-aria does not draw its own spinner, so the atom renders
+ *     one itself and locks the press handler.
+ *   - Glyph scale and stroke weight are derived from `size`; the caller only picks which icon.
  */
 
-/** Props chung — TRỪ cụm `label`/`isIconOnly`/`isSkeleton`, xem {@link ButtonBaseProps}. */
+/** Props shared across all three shapes below — see {@link ButtonBaseProps} for the `label`/`isIconOnly`/`isSkeleton` union. */
 interface ButtonBaseOwnProps {
     /**
-     * Glyph DẪN ĐẦU như COMPONENT (`prefixIcon={PlusIcon}`, KHÔNG JSX). Khi
-     * `isIconOnly` thì đây là glyph DUY NHẤT. Atom ép cả scale lẫn `weight` theo `size`.
+     * Leading glyph passed as a component (`prefixIcon={PlusIcon}`, not JSX). When
+     * `isIconOnly` this is the button's only glyph. Scale and stroke weight are derived from `size`.
      */
     prefixIcon?: IconComponent
     /**
-     * Glyph ĐUÔI (sau nhãn). Cùng luật scale/weight với `prefixIcon`.
-     * ⚠️ Vô nghĩa khi `isIconOnly` — nút chỉ có một ô glyph.
+     * Trailing glyph, after the label. Same scale/weight rule as `prefixIcon`.
+     * Meaningless when `isIconOnly` — the button has only one glyph slot then.
      */
     suffixIcon?: IconComponent
     /**
-     * §5b — ARROW trượt khi hover: `prefixIcon` lùi ←, `suffixIcon` tiến →.
-     * CHỈ dùng cho mũi tên điều hướng; caret/glyph tĩnh bật cái này là gây nhiễu.
+     * Slides the glyph on hover: `prefixIcon` retreats left, `suffixIcon` advances
+     * right. Use only for navigation arrows — a static caret/glyph gains nothing from it.
      */
     iconSlide?: boolean
     /** Action intent → HeroUI variant. Default `primary`. */
     variant?: ButtonVariant
-    /** Scale nút. Default `md`. Glyph TỰ SUY theo size (caller không chỉnh). */
+    /** Button scale. Default `md`. Glyph size follows automatically — the caller does not set it. */
     size?: ButtonSize
+    /**
+     * `true` adds `shadow-lg`, for a button that floats above its background (e.g.
+     * a floating action button). HeroUI's default has no shadow — only a
+     * `transition: box-shadow` prepared for one (see `button.css`).
+     */
+    isElevated?: boolean
+    /** Where the glyph+label row sits inside the button. Default centered (HeroUI's own default). See {@link ButtonAlign}. */
+    align?: ButtonAlign
     onPress?: () => void
-    /** `true` → disable nút (forward xuống HeroUI, OR với `isPending`). */
+    /** `true` disables the button (forwarded to HeroUI, OR'd with `isPending`). */
     isDisabled?: boolean
-    /** `true` → BUSY: Spinner THAY glyph dẫn đầu + khoá press (react-aria không tự vẽ). */
+    /** `true` marks the button busy: a spinner replaces the leading glyph and the press handler locks. */
     isPending?: boolean
-    /** `true` → gắn `data-anat-part` cho part để BlockAnatomy badge. */
+    /** `true` tags the rendered part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
     /**
-     * Tên `data-anat-part` gắn ở GỐC nút. Component BỌC nó (vd `ButtonGroup`) truyền
-     * `"ButtonBase"` xuống để cây deps nhận ra "chỗ này là một ButtonBase" và cho bấm
-     * sang story của nó — cây dựng từ DOM nên không có nhãn thì không thấy.
+     * `data-anat-part` name attached at the button's root. A wrapping component
+     * (e.g. `ButtonGroup`) passes `"ButtonBase"` down so the deps tree — which is
+     * built from the DOM — can recognize this node as a `ButtonBase` and link to its story.
      */
     anatPart?: string
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
- * Ba hình thái loại trừ nhau, ép ở compile-time thay vì tin caller:
- *   • skeleton      — không cần nhãn (shimmer không có chữ).
- *   • chỉ-icon      — `prefixIcon` + `ariaLabel` BẮT BUỘC, không nhãn.
- *   • nút có nhãn   — `label` BẮT BUỘC.
+ * Three mutually exclusive shapes, enforced at compile time:
+ *   - skeleton — no label needed (a shimmer has no text).
+ *   - icon-only — `prefixIcon` + `ariaLabel` required, no label.
+ *   - labeled — `label` required.
  */
 export type ButtonBaseProps = ButtonBaseOwnProps &
     (
@@ -97,6 +106,8 @@ export const ButtonBase = ({
     ariaLabel,
     variant = "primary",
     size = "md",
+    isElevated = false,
+    align,
     onPress,
     isDisabled = false,
     isPending = false,
@@ -104,22 +115,24 @@ export const ButtonBase = ({
     showAnatomy = false,
     anatPart,
     className,
+    classNames,
 }: ButtonBaseProps) => {
     if (isSkeleton) {
-        // Shimmer CO-LOCATED (§12c) — VUÔNG khi chỉ-icon, pill khi có nhãn.
+        // Square when icon-only, pill when labeled.
         return (
             <HeroSkeleton
                 className={cn(
                     "rounded-full",
                     isIconOnly ? SKELETON_SQUARE[size] : cn(SKELETON_W[size], SKELETON_H[size]),
                     className,
+                    classNames,
                 )}
                 data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
             />
         )
     }
 
-    /** Glyph dẫn đầu — hoặc Spinner thay chỗ nó khi BUSY (không chồng 2 tín hiệu một ô). */
+    /** Leading glyph — or a spinner in its place when busy, never both at once. */
     const leading = isPending ? (
         <span aria-hidden className="inline-flex shrink-0">
             <Spinner size="sm" color="current" data-anat-part={showAnatomy ? "Spinner" : undefined} />
@@ -130,7 +143,7 @@ export const ButtonBase = ({
             className={cn(
                 "inline-flex shrink-0",
                 ICON_CLS[size],
-                // Tailwind v4: translate là property RIÊNG — phải transition-[translate], KHÔNG phải -transform.
+                // Tailwind v4 treats `translate` as its own property — needs `transition-[translate]`, not `-transform`.
                 iconSlide && "transition-[translate] group-hover:-translate-x-0.5",
             )}
         >
@@ -147,13 +160,13 @@ export const ButtonBase = ({
             onPress={onPress}
             isPending={isPending}
             isDisabled={isDisabled || isPending}
-            className={cn("group", VARIANT_CLS[variant], className)}
+            className={cn("group", VARIANT_CLS[variant], isElevated && "shadow-lg", align && ALIGN_CLS[align], className, classNames)}
             data-anat-part={anatPart ?? (showAnatomy ? "Button" : undefined)}
         >
             {leading}
             {isIconOnly ? null : <span>{label}</span>}
             {!isIconOnly && SuffixIcon ? (
-                // Glyph ĐUÔI — iconSlide: TIẾN → khi hover (nghĩa "đi tiếp").
+                // Trailing glyph — advances right on hover when iconSlide is set.
                 <span
                     aria-hidden
                     className={cn(

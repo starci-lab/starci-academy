@@ -90,7 +90,7 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
             key: "readiness-track",
             content: (
                 <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                    <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                     <ProgressBar isSkeleton showAnatomy={showAnatomy} />
                     <ProgressBar isSkeleton showAnatomy={showAnatomy} />
                 </StackV>
@@ -105,8 +105,8 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
                 <IconTile isSkeleton size="sm" anatPart={showAnatomy ? "IconTile" : undefined} />
                 <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
                     <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
-                        <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="xs" isSkeleton className="w-8 shrink-0" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" isSkeleton classNames={["w-1/4", "shrink-0"]} anatPart={showAnatomy ? "Typography" : undefined} />
                     </StackH>
                     <ProgressBar isSkeleton showAnatomy={showAnatomy} />
                 </StackV>
@@ -118,12 +118,12 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
         key: `skill-${i}`,
         content: (
             <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                <Typography size="h4" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                 <SurfaceCard padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
                     <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                        <Typography size="h3" isSkeleton className="w-16" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" isSkeleton className="w-2/3" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="xs" isSkeleton className="w-24" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="h3" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                     </StackV>
                 </SurfaceCard>
             </StackV>
@@ -180,27 +180,27 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
 
                         {/* name (h3) + role title + @handle — one unit of meaning, flush */}
                         <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="h3" isSkeleton className="w-3/4" anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="sm" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="h3" isSkeleton classNames={["w-3/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                         </StackV>
 
                         {/* short bio */}
-                        <Typography size="sm" isSkeleton className="w-2/3" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
 
                         {/* location · preferred work mode */}
                         <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
                             <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
                                 <HeroSkeleton className="size-5 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                                <Typography size="sm" isSkeleton className="w-20" anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                             </StackH>
                             <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
                         </StackH>
 
                         {/* follower / following line */}
                         <StackH gap="grouped" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="sm" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="sm" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                         </StackH>
 
                         {/* earned-badge medal strip — `AvatarGroup` already owns the overlap look */}
@@ -208,8 +208,8 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
 
                         {/* action cluster — two full-width buttons */}
                         <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Button isSkeleton className="w-full" anatPart={showAnatomy ? "Button" : undefined} />
-                            <Button isSkeleton className="w-full" anatPart={showAnatomy ? "Button" : undefined} />
+                            <Button isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Button" : undefined} />
+                            <Button isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Button" : undefined} />
                         </StackV>
 
                         {/* meta: github · linkedin · website — leading icon + text rows */}
@@ -217,7 +217,7 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
                             {META_ROWS.map((key) => (
                                 <StackH key={key} gap="tight" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
                                     <HeroSkeleton className="size-5 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                                    <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography" : undefined} />
+                                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                                 </StackH>
                             ))}
                         </StackV>
@@ -227,13 +227,13 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
                     <StackV gap="section" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
                         {/* job readiness — headline metric card + a tracked-goal row */}
                         <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="h4" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                             <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
                                 <SurfaceCard padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
                                     <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                                        <Typography size="h3" isSkeleton className="w-16" anatPart={showAnatomy ? "Typography" : undefined} />
-                                        <Typography size="sm" isSkeleton className="w-2/3" anatPart={showAnatomy ? "Typography" : undefined} />
-                                        <Typography size="xs" isSkeleton className="w-24" anatPart={showAnatomy ? "Typography" : undefined} />
+                                        <Typography size="h3" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                                        <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                                     </StackV>
                                 </SurfaceCard>
                                 <SurfaceCardList
@@ -246,7 +246,7 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
 
                         {/* courses — icon tile + title/percent + progress rows */}
                         <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="h4" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                             <SurfaceCardList
                                 items={courseItems}
                                 anatPart={showAnatomy ? "SurfaceCardList" : undefined}
@@ -256,12 +256,12 @@ export const ProfileLoadingState = ({ className, showAnatomy = false, anatPart }
 
                         {/* contributions — heatmap grid + streak line */}
                         <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                            <Typography size="h4" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="h4" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                             <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
                                 <HeroSkeleton className="h-40 w-full rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                                 <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} showAnatomy={showAnatomy}>
                                     <HeroSkeleton className="size-4 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                                    <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography" : undefined} />
+                                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                                 </StackH>
                             </StackV>
                         </StackV>

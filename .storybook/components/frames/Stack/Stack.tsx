@@ -124,7 +124,7 @@ const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal"
                 <Divider
                     key={`stack-divider-${index}`}
                     orientation={ruleOrientation}
-                    className={ruleOrientation === "vertical" ? "self-stretch" : undefined}
+                    classNames={ruleOrientation === "vertical" ? ["self-stretch"] : undefined}
                     anatPart={showAnatomy ? "Divider" : undefined}
                 />,
                 child,

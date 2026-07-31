@@ -1,10 +1,10 @@
 import React from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — a faithful, dependency-light port of
- * `src/components/blocks/media/CoverImage`, authored in Storybook (NOT `src`)
- * and synced back to `src` later. No `@/components` imports.
+ * Storybook-local port of `src/components/blocks/media/CoverImage`. Does not
+ * import from `@/components`.
  */
 
 /** Props for the {@link CoverImage} block. */
@@ -15,8 +15,16 @@ export interface CoverImageProps {
     alt: string
     /** `true` → shimmer the SAME frame (aspect-video/rounded-2xl footprint), no `<img>` mounted. */
     isSkeleton?: boolean
-    /** Extra classes on the frame. */
+    /**
+     * Extra classes on the frame.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** `true` → tag the skeleton box with `data-anat-part="Skeleton"`. */
@@ -36,24 +44,23 @@ const CoverImageBase = ({
     alt,
     isSkeleton = false,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: CoverImageProps) => {
     if (isSkeleton) {
-        // Skeleton CO-LOCATED (§12c): no wrapper — the shimmer box IS the whole
-        // root, so it doubles as both the ROOT (`anatPart`) and the leaf skeleton
-        // (`"Skeleton"`); `anatPart` wins when a parent has named this node
-        // (matches `IconTile`'s single-node skeleton branch).
+        // No wrapper: the shimmer box is both the root (`anatPart`) and the
+        // leaf skeleton; `anatPart` takes precedence when set.
         return (
             <HeroSkeleton
-                className={cn("aspect-video w-full rounded-2xl", className)}
+                className={cn("aspect-video w-full rounded-2xl", className, classNames)}
                 data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
             />
         )
     }
     return (
         <div
-            className={cn("aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary", className)}
+            className={cn("aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary", className, classNames)}
             data-anat-part={anatPart}
         >
             {src ? (

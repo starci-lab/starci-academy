@@ -99,10 +99,10 @@ const KeyValueRow = ({
             anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
         >
             <StackV gap="tight" className="min-w-0">
-                <HeroSkeleton className="h-3.5 w-20 rounded" />
-                {hint != null ? <HeroSkeleton className="h-3 w-14 rounded" /> : null}
+                <HeroSkeleton className="h-3.5 w-1/3 rounded" />
+                {hint != null ? <HeroSkeleton className="h-3 w-1/4 rounded" /> : null}
             </StackV>
-            <HeroSkeleton className="h-3.5 w-12 shrink-0 rounded" />
+            <HeroSkeleton className="h-3.5 w-1/4 shrink-0 rounded" />
         </StackH>
     ) : (
         <StackH

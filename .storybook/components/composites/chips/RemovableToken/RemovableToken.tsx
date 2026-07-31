@@ -86,7 +86,7 @@ export const RemovableToken = ({
             >
                 <StackH gap="related" className="min-w-0">
                     <HeroSkeleton className="size-4 shrink-0 rounded" />
-                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
+                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/3")} />
                 </StackH>
                 <HeroSkeleton className="h-9 w-20 shrink-0 rounded-full" />
             </div>

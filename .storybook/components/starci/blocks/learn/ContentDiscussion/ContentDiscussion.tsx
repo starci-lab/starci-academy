@@ -133,7 +133,7 @@ const ContentDiscussion = ({
                             ASSOCIATION step to read as "discussion" (not a universal symbol like
                             ✓/🔒), and the label text already carries the full fact on its own. */}
                         {isSkeleton ? (
-                            <Typography weight="medium" isSkeleton className="w-24" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography weight="medium" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
                         ) : (
                             <Typography weight="medium" text={`${label} · ${total}`} anatPart={showAnatomy ? "Typography" : undefined} />
                         )}
@@ -142,7 +142,7 @@ const ContentDiscussion = ({
                                 size="xs"
                                 color="muted"
                                 isSkeleton={isSkeleton}
-                                className={isSkeleton ? "w-48" : undefined}
+                                classNames={isSkeleton ? ["w-2/3"] : undefined}
                                 text={`${answeredCount}/${total} câu hỏi đã được trả lời, tích luỹ theo thời gian`}
                                 anatPart={showAnatomy ? "Typography" : undefined}
                             />
@@ -195,7 +195,7 @@ const ContentDiscussion = ({
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className="self-center"
+                                classNames={["self-center"]}
                                 label={isLoadingMore ? "Đang tải…" : "Xem thêm bình luận"}
                                 isDisabled={isLoadingMore}
                                 onPress={onLoadMore}

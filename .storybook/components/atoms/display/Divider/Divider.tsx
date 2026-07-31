@@ -1,5 +1,7 @@
+/** @noSkeleton renders a rule between two things — there is no value behind it to wait for. */
 import type { ReactNode } from "react"
 import { Separator as HeroSeparator, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -31,17 +33,20 @@ export interface DividerBaseProps {
     /** Optional centered label (horizontal only) → rule · label · rule. */
     label?: ReactNode
     /**
-     * Anatomy tag for THIS component itself — so a PARENT can badge it as ONE node (§11a.1).
-     *
-     * ⭐ 2026-07-27 (deep-scan): without this prop, a parent can't name it, so the parent is
-     * forced to pass `showAnatomy` down — which OPENS UP the child's insides, leaking its
-     * grandchildren out as siblings. This is the ROOT cause of that whole class of bug, not
-     * a symptom of it.
+     * Anatomy tag for this component itself, so a parent can badge it as one
+     * node. Without it, a parent would have to pass `showAnatomy` down instead,
+     * which exposes the child's own internals as siblings.
      */
     anatPart?: string
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -49,14 +54,22 @@ export interface DividerBaseProps {
  *
  * @param props - {@link DividerBaseProps}
  */
-const DividerBase = ({ orientation = "horizontal", variant = "default", label, showAnatomy = false, anatPart, className }: DividerBaseProps) => {
+const DividerBase = ({
+    orientation = "horizontal",
+    variant = "default",
+    label,
+    showAnatomy = false,
+    anatPart,
+    className,
+    classNames,
+}: DividerBaseProps) => {
     // A labelled divider (horizontal only): a rule on each side of centered text.
     if (label !== undefined && orientation === "horizontal") {
         return (
-            <div data-anat-part={anatPart} className={cn("flex w-full items-center gap-3", className)}>
+            <div data-anat-part={anatPart} className={cn("flex w-full items-center gap-3", className, classNames)}>
                 <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Separator" : undefined} />
-                {/* Caller slot (§ LOAI 3) — `label` is free-form content the caller passed in,
-                    not a part of Divider's own anatomy, so this span stays unbadged. */}
+                {/* Caller slot — `label` is free-form content the caller passed in,
+                    not part of Divider's own anatomy, so this span stays unbadged. */}
                 <span className="text-muted shrink-0 text-xs">
                     {label}
                 </span>
@@ -64,7 +77,7 @@ const DividerBase = ({ orientation = "horizontal", variant = "default", label, s
             </div>
         )
     }
-    return <HeroSeparator orientation={orientation} variant={variant} className={cn(className)} data-anat-part={anatPart ?? (showAnatomy ? "Separator" : undefined)} />
+    return <HeroSeparator orientation={orientation} variant={variant} className={cn(className, classNames)} data-anat-part={anatPart ?? (showAnatomy ? "Separator" : undefined)} />
 }
 
 /**

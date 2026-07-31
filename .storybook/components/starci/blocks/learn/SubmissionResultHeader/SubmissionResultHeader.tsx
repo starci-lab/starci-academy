@@ -88,7 +88,7 @@ const SubmissionResultHeader = ({
                 anatPart={showAnatomy ? "PageHeader" : undefined}
                 breadcrumb={
                     isSkeleton ? (
-                        <Typography size="sm" isSkeleton className="w-24" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                     ) : (
                         <LinkBack label={backLabel} onPress={onBack} anatPart={showAnatomy ? "LinkBack" : undefined} />
                     )

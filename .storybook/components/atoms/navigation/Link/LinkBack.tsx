@@ -1,37 +1,66 @@
 import React from "react"
-import { Link as HeroUILink, cn } from "@heroui/react"
+import { Link as HeroUILink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
+import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
+import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — full port of `@/components/blocks/navigation/BackLink`.
- * Authored in Storybook (not `src`); synced to `src` later.
+ * Storybook-local port of `@/components/blocks/navigation/BackLink`. Authored
+ * here, synced to `src` separately.
  *
  * The real block derives its label from next-intl (`common.goBack` /
- * `common.goBackTo`); this local copy inlines English defaults ("Back") so the
- * design renders standalone without the i18n provider.
+ * `common.goBackTo`); this copy inlines the English defaults ("Back") so it
+ * renders standalone without the i18n provider.
  *
- * 2026-07-26: gộp vào namespace `Link.*` cùng `LinkSeeMore` (§12a) — "quay lại" và
- * "xem thêm" là hai hình thái của cùng một khái niệm (text-link + mũi tên), không
- * phải hai component rời.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The atom owns its own resting shape, so the `isSkeleton` shimmer is
+ * co-located here rather than hand-rolled by callers — same icon + text row,
+ * same `text-sm` line box, so the row does not move once the real label lands.
  */
 
-/** Props for {@link LinkBack}. */
-export interface LinkBackProps {
+/** Props shared by both variants — excludes `onPress`, see {@link LinkBackProps}. */
+interface LinkBackOwnProps {
     /** Full label override; omit to compose from `target` / the generic "Back". */
     label?: string
     /** Destination name appended to the generic label — "Back to {target}" (e.g. "Back to preview"). */
     target?: string
-    /** Fired when the link is pressed — the caller owns the routing. */
-    onPress: () => void
-    /** `true` → tag the root with `data-anat-part="Link"` (heroui tier, 2026-07-27) so a BlockAnatomy panel can badge it. */
+    /**
+     * Render the leaf shimmer instead of the real link — same icon + text row, so
+     * the row does not move once the label resolves. Width is the only axis left
+     * to the caller (ATOM-4): only the atom knows its own line box / icon box.
+     */
+    isSkeleton?: boolean
+    /**
+     * Shimmer width for the label bar, as a fraction of the row — never a fixed
+     * length, since the real label wraps/reflows with whatever box holds it.
+     * Defaults to `"w-1/4"`, matching the short generic "Back" most callers show
+     * before `target` is known.
+     */
+    skeletonWidth?: SkeletonWidth
+    /** `true` → tag the root with `data-anat-part="Link"` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
     /** Anatomy tag override — a composite forwards its OWN atom name here (e.g. `"LinkBack"`) so the deps tree can jump to this atom's own story instead of the underlying HeroUI element. */
     anatPart?: string
-    /** Extra classes on the link. */
+    /**
+     * Extra classes on the link.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
+
+/**
+ * `onPress` is required when rendering the real link, not needed when
+ * `isSkeleton` — the shimmer has nowhere to navigate yet.
+ */
+export type LinkBackProps = LinkBackOwnProps &
+    (
+        | { isSkeleton: true; onPress?: () => void }
+        | { isSkeleton?: false; onPress: () => void }
+    )
 
 /**
  * The single back affordance of a leaf / sub-view page ("← Back",
@@ -42,7 +71,34 @@ export interface LinkBackProps {
  *
  * @param props - {@link LinkBackProps}
  */
-export const LinkBack = ({ label, target, onPress, showAnatomy = false, anatPart, className }: LinkBackProps) => {
+export const LinkBack = ({
+    label,
+    target,
+    onPress,
+    isSkeleton = false,
+    skeletonWidth,
+    showAnatomy = false,
+    anatPart,
+    className,
+    classNames,
+}: LinkBackProps) => {
+    if (isSkeleton) {
+        // Same `flex items-center gap-2` row as the real render; icon box
+        // matches `size-3.5`, and the label bar rides `SKELETON_TEXT_BAR_SM`
+        // (14px bar in the 20px `text-sm` line box) so the row's height does
+        // not change when the real label lands. No `data-anat-part="Link"`
+        // here since nothing HeroUI-Link-shaped renders in this branch.
+        return (
+            <div className={cn("flex w-fit items-center gap-2", className, classNames)} data-anat-part={anatPart}>
+                <HeroSkeleton className="size-3.5 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton
+                    className={cn(SKELETON_TEXT_BAR_SM, skeletonWidth ?? "w-1/4")}
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                />
+            </div>
+        )
+    }
+
     const text = label ?? (target ? `Back to ${target}` : "Back")
 
     return (
@@ -52,13 +108,15 @@ export const LinkBack = ({ label, target, onPress, showAnatomy = false, anatPart
             className={cn(
                 "group flex w-fit cursor-pointer items-center gap-2 text-sm text-muted no-underline transition-colors hover:text-foreground",
                 className,
+                classNames,
             )}
         >
             {/*
-              Glyph Phosphor ở `size-3.5` cho khớp `text-sm`, nhỏ hơn `size-5` nên
-              phải `weight="bold"` bù nét (§5.0a). Tailwind v4: `translate` là
-              property RIÊNG → transition phải `[translate]`, `transition-transform`
-              không ăn (mũi tên nhảy giật thay vì trượt). Cùng khuôn `Breadcrumbs`.
+              Icon sized `size-3.5` to match `text-sm`; smaller than `size-5`
+              so `weight="bold"` compensates the stroke. Tailwind v4 treats
+              `translate` as its own property, so the transition must target
+              `[translate]` — `transition-transform` doesn't animate it (the
+              arrow would jump instead of sliding).
             */}
             <ArrowLeftIcon
                 aria-hidden

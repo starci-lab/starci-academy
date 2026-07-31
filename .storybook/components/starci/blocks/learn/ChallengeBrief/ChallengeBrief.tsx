@@ -158,7 +158,7 @@ const markdownBody = (body: string, showAnatomy: boolean): ReactNode => (
 const skeletonListRows = (count: number, keyPrefix: string): Array<SurfaceCardListItem> =>
     Array.from({ length: count }, (_unused, index) => ({
         key: `${keyPrefix}-${index}`,
-        content: <Typography size="sm" isSkeleton className="w-3/4" />,
+        content: <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
     }))
 
 /**
@@ -306,7 +306,7 @@ const ChallengeBrief = ({
                     showAnatomy={showAnatomy}
                 >
                     {isSkeleton
-                        ? <Typography size="sm" isSkeleton className="w-3/4" />
+                        ? <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
                         : markdownBody(trimmedHint, showAnatomy)}
                 </SurfaceCard>
             ) : null}

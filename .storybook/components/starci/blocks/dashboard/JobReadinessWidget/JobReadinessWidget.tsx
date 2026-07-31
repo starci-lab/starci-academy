@@ -166,11 +166,11 @@ const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentPr
         {pillarMeter("Phỏng vấn thử", track.interviewScore, isSkeleton, showAnatomy)}
         {pillarMeter("CV", track.cvScore, isSkeleton, showAnatomy)}
         {isSkeleton ? (
-            <Button isSkeleton className="self-start" />
+            <Button isSkeleton classNames={["self-start"]} />
         ) : track.nextAction ? (
             <Button
                 variant="primary"
-                className="self-start"
+                classNames={["self-start"]}
                 label={track.nextAction.label}
                 onPress={track.nextAction.onPress}
                 anatPart={showAnatomy ? "Button" : undefined}

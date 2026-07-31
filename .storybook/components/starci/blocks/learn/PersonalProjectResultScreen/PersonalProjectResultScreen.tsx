@@ -155,7 +155,7 @@ const MilestoneUpNextCard = ({
                 suffixIcon={ArrowRightIcon}
                 iconSlide
                 onPress={onGoToNextTask}
-                className="w-fit shrink-0"
+                classNames={["w-fit", "shrink-0"]}
                 anatPart={showAnatomy ? "Button" : undefined}
             />
         </StackH>

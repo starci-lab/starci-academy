@@ -2,6 +2,7 @@ import React from "react"
 import { BookOpenIcon, FlagIcon, PuzzlePieceIcon, TrophyIcon } from "@phosphor-icons/react"
 import { ButtonRadioGroup } from "@sb-components/atoms/buttons/Button/ButtonRadioGroup"
 import { Typography, type TypographyIcon } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -85,7 +86,15 @@ export interface LeaderboardCategoryNavProps {
     onSelect: (key: LeaderboardCategoryKey) => void
     /** Accessible name for the row, localized by the caller (blocks carry no i18n). */
     ariaLabel: string
+    /**
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     * Kept only for `LeaderboardPage`'s `@app-lg:hidden`: a responsive visibility
+     * toggle, not a positioning class, so it falls outside `AllowedClassName`
+     * (ATOM-5 narrowing pass, 2026-07-31) and could not be converted.
+     */
     className?: string
+    /** Extra classes on the row. Prefer this over `className`; the string form is going away. */
+    classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
@@ -105,6 +114,7 @@ const LeaderboardCategoryNav = ({
     onSelect,
     ariaLabel,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: LeaderboardCategoryNavProps) => (
@@ -115,6 +125,7 @@ const LeaderboardCategoryNav = ({
                 value={selected}
                 onChange={onSelect}
                 className={className}
+                classNames={classNames}
                 showAnatomy={showAnatomy}
                 items={items.map((item) => ({
                     value: item.key,

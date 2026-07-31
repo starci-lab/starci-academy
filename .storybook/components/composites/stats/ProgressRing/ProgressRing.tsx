@@ -107,7 +107,8 @@ export const ProgressRing = ({
             </div>
             {/* Optional caption — small + muted, distinct from the centered value */}
             {caption ? (
-                <Typography size="xs" color="muted" className="text-center" text={caption} />
+                <Typography size="xs" color="muted"
+ align="center" text={caption} />
             ) : null}
         </StackV>
     )

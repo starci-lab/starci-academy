@@ -288,7 +288,7 @@ const LessonVideoModal = ({
                                     size="sm"
                                     color="muted"
                                     isSkeleton
-                                    className="w-24"
+                                    classNames={["w-1/3"]}
                                     anatPart={showAnatomy ? "Typography" : undefined}
                                 />
                             ) : (
@@ -305,7 +305,7 @@ const LessonVideoModal = ({
                 <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined}>
                     <PlayerGap showAnatomy={showAnatomy} />
                     {isLoading ? (
-                        <Typography size="sm" isSkeleton className="w-48" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-3/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
                     ) : (
                         <Typography
                             size="sm"

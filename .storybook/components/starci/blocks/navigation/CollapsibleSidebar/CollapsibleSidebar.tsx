@@ -201,7 +201,6 @@ export const CollapsibleSidebar = ({
                             isIconOnly
                             variant="ghost"
                             size="sm"
-                            className="rounded-full"
                             ariaLabel={collapsed ? expandLabel : collapseLabel}
                             prefixIcon={SidebarSimpleIcon}
                             onPress={toggle}

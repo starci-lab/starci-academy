@@ -168,7 +168,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                     size="sm"
                     weight="medium"
                     isSkeleton={isSkeleton}
-                    className={isSkeleton ? "w-16" : undefined}
+                    classNames={isSkeleton ? ["w-1/4"] : undefined}
                     text={attempt != null ? `Lần ${attempt.attemptNumber}` : undefined}
                     anatPart={showAnatomy ? "Typography (attempt label)" : undefined}
                 />
@@ -185,7 +185,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                     size="sm"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    className={isSkeleton ? "w-2/3" : undefined}
+                    classNames={isSkeleton ? ["w-2/3"] : undefined}
                     text={attempt?.shortFeedback ?? undefined}
                     anatPart={showAnatomy ? "Typography (feedback)" : undefined}
                 />

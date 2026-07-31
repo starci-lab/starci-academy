@@ -13,6 +13,7 @@ import {
     UserPlusIcon,
 } from "@phosphor-icons/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
+import type { AvatarRing } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -168,16 +169,15 @@ export interface ProfileHeroProps {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Ring class for a ranked avatar — top-3 gets the strongest (warning-toned)
- * frame, any other rank a quieter accent frame, no rank at all → no ring.
- * A fact about standing, not decoration chosen for its own sake (file header,
- * judgement call 2).
+ * Ring tone for a ranked avatar — top-3 gets the strongest (warning) frame,
+ * any other rank a quieter accent frame, no rank at all → no ring. A fact
+ * about standing, not decoration chosen for its own sake (file header,
+ * judgement call 2). The atom (`Avatar`'s `ring` prop, added 2026-07-31) now
+ * owns the frame's shape; this only picks the tone.
  */
-const rankRingClassName = (rank: number | undefined): string | undefined => {
+const rankRingTone = (rank: number | undefined): AvatarRing | undefined => {
     if (rank == null) return undefined
-    return rank <= 3
-        ? "rounded-full ring-2 ring-warning ring-offset-2 ring-offset-background"
-        : "rounded-full ring-2 ring-accent ring-offset-2 ring-offset-background"
+    return rank <= 3 ? "warning" : "accent"
 }
 
 interface ProfileRankAvatarProps {
@@ -198,7 +198,7 @@ const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false, showAnat
                 size="lg"
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
-                className={isSkeleton ? undefined : rankRingClassName(rank)}
+                ring={isSkeleton ? undefined : rankRingTone(rank)}
             />
         </div>
         {isSkeleton || rank != null ? (
@@ -513,7 +513,7 @@ const ProfileHero = ({
 
                     <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
                         <Button
-                            className="flex-1"
+                            classNames={["flex-1"]}
                             variant={action.variant}
                             label={action.label}
                             prefixIcon={action.prefixIcon}

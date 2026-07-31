@@ -2,15 +2,9 @@ import React from "react"
 import { Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/identity/UserCell`. Authored in Storybook (not `src`);
- * synced to `src` later. Composes the shared {@link Avatar} atom (`Avatar`)
- * instead of the retired `UserAvatar` port — that port's DiceBear + broken-image
- * fallback chain merged into `Avatar` on 2026-07-26 (xem header của
- * `AvatarBase.tsx`), nên compose thẳng `Avatar` chứ không quay lại `UserAvatar`.
- */
+/** Ported from `@/components/blocks/identity/UserCell`. */
 
 /** Props for {@link UserCell}. */
 export interface UserCellProps {
@@ -27,19 +21,26 @@ export interface UserCellProps {
     /** Optional right-aligned slot, e.g. a follow button or status chip. */
     trailing?: React.ReactNode
     /**
-     * `true` khi hàng này là của chính người đang xem — đổi tone tên sang accent để
-     * mắt tự nhận ra "đây là mình" giữa danh sách (vd bảng xếp hạng, thread bình
-     * luận). Prop NGỮ NGHĨA — atom tự chọn class, caller không truyền chuỗi thô (§4).
+     * `true` when this row belongs to the viewer — tints the name accent so it
+     * stands out in a list (e.g. a leaderboard or comment thread).
      */
     isOwnRow?: boolean
+    /**
+     * Placement utilities (e.g. `mb-4`).
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** When on, emit `data-anat-part` on this cell's own direct sub-parts (avatar · name · handle · trailing) so a `BlockAnatomy` panel can badge them. */
     showAnatomy?: boolean
     /**
-     * Render the leaf skeleton (shimmer) instead of the cell. Atom này là **BẢN GỐC
-     * DUY NHẤT** của hình đó (§12c — chủ của HÌNH là chủ của SKELETON): avatar
-     * shimmer uỷ quyền thẳng cho `Avatar isSkeleton size={size}` nên luôn khớp
-     * cỡ hàng thật, không khoá cứng một size cho mọi row.
+     * Render the leaf skeleton (shimmer) instead of the cell. The avatar shimmer
+     * delegates to `Avatar isSkeleton size={size}`, so it always matches this
+     * row's size rather than a fixed size for every row.
      */
     isSkeleton?: boolean
 }
@@ -63,6 +64,7 @@ const UserCellBase = ({
     size = "sm",
     trailing,
     className,
+    classNames,
     isOwnRow = false,
     showAnatomy = false,
     isSkeleton = false,
@@ -70,12 +72,11 @@ const UserCellBase = ({
     const name = displayName ?? username
 
     if (isSkeleton) {
-        // Skeleton lá do CHÍNH atom này sở hữu (§12c) — avatar uỷ quyền cho
-        // `Avatar isSkeleton size={size}` (chủ hình = chủ skeleton, cỡ luôn
-        // khớp hàng thật) + name bar (h-3 w-24 my-1) + handle bar tuỳ chọn
-        // (h-3 w-16 my-0), gate theo `handle` y như nhánh sống gate dòng đó.
+        // Avatar delegates to `Avatar isSkeleton size={size}` so it matches this
+        // row's size, plus a name bar and an optional handle bar gated on
+        // `handle`, the same as the live branch below.
         return (
-            <div className={cn("flex min-w-0 items-center gap-2", className)}>
+            <div className={cn("flex min-w-0 items-center gap-2", className, classNames)}>
                 <Avatar isSkeleton size={size} showAnatomy={showAnatomy} />
                 <div className="flex min-w-0 flex-col gap-0">
                     <HeroSkeleton
@@ -94,7 +95,7 @@ const UserCellBase = ({
     }
 
     return (
-        <div className={cn("flex min-w-0 items-center gap-2", className)}>
+        <div className={cn("flex min-w-0 items-center gap-2", className, classNames)}>
             <Avatar
                 name={username}
                 src={avatar ?? undefined}
@@ -109,7 +110,6 @@ const UserCellBase = ({
                     truncate
                     showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "Typography" : undefined}
-                    className="leading-5"
                     text={name}
                 />
                 {handle ? (
@@ -118,14 +118,13 @@ const UserCellBase = ({
                         truncate
                         showAnatomy={showAnatomy}
                         anatPart={showAnatomy ? "Typography" : undefined}
-                        className="leading-4"
                         text={handle}
                     />
                 ) : null}
             </div>
             {trailing ? (
-                // Caller slot (§ LOAI 3) — `trailing` is free content the caller passed in,
-                // not a fixed part of UserCell's own anatomy, so it stays unbadged.
+                // `trailing` is free content the caller passed in, not part of
+                // UserCell's own anatomy, so it stays unbadged.
                 <div className="ml-auto shrink-0">
                     {trailing}
                 </div>

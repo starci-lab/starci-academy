@@ -1,5 +1,6 @@
 import React from "react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -56,8 +57,14 @@ export const DIFFICULTY_COLOR: Record<Difficulty, string> = {
 export interface VariantChipDifficultyProps {
     /** Difficulty tier — decides BOTH the label AND the dot color. The one axis. */
     difficulty: Difficulty
-    /** Extra classes on the wrapper. */
-    className?: string
+    /**
+     * Extra classes on the wrapper. Narrowed from `string` to a closed union on
+     * 2026-07-31 (ATOM-5): this value is handed straight to `Chip`'s own closed
+     * `classNames` union, so an unconstrained string here would only fail one tier
+     * down. No caller passed `className` at the time of narrowing, so `className`
+     * itself is cut, not kept alongside as a deprecated escape.
+     */
+    classNames?: Array<AllowedClassName>
     /** `true` → shimmer bar mirroring the exact dot+label shape (the atom draws it itself). */
     isSkeleton?: boolean
     /** Dev/spec: overlay anatomy labels on this chip. */
@@ -85,7 +92,7 @@ const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() 
  */
 const VariantChipDifficulty = ({
     difficulty,
-    className,
+    classNames,
     isSkeleton,
     showAnatomy = false,
     anatPart,
@@ -105,14 +112,14 @@ const VariantChipDifficulty = ({
         <Chip
             isSkeleton
             dotClassName={DIFFICULTY_COLOR[difficulty]}
-            className={className}
+            classNames={classNames}
             anatPart={chipPart}
         />
     ) : (
         <Chip
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             text={capitalize(difficulty)}
-            className={className}
+            classNames={classNames}
             anatPart={chipPart}
         />
     )

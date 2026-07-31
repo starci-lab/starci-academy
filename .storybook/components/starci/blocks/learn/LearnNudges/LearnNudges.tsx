@@ -101,7 +101,7 @@ const LearnNudgesBase = ({
                         <Typography
                             size="sm"
                             isSkeleton
-                            className="w-2/3"
+                            classNames={["w-2/3"]}
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     ),

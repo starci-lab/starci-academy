@@ -2,23 +2,16 @@ import React from "react"
 import { cn } from "@heroui/react"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `ReactionPicker`: a row of image buttons, each scaling up and lifting
- * with its name floating above on hover, popping in with a slight stagger when
+ * `ReactionPicker` — a row of image buttons, each scaling up and lifting with
+ * its name floating above on hover, and popping in with a slight stagger when
  * the row first appears (Facebook-style reaction picker).
  *
- * ⭐⭐ EXTRACTED 2026-07-28 (thầy — a block had written this exact animation
- * CSS itself: `animate-[reactionPop_…]`, `group/fbreact`,
- * `group-hover/fbreact:scale-[1.45]`, `text-[10px]`… CSS phức tạp chỉ được ở
- * atom/frame, không phải composite/block/screen). This atom owns ALL of that
- * CSS; a caller only supplies plain data (`items`, `activeKey`, `onSelect`).
- * It knows NOTHING about what the images mean — no "reaction" enum, no
- * "lesson" — genuinely reusable for any small labeled-icon picker with this
- * exact micro-interaction.
+ * Owns all of the interaction CSS; callers only supply data (`items`,
+ * `activeKey`, `onSelect`) — it has no notion of what the images represent,
+ * so it is reusable for any small labeled-icon picker with this interaction.
  *
- * `reactionPop` is a real `@keyframes` in `src/app/globals.css` (Storybook's
- * `preview.tsx` imports the same file), not invented here.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `reactionPop` is a `@keyframes` defined in `src/app/globals.css` (Storybook's
+ * `preview.tsx` imports the same file).
  */
 
 /** One pickable item in a {@link ReactionPicker} row. */

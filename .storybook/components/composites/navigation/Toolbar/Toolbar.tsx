@@ -125,7 +125,7 @@ const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
  * Selected-state TEXT color only (accent tab group) — the underline itself now
  * comes from `<Tabs.Indicator/>` (native HeroUI `.tabs--secondary` accent bar).
  */
-const TAB_CLASS_ACCENT = "rounded-none data-[selected=true]:text-accent-soft-foreground"
+const TAB_CLASS_ACCENT = "data-[selected=true]:text-accent-soft-foreground"
 /**
  * Selected-state chrome — NEUTRAL foreground underline (secondary toggle
  * group, no accent). Kept on the MANUAL `border-b-2` technique because
@@ -134,7 +134,7 @@ const TAB_CLASS_ACCENT = "rounded-none data-[selected=true]:text-accent-soft-for
  * suppressed for this path (see below).
  */
 const TAB_CLASS_NEUTRAL =
-    "rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-foreground data-[selected=true]:font-medium data-[selected=true]:text-foreground"
+    "data-[selected=true]:border-b-2 data-[selected=true]:border-foreground data-[selected=true]:font-medium data-[selected=true]:text-foreground"
 /**
  * The toolbar row: `leftTabs` pinned left (+ an optional `leftEnd` action cluster
  * beside it), optional `rightTabs` pinned right, a `gap-3` gutter between them.
@@ -177,7 +177,6 @@ const ToolbarBase = ({
                             className={cn(
                                 variant === "secondary" && (accent ? TAB_CLASS_ACCENT : TAB_CLASS_NEUTRAL),
                                 size === "sm" && TAB_SIZE_SM,
-                                item.muted && "text-muted",
                             )}
                         >
                             <StackH gap="related">

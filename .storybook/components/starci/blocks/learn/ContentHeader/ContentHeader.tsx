@@ -162,7 +162,7 @@ const ContentHeader = ({
                                 />
                             ) : null}
                             {isSkeleton ? (
-                                <Typography size="xs" color="muted" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                             ) : (
                                 <>
                                     {minutesRead != null ? (

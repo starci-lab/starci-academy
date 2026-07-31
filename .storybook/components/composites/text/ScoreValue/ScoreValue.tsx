@@ -51,7 +51,7 @@ export const ScoreValue = ({ points, unit = "điểm", isSkeleton = false, anatP
         weight="medium"
         tabularNums
         isSkeleton={isSkeleton}
-        className={isSkeleton ? "w-10" : undefined}
+        classNames={isSkeleton ? ["w-1/4"] : undefined}
         text={`${points} ${unit}`}
         anatPart={anatPart}
     />

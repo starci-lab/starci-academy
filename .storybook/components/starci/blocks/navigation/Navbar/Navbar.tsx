@@ -389,19 +389,23 @@ const Navbar = ({
                         }}
                         className="inline-flex cursor-pointer items-center"
                     >
-                        <Logo className="h-8 w-auto" />
+                        <Logo />
                     </span>
-                    {/* desktop-only route pills; the mobile drawer renders the same `navItems` as full rows */}
-                    <ButtonRadioGroup
-                        items={navItems.map((item) => ({
-                            value: item.id,
-                            content: <Typography size="sm" text={item.label} anatPart={showAnatomy ? "Typography" : undefined} />,
-                        }))}
-                        value={activeNavId}
-                        onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
-                        ariaLabel="Điều hướng chính"
-                        className="hidden @app-md:flex"
-                    />
+                    {/* desktop-only route pills; the mobile drawer renders the same `navItems` as full rows.
+                        `hidden @app-md:flex` is the WRAPPER's call (showing/hiding at a breakpoint is the
+                        surrounding frame's decision, not the atom's — ATOM-5), so it sits on this span,
+                        not on `ButtonRadioGroup`'s own `className`. */}
+                    <span className="hidden @app-md:flex">
+                        <ButtonRadioGroup
+                            items={navItems.map((item) => ({
+                                value: item.id,
+                                content: <Typography size="sm" text={item.label} anatPart={showAnatomy ? "Typography" : undefined} />,
+                            }))}
+                            value={activeNavId}
+                            onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
+                            ariaLabel="Điều hướng chính"
+                        />
+                    </span>
                 </StackH>
 
                 <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
@@ -413,15 +417,18 @@ const Navbar = ({
                         onPress={onSearchPress}
                         className="hidden w-[260px] @app-md:flex"
                     />
-                    <Button
-                        isIconOnly
-                        variant="ghost"
-                        prefixIcon={MagnifyingGlassIcon}
-                        ariaLabel={searchPlaceholder}
-                        onPress={onSearchPress}
-                        className="@app-md:hidden"
-                        anatPart={showAnatomy ? "Button" : undefined}
-                    />
+                    {/* `@app-md:hidden` moved off the atom onto this wrapper — a breakpoint
+                        show/hide is the surrounding frame's decision, not the atom's (ATOM-5). */}
+                    <span className="@app-md:hidden">
+                        <Button
+                            isIconOnly
+                            variant="ghost"
+                            prefixIcon={MagnifyingGlassIcon}
+                            ariaLabel={searchPlaceholder}
+                            onPress={onSearchPress}
+                            anatPart={showAnatomy ? "Button" : undefined}
+                        />
+                    </span>
 
                     {/* desktop: language + theme inline; the mobile drawer carries them instead */}
                     <StackH gap="related" className="hidden @app-md:flex" anatPart={showAnatomy ? "StackH" : undefined}>
@@ -523,7 +530,7 @@ const Navbar = ({
                                     <Button
                                         variant="ghost"
                                         size="sm"
-                                        className="w-full"
+                                        classNames={["w-full"]}
                                         label="Xem tất cả"
                                         onPress={notifications.onSeeAll}
                                         anatPart={showAnatomy ? "Button" : undefined}
@@ -599,16 +606,18 @@ const Navbar = ({
                         </Dropdown.Popover>
                     </Dropdown>
 
-                    {/* mobile: expand icon → the navigation drawer */}
-                    <Button
-                        isIconOnly
-                        variant="ghost"
-                        prefixIcon={SidebarSimpleIcon}
-                        ariaLabel="Mở menu di động"
-                        onPress={() => onMobileDrawerOpenChange(true)}
-                        className="@app-md:hidden"
-                        anatPart={showAnatomy ? "Button" : undefined}
-                    />
+                    {/* mobile: expand icon → the navigation drawer. `@app-md:hidden` moved off the
+                        atom onto this wrapper (ATOM-5 — breakpoint visibility is the frame's call). */}
+                    <span className="@app-md:hidden">
+                        <Button
+                            isIconOnly
+                            variant="ghost"
+                            prefixIcon={SidebarSimpleIcon}
+                            ariaLabel="Mở menu di động"
+                            onPress={() => onMobileDrawerOpenChange(true)}
+                            anatPart={showAnatomy ? "Button" : undefined}
+                        />
+                    </span>
                 </StackH>
             </StackH>
 
@@ -628,7 +637,8 @@ const Navbar = ({
                             <Button
                                 key={item.id}
                                 variant={item.isActive ? "secondary" : "ghost"}
-                                className="w-full justify-start"
+                                align="start"
+                                classNames={["w-full"]}
                                 label={item.label}
                                 onPress={() => {
                                     item.onPress()

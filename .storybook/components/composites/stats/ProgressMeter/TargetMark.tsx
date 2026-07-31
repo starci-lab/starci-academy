@@ -45,6 +45,13 @@ export interface ProgressMeterTargetMarkProps {
  * The label sits DIRECTLY on the tick, no gap (thầy 2026-07-30: "offset chi ông?
  * không offset") — label and tick are ONE mark, so nothing should separate them.
  *
+ * ⭐ 2026-07-31 — the "tick + floating label above it" shape is ONE composite
+ * mark, so the composite owns the pinning of the label to the tick. The
+ * pinning (`absolute bottom-full left-1/2 -translate-x-1/2`) now lives on a
+ * plain wrapper `div` this composite controls, not on `Typography` — an atom
+ * owns how it looks, never where it sits. `Typography` renders with no
+ * positioning classes at all.
+ *
  * @param props - {@link ProgressMeterTargetMarkProps}
  */
 export const ProgressMeterTargetMark = ({ percent, label, className }: ProgressMeterTargetMarkProps) => (
@@ -54,11 +61,13 @@ export const ProgressMeterTargetMark = ({ percent, label, className }: ProgressM
     >
         <div className="h-1 w-0.5 rounded-none bg-muted" />
         {label === undefined ? null : (
-            <Typography size="xs"
-                color="muted"
-                className="absolute bottom-full left-1/2 -translate-x-1/2 whitespace-nowrap"
-                text={label}
-            />
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2">
+                <Typography size="xs"
+                    color="muted"
+                    noWrap
+                    text={label}
+                />
+            </div>
         )}
     </div>
 )

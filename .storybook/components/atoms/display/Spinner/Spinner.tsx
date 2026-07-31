@@ -1,17 +1,9 @@
 import { Spinner as HeroSpinner, cn } from "@heroui/react"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Spinner`: the ONE constrained spinner atom over HeroUI Spinner.
+ * @noSkeleton the spinner IS the loading indicator — a shimmer standing in for one is circular.
  *
- * Chỉ-báo BUSY (một glyph xoay), phân biệt bằng PROP (leaf = composition):
- *   • mặc định             → `<Spinner />`
- *   • size                  → `<Spinner size="lg" />` (sm · md · lg · xl)
- *   • tone                  → `<Spinner tone="current" />` (theo màu chữ container)
- *
- * KHÔNG có `isSkeleton`: spinner CHÍNH LÀ chỉ-báo tải — skeleton vô nghĩa ở đây.
- * `label` = tên a11y (aria-label); atom tự ép size/tone (§4).
- * ─────────────────────────────────────────────────────────────────────────────
+ * The house spinner over HeroUI's. Size and tone are props, not separate components.
  */
 
 /** Spinner size preset. */
@@ -26,15 +18,16 @@ export interface SpinnerBaseProps {
     size?: SpinnerSize
     /** Tone. Default `accent`; `current` follows the container's text colour. */
     tone?: SpinnerTone
-    /** Accessible name (announced by screen readers). Default `"Đang tải"`. */
+    /** Accessible name, announced by screen readers. Default `"Loading"`. */
     label?: string
-    /** `true` → tag the spinner with `data-anat-part` so a BlockAnatomy panel can badge it. */
+    /** Tags the spinner with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** Placement within the parent. */
     className?: string
 }
 
 /**
- * The base spinner atom — a busy indicator. See file header for the (no-skeleton) contract.
+ * The base spinner atom — a busy indicator.
  *
  * @param props - {@link SpinnerBaseProps}
  */
@@ -48,8 +41,4 @@ const SpinnerBase = ({ size = "md", tone = "accent", label = "Loading", showAnat
     />
 )
 
-/**
- * `Spinner.*` — the spinner ATOM namespace. `Spinner` is the single
- * constrained spinner; size / tone are LEAVES of it (prop-driven).
- */
 export { SpinnerBase as Spinner }

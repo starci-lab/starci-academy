@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -33,11 +34,11 @@ export type TitledTextSize = "row" | "header" | "stat"
  */
 interface TitledTextSkeletonWidths {
     /** Width class of the title bar. */
-    title: string
+    title: AllowedClassName
     /** Width class of the subtitle bar. */
-    sub: string
+    sub: AllowedClassName
     /** Width class of the hint bar. */
-    hint: string
+    hint: AllowedClassName
 }
 
 interface SizeConfig {
@@ -140,9 +141,9 @@ export const TitledText = ({
         return (
             <StackV gap="flush" className={cn("min-w-0", className)} anatPart={anatPart}>
                 {/* §12c: whoever owns the shape owns the skeleton — each line draws its own bar with its own atom. */}
-                <Typography size={cfg.titleSize} isSkeleton className={cfg.skeleton.title} anatPart={part("Title")} />
-                {subtitle ? <Typography size={cfg.subSize} isSkeleton className={cfg.skeleton.sub} anatPart={part("Subtitle")} /> : null}
-                {hint ? <Typography size="xs" isSkeleton className={cfg.skeleton.hint} anatPart={part("Hint")} /> : null}
+                <Typography size={cfg.titleSize} isSkeleton classNames={[cfg.skeleton.title]} anatPart={part("Title")} />
+                {subtitle ? <Typography size={cfg.subSize} isSkeleton classNames={[cfg.skeleton.sub]} anatPart={part("Subtitle")} /> : null}
+                {hint ? <Typography size="xs" isSkeleton classNames={[cfg.skeleton.hint]} anatPart={part("Hint")} /> : null}
             </StackV>
         )
     }

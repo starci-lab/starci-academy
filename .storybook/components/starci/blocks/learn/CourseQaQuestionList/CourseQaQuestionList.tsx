@@ -224,17 +224,17 @@ const SkeletonQuestionRow = ({ showAnatomy }: SkeletonQuestionRowProps) => (
         </div>
         <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
             {/* asker + time line */}
-            <Typography size="xs" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
             {/* two-line preview */}
             <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Typography size="sm" isSkeleton className="w-full" anatPart={showAnatomy ? "Typography" : undefined} />
-                <Typography size="sm" isSkeleton className="w-2/3" anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
             </StackV>
             {/* chip-pill row — ONE chip (status, the classification axis) + the scope
                 as a plain shimmer bar, matching the real row's own text-inline treatment
                 (eslint `starci-fe/no-adjacent-chip`, ★7 below). */}
             <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined}>
-                <Typography size="xs" isSkeleton className="w-16" anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                 <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
             </StackH>
         </StackV>

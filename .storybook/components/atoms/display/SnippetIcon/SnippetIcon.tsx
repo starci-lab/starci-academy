@@ -3,41 +3,63 @@
 import { CheckCircleIcon, CopyIcon } from "@phosphor-icons/react"
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/identity/SnippetIcon`. Authored in Storybook (not `src`);
- * synced to `src` later.
+ * Ported from `@/components/blocks/identity/SnippetIcon`.
  *
- * ⚠️ Sửa 2026-07-26 (canon §4 + §12): xoá cửa hậu `classNames.copyIcon` /
- * `classNames.checkIcon` — nó cho caller bôi class thẳng vào icon NỘI BỘ, trái
- * §4 (atom sở hữu style bên trong, không mở lỗ cho ngoài chọc vào). Atom chỉ còn
- * `className` cho gốc trigger. Đồng thời thêm anatomy (§12e) — atom DUY NHẤT
- * trong 36 atom trước đó chưa có — và `isCopied` để ghim hình ✓ từ ngoài (§12f):
- * hình đó chỉ sinh từ `useState`/`setTimeout` nội bộ nên không story nào ghim
- * được nếu thiếu prop này.
+ * The trigger has no `className` hook into its internal icons — only the root
+ * takes `className`/`classNames`.
+ *
+ * Renders a single fixed-size glyph (`w-5 h-5`, see `CopyIcon`/`CheckCircleIcon`
+ * below), not text, so there is no `skeletonWidth` prop — nothing here scales
+ * with content length, unlike a line of text.
  */
 
-/** Props for {@link SnippetIcon}. */
-export interface SnippetIconProps {
-    /** The exact string written to the clipboard on click. */
-    copyString: string
+/** Props shared, excluding the `copyString`/`isSkeleton` pair — see {@link SnippetIconProps}. */
+interface SnippetIconOwnProps {
     /**
-     * Ghim hình đã-copy (glyph ✓) từ bên ngoài — dùng cho preview/story. Không
-     * truyền ⇒ atom tự quản trạng thái này như cũ bằng `useState`/`setTimeout`
-     * (hành vi mặc định KHÔNG đổi). Truyền `true`/`false` sẽ ĐÈ state nội bộ.
+     * Pins the copied state (the check glyph) from outside, for previews/stories.
+     * Omitted, the atom manages this itself via `useState`/`setTimeout`. Passing
+     * `true`/`false` overrides the internal state.
      */
     isCopied?: boolean
-    /** `true` → gắn `data-anat-part` cho từng part để `BlockAnatomy` badge. */
+    /** `true` → tag each part with `data-anat-part` so a `BlockAnatomy` panel can badge it. */
     showAnatomy?: boolean
     /**
-     * Tên `data-anat-part` gắn ở GỐC trigger. Component bọc nó truyền xuống để
-     * cây deps nhận ra "chỗ này là một SnippetIcon" và cho bấm sang story của nó.
+     * `data-anat-part` name applied to the root trigger. A wrapping component
+     * passes this down so a deps tree can recognize "this is a SnippetIcon" and
+     * link to its story.
      */
     anatPart?: string
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
+
+/**
+ * `copyString` is required to render the live trigger, optional when
+ * `isSkeleton` — the shimmer has nothing to copy.
+ */
+export type SnippetIconProps = SnippetIconOwnProps &
+    (
+        | {
+            /** `true` → renders a shimmer at the exact glyph size, in place of the trigger. */
+            isSkeleton: true
+            /** The exact string written to the clipboard on click. */
+            copyString?: string
+        }
+        | {
+            isSkeleton?: false
+            /** The exact string written to the clipboard on click. */
+            copyString: string
+        }
+    )
 
 /**
  * One-tap copy affordance for a single line (an install command, an API key, a
@@ -50,29 +72,48 @@ export interface SnippetIconProps {
 const SnippetIconBase = ({
     copyString,
     isCopied,
+    isSkeleton = false,
     showAnatomy = false,
     anatPart,
     className,
+    classNames,
 }: SnippetIconProps) => {
     const [copiedState, setCopiedState] = useState(false)
-    // `isCopied` ghim từ ngoài thắng state nội bộ (dùng cho preview); không truyền ⇒ atom tự quản như cũ.
+    // `isCopied` passed from outside wins over internal state (used for previews).
     const copied = isCopied ?? copiedState
 
     const handleCopy = async () => {
+        // `copyString` is `string | undefined` here because it's optional in the
+        // `isSkeleton` branch of the union — a skeleton is never clicked, but the
+        // guard also keeps this call type-safe without narrowing on `isSkeleton`.
+        if (!copyString) return
         await navigator.clipboard.writeText(copyString)
         setCopiedState(true)
         setTimeout(() => setCopiedState(false), 350)
     }
 
+    if (isSkeleton) {
+        // The trigger has no visible box of its own — it IS the glyph — so the
+        // shimmer takes the glyph's exact footprint (`w-5 h-5`, same as
+        // `CopyIcon`/`CheckCircleIcon` below) at the trigger's own position.
+        // `rounded-full` matches the sibling bare size-5 glyph skeletons elsewhere
+        // in this atom set (`Menu`'s row icon, `StepBadge`'s check).
+        return (
+            <HeroSkeleton
+                className={cn("w-5 h-5 shrink-0 rounded-full", className, classNames)}
+                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+            />
+        )
+    }
+
     return (
-        // The root (trigger) is a plain element with no reusable name/story of its own
-        // (§13z internal geometry) — only `anatPart` from a PARENT names it as one
-        // opaque node, no self-badge fallback. `Icon` DOES get a self-badge: it has its
-        // own dedicated leaf/story in this same file (`Copied`) showing the exact
-        // copy↔check swap, so linking there is a real jump, not a circular one.
+        // The root (trigger) is a plain element with no reusable name/story of its
+        // own — only `anatPart` from a parent names it as one opaque node, with no
+        // self-badge fallback. `Icon` does get a self-badge: it has its own leaf/
+        // story in this file (`Copied`) showing the copy↔check swap.
         <motion.div
             onClick={handleCopy}
-            className={cn("cursor-pointer", className)}
+            className={cn("cursor-pointer", className, classNames)}
             whileTap={{ scale: 0.9 }}
             data-anat-part={anatPart}
         >

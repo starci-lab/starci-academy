@@ -110,7 +110,7 @@ const QaConversationHeader = ({
             <StackV gap="flush" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined}>
                 <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
                     {isSkeleton ? (
-                        <Typography size="sm" weight="medium" isSkeleton className="w-24" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                     ) : (
                         <>
                             <Typography size="sm" weight="medium" text={asker.displayName} anatPart={showAnatomy ? "Typography" : undefined} />
@@ -121,7 +121,7 @@ const QaConversationHeader = ({
                     )}
                 </StackH>
                 {isSkeleton ? (
-                    <Typography size="xs" color="muted" isSkeleton className="w-32" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                 ) : (
                     <Typography size="xs" color="muted" text={replyLabel(replyCount)} anatPart={showAnatomy ? "Typography" : undefined} />
                 )}

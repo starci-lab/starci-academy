@@ -5,22 +5,22 @@ import {
     Skeleton as HeroSkeleton,
     cn,
 } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Progress.*`: the progress-indicator atom namespace (bọc HeroUI).
+ * `Progress.*` — the progress-indicator atom namespace, wrapping HeroUI.
  *
- * Members theo HÌNH + NGỮ NGHĨA:
- *   • `ProgressBar`    — thanh tuyến tính, TIẾN TRÌNH (task đang chạy). Có xác định
- *                          (value) hoặc `isIndeterminate` (không rõ thời lượng).
- *   • `ProgressCircle` — vòng tròn, cùng ngữ nghĩa tiến-trình như Bar.
- *   • `ProgressMeter`  — ĐO LƯỜNG tĩnh (dung lượng, mức pin, điểm). LUÔN có giá trị
- *                          xác định → KHÔNG `isIndeterminate` (react-aria Meter không có).
+ * Members, by shape and meaning:
+ *   - `ProgressBar` — linear bar for ongoing progress. Determinate (`value`) or
+ *     `isIndeterminate` (duration unknown).
+ *   - `ProgressCircle` — circular, same progress semantics as Bar.
+ *   - `ProgressMeter` — static measurement (capacity, battery level, score).
+ *     Always determinate — react-aria's Meter has no indeterminate state.
  *
- * Bar/Circle bọc react-aria ProgressBar (hỗ trợ indeterminate); Meter bọc react-aria
- * Meter (đo lường, không indeterminate). Atom tự ép size/màu, tự vẽ leaf skeleton
- * (`isSkeleton`). Track/Fill là part nội tại — atom sở hữu, consumer không chèn.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Bar/Circle wrap react-aria's ProgressBar (supports indeterminate); Meter wraps
+ * react-aria's Meter (measurement only). Each member owns its size/color mapping
+ * and draws its own leaf skeleton (`isSkeleton`). Track/Fill are internal parts —
+ * owned by the atom, not inserted by the consumer.
  */
 
 /** Fill tone shared by all three members. */
@@ -47,7 +47,13 @@ interface ProgressTrackProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** Per-size circle diameter (skeleton match + `ProgressCircle` doesn't force a box). */
@@ -64,9 +70,10 @@ const ProgressBar = ({
     isSkeleton = false,
     showAnatomy = false,
     className,
+    classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-2 w-full rounded-full", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+        return <HeroSkeleton className={cn("h-2 w-full rounded-full", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
     }
     return (
         <HeroProgressBar
@@ -76,7 +83,7 @@ const ProgressBar = ({
             isIndeterminate={isIndeterminate}
             color={color}
             size={size}
-            className={cn("w-full", className)}
+            className={cn("w-full", className, classNames)}
         >
             <HeroProgressBar.Track data-anat-part={showAnatomy ? "ProgressBar.Track" : undefined}>
                 <HeroProgressBar.Fill data-anat-part={showAnatomy ? "ProgressBar.Fill" : undefined} />
@@ -96,9 +103,10 @@ const ProgressCircle = ({
     isSkeleton = false,
     showAnatomy = false,
     className,
+    classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("rounded-full", CIRCLE_BOX[size], className)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+        return <HeroSkeleton className={cn("rounded-full", CIRCLE_BOX[size], className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
     }
     return (
         <HeroProgressCircle
@@ -108,7 +116,7 @@ const ProgressCircle = ({
             isIndeterminate={isIndeterminate}
             color={color}
             size={size}
-            className={cn(className)}
+            className={cn(className, classNames)}
         >
             <HeroProgressCircle.Track data-anat-part={showAnatomy ? "ProgressCircle.Track" : undefined}>
                 <HeroProgressCircle.TrackCircle />
@@ -118,7 +126,7 @@ const ProgressCircle = ({
     )
 }
 
-/** Props chung của {@link Meter} — TRỪ cặp `value`/`isSkeleton`. */
+/** Props shared by {@link Meter}, excluding the `value`/`isSkeleton` pair. */
 interface MeterOwnProps {
     /** Maximum value = full. Default `100`. */
     max?: number
@@ -130,12 +138,18 @@ interface MeterOwnProps {
     ariaLabel?: string
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
- * `value` BẮT BUỘC khi meter sống (đo cái gì thì phải có số), KHÔNG cần khi
- * `isSkeleton` — track shimmer chưa đo gì. Cùng khuôn với `TypographyProps`.
+ * `value` is required for a live meter, optional when `isSkeleton` — the
+ * shimmer has nothing measured yet to show.
  */
 type MeterProps = MeterOwnProps &
     (
@@ -153,12 +167,13 @@ const Meter = ({
     isSkeleton = false,
     showAnatomy = false,
     className,
+    classNames,
 }: MeterProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-2 w-full rounded-full", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+        return <HeroSkeleton className={cn("h-2 w-full rounded-full", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
     }
     return (
-        <HeroMeter aria-label={ariaLabel} value={value} maxValue={max} color={color} size={size} className={cn("w-full", className)}>
+        <HeroMeter aria-label={ariaLabel} value={value} maxValue={max} color={color} size={size} className={cn("w-full", className, classNames)}>
             <HeroMeter.Track data-anat-part={showAnatomy ? "Meter.Track" : undefined}>
                 <HeroMeter.Fill data-anat-part={showAnatomy ? "Meter.Fill" : undefined} />
             </HeroMeter.Track>
@@ -167,8 +182,9 @@ const Meter = ({
 }
 
 /**
- * `Progress.*` — progress-indicator atom namespace. `Bar`/`Circle` = tiến trình
- * (determinate/indeterminate), `Gauge` = đo lường tĩnh (chỉ determinate).
- * Tên `ProgressMeter` thuộc về BLOCK composite (khớp `src`), nên atom là `ProgressGauge`.
+ * `Progress.*` — progress-indicator atom namespace. `Bar`/`Circle` are progress
+ * (determinate/indeterminate); `Gauge` is a static measurement (determinate only).
+ * Exported as `ProgressGauge` rather than `ProgressMeter` because `ProgressMeter`
+ * is the name of a separate composite block component.
  */
 export { ProgressBar, ProgressCircle, Meter as ProgressGauge }

@@ -152,7 +152,7 @@ const CourseBriefBase = ({
                 }
                 meta={
                     isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                     ) : metaParts.length > 0 ? (
                         <span>
                             <Typography size="xs" color="muted" text={metaParts.join(" · ")} anatPart={showAnatomy ? "Typography" : undefined} />

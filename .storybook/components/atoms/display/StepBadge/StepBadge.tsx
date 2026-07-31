@@ -2,23 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckIcon } from "@phosphor-icons/react"
-
-/**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — the target `StepBadge`. Authored in Storybook
- * (not `src`); synced to `src` later. NO `@/components` imports.
- *
- * Grounded in the numbered step badge hand-rolled inline in `GithubTeamGate`
- * (`src/components/features/auth/GithubTeamGate/index.tsx`, `stepBadge(n)`:
- * `flex size-5 shrink-0 items-center justify-center rounded-full bg-accent-soft
- * text-xs font-medium text-accent-soft-foreground`) and generalised against the
- * private `StepIndicator` inside the `Stepper` port
- * (`.storybook/stories/blocks/navigation/Stepper/Stepper.tsx`, states
- * done/current/upcoming) into a standalone, reusable numbered/checked badge so
- * any step-style flow (guided modals, wizards, changelogs…) can drop it in
- * without re-hand-rolling a local `stepBadge` closure.
- * ─────────────────────────────────────────────────────────────────────────────
- */
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Visual state of the badge. */
 export type StepBadgeState = "done" | "active" | "muted"
@@ -26,7 +10,7 @@ export type StepBadgeState = "done" | "active" | "muted"
 /** Badge size. */
 export type StepBadgeSize = "sm" | "md"
 
-/** Props chung — TRỪ cụm `number`/`isSkeleton` (xem {@link StepBadgeProps}). */
+/** Props shared, excluding the `number`/`isSkeleton` pair — see {@link StepBadgeProps}. */
 interface StepBadgeOwnProps {
     /**
      * Visual state. `"done"` swaps the number for a check and fills success
@@ -37,21 +21,26 @@ interface StepBadgeOwnProps {
     state?: StepBadgeState
     /** Badge size. Defaults to `"sm"` (20px, matches the hand-rolled `size-5`). */
     size?: StepBadgeSize
-    /** Extra classes. */
+    /** Extra classes. @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
-    /** `true` → gắn `data-anat-part` cho từng part để `BlockAnatomy` badge được. */
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
+    /** `true` → tag each part with `data-anat-part` so a `BlockAnatomy` panel can badge it. */
     showAnatomy?: boolean
     /**
-     * Tên `data-anat-part` gắn ở GỐC badge. Component BỌC nó (vd `Stepper`) truyền
-     * xuống (vd `"StepBadge"`) để cây deps nhận ra "chỗ này là một StepBadge" — cây
-     * dựng từ DOM nên không có nhãn thì không thấy.
+     * `data-anat-part` name applied to the root badge. A wrapping component (e.g.
+     * `Stepper`) passes this down (e.g. `"StepBadge"`) so a deps tree built from
+     * the DOM can recognize this node.
      */
     anatPart?: string
 }
 
 /**
- * `number` BẮT BUỘC khi render badge thật, KHÔNG cần khi `isSkeleton` — pill shimmer
- * không có nội dung để căn giữa. Cùng khuôn với `ChipBaseProps`/`TypographyProps` (§12c).
+ * `number` is required to render the live badge, optional when `isSkeleton` —
+ * the pill shimmer has no content to center.
  */
 export type StepBadgeProps = StepBadgeOwnProps &
     ({ isSkeleton: true; number?: ReactNode } | { isSkeleton?: false; number: ReactNode })
@@ -63,21 +52,17 @@ const STATE: Record<StepBadgeState, string> = {
     muted: "bg-default text-muted",
 }
 
-/** size → badge box + text scale + auto icon size (§5: text-xs → size-4, text-sm → size-5). */
+/** size → badge box + text scale + auto icon size (text-xs → size-4, text-sm → size-5). */
 const SIZE: Record<StepBadgeSize, string> = {
     sm: "size-5 text-xs [&_svg]:size-4",
     md: "size-6 text-sm [&_svg]:size-5",
 }
 
 /**
- * size → WEIGHT của glyph, bảng đặt NGAY CẠNH {@link SIZE} để hai thang không lệch.
- *
- * §5.0a: `sm` render icon `size-4` (16px < 20px) ⇒ `bold` bù nét; `md` render `size-5`
- * (20px, đúng cỡ chuẩn) ⇒ `regular`.
- *
- * ❌ neo (2026-07-26): trước đó `weight="bold"` ép CỨNG cho cả hai — nấc `md` vì thế
- * đậm hơn mọi glyph `size-5` khác trong hệ. Đây là ca NGƯỢC với lỗi thường gặp (quên
- * bold ở cỡ nhỏ), nên quét theo hướng "thiếu bold" sẽ không bao giờ thấy nó.
+ * size → icon weight, kept beside {@link SIZE} so the two scales stay aligned.
+ * `sm` renders the icon at `size-4` (16px, below the 20px baseline), so `bold`
+ * compensates for the smaller glyph; `md` renders at `size-5` (20px, the
+ * baseline), so `regular` applies.
  */
 const ICON_WEIGHT: Record<StepBadgeSize, "regular" | "bold"> = {
     sm: "bold",
@@ -93,7 +78,7 @@ const SKELETON_SIZE: Record<StepBadgeSize, string> = {
 /**
  * A generic, round numbered badge for step-by-step flows — a leading
  * indicator showing either a number/glyph or (once `state="done"`) a check.
- * Pure/props-only; owns its size + tone (§4) so callers just pass the number
+ * Pure/props-only; owns its size + tone so callers just pass the number
  * and a state, e.g. a guided-flow ordered list (`1` active → `2`/`3` muted,
  * flipping to `done` as each step completes).
  *
@@ -104,23 +89,23 @@ const StepBadgeBase = ({
     state = "active",
     size = "sm",
     className,
+    classNames,
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
 }: StepBadgeProps) => {
     if (isSkeleton) {
-        // Nhánh skeleton xét TRƯỚC mọi nhánh rẽ hình (§12c) — không có `number` để căn giữa.
+        // Checked before any visual branch — there's no `number` to center yet.
         return (
             <HeroSkeleton
-                className={cn("rounded-full", SKELETON_SIZE[size], className)}
+                className={cn("rounded-full", SKELETON_SIZE[size], className, classNames)}
                 data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
             />
         )
     }
-    // `Badge` (root span) and `Icon` (wraps the check glyph) are plain elements, not
-    // fixed importable components (§ naming pass, 2026-07-28) — kept in the DOM for
-    // future use but given no self-badge fallback; only `anatPart` from a PARENT
-    // names this root as one opaque node.
+    // `Badge` (root span) and `Icon` (wraps the check glyph) are plain elements,
+    // not components of their own, and have no self-badge fallback — only
+    // `anatPart` passed from a parent names this root.
     return (
         <span
             aria-hidden
@@ -130,6 +115,7 @@ const StepBadgeBase = ({
                 SIZE[size],
                 STATE[state],
                 className,
+                classNames,
             )}
         >
             {state === "done" ? (

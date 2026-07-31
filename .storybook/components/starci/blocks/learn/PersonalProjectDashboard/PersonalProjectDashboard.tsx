@@ -264,7 +264,7 @@ const Body = ({
                 size="xs"
                 color="muted"
                 isSkeleton={isSkeleton}
-                className={isSkeleton ? "w-56" : undefined}
+                classNames={isSkeleton ? ["w-3/4"] : undefined}
                 text={statsLine(stats)}
                 anatPart={showAnatomy ? "Typography" : undefined}
             />

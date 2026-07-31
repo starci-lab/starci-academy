@@ -131,13 +131,12 @@ const CourseQaToolbar = ({
                     />
                 </div>
                 <StackH gap="related" justify="between" wrap showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackH" : undefined}>
-                    <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
+                    <div className="min-w-0 flex-1 @app-sm:max-w-sm" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
                         <InputSearch
                             value={searchValue}
                             onValueChange={onSearchChange}
                             placeholder="Tìm câu hỏi..."
                             ariaLabel="Tìm câu hỏi"
-                            className="@app-sm:max-w-sm"
                             showAnatomy={showAnatomy}
                         />
                     </div>
@@ -146,7 +145,7 @@ const CourseQaToolbar = ({
                             size="sm"
                             color="muted"
                             isSkeleton
-                            className="shrink-0"
+                            classNames={["shrink-0"]}
                             showAnatomy={showAnatomy}
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />
@@ -156,7 +155,7 @@ const CourseQaToolbar = ({
                             color="muted"
                             tabularNums
                             text={resultCountLabel(resultCount)}
-                            className="shrink-0"
+                            classNames={["shrink-0"]}
                             showAnatomy={showAnatomy}
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />

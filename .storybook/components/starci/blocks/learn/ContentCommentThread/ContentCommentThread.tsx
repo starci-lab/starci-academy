@@ -178,7 +178,7 @@ const ContentCommentThread = ({
                             showAnatomy={showAnatomy}
                         />
                     ) : (
-                        <Typography size="sm" className="whitespace-pre-wrap" text={comment.body} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" preserveWhitespace text={comment.body} anatPart={showAnatomy ? "Typography" : undefined} />
                     )}
 
                     {/* action row: reaction + reply + owner edit/delete. `isButton`, NOT

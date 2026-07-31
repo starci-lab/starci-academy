@@ -1,29 +1,20 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Button, ButtonGroup as HeroButtonGroup, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Button.RadioGroup`: hàng nút CHỌN (single hoặc multi), flex-wrap.
+ * `Button.RadioGroup` — a row of select buttons (single or multi), flex-wrap.
  *
- * Gom vào namespace `Button` 2026-07-26 (trước đó sống riêng ở
- * `atoms/navigation/FlexWrapButtonRadio`, tên cũ `FlexWrapButtonRadio`). Quyết định
- * MEMBER MỚI (không gộp prop vào `Button.Group` — xem `Button.Group` ở `./ButtonGroup.tsx`):
- * `Button.Group` là cụm nút HÀNH ĐỘNG rời rạc, dựng từ `items` KHÔNG mang trạng thái
- * chọn — mỗi item chỉ có `onPress` độc lập, không có khái niệm "đang chọn gì". Cụm này
- * NGƯỢC LẠI: nó là một CONTROL có state — `value`/`onChange` (chọn-1, kiểu radio) hoặc
- * `values`/`onToggle` (chọn-N, kiểu checkbox-group) — với `role="group"` +
- * `aria-pressed` per-button, cộng khả năng mỗi item tự nở thành một `Button.Group`
- * con khi có `itemAction`. Khác hình thái thật (control có-state vs cụm hành-động
- * vô-state), không phải biến thể thị giác ⇒ member riêng theo §12a, không phải prop
- * mới trên `Button.Group` theo §6b.
+ * A stateful control (`value`/`onChange` for single-select, `values`/`onToggle` for
+ * multi-select) with `role="group"` + `aria-pressed` per button, distinct from
+ * `ButtonGroup`'s stateless row of independent action buttons. Each item can also
+ * expand into its own connected `ButtonGroup` via `itemAction`.
  *
- * ⚠️ Bên trong vẫn dựng thẳng HeroUI `Button`/`ButtonGroup` (KHÔNG qua `Button.Base`/
- * `Button.Group` của chính namespace này) — giữ nguyên lý do đã audit trước khi gom:
- * hợp đồng a11y của cụm này là `role="group"` + `aria-pressed` per-button, còn
- * `Button.Base` không forward các attribute tuỳ ý (không có `...rest`) nên đổi sẽ làm
- * rớt mất `aria-pressed` khỏi assistive tech. Deferred, KHÔNG audit lại lượt gom này.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Renders raw HeroUI `Button`/`ButtonGroup` directly rather than through this
+ * namespace's own `ButtonBase`/`ButtonGroup`: `ButtonBase` does not forward arbitrary
+ * attributes (no `...rest`), so using it here would drop `aria-pressed` from
+ * assistive tech.
  */
 
 /** One selectable button in a {@link ButtonRadioGroup}. */
@@ -57,8 +48,16 @@ interface ButtonRadioGroupBaseProps<T extends string> {
     itemAction?: (item: ButtonRadioGroupItem<T>) => ReactNode
     /** `true` → tag this row's own HeroUI renders (`Button`/`ButtonGroup`/`ButtonGroup.Separator`) with `data-anat-part` so a BlockAnatomy panel can badge them. */
     showAnatomy?: boolean
-    /** Extra classes on the row. */
+    /**
+     * Extra classes on the row.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** Single-select mode (default) — exactly one value selected at a time. */
@@ -108,7 +107,7 @@ export type ButtonRadioGroupProps<T extends string> =
  * @param props - {@link ButtonRadioGroupProps}
  */
 export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<T>) => {
-    const { items, ariaLabel, trailing, itemAction, showAnatomy = false, className } = props
+    const { items, ariaLabel, trailing, itemAction, showAnatomy = false, className, classNames } = props
     // narrow the discriminated union once — selection state + the press handler are
     // the only things that differ between single- and multi-select.
     const isSelected = (candidate: T): boolean =>
@@ -121,19 +120,11 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
         }
     }
     return (
-        <div role="group" aria-label={ariaLabel} className={cn("flex flex-wrap items-center gap-2", className)}>
+        <div role="group" aria-label={ariaLabel} className={cn("flex flex-wrap items-center gap-2", className, classNames)}>
             {items.map((item) => {
                 const selected = isSelected(item.value)
                 if (!itemAction) {
-                    // standalone: selected = filled `tertiary` (neutral, NOT accent —
-                    // a facet toggle isn't a CTA), unselected = hollow `ghost` (no
-                    // surface of its own — the page/card is the surface).
-                    // NOTE: left as raw HeroUI <Button> (not `Button.Base`) — this
-                    // toggle group's a11y contract is `role="group"` + `aria-pressed`
-                    // per button (see doc comment above); `Button.Base`'s props don't
-                    // forward arbitrary/native attributes like `aria-pressed` (no
-                    // `...rest` spread), so swapping would silently drop the pressed
-                    // state from assistive tech. Deferred.
+                    // standalone: selected = filled `tertiary`, unselected = hollow `ghost`.
                     return (
                         <Button
                             key={item.value}
@@ -148,13 +139,9 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
                         </Button>
                     )
                 }
-                // select button + its action(s) = ONE connected ButtonGroup per
-                // item. No border frame — the button variants carry the look; here
-                // the unselected select is `tertiary` (filled `--default`), NOT
-                // `ghost`, so it matches the filled action buttons instead of
-                // floating hollow. Each action button gets a `ButtonGroup.Separator`
-                // injected at the head of its children (HeroUI's separator must sit
-                // INSIDE the following button), full-height.
+                // select button + its action(s) = one connected ButtonGroup per item.
+                // Each action button gets a `ButtonGroup.Separator` injected at the head
+                // of its children — HeroUI's separator must sit inside the following button.
                 return (
                     <HeroButtonGroup
                         key={item.value}

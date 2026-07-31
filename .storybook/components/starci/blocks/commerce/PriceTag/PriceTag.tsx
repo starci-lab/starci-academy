@@ -1,5 +1,5 @@
 import React from "react"
-import { Popover, cn } from "@heroui/react"
+import { Popover } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackV } from "@sb-components/frames/Stack/Stack"
@@ -193,7 +193,7 @@ const PriceTagBase = ({
                             value: (
                                 <Typography
                                     size="sm"
-                                    className="text-success-soft-foreground"
+                                    color="success-soft"
                                     text={`−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`}
                                 />
                             ),
@@ -206,7 +206,8 @@ const PriceTagBase = ({
                             value: (
                                 <Typography
                                     size="sm"
-                                    className="shrink-0 text-success-soft-foreground"
+                                    color="success-soft"
+                                    classNames={["shrink-0"]}
                                     text={`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
                                 />
                             ),
@@ -254,7 +255,7 @@ const PriceTagBase = ({
                                 size={AMOUNT_TYPE[emphasis]}
                                 weight="bold"
                                 isSkeleton={isSkeleton}
-                                className={isSkeleton ? "w-28" : undefined}
+                                classNames={isSkeleton ? ["w-2/3"] : undefined}
                                 anatPart={showAnatomy ? "Typography" : undefined}
                                 text={formatPrice(discounted, currency)}
                             />
@@ -268,7 +269,8 @@ const PriceTagBase = ({
                                     size={ORIGINAL_TYPE[emphasis]}
                                     color="muted"
                                     isSkeleton={isSkeleton}
-                                    className={cn("line-through", isSkeleton && "w-16")}
+                                    isStruck
+                                    classNames={isSkeleton ? ["w-1/3"] : undefined}
                                     anatPart={showAnatomy ? "Typography" : undefined}
                                     text={formatPrice(original, currency)}
                                 />
@@ -290,7 +292,7 @@ const PriceTagBase = ({
                                     <Popover>
                                         <Popover.Trigger
                                             aria-label="Chi tiết giá"
-                                            className="cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                            className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                                             data-anat-part={showAnatomy ? "Popover.Trigger" : undefined}
                                         >
                                             {chip}
@@ -312,7 +314,7 @@ const PriceTagBase = ({
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    className={isSkeleton ? "w-24" : undefined}
+                    classNames={isSkeleton ? ["w-1/2"] : undefined}
                     anatPart={showAnatomy ? "Typography" : undefined}
                     text={hasSaving ? `Tiết kiệm ${formatPrice(original - discounted, currency)}` : undefined}
                 />

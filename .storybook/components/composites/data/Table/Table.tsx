@@ -144,7 +144,7 @@ const TableBase = ({
                                 layout). Căn bằng chiều cao + `items-center`, KHÔNG bằng margin (§10a).
                                 Tag NGOÀI atom (atom không nhận rest props) — cùng lý do như CellBox. */}
                             <span className="flex h-5 items-center" data-anat-part={showAnatomy ? "Typography" : undefined}>
-                                <Typography size="sm" isSkeleton className="w-2/3" />
+                                <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
                             </span>
                         </HeroTable.Cell>
                     ))}

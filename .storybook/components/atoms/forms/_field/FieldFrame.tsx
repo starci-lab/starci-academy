@@ -2,31 +2,24 @@ import type { ReactNode } from "react"
 import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM-INTERNAL — `FieldFrame`: the label · hint · control · error SCAFFOLD that
- * every form atom composes so the atom itself IS the full field (teacher decided
- * 2026-07-25: "label/errorMessage count toward the atom", NO separate Field
- * atom).
+ * `FieldFrame` — the label / hint / control / error scaffold every form atom
+ * composes so the atom itself is the full field.
  *
- * Self-contained in the atom layer (HeroUI only — NO importing blocks/, since the
- * atom is the lowest layer). Owns the vertical rhythm (`flex flex-col gap-1.5`):
- * label on top, hint below the label, control, error line last — and mirrors the
- * exact shape when `isSkeleton`.
+ * Self-contained in the atom layer: HeroUI only, no importing from `blocks/`.
+ * Owns the vertical rhythm (`flex flex-col`, gap set by `gap` — default
+ * `"tight"` = `gap-1`): label on top, hint below the label, control, error
+ * line last — and mirrors the exact shape when `isSkeleton`.
  *
- * "Bare" mode: when there is NO label/hint/errorMessage/required (and not
- * skeleton), FieldFrame renders children DIRECTLY — zero wrapper, so the atom can
- * still be used as a bare cell nested inside something else.
+ * "Bare" mode: when there is no label/hint/errorMessage/required (and not
+ * skeleton), FieldFrame renders `children` directly with zero wrapper, so the
+ * atom can still be used as a bare cell nested inside something else.
  *
- * Anatomy (§11a — an atom badges its own direct parts): only `Label` and the
- * label-bar `Skeleton` carry `data-anat-part` — both are heroui's OWN components
- * (`Label`/`Skeleton` imported straight from `@heroui/react`), declared `tier:
- * "heroui"` by whichever atom composes this frame with a visible `label`
- * (`ChoiceRadioGroup`, `Input.*`, `Select.*`). `Description`/`Error` stay
- * unbadged (2026-07-28 orphan-part pass) — they're plain hand-rolled `<p>`s, not
- * a real component, and `FieldFrame` itself has no story of its own to declare
- * them against. The control cell badges its own part (`Field`/`Skeleton`) —
- * FieldFrame does NOT badge the Control wrapper, to avoid nesting two badge tiers.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Only `Label` and the label-bar `Skeleton` carry `data-anat-part` — both are
+ * HeroUI's own components. `Description`/`Error` stay unbadged: they're plain
+ * hand-rolled `<p>`s, not real components, and `FieldFrame` has no story of
+ * its own to declare them against. The control cell badges its own part;
+ * `FieldFrame` doesn't badge the control wrapper, to avoid nesting two badge
+ * tiers.
  */
 export interface FieldFrameProps {
     /** Label above the control (`text-sm font-medium`). Omit → no label. */
@@ -35,6 +28,15 @@ export interface FieldFrameProps {
     hint?: ReactNode
     /** Error line below the control (`text-sm text-danger`) — set → field invalid. */
     errorMessage?: ReactNode
+    /**
+     * Vertical rhythm between label/hint/control/error. Default `"tight"`
+     * (`gap-1`) treats the four parts as one field, not separate regions.
+     * `"related"` (`gap-2`) loosens that for a field that needs to breathe
+     * more. Mirrors the frame tier's `SeamScale` naming but is redeclared
+     * locally rather than imported, since an atom can't import from outside
+     * its own layer.
+     */
+    gap?: "tight" | "related"
     /** Adds a `*` mark (text-danger) after the label. */
     isRequired?: boolean
     /** Dims the label (locking the control itself is the atom's job). */
@@ -44,11 +46,10 @@ export interface FieldFrameProps {
     /** Control-shaped skeleton for `isSkeleton` (the atom passes its own box). */
     skeletonControl?: ReactNode
     /**
-     * The real control (an already-wrapped HeroUI cell). A valid exception under
-     * §12b (a true atom-WRAPPER): `FieldFrame` is a wrapping frame that must accept
-     * the calling atom's ARBITRARY control as-is (Input/Select/Choice/…) — it can't
-     * be swapped for a data prop, since the control isn't "content" but a whole
-     * component tree.
+     * The real control (an already-wrapped HeroUI cell). `FieldFrame` is a
+     * wrapping frame that must accept the calling atom's arbitrary control
+     * as-is (Input/Select/Choice/…) — it can't be swapped for a data prop,
+     * since the control isn't "content" but a whole component tree.
      */
     children?: ReactNode
     /** The control's `id` so the label's `htmlFor` points correctly — the atom passes the same id down to the control. */
@@ -69,6 +70,12 @@ export interface FieldFrameProps {
 export const fieldName = (label: ReactNode, fallback?: string): string | undefined =>
     typeof label === "string" ? label : fallback
 
+/** {@link FieldFrameProps.gap} step → literal class (kept local — see the prop's JSDoc). */
+const GAP_CLASS: Record<"tight" | "related", string> = {
+    tight: "gap-1",
+    related: "gap-2",
+}
+
 /** Label + `*` mark when required. */
 const withRequired = (label: ReactNode, isRequired?: boolean) =>
     isRequired ? (
@@ -87,6 +94,7 @@ const FieldFrameBase = ({
     label,
     hint,
     errorMessage,
+    gap = "tight",
     isRequired,
     isDisabled,
     isSkeleton,
@@ -105,11 +113,10 @@ const FieldFrameBase = ({
             return <>{skeletonControl}</>
         }
         return (
-            <div className={cn("flex flex-col gap-1", className)}>
+            <div className={cn("flex flex-col", GAP_CLASS[gap], className)}>
                 {label != null ? (
-                    // Node name = the REAL component rendered here (heroui `Skeleton`, in its
-                    // label-bar look) — NOT the word "Label" (that's the SLOT it stands in for,
-                    // not its identity; the atom's own control skeleton is also a `Skeleton`).
+                    // data-anat-part uses the real HeroUI component name (`Skeleton`, in its
+                    // label-bar look), not the slot word "Label" it stands in for.
                     <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 ) : null}
                 {skeletonControl}
@@ -124,7 +131,7 @@ const FieldFrameBase = ({
 
     // ── Full field ─────────────────────────────────────────────────────────────
     return (
-        <div className={cn("flex flex-col gap-1", className)}>
+        <div className={cn("flex flex-col", GAP_CLASS[gap], className)}>
             {label != null ? (
                 <Label htmlFor={id} isDisabled={isDisabled} className="text-sm font-medium" data-anat-part={showAnatomy ? "Label" : undefined}>
                     {withRequired(label, isRequired)}

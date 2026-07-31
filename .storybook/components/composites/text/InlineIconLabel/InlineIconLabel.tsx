@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { Typography as HeroTypography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
+import type { SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — InlineIconLabel: a leading icon + an inline text
@@ -78,7 +79,12 @@ export interface InlineIconLabelProps {
     /** `true` → render the skeleton mirror (icon dot + text bar). */
     isSkeleton?: boolean
     /** Skeleton text-bar width (Tailwind class). Defaults to `"w-16"`. */
-    skeletonWidth?: string
+    /**
+     * Width of the label's shimmer, as a fraction of the row. Narrowed from `string` on
+     * 2026-07-31: this value is handed straight to `Typography`, whose `classNames` is a closed
+     * union, so an unconstrained string here would only fail one tier down.
+     */
+    skeletonWidth?: SkeletonWidth
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** Extra classes on the root. */
@@ -99,7 +105,7 @@ export const InlineIconLabel = ({
     size = "xs",
     truncate = false,
     isSkeleton = false,
-    skeletonWidth = "w-16",
+    skeletonWidth = "w-1/4",
     anatPart,
     className,
 }: InlineIconLabelProps) => {
@@ -113,7 +119,7 @@ export const InlineIconLabel = ({
             <span className={cn("inline-flex items-center", cfg.gap, className)} data-anat-part={anatPart}>
                 <HeroSkeleton className={cn(SKELETON_ICON, "shrink-0 rounded-full")} />
                 {/* §12c: chủ của hình là chủ của skeleton — Typography atom TỰ vẽ gạch của chính nó */}
-                <Typography size={size} isSkeleton className={skeletonWidth} />
+                <Typography size={size} isSkeleton classNames={[skeletonWidth]} />
             </span>
         )
     }

@@ -108,13 +108,13 @@ const FoundationCategorySearchBar = ({
                     />
                 </div>
                 {isSkeleton ? (
-                    <Typography size="sm" color="muted" isSkeleton className="shrink-0" showAnatomy={showAnatomy} />
+                    <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} showAnatomy={showAnatomy} />
                 ) : count !== undefined ? (
                     <Typography
                         size="sm"
                         color="muted"
                         text={countLabel(count)}
-                        className="shrink-0"
+                        classNames={["shrink-0"]}
                         showAnatomy={showAnatomy}
                     />
                 ) : null}

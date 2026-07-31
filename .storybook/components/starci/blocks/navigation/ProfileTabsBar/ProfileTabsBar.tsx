@@ -153,7 +153,7 @@ const ProfileTabsBar = ({
             <TabsExtended
                 selectedKey={activeTab}
                 onSelectionChange={(key) => onTabChange(key as ProfileTab)}
-                className="w-full"
+                classNames={["w-full"]}
                 showAnatomy={showAnatomy}
             >
                 <HeroTabs.ListContainer>

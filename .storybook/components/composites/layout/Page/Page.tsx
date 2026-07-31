@@ -171,12 +171,14 @@ const Header = ({
                     )}
                     {description ? (
                         // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
-                        <Typography size="sm"
-                            color="muted"
-                            className="line-clamp-2 @app-sm:line-clamp-none"
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                            text={description}
-                        />
+                        // — a viewport-width decision, so the wrapper owns it, not the atom.
+                        <div className="line-clamp-2 @app-sm:line-clamp-none">
+                            <Typography size="sm"
+                                color="muted"
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                                text={description}
+                            />
+                        </div>
                     ) : null}
                 </StackV>
 

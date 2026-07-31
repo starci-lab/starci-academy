@@ -77,7 +77,7 @@ const ContentReaction = ({
                 anatPart={showAnatomy ? "ReactionButton" : undefined}
             />
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton className="w-16" anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
             ) : viewCount != null ? (
                 <Typography
                     size="xs"

@@ -3,31 +3,16 @@ import { ButtonGroup } from "./ButtonGroup"
 import { ButtonRadioGroup } from "./ButtonRadioGroup"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Button.*`: the trigger family namespace. This file ONLY gathers, no logic.
+ * `Button.*` — the trigger family namespace. This file only gathers, no logic.
  *
- * Each member gets its OWN FILE (split 2026-07-26) so the relationship between
- * them is a REAL, readable `import`:
- *   • `Button`       → ./ButtonBase       — the ONE button; `isIconOnly` for an icon-only button.
- *   • `ButtonGroup`      → ./ButtonGroup      — a ROW of action buttons, built from
- *     STATE-LESS `items` (no "which one is selected"); **imports ButtonBase**.
- *   • `ButtonRadioGroup` → ./ButtonRadioGroup — a row of SELECT buttons (single
- *     `value`/`onChange` or multi `values`/`onToggle`), flex-wrap, `role="group"` +
- *     `aria-pressed` per button. Folded in from `atoms/navigation/FlexWrapButtonRadio`
- *     2026-07-26 — a genuinely different shape from `ButtonGroup` (stateful control
- *     vs. stateless action cluster, §12a), so it's a SEPARATE MEMBER rather than a
- *     new prop on `ButtonGroup`. Builds straight on HeroUI's `Button`/`ButtonGroup`
- *     (not through `Button`/`ButtonGroup`) — see the reasoning in
- *     `ButtonRadioGroup.tsx`.
- *   • `./button-tokens` — a shared table (not a component, not part of the deps tree).
- *
- * ⚠️ `Button.Icon` HAS BEEN REMOVED (2026-07-26): an icon-only button isn't a
- * different shape, it's the SAME button with the label dropped ⇒
- * `<Button isIconOnly prefixIcon={X} ariaLabel="…" />`. Keeping two components
- * side by side means every rule has to be fixed in two places.
- *
- * External call sites do NOT change their import path: still `.../Button/Button`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * - `Button` → {@link ButtonBase} — the button. Pass `isIconOnly` for an icon-only button
+ *   (`<Button isIconOnly prefixIcon={X} ariaLabel="…" />`); there is no separate `Button.Icon`.
+ * - `ButtonGroup` → `./ButtonGroup` — a row of action buttons built from stateless `items`
+ *   (no "which one is selected"). Imports `ButtonBase`.
+ * - `ButtonRadioGroup` → `./ButtonRadioGroup` — a row of select buttons (single
+ *   `value`/`onChange` or multi `values`/`onToggle`), flex-wrap, `role="group"` +
+ *   `aria-pressed` per button. Builds directly on HeroUI's `Button`/`ButtonGroup`.
+ * - `./button-tokens` — a shared token table, not a component.
  */
 export { ButtonBase as Button, ButtonGroup, ButtonRadioGroup }
 

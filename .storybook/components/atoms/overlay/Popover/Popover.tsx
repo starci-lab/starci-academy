@@ -1,45 +1,41 @@
+/** @noSkeleton renders a floating surface; the content is handed in and shimmers on its own. */
 import type { ComponentType, ReactNode, SVGProps } from "react"
-import { Popover as HeroPopover, Button as HeroButton } from "@heroui/react"
+import { Popover as HeroPopover, Button as HeroButton, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Popover`: the ONE constrained click-panel atom over HeroUI Popover.
+ * ATOM — `Popover`: the constrained click-panel atom over HeroUI Popover.
  *
- * Bọc HeroUI `Popover` TỐI ĐA (alias `HeroPopover`) + một `Button` (alias
- * `HeroButton`) làm trigger pressable (react-aria `DialogTrigger` bắt buộc trigger là
- * pressable). Atom SỞ HỮU chrome: dialog surface, placement, arrow, heading.
+ * Wraps HeroUI `Popover` (aliased `HeroPopover`) with a `Button` (aliased
+ * `HeroButton`) as trigger — react-aria's `DialogTrigger` requires the
+ * trigger to be pressable. This atom owns the chrome: dialog surface,
+ * placement, arrow, heading.
  *
- * NAMESPACE (thầy chốt 2026-07-25): atom KHÔNG export component trần — mọi thành
- * viên đi qua `Popover.*` (hôm nay chỉ có `Base`), khớp `Chip.*` / `Button.*`.
+ * All exports go through `Popover.*` (currently only `Base`).
  *
- * KHÔNG `children` (luật ② thầy chốt 2026-07-25): nhãn nút mở đi bằng PROP DỮ LIỆU
- * `triggerLabel` (+ `triggerIcon` là COMPONENT, atom tự ép scale). Popover KHÔNG
- * buộc phải bọc phần tử khác — trigger do chính atom dựng — nên KHÔNG thuộc ngoại
- * lệ wrapper (chỉ `Tooltip`/`Badge` được giữ `children`).
+ * No `children`: the open-button label is the data prop `triggerLabel`
+ * (`triggerIcon` is a component, rendered at trigger scale by the atom).
  *
- * STRICT §4: `content` là THÂN panel (ReactNode — được giữ vì là nội dung, không phải
- * children), `heading` (tuỳ chọn) render `Popover.Heading`. `isOpen`/`defaultOpen` để
- * STORY pin panel mở (soi tĩnh).
+ * `content` is the panel body (a ReactNode, not children), `heading`
+ * (optional) renders `Popover.Heading`. `isOpen`/`defaultOpen` let a story
+ * pin the panel open.
  *
- * Overlay portal: `Popover.Content` render RA NGOÀI render-box nên badge on-render chỉ
- * neo được `Trigger`; các part panel vẫn hiện trong legend + Cây.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `Popover.Content` renders through a portal outside this component's own
+ * render box, so an on-render anatomy badge can only anchor to `Trigger`;
+ * the panel parts still show in the legend and tree.
  */
 
 /** An icon passed as a COMPONENT (e.g. `CircleInfo`), rendered by the atom at trigger scale. */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
 
-/**
- * Nét glyph của trigger: `size-3.5` (14px) nhỏ hơn `size-5` ⇒ `bold` bù nét (§5.0a).
- * Cỡ đã ép bằng class trên span bọc (cần `!` vì HeroUI `.button svg` specificity cao hơn).
- */
+/** Trigger glyph at `size-3.5` (14px) needs `bold` weight to keep the stroke visible at that size. */
 const TRIGGER_ICON_WEIGHT = "bold" as const
 
 /** Props for {@link PopoverBase}. */
 export interface PopoverBaseProps {
-    /** Trigger button label (nhãn, KHÔNG phải children). */
+    /** Trigger button label (not children). */
     triggerLabel: ReactNode
-    /** Leading icon of the trigger as a COMPONENT reference. Atom ép `size-3.5` (scale chữ nút). */
+    /** Leading icon of the trigger as a component reference, rendered at `size-3.5` to match the button text scale. */
     triggerIcon?: IconComponent
     /** Panel body. */
     content: ReactNode
@@ -59,8 +55,16 @@ export interface PopoverBaseProps {
     onOpenChange?: (isOpen: boolean) => void
     /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Button`/`Popover.Content`/`Popover.Arrow`/`Popover.Heading`) so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** Extra classes on the trigger. */
+    /**
+     * Extra classes on the trigger.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -81,15 +85,15 @@ const PopoverBase = ({
     onOpenChange,
     showAnatomy = false,
     className,
+    classNames,
 }: PopoverBaseProps) => {
     return (
         <HeroPopover isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroButton variant={triggerVariant} className={className} data-anat-part={showAnatomy ? "Button" : undefined}>
+            <HeroButton variant={triggerVariant} className={cn(className, classNames)} data-anat-part={showAnatomy ? "Button" : undefined}>
                 {TriggerIcon ? (
-                    // Atom sở hữu glyph scale — `!` bắt buộc vì HeroUI có rule `.button svg` specificity cao hơn.
-                    // Span thuần bọc icon TRẦN (bất kỳ Phosphor nào caller đưa) — không phải một
-                    // component có tên riêng nên KHÔNG phát `data-anat-part` (§ luật ①: tên phải là
-                    // component thật, span glue này không phải).
+                    // `!` needed: HeroUI's `.button svg` rule has higher specificity. This
+                    // span is a plain wrapper around a caller-supplied icon, not a named
+                    // component, so it does not emit `data-anat-part`.
                     <span aria-hidden className="inline-flex shrink-0 [&_svg]:!size-3.5">
                         <TriggerIcon weight={TRIGGER_ICON_WEIGHT} />
                     </span>
@@ -107,8 +111,7 @@ const PopoverBase = ({
                         {heading}
                     </HeroPopover.Heading>
                 ) : null}
-                {/* Div thuần bọc `content` (ReactNode TỰ DO caller đưa) — không phải một component
-                    có tên riêng nên KHÔNG phát `data-anat-part` (cùng lý do với span icon ở trên). */}
+                {/* Plain div wrapping caller-supplied `content`; not a named component, so no `data-anat-part`. */}
                 <div className="text-sm text-muted">
                     {content}
                 </div>
@@ -117,8 +120,5 @@ const PopoverBase = ({
     )
 }
 
-/**
- * `Popover.*` — the click-panel ATOM namespace. `Popover` là atom popover DUY
- * NHẤT (heading/arrow/placement đều là LEAF prop-driven của nó).
- */
+/** `Popover.*` — the click-panel atom namespace. `heading`/`arrow`/`placement` are all leaf props. */
 export { PopoverBase as Popover }

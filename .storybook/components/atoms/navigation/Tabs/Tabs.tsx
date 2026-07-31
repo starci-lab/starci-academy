@@ -2,23 +2,13 @@ import { TabsBase } from "./TabsBase"
 import { TabsExtended } from "./TabsExtended"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Tabs.*`: namespace của họ tab-strip. File này CHỈ gom, không có logic.
+ * `Tabs.*` — namespace of the tab-strip family. This file only gathers the
+ * members together; no logic of its own.
  *
- * Gộp 2026-07-26 (thầy chốt): `ExtendedTabs` (namespace rời, đi bằng `children`)
- * nhập vào đây làm `TabsExtended` — cả hai member cùng bọc HeroUI `Tabs`, tách
- * hai namespace là giả, chỉ khác API dữ liệu (`items` vs `children`, xem header
- * `TabsExtended.tsx` — nợ §12b CHƯA gộp API ở lượt này).
+ *   • `Tabs`         → ./TabsBase     — data-driven, `items`.
+ *   • `TabsExtended` → ./TabsExtended — takes `children` directly.
  *
- * Mỗi member một FILE riêng (khuôn `Button/ButtonBase.tsx` + `ButtonGroup.tsx`):
- *   • `Tabs`     → ./TabsBase     — data-driven, `items` (§12b sạch).
- *   • `TabsExtended` → ./TabsExtended — `children` thô (§12b nợ, xem header đó).
- *
- * Call-site bên ngoài dùng `Tabs` giữ nguyên đường import cũ
- * (`.../Tabs/Tabs`). `ExtendedTabs` (thư mục riêng) đã XOÁ — xem báo cáo cho
- * danh sách file ngoài `.storybook` còn import `ExtendedTabs` (chưa sửa, ngoài
- * phạm vi lượt này).
- * ─────────────────────────────────────────────────────────────────────────────
+ * External call sites keep importing `Tabs` from `.../Tabs/Tabs`.
  */
 export { TabsBase as Tabs, TabsExtended }
 

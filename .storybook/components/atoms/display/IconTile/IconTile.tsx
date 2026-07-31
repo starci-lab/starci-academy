@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import type { ComponentType, SVGProps } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -13,24 +14,22 @@ import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * Visual tone of the tile (drives the tinted background + icon colour).
- *
- * Alias, not a redeclaration (thầy chốt 2026-07-29): the same five values
- * {@link AlertStatus} already carries — trung lập is `default`, matching every
- * other status-driven prop in the system instead of this atom's own `neutral`.
+ * Alias of {@link AlertStatus}, not a redeclaration — the same five values,
+ * with `default` as neutral rather than a separate `neutral` value.
  */
 export type IconTileTone = AlertStatus
 
 /** Size of the tile. */
 export type IconTileSize = "sm" | "md" | "lg"
 
-/** Two weight steps for the glyph — matches §5.0a (only a glyph smaller than `size-5` needs `bold`). */
+/** Two weight steps for the glyph; only a glyph smaller than `size-5` needs `bold`. */
 export type IconWeight = "regular" | "bold"
 
 /**
- * Icon is passed in as a COMPONENT (e.g. `GraduationCapIcon`); the atom renders it
- * and forces its own scale at the tile's size. The type stays OPEN (`SVGProps` +
- * optional `weight`), NOT typed against Phosphor's `Icon` — typing tightly against
- * one library locks the whole tree to a single provider (§5.0).
+ * Icon is passed in as a COMPONENT (e.g. `GraduationCapIcon`); the atom renders
+ * it and forces its own scale at the tile's size. Typed as `SVGProps` plus an
+ * optional `weight`, not against Phosphor's own `Icon` type, so this file does
+ * not depend on one icon provider.
  */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: IconWeight }>
 
@@ -52,14 +51,19 @@ interface IconTileOwnProps {
     showAnatomy?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
- * `icon` is REQUIRED when rendering the real tile, NOT needed when `isSkeleton` —
- * the shimmer box has no icon inside. Same union shape as `ChipBaseProps`/
- * `TypographyProps` (§12c: content optional-when-skeleton via a UNION, not a
- * blanket optional).
+ * `icon` is required when rendering the real tile, not needed when
+ * `isSkeleton` (the shimmer box has no icon inside). Same union shape as
+ * `ChipBaseProps`/`TypographyProps`.
  */
 export type IconTileProps = IconTileOwnProps &
     (
@@ -87,31 +91,19 @@ const TONE: Record<IconTileTone, string> = {
 }
 
 /**
- * Corner rounding — ROUND, a single shape (teacher decided 2026-07-26: "round
- * reads nicer", then decided the same day to DROP the `shape` axis entirely).
+ * Corner rounding — round, a single fixed shape (no `shape` prop/axis).
  *
- * The old `square`/`circle` axis only lived inside its own story — no consumer in
- * the design tree ever passed `shape`, so it was a choice nobody made. A tile
- * usually stands ALONE in open space (an empty state, the top of a dialog) where
- * there's no straight edge nearby to line up against, so round reads softer.
- *
- * ⚠️ `src` (the real app) currently uses hard square rounding by size
- * (`rounded-xl`/`rounded-2xl`) and has NO `shape` prop — the design intentionally
- * leads; sync comes later (§0).
+ * `src` (the real app) currently uses square rounding by size instead and has
+ * no `shape` prop; the two are not yet in sync.
  */
 const SHAPE_CLASS = "rounded-full"
 
 /**
- * size → the tile's BOX (corner rounding is {@link SHAPE_CLASS}'s job, not mixed
- * in here).
+ * size → the tile's box (corner rounding is {@link SHAPE_CLASS}'s job, kept separate).
  *
- * Default `sm` = `size-10` (40px) + icon `size-5` — the standard pairing for an
- * `IconTile + TitledText` row and for an empty state. The icon is a FUNCTION of
- * size — the caller never tunes it separately (§12d) — see {@link SIZE_ICON}.
- *
- * 🕰️ `sm` used to be `size-12` (48px, decided 2026-07-26) → lowered to `size-10`
- * (teacher decided 2026-07-27): 48px overpowered an `sm`/`xs` text cluster — the
- * tile read as the main character instead of an identity mark.
+ * Default `sm` = `size-10` (40px) with icon `size-5` — the standard pairing for
+ * an `IconTile + TitledText` row or an empty state. Icon size is a function of
+ * tile size ({@link SIZE_ICON}); callers cannot tune it separately.
  */
 const SIZE_BOX: Record<IconTileSize, string> = {
     sm: "size-10",
@@ -120,9 +112,9 @@ const SIZE_BOX: Record<IconTileSize, string> = {
 }
 
 /**
- * size → the inner ICON size. All three steps are `size-5` or above ⇒ per §5.0a we
- * do NOT pass `weight` (the glyph stays natural `regular`) — only a glyph under
- * `size-5` needs `bold` forced, and IconTile has no step that small.
+ * size → the inner icon size. All three steps are `size-5` or above, so no
+ * `weight` is passed (the glyph stays `regular`); only a glyph under `size-5`
+ * needs `bold`, and IconTile has no step that small.
  */
 const SIZE_ICON: Record<IconTileSize, string> = {
     sm: "size-5",
@@ -147,6 +139,7 @@ const IconTileBase = ({
     size = "sm",
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: IconTileProps) => {
@@ -156,23 +149,22 @@ const IconTileBase = ({
     useEffect(() => setFailed(false), [src])
     const showImage = Boolean(src) && !failed
 
-    // Skeleton CO-LOCATED (§12c): the tile is a SOLID BOX (icon/image fills it), so
-    // the shimmer bar IS the whole box — exact {@link SIZE_BOX}, same rounding.
-    // Checked BEFORE any shape branch (icon vs image) so real content never leaks.
+    // The tile is a solid box (icon/image fills it), so the shimmer is the whole
+    // box — exact {@link SIZE_BOX}, same rounding. Checked before any content
+    // branch so real content never leaks through while loading.
     if (isSkeleton) {
         return (
             <HeroSkeleton
                 data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
-                className={cn("shrink-0", SIZE_BOX[size], SHAPE_CLASS, className)}
+                className={cn("shrink-0", SIZE_BOX[size], SHAPE_CLASS, className, classNames)}
             />
         )
     }
 
     return (
-        // Tile/Cover/Icon are plain elements/arbitrary content, not fixed importable
-        // components (§ naming pass, 2026-07-28 — see the story's own note), so none
-        // of them gets a self-badge fallback here; only `anatPart` from a PARENT names
-        // this root as one opaque node.
+        // Tile/Cover/Icon are plain elements, not importable components, so none
+        // of them gets a self-badge fallback here; only `anatPart` from a parent
+        // names this root as one opaque node.
         <div
             aria-hidden
             data-anat-part={anatPart}
@@ -183,6 +175,7 @@ const IconTileBase = ({
                 // skip the tint when a cover image fills the tile
                 showImage ? null : TONE[tone],
                 className,
+                classNames,
             )}
         >
             {showImage ? (
@@ -194,9 +187,8 @@ const IconTileBase = ({
                 />
             ) : Icon ? (
                 <span aria-hidden className="inline-flex shrink-0">
-                    {/* The atom owns the glyph scale (§4): SIZE_ICON is already ≥ size-5
-                        at all three steps, so no `weight` is passed (§5.0a — only a
-                        glyph < size-5 forces "bold"). */}
+                    {/* SIZE_ICON is already ≥ size-5 at all three steps, so no
+                        `weight` is passed — only a glyph < size-5 forces "bold". */}
                     <Icon className={SIZE_ICON[size]} />
                 </span>
             ) : null}

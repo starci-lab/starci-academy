@@ -352,8 +352,8 @@ const Base = ({
             <StackH gap="grouped" padding="cozy" className={cn("rounded-3xl bg-surface shadow-surface", className)}>
                 <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
                 <StackV gap="related" className="min-w-0 flex-1">
-                    <Typography size="sm" isSkeleton className="w-2/3" />
-                    <Typography size="xs" isSkeleton className="w-1/3" />
+                    <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
+                    <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
                 </StackV>
             </StackH>
         )
@@ -596,10 +596,7 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
                 weight="medium"
                 truncate
                 isSkeleton={isSkeleton}
-                className={cn(
-                    "underline-offset-4 decoration-[var(--separator-tertiary)]",
-                    interactive && "group-hover:underline",
-                )}
+                underlineOnGroupHover={interactive}
                 text={title}
             />
             {content ? <div>{content}</div> : null}
@@ -694,7 +691,7 @@ const Nested = ({
                         <StackH gap="related" className="min-w-0 text-muted [&_svg]:size-4">
                             {icon}
                             {isSkeleton
-                                ? <Typography size="xs" isSkeleton className="w-28" />
+                                ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
                                 : <Typography size="xs" color="muted" truncate text={title} />}
                         </StackH>
                     )}
@@ -926,8 +923,8 @@ const PressableGroupSkeletonTile = ({ className, showAnatomy }: PressableGroupSk
             <Avatar isSkeleton size="md" />
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
-            <Typography size="sm" isSkeleton className="w-1/3" />
-            <Typography size="xs" isSkeleton className="w-2/3" />
+            <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+            <Typography size="xs" isSkeleton classNames={["w-2/3"]} />
         </div>
     </div>
 )
@@ -1389,7 +1386,8 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         />
     ) : null)
     const metaSlot = meta ?? (metaText != null
-        ? <Typography size="sm" weight="medium" className="text-accent-soft-foreground" text={metaText} />
+        ? <Typography size="sm" weight="medium"
+ color="accent-soft" text={metaText} />
         : null)
     // DIV position (icon §1c/§4.2): the row is a control with FIXED `p-3` padding (not
     // hug-content), and its title is `text-sm` ⇒ line-height size = `size-5` — the SAME
@@ -1406,7 +1404,8 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 <Typography size="sm"
                     truncate
                     isSkeleton={isSkeleton}
-                    className={cn(underlineHover && "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline", titleClassName)}
+                    underlineOnGroupHover={underlineHover}
+                    className={titleClassName}
                     text={title}
                 />
                 {subtitle ? (
@@ -1682,7 +1681,7 @@ const AccordionFrame = ({
                         </Accordion.Trigger>
                     </Accordion.Heading>
                     <Accordion.Panel>
-                        <Accordion.Body className={cn("pt-0")}>{item.body}</Accordion.Body>
+                        <Accordion.Body>{item.body}</Accordion.Body>
                     </Accordion.Panel>
                 </Accordion.Item>
             ))}
@@ -1725,11 +1724,11 @@ const AccordionFrameSkeleton = ({
                                 the shimmer bar is only glyph-height, so without this wrapper the
                                 loading row would sit shorter than the real row. */}
                             <span className="flex h-5 items-center">
-                                <Typography size="sm" isSkeleton className="w-2/5" />
+                                <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
                             </span>
                             {item?.subtitle != null ? (
                                 <span className="flex h-4 items-center">
-                                    <Typography size="xs" isSkeleton className="w-1/4" />
+                                    <Typography size="xs" isSkeleton classNames={["w-1/4"]} />
                                 </span>
                             ) : null}
                         </StackV>
@@ -1957,7 +1956,7 @@ const CrossListRow = ({
             <>
                 <HeroSkeleton className="size-5 shrink-0 rounded-full" />
                 <div className="min-w-0 flex-1">
-                    <Typography size="sm" isSkeleton className="w-3/4" />
+                    <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
                 </div>
             </>
         ) : (
@@ -2066,7 +2065,7 @@ const Placeholder = ({
                 )}
             >
                 <HeroSkeleton className="size-8 rounded-xl" />
-                <Typography size="sm" isSkeleton className="w-1/3" />
+                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
             </div>
         )
     }

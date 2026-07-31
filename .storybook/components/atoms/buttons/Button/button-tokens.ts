@@ -1,32 +1,22 @@
 import type { ComponentType, SVGProps } from "react"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * TOKEN dùng chung của họ `Button` — KHÔNG phải component.
- *
- * Tách ra file riêng để `ButtonIcon` không phải import từ `ButtonBase` chỉ để lấy
- * mấy cái bảng: hai nút là hai component NGANG HÀNG, không cái nào dựng cái nào.
- * File này không export component nào nên nó KHÔNG xuất hiện trong deps tree.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Shared tokens for the `Button` family — not a component. Kept in its own file so
+ * no member has to import another member just to reach these tables; nothing here
+ * is exported as a component, so this file does not appear in the deps tree.
  */
 
-/**
- * Semantic action intent → maps straight to the HeroUI fork's `variant`.
- *
- * `tertiary`/`outline` thêm 2026-07-29 (deep research, `principles.md` §15) — HeroUI
- * thật khai đủ 7 (`node_modules/@heroui/styles/.../button.styles.d.ts`), atom trước đó
- * chỉ có 5. `tertiary` = hành động PHỤ, không cần nổi (§15c) — dùng nhiều nhất trong
- * `src` thật (77 call-site), atom lại chưa có option để chọn. `outline` hiếm (6
- * call-site), viền rõ nhưng nền trong suốt.
- */
-export type ButtonVariant = "primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger" | "danger-soft"
+/** Semantic action intent, mapped to the HeroUI fork's `variant` via {@link HERO_VARIANT}. */
+export type ButtonVariant =
+    | "primary"
+    | "secondary"
+    | "tertiary"
+    | "outline"
+    | "ghost"
+    | "danger"
+    | "danger-soft"
 
-/**
- * HeroUI thật khai NGUYÊN cả 7 (kể cả `danger-soft` — comment cũ ở đây từng nói HeroUI
- * không có `danger-soft`, đã LỖI THỜI: bản HeroUI hiện tại cài trong repo đã có sẵn.
- * Giữ nguyên cách mượn `secondary` + `VARIANT_CLS` cho `danger-soft` ở đây — đổi sang
- * variant gốc của HeroUI là việc RIÊNG, ngoài phạm vi thêm `tertiary`/`outline` lần này.
- */
+/** HeroUI's own variant set. `danger-soft` has no HeroUI equivalent — see {@link HERO_VARIANT}. */
 type HeroVariant = "primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger"
 
 export const HERO_VARIANT: Record<ButtonVariant, HeroVariant> = {
@@ -39,37 +29,43 @@ export const HERO_VARIANT: Record<ButtonVariant, HeroVariant> = {
     "danger-soft": "secondary",
 }
 
-/** Class đắp thêm cho variant HeroUI không có sẵn. Rỗng = dùng nguyên variant HeroUI. */
+/** Classes layered on for variants HeroUI has no native equivalent for. Empty = use the HeroUI variant as-is. */
 export const VARIANT_CLS: Partial<Record<ButtonVariant, string>> = {
     "danger-soft": "bg-danger-soft text-danger-soft-foreground hover:bg-danger-soft/70",
 }
 
-/** Scale bậc thang → map THẲNG xuống HeroUI `size` (`md` = default). */
+/** Size scale, mapped directly to HeroUI's `size` (`md` = default). */
 export type ButtonSize = "sm" | "md" | "lg"
 
-/**
- * Nét icon Phosphor mà ATOM tự ép (§5.0a) — khai TẠI CHỖ, KHÔNG import kiểu `Icon`
- * của thư viện: khai chặt theo lib là khoá cả cây vào một nhà cung cấp.
- */
-type IconWeight = "regular" | "bold"
+/** Where the content sits inside the control — `ButtonBase`'s glyph+label row, or `ButtonGroup`'s row of buttons. */
+export type ButtonAlign = "start" | "end" | "between"
 
 /**
- * An icon passed as a COMPONENT (e.g. `PlusIcon`), rendered by the atom at button
- * scale. Prop `weight` để OPTIONAL vì atom tự truyền (§5.0a); component icon nào
- * không hiểu `weight` vẫn nhận được.
+ * `between` bakes in `w-full`: `justify-between` with no room to spread does
+ * nothing, so a caller that wants the two edges pushed apart needs the full-width
+ * half too. `start`/`end` stay width-agnostic; a caller that also wants full width
+ * can still reach for `classNames={["w-full"]}`.
  */
+export const ALIGN_CLS: Record<ButtonAlign, string> = {
+    start: "justify-start",
+    end: "justify-end",
+    between: "w-full justify-between",
+}
+
+/** Phosphor icon stroke weight, declared locally rather than imported from the icon library's own type. */
+type IconWeight = "regular" | "bold"
+
+/** An icon passed as a component (e.g. `PlusIcon`), rendered at button scale. `weight` is optional — the atom supplies it. */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: IconWeight }>
 
 /**
- * ICON SCALE = FONT SCALE (luật atom-layer: size icon = size chữ — thầy chốt
- * 2026-07-25). `sm`/`md` chữ `text-sm` (14px) → `size-3.5`; `lg` chữ `text-base`
- * (16px) → `size-4`. Áp CHUNG cho cả glyph-duy-nhất (`Button.Icon`) — một luật
- * duy nhất, không có thang riêng theo box.
+ * Icon scale matches the button's font scale: `sm`/`md` text is `text-sm` (14px) →
+ * `size-3.5`; `lg` text is `text-base` (16px) → `size-4`.
  *
- * ⚠️ `!` là BẮT BUỘC: HeroUI có rule `.button svg:not(…) { size-5 sm:size-4 }`
- * specificity (0,2,2) — cao hơn class Tailwind thường (0,1,1) nên không ép thì
- * icon rơi về thang HeroUI. Đặt trên SPAN bọc icon (không phải trên button) để
- * KHÔNG đụng `<Spinner>`.
+ * The `!` is required: HeroUI's own rule `.button svg:not(…) { size-5 sm:size-4 }`
+ * has higher specificity (0,2,2) than a plain Tailwind class (0,1,1), so without it
+ * the icon falls back to HeroUI's scale. Applied to the wrapping span rather than
+ * the button itself so it does not affect `<Spinner>`.
  */
 export const ICON_CLS: Record<ButtonSize, string> = {
     sm: "[&_svg]:!size-3.5",
@@ -78,11 +74,11 @@ export const ICON_CLS: Record<ButtonSize, string> = {
 }
 
 /**
- * WEIGHT THEO SIZE (§5.0a — thầy chốt 2026-07-26): nét Phosphor co theo cỡ, nên
- * icon NHỎ HƠN `size-5` phải `bold` mới nhìn dày BẰNG icon `size-5` regular
- * (regular 16 đơn vị vs bold 24 trên lưới 256). Cả 3 size của nút đều dưới
- * `size-5` (xem {@link ICON_CLS}) → `bold` hết; vẫn giữ map theo size để bậc nào
- * lên `size-5` thì đổi về `regular` tại đúng một chỗ.
+ * Phosphor's stroke thins as glyph size shrinks, so an icon below `size-5` needs
+ * `bold` to read as visually thick as a `size-5` regular icon (regular is 16 units
+ * vs bold 24 on Phosphor's 256 grid). All three button sizes are below `size-5`
+ * (see {@link ICON_CLS}), so all map to `bold`; kept as a per-size table so a size
+ * that reaches `size-5` can switch to `regular` in one place.
  */
 export const ICON_WEIGHT: Record<ButtonSize, IconWeight> = {
     sm: "bold",
@@ -90,7 +86,7 @@ export const ICON_WEIGHT: Record<ButtonSize, IconWeight> = {
     lg: "bold",
 }
 
-/** Skeleton box theo size — mirror đúng chiều cao nút (mobile → `@app-md` desktop). */
+/** Skeleton height per size, mirroring the real button's height (mobile → `@app-md` desktop). */
 export const SKELETON_H: Record<ButtonSize, string> = {
     sm: "h-9 @app-md:h-8",
     md: "h-10 @app-md:h-9",
@@ -98,10 +94,9 @@ export const SKELETON_H: Record<ButtonSize, string> = {
 }
 
 /**
- * Bề NGANG skeleton cũng phải theo `size` — nút lớn thì padding ngang lớn hơn nên pill
- * dài hơn. Sửa 2026-07-26: trước đó dùng `w-24` CỨNG cho cả ba bậc, chỉ khác chiều cao
- * 4px ⇒ ba skeleton nhìn y hệt nhau, và footprint sai so với nút thật (layout nhảy khi
- * dữ liệu về). Bản legacy vốn có bảng này, bản live làm rơi mất.
+ * Skeleton width must scale with size too: a larger button has more horizontal
+ * padding, so its pill is wider. Keeping this in step with the real button's
+ * footprint avoids a layout shift once the button's content arrives.
  */
 export const SKELETON_W: Record<ButtonSize, string> = {
     sm: "w-20",
@@ -109,7 +104,7 @@ export const SKELETON_W: Record<ButtonSize, string> = {
     lg: "w-28",
 }
 
-/** Skeleton VUÔNG cho nút chỉ-icon (khớp cả bề ngang iconOnly). */
+/** Square skeleton for icon-only buttons, matching their icon-only footprint. */
 export const SKELETON_SQUARE: Record<ButtonSize, string> = {
     sm: "size-9 @app-md:size-8",
     md: "size-10 @app-md:size-9",

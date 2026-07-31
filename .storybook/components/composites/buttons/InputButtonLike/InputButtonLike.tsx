@@ -103,7 +103,7 @@ export const InputButtonLike = ({
             aria-label={ariaLabel ?? (typeof placeholder === "string" ? placeholder : undefined)}
             onPress={onPress}
             className={cn(
-                "w-full justify-between gap-2 rounded-field border-[var(--field-border)] bg-field px-3 font-normal text-field-foreground shadow-[var(--field-shadow)] hover:bg-field",
+                "w-full justify-between rounded-field border-[var(--field-border)] bg-field px-3 font-normal text-field-foreground shadow-[var(--field-shadow)] hover:bg-field",
                 HEIGHT_CLS[size],
                 ICON_CLS[size],
                 className,

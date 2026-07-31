@@ -142,7 +142,7 @@ const QuotaBar = ({
                     size="sm"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    className={isSkeleton ? "w-24" : undefined}
+                    classNames={isSkeleton ? ["w-1/4"] : undefined}
                     anatPart={showAnatomy ? "Typography" : undefined}
                     text={label}
                 />
@@ -151,7 +151,7 @@ const QuotaBar = ({
                     weight="medium"
                     tabularNums
                     isSkeleton={isSkeleton}
-                    className={isSkeleton ? "w-16" : undefined}
+                    classNames={isSkeleton ? ["w-1/3"] : undefined}
                     anatPart={showAnatomy ? "Typography" : undefined}
                     text={(
                         <>
@@ -161,7 +161,7 @@ const QuotaBar = ({
                             {showUnit && unit ? (
                                 <>
                                     {" "}
-                                    <Typography size="sm" color="muted" className="inline" text={unit} />
+                                    <Typography size="sm" color="muted" isInline text={unit} />
                                 </>
                             ) : null}
                         </>
@@ -189,7 +189,7 @@ const QuotaBar = ({
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    className={isSkeleton ? "w-1/2" : undefined}
+                    classNames={isSkeleton ? ["w-1/2"] : undefined}
                     anatPart={showAnatomy ? "ResetCaption" : undefined}
                     text={resetLabel ?? undefined}
                 />

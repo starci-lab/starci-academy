@@ -51,7 +51,7 @@ export const FloatingActionButton = ({
             icon={icon}
             isSkeleton={isSkeleton}
             className={cn(
-                "fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40 rounded-full shadow-lg",
+                "fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40 shadow-lg",
                 className,
             )}
         />

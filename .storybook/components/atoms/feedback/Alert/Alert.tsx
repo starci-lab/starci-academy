@@ -2,52 +2,38 @@ import type { ComponentType, ReactNode, SVGProps } from "react"
 import { Alert as HeroAlert, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, XIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Alert.Base`: the ONE "a message with a valence and an exit" atom.
+ * `Alert.Base` — the single "message with a valence and an exit" atom. It is
+ * the only component that imports `Alert` from `@heroui/react`; `FeedbackCallout`
+ * (placed inside a surface) and `Toast` (floating) both compose from it.
  *
- * Teacher finalized 2026-07-25: `FeedbackCallout` and `Toast` turned out to
- * be the SAME atom (a color-filled alert), differing only in PLACEMENT — callout
- * sits inside a surface, toast floats. Before this, each side had its own
- * `import { Alert } from "@heroui/react"` and kept its own color/close table →
- * "change one, change all" (C-compose drift). This atom is the ONE AND ONLY port
- * down to HeroUI Alert; the other two compose from here, no more cutting straight through.
+ * Owns: `status` → tint mapping, default icon per valence, glyph scale, ×
+ * button skin per status, Indicator/Content/Action/Close layout, and this
+ * shape's own skeleton.
+ * Consumer supplies: content (`title`/`description`/`body`), `action`, `onClose`.
  *
- * ATOM OWNS: `status`→tint mapping · default icon per valence · glyph scale (§4/§5)
- * · × button skin per status · Indicator/Content/Action/Close layout · this
- * shape's own skeleton (§12c).
- * CONSUMER ONLY SUPPLIES: content (`title`/`description`/`body`) + `action` + `onClose`.
+ * Icon set: `@phosphor-icons/react`. Weight follows size — the indicator glyph
+ * at `size-5` stays regular; the × glyph inside `Button size="sm"` is forced
+ * down to `size-3.5`, so it is set to `weight="bold"` to match.
  *
- * ICON (§5.0, teacher finalized 2026-07-26): ONE single set, `@phosphor-icons/react`.
- * Weight follows size (§5.0a): the indicator glyph at `size-5` ⇒ regular (no
- * `weight` passed); the × glyph inside `Button size="sm"` gets forced to `size-3.5` ⇒ `weight="bold"`.
- *
- * NAMESPACE (§13a): do NOT export a bare component — every member goes through `Alert.*`.
- *
- * §12b: do NOT open `children` — `body` is the ONE path for free-form content
- * (a short list, a meta row) under description. `Alert.Base` isn't a real wrapper
- * (there's no "caller content" that needs wrapping beyond the data props already
- * given), so `children` here would just be an escape hatch duplicating `body` — dropped.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Namespace: no bare component export — every member is reached through `Alert.*`.
+ * No `children` prop — use `body` for free-form content under `description`.
  */
 
 /**
- * An icon passed as a COMPONENT (Phosphor), rendered by the atom at its own scale (§4/§5).
- * The type stays BARE as `ComponentType<SVGProps<SVGSVGElement>>` (§5.0) — no
- * library-specific icon type declared, so the whole tree doesn't lock into one provider.
+ * An icon passed as a component (Phosphor), rendered by the atom at its own
+ * scale. Typed as the bare `ComponentType<SVGProps<SVGSVGElement>>` rather
+ * than a library-specific icon type, so callers aren't locked into one provider.
  */
 export type AlertIcon = ComponentType<SVGProps<SVGSVGElement>>
 
 /**
- * Semantic tone — drives tint, default icon and close-button skin.
- *
- * AUDIT 2026-07-30 (feedback ChallengePage/Graded round-9): `info` added — a
- * calm/neutral status distinct from `accent` (the brand's active-state pink),
- * needed for a low-severity AI-grading finding (`bg-info` dot, ground truth
- * `src`'s `LastAttemptResult.tsx`). Token declared in `src/app/globals.css`
- * alongside `success`/`warning` (no prior `--info` value existed anywhere to
- * copy — a genuinely new tone, not a port).
+ * Semantic tone — drives tint, default icon and close-button skin. `info` is
+ * a calm/neutral status distinct from `accent` (the brand's active-state
+ * pink); its `--info` token is declared in `src/app/globals.css` alongside
+ * `success`/`warning`.
  */
 export type AlertStatus = "default" | "accent" | "success" | "warning" | "danger" | "info"
 
@@ -59,8 +45,8 @@ export type AlertStatus = "default" | "accent" | "success" | "warning" | "danger
 export type AlertTone = "soft" | "plain"
 
 /**
- * Default indicator icon per status — Phosphor regular (§5.0). Same round shape
- * for 4 of the 5 statuses; `warning` keeps a triangle because that's the standard warning semantic.
+ * Default indicator icon per status. `warning` uses a triangle; the rest
+ * share a round shape.
  */
 const STATUS_ICON: Record<AlertStatus, AlertIcon> = {
     default: InfoIcon,
@@ -71,7 +57,7 @@ const STATUS_ICON: Record<AlertStatus, AlertIcon> = {
     info: InfoIcon,
 }
 
-/** Soft tint per status — the ONE table (was duplicated in Callout + Toast). */
+/** Soft tint per status. */
 const STATUS_TINT: Record<AlertStatus, string> = {
     default: "bg-default",
     accent: "bg-accent-soft",
@@ -82,9 +68,8 @@ const STATUS_TINT: Record<AlertStatus, string> = {
 }
 
 /**
- * Close (×) colour + hover tint per status. The `!` beats `Button`'s own
- * `ghost` text/hover (a plain utility would lose to it). Hover = a tint of the
- * alert's OWN tone.
+ * Close (×) color + hover tint per status. The `!` is required to override
+ * `Button`'s own `ghost` text/hover utilities.
  */
 const STATUS_CLOSE_TONE: Record<AlertStatus, string> = {
     default: "!text-muted hover:!bg-default",
@@ -95,19 +80,13 @@ const STATUS_CLOSE_TONE: Record<AlertStatus, string> = {
     info: "!text-info-soft-foreground hover:!bg-info-soft",
 }
 
-/**
- * Glyph scale — ONE size for every alert (teacher finalized 2026-07-25, eyeballed
- * on story `Tones`). Before this the atom carried a `size` axis sm/md just to
- * preserve the old shape of Callout (size-6) vs Toast (size-5); teacher locked
- * both to size-5 ⇒ that axis became redundant, removed (§6: don't keep a prop that carries no real difference).
- */
+/** Glyph scale — one size for every alert. */
 const GLYPH_SCALE = "[&_svg]:size-5!"
 
 /**
- * The × glyph of the close button. `Button size="sm"` forces the icon down
- * to `size-3.5` — smaller than `size-5`, so §5.0a requires compensating with
- * `weight="bold"`; left at regular, the × stroke reads ~33% thinner than the
- * `size-5` indicator glyph sitting on the same row, showing two different weights.
+ * The × glyph of the close button. `Button size="sm"` forces it down to
+ * `size-3.5`, so it needs `weight="bold"` to match the stroke weight of the
+ * `size-5` indicator glyph on the same row.
  */
 const CloseGlyph = (props: SVGProps<SVGSVGElement>) => <XIcon {...props} weight="bold" />
 
@@ -129,8 +108,16 @@ interface AlertBaseOwnProps {
     onClose?: () => void
     /** Accessible label for the × (caller passes a localised string). */
     closeAriaLabel?: string
-    /** Placement utilities only (e.g. `mb-4`) — NOT for restyling the alert. */
+    /**
+     * Placement utilities only (e.g. `mb-4`) — NOT for restyling the alert.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
@@ -140,10 +127,10 @@ interface AlertBaseOwnProps {
 /**
  * Props for {@link Alert.Base}.
  *
- * §12c: `isSkeleton` is a CO-LOCATED state — this atom is the ONE AND ONLY origin
- * shape of the alert, so it draws its own loading shape too (no `Skeleton.*`
- * compound). When `isSkeleton`, `title` becomes OPTIONAL via a UNION (not
- * optional across the board — the live branch still REQUIRES a title).
+ * `isSkeleton` is a co-located loading state — this atom renders its own
+ * skeleton rather than delegating to a `Skeleton.*` compound. `title` is
+ * optional only in the `isSkeleton: true` branch; the live branch still
+ * requires it.
  */
 export type AlertBaseProps = AlertBaseOwnProps &
     (
@@ -167,6 +154,7 @@ const AlertBase = ({
     onClose,
     closeAriaLabel,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
     isSkeleton = false,
@@ -174,27 +162,25 @@ const AlertBase = ({
     const Icon = icon ?? STATUS_ICON[status]
     return (
         <HeroAlert
-            // Vendor `HeroAlert.status` is a CLOSED union that never gained `info`
-            // (same hard constraint as `HeroChip.color` — see `ChipTone`'s own note).
-            // `"default"` is a safe stand-in here ONLY because this atom's own
+            // Vendor `HeroAlert.status` is a closed union without `info`.
+            // `"default"` is a safe stand-in because this atom's own
             // `STATUS_TINT`/`STATUS_ICON`/`STATUS_CLOSE_TONE` (all `info`-aware)
-            // drive the actual paint via explicit className — vendor `status` just
-            // needs a value it accepts, not the real answer.
+            // drive the actual paint via explicit className.
             status={status === "info" ? "default" : status}
-            className={cn("shadow-none", tone === "soft" && STATUS_TINT[status], className)}
+            className={cn("shadow-none", tone === "soft" && STATUS_TINT[status], className, classNames)}
             data-anat-part={anatPart}
         >
-            {/* §4: the scaffold owns the glyph scale — the caller hands a BARE icon (component ref). */}
+            {/* The scaffold owns the glyph scale — callers hand a bare icon component. */}
             <HeroAlert.Indicator className={GLYPH_SCALE} data-anat-part={showAnatomy ? "Alert.Indicator" : undefined}>
                 <Icon aria-hidden />
             </HeroAlert.Indicator>
             <HeroAlert.Content data-anat-part={showAnatomy ? "Alert.Content" : undefined}>
-                {/* §12c: the skeleton branch is checked BEFORE any other text-rendering branch. */}
+                {/* The skeleton branch is checked before any other text-rendering branch. */}
                 {isSkeleton ? (
-                    // The FRAME (tint · radius · shadow · gap) and the ICON render FOR REAL — only
-                    // the TEXT turns into bars. Each bar matches the real line-box so layout never
-                    // jumps (§8): title `text-sm leading-6` → my-1 + h-4 = 24px; description
-                    // `text-sm` (leading-5) → my-1 + h-3 = 20px.
+                    // The frame (tint, radius, shadow, gap) and the icon render for real —
+                    // only the text turns into bars. Each bar matches the real line-box so
+                    // layout doesn't jump: title `text-sm leading-6` → my-1 + h-4 = 24px;
+                    // description `text-sm` (leading-5) → my-1 + h-3 = 20px.
                     <>
                         <HeroSkeleton
                             className="my-1 h-4 w-40 rounded"
@@ -215,19 +201,19 @@ const AlertBase = ({
                         ) : null}
                     </>
                 )}
-                {/* §11a: `body` is a CALLER SLOT — the node inside belongs to whoever passed it,
-                    not to this atom's own anatomy, so the wrapper does not badge it. */}
+                {/* `body` is a caller slot — the node inside belongs to whoever passed
+                    it, so the wrapper does not badge it. */}
                 {body != null ? (
                     <div className="mt-2 w-full">{body}</div>
                 ) : null}
             </HeroAlert.Content>
-            {/* §11a: `action` is a CALLER SLOT too (usually `Button`, but the atom never
-                forces that) — not badged for the same reason as `body` above. */}
+            {/* `action` is a caller slot too (usually `Button`, not enforced) —
+                not badged for the same reason as `body` above. */}
             {action ? (
                 <div className="shrink-0">{action}</div>
             ) : null}
             {onClose ? (
-                // §11a: the badge stops at the "Close" node (atom `Button`) — don't drill into the atom's guts.
+                // Badge stops at the "Close" node (atom `Button`) — doesn't drill into its internals.
                 <span className="shrink-0" data-anat-part={showAnatomy ? "Button" : undefined}>
                     <Button isIconOnly
                         prefixIcon={CloseGlyph}
@@ -244,7 +230,7 @@ const AlertBase = ({
 }
 
 /**
- * `Alert.*` — the alert ATOM namespace. `Alert.Base` is the ONE AND ONLY alert
- * surface of the system; `FeedbackCallout` (placed inside a surface) and `Toast` (floating) both compose from it.
+ * `Alert.*` — the alert atom namespace. `Alert.Base` is the single alert
+ * surface; `FeedbackCallout` and `Toast` both compose from it.
  */
 export { AlertBase as Alert }

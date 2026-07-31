@@ -1,37 +1,26 @@
 import { cn } from "@heroui/react"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `ThreadConnector`: the curved guide line that visually links a
- * comment's avatar down into a reply composer's own avatar (thầy 2026-07-29,
- * "khi trả lời thì nested avatar like facebook, với có thể line màu cam được
- * k?"). Same family as `Stack.nested`'s straight indent-guide border — this is
- * that same idea BENT into a corner instead of a straight drop, so no block
- * ever hand-writes `border-l`/`border-b`/`rounded-bl-*` itself.
+ * @noSkeleton draws a guide line, not a value — there is nothing behind it to wait for.
  *
- * Genuinely NEW capability, not a `src` port — real `CommentComposer` never
- * shows an avatar for a reply at all (see `ContentCommentComposer`'s own file
- * header).
+ * The curved line linking a comment's avatar down into a reply composer's avatar. Same idea as
+ * `Stack.nested`'s straight indent guide, bent into a corner, so no block hand-writes
+ * `border-l` / `border-b` / `rounded-bl-*` of its own.
  *
- * ⭐ HEIGHT IS FIXED, NOT `self-stretch` (thầy 2026-07-29: "cái mốc bị lệch" —
- * caught after the first cut stretched to match the WHOLE composer, including
- * the textarea+button rows below the avatar, so the curve never landed on the
- * avatar's actual center). The reply composer's own avatar is `size="sm"`
- * (`size-8`/32px) and top-aligned (`align="start"` on the composer's own row,
- * see its file header) — this connector's height is exactly HALF that
- * (`h-4`/16px), so its bottom border lands precisely at the avatar's vertical
- * center, not somewhere down the middle of a much taller box.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The height is fixed at `h-4` and must not become `self-stretch`. The reply composer's avatar is
+ * `size="sm"` (32px) and top-aligned, so its centre is 16px down and that is where the bottom
+ * border has to land. Stretching makes the line track the whole composer, textarea and buttons
+ * included, and the curve stops meeting the avatar.
  */
 
 /** Props for {@link ThreadConnector}. */
 export interface ThreadConnectorProps {
-    /** Extra classes (placement only). */
+    /** Placement within the parent. */
     className?: string
 }
 
 /**
- * The reply-thread connector line. See the file header for the full contract.
+ * The reply-thread connector line.
  *
  * @param props - {@link ThreadConnectorProps}
  */

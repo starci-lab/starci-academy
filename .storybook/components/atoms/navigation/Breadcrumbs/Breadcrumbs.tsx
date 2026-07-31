@@ -2,42 +2,30 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Breadcrumbs as HeroBreadcrumbs, Link as HeroLink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Breadcrumbs`: the ONE constrained breadcrumb-trail atom over
- * HeroUI `Breadcrumbs`.
+ * `Breadcrumbs` — the single breadcrumb-trail atom wrapping HeroUI `Breadcrumbs`.
  *
- * Data-driven: the caller passes `items` (root → current), and the atom renders
- * `HeroBreadcrumbs > HeroBreadcrumbs.Item`. The last item is the current page
- * (usually without `onPress` → read-only). Truncation is a LEAF of the same atom
- * driven by `maxItems`: when the trail is longer, the middle collapses to a
- * single non-pressable "…" crumb (first + ellipsis + tail) — NOT a separate
- * component (§6 granularity).
+ * Data-driven: pass `items` (root → current). Renders `HeroBreadcrumbs >
+ * HeroBreadcrumbs.Item`. The last item is the current page, usually without
+ * `onPress` (read-only). `maxItems` truncates a longer trail to a single
+ * non-pressable "…" crumb in the middle (first + ellipsis + tail).
  *
- * RESPONSIVE COLLAPSE also lives here (the `ResponsiveBreadcrumb` scaffold
- * removed 2026-07-25 — §13c "atom wears the coat"): a narrow column can't hold a trail, and a
- * deep trail wraps and eats vertical space, so the atom can swap the WHOLE trail
- * for a single back affordance ("← Back") pointing at the deepest pressable
- * ancestor:
+ * Responsive collapse also lives here: a narrow column can't hold a trail, and
+ * a deep trail wraps and eats vertical space, so the atom can swap the whole
+ * trail for a single back affordance ("← Back") pointing at the deepest
+ * pressable ancestor:
  *   • `collapseOnMobile` → back link below `@app-sm`, trail from `@app-sm` up.
- *   • `collapseFrom={n}` → back link at EVERY width once the trail has ≥ n crumbs.
- * The back link is a LEAF of this atom (inline HeroUI `Link` + Phosphor
- * `ArrowLeftIcon`) — an atom is the bottom tier and must not import `blocks/`,
- * so it does NOT reuse the `BackLink` block.
+ *   • `collapseFrom={n}` → back link at every width once the trail has ≥ n crumbs.
+ * The back link is built inline here (HeroUI `Link` + Phosphor `ArrowLeftIcon`)
+ * rather than reusing the `BackLink` block, since an atom must not import
+ * `blocks/`.
  *
- * Rules (Chip/Input):
- *   • NAMESPACE required — export ONLY `Breadcrumbs = { Base }`, no bare
- *     component exported (teacher finalized 2026-07-25).
- *   • NO `children` — crumbs pass through `items` data; `label` is a
- *     `ReactNode` prop (the label), not children.
- *   • Wrap HeroUI to the MAX (`Breadcrumbs`), alias `Hero*`.
- *   • STRICT §4: `items` + per-item `onPress` TRẦN — the atom owns separators,
- *     truncation, current-crumb styling; the consumer never touches structure.
- *   • `isSkeleton` → trail skeleton co-located (HeroSkeleton, hybrid C); shape
- *     follows `collapseFrom`/`collapseOnMobile` (bar-row vs back-link vs both,
- *     responsive) — fixed 2026-07-27, see prop doc below.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Only `Breadcrumbs` is exported — no bare component. `items`/`label` are data
+ * props, not `children`. The atom owns separators, truncation, and
+ * current-crumb styling. `isSkeleton` renders a co-located trail skeleton whose
+ * shape follows `collapseFrom`/`collapseOnMobile`.
  */
 
 /** One crumb in a {@link BreadcrumbsBase} trail. */
@@ -82,7 +70,13 @@ export interface BreadcrumbsBaseProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** The collapsed placeholder key (stable, never collides with a real crumb key). */
@@ -102,34 +96,32 @@ const BreadcrumbsBase = ({
     isSkeleton = false,
     showAnatomy = false,
     className,
+    classNames,
 }: BreadcrumbsBaseProps) => {
     if (isSkeleton) {
-        // Collapse shape is STRUCTURAL — driven by `collapseFrom`/`collapseOnMobile`
-        // (caller config) + trail depth, both known BEFORE crumb text loads. The
-        // shimmer must pick the same shape the real trail resolves to; a bar-row
-        // shimmer in front of a back-link real render is a layout jump when data
-        // lands, the same bug class fixed on `Button` (§12g: skeleton must
-        // track every known-ahead axis, not one fixed shape for every config).
-        // `items.length` stands in for "has a navigable ancestor" since skeleton
-        // items rarely carry real `onPress` yet.
+        // Collapse shape is known ahead of load (driven by `collapseFrom`/
+        // `collapseOnMobile` + trail depth), so the shimmer must match the shape
+        // the real trail resolves to — a mismatched shimmer causes a layout jump
+        // once data lands. `items.length` stands in for "has a navigable
+        // ancestor" since skeleton items rarely carry a real `onPress` yet.
         const canCollapse = items.length > 1
         const isLongTrail = collapseFrom !== undefined && items.length >= collapseFrom
         const collapseAlways = canCollapse && isLongTrail
         const collapseMobile = canCollapse && collapseOnMobile && !collapseAlways
 
-        // Real heroui render is each `HeroSkeleton` (`Skeleton`) bar itself, NOT the plain
-        // wrapping `<div>` — tagging the div would be a made-up name (2026-07-27).
+        // Only the HeroSkeleton bars get data-anat-part — the wrapping div isn't
+        // a real component, tagging it would be a made-up name.
         const trailBars = (
-            <div className={cn("flex items-center gap-2", className)}>
-                <HeroSkeleton className="h-4 w-14 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                <HeroSkeleton className="h-4 w-16 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                <HeroSkeleton className="h-4 w-20 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            <div className={cn("flex items-center gap-2", className, classNames)}>
+                <HeroSkeleton className="h-4 w-1/4 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-4 w-1/2 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             </div>
         )
         const backBar = (
-            <div className={cn("flex w-fit items-center gap-2", className)}>
+            <div className={cn("flex w-fit items-center gap-2", className, classNames)}>
                 <HeroSkeleton className="size-3.5 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                <HeroSkeleton className="h-4 w-12 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             </div>
         )
 
@@ -164,7 +156,7 @@ const BreadcrumbsBase = ({
     const trail = (
         <HeroBreadcrumbs
             data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}
-            className={cn(collapseMobile && "hidden @app-sm:flex", className)}
+            className={cn(collapseMobile && "hidden @app-sm:flex", className, classNames)}
         >
             {rendered.map((entry) =>
                 entry === ELLIPSIS_KEY ? (
@@ -188,11 +180,11 @@ const BreadcrumbsBase = ({
         <>
             {collapseAlways ? null : trail}
             {/*
-              Collapsed LEAF of this atom: one quiet back affordance, not a pill.
-              Arrow slides left on hover (§5b — arrow = action icon); the Phosphor
-              glyph sits at `size-3.5` to match `text-sm`, smaller than `size-5` so
-              it needs `weight="bold"` to compensate the stroke (§5.0a). Tailwind
-              v4: `translate` is its own property → transition `[translate]`.
+              A quiet back affordance, not a pill. Icon sized `size-3.5` to
+              match `text-sm`; smaller than `size-5` so `weight="bold"`
+              compensates the stroke. Tailwind v4 treats `translate` as its
+              own property, so the transition must target `[translate]` —
+              `transition-transform` won't animate it.
             */}
             <HeroLink
                 data-anat-part={showAnatomy ? "Link" : undefined}
@@ -201,6 +193,7 @@ const BreadcrumbsBase = ({
                     "group text-muted hover:text-foreground flex w-fit cursor-pointer items-center gap-2 text-sm no-underline transition-colors",
                     collapseMobile && "@app-sm:hidden",
                     className,
+                    classNames,
                 )}
             >
                 <ArrowLeftIcon

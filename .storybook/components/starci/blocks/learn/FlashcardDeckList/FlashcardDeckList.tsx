@@ -246,7 +246,7 @@ const FlashcardDeckList = ({
                     <Typography
                         size="sm"
                         weight="medium"
-                        className="text-accent-soft-foreground"
+                        color="accent-soft"
                         text={ctaLabel ?? DEFAULT_CTA_LABEL}
                         anatPart={showAnatomy ? "Typography" : undefined}
                     />

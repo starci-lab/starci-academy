@@ -88,7 +88,7 @@ const ContentAiSelectionAsk = ({
                 size="sm"
                 prefixIcon={SparkleIcon}
                 onPress={onOpen}
-                className="rounded-full shadow-lg"
+                isElevated
                 anatPart={showAnatomy ? "Button" : undefined}
             />
             {isNew ? (

@@ -208,7 +208,7 @@ const FoundationHeader = ({
                             ) : null}
                         </StackH>
                         {isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton className="w-32" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                         ) : hasAuthor ? (
                             <Typography
                                 size="xs"

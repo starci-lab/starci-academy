@@ -175,8 +175,8 @@ const TrialConversionStripBase = ({
                         // resolves, but the price is a second fetch — mirror the price
                         // line instead of showing an empty gap until it lands.
                             <>
-                                <Typography size="h4" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography" : undefined} />
-                                <Typography size="xs" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="h4" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="xs" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
                             </>
                         ) : price?.discountedPriceVnd != null ? (
                             <>
@@ -203,7 +203,7 @@ const TrialConversionStripBase = ({
                     <Button
                         variant="primary"
                         size="lg"
-                        className="shrink-0"
+                        classNames={["shrink-0"]}
                         label="Mở khoá toàn bộ khoá học"
                         suffixIcon={ArrowRightIcon}
                         iconSlide

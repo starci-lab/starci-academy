@@ -192,9 +192,10 @@ const Podium = ({ entries, meLabel, isSkeleton, showAnatomy }: PodiumProps) => (
                         weight="medium"
                         color={entry.isMe ? "accent" : undefined}
                         truncate
+                        align="center"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : entry.username}
-                        className="w-full text-center"
+                        classNames={["w-full"]}
                         anatPart={showAnatomy ? "Typography" : undefined}
                     />
                     <Typography
@@ -213,7 +214,7 @@ const Podium = ({ entries, meLabel, isSkeleton, showAnatomy }: PodiumProps) => (
                             tabularNums
                             isSkeleton={isSkeleton}
                             text={isSkeleton ? undefined : String(entry.rank)}
-                            className="text-accent-soft-foreground"
+                            color="accent-soft"
                             anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     </div>
@@ -310,9 +311,10 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean, show
                 size="sm"
                 color="muted"
                 tabularNums
+                align="center"
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : `#${row.rank}`}
-                className="w-8 shrink-0 text-center"
+                classNames={["w-1/4", "shrink-0"]}
                 anatPart={showAnatomy ? "Typography" : undefined}
             />
             <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "UserCell" : undefined}>

@@ -346,7 +346,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
             <Accordion
                 variant="default"
                 style={{ "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)" } as React.CSSProperties}
-                className={cn("overflow-hidden rounded-3xl border border-default bg-surface", blockMy)}
+                className={cn("overflow-hidden border border-default bg-surface", blockMy)}
             >
                 {children}
             </Accordion>

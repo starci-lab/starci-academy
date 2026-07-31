@@ -138,7 +138,7 @@ const IMPLEMENTATION_GUIDE_HEADING = "Hướng dẫn"
 const IMPLEMENTATION_EXAMPLE_HEADING = "Ví dụ"
 
 /** How many shimmer paragraph lines `BriefMarkdown` guesses while `isSkeleton` — see file header. */
-const BRIEF_SKELETON_LINE_WIDTHS = ["w-full", "w-full", "w-4/5", "w-2/3"] as const
+const BRIEF_SKELETON_LINE_WIDTHS = ["w-full", "w-full", "w-3/4", "w-2/3"] as const
 
 /**
  * The personal-project task reading column. See the file header for the full
@@ -195,9 +195,9 @@ const TaskBriefBody = ({
         <StackV gap="section" anatPart={anatPart} showAnatomy={showAnatomy}>
             {/* TitleDesc — always present; both lines fall back to their own shimmer bar. */}
             <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
-                <Typography size="h3" weight="bold" isSkeleton={isSkeleton} className={isSkeleton ? "w-1/2" : undefined} text={title} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="h3" weight="bold" isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} text={title} anatPart={showAnatomy ? "Typography" : undefined} />
                 {isSkeleton ? (
-                    <Typography size="sm" color="muted" isSkeleton className="w-2/3" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" color="muted" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                 ) : description != null && description.trim().length > 0 ? (
                     <Typography size="sm" color="muted" text={description} anatPart={showAnatomy ? "Typography" : undefined} />
                 ) : null}
@@ -226,7 +226,7 @@ const TaskBriefBody = ({
                 isSkeleton ? (
                     <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined}>
                         {BRIEF_SKELETON_LINE_WIDTHS.map((width, index) => (
-                            <Typography key={index} size="base" isSkeleton className={width} />
+                            <Typography key={index} size="base" isSkeleton classNames={[width]} />
                         ))}
                     </StackV>
                 ) : (

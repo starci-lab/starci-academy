@@ -1,20 +1,16 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Link as HeroUILink, cn } from "@heroui/react"
+import { Link as HeroUILink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
+import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
+import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — full port of `@/components/blocks/navigation/SeeMoreLink`.
- * Authored in Storybook (not `src`); synced to `src` later.
+ * Storybook-local port of `@/components/blocks/navigation/SeeMoreLink`.
+ * Authored here, synced to `src` separately.
  *
- * Reused by the surface-card header ("Xem thêm →") and by ContinueCard's item CTA
- * (`decorative`), so both read as the same control.
- *
- * 2026-07-26: gộp vào namespace `Link.*` cùng `LinkBack` (§12a) — "quay lại" và
- * "xem thêm" là hai hình thái của cùng một khái niệm (text-link + mũi tên), không
- * phải hai component rời.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Reused by the surface-card header ("See more →") and by ContinueCard's item
+ * CTA (`decorative`), so both read as the same control.
  */
 
 /**
@@ -23,10 +19,8 @@ import { ArrowRightIcon } from "@phosphor-icons/react"
  */
 export type LinkSeeMoreSize = "sm" | "xs"
 
-/** Props for {@link LinkSeeMore}. */
-export interface LinkSeeMoreProps {
-    /** Link label — e.g. "Xem thêm", "Tiếp tục", "Xem tất cả". */
-    label: ReactNode
+/** Props shared by both variants — excludes `label`, see {@link LinkSeeMoreProps}. */
+interface LinkSeeMoreOwnProps {
     /**
      * Press handler. Ignored when {@link href} is set, and when
      * {@link decorative} is true (the parent owns the press target).
@@ -43,44 +37,64 @@ export interface LinkSeeMoreProps {
     decorative?: boolean
     /** Text size. Defaults to `sm`. */
     size?: LinkSeeMoreSize
-    /** Extra classes on the link. */
+    /**
+     * Render the leaf shimmer instead of the real link — same text + arrow row, so
+     * the row does not move once the label resolves (ATOM-4). Shape follows `size`
+     * the same way the real render does.
+     */
+    isSkeleton?: boolean
+    /**
+     * Shimmer width for the label bar, as a fraction of the row — never a fixed
+     * length, since the real label wraps/reflows with whatever box holds it.
+     * Defaults to `"w-1/4"`, matching short labels like "See more".
+     */
+    skeletonWidth?: SkeletonWidth
+    /**
+     * Extra classes on the link.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
-    /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
+    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
 
 /**
- * Shared look — semibold accent text + `gap-2` tới mũi tên.
- *
- * ⭐ 2026-07-26 (thầy, khi gom namespace `Link`): `gap-1` → `gap-2` cho khớp
- * {@link LinkBack}. Hai member nằm cùng một namespace mà chừa hai khoảng cách khác
- * nhau giữa chữ và mũi tên là drift — gom lại chính là để lộ ra chỗ này.
+ * `label` is required when rendering the real link, not needed when
+ * `isSkeleton` — the shimmer has no content to centre.
  */
-const baseClassName = (size: LinkSeeMoreSize, className?: string) =>
+export type LinkSeeMoreProps = LinkSeeMoreOwnProps &
+    (
+        | { isSkeleton: true; label?: ReactNode }
+        | { isSkeleton?: false; label: ReactNode }
+    )
+
+/** Shared look — semibold accent text with `gap-2` to the arrow, matching {@link LinkBack}. */
+const baseClassName = (size: LinkSeeMoreSize, className?: string, classNames?: Array<AllowedClassName>) =>
     cn(
         "inline-flex w-fit shrink-0 items-center gap-2 font-semibold text-accent-soft-foreground no-underline",
         TEXT_CLASS[size],
         className,
+        classNames,
     )
 
-/** `size` → cỡ CHỮ. Tách bảng để nó đứng cạnh {@link ARROW_CLASS}, không lệch nhau được. */
+/** `size` → text size. Kept as its own table next to {@link ARROW_CLASS} so the two can't drift apart. */
 const TEXT_CLASS: Record<LinkSeeMoreSize, string> = {
     sm: "text-sm",
     xs: "text-xs",
 }
 
 /**
- * `size` → cỡ MŨI TÊN. Icon là HÀM của size (§12d) — caller KHÔNG chỉnh riêng.
- *
- * Thang §5a (đối chiếu font-size, không phải line-height): `text-sm` 14px → `size-3.5`
- * (14px) · `text-xs` 12px → `size-3` (12px). Cả hai đều nhỏ hơn `size-5` nên đều
- * `weight="bold"` (§5.0a).
- *
- * ❌ neo (2026-07-26): trước đó mũi tên khoá cứng `size-3.5` cho CẢ HAI size — leaf
- * `Size` render hai chữ khác cỡ mà mũi tên y hệt nhau, đúng dấu hiệu "hai ô nhìn
- * giống nhau = LỖI ATOM" của §12g. Story render đủ union chính là cái bắt được.
+ * `size` → arrow icon size. A function of `size` — callers cannot set it
+ * independently. Scaled against font-size (not line-height): `text-sm` 14px →
+ * `size-3.5`, `text-xs` 12px → `size-3`; both smaller than `size-5`, so both
+ * need `weight="bold"` to compensate the stroke.
  */
 const ARROW_CLASS: Record<LinkSeeMoreSize, string> = {
     sm: "size-3.5",
@@ -88,24 +102,28 @@ const ARROW_CLASS: Record<LinkSeeMoreSize, string> = {
 }
 
 /**
- * Nhãn — gạch chân khi hover, ĐÚNG như {@link LinkBack}.
- *
- * ⭐ 2026-07-26 (thầy): thay `opacity-60` cũ. Cùng một hành vi "đi tới đó" mà hai
- * member cho hai tín hiệu khác nhau (một gạch chân, một mờ đi) thì người đọc phải
- * học hai lần. Gạch chân là affordance go-there chuẩn của hệ; mờ-đi dễ đọc nhầm
- * thành *đang bị vô hiệu*.
- *
- * Gạch chân đặt trên NHÃN chứ không trên cả cụm, để mũi tên không bị gạch theo.
+ * `size` → label-bar shimmer, sized to the same line box the real text sits
+ * in. `sm` reuses `SKELETON_TEXT_BAR_SM` (`text-sm`'s 20px line box, same as
+ * `LinkBack`). `text-xs`'s line box is 16px (12px font / 1rem line-height): a
+ * 10px bar centred with `my-[3px]` fills it (3 + 10 + 3 = 16).
+ */
+const SKEL_TEXT_BAR: Record<LinkSeeMoreSize, string> = {
+    sm: SKELETON_TEXT_BAR_SM,
+    xs: "my-[3px] h-[10px] rounded",
+}
+
+/**
+ * Label underline on hover, matching {@link LinkBack}. Applied to the label
+ * only, not the whole cluster, so the arrow doesn't get underlined too.
  */
 const LABEL_HOVER = "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
 
 /**
- * The shared "See more →" / "Continue →" affordance: semibold accent text + an
- * ARROW that slides right on hover (§5b — ARROW is the CTA affordance that slides;
- * a caret would NOT slide), and the LABEL underlines on hover — same go-there
- * signal as {@link LinkBack}, only mirrored (its arrow slides left). Used by
- * `SurfaceCardHeader`'s `onSeeMore` and ContinueCard's item CTA so both read as
- * the same control.
+ * The shared "See more →" / "Continue →" affordance: semibold accent text with
+ * an arrow that slides right on hover, and the label underlines on hover — the
+ * same go-there signal as {@link LinkBack}, mirrored (its arrow slides left).
+ * Used by `SurfaceCardHeader`'s `onSeeMore` and ContinueCard's item CTA so both
+ * read as the same control.
  *
  * @param props - {@link LinkSeeMoreProps}
  */
@@ -115,27 +133,53 @@ export const LinkSeeMore = ({
     href,
     decorative = false,
     size = "sm",
+    isSkeleton = false,
+    skeletonWidth,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: LinkSeeMoreProps) => {
-    // Tên node PHẢI khớp CÁI ĐANG RENDER THẬT (2026-07-27, heroui tier): chỉ nhánh
-    // `HeroUILink` (không `href`, không `decorative`) thực sự là component heroui
-    // `Link` — hai nhánh kia render `<a>`/`<span>` trần, gắn tên "Link" ở đó là bịa
-    // (Rule 1). Fallback chỉ áp dụng cho đúng nhánh heroui; `anatPart` do composite
-    // cha forward vẫn thắng tuyệt đối, bất kể thẻ nào.
+    if (isSkeleton) {
+        // Same `inline-flex items-center gap-2` row as the real render; arrow
+        // box matches `ARROW_CLASS[size]` and the label bar rides
+        // `SKEL_TEXT_BAR[size]` so the row's height never moves once the real
+        // label lands. `decorative`/`href`/`onPress` don't affect this shape —
+        // they only change what happens on press — so no `data-anat-part="Link"`
+        // here: this branch renders neither the HeroUI `Link` nor the plain
+        // `<a>`/`<span>` the other branches produce.
+        return (
+            <span
+                className={cn("inline-flex w-fit shrink-0 items-center gap-2", className, classNames)}
+                data-anat-part={anatPart}
+            >
+                <HeroSkeleton
+                    className={cn(SKEL_TEXT_BAR[size], skeletonWidth ?? "w-1/4")}
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                />
+                <HeroSkeleton className={cn(ARROW_CLASS[size], "rounded-full")} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+            </span>
+        )
+    }
+
+    // Only the `HeroUILink` branch (no `href`, no `decorative`) actually renders
+    // the HeroUI `Link` component — the other two branches render a plain
+    // `<a>`/`<span>`, so tagging them "Link" would be inaccurate. The
+    // `showAnatomy` fallback only applies to that branch; a forwarded `anatPart`
+    // always wins regardless of which tag renders.
     const isHeroUILinkBranch = !decorative && !href
     const rootPart = anatPart ?? (showAnatomy && isHeroUILinkBranch ? "Link" : undefined)
 
-    // `Arrow` KHÔNG được tag: span nội bộ bọc glyph Phosphor, không phải component
-    // thật của ta lẫn heroui (cùng lý do `Icon` span của `Tabs` không được tag).
+    // The arrow wrapper isn't tagged — it's an internal span around the
+    // Phosphor glyph, not a real component of ours or HeroUI's.
     const arrow = (
         <span aria-hidden className="inline-flex shrink-0">
             {/*
-              Glyph Phosphor ở `size-3.5` cho khớp `text-sm`, nhỏ hơn `size-5` nên
-              phải `weight="bold"` bù nét (§5.0a). Tailwind v4: `translate` là
-              property RIÊNG → transition phải `[translate]`, `transition-transform`
-              không ăn. Cùng khuôn `LinkBack`/`Breadcrumbs` — chỉ khác chiều trượt.
+              Icon sized `size-3.5` to match `text-sm`; smaller than `size-5`
+              so `weight="bold"` compensates the stroke. Tailwind v4 treats
+              `translate` as its own property, so the transition must target
+              `[translate]` — `transition-transform` won't animate it. Same
+              pattern as `LinkBack` / `Breadcrumbs`, mirrored to slide right.
             */}
             <ArrowRightIcon
                 focusable="false"
@@ -145,21 +189,21 @@ export const LinkSeeMore = ({
         </span>
     )
 
-    // Nhãn tách ra một span riêng để gạch chân chỉ ăn vào CHỮ, mũi tên đứng ngoài.
+    // Label is its own span so the underline only applies to the text, not the arrow.
     const text = <span className={LABEL_HOVER}>{label}</span>
 
     if (decorative) {
         // Parent supplies `group` (e.g. ContinueCard wrapper) — hover fires from
         // anywhere on that surface, not a hover zone of this span alone.
         return (
-            <span data-anat-part={rootPart} className={baseClassName(size, className)}>
+            <span data-anat-part={rootPart} className={baseClassName(size, className, classNames)}>
                 {text}
                 {arrow}
             </span>
         )
     }
 
-    const interactiveClassName = cn(baseClassName(size, className), "group cursor-pointer")
+    const interactiveClassName = cn(baseClassName(size, className, classNames), "group cursor-pointer")
 
     if (href) {
         return (

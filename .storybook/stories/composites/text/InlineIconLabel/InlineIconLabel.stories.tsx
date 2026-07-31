@@ -83,7 +83,7 @@ export const Skeleton: Story = {
     render: () => shell(
         <div className="flex flex-col gap-3">
             <InlineIconLabel icon={null} isSkeleton size="xs">x</InlineIconLabel>
-            <InlineIconLabel icon={null} isSkeleton size="sm" skeletonWidth="w-24">x</InlineIconLabel>
+            <InlineIconLabel icon={null} isSkeleton size="sm" skeletonWidth="w-1/3">x</InlineIconLabel>
         </div>,
     ),
 }

@@ -253,8 +253,10 @@ const Actions = ({
     >
         <ButtonGroup
             items={items}
-            // `between` = hai mép ⇒ cụm nút phải chiếm hết bề ngang mới đẩy ra được.
-            className={align === "between" ? "w-full justify-between" : undefined}
+            // Forward straight through — `FormActionsAlign` and the atom's own `ButtonAlign`
+            // are the same three-value vocabulary (§ATOM-5, 2026-07-31); the atom now owns
+            // the `between` ⇒ `w-full justify-between` mapping itself (`ALIGN_CLS`).
+            align={align}
             showAnatomy={showAnatomy}
         />
     </div>

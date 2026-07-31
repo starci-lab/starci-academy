@@ -1,30 +1,28 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import { Alert as AtomAlert } from "@sb-components/atoms/feedback/Alert/Alert"
+import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Toast`: the ONE constrained notification-surface atom.
+ * ATOM — `Toast`: the constrained notification-surface atom.
  *
- * Compose từ atom `AtomAlert` (thầy chốt 2026-07-25 — toast và callout là CÙNG một
- * hạt alert, chỉ khác chỗ đặt: toast nổi, callout nằm trong surface). Trước đây file
- * này tự `import { Alert } from "@heroui/react"` và tự nuôi bảng icon + nút × song
- * song với `FeedbackCallout` → drift. Nay chỉ còn CHỖ ĐẶT: `tone="plain"` (tint mặc
- * định, không ép soft) + glyph `sm`. Port xuống HeroUI nằm DUY NHẤT ở `AtomAlert`.
+ * Composed from the `AtomAlert` atom — toast and callout share the same
+ * alert primitive and differ only in placement (toast floats, callout sits
+ * inside a surface). Uses `tone="plain"` (default tint, not forced to soft)
+ * with `sm` glyphs. The HeroUI port lives solely in `AtomAlert`.
  *
- * Đây là bề mặt thông báo TĨNH (soi được, không cần queue sống) — feature dùng nó làm
- * thân của một toast/inline-alert.
+ * This is a static notification surface (inspectable, no live queue
+ * needed) — a feature uses it as the body of a toast or inline alert.
  *
- * NAMESPACE (thầy chốt 2026-07-25): atom KHÔNG export component trần — mọi thành
- * viên đi qua `Toast.*` (hôm nay chỉ có `Base`), khớp `Chip.*` / `Button.*`.
+ * All exports go through `Toast.*` (currently only `Base`).
  *
- * KHÔNG `children` (luật ② thầy chốt 2026-07-25): toast vốn đã 100% prop dữ liệu —
- * `title`/`description`/`action` là NỘI DUNG (ReactNode được phép), không phải
- * children. Không có gì phải bọc ⇒ không thuộc ngoại lệ wrapper.
+ * No `children`: toast is fully data-driven — `title`/`description`/
+ * `action` are content (ReactNode, not children).
  *
- * STRICT §4: `status` chọn tone (success/warning/danger/info), atom tự chọn icon —
- * consumer KHÔNG truyền icon sai valence. `title`/`description` là nội dung; `action`
- * (tuỳ chọn) đặt trước nút ×; `onClose` bật ×. Bảng icon nằm DUY NHẤT ở `AtomAlert`
- * (`@phosphor-icons/react` — MỘT BỘ DUY NHẤT, §5.0).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `status` selects the tone (success/warning/danger/info) and the atom
+ * picks the icon itself, so a caller cannot pass a mismatched icon.
+ * `title`/`description` are content; `action` (optional) sits before the
+ * close button; `onClose` enables the close button. The icon table lives
+ * solely in `AtomAlert`.
  */
 /** An icon passed as a COMPONENT (Phosphor), rendered by the atom at status-icon scale. */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
@@ -55,8 +53,16 @@ export interface ToastBaseProps {
     closeLabel?: string
     /** Dev/spec: emit `data-anat-part` on Icon/Title/Description/Action/Close so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** Placement utilities only (e.g. `mb-4`). */
+    /**
+     * Placement utilities only (e.g. `mb-4`).
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 /**
  * The base toast/notification atom. See file header for the strict contract.
@@ -73,6 +79,7 @@ const ToastBase = ({
     closeLabel,
     showAnatomy = false,
     className,
+    classNames,
 }: ToastBaseProps) => (
     <AtomAlert
         status={STATUS_TO_ALERT[status]}
@@ -83,12 +90,9 @@ const ToastBase = ({
         action={action}
         onClose={onClose}
         closeAriaLabel={closeLabel}
-        className={className}
+        className={cn(className, classNames)}
         showAnatomy={showAnatomy}
     />
 )
-/**
- * `Toast.*` — the notification-surface ATOM namespace. `Toast` là bề mặt thông
- * báo DUY NHẤT (status/action/close đều là LEAF prop-driven của nó).
- */
+/** `Toast.*` — the notification-surface atom namespace. `status`/`action`/`close` are all leaf props. */
 export { ToastBase as Toast }

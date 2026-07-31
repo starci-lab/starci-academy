@@ -143,7 +143,7 @@ const ChallengeHeader = ({
                 anatPart={showAnatomy ? "PageHeader" : undefined}
                 breadcrumb={
                     isSkeleton ? (
-                        <Typography size="sm" isSkeleton className="w-28" anatPart={showAnatomy ? "LinkBack" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "LinkBack" : undefined} />
                     ) : (
                         <LinkBack
                             label={backLabel}
@@ -219,7 +219,7 @@ const ChallengeHeader = ({
                             />
                         )}
                         {isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton className="w-16" anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
                         ) : scoreValue != null ? (
                             <Typography
                                 size="xs"

@@ -2,14 +2,10 @@ import { FolderIcon, FolderOpenIcon } from "@phosphor-icons/react"
 import React, { useCallback } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { useDropzone } from "react-dropzone"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — full port of `@/components/blocks/form/Dropzone`.
- * Authored in Storybook (not `src`); synced to `src` later. Faithful port of the
- * whole prop API + every legacy state; no `@/components` import. Uses the real
- * `react-dropzone` dep the src uses.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `Dropzone` — drag-and-drop single-file input built on `react-dropzone`.
  */
 
 /**
@@ -32,13 +28,20 @@ export interface DropzoneProps {
     onBlur?: () => void
     /** When true, renders a skeleton mirroring the dashed drop box instead. */
     isSkeleton?: boolean
-    /** Extra classes on the outer wrapper. */
+    /**
+     * Extra classes on the outer wrapper.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
     /**
-     * Storybook-only: when true, the loading `Skeleton` emits a `data-anat-part` so
-     * the anatomy panel can anchor its badge. The drag box and the error line stay
-     * unbadged (2026-07-28) — plain hand-rolled `<div>`s, not a real component. No
-     * visual effect.
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
+    /**
+     * When true, the loading `Skeleton` emits a `data-anat-part` so the anatomy
+     * panel can anchor its badge. The drag box and the error line stay unbadged —
+     * they're plain hand-rolled `<div>`s, not a real component.
      */
     showAnatomy?: boolean
 }
@@ -57,6 +60,7 @@ const DropzoneBase = ({
     onBlur,
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
 }: DropzoneProps) => {
     const onDrop = useCallback((acceptedFiles: Array<File>) => {
@@ -76,7 +80,7 @@ const DropzoneBase = ({
 
     if (isSkeleton) {
         return (
-            <div className={cn("flex flex-col gap-2", className)}>
+            <div className={cn("flex flex-col gap-2", className, classNames)}>
                 <HeroSkeleton
                     className="h-[68px] w-full rounded-3xl"
                     data-anat-part={showAnatomy ? "Skeleton" : undefined}
@@ -85,15 +89,11 @@ const DropzoneBase = ({
         )
     }
 
-    // NOTE: FieldShell not composed here (intentional): Dropzone is a drag-box,
-    // not a labeled field — `hint` renders as PLACEHOLDER TEXT INSIDE the dashed
-    // box (replaced by the file name once selected), not a description sitting
-    // below a label the way FieldShell's `description` does. Forcing FieldShell
-    // would only fit the error line and would split this shell's ownership of
-    // the box for no real gain. Kept hand-rolled; errorMessage line already
-    // matches FieldShell's error line styling (text-sm text-danger-soft-foreground).
+    // `hint` renders as placeholder text inside the dashed box, replaced by the
+    // file name once one is selected. The error line's classes match FieldShell's
+    // error line styling (text-sm text-danger-soft-foreground).
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div className={cn("flex flex-col gap-2", className, classNames)}>
             <div
                 {...getRootProps()}
                 className={cn(
@@ -122,7 +122,7 @@ const DropzoneBase = ({
 }
 
 /**
- * `Dropzone.*` — namespace ô kéo-thả file. Root GỌI THẲNG được (`<Dropzone …/>`)
- * và chính nó là `Base` (§12a: callable-namespace, không export trần).
+ * `Dropzone` — drag-and-drop file namespace; the root itself is `DropzoneBase`,
+ * callable directly as `<Dropzone .../>`.
  */
 export { DropzoneBase as Dropzone }

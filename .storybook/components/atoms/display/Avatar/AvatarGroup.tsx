@@ -1,21 +1,20 @@
 import { Avatar as HeroAvatar, AvatarFallback as HeroAvatarFallback, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { AvatarBase, SIZE_MAP } from "./AvatarBase"
 import type { AvatarSize, IconComponent } from "./AvatarBase"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `AvatarGroup`: cụm avatar chồng mép ("who follows"): hàng avatar viền
- * `ring` + chip "+N" đếm phần dư. Khung `blocks/identity/AvatarGroup` xoá
- * 2026-07-25 (§13c — chỉ là atom mặc áo), năng lực chuyển XUỐNG đây thành MEMBER
- * của atom.
+ * ATOM — `AvatarGroup`: an overlapping row of avatars ("who follows"), each
+ * ringed, with a "+N" chip for the overflow.
  *
- * ⭐ COMPONENT DUY NHẤT trong họ Avatar CÓ DEPS: nó `import { AvatarBase }` ở trên
- * (tách file 2026-07-26 để quan hệ này là `import` THẬT, cây deps đọc ra được).
+ * The only component in the Avatar family with dependencies of its own — it
+ * imports `AvatarBase`.
  *
- *   • §12b — `items` DỮ LIỆU, cấm `children`; atom tự dựng từng `Avatar`.
- *   • §12d — `size` đặt ở CẤP CỤM (hàng avatar luôn đồng cỡ), item không mang size.
- *   • §12c — `isSkeleton` truyền xuống, mỗi item tự mirror → giữ nguyên footprint.
- * ─────────────────────────────────────────────────────────────────────────── */
+ *   • `items` is DATA, not `children`; the atom builds each `Avatar` itself.
+ *   • `size` is set at the GROUP level (the row is always one size); items
+ *     do not carry their own size.
+ *   • `isSkeleton` passes down so each item mirrors it, keeping the row's footprint stable.
+ */
 
 /** One avatar in an {@link AvatarGroup} row. */
 export interface AvatarGroupItem {
@@ -42,13 +41,19 @@ export interface AvatarGroupProps {
      * first page of members. Defaults to `items.length`.
      */
     total?: number
-    /** Size preset for EVERY avatar in the row (§12d, cluster-level). Default `sm`. */
+    /** Size preset for EVERY avatar in the row (cluster-level). Default `sm`. */
     size?: AvatarSize
     /** Render the row skeleton — each visible slot mirrors as a circle shimmer. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /** Ring that separates one overlapping avatar from the one beneath it. */
@@ -67,15 +72,16 @@ export const AvatarGroup = ({
     isSkeleton = false,
     showAnatomy = false,
     className,
+    classNames,
 }: AvatarGroupProps) => {
     const visible = items.slice(0, max)
     const extra = Math.max((total ?? items.length) - visible.length, 0)
 
     return (
-        <div className={cn("flex -space-x-2", className)}>
+        <div className={cn("flex -space-x-2", className, classNames)}>
             {visible.map((item) => (
-                // One badge per MEMBER (§11a): the row names each avatar as ONE opaque
-                // part instead of drilling into Avatar's own Image/Fallback parts.
+                // One badge per member: names each avatar as one opaque part
+                // instead of exposing Avatar's own Image/Fallback parts.
                 <span key={item.key} className="inline-flex" data-anat-part={showAnatomy ? "Avatar" : undefined}>
                     <AvatarBase
                         src={item.src}
@@ -90,8 +96,8 @@ export const AvatarGroup = ({
             ))}
             {extra > 0 ? (
                 isSkeleton ? (
-                    // §12c: đang skeleton thì chip "+N" cũng phải mirror thành shimmer —
-                    // hiện "+3" thật giữa hàng đang loading là dữ liệu thật lọt vào state giả.
+                    // While skeleton, the "+N" chip mirrors as a shimmer too — showing
+                    // a real count inside a loading row would leak real data into fake state.
                     <HeroSkeleton
                         className={cn("rounded-full", SIZE_MAP[size].box, GROUP_RING)}
                         data-anat-part={showAnatomy ? "Skeleton" : undefined}

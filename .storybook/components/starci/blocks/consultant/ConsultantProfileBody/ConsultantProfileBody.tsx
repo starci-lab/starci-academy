@@ -204,8 +204,8 @@ const ConsultantProfileBody = ({
                 {/* contact fork — see file header for why loading shimmers neutrally */}
                 {isSkeleton ? (
                     <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>
-                        <Typography size="sm" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" isSkeleton className="w-32" anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
                     </StackV>
                 ) : contactUnlocked ? (
                     <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy}>

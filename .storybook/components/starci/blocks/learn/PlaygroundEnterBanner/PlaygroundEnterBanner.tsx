@@ -115,7 +115,7 @@ const PlaygroundEnterBanner = ({
                     isDisabled={!allReady}
                     isSkeleton={isSkeleton}
                     anatPart={showAnatomy ? "Button" : undefined}
-                    className="w-fit"
+                    classNames={["w-fit"]}
                 />
             </StackV>
         </SurfaceCard>

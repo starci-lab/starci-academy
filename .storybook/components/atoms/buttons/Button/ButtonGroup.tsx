@@ -1,56 +1,57 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ButtonBase } from "./ButtonBase"
-import type { ButtonSize, ButtonVariant, IconComponent } from "./button-tokens"
+import { ALIGN_CLS, type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "./button-tokens"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `ButtonGroup`: HÀNG nút (cluster) mô tả bằng `items` DỮ LIỆU.
+ * `ButtonGroup` — a row of buttons described by `items` data.
  *
- * ⭐ COMPONENT DUY NHẤT trong họ Button CÓ DEPS: nó `import { ButtonBase }` ở trên.
- * Trước 2026-07-26 cả họ sống chung một file nên quan hệ này vô hình — giờ là import
- * thật, cây deps đọc ra được.
- *
- * Group KHÔNG đẻ nghĩa mới: chỉ layout gap + dựng lại `ButtonBase`. Mọi state của
- * TỪNG nút (`variant`/`isPending`/`isDisabled`) là prop chuyển tiếp, thuộc về
- * `ButtonBase` (§12f) — story của cụm KHÔNG lặp lại chúng.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Imports `ButtonBase` and renders one per item; it adds only row layout (gap),
+ * nothing else. Per-button state (`variant`/`isPending`/`isDisabled`) is a
+ * pass-through prop that belongs to `ButtonBase`.
  */
 
-/** Một nút trong {@link ButtonGroup} — mô tả bằng DỮ LIỆU, không phải JSX. */
+/** One button in a {@link ButtonGroup} — described as data, not JSX. */
 export interface ButtonGroupItem {
-    /** Khoá React + định danh hành động. */
+    /** React key + action identifier. */
     key: string
-    /** Nhãn nút. Bỏ trống → nút CHỈ-icon (phải có `prefixIcon` + `ariaLabel`). */
+    /** Button label. Omit for an icon-only button (then `prefixIcon` + `ariaLabel` are required). */
     label?: ReactNode
-    /** Glyph COMPONENT — dẫn đầu (khi có `label`) hoặc glyph duy nhất (khi không). */
+    /** Icon component — leading glyph when `label` is set, sole glyph otherwise. */
     prefixIcon?: IconComponent
-    /** Accessible name — BẮT BUỘC khi không có `label`. */
+    /** Accessible name — required when there is no `label`. */
     ariaLabel?: string
     /** Action intent → variant. Default `primary`. */
     variant?: ButtonVariant
     onPress?: () => void
     isDisabled?: boolean
-    /** `true` → BUSY: Spinner + khoá press (chỉ nút đó). */
+    /** `true` marks this button busy: spinner + locked press, scoped to this button only. */
     isPending?: boolean
 }
 
 /** Props for {@link ButtonGroup} — a row cluster of buttons. */
 export interface ButtonGroupProps {
-    /**
-     * Hàng nút mô tả bằng DỮ LIỆU (§4 STRICT — consumer KHÔNG truyền structure/JSX
-     * con). Item có `label` → nút nhãn; không `label` → nút chỉ-icon.
-     */
+    /** The row's buttons, described as data. An item with `label` renders labeled; without, icon-only. */
     items: Array<ButtonGroupItem>
-    /**
-     * Scale CHUNG cả cụm (default `md`) — cluster luôn ĐỒNG CỠ, nên `size` ở
-     * group chứ không ở từng item (item chỉ mang vai trò/hành vi).
-     */
+    /** Scale shared by the whole row (default `md`) — every button in a cluster is the same size. */
     size?: ButtonSize
-    /** `true` → skeleton mirror đúng số nút (pill/vuông theo từng item). */
+    /** `true` renders a skeleton mirroring the item count (pill/square per item). */
     isSkeleton?: boolean
     showAnatomy?: boolean
+    /**
+     * Where this row of buttons sits inside its parent's width — `justify-start` /
+     * `justify-end` / `w-full justify-between` (`between` also claims the full
+     * width, else `justify-between` has no room to spread). Same vocabulary as `ButtonBase`'s own `align`.
+     */
+    align?: ButtonAlign
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 export const ButtonGroup = ({
@@ -58,11 +59,13 @@ export const ButtonGroup = ({
     size = "md",
     isSkeleton = false,
     showAnatomy = false,
+    align,
     className,
+    classNames,
 }: ButtonGroupProps) => (
-    <div className={cn("flex items-center gap-2", className)}>
+    <div className={cn("flex items-center gap-2", align && ALIGN_CLS[align], className, classNames)}>
         {items.map(({ key, label, prefixIcon, ariaLabel, variant, onPress, isDisabled, isPending }) => {
-            // Nhãn deps: cây đọc từ DOM nên cụm phải GỌI TÊN cái nó dựng lại.
+            // Deps tree is built from the DOM, so each rendered ButtonBase must be tagged by name.
             const anatPart = showAnatomy ? "Button" : undefined
             const shared = { variant, size, onPress, isDisabled, isPending, anatPart } as const
             if (label != null) {

@@ -218,7 +218,7 @@ const FlashcardDueHero = ({
                     isPending={isStarting}
                     isSkeleton={isSkeleton}
                     anatPart={showAnatomy ? "Button" : undefined}
-                    className="w-fit"
+                    classNames={["w-fit"]}
                 />
             </StackV>
         </SurfaceCard>

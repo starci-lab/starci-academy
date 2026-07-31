@@ -83,7 +83,7 @@ export const SurfaceCardHeader = ({
                     color={subtleLabel ? "muted" : undefined}
                     truncate
                     isSkeleton={isSkeleton}
-                    className={isSkeleton ? "w-32" : undefined}
+                    classNames={isSkeleton ? ["w-1/2"] : undefined}
                     text={label}
                 />
             </StackH>
@@ -100,7 +100,7 @@ export const SurfaceCardHeader = ({
                     size={textSize}
                     color="muted"
                     isSkeleton={isSkeleton}
-                    className={cn("shrink-0", isSkeleton && "w-16")}
+                    classNames={isSkeleton ? ["shrink-0", "w-1/4"] : ["shrink-0"]}
                     text={labelEnd}
                 />
             ) : null)}

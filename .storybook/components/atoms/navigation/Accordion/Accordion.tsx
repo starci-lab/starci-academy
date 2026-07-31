@@ -2,29 +2,21 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Disclosure as HeroDisclosure, DisclosureGroup as HeroDisclosureGroup, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Accordion`: the ONE constrained accordion atom over HeroUI
- * `DisclosureGroup` + `Disclosure`.
+ * `Accordion` — the single accordion atom wrapping HeroUI `DisclosureGroup` +
+ * `Disclosure`.
  *
- * Data-driven: the caller passes `items` (id + title + content), and the atom
- * renders `HeroDisclosureGroup > HeroDisclosure` with the full compound
- * (`Heading > Trigger (+ Indicator)` and `Content > Body`). Single-open vs
- * multi-open is a LEAF driven by the `allowsMultiple` prop (§6 granularity), not
- * a separate component; `defaultExpandedKeys` seeds an initially-open panel.
+ * Data-driven: pass `items` (id + title + content); the atom renders the full
+ * `DisclosureGroup > Disclosure` compound (`Heading > Trigger (+ Indicator)`
+ * and `Content > Body`). `allowsMultiple` switches single-open vs multi-open;
+ * `defaultExpandedKeys` seeds an initially-open panel.
  *
- * Rules (Chip/Input):
- *   • NAMESPACE bắt buộc — chỉ export `Accordion = { Base }`, không export
- *     component trần (thầy chốt 2026-07-25).
- *   • KHÔNG `children` — panel truyền qua `items` dữ liệu; `title`/`content` là
- *     prop `ReactNode` (thân nội dung, được phép), không phải children.
- *   • Bọc HeroUI TỐI ĐA (`DisclosureGroup`, `Disclosure`), alias `Hero*`.
- *   • STRICT §4: `items` + `allowsMultiple` + `defaultExpandedKeys` TRẦN — the
- *     atom owns the trigger row, rotating indicator, expand/collapse animation;
- *     the consumer never touches the compound structure.
- *   • `isSkeleton` → collapsed-row skeleton co-located (HeroSkeleton, hybrid C).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Only `Accordion` is exported — no bare component. `items`/`title`/`content`
+ * are data props, not `children`. The atom owns the trigger row, rotating
+ * indicator, and expand/collapse animation. `isSkeleton` renders a co-located
+ * collapsed-row skeleton.
  */
 
 /** One panel in an {@link AccordionBase}. */
@@ -54,7 +46,13 @@ export interface AccordionBaseProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -69,16 +67,17 @@ const AccordionBase = ({
     isSkeleton = false,
     showAnatomy = false,
     className,
+    classNames,
 }: AccordionBaseProps) => {
     if (isSkeleton) {
-        // Leaf skeleton OWNED by the atom (hybrid C) — one collapsed trigger row per item.
-        // Real heroui renders are the two `HeroSkeleton` (`Skeleton`) elements themselves,
-        // NOT the plain wrapping `<div>` — tagging the div would be a made-up name (2026-07-27).
+        // One collapsed trigger row per item. Only the HeroSkeleton elements get
+        // data-anat-part — the wrapping div isn't a real component, tagging it
+        // would be a made-up name.
         return (
-            <div className={cn("flex flex-col gap-2", className)}>
+            <div className={cn("flex flex-col gap-2", className, classNames)}>
                 {items.map((item) => (
                     <div key={item.key} className="flex items-center justify-between rounded-xl border border-default-200 px-4 py-3">
-                        <HeroSkeleton className="h-4 w-40 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        <HeroSkeleton className="h-4 w-1/2 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                         <HeroSkeleton className="size-4 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                     </div>
                 ))}
@@ -90,7 +89,7 @@ const AccordionBase = ({
         <HeroDisclosureGroup
             allowsMultipleExpanded={allowsMultiple}
             defaultExpandedKeys={defaultExpandedKeys}
-            className={className}
+            className={cn(className, classNames)}
             data-anat-part={showAnatomy ? "DisclosureGroup" : undefined}
         >
             {items.map((item) => (
@@ -99,11 +98,10 @@ const AccordionBase = ({
                         <HeroDisclosure.Trigger data-anat-part={showAnatomy ? "Disclosure.Trigger" : undefined}>
                             {item.title}
                             <HeroDisclosure.Indicator data-anat-part={showAnatomy ? "Disclosure.Indicator" : undefined}>
-                                {/* Bỏ trống slot này thì vendor tự vẽ IconChevronDown (bộ icon thứ hai lọt
-                                    cửa sau, §1a.1 icon/context.md) — truyền Phosphor để chỉ còn MỘT bộ icon.
-                                    Vendor `cloneElement` giữ nguyên `data-expanded`/`data-slot` và tự áp class
-                                    `disclosure__indicator` (size-4 + rotate-180 khi mở), nên KHÔNG cần className
-                                    ở đây — animation xoay vẫn chạy nguyên. */}
+                                {/* Left empty, HeroUI renders its own chevron instead — pass an icon
+                                    here to keep a single icon set. The vendor clones this element,
+                                    preserving data-expanded/data-slot and applying its own
+                                    rotate-on-open class, so no className is needed here. */}
                                 <CaretDownIcon aria-hidden weight="bold" />
                             </HeroDisclosure.Indicator>
                         </HeroDisclosure.Trigger>

@@ -1,21 +1,20 @@
 import type { ReactNode } from "react"
 import { Badge as HeroBadge, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
  * ATOM — `Badge`: the ONE constrained badge atom over HeroUI Badge.
  *
- * Gom mọi biến thể badge vào MỘT atom, phân biệt bằng PROP (leaf = composition):
- *   • đếm số               → `<Badge count={3}>{icon}</Badge>`
- *   • chấm (dot)            → `<Badge dot>{icon}</Badge>`
- *   • cap ("99+")           → `<Badge count={128} max={99}>{icon}</Badge>`
- *   • đứng riêng (no anchor) → `<Badge count={5} />`
+ * Every badge variant lives on this ONE atom, distinguished by PROP:
+ *   • count                  → `<Badge count={3}>{icon}</Badge>`
+ *   • dot                    → `<Badge dot>{icon}</Badge>`
+ *   • capped count           → `<Badge count={128} max={99}>{icon}</Badge>`
+ *   • standalone (no anchor) → `<Badge count={5} />`
  *
- * Khi có `children` → atom bọc trong HeroUI `Badge.Anchor` (badge treo góc phần tử);
- * không có → badge inline độc lập. Atom tự cap số theo `max` (§4), tự vẽ leaf
- * skeleton (`isSkeleton`). `count <= 0` (không `showZero`, không `dot`) → ẩn badge,
- * chỉ render anchor content.
- * ─────────────────────────────────────────────────────────────────────────────
+ * With `children`, the atom wraps in HeroUI's `Badge.Anchor` (badge hangs off
+ * the corner of the child); without, it renders inline. The atom caps the
+ * count at `max` and draws its own leaf skeleton (`isSkeleton`). `count <= 0`
+ * (without `showZero` or `dot`) hides the badge, rendering only the anchor content.
  */
 
 /** Badge tone (HeroUI Badge `color`). */
@@ -46,7 +45,13 @@ export interface BadgeBaseProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -66,12 +71,13 @@ const BadgeBase = ({
     isSkeleton = false,
     showAnatomy = false,
     className,
+    classNames,
 }: BadgeBaseProps) => {
     if (isSkeleton) {
-        // Leaf skeleton OWNED by the atom (hybrid C) — a dot when `dot`, else a short count pill.
+        // Leaf skeleton: a dot shimmer when `dot`, otherwise a short count pill.
         return (
             <HeroSkeleton
-                className={cn(dot ? "size-2.5 rounded-full" : "h-4 w-6 rounded-full", className)}
+                className={cn(dot ? "size-2.5 rounded-full" : "h-4 w-6 rounded-full", className, classNames)}
                 data-anat-part={showAnatomy ? "Skeleton" : undefined}
             />
         )
@@ -86,7 +92,7 @@ const BadgeBase = ({
             color={color}
             size={size}
             placement={placement}
-            className={cn(dot && "min-w-0 p-0", !children && "static", className)}
+            className={cn(dot && "min-w-0 p-0", !children && "static", className, classNames)}
             data-anat-part={showAnatomy ? "Badge" : undefined}
         >
             {label}
@@ -99,7 +105,7 @@ const BadgeBase = ({
     }
     return (
         <HeroBadge.Anchor data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
-            {/* Caller slot (§ LOAI 3) — `children` belongs to whoever anchors on this badge,
+            {/* Caller slot — `children` belongs to whoever anchors on this badge,
                 not to Badge's own anatomy, so this wrapper stays unbadged. */}
             <span className="inline-flex">
                 {children}

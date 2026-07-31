@@ -132,7 +132,7 @@ const MilestoneUpNextCard = ({
                 suffixIcon={ArrowRightIcon}
                 iconSlide
                 onPress={onPress}
-                className="w-fit shrink-0"
+                classNames={["w-fit", "shrink-0"]}
                 anatPart={showAnatomy ? "Button" : undefined}
             />
         </StackV>

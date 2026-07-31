@@ -131,20 +131,24 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
     const chip = scoreChipFor(attempt)
     return (
         <StackV gap="tight" anatPart={showAnatomy ? "StackV (row)" : undefined}>
-            <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH (attempt line)" : undefined}>
-                <Typography
-                    text={`Lần ${attempt.attemptNumber}`}
-                    size="sm"
-                    weight="medium"
-                    anatPart={showAnatomy ? "Typography (attempt line)" : undefined}
-                />
-                <Chip tone={chip.tone} icon={chip.icon} text={chip.text} anatPart={showAnatomy ? "Chip" : undefined} />
+            {/* justify="between" pushes the timeago to the far edge — the PARENT does the
+            pushing, not a child margin; the label+chip stay grouped in their own inner track
+            so `between` only ever splits two things, not three. */}
+            <StackH gap="related" align="center" justify="between" anatPart={showAnatomy ? "StackH (attempt line)" : undefined}>
+                <StackH gap="related" align="center">
+                    <Typography
+                        text={`Lần ${attempt.attemptNumber}`}
+                        size="sm"
+                        weight="medium"
+                        anatPart={showAnatomy ? "Typography (attempt line)" : undefined}
+                    />
+                    <Chip tone={chip.tone} icon={chip.icon} text={chip.text} anatPart={showAnatomy ? "Chip" : undefined} />
+                </StackH>
                 {attempt.processedTimeAgo != null ? (
                     <Typography
                         text={attempt.processedTimeAgo}
                         size="xs"
                         color="muted"
-                        className="ml-auto"
                         anatPart={showAnatomy ? "Typography (timeago)" : undefined}
                     />
                 ) : null}

@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ChipGroup, type ChipGroupItem, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
+import type { ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
+import { ChipGroup, type ChipGroupItem } from "@sb-components/composites/chips/ChipGroup/ChipGroup"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ATOM — `ChipGroup`: a ROW of chips built from `items` data, cut at `maxVisible`,
+ * COMPOSITE — `ChipGroup`: a ROW of chips built from `items` data, cut at `maxVisible`,
  * the overflow gathered into a `+N` chip that opens a Tooltip.
  *
- * ⚠️ STATE SCOPE (§12f): the cluster does NOT invent new meaning — it `import { ChipBase }`
+ * ⚠️ STATE SCOPE (§12f): the cluster does NOT invent new meaning — it `import { Chip }`
  * and rebuilds. So the story here ONLY renders state BELONGING TO THE CLUSTER: `items` ·
  * `maxVisible` · cluster-level `tone` · `isSkeleton` for the whole row. State of EACH chip
  * (glyph, color dot, × button) lives in the `Chip` story — NOT repeated here.
@@ -18,7 +19,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `Chip` — see the Deps tab.
  */
 const meta: Meta<typeof ChipGroup> = {
-    title: "Atoms/Chips/Chip/ChipGroup",
+    title: "Composites/Chips/ChipGroup",
     component: ChipGroup,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -38,6 +39,8 @@ const GROUP_DEPS: Record<string, AnatomyAnnotation> = {
     "Chip": {
         tier: "atom",
         role: "every pill in the row, including the +N one",
+        // tier stays "atom" here — this entry names the CHILD `Chip` the group renders,
+        // not the group itself.
         storyId: "atoms-chips-chip-chip--default",
     },
 }
@@ -72,7 +75,7 @@ export const Default: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="ChipGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `items`"
                 annotate={GROUP_DEPS}
                 reason="The row is described as data, never as JSX children, so a caller cannot slip a different pill, a different tone, or a stray wrapper into the middle of it."
@@ -115,7 +118,7 @@ export const MaxVisible: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="ChipGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `maxVisible`"
                 annotate={GROUP_DEPS}
                 reason="The cut belongs to the row, not to the page: a tag row in a dense card can only afford two chips, while the same row on a detail page can show five, and moving the cut is a single number regardless of how much data sits behind it."
@@ -139,7 +142,7 @@ export const Tones: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="ChipGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `tone`"
                 annotate={GROUP_DEPS}
                 reason="Tone sits on the row, not on the item: a row is read as one set, so it carries one color, and letting each item pick its own would turn a tag list into a rainbow that nobody can read as a single message."
@@ -166,7 +169,7 @@ export const Skeleton: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="ChipGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `isSkeleton`"
                 annotate={GROUP_DEPS}
                 reason="The row does not draw the resting state itself: it still builds Chip, one per slot, and each pill draws its own shimmer, so two components never end up drawing the same pill and drifting apart the first time one of them changes."

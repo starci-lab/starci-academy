@@ -27,8 +27,12 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * Field-frame props every form atom accepts to carry its own label, hint,
  * error, and required mark. Omit them all and the atom renders as a bare
  * control (FieldFrame renders the control straight through).
+ *
+ * Exported so the `InputTags` composite (`composites/form/InputTags`) can
+ * reuse the same shape — it moved out of this file (ATOM-8: it composed the
+ * `Chip` atom once per tag) but still carries the same label/hint/error frame.
  */
-interface FrameProps {
+export interface FrameProps {
     /** Label above the control. */
     label?: ReactNode
     /** Description below the label (always visible). */
@@ -52,8 +56,14 @@ interface FrameProps {
  * importing the `Skeleton.*` compound.
  */
 
-/** Props for the {@link FieldSkeleton} mirror — a field-box skeleton owned by the atom. */
-interface FieldSkeletonProps {
+/**
+ * Props for the {@link FieldSkeleton} mirror — a field-box skeleton owned by the atom.
+ *
+ * Exported so the `InputTags` composite can draw the same field-box shimmer it
+ * used before it moved out of this file — the shimmer's shape still belongs
+ * here, at the atom tier, per ATOM-4.
+ */
+export interface FieldSkeletonProps {
     /** Height class of the bar — matches the real control it stands in for. */
     heightCls?: string
     /**

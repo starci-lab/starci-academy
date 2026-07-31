@@ -1,7 +1,8 @@
 import type { ReactNode } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
@@ -55,8 +56,13 @@ interface KeyValueRowOwnProps {
      * `frame`/`composite` tier node that the panel can't see counts as not using it.
      */
     anatPart?: string
-    /** Extra classes on the row. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
     showAnatomy?: boolean
 }
@@ -87,9 +93,12 @@ const KeyValueRow = ({
     gap = "grouped",
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: KeyValueRowProps) => {
+    // Mirrors `pairContent` below one-for-one: same `Typography` sizes the real
+    // label/hint/value use, handed `isSkeleton` instead of `text`.
     const skeletonPair = (
         <>
             <StackV
@@ -97,12 +106,12 @@ const KeyValueRow = ({
                 classNames={["min-w-0"]}
                 body={
                     <>
-                        <HeroSkeleton className="h-3.5 w-1/3 rounded" />
-                        {hint != null ? <HeroSkeleton className="h-3 w-1/4 rounded" /> : null}
+                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+                        {hint != null ? <Typography size="xs" isSkeleton classNames={["w-1/4"]} /> : null}
                     </>
                 }
             />
-            <HeroSkeleton className="h-3.5 w-1/4 shrink-0 rounded" />
+            <Typography size="sm" isSkeleton classNames={["w-1/4", "shrink-0"]} />
         </>
     )
     // Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1).
@@ -143,6 +152,7 @@ const KeyValueRow = ({
             justify="between"
             gap="related"
             className={className}
+            classNames={classNames}
             anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
             body={skeletonPair}
         />
@@ -152,6 +162,7 @@ const KeyValueRow = ({
             justify="between"
             gap="related"
             className={className}
+            classNames={classNames}
             anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
             body={pairContent}
         />
@@ -208,8 +219,13 @@ export interface KeyValueListProps {
      * `frame`/`composite` tier node that the panel can't see counts as not using it.
      */
     anatPart?: string
-    /** Extra classes on the column. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
     showAnatomy?: boolean
 }
@@ -230,10 +246,11 @@ const KeyValueList = ({
     isSkeleton = false,
     skeletonRows = 3,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: KeyValueListProps) => (
-    <div data-anat-part={anatPart} className={cn("flex flex-col", GAP_CLASS[gap], className)}>
+    <div data-anat-part={anatPart} className={cn("flex flex-col", GAP_CLASS[gap], className, classNames)}>
         {isSkeleton
             ? Array.from({ length: skeletonRows }, (_unused, index) => (
                 <KeyValueRow key={index} isSkeleton divider={divider && index < skeletonRows - 1} gap={gap} showAnatomy={showAnatomy} />

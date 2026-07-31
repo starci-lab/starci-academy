@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { ChatsCircleIcon, SidebarSimpleIcon, SquareHalfIcon } from "@phosphor-icons/react"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
-import { ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/atoms/buttons/Button/ButtonRadioGroup"
+import { ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"

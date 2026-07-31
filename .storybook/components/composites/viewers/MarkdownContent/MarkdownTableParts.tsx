@@ -4,6 +4,7 @@ import {
     flattenMarkdownTableHeaderChildren,
     isMarkdownHeaderTableRowNode,
 } from "@sb-components/composites/viewers/MarkdownContent/markdown-table"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -47,18 +48,20 @@ export interface MarkdownTablePartProps {
     node?: unknown
     /** Extra classes. */
     className?: string
+    /** Where this sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
  * Header row: columns must be direct children of `Table.Header` (fragment, not `Table.Row`).
  * Body row: wrapped in HeroUI `Table.Row`.
  */
-export const MarkdownTableRow = ({ children, node, className }: MarkdownTablePartProps) => {
+export const MarkdownTableRow = ({ children, node, className, classNames }: MarkdownTablePartProps) => {
     if (isMarkdownHeaderTableRowNode(node)) {
         return <>{children}</>
     }
 
-    return <Table.Row className={cn(className)}>{children}</Table.Row>
+    return <Table.Row className={cn(className, classNames)}>{children}</Table.Row>
 }
 
 /**
@@ -66,11 +69,11 @@ export const MarkdownTableRow = ({ children, node, className }: MarkdownTablePar
  * Rebuilds columns with `isRowHeader` on the first column (required by HeroUI / React Aria).
  * Renders a screen-reader-only column when the header row is empty so the table still mounts.
  */
-export const MarkdownTableHead = ({ children, className }: MarkdownTablePartProps) => {
+export const MarkdownTableHead = ({ children, className, classNames }: MarkdownTablePartProps) => {
     const columns = flattenMarkdownTableHeaderChildren(children)
 
     return (
-        <Table.Header className={cn(className)}>
+        <Table.Header className={cn(className, classNames)}>
             {columns.length === 0 ? (
                 <Table.Column isRowHeader className="sr-only">
                     {" "}
@@ -90,6 +93,8 @@ export interface MarkdownTableProps {
     ariaLabel: string
     /** Extra classes. */
     className?: string
+    /** Where this sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -97,7 +102,7 @@ export interface MarkdownTableProps {
  * Some markdown tables only emit `tbody`; the first body row is promoted to `thead` in that case.
  * @param props - {@link MarkdownTableProps}
  */
-export const MarkdownTable = ({ children, ariaLabel, className }: MarkdownTableProps) => {
+export const MarkdownTable = ({ children, ariaLabel, className, classNames }: MarkdownTableProps) => {
     const parts = React.Children.toArray(children)
     const hasThead = parts.some(
         (child) => React.isValidElement(child) && child.type === MarkdownTableHead,
@@ -136,7 +141,7 @@ export const MarkdownTable = ({ children, ariaLabel, className }: MarkdownTableP
     // 0, so the column shrinks and the table scrolls inside instead of blocking the layout.
     return (
         <div className="max-w-full overflow-x-auto">
-            <Table variant="primary" className={cn(className)}>
+            <Table variant="primary" className={cn(className, classNames)}>
                 <Table.ScrollContainer>
                     <Table.Content aria-label={ariaLabel}>
                         {content}
@@ -148,11 +153,11 @@ export const MarkdownTable = ({ children, ariaLabel, className }: MarkdownTableP
 }
 
 /** Maps markdown `tbody` to HeroUI `Table.Body`. */
-export const MarkdownTableBody = ({ children, className }: MarkdownTablePartProps) => (
-    <Table.Body className={cn(className)}>{children}</Table.Body>
+export const MarkdownTableBody = ({ children, className, classNames }: MarkdownTablePartProps) => (
+    <Table.Body className={cn(className, classNames)}>{children}</Table.Body>
 )
 
 /** Maps markdown `th` to HeroUI `Table.Column`. */
-export const MarkdownTableColumn = ({ children, className }: MarkdownTablePartProps) => (
-    <Table.Column className={cn(className)}>{children}</Table.Column>
+export const MarkdownTableColumn = ({ children, className, classNames }: MarkdownTablePartProps) => (
+    <Table.Column className={cn(className, classNames)}>{children}</Table.Column>
 )

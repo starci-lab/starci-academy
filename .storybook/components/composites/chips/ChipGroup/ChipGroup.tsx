@@ -2,16 +2,16 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { ChipBase, type ChipTone } from "./ChipBase"
+import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 /**
  * `ChipGroup` — a row of chips described by `items` data, truncated when it overflows.
  *
- * The only member of the chip family with dependencies: it imports `ChipBase` and
+ * The only member of the chip family with dependencies: it imports `Chip` and
  * `Tooltip`. Shows up to `maxVisible` chips; the rest collapse into a single `+N` chip
  * whose tooltip lists the full set.
  *
- * The group carries no meaning of its own — just layout gap plus `ChipBase` instances.
- * Per-chip state (`icon`/`onRemove`/dot color) belongs to `ChipBase`; the group's story
+ * The group carries no meaning of its own — just layout gap plus `Chip` instances.
+ * Per-chip state (`icon`/`onRemove`/dot color) belongs to `Chip`; the group's story
  * doesn't repeat it.
  */
 /** One chip in {@link ChipGroup} — described as data, not JSX. */
@@ -37,7 +37,7 @@ export interface ChipGroupProps {
      * lives on the group, not on each item.
      */
     tone?: ChipTone
-    /** `true` → skeleton mirrors the resting-state cell count (each cell is its own `ChipBase`). */
+    /** `true` → skeleton mirrors the resting-state cell count (each cell is its own `Chip`). */
     isSkeleton?: boolean
     showAnatomy?: boolean
     /** `data-anat-part` name on the row's root, so a wrapping component can name this cluster. */
@@ -72,7 +72,7 @@ export const ChipGroup = ({
                 {Array.from({ length: maxVisible }).map((_, index) => (
                     // Shimmer carries no tone (plain gray), so `tone` isn't passed down —
                     // passing a prop with no effect would make a reader think it does something.
-                    <ChipBase key={index} isSkeleton anatPart={chipPart} />
+                    <Chip key={index} isSkeleton anatPart={chipPart} />
                 ))}
             </div>
         )
@@ -83,7 +83,7 @@ export const ChipGroup = ({
     return (
         <div className={cn("flex flex-wrap items-center gap-2", className, classNames)} data-anat-part={anatPart}>
             {visibleItems.map(({ key, text }) => (
-                <ChipBase key={key} text={text} tone={tone} anatPart={chipPart} />
+                <Chip key={key} text={text} tone={tone} anatPart={chipPart} />
             ))}
             {overflowCount > 0 ? (
                 <Tooltip
@@ -98,7 +98,7 @@ export const ChipGroup = ({
                         </div>
                     }
                 >
-                    <ChipBase text={`+${overflowCount}`} tone={tone} anatPart={chipPart} />
+                    <Chip text={`+${overflowCount}`} tone={tone} anatPart={chipPart} />
                 </Tooltip>
             ) : null}
         </div>

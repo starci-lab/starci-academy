@@ -2,6 +2,7 @@
 
 import React, { type ReactNode } from "react"
 import { Typography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -24,6 +25,8 @@ interface RichTextOwnProps {
     color?: TypographyColor
     /** Extra classes on the wrapping Typography. */
     className?: string
+    /** Where this sits inside its parent, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** `true` → tag the internal skeleton bar with `data-anat-part="Skeleton"`. */
@@ -159,13 +162,14 @@ export const RichText = ({
     color,
     isSkeleton = false,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: RichTextProps) => {
     if (isSkeleton) {
         return (
             <HeroSkeleton
-                className={cn("h-4 w-full rounded", className)}
+                className={cn("h-4 w-full rounded", className, classNames)}
                 data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
             />
         )
@@ -174,7 +178,7 @@ export const RichText = ({
         <Typography
             type={size}
             color={color}
-            className={cn(className)}
+            className={cn(className, classNames)}
             data-anat-part={anatPart ?? (showAnatomy ? "RichText" : undefined)}
         >
             {renderInline(text ?? "")}

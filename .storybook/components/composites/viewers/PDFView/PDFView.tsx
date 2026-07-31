@@ -10,6 +10,7 @@ import React, {
 } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -152,6 +153,8 @@ interface PDFViewOwnProps {
     isSkeleton?: boolean
     /** Extra classes on the wrapper. */
     className?: string
+    /** Where this sits inside its parent, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** `true` → tag the whole-file skeleton with `data-anat-part="Skeleton"`. */
@@ -192,6 +195,7 @@ export const PDFView = ({
     fitToContainer = false,
     isSkeleton = false,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: PDFViewProps) => {
@@ -265,7 +269,7 @@ export const PDFView = ({
     if (isSkeleton) {
         return (
             <HeroSkeleton
-                className={cn(heightClassName, "w-full rounded-medium", className)}
+                className={cn(heightClassName, "w-full rounded-medium", className, classNames)}
                 data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
             />
         )
@@ -279,6 +283,7 @@ export const PDFView = ({
                 "overflow-x-auto bg-surface scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary",
                 allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden",
                 className,
+                classNames,
             )}
             data-anat-part={anatPart}
         >

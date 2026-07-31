@@ -1,7 +1,7 @@
 import { ArrowLeftIcon, SealCheckIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
-import { AvatarGroup } from "@sb-components/atoms/display/Avatar/AvatarGroup"
+import { AvatarGroup } from "@sb-components/composites/lists/AvatarGroup/AvatarGroup"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 

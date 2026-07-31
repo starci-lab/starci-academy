@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -45,8 +46,13 @@ interface LegendOwnProps {
     direction?: "row" | "col"
     /** Entry count to shimmer while `isSkeleton`. Defaults to `3`. */
     skeletonCount?: number
-    /** Extra classes on the root element. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** `true` → tag the dot/label skeleton bars with `data-anat-part="Skeleton"`. */
@@ -78,6 +84,7 @@ export const Legend = ({
     isSkeleton = false,
     skeletonCount = 3,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: LegendProps) => {
@@ -88,6 +95,7 @@ export const Legend = ({
                     ? "flex flex-col gap-2"
                     : "flex flex-wrap gap-x-3 gap-y-2",
                 className,
+                classNames,
             )}
             data-anat-part={anatPart}
         >
@@ -98,8 +106,11 @@ export const Legend = ({
                         gap="related"
                         body={
                             <>
+                                {/* No swatch/dot atom exists yet — a bare span is what the
+                                    real render below draws too, so this stays a hand-drawn
+                                    bar until that atom exists. */}
                                 <HeroSkeleton className="size-2.5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                                <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                                <Typography size="xs" isSkeleton showAnatomy={showAnatomy} />
                             </>
                         }
                     />

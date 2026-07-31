@@ -4,6 +4,7 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { Button as ButtonAtom } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -62,6 +63,11 @@ export interface ChipButtonListProps {
     /** `true` → emit `data-anat-part` trên từng part (Button/icon/Typography) cho {@link BlockAnatomy}. */
     showAnatomy?: boolean
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 const DEFAULT_VARIANT: Record<ChipButtonListDirection, ChipButtonListVariant> = {
@@ -95,12 +101,13 @@ export const ChipButtonList = ({
     anatPart,
     showAnatomy = false,
     className,
+    classNames,
 }: ChipButtonListProps) => {
     const resolvedVariant = variant ?? DEFAULT_VARIANT[direction]
 
     if (isSkeleton) {
         return (
-            <div className={cn(CONTAINER_CLS[direction], className)} data-anat-part={anatPart}>
+            <div className={cn(CONTAINER_CLS[direction], className, classNames)} data-anat-part={anatPart}>
                 {direction === "column"
                     ? Array.from({ length: skeletonCount }).map((_, index) => (
                         <StackH
@@ -135,7 +142,7 @@ export const ChipButtonList = ({
     }
 
     return (
-        <div className={cn(CONTAINER_CLS[direction], className)} data-anat-part={anatPart}>
+        <div className={cn(CONTAINER_CLS[direction], className, classNames)} data-anat-part={anatPart}>
             {items.map((item, index) => (
                 <Button
                     key={item.id ?? index}

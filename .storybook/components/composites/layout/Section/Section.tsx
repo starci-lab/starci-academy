@@ -1,6 +1,7 @@
 import { isValidElement } from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography, type TypographySize } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
@@ -86,8 +87,13 @@ export interface SectionHeaderProps {
     action?: ReactNode
     /** Heading rank → the text scale of every line. Default `2`. */
     level?: SectionLevel
-    /** Extra classes on the header row. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
     anatPart?: string
     /** `true` → each part emits `data-anat-part` for a BlockAnatomy panel. No visual effect. */
@@ -110,6 +116,7 @@ const Header = ({
     action,
     level = 2,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: SectionHeaderProps) => {
@@ -142,6 +149,7 @@ const Header = ({
             justify="between"
             gap="grouped"
             className={className}
+            classNames={classNames}
             anatPart={anatPart}
             body={
                 <>
@@ -186,8 +194,13 @@ export interface SectionBaseProps {
      * `3` (`grouped`) when the header is just a label over a tight list.
      */
     gap?: SeamScale
-    /** Extra classes on the `<section>` element. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
     anatPart?: string
     /** `true` → each region emits `data-anat-part` for a BlockAnatomy panel. No visual effect. */
@@ -215,6 +228,7 @@ const Base = ({
     footer,
     children,
     gap = "section",    className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: SectionBaseProps) => {
@@ -228,7 +242,7 @@ const Base = ({
             ? <Header {...header} showAnatomy={showAnatomy} anatPart={showAnatomy ? "SectionHeader" : undefined} />
             : header
     return (
-        <section className={cn("flex flex-col", GAP_CLASS[gap], className)} data-anat-part={anatPart}>
+        <section className={cn("flex flex-col", GAP_CLASS[gap], className, classNames)} data-anat-part={anatPart}>
             {headerNode != null ? (
                 <div>{headerNode}</div>
             ) : null}

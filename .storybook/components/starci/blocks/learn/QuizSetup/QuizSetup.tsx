@@ -1,6 +1,7 @@
 import React from "react"
 import { PlayIcon } from "@phosphor-icons/react"
-import { Button, ButtonRadioGroup } from "@sb-components/atoms/buttons/Button/Button"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonRadioGroup } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"

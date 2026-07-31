@@ -3,7 +3,8 @@ import type { ReactNode } from "react"
 import { Button, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { XIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
+import { Button as ButtonAtom } from "@sb-components/atoms/buttons/Button/Button"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -50,8 +51,13 @@ export interface RemovableTokenProps {
     removeLabel?: string
     /** Disables both affordances and dims the token. */
     isDisabled?: boolean
-    /** Extra classes on the row. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** `true` → render the skeleton mirror (row frame + placeholder bars). */
     isSkeleton?: boolean
 }
@@ -74,6 +80,7 @@ export const RemovableToken = ({
     removeLabel = "Remove",
     isDisabled = false,
     className,
+    classNames,
     isSkeleton = false,
 }: RemovableTokenProps) => {
     if (isSkeleton) {
@@ -82,6 +89,7 @@ export const RemovableToken = ({
                 className={cn(
                     "flex items-center justify-between gap-3 rounded-2xl border border-default px-3 py-3",
                     className,
+                    classNames,
                 )}
             >
                 <StackH
@@ -89,12 +97,19 @@ export const RemovableToken = ({
                     classNames={["min-w-0"]}
                     body={
                         <>
+                            {/* STOPPED (COMPOSITE-10): `icon` is an arbitrary caller-supplied
+                                node (wrapped in a bare span in the real branch below), not an
+                                atom — there is no `Icon` atom in the house to hand `isSkeleton`
+                                to for a generic glyph placeholder. Left hand-drawn. */}
                             <HeroSkeleton className="size-4 shrink-0 rounded" />
-                            <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/3")} />
+                            {/* Real branch renders `Typography size="sm" weight="medium"` here — forward `isSkeleton` to it. */}
+                            <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
                         </>
                     }
                 />
-                <HeroSkeleton className="h-9 w-20 shrink-0 rounded-full" />
+                {/* Real branch's `onEdit` affordance is a `Button size="sm"` — forward `isSkeleton`
+                    to the house `Button` atom instead of hand-measuring its pill. */}
+                <ButtonAtom isSkeleton size="sm" classNames={["shrink-0"]} />
             </div>
         )
     }
@@ -106,6 +121,7 @@ export const RemovableToken = ({
                 "flex items-center justify-between gap-3 rounded-2xl border border-default px-3 py-3",
                 isDisabled && "opacity-50",
                 className,
+                classNames,
             )}
         >
             <StackH

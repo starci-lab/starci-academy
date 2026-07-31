@@ -3,6 +3,7 @@ import { ListBox, Select, Tabs, cn } from "@heroui/react"
 import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { StackH } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * COMPOSITE TIER (§13) — `Toolbar.*`, the KHUNG of a nav/control ROW above a panel.
@@ -114,6 +115,8 @@ export interface ToolbarBaseProps {
     size?: "sm" | "md"
     /** Extra classes on the toolbar row. */
     className?: string
+    /** Layout utilities on the toolbar row, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this toolbar. */
     showAnatomy?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
@@ -156,6 +159,7 @@ const ToolbarBase = ({
     variant = "secondary",
     size = "md",
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: ToolbarBaseProps) => {
@@ -306,7 +310,7 @@ const ToolbarBase = ({
         <StackH
             gap="grouped"
             justify="between"
-            className={cn(showAnatomy && "relative", className)}
+            className={cn(showAnatomy && "relative", className, classNames)}
             anatPart={anatPart}
             body={
                 <>

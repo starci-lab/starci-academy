@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -22,6 +23,11 @@ export interface StatGridCardProps {
     items: Array<StatGridCardItem>
     /** Extra classes on the root element. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Storybook-only: emit `data-anat-part="Cell"` on each grid cell for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
@@ -38,12 +44,12 @@ export interface StatGridCardProps {
  *
  * @param props - {@link StatGridCardProps}
  */
-export const StatGridCard = ({ items, className, showAnatomy = false }: StatGridCardProps) => {
+export const StatGridCard = ({ items, className, classNames, showAnatomy = false }: StatGridCardProps) => {
     const total = items.length
     const isOddTotal = total % 2 === 1
 
     return (
-        <div className={cn("grid grid-cols-2 overflow-hidden rounded-3xl border border-default bg-surface", className)}>
+        <div className={cn("grid grid-cols-2 overflow-hidden rounded-3xl border border-default bg-surface", className, classNames)}>
             {items.map((item, index) => {
                 const isLastOddSpan = isOddTotal && index === total - 1
                 const isRightCol = index % 2 === 1

@@ -6,6 +6,7 @@ import mermaid from "mermaid"
 import useSWR from "swr"
 import { Modal, cn } from "@heroui/react"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -35,6 +36,8 @@ export interface MermaidDiagramProps {
     fallbackLabel: string
     /** Extra classes on the root `<figure>`. */
     className?: string
+    /** Where the root `<figure>` sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -45,7 +48,7 @@ export interface MermaidDiagramProps {
  * `"use client"` for the browser-side mermaid renderer.
  * @param props - {@link MermaidDiagramProps}
  */
-export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel, className }: MermaidDiagramProps) => {
+export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel, className, classNames }: MermaidDiagramProps) => {
     // Stable id so concurrent diagrams never collide on mermaid's render target id.
     const renderId = useId().replace(/:/g, "-")
     // Local open flag for the full-screen preview dialog (per-diagram, not a global modal).
@@ -70,7 +73,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
     )
 
     return (
-        <figure className={cn("overflow-hidden rounded-3xl border border-default bg-background", className)}>
+        <figure className={cn("overflow-hidden rounded-3xl border border-default bg-background", className, classNames)}>
             {/* Header row matches `CodeToHtml`'s exact chrome (label left, action right) — a
                 mermaid block is "a fence with a name" the same way a code fence is (thầy
                 2026-07-29: "bỏ luôn icon diagram, ghi rõ là mermaid" — no icon, the WORD

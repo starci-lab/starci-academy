@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { TrashIcon, FloppyDiskIcon } from "@phosphor-icons/react"
-import { ButtonGroup, type ButtonGroupItem, type ButtonSize } from "@sb-components/atoms/buttons/Button/Button"
+import type { ButtonSize } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonGroup, type ButtonGroupItem } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
  * ⚠️ STATE SCOPE (teacher's call 2026-07-25): `ButtonGroup` does NOT grow new meaning —
@@ -29,7 +30,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * 🎨 Icons = Phosphor (§5.0); stroke weight is enforced by the atom per cluster `size` (§5.0a).
  */
 const meta: Meta<typeof ButtonGroup> = {
-    title: "Atoms/Buttons/Button/ButtonGroup",
+    title: "Composites/Buttons/ButtonGroup",
     component: ButtonGroup,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -69,7 +70,7 @@ export const Default: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="ButtonGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `items`"
                 annotate={GROUP_ANNOTATE}
                 reason="The group is a cluster: layout and nothing else. `items` is data, not JSX children, so a caller can't wire up the wrong structure or a mismatched size for one entry alone."
@@ -97,7 +98,7 @@ export const Sizes: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="ButtonGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `size`"
                 annotate={GROUP_ANNOTATE}
                 reason="A cluster is always one size, so `size` sits on the group and never on an item. Putting it on items instead would let anyone build a row of buttons at mismatched heights, which reads as broken rather than intentional."
@@ -119,7 +120,7 @@ export const Skeleton: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="ButtonGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `isSkeleton`"
                 annotate={GROUP_ANNOTATE}
                 reason="The group only passes the flag down; every item draws its own shimmer, a pill for a labelled button and a square for an icon-only one. The row keeps its footprint at every size, so nothing shifts once the real labels land."

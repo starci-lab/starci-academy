@@ -1,7 +1,9 @@
 import React from "react"
-import { ProgressCircle, Typography as HeroTypography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { ProgressCircle, Typography as HeroTypography, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { ProgressCircle as ProgressCircleAtom } from "@sb-components/atoms/display/Progress/Progress"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/ProgressRing`. Authored in Storybook (not `src`);
@@ -34,8 +36,13 @@ interface ProgressRingOwnProps {
     size?: "sm" | "md" | "lg"
     /** Fill tone. Defaults to `"accent"`; pass a semantic tone (success / warning / danger) when the VALUE carries meaning. */
     tone?: "accent" | "success" | "warning" | "danger"
-    /** Extra classes on the root element. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** `true` → tag the ring/caption skeleton bars with `data-anat-part="Skeleton"`. */
@@ -68,6 +75,7 @@ export const ProgressRing = ({
     tone = "accent",
     isSkeleton = false,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: ProgressRingProps) => {
@@ -78,12 +86,20 @@ export const ProgressRing = ({
                 gap="related"
                 align="center"
                 className={className}
+                classNames={classNames}
                 anatPart={anatPart}
                 body={
                     <>
-                        <HeroSkeleton className={cn("rounded-full", ring)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        {/*
+                         * The real ring below draws the vendor `ProgressCircle` compound
+                         * directly (plus a centered label overlay the atom doesn't support),
+                         * but a loading ring has no label to overlay yet — so the plain
+                         * shimmer circle the `Progress.ProgressCircle` atom already draws
+                         * for its own `isSkeleton` is the same shape, just sized to `ring`.
+                         */}
+                        <ProgressCircleAtom isSkeleton showAnatomy={showAnatomy} className={ring} />
                         {caption !== undefined ? (
-                            <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                            <Typography size="xs" isSkeleton showAnatomy={showAnatomy} />
                         ) : null}
                     </>
                 }
@@ -121,6 +137,6 @@ export const ProgressRing = ({
         </>
     )
     return (
-        <StackV gap="related" align="center" className={className} anatPart={anatPart} body={ringVisual} />
+        <StackV gap="related" align="center" className={className} classNames={classNames} anatPart={anatPart} body={ringVisual} />
     )
 }

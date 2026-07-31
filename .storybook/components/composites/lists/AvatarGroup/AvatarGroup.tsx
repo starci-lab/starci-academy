@@ -1,16 +1,16 @@
-import { Avatar as HeroAvatar, AvatarFallback as HeroAvatarFallback, Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import { AvatarBase, SIZE_MAP } from "./AvatarBase"
-import type { AvatarSize, IconComponent } from "./AvatarBase"
+import { Avatar as HeroAvatar, AvatarFallback as HeroAvatarFallback, cn } from "@heroui/react"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
+import type { AvatarSize, IconComponent } from "@sb-components/atoms/display/Avatar/Avatar"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ATOM — `AvatarGroup`: an overlapping row of avatars ("who follows"), each
+ * `AvatarGroup` — an overlapping row of avatars ("who follows"), each
  * ringed, with a "+N" chip for the overflow.
  *
  * The only component in the Avatar family with dependencies of its own — it
- * imports `AvatarBase`.
+ * imports `Avatar`.
  *
- *   • `items` is DATA, not `children`; the atom builds each `Avatar` itself.
+ *   • `items` is DATA, not `children`; the composite builds each `Avatar` itself.
  *   • `size` is set at the GROUP level (the row is always one size); items
  *     do not carry their own size.
  *   • `isSkeleton` passes down so each item mirrors it, keeping the row's footprint stable.
@@ -83,7 +83,7 @@ export const AvatarGroup = ({
                 // One badge per member: names each avatar as one opaque part
                 // instead of exposing Avatar's own Image/Fallback parts.
                 <span key={item.key} className="inline-flex" data-anat-part={showAnatomy ? "Avatar" : undefined}>
-                    <AvatarBase
+                    <Avatar
                         src={item.src}
                         seed={item.seed}
                         name={item.name}
@@ -98,10 +98,11 @@ export const AvatarGroup = ({
                 isSkeleton ? (
                     // While skeleton, the "+N" chip mirrors as a shimmer too — showing
                     // a real count inside a loading row would leak real data into fake state.
-                    <HeroSkeleton
-                        className={cn("rounded-full", SIZE_MAP[size].box, GROUP_RING)}
-                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
-                    />
+                    // Forwards to the same `Avatar` atom the visible items use above: the
+                    // count/person distinction only matters once real content lands.
+                    <span className="inline-flex" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                        <Avatar isSkeleton size={size} className={GROUP_RING} />
+                    </span>
                 ) : (
                     // "+N" is a COUNT, not a person — rendered here rather than through
                     // Avatar, whose initials fallback would clip "+12" to "+1".

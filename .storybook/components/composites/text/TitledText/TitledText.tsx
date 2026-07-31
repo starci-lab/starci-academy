@@ -111,6 +111,11 @@ export interface TitledTextProps {
     showAnatomy?: boolean
     /** Extra classes on the root (e.g. `flex-1` for row layouts). */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -132,16 +137,18 @@ export const TitledText = ({
     anatPart,
     showAnatomy = false,
     className,
+    classNames,
 }: TitledTextProps) => {
     const cfg = SIZE_CONFIG[size]
     /** Each line is ONE `Typography` — named so the deps tree can go down to the atom. */
     const part = (name: string) => (showAnatomy ? name : undefined)
+    const rootClassNames: Array<AllowedClassName> = ["min-w-0", ...(classNames ?? [])]
 
     if (isSkeleton) {
         return (
             <StackV
                 gap="flush"
-                classNames={["min-w-0"]}
+                classNames={rootClassNames}
                 className={className}
                 anatPart={anatPart}
                 body={
@@ -159,7 +166,7 @@ export const TitledText = ({
     return (
         <StackV
             gap="flush"
-            classNames={["min-w-0"]}
+            classNames={rootClassNames}
             className={className}
             anatPart={anatPart}
             body={

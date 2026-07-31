@@ -3,6 +3,7 @@
 import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `FloatingActionButton`. Authored in
@@ -25,6 +26,11 @@ export interface FloatingActionButtonProps {
     isSkeleton?: boolean
     /** Extra classes on the button. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -41,6 +47,7 @@ export const FloatingActionButton = ({
     icon,
     isSkeleton = false,
     className,
+    classNames,
 }: FloatingActionButtonProps) => {
     return (
         <Button
@@ -53,6 +60,7 @@ export const FloatingActionButton = ({
             className={cn(
                 "fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40 shadow-lg",
                 className,
+                classNames,
             )}
         />
     )

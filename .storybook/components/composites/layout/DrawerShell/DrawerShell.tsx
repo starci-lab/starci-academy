@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn, Drawer } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -70,8 +71,13 @@ export interface DrawerShellBaseProps {
     bodyClassName?: string
     /** Extra classes merged onto `Drawer.Footer`. */
     footerClassName?: string
-    /** Extra classes merged onto `Drawer.Dialog`. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (close trigger / header / body / footer)
      * emits `data-anat-part="<name>"` so a BlockAnatomy panel can badge it
@@ -102,6 +108,7 @@ const Base = ({
     bodyClassName,
     footerClassName,
     className,
+    classNames,
     children,
     showAnatomy = false,
 }: DrawerShellBaseProps) => {
@@ -111,7 +118,7 @@ const Base = ({
         <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
             <Drawer.Backdrop>
                 <Drawer.Content className={contentClassName} placement={placement}>
-                    <Drawer.Dialog className={cn("gap-3", dialogClassName, className)}>
+                    <Drawer.Dialog className={cn("gap-3", dialogClassName, className, classNames)}>
                         <Drawer.CloseTrigger data-anat-part={showAnatomy ? "Drawer.CloseTrigger" : undefined} />
                         {header ? (
                             <Drawer.Header data-anat-part={showAnatomy ? "Drawer.Header" : undefined}>{header}</Drawer.Header>

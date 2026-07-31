@@ -1,6 +1,6 @@
 import React from "react"
 import { BookOpenIcon, FlagIcon, PuzzlePieceIcon, TrophyIcon } from "@phosphor-icons/react"
-import { ButtonRadioGroup } from "@sb-components/atoms/buttons/Button/ButtonRadioGroup"
+import { ButtonRadioGroup } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { Typography, type TypographyIcon } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 

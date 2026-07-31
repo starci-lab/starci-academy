@@ -44,7 +44,7 @@ const MODE_SWITCH_PART: AnatomyNode = {
     name: "ButtonRadioGroup",
     tier: "atom",
     role: "the rail⇄drawer presentation switch, icon-only, single-select",
-    storyId: "atoms-buttons-button-buttonradiogroup--default",
+    storyId: "composites-buttons-buttonradiogroup--default",
 }
 
 const BODY_PARTS: Array<AnatomyNode> = [

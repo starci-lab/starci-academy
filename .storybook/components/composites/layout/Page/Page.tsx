@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -78,8 +79,13 @@ interface PageHeaderOwnProps {
      * PANE/PHASE inside an existing page shell.
      */
     size?: "page" | "compact"
-    /** Extra classes on the header wrapper. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /**
      * `true` → each part this frame renders carries a `data-anat-part="<name>"`
      * attribute so a BlockAnatomy panel can badge it on-render. Off in production.
@@ -129,6 +135,7 @@ const Header = ({
     size = "page",
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy,
     anatPart,
 }: PageHeaderProps) => {
@@ -136,6 +143,8 @@ const Header = ({
         // Shape-agnostic mirror: the real shape (breadcrumb/description/meta presence)
         // isn't known before the route's data arrives, so this assumes the full header.
         // Shape-agnostic mirror: title-block bars stacked above a row of pill bars.
+        // Title/description mirror the exact atom the real branch renders at that spot
+        // (`Typography`), handed `isSkeleton` instead of a hand-drawn `HeroSkeleton` bar.
         const skeletonHeader = (
             <>
                 <StackV
@@ -143,8 +152,18 @@ const Header = ({
                     classNames={["min-w-0"]}
                     body={
                         <>
-                            <HeroSkeleton className={size === "compact" ? "h-4 w-48 rounded" : "h-6 w-64 rounded"} />
-                            <HeroSkeleton className="h-4 w-80 max-w-full rounded" />
+                            <Typography
+                                isSkeleton
+                                size={size === "compact" ? "base" : "h3"}
+                                className={size === "compact" ? "h-4 w-48 rounded" : "h-6 w-64 rounded"}
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                            />
+                            <Typography
+                                isSkeleton
+                                size="sm"
+                                className="h-4 w-80 max-w-full rounded"
+                                anatPart={showAnatomy ? "Typography" : undefined}
+                            />
                         </>
                     }
                 />
@@ -163,7 +182,7 @@ const Header = ({
                 />
             </>
         )
-        return <StackV gap="grouped" anatPart={anatPart} className={className} body={skeletonHeader} />
+        return <StackV gap="grouped" anatPart={anatPart} className={className} classNames={classNames} body={skeletonHeader} />
     }
     // Left column: stacked title and optional description
     const titleBlock = (
@@ -219,7 +238,7 @@ const Header = ({
     return (
         // outer gap="grouped": breadcrumb ↔ title-block ↔ meta (different header tiers);
         // title ↔ description stay a related gap="related" pair inside the title block.
-        <StackV gap="grouped" anatPart={anatPart} className={className} body={headerBody} />
+        <StackV gap="grouped" anatPart={anatPart} className={className} classNames={classNames} body={headerBody} />
     )
 }
 
@@ -242,8 +261,13 @@ export interface PageBottomBarProps {
     actions?: ReactNode
     /** Shorthand for {@link PageBottomBarProps.body}. */
     children?: ReactNode
-    /** Extra classes on the bar chrome. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /**
      * `true` → each region emits `data-anat-part="<name>"` so a BlockAnatomy
      * panel can badge it on-render. Off in production.
@@ -269,6 +293,7 @@ const BottomBar = ({
     actions,
     children,
     className,
+    classNames,
     showAnatomy = false,
 }: PageBottomBarProps) => {
     const main = body ?? children
@@ -279,14 +304,14 @@ const BottomBar = ({
     if (main == null || actions == null) {
         const only = main ?? actions
         return (
-            <div className={cn(chrome, className)}>
+            <div className={cn(chrome, className, classNames)}>
                 <div>{only}</div>
             </div>
         )
     }
 
     return (
-        <div className={cn(chrome, className)}>
+        <div className={cn(chrome, className, classNames)}>
             <StackH
                 align="center"
                 justify="between"

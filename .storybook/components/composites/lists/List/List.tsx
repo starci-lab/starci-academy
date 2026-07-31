@@ -5,6 +5,7 @@ import { TitledText } from "@sb-components/composites/text/TitledText/TitledText
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -88,6 +89,8 @@ export interface ListRowProps {
     isSkeleton?: boolean
     /** Extra classes merged onto the root element via `cn`. */
     className?: string
+    /** Layout utilities merged onto the root element, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (leading / title-text / meta-trailing
      * cluster) emits `data-anat-part="<name>"` so a BlockAnatomy panel can badge
@@ -161,6 +164,7 @@ const Row = ({
     href,
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
 }: ListRowProps) => {
     const isPressable = Boolean(onPress || href)
@@ -171,6 +175,7 @@ const Row = ({
         isPressable &&
             "rounded-2xl transition-colors hover:bg-surface-secondary focus-visible:bg-surface-secondary focus-visible:outline-none",
         className,
+        classNames,
     )
 
     if (isSkeleton) {
@@ -178,7 +183,7 @@ const Row = ({
             <RowSkeleton
                 hasLeading={Boolean(leading)}
                 hasSubtitle={Boolean(subtitle)}
-                className={cn(divider && "border-b border-separator", className)}
+                className={cn(divider && "border-b border-separator", className, classNames)}
                 showAnatomy={showAnatomy}
             />
         )
@@ -284,6 +289,8 @@ export interface ListLabeledProps {
     skeletonRows?: number
     /** Extra classes on the outer section. */
     className?: string
+    /** Layout utilities on the outer section, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
@@ -306,6 +313,7 @@ const Labeled = ({
     isSkeleton = false,
     skeletonRows = 3,
     className,
+    classNames,
     showAnatomy = false,
 }: ListLabeledProps) => {
     const rows = isSkeleton
@@ -323,6 +331,7 @@ const Labeled = ({
             as="section"
             gap="grouped"
             className={className}
+            classNames={classNames}
             body={
                 <>
                     <StackH
@@ -361,6 +370,8 @@ export interface ListMetaProps {
     items: ReadonlyArray<ReactNode>
     /** Extra classes on the row root. */
     className?: string
+    /** Layout utilities on the row root, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /**
@@ -379,10 +390,10 @@ export interface ListMetaProps {
  *
  * @param props - {@link ListMetaProps}
  */
-const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMetaProps) => (
+const Meta = ({ chip, items, className, classNames, anatPart, showAnatomy = false }: ListMetaProps) => (
     <StackH
         gap="related"
-        classNames={["min-w-0"]}
+        classNames={["min-w-0", ...(classNames ?? [])]}
         className={className}
         anatPart={anatPart}
         body={
@@ -444,6 +455,8 @@ export interface ListToggleRowProps {
     isDisabled?: boolean
     /** Extra classes on the row root. */
     className?: string
+    /** Layout utilities on the row root, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /** `true` → render the skeleton mirror (label + desc bars, switch pill). Consumer just flips the flag. */
     isSkeleton?: boolean
     /**
@@ -472,6 +485,7 @@ const ToggleRow = ({
     onCheckedChange,
     isDisabled = false,
     className,
+    classNames,
     isSkeleton = false,
     showAnatomy = false,
 }: ListToggleRowProps) => {
@@ -480,6 +494,7 @@ const ToggleRow = ({
             <StackH
                 gap="grouped"
                 className={className}
+                classNames={classNames}
                 body={
                     <>
                         {/* title↔description stack = TitledText (skeleton mirror delegated) */}
@@ -506,6 +521,7 @@ const ToggleRow = ({
         <StackH
             gap="grouped"
             className={cn(isDisabled && "opacity-50", className)}
+            classNames={classNames}
             body={
                 <>
                     {/* label (body-sm medium) + muted description = one TitledText row */}

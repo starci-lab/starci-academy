@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { Avatar, type AvatarSize } from "@sb-components/atoms/display/Avatar/Avatar"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -51,6 +52,8 @@ export interface IdentityContentRowProps {
     isSkeleton?: boolean
     /** Extra classes on the root. */
     className?: string
+    /** Layout utilities on the root, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this composite so a BlockAnatomy panel can badge it on-render. */
@@ -72,6 +75,7 @@ const IdentityContentRow = ({
     children,
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: IdentityContentRowProps) => (
@@ -80,6 +84,7 @@ const IdentityContentRow = ({
         align="start"
         nested={nested}
         className={className}
+        classNames={classNames}
         anatPart={anatPart}
         body={
             <>

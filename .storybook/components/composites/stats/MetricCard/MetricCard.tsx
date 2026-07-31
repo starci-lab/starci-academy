@@ -1,7 +1,8 @@
 import React from "react"
-import { Card, CardContent, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Card, CardContent, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -42,8 +43,13 @@ interface MetricCardOwnProps {
      * SMALL and MUTED (`body-xs`) — deliberately less prominent than the label.
      */
     hint?: React.ReactNode
-    /** Extra classes on the root element. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /**
@@ -86,20 +92,22 @@ export const MetricCard = ({
     hint,
     isSkeleton = false,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: MetricCardProps) => {
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
-        <SectionCard className={cn(className)} anatPart={anatPart}>
+        <SectionCard className={cn(className, classNames)} anatPart={anatPart}>
             <StackV
                 gap="related"
                 body={
                     isSkeleton ? (
                         <>
-                            <HeroSkeleton className="h-6 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                            <HeroSkeleton className="h-4 w-24 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                            <HeroSkeleton className="h-3 w-20 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                            {/* Value/label/hint slots, shimmered by the same atom each renders when real */}
+                            <Typography size="h4" isSkeleton showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="sm" isSkeleton showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="xs" color="muted" isSkeleton showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
                         </>
                     ) : (
                         <>

@@ -50,7 +50,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame stacking meta row, question, answer body and footer", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "a horizontal row — the meta chips, the lock notice's icon+text, or the prev/reveal/next footer", storyId: "frames-stack-stackh--default" },
     "Chip": { tier: "atom", role: "the level chip — the one classifying mark in the meta row, per `no-adjacent-chip`", storyId: "atoms-chips-chip-chip--default" },
-    "ChipGroup": { tier: "atom", role: "the tag row, truncated as ONE unit instead of a second run of bare chips", storyId: "atoms-chips-chip-chipgroup--default" },
+    "ChipGroup": { tier: "atom", role: "the tag row, truncated as ONE unit instead of a second run of bare chips", storyId: "composites-chips-chipgroup--default" },
     "MarkdownContent": { tier: "composite", role: "the question, the answer, or the explanation — each an authored document this block repeats without understanding it", storyId: "composites-viewers-markdowncontent--compact" },
     "Typography": { tier: "atom", role: "a section label ('Đáp án'/'Giải thích') or a line of the lock notice", storyId: "atoms-text-typography-typography--plain" },
     "Button": { tier: "atom", role: "reveal, unlock, or one of the prev/next nav controls", storyId: "atoms-buttons-button-button--default" },

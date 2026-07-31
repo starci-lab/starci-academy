@@ -3,16 +3,17 @@ import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
 import { DotsThreeVerticalIcon, TrashIcon } from "@phosphor-icons/react"
-import { ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ATOM — `Button.RadioGroup`: the system's ONE flex-wrap row of selectable
+ * COMPOSITE — `Button.RadioGroup`: the system's ONE flex-wrap row of selectable
  * buttons (single or multi). Folded into the `Button` namespace 2026-07-26
  * (previously `atoms/navigation/FlexWrapButtonRadio`, old name
- * `FlexWrapButtonRadio`) — see the JSDoc of `Button.tsx`/`ButtonRadioGroup.tsx`
- * for why it stays a SEPARATE MEMBER (props not folded into `Button.Group`).
+ * `FlexWrapButtonRadio`), then moved out of that namespace into the composite
+ * tier — see the JSDoc of `ButtonRadioGroup.tsx` for why it stays a SEPARATE
+ * MEMBER (props not folded into `ButtonGroup`).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — the ATOM-TIER rule):
+ * 📐 **1 PROP = 1 LEAF** (§12g):
  * - `items` — data that builds N child buttons ⇒ **leaf `Default`** (§12g.2).
  *   `isDisabled` is an OPTIONAL field of ONE item, i.e. a shape `items` itself
  *   can take, not a separate axis ⇒ lives TOGETHER inside `Default` — do NOT
@@ -47,7 +48,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * are written in ENGLISH; JSDoc/comments stay in Vietnamese.
  */
 const meta: Meta<typeof ButtonRadioGroup> = {
-    title: "Atoms/Buttons/Button/ButtonRadioGroup",
+    title: "Composites/Buttons/ButtonRadioGroup",
     component: ButtonRadioGroup,
     tags: ["autodocs"],
     parameters: {
@@ -151,7 +152,7 @@ export const Default: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="Button.RadioGroup"
-                tier="atom"
+                tier="composite"
                 annotate={ANNOTATE}
                 leaf="Prop `items`"
                 reason="Every option renders as a real HeroUI button inside a wrapping flex row, wrapping onto a new line instead of ever scrolling. A selected option fills in as a neutral `tertiary` button rather than `primary`, since a config toggle is never the page's one accent call to action, an unselected option stays a hollow `ghost` outline, and a locked option dims while it stays visible and stops accepting presses."
@@ -187,7 +188,7 @@ export const Multiple: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="Button.RadioGroup"
-                tier="atom"
+                tier="composite"
                 annotate={ANNOTATE}
                 leaf="Prop `multiple`"
                 reason="Flipping `multiple` turns the group into a set of independent toggles instead of one radio, producing the one pixel signature single-select can never reach: two or more buttons filled at once."
@@ -218,7 +219,7 @@ export const Trailing: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="Button.RadioGroup"
-                tier="atom"
+                tier="composite"
                 annotate={ANNOTATE}
                 leaf="Prop `trailing`"
                 reason="`trailing` is an escape hatch for one non-option action that must sit on the same row as the buttons, for example a `+N` overflow trigger. It is not part of the group's value: the component never treats it as an item, so pressing it never fires `onChange`."
@@ -256,7 +257,7 @@ export const ItemAction: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="Button.RadioGroup"
-                tier="atom"
+                tier="composite"
                 annotate={ANNOTATE}
                 leaf="Prop `itemAction`"
                 reason="Giving an item action buttons stops it from being a standalone `Button`: the select button plus every action fuse into one connected `ButtonGroup`, so the actions read as belonging to that option instead of floating beside it as separate controls. The seam between segments is HeroUI's `ButtonGroup.Separator`, recoloured to the border token and forced full height."

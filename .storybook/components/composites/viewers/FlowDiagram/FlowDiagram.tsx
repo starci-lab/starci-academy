@@ -14,6 +14,7 @@ import {
 } from "@xyflow/react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -74,6 +75,8 @@ const NODE_TYPES = { [FLOW_DIAGRAM_CARD_NODE_TYPE]: FlowDiagramCardNode }
 interface FlowDiagramOwnProps {
     /** Extra classes on the outer canvas frame. */
     className?: string
+    /** Where the canvas frame sits inside its parent. */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** `true` → tag the skeleton placeholder with `data-anat-part="Skeleton"`. */
@@ -111,7 +114,7 @@ export type FlowDiagramProps = FlowDiagramOwnProps &
  *
  * @param props - See {@link FlowDiagramProps}.
  */
-export const FlowDiagram = ({ nodes, edges, isSkeleton = false, className, anatPart, showAnatomy = false }: FlowDiagramProps) => {
+export const FlowDiagram = ({ nodes, edges, isSkeleton = false, className, classNames, anatPart, showAnatomy = false }: FlowDiagramProps) => {
     const nodeTypes = useMemo(() => NODE_TYPES, [])
 
     // A per-node shimmer isn't feasible before the graph is fetched (positions/edges are
@@ -120,7 +123,7 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, className, anatP
     if (isSkeleton) {
         return (
             <HeroSkeleton
-                className={cn("h-[420px] w-full rounded-large", className)}
+                className={cn("h-[420px] w-full rounded-large", className, classNames)}
                 data-anat-part={showAnatomy ? "Skeleton" : anatPart}
             />
         )
@@ -128,7 +131,7 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, className, anatP
 
     return (
         <div
-            className={cn("h-[420px] w-full overflow-hidden rounded-large border border-default", className)}
+            className={cn("h-[420px] w-full overflow-hidden rounded-large border border-default", className, classNames)}
             data-anat-part={anatPart}
         >
             <ReactFlowProvider>

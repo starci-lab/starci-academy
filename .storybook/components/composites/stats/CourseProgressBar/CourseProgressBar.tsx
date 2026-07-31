@@ -2,7 +2,8 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
-import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
+import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -32,6 +33,8 @@ interface CourseProgressBarOwnProps {
     hideLegend?: boolean
     /** Extra classes on the root element. */
     className?: string
+    /** Layout utilities on the root element, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -64,29 +67,20 @@ export const CourseProgressBar = ({
     hideLegend,
     isSkeleton = false,
     className,
+    classNames,
 }: CourseProgressBarProps) => {
     if (isSkeleton) {
         return (
             <StackV
                 gap="related"
                 className={className}
+                classNames={classNames}
                 body={
                     <>
+                        {/* the multi-lane track (below) has no atom counterpart — see file
+                            header note — so this shimmer stays hand-drawn as a single flat bar */}
                         <HeroSkeleton className="h-1 w-full rounded-full" />
-                        {!hideLegend ? (
-                            <StackH
-                                wrap
-                                gap="grouped"
-                                align="stretch"
-                                body={
-                                    <>
-                                        <HeroSkeleton className="h-3.5 w-16 rounded" />
-                                        <HeroSkeleton className="h-3.5 w-16 rounded" />
-                                        <HeroSkeleton className="h-3.5 w-16 rounded" />
-                                    </>
-                                }
-                            />
-                        ) : null}
+                        {!hideLegend ? <Legend isSkeleton /> : null}
                     </>
                 }
             />
@@ -104,6 +98,7 @@ export const CourseProgressBar = ({
         <StackV
             gap="related"
             className={className}
+            classNames={classNames}
             body={
                 <>
                     <div

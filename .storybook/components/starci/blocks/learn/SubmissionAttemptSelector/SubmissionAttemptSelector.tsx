@@ -1,6 +1,7 @@
 import React from "react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
-import { Button, ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/atoms/buttons/Button/Button"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import {
     AsyncContent,

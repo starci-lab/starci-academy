@@ -5,6 +5,7 @@ import { ProgressMeterTargetMark } from "./TargetMark"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/ProgressMeter`. Authored in Storybook (not `src`);
@@ -32,8 +33,13 @@ interface ProgressMeterOwnProps {
     target?: number
     /** Optional label rendered above the target tick (e.g. `"85%"`). Only shown when {@link ProgressMeterProps.target} is set. */
     targetLabel?: ReactNode
-    /** Extra classes on the root element. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this meter. */
     showAnatomy?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
@@ -67,6 +73,7 @@ export const ProgressMeter = ({
     targetLabel,
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: ProgressMeterProps) => {
@@ -76,9 +83,18 @@ export const ProgressMeter = ({
                 gap="related"
                 anatPart={anatPart}
                 className={className}
+                classNames={classNames}
                 body={
                     <>
-                        <HeroSkeleton className="h-3 w-24 rounded" />
+                        {/* Top row (label/value) — same atom the real top row renders */}
+                        <Typography size="xs" isSkeleton />
+                        {/*
+                         * Track — kept hand-drawn. The real track below sets `h-1` directly
+                         * on the vendor `ProgressBar.Track`; the local `Progress.ProgressBar`
+                         * atom (`@sb-components/atoms/display/Progress/Progress`) does not
+                         * expose its Track's height for override, so it cannot reproduce this
+                         * compact track without widening the atom.
+                         */}
                         <HeroSkeleton className="h-1 w-full rounded-full" />
                     </>
                 }
@@ -155,6 +171,7 @@ export const ProgressMeter = ({
         <StackV
             gap="related"
             className={cn(showAnatomy && "relative", className)}
+            classNames={classNames}
             anatPart={anatPart}
             body={
                 <>

@@ -1,9 +1,10 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Typography as HeroTypography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { TypographyColor } from "@sb-components/atoms/text/Typography/Typography"
 import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
-import type { SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
+import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — InlineIconLabel: a leading icon + an inline text
@@ -18,11 +19,13 @@ import type { SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
  * imports.
  *
  * TONE — trung lập (`default`) flows through Typography's `color="muted"` prop
- * (§9-clean, Typography's OWN vocabulary — not this tone's name); the other tones
- * (warning/danger/success/accent) have no Typography colour token, so they ride the
- * repo's accepted `text-*-soft-foreground` className on the Typography (mirrors
- * PriceTag/FieldShell/DeadlineCallout). The leading icon gets the SAME tone via a
- * className on its own plain span (currentColor), so icon + text stay in lockstep.
+ * (§9-clean, Typography's OWN vocabulary — not this tone's name); `accent`/`success`
+ * flow through `color="accent-soft"`/`"success-soft"` (real Typography colour
+ * tokens, mirrors PriceTag). `warning`/`danger`/`info` have NO matching Typography
+ * colour token (only accent-soft/success-soft exist), so those three still ride the
+ * repo's accepted `text-*-soft-foreground` className on the Typography. The leading
+ * icon gets the SAME tone via a className on its own plain span (currentColor), so
+ * icon + text stay in lockstep.
  */
 
 /**
@@ -39,8 +42,6 @@ export type InlineIconLabelTone = AlertStatus
 export type InlineIconLabelSize = "xs" | "sm"
 
 interface SizeConfig {
-    /** Text Typography type. */
-    text: "body-xs" | "body-sm"
     /** Gap between icon and text. */
     gap: string
 }
@@ -50,8 +51,8 @@ const ICON_BOX = "[&_svg]:size-4"
 const SKELETON_ICON = "size-4"
 
 const SIZE_CONFIG: Record<InlineIconLabelSize, SizeConfig> = {
-    xs: { text: "body-xs", gap: "gap-1" },
-    sm: { text: "body-sm", gap: "gap-2" },
+    xs: { gap: "gap-1" },
+    sm: { gap: "gap-2" },
 }
 
 /** Tone → wrapper text-colour class (icon + `color="current"` text both inherit it). */
@@ -89,6 +90,11 @@ export interface InlineIconLabelProps {
     anatPart?: string
     /** Extra classes on the root. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -108,15 +114,25 @@ export const InlineIconLabel = ({
     skeletonWidth = "w-1/4",
     anatPart,
     className,
+    classNames,
 }: InlineIconLabelProps) => {
     const cfg = SIZE_CONFIG[size]
-    // default (trung lập) → Typography color prop; other tones → className (no Typography token for them).
+    // Icon span always gets its tone via className (currentColor) — no atom involved there.
     const toneClass = tone ? TONE_CLASS[tone] : undefined
-    const textToneClass = tone && tone !== "default" ? TONE_CLASS[tone] : undefined
+    // Typography's `color` prop covers default/accent/success (muted/accent-soft/success-soft
+    // are real tokens on the atom); warning/danger/info have no matching token, so those three
+    // still fall back to the raw className (see the TONE doc comment above).
+    const textColor: TypographyColor | undefined =
+        tone === "default" ? "muted"
+            : tone === "accent" ? "accent-soft"
+                : tone === "success" ? "success-soft"
+                    : undefined
+    const textClassNameFallback =
+        tone === "warning" || tone === "danger" || tone === "info" ? TONE_CLASS[tone] : undefined
 
     if (isSkeleton) {
         return (
-            <span className={cn("inline-flex items-center", cfg.gap, className)} data-anat-part={anatPart}>
+            <span className={cn("inline-flex items-center", cfg.gap, className, classNames)} data-anat-part={anatPart}>
                 <HeroSkeleton className={cn(SKELETON_ICON, "shrink-0 rounded-full")} />
                 {/* §12c: chủ của hình là chủ của skeleton — Typography atom TỰ vẽ gạch của chính nó */}
                 <Typography size={size} isSkeleton classNames={[skeletonWidth]} />
@@ -128,14 +144,13 @@ export const InlineIconLabel = ({
         <span className={cn("inline-flex items-center", cfg.gap, className)} data-anat-part={anatPart}>
             {/* icon-ownership: the composite forces the svg box; tone via currentColor on this span */}
             <span className={cn("shrink-0", ICON_BOX, toneClass)}>{icon}</span>
-            <HeroTypography
-                type={cfg.text}
-                color={tone === "default" ? "muted" : undefined}
-                className={textToneClass}
+            <Typography
+                size={size}
+                color={textColor}
+                className={textClassNameFallback}
                 truncate={truncate}
-            >
-                {children}
-            </HeroTypography>
+                text={children}
+            />
         </span>
     )
 }

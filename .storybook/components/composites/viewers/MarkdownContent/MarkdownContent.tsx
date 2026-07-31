@@ -2,9 +2,11 @@ import React, { useEffect, useMemo, useRef, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import remarkDirective from "remark-directive"
 import remarkGfm from "remark-gfm"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { buildMarkdownRenderers } from "@sb-components/composites/viewers/MarkdownContent/map"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -322,6 +324,8 @@ export interface MarkdownContentProps {
     measure?: MarkdownMeasure
     /** Extra classes on the article wrapper. */
     className?: string
+    /** Where the article wrapper sits inside its parent. */
+    classNames?: Array<AllowedClassName>
     /**
      * `true` → render a 2-line shimmer mirror instead of the real document
      * (§12c: the owner of the shape owns the skeleton). Added 2026-07-29 —
@@ -346,6 +350,7 @@ const MarkdownContent = ({
     source,
     measure = "reading",
     className,
+    classNames,
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
@@ -374,11 +379,12 @@ const MarkdownContent = ({
             <StackV
                 gap="related"
                 className={className}
+                classNames={classNames}
                 anatPart={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
                 body={
                     <>
-                        <HeroSkeleton className="h-4 w-full rounded" />
-                        <HeroSkeleton className="h-4 w-2/3 rounded" />
+                        <Typography isSkeleton size="base" classNames={["w-full"]} />
+                        <Typography isSkeleton size="base" classNames={["w-2/3"]} />
                     </>
                 }
             />
@@ -389,7 +395,7 @@ const MarkdownContent = ({
         <article
             ref={rootRef}
             data-anat-part={anatPart ?? (showAnatomy ? "MarkdownContent" : undefined)}
-            className={cn("first:*:mt-0 last:*:mb-0", className)}
+            className={cn("first:*:mt-0 last:*:mb-0", className, classNames)}
         >
             <ReactMarkdown remarkPlugins={REMARK_PLUGINS} components={components as never}>
                 {renderedSource}

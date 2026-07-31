@@ -1,6 +1,6 @@
 import type { FormEvent, ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { ButtonGroup, type ButtonGroupItem } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonGroup, type ButtonGroupItem } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 import { StackV } from "@sb-components/frames/Stack/Stack"

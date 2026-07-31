@@ -1,15 +1,15 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { ButtonBase } from "./ButtonBase"
-import { ALIGN_CLS, type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "./button-tokens"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { ALIGN_CLS, type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /**
  * `ButtonGroup` — a row of buttons described by `items` data.
  *
- * Imports `ButtonBase` and renders one per item; it adds only row layout (gap),
+ * Imports `Button` and renders one per item; it adds only row layout (gap),
  * nothing else. Per-button state (`variant`/`isPending`/`isDisabled`) is a
- * pass-through prop that belongs to `ButtonBase`.
+ * pass-through prop that belongs to `Button`.
  */
 
 /** One button in a {@link ButtonGroup} — described as data, not JSX. */
@@ -42,7 +42,7 @@ export interface ButtonGroupProps {
     /**
      * Where this row of buttons sits inside its parent's width — `justify-start` /
      * `justify-end` / `w-full justify-between` (`between` also claims the full
-     * width, else `justify-between` has no room to spread). Same vocabulary as `ButtonBase`'s own `align`.
+     * width, else `justify-between` has no room to spread). Same vocabulary as `Button`'s own `align`.
      */
     align?: ButtonAlign
     /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
@@ -65,15 +65,15 @@ export const ButtonGroup = ({
 }: ButtonGroupProps) => (
     <div className={cn("flex items-center gap-2", align && ALIGN_CLS[align], className, classNames)}>
         {items.map(({ key, label, prefixIcon, ariaLabel, variant, onPress, isDisabled, isPending }) => {
-            // Deps tree is built from the DOM, so each rendered ButtonBase must be tagged by name.
+            // Deps tree is built from the DOM, so each rendered Button must be tagged by name.
             const anatPart = showAnatomy ? "Button" : undefined
             const shared = { variant, size, onPress, isDisabled, isPending, anatPart } as const
             if (label != null) {
-                return <ButtonBase key={key} label={label} prefixIcon={prefixIcon} isSkeleton={isSkeleton} {...shared} />
+                return <Button key={key} label={label} prefixIcon={prefixIcon} isSkeleton={isSkeleton} {...shared} />
             }
             if (prefixIcon == null) return null
             return (
-                <ButtonBase
+                <Button
                     key={key}
                     isIconOnly
                     prefixIcon={prefixIcon}

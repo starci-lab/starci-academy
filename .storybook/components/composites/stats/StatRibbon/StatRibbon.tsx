@@ -1,5 +1,6 @@
 import React from "react"
 import { Card, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StatPair, type StatPairValueType } from "@sb-components/composites/stats/StatPair/StatPair"
 import { ResponsiveRow } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
@@ -34,6 +35,11 @@ interface StatRibbonOwnProps {
     skeletonCount?: number
     /** Extra classes on the root element. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
@@ -64,6 +70,7 @@ export const StatRibbon = ({
     isSkeleton = false,
     skeletonCount = 3,
     className,
+    classNames,
     showAnatomy = false,
 }: StatRibbonProps) => {
     const cells = isSkeleton
@@ -72,7 +79,7 @@ export const StatRibbon = ({
     return (
         <Card
             variant="default"
-            className={cn(bordered && "!border !border-solid !border-default !shadow-none", className)}
+            className={cn(bordered && "!border !border-solid !border-default !shadow-none", className, classNames)}
         >
             {/* Desktop: bleed the row to the card's inner edges (`@app-sm:-m-3` cancels the
                 globals `.card { p-3 !important }`) so the per-cell `border-l` reaches the

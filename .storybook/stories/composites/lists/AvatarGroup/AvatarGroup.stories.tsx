@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { AvatarGroup } from "@sb-components/atoms/display/Avatar/Avatar"
+import { AvatarGroup } from "@sb-components/composites/lists/AvatarGroup/AvatarGroup"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ATOM — `AvatarGroup`: a row of edge-overlapping avatars ("who follows") + a "+N" chip.
+ * COMPOSITE — `AvatarGroup`: a row of edge-overlapping avatars ("who follows") + a "+N" chip.
  *
  * 📐 **1 PROP = 1 LEAF** (§12g). `items`/mapping is the bare leaf `Default` (no
  * shape-bearing prop turned on yet). `max` and `total` BOTH produce the same
@@ -10,14 +10,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * two (mirrors the dot exception on `Chip`, where `dotColor`/`dotClassName`
  * also merge into one leaf because they're the same shape). `size` sits at the
  * CLUSTER LEVEL so it gets its own leaf `Sizes`. `isSkeleton` is the rule-correct
- * exception: its leaf re-renders the exact SHAPE the atom produces while loading
+ * exception: its leaf re-renders the exact SHAPE the composite produces while loading
  * — the whole row mirrors, keeping the same footprint.
  *
  * ⛔ NO leaf `Status`/`Colors`/`Fallback`: those are states of member
  * `Avatar`, this cluster doesn't repeat them (§12f) — click the `Avatar`
  * part in the Deps tab to jump to where those states actually live.
  *
- * ⭐ Real deps: `AvatarGroup` `import { AvatarBase }` to build each avatar — the
+ * ⭐ Real deps: `AvatarGroup` `import { Avatar }` to build each avatar — the
  * ONLY component in the Avatar family with deps, so the `Avatar` part is
  * annotated with a storyId that jumps to `Avatar`.
  */
@@ -58,7 +58,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 const meta: Meta<typeof AvatarGroup> = {
-    title: "Atoms/Display/Avatar/AvatarGroup",
+    title: "Composites/Lists/AvatarGroup",
     component: AvatarGroup,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -71,10 +71,10 @@ export const Default: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="AvatarGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Default"
                 annotate={ANNOTATE}
-                reason="The overlapping row is a MEMBER of the Avatar atom (§13c), not its own scaffold: the group builds every Avatar itself from `items`, and callers never pass children."
+                reason="The overlapping row builds every Avatar itself from `items`, and callers never pass children."
                 states={[
                     {
                         name: "items = 4 members, no max/total",
@@ -96,7 +96,7 @@ export const Overflow: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="AvatarGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Props `max` / `total`"
                 annotate={ANNOTATE}
                 reason="The plus-N chip is a count, not a face, and it has two different triggers. `max` cuts a row already held in full. `total` covers the page-one case, where only a handful of members were fetched but the server reported the real count. Both roads land on the exact same chip; nothing distinguishes which one fired, because the reader only needs to know more exist, not why."
@@ -124,7 +124,7 @@ export const Sizes: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="AvatarGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `size`"
                 annotate={ANNOTATE}
                 reason="Size lives on the group, not the member, because a row of mismatched avatars would read as a layout bug rather than a feature. `Avatar` never sees a size prop from here; the group hands the same value to every avatar it builds."
@@ -168,7 +168,7 @@ export const Skeleton: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="AvatarGroup"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `isSkeleton`"
                 annotate={ANNOTATE}
                 reason="The group does not own a shimmer shape of its own; it flips isSkeleton down to every Avatar it builds, so the whole row mirrors as circles instead of growing a separate loading component to keep in sync. The overflow chip mirrors too, so no real count sneaks into a loading row."

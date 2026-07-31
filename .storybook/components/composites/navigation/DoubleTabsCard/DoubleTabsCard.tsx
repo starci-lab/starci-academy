@@ -3,6 +3,7 @@ import { Toolbar, type ToolbarTabGroup } from "@sb-components/composites/navigat
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type InsetScale } from "@sb-components/frames/_spacing"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -52,6 +53,8 @@ export interface DoubleTabsCardProps {
     padding?: InsetScale
     /** Extra classes on the card's outer section wrapper. */
     className?: string
+    /** Layout utilities on the card's outer section wrapper, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this composite so a BlockAnatomy panel can badge it on-render. */
@@ -76,6 +79,7 @@ const DoubleTabsCard = ({
     cardVariant,
     padding,
     className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: DoubleTabsCardProps) => (
@@ -83,6 +87,7 @@ const DoubleTabsCard = ({
         variant={cardVariant}
         padding={padding}
         className={className}
+        classNames={classNames}
         anatPart={anatPart}
         showAnatomy={showAnatomy}
         header={

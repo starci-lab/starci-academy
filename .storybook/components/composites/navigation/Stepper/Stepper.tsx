@@ -3,6 +3,7 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { CheckIcon } from "@phosphor-icons/react"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -45,6 +46,8 @@ export interface StepperProps {
     onStepPress?: (index: number) => void
     /** Extra classes on the track. */
     className?: string
+    /** Layout utilities on the track, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
     /**
      * `true` → each part this block renders carries a `data-anat-part="<name>"`
      * attribute so a BlockAnatomy panel can badge it on-render. Off in production.
@@ -100,6 +103,7 @@ const StepperBase = ({
     orientation = "horizontal",
     onStepPress,
     className,
+    classNames,
     showAnatomy,
 }: StepperProps) => {
     const isVertical = orientation === "vertical"
@@ -114,6 +118,7 @@ const StepperBase = ({
                 "flex",
                 isVertical ? "flex-col gap-3" : "items-start",
                 className,
+                classNames,
             )}
         >
             {steps.map((step, index) => {

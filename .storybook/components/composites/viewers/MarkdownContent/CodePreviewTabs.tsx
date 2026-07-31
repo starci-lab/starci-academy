@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import { Tabs, cn } from "@heroui/react"
 import { CodeIcon, SidebarIcon } from "@phosphor-icons/react"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -21,6 +22,8 @@ export interface CodePreviewTabsProps {
     code: React.ReactNode
     /** Extra classes. */
     className?: string
+    /** Where this sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -30,7 +33,7 @@ export interface CodePreviewTabsProps {
  * and depends on NO layout component.
  * @param props - {@link CodePreviewTabsProps}
  */
-export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsProps) => {
+export const CodePreviewTabs = ({ preview, code, className, classNames }: CodePreviewTabsProps) => {
     const [tab, setTab] = useState<"preview" | "code">("preview")
     const panes = (
         <>
@@ -66,6 +69,11 @@ export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsPro
         </>
     )
     return (
-        <StackV gap="related" className={className ? cn("not-prose", className) : "not-prose"} body={panes} />
+        <StackV
+            gap="related"
+            className={className ? cn("not-prose", className) : "not-prose"}
+            classNames={classNames}
+            body={panes}
+        />
     )
 }

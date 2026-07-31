@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn, Modal } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -81,8 +82,13 @@ export interface ModalShellBaseProps {
     bodyClassName?: string
     /** Extra classes merged onto `Modal.Footer`. */
     footerClassName?: string
-    /** Extra classes merged onto `Modal.Dialog`. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (close trigger / header / body / footer)
      * emits `data-anat-part="<name>"` so a BlockAnatomy panel can badge it
@@ -114,6 +120,7 @@ const Base = ({
     bodyClassName,
     footerClassName,
     className,
+    classNames,
     children,
     showAnatomy = false,
 }: ModalShellBaseProps) => {
@@ -132,7 +139,7 @@ const Base = ({
                         đè CSS của HeroUI (`.modal__header + .modal__body { mt-2 }`, `mt-5` trước
                         footer), không phải để giành với cha.
                         Nay `gap-4` ở đây + `mt-0!` ở con: MỘT seam, MỘT chủ (§10a). */}
-                    <Modal.Dialog className={cn("gap-3", dialogClassName, className)}>
+                    <Modal.Dialog className={cn("gap-3", dialogClassName, className, classNames)}>
                         <Modal.CloseTrigger data-anat-part={showAnatomy ? "Modal.CloseTrigger" : undefined} />
                         {header ? (
                             <Modal.Header data-anat-part={showAnatomy ? "Modal.Header" : undefined}>{header}</Modal.Header>

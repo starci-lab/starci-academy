@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { Table as HeroTable, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -70,8 +71,13 @@ export interface TableBaseProps {
     isSkeleton?: boolean
     /** Có handler → mỗi hàng thành press target (react-aria row action), nhận `item.key`. */
     onRowPress?: (key: string) => void
-    /** Extra classes trên root bảng. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
     showAnatomy?: boolean
 }
@@ -113,6 +119,7 @@ const TableBase = ({
     isSkeleton = false,
     onRowPress,
     className,
+    classNames,
     showAnatomy = false,
 }: TableBaseProps) => {
     // Header là CẤU HÌNH (biết trước cả khi có dữ liệu) → skeleton giữ header THẬT,
@@ -185,7 +192,7 @@ const TableBase = ({
     )
 
     return (
-        <HeroTable variant="primary" className={className} data-anat-part={showAnatomy ? "Table" : undefined}>
+        <HeroTable variant="primary" className={cn(className, classNames)} data-anat-part={showAnatomy ? "Table" : undefined}>
             <HeroTable.ScrollContainer data-anat-part={showAnatomy ? "Table.ScrollContainer" : undefined}>
                 <HeroTable.Content aria-label={ariaLabel} data-anat-part={showAnatomy ? "Table.Content" : undefined}>
                     {header}

@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -15,8 +16,13 @@ export interface ProgressMeterTargetMarkProps {
     percent: number
     /** Optional short label floating just above the pill (e.g. `"85%"`). Keep it short — it floats over the bar. */
     label?: ReactNode
-    /** Extra classes on the root element. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -54,9 +60,9 @@ export interface ProgressMeterTargetMarkProps {
  *
  * @param props - {@link ProgressMeterTargetMarkProps}
  */
-export const ProgressMeterTargetMark = ({ percent, label, className }: ProgressMeterTargetMarkProps) => (
+export const ProgressMeterTargetMark = ({ percent, label, className, classNames }: ProgressMeterTargetMarkProps) => (
     <div
-        className={cn("pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2", className)}
+        className={cn("pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2", className, classNames)}
         style={{ left: `${percent}%` }}
     >
         <div className="h-1 w-0.5 rounded-none bg-muted" />

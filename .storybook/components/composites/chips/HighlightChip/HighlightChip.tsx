@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Chip, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -27,7 +28,7 @@ interface WithClassNames<T> {
 export type HighlightChipTone = ChipTone
 
 /** Props every {@link HighlightChip} carries regardless of loading state. */
-interface HighlightChipOwnProps extends WithClassNames<undefined> {
+interface HighlightChipOwnProps extends WithClassNames<Array<AllowedClassName>> {
     /**
      * Semantic tone driving the soft-tinted color. Defaults to "default" (trung lập).
      */
@@ -54,16 +55,25 @@ export type HighlightChipProps = HighlightChipOwnProps &
  * "276 Bài thực hành". Pure and props-only (tone drives the color). Used in the
  * `PageHeader` meta row to show a course's figures.
  */
-export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, className }: HighlightChipProps) => {
+export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, className, classNames }: HighlightChipProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-6 w-20 rounded-full", className)} />
+        // STOPPED (COMPOSITE-10): the real branch below renders `Chip` straight
+        // from `@heroui/react` with `size="sm"`, not the house `Chip` atom
+        // (`@sb-components/atoms/chips/Chip/Chip`, imported here only for its
+        // `ChipTone` type). That atom has no `size` prop — its own skeleton
+        // renders the un-sized `.chip` padding (24px tall), not the 20px
+        // `size="sm"` box this component actually draws — so forwarding
+        // `isSkeleton` to it would change the loading pill's height, not just
+        // its shape. Left hand-drawn until the real branch is migrated onto
+        // the atom.
+        return <HeroSkeleton className={cn("h-6 w-20 rounded-full", className, classNames)} />
     }
     return (
         <Chip
             color={tone}
             variant="soft"
             size="sm"
-            className={className}
+            className={cn(className, classNames)}
         >
             {icon}
             <Chip.Label>

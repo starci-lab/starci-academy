@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Accordion, Card, cn, Radio, RadioGroup, Skeleton as HeroSkeleton } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CaretDownIcon, CheckCircleIcon, CircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/composites/cards/verdict-band"
@@ -287,6 +288,11 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     isSelected?: boolean
     /** Extra classes on the section wrapper. */
     className?: string
+    /**
+     * Where the section wrapper sits inside its parent. Appearance is not passable —
+     * it is already a prop. Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Extra classes on the surface (content) wrapper. */
     contentClassName?: string
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
@@ -331,6 +337,7 @@ const Base = ({
     actions,
     ariaLabel,
     className,
+    classNames,
     contentClassName,
     anatPart,
     showAnatomy = false,
@@ -527,7 +534,7 @@ const Base = ({
         />
     )
     return (
-        <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
+        <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className, classNames)}>
             {label != null && showAnatomy ? <div data-anat-part="SurfaceCardHeader">{labelRow}</div> : labelRow}
             {cardWithCaption}
         </section>
@@ -552,6 +559,11 @@ export interface SurfaceCardNestedSection {
     href?: string
     /** Extra classes on the section. */
     className?: string
+    /**
+     * Where this section sits inside its parent. Appearance is not passable — it is
+     * already a prop. Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
@@ -598,6 +610,11 @@ export interface SurfaceCardNestedProps extends SlotProps {
     isSkeleton?: boolean
     /** Extra classes on the card root. */
     className?: string
+    /**
+     * Where the card root sits inside its parent. Appearance is not passable — it is
+     * already a prop. Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
@@ -612,7 +629,7 @@ export interface SurfaceCardNestedProps extends SlotProps {
  * title (nav-link affordance) — NO press-scale/ripple. Non-interactive → plain
  * `<div>` with no `cursor-pointer` (no false click affordance).
  */
-const NestedSection = ({ title, eyebrow, content, onPress, href, className, anatPart, isSkeleton = false }: Omit<SurfaceCardNestedSection, "key"> & { isSkeleton?: boolean }) => {
+const NestedSection = ({ title, eyebrow, content, onPress, href, className, classNames, anatPart, isSkeleton = false }: Omit<SurfaceCardNestedSection, "key"> & { isSkeleton?: boolean }) => {
     const interactive = Boolean(onPress || href)
     // §10: parent owns the gap (tight) — eyebrow/title/content no longer self-margin.
     const body = (
@@ -644,6 +661,7 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
                 className={cn(
                     "group block w-full cursor-pointer p-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent",
                     className,
+                    classNames,
                 )}
             >
                 {body}
@@ -659,6 +677,7 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
                 className={cn(
                     "group block w-full cursor-pointer p-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent",
                     className,
+                    classNames,
                 )}
             >
                 {body}
@@ -666,7 +685,7 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
         )
     }
     return (
-        <div data-anat-part={anatPart} className={cn("p-3", className)}>
+        <div data-anat-part={anatPart} className={cn("p-3", className, classNames)}>
             {body}
         </div>
     )
@@ -693,6 +712,7 @@ const Nested = ({
     variant = "surface",
     isSkeleton = false,
     className,
+    classNames,
     anatPart,
     showAnatomy,
 }: SurfaceCardNestedProps) => {
@@ -712,6 +732,7 @@ const Nested = ({
                 radius === "xl" ? "rounded-xl" : "rounded-3xl",
                 variant === "nested" ? "border border-default bg-transparent" : "bg-surface shadow-surface",
                 className,
+                classNames,
             )}
         >
             {hasHeader ? (
@@ -876,6 +897,12 @@ export interface SurfaceCardPressableGroupItem {
      */
     className?: string
     /**
+     * Where this tile sits inside the grid (e.g. `@lg:col-start-2`). Appearance is not
+     * passable — it is already a prop. Prefer this over `className`; the string form
+     * is going away.
+     */
+    classNames?: Array<AllowedClassName>
+    /**
      * Verdict variant: a LEFT band marking this tile with a signal that comes from
      * DATA (`card.md` §3i) — the canonical {@link VerdictBand}, SAME shape as
      * `SectionCard`/`SurfaceCardList`.
@@ -931,6 +958,8 @@ export interface SurfaceCardPressableGroupProps {
      * {@link AnatomyOverlay} anchor so a BlockAnatomy panel can badge it on-render.
      */
     showAnatomy?: boolean
+    /** Where the grid sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 // Compact grid cell, not a standalone top-level card: one step down from
 // `.Pressable`'s own `rounded-3xl`/`shadow-surface` default (concentric
@@ -968,11 +997,16 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
 interface PressableGroupSkeletonTileProps {
     /** Placement class only. */
     className?: string
+    /**
+     * Where this tile sits inside the grid. Appearance is not passable — it is
+     * already a prop. Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Storybook-only: names the Avatar mirror so a BlockAnatomy panel can badge/link it. Avatar has no anatPart of its own, so the frame wraps it instead. */
     showAnatomy?: boolean
 }
-const PressableGroupSkeletonTile = ({ className, showAnatomy }: PressableGroupSkeletonTileProps) => (
-    <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", className)}>
+const PressableGroupSkeletonTile = ({ className, classNames, showAnatomy }: PressableGroupSkeletonTileProps) => (
+    <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", className, classNames)}>
         <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
             <Avatar isSkeleton size="md" />
         </div>
@@ -1000,9 +1034,11 @@ const PressableGroup = ({
     items,
     ariaLabel,
     columns = {},
-    gap = "grouped",    keyboardShortcut = false,
+    gap = "grouped",
+    keyboardShortcut = false,
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
 }: SurfaceCardPressableGroupProps) => {
     // Reading `items` through a ref keeps the window listener subscribed ONCE
@@ -1044,7 +1080,7 @@ const PressableGroup = ({
     }
     if (isSkeleton) {
         return (
-            <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid" : undefined}>
+            <div role="group" aria-label={ariaLabel} className={cn(className, classNames)} data-anat-part={showAnatomy ? "Grid" : undefined}>
                 <Grid
                     columns={columns}
                     gap={gap}
@@ -1052,11 +1088,11 @@ const PressableGroup = ({
                         key: item.key,
                         content: showAnatomy ? (
                             <div className="relative" data-anat>
-                                <PressableGroupSkeletonTile className={item.className} showAnatomy={showAnatomy} />
+                                <PressableGroupSkeletonTile className={item.className} classNames={item.classNames} showAnatomy={showAnatomy} />
                                 <AnatomyOverlay label="SkeletonTile" tier="composite" />
                             </div>
                         ) : (
-                            <PressableGroupSkeletonTile className={item.className} />
+                            <PressableGroupSkeletonTile className={item.className} classNames={item.classNames} />
                         ),
                     }))}
                 />
@@ -1068,7 +1104,7 @@ const PressableGroup = ({
     // (one frame, not every frame opening its own). Grid built with `Grid`
     // (§13, the tier's ONE grid system) instead of hand-declaring `grid`/`grid-cols-*`.
     return (
-        <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid" : undefined}>
+        <div role="group" aria-label={ariaLabel} className={cn(className, classNames)} data-anat-part={showAnatomy ? "Grid" : undefined}>
             <Grid
                 columns={columns}
                 gap={gap}
@@ -1084,6 +1120,7 @@ const PressableGroup = ({
                                 TILE_CHROME,
                                 verdictBandClassName(item.withVerdict),
                                 item.className,
+                                item.classNames,
                             )}
                         >
                             {itemBody(item)}
@@ -1136,6 +1173,11 @@ export interface SurfaceCardSelectableGroupProps<T extends string> {
     /** Extra classes on the grid. */
     className?: string
     /**
+     * Where the grid sits inside its parent. Appearance is not passable — it is
+     * already a prop. Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
+    /**
      * Dev/spec: tag each card's own direct parts (`Icon` / `Label` / `Badge`) so a
      * BlockAnatomy panel can badge them.
      */
@@ -1180,6 +1222,7 @@ const SelectableGroup = <T extends string>({
     ariaLabel,
     columns = 2,
     className,
+    classNames,
     showAnatomy = false,
 }: SurfaceCardSelectableGroupProps<T>) => (
         <RadioGroup
@@ -1191,6 +1234,7 @@ const SelectableGroup = <T extends string>({
                 gap="related"
                 columns={SELECTABLE_GROUP_COLUMNS[columns]}
                 className={className}
+                classNames={classNames}
                 items={items.map((item) => ({
                     key: item.value,
                     content: (
@@ -1319,6 +1363,11 @@ export interface SurfaceCardListItem {
     titleClassName?: string
     /** Extra classes on the row. */
     className?: string
+    /**
+     * Where this row sits inside its parent. Appearance is not passable — it is
+     * already a prop. Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
@@ -1351,6 +1400,12 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
     isSkeleton?: boolean
     /** Extra classes on the outer section / surface. */
     className?: string
+    /**
+     * Where the outer section / surface sits inside its parent. Appearance is not
+     * passable — it is already a prop. Prefer this over `className`; the string
+     * form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Description) for a BlockAnatomy panel. */
@@ -1413,6 +1468,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         isDisabled = false,
         hover = "fill",
         className,
+        classNames,
         anatPart,
     } = item
     const withVerdict = itemVerdict(item)
@@ -1429,6 +1485,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         verdictBandClassName(withVerdict),
         withVerdict?.enable && "first:rounded-t-3xl last:rounded-b-3xl",
         className,
+        classNames,
     )
     // §4/§5: when the caller goes the DATA path (`leadingIcon`/`metaText`/`trailingIcon`),
     // the frame owns scale + tone — the caller doesn't paint classes, doesn't hold an atom.
@@ -1515,7 +1572,7 @@ interface ListFreeRowProps {
     item: SurfaceCardListItem
 }
 const ListFreeRow = ({ item }: ListFreeRowProps) => {
-    const { content, onPress, href, isDisabled = false, hover = "fill", className, anatPart } = item
+    const { content, onPress, href, isDisabled = false, hover = "fill", className, classNames, anatPart } = item
     const withVerdict = itemVerdict(item)
     const interactive = Boolean(onPress || href)
     const itemClassName = cn(
@@ -1529,6 +1586,7 @@ const ListFreeRow = ({ item }: ListFreeRowProps) => {
         interactive && !isDisabled && "cursor-pointer",
         isDisabled && "cursor-not-allowed opacity-60",
         className,
+        classNames,
     )
     if (href) {
         return <RowAnchor href={href} onClick={onPress} className={itemClassName} anatPart={anatPart}>{content}</RowAnchor>
@@ -1552,6 +1610,7 @@ const List = ({
     description,
     isSkeleton = false,
     className,
+    classNames,
     label,
     labelEnd,
     onSeeMore,
@@ -1578,7 +1637,7 @@ const List = ({
             className={cn(
                 "overflow-hidden",
                 surfaceFrame(variant),
-                bare && className,
+                bare && cn(className, classNames),
             )}
         >
             {inner}
@@ -1600,7 +1659,7 @@ const List = ({
         />
     ) : surface
     return (
-        <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
+        <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className, classNames)}>
             <div>
                 <SurfaceCardHeader
                     label={label}

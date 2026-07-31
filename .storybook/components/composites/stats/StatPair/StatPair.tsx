@@ -1,5 +1,7 @@
 import React from "react"
-import { Typography, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Typography as HeroTypography, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -17,6 +19,11 @@ interface StatPairOwnProps {
     valueType?: StatPairValueType
     /** Extra classes on the root element. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /**
@@ -62,6 +69,7 @@ export const StatPair = ({
     valueType = "h4",
     isSkeleton = false,
     className,
+    classNames,
     anatPart,
     showAnatomy,
 }: StatPairProps) => {
@@ -72,6 +80,7 @@ export const StatPair = ({
                 align="start"
                 anatPart={anatPart}
                 className={className}
+                classNames={classNames}
                 body={
                     <>
                         <HeroSkeleton className="h-5 w-14 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
@@ -87,22 +96,19 @@ export const StatPair = ({
             align="start"
             anatPart={anatPart}
             className={className}
+            classNames={classNames}
             body={
                 <>
-                    <Typography
+                    <HeroTypography
                         type={valueType}
                         weight="semibold"
-                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                        data-anat-part={showAnatomy ? "HeroTypography" : undefined}
                     >
                         {value}
-                    </Typography>
-                    <Typography
-                        type="body-xs"
-                        color="muted"
-                        data-anat-part={showAnatomy ? "Typography" : undefined}
-                    >
-                        {label}
-                    </Typography>
+                    </HeroTypography>
+                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <Typography size="xs" color="muted" text={label} />
+                    </span>
                 </>
             }
         />

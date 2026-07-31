@@ -1,8 +1,10 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
-import { AlertDialog, Typography as HeroTypography, cn } from "@heroui/react"
+import { AlertDialog, cn } from "@heroui/react"
 import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
-import { Button, ButtonGroup } from "@sb-components/atoms/buttons/Button/Button"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonGroup } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -101,8 +103,16 @@ export interface FeedbackCalloutProps {
     onClose?: () => void
     /** Accessible label for the close button. */
     closeAriaLabel?: string
-    /** Placement utilities only (e.g. `mb-4`) — NOT for restyling the callout. */
+    /**
+     * Placement utilities only (e.g. `mb-4`) — NOT for restyling the callout.
+     * @deprecated pass `classNames` instead — a free string cannot be constrained.
+     */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /**
@@ -143,6 +153,7 @@ const Callout = ({
     onClose,
     closeAriaLabel,
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: FeedbackCalloutProps) => (
@@ -162,6 +173,7 @@ const Callout = ({
         onClose={onClose}
         closeAriaLabel={closeAriaLabel}
         className={className}
+        classNames={classNames}
         // Self-names as the thing it COMPOSES, not as itself. The parent already gives it a
         // name through `anatPart`; running inside its own story the useful answer is "this is
         // an Alert wearing a callout skin", which is what a Deps tab is for. Naming it
@@ -217,8 +229,13 @@ export interface FeedbackEmptyProps {
      *   larger title and room for a `code` numeral above it.
      */
     size?: "default" | "compact" | "page"
-    /** Extra classes on the wrapper. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /**
@@ -257,6 +274,7 @@ const Empty = ({
     tone = "neutral",
     size = "default",
     className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: FeedbackEmptyProps) => {
@@ -264,7 +282,7 @@ const Empty = ({
         // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
         // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
         return (
-            <span className={cn("block", className)} data-anat-part={showAnatomy ? "Typography" : anatPart}>
+            <span className={cn("block", className, classNames)} data-anat-part={showAnatomy ? "Typography" : anatPart}>
                 <Typography size="sm" text={title} color="muted" />
             </span>
         )
@@ -281,15 +299,12 @@ const Empty = ({
                     ? "mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-8 text-center"
                     : "flex flex-col items-center gap-3 py-6 text-center",
                 className,
+                classNames,
             )}
         >
             {code != null ? (
-                // ⚠️ HeroUI Typography (NOT the atom) for the TWO heading-size slots of
-                // `size="page"`: the `Typography.*` atom tops out at `Lg` (text-lg) so
-                // forcing a size via a raw className would break the `no-hero-heading-class`
-                // lint rule. See the GAP note at the end of the file.
-                <div data-anat-part={showAnatomy ? "HeroTypography" : undefined}>
-                    <HeroTypography type="h1" weight="bold" color="muted">{code}</HeroTypography>
+                <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography size="h1" weight="bold" color="muted" text={code} />
                 </div>
             ) : null}
             {Icon ? (
@@ -305,8 +320,8 @@ const Empty = ({
                     gap="related"
                     body={
                         <>
-                            <div data-anat-part={showAnatomy ? "HeroTypography" : undefined}>
-                                <HeroTypography type="h4" weight="semibold" align="center">{title}</HeroTypography>
+                            <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography size="h4" weight="semibold" align="center" text={title} />
                             </div>
                             {description ? (
                                 <div data-anat-part={showAnatomy ? "Typography" : undefined}>
@@ -475,12 +490,5 @@ const Confirm = ({
  * content (one or two lines of `Typography.*`). If the "dotted underline for hard
  * terms" convention needs to be kept, that's a component at the DESIGN TIER (e.g.
  * `GlossaryTerm`) — it carries content meaning, not a frame — and sits outside this tier.
- *
- * ⚠️ Known GAP (out of scope, needs its own decision): the `Typography.*` atom tops
- * out at `Lg` (text-lg) and only has `weight` medium|bold → it CANNOT express heading
- * sizes. So exactly TWO slots of `.Empty size="page"` (`code` = h1, `title` = h4) still
- * use HeroUI `Typography` — forcing the size via a raw className would violate the
- * `starci-fe/no-hero-heading-class` lint rule. Switch these 2 spots once the atom opens a
- * heading-size member.
  */
 export { Callout as FeedbackCallout, Empty as FeedbackEmpty, Confirm as FeedbackConfirm }

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -64,8 +65,13 @@ export interface DisclosureBaseProps {
      * unmounted, exactly like the collapsed real state.
      */
     isSkeleton?: boolean
-    /** Extra classes on the root. */
+    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /**
      * Storybook-only: when true, each composed part (`Trigger` / `Content` /
      * loading `Skeleton`) emits a `data-anat-part` so the anatomy panel can
@@ -94,6 +100,7 @@ const Base = ({
     isDisabled = false,
     isSkeleton = false,
     className,
+    classNames,
     showAnatomy = false,
 }: DisclosureBaseProps) => {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
@@ -111,6 +118,7 @@ const Base = ({
             <StackV
                 gap="grouped"
                 className={className}
+                classNames={classNames}
                 body={
                     <StackH
                         gap="related"
@@ -144,6 +152,7 @@ const Base = ({
         <StackV
             gap="grouped"
             className={className}
+            classNames={classNames}
             body={
                 <>
                     <button

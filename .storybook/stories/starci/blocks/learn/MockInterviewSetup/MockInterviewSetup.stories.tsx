@@ -50,7 +50,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Avatar": { tier: "atom", role: "the interviewer's face — uploaded image, else the shared generated/initials fallback chain", storyId: "atoms-display-avatar-avatar--default" },
     "Typography": { tier: "atom", role: "one of the block's own text lines — interviewer name, role, a field label, or their skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
     "InputText": { tier: "atom", role: "the run-name field the candidate types into", storyId: "atoms-forms-input-inputtext--default" },
-    "ButtonRadioGroup": { tier: "atom", role: "the Sơ/Trung/Cao tier picker — a stateful select row, not a stateless action cluster", storyId: "atoms-buttons-button-buttonradiogroup--default" },
+    "ButtonRadioGroup": { tier: "atom", role: "the Sơ/Trung/Cao tier picker — a stateful select row, not a stateless action cluster", storyId: "composites-buttons-buttonradiogroup--default" },
     "Button": { tier: "atom", role: "a start action — Q&A always, Design only once the course offers it", storyId: "atoms-buttons-button-button--default" },
 }
 

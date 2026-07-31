@@ -41,7 +41,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "InputSearch": { tier: "atom", role: "the query field this rail reads and writes on every keystroke", storyId: "atoms-forms-input-inputsearch--default" },
     "Popover": { tier: "atom", role: "the funnel trigger + its panel; this block never hand-rolls a dropdown", storyId: "atoms-overlay-popover-popover--with-trigger-icon" },
     "Badge": { tier: "atom", role: "a dot on the funnel trigger, present only while a non-default tier is active", storyId: "atoms-display-badge-badge--anchored" },
-    "ButtonRadioGroup": { tier: "atom", role: "the tier control inside the popover panel — value + onChange, same atom QuizSetup/SubmissionAttemptSelector use", storyId: "atoms-buttons-button-buttonradiogroup--default" },
+    "ButtonRadioGroup": { tier: "atom", role: "the tier control inside the popover panel — value + onChange, same atom QuizSetup/SubmissionAttemptSelector use", storyId: "composites-buttons-buttonradiogroup--default" },
     "SurfaceCardList": { tier: "composite", role: "the bounded row surface for results, its dividers, and its own row mirror while loading", storyId: "composites-cards-surfacecard-surfacecardlist--verdict" },
     "AsyncContentEmpty": { tier: "composite", role: "the no-matches message, worded differently with vs without a query", storyId: "composites-async-asynccontent-asynccontentempty--basic" },
 }

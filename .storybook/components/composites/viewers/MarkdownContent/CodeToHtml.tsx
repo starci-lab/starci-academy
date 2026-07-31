@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { codeToHtml } from "shiki"
 import { cn } from "@heroui/react"
 import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIcon"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -71,6 +72,8 @@ export interface CodeToHtmlProps {
     showAnatomy?: boolean
     /** Extra classes on the root element. */
     className?: string
+    /** Where the root element sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -84,7 +87,7 @@ export interface CodeToHtmlProps {
  * (Shiki/WASM is heavy); off-screen blocks show raw code (`<pre>`) until scrolled into view.
  * @param props - {@link CodeToHtmlProps}
  */
-export const CodeToHtml = ({ code, language, theme, showAnatomy = false, className }: CodeToHtmlProps) => {
+export const CodeToHtml = ({ code, language, theme, showAnatomy = false, className, classNames }: CodeToHtmlProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     /** Whether the block has entered (near) the viewport yet — only then do we highlight. */
     const [isVisible, setIsVisible] = useState(false)
@@ -142,6 +145,7 @@ export const CodeToHtml = ({ code, language, theme, showAnatomy = false, classNa
                 // one, so (unlike `src`) there is no `elevated` variant to opt into here.
                 "w-full max-w-full overflow-hidden rounded-3xl border border-default bg-background",
                 className,
+                classNames,
             )}
         >
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}

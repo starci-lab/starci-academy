@@ -1,7 +1,8 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Typography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -182,9 +183,9 @@ export const SegmentBar = ({
                 />
             ) : null}
             {caption ? (
-                <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
-                    {caption}
-                </Typography>
+                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography size="xs" color="muted" text={caption} />
+                </span>
             ) : null}
         </>
     )

@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Button, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -61,6 +62,11 @@ export interface InputButtonLikeProps {
     isSkeleton?: boolean
     /** Extra classes on the control (also placement). */
     className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -81,10 +87,11 @@ export const InputButtonLike = ({
     onPress,
     isSkeleton = false,
     className,
+    classNames,
 }: InputButtonLikeProps) => {
     if (isSkeleton) {
         // Skeleton mirror: field-shaped bar, SAME height/rounding as the real control.
-        return <HeroSkeleton className={cn("w-full rounded-field", HEIGHT_CLS[size], className)} />
+        return <HeroSkeleton className={cn("w-full rounded-field", HEIGHT_CLS[size], className, classNames)} />
     }
     // NOTE: left as raw HeroUI <Button> (not the Button port,
     // ../../buttons/Button/Button.tsx) — three real gaps vs the port's API:
@@ -107,6 +114,7 @@ export const InputButtonLike = ({
                 HEIGHT_CLS[size],
                 ICON_CLS[size],
                 className,
+                classNames,
             )}
         >
             <StackH

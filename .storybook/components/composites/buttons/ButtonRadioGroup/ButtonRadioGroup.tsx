@@ -11,8 +11,8 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * `ButtonGroup`'s stateless row of independent action buttons. Each item can also
  * expand into its own connected `ButtonGroup` via `itemAction`.
  *
- * Renders raw HeroUI `Button`/`ButtonGroup` directly rather than through this
- * namespace's own `ButtonBase`/`ButtonGroup`: `ButtonBase` does not forward arbitrary
+ * Renders raw HeroUI `Button`/`ButtonGroup` directly rather than through the
+ * design system's own `Button` atom: `Button` does not forward arbitrary
  * attributes (no `...rest`), so using it here would drop `aria-pressed` from
  * assistive tech.
  */

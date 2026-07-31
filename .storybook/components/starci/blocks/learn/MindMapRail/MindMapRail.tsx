@@ -1,7 +1,7 @@
 import { FunnelSimpleIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
 import { InputSearch } from "@sb-components/atoms/forms/Input/Input"
 import { Popover } from "@sb-components/atoms/overlay/Popover/Popover"
-import { ButtonRadioGroup } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonRadioGroup } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { Badge } from "@sb-components/atoms/display/Badge/Badge"
 import {
     AsyncContent,

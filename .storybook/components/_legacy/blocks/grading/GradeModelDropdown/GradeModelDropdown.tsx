@@ -17,7 +17,7 @@ import {
 } from "@heroui/react"
 import { AiCategoryChip, AiModelCategory } from "@sb-components/_legacy/designs/chips/AiCategoryChip/AiCategoryChip"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { ButtonRadioGroup } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonRadioGroup } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { SelfHostGpuMark } from "@sb-components/_legacy/designs/grading/SelfHostGpuMark/SelfHostGpuMark"
 /**
  * ─────────────────────────────────────────────────────────────────────────────

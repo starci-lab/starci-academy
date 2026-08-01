@@ -99,8 +99,6 @@ export interface DailyQuestProps {
     onClaim: () => void
     /** `true` → the claim mutation is in flight (the block's one `pending` state). */
     isClaiming?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Row title per task key — the block's own wording (§14d.1). */

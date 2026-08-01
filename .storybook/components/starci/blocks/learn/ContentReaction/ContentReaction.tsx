@@ -44,8 +44,6 @@ export interface ContentReactionProps {
      * then jump when the real summary lands.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

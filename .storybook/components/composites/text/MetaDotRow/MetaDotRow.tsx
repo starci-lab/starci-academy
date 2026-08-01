@@ -33,7 +33,6 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 interface MetaDotRowOwnProps {
     /** Fragment count to shimmer while `isSkeleton`. Defaults to `3`. */
     skeletonCount?: number
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

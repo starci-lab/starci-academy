@@ -105,8 +105,6 @@ export interface ReactionButtonProps {
     isPending?: boolean
     /** `true` → the trigger + summary switch to their own shimmer. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

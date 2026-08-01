@@ -58,8 +58,6 @@ export interface AiQuotaLaneProps {
     data?: AiQuotaLaneData
     /** `true` → this lane's own fetch is in flight; both bars draw their skeleton mirror. */
     isLoading: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

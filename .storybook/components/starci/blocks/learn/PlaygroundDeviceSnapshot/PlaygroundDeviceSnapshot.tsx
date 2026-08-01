@@ -143,8 +143,6 @@ export interface PlaygroundDeviceSnapshotProps {
     deviceInfo: PlaygroundDeviceInfo
     /** `true` → every cell's value/detail line swaps to its own shimmer. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

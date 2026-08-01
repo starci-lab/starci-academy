@@ -140,8 +140,6 @@ export interface LessonVideoModalProps {
     video?: LessonVideo
     /** `true` → the meta row and link mirror their own skeleton; see file header. */
     isLoading?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** {@link LessonVideoKind} → chip tone + tooltip. Every value is `warning` — a stage badge, not a verdict. */

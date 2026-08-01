@@ -58,8 +58,6 @@ interface QaMessageBubbleOwnProps {
     onAcceptAnswer: (accepted: boolean) => void
     /** React/un-react to THIS answer. Only called from the top-level bubble — see file header. */
     onReact: (type: QaReactionType | null) => void
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it. */
 }
 
 /**

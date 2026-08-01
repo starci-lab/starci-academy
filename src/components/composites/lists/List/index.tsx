@@ -348,7 +348,6 @@ export interface ListMetaProps {
     items: ReadonlyArray<string>
     /** Layout utilities on the row root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * Dev/spec: tag this row's own direct parts (`Chip` / `Meta`) so a
      * BlockAnatomy panel can badge them.

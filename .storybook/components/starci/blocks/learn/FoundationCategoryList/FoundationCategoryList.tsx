@@ -130,8 +130,6 @@ export interface FoundationCategoryListProps {
      * loading (§12c) → guesses 3 rows, this composite's siblings' SSOT convention.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The library-itself-is-empty title — no search was involved, so no "try another word" hint applies. Ported verbatim from `foundations.emptyCategories`. */

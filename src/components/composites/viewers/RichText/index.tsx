@@ -54,7 +54,6 @@ interface RichTextOwnProps {
     color?: TypographyColor
     /** Where this sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     /** `true` → tag the internal `Typography` atom's own parts for a BlockAnatomy panel. */
 }
 

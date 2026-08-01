@@ -18,7 +18,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * has no leaf either: appearance is not passable, it is already a prop.
  *
  * ⚠️ No `annotate` table: `FloatingActionButton` does not accept `anatPart` /
- * `showAnatomy`, and the `_legacy` `Button` primitive it composes only emits
+ * and the `_legacy` `Button` primitive it composes only emits
  * `data-anat-part` when handed an explicit `anatPart` string, which this
  * block never forwards — there is nothing for a structure tree to pick up
  * yet. Every leaf below still renders the full `BlockAnatomy` panel for its

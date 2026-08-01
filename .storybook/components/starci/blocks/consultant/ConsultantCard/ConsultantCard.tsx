@@ -81,8 +81,6 @@ export interface ConsultantCardProps {
      * the file header for why this does NOT flow into `.Pressable`'s own flag.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

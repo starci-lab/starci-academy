@@ -83,8 +83,6 @@ export interface MindMapContinueButtonProps {
     continueAriaLabel: string
     /** `true` → the block shows its loading shimmer instead of either leaf. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

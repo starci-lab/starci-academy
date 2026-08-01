@@ -118,7 +118,6 @@ export interface AiQuotaHistoryPanelProps {
     isLoading: boolean
     /** Extra classes on the root. */
     className?: string
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     /** Dev/spec: tag this block's own directly-composed parts (`StackV`/`Typography`/`SurfaceCard`/`SurfaceCardList`/`Chip`) for a BlockAnatomy panel. */
 }
 
@@ -128,7 +127,6 @@ const SKELETON_ROW_COUNT = 3
 /** Chip tone for a credit delta — see judgement call 4 in the file header: ported verbatim. */
 const deltaTone = (credits: number): ChipTone => (credits > 0 ? "warning" : "success")
 
-/** Builds the real `SurfaceCardList` rows from charge data. `showAnatomy` names the row's own `Chip`. */
 const toListItem = (item: AiQuotaHistoryChargeItem): SurfaceCardListItem => ({
     key: item.key,
     title: item.model ?? AUTO_MODEL_LABEL,

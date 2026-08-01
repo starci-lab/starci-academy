@@ -77,8 +77,6 @@ export interface CourseBriefBaseProps {
      * flows down to the atom", just a different PLACE that calls the atom.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

@@ -47,7 +47,6 @@ interface PricePeriodOwnProps {
     period?: string
     /** Amount size — also drives `original`/`period`'s size via {@link SIZE_TO_TOKENS}. Defaults to `"md"` (h3). */
     size?: PricePeriodSize
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

@@ -56,8 +56,6 @@ export interface ConsultantDirectoryCompanySearchProps {
     isLoadingSuggestions?: boolean
     /** Fired with the picked company's id; the screen owns the route push. */
     onSelectCompany: (companyId: string) => void
-    /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

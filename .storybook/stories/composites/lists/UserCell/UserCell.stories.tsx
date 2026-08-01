@@ -19,7 +19,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * story — `Atoms/Display/Avatar/Avatar`, leaf `Source`; repeating it here would
  * be re-testing the child, not testing `UserCell`); `leadingTone` (only tints
  * the `IconTile` that `leadingIcon` already grows a leaf for — `IconTile`'s own
- * story owns the `tone` axis, leaf `Tones`); `className`/`showAnatomy`
+ * story owns the `tone` axis, leaf `Tones`); `className`
  * (plumbing, generates no new shape).
  *
  * ⭐ ADDED 2026-08-01 (additive): `leadingIcon`/`leadingTone` let the row lead

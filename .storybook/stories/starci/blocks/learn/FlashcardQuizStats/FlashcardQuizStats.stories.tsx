@@ -13,7 +13,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * no locale, so it passes the raw i18n KEY as each label — the key names the slot without inventing
  * copy. The app passes `t(key)`; the story passes `"the.key"`; the component renders whichever it gets.
  *
- * ⭐ NO ANATOMY OVERLAY. This is real `src` code, so it carries no `showAnatomy`/`data-anat-part`
+ * ⭐ NO ANATOMY OVERLAY. This is real `src` code, so it carries no `showAnatomy`
  * (split.md) — the Structure tab stays empty here on purpose. The states below are the point: one leaf,
  * four data-driven states of the async switch, plus the coverage band.
  */

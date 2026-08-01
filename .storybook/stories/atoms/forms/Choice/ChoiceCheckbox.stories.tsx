@@ -25,7 +25,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * 📐 **1 PROP = 1 LEAF** (§12g — ATOM TIER law). Leaf set for props WITH their own
  * shape: `isSelected` (`Default`/`Checked`) · `hint` (`WithHint`) · `isRequired`
  * (`Required`) · `isDisabled` (`Disabled`) · `errorMessage` (`Error`) · `isSkeleton`
- * (`Loading`). `label`/`onValueChange`/`className`/`showAnatomy` don't produce a
+ * (`Loading`). `label`/`onValueChange`/`className` don't produce a
  * shape of their own, so they get no leaf.
  *
  * ⭐ DEPS: this atom wraps HeroUI Checkbox directly — it doesn't build on top of

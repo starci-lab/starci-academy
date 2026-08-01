@@ -67,8 +67,6 @@ export interface RatingBarProps {
     isPending?: boolean
     /** `true` → the group draws its own tile mirror. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

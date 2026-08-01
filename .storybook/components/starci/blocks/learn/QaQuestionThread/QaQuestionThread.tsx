@@ -177,8 +177,6 @@ export interface QaQuestionThreadProps {
      * for why this never reaches `SurfaceCard.Pressable`'s own generic flag.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The block's own scope → label vocabulary (§14d.1) — never handed in pre-formatted. */
@@ -197,7 +195,6 @@ const statusLabel = (replyCount: number, answeredByFounder?: boolean): string =>
 interface QaQuestionChipsOptions {
     /** `true` → both chips draw their shimmer mirror. */
     isSkeleton: boolean
-    /** When on, each chip emits `data-anat-part` for a BlockAnatomy panel. */
     /**
      * `true` → a third, quiet reply-count fact rides beside the two chips. The
      * collapsed row needs it (no `QaConversationHeader` around to say it

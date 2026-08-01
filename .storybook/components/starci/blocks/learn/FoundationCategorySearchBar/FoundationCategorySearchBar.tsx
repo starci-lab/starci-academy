@@ -61,8 +61,6 @@ export interface FoundationCategorySearchBarProps {
     count?: number
     /** Renders the field's + count's skeleton mirrors instead of the real controls. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Vietnamese count wording, ported verbatim from `foundations.categoryCount`. */

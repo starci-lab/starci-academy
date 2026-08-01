@@ -85,8 +85,6 @@ export interface SettingsLayoutProps {
     expandLabel: string
     /** `localStorage` key persisting the collapsed flag. */
     storageKey: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

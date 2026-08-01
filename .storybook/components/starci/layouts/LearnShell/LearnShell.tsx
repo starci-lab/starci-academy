@@ -143,8 +143,6 @@ export interface LearnShellProps {
     onOpenSelectionAsk: () => void
     /** The active route's own content — the one place `ReactNode` is valid above frame tier (§12). */
     children: ReactNode
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

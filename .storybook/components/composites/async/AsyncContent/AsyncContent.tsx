@@ -85,7 +85,6 @@ interface MessageProps {
      * frame directly had to name its wrapping Container after the frame — which put the
      * frame's name and its story link on an element that is not the frame at all.
      */
-    /** On → emit `data-anat-part` on each part so a BlockAnatomy panel can badge it. */
 }
 
 /**

@@ -46,7 +46,6 @@ interface ProgressRingOwnProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     /** `true` → tag the ring/caption skeleton bars with ``. */
 }
 

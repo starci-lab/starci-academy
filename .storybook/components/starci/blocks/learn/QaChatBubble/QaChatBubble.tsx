@@ -27,7 +27,6 @@ export interface QaChatBubbleProps {
     children: ReactNode
     /** `true` → the bubble draws a shimmer block instead of `children`. */
     isSkeleton?: boolean
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it. */
 }
 
 /**

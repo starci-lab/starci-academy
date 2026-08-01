@@ -33,8 +33,6 @@ export interface QuizEnrollGateProps {
     ctaLabel: string
     /** Fired when the learner takes the way through. */
     onEnroll: () => void
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

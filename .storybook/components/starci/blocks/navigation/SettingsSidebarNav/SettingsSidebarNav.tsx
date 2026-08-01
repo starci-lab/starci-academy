@@ -169,7 +169,6 @@ interface DesktopNavRowProps {
     isActive: boolean
     /** Fired with the row's `href` when it is pressed. */
     onNavigate: (href: string) => void
-    /** Forwarded from the block's own `showAnatomy`. */
 }
 
 /**
@@ -232,8 +231,6 @@ export interface SettingsSidebarNavProps {
     storageKey: string
     /** Accessible name for the mobile pill nav landmark. Defaults to {@link title}. */
     mobileNavAriaLabel?: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

@@ -126,8 +126,6 @@ export interface ProfileTabsBarProps {
     hiddenTabs?: ReadonlyArray<ProfileTab>
     /** Accessible name for the tab list, localized by the caller (blocks carry no i18n). */
     ariaLabel: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

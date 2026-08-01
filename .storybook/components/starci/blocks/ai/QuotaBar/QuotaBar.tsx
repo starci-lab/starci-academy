@@ -88,8 +88,6 @@ export interface QuotaBarProps {
     resetLabel?: string | null
     /** `true` → the block draws its own row mirror (label, bar, caption all shimmer). */
     isSkeleton?: boolean
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     className?: string
 }
 
@@ -164,8 +162,7 @@ const QuotaBar = ({
         />
     )
 
-    // `ProgressBar` (atom) has no `anatPart` prop of its own — only `showAnatomy`,
-    // which tags its OWN internal track/fill parts. A wrapping `div` is how
+    // `ProgressBar` (atom) has no `anatPart` prop of its own — only // which tags its OWN internal track/fill parts. A wrapping `div` is how
     // `RatingBar` names a same-shaped atom/composite for the parent's tree too.
     const bar = (
         <div>

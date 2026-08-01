@@ -106,7 +106,6 @@ const FieldFrameBase = ({
         return (
             <div data-tier="atom" data-component="FieldFrame" data-principles="label-field" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
                 {label != null ? (
-                    // data-anat-part uses the real HeroUI component name (`Skeleton`, in its
                     // label-bar look), not the slot word "Label" it stands in for.
                     <HeroSkeleton className="h-4 w-1/3 rounded-md" />
                 ) : null}

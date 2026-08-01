@@ -117,7 +117,7 @@ export interface ContainerBaseProps {
      * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern — the caller does, exactly like `anatPart` — so it is passed in.
+     * A frame does not KNOW its pattern — the caller does — so it is passed in.
      * ⚠️ Unlike every other frame, `Container`'s OUTER div (which carries `data-tier`/
      * `data-component`) has NO padding — it is the unpadded `@container` + `max-w` measure (see
      * header note on why padding must live on a second, inner div). The padding class is on the

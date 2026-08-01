@@ -157,7 +157,6 @@ export interface MindMapPageProps {
     isSkeleton?: boolean
     /** `true` → the course has no authored map/modules yet. `workspace`-ONLY — see the file header. */
     isEmpty?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /** localStorage key + bounds the real `MindMapWorkspace` persists the rail width under. */

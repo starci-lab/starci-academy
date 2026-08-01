@@ -65,8 +65,6 @@ export interface LeaderboardToolbarProps {
     refreshLabel: string
     /** Extra classes on the row, from the closed atom/frame union. */
     classNames?: Array<AllowedClassName>
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

@@ -74,7 +74,6 @@ export interface EmptyStateProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     /**
      * When on, each composed part with a FIXED identity emits `data-anat-part`
      * (`Code`/`Title`/`Description`, all as `Typography`/`Typography`) for a

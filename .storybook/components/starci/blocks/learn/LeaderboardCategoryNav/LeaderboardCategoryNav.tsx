@@ -95,8 +95,6 @@ export interface LeaderboardCategoryNavProps {
     className?: string
     /** Extra classes on the row. Prefer this over `className`; the string form is going away. */
     classNames?: Array<AllowedClassName>
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

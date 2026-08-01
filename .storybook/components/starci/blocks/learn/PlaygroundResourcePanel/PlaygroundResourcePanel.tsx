@@ -85,8 +85,6 @@ export interface PlaygroundResourcePanelProps {
      * paired but hasn't reported a snapshot yet.
      */
     resources: Array<PlaygroundResourceEntry>
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The panel's own fixed header wording — see the file header for why this isn't a prop. */

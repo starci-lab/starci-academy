@@ -87,7 +87,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "QuizRecapList": { tier: "block", role: "the answered cards, self-graded one by one once a run ends", storyId: "starci-blocks-learn-quizrecaplist-quizrecaplist--full" },
     // `QuizEnrollGate`, `QuizSetup`, `QuizQuestion` are deliberately absent — no story
     // exists for any of the three yet (see the file header). They still render and
-    // carry `anatPart`, they simply have no Deps link to point at.
+    // carry they simply have no Deps link to point at.
 }
 
 /** LEAF — enrolled: the setup form and the progress panel side by side. */

@@ -66,8 +66,6 @@ export interface LearnNudgesBaseProps {
     isSkeleton?: boolean
     /** Number of placeholder rows when `isSkeleton`. Default 2 — the most common nudge count. */
     skeletonRows?: number
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 /**
  * What to do today — a shortcut list into the next learning task.

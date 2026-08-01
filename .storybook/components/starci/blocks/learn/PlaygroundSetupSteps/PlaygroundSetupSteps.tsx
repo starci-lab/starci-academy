@@ -147,8 +147,6 @@ export interface PlaygroundSetupStepsProps {
     onVerify?: () => void
     /** `true` → every step renders its shimmer mirror (see file header). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** One `SurfaceCard` step, built by this block before render — named per §"every data shape has a name". */

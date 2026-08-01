@@ -59,8 +59,6 @@ export interface CourseQaInviteProps {
      * `title`/`hint` stay fully real (see the file header's judgement call).
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

@@ -72,8 +72,6 @@ export interface FoundationSearchBarProps {
     isCountLoading?: boolean
     /** Renders the field's + count's resting skeleton mirrors instead of the real controls. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Count wording — this block's own vocabulary, never handed in by the caller. */

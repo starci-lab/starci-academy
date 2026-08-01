@@ -225,7 +225,7 @@ const Row = ({
 
 /**
  * One row of a {@link ListLabeled} — the SAME data shape as {@link ListRow}
- * (which renders it), plus a stable React key. `isSkeleton`/`showAnatomy` are
+ * (which renders it), plus a stable React key. `isSkeleton` are
  * owned by the frame, not by the item.
  */
 export interface ListLabeledItem extends Omit<ListRowProps, "isSkeleton" | "showAnatomy"> {
@@ -352,7 +352,6 @@ export interface ListMetaProps {
     items: ReadonlyArray<string>
     /** Layout utilities on the row root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * Dev/spec: tag this row's own direct parts (`Chip` / `Meta`) so a
      * BlockAnatomy panel can badge them.

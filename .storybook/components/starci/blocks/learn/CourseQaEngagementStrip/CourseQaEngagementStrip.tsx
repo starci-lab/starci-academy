@@ -62,8 +62,6 @@ export interface CourseQaEngagementStripProps {
      * `Typography` atoms (§12c) rather than a parallel skeleton tree.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

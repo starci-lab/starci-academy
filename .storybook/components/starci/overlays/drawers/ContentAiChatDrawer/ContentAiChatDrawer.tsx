@@ -126,8 +126,6 @@ export interface ContentAiChatDrawerProps {
     mode?: ContentAiChatDrawerMode
     /** Fired with the mode the reader picked. Omit together with {@link mode} to hide the switch entirely. */
     onModeChange?: (mode: ContentAiChatDrawerMode) => void
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

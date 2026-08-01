@@ -81,7 +81,6 @@ export interface EnumChipProps<E extends string> {
     classNames?: Array<AllowedClassName>
     /** When `true`, renders the skeleton placeholder (a chip-shaped pill) instead of the real chip. */
     isSkeleton?: boolean
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

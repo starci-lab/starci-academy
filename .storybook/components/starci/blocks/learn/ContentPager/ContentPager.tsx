@@ -58,8 +58,6 @@ export interface ContentPagerProps {
      * shimmer keeps the exact shape the real cards will take (§12c).
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

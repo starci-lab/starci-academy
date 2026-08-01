@@ -62,7 +62,6 @@ export interface ConfirmDialogProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** When on, emit `data-anat-part` on each composed part for a BlockAnatomy panel. */
 }
 
 /**

@@ -76,7 +76,6 @@ export interface ChoiceCheckboxProps extends InlineFrameProps {
     isInvalid?: boolean
     /** Render the control-shaped skeleton (square + label bar) instead of the checkbox. */
     isSkeleton?: boolean
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -204,7 +203,6 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
         <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} skeletonControl={skeletonControl}>
             <div data-tier="atom" data-component="ChoiceSwitch" className={cn("flex items-center gap-3", classNames)}>
                 <HeroSwitch
-                    // data-anat-part uses the real HeroUI component name (`Switch`), not a slot word.
 
                     size={size}
                     isSelected={isSelected}

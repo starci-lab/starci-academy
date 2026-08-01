@@ -86,8 +86,6 @@ export interface HeadhunterModalProps {
     onImproveCv?: () => void
     /** `true` → the composed body mirrors itself while the consultant is still resolving. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

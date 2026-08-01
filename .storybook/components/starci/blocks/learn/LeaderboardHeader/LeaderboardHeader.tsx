@@ -60,8 +60,6 @@ export interface LeaderboardHeaderProps {
      * (§12c), so the shimmer keeps the exact box of the thing it replaces.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

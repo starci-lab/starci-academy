@@ -66,8 +66,6 @@ const resolveDotColor = (color: string): { className?: string; style?: React.CSS
 interface DotLabelOwnProps {
     /** Label tone. Defaults to `"muted"`. */
     tone?: DotLabelTone
-    /** `true` → tags each part with `data-anat-part` for the BlockAnatomy badge. */
-    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

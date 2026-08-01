@@ -12,7 +12,7 @@ import { SurfaceCardPlaceholder } from "@sb-components/composites/cards/SurfaceC
  * ⚠️ STATE SCOPE (teacher's call 2026-07-25): this is the ONLY member that takes no content
  * (no slot, no `items`) — the story only has its OWN state: default icon vs. swapped icon,
  * `isSelected`, `isDisabled`, `isSkeleton`. No BlockAnatomy since this frame doesn't expose
- * `showAnatomy`/`anatPart` (§11a: only attach an anatomy tree when there's a real `data-anat-part`).
+ * `showAnatomy` (§11a: only attach an anatomy tree when there's a real `data-anat-part`).
  *
  * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `.Placeholder` is NOT on the list of members
  * that change `bordered`/`flushContent`/`compact` — `SurfaceCardPlaceholderProps` has none of

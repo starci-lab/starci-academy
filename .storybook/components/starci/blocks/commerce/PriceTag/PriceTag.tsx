@@ -73,8 +73,6 @@ export interface PriceTagProps {
     showSavingLine?: boolean
     /** Extra classes on the root. */
     className?: string
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

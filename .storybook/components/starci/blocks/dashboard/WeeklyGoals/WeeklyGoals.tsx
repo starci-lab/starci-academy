@@ -127,8 +127,6 @@ export interface WeeklyGoalsProps {
     defaultTargets: Record<WeeklyGoalKey, number>
     /** `true` → every atom this block owns switches to its own shimmer (data already loaded). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Phosphor icon per metric key — a pure display constant, decoupled from any editor's own map. */

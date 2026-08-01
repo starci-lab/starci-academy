@@ -30,7 +30,7 @@ import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
  * exactly what makes something a block instead of a feature-less design piece
  * (`[[fe-primitive-definition]]`).
  *
- * PROPS: none beyond `className`/`showAnatomy`/`anatPart` (rule 9) — this is a
+ * PROPS: none beyond `className` (rule 9) — this is a
  * PURE skeleton, it never receives or displays data, so there is nothing else to
  * parameterize and therefore only one leaf/one story state.
  *
@@ -58,7 +58,6 @@ import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 /** Props for {@link ProfileLoadingState}. Pure skeleton — no data props (see file header). */
 export interface ProfileLoadingStateProps {
     className?: string
-    /** `true` → tag each composed part with `data-anat-part` for a BlockAnatomy panel. */
     /** Anatomy tag for this block's own root. */
 }
 

@@ -21,7 +21,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *   `Status` (4 tones) · `Sizes` (3 tiers) · `Colors` (5 tints) · `Skeleton`
  *   (skeleton leaf, hybrid C).
  *
- * A prop that produces no shape (`className`, `showAnatomy`) gets no leaf.
+ * A prop that produces no shape (`className`) gets no leaf.
  *
  * 🎨 Icon = Phosphor (§5.0), pass the COMPONENT (`icon={UserIcon}`) not JSX,
  * the atom forces the scale + weight itself based on `size` (§5.0a).

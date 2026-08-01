@@ -59,8 +59,6 @@ export interface ProfileNotFoundStateProps {
     description: string
     /** Fired when the reader takes the one way out: back to the home route. */
     onGoHome: () => void
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

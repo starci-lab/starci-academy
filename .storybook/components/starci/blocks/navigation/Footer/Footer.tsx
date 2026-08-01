@@ -95,8 +95,6 @@ export interface FooterProps {
     onPrivacyPress: () => void
     /** Extra class on the root `<footer>` (placement only). */
     className?: string
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /** Props for the internal {@link FooterLinkColumn} — one titled list of link rows. */

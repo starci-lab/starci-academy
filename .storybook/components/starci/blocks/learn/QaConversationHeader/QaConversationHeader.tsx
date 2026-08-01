@@ -55,8 +55,6 @@ export interface QaConversationHeaderProps {
     isFollowPending?: boolean
     /** `true` → every part draws its own shimmer mirror. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it. */
 }
 
 /** The block's own count → label vocabulary (§14d.1) — never handed in pre-formatted. */

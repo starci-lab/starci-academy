@@ -136,8 +136,6 @@ export interface ChallengeBriefProps {
     hint?: string
     /** `true` → every present-or-guessed section renders its own shimmer mirror. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Placeholder row count while `isSkeleton` and the real section count isn't known yet. */

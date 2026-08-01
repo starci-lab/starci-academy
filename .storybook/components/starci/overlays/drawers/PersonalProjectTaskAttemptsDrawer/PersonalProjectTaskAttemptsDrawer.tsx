@@ -114,8 +114,6 @@ export interface PersonalProjectTaskAttemptsDrawerProps {
     retryLabel?: string
     /** `true` → a parent-forced skeleton paint, same branch as `isLoading` (see file header). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     /** Extra classes merged onto the drawer's dialog surface. */
     className?: string
 }
@@ -135,7 +133,6 @@ interface AttemptRowProps {
     attempt?: PersonalProjectTaskAttempt
     /** Resting state — the row keeps its shape, only the text shimmers. */
     isSkeleton?: boolean
-    /** `true` → each part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

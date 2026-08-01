@@ -109,8 +109,6 @@ export interface ConsultantDirectoryGridProps {
     emptyTitle: string
     /** Accessible name for the directory region — the block has no visible heading of its own. */
     ariaLabel: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** How many placeholder tiles mirror the grid while the list hasn't resolved — ported from the real `ConsultantGrid`'s `SKELETON_COUNT`. */

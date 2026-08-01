@@ -61,8 +61,6 @@ export interface NavLinksProps {
     /** Fired with the pressed item's `path` — the caller owns the actual navigation. */
     onNavigate: (path: string) => void
     className?: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

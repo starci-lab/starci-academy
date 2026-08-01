@@ -18,7 +18,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * 📐 **1 PROP = 1 LEAF** (§12g — the ATOM-tier rule). Props that produce a shape:
  * `hint` (format/size guidance line), `icon` (swaps the center glyph), and
  * `isDragActive` (pins the drag state from outside). `label` is always present,
- * already shown in `Default`. `onFile`, `className`, `showAnatomy` don't produce
+ * already shown in `Default`. `onFile`, `className` don't produce
  * a shape, so they have no leaf.
  *
  * Fixed 2026-07-26 (part of the first atom-cleanup pass):

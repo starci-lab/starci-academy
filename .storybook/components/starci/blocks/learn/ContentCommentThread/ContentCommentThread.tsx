@@ -116,8 +116,6 @@ export interface ContentCommentThreadProps extends ContentCommentThreadCallbacks
     depth: number
     /** Already-loaded replies, keyed by parent id (empty until `onLoadReplies` resolves). */
     repliesByParent: Record<string, ReadonlyArray<ContentCommentNode>>
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

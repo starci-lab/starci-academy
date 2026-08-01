@@ -142,8 +142,6 @@ export interface KeepGoingPathBaseProps {
      * whole separate row.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 /** Placeholder DATA for the 3 guessed rows when `contents` is empty while loading (§12c). */
 const SKELETON_ROWS: Array<KeepGoingContent> = Array.from({ length: 3 }, (_unused, index) => ({

@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * to just its map table plus this delegate.
  *
  * 📐 **1 PROP = 1 LEAF**, adapted for a generic composite: `EnumChip`'s own props are
- * `value`, `map`, `className`, `classNames`, `isSkeleton`, `anatPart`. `value` and `map`
+ * `value`, `map`, `className`, `classNames`, `isSkeleton`. `value` and `map`
  * are two halves of ONE lookup mechanism — a `value` means nothing without the `map` it
  * is resolved against, and a `map` shows nothing without a `value` picking an entry out
  * of it — so they share ONE leaf below, the same call already made for `Chip`'s own
@@ -23,9 +23,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * looks, only where it sits. `anatPart` gets no leaf either — see the caveat below.
  *
  * ⚠️ This composite does not forward `showAnatomy` to the `Chip` atom it renders (its
- * own `anatPart` prop is dead: `ChipBase` never destructures a prop named `anatPart`,
- * so passing it is a no-op). No element under any leaf below ever carries
- * `data-anat-part`, so the Structure tab stays empty for every leaf here — same
+ * own `anatPart` prop is dead: `ChipBase` never destructures a prop named * so passing it is a no-op). No element under any leaf below ever carries
+ * so the Structure tab stays empty for every leaf here — same
  * documented caveat as `Atoms/Media/QRCode`, not a bug in this story. The `ANNOTATE`
  * table is still written out, for when that instrumentation lands.
  */

@@ -96,7 +96,6 @@ export interface TitledTextProps {
     truncate?: boolean
     /** `true` → render the skeleton mirror (bars sized per line). */
     isSkeleton?: boolean
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * `true` → EACH inner line also emits `data-anat-part` (`Title` · `Subtitle` ·
      * `Hint`), so the deps tree can go DOWN TO THE ATOM instead of stopping at the frame.

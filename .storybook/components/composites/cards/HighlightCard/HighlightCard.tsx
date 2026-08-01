@@ -21,7 +21,6 @@ export interface HighlightCardProps {
      * already a prop. Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

@@ -34,7 +34,6 @@ export interface ScoreValueProps {
     unit?: string
     /** `true` → render the skeleton mirror bar instead of the number. */
     isSkeleton?: boolean
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

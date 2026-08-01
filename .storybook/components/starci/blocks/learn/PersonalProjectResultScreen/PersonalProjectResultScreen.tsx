@@ -109,7 +109,6 @@ interface MilestoneUpNextCardProps {
     onGoToNextTask?: () => void
     /** `true` → every composed atom mirrors shimmer instead of the real title. */
     isSkeleton?: boolean
-    /** `true` → each composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**
@@ -257,7 +256,6 @@ export interface PersonalProjectResultScreenProps {
      * same reasoning `ChallengeResultPage` documents for its own cluster.
      */
     isSkeleton?: boolean
-    /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

@@ -55,7 +55,6 @@ interface ProgressMeterOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this meter. */
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

@@ -55,8 +55,6 @@ interface WorkSessionHeaderOwnProps {
     finishLabel?: string
     /** Fired when the learner ends the run and goes to the results. */
     onFinish?: () => void
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

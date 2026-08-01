@@ -121,8 +121,6 @@ export interface PremiumGateModalProps {
     onUpgrade: () => void
     /** Extra classes on the root. */
     className?: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Whether the caller named a specific course, or this is a generic gate. */

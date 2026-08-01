@@ -338,8 +338,6 @@ export interface MarkdownContentProps {
      * has since been switched to this prop instead.
      */
     isSkeleton?: boolean
-    /** When on, the article (and the reused `SnippetIcon`/`Chip` atoms) emit `data-anat-part`. */
-    /** Anatomy tag: names this viewer so a BlockAnatomy panel can badge it. */
 }
 
 /**

@@ -53,8 +53,6 @@ export interface ContentAiSelectionAskProps {
     anchor: ContentAiSelectionAskAnchor
     /** `true` → carries a "New" chip, for the first releases while readers learn the feature exists. */
     isNew?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     className?: string
 }
 

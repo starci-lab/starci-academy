@@ -132,8 +132,6 @@ export interface MockInterviewSetupProps {
     errorMessage?: string
     /** `true` → the card draws its own mirror while the setup data loads. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

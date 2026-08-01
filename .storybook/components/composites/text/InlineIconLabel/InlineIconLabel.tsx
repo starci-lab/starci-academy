@@ -98,7 +98,6 @@ export interface InlineIconLabelProps {
      * union, so an unconstrained string here would only fail one tier down.
      */
     skeletonWidth?: SkeletonWidth
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

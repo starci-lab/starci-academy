@@ -29,7 +29,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * 📐 **1 PROP = 1 LEAF** (§12g). The leaf set covers every prop with a VISUAL shape
  * on this component: selected or not (`Default`/`Selected`, driven by the group's
  * `value` matching) · `isDisabled` (`Disabled`) · `isSkeleton` (`Loading`).
- * `value`/`label`/`className`/`showAnatomy` get no leaf of their own (`value`/`label`
+ * `value`/`label`/`className` get no leaf of their own (`value`/`label`
  * are required data, not an on/off state).
  *
  * ⚠️ HARNESS: `ChoiceRadioGroup` only accepts `options` DATA (no `children`), so to

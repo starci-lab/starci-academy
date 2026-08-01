@@ -30,7 +30,6 @@ export interface InputTagsProps extends FrameProps {
     removeLabel?: string
     /** Render the field-box skeleton instead of the box. */
     isSkeleton?: boolean
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

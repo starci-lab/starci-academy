@@ -39,7 +39,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * or not (`Default`/`Selected`, driven by `value`) · `groupLabel` (`WithLabel`) ·
  * `hint` (`WithHint`) · `isRequired` (`Required`) · `isDisabled` (`Disabled`) ·
  * `errorMessage` (`Error`) · `isSkeleton` (`Loading`). `options`/`onValueChange`/
- * `ariaLabel`/`skeletonRows`/`classNames`/`showAnatomy` get no leaf of their own.
+ * `ariaLabel`/`skeletonRows`/`classNames` get no leaf of their own.
  *
  * ⛔ DON'T repeat the state of EACH ROW (`ChoiceRadio`'s own Disabled/Loading —
  * §12f): locking a single option or skeleton-ing one lone row belongs in the

@@ -74,8 +74,6 @@ export interface MindMapFullscreenButtonProps {
     ariaLabels: MindMapFullscreenButtonAriaLabels
     /** `true` → all three buttons render as their shimmer mirror (flows into `ButtonBase`, §6b). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

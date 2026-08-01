@@ -11,7 +11,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * gets no leaf. `number` gets no leaf of its own — it's free-form content
  * (like `Chip`'s `text`), not a finite union.
  *
- * ⭐ 2026-07-26: the atom just added `showAnatomy`/`anatPart` (group E) —
+ * ⭐ 2026-07-26: the atom just added `showAnatomy` (group E) —
  * tagging `data-anat-part` onto the real root (`"Badge"`), the skeleton root
  * (`"Skeleton"`), and the check-icon wrapper when `state="done"` (`"Icon"`).
  * The first cell of every leaf below turns on `showAnatomy` so the `BlockAnatomy`

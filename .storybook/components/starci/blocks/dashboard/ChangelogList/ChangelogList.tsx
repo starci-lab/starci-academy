@@ -108,8 +108,6 @@ export interface ChangelogListProps {
     onRetry?: () => void
     /** Extra classes on the root. */
     className?: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The block's own section label — matches `dashboard.changelog` in `vi.json`. */

@@ -58,8 +58,6 @@ export interface ContentPaywallProps {
      * and shimmering them would hide an offer that was already legible.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

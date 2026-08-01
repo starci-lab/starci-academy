@@ -56,8 +56,6 @@ export interface PlaygroundEnterBannerProps {
      * than a parallel skeleton tree (§12c).
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The section label above the card — also doubles as the CTA's own wording (the decision this whole card is). */

@@ -79,8 +79,6 @@ export interface ContinueLearningProps {
     onSelectItem: (id: string) => void
     /** Fired when the onboarding CTA is pressed (both empty wordings share one action). */
     onBrowseCourses: () => void
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Subtitle word per kind — the block's own wording (§14d.1: design never sees "lesson"/"challenge"). */

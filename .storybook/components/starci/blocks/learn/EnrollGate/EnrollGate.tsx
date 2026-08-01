@@ -117,8 +117,6 @@ export interface EnrollGateProps {
     isSkeleton?: boolean
     /** Extra classes on the root. */
     className?: string
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

@@ -47,7 +47,6 @@ interface MetricCardOwnProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     /**
      * When `true`, each composed part emits `` so a
      * BlockAnatomy panel can badge it on-render. Off by default (production).

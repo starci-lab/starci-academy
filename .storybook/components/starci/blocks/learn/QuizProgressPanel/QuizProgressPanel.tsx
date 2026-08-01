@@ -117,8 +117,6 @@ export interface QuizProgressPanelProps {
     sessions: Array<QuizProgressSession>
     /** `true` → the card draws its own mirror while progress data loads. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Fixed shape for the loading mirror — a stable 4-cell grid, known ahead of any real data (same reasoning as `ContentDiscussion`'s `SKELETON_ROWS`). */

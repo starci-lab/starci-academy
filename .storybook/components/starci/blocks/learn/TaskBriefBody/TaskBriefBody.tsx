@@ -120,8 +120,6 @@ export interface TaskBriefBodyProps {
     relatedLabel: string
     /** `true` → title/description and the brief-body guess switch to their own shimmer. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Fixed copy for the locked-preview notice — this block owns its own wording (§14d.1). */

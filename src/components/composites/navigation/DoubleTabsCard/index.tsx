@@ -53,8 +53,6 @@ export interface DoubleTabsCardProps {
     padding?: AllowedPadding
     /** Layout utilities on the card's outer section wrapper, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this composite so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

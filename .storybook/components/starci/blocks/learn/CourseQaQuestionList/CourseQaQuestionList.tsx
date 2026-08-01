@@ -175,8 +175,6 @@ export interface CourseQaQuestionListProps {
     pagerAriaLabel: string
     /** External skeleton override, distinct from `isLoading` (★5). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** How many placeholder rows mirror the list while the first page loads — matches `CourseQaSkeleton.tsx`. */
@@ -248,7 +246,6 @@ const SkeletonQuestionRow = ({  }: SkeletonQuestionRowProps) => {
 
             body={
                 <>
-                    {/* Avatar has no `anatPart` of its own — the row wraps it, same convention `SurfaceCard.PressableGroup`'s own skeleton tile uses. */}
                     <div className="shrink-0">
                         <Avatar isSkeleton size="sm" />
                     </div>
@@ -338,7 +335,6 @@ const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewRowProps
 
             body={
                 <>
-                    {/* Avatar has no `anatPart` of its own — the row wraps it (same convention as the skeleton twin above). */}
                     <div className="shrink-0">
                         <Avatar
                             src={question.author.avatarUrl}

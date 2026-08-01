@@ -54,8 +54,6 @@ interface QuizRecapListOwnProps {
     ratingAriaLabel: string
     /** Card count to shimmer while `isSkeleton` (no real `cards` yet). Defaults to `3`. */
     skeletonCount?: number
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

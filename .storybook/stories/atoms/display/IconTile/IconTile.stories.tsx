@@ -13,7 +13,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 📐 **1 PROP = 1 LEAF** (§12g). Every prop has one leaf, rendering EVERY state
  * that prop produces: `tone` · `size` · `src` (a cover image over the icon) ·
- * `isSkeleton`. A prop that produces no visual (`alt`, `anatPart`, `className`)
+ * `isSkeleton`. A prop that produces no visual (`alt`, `className`)
  * has NO leaf.
  *
  * ⚠️ REMOVED 2026-07-26: the `shape` axis (`circle`/`square`) + the `Shape` leaf.

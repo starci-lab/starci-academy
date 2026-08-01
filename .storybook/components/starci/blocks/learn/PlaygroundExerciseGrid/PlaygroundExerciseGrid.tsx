@@ -98,8 +98,6 @@ export interface PlaygroundExerciseGridProps {
      * tiles, this block's own SSOT convention (see file header).
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Step-count wording — the block's own vocabulary (§14d.1: a block owns its wording). */

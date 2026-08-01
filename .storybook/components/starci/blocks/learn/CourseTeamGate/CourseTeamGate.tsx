@@ -59,7 +59,6 @@ export interface CourseTeamGateBaseProps {
      * Passed DOWN to `Callout` so the anatomy panel can see what this block
      * refs. Without forwarding it, the anatomy view can't tell what it's built from.
      */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

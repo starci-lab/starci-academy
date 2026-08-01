@@ -90,8 +90,6 @@ export interface InnerLayoutProps extends NavbarProps, Omit<FooterProps, "classN
     showFooter: boolean
     /** Extra class on the root track. */
     className?: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

@@ -139,8 +139,6 @@ export interface FlashcardDeckListProps {
     showProgress: boolean
     /** `true` → the track renders its own mirror. `decks` empty while on → guesses a placeholder count in the current `view`'s shape (§12c). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The block's own wording for the grid-tile CTA — overridable via `ctaLabel`. */

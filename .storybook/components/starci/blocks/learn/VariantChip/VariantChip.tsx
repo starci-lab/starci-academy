@@ -68,7 +68,6 @@ export interface VariantChipDifficultyProps {
     /** `true` → shimmer bar mirroring the exact dot+label shape (the atom draws it itself). */
     isSkeleton?: boolean
     /** Dev/spec: overlay anatomy labels on this chip. */
-    /** Anatomy tag: name the part so a BlockAnatomy panel can badge it. */
 }
 
 /** Title-case a difficulty key for the default label. */

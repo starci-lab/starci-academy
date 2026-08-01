@@ -49,7 +49,7 @@ import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/
  *
  * 📐 ONE LEAF. There is no state that changes this block's SHAPE — the hero is
  * always present, the notice is always the same three parts (icon, title,
- * description) plus one CTA. `showAnatomy`/`anatPart` and the two data props
+ * description) plus one CTA. `showAnatomy` and the two data props
  * are the only inputs; different `user` values are DATA, not a different leaf.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -62,8 +62,6 @@ export interface ProfileLockedStateProps {
     onGoCourses: () => void
     /** Extra classes on the root. */
     className?: string
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

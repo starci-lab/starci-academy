@@ -132,8 +132,6 @@ export interface FoundationResourceListProps {
     onPageChange: (pageNumber: number) => void
     /** Accessible name for the list region — the block has no visible heading of its own. */
     ariaLabel?: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** kind → chip label/color — the block's own vocabulary (§14d.1), never handed in by a caller. */

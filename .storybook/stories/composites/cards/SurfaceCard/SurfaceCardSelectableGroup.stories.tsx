@@ -35,7 +35,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  *   runs it through `ControlledGroup` itself so it needs no leaf of its own.
  * - `ariaLabel` — ONLY feeds `RadioGroup`'s `aria-label`, doesn't change a single pixel ⇒
  *   **NO leaf** (§12g.1, same family as `ChoiceRadioGroup`'s `ariaLabel`).
- * - `className`/`showAnatomy` — escape hatch / dev flag, not part of the atom's visual
+ * - `className` — escape hatch / dev flag, not part of the atom's visual
  *   form ⇒ no leaf.
  *
  * ⚠️ `tier` changed from `"atom"` (old version) to `"composite"` — the composite tier of the

@@ -58,7 +58,6 @@ export interface TrialConversionStripProps {
     onEnroll?: () => void
     /** Layout utilities on the root, from the closed positioning union (SurfaceCard's `className` door was deleted, COMPOSITE-4). */
     classNames?: Array<AllowedClassName>
-    /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
     /**
      * Anatomy tag for THIS block itself — so the caller can badge it as ONE node (§11a).
      * Without this prop, the screen has to wrap `<div data-anat-part>` around it,

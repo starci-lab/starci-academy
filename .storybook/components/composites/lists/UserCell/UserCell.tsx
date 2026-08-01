@@ -68,8 +68,6 @@ export interface UserCellProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** When on, each composed atom (avatar · name · handle) emits its own `data-anat-part` for a `BlockAnatomy` panel. */
-    /** Anatomy tag: names this composite so a `BlockAnatomy` panel can badge it on-render. */
     /**
      * Render the leaf skeleton (shimmer) instead of the cell. Every shimmer is
      * delegated to the atom it stands for — `Avatar isSkeleton size={size}` for

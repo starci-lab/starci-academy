@@ -74,8 +74,6 @@ export interface ContentArticleProps {
     hintText?: string
     /** `true` → the card draws a body mirror instead of the document. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

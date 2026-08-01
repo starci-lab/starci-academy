@@ -78,8 +78,6 @@ export interface ContentDiscussionProps extends ContentCommentThreadCallbacks {
     errorMessage?: string
     /** `true` → two placeholder threads mirror the real row shape while the first page loads. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Two placeholder rows so the mirror has the same shape as a short thread. */

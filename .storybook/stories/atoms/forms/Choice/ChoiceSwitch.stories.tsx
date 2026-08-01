@@ -22,7 +22,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * 📐 **1 PROP = 1 LEAF** (§12g). The full set of leaf props WITH A DISTINCT SHAPE: `isSelected`
  * (`Default`/`Selected`) · `size` (`Sizes`) · `hint` (`WithHint`) · `isRequired` (`Required`) ·
  * `isDisabled` (`Disabled`) · `errorMessage` (`Error`) · `isSkeleton` (`Loading`).
- * `label`/`onValueChange`/`className`/`showAnatomy` produce no distinct shape, so they get
+ * `label`/`onValueChange`/`className` produce no distinct shape, so they get
  * no leaf.
  *
  * ⚠️ The previous version was MISSING the `Sizes` leaf entirely, even though the `size` prop

@@ -46,8 +46,6 @@ export interface AuthorBylineProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** When on, each composed part emits `data-anat-part` for a `BlockAnatomy` panel. */
-    /** Anatomy tag: names this composite so a `BlockAnatomy` panel can badge it on-render. */
     /**
      * Render the leaf skeleton (shimmer) instead of the row. `name`/`timestamp`
      * delegate to `Typography isSkeleton`; the verified/pinned glyphs and the

@@ -153,8 +153,6 @@ export interface TaskSubmissionPanelProps {
     settingsFormProps: GithubGradingSettingsFormProps
     /** `true` → every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Autosave state → its own icon/tone/wording. `idle` never renders (see file header). */

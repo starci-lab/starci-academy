@@ -83,7 +83,6 @@ export interface CalloutProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     /**
      * Story-only: when on, the frame names ITSELF `"Callout"` so a panel can badge it
      * without the story wrapping an extra div.

@@ -97,8 +97,6 @@ export interface SubmissionAttemptsDrawerProps {
     retryLabel?: string
     /** Which edge the panel slides in from. Real `src` picks bottom-on-mobile itself; this port leaves that call to the caller. @default "right" */
     placement?: "top" | "bottom" | "left" | "right"
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Fixed, block-owned title (§14d.1) — real `src` appends the live count, so this does too. */

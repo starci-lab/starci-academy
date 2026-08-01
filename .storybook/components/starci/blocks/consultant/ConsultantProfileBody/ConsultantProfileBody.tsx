@@ -112,8 +112,6 @@ export interface ConsultantProfileBodyProps {
      * instead of picking a branch (see file header). There is no id to open yet.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Fixed copy for the locked-contact callout — block-owned wording (§14d.1), see file header. */

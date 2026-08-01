@@ -130,8 +130,6 @@ export interface MindMapRailProps {
     isSkeleton?: boolean
     /** Dev/spec only: pins the funnel popover open (see file header's judgement call). */
     defaultFilterOpen?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The block's own wording for the tier filter — never handed in by the caller (§14d.1). */

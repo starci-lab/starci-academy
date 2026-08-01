@@ -142,7 +142,6 @@ const SearchAutocompleteBase = ({
                 onInputChange={onInputChange}
                 onSelectionChange={onSelectionChange}
             >
-                {/* data-anat-part uses the real HeroUI component name (`ComboBox.InputGroup`). */}
                 <ComboBox.InputGroup className="relative">
                     <Input
                         id={controlId}
@@ -153,7 +152,6 @@ const SearchAutocompleteBase = ({
                     />
                     <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2" />
                 </ComboBox.InputGroup>
-                {/* data-anat-part uses the real HeroUI component name (`ComboBox.Popover`). */}
                 <ComboBox.Popover>
                     <ListBox
                         // empty the collection while loading so `renderEmptyState` shows

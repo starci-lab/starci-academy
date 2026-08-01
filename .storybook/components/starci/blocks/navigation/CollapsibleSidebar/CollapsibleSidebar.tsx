@@ -105,8 +105,6 @@ export interface CollapsibleSidebarProps {
     topSlot?: ReactNode
     /** The panel body — nav rows/groups; content-agnostic, this shell never inspects them. */
     children: ReactNode
-    /** `true` → tag each composed part with `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this composite so a BlockAnatomy panel can badge it on-render. */
     className?: string
 }
 

@@ -34,8 +34,6 @@ export interface QaReactionBarProps {
     onReact: (type: QaReactionType | null) => void
     /** `true` → renders a shimmer mirror instead of the live control. */
     isSkeleton?: boolean
-    /** When on, emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it. */
 }
 
 /**

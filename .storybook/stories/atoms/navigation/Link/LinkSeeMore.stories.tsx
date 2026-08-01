@@ -13,7 +13,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * 📐 **1 PROP = 1 LEAF** (§12g). `decorative` and `size` have visual form → each gets
  * its own leaf, rendering the FULL union. `label` is TEXT (§12g.2) so it has NO leaf of
  * its own — every other leaf still has to pass it. Props with no visual form
- * (`className`, `showAnatomy`, `anatPart`) get NO leaf.
+ * (`className`) get NO leaf.
  *
  * ⚠️ `onPress` has NO leaf of its own — whether or not there's a handler, the text +
  * arrow are identical, only the press behavior changes (not pixels). `href` is the same:

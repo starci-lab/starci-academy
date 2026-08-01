@@ -24,7 +24,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `icon={<BuildingOfficeIcon />}`.
  *
  * ⚠️ No `annotate` table: `RemovableToken` does not yet accept `anatPart` /
- * `showAnatomy`, so none of its parts (or the `Button`/`Typography` atoms it
+ * so none of its parts (or the `Button`/`Typography` atoms it
  * composes) emit `data-anat-part` — there is nothing for a structure tree to
  * pick up yet. Every leaf below still renders the full `BlockAnatomy` panel
  * for its states/why/code.

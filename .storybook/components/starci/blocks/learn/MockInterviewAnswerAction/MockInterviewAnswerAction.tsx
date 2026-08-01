@@ -54,8 +54,6 @@ export interface MockInterviewAnswerActionProps {
     isDisabled?: boolean
     /** `true` → the submit request is in flight. */
     isPending?: boolean
-    /** When on, emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

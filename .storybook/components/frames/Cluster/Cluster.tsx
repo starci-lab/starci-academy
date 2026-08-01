@@ -79,7 +79,6 @@ export interface ClusterBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → tag each item with `data-anat-part` for a BlockAnatomy panel. */
     /**
      * The layout pattern this track's seam realises — a token from `test-runner/patterns.mjs`.
      * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the

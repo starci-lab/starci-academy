@@ -53,7 +53,7 @@ import {
  * every REAL sub-part they use (`PageHeader`, `Callout`,
  * `SurfaceCard`/`SurfaceCardAccordion`, `ContentRelatedList`, `ListRow`,
  * `InputText`, `Button`, `SubmissionScoreCard`) already has its own story and
- * carries its own `anatPart`, so the DOM structure the anatomy panel reads is
+ * carries its own so the DOM structure the anatomy panel reads is
  * unaffected either way.
  *
  * REUSE, NOT REBUILD:
@@ -233,7 +233,6 @@ export interface PersonalProjectTaskPageProps {
      * card (§12c) rather than a parallel skeleton tree built here.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /** Skeleton placeholder count for the legacy accordions while real data hasn't landed yet. */

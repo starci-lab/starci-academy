@@ -109,8 +109,6 @@ export interface WeeklyChallengeCardProps {
     data?: WeeklyChallengeData
     /** `true` → every atom this block owns switches to its own shimmer (data already loaded). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The title: a routable link when `onOpenChallenge` is set, plain bold text otherwise. */

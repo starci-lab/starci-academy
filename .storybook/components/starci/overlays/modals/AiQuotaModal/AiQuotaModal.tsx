@@ -139,8 +139,6 @@ export interface AiQuotaModalProps {
     onViewDetails: () => void
     /** Extra classes merged onto the dialog. */
     className?: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Tab → label. The block's own vocabulary (§14d.1), same pattern as `ContentModeNav`'s `MODE_LABEL`. */

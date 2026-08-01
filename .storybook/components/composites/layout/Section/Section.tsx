@@ -94,8 +94,6 @@ export interface SectionHeaderProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
-    /** `true` → each part emits `data-anat-part` for a BlockAnatomy panel. No visual effect. */
 }
 
 /**
@@ -192,8 +190,6 @@ export interface SectionBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
-    /** `true` → each region emits `data-anat-part` for a BlockAnatomy panel. No visual effect. */
 }
 
 /** A header slot is PROPS only when it is a plain object (not an element/array/string). */

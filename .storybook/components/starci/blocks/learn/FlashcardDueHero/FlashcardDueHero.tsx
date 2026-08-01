@@ -97,8 +97,6 @@ export interface FlashcardDueHeroProps {
     isStarting?: boolean
     /** `true` → the "No resume in progress" shape renders with every text/button part shimmering. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** The section label every non-resume leaf shares — a section always answers "what is this card". */

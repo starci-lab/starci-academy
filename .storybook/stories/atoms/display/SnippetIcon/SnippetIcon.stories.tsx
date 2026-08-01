@@ -18,7 +18,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *   (see the old file; don't port that approach).
  *
  * So the leaf set is: `Default` (bare, idle) + `Copied` (prop `isCopied`, two states
- * side by side). The atom now has `showAnatomy`/`anatPart` so both leaves can carry
+ * side by side). The atom now has `showAnatomy` so both leaves can carry
  * a badge — this used to be the ONE atom in the system without anatomy.
  *
  * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a). The `Copied` leaf

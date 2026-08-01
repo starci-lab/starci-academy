@@ -234,8 +234,6 @@ export interface PublicProfileLayoutProps {
     onGoCourses: () => void
     /** The active tab's own panel — rendered by that tab's own route. Mandatory — RULE 12. */
     children: ReactNode
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

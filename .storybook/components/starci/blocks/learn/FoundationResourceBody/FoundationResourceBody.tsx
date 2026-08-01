@@ -86,8 +86,6 @@ export interface FoundationResourceBodyProps {
      * of their own to shimmer here.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /** Block-owned vocabulary for the video gap — see the file header's §B3 note. */

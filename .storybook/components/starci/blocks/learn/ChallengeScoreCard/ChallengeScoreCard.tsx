@@ -54,8 +54,6 @@ export interface ChallengeScoreCardProps {
     passThreshold: number
     /** `true` → the score row and the meter switch to shimmer (card label + caption follow via `SurfaceCard`). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

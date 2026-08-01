@@ -115,7 +115,6 @@ export interface ToolbarBaseProps {
     /** Layout utilities on the toolbar row, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this toolbar. */
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
 }
 /** size → extra Tab className override (md = HeroUI's own default, no override). */
 const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"

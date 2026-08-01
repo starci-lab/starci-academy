@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * 📐 **1 PROP = 1 LEAF** (§12g — the law for the ATOM TIER). Each prop gets one leaf,
  * and that leaf renders EVERY state the prop can produce: `tone` · `icon` · colour dot
  * · `onRemove` · `isSkeleton`. Props that produce no visual (`removeLabel`, `className`,
- * `showAnatomy`, `anatPart`) get NO leaf.
+ * `showAnatomy`) get NO leaf.
  *
  * ⚠️ Don't confuse this with §14d.2 (leaf = STRUCTURE) — that law is for
  * design/block/screen. The previous version of this file split leaves by

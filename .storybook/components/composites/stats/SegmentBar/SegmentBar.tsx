@@ -56,8 +56,6 @@ interface SegmentBarOwnProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    /** When on, emit `data-anat-part` on this bar's own direct sub-parts (Bar · Legend · Caption) so its own `BlockAnatomy` panel can badge them. */
 }
 
 /**

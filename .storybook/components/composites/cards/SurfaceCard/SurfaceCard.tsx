@@ -295,7 +295,6 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     classNames?: Array<AllowedClassName>
     /** Extra classes on the surface (content) wrapper. */
     contentClassName?: string
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * Storybook-only: when true, each composed part (`SurfaceCardHeader` / the
      * surface content wrapper / `description`) emits a `data-anat-part` so the
@@ -537,7 +536,6 @@ export interface SurfaceCardNestedSection {
      * already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
 }
 /** Props for {@link SurfaceCardNested}. */
 export interface SurfaceCardNestedProps extends SlotProps {
@@ -588,8 +586,6 @@ export interface SurfaceCardNestedProps extends SlotProps {
      * already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
 }
 /**
  * One inner section row — a flush row (no own border/radius) with an optional
@@ -967,7 +963,6 @@ interface PressableGroupSkeletonTileProps {
      * already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: names the Avatar mirror so a BlockAnatomy panel can badge/link it. Avatar has no anatPart of its own, so the frame wraps it instead. */
 }
 const PressableGroupSkeletonTile = ({ classNames }: PressableGroupSkeletonTileProps) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", classNames)}>
@@ -1337,7 +1332,6 @@ export interface SurfaceCardListItem {
      * already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
 }
 /** Props for {@link SurfaceCardList}. */
 export interface SurfaceCardListProps extends SurfaceLabelProps {
@@ -1375,7 +1369,6 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      * passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Description) for a BlockAnatomy panel. */
 }
 /** Resolves an item's left DATA band — `withVerdict` (full shape) wins over the `tone` shorthand. */
@@ -1726,7 +1719,6 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
      * passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Row) for a BlockAnatomy panel. */
 }
 /**
@@ -1946,7 +1938,6 @@ export interface SurfaceCardCrossListProps {
     skeletonRows?: number
     /** Where the list root sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * When on, every row (real or self-generated skeleton) emits
      * `` for the anatomy panel — unless the item

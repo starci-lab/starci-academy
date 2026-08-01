@@ -28,8 +28,6 @@ import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/
 
 /** Props for {@link FoundationResourceEmpty}. */
 export interface FoundationResourceEmptyProps {
-    /** When on, emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

@@ -71,8 +71,6 @@ export interface TaskLockedAlertProps {
     onGoToCurrentTask?: () => void
     /** Placement utilities only, from the closed positioning union — NOT for restyling the alert. */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    /** When on, the composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

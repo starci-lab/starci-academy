@@ -96,8 +96,6 @@ export interface SubmissionScoreCardProps {
     label: string
     /** `true` → every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

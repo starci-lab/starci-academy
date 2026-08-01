@@ -42,14 +42,13 @@ interface PhaseScarcityNoteOwnProps {
     /**
      * Anatomy tag for THIS line itself — lets the caller badge it as ONE node (§11a).
      *
-     * ⭐ 2026-07-27: without this prop the root doesn't emit `data-anat-part`, so
+     * ⭐ 2026-07-27: without this prop the root doesn't emit so
      * when the caller (`TrialConversionStrip`) declares it as a dep, the node
      * CAN'T enter the tree — the gold-colored line vanishes from the panel even
      * though it still renders on screen. Worse: the four internal spans
      * (`WarningCircleIcon`/`SeatCountLine`/`Separator`/`PriceRiseClause`) leak
      * out as LOOSE siblings, reading like four sibling deps of the block.
      */
-    /** Storybook-only: emit `data-anat-part` on each anatomy part. */
 }
 
 /**

@@ -93,8 +93,6 @@ export interface PersonalProjectGatePreviewProps {
     isSkeleton?: boolean
     /** Placement class only (§14d.1) — not for restyling. */
     className?: string
-    /** `true` → every composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block itself (§11a). */
 }
 
 /**

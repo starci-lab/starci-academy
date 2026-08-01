@@ -106,8 +106,6 @@ export interface SubmissionAttemptSelectorProps {
     retryLabel?: string
     /** `true` → a parent-forced skeleton paint, same branch as `isLoading` (see file header). */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
 }
 
 const EMPTY_LABEL_DEFAULT = "No attempts to choose from yet"
@@ -131,7 +129,6 @@ const attemptChip = (attempt: SubmissionAttempt) => (
 
 /** Props for {@link AttemptRowSkeleton}. */
 interface AttemptRowSkeletonProps {
-    /** `true` → each skeleton pill emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /** Mirrors the real strip's footprint while attempts are loading — pill-for-pill, no data. */

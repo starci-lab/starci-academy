@@ -192,7 +192,7 @@ export const SlotRow: Story = {
                         name: "leading = undefined, trailing = undefined (default)",
                         why: "Only the `label`/`showValue` row (when set) and the track render — this leaf's row is entirely absent, exactly like every other leaf on this page.",
                         code: "<ProgressMeter value={62} label=\"Sprint burndown\" showValue />",
-                        render: <ProgressMeter value={62} label="Sprint burndown" showValue anatPart="ProgressMeter" showAnatomy />,
+                        render: <ProgressMeter value={62} label="Sprint burndown" showValue />,
                     },
                     {
                         name: "leading = SprintLabel, trailing = OnTrackChip",
@@ -242,7 +242,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "`value` has no honest ratio to show before data loads, so the meter mirrors its own shape instead of borrowing an unrelated skeleton: a short label-width bar sits above a full-width track bar sized to match the real `ProgressBar`'s `h-1` track.",
                         code: "<ProgressMeter isSkeleton />",
-                        render: <ProgressMeter isSkeleton anatPart="ProgressMeter" showAnatomy />,
+                        render: <ProgressMeter isSkeleton />,
                     },
                 ]}
             />

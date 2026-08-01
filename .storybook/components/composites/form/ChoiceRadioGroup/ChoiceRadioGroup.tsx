@@ -57,7 +57,6 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
     /** Row count for the skeleton mirror (default = `options.length`). */
     skeletonRows?: number
     /** `true` → tag each option row (`ChoiceRadio`) and its internals for BlockAnatomy. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -78,7 +77,6 @@ export const ChoiceRadioGroup = ({
     isInvalid,
     isSkeleton,
     skeletonRows,
-    showAnatomy,
     classNames,
     hint,
     errorMessage,
@@ -94,14 +92,14 @@ export const ChoiceRadioGroup = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             skeletonControl={
                 // COMPOSITE-10: the composite only decides HOW MANY rows shimmer — each row
                 // draws its own shimmer via `ChoiceRadio`'s own `isSkeleton` branch, the same
                 // shape ButtonGroup/ChipGroup delegate to `Button`/`Chip` while loading.
                 <div data-principles="sibling-stack" className={cn("flex flex-col gap-2", classNames)}>
                     {Array.from({ length: rows }, (_, index) => (
-                        <ChoiceRadio key={index} value={String(index)} label="" isSkeleton showAnatomy={showAnatomy} />
+                        <ChoiceRadio key={index} value={String(index)} label="" isSkeleton />
                     ))}
                 </div>
             }
@@ -120,8 +118,8 @@ export const ChoiceRadioGroup = ({
                     // own (ATOM-10 — an atom writes its own name, never a caller's), so the
                     // composite badges the wrapper instead — the same technique `AvatarGroup`
                     // uses to name each `Avatar` it rebuilds.
-                    <span key={option.value} data-anat-part={showAnatomy ? "ChoiceRadio" : undefined}>
-                        <ChoiceRadio value={option.value} label={option.label} isDisabled={option.isDisabled} showAnatomy={showAnatomy} />
+                    <span key={option.value}>
+                        <ChoiceRadio value={option.value} label={option.label} isDisabled={option.isDisabled} />
                     </span>
                 ))}
             </HeroRadioGroup>

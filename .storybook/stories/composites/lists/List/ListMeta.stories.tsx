@@ -62,7 +62,7 @@ export const WithChip: Story = {
                             <ListMeta
                                 chip={CountdownChip}
                                 items={["Question 7 / 8", "Middle"]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -88,7 +88,7 @@ export const MetaOnly: Story = {
                         code: `<ListMeta
   items={["Question 2 / 8", "Middle", "40 minutes left"]}
 />`,
-                        render: <ListMeta items={["Question 2 / 8", "Middle", "40 minutes left"]} showAnatomy />,
+                        render: <ListMeta items={["Question 2 / 8", "Middle", "40 minutes left"]} />,
                     },
                 ]}
             />
@@ -112,7 +112,7 @@ export const Overflow: Story = {
                         code: `<ListMeta
   items={["Building a scalable distributed rate limiter", "Middle", "40 minutes left"]}
 />`,
-                        render: <ListMeta items={["Building a scalable distributed rate limiter", "Middle", "40 minutes left"]} showAnatomy />,
+                        render: <ListMeta items={["Building a scalable distributed rate limiter", "Middle", "40 minutes left"]} />,
                     },
                 ]}
             />

@@ -90,8 +90,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <PlaygroundExerciseGrid
-                                anatPart="PlaygroundExerciseGrid"
-                                showAnatomy
+
+                               
                                 exercises={EXERCISES}
                                 onSelect={() => {}}
                                 ariaLabel="Playground exercises"
@@ -135,8 +135,8 @@ export const Empty: Story = {
                         code: "<PlaygroundExerciseGrid exercises={[]} onSelect={openExercise} ariaLabel=\"Playground exercises\" />",
                         render: (
                             <PlaygroundExerciseGrid
-                                anatPart="PlaygroundExerciseGrid"
-                                showAnatomy
+
+                               
                                 exercises={[]}
                                 onSelect={() => {}}
                                 ariaLabel="Playground exercises"

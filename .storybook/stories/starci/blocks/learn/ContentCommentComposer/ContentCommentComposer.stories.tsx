@@ -52,8 +52,8 @@ export const CollapsedPill: Story = {
                         code: "<ContentCommentComposer collapsible currentUser={viewer} ariaLabel=\"Write a comment\" onSubmit={post} />",
                         render: (
                             <ContentCommentComposer
-                                anatPart="ContentCommentComposer"
-                                showAnatomy
+
+                               
                                 collapsible
                                 currentUser={VIEWER}
                                 ariaLabel="Write a comment"
@@ -85,8 +85,8 @@ export const ExpandedWithAvatar: Story = {
                         code: "<ContentCommentComposer collapsible currentUser={viewer} ariaLabel=\"Write a comment\" onSubmit={post} />",
                         render: (
                             <ContentCommentComposer
-                                anatPart="ContentCommentComposer"
-                                showAnatomy
+
+                               
                                 collapsible
                                 currentUser={VIEWER}
                                 ariaLabel="Write a comment"
@@ -132,8 +132,8 @@ export const ReplyOrEdit: Story = {
                         code: "<ContentCommentComposer placeholder=\"Write your reply...\" submitLabel=\"Reply\" onCancel={close} ariaLabel=\"Write a reply\" onSubmit={reply} />",
                         render: (
                             <ContentCommentComposer
-                                anatPart="ContentCommentComposer"
-                                showAnatomy
+
+                               
                                 placeholder="Write your reply..."
                                 submitLabel="Reply"
                                 onCancel={() => {}}

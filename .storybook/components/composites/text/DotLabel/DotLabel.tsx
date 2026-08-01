@@ -67,9 +67,7 @@ interface DotLabelOwnProps {
     /** Label tone. Defaults to `"muted"`. */
     tone?: DotLabelTone
     /** `true` → tags each part with `data-anat-part` for the BlockAnatomy badge. */
-    showAnatomy?: boolean
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -113,8 +111,6 @@ export const DotLabel = ({
     color,
     label,
     tone = "muted",
-    showAnatomy = false,
-    anatPart,
     classNames,
     isSkeleton = false,
 }: DotLabelProps) => {
@@ -123,7 +119,7 @@ export const DotLabel = ({
     return (
         <span
             className={cn("inline-flex items-center gap-1", classNames)}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="DotLabel"
             data-principles="icon-text"
@@ -136,21 +132,21 @@ export const DotLabel = ({
                 <span
                     aria-hidden
                     className="size-2.5 shrink-0 rounded-full bg-default"
-                    data-anat-part={showAnatomy ? "Dot" : undefined}
+
                 />
             ) : (
                 <span
                     aria-hidden
                     style={dot?.style}
                     className={cn("size-2.5 shrink-0 rounded-full", dot?.className)}
-                    data-anat-part={showAnatomy ? "Dot" : undefined}
+
                 />
             )}
             <Typography
                 size="sm"
                 color={isSkeleton ? undefined : TONE_TO_TYPOGRAPHY[tone]}
                 classNames={isSkeleton ? ["w-1/3"] : undefined}
-                showAnatomy={showAnatomy}
+
                 isSkeleton={isSkeleton}
                 text={label}
             />

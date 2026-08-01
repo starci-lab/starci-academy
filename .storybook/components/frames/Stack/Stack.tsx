@@ -81,7 +81,6 @@ export interface StackBaseProps {
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
      */
-    anatPart?: string
     /** The stacked content. A wrapper frame takes a named slot (§13b). */
     body?: ReactNode
     /**
@@ -89,7 +88,6 @@ export interface StackBaseProps {
      */
     classNames?: Array<AllowedClassName>
     /** `true` → tag this frame's parts with `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /**
      * The layout pattern this track's seam realises — forwarded straight to the `Flex` this
      * track renders through, the same way `gap`/`align`/`justify` are. See `Flex`'s own
@@ -122,7 +120,7 @@ export interface StackHProps extends StackBaseProps {
  * the track's `items-*`, so the line spans the row's full height even when the
  * row is `items-center`.
  */
-const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal", showAnatomy: boolean) => {
+const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal") => {
     const nodes = React.Children.toArray(children)
     // `axis` = the TRACK's direction; a rule always runs ACROSS it.
     const ruleOrientation = axis === "vertical" ? "horizontal" : "vertical"
@@ -134,7 +132,7 @@ const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal"
                     key={`stack-divider-${index}`}
                     orientation={ruleOrientation}
                     classNames={ruleOrientation === "vertical" ? ["self-stretch"] : undefined}
-                    showAnatomy={showAnatomy}
+
                 />,
                 child,
             ],
@@ -157,8 +155,6 @@ const StackV = ({
     body,
     padding,
     classNames,
-    showAnatomy = false,
-    anatPart,
     pattern,
 }: StackVProps) => (
     <Flex
@@ -171,9 +167,9 @@ const StackV = ({
         justify={justify}
         nested={nested}
         classNames={classNames}
-        anatPart={anatPart}
+
         pattern={pattern}
-        body={divider ? interleaveDividers(body, "vertical", showAnatomy) : body}
+        body={divider ? interleaveDividers(body, "vertical") : body}
     />
 )
 
@@ -189,8 +185,6 @@ const StackH = ({
     body,
     padding,
     classNames,
-    showAnatomy = false,
-    anatPart,
     pattern,
 }: StackHProps) => (
     <Flex
@@ -204,9 +198,9 @@ const StackH = ({
         at={at}
         nested={nested}
         classNames={classNames}
-        anatPart={anatPart}
+
         pattern={pattern}
-        body={divider ? interleaveDividers(body, "horizontal", showAnatomy) : body}
+        body={divider ? interleaveDividers(body, "horizontal") : body}
     />
 )
 

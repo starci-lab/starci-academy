@@ -34,7 +34,6 @@ interface MetaDotRowOwnProps {
     /** Fragment count to shimmer while `isSkeleton`. Defaults to `3`. */
     skeletonCount?: number
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -67,7 +66,6 @@ export const MetaDotRow = ({
     items,
     isSkeleton = false,
     skeletonCount = 3,
-    anatPart,
     classNames,
 }: MetaDotRowProps) => {
     const fragments = isSkeleton
@@ -82,7 +80,7 @@ export const MetaDotRow = ({
     return (
         <div
             className={cn("flex flex-wrap items-center gap-1 text-muted", classNames)}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="MetaDotRow"
             data-principles="separator-dot"

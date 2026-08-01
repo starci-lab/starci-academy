@@ -57,8 +57,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <QuotaBar
-                                anatPart="QuotaBar"
-                                showAnatomy
+
+                               
                                 label="Next 5 hours"
                                 used={12}
                                 limit={50}
@@ -154,8 +154,8 @@ export const Skeleton: Story = {
                         code: "<QuotaBar label=\"Next 5 hours\" used={0} limit={0} isSkeleton />",
                         render: (
                             <QuotaBar
-                                anatPart="QuotaBar"
-                                showAnatomy
+
+                               
                                 label="Next 5 hours"
                                 used={0}
                                 limit={0}

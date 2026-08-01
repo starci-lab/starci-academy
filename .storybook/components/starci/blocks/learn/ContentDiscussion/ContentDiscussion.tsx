@@ -79,9 +79,7 @@ export interface ContentDiscussionProps extends ContentCommentThreadCallbacks {
     /** `true` → two placeholder threads mirror the real row shape while the first page loads. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Two placeholder rows so the mirror has the same shape as a short thread. */
@@ -113,8 +111,6 @@ const ContentDiscussion = ({
     onLoadMore,
     errorMessage,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ContentDiscussionProps) => {
     // real (not fabricated) count of currently-loaded top-level comments that already
     // have at least one reply — under-counts before "load more" is exhausted, same
@@ -127,9 +123,9 @@ const ContentDiscussion = ({
     const labelLines = (
         <>
             {isSkeleton ? (
-                <Typography weight="medium" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
+                <Typography weight="medium" isSkeleton classNames={["w-1/4"]} />
             ) : (
-                <Typography weight="medium" text={`${label} · ${total}`} showAnatomy={showAnatomy} />
+                <Typography weight="medium" text={`${label} · ${total}`} />
             )}
             {isSkeleton || total > 0 ? (
                 <Typography
@@ -138,7 +134,7 @@ const ContentDiscussion = ({
                     isSkeleton={isSkeleton}
                     classNames={isSkeleton ? ["w-2/3"] : undefined}
                     text={`${answeredCount}/${total} questions answered, accumulated over time`}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -146,14 +142,14 @@ const ContentDiscussion = ({
 
     const discussionHeader = (
         <>
-            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={labelLines} />
+            <StackV gap={2} body={labelLines} />
             <ContentCommentComposer
                 onSubmit={onSubmitComment}
                 currentUser={currentUser}
                 collapsible
                 ariaLabel="Write a comment"
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "ContentCommentComposer" : undefined}
+
+
             />
         </>
     )
@@ -173,7 +169,7 @@ const ContentDiscussion = ({
                     onDelete={onDelete}
                     onReactComment={onReactComment}
                     onLoadReplies={onLoadReplies}
-                    showAnatomy={showAnatomy}
+
                 />
             ))}
             {!isSkeleton && hasMore ? (
@@ -195,13 +191,13 @@ const ContentDiscussion = ({
                 2026-07-29, "feels a bit cramped" — the old version was one step looser in all
                 3 spots): [label+archive]↔composer = grouped (gap-3) · [icon+label]↔archive-line
                 = tight (gap-1) · icon↔label = related (gap-2). */}
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={discussionHeader} />
+            <StackV gap={4} body={discussionHeader} />
 
             {errorMessage != null ? (
                 <EmptyState
                     icon={WarningCircleIcon}
                     title={errorMessage}
-                    anatPart={showAnatomy ? "EmptyState" : undefined}
+
                 />
             ) : !isSkeleton && comments.length === 0 ? (
                 // Nobody has written yet. This is an INVITATION, so it is drawn —
@@ -210,17 +206,17 @@ const ContentDiscussion = ({
                     icon={ChatsCircleIcon}
                     title="No discussion yet"
                     description="Ask the first question about this lesson"
-                    anatPart={showAnatomy ? "EmptyState" : undefined}
+
                 />
             ) : (
-                <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={commentList} />
+                <StackV gap={4} body={commentList} />
             )}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={discussionBody} />
+        <div>
+            <StackV gap={4} body={discussionBody} />
         </div>
     )
 }

@@ -70,7 +70,6 @@ export interface CodeToHtmlProps {
     /** Shiki theme id resolved from the current Storybook toolbar theme. */
     theme: string
     /** `true` → tag the copy control so a BlockAnatomy panel can link to its own story. */
-    showAnatomy?: boolean
     /**
      * Where the root element sits inside its parent, from the closed positioning
      * union. The block-rhythm margin between fences (`"my-4"`/`"my-3"`) has no
@@ -94,7 +93,7 @@ export interface CodeToHtmlProps {
  * (Shiki/WASM is heavy); off-screen blocks show raw code (`<pre>`) until scrolled into view.
  * @param props - {@link CodeToHtmlProps}
  */
-export const CodeToHtml = ({ code, language, theme, showAnatomy = false, classNames }: CodeToHtmlProps) => {
+export const CodeToHtml = ({ code, language, theme, classNames }: CodeToHtmlProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     /** Whether the block has entered (near) the viewport yet — only then do we highlight. */
     const [isVisible, setIsVisible] = useState(false)
@@ -157,7 +156,7 @@ export const CodeToHtml = ({ code, language, theme, showAnatomy = false, classNa
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}
             <div className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs text-muted">{languageLabel(language)}</span>
-                <SnippetIcon copyString={code} showAnatomy={showAnatomy} />
+                <SnippetIcon copyString={code} />
             </div>
             {html ? (
                 <div

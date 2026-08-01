@@ -122,9 +122,7 @@ export interface PremiumGateModalProps {
     /** Extra classes on the root. */
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Whether the caller named a specific course, or this is a generic gate. */
@@ -189,8 +187,6 @@ const PremiumGateModal = ({
     isSkeleton = false,
     onUpgrade,
     className,
-    showAnatomy = false,
-    anatPart,
 }: PremiumGateModalProps) => {
     const headerVariant: GateHeaderVariant = courseTitle ? "named" : "generic"
     const header = GATE_HEADER[headerVariant]
@@ -207,7 +203,7 @@ const PremiumGateModal = ({
             key={item.key}
             gap={3}
             align="center"
-            anatPart={showAnatomy ? "Cluster" : undefined}
+
             items={[
                 {
                     key: "icon",
@@ -229,7 +225,7 @@ const PremiumGateModal = ({
                         <Typography
                             size="sm"
                             text={item.label}
-                            showAnatomy={showAnatomy}
+
                         />
                     ),
                 },
@@ -239,8 +235,8 @@ const PremiumGateModal = ({
 
     const skeletonPrice = (
         <>
-            <Typography size="h4" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
-            <Typography size="xs" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
+            <Typography size="h4" isSkeleton classNames={["w-1/3"]} />
+            <Typography size="xs" isSkeleton classNames={["w-1/2"]} />
         </>
     )
 
@@ -264,10 +260,10 @@ const PremiumGateModal = ({
                                 discounted={price.discountedPriceVnd}
                                 original={price.originalPriceVnd}
                                 breakdown={breakdown}
-                                anatPart={showAnatomy ? "PriceTagProminent" : undefined}
+
                             />
                             <PhaseScarcityNote
-                                anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
+
                                 currentPhase={price.currentPhase}
                                 seatsRemaining={price.seatsRemaining}
                                 nextPhasePriceVnd={price.nextPhasePriceVnd}
@@ -280,14 +276,14 @@ const PremiumGateModal = ({
     )
 
     return (
-        <div data-anat-part={anatPart} className={className}>
+        <div className={className}>
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 title={header.title(courseTitle)}
                 description={header.description}
                 size="md"
-                showAnatomy={showAnatomy}
+
                 footer={
                     <Button
                         variant="primary"
@@ -295,11 +291,11 @@ const PremiumGateModal = ({
                         classNames={["w-full"]}
                         label="Unlock now"
                         onPress={onUpgrade}
-                        showAnatomy={showAnatomy}
+
                     />
                 }
             >
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={gateBody} />
+                <StackV gap={6} body={gateBody} />
             </ModalShell>
         </div>
     )

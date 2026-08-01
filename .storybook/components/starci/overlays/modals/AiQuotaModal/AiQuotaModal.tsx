@@ -140,9 +140,7 @@ export interface AiQuotaModalProps {
     /** Extra classes merged onto the dialog. */
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Tab → label. The block's own vocabulary (§14d.1), same pattern as `ContentModeNav`'s `MODE_LABEL`. */
@@ -184,8 +182,6 @@ const AiQuotaModal = ({
     onSubscribe,
     onViewDetails,
     className,
-    showAnatomy = false,
-    anatPart,
 }: AiQuotaModalProps) => {
     // Caller-built header (title + optional tier chip): `ModalShell.title` only carries ONE
     // Typography node, so a second element beside it (the chip) has to compose its own
@@ -197,10 +193,10 @@ const AiQuotaModal = ({
                 size="base"
                 weight="bold"
                 text="AI usage"
-                showAnatomy={showAnatomy}
+
             />
             {tier != null ? (
-                <Chip tone="accent" text={TIER_LABEL[tier]} showAnatomy={showAnatomy} />
+                <Chip tone="accent" text={TIER_LABEL[tier]} />
             ) : null}
         </>
     )
@@ -210,7 +206,7 @@ const AiQuotaModal = ({
             gap={3}
             align="center"
             className="pr-8"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={titleAndTierChip}
         />
     )
@@ -222,24 +218,24 @@ const AiQuotaModal = ({
             <AiQuotaLane
                 data={auto.data}
                 isLoading={auto.isLoading}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "AiQuotaLane" : undefined}
+
+
             />
         ) : activeTab === "subscription" ? (
             <AiQuotaSubscriptionPanel
                 tier={tier}
                 premiumLane={subscription}
                 onSubscribe={onSubscribe}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "AiQuotaSubscriptionPanel" : undefined}
+
+
             />
         ) : (
             <AiQuotaHistoryPanel
                 chartPoints={history.chartPoints}
                 items={history.items}
                 isLoading={history.isLoading}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "AiQuotaHistoryPanel" : undefined}
+
+
             />
         )
 
@@ -247,7 +243,7 @@ const AiQuotaModal = ({
         <>
             {/* Tabs (atom) carries no `anatPart` prop of its own (unlike Typography/Chip) —
                 same wrapping convention `ContentModeNav` uses around its `Toolbar`. */}
-            <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
+            <div>
                 <Tabs
                     items={TAB_ITEMS}
                     selectedKey={activeTab}
@@ -260,7 +256,7 @@ const AiQuotaModal = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -273,12 +269,12 @@ const AiQuotaModal = ({
                         label="View full usage"
                         onPress={onViewDetails}
                         size="sm"
-                        showAnatomy={showAnatomy}
+
                     />
                 }
-                showAnatomy={showAnatomy}
+
             >
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={tabsAndPanel} />
+                <StackV gap={6} body={tabsAndPanel} />
             </ModalShell>
         </div>
     )

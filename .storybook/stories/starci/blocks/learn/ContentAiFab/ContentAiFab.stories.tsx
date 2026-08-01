@@ -48,8 +48,8 @@ export const Default: Story = {
                         code: "<ContentAiFab onOpen={handleOpen} isOpen={false} />",
                         render: (
                             <ContentAiFab
-                                anatPart="ContentAiFab"
-                                showAnatomy
+
+                               
                                 onOpen={() => {}}
                                 isOpen={false}
                             />

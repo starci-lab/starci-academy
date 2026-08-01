@@ -61,8 +61,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <FlashcardModeSwitch
-                                anatPart="FlashcardModeSwitch"
-                                showAnatomy
+
+                               
                                 ariaLabel="Flashcard mode"
                                 mode="study"
                                 onModeChange={() => {}}

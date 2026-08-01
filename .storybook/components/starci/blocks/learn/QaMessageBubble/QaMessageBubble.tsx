@@ -59,9 +59,7 @@ interface QaMessageBubbleOwnProps {
     /** React/un-react to THIS answer. Only called from the top-level bubble — see file header. */
     onReact: (type: QaReactionType | null) => void
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it. */
-    anatPart?: string
 }
 
 /**
@@ -78,12 +76,10 @@ export type QaMessageBubbleProps = QaMessageBubbleOwnProps &
 const MessageRow = ({
     answer,
     currentUserId,
-    showAnatomy,
     interactive,
 }: {
     answer: QaMessageBubbleAnswer
     currentUserId: string | null
-    showAnatomy: boolean
     interactive: { canAccept: boolean, onAcceptAnswer: (accepted: boolean) => void, onReact: (type: QaReactionType | null) => void } | null
 }) => {
     const isMine = currentUserId != null && currentUserId === answer.author.id
@@ -93,14 +89,14 @@ const MessageRow = ({
         <StackH
             gap={2}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
-                    <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" showAnatomy={showAnatomy} />
-                    <Typography size="xs" weight="medium" text={displayName} showAnatomy={showAnatomy} />
-                    <Typography size="xs" color="muted" text={answer.createdTimeAgo} showAnatomy={showAnatomy} />
+                    <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" />
+                    <Typography size="xs" weight="medium" text={displayName} />
+                    <Typography size="xs" color="muted" text={answer.createdTimeAgo} />
                     {answer.isAcceptedAnswer ? (
-                        <Chip tone="success" text="Accepted answer" showAnatomy={showAnatomy} />
+                        <Chip tone="success" text="Accepted answer" />
                     ) : null}
                 </>
             }
@@ -111,14 +107,14 @@ const MessageRow = ({
         <StackH
             gap={3}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <QaReactionBar
                         count={answer.reactionCount}
                         myReaction={answer.myReaction}
                         onReact={interactive.onReact}
-                        showAnatomy={showAnatomy}
+
                     />
                     {interactive.canAccept ? (
                         <Button
@@ -127,7 +123,7 @@ const MessageRow = ({
                             prefixIcon={CheckCircleIcon}
                             label={answer.isAcceptedAnswer ? "Unaccept" : "Mark as the correct answer"}
                             onPress={() => interactive.onAcceptAnswer(!answer.isAcceptedAnswer)}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -139,9 +135,9 @@ const MessageRow = ({
         <>
             {authorRow}
 
-            <QaChatBubble role={isMine ? "user" : "assistant"} anatPart={showAnatomy ? "QaChatBubble" : undefined}>
+            <QaChatBubble role={isMine ? "user" : "assistant"}>
                 <div className="[&_p]:m-0">
-                    <MarkdownContent source={answer.body} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                    <MarkdownContent source={answer.body} measure="compact" />
                 </div>
             </QaChatBubble>
 
@@ -151,7 +147,7 @@ const MessageRow = ({
 
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
-            <StackV gap={2} className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} anatPart={showAnatomy ? "StackV" : undefined} body={bubbleBody} />
+            <StackV gap={2} className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} body={bubbleBody} />
         </div>
     )
 }
@@ -168,8 +164,6 @@ const QaMessageBubble = ({
     onAcceptAnswer,
     onReact,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: QaMessageBubbleProps) => {
     if (isSkeleton) {
         const skeletonBody = (
@@ -177,10 +171,10 @@ const QaMessageBubble = ({
                 <StackH
                     gap={2}
                     align="center"
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <>
-                            <Avatar isSkeleton size="sm" showAnatomy={showAnatomy} />
+                            <Avatar isSkeleton size="sm" />
                             <HeroSkeleton className="h-3 w-16 rounded" />
                             <HeroSkeleton className="h-3 w-10 rounded" />
                         </>
@@ -190,8 +184,8 @@ const QaMessageBubble = ({
             </>
         )
         return (
-            <div data-anat-part={anatPart}>
-                <StackV gap={2} className="max-w-[92%]" anatPart={showAnatomy ? "StackV" : undefined} body={skeletonBody} />
+            <div>
+                <StackV gap={2} className="max-w-[92%]" body={skeletonBody} />
             </div>
         )
     }
@@ -202,7 +196,7 @@ const QaMessageBubble = ({
 
     const replyRows = (realAnswer.replies ?? []).map((reply) => (
         <div key={reply.id} className="pl-8">
-            <MessageRow answer={reply} currentUserId={currentUserId} showAnatomy={showAnatomy} interactive={null} />
+            <MessageRow answer={reply} currentUserId={currentUserId} interactive={null} />
         </div>
     ))
 
@@ -211,7 +205,7 @@ const QaMessageBubble = ({
             <MessageRow
                 answer={realAnswer}
                 currentUserId={currentUserId}
-                showAnatomy={showAnatomy}
+
                 interactive={{ canAccept, onAcceptAnswer, onReact }}
             />
             {replyRows}
@@ -219,8 +213,8 @@ const QaMessageBubble = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={threadBody} />
+        <div>
+            <StackV gap={2} body={threadBody} />
         </div>
     )
 }

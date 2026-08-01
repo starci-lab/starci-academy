@@ -77,7 +77,7 @@ export const Default: Story = {
                                     triggerLabel="Account"
                                     ariaLabel="Account"
                                     defaultOpen
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -115,7 +115,7 @@ export const TriggerVariants: Story = {
                                     triggerVariant="primary"
                                     triggerLabel="Primary"
                                     ariaLabel="Primary"
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -135,7 +135,7 @@ export const TriggerVariants: Story = {
                                     triggerVariant="secondary"
                                     triggerLabel="Secondary"
                                     ariaLabel="Secondary"
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -155,7 +155,7 @@ export const TriggerVariants: Story = {
                                     triggerVariant="tertiary"
                                     triggerLabel="Tertiary"
                                     ariaLabel="Tertiary"
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -175,7 +175,7 @@ export const TriggerVariants: Story = {
                                     triggerVariant="ghost"
                                     triggerLabel="Ghost"
                                     ariaLabel="Ghost"
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -211,7 +211,7 @@ export const WithIcons: Story = {
                                     triggerLabel="Actions"
                                     ariaLabel="Actions"
                                     defaultOpen
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     items={[
                                         { key: "edit", label: "Edit", icon: PencilSimpleIcon },
@@ -250,7 +250,7 @@ export const WithTriggerIcon: Story = {
                                     triggerIcon={CaretDownIcon}
                                     ariaLabel="Sort"
                                     defaultOpen
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     items={[
                                         { key: "recent", label: "Newest" },
@@ -287,7 +287,7 @@ export const WithSections: Story = {
                                     triggerLabel="Account menu"
                                     ariaLabel="Account menu"
                                     defaultOpen
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     sections={[
                                         {
@@ -334,7 +334,7 @@ export const DisabledItem: Story = {
                                     triggerLabel="Actions"
                                     ariaLabel="Actions"
                                     defaultOpen
-                                    showAnatomy
+                                   
                                     onAction={() => {}}
                                     items={[
                                         { key: "edit", label: "Edit", icon: PencilSimpleIcon },
@@ -373,7 +373,7 @@ export const Skeleton: Story = {
                                         triggerLabel="Account"
                                         ariaLabel="Account"
                                         isSkeleton
-                                        showAnatomy
+                                       
                                         onAction={() => {}}
                                         items={[
                                             { key: "profile", label: "My profile" },

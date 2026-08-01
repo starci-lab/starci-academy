@@ -1882,9 +1882,6 @@ export interface SurfaceCardCrossListItem {
      * e.g. a red ✗ "lost all progress"), not mere absence. Ignored for `none`.
      */
     tone?: MarkTone
-    /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
-    /** Anatomy tag for the leading mark ICON slot (per-slot — the icon is internal, not a prop). */
-    markAnatPart?: string
 }
 /** Props for {@link SurfaceCardCrossList}. */
 export interface SurfaceCardCrossListProps {
@@ -1907,7 +1904,7 @@ export interface SurfaceCardCrossListProps {
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     /**
      * When on, every row (real or self-generated skeleton) emits
-     * `data-anat-part="CrossListItem"` for the anatomy panel — unless the item
+     * `` for the anatomy panel — unless the item
      * carries its own ``.
      */
 }
@@ -1930,8 +1927,7 @@ const CrossListRow = ({
     tone,
     text,
     isSkeleton = false,
-    
-    markAnatPart}: Omit<SurfaceCardCrossListItem, "key" | "text"> & { text?: string; isSkeleton?: boolean }) => (
+}: Omit<SurfaceCardCrossListItem, "key" | "text"> & { text?: string; isSkeleton?: boolean }) => (
     <StackH
         as="li"
         gap={4}
@@ -1948,7 +1944,7 @@ const CrossListRow = ({
                 </>
             ) : (
                 <>
-                    {markIcon(mark, tone, markAnatPart)}
+                    {markIcon(mark, tone)}
                     <div className="min-w-0 flex-1"><Typography size="sm" text={text ?? ""} /></div>
                 </>
             )
@@ -1986,7 +1982,6 @@ const CrossList = ({
                     mark={item.mark}
                     tone={item.tone}
                     text={item.text}
-                    markAnatPart={item.markAnatPart}
                 />
             ))}
     </ul>

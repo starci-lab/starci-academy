@@ -46,7 +46,6 @@ export interface ContinueLearningBaseProps {
     /** `true` → the card switches to shimmer (the flag flows straight down to design). */
     isSkeleton?: boolean
     /** Anatomy tag for THIS block itself — lets the screen badge it as ONE node (§11a.1). */
-    anatPart?: string
 }
 
 /**
@@ -67,13 +66,12 @@ const ContinueLearningBase = ({
     progressPercent,
     onResume,
     isSkeleton = false,
-    anatPart,
 }: ContinueLearningBaseProps) => (
     // EVERY sentence is produced RIGHT HERE. Design doesn't know what a "lesson"/"challenge"
     // is — it only receives an already-worded `title` + `meta` (§14d.1: design receives a
     // node, never a domain concept).
     <ContinueCardHero
-        anatPart={anatPart}
+
         title={`Lesson ${lessonIndex} · ${lessonTitle}`}
         meta={[
             `Read ${lessonsRead}/${lessonsTotal} lessons`,

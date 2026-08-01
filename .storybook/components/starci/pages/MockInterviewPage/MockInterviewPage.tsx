@@ -286,7 +286,6 @@ export interface MockInterviewPageProps {
     isResultSkeleton?: boolean
 
     /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -366,21 +365,20 @@ const MockInterviewPage = ({
     promptTitle,
     createdAt,
     isResultSkeleton = false,
-    showAnatomy = false,
 }: MockInterviewPageProps) => {
     const setupSection = (
         <>
             <PlaygroundSetupHeader
-                anatPart="PlaygroundSetupHeader"
+
                 breadcrumbLabel={setupBackLabel}
                 onBack={onSetupBack}
                 title={setupTitle}
                 description={setupDescription}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <MockInterviewSetup
-                anatPart="MockInterviewSetup"
+
                 label={setupLabel}
                 persona={persona}
                 sessionName={sessionName}
@@ -395,7 +393,7 @@ const MockInterviewPage = ({
                 isPending={isSetupPending}
                 errorMessage={setupErrorMessage}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -403,7 +401,7 @@ const MockInterviewPage = ({
     const liveSection = (
         <>
             <WorkSessionHeader
-                anatPart="WorkSessionHeader"
+
                 backLabel={liveBackLabel}
                 onBack={onLiveBack}
                 title={liveTitle}
@@ -415,10 +413,10 @@ const MockInterviewPage = ({
                 onStepPress={onLiveStepPress}
                 finishLabel={liveFinishLabel}
                 onFinish={onLiveFinish}
-                showAnatomy={showAnatomy}
+
             />
             <InterviewerPresence
-                anatPart="InterviewerPresence"
+
                 persona={interviewerPersona}
                 speaking={speaking}
                 speakingLabel={speakingLabel}
@@ -429,10 +427,10 @@ const MockInterviewPage = ({
                 unmuteLabel={unmuteLabel}
                 questionMarkdown={questionMarkdown}
                 isAsking={isAsking}
-                showAnatomy={showAnatomy}
+
             />
             <VoiceHero
-                anatPart="VoiceHero"
+
                 sttSupported={sttSupported}
                 listening={listening}
                 interimTranscript={interimTranscript}
@@ -441,15 +439,15 @@ const MockInterviewPage = ({
                 onToggleListen={onToggleListen}
                 answerMode={answerMode}
                 labels={voiceLabels}
-                showAnatomy={showAnatomy}
+
             />
             <MockInterviewAnswerAction
-                anatPart="MockInterviewAnswerAction"
+
                 isLastQuestion={isLastQuestion}
                 onSubmit={onAnswerSubmit}
                 isDisabled={isAnswerSubmitDisabled}
                 isPending={isAnswerSubmitPending}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -457,16 +455,16 @@ const MockInterviewPage = ({
     const resultSection = (
         <>
             <SubmissionResultHeader
-                anatPart="SubmissionResultHeader"
+
                 backLabel={resultBackLabel}
                 onBack={onResultBack}
                 title={resultTitle}
                 description={resultDescription}
                 isSkeleton={isResultSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <MockInterviewScorecard
-                anatPart="MockInterviewScorecard"
+
                 verdict={verdict}
                 overallScore={overallScore}
                 phaseOrQuestionScores={phaseOrQuestionScores}
@@ -481,7 +479,7 @@ const MockInterviewPage = ({
                 promptTitle={promptTitle}
                 createdAt={createdAt}
                 isSkeleton={isResultSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -489,20 +487,20 @@ const MockInterviewPage = ({
     const interviewPhases = (
         <>
             {phase === "setup" ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={setupSection} />
+                <StackV gap={6} body={setupSection} />
             ) : null}
 
             {phase === "live" ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={liveSection} />
+                <StackV gap={6} body={liveSection} />
             ) : null}
 
             {phase === "result" ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={resultSection} />
+                <StackV gap={6} body={resultSection} />
             ) : null}
         </>
     )
 
-    const interviewBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={interviewPhases} />
+    const interviewBody = <StackV gap={7} body={interviewPhases} />
 
     return <Container size="md" padding={6} body={interviewBody} />
 }

@@ -48,7 +48,6 @@ export interface PlaygroundHubPageProps {
     /** `true` → every block that can mirror itself does. */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -64,24 +63,23 @@ const PlaygroundHubPage = ({
     onSelectExercise,
     exerciseGridAriaLabel,
     isSkeleton = false,
-    showAnatomy = false,
 }: PlaygroundHubPageProps) => {
     const hubSection = (
         <>
             <PlaygroundHubHeader
-                anatPart="PlaygroundHubHeader"
+
                 title={title}
                 description={description}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <PlaygroundExerciseGrid
-                anatPart="PlaygroundExerciseGrid"
+
                 exercises={exercises}
                 onSelect={onSelectExercise}
                 ariaLabel={exerciseGridAriaLabel}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -90,7 +88,7 @@ const PlaygroundHubPage = ({
         <Container
             size="md"
             padding={6}
-            body={<StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={hubSection} />}
+            body={<StackV gap={6} body={hubSection} />}
         />
     )
 }

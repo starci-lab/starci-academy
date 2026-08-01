@@ -65,9 +65,7 @@ export interface FoundationCategoryHeaderProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -82,17 +80,15 @@ const FoundationCategoryHeader = ({
     title,
     description,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FoundationCategoryHeaderProps) => {
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                        <div className="w-fit">
                             <Breadcrumbs
                                 collapseOnMobile
                                 collapseFrom={4}

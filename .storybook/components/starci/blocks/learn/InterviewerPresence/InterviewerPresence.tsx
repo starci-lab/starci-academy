@@ -105,9 +105,7 @@ export interface InterviewerPresenceProps {
      */
     isAsking?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -127,8 +125,6 @@ const InterviewerPresence = ({
     unmuteLabel,
     questionMarkdown,
     isAsking = false,
-    showAnatomy = false,
-    anatPart,
 }: InterviewerPresenceProps) => {
     const hasQuestion = Boolean(questionMarkdown && questionMarkdown.trim().length > 0)
     // A control that cannot do anything is not drawn — mirrors ContentModeNav's
@@ -153,7 +149,7 @@ const InterviewerPresence = ({
                 src={persona.avatarSrc}
                 seed={persona.name}
                 size="lg"
-                showAnatomy={showAnatomy}
+
             />
         </span>
     )
@@ -162,7 +158,7 @@ const InterviewerPresence = ({
         <StackH
             gap={2}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-accent" />
@@ -171,7 +167,7 @@ const InterviewerPresence = ({
                         size="sm"
                         color="accent"
                         weight="medium"
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             }
@@ -181,25 +177,25 @@ const InterviewerPresence = ({
     const nameAndRole = (
         <StackV
             gap={1}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <Typography
                         text={persona.name}
                         weight="medium"
-                        showAnatomy={showAnatomy}
+
                     />
                     <StackH
                         gap={3}
                         align="center"
-                        anatPart={showAnatomy ? "StackH" : undefined}
+
                         body={
                             <>
                                 <Typography
                                     text={persona.role}
                                     size="sm"
                                     color="muted"
-                                    showAnatomy={showAnatomy}
+
                                 />
                                 {speakingStatus}
                             </>
@@ -214,7 +210,7 @@ const InterviewerPresence = ({
         <StackH
             gap={3}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     {avatarWithPulse}
@@ -231,7 +227,7 @@ const InterviewerPresence = ({
             prefixIcon={TtsIcon}
             ariaLabel={ttsAriaLabel}
             onPress={onToggleTts}
-            showAnatomy={showAnatomy}
+
         />
     ) : null
 
@@ -240,7 +236,7 @@ const InterviewerPresence = ({
             gap={3}
             align="center"
             justify="between"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     {identity}
@@ -254,7 +250,7 @@ const InterviewerPresence = ({
         <StackH
             gap={2}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted" />
@@ -268,14 +264,14 @@ const InterviewerPresence = ({
     const questionRegion = hasQuestion ? (
         <StackV
             gap={2}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <MarkdownContent
                         source={questionMarkdown as string}
                         measure="reading"
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
+
                     />
                     {typingDots}
                 </>
@@ -284,10 +280,10 @@ const InterviewerPresence = ({
     ) : null
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackV
                 gap={3}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <>
                         {headerRow}

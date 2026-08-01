@@ -159,7 +159,6 @@ export interface ChallengeResultPageProps {
      */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -212,7 +211,6 @@ const ChallengeResultPage = ({
     onHistoryOpenChange,
     historyAttempts,
     isSkeleton = false,
-    showAnatomy = false,
 }: ChallengeResultPageProps) => {
     // Nothing about "how did it go" can render before an attempt is actually
     // selected — see the file header. A skeleton paint still reserves this
@@ -222,7 +220,7 @@ const ChallengeResultPage = ({
     const scoreSection = (
         <>
             <SubmissionScoreCard
-                anatPart="SubmissionScoreCard"
+
                 label={scoreLabel}
                 score={score ?? 0}
                 maxScore={maxScore}
@@ -236,10 +234,10 @@ const ChallengeResultPage = ({
                 gradedByLabel={gradedByLabel}
                 timeAgo={timeAgo}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <SubmissionFindingsList
-                anatPart="SubmissionFindingsList"
+
                 label={findingsLabel}
                 findings={findings}
                 repositoryUrl={repositoryUrl}
@@ -249,16 +247,16 @@ const ChallengeResultPage = ({
                 onRetry={onRetryFindings}
                 retryLabel={retryFindingsLabel}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {/* Nothing left to fix on a passing attempt — see file header. */}
             {!isPassing ? (
                 <ContentRelatedList
-                    anatPart="ContentRelatedList"
+
                     items={relatedItems}
                     label={relatedLabel}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -267,7 +265,7 @@ const ChallengeResultPage = ({
     const attemptsSection = (
         <>
             <SubmissionAttemptSelector
-                anatPart="SubmissionAttemptSelector"
+
                 attempts={attempts}
                 selectedId={selectedAttemptId}
                 onSelect={onSelectAttempt}
@@ -281,10 +279,10 @@ const ChallengeResultPage = ({
                 onRetry={onRetryAttempts}
                 retryLabel={retryAttemptsLabel}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {hasSelection ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={scoreSection} />
+                <StackV gap={6} body={scoreSection} />
             ) : null}
         </>
     )
@@ -292,31 +290,31 @@ const ChallengeResultPage = ({
     const pageSections = (
         <>
             <SubmissionResultHeader
-                anatPart="SubmissionResultHeader"
+
                 backLabel={backLabel}
                 onBack={onBack}
                 title={title}
                 description={description}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={attemptsSection} />
+            <StackV gap={6} body={attemptsSection} />
         </>
     )
 
-    const resultBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={pageSections} />
+    const resultBody = <StackV gap={7} body={pageSections} />
 
     return (
         <>
             <Container size="xl" padding={6} body={resultBody} />
             <SubmissionAttemptsDrawer
-                anatPart={showAnatomy ? "SubmissionAttemptsDrawer" : undefined}
+
                 isOpen={isHistoryOpen}
                 onOpenChange={onHistoryOpenChange ?? (() => {})}
                 attempts={historyAttempts ?? []}
                 selectedAttemptId={selectedAttemptId}
                 onSelect={onSelectAttempt}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )

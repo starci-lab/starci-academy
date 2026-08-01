@@ -106,7 +106,6 @@ interface AlertBaseOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -139,7 +138,6 @@ const AlertBase = ({
     onClose,
     closeAriaLabel,
     classNames,
-    showAnatomy = false,
     isSkeleton = false,
 }: AlertBaseProps) => {
     const Icon = icon ?? STATUS_ICON[status]
@@ -153,13 +151,13 @@ const AlertBase = ({
             // drive the actual paint via explicit className.
             status={status === "info" ? "default" : status}
             className={cn("shadow-none", tone === "soft" && STATUS_TINT[status], classNames)}
-            data-anat-part={showAnatomy ? "Alert" : undefined}
+
         >
             {/* The scaffold owns the glyph scale — callers hand a bare icon component. */}
-            <HeroAlert.Indicator className={GLYPH_SCALE} data-anat-part={showAnatomy ? "Alert.Indicator" : undefined}>
+            <HeroAlert.Indicator className={GLYPH_SCALE}>
                 <Icon aria-hidden />
             </HeroAlert.Indicator>
-            <HeroAlert.Content data-anat-part={showAnatomy ? "Alert.Content" : undefined}>
+            <HeroAlert.Content>
                 {/* The skeleton branch is checked before any other text-rendering branch. */}
                 {isSkeleton ? (
                     // The frame (tint, radius, shadow, gap) and the icon render for real —
@@ -169,18 +167,18 @@ const AlertBase = ({
                     <>
                         <HeroSkeleton
                             className="my-1 h-4 w-40 rounded"
-                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                         />
                         <HeroSkeleton
                             className="my-1 h-3 w-full max-w-64 rounded"
-                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                         />
                     </>
                 ) : (
                     <>
-                        <HeroAlert.Title data-anat-part={showAnatomy ? "Alert.Title" : undefined}>{title}</HeroAlert.Title>
+                        <HeroAlert.Title>{title}</HeroAlert.Title>
                         {description ? (
-                            <HeroAlert.Description data-anat-part={showAnatomy ? "Alert.Description" : undefined}>
+                            <HeroAlert.Description>
                                 {description}
                             </HeroAlert.Description>
                         ) : null}
@@ -201,7 +199,7 @@ const AlertBase = ({
                     type="button"
                     onClick={onClose}
                     aria-label={closeAriaLabel ?? "Close"}
-                    data-anat-part={showAnatomy ? "Close" : undefined}
+
                     className={cn(
                         "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-lg p-1.5 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent",
                         STATUS_CLOSE_TONE[status],

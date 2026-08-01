@@ -92,8 +92,8 @@ export const Default: Story = {
                         code: "<ContentCommentThread comment={comment} currentUserId=\"viewer-1\" depth={0} repliesByParent={{}} onReply={reply} onEdit={edit} onDelete={del} onReactComment={react} onLoadReplies={load} />",
                         render: (
                             <ContentCommentThread
-                                anatPart="ContentCommentThread"
-                                showAnatomy
+
+                               
                                 comment={BASE_COMMENT}
                                 currentUserId="someone-else"
                                 depth={0}
@@ -126,8 +126,8 @@ export const OwnerActions: Story = {
                         code: "<ContentCommentThread comment={comment} currentUserId=\"u1\" depth={0} repliesByParent={{}} onReply={reply} onEdit={edit} onDelete={del} onReactComment={react} onLoadReplies={load} />",
                         render: (
                             <ContentCommentThread
-                                anatPart="ContentCommentThread"
-                                showAnatomy
+
+                               
                                 comment={BASE_COMMENT}
                                 currentUserId={AUTHOR.id}
                                 depth={0}
@@ -160,8 +160,8 @@ export const Editing: Story = {
                         code: "// reader pressed \"Edit\" — internal state, no controlled prop",
                         render: (
                             <ClickPreview
-                                anatPart="ContentCommentThread"
-                                showAnatomy
+
+                               
                                 clickText="Edit"
                                 comment={BASE_COMMENT}
                                 currentUserId={AUTHOR.id}
@@ -195,8 +195,8 @@ export const Replying: Story = {
                         code: "// reader pressed \"Reply\" — internal state, no controlled prop\n<ContentCommentThread comment={comment} currentUserId=\"someone-else\" currentUser={{ username: \"You\" }} depth={0} repliesByParent={{}} ... />",
                         render: (
                             <ClickPreview
-                                anatPart="ContentCommentThread"
-                                showAnatomy
+
+                               
                                 clickText="Reply"
                                 comment={BASE_COMMENT}
                                 currentUserId="someone-else"
@@ -231,8 +231,8 @@ export const Deleted: Story = {
                         code: "<ContentCommentThread comment={{ ...comment, isDeleted: true }} currentUserId=\"viewer-1\" depth={0} repliesByParent={{}} onReply={reply} onEdit={edit} onDelete={del} onReactComment={react} onLoadReplies={load} />",
                         render: (
                             <ContentCommentThread
-                                anatPart="ContentCommentThread"
-                                showAnatomy
+
+                               
                                 comment={{ ...BASE_COMMENT, isDeleted: true }}
                                 currentUserId={OWNER_ID}
                                 depth={0}
@@ -265,8 +265,8 @@ export const ExpandedWithReplies: Story = {
                         code: "// reader pressed the view-replies link — internal state, no controlled prop",
                         render: (
                             <ClickPreview
-                                anatPart="ContentCommentThread"
-                                showAnatomy
+
+                               
                                 clickText="View 1 reply"
                                 comment={{ ...BASE_COMMENT, replyCount: 1 }}
                                 currentUserId="someone-else"

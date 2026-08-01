@@ -22,12 +22,10 @@ interface StatPairOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * Storybook-only: when true, the value/label `Typography` each emit a
      * `data-anat-part` so the anatomy panel can anchor badges. No visual effect.
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -75,14 +73,12 @@ export const StatPair = ({
     valueType = "h4",
     isSkeleton = false,
     classNames,
-    anatPart,
-    showAnatomy,
 }: StatPairProps) => {
     return (
         <StackV
             gap={1}
             align="start"
-            anatPart={anatPart}
+
             classNames={classNames}
             body={
                 <>
@@ -90,10 +86,10 @@ export const StatPair = ({
                         size={VALUE_SIZE[valueType]}
                         weight="semibold"
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                         text={value}
                     />
-                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={label} />
+                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={label} />
                 </>
             }
         />

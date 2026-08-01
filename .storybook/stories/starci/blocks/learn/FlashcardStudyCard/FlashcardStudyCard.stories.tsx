@@ -87,8 +87,8 @@ export const Unrevealed: Story = {
 />`,
                         render: (
                             <FlashcardStudyCard
-                                anatPart="FlashcardStudyCard"
-                                showAnatomy
+
+                               
                                 question="What is `React.useMemo` used for?"
                                 levelLabel="Middle"
                                 tags={["react", "performance"]}
@@ -168,8 +168,8 @@ export const Revealed: Story = {
 />`,
                         render: (
                             <FlashcardStudyCard
-                                anatPart="FlashcardStudyCard"
-                                showAnatomy
+
+                               
                                 question="What is `React.useMemo` used for?"
                                 levelLabel="Middle"
                                 revealed
@@ -255,8 +255,8 @@ export const RevealedLocked: Story = {
 />`,
                         render: (
                             <FlashcardStudyCard
-                                anatPart="FlashcardStudyCard"
-                                showAnatomy
+
+                               
                                 question="Explain the event loop in Node.js."
                                 levelLabel="Senior"
                                 tags={["nodejs", "internals"]}
@@ -308,8 +308,8 @@ export const Skeleton: Story = {
 />`,
                         render: (
                             <FlashcardStudyCard
-                                anatPart="FlashcardStudyCard"
-                                showAnatomy
+
+                               
                                 question=""
                                 revealed={false}
                                 onReveal={() => {}}

@@ -82,8 +82,8 @@ export const Content: Story = {
 />`,
                         render: (
                             <QuizProgressPanel
-                                anatPart="QuizProgressPanel"
-                                showAnatomy
+
+                               
                                 label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}
@@ -139,8 +139,8 @@ export const Loading: Story = {
                         code: "<QuizProgressPanel label=\"How you have been practicing\" view=\"stats\" stats={[]} sessions={[]} isSkeleton />",
                         render: (
                             <QuizProgressPanel
-                                anatPart="QuizProgressPanel"
-                                showAnatomy
+
+                               
                                 label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}
@@ -198,8 +198,8 @@ export const Empty: Story = {
 />`,
                         render: (
                             <QuizProgressPanel
-                                anatPart="QuizProgressPanel"
-                                showAnatomy
+
+                               
                                 label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}

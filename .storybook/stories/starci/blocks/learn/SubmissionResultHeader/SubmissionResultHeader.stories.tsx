@@ -61,8 +61,8 @@ export const Header: Story = {
 />`,
                         render: (
                             <SubmissionResultHeader
-                                anatPart="SubmissionResultHeader"
-                                showAnatomy
+
+                               
                                 backLabel="Back to solve page"
                                 onBack={() => {}}
                                 title="Normalize the orders table schema"
@@ -76,8 +76,8 @@ export const Header: Story = {
                         code: "<SubmissionResultHeader backLabel=\"\" onBack={() => {}} title=\"\" isSkeleton />",
                         render: (
                             <SubmissionResultHeader
-                                anatPart="SubmissionResultHeader"
-                                showAnatomy
+
+                               
                                 backLabel=""
                                 onBack={() => {}}
                                 title=""

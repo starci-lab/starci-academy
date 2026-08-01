@@ -55,8 +55,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <PlaygroundEnterBanner
-                                anatPart="PlaygroundEnterBanner"
-                                showAnatomy
+
+                               
                                 allReady={false}
                                 pendingCount={2}
                                 onEnter={() => {}}

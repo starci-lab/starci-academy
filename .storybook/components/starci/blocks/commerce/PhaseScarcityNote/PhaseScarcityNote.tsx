@@ -49,9 +49,7 @@ interface PhaseScarcityNoteOwnProps {
      * (`WarningCircleIcon`/`SeatCountLine`/`Separator`/`PriceRiseClause`) leak
      * out as LOOSE siblings, reading like four sibling deps of the block.
      */
-    anatPart?: string
     /** Storybook-only: emit `data-anat-part` on each anatomy part. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -91,11 +89,9 @@ const PhaseScarcityNoteBase = ({
     nextPhasePriceVnd,
     isSkeleton = false,
     className,
-    anatPart,
-    showAnatomy,
 }: PhaseScarcityNoteBaseProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-4 w-64 max-w-full rounded", className)} data-anat-part={anatPart} />
+        return <HeroSkeleton className={cn("h-4 w-64 max-w-full rounded", className)} />
     }
     // no seat cap at this phase → no honest scarcity reason → stay silent
     if (seatsRemaining == null) {
@@ -127,7 +123,7 @@ const PhaseScarcityNoteBase = ({
             // The PARENT's `anatPart` wins (the parent names this node); when
             // running in ITS OWN story it self-identifies as "Cluster" so the
             // Deps tree can see the frame it uses.
-            anatPart={anatPart ?? (showAnatomy ? "Cluster" : undefined)}
+
             className={cn("text-warning-soft-foreground", className)}
             items={[
                 {
@@ -157,7 +153,7 @@ const PhaseScarcityNoteBase = ({
                             size="sm"
                             weight="medium"
                             text={`${seatsRemaining} seats left at the ${currentPhase != null ? PHASE_LABEL[currentPhase] : ""} price`}
-                            showAnatomy={showAnatomy}
+
                         />
                     ),
                 },
@@ -173,7 +169,7 @@ const PhaseScarcityNoteBase = ({
                                 <Typography
                                     size="sm"
                                     text={`price rises to ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ after that`}
-                                    showAnatomy={showAnatomy}
+
                                 />
                             ),
                         },

@@ -68,7 +68,6 @@ interface ToastOwnProps {
     /** Accessible label for the × (caller passes a localised string). */
     closeLabel?: string
     /** Dev/spec: emit `data-anat-part` on Icon/Title/Description/Action/Close so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
@@ -87,7 +86,7 @@ export type ToastBaseProps = ToastOwnProps &
  * @param props - {@link ToastBaseProps}
  */
 const ToastBase = (props: ToastBaseProps) => {
-    const { status = "info", description, icon, action: Action, onClose, closeLabel, showAnatomy = false, classNames } = props
+    const { status = "info", description, icon, action: Action, onClose, closeLabel, classNames } = props
     // Narrowed off the discriminant so the title stays required in the live branch. Destructuring
     // `title` first would widen it to `ReactNode | undefined` and lose exactly that guarantee.
     const content = props.isSkeleton
@@ -104,7 +103,7 @@ const ToastBase = (props: ToastBaseProps) => {
             onClose={onClose}
             closeAriaLabel={closeLabel}
             classNames={classNames}
-            showAnatomy={showAnatomy}
+
         />
     )
 }

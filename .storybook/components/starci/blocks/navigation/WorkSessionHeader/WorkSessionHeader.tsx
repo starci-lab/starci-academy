@@ -56,9 +56,7 @@ interface WorkSessionHeaderOwnProps {
     /** Fired when the learner ends the run and goes to the results. */
     onFinish?: () => void
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -98,8 +96,6 @@ const WorkSessionHeader = ({
     finishLabel,
     onFinish,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: WorkSessionHeaderProps) => {
     if (isSkeleton) {
         const skeletonRow = (
@@ -110,8 +106,8 @@ const WorkSessionHeader = ({
             </>
         )
         return (
-            <div data-anat-part={anatPart} className="border-b border-default bg-surface">
-                <StackH gap={4} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={skeletonRow} />
+            <div className="border-b border-default bg-surface">
+                <StackH gap={4} align="center" body={skeletonRow} />
                 <div className="p-2">
                     <HeroSkeleton className="h-1 w-full rounded-full" />
                 </div>
@@ -124,11 +120,11 @@ const WorkSessionHeader = ({
         <>
             <LinkBack label={backLabel} onPress={onBack} />
             {title != null ? (
-                <Typography size="sm" weight="bold" text={title} showAnatomy={showAnatomy} />
+                <Typography size="sm" weight="bold" text={title} />
             ) : null}
-            <Typography size="sm" color="muted" text={counter} showAnatomy={showAnatomy} />
+            <Typography size="sm" color="muted" text={counter} />
             {timeLeft != null ? (
-                <Typography size="sm" weight="medium" text={timeLeft} tabularNums showAnatomy={showAnatomy} />
+                <Typography size="sm" weight="medium" text={timeLeft} tabularNums />
             ) : null}
             <span className="flex-1" />
             {onFinish != null && finishLabel != null ? (
@@ -174,11 +170,11 @@ const WorkSessionHeader = ({
     })
 
     return (
-        <div data-anat-part={anatPart} className="border-b border-default bg-surface">
-            <StackH gap={4} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={headerRow} />
+        <div className="border-b border-default bg-surface">
+            <StackH gap={4} align="center" body={headerRow} />
             {/* The rail. Segments are laid out by a frame so the seam stays on scale; each
                 segment carries its own hit zone, because a 4px bar is not a touch target. */}
-            <StackH gap={2} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={railSegments} />
+            <StackH gap={2} align="center" body={railSegments} />
         </div>
     )
 }

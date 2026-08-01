@@ -177,7 +177,7 @@ export const Skeleton: Story = {
                                 freeLessonsRemaining={3}
                                 isSkeleton
                                 onEnroll={() => {}}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -210,7 +210,7 @@ export const Default: Story = {
                                 freeLessonsRemaining={3}
                                 price={SAMPLE_PRICE}
                                 onEnroll={() => {}}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -227,7 +227,7 @@ export const Default: Story = {
                                 freeLessonsRemaining={0}
                                 price={SAMPLE_PRICE}
                                 onEnroll={() => {}}
-                                showAnatomy
+                               
                             />
                         ),
                     },

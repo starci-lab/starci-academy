@@ -76,7 +76,7 @@ export const Basic: Story = {
                         code: `<AsyncContentEmpty
   title="No data yet"
 />`,
-                        render: <AsyncContentEmpty title="No data yet" showAnatomy />,
+                        render: <AsyncContentEmpty title="No data yet" />,
                     },
                 ]}
             />,
@@ -103,7 +103,7 @@ export const WithDescription: Story = {
                             <AsyncContentEmpty
                                 title="List is empty"
                                 description="You haven't saved any items to this list yet."
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -136,7 +136,7 @@ export const WithRetry: Story = {
                                 description="Try changing your filters or reloading to see more."
                                 onRetry={() => {}}
                                 retryLabel="Reload"
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -167,7 +167,7 @@ export const WithAction: Story = {
                                 title="No decks yet"
                                 description="Create your first deck to start reviewing."
                                 action={<Button size="sm" icon={<PlusIcon data-tier="fixture" />}>Create deck</Button>}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -198,7 +198,7 @@ export const CustomIcon: Story = {
                                 icon={MagnifyingGlassIcon}
                                 title="No matching results"
                                 description="No items match the keyword you entered."
-                                showAnatomy
+                               
                             />
                         ),
                     },

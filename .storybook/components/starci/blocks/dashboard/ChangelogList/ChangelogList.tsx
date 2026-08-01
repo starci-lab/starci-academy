@@ -109,9 +109,7 @@ export interface ChangelogListProps {
     /** Extra classes on the root. */
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** The block's own section label — matches `dashboard.changelog` in `vi.json`. */
@@ -170,19 +168,16 @@ const ChangelogList = ({
     error,
     onRetry,
     className,
-    showAnatomy = false,
-    anatPart,
 }: ChangelogListProps) => {
     const errorContent: AsyncContentErrorProps = {
         title: ERROR_TITLE,
         onRetry,
         retryLabel: onRetry ? RETRY_LABEL : undefined,
-        anatPart: showAnatomy ? "AsyncContentError" : undefined,
-        showAnatomy,
+
     }
 
     return (
-        <div data-anat-part={anatPart} className={className}>
+        <div className={className}>
             <AsyncContent
                 isLoading={isLoading}
                 skeleton={
@@ -190,18 +185,18 @@ const ChangelogList = ({
                         title={TITLE}
                         items={skeletonItems()}
                         isSkeleton
-                        anatPart={showAnatomy ? "SurfaceCardNested" : undefined}
+
                     />
                 }
                 isEmpty={entries.length === 0}
                 error={error}
                 errorContent={errorContent}
-                showAnatomy={showAnatomy}
+
                 content={
                     <SurfaceCardNested
                         title={TITLE}
                         items={entries.map(entryItem)}
-                        anatPart={showAnatomy ? "SurfaceCardNested" : undefined}
+
                     />
                 }
             />

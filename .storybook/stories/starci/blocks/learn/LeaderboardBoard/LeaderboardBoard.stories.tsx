@@ -80,8 +80,8 @@ export const Board: Story = {
 />`,
                         render: (
                             <LeaderboardBoard
-                                anatPart="LeaderboardBoard"
-                                showAnatomy
+
+                               
                                 isLoading={false}
                                 isEmpty={false}
                                 onRetry={() => {}}

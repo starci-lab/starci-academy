@@ -87,7 +87,7 @@ export const Default: Story = {
         { key: "vat", label: "VAT", value: "$0.00" },
     ]}
 />`,
-                        render: <KeyValueList showAnatomy items={ITEMS} />,
+                        render: <KeyValueList items={ITEMS} />,
                     },
                 ]}
             />
@@ -111,7 +111,7 @@ export const WithDivider: Story = {
                         name: "divider = true",
                         why: "A `Divider` node grows between each pair of rows, but the last row keeps no trailing line beneath it. The list decides this seam, not each row, so there is never a stray line hanging at the bottom of the block.",
                         code: "<KeyValueList divider items={ITEMS} />",
-                        render: <KeyValueList showAnatomy divider items={ITEMS} />,
+                        render: <KeyValueList divider items={ITEMS} />,
                     },
                 ]}
             />
@@ -143,7 +143,7 @@ export const WithTotal: Story = {
 />`,
                         render: (
                             <KeyValueList
-                                showAnatomy
+                               
                                 divider
                                 items={[...ITEMS, { key: "total", label: "Total", value: "$41.00", emphasis: true }]}
                             />
@@ -170,7 +170,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, default skeletonRows",
                         why: "Three shimmer `KeyValueRow` nodes stack at the list's own `gap`, standing in for `items` before the real label–value pairs are known — the count comes from `skeletonRows` (default `3`), not from an `items` array the caller no longer has to fake.",
                         code: "<KeyValueList items={items} isSkeleton />",
-                        render: <KeyValueList items={[]} showAnatomy isSkeleton />,
+                        render: <KeyValueList items={[]} isSkeleton />,
                     },
                 ]}
             />

@@ -73,7 +73,7 @@ export const Default: Story = {
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions showAnatomy align="end" items={SAVE_ITEMS} />,
+                        render: <FormActions align="end" items={SAVE_ITEMS} />,
                     },
                     {
                         name: "align = \"start\"",
@@ -85,7 +85,7 @@ export const Default: Story = {
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions showAnatomy align="start" items={SAVE_ITEMS} />,
+                        render: <FormActions align="start" items={SAVE_ITEMS} />,
                     },
                     {
                         name: "align = \"between\"",
@@ -97,7 +97,7 @@ export const Default: Story = {
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions showAnatomy align="between" items={SAVE_ITEMS} />,
+                        render: <FormActions align="between" items={SAVE_ITEMS} />,
                     },
                 ]}
             />
@@ -135,7 +135,7 @@ export const Pending: Story = {
 />`,
                         render: (
                             <FormActions
-                                showAnatomy
+                               
                                 items={[
                                     { key: "cancel", label: "Cancel", variant: "secondary" },
                                     { key: "save", label: "Saving", isPending: true },
@@ -175,7 +175,7 @@ export const Sticky: Story = {
                                         <div data-tier="fixture" key={row} className="h-16 rounded-xl bg-default" aria-hidden />
                                     ))}
                                 </div>
-                                <FormActions showAnatomy sticky items={SAVE_ITEMS} />
+                                <FormActions sticky items={SAVE_ITEMS} />
                             </div>
                         ),
                     },

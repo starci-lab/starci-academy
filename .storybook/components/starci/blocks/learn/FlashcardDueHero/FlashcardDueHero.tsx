@@ -98,9 +98,7 @@ export interface FlashcardDueHeroProps {
     /** `true` → the "No resume in progress" shape renders with every text/button part shimmering. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** The section label every non-resume leaf shares — a section always answers "what is this card". */
@@ -134,8 +132,6 @@ const FlashcardDueHero = ({
     onStart,
     isStarting = false,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FlashcardDueHeroProps) => {
     // LEAF 2 — a paused batch always wins: finishing it is the one thing left
     // to do, so the due-count cluster steps aside entirely rather than
@@ -143,7 +139,7 @@ const FlashcardDueHero = ({
     if (resume && !isSkeleton) {
         return (
             <ContinueCardHero
-                anatPart={anatPart ?? (showAnatomy ? "ContinueCardHero" : undefined)}
+
                 title="Continue your unfinished review"
                 meta={[`${resume.current}/${resume.total} cards reviewed in this batch`]}
                 value={resume.current}
@@ -160,11 +156,11 @@ const FlashcardDueHero = ({
         return (
             <SurfaceCard
                 label={SECTION_LABEL}
-                anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
-                showAnatomy={showAnatomy}
+
+
                 body={() => (
                     <EmptyState
-                        anatPart={showAnatomy ? "EmptyState" : undefined}
+
                         icon={CheckCircleDuotone}
                         title="You've reviewed every card due today!"
                         description="Come back tomorrow to keep your review streak going."
@@ -184,14 +180,14 @@ const FlashcardDueHero = ({
                 weight="bold"
                 tabularNums
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
                 text={String(dueCount)}
             />
             <Typography
                 size="sm"
                 color="muted"
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
                 text="cards due today"
             />
             {breakdown ? (
@@ -199,7 +195,7 @@ const FlashcardDueHero = ({
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                     text={breakdown}
                 />
             ) : null}
@@ -208,7 +204,7 @@ const FlashcardDueHero = ({
 
     const heroBody = (
         <>
-            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={dueCountLines} />
+            <StackV gap={2} body={dueCountLines} />
             <Button
                 variant="primary"
                 label="Start reviewing"
@@ -217,7 +213,7 @@ const FlashcardDueHero = ({
                 onPress={onStart}
                 isPending={isStarting}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
                 classNames={["w-fit"]}
             />
         </>
@@ -226,10 +222,10 @@ const FlashcardDueHero = ({
     return (
         <SurfaceCard
             label={SECTION_LABEL}
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={heroBody} />}
+
+            body={() => <StackV gap={4} body={heroBody} />}
         />
     )
 }

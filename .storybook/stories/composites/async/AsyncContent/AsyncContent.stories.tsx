@@ -115,7 +115,7 @@ export const Content: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading={false} skeleton={<ProfileCardSkeleton />} showAnatomy>
+                            <AsyncContent isLoading={false} skeleton={<ProfileCardSkeleton />}>
                                 <ProfileCard />
                             </AsyncContent>
                         ),
@@ -148,7 +148,7 @@ export const ContentSlot: Story = {
                                 isLoading={false}
                                 skeleton={<ProfileCardSkeleton />}
                                 content={<ProfileCard />}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -174,7 +174,7 @@ export const Loading: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading skeleton={<ProfileCardSkeleton />} showAnatomy>
+                            <AsyncContent isLoading skeleton={<ProfileCardSkeleton />}>
                                 <ProfileCard />
                             </AsyncContent>
                         ),
@@ -214,7 +214,7 @@ export const Empty: Story = {
                                     description: "Related lessons will show up here once there are any.",
                                 }}
                                 skeleton={<ProfileCardSkeleton />}
-                                showAnatomy
+                               
                             >
                                 <ProfileCard />
                             </AsyncContent>
@@ -245,7 +245,7 @@ export const EmptySilent: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />} showAnatomy>
+                            <AsyncContent isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />}>
                                 <ProfileCard />
                             </AsyncContent>
                         ),
@@ -287,7 +287,7 @@ export const Error: Story = {
                                     retryLabel: "Retry",
                                 }}
                                 skeleton={<ProfileCardSkeleton />}
-                                showAnatomy
+                               
                             >
                                 <ProfileCard />
                             </AsyncContent>

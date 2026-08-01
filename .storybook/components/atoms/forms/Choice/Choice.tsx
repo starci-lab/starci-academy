@@ -77,7 +77,6 @@ export interface ChoiceCheckboxProps extends InlineFrameProps {
     /** Render the control-shaped skeleton (square + label bar) instead of the checkbox. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -85,19 +84,19 @@ export interface ChoiceCheckboxProps extends InlineFrameProps {
 }
 
 /** `ChoiceCheckbox` — single boolean checkbox with an inline label (HeroUI Checkbox compound). */
-const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvalid, isSkeleton, showAnatomy, classNames, hint, errorMessage, isRequired }: ChoiceCheckboxProps) => {
+const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvalid, isSkeleton, classNames, hint, errorMessage, isRequired }: ChoiceCheckboxProps) => {
     const invalid = isInvalid || errorMessage != null
     // Control = size-4 rounded-md · label = body-sm glyph bar (14/24), row gap-3 (matches Checkbox.Content gap).
     const skeletonControl = (
-        <div data-tier="atom" data-component="ChoiceCheckbox" className={cn("flex items-center gap-3", classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+        <div data-tier="atom" data-component="ChoiceCheckbox" className={cn("flex items-center gap-3", classNames)}>
             <HeroSkeleton className="size-4 shrink-0 rounded-md" />
             <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/2")} />
         </div>
     )
     return (
-        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
+        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} skeletonControl={skeletonControl}>
             <HeroCheckbox data-tier="atom" data-component="ChoiceCheckbox" isSelected={isSelected} onChange={onValueChange} isInvalid={invalid} isDisabled={isDisabled} className={cn(classNames)}>
-                <HeroCheckbox.Control data-anat-part={showAnatomy ? "Checkbox.Control" : undefined}>
+                <HeroCheckbox.Control>
                     {/* HeroUI renders a different icon for selected vs indeterminate when this
                         slot is left empty. The override must stay a function — passing a plain
                         node here makes indeterminate render the check icon too, with no
@@ -112,7 +111,7 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
                         }
                     </HeroCheckbox.Indicator>
                 </HeroCheckbox.Control>
-                <HeroCheckbox.Content data-anat-part={showAnatomy ? "Checkbox.Content" : undefined}>{withRequired(label, isRequired)}</HeroCheckbox.Content>
+                <HeroCheckbox.Content>{withRequired(label, isRequired)}</HeroCheckbox.Content>
             </HeroCheckbox>
         </FieldFrame>
     )
@@ -137,7 +136,6 @@ export interface ChoiceRadioProps {
     /** Render the control-shaped skeleton — one radio-row shimmer (dot + label bar). */
     isSkeleton?: boolean
     /** `true` → tag `Radio.Content` · `Radio.Control` for BlockAnatomy. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -145,11 +143,11 @@ export interface ChoiceRadioProps {
 }
 
 /** `ChoiceRadio` — one radio option row (HeroUI Radio compound). Renders inside `ChoiceRadioGroup`. */
-const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, showAnatomy, classNames }: ChoiceRadioProps) => {
+const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, classNames }: ChoiceRadioProps) => {
     if (isSkeleton) {
         // Row: size-4 rounded-full dot + body-sm label bar, gap-3.
         return (
-            <div data-tier="atom" data-component="ChoiceRadio" className={cn("flex items-center gap-3", classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+            <div data-tier="atom" data-component="ChoiceRadio" className={cn("flex items-center gap-3", classNames)}>
                 <HeroSkeleton className="size-4 shrink-0 rounded-full" />
                 <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/3")} />
             </div>
@@ -157,8 +155,8 @@ const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, showAnatomy, classN
     }
     return (
         <HeroRadio data-tier="atom" data-component="ChoiceRadio" value={value} isDisabled={isDisabled} className={cn(classNames)}>
-            <HeroRadio.Content data-anat-part={showAnatomy ? "Radio.Content" : undefined}>
-                <HeroRadio.Control data-anat-part={showAnatomy ? "Radio.Control" : undefined}>
+            <HeroRadio.Content>
+                <HeroRadio.Control>
                     <HeroRadio.Indicator />
                 </HeroRadio.Control>
                 <span className="min-w-0">
@@ -186,7 +184,6 @@ export interface ChoiceSwitchProps extends InlineFrameProps {
     /** Render the control-shaped skeleton — a switch-track pill (+ label bar). */
     isSkeleton?: boolean
     /** `true` → tag `Switch` · `Label` for BlockAnatomy. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -194,21 +191,21 @@ export interface ChoiceSwitchProps extends InlineFrameProps {
 }
 
 /** `ChoiceSwitch` — boolean toggle with the label BESIDE the track (HeroUI Switch compound). */
-const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid, size, isSkeleton, showAnatomy, classNames, hint, errorMessage, isRequired }: ChoiceSwitchProps) => {
+const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid, size, isSkeleton, classNames, hint, errorMessage, isRequired }: ChoiceSwitchProps) => {
     const invalid = isInvalid || errorMessage != null
     // Track = h-9 w-16 pill (overrides HeroUI's default size) · optional label bar (body-sm).
     const skeletonControl = (
-        <div data-tier="atom" data-component="ChoiceSwitch" className={cn("flex items-center gap-3", classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+        <div data-tier="atom" data-component="ChoiceSwitch" className={cn("flex items-center gap-3", classNames)}>
             <HeroSkeleton className="h-9 w-16 shrink-0 rounded-full" />
             {label != null ? <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/2")} /> : null}
         </div>
     )
     return (
-        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
+        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} skeletonControl={skeletonControl}>
             <div data-tier="atom" data-component="ChoiceSwitch" className={cn("flex items-center gap-3", classNames)}>
                 <HeroSwitch
                     // data-anat-part uses the real HeroUI component name (`Switch`), not a slot word.
-                    data-anat-part={showAnatomy ? "Switch" : undefined}
+
                     size={size}
                     isSelected={isSelected}
                     onChange={onValueChange}
@@ -223,7 +220,7 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
                     </HeroSwitch.Content>
                 </HeroSwitch>
                 {label != null ? (
-                    <HeroLabel isDisabled={isDisabled} data-anat-part={showAnatomy ? "Label" : undefined} className="text-sm font-medium">
+                    <HeroLabel isDisabled={isDisabled} className="text-sm font-medium">
                         {withRequired(label, isRequired)}
                     </HeroLabel>
                 ) : null}

@@ -55,9 +55,7 @@ export interface MockInterviewAnswerActionProps {
     /** `true` → the submit request is in flight. */
     isPending?: boolean
     /** When on, emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -71,8 +69,6 @@ const MockInterviewAnswerAction = ({
     onSubmit,
     isDisabled = false,
     isPending = false,
-    showAnatomy = false,
-    anatPart,
 }: MockInterviewAnswerActionProps) => (
     <Button
         variant="primary"
@@ -84,7 +80,7 @@ const MockInterviewAnswerAction = ({
         isDisabled={isDisabled}
         isPending={isPending}
         classNames={["self-center"]}
-        showAnatomy={showAnatomy}
+
     />
 )
 

@@ -121,7 +121,7 @@ export const Default: Story = {
                         render: (
                             <HeadhuntingsPage
                                 {...BASE}
-                                showAnatomy
+                               
                                 consultants={CONSULTANTS}
                                 consultantCount={12}
                                 isLoadingConsultants={false}
@@ -192,7 +192,7 @@ export const Skeleton: Story = {
                         render: (
                             <HeadhuntingsPage
                                 {...BASE}
-                                showAnatomy
+                               
                                 isSkeleton
                                 isLoadingConsultants
                             />

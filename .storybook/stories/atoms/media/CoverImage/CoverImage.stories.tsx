@@ -49,7 +49,7 @@ export const WithImage: Story = {
                         code: "<CoverImage src={COVER_SRC} alt=\"Course cover image\" />",
                         render: (
                             <div data-tier="fixture" className="w-96">
-                                <CoverImage src={COVER_SRC} alt="Course cover image" showAnatomy />
+                                <CoverImage src={COVER_SRC} alt="Course cover image" />
                             </div>
                         ),
                     },
@@ -75,7 +75,7 @@ export const NoImage: Story = {
                         code: "<CoverImage src={null} alt=\"No cover image yet\" />",
                         render: (
                             <div data-tier="fixture" className="w-96">
-                                <CoverImage src={null} alt="No cover image yet" showAnatomy />
+                                <CoverImage src={null} alt="No cover image yet" />
                             </div>
                         ),
                     },
@@ -101,7 +101,7 @@ export const Skeleton: Story = {
                         code: "<CoverImage isSkeleton alt=\"Course cover image\" />",
                         render: (
                             <div data-tier="fixture" className="w-96">
-                                <CoverImage isSkeleton alt="Course cover image" showAnatomy />
+                                <CoverImage isSkeleton alt="Course cover image" />
                             </div>
                         ),
                     },

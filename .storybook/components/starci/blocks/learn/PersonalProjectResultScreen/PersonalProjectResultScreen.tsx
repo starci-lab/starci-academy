@@ -110,7 +110,6 @@ interface MilestoneUpNextCardProps {
     /** `true` → every composed atom mirrors shimmer instead of the real title. */
     isSkeleton?: boolean
     /** `true` → each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -126,13 +125,12 @@ const MilestoneUpNextCard = ({
     task,
     onGoToNextTask,
     isSkeleton = false,
-    showAnatomy = false,
 }: MilestoneUpNextCardProps) => {
     const titleColumn = (
         <StackV
             gap={1}
             classNames={["min-w-0"]}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <Typography
@@ -140,7 +138,7 @@ const MilestoneUpNextCard = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={NEXT_TASK_EYEBROW}
-                        showAnatomy={showAnatomy}
+
                     />
                     <Typography
                         size="base"
@@ -148,7 +146,7 @@ const MilestoneUpNextCard = ({
                         truncate
                         isSkeleton={isSkeleton}
                         text={task.title}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             }
@@ -159,14 +157,14 @@ const MilestoneUpNextCard = ({
         <SurfaceCard
             isHighlight
             isSkeleton={isSkeleton}
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
             body={() => (
                 <StackH
                     gap={4}
                     justify="between"
                     align="center"
                     wrap
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <>
                             {titleColumn}
@@ -260,7 +258,6 @@ export interface PersonalProjectResultScreenProps {
      */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -298,7 +295,6 @@ const PersonalProjectResultScreen = ({
     nextTask,
     onGoToNextTask,
     isSkeleton = false,
-    showAnatomy = false,
 }: PersonalProjectResultScreenProps) => {
     // Nothing about "how did it go" can render before an attempt is actually
     // selected — see the file header. A skeleton paint still reserves this
@@ -313,11 +309,11 @@ const PersonalProjectResultScreen = ({
     const scoreCluster = hasSelection ? (
         <StackV
             gap={6}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <SubmissionScoreCard
-                        anatPart="SubmissionScoreCard"
+
                         label={scoreLabel}
                         score={score ?? 0}
                         maxScore={maxScore}
@@ -329,24 +325,24 @@ const PersonalProjectResultScreen = ({
                         modelCategory={modelCategory}
                         timeAgo={timeAgo}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                     <SubmissionFindingsList
-                        anatPart="SubmissionFindingsList"
+
                         label={findingsLabel}
                         findings={findings}
                         repositoryUrl={repositoryUrl}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                     {/* Nothing left to fix on a passing attempt — see file header. */}
                     {!isPassing ? (
                         <ContentRelatedList
-                            anatPart="ContentRelatedList"
+
                             items={relatedItems}
                             label={relatedLabel}
                             isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                     {/* Forward handoff to the next milestone task — only once this one passed. */}
@@ -355,7 +351,7 @@ const PersonalProjectResultScreen = ({
                             task={nextTask as PersonalProjectNextTask}
                             onGoToNextTask={onGoToNextTask}
                             isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -366,20 +362,20 @@ const PersonalProjectResultScreen = ({
     const screenBody = (
         <StackV
             gap={6}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <SubmissionResultHeader
-                        anatPart="SubmissionResultHeader"
+
                         backLabel={backLabel}
                         onBack={onBack}
                         title={title}
                         description={description}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                     <SubmissionAttemptSelector
-                        anatPart="SubmissionAttemptSelector"
+
                         attempts={attempts}
                         selectedId={selectedAttemptId}
                         onSelect={onSelectAttempt}
@@ -387,7 +383,7 @@ const PersonalProjectResultScreen = ({
                         overflowCount={overflowCount}
                         onOverflowPress={onOverflowPress}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                     {scoreCluster}
                 </>

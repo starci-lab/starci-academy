@@ -130,8 +130,8 @@ export const Loading: Story = {
 </PublicProfileLayout>`,
                     render: (
                         <PublicProfileLayout
-                            showAnatomy
-                            anatPart="PublicProfileLayout"
+                           
+
                             isLoading
                             user={null}
                             isSelf={false}
@@ -189,8 +189,8 @@ export const NotFound: Story = {
 </PublicProfileLayout>`,
                     render: (
                         <PublicProfileLayout
-                            showAnatomy
-                            anatPart="PublicProfileLayout"
+                           
+
                             isLoading={false}
                             user={null}
                             isSelf={false}
@@ -248,8 +248,8 @@ export const Locked: Story = {
 </PublicProfileLayout>`,
                     render: (
                         <PublicProfileLayout
-                            showAnatomy
-                            anatPart="PublicProfileLayout"
+                           
+
                             isLoading={false}
                             user={LOCKED_USER}
                             isSelf={false}
@@ -307,8 +307,8 @@ export const Content: Story = {
 </PublicProfileLayout>`,
                     render: (
                         <PublicProfileLayout
-                            showAnatomy
-                            anatPart="PublicProfileLayout"
+                           
+
                             isLoading={false}
                             user={OWNER_USER}
                             isSelf

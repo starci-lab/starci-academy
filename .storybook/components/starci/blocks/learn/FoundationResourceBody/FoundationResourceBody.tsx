@@ -87,9 +87,7 @@ export interface FoundationResourceBodyProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Block-owned vocabulary for the video gap — see the file header's §B3 note. */
@@ -113,21 +111,19 @@ const FoundationResourceBody = ({
     linkUrl,
     onOpenLink,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FoundationResourceBodyProps) => {
     if (kind === "video") {
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <SurfaceCard
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
                     body={() => (
                         <EmptyState
                             icon={VideoCameraIcon}
                             title={VIDEO_GAP_TITLE}
                             description={VIDEO_GAP_DESCRIPTION}
-                            anatPart={showAnatomy ? "EmptyState" : undefined}
+
                         />
                     )}
                 />
@@ -143,14 +139,14 @@ const FoundationResourceBody = ({
         }
         const destination = linkUrl
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <Button
                     label={linkTitle ?? DEFAULT_LINK_LABEL}
                     variant="primary"
                     suffixIcon={ArrowSquareOutIcon}
                     isSkeleton={isSkeleton}
                     onPress={() => onOpenLink?.(destination)}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
         )
@@ -159,15 +155,15 @@ const FoundationResourceBody = ({
     // "document" — the reading article, same card face the lesson body reads
     // in (matches `src`'s `Card`/`CardContent` wrapper for this kind).
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
                 body={() => (
                     <MarkdownContent
                         source={markdownBody ?? ""}
                         measure="reading"
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                     />
                 )}
             />

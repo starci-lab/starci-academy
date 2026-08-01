@@ -123,9 +123,7 @@ export interface FoundationHeaderProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -145,8 +143,6 @@ const FoundationHeader = ({
     tags,
     author,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FoundationHeaderProps) => {
     const hasTags = (tags?.length ?? 0) > 0
     const hasAuthor = author != null && author.trim().length > 0
@@ -157,53 +153,53 @@ const FoundationHeader = ({
                 gap={3}
                 align="center"
                 wrap
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
                     <>
                         <EnumChip
                             value={isSkeleton ? FoundationKind.Document : kind}
                             map={KIND_MAP}
                             isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "EnumChip" : undefined}
+
                         />
                         {isSkeleton ? (
-                            <Chip isSkeleton showAnatomy={showAnatomy} />
+                            <Chip isSkeleton />
                         ) : isRecommended ? (
-                            <Chip tone="success" text="Recommended" showAnatomy={showAnatomy} />
+                            <Chip tone="success" text="Recommended" />
                         ) : null}
                         {isSkeleton ? (
                             <>
-                                <Chip isSkeleton showAnatomy={showAnatomy} />
-                                <Chip isSkeleton showAnatomy={showAnatomy} />
+                                <Chip isSkeleton />
+                                <Chip isSkeleton />
                             </>
                         ) : hasTags ? (
                             (tags ?? []).map((tag) => (
-                                <Chip key={tag.key} text={tag.label} showAnatomy={showAnatomy} />
+                                <Chip key={tag.key} text={tag.label} />
                             ))
                         ) : null}
                     </>
                 }
             />
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
             ) : hasAuthor ? (
                 <Typography
                     size="xs"
                     color="muted"
                     text={`Author: ${author}`}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 breadcrumb={() => (
-                    <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                    <div className="w-fit">
                         <Breadcrumbs
                             collapseOnMobile
                             collapseFrom={4}
@@ -215,7 +211,7 @@ const FoundationHeader = ({
                 title={title}
                 description={description}
                 meta={() =>
-                    <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={metaCluster} />
+                    <StackV gap={4} body={metaCluster} />
                 }
             />
         </div>

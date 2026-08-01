@@ -52,8 +52,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <MockInterviewAnswerAction
-                                anatPart="MockInterviewAnswerAction"
-                                showAnatomy
+
+                               
                                 isLastQuestion={false}
                                 onSubmit={() => {}}
                             />

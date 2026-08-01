@@ -69,7 +69,6 @@ interface ButtonBaseOwnProps {
     /** `true` marks the button busy: a spinner replaces the leading glyph and the press handler locks. */
     isPending?: boolean
     /** `true` tags the rendered part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -104,7 +103,6 @@ export const ButtonBase = ({
     isDisabled = false,
     isPending = false,
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: ButtonBaseProps) => {
     if (isSkeleton) {
@@ -118,7 +116,7 @@ export const ButtonBase = ({
                     isIconOnly ? SKELETON_SQUARE[size] : cn(SKELETON_W[size], SKELETON_H[size]),
                     classNames,
                 )}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
             />
         )
     }
@@ -126,7 +124,7 @@ export const ButtonBase = ({
     /** Leading glyph — or a spinner in its place when busy, never both at once. */
     const leading = isPending ? (
         <span aria-hidden className="inline-flex shrink-0">
-            <Spinner size="sm" color="current" data-anat-part={showAnatomy ? "Spinner" : undefined} />
+            <Spinner size="sm" color="current" />
         </span>
     ) : PrefixIcon ? (
         <span
@@ -154,7 +152,7 @@ export const ButtonBase = ({
             isPending={isPending}
             isDisabled={isDisabled || isPending}
             className={cn("group", VARIANT_CLS[variant], isElevated && "shadow-lg", align && ALIGN_CLS[align], classNames)}
-            data-anat-part={showAnatomy ? "Button" : undefined}
+
         >
             {leading}
             {isIconOnly ? null : (

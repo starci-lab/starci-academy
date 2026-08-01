@@ -115,9 +115,7 @@ export interface PersonalProjectTaskAttemptsDrawerProps {
     /** `true` → a parent-forced skeleton paint, same branch as `isLoading` (see file header). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** Extra classes merged onto the drawer's dialog surface. */
     className?: string
 }
@@ -138,7 +136,6 @@ interface AttemptRowProps {
     /** Resting state — the row keeps its shape, only the text shimmers. */
     isSkeleton?: boolean
     /** `true` → each part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -147,7 +144,7 @@ interface AttemptRowProps {
  * renders for real data and for the skeleton mirror (`isSkeleton` flips which
  * parts shimmer) — no second, hand-drawn placeholder tree (§6b).
  */
-const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: AttemptRowProps) => {
+const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
     const scoreTone: ChipTone = attempt?.score != null ? "accent" : "default"
     const scoreLabel = attempt?.score != null ? `${attempt.score} points` : "Grading"
     // A missing attempt (real, §2) drops the line; the skeleton branch always
@@ -162,7 +159,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                 isSkeleton={isSkeleton}
                 classNames={isSkeleton ? ["w-1/4"] : undefined}
                 text={attempt != null ? `Attempt ${attempt.attemptNumber}` : undefined}
-                showAnatomy={showAnatomy}
+
             />
             <Chip
                 icon={SparkleIcon}
@@ -180,8 +177,8 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                 align="center"
                 justify="between"
                 wrap
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "StackH (attempt)" : undefined}
+
+
                 body={attemptLabelAndChip}
             />
             {showFeedback ? (
@@ -191,7 +188,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                     isSkeleton={isSkeleton}
                     classNames={isSkeleton ? ["w-2/3"] : undefined}
                     text={attempt?.shortFeedback ?? undefined}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             <InlineIconLabel
@@ -199,7 +196,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                 tone="default"
                 size="xs"
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
             >
                 {attempt?.processedAtLabel ?? ""}
             </InlineIconLabel>
@@ -207,7 +204,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
     )
 
     return (
-        <StackV gap={2} showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={rowLines} />
+        <StackV gap={2} body={rowLines} />
     )
 }
 
@@ -229,43 +226,39 @@ const PersonalProjectTaskAttemptsDrawer = ({
     onRetry,
     retryLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
     className,
 }: PersonalProjectTaskAttemptsDrawerProps) => {
     const emptyContent: AsyncContentEmptyProps = {
         title: emptyLabel ?? EMPTY_LABEL_DEFAULT,
-        anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-        showAnatomy,
+
     }
 
     const errorContent: AsyncContentErrorProps = {
         title: ERROR_TITLE,
         onRetry,
         retryLabel,
-        anatPart: showAnatomy ? "AsyncContentError" : undefined,
-        showAnatomy,
+
     }
 
     const skeletonItems: Array<SurfaceCardListItem> = Array.from({ length: SKELETON_ROW_COUNT }, (_, index) => ({
         key: `skeleton-${index}`,
-        content: () => <AttemptRow isSkeleton showAnatomy={showAnatomy} />,
+        content: () => <AttemptRow isSkeleton />,
     }))
 
     const items: Array<SurfaceCardListItem> = attempts.map((attempt) => ({
         key: attempt.id,
-        content: () => <AttemptRow attempt={attempt} showAnatomy={showAnatomy} />,
+        content: () => <AttemptRow attempt={attempt} />,
     }))
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={DRAWER_TITLE}
                 className={className}
-                showAnatomy={showAnatomy}
+
             >
                 <AsyncContent
                     // A parent-forced skeleton and this drawer's own in-flight fetch share
@@ -274,20 +267,20 @@ const PersonalProjectTaskAttemptsDrawer = ({
                     skeleton={
                         <SurfaceCardList
                             items={skeletonItems}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+
+
                         />
                     }
                     isEmpty={isEmpty}
                     emptyContent={emptyContent}
                     error={error}
                     errorContent={errorContent}
-                    showAnatomy={showAnatomy}
+
                     content={
                         <SurfaceCardList
                             items={items}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+
+
                         />
                     }
                 />

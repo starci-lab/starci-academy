@@ -59,8 +59,8 @@ export const Toolbar: Story = {
                         code: "<LeaderboardToolbar categoryLabel=\"This week's XP\" updatedAt={fiveMinutesAgo} refreshLabel=\"Refresh\" onRefresh={refresh} />",
                         render: (
                             <LeaderboardToolbar
-                                anatPart="LeaderboardToolbar"
-                                showAnatomy
+
+                               
                                 categoryLabel="This week's XP"
                                 updatedAt={FIVE_MINUTES_AGO}
                                 refreshLabel="Refresh"

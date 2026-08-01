@@ -108,8 +108,8 @@ export const Loading: Story = {
 />`,
                         render: (
                             <CourseQaQuestionList
-                                anatPart="CourseQaQuestionList"
-                                showAnatomy
+
+                               
                                 questions={[]}
                                 isLoading
                                 page={1}
@@ -156,8 +156,8 @@ export const ErrorLeaf: Story = {
 />`,
                         render: (
                             <CourseQaQuestionList
-                                anatPart="CourseQaQuestionList"
-                                showAnatomy
+
+                               
                                 questions={[]}
                                 isLoading={false}
                                 error={new globalThis.Error("network")}
@@ -205,8 +205,8 @@ export const Empty: Story = {
 />`,
                         render: (
                             <CourseQaQuestionList
-                                anatPart="CourseQaQuestionList"
-                                showAnatomy
+
+                               
                                 questions={[]}
                                 isLoading={false}
                                 page={1}
@@ -251,8 +251,8 @@ export const Content: Story = {
 />`,
                         render: (
                             <CourseQaQuestionList
-                                anatPart="CourseQaQuestionList"
-                                showAnatomy
+
+                               
                                 questions={QUESTIONS}
                                 isLoading={false}
                                 page={1}

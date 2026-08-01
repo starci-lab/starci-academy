@@ -36,8 +36,7 @@ interface LinkBackOwnProps {
      * before `target` is known.
      */
     skeletonWidth?: SkeletonWidth
-    /** `true` → tag the root with `data-anat-part="Link"` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
+    /** `true` → tag the root with `` so a BlockAnatomy panel can badge it. */
     /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
@@ -67,21 +66,20 @@ export const LinkBack = ({
     onPress,
     isSkeleton = false,
     skeletonWidth,
-    showAnatomy = false,
     classNames,
 }: LinkBackProps) => {
     if (isSkeleton) {
         // Same `flex items-center gap-1` (icon-text) row as the real render; icon box
         // matches `size-3.5`, and the label bar rides `SKELETON_TEXT_BAR_SM`
         // (14px bar in the 20px `text-sm` line box) so the row's height does
-        // not change when the real label lands. No `data-anat-part="Link"`
+        // not change when the real label lands. No ``
         // here since nothing HeroUI-Link-shaped renders in this branch.
         return (
             <div data-tier="atom" data-component="LinkBack" data-principles="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
-                <HeroSkeleton className="size-3.5 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="size-3.5 rounded-full" />
                 <HeroSkeleton
                     className={cn(SKELETON_TEXT_BAR_SM, skeletonWidth ?? "w-1/4")}
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                 />
             </div>
         )
@@ -94,7 +92,7 @@ export const LinkBack = ({
             data-tier="atom"
             data-component="LinkBack"
             onPress={onPress}
-            data-anat-part={showAnatomy ? "Link" : undefined}
+
             data-principles="icon-text"
             className={cn(
                 "group flex w-fit cursor-pointer items-center gap-1 text-sm text-muted no-underline transition-colors hover:text-foreground",

@@ -78,8 +78,8 @@ export const List: Story = {
 />`,
                         render: (
                             <ModuleLessonList
-                                anatPart="ModuleLessonList"
-                                showAnatomy
+
+                               
                                 lessons={LESSONS}
                                 resumeLessonId="l2"
                                 onSelectLesson={() => {}}
@@ -115,8 +115,8 @@ export const Skeleton: Story = {
                         code: "<ModuleLessonList isSkeleton lessons={[]} onSelectLesson={selectLesson} />",
                         render: (
                             <ModuleLessonList
-                                anatPart="ModuleLessonList"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 lessons={[]}
                                 onSelectLesson={() => {}}

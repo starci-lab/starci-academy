@@ -234,7 +234,6 @@ export interface PersonalProjectTaskPageProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /** Skeleton placeholder count for the legacy accordions while real data hasn't landed yet. */
@@ -248,32 +247,32 @@ const SettingsLeading = ({ isSkeleton }: { isSkeleton?: boolean }) =>
 const SettingsChevron = () => <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
 
 /** One markdown body at the `compact` measure the legacy accordion panels use. */
-const legacyMarkdown = (body: string, showAnatomy: boolean) => (
-    <MarkdownContent source={body} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+const legacyMarkdown = (body: string) => (
+    <MarkdownContent source={body} measure="compact" />
 )
 
 /** One legacy code-implementation accordion panel body: guide, then a worked example. */
-const legacyCodeBody = (item: PersonalProjectTaskLegacyCodeImplementationItem, showAnatomy: boolean) => {
+const legacyCodeBody = (item: PersonalProjectTaskLegacyCodeImplementationItem) => {
     const guideSection = (
         <>
-            <Typography size="xs" weight="medium" color="muted" text="Guide" showAnatomy={showAnatomy} />
-            {legacyMarkdown(item.guide, showAnatomy)}
+            <Typography size="xs" weight="medium" color="muted" text="Guide" />
+            {legacyMarkdown(item.guide)}
         </>
     )
     const exampleSection = (
         <>
-            <Typography size="xs" weight="medium" color="muted" text="Example" showAnatomy={showAnatomy} />
-            {legacyMarkdown(item.example, showAnatomy)}
+            <Typography size="xs" weight="medium" color="muted" text="Example" />
+            {legacyMarkdown(item.example)}
         </>
     )
     return (
         <StackV
             gap={4}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={guideSection} />
-                    <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={exampleSection} />
+                    <StackV gap={2} body={guideSection} />
+                    <StackV gap={2} body={exampleSection} />
                 </>
             }
         />
@@ -296,7 +295,6 @@ const readingColumn = (props: {
     relatedItems: Array<ContentRelatedItem>
     relatedLabel: string
     isSkeleton: boolean
-    showAnatomy: boolean
 }) => {
     const {
         breadcrumbItems,
@@ -308,7 +306,6 @@ const readingColumn = (props: {
         relatedItems,
         relatedLabel,
         isSkeleton,
-        showAnatomy,
     } = props
 
     const hasLegacyCriteria = (legacyCriteria?.length ?? 0) > 0
@@ -323,11 +320,11 @@ const readingColumn = (props: {
         ? (legacyCriteria ?? []).map((item, index) => ({
             id: item.key,
             title: `${index + 1}. ${item.text}`,
-            titleEnd: () => <Chip tone="accent" text={`${item.score} points`} showAnatomy={showAnatomy} />,
+            titleEnd: () => <Chip tone="accent" text={`${item.score} points`} />,
             body: item.hint
-                ? legacyMarkdown(item.hint, showAnatomy)
+                ? legacyMarkdown(item.hint)
                 : <Typography size="sm" color="muted"
- isItalic text="No grading hint yet" showAnatomy={showAnatomy} />,
+ isItalic text="No grading hint yet" />,
         }))
         : isSkeleton
             ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `criteria-skeleton-${index}`, title: "", body: null }))
@@ -337,7 +334,7 @@ const readingColumn = (props: {
         ? (legacyCodeImplementations ?? []).map((item) => ({
             id: item.key,
             title: item.lang,
-            body: legacyCodeBody(item, showAnatomy),
+            body: legacyCodeBody(item),
         }))
         : isSkeleton
             ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `code-skeleton-${index}`, title: "", body: null }))
@@ -351,8 +348,8 @@ const readingColumn = (props: {
                     items={criteriaItems}
                     allowsMultipleExpanded
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
             {hasLegacyCode || isSkeleton ? (
@@ -361,8 +358,8 @@ const readingColumn = (props: {
                     items={codeItems}
                     allowsMultipleExpanded
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
         </>
@@ -371,11 +368,11 @@ const readingColumn = (props: {
     const readingSections = (
         <>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                        <div className="w-fit">
                             <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton} />
                         </div>
                     ) : undefined
@@ -389,7 +386,7 @@ const readingColumn = (props: {
                     status="warning"
                     title="Preview of a task not yet unlocked"
                     description="You need to finish the current task before you can work on this one."
-                    anatPart={showAnatomy ? "Callout" : undefined}
+
                 />
             ) : null}
 
@@ -397,8 +394,8 @@ const readingColumn = (props: {
                 <SurfaceCard
                     label="Guide"
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    body={() => <MarkdownContent source={brief.body} anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
+
+                    body={() => <MarkdownContent source={brief.body} />}
                 />
             ) : null}
 
@@ -406,8 +403,8 @@ const readingColumn = (props: {
                 <SurfaceCard
                     label="Evaluation criteria (legacy)"
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={legacyAccordions} />}
+
+                    body={() => <StackV gap={6} body={legacyAccordions} />}
                 />
             ) : null}
 
@@ -415,12 +412,12 @@ const readingColumn = (props: {
                 label={relatedLabel}
                 items={relatedItems}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "ContentRelatedList" : undefined}
+
             />
         </>
     )
 
-    return <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={readingSections} />
+    return <StackV gap={7} body={readingSections} />
 }
 
 /**
@@ -431,9 +428,8 @@ const readingColumn = (props: {
 const submissionPanel = (props: {
     panel: PersonalProjectTaskSubmissionPanelProps
     isSkeleton: boolean
-    showAnatomy: boolean
 }) => {
-    const { panel, isSkeleton, showAnatomy } = props
+    const { panel, isSkeleton } = props
     const hasAttempts = panel.hasAttempts ?? false
 
     const evaluateActions = (
@@ -445,7 +441,7 @@ const submissionPanel = (props: {
                 isPending={panel.isEvaluatePending}
                 isDisabled={panel.isEvaluateDisabled}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <Button
                 label="View feedback"
@@ -453,7 +449,7 @@ const submissionPanel = (props: {
                 onPress={panel.onOpenFeedbackDetails}
                 isDisabled={!hasAttempts}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <Button
                 label="View submission history"
@@ -461,7 +457,7 @@ const submissionPanel = (props: {
                 onPress={panel.onOpenAttempts}
                 isDisabled={!hasAttempts}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -476,9 +472,9 @@ const submissionPanel = (props: {
                 placeholder="https://github.com/…"
                 ariaLabel="GitHub repo URL"
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <div data-anat-part={showAnatomy ? "ListRow" : undefined}>
+            <div>
                 <ListRow
                     leading={SettingsLeading}
                     title="Grading settings"
@@ -486,10 +482,10 @@ const submissionPanel = (props: {
                     trailing={SettingsChevron}
                     onPress={panel.onOpenSettings}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
-            <StackH gap={3} wrap anatPart={showAnatomy ? "StackH" : undefined} body={evaluateActions} />
+            <StackH gap={3} wrap body={evaluateActions} />
         </>
     )
 
@@ -498,8 +494,8 @@ const submissionPanel = (props: {
             <SurfaceCard
                 label="Project GitHub"
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={githubFields} />}
+
+                body={() => <StackV gap={6} body={githubFields} />}
             />
 
             {isSkeleton || panel.result != null ? (
@@ -514,14 +510,14 @@ const submissionPanel = (props: {
                     modelCategory={panel.result?.modelCategory}
                     timeAgo={panel.result?.timeAgo}
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SubmissionScoreCard" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
         </>
     )
 
-    return <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={panelSections} />
+    return <StackV gap={6} body={panelSections} />
 }
 
 /**
@@ -541,14 +537,13 @@ const PersonalProjectTaskPage = ({
     relatedLabel,
     submissionPanelProps,
     isSkeleton = false,
-    showAnatomy = false,
 }: PersonalProjectTaskPageProps) => (
     <Container
         size="xl"
         padding={6}
         body={
             <SplitWorkspace
-                anatPart={showAnatomy ? "SplitWorkspace" : undefined}
+
                 main={readingColumn({
                     breadcrumbItems,
                     task,
@@ -559,9 +554,8 @@ const PersonalProjectTaskPage = ({
                     relatedItems,
                     relatedLabel,
                     isSkeleton,
-                    showAnatomy,
                 })}
-                aside={submissionPanel({ panel: submissionPanelProps, isSkeleton, showAnatomy })}
+                aside={submissionPanel({ panel: submissionPanelProps, isSkeleton })}
             />
         }
     />

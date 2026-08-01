@@ -91,9 +91,7 @@ export interface InnerLayoutProps extends NavbarProps, Omit<FooterProps, "classN
     /** Extra class on the root track. */
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -112,8 +110,6 @@ const InnerLayout = ({
     onTermsPress,
     onPrivacyPress,
     className,
-    showAnatomy = false,
-    anatPart,
     ...navbarProps
 }: InnerLayoutProps) => {
     const navMainFooter = (
@@ -123,8 +119,8 @@ const InnerLayout = ({
             <div className="sticky top-0 z-40">
                 <Navbar
                     {...(navbarProps as NavbarProps)}
-                    anatPart={showAnatomy ? "Navbar" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             </div>
             {/* CALLER SLOT — deliberately unbadged, see file header. */}
@@ -136,8 +132,8 @@ const InnerLayout = ({
                     socials={socials}
                     onTermsPress={onTermsPress}
                     onPrivacyPress={onPrivacyPress}
-                    anatPart={showAnatomy ? "Footer" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
             {/* Overlay/chat-rail/provider global mount points — intentionally NOT
@@ -146,7 +142,7 @@ const InnerLayout = ({
     )
 
     return (
-        <StackV gap={1} className={cn("min-h-dvh", className)} anatPart={anatPart} body={navMainFooter} />
+        <StackV gap={1} className={cn("min-h-dvh", className)} body={navMainFooter} />
     )
 }
 

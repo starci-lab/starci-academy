@@ -57,9 +57,7 @@ export interface PlaygroundEnterBannerProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** The section label above the card — also doubles as the CTA's own wording (the decision this whole card is). */
@@ -85,20 +83,18 @@ const PlaygroundEnterBanner = ({
     pendingCount,
     onEnter,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundEnterBannerProps) => {
     const readiness = buildReadinessText(allReady, pendingCount)
     return (
         <SurfaceCard
             label={SECTION_LABEL}
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             body={() => (
                 <StackV
                     gap={4}
-                    anatPart={showAnatomy ? "StackV" : undefined}
+
                     body={
                         <>
                             <Typography
@@ -107,7 +103,7 @@ const PlaygroundEnterBanner = ({
                                 weight={allReady ? "medium" : undefined}
                                 prefixIcon={allReady ? CheckCircleIcon : undefined}
                                 isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
+
                                 text={readiness}
                             />
                             <Button
@@ -118,7 +114,7 @@ const PlaygroundEnterBanner = ({
                                 onPress={onEnter}
                                 isDisabled={!allReady}
                                 isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
+
                                 classNames={["w-fit"]}
                             />
                         </>

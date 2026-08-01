@@ -62,9 +62,7 @@ export interface NavLinksProps {
     onNavigate: (path: string) => void
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -74,19 +72,19 @@ export interface NavLinksProps {
  *
  * @param props - {@link NavLinksProps}
  */
-const NavLinks = ({ items, onNavigate, className, showAnatomy = false, anatPart }: NavLinksProps) => (
-    <div data-anat-part={anatPart}>
+const NavLinks = ({ items, onNavigate, className }: NavLinksProps) => (
+    <div>
         <StackH
             gap={3}
             justify="center"
             className={cn("hidden @app-md:flex", className)}
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={items.map((item) => (
                 <HeroUILink
                     key={item.path}
                     onPress={() => onNavigate(item.path)}
                     aria-current={item.isActive ? "page" : undefined}
-                    data-anat-part={showAnatomy ? "Link" : undefined}
+
                 >
                     <span
                         className={cn(

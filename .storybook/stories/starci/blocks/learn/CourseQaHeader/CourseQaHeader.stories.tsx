@@ -57,8 +57,8 @@ export const Header: Story = {
 />`,
                         render: (
                             <CourseQaHeader
-                                anatPart="CourseQaHeader"
-                                showAnatomy
+
+                               
                                 breadcrumbItems={CRUMBS}
                                 title="Q&A"
                                 description="Ask questions and discuss with instructors, teaching assistants, and other learners in the course"

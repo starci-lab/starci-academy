@@ -82,7 +82,6 @@ export interface EnumChipProps<E extends string> {
     /** When `true`, renders the skeleton placeholder (a chip-shaped pill) instead of the real chip. */
     isSkeleton?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -104,13 +103,13 @@ export interface EnumChipProps<E extends string> {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "EnumChip" } as const
 
-export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton, anatPart }: EnumChipProps<E>) => {
+export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton }: EnumChipProps<E>) => {
     if (isSkeleton) {
         // No longer patching in `h-6` here: the atom's shimmer used to stand `h-7` tall,
         // 4px off from the real chip box, so the call site had to paper over the shape.
         // The atom was fixed (2026-07-26) — a call site having to patch the atom's shape
         // is itself the sign the atom is wrong, not this spot.
-        return <Chip isSkeleton className={className} classNames={classNames} anatPart={anatPart} />
+        return <Chip isSkeleton className={className} classNames={classNames} />
     }
     const entry = map[value]
     if (!entry) {
@@ -121,7 +120,7 @@ export const EnumChip = <E extends string>({ value, map, className, classNames, 
             tone={entry.color ?? "default"}
             className={className}
             classNames={classNames}
-            anatPart={anatPart}
+
             text={entry.label}
             icon={entry.icon != null ? ENUM_CHIP_ICON_MAP[entry.icon] : undefined}
         />

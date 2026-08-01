@@ -113,9 +113,7 @@ export interface ChallengeHeaderProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -133,8 +131,6 @@ const ChallengeHeader = ({
     difficulty,
     status,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ChallengeHeaderProps) => {
     // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, teacher's final
     // call on the still-open score-1 issue, round-3: "move the red one to the
@@ -153,13 +149,13 @@ const ChallengeHeader = ({
                     value="inProgress"
                     map={STATUS_MAP}
                     isSkeleton
-                    anatPart={showAnatomy ? "EnumChip" : undefined}
+
                 />
             ) : status != null ? (
                 <EnumChip
                     value={status}
                     map={STATUS_MAP}
-                    anatPart={showAnatomy ? "EnumChip" : undefined}
+
                 />
             ) : null}
             {isSkeleton ? (
@@ -167,41 +163,41 @@ const ChallengeHeader = ({
                     value="easy"
                     map={DIFFICULTY_MAP}
                     isSkeleton
-                    anatPart={showAnatomy ? "EnumChip" : undefined}
+
                 />
             ) : (
                 <EnumChip
                     value={difficulty}
                     map={DIFFICULTY_MAP}
-                    anatPart={showAnatomy ? "EnumChip" : undefined}
+
                 />
             )}
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} />
             ) : scoreValue != null ? (
                 <Typography
                     size="xs"
                     color="muted"
                     text={`${scoreValue} points`}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton ? (
-                        <Typography size="sm" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/4"]} />
                     ) : (
                         <LinkBack
                             label={backLabel}
                             onPress={onBackPress}
-                            showAnatomy={showAnatomy}
+
                         />
                     )
                 }
@@ -212,7 +208,7 @@ const ChallengeHeader = ({
                 // and `PageHeader` now owns the muted styling + skeleton swap itself.
                 description={description}
                 meta={() =>
-                    <StackH gap={3} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
+                    <StackH gap={3} align="center" body={metaRow} />
                 }
             />
         </div>

@@ -55,7 +55,7 @@ const Byline = ({ isSkeleton }: { isSkeleton?: boolean }) => (
     <StackH
         gap={2}
         align="center"
-        anatPart="StackH"
+
         body={
             <>
                 <Typography
@@ -108,8 +108,8 @@ export const Default: Story = {
                         code: `<IdentityContentRow avatarName="Minh Anh" avatarSeed="u1" byline={Byline} body={CommentBody} />`,
                         render: (
                             <IdentityContentRow
-                                anatPart="IdentityContentRow"
-                                showAnatomy
+
+                               
                                 avatarName="Minh Anh"
                                 avatarSeed="u1"
                                 byline={Byline}
@@ -141,8 +141,8 @@ export const Skeleton: Story = {
                         code: "<IdentityContentRow isSkeleton avatarName=\"Minh Anh\" avatarSeed=\"u1\" byline={Byline} body={CommentBody} />",
                         render: (
                             <IdentityContentRow
-                                anatPart="IdentityContentRow"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 avatarName="Minh Anh"
                                 avatarSeed="u1"

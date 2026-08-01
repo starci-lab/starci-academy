@@ -119,9 +119,7 @@ export interface ContentModeNavProps {
     /** Accessible name for the language group. Required whenever `languages` is set. */
     languageAriaLabel?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -139,8 +137,6 @@ const ContentModeNav = ({
     onLanguageChange,
     ariaLabel,
     languageAriaLabel,
-    showAnatomy = false,
-    anatPart,
 }: ContentModeNavProps) => {
     const items: Array<ToolbarTabItem> = modes.map((entry) => ({
         key: entry.mode,
@@ -157,8 +153,8 @@ const ContentModeNav = ({
     const hasLanguages = availableLanguageCount > 1 && language != null && onLanguageChange != null
 
     return (
-        <div data-anat-part={anatPart}>
-            <div data-anat-part={showAnatomy ? "Toolbar" : undefined}>
+        <div>
+            <div>
                 <Toolbar
                     leftTabs={{
                         items,
@@ -190,7 +186,7 @@ const ContentModeNav = ({
                     // column with 4 inline tabs (instructor's call, 2026-07-29, reversing the 2026-07-29
                     // "keep every language reachable in one tap" call from earlier the same day).
                     collapseRightOnMobile
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
         </div>

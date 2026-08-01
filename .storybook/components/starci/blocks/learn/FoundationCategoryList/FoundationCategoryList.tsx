@@ -131,9 +131,7 @@ export interface FoundationCategoryListProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** The library-itself-is-empty title — no search was involved, so no "try another word" hint applies. Ported verbatim from `foundations.emptyCategories`. */
@@ -168,8 +166,6 @@ const FoundationCategoryList = ({
     onSelectCategory,
     pagination,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FoundationCategoryListProps) => {
     // Empty while loading (no real categories yet) → guess 3 rows, keeping the
     // right shape for when real data lands (§8). Once real `categories` exist,
@@ -182,7 +178,7 @@ const FoundationCategoryList = ({
         return {
             key: category.id,
             leading: (
-                <div className="size-10 shrink-0" data-anat-part={showAnatomy ? "Image" : undefined}>
+                <div className="size-10 shrink-0">
                     <Image
                         src={src}
                         fallbackSrc={fallbackSrc}
@@ -190,7 +186,7 @@ const FoundationCategoryList = ({
                         ratio="square"
                         radius="md"
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                 </div>
             ),
@@ -214,8 +210,8 @@ const FoundationCategoryList = ({
         <EmptyState
             icon={hasQuery ? MagnifyingGlassIcon : undefined}
             title={hasQuery ? `No topics match "${searchQuery?.trim()}".` : LIBRARY_EMPTY_TITLE}
-            anatPart={showAnatomy ? "EmptyState" : undefined}
-            showAnatomy={showAnatomy}
+
+
         />
     )
     const emptyState = !isSkeleton && categories.length === 0 ? EmptyState : undefined
@@ -227,22 +223,22 @@ const FoundationCategoryList = ({
     return (
         <StackV
             gap={4}
-            anatPart={anatPart}
+
             body={
                 <>
                     <SurfaceCardList
-                        anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+
                         isSkeleton={isSkeleton}
                         items={rows}
                         emptyState={emptyState}
                     />
                     {showPager ? (
-                        <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
+                        <div>
                             <Pagination
                                 currentPage={pagination.currentPage}
                                 totalPages={pagination.totalPages}
                                 onPageChange={pagination.onPageChange}
-                                showAnatomy={showAnatomy}
+
                             />
                         </div>
                     ) : null}

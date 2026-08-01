@@ -57,8 +57,8 @@ export const Warning: Story = {
                         code: "<CourseTeamGate isEnrolled isInTeam={false} onJoin={handleJoin} />",
                         render: (
                             <CourseTeamGate
-                                anatPart="Callout"
-                                showAnatomy
+
+                               
                                 isEnrolled
                                 isInTeam={false}
                                 onJoin={() => {}}
@@ -100,7 +100,7 @@ export const Skeleton: Story = {
                             // name lets the component's own ternary resolve to whichever of the two
                             // it actually renders.
                             <CourseTeamGate
-                                showAnatomy
+                               
                                 isSkeleton
                                 isEnrolled={false}
                                 isInTeam={false}

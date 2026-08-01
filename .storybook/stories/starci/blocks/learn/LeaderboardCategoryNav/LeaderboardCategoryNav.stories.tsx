@@ -63,8 +63,8 @@ export const ChipRow: Story = {
 />`,
                         render: (
                             <LeaderboardCategoryNav
-                                anatPart="LeaderboardCategoryNav"
-                                showAnatomy
+
+                               
                                 items={ITEMS}
                                 selected="total"
                                 onSelect={() => {}}

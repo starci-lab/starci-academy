@@ -175,7 +175,6 @@ export interface ContentPageProps {
      */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -230,18 +229,17 @@ const ContentPage = ({
     pagerAriaLabel,
     tabsAriaLabel,
     isSkeleton = false,
-    showAnatomy = false,
 }: ContentPageProps) => {
     const lessonFooter = (
         <>
             <ContentReaction
-                anatPart="ContentReaction"
+
                 myReaction={myReaction}
                 counts={reactionCounts}
                 viewCount={viewCount}
                 onReact={onReact}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {/* MOBILE/TABLET-ONLY, via CSS not a second component tree: on desktop
             the right rail's own "Practice this lesson" already surfaces this, so
@@ -252,7 +250,7 @@ const ContentPage = ({
             the one focal action a mobile reader sees after the reaction bar). */}
             {!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0 ? (
                 <MilestoneUpNextCard
-                    anatPart="MilestoneUpNextCard"
+
                     className="@app-lg:hidden"
                     isHighlight
                     eyebrow="Up next · Practice this lesson"
@@ -260,18 +258,18 @@ const ContentPage = ({
                     description="Apply what you just learned. Challenges are graded automatically and count toward your progress."
                     ctaLabel="Start challenges"
                     onPress={() => onModeChange("challenges")}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             <ContentRelatedList
-                anatPart="ContentRelatedList"
+
                 items={relatedItems}
                 label={relatedLabel}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <ContentDiscussion
-                anatPart="ContentDiscussion"
+
                 label={discussionLabel}
                 currentUserId={currentUserId}
                 currentUser={currentUser}
@@ -289,15 +287,15 @@ const ContentPage = ({
                 onLoadMore={onLoadMoreComments}
                 errorMessage={discussionErrorMessage}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <ContentPager
-                anatPart="ContentPager"
+
                 previous={previous}
                 next={next}
                 ariaLabel={pagerAriaLabel}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -305,7 +303,7 @@ const ContentPage = ({
     const readingSection = (
         <>
             <ContentModeNav
-                anatPart="ContentModeNav"
+
                 modes={modes}
                 mode={mode}
                 onModeChange={onModeChange}
@@ -314,22 +312,22 @@ const ContentPage = ({
                 onLanguageChange={onLanguageChange}
                 languageAriaLabel={languageAriaLabel}
                 ariaLabel={tabsAriaLabel}
-                showAnatomy={showAnatomy}
+
             />
             <ContentArticle
-                anatPart="ContentArticle"
+
                 body={body}
                 isLocked={isLocked}
                 offer={offer}
                 hintText={hintText}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {/* A reader stopped by the paywall has ONE decision in front of them. Four more
                 things to do underneath would compete with it, so the whole footer waits
                 until the lesson is actually open. */}
             {!isLocked ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={lessonFooter} />
+                <StackV gap={6} body={lessonFooter} />
             ) : null}
         </>
     )
@@ -337,7 +335,7 @@ const ContentPage = ({
     const contentSections = (
         <>
             <ContentHeader
-                anatPart="ContentHeader"
+
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
@@ -346,17 +344,17 @@ const ContentPage = ({
                 challengeCount={challengeCount}
                 outcomes={outcomes}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {/* ModeNav↔Article↔(reaction cluster) sit CLOSER together than the identity/outcomes
                 block above (teacher 2026-07-29, deliberate — a chosen tightening, not a copy of
                 `src`'s uniform `gap-6`): they are all "reading this lesson", one continuous
                 surface, not separate regions. */}
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={readingSection} />
+            <StackV gap={4} body={readingSection} />
         </>
     )
 
-    const contentBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={contentSections} />
+    const contentBody = <StackV gap={6} body={contentSections} />
 
     return <Container size="md" padding={6} body={contentBody} />
 }

@@ -96,9 +96,7 @@ export interface LeaderboardCategoryNavProps {
     /** Extra classes on the row. Prefer this over `className`; the string form is going away. */
     classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -115,18 +113,16 @@ const LeaderboardCategoryNav = ({
     ariaLabel,
     className,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: LeaderboardCategoryNavProps) => (
-    <div data-anat-part={anatPart}>
-        <div data-anat-part={showAnatomy ? "ButtonRadioGroup" : undefined}>
+    <div>
+        <div>
             <ButtonRadioGroup
                 ariaLabel={ariaLabel}
                 value={selected}
                 onChange={onSelect}
                 className={className}
                 classNames={classNames}
-                showAnatomy={showAnatomy}
+
                 items={items.map((item) => ({
                     value: item.key,
                     content: (
@@ -134,7 +130,7 @@ const LeaderboardCategoryNav = ({
                             size="sm"
                             prefixIcon={CATEGORY_ICON[item.key]}
                             text={`${CATEGORY_LABEL[item.key]} · ${item.xp} points`}
-                            showAnatomy={showAnatomy}
+
                         />
                     ),
                 }))}

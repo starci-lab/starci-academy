@@ -52,9 +52,7 @@ export interface PlaygroundHubHeaderProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -68,13 +66,11 @@ const PlaygroundHubHeader = ({
     title,
     description,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundHubHeaderProps) => {
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 title={title}
                 description={description}

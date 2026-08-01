@@ -73,7 +73,7 @@ export const Default: Story = {
                         name: "no prop turned on (variant = primary, size = md)",
                         why: "The DOM stays flat, a button wrapping just its label. Both variant and size fall back to their defaults, so this is the plainest shape the atom can take.",
                         code: "<Button label=\"Save draft\" />",
-                        render: <Button label="Save draft" showAnatomy />,
+                        render: <Button label="Save draft" />,
                     },
                 ]}
             />
@@ -96,31 +96,31 @@ export const Variants: Story = {
                         name: "variant = \"primary\"",
                         why: "The one action the screen wants most, so it carries the filled brand colour and the heaviest weight in the row. Only one of these belongs in a view, because two primaries means neither is primary.",
                         code: "<Button variant=\"primary\" label=\"Save draft\" />",
-                        render: <Button variant="primary" label="Save draft" showAnatomy />,
+                        render: <Button variant="primary" label="Save draft" />,
                     },
                     {
                         name: "variant = \"secondary\"",
                         why: "A real alternative that is still safe to take, drawn on a tinted surface so it reads as an option rather than the recommendation. It can sit beside primary without competing for the eye.",
                         code: "<Button variant=\"secondary\" label=\"Preview\" />",
-                        render: <Button variant="secondary" label="Preview" showAnatomy />,
+                        render: <Button variant="secondary" label="Preview" />,
                     },
                     {
                         name: "variant = \"ghost\"",
                         why: "No surface at all, only a label, for the way out of a flow such as Cancel or Back. It stays legible while claiming the least attention of any button in the system.",
                         code: "<Button variant=\"ghost\" label=\"Cancel\" />",
-                        render: <Button variant="ghost" label="Cancel" showAnatomy />,
+                        render: <Button variant="ghost" label="Cancel" />,
                     },
                     {
                         name: "variant = \"danger\"",
                         why: "The solid destructive confirm, used in the dialog where the user has already made the decision. Its weight is deliberate, because the click that follows cannot be undone.",
                         code: "<Button variant=\"danger\" label=\"Delete\" />",
-                        render: <Button variant="danger" label="Delete" showAnatomy />,
+                        render: <Button variant="danger" label="Delete" />,
                     },
                     {
                         name: "variant = \"danger-soft\"",
                         why: "The calmer destructive action for a smaller scope, such as dropping one row out of a list. It warns without turning an ordinary row into an alarm.",
                         code: "<Button variant=\"danger-soft\" label=\"Remove from list\" />",
-                        render: <Button variant="danger-soft" label="Remove from list" showAnatomy />,
+                        render: <Button variant="danger-soft" label="Remove from list" />,
                     },
                 ]}
             />
@@ -143,7 +143,7 @@ export const Sizes: Story = {
                         name: "size = \"sm\"",
                         why: "The button renders at its smallest box height, sm. This scale suits a tight row of actions such as a table's inline toolbar, where every extra pixel of height crowds the next row.",
                         code: "<Button size=\"sm\" label=\"Save draft\" />",
-                        render: <Button size="sm" label="Save draft" showAnatomy />,
+                        render: <Button size="sm" label="Save draft" />,
                     },
                     {
                         name: "size = \"md\" (default)",
@@ -184,7 +184,7 @@ export const PrefixIcon: Story = {
                         name: "prefixIcon = ArrowLeftIcon",
                         why: "A leading arrow glyph grows before the label on a plain button headed back a step. The glyph carries no size of its own, so the atom reads it off `size` and forces bold weight, since every button glyph sits under 20px and a thin stroke reads weak there.",
                         code: "<Button prefixIcon={ArrowLeftIcon} label=\"Back\" />",
-                        render: <Button prefixIcon={ArrowLeftIcon} label="Back" showAnatomy />,
+                        render: <Button prefixIcon={ArrowLeftIcon} label="Back" />,
                     },
                     {
                         name: "prefixIcon = FloppyDiskIcon",
@@ -237,7 +237,7 @@ export const SuffixIcon: Story = {
                         name: "suffixIcon set, variant = \"primary\"",
                         why: "A trailing arrow grows after the label on the screen's main forward action, Continue. The trailing position reads as onward, so it fits a button that takes the reader further rather than one that saves or deletes something.",
                         code: "<Button label=\"Continue\" suffixIcon={ArrowRightIcon} />",
-                        render: <Button label="Continue" suffixIcon={ArrowRightIcon} showAnatomy />,
+                        render: <Button label="Continue" suffixIcon={ArrowRightIcon} />,
                     },
                     {
                         name: "suffixIcon set, variant = \"secondary\"",
@@ -276,7 +276,7 @@ export const IconSlide: Story = {
                         name: "iconSlide = true, suffixIcon (trailing arrow)",
                         why: "On hover, the trailing arrow slides right, the same direction it already points, nudging the reader onward. Tailwind v4 treats translate as its own property, so the atom transitions `translate` rather than `transform`, which is what keeps the hover motion from stuttering.",
                         code: "<Button label=\"Continue\" suffixIcon={ArrowRightIcon} iconSlide />",
-                        render: <Button label="Continue" suffixIcon={ArrowRightIcon} iconSlide showAnatomy />,
+                        render: <Button label="Continue" suffixIcon={ArrowRightIcon} iconSlide />,
                     },
                     {
                         name: "iconSlide = true, prefixIcon (leading arrow)",
@@ -312,7 +312,7 @@ export const IsIconOnly: Story = {
                         name: "isIconOnly = true, variant = \"primary\"",
                         why: "The label disappears and the button collapses to a square glyph-only box carrying the plus icon. The box goes square at the size's own dimension while the glyph still follows the font scale, exactly like a labelled button.",
                         code: "<Button isIconOnly prefixIcon={PlusIcon} ariaLabel=\"Add item\" />",
-                        render: <Button isIconOnly prefixIcon={PlusIcon} ariaLabel="Add item" showAnatomy />,
+                        render: <Button isIconOnly prefixIcon={PlusIcon} ariaLabel="Add item" />,
                     },
                     {
                         name: "isIconOnly = true, variant = \"secondary\"",
@@ -371,7 +371,7 @@ export const Disabled: Story = {
                         name: "isDisabled = true, variant = \"primary\"",
                         why: "The primary button dims and blocks press, with no spinner attached. This is forwarded straight to HeroUI's own disabled handling, distinct from `isPending` because the two mean different things to a reader.",
                         code: "<Button variant=\"primary\" isDisabled label=\"Save draft\" />",
-                        render: <Button variant="primary" label="Save draft" isDisabled showAnatomy />,
+                        render: <Button variant="primary" label="Save draft" isDisabled />,
                     },
                     {
                         name: "isDisabled = true, variant = \"secondary\"",
@@ -418,7 +418,7 @@ export const Pending: Story = {
                         name: "isPending = true, size = \"sm\"",
                         why: "A spinner takes the leading slot on the smallest button, replacing whatever glyph would otherwise sit there. Two marks in one place would be two signals fighting, so the spinner is the only thing allowed in that slot while the action is busy.",
                         code: "<Button size=\"sm\" isPending label=\"Saving…\" />",
-                        render: <Button size="sm" isPending label="Saving…" showAnatomy />,
+                        render: <Button size="sm" isPending label="Saving…" />,
                     },
                     {
                         name: "isPending = true, size = \"md\" (default)",
@@ -461,37 +461,37 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, size = \"sm\" (pill)",
                         why: "A shimmer pill stands at 80px, tracking the width the real small labelled button will take. This is what stops a button jumping once the data lands and the real label replaces the shimmer.",
                         code: "<Button size=\"sm\" isSkeleton />",
-                        render: <Button size="sm" isSkeleton showAnatomy />,
+                        render: <Button size="sm" isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, size = \"md\" (pill, default)",
                         why: "A shimmer pill stands at 96px, the default width a labelled button's placeholder takes before its data arrives. This is the shape most loading rows in the app actually show, since md is the button size most screens default to.",
                         code: "<Button isSkeleton />",
-                        render: <Button size="md" isSkeleton showAnatomy />,
+                        render: <Button size="md" isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, size = \"lg\" (pill)",
                         why: "A shimmer pill stands at 112px, tracking the width the real large labelled button will take. The shimmer's own width rule scales with size instead of staying one fixed pill for every button.",
                         code: "<Button size=\"lg\" isSkeleton />",
-                        render: <Button size="lg" isSkeleton showAnatomy />,
+                        render: <Button size="lg" isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, isIconOnly = true, size = \"sm\" (square)",
                         why: "A shimmer square stands at 36px instead of a pill, matching the small icon-only button's own box. The square shimmer is its own shape rather than a pill shrunk down, because that is the exact box the real icon-only button will occupy.",
                         code: "<Button isIconOnly size=\"sm\" isSkeleton />",
-                        render: <Button isIconOnly size="sm" isSkeleton showAnatomy />,
+                        render: <Button isIconOnly size="sm" isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, isIconOnly = true, size = \"md\" (square, default)",
                         why: "A shimmer square stands at 40px, the default icon-only button's own box. This is the placeholder a loading toolbar icon shows before its glyph and press handler are ready.",
                         code: "<Button isIconOnly isSkeleton />",
-                        render: <Button isIconOnly size="md" isSkeleton showAnatomy />,
+                        render: <Button isIconOnly size="md" isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, isIconOnly = true, size = \"lg\" (square)",
                         why: "A shimmer square stands at 44px, tracking the largest icon-only button's own box. The square scales with size the same way the pill shimmer does, so neither shape needs a size rule of its own.",
                         code: "<Button isIconOnly size=\"lg\" isSkeleton />",
-                        render: <Button isIconOnly size="lg" isSkeleton showAnatomy />,
+                        render: <Button isIconOnly size="lg" isSkeleton />,
                     },
                 ]}
             />

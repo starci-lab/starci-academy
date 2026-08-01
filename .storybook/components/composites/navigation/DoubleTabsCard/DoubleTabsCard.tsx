@@ -54,9 +54,7 @@ export interface DoubleTabsCardProps {
     /** Layout utilities on the card's outer section wrapper, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this composite so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -80,15 +78,13 @@ const DoubleTabsCard = ({
     cardVariant,
     padding,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: DoubleTabsCardProps) => (
     <SurfaceCard
         variant={cardVariant}
         padding={padding}
         classNames={classNames}
-        anatPart={anatPart}
-        showAnatomy={showAnatomy}
+
+
         header={() => (
             <Toolbar
                 leftTabs={leftTabs}
@@ -98,8 +94,8 @@ const DoubleTabsCard = ({
                 rightTabsNeutral={rightTabsNeutral}
                 variant={variant}
                 size={tabSize}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "Toolbar" : undefined}
+
+
             />
         )}
         body={() => children}

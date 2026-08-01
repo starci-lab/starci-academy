@@ -89,9 +89,7 @@ export interface ContentHeaderProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -109,25 +107,23 @@ const ContentHeader = ({
     challengeCount,
     outcomes,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ContentHeaderProps) => {
     const hasOutcomes = isSkeleton || (outcomes?.length ?? 0) > 0
 
     const metaRow = (
         <>
             {isSkeleton ? (
-                <Chip isSkeleton showAnatomy={showAnatomy} />
+                <Chip isSkeleton />
             ) : isRead ? (
                 <Chip
                     tone="success"
                     icon={CheckCircleIcon}
                     text="Read"
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} />
             ) : (
                 <>
                     {minutesRead != null ? (
@@ -135,7 +131,7 @@ const ContentHeader = ({
                             size="xs"
                             color="muted"
                             text={`${minutesRead} min read`}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                     {challengeCount != null ? (
@@ -143,7 +139,7 @@ const ContentHeader = ({
                             size="xs"
                             color="muted"
                             text={`${challengeCount} challenges`}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -154,11 +150,11 @@ const ContentHeader = ({
     const headerBody = (
         <>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                        <div className="w-fit">
                             <Breadcrumbs
                                 collapseOnMobile
                                 collapseFrom={4}
@@ -171,14 +167,14 @@ const ContentHeader = ({
                 title={title}
                 description={description}
                 meta={() =>
-                    <StackH gap={3} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
+                    <StackH gap={3} align="center" body={metaRow} />
                 }
             />
             {hasOutcomes ? (
                 <SurfaceCardList
                     label="What you will learn"
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+
                     items={(outcomes ?? []).map((outcome) => ({
                         key: outcome.key,
                         leadingIcon: CheckCircleIcon,
@@ -191,8 +187,8 @@ const ContentHeader = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={headerBody} />
+        <div>
+            <StackV gap={6} body={headerBody} />
         </div>
     )
 }

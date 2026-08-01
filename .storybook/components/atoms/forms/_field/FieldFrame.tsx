@@ -49,7 +49,6 @@ export interface FieldFrameProps {
     /** Where this sits inside its parent (the outer column). Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
     /** Storybook: badges Label/Description/Control/Error for BlockAnatomy. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -96,7 +95,6 @@ const FieldFrameBase = ({
     children,
     id,
     classNames,
-    showAnatomy = false,
 }: FieldFrameProps) => {
     const hasFrame = label != null || hint != null || errorMessage != null
 
@@ -111,7 +109,7 @@ const FieldFrameBase = ({
                 {label != null ? (
                     // data-anat-part uses the real HeroUI component name (`Skeleton`, in its
                     // label-bar look), not the slot word "Label" it stands in for.
-                    <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                    <HeroSkeleton className="h-4 w-1/3 rounded-md" />
                 ) : null}
                 {skeletonControl}
             </div>
@@ -127,7 +125,7 @@ const FieldFrameBase = ({
     return (
         <div data-tier="atom" data-component="FieldFrame" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
             {label != null ? (
-                <Label htmlFor={id} isDisabled={isDisabled} className="text-sm font-medium" data-anat-part={showAnatomy ? "Label" : undefined}>
+                <Label htmlFor={id} isDisabled={isDisabled} className="text-sm font-medium">
                     {withRequired(label, isRequired)}
                 </Label>
             ) : null}

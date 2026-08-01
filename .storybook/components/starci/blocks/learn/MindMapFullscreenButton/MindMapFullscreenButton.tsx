@@ -75,9 +75,7 @@ export interface MindMapFullscreenButtonProps {
     /** `true` → all three buttons render as their shimmer mirror (flows into `ButtonBase`, §6b). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -92,16 +90,12 @@ const MindMapFullscreenButton = ({
     isFullscreen,
     ariaLabels,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: MindMapFullscreenButtonProps) => {
-    const buttonAnatPart = showAnatomy ? "ButtonBase" : undefined
-
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackV
                 gap={2}
-                showAnatomy={showAnatomy}
+
                 body={
                     <>
                         <ButtonBase
@@ -112,7 +106,7 @@ const MindMapFullscreenButton = ({
                             prefixIcon={MagnifyingGlassPlusIcon}
                             ariaLabel={ariaLabels.zoomIn}
                             onPress={onZoomIn}
-                            showAnatomy={showAnatomy}
+
                         />
                         <ButtonBase
                             isIconOnly
@@ -122,7 +116,7 @@ const MindMapFullscreenButton = ({
                             prefixIcon={MagnifyingGlassMinusIcon}
                             ariaLabel={ariaLabels.zoomOut}
                             onPress={onZoomOut}
-                            showAnatomy={showAnatomy}
+
                         />
                         <ButtonBase
                             isIconOnly
@@ -134,7 +128,7 @@ const MindMapFullscreenButton = ({
                             prefixIcon={isFullscreen ? ArrowsInIcon : ArrowsOutIcon}
                             ariaLabel={ariaLabels.toggleFullscreen}
                             onPress={onToggleFullscreen}
-                            showAnatomy={showAnatomy}
+
                         />
                     </>
                 }

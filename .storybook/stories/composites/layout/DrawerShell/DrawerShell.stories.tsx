@@ -85,7 +85,7 @@ const ControlledDrawer = ({
                         why,
                         code,
                         render: (
-                            <DrawerShell isOpen={isOpen} onOpenChange={setIsOpen} showAnatomy {...rest}>
+                            <DrawerShell isOpen={isOpen} onOpenChange={setIsOpen} {...rest}>
                                 {children}
                             </DrawerShell>
                         ),

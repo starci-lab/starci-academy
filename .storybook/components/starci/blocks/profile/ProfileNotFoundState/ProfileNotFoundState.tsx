@@ -60,9 +60,7 @@ export interface ProfileNotFoundStateProps {
     /** Fired when the reader takes the one way out: back to the home route. */
     onGoHome: () => void
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -75,10 +73,8 @@ const ProfileNotFoundState = ({
     title,
     description,
     onGoHome,
-    showAnatomy = false,
-    anatPart,
 }: ProfileNotFoundStateProps) => (
-    <div data-anat-part={anatPart}>
+    <div>
         <EmptyState
             icon={UserCircleMinusIcon}
             title={title}
@@ -91,7 +87,7 @@ const ProfileNotFoundState = ({
                     onPress={onGoHome}
                 />
             )}
-            anatPart={showAnatomy ? "EmptyState" : undefined}
+
         />
     </div>
 )

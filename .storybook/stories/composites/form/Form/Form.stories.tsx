@@ -78,7 +78,7 @@ export const Default: Story = {
                         render: (
                             <div data-tier="fixture" className="w-96">
                                 <Form
-                                    showAnatomy
+                                   
                                     onSubmit={() => {}}
                                     actions={(
                                         <FormActions
@@ -128,7 +128,7 @@ export const Submitting: Story = {
                         render: (
                             <div data-tier="fixture" className="w-96">
                                 <Form
-                                    showAnatomy
+                                   
                                     isDisabled
                                     onSubmit={() => {}}
                                     actions={(
@@ -176,7 +176,7 @@ export const Disabled: Story = {
                         render: (
                             <div data-tier="fixture" className="w-96">
                                 <Form
-                                    showAnatomy
+                                   
                                     isDisabled
                                     onSubmit={() => {}}
                                     actions={(

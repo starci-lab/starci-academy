@@ -59,7 +59,7 @@ export const Checks: Story = {
 />`,
                         render: (
                             <SurfaceCardCrossList
-                                showAnatomy
+                               
                                 items={[
                                     { key: "projects", mark: "check", text: row("Build 3 real-world projects from scratch to deployment") },
                                     { key: "grading", mark: "check", text: row("AI-graded assignments using real hiring checklists") },
@@ -89,7 +89,7 @@ export const Crosses: Story = {
 />`,
                         render: (
                             <SurfaceCardCrossList
-                                showAnatomy
+                               
                                 items={[
                                     { key: "cert", mark: "cross", text: row("No certificate to submit to employers") },
                                     { key: "mentor", mark: "cross", text: row("No 1-on-1 mentor support") },
@@ -122,7 +122,7 @@ export const Mixed: Story = {
 />`,
                         render: (
                             <SurfaceCardCrossList
-                                showAnatomy
+                               
                                 items={[
                                     { key: "content", mark: "check", text: row("All 12 weeks of content + self-graded exercises") },
                                     { key: "mock", mark: "check", text: row("Unlimited mock interviews") },
@@ -154,7 +154,7 @@ export const NoMark: Story = {
 />`,
                         render: (
                             <SurfaceCardCrossList
-                                showAnatomy
+                               
                                 items={[
                                     { key: "lang", mark: "none", text: row("Know any programming language") },
                                     { key: "node", mark: "none", text: row("A computer with Node.js installed") },
@@ -192,7 +192,7 @@ export const Variant: Story = {
                         code: "<SurfaceCardCrossList items={[…]} />",
                         render: (
                             <SurfaceCardCrossList
-                                showAnatomy
+                               
                                 items={[
                                     { key: "included", mark: "check", text: row("Included: full course content") },
                                     { key: "excluded", mark: "cross", text: row("Not included: 1-on-1 mentor") },
@@ -208,7 +208,7 @@ export const Variant: Story = {
                             <div data-tier="fixture" className="rounded-3xl bg-surface p-3 shadow-surface">
                                 <SurfaceCardCrossList
                                     variant="nested"
-                                    showAnatomy
+                                   
                                     items={[
                                         { key: "included", mark: "check", text: row("Included: full course content") },
                                         { key: "excluded", mark: "cross", text: row("Not included: 1-on-1 mentor") },
@@ -243,7 +243,7 @@ export const DangerTone: Story = {
 />`,
                         render: (
                             <SurfaceCardCrossList
-                                showAnatomy
+                               
                                 items={[
                                     { key: "progress", mark: "cross", tone: "danger", text: row("Lose all AI-graded assignment progress") },
                                     { key: "mock", mark: "cross", tone: "danger", text: row("Lose unlimited mock interview access") },
@@ -282,7 +282,7 @@ export const MutedTone: Story = {
                         render: (
                             <SurfaceCardCrossList
                                 variant="nested"
-                                showAnatomy
+                               
                                 items={[
                                     { key: "projects", mark: "check", text: row("Build 3 real-world projects") },
                                     { key: "grading", mark: "check", text: row("AI-graded assignments") },
@@ -300,7 +300,7 @@ export const MutedTone: Story = {
                         render: (
                             <SurfaceCardCrossList
                                 variant="nested"
-                                showAnatomy
+                               
                                 items={[
                                     { key: "projects", mark: "check", tone: "muted", text: row("Build 3 real-world projects") },
                                     { key: "grading", mark: "check", tone: "muted", text: row("AI-graded assignments") },
@@ -329,7 +329,7 @@ export const Loading: Story = {
   items={[]}
   isSkeleton
 />`,
-                        render: <SurfaceCardCrossList items={[]} isSkeleton showAnatomy />,
+                        render: <SurfaceCardCrossList items={[]} isSkeleton />,
                     },
                 ]}
             />

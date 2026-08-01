@@ -51,7 +51,7 @@ const Controlled = ({
             acceptedMimeTypes={acceptedMimeTypes}
             maxSizeInBytes={maxSizeInBytes}
             onValueChange={setFile}
-            showAnatomy
+           
         />
     )
 }
@@ -174,7 +174,7 @@ export const Skeleton: Story = {
                                 acceptedMimeTypes={ACCEPT}
                                 maxSizeInBytes={MAX}
                                 onValueChange={() => {}}
-                                showAnatomy
+                               
                             />
                         ),
                     },

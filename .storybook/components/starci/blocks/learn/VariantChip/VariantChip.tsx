@@ -68,9 +68,7 @@ export interface VariantChipDifficultyProps {
     /** `true` → shimmer bar mirroring the exact dot+label shape (the atom draws it itself). */
     isSkeleton?: boolean
     /** Dev/spec: overlay anatomy labels on this chip. */
-    showAnatomy?: boolean
     /** Anatomy tag: name the part so a BlockAnatomy panel can badge it. */
-    anatPart?: string
 }
 
 /** Title-case a difficulty key for the default label. */
@@ -94,15 +92,12 @@ const VariantChipDifficulty = ({
     difficulty,
     classNames,
     isSkeleton,
-    showAnatomy = false,
-    anatPart,
 }: VariantChipDifficultyProps) => {
     // Part name so the anatomy tree can call out exactly what this design builds —
     // the tree reads off the DOM, so without a name the story reveals nothing
     // about what it's made of (teacher caught this 2026-07-25).
     // The label must be the NAMESPACE name (`Chip`) because readers look it
     // up by story name.
-    const chipPart = showAnatomy ? "Chip" : undefined
     // Two branches because the atom's `isSkeleton` is a disjoint union (when
     // skeleton, `text` isn't required): passing a single `boolean | undefined`
     // into one call site wouldn't type-check. The skeleton branch STILL keeps
@@ -130,11 +125,7 @@ const VariantChipDifficulty = ({
     // wrong, with the two atoms jumping up to sit level with design (teacher
     // caught this 2026-07-26). The tree is inferred from the DOM, so the name
     // must sit on the node that ACTUALLY contains the children.
-    return showAnatomy ? (
-        <span className="inline-flex" data-anat-part={anatPart ?? "VariantChipDifficulty"}>
-            {chip}
-        </span>
-    ) : chip
+    return chip
 }
 
 /**

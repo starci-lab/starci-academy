@@ -47,7 +47,7 @@ export interface StepperProps {
     /** Layout utilities on the track, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → each part this block renders carries a `data-anat-part="<name>"`
+     * `true` → each part this block renders carries a ``
      * attribute so a BlockAnatomy panel can badge it on-render. Off in production.
      */
 }

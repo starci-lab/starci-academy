@@ -80,7 +80,7 @@ export const Default: Story = {
                         name: "no prop turned on (tone = default, empty leading slot, no remove)",
                         why: "The DOM is just the pill and its Label, nothing leading and no × trailing. This is the plainest shape the chip can take, the baseline every other leaf differs from by exactly one prop.",
                         code: "<Chip text=\"Draft\" />",
-                        render: <Chip text="Draft" showAnatomy />,
+                        render: <Chip text="Draft" />,
                     },
                 ]}
             />
@@ -102,31 +102,31 @@ export const Tones: Story = {
                         name: "tone = \"default\"",
                         why: "The chip renders on the plain default soft surface with no colour signal at all. Reach for default on tokens that carry no verdict, such as a draft label, so the reader does not hunt for a meaning that is not there.",
                         code: "<Chip tone=\"default\" text=\"Draft\" />",
-                        render: <Chip tone="default" text="Draft" showAnatomy />,
+                        render: <Chip tone="default" text="Draft" />,
                     },
                     {
                         name: "tone = \"success\"",
                         why: "The chip renders on the success soft surface, one step of opacity over the success colour. Reach for it only for the good outcome, such as a check that passed, so the colour keeps its weight everywhere else it appears.",
                         code: "<Chip tone=\"success\" text=\"Passed\" />",
-                        render: <Chip tone="success" text="Passed" showAnatomy />,
+                        render: <Chip tone="success" text="Passed" />,
                     },
                     {
                         name: "tone = \"warning\"",
                         why: "The chip renders on the warning soft surface, a colour that asks for attention without declaring failure. Reach for it on a state that is not broken yet, such as something still awaiting review.",
                         code: "<Chip tone=\"warning\" text=\"Needs review\" />",
-                        render: <Chip tone="warning" text="Needs review" showAnatomy />,
+                        render: <Chip tone="warning" text="Needs review" />,
                     },
                     {
                         name: "tone = \"danger\"",
                         why: "The chip renders on the danger soft surface, one step of opacity over the danger colour. Reach for it only for the bad outcome, such as a check that failed, so a red chip always means something is actually wrong.",
                         code: "<Chip tone=\"danger\" text=\"Failed\" />",
-                        render: <Chip tone="danger" text="Failed" showAnatomy />,
+                        render: <Chip tone="danger" text="Failed" />,
                     },
                     {
                         name: "tone = \"accent\"",
                         why: "The chip renders on the accent soft surface, a colour that draws the eye without claiming good or bad. Reach for it when something is merely worth a look, such as a newly added item.",
                         code: "<Chip tone=\"accent\" text=\"New\" />",
-                        render: <Chip tone="accent" text="New" showAnatomy />,
+                        render: <Chip tone="accent" text="New" />,
                     },
                 ]}
             />
@@ -148,25 +148,25 @@ export const Icon: Story = {
                         name: "icon = CheckCircleIcon, tone = \"success\"",
                         why: "A check-circle glyph grows before the label, sized off the chip's own text and coloured through currentColor rather than a colour of its own. Reach for it when a verified outcome should read faster as a symbol than as the word.",
                         code: "<Chip tone=\"success\" icon={CheckCircleIcon} text=\"Verified\" />",
-                        render: <Chip tone="success" icon={CheckCircleIcon} text="Verified" showAnatomy />,
+                        render: <Chip tone="success" icon={CheckCircleIcon} text="Verified" />,
                     },
                     {
                         name: "icon = XCircleIcon, tone = \"danger\"",
                         why: "A cross-circle glyph grows before the label, borrowing the chip's own danger colour instead of one of its own. Reach for it when a failed outcome must stop the reader before they even get to the word.",
                         code: "<Chip tone=\"danger\" icon={XCircleIcon} text=\"Failed\" />",
-                        render: <Chip tone="danger" icon={XCircleIcon} text="Failed" showAnatomy />,
+                        render: <Chip tone="danger" icon={XCircleIcon} text="Failed" />,
                     },
                     {
                         name: "icon = ClockIcon, tone = \"warning\"",
                         why: "A clock glyph grows before the label on the warning tone, reading as a wait rather than a break. Reach for it when the result has not landed yet and the chip must say pending without sounding like an error.",
                         code: "<Chip tone=\"warning\" icon={ClockIcon} text=\"Pending review\" />",
-                        render: <Chip tone="warning" icon={ClockIcon} text="Pending review" showAnatomy />,
+                        render: <Chip tone="warning" icon={ClockIcon} text="Pending review" />,
                     },
                     {
                         name: "icon = LockIcon, tone not set (default \"default\")",
                         why: "A lock glyph grows before the label while the chip keeps its default neutral tone, since the glyph alone already carries the meaning. Reach for it when the state is about access rather than an outcome, so no success or danger colour is warranted.",
                         code: "<Chip icon={LockIcon} text=\"Locked\" />",
-                        render: <Chip icon={LockIcon} text="Locked" showAnatomy />,
+                        render: <Chip icon={LockIcon} text="Locked" />,
                     },
                 ]}
             />
@@ -199,7 +199,7 @@ export const Dot: Story = {
 <Chip dotClassName="text-danger" text="Down" />`,
                         render: (
                             <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
-                                <Chip dotClassName="text-success" text="Running" showAnatomy />
+                                <Chip dotClassName="text-success" text="Running" />
                                 <Chip dotClassName="text-warning" text="Degraded" />
                                 <Chip dotClassName="text-danger" text="Down" />
                             </div>
@@ -209,13 +209,13 @@ export const Dot: Story = {
                         name: "dotColor set (raw hex outside the palette)",
                         why: "A single chip shows the dot coloured by a raw hex value rather than a Tailwind class, through the same currentColor mechanism the class-based dot uses. Reach for it when the colour is tied to an identity outside the app's own palette, such as a language colour.",
                         code: "<Chip dotColor=\"#3178c6\" text=\"TypeScript\" />",
-                        render: <Chip dotColor="#3178c6" text="TypeScript" showAnatomy />,
+                        render: <Chip dotColor="#3178c6" text="TypeScript" />,
                     },
                     {
                         name: "both dotColor and dotClassName set (dotColor wins)",
                         why: "A single chip sets both dotColor and dotClassName at once, and the dot renders in the raw dotColor value rather than the palette class. This precedence lets a caller pass a shared default class while still overriding it once a specific identity colour is known.",
                         code: "<Chip dotColor=\"#3178c6\" dotClassName=\"text-danger\" text=\"Raw colour wins\" />",
-                        render: <Chip dotColor="#3178c6" dotClassName="text-danger" text="Raw colour wins" showAnatomy />,
+                        render: <Chip dotColor="#3178c6" dotClassName="text-danger" text="Raw colour wins" />,
                     },
                 ]}
             />
@@ -237,7 +237,7 @@ export const Removable: Story = {
                         name: "onRemove not set",
                         why: "The chip renders as a plain pill with nothing at its tail, since no handler was given to grow a ×. This is the resting shape of a label the reader cannot dismiss, the baseline the removable shape below differs from by exactly one prop.",
                         code: "<Chip text=\"React\" />",
-                        render: <Chip text="React" showAnatomy />,
+                        render: <Chip text="React" />,
                     },
                     {
                         name: "onRemove set (× grows at the tail)",
@@ -246,7 +246,7 @@ export const Removable: Story = {
 <Chip tone="accent" text="TypeScript" onRemove={dropFilter} removeLabel="Remove the TypeScript filter" />`,
                         render: (
                             <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
-                                <Chip text="React" onRemove={() => {}} removeLabel="Remove the React filter" showAnatomy />
+                                <Chip text="React" onRemove={() => {}} removeLabel="Remove the React filter" />
                                 <Chip
                                     tone="accent"
                                     text="TypeScript"
@@ -283,25 +283,25 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, no leading or trailing slot",
                         why: "The shimmer pill renders as narrow as a bare label, the same width the real chip takes with neither an icon nor a remove button. This is the loading placeholder for the plainest call shape the chip supports.",
                         code: "<Chip isSkeleton />",
-                        render: <Chip isSkeleton showAnatomy />,
+                        render: <Chip isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, with a leading icon slot",
                         why: "The shimmer pill grows one extra block for the leading glyph slot even though no real icon is drawn yet, matching the width the chip will take once data lands. Reserving that width up front keeps the row from jumping the moment the real icon appears.",
                         code: "<Chip isSkeleton icon={ClockIcon} />",
-                        render: <Chip isSkeleton icon={ClockIcon} showAnatomy />,
+                        render: <Chip isSkeleton icon={ClockIcon} />,
                     },
                     {
                         name: "isSkeleton = true, with a trailing remove slot",
                         why: "The shimmer pill grows the matching extra block on the × side instead of the icon side, and it comes out the same width as the leading-icon state on purpose. The shimmer counts slots rather than which side they sit on, so either slot costs the same one unit of width.",
                         code: "<Chip isSkeleton onRemove={dropFilter} />",
-                        render: <Chip isSkeleton onRemove={() => {}} showAnatomy />,
+                        render: <Chip isSkeleton onRemove={() => {}} />,
                     },
                     {
                         name: "isSkeleton = true, with both a leading and trailing slot",
                         why: "The shimmer pill grows to its widest shape, one block for the leading glyph and one for the trailing ×, matching a chip that will render both once data lands. This is the loading placeholder for the busiest call shape the chip supports.",
                         code: "<Chip isSkeleton icon={ClockIcon} onRemove={dropFilter} />",
-                        render: <Chip isSkeleton icon={ClockIcon} onRemove={() => {}} showAnatomy />,
+                        render: <Chip isSkeleton icon={ClockIcon} onRemove={() => {}} />,
                     },
                 ]}
             />

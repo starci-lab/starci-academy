@@ -95,9 +95,7 @@ interface ContinueCardDataProps {
      */
     isSkeleton?: boolean
     /** `true` → every part emits `data-anat-part` for the BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** The part name of THIS card itself (§11a). */
-    anatPart?: string
 }
 /** Props for {@link ContinueCardHero}. */
 export type ContinueCardHeroProps = ContinueCardDataProps
@@ -113,22 +111,21 @@ const CardBody = ({
     timeLeft,
     urgent = false,
     isSkeleton = false,
-    showAnatomy,
     cta,
 }: ContinueCardDataProps & { cta: React.ReactNode }) => {
     const titleAndMeta = (
         <>
-            <Typography weight="medium" truncate showAnatomy={showAnatomy} isSkeleton={isSkeleton} text={title} />
+            <Typography weight="medium" truncate isSkeleton={isSkeleton} text={title} />
             {isSkeleton ? (
                 // `ListMeta` (the scaffold the live branch uses here) has no `isSkeleton`
                 // yet and sits outside this round's boundary — CardBody calls that scaffold
                 // DIRECTLY so it builds ONE shimmer bar in place of the meta/subtitle row
                 // (the real shape always has EXACTLY ONE of the two) using atom `Typography`.
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
             ) : meta?.length || timeLeft ? (
                 <ListMeta
                     items={meta ?? []}
-                    anatPart={showAnatomy ? "ListMeta" : undefined}
+
                     chip={
                         timeLeft ? (
                             // Same kind of information (time left) ⇒ the same element in
@@ -137,7 +134,7 @@ const CardBody = ({
                             () => (
                                 <Chip
                                     tone={urgent ? "warning" : "default"}
-                                    showAnatomy={showAnatomy}
+
                                     text={timeLeft}
                                 />
                             )
@@ -145,7 +142,7 @@ const CardBody = ({
                     }
                 />
             ) : subtitle ? (
-                <Typography size="xs" color="muted" truncate showAnatomy={showAnatomy} text={subtitle} />
+                <Typography size="xs" color="muted" truncate text={subtitle} />
             ) : null}
         </>
     )
@@ -163,9 +160,9 @@ const CardBody = ({
                 gap={4}
                 align="center"
                 className="relative"
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
-                    <StackV gap={3} classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={titleAndMeta} />
+                    <StackV gap={3} classNames={["min-w-0", "flex-1"]} body={titleAndMeta} />
                 }
             />
             {/* Progress SITS right under the text cluster, BEFORE the button (teacher
@@ -175,9 +172,9 @@ const CardBody = ({
                 // `ProgressMeter` (scaffold) has no `isSkeleton` yet and sits outside this
                 // round's boundary — CardBody calls that scaffold directly so it builds a
                 // track shimmer bar matching the real track height (`h-1`, see `ProgressMeter.tsx`).
-                <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-1 w-full rounded-full" />
             ) : (
-                <ProgressMeter value={value} max={max} anatPart={showAnatomy ? "ProgressMeter" : undefined} />
+                <ProgressMeter value={value} max={max} />
             )}
             <div className="relative">{cta}</div>
         </>
@@ -190,12 +187,12 @@ const CardBody = ({
  * a surface; two side by side and both lose their emphasis.
  */
 const ContinueCardHero = (props: ContinueCardHeroProps) => {
-    const { onPress, className, isSkeleton = false, showAnatomy = false, anatPart } = props
+    const { onPress, className, isSkeleton = false } = props
     return (
         <SurfaceCard
             isHighlight
             isSkeleton={isSkeleton}
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+
             contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
             body={() => (
                 <CardBody
@@ -213,7 +210,7 @@ const ContinueCardHero = (props: ContinueCardHeroProps) => {
                             suffixIcon={ArrowRightIcon}
                             iconSlide
                             onPress={onPress}
-                            showAnatomy={showAnatomy}
+
                             classNames={["w-fit", "shrink-0"]}
                         />
                     }
@@ -230,11 +227,11 @@ const ContinueCardHero = (props: ContinueCardHeroProps) => {
  * control and hijack hover).
  */
 const ContinueCardItem = (props: ContinueCardItemProps) => {
-    const { href, onPress, className, isSkeleton = false, showAnatomy = false, anatPart } = props
+    const { href, onPress, className, isSkeleton = false } = props
     return (
         <SurfaceCard
             isSkeleton={isSkeleton}
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+
             contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
             body={() => (
                 <CardBody
@@ -248,13 +245,13 @@ const ContinueCardItem = (props: ContinueCardItemProps) => {
                             // The tag sits on the REAL heroui `Skeleton` element itself (not the
                             // wrapping span) — same convention as the progress-bar mirror above.
                             <span>
-                                <HeroSkeleton className="h-[14px] w-20 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                                <HeroSkeleton className="h-[14px] w-20 rounded" />
                             </span>
                         ) : (
                             <LinkSeeMore
                                 href={href}
                                 onPress={onPress}
-                                showAnatomy={showAnatomy}
+
                                 label={CTA_LABEL}
                             />
                         )

@@ -155,7 +155,7 @@ const ControlledE2eResultDrawer = ({ flows }: ControlledE2eResultDrawerProps) =>
                                 isOpen={isOpen}
                                 onOpenChange={setIsOpen}
                                 flows={SINGLE_LANG_FLOWS}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -177,7 +177,7 @@ const ControlledE2eResultDrawer = ({ flows }: ControlledE2eResultDrawerProps) =>
                                 isOpen={isOpen}
                                 onOpenChange={setIsOpen}
                                 flows={MULTI_LANG_FLOWS}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -212,8 +212,8 @@ export const Skeleton: Story = {
                                 isOpen
                                 onOpenChange={() => {}}
                                 isSkeleton
-                                anatPart="E2eResultDrawer"
-                                showAnatomy
+
+                               
                             />
                         ),
                     },

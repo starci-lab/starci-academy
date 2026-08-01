@@ -64,7 +64,7 @@ export const Default: Story = {
                         code: "<Divider />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <Divider showAnatomy />
+                                <Divider />
                             </div>
                         ),
                     },
@@ -90,7 +90,7 @@ export const Orientation: Story = {
                         code: "<Divider />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <Divider showAnatomy />
+                                <Divider />
                             </div>
                         ),
                     },
@@ -101,7 +101,7 @@ export const Orientation: Story = {
                         render: (
                             <div data-tier="fixture" className="flex h-16 items-center gap-4">
                                 <span className="text-muted text-sm">Lesson</span>
-                                <Divider orientation="vertical" showAnatomy />
+                                <Divider orientation="vertical" />
                                 <span className="text-muted text-sm">Exercise</span>
                                 <Divider orientation="vertical" />
                                 <span className="text-muted text-sm">Discussion</span>
@@ -130,7 +130,7 @@ export const Variants: Story = {
                         code: "<Divider variant=\"default\" />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <Divider variant="default" showAnatomy />
+                                <Divider variant="default" />
                             </div>
                         ),
                     },
@@ -140,7 +140,7 @@ export const Variants: Story = {
                         code: "<Divider variant=\"secondary\" />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <Divider variant="secondary" showAnatomy />
+                                <Divider variant="secondary" />
                             </div>
                         ),
                     },
@@ -150,7 +150,7 @@ export const Variants: Story = {
                         code: "<Divider variant=\"tertiary\" />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <Divider variant="tertiary" showAnatomy />
+                                <Divider variant="tertiary" />
                             </div>
                         ),
                     },
@@ -176,7 +176,7 @@ export const WithLabel: Story = {
                         code: "<Divider label=\"OR\" />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <Divider label="OR" showAnatomy />
+                                <Divider label="OR" />
                             </div>
                         ),
                     },

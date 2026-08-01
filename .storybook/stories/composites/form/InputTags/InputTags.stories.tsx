@@ -10,7 +10,7 @@ type Story = StoryObj
 /**
  * THE ONE REAL DEP — each token in the box is a removable `Chip` (see
  * `.storybook/components/composites/form/InputTags/InputTags.tsx`: `<Chip
- * onRemove … anatPart="Chip" />` — the node name is the REAL component name,
+ * onRemove … />` — the node name is the REAL component name,
  * no longer the "Chip" role of the old wrapping span, § two-law pass
  * 2026-07-28). `storyId` points at the `Removable` export of
  * `Atoms/Chips/Chip/Chip` (matches the exact shape rendered here — it has `onRemove`).
@@ -49,7 +49,7 @@ export const Default: Story = {
                             code: "<InputTags value={value} onValueChange={setValue} placeholder=\"Add a tag…\" />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputTags value={value} onValueChange={setValue} placeholder="Add a tag…" ariaLabel="Tags" showAnatomy />
+                                    <InputTags value={value} onValueChange={setValue} placeholder="Add a tag…" ariaLabel="Tags" />
                                 </div>
                             ),
                         },
@@ -79,7 +79,7 @@ export const WithLabel: Story = {
                             code: "<InputTags label=\"Skills\" hint=\"Press Enter to add\" value={value} onValueChange={setValue} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputTags label="Skills" hint="Press Enter to add" value={value} onValueChange={setValue} placeholder="Add a tag…" showAnatomy />
+                                    <InputTags label="Skills" hint="Press Enter to add" value={value} onValueChange={setValue} placeholder="Add a tag…" />
                                 </div>
                             ),
                         },
@@ -109,7 +109,7 @@ export const Required: Story = {
                             code: "<InputTags label=\"Skills\" isRequired value={value} onValueChange={setValue} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputTags label="Skills" isRequired value={value} onValueChange={setValue} placeholder="Add a tag…" showAnatomy />
+                                    <InputTags label="Skills" isRequired value={value} onValueChange={setValue} placeholder="Add a tag…" />
                                 </div>
                             ),
                         },
@@ -139,7 +139,7 @@ export const Filled: Story = {
                             code: "<InputTags label=\"Skills\" value={[\"React\", \"TypeScript\", \"GraphQL\"]} onValueChange={setValue} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputTags label="Skills" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" showAnatomy />
+                                    <InputTags label="Skills" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" />
                                 </div>
                             ),
                         },
@@ -169,7 +169,7 @@ export const Disabled: Story = {
                             code: "<InputTags label=\"Skills\" isDisabled value={[\"React\", \"TypeScript\"]} onValueChange={setValue} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputTags label="Skills" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" isDisabled showAnatomy />
+                                    <InputTags label="Skills" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" isDisabled />
                                 </div>
                             ),
                         },
@@ -199,7 +199,7 @@ export const Error: Story = {
                             code: "<InputTags label=\"Skills\" errorMessage=\"Add at least 3 tags\" value={[\"React\"]} onValueChange={setValue} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputTags label="Skills" errorMessage="Add at least 3 tags" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" showAnatomy />
+                                    <InputTags label="Skills" errorMessage="Add at least 3 tags" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" />
                                 </div>
                             ),
                         },
@@ -227,7 +227,7 @@ export const Loading: Story = {
                         code: "<InputTags label=\"Skills\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-80">
-                                <InputTags label="Skills" value={[]} onValueChange={() => {}} isSkeleton showAnatomy />
+                                <InputTags label="Skills" value={[]} onValueChange={() => {}} isSkeleton />
                             </div>
                         ),
                     },

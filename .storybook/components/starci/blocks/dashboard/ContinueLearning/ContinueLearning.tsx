@@ -80,9 +80,7 @@ export interface ContinueLearningProps {
     /** Fired when the onboarding CTA is pressed (both empty wordings share one action). */
     onBrowseCourses: () => void
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Subtitle word per kind — the block's own wording (§14d.1: design never sees "lesson"/"challenge"). */
@@ -110,8 +108,6 @@ const ContinueLearning = ({
     isLoading,
     onSelectItem,
     onBrowseCourses,
-    showAnatomy = false,
-    anatPart,
 }: ContinueLearningProps) => {
     const usingPlaceholders = isLoading && items.length === 0
     const source = usingPlaceholders ? SKELETON_ITEMS : items
@@ -124,17 +120,17 @@ const ContinueLearning = ({
                 title={item.title}
                 subtitle={KIND_LABEL[item.kind]}
                 onPress={usingPlaceholders ? undefined : () => onSelectItem(item.id)}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "ContinueCardItem" : undefined}
+
+
             />
         ),
     }))
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
-                skeleton={<Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} showAnatomy={showAnatomy} />}
+                skeleton={<Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} />}
                 isEmpty={!isLoading && items.length === 0}
                 emptyContent={{
                     title: hasCourses
@@ -149,15 +145,14 @@ const ContinueLearning = ({
                             size="sm"
                             label="Browse courses"
                             onPress={onBrowseCourses}
-                            showAnatomy={showAnatomy}
+
                         />
                     ),
-                    anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-                    showAnatomy,
+
                 }}
-                showAnatomy={showAnatomy}
+
             >
-                <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} showAnatomy={showAnatomy} />
+                <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} />
             </AsyncContent>
         </div>
     )

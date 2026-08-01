@@ -112,8 +112,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ContentDiscussion
-                                anatPart="ContentDiscussion"
-                                showAnatomy
+
+                               
                                 label="Discussion"
                                 currentUserId="viewer-1"
                                 currentUser={{ username: "You" }}
@@ -168,8 +168,8 @@ export const Empty: Story = {
                         code: "<ContentDiscussion label=\"Discussion\" comments={[]} total={0} repliesByParent={{}} onSubmitComment={post} ... />",
                         render: (
                             <ContentDiscussion
-                                anatPart="ContentDiscussion"
-                                showAnatomy
+
+                               
                                 label="Discussion"
                                 currentUserId={null}
                                 comments={[]}
@@ -204,8 +204,8 @@ export const Error: Story = {
                         code: "<ContentDiscussion label=\"Discussion\" comments={[]} total={0} errorMessage=\"Couldn't load comments\" ... />",
                         render: (
                             <ContentDiscussion
-                                anatPart="ContentDiscussion"
-                                showAnatomy
+
+                               
                                 label="Discussion"
                                 currentUserId={null}
                                 comments={[]}
@@ -241,8 +241,8 @@ export const Skeleton: Story = {
                         code: "<ContentDiscussion label=\"Discussion\" isSkeleton comments={[]} total={0} ... />",
                         render: (
                             <ContentDiscussion
-                                anatPart="ContentDiscussion"
-                                showAnatomy
+
+                               
                                 label="Discussion"
                                 currentUserId="viewer-1"
                                 currentUser={{ username: "You" }}

@@ -45,7 +45,6 @@ const progressBase = {
     meta: ["Question 2 / 8", "Middle"],
     timeLeft: "40 minutes left",
     onPress: () => {},
-    showAnatomy: true,
 }
 
 // The loaded "has-progress" shape — urgent/not-urgent SHARE this composition (only the chip TONE differs).
@@ -271,10 +270,10 @@ export const LoadError: Story = {
 />`,
                         render: (
                             <SurfaceCard
-                                anatPart="SurfaceCard"
+
                                 body={() => (
                                     <EmptyState
-                                        anatPart="EmptyState"
+
                                         tone="danger"
                                         icon={WarningDuotone}
                                         title="Connection lost"

@@ -190,7 +190,7 @@ const Section = ({
             data-principles="label-field"
         >
             {/* tight gap-1: title ↔ description is a PAIR, not two regions (§10b).
-                No `data-anat-part="Header"` wrapper: it never helps the reader past what the
+                No `` wrapper: it never helps the reader past what the
                 `Typography` nodes inside already say on their own (§11a.1 CASE 2/3 — a
                 badge with nowhere to link is worse than no badge; those two atoms keep their
                 own badge below and surface as top-level nodes instead). */}
@@ -211,7 +211,7 @@ const Section = ({
                     </>
                 }
             />
-            {/* No `data-anat-part="Body"` here either: `body`/`children` is arbitrary
+            {/* No `` here either: `body`/`children` is arbitrary
                 caller-supplied field content (§11a.1 CASE 3 — caller slot). */}
             {main != null ? (
                 <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>

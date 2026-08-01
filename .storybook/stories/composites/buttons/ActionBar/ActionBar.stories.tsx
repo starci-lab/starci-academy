@@ -59,7 +59,7 @@ export const Slots: Story = {
                         name: "primary only",
                         why: "`primary` is the only required slot — a row can be just the one emphasized action, e.g. a single-step confirmation with nothing to cancel back to.",
                         code: `<ActionBar primary={{ label: "Submit", onPress }} />`,
-                        render: <ActionBar primary={primary} showAnatomy />,
+                        render: <ActionBar primary={primary} />,
                     },
                     {
                         name: "primary + dismiss",
@@ -68,7 +68,7 @@ export const Slots: Story = {
   primary={{ label: "Submit", onPress }}
   dismiss={{ label: "Cancel", onPress }}
 />`,
-                        render: <ActionBar primary={primary} dismiss={dismiss} showAnatomy />,
+                        render: <ActionBar primary={primary} dismiss={dismiss} />,
                     },
                     {
                         name: "primary + secondary + dismiss",
@@ -78,7 +78,7 @@ export const Slots: Story = {
   secondary={{ label: "Save draft", onPress }}
   dismiss={{ label: "Cancel", onPress }}
 />`,
-                        render: <ActionBar primary={primary} secondary={secondary} dismiss={dismiss} showAnatomy />,
+                        render: <ActionBar primary={primary} secondary={secondary} dismiss={dismiss} />,
                     },
                 ]}
             />
@@ -101,7 +101,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, primary + secondary + dismiss",
                         why: "All three roles still render as three shimmer buttons, in the same order and with the same gap — the composite decides the count is three, the atom decides each shimmer's own shape.",
                         code: `<ActionBar isSkeleton primary={{ label: "Submit" }} secondary={{ label: "Save draft" }} dismiss={{ label: "Cancel" }} />`,
-                        render: <ActionBar isSkeleton primary={primary} secondary={secondary} dismiss={dismiss} showAnatomy />,
+                        render: <ActionBar isSkeleton primary={primary} secondary={secondary} dismiss={dismiss} />,
                     },
                 ]}
             />
@@ -140,7 +140,7 @@ export const Responsive: Story = {
                         code: `<ActionBar primary={{…}} secondary={{…}} dismiss={{…}} />          // at="md" = default`,
                         render: (
                             <ResponsiveFrame width="20rem" label="container 320px, below @app-md, full-width column">
-                                <ActionBar primary={primary} secondary={secondary} dismiss={dismiss} showAnatomy />
+                                <ActionBar primary={primary} secondary={secondary} dismiss={dismiss} />
                             </ResponsiveFrame>
                         ),
                     },
@@ -150,7 +150,7 @@ export const Responsive: Story = {
                         code: `<ActionBar primary={{…}} secondary={{…}} dismiss={{…}} />          // at="md" = default`,
                         render: (
                             <ResponsiveFrame width="50rem" label="container 800px, at @app-md, packed row">
-                                <ActionBar primary={primary} secondary={secondary} dismiss={dismiss} showAnatomy />
+                                <ActionBar primary={primary} secondary={secondary} dismiss={dismiss} />
                             </ResponsiveFrame>
                         ),
                     },

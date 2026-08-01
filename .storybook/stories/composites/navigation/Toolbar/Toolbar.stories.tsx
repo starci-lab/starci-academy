@@ -177,7 +177,7 @@ export const SingleGroup: Story = {
                         code: `<Toolbar
   leftTabs={{ items, selectedKey, ariaLabel: "Course section", onSelectionChange }}
 />`,
-                        render: <Controlled leftItems={CONTENT_TABS} defaultLeftKey="overview" showAnatomy />,
+                        render: <Controlled leftItems={CONTENT_TABS} defaultLeftKey="overview" />,
                     },
                 ]}
             />
@@ -202,7 +202,7 @@ export const WithLeftEnd: Story = {
   leftTabs={…}
   leftEnd={<Button isIconOnly prefixIcon={PlusIcon} ariaLabel="Add new section" variant="ghost" size="sm" />}
 />`,
-                        render: <Controlled leftItems={CONTENT_TABS} defaultLeftKey="overview" leftEnd={addButton} showAnatomy />,
+                        render: <Controlled leftItems={CONTENT_TABS} defaultLeftKey="overview" leftEnd={addButton} />,
                     },
                 ]}
             />
@@ -230,7 +230,7 @@ export const TwoGroups: Story = {
                                 defaultLeftKey="overview"
                                 rightItems={LANGUAGE_TABS}
                                 defaultRightKey="vi"
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -272,7 +272,7 @@ export const RightNeutralCollapsed: Story = {
                                 defaultRightKey="vi"
                                 rightTabsNeutral
                                 collapseRightOnMobile
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -318,7 +318,7 @@ export const PrimaryVariant: Story = {
                                 leftAriaLabel="Area"
                                 defaultLeftKey="start"
                                 variant="primary"
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -373,7 +373,7 @@ export const TabStates: Story = {
                                 ]}
                                 leftAriaLabel="Area"
                                 defaultLeftKey="start"
-                                showAnatomy
+                               
                             />
                         ),
                     },

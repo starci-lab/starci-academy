@@ -60,9 +60,7 @@ export interface FlashcardModeSwitchProps {
      */
     ariaLabel: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -74,8 +72,6 @@ const FlashcardModeSwitch = ({
     mode,
     onModeChange,
     ariaLabel,
-    showAnatomy = false,
-    anatPart,
 }: FlashcardModeSwitchProps) => {
     const items: Array<TabItem> = (Object.keys(MODE_LABEL) as Array<FlashcardMode>).map((key) => ({
         key,
@@ -84,13 +80,13 @@ const FlashcardModeSwitch = ({
     }))
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <Tabs
                 items={items}
                 selectedKey={mode}
                 onSelectionChange={(key) => onModeChange(key as FlashcardMode)}
                 ariaLabel={ariaLabel}
-                showAnatomy={showAnatomy}
+
             />
         </div>
     )

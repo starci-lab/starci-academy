@@ -55,7 +55,7 @@ export const Subtitle: Story = {
                         name: "subtitle = undefined",
                         why: "Only the title line renders, no subtitle bar or gap beneath it. This is the shape for a bare label — a notification title, a bare setting name with nothing more to say.",
                         code: "<TitledText title=\"Notification\" />",
-                        render: <TitledText title="Notification" showAnatomy />,
+                        render: <TitledText title="Notification" />,
                     },
                     {
                         name: "subtitle set",
@@ -93,7 +93,7 @@ export const Hint: Story = {
                         name: "hint set",
                         why: "A third muted line grows beneath the label, completing the three-line stat stack — big bold value, foreground label, muted hint. This is the shape a dashboard tile takes when it also wants to show the metric's recent trend.",
                         code: "<TitledText size=\"stat\" title=\"1,284\" subtitle=\"Students\" hint=\"+12% vs last month\" />",
-                        render: <TitledText size="stat" title="1,284" subtitle="Students" hint="+12% vs last month" showAnatomy />,
+                        render: <TitledText size="stat" title="1,284" subtitle="Students" hint="+12% vs last month" />,
                     },
                 ]}
             />
@@ -119,7 +119,7 @@ export const Sizes: Story = {
                         name: "size = \"row\" (default)",
                         why: "The title renders body-sm medium over a body-xs muted subtitle — the dense scale a list row or setting row falls back to when size is left unset.",
                         code: "<TitledText title=\"Grade with the premium model\" subtitle=\"Unlocks when you upgrade your plan\" />",
-                        render: <TitledText title="Grade with the premium model" subtitle="Unlocks when you upgrade your plan" showAnatomy />,
+                        render: <TitledText title="Grade with the premium model" subtitle="Unlocks when you upgrade your plan" />,
                     },
                     {
                         name: "size = \"header\"",
@@ -156,7 +156,7 @@ export const Weight: Story = {
                         name: "weight = undefined (per-size default)",
                         why: "The title renders at its size's own default weight — medium for the row scale shown here. This is the shape every leaf above takes when weight is left unset.",
                         code: "<TitledText title=\"Grade with the premium model\" subtitle=\"Unlocks when you upgrade your plan\" />",
-                        render: <TitledText title="Grade with the premium model" subtitle="Unlocks when you upgrade your plan" showAnatomy />,
+                        render: <TitledText title="Grade with the premium model" subtitle="Unlocks when you upgrade your plan" />,
                     },
                     {
                         name: "weight = \"medium\"",
@@ -205,7 +205,7 @@ export const Truncate: Story = {
                                 <TitledText
                                     title="A very long title that gets clipped at the end of the line"
                                     subtitle="And a subtitle that is just as long gets clipped the same way"
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -248,7 +248,7 @@ export const SkeletonState: Story = {
                         name: "isSkeleton = false",
                         why: "The real two-line stack renders: a medium title over a muted subtitle — the shape the shimmer below mirrors.",
                         code: "<TitledText title=\"Grade with the premium model\" subtitle=\"Unlocks when you upgrade your plan\" />",
-                        render: <TitledText title="Grade with the premium model" subtitle="Unlocks when you upgrade your plan" showAnatomy />,
+                        render: <TitledText title="Grade with the premium model" subtitle="Unlocks when you upgrade your plan" />,
                     },
                     {
                         name: "isSkeleton = true, size = \"row\"",

@@ -322,7 +322,7 @@ export const ContainerQuery: Story = {
                                         size="md"
                                         padding={4}
                                         body={
-                                            <span data-tier="fixture" className="block" data-anat-part="Grid">
+                                            <span data-tier="fixture" className="block">
                                                 <Grid columns={columns} gap={4} items={cells} />
                                             </span>
                                         }
@@ -342,7 +342,7 @@ export const ContainerQuery: Story = {
                                         size="xl"
                                         padding={4}
                                         body={
-                                            <span data-tier="fixture" className="block" data-anat-part="Grid">
+                                            <span data-tier="fixture" className="block">
                                                 <Grid columns={columns} gap={4} items={cells} />
                                             </span>
                                         }

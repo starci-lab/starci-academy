@@ -96,7 +96,6 @@ export interface HeadhuntingsPageProps {
     /** `true` → every block that can mirror itself does. */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -121,28 +120,27 @@ const HeadhuntingsPage = ({
     consultantsEmptyTitle,
     consultantsAriaLabel,
     isSkeleton = false,
-    showAnatomy = false,
 }: HeadhuntingsPageProps) => {
     const directorySection = (
         <>
             <ConsultantDirectoryCompanySearch
-                anatPart="ConsultantDirectoryCompanySearch"
+
                 query={companyQuery}
                 onQueryChange={onCompanyQueryChange}
                 suggestions={companySuggestions}
                 isLoadingSuggestions={isLoadingCompanySuggestions}
                 onSelectCompany={onSelectCompany}
-                showAnatomy={showAnatomy}
+
             />
             <ConsultantDirectoryGrid
-                anatPart="ConsultantDirectoryGrid"
+
                 consultants={consultants}
                 count={consultantCount}
                 isLoading={isLoadingConsultants}
                 onOpenConsultant={onOpenConsultant}
                 emptyTitle={consultantsEmptyTitle}
                 ariaLabel={consultantsAriaLabel}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -150,18 +148,18 @@ const HeadhuntingsPage = ({
     const headhuntingsSections = (
         <>
             <ConsultantDirectoryHeader
-                anatPart="ConsultantDirectoryHeader"
+
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={directorySection} />
+            <StackV gap={4} body={directorySection} />
         </>
     )
 
-    const headhuntingsBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={headhuntingsSections} />
+    const headhuntingsBody = <StackV gap={6} body={headhuntingsSections} />
 
     return <Container size="md" padding={6} body={headhuntingsBody} />
 }

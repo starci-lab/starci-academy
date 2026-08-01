@@ -74,7 +74,7 @@ export const Default: Story = {
                         code: "<Tooltip label=\"Weekly XP ranking\" placement=\"top\">\n  <TermChip />\n</Tooltip>",
                         render: (
                             <div data-tier="fixture" className="flex justify-center py-12">
-                                <Tooltip label="Ranked by total XP earned this week" placement="top" defaultOpen showAnatomy>
+                                <Tooltip label="Ranked by total XP earned this week" placement="top" defaultOpen>
                                     <TriggerBox label="Weekly rank" />
                                 </Tooltip>
                             </div>
@@ -102,7 +102,7 @@ export const Placements: Story = {
                         code: "<Tooltip label=\"Placement top\" placement=\"top\">…</Tooltip>",
                         render: (
                             <div data-tier="fixture" className="flex justify-center py-12">
-                                <Tooltip label="Placement top" placement="top" defaultOpen showAnatomy>
+                                <Tooltip label="Placement top" placement="top" defaultOpen>
                                     <TriggerBox label="Top" />
                                 </Tooltip>
                             </div>
@@ -114,7 +114,7 @@ export const Placements: Story = {
                         code: "<Tooltip label=\"Placement bottom\" placement=\"bottom\">…</Tooltip>",
                         render: (
                             <div data-tier="fixture" className="flex justify-center py-12">
-                                <Tooltip label="Placement bottom" placement="bottom" defaultOpen showAnatomy>
+                                <Tooltip label="Placement bottom" placement="bottom" defaultOpen>
                                     <TriggerBox label="Bottom" />
                                 </Tooltip>
                             </div>
@@ -126,7 +126,7 @@ export const Placements: Story = {
                         code: "<Tooltip label=\"Placement left\" placement=\"left\">…</Tooltip>",
                         render: (
                             <div data-tier="fixture" className="flex justify-center py-12">
-                                <Tooltip label="Placement left" placement="left" defaultOpen showAnatomy>
+                                <Tooltip label="Placement left" placement="left" defaultOpen>
                                     <TriggerBox label="Left" />
                                 </Tooltip>
                             </div>
@@ -138,7 +138,7 @@ export const Placements: Story = {
                         code: "<Tooltip label=\"Placement right\" placement=\"right\">…</Tooltip>",
                         render: (
                             <div data-tier="fixture" className="flex justify-center py-12">
-                                <Tooltip label="Placement right" placement="right" defaultOpen showAnatomy>
+                                <Tooltip label="Placement right" placement="right" defaultOpen>
                                     <TriggerBox label="Right" />
                                 </Tooltip>
                             </div>

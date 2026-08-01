@@ -111,7 +111,7 @@ const Controlled = <T extends string>(props: {
             ariaLabel={props.ariaLabel}
             trailing={props.trailing}
             itemAction={props.itemAction}
-            showAnatomy
+           
         />
     )
 }
@@ -137,7 +137,7 @@ const ControlledMulti = <T extends string>(props: {
             values={values}
             onToggle={toggle}
             ariaLabel={props.ariaLabel}
-            showAnatomy
+           
         />
     )
 }
@@ -239,7 +239,7 @@ export const Trailing: Story = {
                                 items={DIFFICULTY_ITEMS}
                                 initialValue="easy"
                                 ariaLabel="Select difficulty"
-                                trailing={<Button data-tier="fixture" size="sm" variant="ghost" data-anat-part="Button">+2</Button>}
+                                trailing={<Button data-tier="fixture" size="sm" variant="ghost">+2</Button>}
                             />
                         ),
                     },
@@ -285,10 +285,10 @@ export const ItemAction: Story = {
                                 initialValue="attempt-1"
                                 ariaLabel="Select attempt"
                                 itemAction={(item) => [
-                                    <Button data-tier="fixture" key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Delete ${item.value}`} data-anat-part="Button">
+                                    <Button data-tier="fixture" key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Delete ${item.value}`}>
                                         <TrashIcon className="size-4" />
                                     </Button>,
-                                    <Button data-tier="fixture" key="more" size="sm" variant="tertiary" isIconOnly aria-label={`More options for ${item.value}`} data-anat-part="Button">
+                                    <Button data-tier="fixture" key="more" size="sm" variant="tertiary" isIconOnly aria-label={`More options for ${item.value}`}>
                                         <DotsThreeVerticalIcon className="size-4" />
                                     </Button>,
                                 ]}

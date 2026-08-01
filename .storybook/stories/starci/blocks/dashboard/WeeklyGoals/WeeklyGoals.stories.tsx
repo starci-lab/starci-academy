@@ -87,8 +87,8 @@ export const Content: Story = {
 />`,
                         render: (
                             <WeeklyGoals
-                                anatPart="WeeklyGoals"
-                                showAnatomy
+
+                               
                                 isLoading={false}
                                 onRetry={() => {}}
                                 data={FULL_DATA}

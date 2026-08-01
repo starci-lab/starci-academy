@@ -144,7 +144,6 @@ export interface AvatarBaseProps {
     /** Render the leaf skeleton (a circle shimmer) instead of the avatar. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -168,7 +167,6 @@ export const AvatarBase = ({
     size = "md",
     color = "default",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: AvatarBaseProps) => {
     const { box, dot, glyph, glyphWeight } = SIZE_MAP[size]
@@ -183,11 +181,11 @@ export const AvatarBase = ({
                 data-component="Avatar"
                 className={cn("relative inline-flex", ring ? cn(RING_FRAME, RING_TONE[ring]) : undefined, classNames)}
             >
-                <HeroSkeleton className={cn("rounded-full", box)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className={cn("rounded-full", box)} />
                 {status ? (
                     <span
                         aria-hidden
-                        data-anat-part={showAnatomy ? "Status" : undefined}
+
                         className={cn("ring-background absolute bottom-0 right-0 rounded-full ring-2", dot, "bg-default-300")}
                     />
                 ) : null}
@@ -232,12 +230,12 @@ export const AvatarBase = ({
             data-component="Avatar"
             className={cn("relative inline-flex", ring ? cn(RING_FRAME, RING_TONE[ring]) : undefined, classNames)}
         >
-            <HeroAvatar size={size} color={color} className="rounded-full" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+            <HeroAvatar size={size} color={color} className="rounded-full">
                 {imageSrc ? (
                     <HeroAvatarImage
                         src={imageSrc}
                         alt={name ?? ""}
-                        data-anat-part={showAnatomy ? "AvatarImage" : undefined}
+
                         onLoadingStatusChange={(loadStatus) => {
                             if (loadStatus === "error") {
                                 setState({ signature, index: index + 1 })
@@ -245,12 +243,12 @@ export const AvatarBase = ({
                         }}
                     />
                 ) : null}
-                <HeroAvatarFallback data-anat-part={showAnatomy ? "AvatarFallback" : undefined}>{fallbackContent}</HeroAvatarFallback>
+                <HeroAvatarFallback>{fallbackContent}</HeroAvatarFallback>
             </HeroAvatar>
             {status ? (
                 <span
                     aria-hidden
-                    data-anat-part={showAnatomy ? "Status" : undefined}
+
                     className={cn(
                         "ring-background absolute bottom-0 right-0 rounded-full ring-2",
                         dot,

@@ -79,9 +79,7 @@ export interface ModuleChallengeListProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -114,8 +112,6 @@ const ModuleChallengeList = ({
     challenges,
     onSelectChallenge,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ModuleChallengeListProps) => {
     // Empty while loading (no real challenges yet) → guess 3 rows, keeping the
     // right shape for when real data arrives (§8). Once real `challenges` exist,
@@ -124,7 +120,7 @@ const ModuleChallengeList = ({
 
     return (
         <SurfaceCardList
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCardList" : undefined)}
+
             isSkeleton={isSkeleton}
             items={rows.map((challenge) => ({
                 key: challenge.id,
@@ -151,7 +147,7 @@ const ModuleChallengeList = ({
                     <VariantChipDifficulty
                         difficulty={challenge.difficulty}
                         isSkeleton={isSkeleton}
-                        anatPart={showAnatomy ? "VariantChipDifficulty" : undefined}
+
                     />
                 ),
             }))}

@@ -61,9 +61,7 @@ export interface HeadhuntingCompaniesLayoutProps {
     /** Extra class on the root track. */
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -76,8 +74,6 @@ export interface HeadhuntingCompaniesLayoutProps {
 const HeadhuntingCompaniesLayout = ({
     children,
     className,
-    showAnatomy = false,
-    anatPart,
 }: HeadhuntingCompaniesLayoutProps) => {
     const navAndContent = (
         <>
@@ -88,7 +84,7 @@ const HeadhuntingCompaniesLayout = ({
                     title="Course navigation"
                     description="The course chapter/lesson tree is not built in this pass — the slot is here, the content comes later."
                     icon={SidebarIcon}
-                    anatPart={showAnatomy ? "CourseNavSidebarGap" : undefined}
+
                 />
             </div>
             {/* CALLER SLOT — deliberately unbadged, see file header. */}
@@ -99,7 +95,7 @@ const HeadhuntingCompaniesLayout = ({
     )
 
     return (
-        <StackH gap={6} align="start" className={className} anatPart={anatPart} body={navAndContent} />
+        <StackH gap={6} align="start" className={className} body={navAndContent} />
     )
 }
 

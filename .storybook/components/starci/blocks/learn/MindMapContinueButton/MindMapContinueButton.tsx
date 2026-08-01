@@ -84,9 +84,7 @@ export interface MindMapContinueButtonProps {
     /** `true` → the block shows its loading shimmer instead of either leaf. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -101,8 +99,6 @@ const MindMapContinueButton = ({
     onResume,
     continueAriaLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: MindMapContinueButtonProps) => {
     if (isSkeleton) {
         return (
@@ -132,7 +128,7 @@ const MindMapContinueButton = ({
     if (allContentDone) {
         return (
             <div
-                data-anat-part={anatPart}
+
                 className="rounded-full border border-default bg-surface px-3 py-2 shadow-lg"
             >
                 <Typography
@@ -140,7 +136,7 @@ const MindMapContinueButton = ({
                     weight="semibold"
                     color="success"
                     text={ALL_DONE_LABEL}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
         )

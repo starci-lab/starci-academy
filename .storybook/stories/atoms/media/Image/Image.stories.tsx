@@ -63,7 +63,7 @@ export const WithImage: Story = {
                         code: "<Image src={url} alt=\"Course cover\" ratio=\"video\" />",
                         render: (
                             <div data-tier="fixture" className="w-40">
-                                <Image src={OK_SRC} alt="Course cover" ratio="video" loading="eager" showAnatomy />
+                                <Image src={OK_SRC} alt="Course cover" ratio="video" loading="eager" />
                             </div>
                         ),
                     },
@@ -136,7 +136,7 @@ export const FallbackGlyph: Story = {
                         name: "src = null, fallbackSrc not set",
                         why: "The `Img` node disappears entirely and a `Fallback` node with an image glyph takes its place, with `alt` moving into screen-reader-only text. A genuinely broken image, an `onError` from a 404 or a decode failure, takes this same branch, so the frame is never left blank.",
                         code: "<Image src={null} alt=\"Course cover\" ratio=\"video\" />   // or a broken image src — same branch",
-                        render: <Image src={null} alt="Course cover" ratio="video" showAnatomy />,
+                        render: <Image src={null} alt="Course cover" ratio="video" />,
                     },
                 ]}
             />

@@ -55,7 +55,7 @@ interface LegendOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    /** `true` → tag the dot/label skeleton bars with `data-anat-part="Skeleton"`. */
+    /** `true` → tag the dot/label skeleton bars with ``. */
 }
 
 /**

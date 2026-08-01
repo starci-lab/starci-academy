@@ -82,9 +82,7 @@ interface E2eResultDrawerOwnProps {
     /** Row count to shimmer while `isSkeleton` (no real `flows` yet). Defaults to `3`. */
     skeletonCount?: number
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -120,8 +118,6 @@ const E2eResultDrawer = ({
     placement = "right",
     isSkeleton = false,
     skeletonCount = 3,
-    showAnatomy = false,
-    anatPart,
 }: E2eResultDrawerProps) => {
     const langs = useMemo(() => {
         const set = new Set((flows ?? []).map((flow) => flow.lang ?? UNSPECIFIED_LANG))
@@ -144,9 +140,9 @@ const E2eResultDrawer = ({
         )
 
         return (
-            <div data-anat-part={anatPart}>
-                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} showAnatomy={showAnatomy}>
-                    <StackV gap={4} anatPart={showAnatomy ? "StackV (root)" : undefined} body={skeletonRows} />
+            <div>
+                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE}>
+                    <StackV gap={4} body={skeletonRows} />
                 </DrawerShell>
             </div>
         )
@@ -170,13 +166,13 @@ const E2eResultDrawer = ({
                 <ChipBase
                     tone={isPass ? "success" : "danger"}
                     text={isPass ? "pass" : "fail"}
-                    showAnatomy={showAnatomy}
+
                 />
                 <Typography
                     text={flow.title}
                     size="sm"
                     weight="medium"
-                    showAnatomy={showAnatomy}
+
                 />
             </>
         )
@@ -185,8 +181,8 @@ const E2eResultDrawer = ({
             title: (
                 <StackH
                     gap={2}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "StackH (flow title)" : undefined}
+
+
                     body={chipAndTitle}
                 />
             ),
@@ -194,8 +190,8 @@ const E2eResultDrawer = ({
                 <MarkdownContent
                     source={flow.markdown}
                     measure="compact"
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
+
                 />
             ) : null,
         }
@@ -207,40 +203,40 @@ const E2eResultDrawer = ({
                 text={`${passed}/${visible.length} flows passed — real logs recorded from an actual E2E run against the backend and UI.`}
                 size="sm"
                 color="muted"
-                showAnatomy={showAnatomy}
+
             />
             {hasLangFilter ? (
-                <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
+                <div>
                     <TabsBase
                         items={langs.map((lang) => ({ key: lang, label: langLabel(lang) }))}
                         selectedKey={activeLang}
                         onSelectionChange={setActiveLang}
                         ariaLabel="E2E language"
                         variant="secondary"
-                        showAnatomy={showAnatomy}
+
                     />
                 </div>
             ) : null}
             <Accordion
                 items={items}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={DRAWER_TITLE}
-                showAnatomy={showAnatomy}
+
             >
                 <StackV
                     gap={4}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "StackV (root)" : undefined}
+
+
                     body={countFilterAndAccordion}
                 />
             </DrawerShell>

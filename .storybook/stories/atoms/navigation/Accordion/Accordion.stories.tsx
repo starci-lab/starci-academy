@@ -69,7 +69,7 @@ export const Default: Story = {
                         name: "items = 3 FAQ entries, allowsMultiple unset",
                         why: "`items` renders one Disclosure per entry, giving three panels here, and all three sit collapsed because nothing has been toggled open yet. This bare leaf is the shape a caller reaches for with only the data prop set, before any open behavior is pinned in.",
                         code: "<Accordion items={FAQ_ITEMS} />",
-                        render: <Accordion items={FAQ_ITEMS} showAnatomy />,
+                        render: <Accordion items={FAQ_ITEMS} />,
                     },
                 ]}
             />
@@ -97,7 +97,7 @@ export const Single: Story = {
                         name: "allowsMultiple unset (defaults false), defaultExpandedKeys = [\"refund\"]",
                         why: "allowsMultiple defaults to false, so opening one panel closes any other automatically, and defaultExpandedKeys seeds one panel open so that mutually-exclusive behavior has a visible shape at mount. Without seeding a panel open here, this leaf would mount looking identical to Multiple, and the reader could never tell single-open from multi-open just by looking.",
                         code: "<Accordion defaultExpandedKeys={[\"refund\"]} items={FAQ_ITEMS} /> {/* allowsMultiple defaults to false */}",
-                        render: <Accordion defaultExpandedKeys={["refund"]} items={FAQ_ITEMS} showAnatomy />,
+                        render: <Accordion defaultExpandedKeys={["refund"]} items={FAQ_ITEMS} />,
                     },
                 ]}
             />
@@ -123,7 +123,7 @@ export const Multiple: Story = {
                         name: "allowsMultiple = true, defaultExpandedKeys = [\"refund\", \"cert\"]",
                         why: "allowsMultiple lets panels expand independently, and two of the three start open together here, a count Single can never show at once. Same items, same defaultExpandedKeys mechanism as Single, only the number of panels open at mount differs.",
                         code: "<Accordion allowsMultiple defaultExpandedKeys={[\"refund\", \"cert\"]} items={FAQ_ITEMS} />",
-                        render: <Accordion allowsMultiple defaultExpandedKeys={["refund", "cert"]} items={FAQ_ITEMS} showAnatomy />,
+                        render: <Accordion allowsMultiple defaultExpandedKeys={["refund", "cert"]} items={FAQ_ITEMS} />,
                     },
                 ]}
             />
@@ -145,7 +145,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "The atom swaps every panel row for its own shimmer bar instead of forwarding to a shared Skeleton component, so it draws exactly the closed-trigger shape it will hold once real data lands. This is what the FAQ list looks like while it hasn't loaded yet.",
                         code: "<Accordion isSkeleton items={FAQ_ITEMS} />",
-                        render: <Accordion isSkeleton items={FAQ_ITEMS} showAnatomy />,
+                        render: <Accordion isSkeleton items={FAQ_ITEMS} />,
                     },
                 ]}
             />

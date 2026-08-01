@@ -68,8 +68,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ChallengeHeader
-                                anatPart="ChallengeHeader"
-                                showAnatomy
+
+                               
                                 onBackPress={() => {}}
                                 title="Balance a binary search tree"
                                 description="Write a function that checks whether a BST is height-balanced."

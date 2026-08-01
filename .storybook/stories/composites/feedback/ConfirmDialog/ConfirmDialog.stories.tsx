@@ -107,7 +107,7 @@ const Demo = ({
                 description={description}
                 confirmLabel={confirmLabel}
                 onConfirm={() => setOpen(false)}
-                showAnatomy
+               
             />
         </>
     )
@@ -211,7 +211,7 @@ export const TitleOnly: Story = {
                                 title="Leave this practice session?"
                                 confirmLabel="Leave"
                                 onConfirm={() => {}}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -251,7 +251,7 @@ export const Confirming: Story = {
                                 confirmLabel="Delete submission"
                                 isConfirming
                                 onConfirm={() => {}}
-                                showAnatomy
+                               
                             />
                         ),
                     },

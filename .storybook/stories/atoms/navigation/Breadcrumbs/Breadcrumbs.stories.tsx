@@ -71,7 +71,7 @@ export const Default: Story = {
                                     { key: "course", label: "Advanced React", onPress: () => {} },
                                     { key: "current", label: "Lesson 3: Hooks" },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -105,7 +105,7 @@ export const Truncated: Story = {
                                     { key: "module", label: "Chapter 2", onPress: () => {} },
                                     { key: "current", label: "Lesson 3: Hooks" },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -139,7 +139,7 @@ export const CollapsedLongTrail: Story = {
                                     { key: "course", label: "Advanced React", onPress: () => {} },
                                     { key: "current", label: "Lesson 3: Hooks" },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -173,7 +173,7 @@ export const CollapsedOnMobile: Story = {
                                         { key: "course", label: "Advanced React", onPress: () => {} },
                                         { key: "current", label: "Lesson 3: Hooks" },
                                     ]}
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -219,7 +219,7 @@ export const Skeleton: Story = {
                                     { key: "course", label: "React" },
                                     { key: "current", label: "Lesson 3" },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -236,7 +236,7 @@ export const Skeleton: Story = {
                                     { key: "course", label: "React" },
                                     { key: "current", label: "Lesson 3" },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -254,7 +254,7 @@ export const Skeleton: Story = {
                                         { key: "course", label: "React" },
                                         { key: "current", label: "Lesson 3" },
                                     ]}
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),

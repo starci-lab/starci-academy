@@ -33,13 +33,13 @@ export const Default: Story = {
                         name: "points = 40",
                         why: "The row renders as accent-coloured text reading the points plus a unit word, sized to sit as a trailing value beside a dense row's title. Tabular numerals keep a column of these lining up when several rows sit stacked.",
                         code: "<ScoreValue points={40} />",
-                        render: <ScoreValue points={40} anatPart="ScoreValue" />,
+                        render: <ScoreValue points={40} />,
                     },
                     {
                         name: "isSkeleton = true",
                         why: "The text becomes a shimmer bar at the same trailing position, sized to the resting width of a typical point count so the row's own width does not jump once the real number lands.",
                         code: "<ScoreValue points={0} isSkeleton />",
-                        render: <ScoreValue points={0} isSkeleton anatPart="ScoreValue" />,
+                        render: <ScoreValue points={0} isSkeleton />,
                     },
                 ]}
             />

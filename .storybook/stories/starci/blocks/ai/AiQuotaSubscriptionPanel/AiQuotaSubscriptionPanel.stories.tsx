@@ -61,8 +61,8 @@ export const NoTierCta: Story = {
 />`,
                         render: (
                             <AiQuotaSubscriptionPanel
-                                anatPart="AiQuotaSubscriptionPanel"
-                                showAnatomy
+
+                               
                                 tier={null}
                                 premiumLane={{ isLoading: false }}
                                 onSubscribe={() => {}}
@@ -102,8 +102,8 @@ export const ActiveLane: Story = {
 />`,
                         render: (
                             <AiQuotaSubscriptionPanel
-                                anatPart="AiQuotaSubscriptionPanel"
-                                showAnatomy
+
+                               
                                 tier="pro"
                                 premiumLane={{ data: PRO_LANE, isLoading: false }}
                                 onSubscribe={() => {}}
@@ -149,8 +149,8 @@ export const Skeleton: Story = {
                         code: "<AiQuotaSubscriptionPanel isSkeleton onSubscribe={subscribe} />",
                         render: (
                             <AiQuotaSubscriptionPanel
-                                anatPart="AiQuotaSubscriptionPanel"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 onSubscribe={() => {}}
                             />

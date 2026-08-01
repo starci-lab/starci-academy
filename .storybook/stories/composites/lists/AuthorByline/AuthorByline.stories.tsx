@@ -91,7 +91,7 @@ export const Default: Story = {
                         name: "verified = false, pinned = false",
                         why: "Only the name, the `·`, and the timestamp render — no glyph mounts between them because neither flag is on.",
                         code: "<AuthorByline name=\"Priya Shah\" timestamp=\"3 hours ago\" />",
-                        render: <AuthorByline name="Priya Shah" timestamp="3 hours ago" showAnatomy />,
+                        render: <AuthorByline name="Priya Shah" timestamp="3 hours ago" />,
                     },
                 ]}
             />
@@ -113,7 +113,7 @@ export const Verified: Story = {
                         name: "verified = false (default)",
                         why: "No glyph mounts between the name and the separator — the row reads as a plain author line.",
                         code: "<AuthorByline name=\"Marcus Reed\" timestamp=\"1 day ago\" />",
-                        render: <AuthorByline name="Marcus Reed" timestamp="1 day ago" showAnatomy />,
+                        render: <AuthorByline name="Marcus Reed" timestamp="1 day ago" />,
                     },
                     {
                         name: "verified = true",
@@ -141,7 +141,7 @@ export const Pinned: Story = {
                         name: "pinned = false (default)",
                         why: "No pin glyph mounts — the row is a plain author line.",
                         code: "<AuthorByline name=\"Natalie Cross\" timestamp=\"12 minutes ago\" />",
-                        render: <AuthorByline name="Natalie Cross" timestamp="12 minutes ago" showAnatomy />,
+                        render: <AuthorByline name="Natalie Cross" timestamp="12 minutes ago" />,
                     },
                     {
                         name: "pinned = true",
@@ -174,7 +174,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = false",
                         why: "The real row: name, both glyphs, `·`, timestamp — the shape `isSkeleton` mirrors.",
                         code: "<AuthorByline name=\"Daniel Ortiz\" timestamp=\"an hour ago\" verified pinned />",
-                        render: <AuthorByline name="Daniel Ortiz" timestamp="an hour ago" verified pinned showAnatomy />,
+                        render: <AuthorByline name="Daniel Ortiz" timestamp="an hour ago" verified pinned />,
                     },
                     {
                         name: "isSkeleton = true",

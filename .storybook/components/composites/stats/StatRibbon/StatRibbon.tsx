@@ -43,7 +43,6 @@ interface StatRibbonOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -75,7 +74,6 @@ export const StatRibbon = ({
     isSkeleton = false,
     skeletonCount = 3,
     classNames,
-    showAnatomy = false,
 }: StatRibbonProps) => {
     const cells = isSkeleton
         ? Array.from({ length: skeletonCount }, (_unused, index) => ({ key: String(index) }))
@@ -101,7 +99,7 @@ export const StatRibbon = ({
                     key: item.key,
                     content: (
                         <div
-                            data-anat-part={showAnatomy ? "StatPair" : undefined}
+
                             className={cn(
                                 "min-w-0 @app-sm:flex-1 @app-sm:px-6 @app-sm:py-3 @app-sm:first:pl-3 @app-sm:last:pr-3",
                                 index > 0 && "@app-sm:border-l @app-sm:border-default",

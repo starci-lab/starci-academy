@@ -69,8 +69,8 @@ export const Nudges: Story = {
                         code: "<LearnNudges items={nudges} />",
                         render: (
                             <LearnNudges
-                                anatPart="SurfaceCardList"
-                                showAnatomy
+
+                               
                                 items={NUDGES}
                             />
                         ),
@@ -109,8 +109,8 @@ export const Skeleton: Story = {
                         code: "<LearnNudges isSkeleton items={[]} />",
                         render: (
                             <LearnNudges
-                                anatPart="SurfaceCardList"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 items={[]}
                             />

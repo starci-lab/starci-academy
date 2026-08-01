@@ -115,8 +115,8 @@ const ControlledAiQuotaModal = ({
                 onOpenChange={setIsOpen}
                 activeTab={activeTab}
                 onTabChange={setActiveTab}
-                showAnatomy
-                anatPart="AiQuotaModal"
+               
+
                 {...modalProps}
             />
         </div>

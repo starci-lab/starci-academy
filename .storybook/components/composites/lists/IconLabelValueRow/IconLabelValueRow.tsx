@@ -64,10 +64,8 @@ export interface IconLabelValueRowProps {
     isSkeleton?: boolean
     /** Layout utilities on the root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** `true` → the icon slot also emits `data-anat-part="Icon"`, so a BlockAnatomy panel can badge it on-render. */
-    showAnatomy?: boolean
+    /** `true` → the icon slot also emits ``, so a BlockAnatomy panel can badge it on-render. */
     /** Anatomy tag: names this composite so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -85,26 +83,24 @@ const IconLabelValueRow = ({
     value,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: IconLabelValueRowProps) => (
     <div
         className={cn("flex min-w-0 items-center gap-3", classNames)}
         data-tier="composite"
         data-component="IconLabelValueRow"
         data-principles="content-row"
-        data-anat-part={anatPart}
+
     >
         {isSkeleton ? (
             <span
                 aria-hidden
                 className="size-5 shrink-0 rounded-md bg-default"
-                data-anat-part={showAnatomy ? "Icon" : undefined}
+
             />
         ) : (
             <span
                 className="shrink-0 text-foreground [&_svg]:size-5"
-                data-anat-part={showAnatomy ? "Icon" : undefined}
+
             >
                 <Icon aria-hidden focusable="false" />
             </span>

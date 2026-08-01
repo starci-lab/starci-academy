@@ -159,9 +159,7 @@ export interface ProfileHeroProps {
     /** `true` → every real part switches to its own shimmer; the profile stops accepting presses. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -185,20 +183,19 @@ interface ProfileRankAvatarProps {
     avatarUrl?: string
     rank?: number
     isSkeleton?: boolean
-    showAnatomy?: boolean
 }
 
 /** Avatar with an optional rank-tinted ring, plus the "Rank #N" caption underneath. */
-const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false, showAnatomy = false }: ProfileRankAvatarProps) => {
+const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: ProfileRankAvatarProps) => {
     const rankBody = (
         <>
-            <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
+            <div>
                 <Avatar
                     name={name}
                     src={avatarUrl}
                     size="lg"
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                     ring={isSkeleton ? undefined : rankRingTone(rank)}
                 />
             </div>
@@ -209,12 +206,12 @@ const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false, showAnat
                     weight="medium"
                     isSkeleton={isSkeleton}
                     text={rank != null ? `Rank #${rank}` : undefined}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
     )
-    return <StackV gap={2} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={rankBody} />
+    return <StackV gap={2} align="center" body={rankBody} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -224,11 +221,10 @@ const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false, showAnat
 interface ProfileFollowersProps {
     followersCount?: number
     isSkeleton?: boolean
-    showAnatomy?: boolean
 }
 
 /** Follower count + caption, same "big tabular number over a muted label" idiom `FlashcardDueHero` uses for its due-count (file header, judgement call 4). */
-const ProfileFollowers = ({ followersCount, isSkeleton = false, showAnatomy = false }: ProfileFollowersProps) => {
+const ProfileFollowers = ({ followersCount, isSkeleton = false}: ProfileFollowersProps) => {
     const followersBody = (
         <>
             <Typography
@@ -237,18 +233,18 @@ const ProfileFollowers = ({ followersCount, isSkeleton = false, showAnatomy = fa
                 tabularNums
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : String(followersCount ?? 0)}
-                showAnatomy={showAnatomy}
+
             />
             <Typography
                 size="xs"
                 color="muted"
                 isSkeleton={isSkeleton}
                 text="Followers"
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
-    return <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={followersBody} />
+    return <StackV gap={1} body={followersBody} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -258,18 +254,17 @@ const ProfileFollowers = ({ followersCount, isSkeleton = false, showAnatomy = fa
 interface ProfileBadgesProps {
     badges?: ReadonlyArray<ProfileBadge>
     isSkeleton?: boolean
-    showAnatomy?: boolean
 }
 
 /** Two placeholder pills while loading — enough to read as "a row of badges", not a guess at the real count. */
 const SKELETON_BADGE_KEYS = ["skeleton-badge-1", "skeleton-badge-2"] as const
 
 /** A wrapping row of earned-achievement chips. */
-const ProfileBadges = ({ badges, isSkeleton = false, showAnatomy = false }: ProfileBadgesProps) => {
+const ProfileBadges = ({ badges, isSkeleton = false}: ProfileBadgesProps) => {
     const items = isSkeleton
         ? SKELETON_BADGE_KEYS.map((key) => ({
             key,
-            content: <Chip isSkeleton showAnatomy={showAnatomy} />,
+            content: <Chip isSkeleton />,
         }))
         : (badges ?? []).map((badge) => ({
             key: badge.id,
@@ -278,11 +273,11 @@ const ProfileBadges = ({ badges, isSkeleton = false, showAnatomy = false }: Prof
                     tone="accent"
                     icon={badge.icon}
                     text={badge.label}
-                    showAnatomy={showAnatomy}
+
                 />
             ),
         }))
-    return <Cluster items={items} gap={2} anatPart={showAnatomy ? "Cluster" : undefined} showAnatomy={showAnatomy} />
+    return <Cluster items={items} gap={2} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -292,13 +287,12 @@ const ProfileBadges = ({ badges, isSkeleton = false, showAnatomy = false }: Prof
 interface ShareProfileButtonProps {
     onShare?: () => void
     isSkeleton?: boolean
-    showAnatomy?: boolean
 }
 
 /** Icon-only share trigger — the caller decides what "share" does (copy link, open a sheet, …). */
-const ShareProfileButton = ({ onShare, isSkeleton = false, showAnatomy = false }: ShareProfileButtonProps) => {
+const ShareProfileButton = ({ onShare, isSkeleton = false}: ShareProfileButtonProps) => {
     if (isSkeleton) {
-        return <Button isSkeleton isIconOnly showAnatomy={showAnatomy} />
+        return <Button isSkeleton isIconOnly />
     }
     return (
         <Button
@@ -307,7 +301,7 @@ const ShareProfileButton = ({ onShare, isSkeleton = false, showAnatomy = false }
             prefixIcon={ShareNetworkIcon}
             ariaLabel="Share profile"
             onPress={onShare}
-            showAnatomy={showAnatomy}
+
         />
     )
 }
@@ -401,8 +395,6 @@ const ProfileHero = ({
     onEdit,
     onShare,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ProfileHeroProps) => {
     const { fullName, handle, roleTitle, bio, location, workMode, avatarUrl, rank, followersCount, badges, joinedAt, social } = user
 
@@ -422,7 +414,7 @@ const ProfileHero = ({
                 align="center"
                 isSkeleton={isSkeleton}
                 text={fullName}
-                showAnatomy={showAnatomy}
+
             />
             <Typography
                 size="sm"
@@ -430,7 +422,7 @@ const ProfileHero = ({
                 align="center"
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : `@${handle}`}
-                showAnatomy={showAnatomy}
+
             />
             {isSkeleton || roleTitle ? (
                 <Typography
@@ -439,7 +431,7 @@ const ProfileHero = ({
                     align="center"
                     isSkeleton={isSkeleton}
                     text={roleTitle}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -452,17 +444,17 @@ const ProfileHero = ({
                 avatarUrl={avatarUrl}
                 rank={rank}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <StackV gap={1} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={nameBlock} />
+            <StackV gap={1} align="center" body={nameBlock} />
         </>
     )
 
     const statsRow = (
         <>
-            <ProfileFollowers followersCount={followersCount} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+            <ProfileFollowers followersCount={followersCount} isSkeleton={isSkeleton} />
             {hasBadgesRow ? (
-                <ProfileBadges badges={badges} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                <ProfileBadges badges={badges} isSkeleton={isSkeleton} />
             ) : null}
         </>
     )
@@ -477,9 +469,9 @@ const ProfileHero = ({
                 onPress={action.onPress}
                 isPending={action.isPending}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <ShareProfileButton onShare={onShare} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+            <ShareProfileButton onShare={onShare} isSkeleton={isSkeleton} />
         </>
     )
 
@@ -498,17 +490,17 @@ const ProfileHero = ({
                             isSkeleton={isSkeleton}
                             truncate
                             text={isSkeleton ? undefined : entry.label}
-                            showAnatomy={showAnatomy}
+
                         />
                     </>
                 )
-                return <StackH key={entry.key} gap={2} anatPart={showAnatomy ? "StackH" : undefined} body={socialRow} />
+                return <StackH key={entry.key} gap={2} body={socialRow} />
             })}
             <InlineIconLabel
                 icon={CalendarBlankIcon}
                 tone="default"
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
             >
                 {isSkeleton ? undefined : `Joined ${formatJoinedDate(joinedAt)}`}
             </InlineIconLabel>
@@ -517,14 +509,14 @@ const ProfileHero = ({
 
     const metaSection = hasMetaList ? (
         <>
-            <Divider showAnatomy={showAnatomy} />
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={metaList} />
+            <Divider />
+            <StackV gap={4} body={metaList} />
         </>
     ) : null
 
     const cardBody = (
         <>
-            <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={identitySection} />
+            <StackV gap={4} align="center" body={identitySection} />
 
             {isSkeleton || bio ? (
                 <Typography
@@ -534,7 +526,7 @@ const ProfileHero = ({
                     lineClamp={3}
                     isSkeleton={isSkeleton}
                     text={bio}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
 
@@ -542,8 +534,8 @@ const ProfileHero = ({
                 <Cluster
                     gap={3}
                     justify="center"
-                    anatPart={showAnatomy ? "Cluster" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                     items={[
                         ...(isSkeleton || location
                             ? [
@@ -553,7 +545,7 @@ const ProfileHero = ({
                                         <InlineIconLabel
                                             icon={MapPinIcon}
                                             isSkeleton={isSkeleton}
-                                            anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
                                         >
                                             {location}
                                         </InlineIconLabel>
@@ -570,7 +562,7 @@ const ProfileHero = ({
                                             value={(workMode ?? "remote") as ProfileWorkMode}
                                             map={WORK_MODE_MAP}
                                             isSkeleton={isSkeleton}
-                                            anatPart={showAnatomy ? "EnumChip" : undefined}
+
                                         />
                                     ),
                                 },
@@ -580,20 +572,20 @@ const ProfileHero = ({
                 />
             ) : null}
 
-            <StackH gap={3} divider anatPart={showAnatomy ? "StackH" : undefined} body={statsRow} />
+            <StackH gap={3} divider body={statsRow} />
 
-            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={actionsRow} />
+            <StackH gap={3} body={actionsRow} />
 
             {metaSection}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                showAnatomy={showAnatomy}
-                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={cardBody} />}
+
+
+                body={() => <StackV gap={6} body={cardBody} />}
             />
         </div>
     )

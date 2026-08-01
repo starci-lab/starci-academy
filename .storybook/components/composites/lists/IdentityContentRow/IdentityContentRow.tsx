@@ -73,9 +73,7 @@ export interface IdentityContentRowProps {
     /** Layout utilities on the root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this composite so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -96,15 +94,13 @@ const IdentityContentRow = ({
     body: Body,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: IdentityContentRowProps) => (
     <StackH
         gap={4}
         align="start"
         nested={nested}
         classNames={classNames}
-        anatPart={anatPart}
+
         body={
             <>
                 <Avatar
@@ -113,12 +109,12 @@ const IdentityContentRow = ({
                     seed={avatarSeed}
                     size={avatarSize}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
                 <StackV
                     gap={2}
                     classNames={["min-w-0", "flex-1"]}
-                    anatPart={showAnatomy ? "StackV" : undefined}
+
                     body={
                         <>
                             <Byline isSkeleton={isSkeleton} />

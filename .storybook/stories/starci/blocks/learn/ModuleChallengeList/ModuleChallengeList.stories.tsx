@@ -75,8 +75,8 @@ export const List: Story = {
 />`,
                         render: (
                             <ModuleChallengeList
-                                anatPart="SurfaceCardList"
-                                showAnatomy
+
+                               
                                 challenges={MIXED}
                                 onSelectChallenge={() => {}}
                             />
@@ -111,8 +111,8 @@ export const Skeleton: Story = {
                         code: "<ModuleChallengeList isSkeleton challenges={[]} onSelectChallenge={onSelectChallenge} />",
                         render: (
                             <ModuleChallengeList
-                                anatPart="SurfaceCardList"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 challenges={[]}
                                 onSelectChallenge={() => {}}

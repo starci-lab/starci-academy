@@ -89,9 +89,7 @@ export interface FoundationModalProps {
     /** `true` → the composed body mirrors itself while the resource is still resolving. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -110,13 +108,11 @@ const FoundationModal = ({
     linkUrl,
     onOpenLink,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FoundationModalProps) => {
     const isVideo = kind === "video"
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -124,7 +120,7 @@ const FoundationModal = ({
                 size="full"
                 containerClassName={isVideo ? "modal__container--narrow" : undefined}
                 scroll={isVideo ? undefined : "inside"}
-                showAnatomy={showAnatomy}
+
             >
                 <FoundationResourceBody
                     kind={kind}
@@ -133,8 +129,8 @@ const FoundationModal = ({
                     linkUrl={linkUrl}
                     onOpenLink={onOpenLink}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "FoundationResourceBody" : undefined}
+
+
                 />
             </ModalShell>
         </div>

@@ -47,9 +47,7 @@ export interface AuthorBylineProps {
      */
     classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a `BlockAnatomy` panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this composite so a `BlockAnatomy` panel can badge it on-render. */
-    anatPart?: string
     /**
      * Render the leaf skeleton (shimmer) instead of the row. `name`/`timestamp`
      * delegate to `Typography isSkeleton`; the verified/pinned glyphs and the
@@ -75,15 +73,13 @@ const AuthorByline = ({
     pinned = false,
     timestamp,
     classNames,
-    showAnatomy = false,
-    anatPart,
     isSkeleton = false,
 }: AuthorBylineProps) => (
     <StackH
         gap={2}
         pattern="icon-text separator-dot"
         classNames={["min-w-0", ...(classNames ?? [])]}
-        anatPart={anatPart}
+
         body={
             <>
                 <Typography
@@ -93,7 +89,7 @@ const AuthorByline = ({
                     truncate
                     isSkeleton={isSkeleton}
                     classNames={isSkeleton ? ["w-1/3"] : undefined}
-                    showAnatomy={showAnatomy}
+
                     text={name}
                 />
                 {!isSkeleton && verified ? (
@@ -102,14 +98,14 @@ const AuthorByline = ({
                 {!isSkeleton && pinned ? (
                     <PushPinIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
                 ) : null}
-                <Typography size="xs" color="muted" showAnatomy={showAnatomy} text="·" />
+                <Typography size="xs" color="muted" text="·" />
                 <Typography
                     size="xs"
                     color="muted"
                     truncate
                     isSkeleton={isSkeleton}
                     classNames={isSkeleton ? ["w-1/4"] : undefined}
-                    showAnatomy={showAnatomy}
+
                     text={timestamp}
                 />
             </>

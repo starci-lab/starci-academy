@@ -59,7 +59,6 @@ interface PageHeaderOwnProps {
      * grandchildren out as if they were siblings. This is the ROOT cause of that whole
      * class of bugs, not a symptom.
      */
-    anatPart?: string
 
     /**
      * Optional supporting description placed directly below the title. The
@@ -101,10 +100,9 @@ interface PageHeaderOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → each part this frame renders carries a `data-anat-part="<name>"`
+     * `true` → each part this frame renders carries a ``
      * attribute so a BlockAnatomy panel can badge it on-render. Off in production.
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -149,8 +147,6 @@ const Header = ({
     size = "page",
     isSkeleton = false,
     classNames,
-    showAnatomy,
-    anatPart,
 }: PageHeaderProps) => {
     // ONE render path (§12c) — every part this frame would render anyway stays,
     // each handed `isSkeleton`; the atoms draw their own shimmer. While loading, the
@@ -165,21 +161,21 @@ const Header = ({
     const titleBlock = (
         <>
             {size === "compact" ? (
-                <Typography weight="bold" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={title} />
+                <Typography weight="bold" isSkeleton={isSkeleton} text={title} />
             ) : (
-                <Typography size="h3" weight="bold" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={title} />
+                <Typography size="h3" weight="bold" isSkeleton={isSkeleton} text={title} />
             )}
             {showDescription ? (
                 // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
                 // — a viewport-width decision, so the wrapper owns it, not the atom. Skipped
                 // while loading: the shimmer bar has no overflow to clamp.
                 isSkeleton ? (
-                    <Typography size="sm" color="muted" isSkeleton showAnatomy={showAnatomy} />
+                    <Typography size="sm" color="muted" isSkeleton />
                 ) : (
                     <div className="line-clamp-2 @app-sm:line-clamp-none">
                         <Typography size="sm"
                             color="muted"
-                            showAnatomy={showAnatomy}
+
                             text={description}
                         />
                     </div>
@@ -236,7 +232,7 @@ const Header = ({
     return (
         // outer gap={4}: breadcrumb ↔ title-block ↔ meta (different header tiers);
         // title ↔ description stay a related gap={3} pair inside the title block.
-        <StackV gap={4} anatPart={anatPart} classNames={classNames} body={headerBody} />
+        <StackV gap={4} classNames={classNames} body={headerBody} />
     )
 }
 
@@ -272,10 +268,9 @@ export interface PageBottomBarProps {
      */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → each region emits `data-anat-part="<name>"` so a BlockAnatomy
+     * `true` → each region emits `` so a BlockAnatomy
      * panel can badge it on-render. Off in production.
      */
-    showAnatomy?: boolean
 }
 
 /**

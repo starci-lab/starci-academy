@@ -55,9 +55,7 @@ export interface ChallengeScoreCardProps {
     /** `true` → the score row and the meter switch to shimmer (card label + caption follow via `SurfaceCard`). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -73,8 +71,6 @@ const ChallengeScoreCard = ({
     maxScore,
     passThreshold,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ChallengeScoreCardProps) => {
     // Guards a `max={0}` attempt (an ungraded/empty challenge) from a divide-by-zero
     // meter — same defensive floor `ProgressMeter` itself applies internally.
@@ -103,7 +99,7 @@ const ChallengeScoreCard = ({
                 tabularNums
                 isSkeleton={isSkeleton}
                 text={earnedScore}
-                showAnatomy={showAnatomy}
+
             />
             <Typography
                 size="sm"
@@ -111,18 +107,18 @@ const ChallengeScoreCard = ({
                 tabularNums
                 isSkeleton={isSkeleton}
                 text={`/ ${maxScore} points`}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
 
     const scoreBody = (
         <>
-            <StackH gap={2} align="baseline" anatPart={showAnatomy ? "StackH" : undefined} body={scoreReading} />
+            <StackH gap={2} align="baseline" body={scoreReading} />
             {isSkeleton ? (
                 <HeroSkeleton
                     className="h-1 w-full rounded-full"
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                 />
             ) : (
                 <ProgressMeter
@@ -131,7 +127,7 @@ const ChallengeScoreCard = ({
                     color={meterColor}
                     target={targetScore}
                     targetLabel={`${Math.round(passThreshold * 100)}%`}
-                    anatPart={showAnatomy ? "ProgressMeter" : undefined}
+
                 />
             )}
         </>
@@ -142,9 +138,9 @@ const ChallengeScoreCard = ({
             label="Your results"
             description="Passing needs every requirement completed, not just the total score."
             isSkeleton={isSkeleton}
-            anatPart={anatPart}
-            showAnatomy={showAnatomy}
-            body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={scoreBody} />}
+
+
+            body={() => <StackV gap={4} body={scoreBody} />}
         />
     )
 }

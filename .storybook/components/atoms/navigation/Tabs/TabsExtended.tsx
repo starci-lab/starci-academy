@@ -50,11 +50,10 @@ export interface TabsExtendedProps {
      */
     size?: "sm" | "md"
     /**
-     * `true` → tag the root `HeroTabs` with `data-anat-part="Tabs"` so a
+     * `true` → tag the root `HeroTabs` with `` so a
      * BlockAnatomy panel can badge it. The `children` tree is the caller's
      * own — it stays untagged here, since it isn't this atom's own render.
      */
-    showAnatomy?: boolean
     /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
@@ -76,7 +75,6 @@ export const TabsExtended = ({
     classNames,
     variant = "secondary",
     size = "md",
-    showAnatomy = false,
 }: TabsExtendedProps) => {
     return (
         <HeroTabs
@@ -93,7 +91,7 @@ export const TabsExtended = ({
                 variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
                 classNames,
             )}
-            data-anat-part={showAnatomy ? "Tabs" : undefined}
+
         >
             {children}
         </HeroTabs>

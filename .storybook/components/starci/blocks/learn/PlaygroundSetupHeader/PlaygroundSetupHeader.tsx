@@ -59,9 +59,7 @@ export interface PlaygroundSetupHeaderProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -76,16 +74,14 @@ const PlaygroundSetupHeader = ({
     title,
     description,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundSetupHeaderProps) => {
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 breadcrumb={() => (
-                    <div className="w-fit" data-anat-part={showAnatomy ? "LinkBack" : undefined}>
+                    <div className="w-fit">
                         <LinkBack label={breadcrumbLabel} onPress={onBack} />
                     </div>
                 )}

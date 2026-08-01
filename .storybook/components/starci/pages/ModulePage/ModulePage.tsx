@@ -124,7 +124,6 @@ export interface ModulePageProps {
     /** `true` → the module has no lessons yet; `AsyncContentEmpty` replaces the ENTIRE spine. */
     isEmpty?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -137,12 +136,12 @@ export interface ModulePageProps {
  */
 const ModulePageEmpty = () => (
     <Container
-        anatPart="Container"
+
         size="md"
         padding={6}
         body={
             <AsyncContentEmpty
-                anatPart="AsyncContentEmpty"
+
                 icon={StackIcon}
                 title="This module has no lessons yet"
                 description="Content is still being written — check back later."
@@ -188,7 +187,6 @@ const ModulePage = ({
     onSelectChallenge,
     isSkeleton = false,
     isEmpty = false,
-    showAnatomy = false,
 }: ModulePageProps) => {
     if (isEmpty) {
         return <ModulePageEmpty />
@@ -197,7 +195,7 @@ const ModulePage = ({
     const moduleContent = (
         <>
             <ModuleContinueBand
-                anatPart="ModuleContinueBand"
+
                 resumeLessonTitle={resumeLessonTitle}
                 lessonsRead={lessonsRead}
                 lessonsTotal={lessonsTotal}
@@ -205,26 +203,26 @@ const ModulePage = ({
                 challengesTotal={challengesTotal}
                 onResume={onResume}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <ModuleLessonList
-                anatPart="ModuleLessonList"
+
                 lessons={lessons}
                 resumeLessonId={resumeLessonId}
                 onSelectLesson={onSelectLesson}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {/* A count of zero is not news (`ModuleHeader`/`ContentModeNav` idiom) —
             extended here to a whole block's presence: a module with no challenges
             yet does not earn an empty challenge list on its own page. */}
             {isSkeleton || challenges.length > 0 ? (
                 <ModuleChallengeList
-                    anatPart="ModuleChallengeList"
+
                     challenges={challenges}
                     onSelectChallenge={onSelectChallenge}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -233,7 +231,7 @@ const ModulePage = ({
     const moduleSections = (
         <>
             <ModuleHeader
-                anatPart="ModuleHeader"
+
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
@@ -242,11 +240,11 @@ const ModulePage = ({
                 minutesTotal={minutesTotal}
                 challengeCount={challengeCount}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {isLocked ? (
                 <ContentPaywall
-                    anatPart="ContentPaywall"
+
                     title={paywallTitle ?? ""}
                     description={paywallDescription}
                     discountedPriceVnd={discountedPriceVnd ?? 0}
@@ -257,17 +255,17 @@ const ModulePage = ({
                     ctaLabel={paywallCtaLabel ?? ""}
                     onPurchase={onPurchase ?? (() => {})}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={moduleContent} />
+                <StackV gap={6} body={moduleContent} />
             )}
         </>
     )
 
-    const moduleBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={moduleSections} />
+    const moduleBody = <StackV gap={7} body={moduleSections} />
 
-    return <Container size="md" padding={6} anatPart={showAnatomy ? "Container" : undefined} body={moduleBody} />
+    return <Container size="md" padding={6} body={moduleBody} />
 }
 
 export { ModulePage }

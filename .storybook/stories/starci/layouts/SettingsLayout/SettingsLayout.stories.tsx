@@ -85,8 +85,8 @@ export const Default: Story = {
 </SettingsLayout>`,
                         render: (
                             <SettingsLayout
-                                anatPart="SettingsLayout"
-                                showAnatomy
+
+                               
                                 groups={GROUPS}
                                 activeHref="/profile/edit"
                                 onNavigate={() => {}}

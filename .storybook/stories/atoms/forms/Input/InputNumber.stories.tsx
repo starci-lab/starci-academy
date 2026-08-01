@@ -45,7 +45,7 @@ export const Default: Story = {
                             code: "<InputNumber value={v} onValueChange={setV} minValue={0} maxValue={10} step={1} />",
                             render: (
                                 <div data-tier="fixture" className="w-56">
-                                    <InputNumber value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} ariaLabel="Quantity" showAnatomy />
+                                    <InputNumber value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} ariaLabel="Quantity" />
                                 </div>
                             ),
                         },
@@ -75,7 +75,7 @@ export const WithLabel: Story = {
                             code: "<InputNumber label=\"Quantity\" hint=\"0 to 10\" value={v} onValueChange={setV} minValue={0} maxValue={10} />",
                             render: (
                                 <div data-tier="fixture" className="w-56">
-                                    <InputNumber label="Quantity" hint="0 to 10" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} showAnatomy />
+                                    <InputNumber label="Quantity" hint="0 to 10" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} />
                                 </div>
                             ),
                         },
@@ -105,7 +105,7 @@ export const Required: Story = {
                             code: "<InputNumber label=\"Quantity\" isRequired value={v} onValueChange={setV} minValue={0} maxValue={10} />",
                             render: (
                                 <div data-tier="fixture" className="w-56">
-                                    <InputNumber label="Quantity" isRequired value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} showAnatomy />
+                                    <InputNumber label="Quantity" isRequired value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} />
                                 </div>
                             ),
                         },
@@ -135,7 +135,7 @@ export const Filled: Story = {
                             code: "<InputNumber label=\"Quantity\" value={5} onValueChange={setV} minValue={0} maxValue={10} />",
                             render: (
                                 <div data-tier="fixture" className="w-56">
-                                    <InputNumber label="Quantity" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} showAnatomy />
+                                    <InputNumber label="Quantity" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} />
                                 </div>
                             ),
                         },
@@ -165,7 +165,7 @@ export const Disabled: Story = {
                             code: "<InputNumber label=\"Quantity\" value={5} onValueChange={setV} isDisabled />",
                             render: (
                                 <div data-tier="fixture" className="w-56">
-                                    <InputNumber label="Quantity" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} isDisabled showAnatomy />
+                                    <InputNumber label="Quantity" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} isDisabled />
                                 </div>
                             ),
                         },
@@ -195,7 +195,7 @@ export const Error: Story = {
                             code: "<InputNumber label=\"Quantity\" errorMessage=\"Above the max of 10\" value={15} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-56">
-                                    <InputNumber label="Quantity" errorMessage="Above the max of 10" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} showAnatomy />
+                                    <InputNumber label="Quantity" errorMessage="Above the max of 10" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} />
                                 </div>
                             ),
                         },
@@ -223,7 +223,7 @@ export const Loading: Story = {
                         code: "<InputNumber label=\"Quantity\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-56">
-                                <InputNumber label="Quantity" value={0} onValueChange={() => {}} isSkeleton showAnatomy />
+                                <InputNumber label="Quantity" value={0} onValueChange={() => {}} isSkeleton />
                             </div>
                         ),
                     },

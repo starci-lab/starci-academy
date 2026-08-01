@@ -22,7 +22,6 @@ export interface SpinnerBaseProps {
     /** Accessible name, announced by screen readers. Default `"Loading"`. */
     label?: string
     /** Tags the spinner with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -39,7 +38,6 @@ const SpinnerBase = ({
     size = "md",
     tone = "accent",
     label = "Loading",
-    showAnatomy = false,
     classNames,
 }: SpinnerBaseProps) => (
     <HeroSpinner
@@ -49,7 +47,7 @@ const SpinnerBase = ({
         size={size}
         color={tone}
         className={cn(classNames)}
-        data-anat-part={showAnatomy ? "Spinner" : undefined}
+
     />
 )
 

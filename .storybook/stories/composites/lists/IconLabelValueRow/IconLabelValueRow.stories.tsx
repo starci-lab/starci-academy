@@ -42,8 +42,8 @@ export const Default: Story = {
                         code: `<IconLabelValueRow icon={UsersIcon} label="Members" value="12 / 20" />`,
                         render: (
                             <IconLabelValueRow
-                                anatPart="IconLabelValueRow"
-                                showAnatomy
+
+                               
                                 icon={UsersIcon}
                                 label="Members"
                                 value="12 / 20"
@@ -73,8 +73,8 @@ export const Skeleton: Story = {
                         code: `<IconLabelValueRow isSkeleton icon={UsersIcon} label="Members" value="12 / 20" />`,
                         render: (
                             <IconLabelValueRow
-                                anatPart="IconLabelValueRow"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 icon={UsersIcon}
                                 label="Members"

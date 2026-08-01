@@ -44,7 +44,6 @@ export interface BadgeBaseProps {
     /** Render the leaf skeleton (a small pill/dot shimmer) instead of the badge. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -67,7 +66,6 @@ const BadgeBase = ({
     size = "md",
     placement = "top-right",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: BadgeBaseProps) => {
     if (isSkeleton) {
@@ -77,7 +75,7 @@ const BadgeBase = ({
                 data-tier="atom"
                 data-component="Badge"
                 className={cn(dot ? "size-2.5 rounded-full" : "h-4 w-6 rounded-full", classNames)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
             />
         )
     }
@@ -96,7 +94,7 @@ const BadgeBase = ({
             size={size}
             placement={placement}
             className={cn(dot && "min-w-0 p-0", !children && "static", classNames)}
-            data-anat-part={showAnatomy ? "Badge" : undefined}
+
         >
             {label}
         </HeroBadge>
@@ -107,7 +105,7 @@ const BadgeBase = ({
         return badge
     }
     return (
-        <HeroBadge.Anchor data-tier="atom" data-component="Badge" data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
+        <HeroBadge.Anchor data-tier="atom" data-component="Badge">
             {/* Caller slot — `children` belongs to whoever anchors on this badge,
                 not to Badge's own anatomy, so this wrapper stays unbadged. */}
             <span className="inline-flex">

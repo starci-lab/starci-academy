@@ -110,7 +110,7 @@ export const Default: Story = {
   ]}
   defaultExpandedKeys={new Set(["rest"])}
 />`,
-                        render: <SurfaceCardAccordion showAnatomy items={items} defaultExpandedKeys={new Set(["rest"])} />,
+                        render: <SurfaceCardAccordion items={items} defaultExpandedKeys={new Set(["rest"])} />,
                     },
                 ]}
             />
@@ -134,7 +134,7 @@ export const WithLabel: Story = {
   items={[…]}
   defaultExpandedKeys={new Set(["rest"])}
 />`,
-                        render: <SurfaceCardAccordion showAnatomy label="Resources" items={items} defaultExpandedKeys={new Set(["rest"])} />,
+                        render: <SurfaceCardAccordion label="Resources" items={items} defaultExpandedKeys={new Set(["rest"])} />,
                     },
                 ]}
             />
@@ -167,7 +167,7 @@ export const Variants: Story = {
                         code: "<SurfaceCardAccordion label=\"Resources\" items={[…]} />",
                         render: (
                             <SurfaceCardAccordion
-                                showAnatomy
+                               
                                 label="Resources"
                                 variant="surface"
                                 items={items}
@@ -224,7 +224,7 @@ export const WithTitleEnd: Story = {
 />`,
                         render: (
                             <SurfaceCardAccordion
-                                showAnatomy
+                               
                                 label="Milestones"
                                 defaultExpandedKeys={new Set(["m2"])}
                                 items={[
@@ -260,7 +260,7 @@ export const MultipleExpand: Story = {
   defaultExpandedKeys={new Set(["rest", "error"])}
 />`,
                         render: (
-                            <SurfaceCardAccordion showAnatomy label="Multiple open" allowsMultipleExpanded items={items} defaultExpandedKeys={new Set(["rest", "error"])} />
+                            <SurfaceCardAccordion label="Multiple open" allowsMultipleExpanded items={items} defaultExpandedKeys={new Set(["rest", "error"])} />
                         ),
                     },
                 ]}
@@ -286,7 +286,7 @@ export const NoneExpand: Story = {
   items={[…]}
   defaultExpandedKeys={new Set()}
 />`,
-                        render: <SurfaceCardAccordion showAnatomy label="All collapsed" items={items} defaultExpandedKeys={new Set()} />,
+                        render: <SurfaceCardAccordion label="All collapsed" items={items} defaultExpandedKeys={new Set()} />,
                     },
                 ]}
             />
@@ -299,7 +299,7 @@ const ResourcesEmptyState = () => (
         icon={FolderOpenDuotone}
         title="No resources yet"
         description="Docs for this topic will show up here."
-        anatPart="EmptyState"
+
     />
 )
 /** Empty: an empty `items` → {@link EmptyState} fills the surface (instead of a blank card). */
@@ -322,7 +322,7 @@ export const Empty: Story = {
 />`,
                         render: (
                             <SurfaceCardAccordion
-                                showAnatomy
+                               
                                 label="Resources"
                                 items={[]}
                                 emptyState={ResourcesEmptyState}
@@ -351,7 +351,7 @@ export const Loading: Story = {
   items={[…]}
   isSkeleton
 />`,
-                        render: <SurfaceCardAccordion showAnatomy label="Resources" items={items} isSkeleton />,
+                        render: <SurfaceCardAccordion label="Resources" items={items} isSkeleton />,
                     },
                 ]}
             />

@@ -72,9 +72,7 @@ interface AiQuotaSubscriptionPanelOwnProps {
     /** Extra classes on the root. */
     className?: string
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -106,32 +104,30 @@ const AiQuotaSubscriptionPanel = ({
     onSubscribe,
     isSkeleton = false,
     className,
-    anatPart,
-    showAnatomy = false,
 }: AiQuotaSubscriptionPanelProps) => {
     if (isSkeleton) {
         return (
-            <div className={className} data-anat-part={anatPart}>
-                <AiQuotaLane isLoading showAnatomy={showAnatomy} anatPart={showAnatomy ? "AiQuotaLane" : undefined} />
+            <div className={className}>
+                <AiQuotaLane isLoading />
             </div>
         )
     }
     if (tier == null) {
         return (
-            <div className={className} data-anat-part={anatPart}>
+            <div className={className}>
                 <SurfaceCard
                     variant="nested"
                     padding={4}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
+
                     body={() => (
-                        <StackV gap={4} align="start" anatPart={showAnatomy ? "StackV" : undefined} body={
+                        <StackV gap={4} align="start" body={
                             <>
                                 <Typography
                                     size="sm"
                                     color="muted"
                                     text="You don't have a paid plan yet. Upgrade to unlock Premium credit and get graded with premium models."
-                                    showAnatomy={showAnatomy}
+
                                 />
                                 <Button
                                     label="Subscribe to a paid plan"
@@ -150,20 +146,20 @@ const AiQuotaSubscriptionPanel = ({
     }
 
     return (
-        <div className={className} data-anat-part={anatPart}>
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
+        <div className={className}>
+            <StackV gap={4} body={
                 <>
                     <AiQuotaLane
                         data={premiumLane?.data}
                         isLoading={premiumLane?.isLoading ?? false}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "AiQuotaLane" : undefined}
+
+
                     />
                     <Typography
                         size="sm"
                         color="muted"
                         text={`You're on the ${TIER_LABEL[tier]} plan.`}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             } />

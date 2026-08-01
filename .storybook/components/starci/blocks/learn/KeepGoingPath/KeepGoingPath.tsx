@@ -143,9 +143,7 @@ export interface KeepGoingPathBaseProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 /** Placeholder DATA for the 3 guessed rows when `contents` is empty while loading (§12c). */
 const SKELETON_ROWS: Array<KeepGoingContent> = Array.from({ length: 3 }, (_unused, index) => ({
@@ -165,8 +163,6 @@ const KeepGoingPathBase = ({
     module,
     contents,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: KeepGoingPathBaseProps) => {
     // Empty while loading (no real contents yet) → guess 3 rows, keeping the right
     // shape for when real data arrives (§8). Once real `contents` exist, keep the
@@ -178,7 +174,7 @@ const KeepGoingPathBase = ({
             // EVERY word of the heading is decided HERE — "Continue", "Chapter", the `·`.
             // The caller only supplies the number and the name.
             label={`Continue · Chapter ${module.index} · ${module.name}`}
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCardList" : undefined)}
+
             isSkeleton={isSkeleton}
             items={rows.map((content) => {
                 // A lock REPLACES the state icon, it isn't added on top at the row's tail.
@@ -209,7 +205,7 @@ const KeepGoingPathBase = ({
                         <VariantChipDifficulty
                             difficulty={content.difficulty}
                             isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "VariantChipDifficulty" : undefined}
+
                         />
                     ),
                 }

@@ -129,7 +129,7 @@ export const PriceWithAction: Story = {
                             <Screen
                                 bar={(
                                     <PageBottomBar
-                                        showAnatomy
+                                       
                                         body={EnrollPriceTag}
                                         actions={EnrollAction}
                                     />
@@ -160,7 +160,7 @@ export const FullWidthAction: Story = {
                         render: (
                             <Screen
                                 bar={(
-                                    <PageBottomBar showAnatomy>
+                                    <PageBottomBar>
                                         {StartLearningAction}
                                     </PageBottomBar>
                                 )}
@@ -191,7 +191,7 @@ export const WithDecline: Story = {
                             <Screen
                                 bar={(
                                     <PageBottomBar
-                                        showAnatomy
+                                       
                                         actions={DeclineOrAcceptActions}
                                     />
                                 )}

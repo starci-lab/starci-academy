@@ -47,10 +47,9 @@ export interface StepperProps {
     /** Layout utilities on the track, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → each part this block renders carries a `data-anat-part="<name>"`
+     * `true` → each part this block renders carries a ``
      * attribute so a BlockAnatomy panel can badge it on-render. Off in production.
      */
-    showAnatomy?: boolean
 }
 
 /** Visual state of a single step relative to {@link StepperProps.currentIndex}. */
@@ -64,11 +63,9 @@ type StepState = "done" | "current" | "upcoming"
 const StepIndicator = ({
     state,
     index,
-    showAnatomy,
 }: {
     state: StepState
     index: number
-    showAnatomy?: boolean
 }) => (
     <span
         aria-hidden
@@ -104,7 +101,6 @@ const StepperBase = ({
     orientation = "horizontal",
     onStepPress,
     classNames,
-    showAnatomy,
 }: StepperProps) => {
     const isVertical = orientation === "vertical"
     const safeIndex = Math.min(Math.max(currentIndex, 0), steps.length)
@@ -131,14 +127,14 @@ const StepperBase = ({
 
                 const indicatorAndCopy = (
                     <>
-                        <StepIndicator state={state} index={index} showAnatomy={showAnatomy} />
+                        <StepIndicator state={state} index={index} />
                         <div
                             className={cn(
                                 "flex flex-col gap-0",
                                 isVertical ? "" : "items-center text-center",
                             )}
                         >
-                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <span>
                                 <Typography size="sm"
                                     text={step.label}
                                     weight={state === "current" ? "medium" : undefined}
@@ -146,7 +142,7 @@ const StepperBase = ({
                                 />
                             </span>
                             {step.description ? (
-                                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <span>
                                     <Typography size="xs" text={step.description} color="muted" />
                                 </span>
                             ) : null}
@@ -189,11 +185,11 @@ const StepperBase = ({
                 // + optional description) — one node, only the wrapping tag differs.
                 const clickableCopy = (
                     <>
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <span>
                             <Typography size="sm" text={step.label} />
                         </span>
                         {step.description ? (
-                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <span>
                                 <Typography size="xs" text={step.description} color="muted" />
                             </span>
                         ) : null}
@@ -201,7 +197,7 @@ const StepperBase = ({
                 )
                 const staticCopy = (
                     <>
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <span>
                             <Typography size="sm"
                                 text={step.label}
                                 weight={state === "current" ? "medium" : undefined}
@@ -209,7 +205,7 @@ const StepperBase = ({
                             />
                         </span>
                         {step.description ? (
-                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <span>
                                 <Typography size="xs" text={step.description} color="muted" />
                             </span>
                         ) : null}
@@ -217,7 +213,7 @@ const StepperBase = ({
                 )
                 const railAndConnector = (
                     <>
-                        <StepIndicator state={state} index={index} showAnatomy={showAnatomy} />
+                        <StepIndicator state={state} index={index} />
                         {index < steps.length - 1 ? (
                             <span
                                 aria-hidden

@@ -95,22 +95,20 @@ const Interactive = ({
     initialQuery = "",
     showProgress,
     isSkeleton,
-    showAnatomy,
 }: {
     decks: Array<FlashcardDeckListDeck>
     initialView: FlashcardDeckListView
     initialQuery?: string
     showProgress: boolean
     isSkeleton?: boolean
-    showAnatomy?: boolean
 }) => {
     const [view, setView] = useState<FlashcardDeckListView>(initialView)
     const [query, setQuery] = useState(initialQuery)
     const [page, setPage] = useState(1)
     return (
         <FlashcardDeckList
-            anatPart="FlashcardDeckList"
-            showAnatomy={showAnatomy}
+
+
             decks={decks}
             query={query}
             onQueryChange={setQuery}
@@ -153,7 +151,7 @@ export const GridView: Story = {
     onSelectDeck={onSelectDeck}
     showProgress
 />`,
-                        render: <Interactive decks={DECKS} initialView="grid" showProgress showAnatomy />,
+                        render: <Interactive decks={DECKS} initialView="grid" showProgress />,
                     },
                     {
                         name: "showProgress = false",
@@ -189,7 +187,7 @@ export const LineView: Story = {
     showProgress
     /* … */
 />`,
-                        render: <Interactive decks={DECKS} initialView="line" showProgress showAnatomy />,
+                        render: <Interactive decks={DECKS} initialView="line" showProgress />,
                     },
                 ]}
             />
@@ -213,7 +211,7 @@ export const SearchEmpty: Story = {
                         name: "query = \"advanced kubernetes\", decks = []",
                         why: "The search field stays live and shows exactly what was typed, but the grid/list itself is REPLACED by one centred message naming the query — there is nothing left to browse for this term, so no empty grid or empty list ever renders.",
                         code: "<FlashcardDeckList decks={[]} query=\"advanced kubernetes\" /* … */ />",
-                        render: <Interactive decks={[]} initialView="grid" initialQuery="advanced kubernetes" showProgress showAnatomy />,
+                        render: <Interactive decks={[]} initialView="grid" initialQuery="advanced kubernetes" showProgress />,
                     },
                     {
                         name: "query = \"\", decks = []",
@@ -243,7 +241,7 @@ export const Loading: Story = {
                         name: "isSkeleton = true, decks = [] (grid)",
                         why: "The first fetch hasn't resolved yet. The toolbar stays fully interactive (typing/switching view doesn't need the list to exist first); the track guesses six placeholder tiles, each rendering `SurfaceCard`'s own generic mirror instead of this block's chip/mastery/CTA content, which is never built for a placeholder.",
                         code: "<FlashcardDeckList decks={[]} isSkeleton view=\"grid\" /* … */ />",
-                        render: <Interactive decks={[]} initialView="grid" showProgress isSkeleton showAnatomy />,
+                        render: <Interactive decks={[]} initialView="grid" showProgress isSkeleton />,
                     },
                 ]}
             />

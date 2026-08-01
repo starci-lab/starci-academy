@@ -74,19 +74,17 @@ export interface ContentRelatedListProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
  * One related-lesson row's content — extracted because it depends on the loop
  * variable (`item`) and so cannot be hoisted to a module-level const.
  */
-const relatedItemBody = (item: ContentRelatedItem, enrollToOpenLabel: string, showAnatomy: boolean) => (
+const relatedItemBody = (item: ContentRelatedItem, enrollToOpenLabel: string) => (
     <>
         {item.breadcrumb ? (
-            <Typography size="xs" color="muted" truncate text={item.breadcrumb} showAnatomy={showAnatomy} />
+            <Typography size="xs" color="muted" truncate text={item.breadcrumb} />
         ) : null}
         <Typography
             size="sm"
@@ -94,10 +92,10 @@ const relatedItemBody = (item: ContentRelatedItem, enrollToOpenLabel: string, sh
             truncate
             text={item.title}
             underlineOnGroupHover
-            showAnatomy={showAnatomy}
+
         />
         {item.isLocked ? (
-            <Typography size="xs" color="warning" prefixIcon={LockSimpleIcon} text={enrollToOpenLabel} showAnatomy={showAnatomy} />
+            <Typography size="xs" color="warning" prefixIcon={LockSimpleIcon} text={enrollToOpenLabel} />
         ) : null}
     </>
 )
@@ -112,8 +110,6 @@ const ContentRelatedList = ({
     label,
     enrollToOpenLabel = "Enroll to unlock",
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ContentRelatedListProps) => {
     // Nothing related ⇒ draw nothing. Deliberately BEFORE the skeleton check is
     // false: while loading we do not know yet, so the mirror still shows.
@@ -128,17 +124,17 @@ const ContentRelatedList = ({
         // matches the real row's own affordance (no accent, no arrow).
         hover: "underline",
         content: (
-            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={relatedItemBody(item, enrollToOpenLabel, showAnatomy)} />
+            <StackV gap={2} body={relatedItemBody(item, enrollToOpenLabel)} />
         ),
     }))
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCardList
                 label={label}
                 items={rows}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+
             />
         </div>
     )

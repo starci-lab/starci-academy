@@ -59,9 +59,7 @@ export interface ContentAiFabProps {
     /** Extra classes on the button. */
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -74,8 +72,6 @@ const ContentAiFab = ({
     onOpen,
     isOpen = false,
     className,
-    showAnatomy = false,
-    anatPart,
 }: ContentAiFabProps) => {
     // The panel this button opens is already up — a second trigger floating on
     // top of it would be redundant chrome (and could overlap the panel's own
@@ -85,8 +81,8 @@ const ContentAiFab = ({
     }
 
     return (
-        <div data-anat-part={anatPart}>
-            <div data-anat-part={showAnatomy ? "FloatingActionButton" : undefined}>
+        <div>
+            <div>
                 <FloatingActionButton
                     onPress={onOpen}
                     ariaLabel={ARIA_LABEL}

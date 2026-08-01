@@ -59,7 +59,7 @@ const ITEMS = [
  * The cell (`Table.Cell`) is not badged on its own because it is only a slot the
  * consumer drops a node into (§11a: badge the DIRECT child) — the same reason
  * `emptyContent` below (`renderEmptyState`) is also not badged: both are caller
- * slots (§11a.1 TYPE 3), and the component dropped `data-anat-part="Empty"`
+ * slots (§11a.1 TYPE 3), and the component dropped ``
  * entirely (2026-07-28).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -103,7 +103,7 @@ export const Default: Story = {
         …
     ]}
 />`,
-                        render: <Table showAnatomy ariaLabel="Student list" columns={COLUMNS} items={ITEMS} />,
+                        render: <Table ariaLabel="Student list" columns={COLUMNS} items={ITEMS} />,
                     },
                 ]}
             />
@@ -132,7 +132,7 @@ export const Alignment: Story = {
 ]}`,
                         render: (
                             <Table
-                                showAnatomy
+                               
                                 ariaLabel="Student list with right-aligned column"
                                 columns={[
                                     { key: "name", header: "Student" },
@@ -175,7 +175,7 @@ export const Empty: Story = {
 />`,
                         render: (
                             <Table
-                                showAnatomy
+                               
                                 ariaLabel="Student list"
                                 columns={COLUMNS}
                                 items={[]}
@@ -210,7 +210,7 @@ export const Loading: Story = {
 />`,
                         render: (
                             <Table
-                                showAnatomy
+                               
                                 isSkeleton
                                 ariaLabel="Loading student list"
                                 columns={COLUMNS}
@@ -246,7 +246,7 @@ export const Pressable: Story = {
 />`,
                         render: (
                             <Table
-                                showAnatomy
+                               
                                 ariaLabel="Clickable student list"
                                 columns={COLUMNS}
                                 items={ITEMS}

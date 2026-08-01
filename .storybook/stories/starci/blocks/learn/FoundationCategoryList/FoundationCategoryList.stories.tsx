@@ -118,8 +118,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <FoundationCategoryList
-                                anatPart="FoundationCategoryList"
-                                showAnatomy
+
+                               
                                 categories={CATEGORIES}
                                 onSelectCategory={() => {}}
                                 pagination={{ currentPage: 1, totalPages: 4, onPageChange: () => {} }}
@@ -165,8 +165,8 @@ export const Empty: Story = {
                         code: "<FoundationCategoryList categories={[]} searchQuery=\"cobol\" onSelectCategory={selectCategory} />",
                         render: (
                             <FoundationCategoryList
-                                anatPart="FoundationCategoryList"
-                                showAnatomy
+
+                               
                                 categories={[]}
                                 searchQuery="cobol"
                                 onSelectCategory={() => {}}

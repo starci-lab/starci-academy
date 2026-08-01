@@ -81,8 +81,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ConsultantCard
-                                anatPart="ConsultantCard"
-                                showAnatomy
+
+                               
                                 consultant={FULL_CONSULTANT}
                                 onOpen={() => {}}
                             />
@@ -135,8 +135,8 @@ export const Minimal: Story = {
 />`,
                         render: (
                             <ConsultantCard
-                                anatPart="ConsultantCard"
-                                showAnatomy
+
+                               
                                 consultant={{
                                     id: "consultant-2",
                                     fullName: "Kevin Tran",

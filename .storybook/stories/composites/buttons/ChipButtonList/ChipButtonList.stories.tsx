@@ -125,7 +125,7 @@ export const WrapWithIcon: Story = {
                         name: "direction = \"wrap\", items[].icon set",
                         why: "Three suggestion chips wrap onto new lines as the row runs out of width, each one a repeated Button with a leading icon before its label. Wrapping keeps every suggestion visible at once instead of forcing the row to scroll sideways.",
                         code: "<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: SparkleIcon }]} direction=\"wrap\" />",
-                        render: <ChipButtonList items={WRAP_ICON_ITEMS} direction="wrap" showAnatomy />,
+                        render: <ChipButtonList items={WRAP_ICON_ITEMS} direction="wrap" />,
                     },
                 ]}
             />,
@@ -147,7 +147,7 @@ export const WrapPlain: Story = {
                         name: "direction = \"wrap\", items[].icon not set",
                         why: "Each chip renders as a bare label with no leading icon, using the same direct-children pattern the base Button already uses for a plain label. Omitting icon on every item is what drops the icon slot from the composition entirely, rather than leaving an empty gap where it would sit.",
                         code: "<ChipButtonList items={[{ label: \"Summarize this lesson for me\" }]} direction=\"wrap\" />",
-                        render: <ChipButtonList items={WRAP_PLAIN_ITEMS} direction="wrap" showAnatomy />,
+                        render: <ChipButtonList items={WRAP_PLAIN_ITEMS} direction="wrap" />,
                     },
                 ]}
             />,
@@ -171,7 +171,7 @@ export const ColumnMenu: Story = {
                         code: "<ChipButtonList items={[{ label: \"Find related lesson\", icon: BookOpenIcon }]} direction=\"column\" />",
                         render: (
                             <div data-tier="fixture" className="rounded-2xl border border-default-200 bg-surface p-1">
-                                <ChipButtonList items={COLUMN_ITEMS} direction="column" showAnatomy />
+                                <ChipButtonList items={COLUMN_ITEMS} direction="column" />
                             </div>
                         ),
                     },
@@ -195,7 +195,7 @@ export const WithDisabledItem: Story = {
                         name: "items[1].isDisabled = true",
                         why: "The middle chip stays visible in its normal position but stops responding to press, because item.isDisabled forwards straight to Button.isDisabled. A locked item never hides, since hiding it would make the reader wonder whether the feature exists at all.",
                         code: "<ChipButtonList items={[{ label: \"Coming soon\", icon: MagnifyingGlassIcon, isDisabled: true }]} direction=\"wrap\" />",
-                        render: <ChipButtonList items={DISABLED_ITEMS} direction="wrap" showAnatomy />,
+                        render: <ChipButtonList items={DISABLED_ITEMS} direction="wrap" />,
                     },
                 ]}
             />,
@@ -217,7 +217,7 @@ export const Loading: Story = {
                         name: "isSkeleton = true, skeletonCount = 3, items = []",
                         why: "Three shimmer pills render in the same gap and layout the real chip row would use, without building any real Button. isSkeleton needs no items to work, the count comes from skeletonCount alone, so the loading shape never depends on data that has not arrived yet.",
                         code: "<ChipButtonList items={[]} direction=\"wrap\" isSkeleton skeletonCount={3} />",
-                        render: <ChipButtonList items={[]} direction="wrap" isSkeleton skeletonCount={3} showAnatomy />,
+                        render: <ChipButtonList items={[]} direction="wrap" isSkeleton skeletonCount={3} />,
                     },
                 ]}
             />,
@@ -239,7 +239,7 @@ export const SingleItem: Story = {
                         name: "items.length = 1",
                         why: "A single chip renders on its own, using the exact same Button-plus-icon composition as every other leaf. Nothing in the container enforces a minimum item count, so one entry is exactly as valid a shape as four.",
                         code: "<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: SparkleIcon }]} direction=\"wrap\" />",
-                        render: <ChipButtonList items={ONE_ITEM} direction="wrap" showAnatomy />,
+                        render: <ChipButtonList items={ONE_ITEM} direction="wrap" />,
                     },
                 ]}
             />,

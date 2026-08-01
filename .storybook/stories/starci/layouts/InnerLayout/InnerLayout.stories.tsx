@@ -141,8 +141,8 @@ export const NoFooter: Story = {
                         render: (
                             <div data-tier="fixture" style={{ height: "32rem" }} className="overflow-y-auto rounded-2xl border border-default">
                                 <InnerLayout
-                                    anatPart="InnerLayout"
-                                    showAnatomy
+
+                                   
                                     showFooter={false}
                                     navItems={NAV_ITEMS}
                                     onLogoPress={() => {}}
@@ -207,8 +207,8 @@ export const WithFooter: Story = {
                         render: (
                             <div data-tier="fixture" style={{ height: "40rem" }} className="overflow-y-auto rounded-2xl border border-default">
                                 <InnerLayout
-                                    anatPart="InnerLayout"
-                                    showAnatomy
+
+                                   
                                     showFooter
                                     navItems={NAV_ITEMS}
                                     onLogoPress={() => {}}

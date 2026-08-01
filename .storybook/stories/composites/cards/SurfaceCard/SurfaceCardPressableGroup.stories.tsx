@@ -134,7 +134,7 @@ export const Default: Story = {
         { key: "QN", label: "Quang Nguyen", onPress: () => {}, content: profileTile(…) },
     ]}
 />`,
-                        render: <SurfaceCardPressableGroup ariaLabel="Mentors" columns={{ base: 1, sm: 2 }} items={profileItems} showAnatomy />,
+                        render: <SurfaceCardPressableGroup ariaLabel="Mentors" columns={{ base: 1, sm: 2 }} items={profileItems} />,
                     },
                 ]}
             />,
@@ -172,7 +172,7 @@ export const Columns: Story = {
                                     ariaLabel="Mentors (wide container)"
                                     columns={{ base: 1, sm: 2, lg: 4 }}
                                     items={profileItems}
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -217,7 +217,7 @@ export const Gap: Story = {
                         name: "peers in one set",
                         why: "The cells sit close enough to read as members of one set rather than separate cards, which works when each tile is already visually distinct on its own, as a short profile row with an avatar is. Pick this step from the relationship and not from how full the grid looks.",
                         code: "<SurfaceCardPressableGroup gap={3} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
-                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (gap step 3)" columns={{ base: 1, sm: 2 }} gap={3} items={profileItems.slice(0, 2)} showAnatomy />,
+                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (gap step 3)" columns={{ base: 1, sm: 2 }} gap={3} items={profileItems.slice(0, 2)} />,
                     },
                     {
                         name: "rows inside one surface",
@@ -260,7 +260,7 @@ export const WithIcon: Story = {
                             <SurfaceCardPressableGroup
                                 ariaLabel="Resources"
                                 columns={{ base: 1, sm: 2 }}
-                                showAnatomy
+                               
                                 items={[
                                     {
                                         key: "docs",
@@ -314,7 +314,7 @@ export const KeyboardShortcut: Story = {
                                 columns={{ base: 1, sm: 2 }}
                                 items={profileItems}
                                 keyboardShortcut
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -350,7 +350,7 @@ export const Verdict: Story = {
                                     ...item,
                                     withVerdict: { enable: true, variant: "success" },
                                 }))}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -454,7 +454,7 @@ export const PagerFullWidth: Story = {
                                         content: NextContent,
                                     },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -494,7 +494,7 @@ export const Loading: Story = {
                                 columns={{ base: 1, sm: 2 }}
                                 items={profileItems}
                                 isSkeleton
-                                showAnatomy
+                               
                             />
                         ),
                     },

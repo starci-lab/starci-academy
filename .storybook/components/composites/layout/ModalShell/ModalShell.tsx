@@ -91,10 +91,9 @@ export interface ModalShellBaseProps {
     classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (close trigger / header / body / footer)
-     * emits `data-anat-part="<name>"` so a BlockAnatomy panel can badge it
+     * emits `` so a BlockAnatomy panel can badge it
      * on-render. Off by default (production).
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -121,7 +120,6 @@ const Base = ({
     footerClassName,
     classNames,
     children,
-    showAnatomy = false,
 }: ModalShellBaseProps) => {
     const hasHeader = header != null || title != null
     const main = body ?? children
@@ -145,9 +143,9 @@ const Base = ({
                         compete with the parent.
                         Now `gap-4` here + `mt-0!` on the child: ONE seam, ONE owner (§10a). */}
                     <Modal.Dialog className={cn("gap-3", dialogClassName, classNames)}>
-                        <Modal.CloseTrigger data-anat-part={showAnatomy ? "Modal.CloseTrigger" : undefined} />
+                        <Modal.CloseTrigger />
                         {header ? (
-                            <Modal.Header data-anat-part={showAnatomy ? "Modal.Header" : undefined}>{header}</Modal.Header>
+                            <Modal.Header>{header}</Modal.Header>
                         ) : title != null ? (
                             <Modal.Header>
                                 {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
@@ -161,13 +159,13 @@ const Base = ({
                                             <>
                                                 <Typography
                                                     weight="bold"
-                                                    showAnatomy={showAnatomy}
+
                                                     text={title}
                                                 />
                                                 {description != null ? (
                                                     <Typography size="sm"
                                                         color="muted"
-                                                        showAnatomy={showAnatomy}
+
                                                         text={description}
                                                     />
                                                 ) : null}
@@ -186,7 +184,7 @@ const Base = ({
                             frame compensate for it from outside.
                             Real consequence: a tabs case turned 12px into 16px. */}
                         <Modal.Body
-                            data-anat-part={showAnatomy ? "Modal.Body" : undefined}
+
                             className={cn(
                                 // `mt-0!` only TURNS OFF the margin HeroUI ships with; the rhythm is
                                 // decided by the Dialog's own `gap-4`. The 0 sits on the scale, so it
@@ -202,7 +200,7 @@ const Base = ({
                             header→body and body→footer read as the SAME gap. */}
                         {footer != null ? (
                             <Modal.Footer
-                                data-anat-part={showAnatomy ? "Modal.Footer" : undefined}
+
                                 className={cn("mt-0!", footerClassName)}
                             >
                                 {footer}

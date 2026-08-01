@@ -60,9 +60,7 @@ export interface CourseQaInviteProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -77,12 +75,10 @@ const CourseQaInvite = ({
     ctaLabel,
     onGoToContent,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: CourseQaInviteProps) => (
-    <div data-anat-part={anatPart}>
+    <div>
         <SurfaceCard
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
             body={() => (
                 <EmptyState
                     icon={QuestionIcon}
@@ -96,10 +92,10 @@ const CourseQaInvite = ({
                             suffixIcon={ArrowRightIcon}
                             iconSlide
                             onPress={onGoToContent}
-                            showAnatomy={showAnatomy}
+
                         />
                     }
-                    anatPart={showAnatomy ? "EmptyState" : undefined}
+
                 />
             )}
         />

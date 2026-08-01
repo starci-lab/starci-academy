@@ -50,7 +50,7 @@ export const Value: Story = {
                         name: "value = 68",
                         why: "The ring fills to 68% of its circumference while the track underneath stays visible for the remaining arc. A circular ring reads well in a compact stat tile where a full-width bar would not fit.",
                         code: "<ProgressCircle value={68} size=\"md\" />",
-                        render: <ProgressCircle value={68} ariaLabel="Progress" showAnatomy />,
+                        render: <ProgressCircle value={68} ariaLabel="Progress" />,
                     },
                 ]}
             />
@@ -72,7 +72,7 @@ export const Indeterminate: Story = {
                         name: "isIndeterminate = true",
                         why: "The arc spins continuously on its own instead of resting at a fixed angle, and react-aria ignores `value` entirely while `isIndeterminate` is set. Use it whenever the actual duration or completion percentage is not known yet, so the ring never claims a false level of certainty.",
                         code: "<ProgressCircle isIndeterminate />",
-                        render: <ProgressCircle isIndeterminate ariaLabel="Processing" showAnatomy />,
+                        render: <ProgressCircle isIndeterminate ariaLabel="Processing" />,
                     },
                 ]}
             />
@@ -94,7 +94,7 @@ export const Loading: Story = {
                         name: "isSkeleton = true",
                         why: "The ring itself becomes a shimmering circle instead of a track-plus-arc, since `isSkeleton` replaces both with one resting shape (hybrid C). This is the state to reach for before a value is known at all, distinct from `Indeterminate`, which already knows work is happening but not how much.",
                         code: "<ProgressCircle isSkeleton />",
-                        render: <ProgressCircle isSkeleton showAnatomy />,
+                        render: <ProgressCircle isSkeleton />,
                     },
                 ]}
             />
@@ -117,31 +117,31 @@ export const Colors: Story = {
                         name: "color = accent",
                         why: "The FillCircle arc renders in the accent tone while the TrackCircle stays neutral underneath. This is the default reading for an ordinary run, like course progress, with no outcome to call out yet.",
                         code: "<ProgressCircle color=\"accent\" value={55} />",
-                        render: <ProgressCircle color="accent" value={55} ariaLabel="Course progress" showAnatomy />,
+                        render: <ProgressCircle color="accent" value={55} ariaLabel="Course progress" />,
                     },
                     {
                         name: "color = success",
                         why: "The arc renders in the success tone to mark a positive outcome, such as an upload that finished cleanly. The track stays neutral so only the arc itself carries the good-news meaning.",
                         code: "<ProgressCircle color=\"success\" value={100} />",
-                        render: <ProgressCircle color="success" value={100} ariaLabel="Upload complete" showAnatomy />,
+                        render: <ProgressCircle color="success" value={100} ariaLabel="Upload complete" />,
                     },
                     {
                         name: "color = warning",
                         why: "The arc renders in the warning tone to flag a state that needs attention before it becomes a failure, such as a sync falling behind. The neutral track keeps the warning legible without overwhelming the ring.",
                         code: "<ProgressCircle color=\"warning\" value={40} />",
-                        render: <ProgressCircle color="warning" value={40} ariaLabel="Sync needs attention" showAnatomy />,
+                        render: <ProgressCircle color="warning" value={40} ariaLabel="Sync needs attention" />,
                     },
                     {
                         name: "color = danger",
                         why: "The arc renders in the danger tone to mark an explicit failure, such as a deploy that did not go through. This tone is reserved for outcomes the user must act on, not just numbers that happen to be low.",
                         code: "<ProgressCircle color=\"danger\" value={20} />",
-                        render: <ProgressCircle color="danger" value={20} ariaLabel="Deploy failed" showAnatomy />,
+                        render: <ProgressCircle color="danger" value={20} ariaLabel="Deploy failed" />,
                     },
                     {
                         name: "color = default",
                         why: "The arc renders in the default tone for a run that carries no outcome semantics at all, such as an idle queue simply ticking along. Keeping this tone separate from accent avoids implying an active in-progress state when there is none.",
                         code: "<ProgressCircle color=\"default\" value={65} />",
-                        render: <ProgressCircle color="default" value={65} ariaLabel="Idle queue" showAnatomy />,
+                        render: <ProgressCircle color="default" value={65} ariaLabel="Idle queue" />,
                     },
                 ]}
             />
@@ -164,19 +164,19 @@ export const Sizes: Story = {
                         name: "size = sm",
                         why: "The ring renders at its smallest diameter, sized to sit inline inside a compact stat row without dominating it. Its skeleton box matches this diameter exactly, so a loading ring never resizes once the real value lands.",
                         code: "<ProgressCircle size=\"sm\" value={68} />",
-                        render: <ProgressCircle size="sm" value={68} ariaLabel="Compact ring" showAnatomy />,
+                        render: <ProgressCircle size="sm" value={68} ariaLabel="Compact ring" />,
                     },
                     {
                         name: "size = md",
                         why: "The ring renders at its default diameter, the size most product surfaces reach for first. It is large enough to read the value inside it without demanding its own dedicated tile.",
                         code: "<ProgressCircle size=\"md\" value={68} />",
-                        render: <ProgressCircle size="md" value={68} ariaLabel="Default ring" showAnatomy />,
+                        render: <ProgressCircle size="md" value={68} ariaLabel="Default ring" />,
                     },
                     {
                         name: "size = lg",
                         why: "The ring renders at its largest diameter, big enough to anchor a dashboard tile on its own. Reach for this size when the ring is the primary focus of the card rather than one metric among several.",
                         code: "<ProgressCircle size=\"lg\" value={68} />",
-                        render: <ProgressCircle size="lg" value={68} ariaLabel="Prominent ring" showAnatomy />,
+                        render: <ProgressCircle size="lg" value={68} ariaLabel="Prominent ring" />,
                     },
                 ]}
             />

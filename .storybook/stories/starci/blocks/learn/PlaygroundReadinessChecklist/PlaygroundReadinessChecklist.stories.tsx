@@ -91,8 +91,8 @@ export const Default: Story = {
                         code: "<PlaygroundReadinessChecklist items={items} />",
                         render: (
                             <PlaygroundReadinessChecklist
-                                anatPart="PlaygroundReadinessChecklist"
-                                showAnatomy
+
+                               
                                 items={ITEMS}
                             />
                         ),
@@ -131,8 +131,8 @@ export const Skeleton: Story = {
                         code: "<PlaygroundReadinessChecklist items={items} isSkeleton />",
                         render: (
                             <PlaygroundReadinessChecklist
-                                anatPart="PlaygroundReadinessChecklist"
-                                showAnatomy
+
+                               
                                 items={ITEMS}
                                 isSkeleton
                             />

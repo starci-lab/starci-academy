@@ -31,7 +31,6 @@ export interface InputTagsProps extends FrameProps {
     /** Render the field-box skeleton instead of the box. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -51,7 +50,6 @@ export const InputTags = ({
     ariaLabel = "Tags",
     removeLabel = "Remove tag",
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -78,9 +76,9 @@ export const InputTags = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             id={controlId}
-            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <div
                 data-principles="sibling-stack"
@@ -99,7 +97,7 @@ export const InputTags = ({
                             text={tag}
                             onRemove={isDisabled ? undefined : () => removeAt(index)}
                             removeLabel={removeLabel}
-                            showAnatomy={showAnatomy}
+
                         />
                     </span>
                 ))}

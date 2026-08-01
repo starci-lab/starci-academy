@@ -95,7 +95,7 @@ const Controlled = ({
 }) => {
     const [selectedKey, setSelectedKey] = useState(defaultKey)
     return (
-        <TabsExtended selectedKey={selectedKey} onSelectionChange={setSelectedKey} variant={variant} size={size} showAnatomy>
+        <TabsExtended selectedKey={selectedKey} onSelectionChange={setSelectedKey} variant={variant} size={size}>
             {children}
         </TabsExtended>
     )

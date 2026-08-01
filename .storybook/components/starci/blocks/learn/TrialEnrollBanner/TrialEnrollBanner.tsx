@@ -69,9 +69,7 @@ export interface TrialEnrollBannerProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -85,8 +83,6 @@ const TrialEnrollBanner = ({
     isVisible,
     onEnroll,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: TrialEnrollBannerProps) => {
     if (isSkeleton) {
         // `Callout` has no `isSkeleton` of its own (§12c gap, same one
@@ -98,11 +94,11 @@ const TrialEnrollBanner = ({
         // inside its content region — call it directly, same precedent as
         // `CourseTeamGate.tsx`.
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <Alert
                     isSkeleton
                     status="accent"
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
         )
@@ -114,12 +110,12 @@ const TrialEnrollBanner = ({
     }
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <Callout
                 status="accent"
                 title="You're on a trial"
                 description="Unlock the full course and build proof of work employers can see on your profile."
-                anatPart={showAnatomy ? "Callout" : undefined}
+
             >
                 <Button
                     label="Unlock the course"
@@ -128,7 +124,7 @@ const TrialEnrollBanner = ({
                     suffixIcon={ArrowRightIcon}
                     iconSlide
                     onPress={onEnroll}
-                    showAnatomy={showAnatomy}
+
                 />
             </Callout>
         </div>

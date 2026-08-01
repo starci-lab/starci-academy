@@ -73,9 +73,7 @@ export interface FoundationSearchBarProps {
     /** Renders the field's + count's resting skeleton mirrors instead of the real controls. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Count wording — this block's own vocabulary, never handed in by the caller. */
@@ -97,8 +95,6 @@ const FoundationSearchBar = ({
     resultCount,
     isCountLoading = false,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FoundationSearchBarProps) => {
     // Domain suggestion → the atom's generic item shape (no `description` line:
     // this bar's rows carry only a bare label).
@@ -108,12 +104,12 @@ const FoundationSearchBar = ({
     }))
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackH
                 gap={3}
                 justify="between"
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "StackH" : undefined}
+
+
                 body={
                     <>
                         <SearchAutocomplete
@@ -123,7 +119,7 @@ const FoundationSearchBar = ({
                             onSelect={onSelectSuggestion}
                             placeholder={placeholder}
                             isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
+
                         />
                         {isSkeleton || isCountLoading ? (
                             <Typography
@@ -131,7 +127,7 @@ const FoundationSearchBar = ({
                                 color="muted"
                                 isSkeleton
                                 classNames={["shrink-0"]}
-                                showAnatomy={showAnatomy}
+
                             />
                         ) : resultCount !== undefined ? (
                             <Typography
@@ -140,7 +136,7 @@ const FoundationSearchBar = ({
                                 tabularNums
                                 text={resultCountLabel(resultCount)}
                                 classNames={["shrink-0"]}
-                                showAnatomy={showAnatomy}
+
                             />
                         ) : null}
                     </>

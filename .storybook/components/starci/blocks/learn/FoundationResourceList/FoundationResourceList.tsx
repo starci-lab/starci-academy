@@ -133,9 +133,7 @@ export interface FoundationResourceListProps {
     /** Accessible name for the list region — the block has no visible heading of its own. */
     ariaLabel?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** kind → chip label/color — the block's own vocabulary (§14d.1), never handed in by a caller. */
@@ -157,47 +155,47 @@ const EMPTY_DESCRIPTION_WITH_QUERY = "Try a different keyword."
 const SKELETON_ROW_COUNT = 4
 
 /** One row's kind chip + optional recommended chip, in that order. */
-const resourceMeta = (resource: FoundationResourceItem, showAnatomy: boolean) => {
+const resourceMeta = (resource: FoundationResourceItem) => {
     const chips: Array<ClusterItem> = [
         {
             key: "kind",
-            content: <EnumChip value={resource.kind} map={KIND_CHIP_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />,
+            content: <EnumChip value={resource.kind} map={KIND_CHIP_MAP} />,
         },
     ]
     if (resource.isRecommended) {
         chips.push({
             key: "recommended",
-            content: <Chip tone="accent" text={RECOMMENDED_LABEL} showAnatomy={showAnatomy} />,
+            content: <Chip tone="accent" text={RECOMMENDED_LABEL} />,
         })
     }
-    return <Cluster gap={3} items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
+    return <Cluster gap={3} items={chips} />
 }
 
 /** Placeholder rows for the loading mirror — no data, no press handler (§12c). */
-const skeletonRows = (showAnatomy: boolean): Array<SurfaceCardListItem> =>
+const skeletonRows = (): Array<SurfaceCardListItem> =>
     Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
         key: `skeleton-${index}`,
-        leading: () => <IconTile isSkeleton size="sm" showAnatomy={showAnatomy} />,
+        leading: () => <IconTile isSkeleton size="sm" />,
         title: "",
         subtitle: "",
     }))
 
 /** One real row: numbered title, blurb, thumbnail-or-glyph, kind+recommended chips, caret. */
-const resourceRow = (resource: FoundationResourceItem, position: number, showAnatomy: boolean): SurfaceCardListItem => ({
+const resourceRow = (resource: FoundationResourceItem, position: number): SurfaceCardListItem => ({
     key: resource.id,
     leading: () => (
         <IconTile
             src={resource.thumbnailUrl}
             icon={StackIcon}
             size="sm"
-            showAnatomy={showAnatomy}
+
         />
     ),
     // The block owns the numbering (§14d.1) — see file header for why it is
     // LOCAL to the current page rather than a running count across pages.
     title: `${position}. ${resource.title}`,
     subtitle: resource.description,
-    meta: () => resourceMeta(resource, showAnatomy),
+    meta: () => resourceMeta(resource),
     trailingIcon: CaretRightIcon,
     onPress: resource.onPress,
 })
@@ -218,8 +216,6 @@ const FoundationResourceList = ({
     totalPages,
     onPageChange,
     ariaLabel,
-    showAnatomy = false,
-    anatPart,
 }: FoundationResourceListProps) => {
     const hasQuery = Boolean(searchQuery && searchQuery.trim().length > 0)
 
@@ -228,52 +224,49 @@ const FoundationResourceList = ({
             icon: MagnifyingGlassIcon,
             title: `No resources found matching "${searchQuery}"`,
             description: EMPTY_DESCRIPTION_WITH_QUERY,
-            anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-            showAnatomy,
+
         }
         : {
             title: EMPTY_TITLE_NO_QUERY,
-            anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-            showAnatomy,
+
         }
 
     const errorContent: AsyncContentErrorProps = {
         title: ERROR_TITLE,
-        anatPart: showAnatomy ? "AsyncContentError" : undefined,
-        showAnatomy,
+
     }
 
-    const rows: Array<SurfaceCardListItem> = resources.map((resource, index) => resourceRow(resource, index + 1, showAnatomy))
+    const rows: Array<SurfaceCardListItem> = resources.map((resource, index) => resourceRow(resource, index + 1))
 
     return (
-        <div data-anat-part={anatPart} aria-label={ariaLabel} role={ariaLabel ? "region" : undefined}>
+        <div aria-label={ariaLabel} role={ariaLabel ? "region" : undefined}>
             <AsyncContent
                 isLoading={isLoading}
                 skeleton={
                     <SurfaceCardList
-                        items={skeletonRows(showAnatomy)}
+                        items={skeletonRows()}
                         isSkeleton
-                        anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+
                     />
                 }
                 isEmpty={resources.length === 0}
                 emptyContent={emptyContent}
                 error={error}
                 errorContent={errorContent}
-                showAnatomy={showAnatomy}
+
                 content={
                     <StackV
                         gap={3}
-                        anatPart={showAnatomy ? "StackV" : undefined}
+
                         body={
                             <>
-                                <SurfaceCardList items={rows} anatPart={showAnatomy ? "SurfaceCardList" : undefined} />
-                                <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
+                                <SurfaceCardList items={rows} />
+                                <div>
                                     <Pagination
                                         currentPage={currentPage}
                                         totalPages={totalPages}
                                         onPageChange={onPageChange}
-                                        showAnatomy={showAnatomy}
+
                                     />
                                 </div>
                             </>

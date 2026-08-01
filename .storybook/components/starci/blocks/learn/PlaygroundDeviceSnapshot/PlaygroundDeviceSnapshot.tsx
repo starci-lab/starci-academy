@@ -119,7 +119,6 @@ interface DeviceStatLabelProps {
     /** Supporting detail line, computed from `deviceInfo`. */
     detail: string
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
 /**
@@ -127,11 +126,11 @@ interface DeviceStatLabelProps {
  * detail beneath. See the file header for why this is a raw `<span>` rather
  * than a `StackV` frame.
  */
-const DeviceStatLabel = ({ caption, detail, isSkeleton, showAnatomy }: DeviceStatLabelProps) => (
+const DeviceStatLabel = ({ caption, detail, isSkeleton }: DeviceStatLabelProps) => (
     <span className="flex flex-col">
         <span>{caption}</span>
         {isSkeleton ? (
-            <Typography size="xs" isSkeleton showAnatomy={showAnatomy} />
+            <Typography size="xs" isSkeleton />
         ) : (
             <span className="truncate">{detail}</span>
         )}
@@ -145,9 +144,7 @@ export interface PlaygroundDeviceSnapshotProps {
     /** `true` → every cell's value/detail line swaps to its own shimmer. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -161,11 +158,9 @@ export interface PlaygroundDeviceSnapshotProps {
 const PlaygroundDeviceSnapshot = ({
     deviceInfo,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundDeviceSnapshotProps) => {
     const skeletonValue = (
-        <Typography size="base" isSkeleton showAnatomy={showAnatomy} />
+        <Typography size="base" isSkeleton />
     )
 
     const items: ReadonlyArray<StatRibbonItem> = [
@@ -177,7 +172,7 @@ const PlaygroundDeviceSnapshot = ({
                     caption="Operating system"
                     detail={`${deviceInfo.arch} · ${deviceInfo.hostname}`}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ),
         },
@@ -189,7 +184,7 @@ const PlaygroundDeviceSnapshot = ({
                     caption="CPU"
                     detail={deviceInfo.cpuModel}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ),
         },
@@ -201,7 +196,7 @@ const PlaygroundDeviceSnapshot = ({
                     caption="RAM"
                     detail={`${gbOf(deviceInfo.freeMemBytes)} GB free`}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ),
         },
@@ -213,18 +208,18 @@ const PlaygroundDeviceSnapshot = ({
                     caption="GPU"
                     detail={vramDetail(deviceInfo.gpu, deviceInfo.vramTotalMb, deviceInfo.vramFreeMb)}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ),
         },
     ]
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StatRibbon
                 valueType="body"
                 items={items}
-                showAnatomy={showAnatomy}
+
             />
         </div>
     )

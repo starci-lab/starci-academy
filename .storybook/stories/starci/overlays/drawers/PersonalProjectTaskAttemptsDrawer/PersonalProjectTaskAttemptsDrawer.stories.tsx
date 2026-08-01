@@ -147,7 +147,7 @@ const ControlledDrawer = ({
                                 error={error}
                                 onRetry={() => {}}
                                 retryLabel="Retry"
-                                showAnatomy
+                               
                             />
                         ),
                     },

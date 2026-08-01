@@ -86,8 +86,8 @@ const ControlledHeadhunterModal = ({
             <HeadhunterModal
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}
-                showAnatomy
-                anatPart="HeadhunterModal"
+               
+
                 {...modalProps}
             />
         </div>

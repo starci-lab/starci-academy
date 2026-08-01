@@ -42,13 +42,13 @@ const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
         eyebrow: "Relational databases",
         title: "Data normalization and normal forms",
         content: NormalizationContent,
-        anatPart: "Section",
+        
     },
     {
         key: "denormalize",
         eyebrow: "Database review deck",
         title: "When should you denormalize to optimize reads?",
-        anatPart: "Section",
+        
     },
 ]
 /** `icon` slot fixture for {@link WithIconMeta} — a component reference (COMPOSITE-8), not a built node. */
@@ -90,7 +90,7 @@ export const Default: Story = {
         { key: "denormalize", eyebrow: "Database review deck", title: "When should you denormalize…" },
     ]}
 />`,
-                        render: <SurfaceCardNested title="Related lessons" items={relatedItems} showAnatomy />,
+                        render: <SurfaceCardNested title="Related lessons" items={relatedItems} />,
                     },
                 ]}
             />
@@ -128,7 +128,7 @@ export const Variant: Story = {
 />`,
                         render: (
                             <div data-tier="fixture" className="max-w-md">
-                                <SurfaceCardNested title="Related lessons" variant="surface" items={relatedItems} showAnatomy />
+                                <SurfaceCardNested title="Related lessons" variant="surface" items={relatedItems} />
                             </div>
                         ),
                     },
@@ -149,7 +149,7 @@ export const Variant: Story = {
                                         </Typography>
                                     </div>
                                     <div className="max-w-[85%]">
-                                        <SurfaceCardNested title="Related lessons" variant="nested" items={relatedItems} showAnatomy />
+                                        <SurfaceCardNested title="Related lessons" variant="nested" items={relatedItems} />
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +190,7 @@ export const InteractiveSections: Story = {
                         render: (
                             <SurfaceCardNested
                                 title="Related lessons"
-                                showAnatomy
+                               
                                 items={[
                                     { ...relatedItems[0], onPress: () => alert("Open: Data normalization") },
                                     { ...relatedItems[1], href: "#denormalize" },
@@ -229,7 +229,7 @@ export const WithIconMeta: Story = {
                                 title="Related lessons"
                                 meta={RelatedMeta}
                                 items={relatedItems}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -262,7 +262,7 @@ export const WithFooter: Story = {
                                 title="Related lessons"
                                 items={relatedItems}
                                 footer={ViewAllFooter}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -288,7 +288,7 @@ export const Headerless: Story = {
                         code: `<SurfaceCardNested
     items={[…]}
 />`,
-                        render: <SurfaceCardNested items={relatedItems} showAnatomy />,
+                        render: <SurfaceCardNested items={relatedItems} />,
                     },
                 ]}
             />
@@ -310,7 +310,7 @@ export const FreeBody: Story = {
                         name: "body set, items unset",
                         why: "The body renders whatever free-form component the caller hands to `body`, instead of mapping `items` into a divided row of sections. No `Section` node appears in this tree because there is nothing repeating here to divide.",
                         code: `<SurfaceCardNested title="Notes" body={NotesBody} />`,
-                        render: <SurfaceCardNested title="Notes" showAnatomy body={NotesBody} />,
+                        render: <SurfaceCardNested title="Notes" body={NotesBody} />,
                     },
                 ]}
             />
@@ -346,7 +346,7 @@ export const Radius: Story = {
 />`,
                         render: (
                             <div data-tier="fixture" className="max-w-md">
-                                <SurfaceCardNested title="Related lessons" radius="3xl" items={relatedItems} showAnatomy />
+                                <SurfaceCardNested title="Related lessons" radius="3xl" items={relatedItems} />
                             </div>
                         ),
                     },
@@ -361,7 +361,7 @@ export const Radius: Story = {
 />`,
                         render: (
                             <div data-tier="fixture" className="max-w-sm rounded-2xl bg-surface p-3 shadow-surface">
-                                <SurfaceCardNested title="Related lessons" radius="xl" variant="nested" items={relatedItems} showAnatomy />
+                                <SurfaceCardNested title="Related lessons" radius="xl" variant="nested" items={relatedItems} />
                             </div>
                         ),
                     },

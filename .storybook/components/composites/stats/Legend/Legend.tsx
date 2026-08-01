@@ -55,9 +55,7 @@ interface LegendOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
-    /** `true` → tag the dot/label skeleton bars with `data-anat-part="Skeleton"`. */
-    showAnatomy?: boolean
+    /** `true` → tag the dot/label skeleton bars with ``. */
 }
 
 /**
@@ -88,8 +86,6 @@ export const Legend = ({
     isSkeleton = false,
     skeletonCount = 3,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: LegendProps) => {
     return (
         <div
@@ -99,7 +95,7 @@ export const Legend = ({
                     : "flex flex-wrap gap-x-3 gap-y-2",
                 classNames,
             )}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="Legend"
             data-principles={direction === "col" ? "sibling-stack" : undefined}
@@ -119,9 +115,9 @@ export const Legend = ({
                                 <span
                                     aria-hidden
                                     className="size-2.5 shrink-0 rounded-full bg-default"
-                                    data-anat-part={showAnatomy ? "Dot" : undefined}
+
                                 />
-                                <Typography size="xs" isSkeleton showAnatomy={showAnatomy} />
+                                <Typography size="xs" isSkeleton />
                             </>
                         }
                     />

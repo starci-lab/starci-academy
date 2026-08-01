@@ -145,8 +145,8 @@ export const Collapsed: Story = {
 />`,
                         render: (
                             <QaQuestionThread
-                                anatPart="QaQuestionThread"
-                                showAnatomy
+
+                               
                                 question={QUESTION_ANSWERED}
                                 currentUserId="u-peer"
                                 currentUser={CURRENT_USER}
@@ -208,8 +208,8 @@ export const Expanded: Story = {
 // pressing the collapsed row is what opens this shape`,
                         render: (
                             <ExpandedPreview
-                                anatPart="QaQuestionThread"
-                                showAnatomy
+
+                               
                                 question={QUESTION_ANSWERED}
                                 currentUserId="u-peer"
                                 currentUser={CURRENT_USER}

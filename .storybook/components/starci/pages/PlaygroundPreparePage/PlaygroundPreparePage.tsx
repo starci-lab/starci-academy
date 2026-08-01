@@ -142,7 +142,6 @@ export interface PlaygroundPreparePageProps {
      */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -155,12 +154,12 @@ export interface PlaygroundPreparePageProps {
  */
 const PlaygroundPreparePageEmpty = () => (
     <Container
-        anatPart="Container"
+
         size="md"
         padding={6}
         body={
             <AsyncContentEmpty
-                anatPart="AsyncContentEmpty"
+
                 icon={TerminalWindowIcon}
                 title="Exercise not found"
                 description="This exercise may have been removed, or the link is no longer valid — go back to Playground to pick another one."
@@ -197,7 +196,6 @@ const PlaygroundPreparePage = ({
     onVerify,
     isEmpty = false,
     isSkeleton = false,
-    showAnatomy = false,
 }: PlaygroundPreparePageProps) => {
     if (isEmpty) {
         return <PlaygroundPreparePageEmpty />
@@ -209,23 +207,23 @@ const PlaygroundPreparePage = ({
     const readinessSection = (
         <>
             <PlaygroundEnterBanner
-                anatPart="PlaygroundEnterBanner"
+
                 allReady={allReady}
                 pendingCount={pendingCount}
                 onEnter={onEnter}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {deviceInfo ? (
                 <PlaygroundDeviceSnapshot
-                    anatPart="PlaygroundDeviceSnapshot"
+
                     deviceInfo={deviceInfo}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             <PlaygroundSetupSteps
-                anatPart="PlaygroundSetupSteps"
+
                 flavor={flavor}
                 engineName={engineName}
                 osGuides={osGuides}
@@ -243,13 +241,13 @@ const PlaygroundPreparePage = ({
                 engineDetail={engineDetail}
                 onVerify={onVerify}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <PlaygroundReadinessChecklist
-                anatPart="PlaygroundReadinessChecklist"
+
                 items={checklistItems}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -257,21 +255,21 @@ const PlaygroundPreparePage = ({
     const prepareSections = (
         <>
             <PlaygroundSetupHeader
-                anatPart="PlaygroundSetupHeader"
+
                 breadcrumbLabel={breadcrumbLabel}
                 onBack={onBack}
                 title={title}
                 description={description}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={readinessSection} />
+            <StackV gap={6} body={readinessSection} />
         </>
     )
 
-    const prepareBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={prepareSections} />
+    const prepareBody = <StackV gap={6} body={prepareSections} />
 
-    return <Container size="md" padding={6} anatPart={showAnatomy ? "Container" : undefined} body={prepareBody} />
+    return <Container size="md" padding={6} body={prepareBody} />
 }
 
 export { PlaygroundPreparePage }

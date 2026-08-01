@@ -72,7 +72,6 @@ export interface SearchAutocompleteProps {
     /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
     /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel to badge on-render. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -100,7 +99,6 @@ const SearchAutocompleteBase = ({
     errorMessage,
     isRequired,
     classNames,
-    showAnatomy,
 }: SearchAutocompleteProps) => {
     const controlId = useId()
     const invalid = errorMessage != null
@@ -120,14 +118,14 @@ const SearchAutocompleteBase = ({
             errorMessage={errorMessage}
             isRequired={isRequired}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             id={controlId}
             // Field-box skeleton owned by this atom — mirrors only the search
             // field's resting shape; the popover has no resting shape.
             skeletonControl={
                 <HeroSkeleton
                     className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm", classNames)}
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                 />
             }
         >
@@ -145,7 +143,7 @@ const SearchAutocompleteBase = ({
                 onSelectionChange={onSelectionChange}
             >
                 {/* data-anat-part uses the real HeroUI component name (`ComboBox.InputGroup`). */}
-                <ComboBox.InputGroup className="relative" data-anat-part={showAnatomy ? "ComboBox.InputGroup" : undefined}>
+                <ComboBox.InputGroup className="relative">
                     <Input
                         id={controlId}
                         type="search"
@@ -156,7 +154,7 @@ const SearchAutocompleteBase = ({
                     <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2" />
                 </ComboBox.InputGroup>
                 {/* data-anat-part uses the real HeroUI component name (`ComboBox.Popover`). */}
-                <ComboBox.Popover data-anat-part={showAnatomy ? "ComboBox.Popover" : undefined}>
+                <ComboBox.Popover>
                     <ListBox
                         // empty the collection while loading so `renderEmptyState` shows
                         // the spinner instead of a stale list

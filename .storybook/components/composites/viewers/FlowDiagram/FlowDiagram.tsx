@@ -86,9 +86,7 @@ interface FlowDiagramOwnProps {
     /** Where the canvas frame sits inside its parent. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** `true` → tag the skeleton placeholder cards' `Typography` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -125,7 +123,7 @@ export type FlowDiagramProps = FlowDiagramOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "FlowDiagram" } as const
 
-export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames, anatPart, showAnatomy = false }: FlowDiagramProps) => {
+export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: FlowDiagramProps) => {
     const nodeTypes = useMemo(() => NODE_TYPES, [])
 
     // The frame stays real throughout — same footprint, border, radius whether or not
@@ -133,7 +131,7 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames, anat
     return (
         <div
             className={cn("h-[420px] w-full overflow-hidden rounded-large border border-default", classNames)}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="FlowDiagram"
         >
@@ -145,8 +143,8 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames, anat
                             data-principles="title-subtitle"
                             className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
                         >
-                            <Typography size="sm" weight="medium" isSkeleton showAnatomy={showAnatomy} />
-                            <Typography size="xs" color="muted" isSkeleton showAnatomy={showAnatomy} />
+                            <Typography size="sm" weight="medium" isSkeleton />
+                            <Typography size="xs" color="muted" isSkeleton />
                         </div>
                     ))}
                 </div>

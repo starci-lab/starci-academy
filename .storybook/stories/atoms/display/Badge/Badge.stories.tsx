@@ -76,7 +76,7 @@ export const Anchored: Story = {
                         why: "The anchor badge renders the plain number 3, since nothing here caps or hides it. A raw count under any cap is shown verbatim so the anchored icon carries an honest unread total.",
                         code: "<Badge count={3}>{<BellIcon/>}</Badge>",
                         render: (
-                            <Badge count={3} showAnatomy>
+                            <Badge count={3}>
                                 <BellHost />
                             </Badge>
                         ),
@@ -86,7 +86,7 @@ export const Anchored: Story = {
                         why: "The badge drops to a bare dot with no number, since `dot` overrides `count` entirely. This is the presence signal to reach for when a raw count would look like more detail than the anchor needs.",
                         code: "<Badge dot>{<BellIcon/>}</Badge>",
                         render: (
-                            <Badge dot showAnatomy>
+                            <Badge dot>
                                 <BellHost />
                             </Badge>
                         ),
@@ -96,7 +96,7 @@ export const Anchored: Story = {
                         why: "The label switches from the raw number to `99+`, because `count` exceeds `max`. The atom owns the cap itself so the caller never has to format the overflow string.",
                         code: "<Badge count={128} max={99}>{<BellIcon/>}</Badge>",
                         render: (
-                            <Badge count={128} max={99} showAnatomy>
+                            <Badge count={128} max={99}>
                                 <BellHost />
                             </Badge>
                         ),
@@ -122,31 +122,31 @@ export const Colors: Story = {
                         name: "color = danger",
                         why: "Only the badge's tint changes to the danger red, and the tree stays the identical single node as every other tone in this family. Red marks something needing immediate attention, such as an unread alert.",
                         code: "<Badge count={5} color=\"danger\" />",
-                        render: <Badge count={5} color="danger" showAnatomy />,
+                        render: <Badge count={5} color="danger" />,
                     },
                     {
                         name: "color = accent",
                         why: "The badge tint switches to the accent tone with no other change to its shape. Accent flags a fresh or newly arrived item rather than a problem to act on.",
                         code: "<Badge count={5} color=\"accent\" />",
-                        render: <Badge count={5} color="accent" showAnatomy />,
+                        render: <Badge count={5} color="accent" />,
                     },
                     {
                         name: "color = success",
                         why: "The badge tint switches to the success green, again with an identical node tree to the other tones. Green marks a completed or resolved state, the opposite signal from danger.",
                         code: "<Badge count={5} color=\"success\" />",
-                        render: <Badge count={5} color="success" showAnatomy />,
+                        render: <Badge count={5} color="success" />,
                     },
                     {
                         name: "color = warning",
                         why: "The badge tint switches to the warning amber, still the same single badge node as every other tone. Amber sits between danger and success, for something that needs attention but is not yet critical.",
                         code: "<Badge count={5} color=\"warning\" />",
-                        render: <Badge count={5} color="warning" showAnatomy />,
+                        render: <Badge count={5} color="warning" />,
                     },
                     {
                         name: "color = default",
                         why: "The badge tint falls back to the neutral default tone, again changing nothing but the fill colour. This tone suits a plain count with no urgency or status attached to it.",
                         code: "<Badge count={5} color=\"default\" />",
-                        render: <Badge count={5} color="default" showAnatomy />,
+                        render: <Badge count={5} color="default" />,
                     },
                 ]}
             />
@@ -169,19 +169,19 @@ export const Sizes: Story = {
                         name: "size = sm",
                         why: "The badge pill renders at its smallest footprint, with no other node added to or removed from the tree. A small size fits next to a compact icon or a dense row where a bigger marker would crowd its neighbours.",
                         code: "<Badge count={5} size=\"sm\" />",
-                        render: <Badge count={5} size="sm" showAnatomy />,
+                        render: <Badge count={5} size="sm" />,
                     },
                     {
                         name: "size = md",
                         why: "The badge pill grows to the default footprint, the standard mid-size, and still the same single node as every other size. This is the size used when the badge sits without a tighter or larger visual context around it.",
                         code: "<Badge count={5} size=\"md\" />",
-                        render: <Badge count={5} size="md" showAnatomy />,
+                        render: <Badge count={5} size="md" />,
                     },
                     {
                         name: "size = lg",
                         why: "The badge pill grows to its largest footprint, still just the one node with no children added. A large size suits a bigger anchor, or wherever the badge needs to stay legible from further away.",
                         code: "<Badge count={5} size=\"lg\" />",
-                        render: <Badge count={5} size="lg" showAnatomy />,
+                        render: <Badge count={5} size="lg" />,
                     },
                 ]}
             />
@@ -205,7 +205,7 @@ export const Placement: Story = {
                         why: "The badge anchors to the top-right corner of the bell icon, with the same Anchor/Content/Badge tree as every other corner. Top-right is the default corner, matching where most native badges commonly sit.",
                         code: "<Badge count={3} placement=\"top-right\">{<BellIcon/>}</Badge>",
                         render: (
-                            <Badge count={3} placement="top-right" showAnatomy>
+                            <Badge count={3} placement="top-right">
                                 <BellHost />
                             </Badge>
                         ),
@@ -215,7 +215,7 @@ export const Placement: Story = {
                         why: "The badge moves to the top-left corner instead, changing only the anchor position and nothing about the tree shape. A left-side badge suits an anchor whose top-right corner is already claimed by something else.",
                         code: "<Badge count={3} placement=\"top-left\">{<BellIcon/>}</Badge>",
                         render: (
-                            <Badge count={3} placement="top-left" showAnatomy>
+                            <Badge count={3} placement="top-left">
                                 <BellHost />
                             </Badge>
                         ),
@@ -225,7 +225,7 @@ export const Placement: Story = {
                         why: "The badge moves down to the bottom-right corner, again with no structural change to the tree. A bottom placement suits an anchor whose top edge already carries another marker or label.",
                         code: "<Badge count={3} placement=\"bottom-right\">{<BellIcon/>}</Badge>",
                         render: (
-                            <Badge count={3} placement="bottom-right" showAnatomy>
+                            <Badge count={3} placement="bottom-right">
                                 <BellHost />
                             </Badge>
                         ),
@@ -235,7 +235,7 @@ export const Placement: Story = {
                         why: "The badge moves to the bottom-left corner, the last of the four positions and still the identical tree shape. This corner is picked when both top corners are already occupied by other UI on the anchor.",
                         code: "<Badge count={3} placement=\"bottom-left\">{<BellIcon/>}</Badge>",
                         render: (
-                            <Badge count={3} placement="bottom-left" showAnatomy>
+                            <Badge count={3} placement="bottom-left">
                                 <BellHost />
                             </Badge>
                         ),
@@ -260,7 +260,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "The badge swaps to a small pill or dot shimmer that mirrors its own resting footprint, instead of the real numbered badge. The shimmer is drawn by the atom itself, so there is no shared skeleton component to keep in sync when the badge's shape changes.",
                         code: "<Badge isSkeleton count={3} />",
-                        render: <Badge isSkeleton count={3} showAnatomy />,
+                        render: <Badge isSkeleton count={3} />,
                     },
                 ]}
             />

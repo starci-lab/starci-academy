@@ -79,8 +79,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <AiQuotaHistoryPanel
-                                anatPart="AiQuotaHistoryPanel"
-                                showAnatomy
+
+                               
                                 chartPoints={CHART_POINTS}
                                 items={CHARGES}
                                 isLoading={false}
@@ -127,8 +127,8 @@ export const Loading: Story = {
                         code: "<AiQuotaHistoryPanel chartPoints={chartPoints} isLoading />",
                         render: (
                             <AiQuotaHistoryPanel
-                                anatPart="AiQuotaHistoryPanel"
-                                showAnatomy
+
+                               
                                 chartPoints={CHART_POINTS}
                                 isLoading
                             />

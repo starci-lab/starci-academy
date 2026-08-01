@@ -148,9 +148,7 @@ export interface PlaygroundSetupStepsProps {
     /** `true` → every step renders its shimmer mirror (see file header). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** One `SurfaceCard` step, built by this block before render — named per §"every data shape has a name". */
@@ -250,8 +248,6 @@ const PlaygroundSetupSteps = ({
     engineDetail,
     onVerify,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundSetupStepsProps) => {
     const [os, setOs] = useState<PlaygroundSetupOs>("mac")
     const [isRotateConfirmOpen, setRotateConfirmOpen] = useState(false)
@@ -274,7 +270,7 @@ const PlaygroundSetupSteps = ({
     // Shared by every step (see PROPS doc on `onVerify`) — built once as functions, not a
     // single JSX element re-used across positions, so each step gets its own element instance.
     const renderVerifyButton = (): ReactNode => {
-        if (isSkeleton) return <Button isSkeleton size="sm" showAnatomy={showAnatomy} />
+        if (isSkeleton) return <Button isSkeleton size="sm" />
         if (!onVerify) return null
         return (
             <Button
@@ -283,12 +279,12 @@ const PlaygroundSetupSteps = ({
                 size="sm"
                 prefixIcon={ArrowClockwiseIcon}
                 onPress={onVerify}
-                showAnatomy={showAnatomy}
+
             />
         )
     }
     const renderRotateButton = (): ReactNode => {
-        if (isSkeleton) return <Button isSkeleton size="sm" showAnatomy={showAnatomy} />
+        if (isSkeleton) return <Button isSkeleton size="sm" />
         if (!onRefreshPairingCode) return null
         return (
             <Button
@@ -298,7 +294,7 @@ const PlaygroundSetupSteps = ({
                 prefixIcon={ArrowsClockwiseIcon}
                 onPress={handleRotateClick}
                 isPending={isRefreshingPairingCode}
-                showAnatomy={showAnatomy}
+
             />
         )
     }
@@ -309,7 +305,7 @@ const PlaygroundSetupSteps = ({
                 size="xs"
                 color="danger"
                 text="The pairing code has expired — get a new code to continue."
-                showAnatomy={showAnatomy}
+
             />
         )
         : pairingCodeSecondsLeft != null
@@ -318,7 +314,7 @@ const PlaygroundSetupSteps = ({
                     size="xs"
                     color="muted"
                     text={`Code valid for ${pairingCodeSecondsLeft} more seconds`}
-                    showAnatomy={showAnatomy}
+
                 />
             )
             : null
@@ -326,7 +322,7 @@ const PlaygroundSetupSteps = ({
     const pairStepBody: ReactNode = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <Typography
@@ -334,16 +330,16 @@ const PlaygroundSetupSteps = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         text="The local agent is the bridge that lets Playground control your machine — skip this step and every command in the following steps fails to run."
-                        showAnatomy={showAnatomy}
+
                     />
                     {isSkeleton
                         ? <CommandSkeleton />
-                        : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
+                        : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" />}
                     {!isSkeleton ? pairingCodeNote : null}
                     <StackH
                         gap={3}
                         wrap
-                        anatPart={showAnatomy ? "StackH" : undefined}
+
                         body={
                             <>
                                 {renderVerifyButton()}
@@ -360,13 +356,13 @@ const PlaygroundSetupSteps = ({
     const osTabsRow: ReactNode = isSkeleton ? (
         <OsTabsSkeleton />
     ) : (
-        <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>
+        <div>
             <TabsExtended
                 variant="secondary"
                 size="sm"
                 selectedKey={os}
                 onSelectionChange={(key) => setOs(key as PlaygroundSetupOs)}
-                showAnatomy={showAnatomy}
+
             >
                 <Tabs.ListContainer>
                     <Tabs.List aria-label="Choose operating system">
@@ -391,7 +387,7 @@ const PlaygroundSetupSteps = ({
     const engineStepBody: ReactNode = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <Typography
@@ -399,22 +395,22 @@ const PlaygroundSetupSteps = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={`${engineLabel} is where the model actually runs on your machine — once installed, Playground can handle local AI tasks.`}
-                        showAnatomy={showAnatomy}
+
                     />
                     {osTabsRow}
                     {isSkeleton
                         ? <CommandSkeleton lines={3} />
-                        : <MarkdownContent source={osGuides[os]} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
+                        : <MarkdownContent source={osGuides[os]} measure="compact" />}
                     {!isSkeleton && engineReady && engineDetail ? (
                         <Callout
                             status="success"
                             title={`${engineLabel} is ready`}
                             description={engineDetail}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Callout" : undefined}
+
+
                         />
                     ) : null}
-                    <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={renderVerifyButton()} />
+                    <StackH gap={3} body={renderVerifyButton()} />
                 </>
             }
         />
@@ -427,16 +423,16 @@ const PlaygroundSetupSteps = ({
     const genModelSection = genModelCommand != null ? (
         <StackV
             gap={2}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <Typography
                         size="xs"
                         color="muted"
                         text={`Model sinh — ${recommendedGenModel}`}
-                        showAnatomy={showAnatomy}
+
                     />
-                    <MarkdownContent source={genModelCommand} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                    <MarkdownContent source={genModelCommand} measure="compact" />
                 </>
             }
         />
@@ -445,16 +441,16 @@ const PlaygroundSetupSteps = ({
     const embedModelSection = (
         <StackV
             gap={2}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <Typography
                         size="xs"
                         color="muted"
                         text={`Model embedding — ${EMBEDDING_MODEL_NAME}`}
-                        showAnatomy={showAnatomy}
+
                     />
-                    <MarkdownContent source={embedModelCommand} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                    <MarkdownContent source={embedModelCommand} measure="compact" />
                 </>
             }
         />
@@ -463,7 +459,7 @@ const PlaygroundSetupSteps = ({
     const modelsCommandsSection = (
         <StackV
             gap={4}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {genModelSection}
@@ -488,7 +484,7 @@ const PlaygroundSetupSteps = ({
     const modelsStepBody: ReactNode = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <Typography
@@ -496,7 +492,7 @@ const PlaygroundSetupSteps = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         text="Models need to be pulled to your machine before use — the right size for your VRAM keeps things running smoothly, without freezing or running out of memory."
-                        showAnatomy={showAnatomy}
+
                     />
                     {isSkeleton ? (
                         modelsSkeletonCommands
@@ -505,21 +501,21 @@ const PlaygroundSetupSteps = ({
                             status="warning"
                             title="Device configuration not detected yet"
                             description="Finish installing the engine, then press Check again — Playground will detect your VRAM and suggest the right model size."
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Callout" : undefined}
+
+
                         />
                     ) : modelsReady ? (
                         <Callout
                             status="success"
                             title="All models are ready"
                             description="Both the text-generation model and the embedding model are already downloaded on your machine."
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Callout" : undefined}
+
+
                         />
                     ) : (
                         modelsCommandsSection
                     )}
-                    <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={renderVerifyButton()} />
+                    <StackH gap={3} body={renderVerifyButton()} />
                 </>
             }
         />
@@ -548,12 +544,12 @@ const PlaygroundSetupSteps = ({
                     value={step.status}
                     map={STEP_STATUS_MAP}
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "EnumChip" : undefined}
+
                 />
             )}
             isSkeleton={isSkeleton}
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
-            showAnatomy={showAnatomy}
+
+
             body={() => step.body}
         />
     )
@@ -568,15 +564,15 @@ const PlaygroundSetupSteps = ({
             cancelLabel="Not now"
             onConfirm={handleConfirmRotate}
             isConfirming={isRefreshingPairingCode}
-            showAnatomy={showAnatomy}
+
         />
     ) : null
 
     return (
         <StackV
             gap={4}
-            anatPart={anatPart}
-            showAnatomy={showAnatomy}
+
+
             body={
                 <>
                     {steps.map(renderStep)}

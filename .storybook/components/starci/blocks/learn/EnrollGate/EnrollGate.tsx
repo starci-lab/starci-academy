@@ -118,9 +118,7 @@ export interface EnrollGateProps {
     /** Extra classes on the root. */
     className?: string
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -137,8 +135,6 @@ const EnrollGateBase = ({
     onEnroll,
     isSkeleton = false,
     className,
-    anatPart,
-    showAnatomy = false,
 }: EnrollGateProps) => {
     // no price to show yet (unresolved) OR the caller forces the loading state —
     // either way the price region falls to the AsyncContent shimmer branch.
@@ -154,7 +150,7 @@ const EnrollGateBase = ({
                 original={price.originalVnd}
                 breakdown={price.breakdown}
                 className="justify-center"
-                anatPart={showAnatomy ? "PriceTagProminent" : undefined}
+
             />
             {price.currentPhase != null ? (
                 <PhaseScarcityNote
@@ -162,8 +158,8 @@ const EnrollGateBase = ({
                     seatsRemaining={price.seatsRemaining ?? null}
                     nextPhasePriceVnd={price.nextPhasePriceVnd ?? null}
                     className="justify-center"
-                    anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
         </>
@@ -177,7 +173,7 @@ const EnrollGateBase = ({
                 icon={LockIcon}
                 tone="accent"
                 size="sm"
-                showAnatomy={showAnatomy}
+
             />
             {/* the real src (`EnrollGate/index.tsx:67`): `type="h4" weight="bold"` — a real
                 HEADING (20px), not body `lg` (18px). */}
@@ -186,14 +182,14 @@ const EnrollGateBase = ({
                 weight="bold"
                 align="center"
                 text={title}
-                showAnatomy={showAnatomy}
+
             />
             <Typography
                 size="sm"
                 color="muted"
                 align="center"
                 text={description}
-                showAnatomy={showAnatomy}
+
             />
             <AsyncContent
                 isLoading={priceLoading}
@@ -204,9 +200,9 @@ const EnrollGateBase = ({
                 // `anatPart` — only `.Empty`/`.Error` do); it self-labels its active
                 // branch via its own dev overlay when `showAnatomy` is on.
                 skeleton={<HeroSkeleton className="h-7 w-32 rounded-xl" />}
-                showAnatomy={showAnatomy}
+
             >
-                <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={priceGroup} />
+                <StackV gap={4} align="center" body={priceGroup} />
             </AsyncContent>
             <Button
                 label="Enroll now"
@@ -216,7 +212,7 @@ const EnrollGateBase = ({
                 iconSlide
                 onPress={onEnroll}
                 classNames={["w-full"]}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -231,8 +227,8 @@ const EnrollGateBase = ({
         <div className="mx-auto w-full max-w-[480px]">
             <SurfaceCard
                 padding={6}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={offerBody} />}
+
+                body={() => <StackV gap={4} align="center" body={offerBody} />}
             />
         </div>
     )
@@ -242,7 +238,7 @@ const EnrollGateBase = ({
     // governs the wrapper's padding instead of a hand-typed `p-*` value.
     if (preview == null) {
         return (
-            <StackH gap={1} justify="center" padding={6} className={className} anatPart={anatPart} body={card} />
+            <StackH gap={1} justify="center" padding={6} className={className} body={card} />
         )
     }
 
@@ -250,7 +246,7 @@ const EnrollGateBase = ({
     // renders the whole real body and only fades its tail, never truncates
     // early), with the enroll card floating over the faded tail.
     return (
-        <div data-anat-part={anatPart} className={cn("relative", className)}>
+        <div className={cn("relative", className)}>
             <div aria-hidden className="pointer-events-none relative">
                 {preview}
                 {/* Same fade band as `ContentArticle`'s locked-body tail — fades into

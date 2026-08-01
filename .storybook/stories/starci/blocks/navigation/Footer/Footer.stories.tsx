@@ -75,8 +75,8 @@ export const Default: Story = {
 />`,
                     render: (
                         <Footer
-                            showAnatomy
-                            anatPart="Footer"
+                           
+
                             exploreLinks={EXPLORE_LINKS}
                             supportLinks={SUPPORT_LINKS}
                             socials={SOCIALS}
@@ -97,8 +97,8 @@ export const Default: Story = {
 />`,
                     render: (
                         <Footer
-                            showAnatomy
-                            anatPart="Footer"
+                           
+
                             exploreLinks={EXPLORE_LINKS}
                             supportLinks={SUPPORT_LINKS}
                             socials={[]}

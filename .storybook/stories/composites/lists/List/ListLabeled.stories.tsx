@@ -117,7 +117,7 @@ export const SingleItem: Story = {
   label="Review this lesson"
   items={[{ key: "closures", title: "JavaScript Closures", subtitle: "12 cards" }]}
 />`,
-                        render: <ListLabeled label="Review this lesson" items={decks.slice(0, 1)} showAnatomy />,
+                        render: <ListLabeled label="Review this lesson" items={decks.slice(0, 1)} />,
                     },
                 ]}
             />
@@ -160,7 +160,7 @@ export const MultipleWithAction: Story = {
                                 label="Practice this lesson"
                                 items={challenges}
                                 action={PracticeNowAction}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -196,7 +196,7 @@ export const WithIcon: Story = {
                                 label="Related flashcards"
                                 icon={CardsLeadingIcon}
                                 items={decks}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -223,7 +223,7 @@ export const NavigationItems: Story = {
   label="Quick access"
   items={[{ key: "courses", title: "Courses", href: "/courses", trailing: ChevronTrailing }, …]}
 />`,
-                        render: <ListLabeled label="Quick access" items={shortcuts} showAnatomy />,
+                        render: <ListLabeled label="Quick access" items={shortcuts} />,
                     },
                 ]}
             />
@@ -272,7 +272,7 @@ export const Empty: Story = {
                                 label="Review this lesson"
                                 items={[]}
                                 emptyState={NoRelatedDecks}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -314,7 +314,7 @@ export const Loading: Story = {
   items={[]}
   isSkeleton
 />`,
-                        render: <ListLabeled label="Practice this lesson" items={[]} isSkeleton showAnatomy />,
+                        render: <ListLabeled label="Practice this lesson" items={[]} isSkeleton />,
                     },
                 ]}
             />

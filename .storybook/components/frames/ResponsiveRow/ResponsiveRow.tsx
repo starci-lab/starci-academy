@@ -69,7 +69,6 @@ export interface ResponsiveRowProps {
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the frame is used but the panel cannot see it.
      */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -112,14 +111,13 @@ const ResponsiveRowBase = ({
     columns,
     at,
     gap,
-    anatPart,
     classNames,
     pattern,
 }: ResponsiveRowProps) => (
     <div
         data-tier="frame"
         data-component="ResponsiveRow"
-        data-anat-part={anatPart}
+
         data-principles={pattern}
         className={cn(
             "grid",

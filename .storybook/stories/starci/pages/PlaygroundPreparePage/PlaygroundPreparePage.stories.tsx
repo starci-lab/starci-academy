@@ -174,7 +174,7 @@ export const Default: Story = {
                         render: (
                             <PlaygroundPreparePage
                                 {...BASE}
-                                showAnatomy
+                               
                                 checklistItems={MIXED_ITEMS}
                                 deviceInfo={DEVICE}
                                 engineDetail="Ollama 0.3.6 · GPU 8GB VRAM"
@@ -241,7 +241,7 @@ export const InfraFlavor: Story = {
                         render: (
                             <PlaygroundPreparePage
                                 {...BASE}
-                                showAnatomy
+                               
                                 flavor="infra"
                                 engineName="Docker Desktop"
                                 recommendedGenModel={undefined}
@@ -274,7 +274,7 @@ export const Empty: Story = {
                         name: "isEmpty = true",
                         why: "There is no header, no banner, no steps — the whole spine is swapped for one empty message, because an exercise id that resolved to nothing has nothing to prepare for either.",
                         code: "<PlaygroundPreparePage {...props} isEmpty />",
-                        render: <PlaygroundPreparePage {...BASE} showAnatomy checklistItems={MIXED_ITEMS} isEmpty />,
+                        render: <PlaygroundPreparePage {...BASE} checklistItems={MIXED_ITEMS} isEmpty />,
                     },
                 ]}
             />
@@ -300,7 +300,7 @@ export const Skeleton: Story = {
                         render: (
                             <PlaygroundPreparePage
                                 {...BASE}
-                                showAnatomy
+                               
                                 isSkeleton
                                 checklistItems={MIXED_ITEMS}
                                 deviceInfo={DEVICE}

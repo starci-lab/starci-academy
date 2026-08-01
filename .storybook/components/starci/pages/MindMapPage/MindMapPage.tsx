@@ -158,7 +158,6 @@ export interface MindMapPageProps {
     /** `true` → the course has no authored map/modules yet. `workspace`-ONLY — see the file header. */
     isEmpty?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /** localStorage key + bounds the real `MindMapWorkspace` persists the rail width under. */
@@ -177,23 +176,22 @@ const WORKSPACE_EMPTY_DESCRIPTION = "The map is generated automatically once the
 /** Props for the {@link MindMapCanvasGap} stand-in below. */
 interface MindMapCanvasGapProps {
     isLoading?: boolean
-    showAnatomy?: boolean
 }
 
 /**
  * Stand-in for the out-of-reach ReactFlow engine (§B3) — see the file header's
  * "CANVAS GAP" note for why `AsyncContentEmpty` is the reused shape here.
  */
-const MindMapCanvasGap = ({ isLoading = false, showAnatomy = false }: MindMapCanvasGapProps) => (
+const MindMapCanvasGap = ({ isLoading = false}: MindMapCanvasGapProps) => (
     <StackV
         gap={1}
         align="center"
         justify="center"
         classNames={["h-full"]}
-        anatPart={showAnatomy ? "StackV" : undefined}
+
         body={
             <AsyncContentEmpty
-                anatPart={showAnatomy ? "AsyncContentEmpty" : undefined}
+
                 icon={ShareNetworkIcon}
                 title={isLoading ? CANVAS_GAP_LOADING_TITLE : CANVAS_GAP_TITLE}
                 description={isLoading ? undefined : CANVAS_GAP_DESCRIPTION}
@@ -213,10 +211,10 @@ const MindMapWorkspaceEmpty = () => (
         align="center"
         justify="center"
         className="h-[calc(100dvh-4rem)]"
-        anatPart="StackV"
+
         body={
             <AsyncContentEmpty
-                anatPart="AsyncContentEmpty"
+
                 icon={MapTrifoldIcon}
                 title={WORKSPACE_EMPTY_TITLE}
                 description={WORKSPACE_EMPTY_DESCRIPTION}
@@ -257,7 +255,6 @@ const MindMapPage = ({
     fullscreenAriaLabels = { zoomIn: "", zoomOut: "", toggleFullscreen: "" },
     isSkeleton = false,
     isEmpty = false,
-    showAnatomy = false,
 }: MindMapPageProps) => {
     if (variant === "workspace" && isEmpty) {
         return <MindMapWorkspaceEmpty />
@@ -265,7 +262,7 @@ const MindMapPage = ({
 
     const railSection = (
         <MindMapRail
-            anatPart="MindMapRail"
+
             query={query}
             onQuery={onQuery}
             tier={tier}
@@ -277,7 +274,7 @@ const MindMapPage = ({
             ariaLabel={railAriaLabel}
             tierAriaLabel={railTierAriaLabel}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
         />
     )
 
@@ -290,27 +287,27 @@ const MindMapPage = ({
                 gap={1}
                 align="center"
                 className="absolute inset-x-0 top-4 z-10"
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <MindMapContinueButton
-                        anatPart="MindMapContinueButton"
+
                         resumeHref={resumeHref}
                         allContentDone={allContentDone}
                         onResume={onResume}
                         continueAriaLabel={continueAriaLabel}
-                        showAnatomy={showAnatomy}
+
                     />
                 }
             />
             <StackV
                 gap={1}
                 className="absolute bottom-4 left-4 z-10"
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     // `Legend` carries no `anatPart` of its own — same bare, class-free
                     // anatomy marker `MindMapRail`'s own file already uses for the same
                     // reason (naming a node without laying anything out).
-                    <div data-anat-part={showAnatomy ? "Legend" : undefined}>
+                    <div>
                         <Legend items={legendItems} />
                     </div>
                 }
@@ -318,16 +315,16 @@ const MindMapPage = ({
             <StackV
                 gap={1}
                 className="absolute bottom-4 right-4 z-10"
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <MindMapFullscreenButton
-                        anatPart="MindMapFullscreenButton"
+
                         onZoomIn={onZoomIn}
                         onZoomOut={onZoomOut}
                         onToggleFullscreen={onToggleFullscreen}
                         isFullscreen={isFullscreen}
                         ariaLabels={fullscreenAriaLabels}
-                        showAnatomy={showAnatomy}
+
                     />
                 }
             />
@@ -336,7 +333,7 @@ const MindMapPage = ({
 
     const canvasRegion = (
         <>
-            <MindMapCanvasGap isLoading={isSkeleton} showAnatomy={showAnatomy} />
+            <MindMapCanvasGap isLoading={isSkeleton} />
             {variant === "standalone" && !isSkeleton ? canvasOverlays : null}
         </>
     )
@@ -350,14 +347,14 @@ const MindMapPage = ({
             ariaLabel={railResizeAriaLabel}
             handleSide="right"
             className="h-full shrink-0 border-r border-default"
-            showAnatomy={showAnatomy}
+
         >
             <StackV
                 padding={6}
                 gap={1}
                 className="overflow-y-auto"
                 classNames={["h-full"]}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={railSection}
             />
         </ResizableRail>
@@ -373,13 +370,13 @@ const MindMapPage = ({
                 gap={1}
                 className="relative"
                 classNames={["min-w-0", "flex-1"]}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={canvasRegion}
             />
         </>
     )
 
-    return <StackH gap={1} className="h-[calc(100dvh-4rem)]" anatPart={showAnatomy ? "StackH" : undefined} body={workspaceSections} />
+    return <StackH gap={1} className="h-[calc(100dvh-4rem)]" body={workspaceSections} />
 }
 
 export { MindMapPage }

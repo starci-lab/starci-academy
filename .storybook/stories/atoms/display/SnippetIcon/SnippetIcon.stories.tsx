@@ -99,7 +99,7 @@ export const Default: Story = {
                                 </Typography>
                                 <SnippetIcon
                                     copyString="npm install @starciacademy/playground-agent"
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -132,7 +132,7 @@ export const Copied: Story = {
                                 </Typography>
                                 <SnippetIcon
                                     copyString="sk-live-51H8x2KJ9mQwErTyUiOp"
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),

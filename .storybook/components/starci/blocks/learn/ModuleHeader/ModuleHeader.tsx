@@ -110,9 +110,7 @@ export interface ModuleHeaderProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -131,8 +129,6 @@ const ModuleHeader = ({
     minutesTotal,
     challengeCount,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ModuleHeaderProps) => {
     const hasLessons = (lessonCount ?? 0) > 0
     const hasMinutes = (minutesTotal ?? 0) > 0
@@ -146,7 +142,7 @@ const ModuleHeader = ({
             gap={3}
             align="center"
             wrap
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     {isSkeleton ? (
@@ -154,17 +150,17 @@ const ModuleHeader = ({
                             value={CourseContentTier.Foundation}
                             map={TIER_MAP}
                             isSkeleton
-                            anatPart={showAnatomy ? "EnumChip" : undefined}
+
                         />
                     ) : tier != null ? (
-                        <EnumChip value={tier} map={TIER_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />
+                        <EnumChip value={tier} map={TIER_MAP} />
                     ) : null}
                     {isSkeleton ? (
-                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                        <span>
                             <Chip isSkeleton icon={StackIcon} />
                         </span>
                     ) : hasLessons ? (
-                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                        <span>
                             <HighlightChip
                                 icon={<StackIcon aria-hidden focusable="false" className="size-4" />}
                                 value={lessonCount}
@@ -173,11 +169,11 @@ const ModuleHeader = ({
                         </span>
                     ) : null}
                     {isSkeleton ? (
-                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                        <span>
                             <Chip isSkeleton icon={ClockIcon} />
                         </span>
                     ) : hasMinutes ? (
-                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                        <span>
                             <HighlightChip
                                 icon={<ClockIcon aria-hidden focusable="false" className="size-4" />}
                                 value={minutesTotal}
@@ -186,11 +182,11 @@ const ModuleHeader = ({
                         </span>
                     ) : null}
                     {isSkeleton ? (
-                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                        <span>
                             <Chip isSkeleton icon={PuzzlePieceIcon} />
                         </span>
                     ) : hasChallenges ? (
-                        <span data-anat-part={showAnatomy ? "HighlightChip" : undefined}>
+                        <span>
                             <HighlightChip
                                 icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-4" />}
                                 value={challengeCount}
@@ -204,12 +200,12 @@ const ModuleHeader = ({
     ) : undefined
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 breadcrumb={() => (
-                    <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                    <div className="w-fit">
                         <Breadcrumbs
                             collapseOnMobile
                             collapseFrom={4}

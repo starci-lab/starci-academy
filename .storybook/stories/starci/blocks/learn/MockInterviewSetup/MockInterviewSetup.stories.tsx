@@ -81,8 +81,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <MockInterviewSetup
-                                anatPart="MockInterviewSetup"
-                                showAnatomy
+
+                               
                                 label="Prepare for the interview"
                                 persona={PERSONA}
                                 sessionName="Round 1 - Backend"

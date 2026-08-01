@@ -127,9 +127,7 @@ export interface ContentAiChatDrawerProps {
     /** Fired with the mode the reader picked. Omit together with {@link mode} to hide the switch entirely. */
     onModeChange?: (mode: ContentAiChatDrawerMode) => void
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -145,8 +143,6 @@ const ContentAiChatDrawer = ({
     title,
     mode,
     onModeChange,
-    showAnatomy = false,
-    anatPart,
 }: ContentAiChatDrawerProps) => {
     // Both halves of the switch must be present together — a mode with nothing to
     // change it, or a handler with no mode to reflect, are both dead controls, so
@@ -155,17 +151,17 @@ const ContentAiChatDrawer = ({
 
     const titleAndModeSwitch = (
         <>
-            <span className="min-w-0 flex-1" data-anat-part={showAnatomy ? "Typography" : undefined}>
+            <span className="min-w-0 flex-1">
                 <Typography text={title ?? FALLBACK_TITLE} weight="bold" truncate />
             </span>
             {hasModeSwitch ? (
-                <span data-anat-part={showAnatomy ? "ButtonRadioGroup" : undefined}>
+                <span>
                     <ButtonRadioGroup
                         items={MODE_ITEMS}
                         value={mode as ContentAiChatDrawerMode}
                         onChange={(next) => onModeChange?.(next)}
                         ariaLabel={MODE_SWITCH_ARIA_LABEL}
-                        showAnatomy={showAnatomy}
+
                     />
                 </span>
             ) : null}
@@ -177,29 +173,29 @@ const ContentAiChatDrawer = ({
             gap={3}
             justify="between"
             className="pr-8"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={titleAndModeSwitch}
         />
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement={placement}
                 header={header}
-                showAnatomy={showAnatomy}
+
             >
                 <SurfaceCard
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                     body={() => (
                         <EmptyState
                             icon={ChatsCircleIcon}
                             title={BODY_GAP_TITLE}
                             description={BODY_GAP_DESCRIPTION}
-                            anatPart={showAnatomy ? "EmptyState" : undefined}
+
                         />
                     )}
                 />

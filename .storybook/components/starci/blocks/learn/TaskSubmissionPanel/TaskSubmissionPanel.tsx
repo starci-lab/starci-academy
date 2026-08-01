@@ -154,9 +154,7 @@ export interface TaskSubmissionPanelProps {
     /** `true` → every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Autosave state → its own icon/tone/wording. `idle` never renders (see file header). */
@@ -186,7 +184,6 @@ interface GithubUrlFieldProps {
     urlError?: string
     autosaveStatus: TaskSubmissionAutosaveStatus
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
 /**
@@ -199,13 +196,12 @@ const GithubUrlField = ({
     urlError,
     autosaveStatus,
     isSkeleton,
-    showAnatomy,
 }: GithubUrlFieldProps) => {
     const AutosaveIcon = autosaveStatus === "idle" ? null : AUTOSAVE_ICON[autosaveStatus]
     return (
         <StackV
             gap={2}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <InputText
@@ -216,14 +212,14 @@ const GithubUrlField = ({
                         placeholder="https://github.com/ten-nhom/du-an"
                         ariaLabel="URL repo GitHub"
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                     {!isSkeleton && AutosaveIcon != null ? (
                         <InlineIconLabel
                             icon={AutosaveIcon}
                             tone={AUTOSAVE_TONE[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
                             size="xs"
-                            anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
                         >
                             {AUTOSAVE_LABEL[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
                         </InlineIconLabel>
@@ -239,23 +235,22 @@ interface SettingsSummaryRowProps {
     settingsSummary: TaskSubmissionSettingsSummary
     onOpenSettings: () => void
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
 /** Compact "what am I grading against" line + the gear that opens the settings drawer. */
-const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton, showAnatomy }: SettingsSummaryRowProps) => (
+const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: SettingsSummaryRowProps) => (
     <StackH
         gap={3}
         align="center"
         justify="between"
-        anatPart={showAnatomy ? "StackH" : undefined}
+
         body={
             <>
                 <StackH
                     gap={3}
                     align="center"
                     wrap
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <>
                             <InlineIconLabel
@@ -263,7 +258,7 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton, showA
                                 tone="default"
                                 size="xs"
                                 isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
                             >
                                 {settingsSummary.langLabel}
                             </InlineIconLabel>
@@ -272,7 +267,7 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton, showA
                                 tone="default"
                                 size="xs"
                                 isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
                             >
                                 {settingsSummary.branch}
                             </InlineIconLabel>
@@ -287,7 +282,7 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton, showA
                     size="sm"
                     onPress={onOpenSettings}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             </>
         }
@@ -300,17 +295,16 @@ interface EvaluateActionRowProps {
     isEvaluating: boolean
     aiStatusText?: string
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
 /** The evaluate CTA + an optional AI status line beside it. */
-const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton, showAnatomy }: EvaluateActionRowProps) => (
+const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton }: EvaluateActionRowProps) => (
     <StackH
         gap={3}
         align="center"
         justify="between"
         wrap
-        anatPart={showAnatomy ? "StackH" : undefined}
+
         body={
             <>
                 {aiStatusText != null ? (
@@ -319,7 +313,7 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton,
                         tone="default"
                         size="xs"
                         isSkeleton={isSkeleton}
-                        anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
                     >
                         {aiStatusText}
                     </InlineIconLabel>
@@ -334,7 +328,7 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton,
                     onPress={onEvaluate}
                     isPending={isEvaluating}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             </>
         }
@@ -345,7 +339,6 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton,
 interface TaskResultSummaryProps {
     result?: TaskSubmissionResult
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
 /**
@@ -353,7 +346,7 @@ interface TaskResultSummaryProps {
  * was dropped and why. `result` omitted → a single muted "no evaluation yet"
  * line instead (§2: a real, named state, not a loading stub).
  */
-const TaskResultSummary = ({ result, isSkeleton, showAnatomy }: TaskResultSummaryProps) => {
+const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps) => {
     if (result == null) {
         return (
             <Typography
@@ -361,7 +354,7 @@ const TaskResultSummary = ({ result, isSkeleton, showAnatomy }: TaskResultSummar
                 color="muted"
                 isSkeleton={isSkeleton}
                 text="No grading runs yet."
-                showAnatomy={showAnatomy}
+
             />
         )
     }
@@ -373,7 +366,7 @@ const TaskResultSummary = ({ result, isSkeleton, showAnatomy }: TaskResultSummar
                 tabularNums
                 isSkeleton={isSkeleton}
                 text={String(result.score)}
-                showAnatomy={showAnatomy}
+
             />
             <Typography
                 size="sm"
@@ -381,7 +374,7 @@ const TaskResultSummary = ({ result, isSkeleton, showAnatomy }: TaskResultSummar
                 tabularNums
                 isSkeleton={isSkeleton}
                 text={`/ ${result.maxScore}`}
-                showAnatomy={showAnatomy}
+
             />
             {result.aiBadge != null ? (
                 <Chip
@@ -389,7 +382,7 @@ const TaskResultSummary = ({ result, isSkeleton, showAnatomy }: TaskResultSummar
                     icon={SparkleIcon}
                     text={result.aiBadge}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -398,16 +391,16 @@ const TaskResultSummary = ({ result, isSkeleton, showAnatomy }: TaskResultSummar
     return (
         <StackV
             gap={2}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <StackH gap={4} align="baseline" wrap anatPart={showAnatomy ? "StackH" : undefined} body={scoreRow} />
+                    <StackH gap={4} align="baseline" wrap body={scoreRow} />
                     {result.shortFeedback != null ? (
                         <Typography
                             size="sm"
                             isSkeleton={isSkeleton}
                             text={result.shortFeedback}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -419,14 +412,13 @@ const TaskResultSummary = ({ result, isSkeleton, showAnatomy }: TaskResultSummar
 /** Props for the local {@link GithubGradingSettingsBody} leaf. */
 interface GithubGradingSettingsBodyProps {
     form: GithubGradingSettingsFormProps
-    showAnatomy: boolean
 }
 
 /** The `GithubGradingSettings` form body: language / branch / token, mounted inside {@link DrawerShell}. */
-const GithubGradingSettingsBody = ({ form, showAnatomy }: GithubGradingSettingsBodyProps) => (
+const GithubGradingSettingsBody = ({ form }: GithubGradingSettingsBodyProps) => (
     <StackV
         gap={4}
-        anatPart={showAnatomy ? "StackV" : undefined}
+
         body={
             <>
                 <SelectSingle
@@ -434,14 +426,14 @@ const GithubGradingSettingsBody = ({ form, showAnatomy }: GithubGradingSettingsB
                     options={form.languageOptions}
                     value={form.language}
                     onValueChange={form.onLanguageChange}
-                    showAnatomy={showAnatomy}
+
                 />
                 <InputText
                     label="Branch"
                     value={form.branch}
                     onValueChange={form.onBranchChange}
                     placeholder="main"
-                    showAnatomy={showAnatomy}
+
                 />
                 <InputPassword
                     label="GitHub token"
@@ -449,7 +441,7 @@ const GithubGradingSettingsBody = ({ form, showAnatomy }: GithubGradingSettingsB
                     onValueChange={form.onTokenChange}
                     hint={form.tokenHint ?? DEFAULT_TOKEN_HINT}
                     placeholder="ghp_…"
-                    showAnatomy={showAnatomy}
+
                 />
             </>
         }
@@ -477,18 +469,16 @@ const TaskSubmissionPanel = ({
     latestResult,
     settingsFormProps,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: TaskSubmissionPanelProps) => (
-    <div data-anat-part={anatPart} className="sticky top-4 z-10">
+    <div className="sticky top-4 z-10">
         <SurfaceCard
             label="Submit project"
             isSkeleton={isSkeleton}
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
             body={() => (
                 <StackV
                     gap={4}
-                    anatPart={showAnatomy ? "StackV" : undefined}
+
                     body={
                         <>
                             <GithubUrlField
@@ -497,22 +487,22 @@ const TaskSubmissionPanel = ({
                                 urlError={urlError}
                                 autosaveStatus={autosaveStatus}
                                 isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
+
                             />
                             <SettingsSummaryRow
                                 settingsSummary={settingsSummary}
                                 onOpenSettings={() => onSettingsOpenChange(true)}
                                 isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
+
                             />
                             <EvaluateActionRow
                                 onEvaluate={onEvaluate}
                                 isEvaluating={isEvaluating}
                                 aiStatusText={aiStatusText}
                                 isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
+
                             />
-                            <TaskResultSummary result={latestResult} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                            <TaskResultSummary result={latestResult} isSkeleton={isSkeleton} />
                         </>
                     }
                 />
@@ -530,12 +520,12 @@ const TaskSubmissionPanel = ({
                     variant="primary"
                     onPress={settingsFormProps.onSave}
                     isPending={settingsFormProps.isSaving}
-                    showAnatomy={showAnatomy}
+
                 />
             }
-            showAnatomy={showAnatomy}
+
         >
-            <GithubGradingSettingsBody form={settingsFormProps} showAnatomy={showAnatomy} />
+            <GithubGradingSettingsBody form={settingsFormProps} />
         </DrawerShell>
     </div>
 )

@@ -69,8 +69,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <MindMapFullscreenButton
-                                anatPart="MindMapFullscreenButton"
-                                showAnatomy
+
+                               
                                 onZoomIn={() => {}}
                                 onZoomOut={() => {}}
                                 onToggleFullscreen={() => {}}

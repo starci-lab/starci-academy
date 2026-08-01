@@ -278,7 +278,6 @@ interface TypographyOwnProps {
     /** `tabular-nums` for numbers/prices/counts, so digits line up in straight columns. */
     tabularNums?: boolean
     /** `true` → tag each part with `data-anat-part` for BlockAnatomy. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -323,7 +322,6 @@ const TypographyBase = ({
     align,
     tabularNums = false,
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
     size = "base",
 }: TypographyProps) => {
@@ -346,7 +344,7 @@ const TypographyBase = ({
                 data-tier="atom"
                 data-component="Typography"
                 className={cn("inline-block w-1/2 rounded", SKEL_H[size], classNames)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
             />
         )
     }
@@ -369,7 +367,7 @@ const TypographyBase = ({
                     underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
                     classNames,
                 )}
-                data-anat-part={showAnatomy ? "Typography.Heading" : undefined}
+
             >
                 {renderedText}
             </HeroTypography.Heading>
@@ -393,7 +391,7 @@ const TypographyBase = ({
                     underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
                     classNames,
                 )}
-                data-anat-part={showAnatomy ? "Typography" : undefined}
+
             >
                 {renderedText}
             </HeroTypography>
@@ -409,7 +407,7 @@ const TypographyBase = ({
                     data-tier="atom"
                     data-component="Typography"
                     className={cn("inline-block w-1/2 rounded", SKEL_H[bodySize], classNames)}
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                 />
             )
         }
@@ -434,7 +432,7 @@ const TypographyBase = ({
                         underlineOnHover ? SELF_HOVER_UNDERLINE_CLS : "underline-offset-2 hover:underline",
                         classNames,
                     )}
-                    data-anat-part={showAnatomy ? "Link" : undefined}
+
                 >
                     {renderedText}
                 </HeroLink>
@@ -460,7 +458,7 @@ const TypographyBase = ({
                         hoverColor && HOVER_COLOR_CLS[hoverColor],
                         classNames,
                     )}
-                    data-anat-part={showAnatomy ? "Button" : undefined}
+
                 >
                     {renderedText}
                 </button>
@@ -503,7 +501,6 @@ const TypographyBase = ({
                 // Atom owns the glyph scale — icon inherits currentColor (matches text tone).
                 <span
                     aria-hidden
-                    data-anat-part={showAnatomy ? `${side}Icon` : undefined}
                     // Tailwind v4: `translate` is its OWN CSS property → the transition must target
                     // `translate` (not `transform`), otherwise hover will jump ([[tailwind-v4-scale-is-own-property]]).
                     className={cn(
@@ -519,13 +516,13 @@ const TypographyBase = ({
                 // `group` so the child arrow can hear `group-hover` when iconSlide is on.
                 <span data-tier="atom" data-component="Typography" className={cn("inline-flex items-center gap-1", iconSlide && "group", baseCls)}>
                     {Prefix ? iconSpan(Prefix, "Prefix") : null}
-                    <span data-anat-part={showAnatomy ? "Text" : undefined} className={cn("min-w-0", clampCls)}>{renderedText}</span>
+                    <span className={cn("min-w-0", clampCls)}>{renderedText}</span>
                     {Suffix ? iconSpan(Suffix, "Suffix") : null}
                 </span>
             )
         }
         return (
-            <span data-tier="atom" data-component="Typography" className={cn(baseCls, clampCls)} data-anat-part={showAnatomy ? "Text" : undefined}>
+            <span data-tier="atom" data-component="Typography" className={cn(baseCls, clampCls)}>
                 {renderedText}
             </span>
         )

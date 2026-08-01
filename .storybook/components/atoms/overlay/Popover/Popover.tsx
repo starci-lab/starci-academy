@@ -54,7 +54,6 @@ export interface PopoverBaseProps {
     /** Open-state change handler (uncontrolled/controlled). */
     onOpenChange?: (isOpen: boolean) => void
     /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Button`/`Popover.Content`/`Popover.Arrow`/`Popover.Heading`) so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
@@ -75,12 +74,11 @@ const PopoverBase = ({
     isOpen,
     defaultOpen,
     onOpenChange,
-    showAnatomy = false,
     classNames,
 }: PopoverBaseProps) => {
     return (
         <HeroPopover data-tier="atom" data-component="Popover" isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroButton variant={triggerVariant} className={cn(classNames)} data-anat-part={showAnatomy ? "Button" : undefined}>
+            <HeroButton variant={triggerVariant} className={cn(classNames)}>
                 {TriggerIcon ? (
                     // `!` needed: HeroUI's `.button svg` rule has higher specificity. This
                     // span is a plain wrapper around a caller-supplied icon, not a named
@@ -94,11 +92,11 @@ const PopoverBase = ({
             <HeroPopover.Content
                 placement={placement}
                 className="w-64 max-w-[calc(100vw-2rem)]"
-                data-anat-part={showAnatomy ? "Popover.Content" : undefined}
+
             >
-                {showArrow ? <HeroPopover.Arrow data-anat-part={showAnatomy ? "Popover.Arrow" : undefined} /> : null}
+                {showArrow ? <HeroPopover.Arrow /> : null}
                 {heading ? (
-                    <HeroPopover.Heading className="mb-1 text-sm font-semibold text-foreground" data-anat-part={showAnatomy ? "Popover.Heading" : undefined}>
+                    <HeroPopover.Heading className="mb-1 text-sm font-semibold text-foreground">
                         {heading}
                     </HeroPopover.Heading>
                 ) : null}

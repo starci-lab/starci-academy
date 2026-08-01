@@ -61,9 +61,7 @@ export interface MilestoneUpNextCardProps {
     /** `true` → every composed atom mirrors as shimmer. */
     isSkeleton?: boolean
     /** `true` → tag each composed part with `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag for THIS block itself (§11a.1) — lets the caller badge it as ONE node. */
-    anatPart?: string
     /** Placement class only (§14d.1), forwarded to the card face. */
     className?: string
 }
@@ -83,19 +81,17 @@ const MilestoneUpNextCard = ({
     onPress,
     isHighlight = true,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
     className,
 }: MilestoneUpNextCardProps) => (
     <SurfaceCard
         isHighlight={isHighlight}
         isSkeleton={isSkeleton}
-        anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+
         contentClassName={className}
         body={() => (
             <StackV
                 gap={4}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <>
                         {/* teacher 2026-07-29: back INSIDE the card face (not `SurfaceCard.label`,
@@ -107,7 +103,7 @@ const MilestoneUpNextCard = ({
                             prefixIcon={showCheck ? CheckCircleIcon : undefined}
                             isSkeleton={isSkeleton}
                             text={eyebrow}
-                            showAnatomy={showAnatomy}
+
                         />
                         {/* teacher 2026-07-29: real `UpNextCard` leaves `type` unset on its title
                             Typography, which defaults to HeroUI's `type="body"` = `text-base`
@@ -119,14 +115,14 @@ const MilestoneUpNextCard = ({
                             weight="medium"
                             isSkeleton={isSkeleton}
                             text={title}
-                            showAnatomy={showAnatomy}
+
                         />
                         <Typography
                             size="sm"
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={description}
-                            showAnatomy={showAnatomy}
+
                         />
                         <Button
                             isSkeleton={isSkeleton}
@@ -137,7 +133,7 @@ const MilestoneUpNextCard = ({
                             iconSlide
                             onPress={onPress}
                             classNames={["w-fit", "shrink-0"]}
-                            showAnatomy={showAnatomy}
+
                         />
                     </>
                 }

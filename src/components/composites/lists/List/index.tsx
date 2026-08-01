@@ -107,7 +107,7 @@ export interface ListRowProps {
     classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (leading / title-text / meta-trailing
-     * cluster) emits `data-anat-part="<name>"` so a BlockAnatomy panel can badge
+     * cluster) emits `` so a BlockAnatomy panel can badge
      * it on-render. Off by default (production).
      */
 }

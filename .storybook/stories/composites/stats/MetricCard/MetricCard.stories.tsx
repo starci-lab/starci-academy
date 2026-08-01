@@ -17,7 +17,7 @@ type Story = StoryObj<typeof MetricCard>
 
 // SectionCard (frame) contains Value (h4 bold), Label (body-sm, the prominent line), and an
 // optional Hint (body-xs muted).
-// The root now carries the composite's own `anatPart="MetricCard"` (matching sibling
+// The root now carries the composite's own `` (matching sibling
 // composites' self-naming convention — see ProgressRing/MarkdownContent), rather than naming
 // the underlying `SectionCard`/`Card` import — so the frame node below is named "MetricCard",
 // with a `storyId` back to this leaf so the self-entry is clickable like any other node.
@@ -63,8 +63,8 @@ export const Default: Story = {
                         code: "<MetricCard value=\"1,204\" label=\"Total enrolled students\" hint=\"Updated daily\" />",
                         render: (
                             <MetricCard
-                                anatPart="MetricCard"
-                                showAnatomy
+
+                               
                                 value="1,204"
                                 label="Total enrolled students"
                                 hint="Updated daily"
@@ -92,8 +92,8 @@ export const WithHint: Story = {
                         code: "<MetricCard value=\"98%\" label=\"Course completion rate\" hint=\"Vs. last week\" />",
                         render: (
                             <MetricCard
-                                anatPart="MetricCard"
-                                showAnatomy
+
+                               
                                 value="98%"
                                 label="Course completion rate"
                                 hint="Vs. last week"
@@ -120,7 +120,7 @@ export const WithoutHint: Story = {
                         name: "hint not passed",
                         why: "The `Hint` node disappears entirely and the card ends right after the label, one node fewer than `Default`. A certificate count needs no extra caveat, so the card doesn't reserve empty space for one.",
                         code: "<MetricCard value=\"42\" label=\"Certificates issued\" />",
-                        render: <MetricCard anatPart="MetricCard" showAnatomy value="42" label="Certificates issued" />,
+                        render: <MetricCard value="42" label="Certificates issued" />,
                     },
                 ]}
             />
@@ -149,8 +149,8 @@ export const LongText: Story = {
                         code: "<MetricCard value=\"3,750\" label=\"Total assignment submissions graded this month\" hint=\"Includes submissions from both trial and paid students\" />",
                         render: (
                             <MetricCard
-                                anatPart="MetricCard"
-                                showAnatomy
+
+                               
                                 value="3,750"
                                 label="Total assignment submissions graded this month"
                                 hint="Includes submissions from both trial and paid students"
@@ -179,7 +179,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "Three shimmer bars stand in for value, label and hint, sized to roughly match their real proportions, so the card holds its shape and never jumps in size once the real metric arrives.",
                         code: "<MetricCard isSkeleton />",
-                        render: <MetricCard isSkeleton anatPart="MetricCard" showAnatomy />,
+                        render: <MetricCard isSkeleton />,
                     },
                 ]}
             />

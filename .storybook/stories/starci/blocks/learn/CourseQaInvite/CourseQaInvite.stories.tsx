@@ -59,8 +59,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <CourseQaInvite
-                                anatPart="CourseQaInvite"
-                                showAnatomy
+
+                               
                                 title="No questions yet"
                                 hint="Review the lesson content, then ask the first question — you'll be the one to break the ice."
                                 ctaLabel="View course content"

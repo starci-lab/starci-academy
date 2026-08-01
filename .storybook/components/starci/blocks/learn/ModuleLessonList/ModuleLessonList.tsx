@@ -88,9 +88,7 @@ export interface ModuleLessonListProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Resolves the leading-icon state: `resumeLessonId` wins over `isRead` (see file header). */
@@ -138,8 +136,6 @@ const ModuleLessonList = ({
     resumeLessonId,
     onSelectLesson,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ModuleLessonListProps) => {
     // Empty while loading (no real lessons yet) → guess 3 rows, keeping the right
     // shape for when real data arrives (§8). Once real `lessons` exist, keep the
@@ -172,7 +168,7 @@ const ModuleLessonList = ({
                 <VariantChipDifficulty
                     difficulty={lesson.difficulty}
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "VariantChipDifficulty" : undefined}
+
                 />
             ) : undefined,
             // A quiet trailing marker, riding NEXT TO the chip rather than replacing the
@@ -183,7 +179,7 @@ const ModuleLessonList = ({
 
     return (
         <SurfaceCardList
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCardList" : undefined)}
+
             isSkeleton={isSkeleton}
             items={rows}
         />

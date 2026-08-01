@@ -59,9 +59,7 @@ export interface AiQuotaLaneProps {
     /** `true` → this lane's own fetch is in flight; both bars draw their skeleton mirror. */
     isLoading: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -71,12 +69,12 @@ export interface AiQuotaLaneProps {
  *
  * @param props - {@link AiQuotaLaneProps}
  */
-const AiQuotaLane = ({ data, isLoading, showAnatomy = false, anatPart }: AiQuotaLaneProps) => {
+const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
     const showSkeleton = isLoading || !data
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={
+        <div>
+            <StackV gap={4} body={
                 <>
                     <QuotaBar
                         label="Next 5 hours"
@@ -84,8 +82,8 @@ const AiQuotaLane = ({ data, isLoading, showAnatomy = false, anatPart }: AiQuota
                         limit={data?.window5h.limit ?? 0}
                         resetLabel={data?.window5h.resetLabel}
                         isSkeleton={showSkeleton}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "QuotaBar" : undefined}
+
+
                     />
                     <QuotaBar
                         label="This week"
@@ -93,8 +91,8 @@ const AiQuotaLane = ({ data, isLoading, showAnatomy = false, anatPart }: AiQuota
                         limit={data?.windowWeek.limit ?? 0}
                         resetLabel={data?.windowWeek.resetLabel}
                         isSkeleton={showSkeleton}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "QuotaBar" : undefined}
+
+
                     />
                 </>
             } />

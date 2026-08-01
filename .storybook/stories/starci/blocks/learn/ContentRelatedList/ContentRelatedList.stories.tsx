@@ -69,8 +69,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ContentRelatedList
-                                anatPart="ContentRelatedList"
-                                showAnatomy
+
+                               
                                 label="You might also want to read"
                                 items={ITEMS}
                             />
@@ -117,8 +117,8 @@ export const Locked: Story = {
 />`,
                         render: (
                             <ContentRelatedList
-                                anatPart="ContentRelatedList"
-                                showAnatomy
+
+                               
                                 label="You might also want to read"
                                 items={[{ ...ITEMS[0], isLocked: true }]}
                             />
@@ -148,8 +148,8 @@ export const Hidden: Story = {
                         code: "<ContentRelatedList label=\"You might also want to read\" items={[]} />",
                         render: (
                             <ContentRelatedList
-                                anatPart="ContentRelatedList"
-                                showAnatomy
+
+                               
                                 label="You might also want to read"
                                 items={[]}
                             />
@@ -179,8 +179,8 @@ export const Skeleton: Story = {
                         code: "<ContentRelatedList label=\"You might also want to read\" items={[]} isSkeleton />",
                         render: (
                             <ContentRelatedList
-                                anatPart="ContentRelatedList"
-                                showAnatomy
+
+                               
                                 label="You might also want to read"
                                 items={[]}
                                 isSkeleton

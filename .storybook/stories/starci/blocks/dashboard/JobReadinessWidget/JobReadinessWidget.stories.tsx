@@ -95,8 +95,8 @@ export const Content: Story = {
 />`,
                         render: (
                             <JobReadinessWidget
-                                anatPart="JobReadinessWidget"
-                                showAnatomy
+
+                               
                                 isLoading={false}
                                 isEmpty={false}
                                 onRetry={() => {}}

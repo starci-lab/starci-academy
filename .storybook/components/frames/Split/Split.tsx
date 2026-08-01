@@ -48,7 +48,6 @@ export interface SplitBaseProps {
      * Without this prop the frame never enters the Deps tree: using a `layouts`-tier frame
      * that the panel can't see counts as not using it at all.
      */
-    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -71,13 +70,12 @@ const SplitBase = ({
     gap,
     align = "center",
     classNames,
-    anatPart,
     pattern,
 }: SplitBaseProps) => (
     <div
         data-tier="frame"
         data-component="Split"
-        data-anat-part={anatPart}
+
         data-principles={pattern}
         className={cn(
             "flex w-full",

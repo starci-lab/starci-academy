@@ -86,8 +86,8 @@ export const MicHero: Story = {
 />`,
                         render: (
                             <VoiceHero
-                                anatPart="VoiceHero"
-                                showAnatomy
+
+                               
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
@@ -184,8 +184,8 @@ export const TypedFallback: Story = {
 />`,
                         render: (
                             <VoiceHero
-                                anatPart="VoiceHero"
-                                showAnatomy
+
+                               
                                 sttSupported={false}
                                 listening={false}
                                 interimTranscript=""

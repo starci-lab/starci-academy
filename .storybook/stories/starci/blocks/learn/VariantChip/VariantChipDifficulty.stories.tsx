@@ -64,7 +64,7 @@ const LEVEL_STATES: Array<AnatomyState> = LEVELS.map((level) => ({
     name: `difficulty = "${level}"`,
     why: "The label and dot colour come from a level on the palette ramp rather than from one of the five semantic tokens, because difficulty is a level, not a state, and forcing four levels into semantic tokens would collide twice on danger. Every level shares the same pill shape from Chip, so the level only ever changes what's written and what colour reads it.",
     code: `<VariantChipDifficulty difficulty="${level}" />`,
-    render: <VariantChipDifficulty difficulty={level} showAnatomy />,
+    render: <VariantChipDifficulty difficulty={level} />,
 }))
 
 /** One state per difficulty level, `isSkeleton`. */
@@ -72,7 +72,7 @@ const SKELETON_STATES: Array<AnatomyState> = LEVELS.map((level) => ({
     name: `difficulty = "${level}", isSkeleton = true`,
     why: "The same pill swaps its label for a shimmer bar while keeping the level's own footprint, so the ramp never shifts width once the real label lands. The pill shape is still the atom's own default, since design never opens a shape axis even for the loading mirror.",
     code: `<VariantChipDifficulty difficulty="${level}" isSkeleton />`,
-    render: <VariantChipDifficulty difficulty={level} isSkeleton showAnatomy />,
+    render: <VariantChipDifficulty difficulty={level} isSkeleton />,
 }))
 
 /**

@@ -86,9 +86,7 @@ export interface PlaygroundResourcePanelProps {
      */
     resources: Array<PlaygroundResourceEntry>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** The panel's own fixed header wording — see the file header for why this isn't a prop. */
@@ -136,20 +134,20 @@ const toneForStatus = (status: string): ChipTone => {
 }
 
 /** Builds one kind group's accordion row: trigger = kind + count, panel = one `List.Row` per resource. */
-const groupToAccordionItem = (group: PlaygroundResourceGroup, showAnatomy: boolean): SurfaceCardAccordionItem => ({
+const groupToAccordionItem = (group: PlaygroundResourceGroup): SurfaceCardAccordionItem => ({
     id: group.kind,
     title: titleCaseKind(group.kind),
     titleEnd: (
         <Chip
             tone="default"
             text={String(group.resources.length)}
-            showAnatomy={showAnatomy}
+
         />
     ),
     body: (
         <StackV
             gap={1}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={group.resources.map((resource, index) => (
                 <ListRow
                     key={`${group.kind}:${resource.name}`}
@@ -158,11 +156,11 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup, showAnatomy: boole
                         <Chip
                             tone={toneForStatus(resource.status)}
                             text={resource.status}
-                            showAnatomy={showAnatomy}
+
                         />
                     )}
                     divider={index < group.resources.length - 1}
-                    showAnatomy={showAnatomy}
+
                 />
             ))}
         />
@@ -178,8 +176,6 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup, showAnatomy: boole
 const PlaygroundResourcePanel = ({
     connection,
     resources,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundResourcePanelProps) => {
     const isConnected = connection === "connected"
     const hasResources = isConnected && resources.length > 0
@@ -191,22 +187,22 @@ const PlaygroundResourcePanel = ({
             icon={PlugsIcon}
             title="Not paired yet"
             description="Pair a machine to see the resources running in your workspace."
-            anatPart={showAnatomy ? "EmptyState" : undefined}
+
         />
     ) : !hasResources ? (
         <EmptyState
             icon={CircleDashedIcon}
             title="Waiting for data"
             description="Machine paired — waiting for the first resource snapshot."
-            anatPart={showAnatomy ? "EmptyState" : undefined}
+
         />
     ) : (
         <SurfaceCardAccordion
-            items={groups.map((group) => groupToAccordionItem(group, showAnatomy))}
+            items={groups.map((group) => groupToAccordionItem(group))}
             allowsMultipleExpanded
             defaultExpandedKeys={new Set(groups.map((group) => group.kind))}
-            anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-            showAnatomy={showAnatomy}
+
+
         />
     )
 
@@ -215,7 +211,7 @@ const PlaygroundResourcePanel = ({
             gap={3}
             justify="between"
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <Typography
@@ -223,7 +219,7 @@ const PlaygroundResourcePanel = ({
                         weight="medium"
                         prefixIcon={CubeIcon}
                         text={PANEL_LABEL}
-                        showAnatomy={showAnatomy}
+
                     />
                     {/* A count of zero (or no snapshot at all) is not news — see `ContentModeNav`'s
                         "a count of zero is not news" convention — so it only appears once there's
@@ -234,7 +230,7 @@ const PlaygroundResourcePanel = ({
                             color="muted"
                             tabularNums
                             text={String(resources.length)}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -245,7 +241,7 @@ const PlaygroundResourcePanel = ({
     return (
         <StackV
             gap={4}
-            anatPart={anatPart}
+
             body={
                 <>
                     {headerRow}

@@ -144,7 +144,6 @@ export interface PlaygroundSessionPageProps {
     onConnectSheetOpenChange: (open: boolean) => void
 
     /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -176,7 +175,6 @@ const PlaygroundSessionPage = ({
     resources,
     isConnectSheetOpen,
     onConnectSheetOpenChange,
-    showAnatomy = false,
 }: PlaygroundSessionPageProps) => {
     // See the file header's "ONE CONNECTION ENUM, TWO VOCABULARIES" note — the
     // resource panel only ever asks a binary question.
@@ -189,15 +187,15 @@ const PlaygroundSessionPage = ({
             padding={6}
             className="overflow-y-auto"
             classNames={["min-w-0", "flex-1"]}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <PlaygroundStepGuide
-                    anatPart="PlaygroundStepGuide"
+
                     step={step}
                     verifyState={verifyState}
                     onVerify={onVerify}
                     onLeaveComplete={onLeaveGuideComplete}
-                    showAnatomy={showAnatomy}
+
                 />
             }
         />
@@ -209,13 +207,13 @@ const PlaygroundSessionPage = ({
             padding={6}
             className="overflow-y-auto @app-xl:w-[24rem]"
             classNames={["w-full", "shrink-0"]}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <PlaygroundResourcePanel
-                    anatPart="PlaygroundResourcePanel"
+
                     connection={resourcePanelConnection}
                     resources={resources}
-                    showAnatomy={showAnatomy}
+
                 />
             }
         />
@@ -231,7 +229,7 @@ const PlaygroundSessionPage = ({
                 divider
                 className="overflow-hidden"
                 classNames={["h-full", "min-h-0"]}
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
                     <>
                         {guidePane}
@@ -242,10 +240,10 @@ const PlaygroundSessionPage = ({
             <StackV
                 gap={1}
                 className="absolute inset-x-0 bottom-0 z-10"
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <PlaygroundConnectSheet
-                        anatPart="PlaygroundConnectSheet"
+
                         connection={connection}
                         latencyMs={latencyMs}
                         device={device}
@@ -253,7 +251,7 @@ const PlaygroundSessionPage = ({
                         onReconnect={onReconnect}
                         open={isConnectSheetOpen}
                         onOpenChange={onConnectSheetOpenChange}
-                        showAnatomy={showAnatomy}
+
                     />
                 }
             />
@@ -263,7 +261,7 @@ const PlaygroundSessionPage = ({
     const sessionSections = (
         <>
             <WorkSessionHeader
-                anatPart="WorkSessionHeader"
+
                 backLabel={backLabel}
                 onBack={onBack}
                 title={title}
@@ -274,19 +272,19 @@ const PlaygroundSessionPage = ({
                 onStepPress={onStepPress}
                 finishLabel={finishLabel}
                 onFinish={onFinish}
-                showAnatomy={showAnatomy}
+
             />
             <StackV
                 gap={1}
                 className="relative"
                 classNames={["min-h-0", "flex-1"]}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={workspaceRegion}
             />
         </>
     )
 
-    return <StackV gap={1} className="h-[calc(100vh-4rem)]" anatPart={showAnatomy ? "StackV" : undefined} body={sessionSections} />
+    return <StackV gap={1} className="h-[calc(100vh-4rem)]" body={sessionSections} />
 }
 
 export { PlaygroundSessionPage }

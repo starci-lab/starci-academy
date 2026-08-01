@@ -99,8 +99,8 @@ export const RailSurface: Story = {
 </LearnShell>`,
                     render: (
                         <LearnShell
-                            showAnatomy
-                            anatPart="LearnShell"
+                           
+
                             activeSurface="content"
                             isEnrollGated={false}
                             isAssessmentLive={false}
@@ -148,8 +148,8 @@ export const NoRailSurface: Story = {
                     code: "<LearnShell activeSurface=\"personalProject\" isEnrollGated={false} isAssessmentLive={false} onOpenAiChat={openAiChat} onOpenSelectionAsk={openSelectionAsk}>{routeContent}</LearnShell>",
                     render: (
                         <LearnShell
-                            showAnatomy
-                            anatPart="LearnShell"
+                           
+
                             activeSurface="personalProject"
                             isEnrollGated={false}
                             isAssessmentLive={false}
@@ -206,8 +206,8 @@ export const SelectionAskActive: Story = {
 </LearnShell>`,
                     render: (
                         <LearnShell
-                            showAnatomy
-                            anatPart="LearnShell"
+                           
+
                             activeSurface="content"
                             isEnrollGated={false}
                             isAssessmentLive={false}
@@ -248,8 +248,8 @@ export const AiSuppressed: Story = {
 </LearnShell>`,
                     render: (
                         <LearnShell
-                            showAnatomy
-                            anatPart="LearnShell"
+                           
+
                             activeSurface="content"
                             isEnrollGated={false}
                             isAssessmentLive
@@ -297,8 +297,8 @@ export const EnrollGated: Story = {
 </LearnShell>`,
                     render: (
                         <LearnShell
-                            showAnatomy
-                            anatPart="LearnShell"
+                           
+
                             activeSurface="personalProject"
                             isEnrollGated
                             isAssessmentLive={false}

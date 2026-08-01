@@ -73,13 +73,11 @@ interface KeyValueRowOwnProps {
      * Without this prop the composite doesn't make it into the Deps tree: using a
      * `frame`/`composite` tier node that the panel can't see counts as not using it.
      */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -109,8 +107,6 @@ const KeyValueRow = ({
     copyable = false,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: KeyValueRowProps) => {
     // COMPOSITE-10: ONE render path — same two-column `StackH`, same label+hint
     // `StackV` cluster, in both states. Every piece of text goes through
@@ -127,7 +123,7 @@ const KeyValueRow = ({
                 pattern="title-subtitle"
                 body={
                     <>
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <span>
                             <Typography size="sm"
                                 text={label}
                                 color={isSkeleton ? undefined : (emphasis ? undefined : "muted")}
@@ -137,7 +133,7 @@ const KeyValueRow = ({
                             />
                         </span>
                         {hint != null ? (
-                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <span>
                                 <Typography size="xs"
                                     text={hint}
                                     color={isSkeleton ? undefined : "muted"}
@@ -153,7 +149,7 @@ const KeyValueRow = ({
                 className={cn("flex shrink-0 items-center", copyable && !isSkeleton && "gap-2")}
                 data-principles={copyable && !isSkeleton ? "flex-action" : undefined}
             >
-                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                <span>
                     {emphasis ? (
                         <Typography text={value} weight={isSkeleton ? undefined : "bold"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/4"] : undefined} />
                     ) : (
@@ -161,11 +157,11 @@ const KeyValueRow = ({
                     )}
                 </span>
                 {copyable && !isSkeleton ? (
-                    <span data-anat-part={showAnatomy ? "SnippetIcon" : undefined}>
+                    <span>
                         {/* `value` is guaranteed a real string whenever `!isSkeleton` (the
                             discriminated union above) — the `?? ""` only satisfies narrowing
                             across the destructure and is never seen. */}
-                        <SnippetIcon copyString={value ?? ""} showAnatomy={showAnatomy} />
+                        <SnippetIcon copyString={value ?? ""} />
                     </span>
                 ) : null}
             </span>
@@ -177,7 +173,7 @@ const KeyValueRow = ({
             justify="between"
             gap={3}
             classNames={classNames}
-            anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
+
             body={pairContent}
         />
     )
@@ -187,7 +183,7 @@ const KeyValueRow = ({
     return (
         <div className={cn("flex flex-col", GAP_CLASS[gap])}>
             {row}
-            <span className="block" data-anat-part={showAnatomy ? "Divider" : undefined}>
+            <span className="block">
                 <Divider variant="tertiary" />
             </span>
         </div>
@@ -234,13 +230,11 @@ export interface KeyValueListProps {
      * Without this prop the composite doesn't make it into the Deps tree: using a
      * `frame`/`composite` tier node that the panel can't see counts as not using it.
      */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -259,18 +253,16 @@ const KeyValueList = ({
     isSkeleton = false,
     skeletonRows = 3,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: KeyValueListProps) => (
     <div
-        data-anat-part={anatPart}
+
         className={cn("flex flex-col", GAP_CLASS[gap], classNames)}
         data-tier="composite"
         data-component="KeyValueList"
     >
         {isSkeleton
             ? Array.from({ length: skeletonRows }, (_unused, index) => (
-                <KeyValueRow key={index} isSkeleton divider={divider && index < skeletonRows - 1} gap={gap} showAnatomy={showAnatomy} />
+                <KeyValueRow key={index} isSkeleton divider={divider && index < skeletonRows - 1} gap={gap} />
             ))
             : items.map(({ key, ...item }, index) => (
                 <KeyValueRow
@@ -278,7 +270,7 @@ const KeyValueList = ({
                     {...item}
                     divider={divider && index < items.length - 1}
                     gap={gap}
-                    showAnatomy={showAnatomy}
+
                 />
             ))}
     </div>

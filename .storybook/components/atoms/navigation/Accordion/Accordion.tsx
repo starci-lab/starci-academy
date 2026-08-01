@@ -45,7 +45,6 @@ export interface AccordionBaseProps {
     /** Render the collapsed-row skeleton (stacked trigger bars) instead of the panels. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -63,7 +62,6 @@ const AccordionBase = ({
     allowsMultiple = false,
     defaultExpandedKeys,
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: AccordionBaseProps) => {
     if (isSkeleton) {
@@ -76,11 +74,11 @@ const AccordionBase = ({
                     <div key={item.key} className="flex items-center justify-between rounded-xl border border-default-200 px-4 py-3">
                         <HeroSkeleton
                             className="h-4 w-1/2 rounded-md"
-                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                         />
                         <HeroSkeleton
                             className="size-4 rounded-md"
-                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                         />
                     </div>
                 ))}
@@ -95,22 +93,22 @@ const AccordionBase = ({
             allowsMultipleExpanded={allowsMultiple}
             defaultExpandedKeys={defaultExpandedKeys}
             className={cn(classNames)}
-            data-anat-part={showAnatomy ? "DisclosureGroup" : undefined}
+
         >
             {items.map((item) => (
                 <HeroDisclosure
                     key={item.key}
                     id={item.key}
                     isDisabled={item.isDisabled}
-                    data-anat-part={showAnatomy ? "Disclosure" : undefined}
+
                 >
                     <HeroDisclosure.Heading>
                         <HeroDisclosure.Trigger
-                            data-anat-part={showAnatomy ? "Disclosure.Trigger" : undefined}
+
                         >
                             {item.title}
                             <HeroDisclosure.Indicator
-                                data-anat-part={showAnatomy ? "Disclosure.Indicator" : undefined}
+
                             >
                                 {/* Left empty, HeroUI renders its own chevron instead — pass an icon
                                     here to keep a single icon set. The vendor clones this element,
@@ -121,7 +119,7 @@ const AccordionBase = ({
                         </HeroDisclosure.Trigger>
                     </HeroDisclosure.Heading>
                     <HeroDisclosure.Content
-                        data-anat-part={showAnatomy ? "Disclosure.Content" : undefined}
+
                     >
                         <HeroDisclosure.Body>{item.content}</HeroDisclosure.Body>
                     </HeroDisclosure.Content>

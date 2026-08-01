@@ -88,7 +88,7 @@ export const Default: Story = {
     { key: "delete", prefixIcon: TrashIcon, ariaLabel: "Delete", variant: "danger" },
   ]}
 />`,
-                        render: <ButtonGroup items={items("(default)")} showAnatomy />,
+                        render: <ButtonGroup items={items("(default)")} />,
                     },
                 ]}
             />
@@ -111,7 +111,7 @@ export const Sizes: Story = {
                     code: size === "md"
                         ? "<ButtonGroup items={[…]} />          // md = default"
                         : `<ButtonGroup size="${size}" items={[…]} />`,
-                    render: <ButtonGroup size={size} items={items(`(${size})`)} showAnatomy />,
+                    render: <ButtonGroup size={size} items={items(`(${size})`)} />,
                 }))}
             />
         </div>
@@ -131,7 +131,7 @@ export const Skeleton: Story = {
                     name: `isSkeleton = true, size = "${size}"`,
                     why: "Every item still goes through Button, so the shimmer comes from the atom rather than the cluster drawing it itself. Skeleton still goes through Button at this leaf's own scale, which is why the row holds the exact width and height the real buttons will occupy.",
                     code: `<ButtonGroup isSkeleton size="${size}" items={[…3 items…]} />`,
-                    render: <ButtonGroup size={size} isSkeleton items={items(`(${size})`)} showAnatomy />,
+                    render: <ButtonGroup size={size} isSkeleton items={items(`(${size})`)} />,
                 }))}
             />
         </div>
@@ -166,7 +166,7 @@ export const Responsive: Story = {
                         code: `<ButtonGroup items={[…]} />          // at="sm" = default`,
                         render: (
                             <ResponsiveFrame width="20rem" label="container 320px, below @app-sm, full-width column">
-                                <ButtonGroup items={items("(narrow)")} showAnatomy />
+                                <ButtonGroup items={items("(narrow)")} />
                             </ResponsiveFrame>
                         ),
                     },
@@ -176,7 +176,7 @@ export const Responsive: Story = {
                         code: `<ButtonGroup items={[…]} />          // at="sm" = default`,
                         render: (
                             <ResponsiveFrame width="45rem" label="container 720px, at @app-sm, packed row">
-                                <ButtonGroup items={items("(wide)")} showAnatomy />
+                                <ButtonGroup items={items("(wide)")} />
                             </ResponsiveFrame>
                         ),
                     },

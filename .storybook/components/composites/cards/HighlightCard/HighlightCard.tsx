@@ -22,7 +22,6 @@ export interface HighlightCardProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -37,10 +36,10 @@ export interface HighlightCardProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "HighlightCard" } as const
 
-export const HighlightCard = ({ children, isSkeleton = false, classNames, anatPart }: HighlightCardProps) => (
+export const HighlightCard = ({ children, isSkeleton = false, classNames }: HighlightCardProps) => (
     <div
         className={cn("relative", classNames)}
-        data-anat-part={anatPart}
+
         data-tier="composite"
         data-component="HighlightCard"
     >

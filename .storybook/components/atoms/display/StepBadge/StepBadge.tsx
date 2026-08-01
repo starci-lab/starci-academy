@@ -27,7 +27,6 @@ interface StepBadgeOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** `true` → tag each part with `data-anat-part` so a `BlockAnatomy` panel can badge it. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -82,7 +81,6 @@ const StepBadgeBase = ({
     size = "sm",
     classNames,
     isSkeleton = false,
-    showAnatomy = false,
 }: StepBadgeProps) => {
     if (isSkeleton) {
         // Checked before any visual branch — there's no `number` to center yet.
@@ -91,7 +89,7 @@ const StepBadgeBase = ({
                 data-tier="atom"
                 data-component="StepBadge"
                 className={cn("rounded-full", SKELETON_SIZE[size], classNames)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
             />
         )
     }
@@ -101,7 +99,7 @@ const StepBadgeBase = ({
             aria-hidden
             data-tier="atom"
             data-component="StepBadge"
-            data-anat-part={showAnatomy ? "StepBadge" : undefined}
+
             className={cn(
                 "flex shrink-0 items-center justify-center rounded-full font-medium",
                 SIZE[size],

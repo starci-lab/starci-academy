@@ -84,9 +84,7 @@ export interface PlaygroundReadinessChecklistProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** kind → leading icon when the row is NOT ready — the block's own vocabulary (§14d.1). */
@@ -110,7 +108,6 @@ const READINESS_CHIP_MAP: Record<ReadinessStatus, EnumChipEntry> = {
 const checklistRow = (
     item: PlaygroundReadinessChecklistItem,
     isSkeleton: boolean,
-    showAnatomy: boolean,
 ): SurfaceCardListItem => {
     const status: ReadinessStatus = item.ready ? "ready" : "pending"
     return {
@@ -123,7 +120,7 @@ const checklistRow = (
                 tone={item.ready ? "success" : "default"}
                 size="sm"
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         ),
         title: item.label,
@@ -133,7 +130,7 @@ const checklistRow = (
                 value={status}
                 map={READINESS_CHIP_MAP}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "EnumChip" : undefined}
+
             />
         ),
     }
@@ -149,14 +146,12 @@ const checklistRow = (
 const PlaygroundReadinessChecklist = ({
     items,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundReadinessChecklistProps) => (
-    <div data-anat-part={anatPart}>
+    <div>
         <SurfaceCardList
-            items={items.map((item) => checklistRow(item, isSkeleton, showAnatomy))}
-            anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-            showAnatomy={showAnatomy}
+            items={items.map((item) => checklistRow(item, isSkeleton))}
+
+
         />
     </div>
 )

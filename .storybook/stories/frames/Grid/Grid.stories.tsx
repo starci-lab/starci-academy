@@ -99,7 +99,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <Frame width="48rem" label="container 768px — @app-md breakpoint → 3 columns">
-                                <Grid showAnatomy gap={4} columns={{ base: 1, sm: 2, md: 3 }} items={cellItems(MODULES)} />
+                                <Grid gap={4} columns={{ base: 1, sm: 2, md: 3 }} items={cellItems(MODULES)} />
                             </Frame>
                         ),
                     },
@@ -142,7 +142,7 @@ export const Span: Story = {
 />`,
                             render: (
                                 <Frame width="48rem" label="container 768px — @app-md → 3 columns, first cell spans 2">
-                                    <Grid showAnatomy gap={4} columns={{ base: 1, sm: 2, md: 3 }} items={items} />
+                                    <Grid gap={4} columns={{ base: 1, sm: 2, md: 3 }} items={items} />
                                 </Frame>
                             ),
                         },
@@ -178,7 +178,7 @@ export const Columns: Story = {
 />`,
                         render: (
                             <Frame width="20rem" label="container 320px — below @app-sm → base = 1 column">
-                                <Grid showAnatomy gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
+                                <Grid gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                             </Frame>
                         ),
                     },
@@ -248,7 +248,7 @@ export const Gaps: Story = {
                     render: (
                         <Frame width="32rem" label={`step ${step.gap} — ${step.relation}`}>
                             <Grid
-                                showAnatomy={index === 0}
+
                                 gap={step.gap}
                                 columns={{ base: 2 }}
                                 items={cellItems(MODULES.slice(0, 4))}

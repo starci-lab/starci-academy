@@ -38,9 +38,7 @@ export interface ChipGroupProps {
     tone?: ChipTone
     /** `true` → skeleton mirrors the resting-state cell count (each cell is its own `Chip`). */
     isSkeleton?: boolean
-    showAnatomy?: boolean
     /** `data-anat-part` name on the row's root, so a wrapping component can name this cluster. */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -55,18 +53,13 @@ export const ChipGroup = ({
     maxVisible = 3,
     tone = "default",
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
     classNames,
 }: ChipGroupProps) => {
-    // Dependency-tree label: the tree is built from the DOM, so the group must name
-    // what it renders.
-    const chipPart = showAnatomy ? "Chip" : undefined
     if (isSkeleton) {
         return (
             <div
                 className={cn("flex flex-wrap items-center gap-2", classNames)}
-                data-anat-part={anatPart}
+
                 data-tier="composite"
                 data-component="ChipGroup"
                 data-principles="chip-row"
@@ -77,7 +70,7 @@ export const ChipGroup = ({
                 {Array.from({ length: maxVisible }).map((_, index) => (
                     // Shimmer carries no tone (plain gray), so `tone` isn't passed down —
                     // passing a prop with no effect would make a reader think it does something.
-                    <Chip key={index} isSkeleton showAnatomy={showAnatomy} />
+                    <Chip key={index} isSkeleton />
                 ))}
             </div>
         )
@@ -88,17 +81,17 @@ export const ChipGroup = ({
     return (
         <div
             className={cn("flex flex-wrap items-center gap-2", classNames)}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="ChipGroup"
             data-principles="chip-row"
         >
             {visibleItems.map(({ key, text }) => (
-                <Chip key={key} text={text} tone={tone} showAnatomy={showAnatomy} />
+                <Chip key={key} text={text} tone={tone} />
             ))}
             {overflowCount > 0 ? (
                 <Tooltip
-                    showAnatomy={showAnatomy}
+
                     label={
                         // Tooltip lists the full row, including the visible part —
                         // opening it shows "everything", not just "what's hidden".
@@ -109,7 +102,7 @@ export const ChipGroup = ({
                         </div>
                     }
                 >
-                    <Chip text={`+${overflowCount}`} tone={tone} showAnatomy={showAnatomy} />
+                    <Chip text={`+${overflowCount}`} tone={tone} />
                 </Tooltip>
             ) : null}
         </div>

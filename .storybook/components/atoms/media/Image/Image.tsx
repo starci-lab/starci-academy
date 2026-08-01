@@ -50,7 +50,6 @@ export interface ImageBaseProps {
     /** Forces the skeleton state from outside, in addition to internal loading. */
     isSkeleton?: boolean
     /** `true` → tags `data-anat-part` for the BlockAnatomy panel. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -71,7 +70,6 @@ const ImageBase = ({
     fallbackSrc,
     loading = "lazy",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: ImageBaseProps) => {
     // Internal load state; resets to "loading" whenever `src` changes.
@@ -102,7 +100,7 @@ const ImageBase = ({
                 // Renders a real HeroUI `Skeleton` — badged and declared `tier: "heroui"` in the story's `annotate`.
                 <HeroSkeleton
                     className="absolute inset-0 size-full"
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                 />
             ) : null}
 

@@ -117,9 +117,7 @@ export interface CourseQaComposerProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -141,8 +139,6 @@ const CourseQaComposer = ({
     onCancel,
     isPending = false,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: CourseQaComposerProps) => {
     // Transient UI-only chrome (§ not domain data) — owned here, never lifted to
     // the caller. A "plain" composer has no collapsed shape at all, so it always
@@ -175,21 +171,21 @@ const CourseQaComposer = ({
             size="sm"
             isSkeleton={isSkeleton}
             classNames={["shrink-0"]}
-            showAnatomy={showAnatomy}
+
         />
     ) : null
 
     // ── LEAF — CollapsedPrompt: avatar + pill, nothing else composed ──────────
     if (mode === "collapsible" && !expanded) {
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <StackH
                     gap={3}
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <>
                             {avatar}
-                            <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputButtonLike" : undefined}>
+                            <div className="min-w-0 flex-1">
                                 <InputButtonLike
                                     placeholder={placeholder ?? "Ask a question about this course…"}
                                     onPress={() => setExpanded(true)}
@@ -214,7 +210,7 @@ const CourseQaComposer = ({
                     onPress={handleCancel}
                     isDisabled={isPending}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             <Button
@@ -225,7 +221,7 @@ const CourseQaComposer = ({
                 isDisabled={!canSubmit}
                 isPending={isPending}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -240,21 +236,21 @@ const CourseQaComposer = ({
                 rows={3}
                 isDisabled={isPending}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <StackH gap={3} justify="end" anatPart={showAnatomy ? "StackH" : undefined} body={actionRow} />
+            <StackH gap={3} justify="end" body={actionRow} />
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackH
                 gap={3}
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
                     <>
                         {avatar}
-                        <StackV gap={3} classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={form} />
+                        <StackV gap={3} classNames={["min-w-0", "flex-1"]} body={form} />
                     </>
                 }
             />

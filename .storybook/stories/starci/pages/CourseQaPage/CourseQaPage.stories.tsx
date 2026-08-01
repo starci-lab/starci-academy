@@ -108,7 +108,7 @@ export const Populated: Story = {
     questions={questions}
     …
 />`,
-                        render: <CourseQaPage {...BASE} showAnatomy questions={QUESTIONS} />,
+                        render: <CourseQaPage {...BASE} questions={QUESTIONS} />,
                     },
                 ]}
             />
@@ -135,7 +135,7 @@ export const Invitation: Story = {
     filter="all"
     questions={[]}
 />`,
-                        render: <CourseQaPage {...BASE} showAnatomy filter="all" questions={[]} />,
+                        render: <CourseQaPage {...BASE} filter="all" questions={[]} />,
                     },
                 ]}
             />
@@ -158,7 +158,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "Every composed block mirrors itself, and `isInvitationEmpty` is short-circuited to `false` (see file header) so a loading screen always shows the POPULATED shape — never the invitation card, which would be a false claim about a board nobody has measured yet.",
                         code: "<CourseQaPage {...props} isSkeleton questions={[]} />",
-                        render: <CourseQaPage {...BASE} showAnatomy isSkeleton questions={[]} />,
+                        render: <CourseQaPage {...BASE} isSkeleton questions={[]} />,
                     },
                 ]}
             />

@@ -119,9 +119,7 @@ export interface AiQuotaHistoryPanelProps {
     /** Extra classes on the root. */
     className?: string
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** Dev/spec: tag this block's own directly-composed parts (`StackV`/`Typography`/`SurfaceCard`/`SurfaceCardList`/`Chip`) for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /** How many placeholder rows the loading mirror shows — matches the source's 3-row skeleton. */
@@ -131,19 +129,19 @@ const SKELETON_ROW_COUNT = 3
 const deltaTone = (credits: number): ChipTone => (credits > 0 ? "warning" : "success")
 
 /** Builds the real `SurfaceCardList` rows from charge data. `showAnatomy` names the row's own `Chip`. */
-const toListItem = (item: AiQuotaHistoryChargeItem, showAnatomy: boolean): SurfaceCardListItem => ({
+const toListItem = (item: AiQuotaHistoryChargeItem): SurfaceCardListItem => ({
     key: item.key,
     title: item.model ?? AUTO_MODEL_LABEL,
     subtitle: `${PURPOSE_LABEL[item.surface]} · ${dayjs(item.occurredAt).format("HH:mm DD/MM")}`,
-    meta: () => <Chip tone={deltaTone(item.credits)} text={`${item.credits} ${CREDITS_UNIT}`} showAnatomy={showAnatomy} />,
+    meta: () => <Chip tone={deltaTone(item.credits)} text={`${item.credits} ${CREDITS_UNIT}`} />,
 })
 
 /** Placeholder rows for the loading mirror — same row shape, shimmer chip in the meta slot. */
-const skeletonItems = (showAnatomy: boolean): Array<SurfaceCardListItem> => Array.from({ length: SKELETON_ROW_COUNT }, (_, index) => ({
+const skeletonItems = (): Array<SurfaceCardListItem> => Array.from({ length: SKELETON_ROW_COUNT }, (_, index) => ({
     key: `skeleton-${index}`,
     title: "Model",
     subtitle: "Purpose · Time",
-    meta: () => <Chip isSkeleton showAnatomy={showAnatomy} />,
+    meta: () => <Chip isSkeleton />,
 }))
 
 /**
@@ -156,19 +154,17 @@ export const AiQuotaHistoryPanel = ({
     items,
     isLoading,
     className,
-    anatPart,
-    showAnatomy = false,
 }: AiQuotaHistoryPanelProps) => {
     const isEmpty = !isLoading && (items?.length ?? 0) === 0
 
     const chart = (
-        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
+        <StackV gap={4} body={
             <>
-                <Typography size="sm" weight="medium" text="Credits used per day (last 7 days)" showAnatomy={showAnatomy} />
+                <Typography size="sm" weight="medium" text="Credits used per day (last 7 days)" />
                 <SurfaceCard
                     variant="nested"
                     padding={4}
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
                     body={() => (
                         <div className="h-44 w-full text-accent-soft-foreground">
                             <ResponsiveContainer width="100%" height="100%">
@@ -196,21 +192,20 @@ export const AiQuotaHistoryPanel = ({
     )
 
     const chargesList = (
-        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
+        <StackV gap={4} body={
             <>
-                <Typography size="sm" weight="medium" text="AI usage history" showAnatomy={showAnatomy} />
+                <Typography size="sm" weight="medium" text="AI usage history" />
                 <div className="max-h-64 overflow-y-auto">
                     <AsyncContent
                         isLoading={isLoading}
-                        skeleton={<SurfaceCardList variant="nested" items={skeletonItems(showAnatomy)} isSkeleton anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
+                        skeleton={<SurfaceCardList variant="nested" items={skeletonItems()} isSkeleton />}
                         isEmpty={isEmpty}
                         emptyContent={{
                             title: "No AI usage yet.",
-                            anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-                            showAnatomy,
+
                         }}
-                        content={<SurfaceCardList variant="nested" items={(items ?? []).map((item) => toListItem(item, showAnatomy))} anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
-                        showAnatomy={showAnatomy}
+                        content={<SurfaceCardList variant="nested" items={(items ?? []).map((item) => toListItem(item))} />}
+
                     />
                 </div>
             </>
@@ -218,8 +213,8 @@ export const AiQuotaHistoryPanel = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={6} className={className} anatPart={showAnatomy ? "StackV" : undefined} body={<>{chart}{chargesList}</>} />
+        <div>
+            <StackV gap={6} className={className} body={<>{chart}{chargesList}</>} />
         </div>
     )
 }

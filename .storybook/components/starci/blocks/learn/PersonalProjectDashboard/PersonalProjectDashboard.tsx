@@ -164,9 +164,7 @@ export interface PersonalProjectDashboardProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Block-owned constant — the one classifying fact of the continue hero's subtitle. */
@@ -220,7 +218,6 @@ interface BodyProps {
     onSelectTask: (taskId: string) => void
     stats: PersonalProjectStats
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
 /**
@@ -236,12 +233,11 @@ const Body = ({
     onSelectTask,
     stats,
     isSkeleton,
-    showAnatomy,
 }: BodyProps) => {
     const heroSection = (
         <StackV
             gap={4}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {isSkeleton || currentTask ? (
@@ -250,19 +246,19 @@ const Body = ({
                             subtitle={NEXT_TASK_SUBTITLE}
                             isSkeleton={isSkeleton}
                             onPress={onContinue}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "ContinueCardHero" : undefined}
+
+
                         />
                     ) : (
-                        <Typography weight="semibold" text={ALL_DONE_TEXT} showAnatomy={showAnatomy} />
+                        <Typography weight="semibold" text={ALL_DONE_TEXT} />
                     )}
                     <ProgressMeter
                         value={stats.done}
                         max={stats.total || 1}
                         label={PROGRESS_LABEL}
                         showValue
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "ProgressMeter" : undefined}
+
+
                     />
                     <Typography
                         size="xs"
@@ -270,7 +266,7 @@ const Body = ({
                         isSkeleton={isSkeleton}
                         classNames={isSkeleton ? ["w-3/4"] : undefined}
                         text={statsLine(stats)}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             }
@@ -280,20 +276,20 @@ const Body = ({
     return (
         <StackV
             gap={6}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {heroSection}
                     <SurfaceCard
                         label={keepGoingLabel(milestoneLabel)}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
+
                         body={() => (
                             <Grid
                                 columns={{ base: 1, sm: 2 }}
                                 gap={4}
-                                showAnatomy={showAnatomy}
+
                                 items={tasks.map((task) => ({
                                     key: task.id,
                                     content: (
@@ -302,8 +298,8 @@ const Body = ({
                                             subtitle={TASK_SUBTITLE[task.subtitleState]}
                                             isSkeleton={isSkeleton}
                                             onPress={() => onSelectTask(task.id)}
-                                            showAnatomy={showAnatomy}
-                                            anatPart={showAnatomy ? "ContinueCardItem" : undefined}
+
+
                                         />
                                     ),
                                 }))}
@@ -335,8 +331,6 @@ const PersonalProjectDashboard = ({
     isLoading = false,
     isEmpty = false,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PersonalProjectDashboardProps) => {
     const crumbs: Array<BreadcrumbItem> = (breadcrumbItems ?? []).map((crumb) => ({
         key: crumb.key,
@@ -346,11 +340,11 @@ const PersonalProjectDashboard = ({
 
     const header = (
         <PageHeader
-            anatPart={showAnatomy ? "PageHeader" : undefined}
+
             isSkeleton={isSkeleton}
             breadcrumb={() =>
                 isSkeleton || crumbs.length ? (
-                    <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                    <div className="w-fit">
                         <Breadcrumbs collapseOnMobile items={crumbs} isSkeleton={isSkeleton} />
                     </div>
                 ) : undefined
@@ -383,12 +377,12 @@ const PersonalProjectDashboard = ({
                     onSelectTask={onSelectTask}
                     stats={{ done: 0, total: 0, attempts: 0, avgLabel: "" }}
                     isSkeleton
-                    showAnatomy={showAnatomy}
+
                 />
             }
             isEmpty={isEmpty}
             emptyContent={EMPTY_STATE}
-            showAnatomy={showAnatomy}
+
         >
             <Body
                 currentTask={currentTask}
@@ -398,16 +392,16 @@ const PersonalProjectDashboard = ({
                 onSelectTask={onSelectTask}
                 stats={stats}
                 isSkeleton={false}
-                showAnatomy={showAnatomy}
+
             />
         </AsyncContent>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackV
                 gap={6}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <>
                         {header}

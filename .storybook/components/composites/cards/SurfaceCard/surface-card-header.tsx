@@ -48,7 +48,6 @@ export interface SurfaceLabelProps {
      * atom (currently: `LinkSeeMore`) so a BlockAnatomy panel can anchor the badge +
      * link to that atom's own story. Doesn't affect the visual.
      */
-    showAnatomy?: boolean
     /**
      * `true` → the header row is in the RESTING state: `label` and the slot must turn
      * into shimmer.
@@ -75,7 +74,6 @@ export const SurfaceCardHeader = ({
     action: Action,
     subtleLabel = false,
     isSkeleton = false,
-    showAnatomy = false,
 }: SurfaceLabelProps) => {
     if (label == null) return null
     // Both sides of the row follow `subtleLabel` for text size — ONE shared variable
@@ -101,7 +99,7 @@ export const SurfaceCardHeader = ({
         // This is an ATOM with its own story ⇒ the node is named so it becomes a
         // clickable DEP in the panel; the badge stops here, no drilling into the
         // atom's insides (§11a).
-        <span className="shrink-0" data-anat-part={showAnatomy ? "LinkSeeMore" : undefined}>
+        <span className="shrink-0">
             <LinkSeeMore onPress={onSeeMore} size={textSize} label={seeMoreLabel} />
         </span>
     ) : labelEnd != null ? (

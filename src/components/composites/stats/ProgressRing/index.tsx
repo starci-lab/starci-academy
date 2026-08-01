@@ -47,7 +47,7 @@ interface ProgressRingOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    /** `true` → tag the ring/caption skeleton bars with `data-anat-part="Skeleton"`. */
+    /** `true` → tag the ring/caption skeleton bars with ``. */
 }
 
 /**

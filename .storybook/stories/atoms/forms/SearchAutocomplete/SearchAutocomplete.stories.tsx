@@ -100,7 +100,7 @@ export const WithSuggestions: Story = {
                                         inputValue={inputValue}
                                         onInputChange={setInputValue}
                                         onSelect={() => undefined}
-                                        showAnatomy
+                                       
                                     />
                                 ),
                             },
@@ -140,7 +140,7 @@ export const Loading: Story = {
                                         onInputChange={setInputValue}
                                         onSelect={() => undefined}
                                         isLoading
-                                        showAnatomy
+                                       
                                     />
                                 ),
                             },
@@ -177,7 +177,7 @@ export const Skeleton: Story = {
                                 onInputChange={() => undefined}
                                 onSelect={() => undefined}
                                 isSkeleton
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -214,7 +214,7 @@ export const NoResults: Story = {
                                         onInputChange={setInputValue}
                                         onSelect={() => undefined}
                                         emptyLabel="No matching course or topic found"
-                                        showAnatomy
+                                       
                                     />
                                 ),
                             },

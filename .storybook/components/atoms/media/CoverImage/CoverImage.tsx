@@ -20,8 +20,7 @@ export interface CoverImageProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → tag the root with `data-anat-part="CoverImage"`. */
-    showAnatomy?: boolean
+    /** `true` → tag the root with ``. */
 }
 
 /**
@@ -37,7 +36,6 @@ const CoverImageBase = ({
     alt,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
 }: CoverImageProps) => {
     if (isSkeleton) {
         // No wrapper: the shimmer box is both the root and the leaf skeleton.
@@ -46,7 +44,7 @@ const CoverImageBase = ({
                 data-tier="atom"
                 data-component="CoverImage"
                 className={cn("aspect-video w-full rounded-2xl", classNames)}
-                data-anat-part={showAnatomy ? "CoverImage" : undefined}
+
             />
         )
     }
@@ -55,7 +53,7 @@ const CoverImageBase = ({
             data-tier="atom"
             data-component="CoverImage"
             className={cn("aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary", classNames)}
-            data-anat-part={showAnatomy ? "CoverImage" : undefined}
+
         >
             {src ? (
                 <img

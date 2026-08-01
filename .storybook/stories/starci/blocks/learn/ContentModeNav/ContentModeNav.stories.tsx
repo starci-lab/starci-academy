@@ -78,8 +78,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ContentModeNav
-                                anatPart="ContentModeNav"
-                                showAnatomy
+
+                               
                                 ariaLabel="How to view this lesson"
                                 mode="content"
                                 modes={MODES}
@@ -156,8 +156,8 @@ export const WithLanguages: Story = {
 />`,
                         render: (
                             <ContentModeNav
-                                anatPart="ContentModeNav"
-                                showAnatomy
+
+                               
                                 ariaLabel="How to view this lesson"
                                 mode="content"
                                 modes={MODES}

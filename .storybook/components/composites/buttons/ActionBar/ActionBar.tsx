@@ -86,7 +86,6 @@ export interface ActionBarProps {
      */
     at?: ResponsiveRowSwitch
     /** `true` → tag each rendered `Button` for a BlockAnatomy panel (the atom names itself). */
-    showAnatomy?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
@@ -99,7 +98,6 @@ const renderSlot = (
     slot: ActionBarSlot | undefined,
     variant: ActionBarVariant,
     isSkeleton: boolean,
-    showAnatomy: boolean,
 ): ResponsiveClusterItem | null => {
     if (!slot) return null
     return {
@@ -113,7 +111,7 @@ const renderSlot = (
                 isDisabled={slot.isDisabled}
                 isPending={slot.isPending}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         ),
     }
@@ -131,13 +129,12 @@ export const ActionBar = ({
     dismiss,
     isSkeleton = false,
     at = "md",
-    showAnatomy = false,
     classNames,
 }: ActionBarProps) => {
     const items = [
-        renderSlot("dismiss", dismiss, "ghost", isSkeleton, showAnatomy),
-        renderSlot("secondary", secondary, "secondary", isSkeleton, showAnatomy),
-        renderSlot("primary", primary, "primary", isSkeleton, showAnatomy),
+        renderSlot("dismiss", dismiss, "ghost", isSkeleton),
+        renderSlot("secondary", secondary, "secondary", isSkeleton),
+        renderSlot("primary", primary, "primary", isSkeleton),
     ].filter((item): item is ResponsiveClusterItem => item != null)
 
     return (

@@ -73,8 +73,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <FoundationsHeader
-                                anatPart="FoundationsHeader"
-                                showAnatomy
+
+                               
                                 breadcrumbItems={CRUMBS}
                                 title="Linux & Shell"
                                 description="Master the command line, permissions, and the core system operations every engineer needs."
@@ -119,8 +119,8 @@ export const Skeleton: Story = {
                         code: "<FoundationsHeader title=\"\" isSkeleton />",
                         render: (
                             <FoundationsHeader
-                                anatPart="FoundationsHeader"
-                                showAnatomy
+
+                               
                                 title=""
                                 isSkeleton
                             />

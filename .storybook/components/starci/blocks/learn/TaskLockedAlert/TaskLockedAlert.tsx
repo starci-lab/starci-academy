@@ -72,9 +72,7 @@ export interface TaskLockedAlertProps {
     /** Placement utilities only, from the closed positioning union — NOT for restyling the alert. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, the composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -88,8 +86,6 @@ const TaskLockedAlertBase = ({
     ctaLabel = DEFAULT_CTA_LABEL,
     onGoToCurrentTask,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: TaskLockedAlertProps) => (
     <Callout
         status="warning"
@@ -98,8 +94,8 @@ const TaskLockedAlertBase = ({
         actionLabel={onGoToCurrentTask ? ctaLabel : undefined}
         onAction={onGoToCurrentTask}
         classNames={classNames}
-        showAnatomy={showAnatomy}
-        anatPart={anatPart ?? (showAnatomy ? "Callout" : undefined)}
+
+
     />
 )
 

@@ -1,7 +1,6 @@
 import React from "react"
 import { ProgressBar, cn } from "@heroui/react"
 import { ProgressMeterTargetMark } from "./TargetMark"
-import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
@@ -56,9 +55,7 @@ interface ProgressMeterOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this meter. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -96,8 +93,6 @@ export const ProgressMeter = ({
     trailing: Trailing,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: ProgressMeterProps) => {
     const safeMax = max > 0 ? max : 1
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
@@ -207,10 +202,9 @@ export const ProgressMeter = ({
         <StackV
             gap={3}
             classNames={classNames}
-            anatPart={anatPart}
+
             body={
                 <>
-                    {showAnatomy ? <AnatomyOverlay label="ProgressMeter" tier="composite" href="/?path=/docs/primitives-stats-progressmeter--docs" /> : null}
                     {topRow}
                     {slotRow}
                     {trackSection}

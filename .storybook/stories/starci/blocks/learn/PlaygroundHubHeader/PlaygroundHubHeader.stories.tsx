@@ -56,8 +56,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <PlaygroundHubHeader
-                                anatPart="PlaygroundHubHeader"
-                                showAnatomy
+
+                               
                                 title="Playground"
                                 description="Hands-on Docker and Kubernetes exercises. You type real commands on your own machine, with step-by-step guidance."
                             />

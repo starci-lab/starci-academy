@@ -41,8 +41,8 @@ export const Roles: Story = {
                         code: "<QaChatBubble role=\"assistant\"><MarkdownContent source=\"Have you tried restarting the container?\" measure=\"compact\" /></QaChatBubble>",
                         render: (
                             <div data-tier="fixture" className="flex w-full max-w-sm justify-start">
-                                <QaChatBubble anatPart="QaChatBubble" role="assistant">
-                                    <MarkdownContent showAnatomy anatPart="MarkdownContent" source="Have you tried restarting the container?" measure="compact" />
+                                <QaChatBubble role="assistant">
+                                    <MarkdownContent source="Have you tried restarting the container?" measure="compact" />
                                 </QaChatBubble>
                             </div>
                         ),

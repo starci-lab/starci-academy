@@ -159,9 +159,7 @@ interface PDFViewOwnProps {
     /** Where this sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** `true` → tag the whole-file skeleton placeholder pages' `Typography` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -201,8 +199,6 @@ export const PDFView = ({
     fitToContainer = false,
     isSkeleton = false,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: PDFViewProps) => {
     const file = useMemo(() => (src ? src : undefined), [src])
     const [numPages, setNumPages] = useState(0)
@@ -279,7 +275,7 @@ export const PDFView = ({
                 allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden",
                 classNames,
             )}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="PDFView"
         >
@@ -297,8 +293,8 @@ export const PDFView = ({
                             style={{ minHeight: 320 }}
                             aria-hidden
                         >
-                            <Typography size="sm" color="muted" isSkeleton showAnatomy={showAnatomy} />
-                            <Typography size="xs" color="muted" isSkeleton showAnatomy={showAnatomy} />
+                            <Typography size="sm" color="muted" isSkeleton />
+                            <Typography size="xs" color="muted" isSkeleton />
                         </div>
                     ))}
                 />

@@ -144,9 +144,7 @@ export interface LearnShellProps {
     /** The active route's own content — the one place `ReactNode` is valid above frame tier (§12). */
     children: ReactNode
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -166,8 +164,6 @@ const LearnShell = ({
     selectionAsk = null,
     onOpenSelectionAsk,
     children,
-    showAnatomy = false,
-    anatPart,
 }: LearnShellProps) => {
     // A locked surface has nothing real to ask AI about yet, on top of the
     // brief's own `isAssessmentLive` suppression.
@@ -184,15 +180,15 @@ const LearnShell = ({
                     ariaLabel={RAIL_ARIA_LABEL}
                     handleSide="right"
                     className="h-full shrink-0 border-r border-default"
-                    showAnatomy={showAnatomy}
+
                 >
                     <StackV
                         gap={1}
                         align="center"
                         justify="center"
                         classNames={["h-full"]}
-                        anatPart={showAnatomy ? "StackV" : undefined}
-                        body={<Spinner label={RAIL_LOADING_LABEL} showAnatomy={showAnatomy} />}
+
+                        body={<Spinner label={RAIL_LOADING_LABEL} />}
                     />
                 </ResizableRail>
             ) : null}
@@ -204,7 +200,7 @@ const LearnShell = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             {isEnrollGated && enrollGateProps != null ? (
                 <EnrollGate
                     title={enrollGateProps.title}
@@ -212,14 +208,14 @@ const LearnShell = ({
                     preview={enrollGateProps.preview}
                     price={enrollGateProps.price}
                     onEnroll={enrollGateProps.onEnroll}
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "EnrollGate" : undefined}
+
+
                 />
             ) : (
                 <StackH
                     gap={1}
                     className="min-h-[calc(100dvh-4rem)]"
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={railAndContent}
                 />
             )}
@@ -229,16 +225,16 @@ const LearnShell = ({
                     <ContentAiFab
                         onOpen={onOpenAiChat}
                         isOpen={isAiChatOpen}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "ContentAiFab" : undefined}
+
+
                     />
                     {selectionAsk != null ? (
                         <ContentAiSelectionAsk
                             onOpen={onOpenSelectionAsk}
                             anchor={selectionAsk.anchor}
                             isNew={selectionAsk.isNew}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "ContentAiSelectionAsk" : undefined}
+
+
                         />
                     ) : null}
                 </>

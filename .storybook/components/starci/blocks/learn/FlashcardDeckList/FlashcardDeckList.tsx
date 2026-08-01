@@ -140,9 +140,7 @@ export interface FlashcardDeckListProps {
     /** `true` → the track renders its own mirror. `decks` empty while on → guesses a placeholder count in the current `view`'s shape (§12c). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** The block's own wording for the grid-tile CTA — overridable via `ctaLabel`. */
@@ -187,8 +185,6 @@ const FlashcardDeckList = ({
     ctaLabel,
     showProgress,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FlashcardDeckListProps) => {
     // Empty while loading (no real decks yet) → guess a placeholder count in the
     // CURRENT view's shape, keeping the right footprint for when real data lands
@@ -206,7 +202,7 @@ const FlashcardDeckList = ({
         const chips: Array<ClusterItem> = [
             {
                 key: "difficulty",
-                content: <VariantChipDifficulty difficulty={deck.difficulty} anatPart={showAnatomy ? "VariantChipDifficulty" : undefined} />,
+                content: <VariantChipDifficulty difficulty={deck.difficulty} />,
             },
         ]
         if (deck.dueCount) {
@@ -217,28 +213,28 @@ const FlashcardDeckList = ({
         }
         const titleAndDescription = (
             <>
-                <Typography size="sm" weight="medium" truncate text={deck.title} showAnatomy={showAnatomy} />
+                <Typography size="sm" weight="medium" truncate text={deck.title} />
                 {deck.description ? (
-                    <Typography size="xs" color="muted" lineClamp={2} text={deck.description} showAnatomy={showAnatomy} />
+                    <Typography size="xs" color="muted" lineClamp={2} text={deck.description} />
                 ) : null}
             </>
         )
 
         const progressRow = (
             <>
-                <div className="flex-1" data-anat-part={showAnatomy ? "ProgressGauge" : undefined}>
+                <div className="flex-1">
                     <ProgressGauge
                         value={((deck.masteredCount ?? 0) / deck.totalCount) * 100}
                         size="sm"
                         ariaLabel={`Mastery level for the ${deck.title} deck`}
-                        showAnatomy={showAnatomy}
+
                     />
                 </div>
                 <Typography
                     size="xs"
                     color="muted"
                     text={`${deck.masteredCount ?? 0}/${deck.totalCount}`}
-                    showAnatomy={showAnatomy}
+
                 />
             </>
         )
@@ -250,7 +246,7 @@ const FlashcardDeckList = ({
                     weight="medium"
                     color="accent-soft"
                     text={ctaLabel ?? DEFAULT_CTA_LABEL}
-                    showAnatomy={showAnatomy}
+
                 />
                 <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-accent-soft-foreground" />
             </>
@@ -258,24 +254,24 @@ const FlashcardDeckList = ({
 
         const tileBody = (
             <>
-                <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={titleAndDescription} />
-                <Cluster gap={3} items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
+                <StackV gap={1} body={titleAndDescription} />
+                <Cluster gap={3} items={chips} />
                 {showProgress && deck.totalCount > 0 ? (
-                    <StackH gap={2} anatPart={showAnatomy ? "StackH" : undefined} body={progressRow} />
+                    <StackH gap={2} body={progressRow} />
                 ) : null}
-                <StackH gap={2} justify="end" anatPart={showAnatomy ? "StackH" : undefined} body={ctaRow} />
+                <StackH gap={2} justify="end" body={ctaRow} />
             </>
         )
 
         return (
-            <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={tileBody} />
+            <StackV gap={3} body={tileBody} />
         )
     }
 
     const tiles: Array<GridItem> = source.map((deck) => ({
         key: deck.id,
         content: (
-            <div data-anat-part={showAnatomy ? "SurfaceCard" : undefined}>
+            <div>
                 <SurfaceCard
                     isSkeleton={isSkeleton}
                     // Always set, even during a placeholder tile: `Base`'s skeleton-mirror
@@ -285,7 +281,7 @@ const FlashcardDeckList = ({
                     // `SurfaceCard` shape) is the one that renders once loading finishes.
                     onPress={() => onSelectDeck(deck.id)}
                     ariaLabel={deck.title}
-                    showAnatomy={showAnatomy}
+
                     body={() => (isSkeleton ? null : deckTileBody(deck))}
                 />
             </div>
@@ -297,7 +293,7 @@ const FlashcardDeckList = ({
         if (!isSkeleton) {
             metaChips.push({
                 key: "difficulty",
-                content: <VariantChipDifficulty difficulty={deck.difficulty} anatPart={showAnatomy ? "VariantChipDifficulty" : undefined} />,
+                content: <VariantChipDifficulty difficulty={deck.difficulty} />,
             })
             if (deck.dueCount) {
                 metaChips.push({
@@ -313,10 +309,10 @@ const FlashcardDeckList = ({
             // The block owns this fallback (§14d.1): a deck with no blurb still says
             // something useful — its card count — instead of a blank second line.
             subtitle: deck.description ?? `${deck.totalCount} cards`,
-            meta: metaChips.length > 0 ? () => <Cluster gap={3} items={metaChips} anatPart={showAnatomy ? "Cluster" : undefined} /> : undefined,
+            meta: metaChips.length > 0 ? () => <Cluster gap={3} items={metaChips} /> : undefined,
             trailing:
                 showProgress && !isSkeleton && deck.totalCount > 0 ? (
-                    <Typography size="xs" color="muted" text={`${deck.masteredCount ?? 0}/${deck.totalCount}`} showAnatomy={showAnatomy} />
+                    <Typography size="xs" color="muted" text={`${deck.masteredCount ?? 0}/${deck.totalCount}`} />
                 ) : undefined,
             onPress: usingPlaceholders ? undefined : () => onSelectDeck(deck.id),
         }
@@ -327,35 +323,35 @@ const FlashcardDeckList = ({
             icon={hasQuery ? MagnifyingGlassIcon : undefined}
             title={hasQuery ? `No decks match “${query}”` : "This course has no decks yet"}
             description={hasQuery ? "Try a different search term." : undefined}
-            anatPart={showAnatomy ? "AsyncContentEmpty" : undefined}
-            showAnatomy={showAnatomy}
+
+
         />
     ) : view === "grid" ? (
-        <div data-anat-part={showAnatomy ? "Grid" : undefined}>
-            <Grid columns={{ base: 1, sm: 2, md: 3 }} gap={4} items={tiles} showAnatomy={showAnatomy} />
+        <div>
+            <Grid columns={{ base: 1, sm: 2, md: 3 }} gap={4} items={tiles} />
         </div>
     ) : (
-        <SurfaceCardList anatPart={showAnatomy ? "SurfaceCardList" : undefined} isSkeleton={isSkeleton} items={rows} />
+        <SurfaceCardList isSkeleton={isSkeleton} items={rows} />
     )
 
     const searchAndView = (
         <>
-            <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
+            <div className="min-w-0 flex-1">
                 <InputSearch
                     value={query}
                     onValueChange={onQueryChange}
                     placeholder="Search decks"
                     ariaLabel="Search decks"
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
-            <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
+            <div>
                 <Tabs
                     items={VIEW_ITEMS}
                     selectedKey={view}
                     onSelectionChange={(key) => onViewChange(key as FlashcardDeckListView)}
                     ariaLabel="Display style"
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
         </>
@@ -363,18 +359,18 @@ const FlashcardDeckList = ({
 
     const listBody = (
         <>
-            <StackH gap={3} wrap anatPart={showAnatomy ? "StackH" : undefined} body={searchAndView} />
+            <StackH gap={3} wrap body={searchAndView} />
             {track}
             {!isSkeleton && decks.length > 0 ? (
-                <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
-                    <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} showAnatomy={showAnatomy} />
+                <div>
+                    <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} />
                 </div>
             ) : null}
         </>
     )
 
     return (
-        <StackV gap={4} anatPart={anatPart} body={listBody} />
+        <StackV gap={4} body={listBody} />
     )
 }
 

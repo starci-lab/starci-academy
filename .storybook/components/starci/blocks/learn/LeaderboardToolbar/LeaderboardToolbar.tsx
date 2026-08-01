@@ -66,9 +66,7 @@ export interface LeaderboardToolbarProps {
     /** Extra classes on the row, from the closed atom/frame union. */
     classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -98,21 +96,19 @@ const LeaderboardToolbar = ({
     isRefreshing = false,
     refreshLabel,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: LeaderboardToolbarProps) => (
     <StackH
         gap={3}
         align="center"
         classNames={classNames}
-        anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)}
+
         body={
             <>
                 <Typography
                     size="sm"
                     weight="medium"
                     text={`Ranked by ${categoryLabel}`}
-                    showAnatomy={showAnatomy}
+
                 />
                 {/* no icon here — §5a.2: a clock needs an ASSOCIATION step to read as "time"
                     (not a universal symbol like ✓/🔒), and the text already carries the fact. */}
@@ -121,7 +117,7 @@ const LeaderboardToolbar = ({
                         size="xs"
                         color="muted"
                         text={formatUpdatedAt(updatedAt)}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : null}
                 {/* Pushes the refresh button to the row's trailing edge without a second

@@ -50,7 +50,7 @@ export const FourStats: Story = {
                                     { key: "top", value: "8%", label: "Top" },
                                     { key: "rank", value: "#3", label: "Rank" },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -80,7 +80,7 @@ export const TwoStats: Story = {
                                     { key: "passed", value: "0", label: "Passed" },
                                     { key: "xp", value: "0", label: "XP" },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -120,7 +120,7 @@ export const Bordered: Story = {
                                         { key: "xp", value: "1,204", label: "XP" },
                                         { key: "top", value: "8%", label: "Top" },
                                     ]}
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -145,7 +145,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, default skeletonCount",
                         why: "Three cells shimmer in the same Card + divider frame the real ribbon uses, standing in for a stat strip whose numbers haven't loaded yet. Each cell delegates its own shimmer to `StatPair isSkeleton` rather than this composite drawing a parallel skeleton tree — per §12g.0's priority rule, the child that already owns a loading state keeps owning it.",
                         code: "<StatRibbon isSkeleton />",
-                        render: <StatRibbon isSkeleton showAnatomy />,
+                        render: <StatRibbon isSkeleton />,
                     },
                 ]}
             />

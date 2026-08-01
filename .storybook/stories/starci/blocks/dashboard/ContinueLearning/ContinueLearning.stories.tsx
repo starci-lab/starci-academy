@@ -69,8 +69,8 @@ export const Content: Story = {
 />`,
                         render: (
                             <ContinueLearning
-                                anatPart="ContinueLearning"
-                                showAnatomy
+
+                               
                                 items={THREE_ITEMS}
                                 hasCourses
                                 isLoading={false}
@@ -117,8 +117,8 @@ export const Empty: Story = {
                         code: "<ContinueLearning items={[]} hasCourses isLoading={false} /* … */ />",
                         render: (
                             <ContinueLearning
-                                anatPart="ContinueLearning"
-                                showAnatomy
+
+                               
                                 items={[]}
                                 hasCourses
                                 isLoading={false}
@@ -165,8 +165,8 @@ export const Loading: Story = {
                         code: "<ContinueLearning items={[]} hasCourses isLoading /* … */ />",
                         render: (
                             <ContinueLearning
-                                anatPart="ContinueLearning"
-                                showAnatomy
+
+                               
                                 items={[]}
                                 hasCourses
                                 isLoading

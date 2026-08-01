@@ -58,8 +58,8 @@ export const PlainAnswer: Story = {
                         code: "<QaMessageBubble answer={answer} currentUserId=\"viewer\" canAccept={false} onAcceptAnswer={accept} onReact={react} />",
                         render: (
                             <QaMessageBubble
-                                anatPart="QaMessageBubble"
-                                showAnatomy
+
+                               
                                 answer={BASE_ANSWER}
                                 currentUserId="viewer"
                                 canAccept={false}
@@ -150,8 +150,8 @@ export const Skeleton: Story = {
                         render: (
                             <QaMessageBubble
                                 isSkeleton
-                                anatPart="QaMessageBubble"
-                                showAnatomy
+
+                               
                                 currentUserId={null}
                                 canAccept={false}
                                 onAcceptAnswer={() => {}}

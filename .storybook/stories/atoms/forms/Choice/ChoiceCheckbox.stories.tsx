@@ -75,7 +75,7 @@ export const Default: Story = {
                             code: "<ChoiceCheckbox isSelected={value} onValueChange={setValue} label=\"Receive email updates\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <ChoiceCheckbox isSelected={value} onValueChange={setValue} label="Receive email updates" showAnatomy />
+                                    <ChoiceCheckbox isSelected={value} onValueChange={setValue} label="Receive email updates" />
                                 </div>
                             ),
                         },
@@ -105,7 +105,7 @@ export const Checked: Story = {
                             code: "<ChoiceCheckbox isSelected onValueChange={setValue} label=\"Receive email updates\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <ChoiceCheckbox isSelected={value} onValueChange={setValue} label="Receive email updates" showAnatomy />
+                                    <ChoiceCheckbox isSelected={value} onValueChange={setValue} label="Receive email updates" />
                                 </div>
                             ),
                         },
@@ -140,7 +140,7 @@ export const WithHint: Story = {
                                         onValueChange={setValue}
                                         label="Receive email updates"
                                         hint="You can turn this off anytime in Settings."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -176,7 +176,7 @@ export const Required: Story = {
                                         onValueChange={setValue}
                                         label="Agree to the Terms of Service"
                                         isRequired
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -210,7 +210,7 @@ export const Disabled: Story = {
                                     onValueChange={() => {}}
                                     label="Agree to the Terms of Service"
                                     isDisabled
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -244,7 +244,7 @@ export const Error: Story = {
                                         onValueChange={setValue}
                                         label="Agree to the Terms of Service"
                                         errorMessage="You must agree to continue."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -273,7 +273,7 @@ export const Loading: Story = {
                         code: "<ChoiceCheckbox isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ChoiceCheckbox isSelected={false} onValueChange={() => {}} label="" isSkeleton showAnatomy />
+                                <ChoiceCheckbox isSelected={false} onValueChange={() => {}} label="" isSkeleton />
                             </div>
                         ),
                     },

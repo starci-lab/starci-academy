@@ -54,7 +54,7 @@ export const Default: Story = {
                     name: "isSkeleton (always)",
                     why: "This block IS the loading state — it has no `isSkeleton` prop of its own, every atom it composes is simply always told to render its own shimmer. The tab strip reuses `Tabs`' native `isSkeleton variant=\"secondary\"` shape, the medal strip reuses `AvatarGroup`'s own overlap shimmer, and every text/pill/button/tile spot mirrors through that atom's own box so nothing here can drift out of sync with the real component it stands in for.",
                     code: "<ProfileLoadingState />",
-                    render: <ProfileLoadingState anatPart="ProfileLoadingState" showAnatomy />,
+                    render: <ProfileLoadingState />,
                 },
             ]}
         />

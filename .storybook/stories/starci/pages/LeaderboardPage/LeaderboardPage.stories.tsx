@@ -126,7 +126,7 @@ export const Ranked: Story = {
                         render: (
                             <LeaderboardPage
                                 {...BASE}
-                                showAnatomy
+                               
                                 isEnrollmentKnown
                                 isEnrolled={false}
                             />
@@ -161,7 +161,7 @@ export const Enrolled: Story = {
                         render: (
                             <LeaderboardPage
                                 {...BASE}
-                                showAnatomy
+                               
                                 isEnrollmentKnown
                                 isEnrolled
                             />
@@ -191,7 +191,7 @@ export const Skeleton: Story = {
                         render: (
                             <LeaderboardPage
                                 {...BASE}
-                                showAnatomy
+                               
                                 isEnrollmentKnown
                                 isEnrolled={false}
                                 isSkeleton

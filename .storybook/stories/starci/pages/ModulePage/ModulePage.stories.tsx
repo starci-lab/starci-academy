@@ -115,7 +115,7 @@ export const Full: Story = {
     challenges={challenges}
     …
 />`,
-                        render: <ModulePage {...BASE} showAnatomy />,
+                        render: <ModulePage {...BASE} />,
                     },
                 ]}
             />
@@ -141,7 +141,7 @@ export const NoChallenges: Story = {
     {...props}
     challenges={[]}
 />`,
-                        render: <ModulePage {...BASE} showAnatomy challenges={[]} challengeCount={0} challengesTotal={0} challengesDone={0} />,
+                        render: <ModulePage {...BASE} challenges={[]} challengeCount={0} challengesTotal={0} challengesDone={0} />,
                     },
                 ]}
             />
@@ -170,7 +170,7 @@ export const Locked: Story = {
     discountedPriceVnd={1290000}
     …
 />`,
-                        render: <ModulePage {...BASE} {...PAYWALL} showAnatomy />,
+                        render: <ModulePage {...BASE} {...PAYWALL} />,
                     },
                 ]}
             />
@@ -193,7 +193,7 @@ export const Empty: Story = {
                         name: "isEmpty = true",
                         why: "There is no header, no gate, no lists — the whole spine is swapped for one empty message, because a module with nothing in it has nothing to orient toward yet either.",
                         code: "<ModulePage {...props} isEmpty />",
-                        render: <ModulePage {...BASE} showAnatomy isEmpty />,
+                        render: <ModulePage {...BASE} isEmpty />,
                     },
                 ]}
             />
@@ -216,7 +216,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "Every block that can mirror itself does (§12c) — the screen builds no separate shimmer tree. The challenge list keeps its guessed rows during loading even though the real `challenges` array is empty, so the page does not lose a block only to gain it back once data lands.",
                         code: "<ModulePage {...props} isSkeleton />",
-                        render: <ModulePage {...BASE} showAnatomy isSkeleton challenges={[]} />,
+                        render: <ModulePage {...BASE} isSkeleton challenges={[]} />,
                     },
                 ]}
             />

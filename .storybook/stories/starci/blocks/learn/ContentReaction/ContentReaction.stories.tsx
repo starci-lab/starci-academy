@@ -68,8 +68,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ContentReaction
-                                anatPart="ContentReaction"
-                                showAnatomy
+
+                               
                                 counts={COUNTS}
                                 viewCount={2481}
                                 onReact={() => {}}
@@ -134,8 +134,8 @@ export const Skeleton: Story = {
                         code: "<ContentReaction isSkeleton onReact={react} />",
                         render: (
                             <ContentReaction
-                                anatPart="ContentReaction"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 onReact={() => {}}
                             />

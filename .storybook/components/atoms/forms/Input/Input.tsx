@@ -74,11 +74,10 @@ export interface FieldSkeletonProps {
      */
     classNames?: Array<AllowedClassName>
     /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
-    showAnatomy?: boolean
 }
 
-export const FieldSkeleton = ({ heightCls = "h-9", showAnatomy, classNames }: FieldSkeletonProps) => (
-    <HeroSkeleton data-tier="atom" data-component="FieldSkeleton" className={cn("w-full rounded-xl", heightCls, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+export const FieldSkeleton = ({ heightCls = "h-9", classNames }: FieldSkeletonProps) => (
+    <HeroSkeleton data-tier="atom" data-component="FieldSkeleton" className={cn("w-full rounded-xl", heightCls, classNames)} />
 )
 
 /** Shared props for text-string members, excluding the value pair and `isSkeleton`. */
@@ -88,7 +87,6 @@ interface StringFieldOwnProps extends FrameProps {
     isInvalid?: boolean
     /** Accessible name used when there's no `label` (otherwise the label handles it). */
     ariaLabel?: string
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -113,7 +111,7 @@ type InputTextProps = StringFieldProps & {
 }
 
 /** `InputText` — single-line text (HeroUI TextField+Input) with label/hint/error. */
-const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, showAnatomy, classNames, label, hint, errorMessage, isRequired, variant = "primary" }: InputTextProps) => {
+const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, classNames, label, hint, errorMessage, isRequired, variant = "primary" }: InputTextProps) => {
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
@@ -124,9 +122,9 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             id={controlId}
-            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroTextField data-tier="atom" data-component="InputText" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
                 <HeroInput
@@ -135,7 +133,7 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
                     value={value}
                     onChange={(event) => onValueChange?.(event.target.value)}
                     className="w-full"
-                    data-anat-part={showAnatomy ? "Input" : undefined}
+
                 />
             </HeroTextField>
         </FieldFrame>
@@ -160,7 +158,6 @@ const InputTextarea = ({
     ariaLabel,
     rows = 3,
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -178,9 +175,9 @@ const InputTextarea = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             id={controlId}
-            skeletonControl={<FieldSkeleton heightCls="h-24" classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton heightCls="h-24" classNames={classNames} />}
         >
             <HeroTextField data-tier="atom" data-component="InputTextarea" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
                 <HeroTextArea
@@ -190,7 +187,7 @@ const InputTextarea = ({
                     value={value}
                     onChange={(event) => onValueChange?.(event.target.value)}
                     className="w-full"
-                    data-anat-part={showAnatomy ? "TextArea" : undefined}
+
                 />
             </HeroTextField>
         </FieldFrame>
@@ -208,7 +205,6 @@ const InputNumber = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -224,7 +220,6 @@ const InputNumber = ({
     isInvalid?: boolean
     ariaLabel?: string
     isSkeleton?: boolean
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -239,8 +234,8 @@ const InputNumber = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+
+            skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroNumberField
                 data-tier="atom"
@@ -257,7 +252,7 @@ const InputNumber = ({
                 className={cn(classNames)}
             >
                 {/* There's no wrapping div here since it had no styling of its own. */}
-                <HeroNumberField.Group data-anat-part={showAnatomy ? "NumberField.Group" : undefined}>
+                <HeroNumberField.Group>
                     <HeroNumberField.DecrementButton />
                     <HeroNumberField.Input />
                     <HeroNumberField.IncrementButton />
@@ -277,7 +272,6 @@ const InputDate = ({
     isInvalid,
     ariaLabel = "Pick a date",
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -292,7 +286,6 @@ const InputDate = ({
     isInvalid?: boolean
     ariaLabel?: string
     isSkeleton?: boolean
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -307,8 +300,8 @@ const InputDate = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+
+            skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroDatePicker
                 data-tier="atom"
@@ -322,7 +315,7 @@ const InputDate = ({
                 maxValue={maxValue}
                 className={cn("w-full", classNames)}
             >
-                <DateField.Group fullWidth variant="secondary" data-anat-part={showAnatomy ? "DateField.Group" : undefined}>
+                <DateField.Group fullWidth variant="secondary">
                     <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
                     <DateField.Suffix>
                         <HeroDatePicker.Trigger>
@@ -347,7 +340,6 @@ const InputSearch = ({
     isInvalid,
     ariaLabel = "Search",
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -364,9 +356,9 @@ const InputSearch = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             id={controlId}
-            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroSearchField
                 data-tier="atom"
@@ -378,7 +370,7 @@ const InputSearch = ({
                 isDisabled={isDisabled}
                 className={cn("w-full", classNames)}
             >
-                <HeroSearchField.Group data-anat-part={showAnatomy ? "SearchField.Group" : undefined}>
+                <HeroSearchField.Group>
                     <HeroSearchField.SearchIcon />
                     <HeroSearchField.Input id={controlId} placeholder={placeholder} />
                 </HeroSearchField.Group>
@@ -396,7 +388,6 @@ const InputPassword = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -414,9 +405,9 @@ const InputPassword = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             id={controlId}
-            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroTextField data-tier="atom" data-component="InputPassword" aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
                 <div className="relative">
@@ -428,7 +419,7 @@ const InputPassword = ({
                         value={value}
                         onChange={(event) => onValueChange?.(event.target.value)}
                         className="w-full pr-9"
-                        data-anat-part={showAnatomy ? "Input" : undefined}
+
                     />
                     <button
                         type="button"
@@ -457,7 +448,6 @@ const InputCurrency = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -475,7 +465,6 @@ const InputCurrency = ({
     isInvalid?: boolean
     ariaLabel?: string
     isSkeleton?: boolean
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -490,8 +479,8 @@ const InputCurrency = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+
+            skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroNumberField
                 data-tier="atom"
@@ -511,7 +500,7 @@ const InputCurrency = ({
                 className={cn(classNames)}
             >
                 {/* There's no wrapping div here since it had no styling of its own. */}
-                <HeroNumberField.Group data-anat-part={showAnatomy ? "NumberField.Group" : undefined}>
+                <HeroNumberField.Group>
                     <HeroNumberField.DecrementButton />
                     <HeroNumberField.Input />
                     <HeroNumberField.IncrementButton />
@@ -529,7 +518,6 @@ const InputTime = ({
     isInvalid,
     ariaLabel = "Pick a time",
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -542,7 +530,6 @@ const InputTime = ({
     isInvalid?: boolean
     ariaLabel?: string
     isSkeleton?: boolean
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -557,8 +544,8 @@ const InputTime = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+
+            skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroTimeField
                 data-tier="atom"
@@ -571,7 +558,7 @@ const InputTime = ({
                 fullWidth
                 className={cn("w-full", classNames)}
             >
-                <HeroTimeField.Group fullWidth variant="secondary" data-anat-part={showAnatomy ? "TimeField.Group" : undefined}>
+                <HeroTimeField.Group fullWidth variant="secondary">
                     <HeroTimeField.Input>{(segment) => <HeroTimeField.Segment segment={segment} />}</HeroTimeField.Input>
                 </HeroTimeField.Group>
             </HeroTimeField>
@@ -589,7 +576,6 @@ const InputOtp = ({
     autoFocus,
     ariaLabel,
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -605,7 +591,6 @@ const InputOtp = ({
     autoFocus?: boolean
     ariaLabel?: string
     isSkeleton?: boolean
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -620,10 +605,10 @@ const InputOtp = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
             skeletonControl={
                 // Leaf skeleton OWNED by the atom — a row of `length` cell-shaped squares.
-                <div className={cn("flex items-center gap-2", classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+                <div className={cn("flex items-center gap-2", classNames)}>
                     {Array.from({ length }, (_, index) => (
                         <HeroSkeleton key={index} className="h-10 w-9 rounded-xl" />
                     ))}
@@ -642,7 +627,7 @@ const InputOtp = ({
                 autoFocus={autoFocus}
                 className={cn(classNames)}
             >
-                <HeroInputOTP.Group data-anat-part={showAnatomy ? "InputOTP.Group" : undefined}>
+                <HeroInputOTP.Group>
                     {Array.from({ length }, (_, index) => (
                         <HeroInputOTP.Slot key={index} index={index} />
                     ))}

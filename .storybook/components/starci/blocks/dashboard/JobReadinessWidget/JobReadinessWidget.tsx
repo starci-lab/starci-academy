@@ -102,9 +102,7 @@ export interface JobReadinessWidgetProps {
     /** `true` → every atom this block owns switches to its own shimmer (data already loaded). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Band → soft chip presentation. */
@@ -115,18 +113,18 @@ const BAND_MAP: Record<JobReadinessBand, EnumChipEntry> = {
 }
 
 /** One pillar's meter, or its skeleton mirror — omitted entirely (not zero-filled) when the pillar has no score. */
-const pillarMeter = (label: string, score: number | null, isSkeleton: boolean, showAnatomy: boolean) => {
+const pillarMeter = (label: string, score: number | null, isSkeleton: boolean) => {
     if (!isSkeleton && score === null) {
         return null
     }
     return isSkeleton ? (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <Typography size="xs" color="muted" isSkeleton showAnatomy={showAnatomy} />
-                    <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                    <Typography size="xs" color="muted" isSkeleton />
+                    <HeroSkeleton className="h-1 w-full rounded-full" />
                 </>
             }
         />
@@ -136,7 +134,7 @@ const pillarMeter = (label: string, score: number | null, isSkeleton: boolean, s
             value={score ?? 0}
             max={100}
             showValue
-            anatPart={showAnatomy ? "ProgressMeter" : undefined}
+
         />
     )
 }
@@ -146,26 +144,25 @@ interface ContentProps {
     codingPercentile?: number | null
     track: JobReadinessTrack
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
-const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentProps) => {
+const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
     const trackSummary = (
         <>
             <StackH
                 gap={4}
                 wrap
                 align="center"
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
                     <>
                         <StatPair
                             value={isSkeleton ? undefined : String(track.depthScore ?? 0)}
                             label={isSkeleton ? undefined : track.courseTitle}
                             isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "StatPair" : undefined}
+
                         />
-                        <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} anatPart={showAnatomy ? "EnumChip" : undefined} />
+                        <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} />
                     </>
                 }
             />
@@ -174,12 +171,12 @@ const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentPr
                     size="xs"
                     color="muted"
                     text={`Ahead of ${codingPercentile}% of learners on coding`}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
-            {pillarMeter("Capstone project", track.capstoneScore, isSkeleton, showAnatomy)}
-            {pillarMeter("Mock interview", track.interviewScore, isSkeleton, showAnatomy)}
-            {pillarMeter("CV", track.cvScore, isSkeleton, showAnatomy)}
+            {pillarMeter("Capstone project", track.capstoneScore, isSkeleton)}
+            {pillarMeter("Mock interview", track.interviewScore, isSkeleton)}
+            {pillarMeter("CV", track.cvScore, isSkeleton)}
             {isSkeleton ? (
                 <Button isSkeleton classNames={["self-start"]} />
             ) : track.nextAction ? (
@@ -188,12 +185,12 @@ const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentPr
                     classNames={["self-start"]}
                     label={track.nextAction.label}
                     onPress={track.nextAction.onPress}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
     )
-    return <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={trackSummary} />
+    return <StackV gap={4} body={trackSummary} />
 }
 
 /** Fixed-shape placeholder rendered while {@link JobReadinessWidgetProps.isLoading} — no real track exists yet. */
@@ -220,17 +217,15 @@ const JobReadinessWidget = ({
     codingPercentile,
     track,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: JobReadinessWidgetProps) => (
     <SurfaceCard
         label="My readiness"
-        anatPart={anatPart}
-        showAnatomy={showAnatomy}
+
+
         body={() => (
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={<Content track={LOADING_TRACK} isSkeleton showAnatomy={showAnatomy} />}
+                skeleton={<Content track={LOADING_TRACK} isSkeleton />}
                 isEmpty={isEmpty}
                 emptyContent={{
                     title: "No readiness signal yet",
@@ -244,14 +239,14 @@ const JobReadinessWidget = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-                showAnatomy={showAnatomy}
+
             >
                 {track ? (
                     <Content
                         codingPercentile={codingPercentile}
                         track={track}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : null}
             </AsyncContent>

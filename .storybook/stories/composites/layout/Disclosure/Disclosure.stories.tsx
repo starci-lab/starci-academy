@@ -66,7 +66,7 @@ export const Default: Story = {
                         why: "Only the `Trigger` row mounts — the caret points down and the content below it does not exist in the DOM yet. Clicking the trigger flips the component's own internal open state, since no `isOpen` prop was passed to control it.",
                         code: "<Disclosure title=\"Customize session\" body={SampleContent} />",
                         render: (
-                            <Disclosure title="Customize session" showAnatomy body={SampleContent} />
+                            <Disclosure title="Customize session" body={SampleContent} />
                         ),
                     },
                 ]}
@@ -94,7 +94,7 @@ export const Open: Story = {
                             <Disclosure
                                 title="Customize session"
                                 defaultOpen
-                                showAnatomy
+                               
                                 body={SampleContent}
                             />
                         ),
@@ -109,7 +109,7 @@ export const Open: Story = {
 const ControlledExample = () => {
     const [open, setOpen] = useState(false)
     return (
-        <Disclosure title="Customize session" isOpen={open} onOpenChange={setOpen} showAnatomy body={SampleContent} />
+        <Disclosure title="Customize session" isOpen={open} onOpenChange={setOpen} body={SampleContent} />
     )
 }
 
@@ -152,7 +152,7 @@ export const Disabled: Story = {
                         why: "The trigger dims and switches to `cursor-not-allowed`, and it drops out of the tab order, but the composition otherwise matches the closed `Default` leaf. This exists for a disclosure the caller wants visible but temporarily not interactive, rather than hidden entirely.",
                         code: "<Disclosure title=\"Customize session\" isDisabled body={SampleContent} />",
                         render: (
-                            <Disclosure title="Customize session" isDisabled showAnatomy body={SampleContent} />
+                            <Disclosure title="Customize session" isDisabled body={SampleContent} />
                         ),
                     },
                 ]}
@@ -177,7 +177,7 @@ export const Skeleton: Story = {
                         why: "The component renders straight to a `Skeleton.Disclosure` mirror of the trigger row — neither the real `Trigger` nor `Content` node exists yet. This is the resting shape while the caller doesn't yet know whether the section has content worth expanding.",
                         code: "<Disclosure title=\"Customize session\" isSkeleton />",
                         render: (
-                            <Disclosure title="Customize session" isSkeleton showAnatomy body={SampleContent} />
+                            <Disclosure title="Customize session" isSkeleton body={SampleContent} />
                         ),
                     },
                 ]}

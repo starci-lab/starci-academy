@@ -74,7 +74,7 @@ export const Content: Story = {
     isLoading={false}
 />`,
                         render: (
-                            <AiQuotaLane anatPart="AiQuotaLane" showAnatomy data={MOSTLY_FREE} isLoading={false} />
+                            <AiQuotaLane data={MOSTLY_FREE} isLoading={false} />
                         ),
                     },
                     {
@@ -127,7 +127,7 @@ export const Loading: Story = {
                         why: "The lane's own fetch is in flight, so both bars draw their shimmer mirror pill-for-pill — same two-row shape, no numbers yet. `isLoading` is required rather than defaulted precisely so a screen cannot forget to say which state an unset `data` is in.",
                         code: "<AiQuotaLane isLoading />",
                         render: (
-                            <AiQuotaLane anatPart="AiQuotaLane" showAnatomy isLoading />
+                            <AiQuotaLane isLoading />
                         ),
                     },
                 ]}

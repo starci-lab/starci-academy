@@ -66,7 +66,7 @@ export const Default: Story = {
                         code: "<HeadhuntingCompaniesLayout>\n    <RoutedPage />\n</HeadhuntingCompaniesLayout>",
                         render: (
                             <div data-tier="fixture" className="@container" style={{ width: "72rem", maxWidth: "100%" }}>
-                                <HeadhuntingCompaniesLayout showAnatomy anatPart="HeadhuntingCompaniesLayout">
+                                <HeadhuntingCompaniesLayout>
                                     <RoutedPage />
                                 </HeadhuntingCompaniesLayout>
                             </div>
@@ -78,7 +78,7 @@ export const Default: Story = {
                         code: "<HeadhuntingCompaniesLayout>\n    <RoutedPage />\n</HeadhuntingCompaniesLayout>",
                         render: (
                             <div data-tier="fixture" className="@container" style={{ width: "36rem", maxWidth: "100%" }}>
-                                <HeadhuntingCompaniesLayout showAnatomy anatPart="HeadhuntingCompaniesLayout">
+                                <HeadhuntingCompaniesLayout>
                                     <RoutedPage />
                                 </HeadhuntingCompaniesLayout>
                             </div>

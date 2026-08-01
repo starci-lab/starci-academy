@@ -97,8 +97,8 @@ export const Open: Story = {
 />`,
                         render: (
                             <ContentArticle
-                                anatPart="ContentArticle"
-                                showAnatomy
+
+                               
                                 body={BODY}
                                 hintText="Highlight a passage to ask AI about that exact spot."
                             />
@@ -138,8 +138,8 @@ export const Locked: Story = {
 />`,
                         render: (
                             <ContentArticle
-                                anatPart="ContentArticle"
-                                showAnatomy
+
+                               
                                 body={BODY}
                                 isLocked
                                 offer={OFFER}
@@ -170,8 +170,8 @@ export const Skeleton: Story = {
                         code: "<ContentArticle body=\"\" isSkeleton />",
                         render: (
                             <ContentArticle
-                                anatPart="ContentArticle"
-                                showAnatomy
+
+                               
                                 body=""
                                 isSkeleton
                             />

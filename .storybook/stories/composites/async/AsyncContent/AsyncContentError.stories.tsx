@@ -77,7 +77,7 @@ export const Basic: Story = {
                         code: `<AsyncContentError
   title="Something went wrong"
 />`,
-                        render: <AsyncContentError title="Something went wrong" showAnatomy />,
+                        render: <AsyncContentError title="Something went wrong" />,
                     },
                 ]}
             />,
@@ -104,7 +104,7 @@ export const WithDescription: Story = {
                             <AsyncContentError
                                 title="Couldn't load the data"
                                 description="The server isn't responding right now. Please try again later."
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -137,7 +137,7 @@ export const WithRetry: Story = {
                                 description="Something went wrong while loading the content."
                                 onRetry={() => {}}
                                 retryLabel="Try again"
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -168,7 +168,7 @@ export const WithAction: Story = {
                                 title="Your session has expired"
                                 description="Sign in again to continue."
                                 action={<Button size="sm" variant="secondary" icon={<ArrowClockwiseIcon data-tier="fixture" />}>Reload page</Button>}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -203,7 +203,7 @@ export const CustomIcon: Story = {
                                 description="Check your connection, then try again."
                                 onRetry={() => {}}
                                 retryLabel="Try again"
-                                showAnatomy
+                               
                             />
                         ),
                     },

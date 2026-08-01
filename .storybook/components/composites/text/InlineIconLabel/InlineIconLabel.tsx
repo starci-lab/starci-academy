@@ -99,7 +99,6 @@ export interface InlineIconLabelProps {
      */
     skeletonWidth?: SkeletonWidth
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -124,7 +123,6 @@ export const InlineIconLabel = ({
     truncate = false,
     isSkeleton = false,
     skeletonWidth = "w-1/4",
-    anatPart,
     classNames,
 }: InlineIconLabelProps) => {
     const cfg = SIZE_CONFIG[size]
@@ -151,7 +149,7 @@ export const InlineIconLabel = ({
     return (
         <span
             className={cn("inline-flex items-center", cfg.gap, classNames)}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="InlineIconLabel"
             data-principles={cfg.pattern}

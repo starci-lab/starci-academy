@@ -57,9 +57,7 @@ interface SegmentBarOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, emit `data-anat-part` on this bar's own direct sub-parts (Bar · Legend · Caption) so its own `BlockAnatomy` panel can badge them. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -102,8 +100,6 @@ export const SegmentBar = ({
     caption,
     isSkeleton = false,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: SegmentBarProps) => {
     // `segments` is REQUIRED whenever `isSkeleton` is false (discriminated union above) —
     // guaranteed by the type at every real call site — the `?? []` only satisfies narrowing
@@ -165,8 +161,8 @@ export const SegmentBar = ({
             </div>
             {!hideLegend ? (
                 <Legend
-                    anatPart={showAnatomy ? "Legend" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                     isSkeleton={isSkeleton}
                     items={isSkeleton ? undefined : colored.map((segment) => ({
                         key: segment.key,
@@ -183,5 +179,5 @@ export const SegmentBar = ({
             ) : null}
         </>
     )
-    return <StackV gap={3} anatPart={anatPart} classNames={classNames} body={barContent} />
+    return <StackV gap={3} classNames={classNames} body={barContent} />
 }

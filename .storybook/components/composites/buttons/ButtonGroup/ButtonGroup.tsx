@@ -46,7 +46,6 @@ export interface ButtonGroupProps {
     /** `true` renders a skeleton mirroring the item count (pill/square per item). */
     isSkeleton?: boolean
     /** `true` → tag each rendered `Button` for a BlockAnatomy panel (the atom names itself). */
-    showAnatomy?: boolean
     /**
      * Main-axis distribution once the row is packed — same three-value vocabulary as
      * `Button`'s own `align` and `Form`'s `FormActionsAlign`. Left out means the browser
@@ -70,7 +69,6 @@ export const ButtonGroup = ({
     items,
     size = "md",
     isSkeleton = false,
-    showAnatomy = false,
     align,
     at = "sm",
     classNames,
@@ -89,7 +87,6 @@ export const ButtonGroup = ({
                 onPress: item.onPress,
                 isDisabled: item.isDisabled,
                 isPending: item.isPending,
-                showAnatomy,
             } as const
             let content: ReactNode
             if (item.label != null) {

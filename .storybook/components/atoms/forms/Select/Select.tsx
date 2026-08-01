@@ -57,11 +57,10 @@ interface TriggerSkeletonProps {
     /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
     /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
-    showAnatomy?: boolean
 }
 
-const TriggerSkeleton = ({ classNames, showAnatomy }: TriggerSkeletonProps) => (
-    <HeroSkeleton className={cn("h-9 w-full rounded-xl", classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+const TriggerSkeleton = ({ classNames }: TriggerSkeletonProps) => (
+    <HeroSkeleton className={cn("h-9 w-full rounded-xl", classNames)} />
 )
 
 /** Shared props across the members. */
@@ -79,7 +78,6 @@ interface BaseSelectProps extends FrameProps {
     /** Renders the trigger-box skeleton instead of the control. */
     isSkeleton?: boolean
     /** `true` tags `data-anat-part` for a BlockAnatomy panel to badge. */
-    showAnatomy?: boolean
     /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
@@ -98,7 +96,6 @@ const SelectSingle = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -120,8 +117,8 @@ const SelectSingle = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+
+            skeletonControl={<TriggerSkeleton classNames={classNames} />}
         >
             <HeroSelect.Root<SelectOption, "single">
                 data-tier="atom"
@@ -137,8 +134,8 @@ const SelectSingle = ({
             >
                 {/* data-anat-part uses the real HeroUI component names (`Select.Trigger`/
                     `Select.Value`), not generic slot words. */}
-                <HeroSelect.Trigger data-anat-part={showAnatomy ? "Select.Trigger" : undefined}>
-                    <HeroSelect.Value data-anat-part={showAnatomy ? "Select.Value" : undefined}>
+                <HeroSelect.Trigger>
+                    <HeroSelect.Value>
                         {() => (
                             <span className={cn("text-sm", !selected && "text-field-placeholder")}>
                                 {selected ? selected.label : placeholder}
@@ -181,7 +178,6 @@ const SelectMulti = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -208,8 +204,8 @@ const SelectMulti = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+
+            skeletonControl={<TriggerSkeleton classNames={classNames} />}
         >
             <HeroSelect.Root<SelectOption, "multiple">
                 data-tier="atom"
@@ -227,7 +223,7 @@ const SelectMulti = ({
                 {/* data-anat-part uses the real HeroUI component name (`Select.Trigger`). The
                     summary `<span>` below stays untagged — it's a plain hand-rolled text slot,
                     not a real component (SelectMulti doesn't compose `Select.Value`). */}
-                <HeroSelect.Trigger data-anat-part={showAnatomy ? "Select.Trigger" : undefined}>
+                <HeroSelect.Trigger>
                     <span className={cn("text-sm", summary == null && "text-field-placeholder")}>
                         {summary ?? placeholder}
                     </span>
@@ -267,7 +263,6 @@ const SelectCombobox = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    showAnatomy,
     classNames,
     label,
     hint,
@@ -288,8 +283,8 @@ const SelectCombobox = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
+
+            skeletonControl={<TriggerSkeleton classNames={classNames} />}
         >
             <HeroComboBox
                 data-tier="atom"
@@ -312,10 +307,10 @@ const SelectCombobox = ({
                 <HeroComboBox.InputGroup className="relative">
                     {/* data-anat-part uses the real HeroUI component names (`Input`/
                         `ComboBox.Trigger`), not generic slot words. */}
-                    <HeroInput placeholder={placeholder} className="w-full pr-9" data-anat-part={showAnatomy ? "Input" : undefined} />
+                    <HeroInput placeholder={placeholder} className="w-full pr-9" />
                     <HeroComboBox.Trigger
                         className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex size-7 items-center justify-center rounded-lg"
-                        data-anat-part={showAnatomy ? "ComboBox.Trigger" : undefined}
+
                     >
                         {/* size-4 + text-muted declared directly on the icon, matching the two
                             `Select.Indicator` instances above (SelectSingle/SelectMulti) rather

@@ -37,7 +37,6 @@ export interface PaginationBaseProps {
     /** Render the control skeleton (a row of square shimmers) instead of the pager. */
     isSkeleton?: boolean
     /** When on, emit `data-anat-part` on this control's own sub-parts (`Pagination.Previous` · `Pagination.Link` · `Pagination.Ellipsis` · `Pagination.Next`). */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -83,7 +82,6 @@ const PaginationBase = ({
     onPageChange,
     siblings = 1,
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: PaginationBaseProps) => {
     const slots = useMemo(() => buildSlots(currentPage, totalPages, siblings), [currentPage, totalPages, siblings])
@@ -103,7 +101,7 @@ const PaginationBase = ({
                     <HeroSkeleton
                         key={index}
                         className="size-9 rounded-xl"
-                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                     />
                 ))}
             </div>
@@ -116,7 +114,7 @@ const PaginationBase = ({
                 <HeroPagination.Content className="flex flex-wrap justify-center gap-1">
                     <HeroPagination.Item>
                         <HeroPagination.Previous
-                            data-anat-part={showAnatomy ? "Pagination.Previous" : undefined}
+
                             aria-label="Previous page"
                             isDisabled={currentPage <= 1}
                             onPress={onPrevious}
@@ -128,7 +126,7 @@ const PaginationBase = ({
                         slot === "ellipsis" ? (
                             <HeroPagination.Item key={`ellipsis-${index}`}>
                                 <HeroPagination.Ellipsis
-                                data-anat-part={showAnatomy ? "Pagination.Ellipsis" : undefined}
+
                             />
                             </HeroPagination.Item>
                         ) : (
@@ -137,13 +135,13 @@ const PaginationBase = ({
                                 pageNumber={slot}
                                 isActive={slot === currentPage}
                                 onPageChange={onPageChange}
-                                showAnatomy={showAnatomy}
+
                             />
                         ),
                     )}
                     <HeroPagination.Item>
                         <HeroPagination.Next
-                            data-anat-part={showAnatomy ? "Pagination.Next" : undefined}
+
                             aria-label="Trang sau"
                             isDisabled={currentPage >= totalPages}
                             onPress={onNext}
@@ -165,8 +163,7 @@ interface PaginationLinkProps {
     isActive: boolean
     /** Fired with this link's page number on press. */
     onPageChange: (pageNumber: number) => void
-    /** When on, emit `data-anat-part="Pagination.Link"` for the parent `BlockAnatomy` panel. */
-    showAnatomy?: boolean
+    /** When on, emit `` for the parent `BlockAnatomy` panel. */
 }
 
 /**
@@ -174,12 +171,12 @@ interface PaginationLinkProps {
  *
  * @param props - {@link PaginationLinkProps}
  */
-const PaginationLink = ({ pageNumber, isActive, onPageChange, showAnatomy }: PaginationLinkProps) => {
+const PaginationLink = ({ pageNumber, isActive, onPageChange }: PaginationLinkProps) => {
     const onPress = useCallback(() => onPageChange(pageNumber), [pageNumber, onPageChange])
     return (
         <HeroPagination.Item>
             <HeroPagination.Link
-                data-anat-part={showAnatomy ? "Pagination.Link" : undefined}
+
                 isActive={isActive}
                 onPress={onPress}
             >

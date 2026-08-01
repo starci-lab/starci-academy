@@ -163,7 +163,7 @@ export const Reading: Story = {
     mode="content"
     …
 />`,
-                        render: <ContentPage {...BASE} showAnatomy isRead myReaction="like" reactionCounts={[{ type: "like", count: 80 }, { type: "love", count: 32 }, { type: "haha", count: 16 }]} viewCount={2481} hintText="Highlight a passage to ask AI about that exact spot." />,
+                        render: <ContentPage {...BASE} isRead myReaction="like" reactionCounts={[{ type: "like", count: 80 }, { type: "love", count: 32 }, { type: "haha", count: 16 }]} viewCount={2481} hintText="Highlight a passage to ask AI about that exact spot." />,
                     },
                 ]}
             />
@@ -192,7 +192,7 @@ export const Locked: Story = {
     offer={offer}
     …
 />`,
-                        render: <ContentPage {...BASE} showAnatomy isLocked offer={OFFER} />,
+                        render: <ContentPage {...BASE} isLocked offer={OFFER} />,
                     },
                 ]}
             />
@@ -201,9 +201,9 @@ export const Locked: Story = {
 }
 
 /** One `@container`-wrapped render at a fixed device width — same helper shape `CourseContents` uses. */
-const containerWidth = (width: number | undefined, showAnatomy?: boolean) => (
+const containerWidth = (width: number | undefined) => (
     <div data-tier="fixture" className="@container" style={width ? { width, maxWidth: "100%" } : undefined}>
-        <ContentPage {...BASE} showAnatomy={showAnatomy} isRead myReaction="like" reactionCounts={[{ type: "like", count: 80 }, { type: "love", count: 32 }, { type: "haha", count: 16 }]} viewCount={2481} />
+        <ContentPage {...BASE} isRead myReaction="like" reactionCounts={[{ type: "like", count: 80 }, { type: "love", count: 32 }, { type: "haha", count: 16 }]} viewCount={2481} />
     </div>
 )
 
@@ -230,7 +230,7 @@ export const PracticeNudgeResponsive: Story = {
                         code: `<div className="@container" style={{ width: 375 }}>
     <ContentPage {...props} mode="content" challengeCount={3} />
 </div>`,
-                        render: containerWidth(375, true),
+                        render: containerWidth(375),
                     },
                     {
                         name: "Tablet — 768px",
@@ -267,7 +267,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "Every block that can mirror itself does, and the mode row deliberately does not — it is known before any request, so shimmering it would take away the one control that was ready. The page keeps its full height, which is what stops the footer from jumping up under a reader who has already started scrolling.",
                         code: "<ContentPage {...props} isSkeleton />",
-                        render: <ContentPage {...BASE} showAnatomy isSkeleton relatedItems={[]} comments={[]} />,
+                        render: <ContentPage {...BASE} isSkeleton relatedItems={[]} comments={[]} />,
                     },
                 ]}
             />

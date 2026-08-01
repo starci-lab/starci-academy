@@ -104,8 +104,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <FoundationResourceList
-                                anatPart="FoundationResourceList"
-                                showAnatomy
+
+                               
                                 ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading={false}
@@ -189,8 +189,8 @@ export const Loading: Story = {
 />`,
                         render: (
                             <FoundationResourceList
-                                anatPart="FoundationResourceList"
-                                showAnatomy
+
+                               
                                 ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading
@@ -231,8 +231,8 @@ export const Error: Story = {
 />`,
                         render: (
                             <FoundationResourceList
-                                anatPart="FoundationResourceList"
-                                showAnatomy
+
+                               
                                 ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading={false}

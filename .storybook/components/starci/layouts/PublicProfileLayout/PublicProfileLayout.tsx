@@ -235,9 +235,7 @@ export interface PublicProfileLayoutProps {
     /** The active tab's own panel — rendered by that tab's own route. Mandatory — RULE 12. */
     children: ReactNode
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -263,14 +261,12 @@ const PublicProfileLayout = ({
     onGoHome,
     onGoCourses,
     children,
-    showAnatomy = false,
-    anatPart,
 }: PublicProfileLayoutProps) => {
     if (isLoading) {
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <ProfileLoadingState
-                    anatPart={showAnatomy ? "ProfileLoadingState" : undefined}
+
                 />
             </div>
         )
@@ -278,12 +274,12 @@ const PublicProfileLayout = ({
 
     if (!user) {
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <ProfileNotFoundState
                     title={NOT_FOUND_TITLE}
                     description={NOT_FOUND_DESCRIPTION}
                     onGoHome={onGoHome}
-                    anatPart={showAnatomy ? "ProfileNotFoundState" : undefined}
+
                 />
             </div>
         )
@@ -292,11 +288,11 @@ const PublicProfileLayout = ({
     // Locked profile viewed by a non-owner — mirrors the real `isLocked = Boolean(user?.profileLocked) && !isSelf`.
     if (user.profileLocked && !isSelf) {
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <ProfileLockedState
                     user={user}
                     onGoCourses={onGoCourses}
-                    anatPart={showAnatomy ? "ProfileLockedState" : undefined}
+
                 />
             </div>
         )
@@ -320,7 +316,7 @@ const PublicProfileLayout = ({
                     onHire={onHire}
                     onEdit={onEditProfile}
                     onShare={onShare}
-                    anatPart={showAnatomy ? "ProfileHero" : undefined}
+
                 />
             </aside>
 
@@ -335,7 +331,7 @@ const PublicProfileLayout = ({
         <StackV
             gap={7}
             className="@app-md:flex-row @app-md:items-start"
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={asideAndPanel}
         />
     )
@@ -349,23 +345,23 @@ const PublicProfileLayout = ({
                 onTabChange={onTabChange}
                 hiddenTabs={hiddenTabs}
                 ariaLabel={PROFILE_TABS_ARIA_LABEL}
-                anatPart={showAnatomy ? "ProfileTabsBar" : undefined}
+
             />
 
             <Container
                 size="xl"
                 padding={6}
-                anatPart={showAnatomy ? "Container" : undefined}
+
                 body={profileBody}
             />
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackV
                 gap={1}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={tabsAndBody}
             />
         </div>

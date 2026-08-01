@@ -6,7 +6,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * ATOM — `Spinner`: wraps HeroUI Spinner directly, only forcing `size`/`tone` (§4).
  *
  * ⭐ LEAF atom — it composes NO atom OF OUR OWN with its own story, so it has no
- * atom-tier dep. But `data-anat-part="Spinner"` is attached to `HeroSpinner` itself —
+ * atom-tier dep. But `` is attached to `HeroSpinner` itself —
  * ONE `@heroui/react` IMPORT rendered directly, so it still enters the tree with
  * `tier: "heroui"` (no `storyId`, the library has no story of ours to jump to) —
  * §heroui, teacher's call 2026-07-27/28. The previous version dropped `annotate`
@@ -45,7 +45,7 @@ export const Default: Story = {
                         name: "size = \"md\", tone = \"accent\"",
                         why: "A single spinning ring renders at the medium diameter in the accent colour, with no visible label text on screen. The `label` prop only feeds the accessible name, so a screen reader announces it while sighted users see just the glyph.",
                         code: "<Spinner label=\"Loading\" />",
-                        render: <Spinner showAnatomy />,
+                        render: <Spinner />,
                     },
                 ]}
             />
@@ -68,25 +68,25 @@ export const Sizes: Story = {
                         name: "size = \"sm\"",
                         why: "The ring renders at its smallest diameter, the step reached for inline next to a short line of text or inside a small button. Only the diameter changes across the four size states, the ring shape and stroke stay the same.",
                         code: "<Spinner size=\"sm\" />",
-                        render: <Spinner size="sm" showAnatomy />,
+                        render: <Spinner size="sm" />,
                     },
                     {
                         name: "size = \"md\"",
                         why: "The ring steps up to the default diameter, the size used when a spinner stands on its own rather than inline with text. Nothing else about the ring changes from the sm step.",
                         code: "<Spinner size=\"md\" />",
-                        render: <Spinner size="md" showAnatomy />,
+                        render: <Spinner size="md" />,
                     },
                     {
                         name: "size = \"lg\"",
                         why: "The ring grows again for a spot that needs more visual weight, such as the centre of an otherwise empty panel. The stroke thickens along with the diameter so the ring never looks thin and stretched.",
                         code: "<Spinner size=\"lg\" />",
-                        render: <Spinner size="lg" showAnatomy />,
+                        render: <Spinner size="lg" />,
                     },
                     {
                         name: "size = \"xl\"",
                         why: "The ring reaches its largest diameter, reserved for a full-page loading moment where the spinner is the only thing on screen. It is the last step of the same four-step scale as the other three sizes.",
                         code: "<Spinner size=\"xl\" />",
-                        render: <Spinner size="xl" showAnatomy />,
+                        render: <Spinner size="xl" />,
                     },
                 ]}
             />
@@ -109,25 +109,25 @@ export const Tones: Story = {
                         name: "tone = \"accent\"",
                         why: "The ring spins in the accent colour, the default identity tone used for a generic loading moment. Every other tone below keeps the same ring shape and only swaps this colour.",
                         code: "<Spinner tone=\"accent\" />",
-                        render: <Spinner tone="accent" showAnatomy />,
+                        render: <Spinner tone="accent" />,
                     },
                     {
                         name: "tone = \"success\"",
                         why: "The ring spins in the success colour, for a moment that is confirming something already agreed to succeed rather than a neutral wait. Only the colour differs from the accent state.",
                         code: "<Spinner tone=\"success\" />",
-                        render: <Spinner tone="success" showAnatomy />,
+                        render: <Spinner tone="success" />,
                     },
                     {
                         name: "tone = \"warning\"",
                         why: "The ring spins in the warning colour, for a wait that carries some risk or cost if it fails. Only the colour differs from the accent state.",
                         code: "<Spinner tone=\"warning\" />",
-                        render: <Spinner tone="warning" showAnatomy />,
+                        render: <Spinner tone="warning" />,
                     },
                     {
                         name: "tone = \"danger\"",
                         why: "The ring spins in the danger colour, matching a destructive action that is currently in flight (such as an unenroll request). Only the colour differs from the accent state.",
                         code: "<Spinner tone=\"danger\" />",
-                        render: <Spinner tone="danger" showAnatomy />,
+                        render: <Spinner tone="danger" />,
                     },
                     {
                         name: "tone = \"current\"",
@@ -135,7 +135,7 @@ export const Tones: Story = {
                         code: "<Spinner tone=\"current\" />",
                         render: (
                             <span data-tier="fixture" className="text-foreground inline-flex">
-                                <Spinner tone="current" showAnatomy />
+                                <Spinner tone="current" />
                             </span>
                         ),
                     },

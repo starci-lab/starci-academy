@@ -13,7 +13,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * component landed from a sibling agent in this same run, but its own story
  * file had not, at the time of writing. `check-orphan-parts` treats a badge
  * with no `storyId` to point to as worse than no badge — so the component
- * renders it un-badged for now. Add `anatPart="ProfileHero"` on the
+ * renders it un-badged for now. Add `` on the
  * component AND a `storyId`-bearing entry here the moment its story lands.
  *
  * 📐 ONE LEAF (§14d.2). The block always renders the exact same
@@ -70,8 +70,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ProfileLockedState
-                                anatPart="ProfileLockedState"
-                                showAnatomy
+
+                               
                                 user={USER}
                                 onGoCourses={() => {}}
                             />

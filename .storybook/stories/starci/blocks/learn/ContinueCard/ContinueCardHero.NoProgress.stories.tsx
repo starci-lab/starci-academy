@@ -39,7 +39,6 @@ const noProgressBase = {
     meta: ["Question 2 / 8", "Middle"],
     timeLeft: "40 minutes left",
     onPress: () => {},
-    showAnatomy: true,
 }
 
 // ⭐ 2026-07-27 (deep-scan from the `CourseContents` screen): this tree USED TO describe
@@ -211,10 +210,10 @@ export const LoadError: Story = {
                         render: (
                             <div data-tier="fixture" className="w-96 p-8">
                                 <SurfaceCard
-                                    anatPart="SurfaceCard"
+
                                     body={() => (
                                         <EmptyState
-                                            anatPart="EmptyState"
+
                                             tone="danger"
                                             icon={WarningDuotone}
                                             title="Connection lost"

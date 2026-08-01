@@ -100,9 +100,7 @@ export interface DailyQuestProps {
     /** `true` → the claim mutation is in flight (the block's one `pending` state). */
     isClaiming?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Row title per task key — the block's own wording (§14d.1). */
@@ -113,12 +111,12 @@ const TASK_LABEL: Record<DailyQuestTaskKey, string> = {
 }
 
 /** One row's body: title (leading) ↔ current/target (trailing) — two peers on one line. */
-const rowBody = (task: DailyQuestTask, showAnatomy: boolean) => (
+const rowBody = (task: DailyQuestTask) => (
     <Split
         gap={3}
-        start={<Typography size="sm" text={TASK_LABEL[task.key]} showAnatomy={showAnatomy} />}
-        end={<Typography size="xs" color="muted" text={`${task.current}/${task.target}`} showAnatomy={showAnatomy} />}
-        anatPart={showAnatomy ? "Split" : undefined}
+        start={<Typography size="sm" text={TASK_LABEL[task.key]} />}
+        end={<Typography size="xs" color="muted" text={`${task.current}/${task.target}`} />}
+
     />
 )
 
@@ -135,14 +133,12 @@ const DailyQuest = ({
     onRetry,
     onClaim,
     isClaiming = false,
-    showAnatomy = false,
-    anatPart,
 }: DailyQuestProps) => {
     const items: Array<SurfaceCardCrossListItem> = (quest?.tasks ?? []).map((task) => ({
         key: task.key,
         mark: task.current >= task.target ? "check" : "pending",
-        text: rowBody(task, showAnatomy),
-        anatPart: showAnatomy ? "CrossListItem" : undefined,
+        text: rowBody(task),
+
     }))
 
     // Leaf 4a/4b/4c — the claim state, only meaningful once `quest` exists.
@@ -151,7 +147,7 @@ const DailyQuest = ({
             <Chip
                 tone="success"
                 text="Reward claimed"
-                showAnatomy={showAnatomy}
+
             />
         ) : quest.allDone ? (
             <Button
@@ -161,44 +157,42 @@ const DailyQuest = ({
                 isPending={isClaiming}
                 onPress={onClaim}
                 classNames={["w-fit"]}
-                showAnatomy={showAnatomy}
+
             />
         ) : (
             <Typography
                 size="xs"
                 color="muted"
                 text={`Complete all 3 quests to claim ${quest.reward} coins.`}
-                showAnatomy={showAnatomy}
+
             />
         )
     ) : null
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <AsyncContent
                 isLoading={quest === null && isLoading}
-                skeleton={<SurfaceCardCrossList items={[]} isSkeleton skeletonRows={3} showAnatomy={showAnatomy} />}
+                skeleton={<SurfaceCardCrossList items={[]} isSkeleton skeletonRows={3} />}
                 isEmpty={quest === null && !isLoading && !error}
                 emptyContent={{
                     title: "No quests for today yet.",
                     onRetry,
                     retryLabel: "Retry",
-                    anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-                    showAnatomy,
+
                 }}
                 error={quest === null ? error : undefined}
                 errorContent={{
                     title: "Couldn't load today's quests.",
                     onRetry,
                     retryLabel: "Retry",
-                    anatPart: showAnatomy ? "AsyncContentError" : undefined,
-                    showAnatomy,
+
                 }}
-                showAnatomy={showAnatomy}
+
             >
                 <StackV gap={4} body={
                     <>
-                        <SurfaceCardCrossList items={items} showAnatomy={showAnatomy} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} />
+                        <SurfaceCardCrossList items={items} />
                         {claimSlot}
                     </>
                 } />

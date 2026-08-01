@@ -89,9 +89,7 @@ export interface VoiceHeroProps {
     /** Wording for both leaves. */
     labels: VoiceHeroLabels
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -109,8 +107,6 @@ const VoiceHero = ({
     onToggleListen,
     answerMode,
     labels,
-    showAnatomy = false,
-    anatPart,
 }: VoiceHeroProps) => {
     // Ephemeral UI-only choice — see file header. Only reachable when BOTH leaves
     // are actually on offer, so there is nothing to reset when the caller's props change.
@@ -123,10 +119,10 @@ const VoiceHero = ({
 
     if (showTypedFallback) {
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <StackV
                     gap={4}
-                    anatPart={showAnatomy ? "StackV" : undefined}
+
                     body={
                         <>
                             <InputTextarea
@@ -135,7 +131,7 @@ const VoiceHero = ({
                                 placeholder={labels.placeholder}
                                 ariaLabel={labels.placeholder}
                                 rows={5}
-                                showAnatomy={showAnatomy}
+
                             />
                             {canToggle ? (
                                 <Typography
@@ -143,7 +139,7 @@ const VoiceHero = ({
                                     isLink
                                     text={labels.useVoice}
                                     onPress={() => setManualTyped(false)}
-                                    showAnatomy={showAnatomy}
+
                                 />
                             ) : null}
                         </>
@@ -161,11 +157,11 @@ const VoiceHero = ({
         : value || (listening ? labels.listening : labels.placeholder)
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackV
                 gap={4}
                 align="center"
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <>
                         <Button
@@ -175,7 +171,7 @@ const VoiceHero = ({
                             prefixIcon={MicrophoneIcon}
                             ariaLabel={listening ? labels.listening : labels.pushToTalk}
                             onPress={onToggleListen}
-                            showAnatomy={showAnatomy}
+
                         />
                         {/* real `src` (`VoiceHero/index.tsx:136`): `<Typography
  color="default">`
@@ -186,7 +182,7 @@ const VoiceHero = ({
                             color={transcriptIsProvisional ? "muted" : "default"}
                             isItalic={transcriptIsProvisional}
                             text={transcriptText}
-                            showAnatomy={showAnatomy}
+
                         />
                         {canToggle ? (
                             <Typography
@@ -194,7 +190,7 @@ const VoiceHero = ({
                                 isLink
                                 text={labels.typeInstead}
                                 onPress={() => setManualTyped(true)}
-                                showAnatomy={showAnatomy}
+
                             />
                         ) : null}
                     </>

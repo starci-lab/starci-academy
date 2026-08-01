@@ -57,9 +57,7 @@ export interface ConsultantDirectoryCompanySearchProps {
     /** Fired with the picked company's id; the screen owns the route push. */
     onSelectCompany: (companyId: string) => void
     /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -74,8 +72,6 @@ const ConsultantDirectoryCompanySearch = ({
     suggestions,
     isLoadingSuggestions = false,
     onSelectCompany,
-    showAnatomy = false,
-    anatPart,
 }: ConsultantDirectoryCompanySearchProps) => {
     const items: Array<SearchAutocompleteItem> = suggestions.map((company) => ({
         id: company.id,
@@ -83,8 +79,8 @@ const ConsultantDirectoryCompanySearch = ({
     }))
 
     return (
-        <div data-anat-part={anatPart}>
-            <div data-anat-part={showAnatomy ? "SearchAutocomplete" : undefined}>
+        <div>
+            <div>
                 <SearchAutocomplete
                     items={items}
                     inputValue={query}
@@ -96,7 +92,7 @@ const ConsultantDirectoryCompanySearch = ({
                     // type a role/skill and get nothing back.
                     placeholder="Search for a hiring company by name…"
                     emptyLabel="No companies found"
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
         </div>

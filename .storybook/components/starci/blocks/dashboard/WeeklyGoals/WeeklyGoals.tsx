@@ -128,9 +128,7 @@ export interface WeeklyGoalsProps {
     /** `true` → every atom this block owns switches to its own shimmer (data already loaded). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Phosphor icon per metric key — a pure display constant, decoupled from any editor's own map. */
@@ -148,18 +146,17 @@ const goalCellContent = (
     item: WeeklyGoalItem,
     defaultTargets: Record<WeeklyGoalKey, number>,
     isSkeleton: boolean,
-    showAnatomy: boolean,
 ) => {
     const Icon = KPI_ICON[item.key]
     const effectiveTarget = item.target ?? defaultTargets[item.key]
 
     const iconLabel = (
-        <StackH gap={2} anatPart={showAnatomy ? "StackH" : undefined} body={(
+        <StackH gap={2} body={(
             <>
                 {isSkeleton ? (
                     <HeroSkeleton
                         className="size-5 shrink-0 rounded-full"
-                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                     />
                 ) : (
                     <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
@@ -168,14 +165,14 @@ const goalCellContent = (
                     size="sm"
                     isSkeleton={isSkeleton}
                     text={item.label}
-                    showAnatomy={showAnatomy}
+
                 />
             </>
         )} />
     )
 
     const labelRow = (
-        <StackH gap={3} justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={(
+        <StackH gap={3} justify="between" body={(
             <>
                 {iconLabel}
                 <Typography
@@ -184,26 +181,26 @@ const goalCellContent = (
                     tabularNums
                     isSkeleton={isSkeleton}
                     text={isSkeleton ? undefined : `${item.current}/${effectiveTarget}`}
-                    showAnatomy={showAnatomy}
+
                 />
             </>
         )} />
     )
 
     return (
-        <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={(
+        <StackV gap={3} body={(
             <>
                 {labelRow}
                 {isSkeleton ? (
                     <HeroSkeleton
                         className="h-1 w-full rounded-full"
-                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                     />
                 ) : (
                     <ProgressMeter
                         value={item.current}
                         max={effectiveTarget > 0 ? effectiveTarget : 1}
-                        anatPart={showAnatomy ? "ProgressMeter" : undefined}
+
                     />
                 )}
                 {!isSkeleton && item.coinReward != null ? (
@@ -211,7 +208,7 @@ const goalCellContent = (
                         size="xs"
                         color={item.canClaim ? "accent" : "muted"}
                         text={`+${item.coinReward} coins when met`}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : null}
             </>
@@ -237,29 +234,28 @@ interface ContentProps {
     resetInLabel?: string
     defaultTargets: Record<WeeklyGoalKey, number>
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
-const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton, showAnatomy }: ContentProps) => {
+const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton }: ContentProps) => {
     const summary = isSkeleton
         ? undefined
         : `${composite.percent}% complete (${composite.completed}/${composite.total} goals)${resetInLabel != null ? ` · ${resetInLabel}` : ""}`
     const gridItems: Array<StatGridCardItem> = items.map((item) => ({
         key: item.key,
-        content: goalCellContent(item, defaultTargets, isSkeleton, showAnatomy),
+        content: goalCellContent(item, defaultTargets, isSkeleton),
     }))
     return (
-        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={(
+        <StackV gap={4} body={(
             <>
                 <Typography
                     size="sm"
                     weight="medium"
                     isSkeleton={isSkeleton}
                     text={summary}
-                    showAnatomy={showAnatomy}
+
                 />
-                <div data-anat-part={showAnatomy ? "StatGridCard" : undefined}>
-                    <StatGridCard items={gridItems} showAnatomy={showAnatomy} />
+                <div>
+                    <StatGridCard items={gridItems} />
                 </div>
             </>
         )} />
@@ -279,13 +275,11 @@ const WeeklyGoals = ({
     data,
     defaultTargets,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: WeeklyGoalsProps) => (
     <SurfaceCard
         label="Weekly Goals"
-        anatPart={anatPart}
-        showAnatomy={showAnatomy}
+
+
         body={() => (
             <AsyncContent
                 isLoading={isLoading}
@@ -295,7 +289,7 @@ const WeeklyGoals = ({
                         composite={{ percent: 0, completed: 0, total: 6 }}
                         defaultTargets={defaultTargets}
                         isSkeleton
-                        showAnatomy={showAnatomy}
+
                     />
                 )}
                 error={error}
@@ -305,7 +299,7 @@ const WeeklyGoals = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-                showAnatomy={showAnatomy}
+
             >
                 {data ? (
                     <Content
@@ -314,7 +308,7 @@ const WeeklyGoals = ({
                         resetInLabel={data.resetInLabel}
                         defaultTargets={defaultTargets}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : null}
             </AsyncContent>

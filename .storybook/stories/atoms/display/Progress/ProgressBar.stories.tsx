@@ -53,7 +53,7 @@ export const Value: Story = {
                         code: "<ProgressBar value={62} max={100} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar value={62} ariaLabel="Course progress" showAnatomy />
+                                <ProgressBar value={62} ariaLabel="Course progress" />
                             </div>
                         ),
                     },
@@ -79,7 +79,7 @@ export const Indeterminate: Story = {
                         code: "<ProgressBar isIndeterminate />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar isIndeterminate ariaLabel="Processing" showAnatomy />
+                                <ProgressBar isIndeterminate ariaLabel="Processing" />
                             </div>
                         ),
                     },
@@ -105,7 +105,7 @@ export const Loading: Story = {
                         code: "<ProgressBar isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar isSkeleton showAnatomy />
+                                <ProgressBar isSkeleton />
                             </div>
                         ),
                     },
@@ -132,7 +132,7 @@ export const Colors: Story = {
                         code: "<ProgressBar color=\"accent\" value={55} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar color="accent" value={55} ariaLabel="Course progress" showAnatomy />
+                                <ProgressBar color="accent" value={55} ariaLabel="Course progress" />
                             </div>
                         ),
                     },
@@ -142,7 +142,7 @@ export const Colors: Story = {
                         code: "<ProgressBar color=\"success\" value={100} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar color="success" value={100} ariaLabel="Upload complete" showAnatomy />
+                                <ProgressBar color="success" value={100} ariaLabel="Upload complete" />
                             </div>
                         ),
                     },
@@ -152,7 +152,7 @@ export const Colors: Story = {
                         code: "<ProgressBar color=\"warning\" value={40} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar color="warning" value={40} ariaLabel="Sync needs attention" showAnatomy />
+                                <ProgressBar color="warning" value={40} ariaLabel="Sync needs attention" />
                             </div>
                         ),
                     },
@@ -162,7 +162,7 @@ export const Colors: Story = {
                         code: "<ProgressBar color=\"danger\" value={20} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar color="danger" value={20} ariaLabel="Deploy failed" showAnatomy />
+                                <ProgressBar color="danger" value={20} ariaLabel="Deploy failed" />
                             </div>
                         ),
                     },
@@ -172,7 +172,7 @@ export const Colors: Story = {
                         code: "<ProgressBar color=\"default\" value={65} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar color="default" value={65} ariaLabel="Idle queue" showAnatomy />
+                                <ProgressBar color="default" value={65} ariaLabel="Idle queue" />
                             </div>
                         ),
                     },
@@ -199,7 +199,7 @@ export const Sizes: Story = {
                         code: "<ProgressBar size=\"sm\" value={62} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar size="sm" value={62} ariaLabel="Compact row" showAnatomy />
+                                <ProgressBar size="sm" value={62} ariaLabel="Compact row" />
                             </div>
                         ),
                     },
@@ -209,7 +209,7 @@ export const Sizes: Story = {
                         code: "<ProgressBar size=\"md\" value={62} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar size="md" value={62} ariaLabel="Default row" showAnatomy />
+                                <ProgressBar size="md" value={62} ariaLabel="Default row" />
                             </div>
                         ),
                     },
@@ -219,7 +219,7 @@ export const Sizes: Story = {
                         code: "<ProgressBar size=\"lg\" value={62} />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ProgressBar size="lg" value={62} ariaLabel="Prominent row" showAnatomy />
+                                <ProgressBar size="lg" value={62} ariaLabel="Prominent row" />
                             </div>
                         ),
                     },

@@ -238,9 +238,7 @@ export interface NavbarProps {
     /** Extra class on the root `<nav>` (placement only). */
     className?: string
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /** Props for the internal {@link NavbarLanguageMenu} control (desktop icon + mobile drawer row share it). */
@@ -248,7 +246,6 @@ interface NavbarLanguageMenuProps {
     languages: Array<NavbarLanguageOption>
     activeLocale: string
     onLocaleChange: (code: string) => void
-    showAnatomy?: boolean
 }
 
 /**
@@ -256,16 +253,16 @@ interface NavbarLanguageMenuProps {
  * single-select CHECK indicator). Shared verbatim by the desktop icon row and the
  * mobile drawer row so the two never drift.
  */
-const NavbarLanguageMenu = ({ languages, activeLocale, onLocaleChange, showAnatomy }: NavbarLanguageMenuProps) => (
+const NavbarLanguageMenu = ({ languages, activeLocale, onLocaleChange }: NavbarLanguageMenuProps) => (
     <Dropdown>
         <Button
             isIconOnly
             variant="ghost"
             prefixIcon={TranslateIcon}
             ariaLabel="Language"
-            showAnatomy={showAnatomy}
+
         />
-        <Dropdown.Popover data-anat-part={showAnatomy ? "Dropdown.Popover" : undefined}>
+        <Dropdown.Popover>
             <Dropdown.Menu
                 aria-label="Language"
                 selectionMode="single"
@@ -275,15 +272,15 @@ const NavbarLanguageMenu = ({ languages, activeLocale, onLocaleChange, showAnato
                     const next = [...keys][0]
                     if (next != null) onLocaleChange(String(next))
                 }}
-                data-anat-part={showAnatomy ? "Dropdown.Menu" : undefined}
+
             >
-                <Dropdown.Section data-anat-part={showAnatomy ? "Dropdown.Section" : undefined}>
+                <Dropdown.Section>
                     {languages.map((language) => (
                         <Dropdown.Item
                             key={language.code}
                             id={language.code}
                             textValue={language.label}
-                            data-anat-part={showAnatomy ? "Dropdown.Item" : undefined}
+
                         >
                             <Dropdown.ItemIndicator />
                             <Label>{language.label}</Label>
@@ -299,19 +296,18 @@ const NavbarLanguageMenu = ({ languages, activeLocale, onLocaleChange, showAnato
 interface NavbarThemeSwitchProps {
     isDarkMode: boolean
     onThemeToggle: (isDark: boolean) => void
-    showAnatomy?: boolean
 }
 
 /**
  * Dark/light toggle — raw HeroUI `Switch` (see file header: `Choice.Switch` has no
  * icon-in-thumb slot). Shared verbatim by the desktop row and the mobile drawer row.
  */
-const NavbarThemeSwitch = ({ isDarkMode, onThemeToggle, showAnatomy }: NavbarThemeSwitchProps) => (
+const NavbarThemeSwitch = ({ isDarkMode, onThemeToggle }: NavbarThemeSwitchProps) => (
     <HeroSwitch
         isSelected={isDarkMode}
         onChange={onThemeToggle}
         aria-label="Toggle dark mode"
-        data-anat-part={showAnatomy ? "Switch" : undefined}
+
     >
         {({ isSelected }) => (
             <HeroSwitch.Content>
@@ -351,8 +347,6 @@ const Navbar = ({
     isMobileDrawerOpen,
     onMobileDrawerOpenChange,
     className,
-    anatPart,
-    showAnatomy = false,
 }: NavbarProps) => {
     const [isNotificationsOpen, setNotificationsOpen] = useState(false)
     const [isAccountOpen, setAccountOpen] = useState(false)
@@ -394,7 +388,7 @@ const Navbar = ({
                 <ButtonRadioGroup
                     items={navItems.map((item) => ({
                         value: item.id,
-                        content: <Typography size="sm" text={item.label} showAnatomy={showAnatomy} />,
+                        content: <Typography size="sm" text={item.label} />,
                     }))}
                     value={activeNavId}
                     onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
@@ -411,14 +405,14 @@ const Navbar = ({
                 languages={languages}
                 activeLocale={activeLocale}
                 onLocaleChange={onLocaleChange}
-                showAnatomy={showAnatomy}
+
             />
-            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} showAnatomy={showAnatomy} />
+            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} />
         </>
     )
 
     const notificationSkeletonRows = [0, 1, 2].map((row) => (
-        <ListRow key={row} title="" isSkeleton showAnatomy={showAnatomy} />
+        <ListRow key={row} title="" isSkeleton />
     ))
 
     const notificationRows = notifications.items.map((item, index) => (
@@ -430,16 +424,16 @@ const Navbar = ({
             ) : undefined}
             title={item.title}
             subtitle={item.subtitle}
-            meta={() => <Typography size="xs" color="muted" text={item.timeLabel} showAnatomy={showAnatomy} />}
+            meta={() => <Typography size="xs" color="muted" text={item.timeLabel} />}
             onPress={() => notifications.onItemPress(item)}
             divider={index < notifications.items.length - 1}
-            showAnatomy={showAnatomy}
+
         />
     ))
 
     const notificationHeader = (
         <>
-            <Typography size="sm" weight="bold" text="Notifications" showAnatomy={showAnatomy} />
+            <Typography size="sm" weight="bold" text="Notifications" />
             {notifications.unreadCount > 0 ? (
                 <Button
                     isIconOnly
@@ -448,7 +442,7 @@ const Navbar = ({
                     prefixIcon={ChecksIcon}
                     ariaLabel="Mark all as read"
                     onPress={notifications.onMarkAllRead}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -457,10 +451,10 @@ const Navbar = ({
     // notification popover body: header row → async list → footer link
     const notificationPanel = (
         <>
-            <StackH gap={3} justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={notificationHeader} />
+            <StackH gap={3} justify="between" body={notificationHeader} />
             <AsyncContent
                 isLoading={notifications.isLoading && notifications.items.length === 0}
-                skeleton={<StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={notificationSkeletonRows} />}
+                skeleton={<StackV gap={1} body={notificationSkeletonRows} />}
                 isEmpty={notifications.items.length === 0}
                 emptyContent={{ title: "No notifications yet" }}
                 error={notifications.error}
@@ -470,7 +464,7 @@ const Navbar = ({
                     retryLabel: "Try again",
                 }}
             >
-                <StackV gap={1} className="max-h-[420px] overflow-y-auto" anatPart={showAnatomy ? "StackV" : undefined} body={notificationRows} />
+                <StackV gap={1} className="max-h-[420px] overflow-y-auto" body={notificationRows} />
             </AsyncContent>
             <Button
                 variant="ghost"
@@ -478,7 +472,7 @@ const Navbar = ({
                 classNames={["w-full"]}
                 label="See all"
                 onPress={notifications.onSeeAll}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -486,7 +480,7 @@ const Navbar = ({
     const guestAccountRow = (
         <>
             <Avatar icon={UserIcon} fallback="icon" />
-            <Typography size="sm" color="muted" text="Sign in to save your learning progress" showAnatomy={showAnatomy} />
+            <Typography size="sm" color="muted" text="Sign in to save your learning progress" />
         </>
     )
 
@@ -502,7 +496,7 @@ const Navbar = ({
                     handle={account.user.email}
                 />
             ) : (
-                <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={guestAccountRow} />
+                <StackH gap={3} body={guestAccountRow} />
             )}
         </AsyncContent>
     )
@@ -535,11 +529,11 @@ const Navbar = ({
                     prefixIcon={MagnifyingGlassIcon}
                     ariaLabel={searchPlaceholder}
                     onPress={onSearchPress}
-                    showAnatomy={showAnatomy}
+
                 />
             </span>
 
-            <StackH gap={3} className="hidden @app-md:flex" anatPart={showAnatomy ? "StackH" : undefined} body={quickControls} />
+            <StackH gap={3} className="hidden @app-md:flex" body={quickControls} />
 
             {/* cart — always shown (guests included), count badge only when non-empty.
                 Raw HeroUI `Button` (not our atom, see file header): the atom's
@@ -551,7 +545,7 @@ const Navbar = ({
                 className="rounded-full"
                 aria-label="Cart"
                 onPress={onCartPress}
-                data-anat-part={showAnatomy ? "Button" : undefined}
+
             >
                 <Badge color="accent" count={cartCount}>
                     <ShoppingCartIcon className="size-5" />
@@ -569,15 +563,15 @@ const Navbar = ({
                         variant="tertiary"
                         className="rounded-full"
                         aria-label="Notifications"
-                        data-anat-part={showAnatomy ? "Button" : undefined}
+
                     >
                         <Badge color="danger" count={notifications.unreadCount}>
                             <BellIcon className="size-5" />
                         </Badge>
                     </HeroButton>
-                    <PopoverContent placement="bottom right" className="w-[360px]" data-anat-part={showAnatomy ? "PopoverContent" : undefined}>
+                    <PopoverContent placement="bottom right" className="w-[360px]">
                         {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
-                        <StackV gap={2} className="px-2 py-1" anatPart={showAnatomy ? "StackV" : undefined} body={notificationPanel} />
+                        <StackV gap={2} className="px-2 py-1" body={notificationPanel} />
                     </PopoverContent>
                 </Popover>
             ) : null}
@@ -591,7 +585,7 @@ const Navbar = ({
                     variant="tertiary"
                     className="rounded-full"
                     aria-label="Account"
-                    data-anat-part={showAnatomy ? "Button" : undefined}
+
                 >
                     {account.isAuthed ? (
                         <Avatar
@@ -604,13 +598,13 @@ const Navbar = ({
                         <UserIcon className="size-5" />
                     )}
                 </HeroButton>
-                <Dropdown.Popover placement="bottom right" className="w-[300px]" data-anat-part={showAnatomy ? "Dropdown.Popover" : undefined}>
+                <Dropdown.Popover placement="bottom right" className="w-[300px]">
                     <div className="p-3">
                         {accountMenuHeader}
                     </div>
-                    <Divider showAnatomy={showAnatomy} />
-                    <Dropdown.Menu aria-label="Account" data-anat-part={showAnatomy ? "Dropdown.Menu" : undefined}>
-                        <Dropdown.Section data-anat-part={showAnatomy ? "Dropdown.Section" : undefined}>
+                    <Divider />
+                    <Dropdown.Menu aria-label="Account">
+                        <Dropdown.Section>
                             {account.menuItems.map((item) => {
                                 const Icon = item.icon
                                 return (
@@ -620,7 +614,7 @@ const Navbar = ({
                                         textValue={item.label}
                                         className={item.isDanger ? "text-danger-soft-foreground" : undefined}
                                         onPress={item.onPress}
-                                        data-anat-part={showAnatomy ? "Dropdown.Item" : undefined}
+
                                     >
                                         {Icon ? <Icon className="size-5" /> : null}
                                         <Label className={item.isDanger ? "text-danger-soft-foreground" : undefined}>{item.label}</Label>
@@ -641,7 +635,7 @@ const Navbar = ({
                     prefixIcon={SidebarSimpleIcon}
                     ariaLabel="Open mobile menu"
                     onPress={() => onMobileDrawerOpenChange(true)}
-                    showAnatomy={showAnatomy}
+
                 />
             </span>
         </>
@@ -650,8 +644,8 @@ const Navbar = ({
     // primary row — fixed 4rem tall, matching the real bar's height contract
     const primaryRow = (
         <>
-            <StackH gap={6} anatPart={showAnatomy ? "StackH" : undefined} body={logoAndNavPills} />
-            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={barActions} />
+            <StackH gap={6} body={logoAndNavPills} />
+            <StackH gap={3} body={barActions} />
         </>
     )
 
@@ -666,48 +660,48 @@ const Navbar = ({
                 item.onPress()
                 onMobileDrawerOpenChange(false)
             }}
-            showAnatomy={showAnatomy}
+
         />
     ))
 
     const languageRow = (
         <>
-            <Typography size="sm" text="Language" showAnatomy={showAnatomy} />
+            <Typography size="sm" text="Language" />
             <NavbarLanguageMenu
                 languages={languages}
                 activeLocale={activeLocale}
                 onLocaleChange={onLocaleChange}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
 
     const themeRow = (
         <>
-            <Typography size="sm" text="Theme" showAnatomy={showAnatomy} />
-            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} showAnatomy={showAnatomy} />
+            <Typography size="sm" text="Theme" />
+            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} />
         </>
     )
 
     // controls hidden from the mobile bar live here: language + theme
     const drawerControls = (
         <>
-            <StackH gap={3} justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={languageRow} />
-            <StackH gap={3} justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={themeRow} />
+            <StackH gap={3} justify="between" body={languageRow} />
+            <StackH gap={3} justify="between" body={themeRow} />
         </>
     )
 
     const drawerNav = (
         <>
-            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={mobileNavRows} />
-            <Divider showAnatomy={showAnatomy} />
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={drawerControls} />
+            <StackV gap={2} body={mobileNavRows} />
+            <Divider />
+            <StackV gap={4} body={drawerControls} />
         </>
     )
 
     return (
         <nav
-            data-anat-part={anatPart}
+
             className={cn("sticky top-0 z-50 border-b border-default bg-surface", className)}
         >
             {/* primary row — fixed 4rem tall, matching the real bar's height contract */}
@@ -715,7 +709,7 @@ const Navbar = ({
                 gap={6}
                 justify="between"
                 className="h-16 min-h-16 px-3"
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={primaryRow}
             />
 
@@ -727,9 +721,9 @@ const Navbar = ({
                 onOpenChange={onMobileDrawerOpenChange}
                 placement="right"
                 title="Mobile menu"
-                showAnatomy={showAnatomy}
+
             >
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={drawerNav} />
+                <StackV gap={6} body={drawerNav} />
             </DrawerShell>
         </nav>
     )

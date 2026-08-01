@@ -98,9 +98,7 @@ export interface SubmissionAttemptsDrawerProps {
     /** Which edge the panel slides in from. Real `src` picks bottom-on-mobile itself; this port leaves that call to the caller. @default "right" */
     placement?: "top" | "bottom" | "left" | "right"
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Fixed, block-owned title (§14d.1) — real `src` appends the live count, so this does too. */
@@ -128,7 +126,7 @@ const scoreChipFor = (attempt: SubmissionAttemptRecord): { tone: "success" | "da
 }
 
 /** Turns one attempt into a {@link SurfaceCardListItem}'s free-form `content` — mirrors real `src`'s row exactly: attempt line + verdict chip + time-ago on line 1, model byline on line 2. */
-const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolean) => {
+const attemptRowContent = (attempt: SubmissionAttemptRecord) => {
     const chip = scoreChipFor(attempt)
 
     const attemptLabelAndChip = (
@@ -137,9 +135,9 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
                 text={`Attempt ${attempt.attemptNumber}`}
                 size="sm"
                 weight="medium"
-                showAnatomy={showAnatomy}
+
             />
-            <Chip tone={chip.tone} icon={chip.icon} text={chip.text} showAnatomy={showAnatomy} />
+            <Chip tone={chip.tone} icon={chip.icon} text={chip.text} />
         </>
     )
 
@@ -154,7 +152,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
                     text={attempt.processedTimeAgo}
                     size="xs"
                     color="muted"
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -166,7 +164,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
                 icon={SparkleIcon}
                 tone="default"
                 size="xs"
-                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
             >
                 {`Graded by ${attempt.gradedByModel}`}
             </InlineIconLabel>
@@ -174,7 +172,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
                 <EnumChip
                     value={attempt.modelCategory}
                     map={MODEL_CATEGORY_MAP}
-                    anatPart={showAnatomy ? "EnumChip" : undefined}
+
                 />
             ) : null}
         </>
@@ -186,17 +184,17 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
                 gap={3}
                 align="center"
                 justify="between"
-                anatPart={showAnatomy ? "StackH (attempt line)" : undefined}
+
                 body={attemptLineContent}
             />
             {attempt.gradedByModel != null ? (
-                <StackH gap={3} align="center" wrap anatPart={showAnatomy ? "StackH (byline)" : undefined} body={bylineContent} />
+                <StackH gap={3} align="center" wrap body={bylineContent} />
             ) : null}
         </>
     )
 
     return (
-        <StackV gap={2} anatPart={showAnatomy ? "StackV (row)" : undefined} body={rowContent} />
+        <StackV gap={2} body={rowContent} />
     )
 }
 
@@ -218,8 +216,6 @@ const SubmissionAttemptsDrawer = ({
     onRetry,
     retryLabel,
     placement = "right",
-    showAnatomy = false,
-    anatPart,
 }: SubmissionAttemptsDrawerProps) => {
     const [page, setPage] = useState(1)
 
@@ -238,16 +234,14 @@ const SubmissionAttemptsDrawer = ({
 
     const emptyContent: AsyncContentEmptyProps = {
         title: EMPTY_TITLE,
-        anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-        showAnatomy,
+
     }
 
     const errorContent: AsyncContentErrorProps = {
         title: ERROR_TITLE,
         onRetry,
         retryLabel,
-        anatPart: showAnatomy ? "AsyncContentError" : undefined,
-        showAnatomy,
+
     }
 
     const skeletonRows = Array.from({ length: SKELETON_ATTEMPT_COUNT }, (_, index) => (
@@ -260,7 +254,7 @@ const SubmissionAttemptsDrawer = ({
     // same mechanism (and same class) real `src`'s `SurfaceListCardItem` uses.
     const items: Array<SurfaceCardListItem> = pagedAttempts.map((attempt) => ({
         key: attempt.id,
-        content: attemptRowContent(attempt, showAnatomy),
+        content: attemptRowContent(attempt),
         className: attempt.id === selectedAttemptId ? "bg-accent-soft hover:bg-accent-soft" : undefined,
         onPress: () => {
             onSelect(attempt.id)
@@ -272,19 +266,19 @@ const SubmissionAttemptsDrawer = ({
         <>
             <SurfaceCardList
                 items={items}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "SurfaceCardList" : undefined}
+
+
             />
             {totalPages > 1 ? (
                 // `Pagination` hard-codes its own internal `aria-label` (§4) — the
                 // wrapping `<nav>` is how this block's own accessible name still
                 // gets attached, same convention `CourseQaQuestionList` uses.
-                <nav aria-label={PAGER_ARIA_LABEL} data-anat-part={showAnatomy ? "Pagination" : undefined}>
+                <nav aria-label={PAGER_ARIA_LABEL}>
                     <Pagination
                         currentPage={page}
                         totalPages={totalPages}
                         onPageChange={setPage}
-                        showAnatomy={showAnatomy}
+
                     />
                 </nav>
             ) : null}
@@ -292,20 +286,20 @@ const SubmissionAttemptsDrawer = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={`${DRAWER_TITLE} · ${attempts.length}`}
-                showAnatomy={showAnatomy}
+
             >
                 <AsyncContent
                     isLoading={isLoading}
                     skeleton={
                         <StackV
                             gap={3}
-                            anatPart={showAnatomy ? "StackV (skeleton list)" : undefined}
+
                             body={skeletonRows}
                         />
                     }
@@ -313,12 +307,12 @@ const SubmissionAttemptsDrawer = ({
                     emptyContent={emptyContent}
                     error={error}
                     errorContent={errorContent}
-                    showAnatomy={showAnatomy}
+
                     content={
                         <StackV
                             gap={4}
-                            showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "StackV (list + pager)" : undefined}
+
+
                             body={listAndPager}
                         />
                     }

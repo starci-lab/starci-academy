@@ -147,9 +147,7 @@ export interface LeaderboardBoardProps {
     /** `true` → every atom this block owns switches to its own shimmer (data already loaded). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -168,11 +166,10 @@ interface PodiumProps {
     /** Accessible tag for "this is you", forwarded from the block. */
     meLabel: string
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
 /** One podium dais entry: avatar, username, score line, ranked riser. */
-const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkeleton: boolean, showAnatomy: boolean) => {
+const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkeleton: boolean) => {
     const riser = (
         <div className={`flex w-full items-center justify-center rounded-t-xl bg-accent-soft ${PODIUM_RISER_HEIGHT[entry.rank]}`}>
             {/* real `src` (`Podium/index.tsx:103-112`): the rank number is a BARE div,
@@ -184,7 +181,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : String(entry.rank)}
                 color="accent-soft"
-                showAnatomy={showAnatomy}
+
             />
         </div>
     )
@@ -194,17 +191,17 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
             gap={2}
             align="center"
             className="w-24"
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                    <div>
                         <Avatar
                             name={entry.username}
                             src={entry.avatar ?? undefined}
                             seed={entry.username}
                             size={entry.rank === 1 ? "lg" : "md"}
                             isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
+
                         />
                     </div>
                     <Typography
@@ -216,14 +213,14 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : entry.username}
                         classNames={["w-full"]}
-                        showAnatomy={showAnatomy}
+
                     />
                     <Typography
                         size="xs"
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : entry.pointsLabel}
-                        showAnatomy={showAnatomy}
+
                     />
                     {riser}
                     {entry.isMe ? <span className="sr-only">{meLabel}</span> : null}
@@ -233,15 +230,15 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
     )
 }
 
-const Podium = ({ entries, meLabel, isSkeleton, showAnatomy }: PodiumProps) => (
+const Podium = ({ entries, meLabel, isSkeleton }: PodiumProps) => (
     <StackH
         gap={3}
         justify="center"
         align="end"
-        anatPart={showAnatomy ? "StackH" : undefined}
+
         body={[...entries]
             .sort((a, b) => PODIUM_VISUAL_ORDER[a.rank] - PODIUM_VISUAL_ORDER[b.rank])
-            .map((entry) => podiumEntryCard(entry, meLabel, isSkeleton, showAnatomy))}
+            .map((entry) => podiumEntryCard(entry, meLabel, isSkeleton))}
     />
 )
 
@@ -323,14 +320,14 @@ const Confetti = ({ celebrateKey }: ConfettiProps) => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Builds one row's free-form `SurfaceCard.List` content: rank number + the unchanged `UserCell`. */
-const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean, showAnatomy: boolean): SurfaceCardListItem => ({
+const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): SurfaceCardListItem => ({
     key: row.key,
     href: row.profileHref,
     content: (
         <StackH
             gap={3}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <Typography
@@ -341,9 +338,9 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean, show
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : `#${row.rank}`}
                         classNames={["w-1/4", "shrink-0"]}
-                        showAnatomy={showAnatomy}
+
                     />
-                    <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "UserCell" : undefined}>
+                    <div className="min-w-0 flex-1">
                         <UserCell
                             username={row.username}
                             avatar={row.avatar}
@@ -355,11 +352,11 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean, show
                                     tabularNums
                                     isSkeleton={slotSkeleton}
                                     text={slotSkeleton ? undefined : row.valueLabel}
-                                    showAnatomy={showAnatomy}
+
                                 />
                             )}
                             isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
+
                         />
                     </div>
                     {row.isMe ? <span className="sr-only">{meLabel}</span> : null}
@@ -380,9 +377,8 @@ const buildListItems = (
     hiddenBetweenCount: number | undefined,
     meLabel: string,
     isSkeleton: boolean,
-    showAnatomy: boolean,
 ): Array<SurfaceCardListItem> => {
-    const rowItems = rows.map((row) => rowItem(row, meLabel, isSkeleton, showAnatomy))
+    const rowItems = rows.map((row) => rowItem(row, meLabel, isSkeleton))
     if (!selfRow) {
         return rowItems
     }
@@ -397,12 +393,12 @@ const buildListItems = (
                         align="center"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : `⋯ ${hiddenBetweenCount} more in between`}
-                        showAnatomy={showAnatomy}
+
                     />
                 ),
             }
             : null
-    return [...rowItems, ...(ellipsisItem ? [ellipsisItem] : []), rowItem(selfRow, meLabel, isSkeleton, showAnatomy)]
+    return [...rowItems, ...(ellipsisItem ? [ellipsisItem] : []), rowItem(selfRow, meLabel, isSkeleton)]
 }
 
 /** Props for the internal {@link Board} content tree — reused for both the real render and the loading skeleton. */
@@ -414,14 +410,13 @@ interface BoardProps {
     hiddenBetweenCount?: number
     meLabel: string
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
-const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton, showAnatomy }: BoardProps) => {
+const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton }: BoardProps) => {
     const standingLabels = standing ? (
         <StackV
             gap={1}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {/* The rank NUMBER is typed data; "Rank #N" is the block's own wording (§14d.1). */}
@@ -431,13 +426,13 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
                         tabularNums
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : `Rank #${standing.rank}`}
-                        showAnatomy={showAnatomy}
+
                     />
                     <Typography
                         size="sm"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : standing.primaryLabel}
-                        showAnatomy={showAnatomy}
+
                     />
                     {standing.secondaryLabel ? (
                         <Typography
@@ -445,7 +440,7 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={isSkeleton ? undefined : standing.secondaryLabel}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -455,15 +450,15 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
 
     const standingCard = standing ? (
         <SurfaceCard
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
             body={() => (
                 <StackH
                     gap={3}
                     align="center"
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <>
-                            <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                            <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} />
                             {standingLabels}
                         </>
                     }
@@ -475,17 +470,17 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
     return (
         <StackV
             gap={6}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {standingCard}
                     {podiumEntries.length > 0 ? (
-                        <Podium entries={podiumEntries} meLabel={meLabel} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                        <Podium entries={podiumEntries} meLabel={meLabel} isSkeleton={isSkeleton} />
                     ) : null}
                     <SurfaceCardList
-                        items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton, showAnatomy)}
-                        anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                        showAnatomy={showAnatomy}
+                        items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton)}
+
+
                     />
                 </>
             }
@@ -530,10 +525,8 @@ const LeaderboardBoard = ({
     celebrateKey,
     meLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: LeaderboardBoardProps) => (
-    <div data-anat-part={anatPart}>
+    <div>
         <AsyncContent
             isLoading={isLoading}
             skeleton={
@@ -543,7 +536,7 @@ const LeaderboardBoard = ({
                     rows={LOADING_ROWS}
                     meLabel=""
                     isSkeleton
-                    showAnatomy={showAnatomy}
+
                 />
             }
             isEmpty={isEmpty}
@@ -558,7 +551,7 @@ const LeaderboardBoard = ({
                 onRetry,
                 retryLabel: "Try again",
             }}
-            showAnatomy={showAnatomy}
+
         >
             {/* Only the CONTENT branch celebrates — there is nothing worth confetting
                 over loading chrome, an empty board, or an error message. */}
@@ -571,7 +564,7 @@ const LeaderboardBoard = ({
                 hiddenBetweenCount={hiddenBetweenCount}
                 meLabel={meLabel}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </AsyncContent>
     </div>

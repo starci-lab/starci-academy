@@ -74,9 +74,7 @@ export interface PriceTagProps {
     /** Extra classes on the root. */
     className?: string
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -125,8 +123,6 @@ const PriceTagBase = ({
     breakdown,
     showSavingLine = true,
     className,
-    anatPart,
-    showAnatomy,
 }: PriceTagProps & { emphasis: PriceEmphasis }) => {
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
@@ -179,7 +175,7 @@ const PriceTagBase = ({
                     spacing from OUTSIDE, which §10 forbids — a composite owns its internal
                     spacing and must not receive it. */}
                 <KeyValueList
-                    anatPart={showAnatomy ? "KeyValueList" : undefined}
+
                     items={[
                         {
                             key: "list",
@@ -230,7 +226,7 @@ const PriceTagBase = ({
         <Cluster
             gap={3}
             align="baseline"
-            anatPart={showAnatomy ? "Cluster" : undefined}
+
             items={[
                 {
                     key: "amount",
@@ -243,7 +239,7 @@ const PriceTagBase = ({
                             weight="bold"
                             isSkeleton={isSkeleton}
                             classNames={isSkeleton ? ["w-2/3"] : undefined}
-                            showAnatomy={showAnatomy}
+
                             text={formatPrice(discounted, currency)}
                         />
                     ),
@@ -258,7 +254,7 @@ const PriceTagBase = ({
                                 isSkeleton={isSkeleton}
                                 isStruck
                                 classNames={isSkeleton ? ["w-1/3"] : undefined}
-                                showAnatomy={showAnatomy}
+
                                 text={formatPrice(original, currency)}
                             />
                         ),
@@ -280,13 +276,13 @@ const PriceTagBase = ({
                                     <Popover.Trigger
                                         aria-label="Price breakdown"
                                         className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                                        data-anat-part={showAnatomy ? "Popover.Trigger" : undefined}
+
                                     >
                                         {chip}
                                     </Popover.Trigger>
                                     <Popover.Content
                                         className="max-w-xs"
-                                        data-anat-part={showAnatomy ? "Popover.Content" : undefined}
+
                                     >
                                         {breakdownContent}
                                     </Popover.Content>
@@ -304,7 +300,7 @@ const PriceTagBase = ({
             color="muted"
             isSkeleton={isSkeleton}
             classNames={isSkeleton ? ["w-1/2"] : undefined}
-            showAnatomy={showAnatomy}
+
             text={hasSaving ? `Save ${formatPrice(original - discounted, currency)}` : undefined}
         />
     ) : null
@@ -318,7 +314,7 @@ const PriceTagBase = ({
             // inside a lower-tier component — the saving line read as if it were glued under the number.
             gap={4}
             className={className}
-            anatPart={anatPart ?? (showAnatomy ? "StackV" : undefined)}
+
             body={(
                 <>
                     {priceRow}

@@ -71,7 +71,7 @@ export const Default: Story = {
                         name: "onPress set, size default (sm)",
                         why: "Defaults to `size=sm`, rendering a real `<Link>` driven by `onPress` so the feature owns routing (for example a router push at the end of a list). Passing `href` instead renders the exact same pixels through a plain `<a>`, so `href` does not earn its own leaf.",
                         code: "<LinkSeeMore onPress={() => {}} label=\"See more\" />\n<LinkSeeMore href=\"/courses\" label=\"See all courses\" />",
-                        render: <LinkSeeMore onPress={() => {}} label="See more" showAnatomy />,
+                        render: <LinkSeeMore onPress={() => {}} label="See more" />,
                     },
                 ]}
             />
@@ -99,7 +99,7 @@ export const Decorative: Story = {
                         code: "<div className=\"group cursor-pointer\">\n  <LinkSeeMore decorative label=\"Continue\" />\n</div>",
                         render: (
                             <div data-tier="fixture" className="group w-fit cursor-pointer rounded-lg border border-default p-3">
-                                <LinkSeeMore decorative label="Continue" showAnatomy />
+                                <LinkSeeMore decorative label="Continue" />
                             </div>
                         ),
                     },
@@ -129,7 +129,7 @@ export const Size: Story = {
                                 size="sm"
                                 onPress={() => {}}
                                 label="See more (sm)"
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -142,7 +142,7 @@ export const Size: Story = {
                                 size="xs"
                                 onPress={() => {}}
                                 label="See more (xs)"
-                                showAnatomy
+                               
                             />
                         ),
                     },

@@ -56,9 +56,7 @@ interface RichTextOwnProps {
     /** Where this sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** `true` → tag the internal `Typography` atom's own parts for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -195,8 +193,6 @@ export const RichText = ({
     color,
     isSkeleton = false,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: RichTextProps) => {
     // One render path (COMPOSITE-10): the atom decides its own shimmer shape via
     // `isSkeleton`; this composite only decides size/color and — since it has no
@@ -204,7 +200,7 @@ export const RichText = ({
     // atom's `showAnatomy` tags its own internal parts separately).
     return (
         <span
-            data-anat-part={anatPart ?? (showAnatomy ? "RichText" : undefined)}
+
             data-tier="composite"
             data-component="RichText"
         >
@@ -212,7 +208,7 @@ export const RichText = ({
                 size={SIZE_MAP[size]}
                 color={color}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
                 classNames={classNames}
                 text={renderInline(text ?? "")}
             />

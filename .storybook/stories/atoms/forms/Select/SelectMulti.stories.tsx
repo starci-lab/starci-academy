@@ -55,7 +55,7 @@ export const Default: Story = {
                                         options={OPTIONS}
                                         placeholder="Choose languages"
                                         ariaLabel="Language"
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -93,7 +93,7 @@ export const WithLabel: Story = {
                                         placeholder="Choose languages"
                                         label="Language"
                                         hint="Pick every language you use."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -131,7 +131,7 @@ export const Required: Story = {
                                         placeholder="Choose languages"
                                         label="Language"
                                         isRequired
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -171,7 +171,7 @@ export const Value: Story = {
                             code: "<SelectMulti value={[]} … />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <SelectMulti value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose languages" ariaLabel="Language" showAnatomy />
+                                    <SelectMulti value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose languages" ariaLabel="Language" />
                                 </div>
                             ),
                         },
@@ -216,7 +216,7 @@ export const Disabled: Story = {
                                     placeholder="Choose languages"
                                     label="Language"
                                     isDisabled
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -255,7 +255,7 @@ export const Invalid: Story = {
                                     placeholder="Choose languages"
                                     label="Language"
                                     isInvalid
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -291,7 +291,7 @@ export const Error: Story = {
                                         placeholder="Choose languages"
                                         label="Language"
                                         errorMessage="Pick at least one language."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -320,7 +320,7 @@ export const Skeleton: Story = {
                         code: "<SelectMulti label=\"Language\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <SelectMulti value={[]} onValueChange={() => {}} options={OPTIONS} label="Language" isSkeleton showAnatomy />
+                                <SelectMulti value={[]} onValueChange={() => {}} options={OPTIONS} label="Language" isSkeleton />
                             </div>
                         ),
                     },

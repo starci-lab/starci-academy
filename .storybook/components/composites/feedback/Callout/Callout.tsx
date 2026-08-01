@@ -84,7 +84,6 @@ export interface CalloutProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * Story-only: when on, the frame names ITSELF `"Callout"` so a panel can badge it
      * without the story wrapping an extra div.
@@ -95,7 +94,6 @@ export interface CalloutProps {
      * the panel with no error anywhere, which is exactly why 11a.1 pins the idiom
      * `anatPart ?? (showAnatomy ? "<name>" : undefined)`.
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -123,8 +121,6 @@ export const Callout = ({
     onClose,
     closeAriaLabel,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: CalloutProps) => (
     <Alert
         status={status}
@@ -147,6 +143,6 @@ export const Callout = ({
         // an Alert wearing a callout skin", which is what a Deps tab is for. Naming it
         // `Callout` here made the subject label itself and left the tree empty, because the
         // only frame this composite is built on never appeared (caught 2026-07-27).
-        showAnatomy={showAnatomy}
+
     />
 )

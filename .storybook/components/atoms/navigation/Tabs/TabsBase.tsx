@@ -70,7 +70,6 @@ export interface TabsBaseProps {
      */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
@@ -87,7 +86,6 @@ export const TabsBase = ({
     ariaLabel,
     variant = "primary",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: TabsBaseProps) => {
     if (isSkeleton) {
@@ -102,8 +100,8 @@ export const TabsBase = ({
                 <div data-tier="atom" data-component="Tabs" className={cn("flex items-center gap-2", classNames)}>
                     {items.map((item) => (
                         <div key={item.key} className="flex flex-col items-center gap-2 px-1 py-2">
-                            <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                            <HeroSkeleton className="h-0.5 w-1/3 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                            <HeroSkeleton className="h-4 w-1/3 rounded-md" />
+                            <HeroSkeleton className="h-0.5 w-1/3 rounded-full" />
                         </div>
                     ))}
                 </div>
@@ -112,7 +110,7 @@ export const TabsBase = ({
         return (
             <div data-tier="atom" data-component="Tabs" className={cn("flex items-center gap-2", classNames)}>
                 {items.map((item) => (
-                    <HeroSkeleton key={item.key} className="h-9 w-1/3 rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                    <HeroSkeleton key={item.key} className="h-9 w-1/3 rounded-xl" />
                 ))}
             </div>
         )
@@ -135,7 +133,7 @@ export const TabsBase = ({
                                 key={item.key}
                                 id={item.key}
                                 isDisabled={item.isDisabled}
-                                data-anat-part={showAnatomy ? "Tabs.Tab" : undefined}
+
                             >
                                 <span className="flex items-center gap-2">
                                     {Icon ? (
@@ -154,9 +152,9 @@ export const TabsBase = ({
                                         // on. This pads the label asymmetrically, so a tab with a
                                         // badge is wider than one without and tab spacing isn't
                                         // perfectly even.
-                                        <HeroBadge.Anchor className="pr-4" data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
+                                        <HeroBadge.Anchor className="pr-4">
                                             <span>{item.label}</span>
-                                            <HeroBadge size="sm" color="danger" data-anat-part={showAnatomy ? "Badge" : undefined}>
+                                            <HeroBadge size="sm" color="danger">
                                                 {item.badge}
                                             </HeroBadge>
                                         </HeroBadge.Anchor>
@@ -164,7 +162,7 @@ export const TabsBase = ({
                                         <span>{item.label}</span>
                                     )}
                                 </span>
-                                <HeroTabs.Indicator data-anat-part={showAnatomy ? "Tabs.Indicator" : undefined} />
+                                <HeroTabs.Indicator />
                             </HeroTabs.Tab>
                         )
                     })}

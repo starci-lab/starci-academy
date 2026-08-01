@@ -95,9 +95,7 @@ export interface SectionHeaderProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
-    anatPart?: string
     /** `true` → each part emits `data-anat-part` for a BlockAnatomy panel. No visual effect. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -116,8 +114,6 @@ const Header = ({
     action,
     level = 2,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: SectionHeaderProps) => {
     const titleSize = TITLE_SIZE[level]
     const descriptionSize = DESCRIPTION_SIZE[level]
@@ -127,15 +123,15 @@ const Header = ({
     const titleBlock = (
         <>
             {eyebrow != null ? (
-                <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                <span className="min-w-0">
                     <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate />
                 </span>
             ) : null}
-            <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+            <span className="min-w-0">
                 <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} />
             </span>
             {description != null ? (
-                <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                <span className="min-w-0">
                     <Typography size={descriptionSize} text={description} color="muted" />
                 </span>
             ) : null}
@@ -148,7 +144,7 @@ const Header = ({
             justify="between"
             gap={4}
             classNames={classNames}
-            anatPart={anatPart}
+
             body={
                 <>
                     <StackV gap={2} pattern="title-subtitle" classNames={["min-w-0"]} body={titleBlock} />
@@ -197,9 +193,7 @@ export interface SectionBaseProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
-    anatPart?: string
     /** `true` → each region emits `data-anat-part` for a BlockAnatomy panel. No visual effect. */
-    showAnatomy?: boolean
 }
 
 /** A header slot is PROPS only when it is a plain object (not an element/array/string). */
@@ -224,8 +218,6 @@ const Base = ({
     children,
     gap = 6,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: SectionBaseProps) => {
     const main = body ?? children
     const headerNode = header == null
@@ -234,12 +226,12 @@ const Base = ({
             // props form → the frame builds ITS OWN SectionHeader (a fixed internal
             // choice, not arbitrary caller content) — badge that real component
             // directly rather than the generic wrapping div below.
-            ? <Header {...header} showAnatomy={showAnatomy} anatPart={showAnatomy ? "SectionHeader" : undefined} />
+            ? <Header {...header} />
             : header
     return (
         <section
             className={cn("flex flex-col", GAP_CLASS[gap], classNames)}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="Section"
             data-principles={gap === 6 ? "block-boundary" : undefined}

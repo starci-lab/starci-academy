@@ -103,8 +103,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ChallengeBrief
-                                anatPart="ChallengeBrief"
-                                showAnatomy
+
+                               
                                 prerequisites={PREREQUISITES}
                                 requirements={REQUIREMENTS}
                                 steps={STEPS}

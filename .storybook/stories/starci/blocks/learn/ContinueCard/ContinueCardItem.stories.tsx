@@ -155,7 +155,7 @@ export const Content: Story = {
 />`,
                         render: (
                             <div data-tier="fixture" className="w-80">
-                                <ContinueCardItem title="Building a RESTful API with NestJS" subtitle="Reading" href="/courses/nestjs-api/lessons/5" showAnatomy />
+                                <ContinueCardItem title="Building a RESTful API with NestJS" subtitle="Reading" href="/courses/nestjs-api/lessons/5" />
                             </div>
                         ),
                     },
@@ -196,7 +196,7 @@ export const Skeleton: Story = {
                                     subtitle="Reading"
                                     href="/courses/nestjs-api/lessons/5"
                                     isSkeleton
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -233,10 +233,10 @@ export const LoadError: Story = {
                         render: (
                             <div data-tier="fixture" className="w-80">
                                 <SurfaceCard
-                                    anatPart="SurfaceCard"
+
                                     body={() => (
                                         <EmptyState
-                                            anatPart="EmptyState"
+
                                             tone="danger"
                                             icon={WarningDuotone}
                                             title="Connection lost"

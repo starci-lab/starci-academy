@@ -53,10 +53,9 @@ export interface ResizableRailBaseProps {
     /** Extra classes on the rail root. */
     className?: string
     /**
-     * When `true`, each composed part emits `data-anat-part="<name>"` so a
+     * When `true`, each composed part emits `` so a
      * BlockAnatomy panel can badge it on-render. Off by default (production).
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -81,7 +80,6 @@ const Base = ({
     handleSide = "right",
     widthVar,
     className,
-    showAnatomy = false,
 }: ResizableRailBaseProps) => {
     // a left-edge handle widens when dragged LEFT (negative deltaX), so flip the sign.
     const dir = handleSide === "left" ? -1 : 1
@@ -188,7 +186,7 @@ const Base = ({
                 no component behind it to link to), so the marker only ever rendered into the
                 DOM invisibly. */}
             {/* splitter: a thin line at the chosen edge that thickens to accent on hover/drag.
-                ⚠️ 2026-07-28: `data-anat-part="Handle"` was dropped too — the splitter is this
+                ⚠️ 2026-07-28: `` was dropped too — the splitter is this
                 frame's own internal geometry (no component/story of its own to link a reader
                 to, same as `Grid`'s per-cell wrapper), so the badge only ever rendered
                 invisibly as well. */}

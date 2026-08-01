@@ -77,8 +77,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ModuleHeader
-                                anatPart="ModuleHeader"
-                                showAnatomy
+
+                               
                                 breadcrumbItems={CRUMBS}
                                 title="Containerizing applications"
                                 description="Packaging, optimizing images, and running containers in production."
@@ -135,8 +135,8 @@ export const NoMeta: Story = {
                         code: "<ModuleHeader breadcrumbItems={crumbs} title=\"Containerizing applications\" />",
                         render: (
                             <ModuleHeader
-                                anatPart="ModuleHeader"
-                                showAnatomy
+
+                               
                                 breadcrumbItems={CRUMBS}
                                 title="Containerizing applications"
                             />
@@ -170,8 +170,8 @@ export const Skeleton: Story = {
                         code: "<ModuleHeader breadcrumbItems={[]} title=\"\" isSkeleton />",
                         render: (
                             <ModuleHeader
-                                anatPart="ModuleHeader"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 breadcrumbItems={[]}
                                 title=""

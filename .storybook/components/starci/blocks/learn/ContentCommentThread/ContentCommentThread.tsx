@@ -77,7 +77,6 @@ interface CommentBylineProps {
     isFounderAuthor?: boolean
     createdTimeAgo: string
     isEdited?: boolean
-    showAnatomy: boolean
 }
 
 /**
@@ -87,15 +86,15 @@ interface CommentBylineProps {
  * props, so passing a fresh wrapping arrow each render never risks remounting
  * anything stateful — there is no state in this leaf to lose.
  */
-const CommentByline = ({ username, isFounderAuthor, createdTimeAgo, isEdited, showAnatomy }: CommentBylineProps) => (
+const CommentByline = ({ username, isFounderAuthor, createdTimeAgo, isEdited }: CommentBylineProps) => (
     <>
-        <Typography size="sm" weight="medium" text={username} showAnatomy={showAnatomy} />
+        <Typography size="sm" weight="medium" text={username} />
         {isFounderAuthor ? (
             <SealCheckIcon weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
         ) : null}
-        <Typography size="xs" color="muted" text={createdTimeAgo} showAnatomy={showAnatomy} />
+        <Typography size="xs" color="muted" text={createdTimeAgo} />
         {isEdited ? (
-            <Typography size="xs" color="muted" text="(edited)" showAnatomy={showAnatomy} />
+            <Typography size="xs" color="muted" text="(edited)" />
         ) : null}
     </>
 )
@@ -118,9 +117,7 @@ export interface ContentCommentThreadProps extends ContentCommentThreadCallbacks
     /** Already-loaded replies, keyed by parent id (empty until `onLoadReplies` resolves). */
     repliesByParent: Record<string, ReadonlyArray<ContentCommentNode>>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -139,8 +136,6 @@ const ContentCommentThread = ({
     onDelete,
     onReactComment,
     onLoadReplies,
-    showAnatomy = false,
-    anatPart,
 }: ContentCommentThreadProps) => {
     const [replying, setReplying] = useState(false)
     const [editing, setEditing] = useState(false)
@@ -166,8 +161,8 @@ const ContentCommentThread = ({
                 myReaction={comment.myReaction}
                 counts={comment.reactionCounts}
                 onReact={(type) => onReactComment(comment.id, type)}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "ReactionButton" : undefined}
+
+
             />
             <Typography
                 size="xs"
@@ -177,7 +172,7 @@ const ContentCommentThread = ({
                 hoverColor="default"
                 text="Reply"
                 onPress={() => setReplying((prev) => !prev)}
-                showAnatomy={showAnatomy}
+
             />
             {isOwner ? (
                 <>
@@ -189,7 +184,7 @@ const ContentCommentThread = ({
                         hoverColor="default"
                         text="Edit"
                         onPress={() => setEditing(true)}
-                        showAnatomy={showAnatomy}
+
                     />
                     <Typography
                         size="xs"
@@ -199,7 +194,7 @@ const ContentCommentThread = ({
                         hoverColor="danger"
                         text="Delete"
                         onPress={() => onDelete(comment.id)}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             ) : null}
@@ -210,7 +205,7 @@ const ContentCommentThread = ({
         <>
             {/* body, edit form, or deleted placeholder */}
             {comment.isDeleted ? (
-                <Typography size="sm" color="muted" isItalic text="[Comment removed]" showAnatomy={showAnatomy} />
+                <Typography size="sm" color="muted" isItalic text="[Comment removed]" />
             ) : editing ? (
                 <ContentCommentComposer
                     initialValue={comment.body}
@@ -221,21 +216,21 @@ const ContentCommentThread = ({
                         onEdit(comment.id, body)
                         setEditing(false)
                     }}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : (
-                <Typography size="sm" preserveWhitespace text={comment.body} showAnatomy={showAnatomy} />
+                <Typography size="sm" preserveWhitespace text={comment.body} />
             )}
 
             {!comment.isDeleted && !editing ? (
-                <StackH gap={4} wrap align="center" anatPart={showAnatomy ? "StackH" : undefined} body={actionRow} />
+                <StackH gap={4} wrap align="center" body={actionRow} />
             ) : null}
         </>
     )
 
     const threadBody = (
         <>
-            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={bodyAndActions} />
+            <StackV gap={2} body={bodyAndActions} />
 
             {/* reply composer — `ThreadConnector` draws the Facebook-style curved
                 guide from this comment down into the reply's own avatar (teacher
@@ -245,7 +240,7 @@ const ContentCommentThread = ({
                 <StackH
                     gap={2}
                     align="start"
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <>
                             <ThreadConnector />
@@ -262,7 +257,7 @@ const ContentCommentThread = ({
                                     setExpanded(true)
                                     onLoadReplies(comment.id)
                                 }}
-                                showAnatomy={showAnatomy}
+
                             />
                         </>
                     }
@@ -279,14 +274,14 @@ const ContentCommentThread = ({
                     underlineOnHover
                     text={expanded ? "Hide replies" : `View ${comment.replyCount} replies`}
                     onPress={toggleReplies}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
 
             {expanded && replies.length > 0 ? (
                 <StackV
                     gap={4}
-                    anatPart={showAnatomy ? "StackV" : undefined}
+
                     body={replies.map((reply) => (
                         <ContentCommentThread
                             key={reply.id}
@@ -300,7 +295,7 @@ const ContentCommentThread = ({
                             onDelete={onDelete}
                             onReactComment={onReactComment}
                             onLoadReplies={onLoadReplies}
-                            showAnatomy={showAnatomy}
+
                         />
                     ))}
                 />
@@ -320,21 +315,21 @@ const ContentCommentThread = ({
             avatarSeed={comment.author.id}
             avatarSize="sm"
             nested={depth > 0}
-            anatPart={anatPart}
-            showAnatomy={showAnatomy}
+
+
             byline={() => (
                 <StackH
                     gap={2}
                     wrap
                     align="center"
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <CommentByline
                             username={comment.author.username}
                             isFounderAuthor={comment.isFounderAuthor}
                             createdTimeAgo={comment.createdTimeAgo}
                             isEdited={comment.isEdited}
-                            showAnatomy={showAnatomy}
+
                         />
                     }
                 />
@@ -350,7 +345,7 @@ const ContentCommentThread = ({
                     still gap-3": the seam right before a reply composer appears needs more
                     room than the tight identity block above it (also where the
                     Facebook-style connector line will run). */
-                <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={threadBody} />
+                <StackV gap={4} body={threadBody} />
             )}
         />
     )

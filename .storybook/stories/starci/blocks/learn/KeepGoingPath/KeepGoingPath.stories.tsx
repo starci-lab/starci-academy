@@ -80,8 +80,8 @@ export const Path: Story = {
 />`,
                         render: (
                             <KeepGoingPath
-                                anatPart="SurfaceCardList"
-                                showAnatomy
+
+                               
                                 module={{ index: 2, name: "Containerization" }}
                                 contents={MIXED}
                             />
@@ -117,8 +117,8 @@ export const Skeleton: Story = {
                         code: "<KeepGoingPath isSkeleton module={{ index: 2, name: \"Containerization\" }} contents={[]} />",
                         render: (
                             <KeepGoingPath
-                                anatPart="SurfaceCardList"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 module={{ index: 2, name: "Containerization" }}
                                 contents={[]}

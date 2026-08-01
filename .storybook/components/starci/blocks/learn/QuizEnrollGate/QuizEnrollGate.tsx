@@ -34,9 +34,7 @@ export interface QuizEnrollGateProps {
     /** Fired when the learner takes the way through. */
     onEnroll: () => void
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -49,21 +47,19 @@ const QuizEnrollGate = ({
     description,
     ctaLabel,
     onEnroll,
-    showAnatomy = false,
-    anatPart,
 }: QuizEnrollGateProps) => (
-    <div data-anat-part={anatPart}>
+    <div>
         <EmptyState
             icon={LockIcon}
             title={title}
             description={description}
-            anatPart={showAnatomy ? "EmptyState" : undefined}
+
         >
             <Button
                 label={ctaLabel}
                 variant="primary"
                 onPress={onEnroll}
-                showAnatomy={showAnatomy}
+
             />
         </EmptyState>
     </div>

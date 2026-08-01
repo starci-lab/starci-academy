@@ -59,7 +59,7 @@ export const Dashboard: Story = {
 />`,
                         render: (
                             <PersonalProjectWorkspace
-                                showAnatomy
+                               
                                 view="dashboard"
                                 breadcrumbItems={[{ key: "courses", label: "Courses" }, { key: "course", label: "Backend Mastery" }]}
                                 title="Personal project"
@@ -109,7 +109,7 @@ export const Task: Story = {
 />`,
                         render: (
                             <PersonalProjectWorkspace
-                                showAnatomy
+                               
                                 view="task"
                                 breadcrumbItems={[{ key: "courses", label: "Courses" }, { key: "milestone", label: "Backend fundamentals" }]}
                                 task={{ title: "Add tests for the DELETE route", description: "Write an integration test for the task-delete route, including the case where the id doesn't exist." }}
@@ -167,7 +167,7 @@ export const Result: Story = {
 />`,
                         render: (
                             <PersonalProjectWorkspace
-                                showAnatomy
+                               
                                 view="result"
                                 backLabel="Back to task"
                                 onBack={() => {}}

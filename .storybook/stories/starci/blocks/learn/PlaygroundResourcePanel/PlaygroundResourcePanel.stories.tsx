@@ -73,8 +73,8 @@ export const Panel: Story = {
                         code: "<PlaygroundResourcePanel connection=\"notConnected\" resources={[]} />",
                         render: (
                             <PlaygroundResourcePanel
-                                anatPart="PlaygroundResourcePanel"
-                                showAnatomy
+
+                               
                                 connection="notConnected"
                                 resources={[]}
                             />

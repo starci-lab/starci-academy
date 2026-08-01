@@ -63,9 +63,7 @@ export interface CourseQaEngagementStripProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -90,8 +88,6 @@ const CourseQaEngagementStrip = ({
     totalQuestions,
     answeredQuestions,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: CourseQaEngagementStripProps) => {
     const hasEnrollment = enrollmentCount != null
 
@@ -103,7 +99,7 @@ const CourseQaEngagementStrip = ({
                     color="muted"
                     isSkeleton={isSkeleton}
                     text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} learners enrolled in this course` : undefined}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             <Typography
@@ -111,14 +107,14 @@ const CourseQaEngagementStrip = ({
                 color="muted"
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : questionLine(totalQuestions, answeredQuestions)}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={lines} />
+        <div>
+            <StackV gap={1} body={lines} />
         </div>
     )
 }

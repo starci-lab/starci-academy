@@ -81,9 +81,7 @@ export interface ModuleContinueBandProps {
     /** `true` → every composed atom swaps to its own shimmer. */
     isSkeleton?: boolean
     /** `true` → tag each composed part with `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag for THIS block itself — lets the screen badge it as ONE node (§11a.1). */
-    anatPart?: string
 }
 
 /**
@@ -100,8 +98,6 @@ const ModuleContinueBand = ({
     challengesTotal,
     onResume,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ModuleContinueBandProps) => {
     // Loading state doesn't know which branch it will land in yet, so it always
     // shows the fuller "still has a lesson to resume" shape (see file header).
@@ -111,7 +107,7 @@ const ModuleContinueBand = ({
         <StackV
             gap={1}
             classNames={["min-w-0"]}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <Typography
@@ -119,7 +115,7 @@ const ModuleContinueBand = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={showResumeRow ? EYEBROW_CONTINUE : EYEBROW_ALL_DONE}
-                        showAnatomy={showAnatomy}
+
                     />
                     {showResumeRow ? (
                         <Typography
@@ -128,7 +124,7 @@ const ModuleContinueBand = ({
                             truncate
                             isSkeleton={isSkeleton}
                             text={resumeLessonTitle}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -141,7 +137,7 @@ const ModuleContinueBand = ({
             gap={4}
             justify="between"
             align="start"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     {eyebrowAndTitle}
@@ -154,7 +150,7 @@ const ModuleContinueBand = ({
                             suffixIcon={ArrowRightIcon}
                             onPress={onResume}
                             classNames={["shrink-0"]}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -165,14 +161,14 @@ const ModuleContinueBand = ({
     const progress = isSkeleton ? (
         // `ProgressMeter` has no `isSkeleton` of its own (same gap `ContinueCard`
         // documents) — a bare track-height bar stands in for it here.
-        <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+        <HeroSkeleton className="h-1 w-full rounded-full" />
     ) : (
         <ProgressMeter
             value={lessonsRead}
             max={lessonsTotal}
             label="Completed"
             showValue
-            anatPart={showAnatomy ? "ProgressMeter" : undefined}
+
         />
     )
 
@@ -182,14 +178,14 @@ const ModuleContinueBand = ({
             color="muted"
             isSkeleton={isSkeleton}
             text={`Read ${lessonsRead}/${lessonsTotal} lessons · Completed ${challengesDone}/${challengesTotal} challenges`}
-            showAnatomy={showAnatomy}
+
         />
     )
 
     return (
         <StackV
             gap={4}
-            anatPart={anatPart}
+
             body={
                 <>
                     {headerRow}

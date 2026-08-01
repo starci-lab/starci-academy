@@ -45,9 +45,7 @@ export interface ContentReactionProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -62,8 +60,6 @@ const ContentReaction = ({
     onReact,
     isPending = false,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ContentReactionProps) => {
     const row = (
         <>
@@ -73,25 +69,25 @@ const ContentReaction = ({
                 onReact={onReact}
                 isPending={isPending}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "ReactionButton" : undefined}
+
+
             />
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} />
             ) : viewCount != null ? (
                 <Typography
                     size="xs"
                     color="muted"
                     text={`${viewCount.toLocaleString("en-US")} views`}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackH gap={3} align="center" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={row} />
+        <div>
+            <StackH gap={3} align="center" justify="between" body={row} />
         </div>
     )
 }

@@ -63,9 +63,7 @@ export interface ContentCommentComposerProps {
     /** Extra classes on the root (placement only, e.g. `flex-1` beside a `ThreadConnector`). */
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -84,8 +82,6 @@ const ContentCommentComposer = ({
     collapsible = false,
     ariaLabel,
     className,
-    showAnatomy = false,
-    anatPart,
 }: ContentCommentComposerProps) => {
     const [body, setBody] = useState(initialValue ?? "")
     // collapsible composers start closed; reply/edit always render expanded
@@ -117,13 +113,13 @@ const ContentCommentComposer = ({
             <StackH
                 gap={4}
                 align="center"
-                anatPart={anatPart}
+
                 body={
                     <>
                         {currentUser ? (
-                            <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" showAnatomy={showAnatomy} />
+                            <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" />
                         ) : null}
-                        <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputButtonLike" : undefined}>
+                        <div className="min-w-0 flex-1">
                             <InputButtonLike
                                 placeholder={placeholder}
                                 ariaLabel={ariaLabel}
@@ -144,7 +140,7 @@ const ContentCommentComposer = ({
                 onPress={handleSubmit}
                 isDisabled={!trimmed}
                 isPending={isPending}
-                showAnatomy={showAnatomy}
+
             />
             {onCancel || collapsible ? (
                 <Button
@@ -153,7 +149,7 @@ const ContentCommentComposer = ({
                     size="sm"
                     onPress={handleCancel}
                     isDisabled={isPending}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -168,23 +164,23 @@ const ContentCommentComposer = ({
                 ariaLabel={ariaLabel}
                 rows={3}
                 variant="primary"
-                showAnatomy={showAnatomy}
+
             />
-            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={buttonRow} />
+            <StackH gap={3} body={buttonRow} />
         </>
     )
 
     const composerRow = (
         <>
             {currentUser ? (
-                <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" showAnatomy={showAnatomy} />
+                <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" />
             ) : null}
-            <StackV gap={3} classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={fieldColumn} />
+            <StackV gap={3} classNames={["min-w-0", "flex-1"]} body={fieldColumn} />
         </>
     )
 
     return (
-        <StackH gap={4} align="start" className={className} anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)} body={composerRow} />
+        <StackH gap={4} align="start" className={className} body={composerRow} />
     )
 }
 

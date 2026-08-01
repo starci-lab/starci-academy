@@ -70,7 +70,7 @@ export const Default: Story = {
                             name: "only title passed",
                             why: "Just the title text renders, no eyebrow above it and no description or action beside it. This is the bare frame, the shape every other leaf below adds one slot on top of.",
                             code: "<SectionHeader title=\"My courses\" />",
-                            render: <SectionHeader title="My courses" showAnatomy />,
+                            render: <SectionHeader title="My courses" />,
                         },
                     ]}
                 />
@@ -93,7 +93,7 @@ export const WithEyebrow: Story = {
                             name: "eyebrow set",
                             why: "A muted kicker line grows above the title, one size smaller and in the same tight text cluster. The eyebrow names the course or module the region belongs to, so it stays context rather than climbing into a second title (§9a).",
                             code: "<SectionHeader eyebrow=\"Fullstack Mastery\" title=\"Module 3 · Databases\" />",
-                            render: <SectionHeader eyebrow="Fullstack Mastery" title="Module 3 · Databases" showAnatomy />,
+                            render: <SectionHeader eyebrow="Fullstack Mastery" title="Module 3 · Databases" />,
                         },
                     ]}
                 />
@@ -123,7 +123,7 @@ export const WithDescription: Story = {
                                 <SectionHeader
                                     title="My courses"
                                     description="The courses you're enrolled in, sorted by most recently studied."
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -155,7 +155,7 @@ export const WithAction: Story = {
                                 <SectionHeader
                                     title="My courses"
                                     action={<Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -191,7 +191,7 @@ export const Full: Story = {
                                     title="Submitted assignments"
                                     description="AI grades within minutes; you can resubmit up to 3 times."
                                     action={<Button label="Settings" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -220,7 +220,7 @@ export const Levels: Story = {
                             name: "level = 1",
                             why: "Title renders at `lg` bold and description at `sm`, the largest band a page uses. The tree stays the same as every other level; only the type scale steps up.",
                             code: "<SectionHeader level={1} title=\"…\" description=\"…\" />",
-                            render: <SectionHeader level={1} title="Learning roadmap" description="level 1 — the biggest band of the page." showAnatomy />,
+                            render: <SectionHeader level={1} title="Learning roadmap" description="level 1 — the biggest band of the page." />,
                         },
                         {
                             name: "level = 2 (default)",

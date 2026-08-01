@@ -57,7 +57,7 @@ export const Default: Story = {
                                         options={OPTIONS}
                                         placeholder="Search city or province"
                                         ariaLabel="City/Province"
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -95,7 +95,7 @@ export const WithLabel: Story = {
                                         placeholder="Search city or province"
                                         label="City/Province"
                                         hint="Type to filter fast."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -133,7 +133,7 @@ export const Required: Story = {
                                         placeholder="Search city or province"
                                         label="City/Province"
                                         isRequired
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -173,7 +173,7 @@ export const Value: Story = {
                             code: "<SelectCombobox value={null} ... />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <SelectCombobox value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" showAnatomy />
+                                    <SelectCombobox value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" />
                                 </div>
                             ),
                         },
@@ -183,7 +183,7 @@ export const Value: Story = {
                             code: "<SelectCombobox value=\"dn\" ... />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <SelectCombobox value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" showAnatomy />
+                                    <SelectCombobox value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" />
                                 </div>
                             ),
                         },
@@ -218,7 +218,7 @@ export const Disabled: Story = {
                                     placeholder="Search city or province"
                                     label="City/Province"
                                     isDisabled
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -257,7 +257,7 @@ export const Invalid: Story = {
                                     placeholder="Search city or province"
                                     label="City/Province"
                                     isInvalid
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -293,7 +293,7 @@ export const Error: Story = {
                                         placeholder="Search city or province"
                                         label="City/Province"
                                         errorMessage="Choose a valid city or province."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -322,7 +322,7 @@ export const Skeleton: Story = {
                         code: "<SelectCombobox label=\"City/Province\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <SelectCombobox value={null} onValueChange={() => {}} options={OPTIONS} label="City/Province" isSkeleton showAnatomy />
+                                <SelectCombobox value={null} onValueChange={() => {}} options={OPTIONS} label="City/Province" isSkeleton />
                             </div>
                         ),
                     },

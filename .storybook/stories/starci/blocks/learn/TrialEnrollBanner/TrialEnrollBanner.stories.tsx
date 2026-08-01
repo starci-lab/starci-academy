@@ -65,8 +65,8 @@ export const Banner: Story = {
                         code: "<TrialEnrollBanner isVisible onEnroll={handleEnroll} />",
                         render: (
                             <TrialEnrollBanner
-                                anatPart="TrialEnrollBanner"
-                                showAnatomy
+
+                               
                                 isVisible
                                 onEnroll={() => {}}
                             />

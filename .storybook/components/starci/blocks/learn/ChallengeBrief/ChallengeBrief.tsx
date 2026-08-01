@@ -137,9 +137,7 @@ export interface ChallengeBriefProps {
     /** `true` → every present-or-guessed section renders its own shimmer mirror. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Placeholder row count while `isSkeleton` and the real section count isn't known yet. */
@@ -147,8 +145,8 @@ const PREREQUISITE_SKELETON_ROWS = 2
 const OUTPUT_SKELETON_ROWS = 2
 
 /** One markdown body, at the `compact` measure every section of this reading column uses. */
-const markdownBody = (body: string, showAnatomy: boolean): ReactNode => (
-    <MarkdownContent source={body} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+const markdownBody = (body: string): ReactNode => (
+    <MarkdownContent source={body} measure="compact" />
 )
 
 /**
@@ -162,7 +160,7 @@ const skeletonListRows = (count: number, keyPrefix: string): Array<SurfaceCardLi
     }))
 
 /** One expected-output row: a leading check plus the stripped output text. */
-const outputRow = (body: string, showAnatomy: boolean) => (
+const outputRow = (body: string) => (
     <StackH
         gap={2}
         align="start"
@@ -171,10 +169,10 @@ const outputRow = (body: string, showAnatomy: boolean) => (
                 <CheckCircleIcon
                     aria-hidden
                     focusable="false"
-                    data-anat-part={showAnatomy ? "CheckCircleIcon" : undefined}
+
                     className="size-5 shrink-0 text-success-soft-foreground"
                 />
-                <Typography size="sm" text={stripMarkdown(body)} showAnatomy={showAnatomy} />
+                <Typography size="sm" text={stripMarkdown(body)} />
             </>
         }
     />
@@ -193,8 +191,6 @@ const ChallengeBrief = ({
     outputs,
     hint,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ChallengeBriefProps) => {
     const trimmedHint = hint?.trim() ?? ""
 
@@ -220,23 +216,23 @@ const ChallengeBrief = ({
         ? skeletonListRows(PREREQUISITE_SKELETON_ROWS, "prereq-skeleton")
         : (prerequisites ?? []).map((item) => ({
             key: item.key,
-            content: () => <Typography size="sm" text={stripMarkdown(item.body)} showAnatomy={showAnatomy} />,
+            content: () => <Typography size="sm" text={stripMarkdown(item.body)} />,
         }))
 
     const outputItems: Array<SurfaceCardListItem> = isSkeleton
         ? skeletonListRows(OUTPUT_SKELETON_ROWS, "output-skeleton")
         : (outputs ?? []).map((item) => ({
             key: item.key,
-            content: () => outputRow(item.body, showAnatomy),
+            content: () => outputRow(item.body),
         }))
 
     const requirementItems: Array<SurfaceCardAccordionItem> = (requirements ?? []).map((item) => ({
         id: item.key,
         title: item.title,
         titleEnd: item.points != null
-            ? <ScoreValue points={item.points} anatPart={showAnatomy ? "ScoreValue" : undefined} />
+            ? <ScoreValue points={item.points} />
             : undefined,
-        body: markdownBody(item.body, showAnatomy),
+        body: markdownBody(item.body),
     }))
 
     const stepItems: Array<SurfaceCardAccordionItem> = (steps ?? []).map((item, index) => ({
@@ -244,7 +240,7 @@ const ChallengeBrief = ({
         // The block owns this sentence (§14d.1) — the caller hands an optional headline
         // plus its position via array order, never a pre-numbered string.
         title: `${index + 1}. ${item.title || `Step ${index + 1}`}`,
-        body: markdownBody(item.body, showAnatomy),
+        body: markdownBody(item.body),
     }))
 
     // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-12, teacher's final call: "the hint should
@@ -278,8 +274,8 @@ const ChallengeBrief = ({
                     label="Prerequisites"
                     items={prerequisiteItems}
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
             {showRequirements ? (
@@ -288,8 +284,8 @@ const ChallengeBrief = ({
                     items={requirementItems}
                     allowsMultipleExpanded
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
             {showSteps ? (
@@ -298,8 +294,8 @@ const ChallengeBrief = ({
                     items={stepItems}
                     allowsMultipleExpanded
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
             {showOutputs ? (
@@ -307,20 +303,20 @@ const ChallengeBrief = ({
                     label="Expected outputs"
                     items={outputItems}
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
             {showHint ? (
                 <SurfaceCard
                     label="Hint"
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                     body={() =>
                         isSkeleton
                             ? <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                            : markdownBody(trimmedHint, showAnatomy)
+                            : markdownBody(trimmedHint)
                     }
                 />
             ) : null}
@@ -328,7 +324,7 @@ const ChallengeBrief = ({
     )
 
     return (
-        <StackV gap={6} anatPart={anatPart} showAnatomy={showAnatomy} body={sections} />
+        <StackV gap={6} body={sections} />
     )
 }
 

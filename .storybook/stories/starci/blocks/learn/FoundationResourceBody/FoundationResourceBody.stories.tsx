@@ -78,8 +78,8 @@ export const Document: Story = {
 />`,
                         render: (
                             <FoundationResourceBody
-                                anatPart="FoundationResourceBody"
-                                showAnatomy
+
+                               
                                 kind="document"
                                 markdownBody={MARKDOWN_BODY}
                             />
@@ -115,8 +115,8 @@ export const Video: Story = {
                         code: "<FoundationResourceBody kind=\"video\" />",
                         render: (
                             <FoundationResourceBody
-                                anatPart="FoundationResourceBody"
-                                showAnatomy
+
+                               
                                 kind="video"
                             />
                         ),
@@ -156,8 +156,8 @@ export const ExternalLink: Story = {
 />`,
                         render: (
                             <FoundationResourceBody
-                                anatPart="FoundationResourceBody"
-                                showAnatomy
+
+                               
                                 kind="external_link"
                                 linkTitle="Official Docker documentation"
                                 linkUrl="https://docs.docker.com"

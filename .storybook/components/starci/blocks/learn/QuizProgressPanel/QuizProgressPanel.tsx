@@ -118,9 +118,7 @@ export interface QuizProgressPanelProps {
     /** `true` → the card draws its own mirror while progress data loads. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Fixed shape for the loading mirror — a stable 4-cell grid, known ahead of any real data (same reasoning as `ContentDiscussion`'s `SKELETON_ROWS`). */
@@ -139,28 +137,28 @@ const SKELETON_SESSIONS: Array<QuizProgressSession> = [
 ]
 
 /** Builds one {@link StatGridCardItem}'s free-form content — icon + label over the value, shimmering together via `isSkeleton`. */
-const statCell = (stat: QuizProgressStat, isSkeleton: boolean, showAnatomy: boolean): StatGridCardItem => {
+const statCell = (stat: QuizProgressStat, isSkeleton: boolean): StatGridCardItem => {
     const Icon = stat.icon
     return {
         key: stat.key,
         content: (
             <StackV
                 gap={2}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <>
                         <StackH
                             gap={2}
                             align="center"
-                            anatPart={showAnatomy ? "StackH" : undefined}
+
                             body={
                                 <>
                                     {Icon ? <Icon aria-hidden focusable="false" className="size-4 text-muted" /> : null}
-                                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={stat.label} showAnatomy={showAnatomy} />
+                                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={stat.label} />
                                 </>
                             }
                         />
-                        <Typography size="lg" weight="semibold" isSkeleton={isSkeleton} text={stat.value} showAnatomy={showAnatomy} />
+                        <Typography size="lg" weight="semibold" isSkeleton={isSkeleton} text={stat.value} />
                     </>
                 }
             />
@@ -181,8 +179,6 @@ const QuizProgressPanel = ({
     stats,
     sessions,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: QuizProgressPanelProps) => {
     const tabItems: Array<TabItem> = (Object.keys(VIEW_LABEL) as Array<QuizProgressView>).map((key) => ({
         key,
@@ -193,7 +189,7 @@ const QuizProgressPanel = ({
     // No run has ever happened — see the file header's judgment call.
     const isEmpty = !isSkeleton && sessions.length === 0
 
-    const statItems = (isSkeleton ? SKELETON_STATS : stats).map((stat) => statCell(stat, isSkeleton, showAnatomy))
+    const statItems = (isSkeleton ? SKELETON_STATS : stats).map((stat) => statCell(stat, isSkeleton))
 
     const historyItems: Array<SurfaceCardListItem> = (isSkeleton ? SKELETON_SESSIONS : sessions).map((session) => ({
         key: session.key,
@@ -207,47 +203,47 @@ const QuizProgressPanel = ({
         <>
             {/* `Tabs` carries no `anatPart` of its own (§ pattern, same as `Toolbar` in
                 `ContentModeNav`) — the wrapping div is the badge anchor. */}
-            <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
+            <div>
                 <Tabs
                     items={tabItems}
                     selectedKey={view}
                     onSelectionChange={(key) => onViewChange(key as QuizProgressView)}
                     ariaLabel={viewAriaLabel}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
             {view === "stats" ? (
                 // `StatGridCard` carries no `anatPart` of its own either — same wrap.
-                <div data-anat-part={showAnatomy ? "StatGridCard" : undefined}>
-                    <StatGridCard items={statItems} showAnatomy={showAnatomy} />
+                <div>
+                    <StatGridCard items={statItems} />
                 </div>
             ) : (
                 <SurfaceCardList
                     items={historyItems}
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "SurfaceCardList" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             )}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 label={label}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
                 body={() =>
                     isEmpty ? (
                         <EmptyState
                             icon={ChartLineIcon}
                             title="No practice sessions yet"
                             description="Start a session in the panel beside this one — your first run will show its stats and history here."
-                            anatPart={showAnatomy ? "EmptyState" : undefined}
+
                         />
                     ) : (
-                        <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={panelBody} />
+                        <StackV gap={6} body={panelBody} />
                     )
                 }
             />

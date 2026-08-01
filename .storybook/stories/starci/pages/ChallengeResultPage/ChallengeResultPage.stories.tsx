@@ -113,7 +113,7 @@ export const NoSelection: Story = {
     {...props}
     selectedAttemptId={undefined}
 />`,
-                        render: <ChallengeResultPage {...BASE} showAnatomy selectedAttemptId={undefined} />,
+                        render: <ChallengeResultPage {...BASE} selectedAttemptId={undefined} />,
                     },
                 ]}
             />
@@ -139,7 +139,7 @@ export const Passing: Story = {
     {...props}
     isPassing
 />`,
-                        render: <ChallengeResultPage {...BASE} showAnatomy isPassing />,
+                        render: <ChallengeResultPage {...BASE} isPassing />,
                     },
                 ]}
             />
@@ -166,7 +166,7 @@ export const Failing: Story = {
     isPassing={false}
     score={54}
 />`,
-                        render: <ChallengeResultPage {...BASE} showAnatomy isPassing={false} score={54} selectedAttemptId="a1" />,
+                        render: <ChallengeResultPage {...BASE} isPassing={false} score={54} selectedAttemptId="a1" />,
                     },
                 ]}
             />
@@ -189,7 +189,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "Every block mirrors itself, and the score/findings cluster reserves its height even though no attempt id has been selected yet — the same reasoning ContentPage documents for its own footer, so the page does not jump once the first attempt actually lands.",
                         code: "<ChallengeResultPage {...props} isSkeleton />",
-                        render: <ChallengeResultPage {...BASE} showAnatomy isSkeleton selectedAttemptId={undefined} findings={[]} relatedItems={[]} />,
+                        render: <ChallengeResultPage {...BASE} isSkeleton selectedAttemptId={undefined} findings={[]} relatedItems={[]} />,
                     },
                 ]}
             />
@@ -217,7 +217,7 @@ const WithHistoryExample = () => {
     return (
         <ChallengeResultPage
             {...BASE}
-            showAnatomy
+           
             selectedAttemptId={selectedId}
             onSelectAttempt={setSelectedId}
             attempts={HISTORY_ATTEMPTS.slice(0, 5)}

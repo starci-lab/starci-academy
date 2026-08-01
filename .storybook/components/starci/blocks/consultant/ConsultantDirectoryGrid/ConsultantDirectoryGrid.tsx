@@ -110,9 +110,7 @@ export interface ConsultantDirectoryGridProps {
     /** Accessible name for the directory region — the block has no visible heading of its own. */
     ariaLabel: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** How many placeholder tiles mirror the grid while the list hasn't resolved — ported from the real `ConsultantGrid`'s `SKELETON_COUNT`. */
@@ -137,8 +135,6 @@ const ConsultantDirectoryGrid = ({
     onOpenConsultant,
     emptyTitle,
     ariaLabel,
-    showAnatomy = false,
-    anatPart,
 }: ConsultantDirectoryGridProps) => {
     // Resolved-but-zero, matching the real `ConsultantGrid`'s Redux-driven gating
     // (`!consultants` = loading, `sortedConsultants.length === 0` = empty).
@@ -151,8 +147,8 @@ const ConsultantDirectoryGrid = ({
                 consultant={{ id: `skeleton-${index}`, fullName: "" }}
                 onOpen={NOOP}
                 isSkeleton
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "ConsultantCard" : undefined}
+
+
             />
         ),
     }))
@@ -163,38 +159,37 @@ const ConsultantDirectoryGrid = ({
             <ConsultantCard
                 consultant={consultant}
                 onOpen={onOpenConsultant}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "ConsultantCard" : undefined}
+
+
             />
         ),
     }))
 
     const emptyContent: AsyncContentEmptyProps = {
         title: emptyTitle,
-        anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-        showAnatomy,
+
     }
 
     return (
-        <div data-anat-part={anatPart} role="region" aria-label={ariaLabel}>
+        <div role="region" aria-label={ariaLabel}>
             <AsyncContent
                 isLoading={isLoading}
                 skeleton={
-                    <div data-anat-part={showAnatomy ? "Grid" : undefined}>
-                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} items={skeletonTiles} showAnatomy={showAnatomy} />
+                    <div>
+                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} items={skeletonTiles} />
                     </div>
                 }
                 isEmpty={isEmpty}
                 emptyContent={emptyContent}
-                showAnatomy={showAnatomy}
+
                 content={
-                    <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
+                    <StackV gap={4} body={
                         <>
                             {count !== undefined ? (
-                                <Typography size="sm" color="muted" text={countLabel(count)} showAnatomy={showAnatomy} />
+                                <Typography size="sm" color="muted" text={countLabel(count)} />
                             ) : null}
-                            <div data-anat-part={showAnatomy ? "Grid" : undefined}>
-                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} items={tiles} showAnatomy={showAnatomy} />
+                            <div>
+                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} items={tiles} />
                             </div>
                         </>
                     } />

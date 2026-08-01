@@ -176,8 +176,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ChallengeDeliverableList
-                                anatPart="ChallengeDeliverableList"
-                                showAnatomy
+
+                               
                                 items={BASE_ITEMS}
                                 onOpenGradingSettings={() => {}}
                             />

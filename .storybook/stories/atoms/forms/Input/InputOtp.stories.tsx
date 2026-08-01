@@ -43,7 +43,7 @@ export const Default: Story = {
                             code: "<InputOtp value={v} onValueChange={setV} length={6} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputOtp value={value} onValueChange={setValue} length={6} ariaLabel="Verification code" showAnatomy />
+                                    <InputOtp value={value} onValueChange={setValue} length={6} ariaLabel="Verification code" />
                                 </div>
                             ),
                         },
@@ -73,7 +73,7 @@ export const WithLabel: Story = {
                             code: "<InputOtp label=\"Verification code\" hint=\"Sent to your email\" value={v} onValueChange={setV} length={6} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputOtp label="Verification code" hint="Sent to your email" value={value} onValueChange={setValue} length={6} showAnatomy />
+                                    <InputOtp label="Verification code" hint="Sent to your email" value={value} onValueChange={setValue} length={6} />
                                 </div>
                             ),
                         },
@@ -103,7 +103,7 @@ export const Required: Story = {
                             code: "<InputOtp label=\"Verification code\" isRequired value={v} onValueChange={setV} length={6} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputOtp label="Verification code" isRequired value={value} onValueChange={setValue} length={6} showAnatomy />
+                                    <InputOtp label="Verification code" isRequired value={value} onValueChange={setValue} length={6} />
                                 </div>
                             ),
                         },
@@ -133,7 +133,7 @@ export const Filled: Story = {
                             code: "<InputOtp label=\"Verification code\" value=\"1234\" onValueChange={setV} length={6} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputOtp label="Verification code" value={value} onValueChange={setValue} length={6} showAnatomy />
+                                    <InputOtp label="Verification code" value={value} onValueChange={setValue} length={6} />
                                 </div>
                             ),
                         },
@@ -163,7 +163,7 @@ export const Disabled: Story = {
                             code: "<InputOtp label=\"Verification code\" isDisabled value=\"1234\" length={6} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputOtp label="Verification code" value={value} onValueChange={setValue} length={6} isDisabled showAnatomy />
+                                    <InputOtp label="Verification code" value={value} onValueChange={setValue} length={6} isDisabled />
                                 </div>
                             ),
                         },
@@ -193,7 +193,7 @@ export const Error: Story = {
                             code: "<InputOtp label=\"Verification code\" errorMessage=\"Incorrect code\" value=\"123\" length={6} />",
                             render: (
                                 <div data-tier="fixture" className="w-80">
-                                    <InputOtp label="Verification code" errorMessage="Incorrect code" value={value} onValueChange={setValue} length={6} showAnatomy />
+                                    <InputOtp label="Verification code" errorMessage="Incorrect code" value={value} onValueChange={setValue} length={6} />
                                 </div>
                             ),
                         },
@@ -221,7 +221,7 @@ export const Loading: Story = {
                         code: "<InputOtp label=\"Verification code\" isSkeleton length={6} />",
                         render: (
                             <div data-tier="fixture" className="w-80">
-                                <InputOtp label="Verification code" value="" onValueChange={() => {}} length={6} isSkeleton showAnatomy />
+                                <InputOtp label="Verification code" value="" onValueChange={() => {}} length={6} isSkeleton />
                             </div>
                         ),
                     },

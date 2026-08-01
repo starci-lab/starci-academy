@@ -109,7 +109,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
                                 attempts={MULTI_PAGE_ATTEMPTS}
                                 selectedAttemptId={selectedId}
                                 onSelect={setSelectedId}
-                                showAnatomy
+                               
                             />
                         ),
                     },

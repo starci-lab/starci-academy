@@ -35,7 +35,6 @@ export interface ScoreValueProps {
     /** `true` → render the skeleton mirror bar instead of the number. */
     isSkeleton?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -49,7 +48,7 @@ export interface ScoreValueProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ScoreValue" } as const
 
-export const ScoreValue = ({ points, unit = "points", isSkeleton = false, anatPart }: ScoreValueProps) => (
+export const ScoreValue = ({ points, unit = "points", isSkeleton = false }: ScoreValueProps) => (
     <Typography
         size="xs"
         weight="medium"

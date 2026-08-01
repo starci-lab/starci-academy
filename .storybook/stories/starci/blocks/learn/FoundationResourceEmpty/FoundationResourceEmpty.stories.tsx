@@ -46,8 +46,8 @@ export const Empty: Story = {
                         code: "<FoundationResourceEmpty />",
                         render: (
                             <FoundationResourceEmpty
-                                anatPart="FoundationResourceEmpty"
-                                showAnatomy
+
+                               
                             />
                         ),
                     },

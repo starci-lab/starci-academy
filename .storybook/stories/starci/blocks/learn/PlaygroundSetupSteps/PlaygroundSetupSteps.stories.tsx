@@ -132,8 +132,8 @@ export const Infra: Story = {
 />`,
                         render: (
                             <PlaygroundSetupSteps
-                                anatPart="PlaygroundSetupSteps"
-                                showAnatomy
+
+                               
                                 flavor="infra"
                                 engineName="Docker Desktop"
                                 osGuides={DOCKER_GUIDES}
@@ -250,8 +250,8 @@ export const Ollama: Story = {
 />`,
                         render: (
                             <PlaygroundSetupSteps
-                                anatPart="PlaygroundSetupSteps"
-                                showAnatomy
+
+                               
                                 flavor="ollama"
                                 engineName="Ollama"
                                 osGuides={OLLAMA_GUIDES}

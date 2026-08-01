@@ -109,7 +109,6 @@ export interface FoundationResourcePageProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -135,12 +134,11 @@ const FoundationResourcePage = ({
     onEnroll,
     isEmpty = false,
     isSkeleton = false,
-    showAnatomy = false,
 }: FoundationResourcePageProps) => {
     const resourceSection = (
         <>
             <FoundationHeader
-                anatPart="FoundationHeader"
+
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
@@ -149,17 +147,17 @@ const FoundationResourcePage = ({
                 tags={tags}
                 author={author}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <FoundationResourceBody
-                anatPart="FoundationResourceBody"
+
                 kind={KIND_TO_RESOURCE_KIND[kind]}
                 markdownBody={markdownBody}
                 linkTitle={linkTitle}
                 linkUrl={linkUrl}
                 onOpenLink={onOpenLink}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -167,21 +165,21 @@ const FoundationResourcePage = ({
     const resourceSections = (
         <>
             <TrialEnrollBanner
-                anatPart="TrialEnrollBanner"
+
                 isVisible={isEnrollmentKnown && !isEnrolled}
                 onEnroll={onEnroll}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {isEmpty ? (
-                <FoundationResourceEmpty anatPart="FoundationResourceEmpty" showAnatomy={showAnatomy} />
+                <FoundationResourceEmpty />
             ) : (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={resourceSection} />
+                <StackV gap={6} body={resourceSection} />
             )}
         </>
     )
 
-    const resourceBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={resourceSections} />
+    const resourceBody = <StackV gap={6} body={resourceSections} />
 
     return <Container size="md" padding={6} body={resourceBody} />
 }

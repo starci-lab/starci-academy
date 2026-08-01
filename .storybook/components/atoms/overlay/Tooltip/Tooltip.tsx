@@ -54,7 +54,6 @@ export interface TooltipBaseProps {
     /** Uncontrolled initial-open — panel starts open then follows hover. */
     defaultOpen?: boolean
     /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Tooltip.Trigger`/`Tooltip.Content`/`Tooltip.Arrow`) so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
@@ -73,21 +72,20 @@ const TooltipBase = ({
     delay = 200,
     isOpen,
     defaultOpen,
-    showAnatomy = false,
     classNames,
 }: TooltipBaseProps) => {
     return (
         <HeroTooltip data-tier="atom" data-component="Tooltip" delay={delay} isOpen={isOpen} defaultOpen={defaultOpen}>
-            <HeroTooltip.Trigger className={cn(classNames)} data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}>
+            <HeroTooltip.Trigger className={cn(classNames)}>
                 {children}
             </HeroTooltip.Trigger>
             <HeroTooltip.Content
                 placement={placement}
                 showArrow={showArrow}
                 className="max-w-[260px]"
-                data-anat-part={showAnatomy ? "Tooltip.Content" : undefined}
+
             >
-                {showArrow ? <HeroTooltip.Arrow data-anat-part={showAnatomy ? "Tooltip.Arrow" : undefined} /> : null}
+                {showArrow ? <HeroTooltip.Arrow /> : null}
                 {label}
             </HeroTooltip.Content>
         </HeroTooltip>

@@ -111,7 +111,7 @@ const ControlledDrawer = ({
                                 title={title}
                                 mode={withModeSwitch ? mode : undefined}
                                 onModeChange={withModeSwitch ? setMode : undefined}
-                                showAnatomy
+                               
                             />
                         ),
                     },

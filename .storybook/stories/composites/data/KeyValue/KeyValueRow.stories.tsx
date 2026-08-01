@@ -72,7 +72,7 @@ export const Default: Story = {
                         code: "<KeyValueRow label=\"Tuition\" value=\"$49.00\" />",
                         render: (
                             <div data-tier="fixture" className="max-w-sm">
-                                <KeyValueRow showAnatomy label="Tuition" value="$49.00" />
+                                <KeyValueRow label="Tuition" value="$49.00" />
                             </div>
                         ),
                     },
@@ -102,7 +102,7 @@ export const WithHint: Story = {
 />`,
                         render: (
                             <div data-tier="fixture" className="max-w-sm">
-                                <KeyValueRow showAnatomy label="Discount" hint="Valid through 12/31" value="-$8.00" />
+                                <KeyValueRow label="Discount" hint="Valid through 12/31" value="-$8.00" />
                             </div>
                         ),
                     },
@@ -128,7 +128,7 @@ export const Emphasis: Story = {
                         code: "<KeyValueRow emphasis label=\"Total\" value=\"$41.00\" />",
                         render: (
                             <div data-tier="fixture" className="max-w-sm">
-                                <KeyValueRow showAnatomy emphasis label="Total" value="$41.00" />
+                                <KeyValueRow emphasis label="Total" value="$41.00" />
                             </div>
                         ),
                     },
@@ -158,7 +158,7 @@ export const Copyable: Story = {
                         code: "<KeyValueRow label=\"Order code\" value=\"ORD-48213\" />",
                         render: (
                             <div data-tier="fixture" className="max-w-sm">
-                                <KeyValueRow showAnatomy label="Order code" value="ORD-48213" />
+                                <KeyValueRow label="Order code" value="ORD-48213" />
                             </div>
                         ),
                     },
@@ -168,7 +168,7 @@ export const Copyable: Story = {
                         code: "<KeyValueRow label=\"Order code\" value=\"ORD-48213\" copyable />",
                         render: (
                             <div data-tier="fixture" className="max-w-sm">
-                                <KeyValueRow showAnatomy label="Order code" value="ORD-48213" copyable />
+                                <KeyValueRow label="Order code" value="ORD-48213" copyable />
                             </div>
                         ),
                     },
@@ -194,7 +194,7 @@ export const Skeleton: Story = {
                         code: "<KeyValueRow isSkeleton hint=\"Valid through 12/31\" />",
                         render: (
                             <div data-tier="fixture" className="max-w-sm">
-                                <KeyValueRow isSkeleton hint="Valid through 12/31" anatPart="KeyValueRow" showAnatomy />
+                                <KeyValueRow isSkeleton hint="Valid through 12/31" />
                             </div>
                         ),
                     },

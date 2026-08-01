@@ -55,8 +55,8 @@ export const ResumeAvailable: Story = {
 />`,
                         render: (
                             <MindMapContinueButton
-                                anatPart="MindMapContinueButton"
-                                showAnatomy
+
+                               
                                 resumeHref="/courses/devops/learn/optimizing-dockerfiles"
                                 allContentDone={false}
                                 continueAriaLabel="Go to the next content"
@@ -91,8 +91,8 @@ export const AllDone: Story = {
 />`,
                         render: (
                             <MindMapContinueButton
-                                anatPart="MindMapContinueButton"
-                                showAnatomy
+
+                               
                                 resumeHref={null}
                                 allContentDone
                                 continueAriaLabel="Go to the next content"
@@ -127,8 +127,8 @@ export const Skeleton: Story = {
 />`,
                         render: (
                             <MindMapContinueButton
-                                anatPart="MindMapContinueButton"
-                                showAnatomy
+
+                               
                                 resumeHref={null}
                                 allContentDone={false}
                                 continueAriaLabel="Go to the next content"

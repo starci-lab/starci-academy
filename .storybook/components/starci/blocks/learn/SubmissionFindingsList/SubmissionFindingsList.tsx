@@ -150,9 +150,7 @@ export interface SubmissionFindingsListProps {
     /** `true` → a parent-forced skeleton paint, same branch as `isLoading` (see file header). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 const EMPTY_LABEL_DEFAULT = "No feedback yet"
@@ -181,27 +179,27 @@ const buildLocationHref = (location: string, repositoryUrl?: string): string | u
  * title text — rides `titleStart`, not composed into `title` itself (§ same
  * rule as `ChallengeDeliverableList`'s status icon).
  */
-const findingIcon = (finding: SubmissionFinding, showAnatomy: boolean): ReactNode => {
+const findingIcon = (finding: SubmissionFinding): ReactNode => {
     const { icon: Icon, toneClassName } = SEVERITY_VISUAL[finding.severity]
     return (
         <Icon
             aria-hidden
             focusable="false"
             weight="bold"
-            data-anat-part={showAnatomy ? "SeverityIcon" : undefined}
+
             className={cn("size-3.5 shrink-0", toneClassName)}
         />
     )
 }
 
 /** Trailing trigger slot: the finding's file location, as a quiet chip. */
-const findingLocationChip = (finding: SubmissionFinding, showAnatomy: boolean): ReactNode | undefined =>
+const findingLocationChip = (finding: SubmissionFinding): ReactNode | undefined =>
     finding.location ? (
         <Chip
             tone="default"
             text={finding.location}
             classNames={["shrink-0"]}
-            showAnatomy={showAnatomy}
+
         />
     ) : undefined
 
@@ -210,13 +208,13 @@ const findingLocationChip = (finding: SubmissionFinding, showAnatomy: boolean): 
  * suggested fix — each optional, each its own row (`related`: independent facts
  * about one finding, not a single unit of meaning).
  */
-const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefined, showAnatomy: boolean): ReactNode => {
+const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefined): ReactNode => {
     const locationHref = finding.location ? buildLocationHref(finding.location, repositoryUrl) : undefined
     const locationRow = finding.location ? (
         <StackH
             gap={2}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <MapPinIcon aria-hidden focusable="false" weight="bold" className="size-3 shrink-0 text-muted" />
@@ -230,10 +228,10 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                             target="_blank"
                             rel="noopener noreferrer"
                             text={finding.location}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : (
-                        <Typography size="xs" color="muted" text={finding.location} showAnatomy={showAnatomy} />
+                        <Typography size="xs" color="muted" text={finding.location} />
                     )}
                 </>
             }
@@ -243,7 +241,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
         <StackH
             gap={2}
             align="start"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <LightbulbIcon aria-hidden focusable="false" weight="bold" className="size-3.5 shrink-0 text-muted" />
@@ -251,7 +249,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                         <MarkdownContent
                             source={finding.suggestion}
                             measure="compact"
-                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                         />
                     </div>
                 </>
@@ -261,7 +259,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
     return (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {finding.detail ? (
@@ -269,7 +267,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                             <MarkdownContent
                                 source={finding.detail}
                                 measure="compact"
-                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                             />
                         </div>
                     ) : null}
@@ -300,8 +298,6 @@ const SubmissionFindingsList = ({
     onRetry,
     retryLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: SubmissionFindingsListProps) => {
     // Error outranks even a stale loading/skeleton flag — same priority order
     // `AsyncContent` itself documents ("error → loading → empty → content") — so a
@@ -314,10 +310,10 @@ const SubmissionFindingsList = ({
         ? []
         : sortFindings(findings).map((finding) => ({
             id: finding.id,
-            titleStart: findingIcon(finding, showAnatomy),
+            titleStart: findingIcon(finding),
             title: finding.message,
-            titleEnd: findingLocationChip(finding, showAnatomy),
-            body: findingPanel(finding, repositoryUrl, showAnatomy),
+            titleEnd: findingLocationChip(finding),
+            body: findingPanel(finding, repositoryUrl),
         }))
 
     // Both branches render BOUNDED inside `SurfaceCard.Accordion`'s own `emptyState`
@@ -329,28 +325,28 @@ const SubmissionFindingsList = ({
             title={ERROR_TITLE}
             onRetry={onRetry}
             retryLabel={retryLabel}
-            anatPart={showAnatomy ? "AsyncContentError" : undefined}
+
         />
     )
 
     const PlainEmptyState = () => (
         <AsyncContentEmpty
             title={emptyLabel ?? EMPTY_LABEL_DEFAULT}
-            anatPart={showAnatomy ? "AsyncContentEmpty" : undefined}
+
         />
     )
 
     const emptyState = error ? ErrorEmptyState : resolvedEmpty ? PlainEmptyState : undefined
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCardAccordion
                 label={label}
                 items={items}
                 isSkeleton={skeleton}
                 emptyState={emptyState}
-                anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                showAnatomy={showAnatomy}
+
+
             />
         </div>
     )

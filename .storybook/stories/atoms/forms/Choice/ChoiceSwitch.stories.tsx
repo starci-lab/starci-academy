@@ -69,7 +69,7 @@ export const Default: Story = {
                             code: "<ChoiceSwitch isSelected={value} onValueChange={setValue} label=\"Dark mode\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <ChoiceSwitch isSelected={value} onValueChange={setValue} label="Dark mode" showAnatomy />
+                                    <ChoiceSwitch isSelected={value} onValueChange={setValue} label="Dark mode" />
                                 </div>
                             ),
                         },
@@ -100,7 +100,7 @@ export const Selected: Story = {
                             code: "<ChoiceSwitch isSelected onValueChange={setValue} label=\"Dark mode\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <ChoiceSwitch isSelected={value} onValueChange={setValue} label="Dark mode" showAnatomy />
+                                    <ChoiceSwitch isSelected={value} onValueChange={setValue} label="Dark mode" />
                                 </div>
                             ),
                         },
@@ -130,7 +130,7 @@ export const Sizes: Story = {
                             why: "The track and thumb render at the smallest scale while the label keeps its normal text size. This scale fits a dense settings list where many rows of switches share one screen.",
                             code: "<ChoiceSwitch size=\"sm\" isSelected onValueChange={setValue} label=\"Dark mode\" />",
                             render: (
-                                <ChoiceSwitch size="sm" isSelected={value} onValueChange={setValue} label="Dark mode (sm)" showAnatomy />
+                                <ChoiceSwitch size="sm" isSelected={value} onValueChange={setValue} label="Dark mode (sm)" />
                             ),
                         },
                         {
@@ -138,7 +138,7 @@ export const Sizes: Story = {
                             why: "The track and thumb render at the default scale, the size ChoiceSwitch takes whenever size is left unset. This is the resting scale for an ordinary settings row with no density pressure.",
                             code: "<ChoiceSwitch isSelected onValueChange={setValue} label=\"Dark mode\" />   // size defaults to md",
                             render: (
-                                <ChoiceSwitch size="md" isSelected={value} onValueChange={setValue} label="Dark mode (md)" showAnatomy />
+                                <ChoiceSwitch size="md" isSelected={value} onValueChange={setValue} label="Dark mode (md)" />
                             ),
                         },
                         {
@@ -146,7 +146,7 @@ export const Sizes: Story = {
                             why: "The track and thumb render at the largest scale while the label keeps its normal text size. This scale suits a spacious page or a touch target that needs to stand out.",
                             code: "<ChoiceSwitch size=\"lg\" isSelected onValueChange={setValue} label=\"Dark mode\" />",
                             render: (
-                                <ChoiceSwitch size="lg" isSelected={value} onValueChange={setValue} label="Dark mode (lg)" showAnatomy />
+                                <ChoiceSwitch size="lg" isSelected={value} onValueChange={setValue} label="Dark mode (lg)" />
                             ),
                         },
                     ]}
@@ -181,7 +181,7 @@ export const WithHint: Story = {
                                         onValueChange={setValue}
                                         label="Dark mode"
                                         hint="Eases eye strain when using the app at night."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -218,7 +218,7 @@ export const Required: Story = {
                                         onValueChange={setValue}
                                         label="Enable two-factor authentication"
                                         isRequired
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -248,7 +248,7 @@ export const Disabled: Story = {
                         code: "<ChoiceSwitch isDisabled isSelected onValueChange={setValue} label=\"Autosave\" />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ChoiceSwitch isSelected onValueChange={() => {}} label="Autosave" isDisabled showAnatomy />
+                                <ChoiceSwitch isSelected onValueChange={() => {}} label="Autosave" isDisabled />
                             </div>
                         ),
                     },
@@ -282,7 +282,7 @@ export const Error: Story = {
                                         onValueChange={setValue}
                                         label="Security alerts"
                                         errorMessage="Turn this on to get alerted about suspicious activity."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -311,7 +311,7 @@ export const Loading: Story = {
                         why: "A shimmer track and a shimmer label bar stand at the smallest scale instead of the real switch. The shimmer tracks the sm scale, so a dense row of switches does not jump once the real content lands.",
                         code: "<ChoiceSwitch size=\"sm\" isSkeleton label=\"Dark mode\" />",
                         render: (
-                            <ChoiceSwitch size="sm" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy />
+                            <ChoiceSwitch size="sm" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton />
                         ),
                     },
                     {
@@ -319,7 +319,7 @@ export const Loading: Story = {
                         why: "A shimmer track and a shimmer label bar stand at the default scale instead of the real switch. The shimmer tracks the md scale, so an ordinary switch row does not jump once the real content lands.",
                         code: "<ChoiceSwitch isSkeleton label=\"Dark mode\" />   // size defaults to md",
                         render: (
-                            <ChoiceSwitch size="md" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy />
+                            <ChoiceSwitch size="md" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton />
                         ),
                     },
                     {
@@ -327,7 +327,7 @@ export const Loading: Story = {
                         why: "A shimmer track and a shimmer label bar stand at the largest scale instead of the real switch. The shimmer tracks the lg scale, so a spacious switch row does not jump once the real content lands.",
                         code: "<ChoiceSwitch size=\"lg\" isSkeleton label=\"Dark mode\" />",
                         render: (
-                            <ChoiceSwitch size="lg" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy />
+                            <ChoiceSwitch size="lg" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton />
                         ),
                     },
                 ]}

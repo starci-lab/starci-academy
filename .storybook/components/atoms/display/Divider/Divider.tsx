@@ -50,7 +50,6 @@ export interface DividerBaseProps {
      */
     shape?: DividerShape
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -68,7 +67,6 @@ const DividerBase = ({
     variant = "default",
     label,
     shape = "rule",
-    showAnatomy = false,
     classNames,
 }: DividerBaseProps) => {
     // An inline mark: a glyph on the surrounding text's baseline, not a Separator
@@ -80,7 +78,7 @@ const DividerBase = ({
                 aria-hidden
                 data-tier="atom"
                 data-component="Divider"
-                data-anat-part={showAnatomy ? "Divider" : undefined}
+
                 className={cn("text-current select-none", classNames)}
             >
                 ·
@@ -94,13 +92,13 @@ const DividerBase = ({
                 data-tier="atom"
                 data-component="Divider"
                 className={cn("flex w-full items-center gap-3", classNames)}
-                data-anat-part={showAnatomy ? "Divider" : undefined}
+
             >
                 <HeroSeparator
                     orientation="horizontal"
                     variant={variant}
                     className="flex-1"
-                    data-anat-part={showAnatomy ? "Separator" : undefined}
+
                 />
                 {/* Caller slot — `label` is free-form content the caller passed in,
                     not part of Divider's own anatomy, so this span stays unbadged. */}
@@ -111,7 +109,7 @@ const DividerBase = ({
                     orientation="horizontal"
                     variant={variant}
                     className="flex-1"
-                    data-anat-part={showAnatomy ? "Separator" : undefined}
+
                 />
             </div>
         )
@@ -123,7 +121,7 @@ const DividerBase = ({
             orientation={orientation}
             variant={variant}
             className={cn(classNames)}
-            data-anat-part={showAnatomy ? "Divider" : undefined}
+
         />
     )
 }

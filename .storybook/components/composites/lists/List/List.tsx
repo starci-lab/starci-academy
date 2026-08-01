@@ -107,10 +107,9 @@ export interface ListRowProps {
     classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (leading / title-text / meta-trailing
-     * cluster) emits `data-anat-part="<name>"` so a BlockAnatomy panel can badge
+     * cluster) emits `` so a BlockAnatomy panel can badge
      * it on-render. Off by default (production).
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -133,7 +132,6 @@ const Row = ({
     href,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
 }: ListRowProps) => {
     // Interactivity is a LOADED-state affordance only — a loading row is inert,
     // same as the old separate `RowSkeleton` never wired a role/href/onClick.
@@ -166,7 +164,7 @@ const Row = ({
                 subtitle={subtitle}
                 isSkeleton={isSkeleton}
                 truncate
-                anatPart={showAnatomy ? "TitledText" : undefined}
+
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
                 <StackH
@@ -272,7 +270,6 @@ export interface ListLabeledProps {
     /** Layout utilities on the outer section, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -293,7 +290,6 @@ const Labeled = ({
     isSkeleton = false,
     skeletonRows = 3,
     classNames,
-    showAnatomy = false,
 }: ListLabeledProps) => {
     // Skeleton placeholder rows go through the SAME `Row` the live list renders —
     // no second hand-built row shape to keep in sync (COMPOSITE-10). `title`/
@@ -301,11 +297,11 @@ const Labeled = ({
     // `isSkeleton`, only uses their presence to decide the bar count.
     const rows = isSkeleton
         ? Array.from({ length: skeletonRows }, (_unused, index) => (
-            <Row key={index} title="—" subtitle="—" isSkeleton showAnatomy={showAnatomy} />
+            <Row key={index} title="—" subtitle="—" isSkeleton />
         ))
         : items.length === 0
             ? (EmptyState ? <EmptyState /> : null)
-            : items.map(({ key, ...item }) => <Row key={key} {...item} showAnatomy={showAnatomy} />)
+            : items.map(({ key, ...item }) => <Row key={key} {...item} />)
 
     return (
         // `as="section"` keeps the landmark tag while still routing the seam through the
@@ -357,12 +353,10 @@ export interface ListMetaProps {
     /** Layout utilities on the row root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * Dev/spec: tag this row's own direct parts (`Chip` / `Meta`) so a
      * BlockAnatomy panel can badge them.
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -374,11 +368,11 @@ export interface ListMetaProps {
  *
  * @param props - {@link ListMetaProps}
  */
-const Meta = ({ chip: Chip, items, classNames, anatPart, showAnatomy = false }: ListMetaProps) => (
+const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
     <StackH
         gap={3}
         classNames={["min-w-0", ...(classNames ?? [])]}
-        anatPart={anatPart}
+
         body={
             <>
                 {Chip ? <span className="shrink-0"><Chip /></span> : null}
@@ -401,7 +395,7 @@ const Meta = ({ chip: Chip, items, classNames, anatPart, showAnatomy = false }: 
                         color="muted"
                         truncate
                         classNames={["min-w-0"]}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : null}
             </>
@@ -446,7 +440,6 @@ export interface ListToggleRowProps {
      * emits a `data-anat-part` so the anatomy panel can anchor badges. No
      * visual effect.
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -469,7 +462,6 @@ const ToggleRow = ({
     isDisabled = false,
     classNames,
     isSkeleton = false,
-    showAnatomy = false,
 }: ListToggleRowProps) => (
     // One outer shape whether loading or not: same wrapper, same `TitledText` call
     // (it forwards `isSkeleton` to its own atom — COMPOSITE-10). Only the trailing
@@ -493,7 +485,7 @@ const ToggleRow = ({
                         subtitle={description}
                         isSkeleton={isSkeleton}
                         classNames={["flex-1"]}
-                        anatPart={showAnatomy ? "TitledText" : undefined}
+
                     />
                     {isSkeleton ? (
                         <ChoiceSwitch
@@ -501,7 +493,7 @@ const ToggleRow = ({
                             isSelected={false}
                             onValueChange={() => undefined}
                             classNames={["shrink-0"]}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : (
                         <Switch
@@ -510,7 +502,7 @@ const ToggleRow = ({
                             isDisabled={isDisabled}
                             onChange={onCheckedChange}
                             aria-label={label}
-                            data-anat-part={showAnatomy ? "Switch" : undefined}
+
                         >
                             <Switch.Content>
                                 <Switch.Control>

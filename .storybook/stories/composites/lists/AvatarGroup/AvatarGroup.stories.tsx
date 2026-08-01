@@ -80,7 +80,7 @@ export const Default: Story = {
                         name: "items = 4 members, no max/total",
                         why: "Four avatars render in a row, each riding a ring so it separates from the one underneath it. Four fit without any cap, so no plus-N chip shows up at the end.",
                         code: "<AvatarGroup items={[{ key: \"u1\", name: \"Noah\", src: \"…\" }, …]} />",
-                        render: <AvatarGroup items={members.slice(0, 4)} showAnatomy />,
+                        render: <AvatarGroup items={members.slice(0, 4)} />,
                     },
                 ]}
             />
@@ -105,7 +105,7 @@ export const Overflow: Story = {
                         name: "max = 3, items = 6 members",
                         why: "The row cuts to three avatars and a plus-3 chip grows at the end. `max` caps a row the caller already holds in full.",
                         code: "<AvatarGroup max={3} items={/* 6 members */} />",
-                        render: <AvatarGroup max={3} items={members} showAnatomy />,
+                        render: <AvatarGroup max={3} items={members} />,
                     },
                     {
                         name: "total = 12, items = 4 loaded",
@@ -133,7 +133,7 @@ export const Sizes: Story = {
                         name: "size = sm, items = 3",
                         why: "All three avatars render at the smallest tier. This size suits compact contexts like table rows or comment threads.",
                         code: "<AvatarGroup size=\"sm\" items={[…]} />",
-                        render: <AvatarGroup size="sm" items={members.slice(0, 3)} showAnatomy />,
+                        render: <AvatarGroup size="sm" items={members.slice(0, 3)} />,
                     },
                     {
                         name: "size = md, items = 3",
@@ -177,7 +177,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, items = 4 members, no max",
                         why: "All four slots mirror into plain circle shimmers and no chip shows up, matching `Default`'s no-overflow shape. Nothing is cut here, so the resting shape carries no plus-N placeholder either.",
                         code: "<AvatarGroup isSkeleton items={/* 4 members */} />",
-                        render: <AvatarGroup isSkeleton items={members.slice(0, 4)} showAnatomy />,
+                        render: <AvatarGroup isSkeleton items={members.slice(0, 4)} />,
                     },
                     {
                         name: "isSkeleton = true, max = 4, items = 6 members",

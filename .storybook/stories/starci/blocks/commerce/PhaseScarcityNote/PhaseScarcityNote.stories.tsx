@@ -79,7 +79,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <PhaseScarcityNote
-                                showAnatomy
+                               
                                 currentPhase={PricingPhase.EarlyBird}
                                 seatsRemaining={14}
                                 nextPhasePriceVnd={2_490_000}
@@ -96,7 +96,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <PhaseScarcityNote
-                                showAnatomy
+                               
                                 currentPhase={PricingPhase.Pioneer}
                                 seatsRemaining={3}
                                 nextPhasePriceVnd={1_990_000}
@@ -113,7 +113,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <PhaseScarcityNote
-                                showAnatomy
+                               
                                 currentPhase={PricingPhase.Regular}
                                 seatsRemaining={5}
                                 nextPhasePriceVnd={null}
@@ -130,7 +130,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <PhaseScarcityNote
-                                showAnatomy
+                               
                                 currentPhase={PricingPhase.Regular}
                                 seatsRemaining={null}
                                 nextPhasePriceVnd={2_990_000}
@@ -158,7 +158,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "There is no honest phase/seat/price fact to show yet, so the shimmer is one plain bar rather than mirroring the icon + two-clause `Cluster` shape the real line eventually takes.",
                         code: "<PhaseScarcityNote isSkeleton />",
-                        render: <PhaseScarcityNote isSkeleton anatPart="PhaseScarcityNote" showAnatomy />,
+                        render: <PhaseScarcityNote isSkeleton />,
                     },
                 ]}
             />

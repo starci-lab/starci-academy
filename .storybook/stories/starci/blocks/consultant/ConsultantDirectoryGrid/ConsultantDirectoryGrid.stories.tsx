@@ -91,8 +91,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ConsultantDirectoryGrid
-                                anatPart="ConsultantDirectoryGrid"
-                                showAnatomy
+
+                               
                                 isLoading
                                 onOpenConsultant={() => {}}
                                 emptyTitle="No consultants yet for this course"

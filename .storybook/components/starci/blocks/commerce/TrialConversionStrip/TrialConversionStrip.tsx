@@ -59,13 +59,11 @@ export interface TrialConversionStripProps {
     /** Layout utilities on the root, from the closed positioning union (SurfaceCard's `className` door was deleted, COMPOSITE-4). */
     classNames?: Array<AllowedClassName>
     /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
-    showAnatomy?: boolean
     /**
      * Anatomy tag for THIS block itself — so the caller can badge it as ONE node (§11a).
      * Without this prop, the screen has to wrap `<div data-anat-part>` around it,
      * meaning the screen adds a DOM node that doesn't belong to the real tree (§14b).
      */
-    anatPart?: string
 }
 
 /**
@@ -83,8 +81,6 @@ const TrialConversionStripBase = ({
     isSkeleton = false,
     onEnroll,
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: TrialConversionStripProps) => {
     const hasFreeLeft = freeLessonsRemaining > 0
 
@@ -96,13 +92,13 @@ const TrialConversionStripBase = ({
         : undefined
 
     const headerRow = (
-        <StackH gap={4} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={(
+        <StackH gap={4} align="center" body={(
             <>
                 <IconTile
                     icon={LockIcon}
                     tone="accent"
                     size="sm"
-                    showAnatomy={showAnatomy}
+
                 />
                 {/* The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
                 ONE frame, not two separate `Typography` (decided 2026-07-27).
@@ -114,7 +110,7 @@ const TrialConversionStripBase = ({
                 one step larger than the row's standard scale. */}
                 <TitledText
                     classNames={["flex-1"]}
-                    anatPart={showAnatomy ? "TitledText" : undefined}
+
                     isSkeleton={isSkeleton && !price}
                     title="Free trial — unlock the full course"
                     subtitle={
@@ -139,14 +135,14 @@ const TrialConversionStripBase = ({
     // card reads 24/12/12/24 — two groups, which is what it is. It was `tight`
     // (1) before either fix, a step §10b reserves for pairs inside an atom.
     const priceColumn = (
-        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
+        <StackV gap={4} body={
             isSkeleton && !price ? (
                 // 2026-07-12: the CTA card renders instantly once the outline
                 // resolves, but the price is a second fetch — mirror the price
                 // line instead of showing an empty gap until it lands.
                 <>
-                    <Typography size="h4" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
-                    <Typography size="xs" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
+                    <Typography size="h4" isSkeleton classNames={["w-1/3"]} />
+                    <Typography size="xs" isSkeleton classNames={["w-1/2"]} />
                 </>
             ) : price?.discountedPriceVnd != null ? (
                 <>
@@ -154,10 +150,10 @@ const TrialConversionStripBase = ({
                         discounted={price.discountedPriceVnd}
                         original={price.originalPriceVnd}
                         breakdown={breakdown}
-                        anatPart={showAnatomy ? "PriceTagProminent" : undefined}
+
                     />
                     <PhaseScarcityNote
-                        anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
+
                         currentPhase={price.currentPhase}
                         seatsRemaining={price.seatsRemainingInCurrentPhase}
                         nextPhasePriceVnd={price.nextPhasePriceVnd}
@@ -187,7 +183,7 @@ const TrialConversionStripBase = ({
             align="end"
             justify="between"
             wrap
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={(
                 <>
                     {priceColumn}
@@ -204,7 +200,7 @@ const TrialConversionStripBase = ({
                         suffixIcon={ArrowRightIcon}
                         iconSlide
                         onPress={onEnroll}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             )}
@@ -223,10 +219,10 @@ const TrialConversionStripBase = ({
             // `anatPart` from the PARENT wins; running in ITS OWN story it names itself
             // so the Deps tree can see the surface FRAME (otherwise the root node is
             // missing and the tree reads as if the block still drew its own surface).
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+
             classNames={classNames}
             body={() => (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={(
+                <StackV gap={6} body={(
                     <>
                         {headerRow}
                         {footerRow}

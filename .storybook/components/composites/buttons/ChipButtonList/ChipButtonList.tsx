@@ -60,9 +60,7 @@ export interface ChipButtonListProps {
     isSkeleton?: boolean
     /** How many skeleton items to render when `isSkeleton` (the real `items` count isn't known yet). Defaults to 3. */
     skeletonCount?: number
-    anatPart?: string
     /** `true` → emit `data-anat-part` on every part (Button/icon/Typography) for {@link BlockAnatomy}. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -100,8 +98,6 @@ export const ChipButtonList = ({
     direction = "wrap",
     isSkeleton = false,
     skeletonCount = 3,
-    anatPart,
-    showAnatomy = false,
     classNames,
 }: ChipButtonListProps) => {
     const resolvedVariant = variant ?? DEFAULT_VARIANT[direction]
@@ -119,7 +115,7 @@ export const ChipButtonList = ({
                 variant={resolvedVariant}
                 size={direction === "wrap" ? "sm" : "md"}
                 className={ITEM_CLS[direction]}
-                anatPart={showAnatomy ? "Button" : undefined}
+
             />
         ))
         : items.map((item, index) => {
@@ -132,7 +128,7 @@ export const ChipButtonList = ({
                     className={ITEM_CLS[direction]}
                     onPress={item.onPress}
                     isDisabled={item.isDisabled}
-                    anatPart={showAnatomy ? "Button" : undefined}
+
                 >
                     {Icon ? (
                         <span aria-hidden className="[&_svg]:size-4 shrink-0 text-muted">
@@ -144,7 +140,7 @@ export const ChipButtonList = ({
                             weight="medium"
                             truncate
                             classNames={["min-w-0", "flex-1"]}
-                            showAnatomy={showAnatomy}
+
                             text={item.label}
                         />
                     ) : (
@@ -157,7 +153,7 @@ export const ChipButtonList = ({
     return (
         <div
             className={cn(CONTAINER_CLS[direction], classNames)}
-            data-anat-part={anatPart}
+
             data-tier="composite"
             data-component="ChipButtonList"
             data-principles={direction === "wrap" ? "flex-action" : undefined}

@@ -84,7 +84,6 @@ export interface DisclosureBaseProps {
      * loading `Skeleton`) emits a `data-anat-part` so the anatomy panel can
      * anchor badges. No visual effect.
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -107,7 +106,6 @@ const Base = ({
     isDisabled = false,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
 }: DisclosureBaseProps) => {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
     const isControlled = isOpen !== undefined

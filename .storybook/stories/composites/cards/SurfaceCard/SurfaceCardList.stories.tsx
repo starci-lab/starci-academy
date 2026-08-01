@@ -55,9 +55,9 @@ const profileRow = (initials: string, title: string, description: string) => (
     </div>
 )
 const courseItems: ReadonlyArray<SurfaceCardListItem> = [
-    { key: "fundamentals", title: "Programming fundamentals", subtitle: "12 lessons · 4 hours", onPress: () => {}, trailing: Caret, anatPart: "Row" },
-    { key: "dsa", title: "Data structures & algorithms", subtitle: "18 lessons · 7 hours", onPress: () => {}, trailing: Caret, anatPart: "Row" },
-    { key: "system-design", title: "System design", subtitle: "9 lessons · 5 hours", onPress: () => {}, trailing: Caret, anatPart: "Row" },
+    { key: "fundamentals", title: "Programming fundamentals", subtitle: "12 lessons · 4 hours", onPress: () => {}, trailing: Caret },
+    { key: "dsa", title: "Data structures & algorithms", subtitle: "18 lessons · 7 hours", onPress: () => {}, trailing: Caret },
+    { key: "system-design", title: "System design", subtitle: "9 lessons · 5 hours", onPress: () => {}, trailing: Caret },
 ]
 /**
  * `EmptyState` is a REAL DEP of the `Empty` leaf (its own story, clickable), it
@@ -89,7 +89,7 @@ export const Default: Story = {
     { key: "dsa", title: "Data structures & algorithms", subtitle: "18 lessons · 7 hours", onPress: () => {}, trailing: caret },
   ]}
 />`,
-                        render: <SurfaceCardList items={courseItems} showAnatomy />,
+                        render: <SurfaceCardList items={courseItems} />,
                     },
                 ]}
             />
@@ -112,7 +112,7 @@ export const WithLabel: Story = {
   label="My learning path"
   items={[…]}
 />`,
-                        render: <SurfaceCardList label="My learning path" items={courseItems} showAnatomy />,
+                        render: <SurfaceCardList label="My learning path" items={courseItems} />,
                     },
                 ]}
             />
@@ -153,7 +153,7 @@ export const LeadingMeta: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
                                     {
                                         key: "once",
@@ -162,7 +162,7 @@ export const LeadingMeta: Story = {
                                         subtitle: "Pay the full tuition now",
                                         meta: SaveTenPercentMeta,
                                         onPress: () => {},
-                                        anatPart: "Row",
+                                        
                                     },
                                     {
                                         key: "installments",
@@ -171,7 +171,7 @@ export const LeadingMeta: Story = {
                                         subtitle: "No interest",
                                         trailing: Caret,
                                         onPress: () => {},
-                                        anatPart: "Row",
+                                        
                                     },
                                 ]}
                             />
@@ -206,19 +206,19 @@ export const FreeForm: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
                                     {
                                         key: "starci",
                                         content: () => profileRow("SC", "StarCi Academy", "Learn fullstack, system design, and DevOps along an interview-prep path."),
                                         onPress: () => {},
-                                        anatPart: "Item",
+                                        
                                     },
                                     {
                                         key: "quang",
                                         content: () => profileRow("QN", "Mentor Quang", "Fullstack mentor — reviews projects and runs mock interviews."),
                                         onPress: () => {},
-                                        anatPart: "Item",
+                                        
                                     },
                                 ]}
                             />
@@ -249,10 +249,10 @@ export const Selected: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
-                                    { key: "vi", title: "Vietnamese", onPress: () => {}, anatPart: "Row" },
-                                    { key: "en", title: "English", selected: true, onPress: () => {}, anatPart: "Row" },
+                                    { key: "vi", title: "Vietnamese", onPress: () => {} },
+                                    { key: "en", title: "English", selected: true, onPress: () => {} },
                                 ]}
                             />
                         ),
@@ -282,16 +282,16 @@ export const Disabled: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
-                                    { key: "pdf", title: "Export PDF invoice", onPress: () => {}, anatPart: "Row" },
+                                    { key: "pdf", title: "Export PDF invoice", onPress: () => {} },
                                     {
                                         key: "xlsx",
                                         title: "Export Excel report (coming soon)",
                                         subtitle: "Not yet available on the current plan",
                                         isDisabled: true,
                                         onPress: () => {},
-                                        anatPart: "Row",
+                                        
                                     },
                                 ]}
                             />
@@ -321,10 +321,10 @@ export const HoverUnderline: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
-                                    { key: "dropout", title: "Why do learners drop out of courses?", subtitle: "12.4k reads", hover: "underline", href: "#", anatPart: "Row" },
-                                    { key: "senior", title: "The path to becoming a Senior Backend engineer", subtitle: "9.1k reads", hover: "underline", href: "#", anatPart: "Row" },
+                                    { key: "dropout", title: "Why do learners drop out of courses?", subtitle: "12.4k reads", hover: "underline", href: "#" },
+                                    { key: "senior", title: "The path to becoming a Senior Backend engineer", subtitle: "9.1k reads", hover: "underline", href: "#" },
                                 ]}
                             />
                         ),
@@ -357,11 +357,11 @@ export const Static: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
-                                    { key: "resilience", title: "Resilience", meta: ResilienceMeta, anatPart: "Row" },
-                                    { key: "errors", title: "Error Handling", meta: ErrorHandlingMeta, anatPart: "Row" },
-                                    { key: "authz", title: "Authorization", meta: AuthorizationMeta, anatPart: "Row" },
+                                    { key: "resilience", title: "Resilience", meta: ResilienceMeta },
+                                    { key: "errors", title: "Error Handling", meta: ErrorHandlingMeta },
+                                    { key: "authz", title: "Authorization", meta: AuthorizationMeta },
                                 ]}
                             />
                         ),
@@ -388,9 +388,9 @@ export const Verdict: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
-                                    { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {}, anatPart: "Row" },
+                                    { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {} },
                                 ]}
                             />
                         ),
@@ -403,9 +403,9 @@ export const Verdict: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
-                                    { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {}, anatPart: "Row" },
+                                    { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {} },
                                 ]}
                             />
                         ),
@@ -418,9 +418,9 @@ export const Verdict: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
+                               
                                 items={[
-                                    { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {}, anatPart: "Row" },
+                                    { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {} },
                                 ]}
                             />
                         ),
@@ -447,8 +447,8 @@ export const SingleRow: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                                showAnatomy
-                                items={[{ key: "only", title: "Just one item", subtitle: "The separator hides itself on the last row", onPress: () => {}, trailing: Caret, anatPart: "Row" }]}
+                               
+                                items={[{ key: "only", title: "Just one item", subtitle: "The separator hides itself on the last row", onPress: () => {}, trailing: Caret }]}
                             />
                         ),
                     },
@@ -464,7 +464,7 @@ const CoursesEmptyState = () => (
         title="No courses yet"
         description="Enroll in a course to see it here."
         action={<Button data-tier="fixture" variant="primary" size="sm">Explore courses</Button>}
-        anatPart="EmptyState"
+
     />
 )
 /** Empty: `items` is empty → {@link EmptyState} fills the surface (no bare blank card). */
@@ -490,7 +490,7 @@ export const Empty: Story = {
                                 label="My courses"
                                 items={[]}
                                 emptyState={CoursesEmptyState}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -524,7 +524,7 @@ export const Loading: Story = {
                         render: (
                             <SurfaceCardList
                                 label="My courses"
-                                showAnatomy
+                               
                                 items={courseItems}
                                 isSkeleton
                             />

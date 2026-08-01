@@ -69,7 +69,7 @@ const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [
  * The "Popover" context wrapper itself is CUT from the tree — HeroUI's `PopoverRoot` is
  * just a context provider around react-aria's `DialogTrigger`, which renders NO DOM
  * element of its own (state-only, clones its children), so there is nothing to tag with
- * `data-anat-part="Popover"`. Only its two DOM-bearing children remain, both `tier:
+ * ``. Only its two DOM-bearing children remain, both `tier:
  * "heroui"` (no `storyId` — they're the library's own components, not one of ours):
  * `Popover.Trigger` (the actual clickable div — role=button, aria-expanded/controls —
  * wrapping the `Chip`; the chip is NOT the button, just its soft-success label) and
@@ -118,7 +118,7 @@ export const Default: Story = {
                         name: "original = undefined",
                         why: "Only the bold amount to pay renders, with no struck price, chip, or popover anywhere in the tree. A price with nothing to compare it against needs none of that scaffolding, so leaving it out keeps a plain price looking exactly like a plain price.",
                         code: "<PriceTag discounted={1990000} />",
-                        render: <PriceTag discounted={1990000} showAnatomy />,
+                        render: <PriceTag discounted={1990000} />,
                     },
                 ]}
             />,
@@ -148,7 +148,7 @@ export const WithDiscount: Story = {
                                 discounted={1290000}
                                 original={1990000}
                                 breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -177,7 +177,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton",
                         why: "Every bar keeps the real line's box, the amount, the struck original, the chip, and the saving line, so nothing shifts once the price lands (§8). The −X% chip keeps its slot in the row but drops the popover, since there is nothing to open yet and a pressable control while loading is a promise the card cannot keep.",
                         code: "<PriceTagProminent isSkeleton discounted={0} original={0} />",
-                        render: <PriceTagProminent isSkeleton discounted={1290000} original={1990000} showAnatomy />,
+                        render: <PriceTagProminent isSkeleton discounted={1290000} original={1990000} />,
                     },
                 ]}
             />,
@@ -214,7 +214,7 @@ export const Inline: Story = {
                                 discounted={1490000}
                                 original={1990000}
                                 breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -241,7 +241,7 @@ export const Prominent: Story = {
                                 discounted={1490000}
                                 original={1990000}
                                 breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -275,7 +275,7 @@ export const CurrencyUsd: Story = {
                                 original={129}
                                 currency="USD"
                                 breakdown={{ phase: 99, phaseLabel: "Early-bird", loyaltyPercent: 20 }}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -308,7 +308,7 @@ export const NoSavingLine: Story = {
                                 original={1990000}
                                 showSavingLine={false}
                                 breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -331,7 +331,7 @@ export const DiscountWithoutBreakdown: Story = {
                         name: "breakdown = undefined",
                         why: "The composition matches the discounted leaf exactly, and the chip still opens a popover, but that popover now shows only the original price resolving down to what the buyer pays, with no phase or loyalty rows in between. Without a breakdown object there is nothing more granular to show, so the popover falls back to the two numbers it always has.",
                         code: "<PriceTag discounted={1290000} original={1990000} />",
-                        render: <PriceTag discounted={1290000} original={1990000} showAnatomy />,
+                        render: <PriceTag discounted={1290000} original={1990000} />,
                     },
                 ]}
             />,
@@ -361,7 +361,7 @@ export const BreakdownOpen: Story = {
                                 discounted={1290000}
                                 original={1990000}
                                 breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                                showAnatomy
+                               
                             />
                         ),
                     },

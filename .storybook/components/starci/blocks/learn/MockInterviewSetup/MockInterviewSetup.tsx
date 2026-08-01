@@ -133,9 +133,7 @@ export interface MockInterviewSetupProps {
     /** `true` → the card draws its own mirror while the setup data loads. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -158,8 +156,6 @@ const MockInterviewSetup = ({
     isPending = false,
     errorMessage,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: MockInterviewSetupProps) => {
     const showDesignStart = isDesignAvailable && onStartDesign != null
 
@@ -172,7 +168,7 @@ const MockInterviewSetup = ({
             description={resumable.progressLabel}
             actionLabel="Continue"
             onAction={resumable.onResume}
-            anatPart={showAnatomy ? "Callout" : undefined}
+
         />
     ) : null
 
@@ -183,14 +179,14 @@ const MockInterviewSetup = ({
                 weight="medium"
                 isSkeleton={isSkeleton}
                 text={persona.name}
-                showAnatomy={showAnatomy}
+
             />
             <Typography
                 size="xs"
                 color="muted"
                 isSkeleton={isSkeleton}
                 text={persona.role}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -200,20 +196,20 @@ const MockInterviewSetup = ({
     const identityRow = (
         <StackH
             gap={3}
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
-                    <div data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                    <div>
                         <Avatar
                             name={persona.name}
                             src={persona.avatarSrc}
                             seed={persona.name}
                             size="md"
                             isSkeleton={isSkeleton}
-                            showAnatomy={showAnatomy}
+
                         />
                     </div>
-                    <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={personaDetails} />
+                    <StackV gap={1} body={personaDetails} />
                 </>
             }
         />
@@ -222,17 +218,17 @@ const MockInterviewSetup = ({
     const sessionNameField = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Session name" showAnatomy={showAnatomy} />
+                    <Typography size="sm" weight="medium" text="Session name" />
                     <InputText
                         value={sessionName}
                         onValueChange={onSessionNameChange}
                         placeholder="e.g. Round 1 - Backend"
                         ariaLabel="Session name"
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             }
@@ -242,15 +238,15 @@ const MockInterviewSetup = ({
     const tierField = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Level" showAnatomy={showAnatomy} />
+                    <Typography size="sm" weight="medium" text="Level" />
                     <ButtonRadioGroup
                         ariaLabel="Interview level"
                         value={tier}
                         onChange={onTierChange}
-                        showAnatomy={showAnatomy}
+
                         items={(Object.keys(TIER_LABEL) as Array<MockInterviewTier>).map((key) => ({
                             value: key,
                             content: TIER_LABEL[key],
@@ -265,7 +261,7 @@ const MockInterviewSetup = ({
         <StackH
             gap={3}
             justify="end"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     {showDesignStart ? (
@@ -276,7 +272,7 @@ const MockInterviewSetup = ({
                             onPress={onStartDesign}
                             isPending={isPending && startingMode === "design"}
                             isDisabled={isPending && startingMode !== "design"}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                     <Button
@@ -286,7 +282,7 @@ const MockInterviewSetup = ({
                         onPress={onStartQna}
                         isPending={isPending && startingMode === "qna"}
                         isDisabled={isPending && startingMode !== "qna"}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             }
@@ -298,14 +294,14 @@ const MockInterviewSetup = ({
     const footer = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {errorMessage != null ? (
                         <Callout
                             status="danger"
                             title={errorMessage}
-                            anatPart={showAnatomy ? "Callout" : undefined}
+
                         />
                     ) : null}
                     {actionsRow}
@@ -325,12 +321,12 @@ const MockInterviewSetup = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 label={label}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={setupBody} />}
+
+                body={() => <StackV gap={6} body={setupBody} />}
             />
         </div>
     )

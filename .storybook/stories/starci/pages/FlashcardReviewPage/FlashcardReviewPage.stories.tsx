@@ -96,7 +96,7 @@ export const Overview: Story = {
 />`,
                         render: (
                             <FlashcardReviewPage
-                                showAnatomy
+                               
                                 phase="overview"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
@@ -221,7 +221,7 @@ export const OverviewLoading: Story = {
 />`,
                         render: (
                             <FlashcardReviewPage
-                                showAnatomy
+                               
                                 phase="overview"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
@@ -308,7 +308,7 @@ export const Session: Story = {
 />`,
                         render: (
                             <FlashcardReviewPage
-                                showAnatomy
+                               
                                 phase="session"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}

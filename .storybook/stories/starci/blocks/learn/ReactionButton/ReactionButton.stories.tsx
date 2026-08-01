@@ -52,7 +52,7 @@ export const Full: Story = {
                         name: "myReaction = null, counts = 3 kinds",
                         why: "Others have reacted but this viewer hasn't — the trigger reads as a neutral invitation, and the summary stacks the three busiest emotions with the total beside them.",
                         code: "<ReactionButton counts={[{ type: \"like\", count: 80 }, { type: \"love\", count: 32 }, { type: \"haha\", count: 16 }]} onReact={react} />",
-                        render: <ReactionButton anatPart="ReactionButton" showAnatomy counts={COUNTS} onReact={() => {}} />,
+                        render: <ReactionButton counts={COUNTS} onReact={() => {}} />,
                     },
                     {
                         name: "myReaction = 'love'",
@@ -92,7 +92,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "The trigger shimmers while the reaction summary is still being fetched.",
                         code: "<ReactionButton isSkeleton onReact={react} />",
-                        render: <ReactionButton anatPart="ReactionButton" showAnatomy isSkeleton onReact={() => {}} />,
+                        render: <ReactionButton isSkeleton onReact={() => {}} />,
                     },
                 ]}
             />

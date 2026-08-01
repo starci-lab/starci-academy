@@ -339,9 +339,7 @@ export interface MarkdownContentProps {
      */
     isSkeleton?: boolean
     /** When on, the article (and the reused `SnippetIcon`/`Chip` atoms) emit `data-anat-part`. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this viewer so a BlockAnatomy panel can badge it. */
-    anatPart?: string
 }
 
 /**
@@ -358,8 +356,6 @@ const MarkdownContent = ({
     measure = "reading",
     classNames,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: MarkdownContentProps) => {
     const reading = measure === "reading"
     const rootRef = useRef<HTMLDivElement>(null)
@@ -374,8 +370,8 @@ const MarkdownContent = ({
     const renderedSource = useMemo(() => stripMermaidCaptions(stableSource), [stableSource])
 
     const components = useMemo(
-        () => buildMarkdownRenderers({ isDark, reading, mermaidCaptions, showAnatomy }),
-        [isDark, reading, mermaidCaptions, showAnatomy],
+        () => buildMarkdownRenderers({ isDark, reading, mermaidCaptions }),
+        [isDark, reading, mermaidCaptions],
     )
 
     // Skeleton mirror owned by THIS composite (§12c) — AFTER every hook above has run
@@ -385,7 +381,7 @@ const MarkdownContent = ({
             <StackV
                 gap={3}
                 classNames={classNames}
-                anatPart={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+
                 body={
                     <>
                         <Typography isSkeleton size="base" classNames={["w-full"]} />
@@ -399,7 +395,7 @@ const MarkdownContent = ({
     return (
         <article
             ref={rootRef}
-            data-anat-part={anatPart ?? (showAnatomy ? "MarkdownContent" : undefined)}
+
             className={cn("first:*:mt-0 last:*:mb-0", classNames)}
             data-tier="composite"
             data-component="MarkdownContent"

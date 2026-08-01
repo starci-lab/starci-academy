@@ -97,9 +97,7 @@ export interface SubmissionScoreCardProps {
     /** `true` → every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -122,8 +120,6 @@ const SubmissionScoreCard = ({
     timeAgo,
     label,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: SubmissionScoreCardProps) => {
     // One tone drives BOTH the hero number and the verdict chip — a passing and a
     // failing score must never read as two independent signals.
@@ -141,7 +137,7 @@ const SubmissionScoreCard = ({
                 color={verdictTone}
                 isSkeleton={isSkeleton}
                 text={String(score)}
-                showAnatomy={showAnatomy}
+
             />
             {maxScore != null ? (
                 <Typography
@@ -150,7 +146,7 @@ const SubmissionScoreCard = ({
                     tabularNums
                     isSkeleton={isSkeleton}
                     text={`/ ${maxScore}`}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             <Chip
@@ -158,7 +154,7 @@ const SubmissionScoreCard = ({
                 icon={isPassing ? CheckCircleIcon : XCircleIcon}
                 text={isPassing ? "Passed" : "Not yet passed"}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -168,7 +164,7 @@ const SubmissionScoreCard = ({
             gap={3}
             align="center"
             wrap
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <InlineIconLabel
@@ -176,7 +172,7 @@ const SubmissionScoreCard = ({
                         tone="default"
                         size="xs"
                         isSkeleton={isSkeleton}
-                        anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
                     >
                         {`${gradedByLabel ?? "Graded by"} ${gradedByModel}`}
                     </InlineIconLabel>
@@ -185,7 +181,7 @@ const SubmissionScoreCard = ({
                             value={modelCategory}
                             map={MODEL_CATEGORY_MAP}
                             isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "EnumChip" : undefined}
+
                         />
                     ) : null}
                     {timeAgo != null ? (
@@ -194,7 +190,7 @@ const SubmissionScoreCard = ({
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={timeAgo}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -204,7 +200,7 @@ const SubmissionScoreCard = ({
 
     const scoreSummary = (
         <>
-            <StackH gap={4} align="baseline" wrap anatPart={showAnatomy ? "StackH" : undefined} body={scoreRow} />
+            <StackH gap={4} align="baseline" wrap body={scoreRow} />
 
             {pointsNeeded != null && pointsNeeded > 0 ? (
                 <Typography
@@ -212,7 +208,7 @@ const SubmissionScoreCard = ({
                     color="muted"
                     isSkeleton={isSkeleton}
                     text={`Need ${pointsNeeded} more points to reach the ${passScore}-point pass mark`}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
 
@@ -221,7 +217,7 @@ const SubmissionScoreCard = ({
                     size="sm"
                     isSkeleton={isSkeleton}
                     text={shortFeedback}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
 
@@ -232,7 +228,7 @@ const SubmissionScoreCard = ({
                     href={submissionUrl}
                     isSkeleton={isSkeleton}
                     text={submissionLabel ?? "View submission"}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
 
@@ -241,12 +237,12 @@ const SubmissionScoreCard = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 label={label}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={scoreSummary} />}
+
+                body={() => <StackV gap={4} body={scoreSummary} />}
             />
         </div>
     )

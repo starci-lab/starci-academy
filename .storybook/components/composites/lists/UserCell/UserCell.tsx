@@ -69,9 +69,7 @@ export interface UserCellProps {
      */
     classNames?: Array<AllowedClassName>
     /** When on, each composed atom (avatar · name · handle) emits its own `data-anat-part` for a `BlockAnatomy` panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this composite so a `BlockAnatomy` panel can badge it on-render. */
-    anatPart?: string
     /**
      * Render the leaf skeleton (shimmer) instead of the cell. Every shimmer is
      * delegated to the atom it stands for — `Avatar isSkeleton size={size}` for
@@ -108,8 +106,6 @@ const UserCellBase = ({
     leadingTone = "accent",
     classNames,
     isOwnRow = false,
-    showAnatomy = false,
-    anatPart,
     isSkeleton = false,
 }: UserCellProps) => {
     const name = displayName ?? username
@@ -133,18 +129,18 @@ const UserCellBase = ({
             <div
                 data-tier="composite"
                 data-component="UserCell"
-                data-anat-part={anatPart}
+
                 className={cn("flex min-w-0 items-center gap-2", classNames)}
             >
                 {LeadingIcon ? (
-                    <IconTile isSkeleton size="sm" showAnatomy={showAnatomy} />
+                    <IconTile isSkeleton size="sm" />
                 ) : (
-                    <Avatar isSkeleton size={size} showAnatomy={showAnatomy} />
+                    <Avatar isSkeleton size={size} />
                 )}
                 <div className="flex min-w-0 flex-col gap-0">
-                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
+                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
                     {handle ? (
-                        <Typography size="xs" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
+                        <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
                     ) : null}
                 </div>
                 {trailingSlot}
@@ -156,7 +152,7 @@ const UserCellBase = ({
         <div
             data-tier="composite"
             data-component="UserCell"
-            data-anat-part={anatPart}
+
             className={cn("flex min-w-0 items-center gap-2", classNames)}
         >
             {LeadingIcon ? (
@@ -164,7 +160,7 @@ const UserCellBase = ({
                     icon={LeadingIcon}
                     tone={leadingTone}
                     size="sm"
-                    showAnatomy={showAnatomy}
+
                 />
             ) : (
                 <Avatar
@@ -172,7 +168,7 @@ const UserCellBase = ({
                     src={avatar ?? undefined}
                     seed={username}
                     size={size}
-                    showAnatomy={showAnatomy}
+
                 />
             )}
             <div className="flex min-w-0 flex-col gap-0">
@@ -180,14 +176,14 @@ const UserCellBase = ({
                     weight="medium"
                     color={isOwnRow ? "accent" : undefined}
                     truncate
-                    showAnatomy={showAnatomy}
+
                     text={name}
                 />
                 {handle ? (
                     <Typography size="xs"
                         color="muted"
                         truncate
-                        showAnatomy={showAnatomy}
+
                         text={handle}
                     />
                 ) : null}

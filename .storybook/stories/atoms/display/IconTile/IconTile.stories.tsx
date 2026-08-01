@@ -101,7 +101,7 @@ export const Default: Story = {
                         name: "tone = \"accent\", size = \"sm\"",
                         why: "A round tile renders at 40px with the accent tint and the graduation-cap glyph centred inside it. The frame is always round, there is no shape axis to pick, and the icon auto-sizes to the box with nothing caller-controlled.",
                         code: "<IconTile icon={GraduationCapIcon} />",
-                        render: <IconTile icon={GraduationCapIcon} showAnatomy />,
+                        render: <IconTile icon={GraduationCapIcon} />,
                     },
                 ]}
             />
@@ -124,7 +124,7 @@ export const Tones: Story = {
                         name: "tone = \"accent\"",
                         why: "The tile lands on a soft accent tint, the default identity colour used when nothing special has happened to the thing it represents. Every other tone below keeps the same folder glyph and only swaps this tint.",
                         code: "<IconTile tone=\"accent\" icon={FolderIcon} />",
-                        render: <IconTile tone="accent" icon={FolderIcon} showAnatomy />,
+                        render: <IconTile tone="accent" icon={FolderIcon} />,
                     },
                     {
                         name: "tone = \"success\"",
@@ -171,7 +171,7 @@ export const Sizes: Story = {
                         name: "size = \"sm\"",
                         why: "The frame renders at 40px, the step that pairs with a TitledText row or sits inside a compact empty state. The rocket glyph inside scales down to match the smaller frame.",
                         code: "<IconTile size=\"sm\" icon={RocketLaunchIcon} />",
-                        render: <IconTile size="sm" icon={RocketLaunchIcon} showAnatomy />,
+                        render: <IconTile size="sm" icon={RocketLaunchIcon} />,
                     },
                     {
                         name: "size = \"md\"",
@@ -210,7 +210,7 @@ export const CoverImage: Story = {
                         name: "src = undefined",
                         why: "With no `src` passed, the tile falls back to its plain icon glyph on the tinted background. This is the same bare tile every other leaf in this file starts from.",
                         code: "<IconTile icon={BookOpenIcon} />",
-                        render: <IconTile icon={BookOpenIcon} size="lg" showAnatomy />,
+                        render: <IconTile icon={BookOpenIcon} size="lg" />,
                     },
                     {
                         name: "src = valid cover URL",
@@ -258,7 +258,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, size = \"sm\"",
                         why: "A round shimmer fills the same 40px circle the real icon would occupy, with no glyph drawn inside it. The size this shimmer commits to matches exactly what the real tile will render once data lands.",
                         code: "<IconTile isSkeleton size=\"sm\" />",
-                        render: <IconTile isSkeleton size="sm" showAnatomy />,
+                        render: <IconTile isSkeleton size="sm" />,
                     },
                     {
                         name: "isSkeleton = true, size = \"md\"",

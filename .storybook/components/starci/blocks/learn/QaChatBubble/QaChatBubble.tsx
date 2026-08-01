@@ -28,7 +28,6 @@ export interface QaChatBubbleProps {
     /** `true` → the bubble draws a shimmer block instead of `children`. */
     isSkeleton?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it. */
-    anatPart?: string
 }
 
 /**
@@ -37,9 +36,9 @@ export interface QaChatBubbleProps {
  *
  * @param props - {@link QaChatBubbleProps}
  */
-const QaChatBubble = ({ role, children, isSkeleton = false, anatPart }: QaChatBubbleProps) => (
+const QaChatBubble = ({ role, children, isSkeleton = false }: QaChatBubbleProps) => (
     <div
-        data-anat-part={anatPart}
+
         className={cn(
             "min-w-0 rounded-2xl px-3 py-3",
             role === "user"

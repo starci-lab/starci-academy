@@ -30,7 +30,7 @@ type Story = StoryObj<typeof ChipGroup>
  * DEPS = the OTHER story this cluster rebuilds. Only ONE node: `Chip`.
  *
  * The `+N` chip's Tooltip HAS its own story but hasn't made it into the tree yet:
- * `Tooltip` currently only emits `data-anat-part="Trigger"`/`"Content"` (SLOT
+ * `Tooltip` currently only emits ``/`"Content"` (SLOT
  * names, not namespace names) and doesn't accept an `anatPart` for the cluster to name
  * it by. Declaring `Trigger` here would produce a node with the wrong name, so it's left
  * out for now — `Tooltip` needs an `anatPart` prop added before this can be declared.
@@ -90,7 +90,7 @@ export const Default: Story = {
     { key: "node", text: "Node.js" },
   ]}
 />`,
-                        render: <ChipGroup items={SHORT_ITEMS} showAnatomy />,
+                        render: <ChipGroup items={SHORT_ITEMS} />,
                     },
                     {
                         name: "items = 6 tags (past maxVisible)",
@@ -129,8 +129,8 @@ export const MaxVisible: Story = {
                         ? "<ChipGroup items={[…6 items…]} />          // 3 = default"
                         : `<ChipGroup maxVisible={${maxVisible}} items={[…6 items…]} />`,
                     render: maxVisible === undefined
-                        ? <ChipGroup items={ITEMS} showAnatomy />
-                        : <ChipGroup maxVisible={maxVisible} items={ITEMS} showAnatomy />,
+                        ? <ChipGroup items={ITEMS} />
+                        : <ChipGroup maxVisible={maxVisible} items={ITEMS} />,
                 }))}
             />
         </div>
@@ -150,7 +150,7 @@ export const Tones: Story = {
                     name: `tone = "${tone}"`,
                     why: `Every chip in the row, including the overflow \`+N\` chip, takes this one color, so the whole set reads as a single message rather than a mix of unrelated pills. Reach for \`${tone}\` for ${hint}.`,
                     code: `<ChipGroup tone="${tone}" items={[…]} />`,
-                    render: <ChipGroup tone={tone} items={ITEMS} showAnatomy />,
+                    render: <ChipGroup tone={tone} items={ITEMS} />,
                 }))}
             />
         </div>
@@ -178,13 +178,13 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, maxVisible unset",
                         why: "The row holds three shimmering pills, the width it will have once the default cut of data lands. The pills are the bare, narrowest form because a row of tags has no leading mark and no × button on it.",
                         code: "<ChipGroup isSkeleton items={tags} />",
-                        render: <ChipGroup isSkeleton items={ITEMS} showAnatomy />,
+                        render: <ChipGroup isSkeleton items={ITEMS} />,
                     },
                     {
                         name: "isSkeleton = true, maxVisible = 5",
                         why: "The row holds five shimmering pills instead of three, matching the width it will occupy once five real tags land under this cut. Only the count of pills changes; each one is still the same bare, narrowest shape.",
                         code: "<ChipGroup isSkeleton maxVisible={5} items={tags} />",
-                        render: <ChipGroup isSkeleton maxVisible={5} items={ITEMS} showAnatomy />,
+                        render: <ChipGroup isSkeleton maxVisible={5} items={ITEMS} />,
                     },
                 ]}
             />

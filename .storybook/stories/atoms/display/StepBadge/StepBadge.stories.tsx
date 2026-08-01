@@ -99,8 +99,8 @@ export const Default: Story = {
                     {
                         name: "state and size both unset",
                         why: "The badge renders at `state=\"active\"` (solid fill, the number printed inside) and `size=\"sm\"` (20px), the shape the hand-rolled badge in GithubTeamGate had before this atom existed. Neither prop is required, so the caller only ever names the value that departs from this default.",
-                        code: "<StepBadge number={1} showAnatomy />",
-                        render: <StepBadge number={1} showAnatomy />,
+                        code: "<StepBadge number={1} />",
+                        render: <StepBadge number={1} />,
                     },
                 ]}
             />
@@ -122,20 +122,20 @@ export const States: Story = {
                     {
                         name: "state = \"done\"",
                         why: "The number is replaced by a check mark inside the same solid-filled circle. This is the only way the check ever appears — a badge can never show both a number and a check at once.",
-                        code: "<StepBadge number={1} state=\"done\" showAnatomy />",
-                        render: <StepBadge number={1} state="done" showAnatomy />,
+                        code: "<StepBadge number={1} state=\"done\" />",
+                        render: <StepBadge number={1} state="done" />,
                     },
                     {
                         name: "state = \"active\"",
                         why: "The circle fills solid and prints the step number as-is. This marks the exact step the reader is standing on right now, distinct from the check that means a step is already behind them.",
                         code: "<StepBadge number={2} state=\"active\" />",
-                        render: <StepBadge number={2} state="active" showAnatomy />,
+                        render: <StepBadge number={2} state="active" />,
                     },
                     {
                         name: "state = \"muted\"",
                         why: "The circle drops to the flat default surface instead of a solid fill, still printing the plain number. A step not yet reached stays visually quiet so it doesn't compete for attention with the active step.",
                         code: "<StepBadge number={3} state=\"muted\" />",
-                        render: <StepBadge number={3} state="muted" showAnatomy />,
+                        render: <StepBadge number={3} state="muted" />,
                     },
                 ]}
             />
@@ -157,14 +157,14 @@ export const Sizes: Story = {
                     {
                         name: "size = \"sm\"",
                         why: "The badge draws at a 20px box. This is the default size, matching how the badge was already used inline before this atom existed.",
-                        code: "<StepBadge number={2} size=\"sm\" showAnatomy />",
-                        render: <StepBadge number={2} state="active" size="sm" showAnatomy />,
+                        code: "<StepBadge number={2} size=\"sm\" />",
+                        render: <StepBadge number={2} state="active" size="sm" />,
                     },
                     {
                         name: "size = \"md\"",
                         why: "The badge draws at a 24px box, the same circle and number just scaled up. Reach for this size when the badge sits inside a bigger callout and needs to read at a glance.",
                         code: "<StepBadge number={2} size=\"md\" />",
-                        render: <StepBadge number={2} state="active" size="md" showAnatomy />,
+                        render: <StepBadge number={2} state="active" size="md" />,
                     },
                 ]}
             />
@@ -190,14 +190,14 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true, size = \"sm\"",
                         why: "A round shimmer fills the same 20px circle the real badge would occupy at this size. No number, check, or state colour renders underneath it.",
-                        code: "<StepBadge isSkeleton size=\"sm\" showAnatomy />",
-                        render: <StepBadge isSkeleton size="sm" showAnatomy />,
+                        code: "<StepBadge isSkeleton size=\"sm\" />",
+                        render: <StepBadge isSkeleton size="sm" />,
                     },
                     {
                         name: "isSkeleton = true, size = \"md\"",
                         why: "The same round shimmer scales up to the 24px circle. Only the box grows — the shimmer shape itself is identical to the `sm` state.",
                         code: "<StepBadge isSkeleton size=\"md\" />",
-                        render: <StepBadge isSkeleton size="md" showAnatomy />,
+                        render: <StepBadge isSkeleton size="md" />,
                     },
                 ]}
             />

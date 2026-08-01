@@ -63,7 +63,6 @@ export interface ConfirmDialogProps {
      */
     classNames?: Array<AllowedClassName>
     /** When on, emit `data-anat-part` on each composed part for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -87,35 +86,34 @@ export const ConfirmDialog = ({
     tone = "default",
     isConfirming = false,
     classNames,
-    showAnatomy = false,
 }: ConfirmDialogProps) => {
     const isDanger = tone === "danger"
     return (
         <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
             {/* `AlertDialog` root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM
                 node of its own, so it can't carry `data-anat-part` (nothing for the scan to find). */}
-            <AlertDialog.Backdrop data-anat-part={showAnatomy ? "AlertDialog.Backdrop" : undefined}>
-                <AlertDialog.Container size="sm" data-anat-part={showAnatomy ? "AlertDialog.Container" : undefined}>
-                    <AlertDialog.Dialog className={cn(classNames)} data-anat-part={showAnatomy ? "AlertDialog.Dialog" : undefined}>
+            <AlertDialog.Backdrop>
+                <AlertDialog.Container size="sm">
+                    <AlertDialog.Dialog className={cn(classNames)}>
                         {/* No status icon — text-only; layout UNCHANGED (heading/body left, footer right) — teacher confirmed 2026-07-23. */}
-                        <AlertDialog.Header data-anat-part={showAnatomy ? "AlertDialog.Header" : undefined}>
-                            <AlertDialog.Heading data-anat-part={showAnatomy ? "AlertDialog.Heading" : undefined}>{title}</AlertDialog.Heading>
+                        <AlertDialog.Header>
+                            <AlertDialog.Heading>{title}</AlertDialog.Heading>
                         </AlertDialog.Header>
                         {description != null ? (
-                            <AlertDialog.Body data-anat-part={showAnatomy ? "AlertDialog.Body" : undefined}>
+                            <AlertDialog.Body>
                                 {/* Typography atom doesn't accept unknown props — tag the wrapper (§11a.1). */}
-                                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <span>
                                     <Typography size="sm" text={description} color="muted" />
                                 </span>
                             </AlertDialog.Body>
                         ) : null}
-                        <AlertDialog.Footer className="w-full" data-anat-part={showAnatomy ? "AlertDialog.Footer" : undefined}>
+                        <AlertDialog.Footer className="w-full">
                             {/* Footer forwards showAnatomy so the REAL nodes (Button × 2) show up, instead of
                                 mislabeling this heroui Footer wrapper as if it were ButtonGroup itself. */}
                             <ButtonGroup
                                 align="end"
                                 classNames={["w-full"]}
-                                showAnatomy={showAnatomy}
+
                                 items={[
                                     {
                                         key: "cancel",

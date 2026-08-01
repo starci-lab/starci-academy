@@ -1,7 +1,6 @@
 import React, { type Key, type ReactNode } from "react"
 import { ListBox, Select, Tabs, cn } from "@heroui/react"
 import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
-import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
@@ -116,9 +115,7 @@ export interface ToolbarBaseProps {
     /** Layout utilities on the toolbar row, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this toolbar. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 /** size → extra Tab className override (md = HeroUI's own default, no override). */
 const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
@@ -160,8 +157,6 @@ const ToolbarBase = ({
     variant = "secondary",
     size = "md",
     classNames,
-    showAnatomy = false,
-    anatPart,
 }: ToolbarBaseProps) => {
     /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: ToolbarTabGroup, accent = true): ReactNode => (
@@ -285,13 +280,13 @@ const ToolbarBase = ({
             classNames={["min-w-0"]}
             body={
                 <>
-                    <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
+                    <div>{renderGroup(leftTabs)}</div>
                     <div>{leftEnd}</div>
                 </>
             }
         />
     ) : (
-        <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
+        <div>{renderGroup(leftTabs)}</div>
     )
     const rightGroup = rightTabs
         ? collapseRightOnMobile
@@ -301,18 +296,18 @@ const ToolbarBase = ({
                         (atom Tabs.Extended) — BOTH real components mount at once (one hidden
                         via CSS), so each gets its OWN badge instead of one wrapper name that
                         could only honestly describe one of them. */}
-                    <div className="@app-sm:hidden" data-anat-part={showAnatomy ? "Select.Root" : undefined}>{renderSelect(rightTabs)}</div>
-                    <div className="hidden @app-sm:block" data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+                    <div className="@app-sm:hidden">{renderSelect(rightTabs)}</div>
+                    <div className="hidden @app-sm:block">{renderGroup(rightTabs, !rightTabsNeutral)}</div>
                 </div>
             )
-            : <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+            : <div>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
         : null
     return (
         <StackH
             gap={4}
             justify="between"
             classNames={classNames}
-            anatPart={anatPart}
+
             body={
                 <>
                     {/* Self-tag: lets a PARENT composite (e.g. FlashcardDeckList) cascade
@@ -320,7 +315,6 @@ const ToolbarBase = ({
                         tree, without drilling into left/right groups (§11a). Harmless when
                         Toolbar is the anatomy SUBJECT itself (below): the name "Toolbar" is
                         absent from that leaf's own `parts`, so it's measured then filtered out. */}
-                    {showAnatomy ? <AnatomyOverlay label="Toolbar" tier="composite" href="/?path=/docs/composites-navigation-toolbar-toolbar-base--docs" /> : null}
                     {leftGroup}
                     {rightGroup}
                 </>

@@ -93,7 +93,7 @@ export const Default: Story = {
   title="Draft saved"
   description="Your changes are kept automatically."
 />`,
-                        render: <Callout showAnatomy status="default" title="Draft saved" description="Your changes are kept automatically." />,
+                        render: <Callout status="default" title="Draft saved" description="Your changes are kept automatically." />,
                     },
                     {
                         name: "status = accent",
@@ -103,7 +103,7 @@ export const Default: Story = {
   title="Chapter 3 just got a new practice section"
   description="Reopen the chapter to try what's new."
 />`,
-                        render: <Callout showAnatomy status="accent" title="Chapter 3 just got a new practice section" description="Reopen the chapter to try what's new." />,
+                        render: <Callout status="accent" title="Chapter 3 just got a new practice section" description="Reopen the chapter to try what's new." />,
                     },
                     {
                         name: "status = success",
@@ -113,7 +113,7 @@ export const Default: Story = {
   title="Submission successful"
   description="Results will be ready in a few minutes."
 />`,
-                        render: <Callout showAnatomy status="success" title="Submission successful" description="Results will be ready in a few minutes." />,
+                        render: <Callout status="success" title="Submission successful" description="Results will be ready in a few minutes." />,
                     },
                     {
                         name: "status = warning",
@@ -123,7 +123,7 @@ export const Default: Story = {
   title="Deadline coming up"
   description="2 days left to finish this milestone."
 />`,
-                        render: <Callout showAnatomy status="warning" title="Deadline coming up" description="2 days left to finish this milestone." />,
+                        render: <Callout status="warning" title="Deadline coming up" description="2 days left to finish this milestone." />,
                     },
                     {
                         name: "status = danger",
@@ -133,7 +133,7 @@ export const Default: Story = {
   title="Couldn't reach the server"
   description="Check your connection and try again."
 />`,
-                        render: <Callout showAnatomy status="danger" title="Couldn't reach the server" description="Check your connection and try again." />,
+                        render: <Callout status="danger" title="Couldn't reach the server" description="Check your connection and try again." />,
                     },
                 ]}
             />
@@ -158,7 +158,7 @@ export const TitleOnly: Story = {
   status="accent"
   title="Tip: highlight a passage to ask AI about it"
 />`,
-                        render: <Callout showAnatomy status="accent" title="Tip: highlight a passage to ask AI about it" />,
+                        render: <Callout status="accent" title="Tip: highlight a passage to ask AI about it" />,
                     },
                 ]}
             />
@@ -184,7 +184,7 @@ export const WithBody: Story = {
 </Callout>`,
                         render: (
                             <Callout
-                                showAnatomy
+                               
                                 status="warning"
                                 title="Submission is missing 2 items"
                                 description="Add them, then resubmit for grading."
@@ -228,7 +228,7 @@ export const WithAction: Story = {
 />`,
                         render: (
                             <Callout
-                                showAnatomy
+                               
                                 status="accent"
                                 title="Upgrade to unlock AI"
                                 description="The paid plan enables advanced grading."
@@ -263,7 +263,7 @@ export const CustomIcon: Story = {
 />`,
                         render: (
                             <Callout
-                                showAnatomy
+                               
                                 status="warning"
                                 icon={GithubLogoIcon}
                                 title="You haven't joined the course's GitHub team"
@@ -299,7 +299,7 @@ export const Dismissible: Story = {
 />`,
                         render: (
                             <Callout
-                                showAnatomy
+                               
                                 status="accent"
                                 title="Tip: highlight text to ask AI"
                                 onClose={() => {}}

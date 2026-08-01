@@ -99,9 +99,7 @@ export interface PlaygroundExerciseGridProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Step-count wording — the block's own vocabulary (§14d.1: a block owns its wording). */
@@ -133,8 +131,6 @@ const PlaygroundExerciseGrid = ({
     onSelect,
     ariaLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundExerciseGridProps) => {
     // Empty while loading (no real exercise yet) → guess 4 tiles, keeping the
     // right shape for when real data lands (§8). Once real `exercises` exist,
@@ -150,10 +146,10 @@ const PlaygroundExerciseGrid = ({
                 gap={2}
                 body={
                     <>
-                        <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <div>
                             <Typography size="base" weight="bold" truncate text={exercise.title} />
                         </div>
-                        <div data-anat-part={showAnatomy ? "Chip" : undefined}>
+                        <div>
                             <Chip tone="default" icon={ListChecksIcon} text={stepCountLabel(exercise.stepCount)} classNames={["w-fit"]} />
                         </div>
                     </>
@@ -166,11 +162,11 @@ const PlaygroundExerciseGrid = ({
                 gap={4}
                 body={
                     <>
-                        <div data-anat-part={showAnatomy ? "IconTile" : undefined}>
+                        <div>
                             <IconTile icon={TerminalWindowIcon} tone="accent" size="lg" />
                         </div>
                         {titleAndSteps}
-                        <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <div>
                             <Typography
                                 size="sm"
                                 weight="medium"
@@ -200,27 +196,27 @@ const PlaygroundExerciseGrid = ({
     // judgement on the two leaves).
     if (!isSkeleton && exercises.length === 0) {
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <EmptyState
                     icon={TerminalWindowIcon}
                     title={EMPTY_TITLE}
                     description={EMPTY_DESCRIPTION}
-                    anatPart={showAnatomy ? "EmptyState" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             </div>
         )
     }
 
     return (
-        <div data-anat-part={anatPart}>
-            <div data-anat-part={showAnatomy ? "SurfaceCardPressableGroup" : undefined}>
+        <div>
+            <div>
                 <SurfaceCardPressableGroup
                     items={items}
                     ariaLabel={ariaLabel}
                     columns={{ base: 1, sm: 2 }}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
         </div>

@@ -86,8 +86,8 @@ const ControlledLessonVideoModal = ({
             <LessonVideoModal
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}
-                showAnatomy
-                anatPart="LessonVideoModal"
+               
+
                 {...modalProps}
             />
         </div>

@@ -110,13 +110,11 @@ export interface WeeklyChallengeCardProps {
     /** `true` → every atom this block owns switches to its own shimmer (data already loaded). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** The title: a routable link when `onOpenChallenge` is set, plain bold text otherwise. */
-const titleText = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy: boolean) =>
+const titleText = (data: WeeklyChallengeData, isSkeleton: boolean) =>
     data.onOpenChallenge ? (
         <Typography
             size="sm"
@@ -124,7 +122,7 @@ const titleText = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy: 
             isSkeleton={isSkeleton}
             onPress={data.onOpenChallenge}
             text={data.title}
-            showAnatomy={showAnatomy}
+
         />
     ) : (
         <Typography
@@ -132,12 +130,12 @@ const titleText = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy: 
             weight="bold"
             isSkeleton={isSkeleton}
             text={data.title}
-            showAnatomy={showAnatomy}
+
         />
     )
 
 /** Right side of the status row: claimed chip, a pending claim button, or a "try now" prompt. */
-const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy: boolean) => {
+const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean) => {
     if (isSkeleton) {
         return <Chip isSkeleton />
     }
@@ -148,7 +146,7 @@ const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy:
                 isLink
                 onPress={data.onOpenChallenge}
                 text="Try it now"
-                showAnatomy={showAnatomy}
+
             />
         ) : null
     }
@@ -169,10 +167,10 @@ const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy:
 }
 
 /** Builds one finisher's free-form `SurfaceCardList` content: the unchanged `UserCell`. */
-const finisherItem = (entry: WeeklyChallengeLeaderboardEntry, isSkeleton: boolean, showAnatomy: boolean): SurfaceCardListItem => ({
+const finisherItem = (entry: WeeklyChallengeLeaderboardEntry, isSkeleton: boolean): SurfaceCardListItem => ({
     key: entry.key,
     content: (
-        <div data-anat-part={showAnatomy ? "UserCell" : undefined}>
+        <div>
             <UserCell
                 username={entry.username}
                 avatar={entry.avatar}
@@ -182,11 +180,11 @@ const finisherItem = (entry: WeeklyChallengeLeaderboardEntry, isSkeleton: boolea
                         color="muted"
                         isSkeleton={slotSkeleton}
                         text={slotSkeleton ? undefined : entry.passedAtLabel}
-                        showAnatomy={showAnatomy}
+
                     />
                 )}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </div>
     ),
@@ -206,12 +204,11 @@ const LOADING_DATA: WeeklyChallengeData = {
 interface ContentProps {
     data: WeeklyChallengeData
     isSkeleton: boolean
-    showAnatomy: boolean
 }
 
-const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => {
+const Content = ({ data, isSkeleton }: ContentProps) => {
     const statusRow = (
-        <StackH gap={4} justify="between" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={(
+        <StackH gap={4} justify="between" align="center" body={(
             <>
                 {data.endsInLabel != null || isSkeleton ? (
                     <Typography
@@ -219,32 +216,32 @@ const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => {
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : data.endsInLabel}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : <span />}
-                {statusSlot(data, isSkeleton, showAnatomy)}
+                {statusSlot(data, isSkeleton)}
             </>
         )} />
     )
 
     return (
-        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={(
+        <StackV gap={4} body={(
             <>
-                {titleText(data, isSkeleton, showAnatomy)}
+                {titleText(data, isSkeleton)}
                 {statusRow}
                 <Typography
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
                     text={isSkeleton ? undefined : `${data.passedCount} people have passed`}
-                    showAnatomy={showAnatomy}
+
                 />
                 {data.leaderboard.length > 0 ? (
-                    <div data-anat-part={showAnatomy ? "SurfaceCardList" : undefined}>
+                    <div>
                         <SurfaceCardList
                             variant="nested"
-                            items={data.leaderboard.map((entry) => finisherItem(entry, isSkeleton, showAnatomy))}
-                            showAnatomy={showAnatomy}
+                            items={data.leaderboard.map((entry) => finisherItem(entry, isSkeleton))}
+
                         />
                     </div>
                 ) : null}
@@ -266,17 +263,15 @@ const WeeklyChallengeCard = ({
     onRetry,
     data,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: WeeklyChallengeCardProps) => (
     <SurfaceCard
         label="Weekly Challenge"
-        anatPart={anatPart}
-        showAnatomy={showAnatomy}
+
+
         body={() => (
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={<Content data={LOADING_DATA} isSkeleton showAnatomy={showAnatomy} />}
+                skeleton={<Content data={LOADING_DATA} isSkeleton />}
                 isEmpty={isEmpty}
                 emptyContent={{
                     title: "No challenge is currently active",
@@ -289,10 +284,10 @@ const WeeklyChallengeCard = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-                showAnatomy={showAnatomy}
+
             >
                 {data ? (
-                    <Content data={data} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                    <Content data={data} isSkeleton={isSkeleton} />
                 ) : null}
             </AsyncContent>
         )}

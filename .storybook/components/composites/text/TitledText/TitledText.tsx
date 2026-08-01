@@ -97,7 +97,6 @@ export interface TitledTextProps {
     /** `true` → render the skeleton mirror (bars sized per line). */
     isSkeleton?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * `true` → EACH inner line also emits `data-anat-part` (`Title` · `Subtitle` ·
      * `Hint`), so the deps tree can go DOWN TO THE ATOM instead of stopping at the frame.
@@ -107,7 +106,6 @@ export interface TitledTextProps {
      * so the frame has to clear the way for its children to show. A frame that swallows
      * its children makes the panel lie about what it actually builds.
      */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -133,13 +131,9 @@ export const TitledText = ({
     weight,
     truncate = false,
     isSkeleton = false,
-    anatPart,
-    showAnatomy = false,
     classNames,
 }: TitledTextProps) => {
     const cfg = SIZE_CONFIG[size]
-    /** Each line is ONE `Typography` — named so the deps tree can go down to the atom. */
-    const part = (name: string) => (showAnatomy ? name : undefined)
     const rootClassNames: Array<AllowedClassName> = ["min-w-0", ...(classNames ?? [])]
 
     // COMPOSITE-10: ONE render path — same `StackV`, same `gap`, in both states.
@@ -150,7 +144,7 @@ export const TitledText = ({
         <StackV
             gap={1}
             classNames={rootClassNames}
-            anatPart={anatPart}
+
             body={
                 <>
                     <Typography
@@ -160,7 +154,7 @@ export const TitledText = ({
                         isSkeleton={isSkeleton}
                         classNames={isSkeleton ? [cfg.skeleton.title] : undefined}
                         text={title}
-                        showAnatomy={showAnatomy}
+
                     />
                     {subtitle ? (
                         <Typography
@@ -171,7 +165,7 @@ export const TitledText = ({
                             isSkeleton={isSkeleton}
                             classNames={isSkeleton ? [cfg.skeleton.sub] : undefined}
                             text={subtitle}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                     {hint ? (
@@ -182,7 +176,7 @@ export const TitledText = ({
                             isSkeleton={isSkeleton}
                             classNames={isSkeleton ? [cfg.skeleton.hint] : undefined}
                             text={hint}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>

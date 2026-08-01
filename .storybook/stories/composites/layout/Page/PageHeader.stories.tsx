@@ -81,7 +81,7 @@ export const Minimal: Story = {
                                 <PageHeader
                                     title="Manage students"
                                     description="View and edit every enrolled student."
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -121,7 +121,7 @@ export const Full: Story = {
                                     description="A path from the fundamentals to shipping a real product, graded by AI."
                                     actions={FullActions}
                                     meta={FullMeta}
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -151,7 +151,7 @@ export const DescriptionClamped: Story = {
                                 <PageHeader
                                     title="Configure payment gateways"
                                     description="Set up SePay and PayOS, choose the default gateway for new students, configure installment plans applied per course, and track transaction status in real time."
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -180,7 +180,7 @@ export const SizePage: Story = {
                             <PageHeader
                                 title="Set up your machine"
                                 description="Before entering the playground, install the CLI and connect the StarCi Agent."
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -209,7 +209,7 @@ export const SizeCompact: Story = {
                                 size="compact"
                                 title="Set up your machine"
                                 description="Before entering the playground, install the CLI and connect the StarCi Agent."
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -235,7 +235,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, size = \"page\"",
                         why: "The real shape (breadcrumb/description/meta presence) isn't known before the route's data arrives, so the shimmer assumes the full header: a title bar, a description bar, and two pill meta-chip bars below.",
                         code: "<PageHeader isSkeleton />",
-                        render: <PageHeader isSkeleton size="page" anatPart="PageHeader" showAnatomy />,
+                        render: <PageHeader isSkeleton size="page" />,
                     },
                 ]}
             />

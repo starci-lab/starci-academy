@@ -64,8 +64,8 @@ export const Header: Story = {
 />`,
                         render: (
                             <LeaderboardHeader
-                                anatPart="LeaderboardHeader"
-                                showAnatomy
+
+                               
                                 breadcrumbItems={CRUMBS}
                                 title="Leaderboard"
                                 description="Ranked by total practice points earned this month"

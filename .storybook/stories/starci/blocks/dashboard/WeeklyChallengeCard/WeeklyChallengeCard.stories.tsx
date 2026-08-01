@@ -98,8 +98,8 @@ export const Content: Story = {
 />`,
                         render: (
                             <WeeklyChallengeCard
-                                anatPart="WeeklyChallengeCard"
-                                showAnatomy
+
+                               
                                 isLoading={false}
                                 isEmpty={false}
                                 onRetry={() => {}}

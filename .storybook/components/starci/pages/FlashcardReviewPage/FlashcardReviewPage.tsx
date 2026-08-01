@@ -210,7 +210,6 @@ export interface FlashcardReviewPageProps {
     isSessionSkeleton?: boolean
 
     /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -277,12 +276,11 @@ const FlashcardReviewPage = ({
     onCardPrev,
     onCardNext,
     isSessionSkeleton = false,
-    showAnatomy = false,
 }: FlashcardReviewPageProps) => {
     const overviewDeck = (
         <>
             <FlashcardDueHero
-                anatPart="FlashcardDueHero"
+
                 dueCount={dueCount}
                 dueReviewCount={dueReviewCount}
                 newCount={dueNewCount}
@@ -290,10 +288,10 @@ const FlashcardReviewPage = ({
                 onStart={onDueStart}
                 isStarting={isDueStarting}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <FlashcardMasteryStrip
-                anatPart="FlashcardMasteryStrip"
+
                 mastered={masteryMastered}
                 total={masteryTotal}
                 learning={masteryLearning}
@@ -302,10 +300,10 @@ const FlashcardReviewPage = ({
                 retention={masteryRetention}
                 totalReviewed={masteryTotalReviewed}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <FlashcardDeckList
-                anatPart="FlashcardDeckList"
+
                 decks={decks}
                 query={deckQuery}
                 onQueryChange={onDeckQueryChange}
@@ -318,7 +316,7 @@ const FlashcardReviewPage = ({
                 ctaLabel={deckCtaLabel}
                 showProgress={showDeckProgress}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -326,20 +324,20 @@ const FlashcardReviewPage = ({
     const overviewSection = (
         <>
             <FlashcardModeSwitch
-                anatPart="FlashcardModeSwitch"
+
                 mode={flashcardMode}
                 onModeChange={onFlashcardModeChange}
                 ariaLabel={flashcardModeAriaLabel}
-                showAnatomy={showAnatomy}
+
             />
-            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={overviewDeck} />
+            <StackV gap={4} body={overviewDeck} />
         </>
     )
 
     const sessionSection = (
         <>
             <WorkSessionHeader
-                anatPart="WorkSessionHeader"
+
                 backLabel={sessionBackLabel}
                 onBack={onSessionBack}
                 title={sessionTitle}
@@ -351,10 +349,10 @@ const FlashcardReviewPage = ({
                 onStepPress={onSessionStepPress}
                 finishLabel={sessionFinishLabel}
                 onFinish={onSessionFinish}
-                showAnatomy={showAnatomy}
+
             />
             <FlashcardStudyCard
-                anatPart="FlashcardStudyCard"
+
                 question={cardQuestion}
                 levelLabel={cardLevelLabel}
                 tags={cardTags}
@@ -372,7 +370,7 @@ const FlashcardReviewPage = ({
                 onPrev={onCardPrev}
                 onNext={onCardNext}
                 isSkeleton={isSessionSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -380,16 +378,16 @@ const FlashcardReviewPage = ({
     const reviewPhases = (
         <>
             {phase === "overview" ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={overviewSection} />
+                <StackV gap={6} body={overviewSection} />
             ) : null}
 
             {phase === "session" ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={sessionSection} />
+                <StackV gap={6} body={sessionSection} />
             ) : null}
         </>
     )
 
-    const reviewBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={reviewPhases} />
+    const reviewBody = <StackV gap={7} body={reviewPhases} />
 
     return <Container size="md" padding={6} body={reviewBody} />
 }

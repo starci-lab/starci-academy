@@ -57,8 +57,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <MilestoneUpNextCard
-                                anatPart="MilestoneUpNextCard"
-                                showAnatomy
+
+                               
                                 eyebrow="Task 2 completed"
                                 showCheck
                                 title="Task 3 · Deploy to staging"
@@ -131,8 +131,8 @@ export const Plain: Story = {
 />`,
                         render: (
                             <MilestoneUpNextCard
-                                anatPart="MilestoneUpNextCard"
-                                showAnatomy
+
+                               
                                 eyebrow="Up next"
                                 title="Do 3 challenges from this lesson"
                                 description="Practice now to remember the lesson longer."

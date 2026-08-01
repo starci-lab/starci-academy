@@ -50,8 +50,8 @@ export const WithCta: Story = {
 />`,
                         render: (
                             <TaskLockedAlert
-                                anatPart="TaskLockedAlert"
-                                showAnatomy
+
+                               
                                 message="You can still view this task's criteria. AI grading, feedback, history, and the GitHub section will unlock once you finish the previous step."
                                 onGoToCurrentTask={() => {}}
                             />
@@ -83,8 +83,8 @@ export const NoCta: Story = {
 />`,
                         render: (
                             <TaskLockedAlert
-                                anatPart="TaskLockedAlert"
-                                showAnatomy
+
+                               
                                 message="You can still view this task's criteria. AI grading, feedback, history, and the GitHub section will unlock once you finish the previous step."
                             />
                         ),

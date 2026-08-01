@@ -64,8 +64,8 @@ export const ResumeAvailable: Story = {
 />`,
                         render: (
                             <ModuleContinueBand
-                                anatPart="ModuleContinueBand"
-                                showAnatomy
+
+                               
                                 resumeLessonTitle="Writing an optimized Dockerfile"
                                 lessonsRead={4}
                                 lessonsTotal={12}
@@ -126,8 +126,8 @@ export const AllDone: Story = {
 />`,
                         render: (
                             <ModuleContinueBand
-                                anatPart="ModuleContinueBand"
-                                showAnatomy
+
+                               
                                 lessonsRead={12}
                                 lessonsTotal={12}
                                 challengesDone={5}
@@ -165,8 +165,8 @@ export const Skeleton: Story = {
 />`,
                         render: (
                             <ModuleContinueBand
-                                anatPart="ModuleContinueBand"
-                                showAnatomy
+
+                               
                                 lessonsRead={0}
                                 lessonsTotal={0}
                                 challengesDone={0}

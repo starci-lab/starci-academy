@@ -106,7 +106,7 @@ export const NoSelection: Story = {
     {...props}
     selectedAttemptId={undefined}
 />`,
-                        render: <PersonalProjectResultScreen {...BASE} showAnatomy selectedAttemptId={undefined} />,
+                        render: <PersonalProjectResultScreen {...BASE} selectedAttemptId={undefined} />,
                     },
                 ]}
             />
@@ -133,7 +133,7 @@ export const Passing: Story = {
     isPassing
     nextTask={{ title: "Milestone 4 — Add idempotency to the payment processing job" }}
 />`,
-                        render: <PersonalProjectResultScreen {...BASE} showAnatomy isPassing />,
+                        render: <PersonalProjectResultScreen {...BASE} isPassing />,
                     },
                 ]}
             />
@@ -160,7 +160,7 @@ export const Failing: Story = {
     isPassing={false}
     score={58}
 />`,
-                        render: <PersonalProjectResultScreen {...BASE} showAnatomy isPassing={false} score={58} selectedAttemptId="a1" />,
+                        render: <PersonalProjectResultScreen {...BASE} isPassing={false} score={58} selectedAttemptId="a1" />,
                     },
                 ]}
             />
@@ -187,7 +187,7 @@ export const PassingNoNextTask: Story = {
     isPassing
     nextTask={undefined}
 />`,
-                        render: <PersonalProjectResultScreen {...BASE} showAnatomy isPassing nextTask={undefined} />,
+                        render: <PersonalProjectResultScreen {...BASE} isPassing nextTask={undefined} />,
                     },
                 ]}
             />
@@ -213,7 +213,7 @@ export const Skeleton: Story = {
                         render: (
                             <PersonalProjectResultScreen
                                 {...BASE}
-                                showAnatomy
+                               
                                 isSkeleton
                                 isPassing
                                 selectedAttemptId={undefined}

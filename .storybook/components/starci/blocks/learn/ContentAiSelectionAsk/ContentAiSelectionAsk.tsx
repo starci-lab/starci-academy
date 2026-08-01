@@ -54,9 +54,7 @@ export interface ContentAiSelectionAskProps {
     /** `true` → carries a "New" chip, for the first releases while readers learn the feature exists. */
     isNew?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     className?: string
 }
 
@@ -70,8 +68,6 @@ const ContentAiSelectionAsk = ({
     onOpen,
     anchor,
     isNew = false,
-    showAnatomy = false,
-    anatPart,
     className,
 }: ContentAiSelectionAskProps) => (
     // Positioning ONLY on this outer box (§13z exempts the anchor point itself, not a row
@@ -79,7 +75,7 @@ const ContentAiSelectionAsk = ({
     <div
         style={{ position: "fixed", left: anchor.x, top: anchor.y }}
         className={cn("z-50 -translate-x-1/2 -translate-y-full", className)}
-        data-anat-part={anatPart}
+
     >
         <StackH
             gap={2}
@@ -93,13 +89,13 @@ const ContentAiSelectionAsk = ({
                         prefixIcon={SparkleIcon}
                         onPress={onOpen}
                         isElevated
-                        showAnatomy={showAnatomy}
+
                     />
                     {isNew ? (
                         <Chip
                             text="New"
                             tone="accent"
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>

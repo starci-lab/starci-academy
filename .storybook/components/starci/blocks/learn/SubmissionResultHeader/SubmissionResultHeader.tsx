@@ -62,9 +62,7 @@ export interface SubmissionResultHeaderProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -79,19 +77,17 @@ const SubmissionResultHeader = ({
     title,
     description,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: SubmissionResultHeaderProps) => {
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton ? (
-                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
                     ) : (
-                        <LinkBack label={backLabel} onPress={onBack} showAnatomy={showAnatomy} />
+                        <LinkBack label={backLabel} onPress={onBack} />
                     )
                 }
                 title={title}

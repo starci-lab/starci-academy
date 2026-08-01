@@ -192,7 +192,6 @@ export interface MarkdownRenderersParams {
     /** Figure captions keyed by trimmed mermaid source, paired from the following paragraph. */
     mermaidCaptions: Record<string, string>
     /** `true` → tag the reused atoms (`SnippetIcon`, `Chip`) for a BlockAnatomy panel. */
-    showAnatomy: boolean
 }
 
 /**
@@ -202,7 +201,7 @@ export interface MarkdownRenderersParams {
  * asymmetric margin in reading measure.
  * @param params - {@link MarkdownRenderersParams}
  */
-export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showAnatomy }: MarkdownRenderersParams) => {
+export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: MarkdownRenderersParams) => {
     const blockMy = reading ? "my-4" : "my-3"
     // Link text rides the same body scale as the surrounding prose.
     const linkSize = reading ? "base" : "sm"
@@ -330,7 +329,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
                         code={code}
                         language={lang}
                         theme={isDark ? "material-theme-darker" : "material-theme-lighter"}
-                        showAnatomy={showAnatomy}
+
                     />
                 </div>
             )

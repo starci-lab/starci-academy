@@ -64,8 +64,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <FoundationCategoryHeader
-                                anatPart="FoundationCategoryHeader"
-                                showAnatomy
+
+                               
                                 breadcrumbItems={CRUMBS}
                                 title="Programming Basics"
                                 description="Variables, data types, loops — the groundwork before moving on to a framework."
@@ -110,8 +110,8 @@ export const Skeleton: Story = {
                         code: "<FoundationCategoryHeader title=\"\" isSkeleton />",
                         render: (
                             <FoundationCategoryHeader
-                                anatPart="FoundationCategoryHeader"
-                                showAnatomy
+
+                               
                                 title=""
                                 isSkeleton
                             />

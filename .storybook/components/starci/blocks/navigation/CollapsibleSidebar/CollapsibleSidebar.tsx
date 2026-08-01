@@ -106,9 +106,7 @@ export interface CollapsibleSidebarProps {
     /** The panel body — nav rows/groups; content-agnostic, this shell never inspects them. */
     children: ReactNode
     /** `true` → tag each composed part with `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this composite so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     className?: string
 }
 
@@ -128,8 +126,6 @@ export const CollapsibleSidebar = ({
     storageKey,
     topSlot,
     children,
-    showAnatomy = false,
-    anatPart,
     className,
 }: CollapsibleSidebarProps) => {
     const reduceMotion = useReducedMotion()
@@ -170,7 +166,7 @@ export const CollapsibleSidebar = ({
                             weight="bold"
                             truncate
                             text={title}
-                            showAnatomy={showAnatomy}
+
                         />
                     </motion.div>
                 ) : null}
@@ -182,7 +178,7 @@ export const CollapsibleSidebar = ({
                 ariaLabel={collapsed ? expandLabel : collapseLabel}
                 prefixIcon={SidebarSimpleIcon}
                 onPress={toggle}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -212,7 +208,7 @@ export const CollapsibleSidebar = ({
                 frame itself lays out nothing. */}
             <nav
                 className="flex min-h-0 flex-1 flex-col"
-                data-anat-part={showAnatomy ? "DragScrollArea" : undefined}
+
             >
                 <DragScrollArea size={40} className="flex-1">
                     <StackV gap={4} body={children} />
@@ -224,7 +220,7 @@ export const CollapsibleSidebar = ({
     return (
         <SidebarCollapsedContext.Provider value={collapsed}>
             <motion.aside
-                data-anat-part={anatPart}
+
                 initial={false}
                 animate={{ width: collapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH }}
                 transition={reduceMotion ? INSTANT_TRANSITION : SPRING_TRANSITION}

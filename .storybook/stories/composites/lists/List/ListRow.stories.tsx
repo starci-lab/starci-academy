@@ -95,7 +95,7 @@ export const TitleOnly: Story = {
 />`,
                         render: (
                             <div data-tier="fixture" className="w-full max-w-md rounded-2xl border border-default px-3">
-                                <ListRow title="Exercise 1: Loops and conditionals" showAnatomy />
+                                <ListRow title="Exercise 1: Loops and conditionals" />
                             </div>
                         ),
                     },
@@ -142,7 +142,7 @@ export const LeadingSubtitle: Story = {
                                     leading={FileTextLeading}
                                     title="Normalizing relational data to 3NF"
                                     subtitle="Module 4 · Database design"
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -163,7 +163,7 @@ export const LeadingSubtitle: Story = {
                                     title="Indexes and query plans"
                                     subtitle="Module 4 · Database design"
                                     isSkeleton
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -207,7 +207,7 @@ export const MetaTrailing: Story = {
                                     subtitle="Submitted Mar 15, 2026"
                                     meta={PassedMeta}
                                     trailing={Chevron}
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -236,7 +236,7 @@ export const DividerList: Story = {
 <ListRow title="Session 3…" subtitle="In progress" />`,
                         render: (
                             <div data-tier="fixture" className="w-full max-w-md rounded-2xl border border-default px-3">
-                                <ListRow title="Session 1: Loops and conditionals" subtitle="Completed" divider showAnatomy />
+                                <ListRow title="Session 1: Loops and conditionals" subtitle="Completed" divider />
                                 <ListRow title="Session 2: Functions and variable scope" subtitle="Completed" divider />
                                 <ListRow title="Session 3: Basic data structures" subtitle="In progress" />
                             </div>
@@ -274,7 +274,7 @@ export const LinkRow: Story = {
                                     subtitle="Issued Feb 1, 2026"
                                     href="/certificates/fullstack-mastery"
                                     trailing={Chevron}
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -319,7 +319,7 @@ export const Clickable: Story = {
                                                 title={row}
                                                 onPress={() => setLastClicked(row)}
                                                 divider={index < rows.length - 1}
-                                                showAnatomy
+                                               
                                             />
                                         ))}
                                     </div>
@@ -406,7 +406,7 @@ export const AsLessonRow: Story = {
                                                 meta={lesson.meta}
                                                 onPress={() => setLastClicked(lesson.title)}
                                                 divider={index < lessons.length - 1}
-                                                showAnatomy
+                                               
                                             />
                                         ))}
                                     </div>
@@ -477,7 +477,7 @@ export const AsNudgeRow: Story = {
                                     meta={AssignmentsMeta}
                                     trailing={ArrowTrailing}
                                     divider
-                                    showAnatomy
+                                   
                                 />
                                 <ListRow
                                     leading={FileTextLeading}

@@ -46,7 +46,6 @@ export interface AvatarGroupProps {
     /** Render the row skeleton — each visible slot mirrors as a circle shimmer. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -71,7 +70,6 @@ export const AvatarGroup = ({
     total,
     size = "sm",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: AvatarGroupProps) => {
     const visible = items.slice(0, max)
@@ -86,7 +84,7 @@ export const AvatarGroup = ({
             {visible.map((item) => (
                 // One badge per member: names each avatar as one opaque part
                 // instead of exposing Avatar's own Image/Fallback parts.
-                <span key={item.key} className="inline-flex" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                <span key={item.key} className="inline-flex">
                     <Avatar
                         src={item.src}
                         seed={item.seed}
@@ -104,7 +102,7 @@ export const AvatarGroup = ({
                     // a real count inside a loading row would leak real data into fake state.
                     // Forwards to the same `Avatar` atom the visible items use above: the
                     // count/person distinction only matters once real content lands.
-                    <span className="inline-flex" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                    <span className="inline-flex">
                         <Avatar isSkeleton size={size} className={GROUP_RING} />
                     </span>
                 ) : (
@@ -115,7 +113,7 @@ export const AvatarGroup = ({
                     // there is no house atom shaped "avatar-ring holding an arbitrary
                     // short string", so the vendor `Avatar`/`AvatarFallback` stays here on
                     // purpose rather than truncating a 2-digit+ overflow count to garbage.
-                    <HeroAvatar size={size} className={GROUP_RING} data-anat-part={showAnatomy ? "HeroAvatar" : undefined}>
+                    <HeroAvatar size={size} className={GROUP_RING}>
                         <HeroAvatarFallback>+{extra}</HeroAvatarFallback>
                     </HeroAvatar>
                 )

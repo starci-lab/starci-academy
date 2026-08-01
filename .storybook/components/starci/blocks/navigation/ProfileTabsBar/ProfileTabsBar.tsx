@@ -127,9 +127,7 @@ export interface ProfileTabsBarProps {
     /** Accessible name for the tab list, localized by the caller (blocks carry no i18n). */
     ariaLabel: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -145,16 +143,14 @@ const ProfileTabsBar = ({
     onTabChange,
     hiddenTabs,
     ariaLabel,
-    showAnatomy = false,
-    anatPart,
 }: ProfileTabsBarProps) => {
     return (
-        <div className="w-full" data-anat-part={anatPart}>
+        <div className="w-full">
             <TabsExtended
                 selectedKey={activeTab}
                 onSelectionChange={(key) => onTabChange(key as ProfileTab)}
                 classNames={["w-full"]}
-                showAnatomy={showAnatomy}
+
             >
                 <HeroTabs.ListContainer>
                     <HeroTabs.List aria-label={ariaLabel}>
@@ -165,30 +161,30 @@ const ProfileTabsBar = ({
                                 <HeroTabs.Tab
                                     key={tabId}
                                     id={tabId}
-                                    data-anat-part={showAnatomy ? "Tabs.Tab" : undefined}
+
                                 >
                                     <StackH
                                         gap={2}
                                         align="center"
-                                        anatPart={showAnatomy ? "StackH" : undefined}
+
                                         body={(
                                             <>
                                                 <Icon aria-hidden focusable="false" className={TAB_ICON_CLASS} weight={TAB_ICON_WEIGHT} />
                                                 {/* Icon-only below @app-md — label (and its marker) only
                                                     from a tablet-wide profile strip up. */}
                                                 <span className="hidden @app-md:inline">
-                                                    <Typography size="sm" text={TAB_LABEL[tabId]} showAnatomy={showAnatomy} />
+                                                    <Typography size="sm" text={TAB_LABEL[tabId]} />
                                                     {isHidden ? (
                                                         <>
                                                             {" "}
-                                                            <Typography size="sm" color="muted" text={HIDDEN_MARKER} showAnatomy={showAnatomy} />
+                                                            <Typography size="sm" color="muted" text={HIDDEN_MARKER} />
                                                         </>
                                                     ) : null}
                                                 </span>
                                             </>
                                         )}
                                     />
-                                    <HeroTabs.Indicator data-anat-part={showAnatomy ? "Tabs.Indicator" : undefined} />
+                                    <HeroTabs.Indicator />
                                 </HeroTabs.Tab>
                             )
                         })}

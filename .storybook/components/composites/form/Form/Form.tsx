@@ -86,7 +86,6 @@ export interface FormBaseProps {
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 /**
  * The composite tier's `<form>` shell: a real `<form>` tag (ENTER submits, a11y),
@@ -107,7 +106,6 @@ const Base = ({
     gap = 6,
     isDisabled = false,
     classNames,
-    showAnatomy = false,
 }: FormBaseProps) => {
     const main = body ?? children
     const submit = (event: FormEvent<HTMLFormElement>) => {
@@ -167,7 +165,6 @@ export interface FormSectionProps {
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 /**
  * A titled group of fields: a `header` block (title + optional description,
@@ -187,7 +184,6 @@ const Section = ({
     children,
     gap = 4,
     classNames,
-    showAnatomy = false,
 }: FormSectionProps) => {
     const main = body ?? children
     return (
@@ -198,7 +194,7 @@ const Section = ({
             data-principles="label-field"
         >
             {/* tight gap-1: title ↔ description is a PAIR, not two regions (§10b).
-                No `data-anat-part="Header"` wrapper: it never helps the reader past what the
+                No `` wrapper: it never helps the reader past what the
                 `Typography` nodes inside already say on their own (§11a.1 CASE 2/3 — a
                 badge with nowhere to link is worse than no badge; those two atoms keep their
                 own badge below and surface as top-level nodes instead). */}
@@ -208,18 +204,18 @@ const Section = ({
                 pattern="title-subtitle"
                 body={
                     <>
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <span>
                             <Typography size="sm" text={title} weight="medium" />
                         </span>
                         {description != null ? (
-                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <span>
                                 <Typography size="xs" text={description} color="muted" />
                             </span>
                         ) : null}
                     </>
                 }
             />
-            {/* No `data-anat-part="Body"` here either: `body`/`children` is arbitrary
+            {/* No `` here either: `body`/`children` is arbitrary
                 caller-supplied field content (§11a.1 CASE 3 — caller slot). */}
             {main != null ? (
                 <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
@@ -253,7 +249,6 @@ export interface FormActionsProps {
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 /** Horizontal alignment → class. `between` needs the button row to OCCUPY the full width for the two edges to actually separate. */
 const ALIGN_CLASS: Record<FormActionsAlign, string> = {
@@ -276,7 +271,6 @@ const Actions = ({
     align = "end",
     sticky = false,
     classNames,
-    showAnatomy = false,
 }: FormActionsProps) => (
     <div
         className={cn(
@@ -295,7 +289,7 @@ const Actions = ({
             // are the same three-value vocabulary (§ATOM-5, 2026-07-31); the atom now owns
             // the `between` ⇒ `w-full justify-between` mapping itself (`ALIGN_CLS`).
             align={align}
-            showAnatomy={showAnatomy}
+
         />
     </div>
 )

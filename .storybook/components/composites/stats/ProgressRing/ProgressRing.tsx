@@ -48,9 +48,7 @@ interface ProgressRingOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
-    /** `true` → tag the ring/caption skeleton bars with `data-anat-part="Skeleton"`. */
-    showAnatomy?: boolean
+    /** `true` → tag the ring/caption skeleton bars with ``. */
 }
 
 /**
@@ -82,8 +80,6 @@ export const ProgressRing = ({
     tone = "accent",
     isSkeleton = false,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: ProgressRingProps) => {
     const { ring, label: labelSize } = SIZE_MAP[size]
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
@@ -98,7 +94,7 @@ export const ProgressRing = ({
             gap={3}
             align="center"
             classNames={classNames}
-            anatPart={anatPart}
+
             body={
                 <>
                     {/* Relative container: the ring fills it, the label overlays its center */}
@@ -110,7 +106,7 @@ export const ProgressRing = ({
                             // full size the moment data lands, the exact thing a skeleton
                             // exists to prevent. Kept a plain, correctly-sized real element
                             // instead of a vendor `Skeleton` import.
-                            <div className="size-full rounded-full bg-default" data-anat-part={showAnatomy ? "Ring" : undefined} />
+                            <div className="size-full rounded-full bg-default" />
                         ) : (
                             <>
                                 <ProgressCircle aria-label={ariaLabel} value={safeValue} color={tone}>

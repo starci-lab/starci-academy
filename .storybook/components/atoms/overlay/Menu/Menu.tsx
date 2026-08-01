@@ -97,7 +97,6 @@ export interface MenuBaseProps {
     /** Open-state change handler. */
     onOpenChange?: (isOpen: boolean) => void
     /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `DropdownTrigger`/`DropdownPopover`/`DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`/`Skeleton`) so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /** Render the leaf skeleton (rows of icon + label bars) instead of the real dropdown; the atom owns its own skeleton. */
     isSkeleton?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
@@ -121,7 +120,6 @@ const MenuBase = ({
     isOpen,
     defaultOpen,
     onOpenChange,
-    showAnatomy = false,
     isSkeleton = false,
     classNames,
 }: MenuBaseProps) => {
@@ -141,7 +139,7 @@ const MenuBase = ({
                 id={item.key}
                 textValue={item.label}
                 isDisabled={item.isDisabled}
-                data-anat-part={showAnatomy ? "DropdownItem" : undefined}
+
             >
                 <span className="flex items-center gap-2">
                     {Icon ? <Icon className={cn(MENU_ICON_CLASS, "shrink-0")} weight={MENU_ICON_WEIGHT} aria-hidden /> : null}
@@ -165,8 +163,8 @@ const MenuBase = ({
             <div data-tier="atom" data-component="Menu" className={cn("flex w-full flex-col gap-1 p-1", classNames)}>
                 {Array.from({ length: rowCount || 4 }).map((_, index) => (
                     <div key={index} className="flex items-center gap-2 px-2 py-2">
-                        <HeroSkeleton className="size-5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        <HeroSkeleton className="h-[14px] w-1/3 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                        <HeroSkeleton className="h-[14px] w-1/3 rounded" />
                     </div>
                 ))}
             </div>
@@ -174,7 +172,7 @@ const MenuBase = ({
     }
     return (
         <HeroDropdown data-tier="atom" data-component="Menu" isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroDropdownTrigger className={cn(classNames)} data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}>
+            <HeroDropdownTrigger className={cn(classNames)}>
                 <HeroButton variant={triggerVariant}>
                     {TriggerIcon ? (
                         // `!` needed: HeroUI's `.button svg` rule has higher specificity. This
@@ -187,19 +185,19 @@ const MenuBase = ({
                     {triggerLabel}
                 </HeroButton>
             </HeroDropdownTrigger>
-            <HeroDropdownPopover placement={placement} className="w-56 max-w-[calc(100vw-2rem)]" data-anat-part={showAnatomy ? "DropdownPopover" : undefined}>
+            <HeroDropdownPopover placement={placement} className="w-56 max-w-[calc(100vw-2rem)]">
                 <HeroDropdownMenu
                     aria-label={ariaLabel}
                     onAction={onAction ? (key) => onAction(String(key)) : undefined}
-                    data-anat-part={showAnatomy ? "DropdownMenu" : undefined}
+
                 >
                     {sections
                         ? sections.map((section) => (
-                            <HeroDropdownSection key={section.key} data-anat-part={showAnatomy ? "DropdownSection" : undefined}>
+                            <HeroDropdownSection key={section.key}>
                                 {section.title ? (
                                     <HeroMenuHeader
                                         className="px-2 py-2 text-xs font-semibold text-muted"
-                                        data-anat-part={showAnatomy ? "Header" : undefined}
+
                                     >
                                         {section.title}
                                     </HeroMenuHeader>

@@ -89,9 +89,7 @@ export interface CourseQaToolbarProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -108,8 +106,6 @@ const CourseQaToolbar = ({
     resultCount,
     filterAriaLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: CourseQaToolbarProps) => {
     const items = FILTER_ORDER.map((value) => ({
         key: value,
@@ -118,13 +114,13 @@ const CourseQaToolbar = ({
 
     const searchAndCount = (
         <>
-            <div className="min-w-0 flex-1 @app-sm:max-w-sm" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
+            <div className="min-w-0 flex-1 @app-sm:max-w-sm">
                 <InputSearch
                     value={searchValue}
                     onValueChange={onSearchChange}
                     placeholder="Search questions..."
                     ariaLabel="Search questions"
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
             {isSkeleton ? (
@@ -133,7 +129,7 @@ const CourseQaToolbar = ({
                     color="muted"
                     isSkeleton
                     classNames={["shrink-0"]}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : (
                 <Typography
@@ -142,7 +138,7 @@ const CourseQaToolbar = ({
                     tabularNums
                     text={resultCountLabel(resultCount)}
                     classNames={["shrink-0"]}
-                    showAnatomy={showAnatomy}
+
                 />
             )}
         </>
@@ -150,7 +146,7 @@ const CourseQaToolbar = ({
 
     const strip = (
         <>
-            <div data-anat-part={showAnatomy ? "Toolbar" : undefined}>
+            <div>
                 <Toolbar
                     leftTabs={{
                         items,
@@ -158,16 +154,16 @@ const CourseQaToolbar = ({
                         ariaLabel: filterAriaLabel,
                         onSelectionChange: (key) => onFilterChange(String(key) as CourseQaFilter),
                     }}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
-            <StackH gap={3} justify="between" wrap showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackH" : undefined} body={searchAndCount} />
+            <StackH gap={3} justify="between" wrap body={searchAndCount} />
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={4} showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={strip} />
+        <div>
+            <StackV gap={4} body={strip} />
         </div>
     )
 }

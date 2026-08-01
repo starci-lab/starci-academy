@@ -220,7 +220,6 @@ export interface QuizPageProps {
     recapRatingAriaLabel: string
 
     /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -292,30 +291,29 @@ const QuizPage = ({
     recapRatingOptions,
     onRecapRate,
     recapRatingAriaLabel,
-    showAnatomy = false,
 }: QuizPageProps) => {
     const setupSection = (
         <>
             <FlashcardModeSwitch
-                anatPart="FlashcardModeSwitch"
+
                 mode={flashcardMode}
                 onModeChange={onFlashcardModeChange}
                 ariaLabel={flashcardModeAriaLabel}
-                showAnatomy={showAnatomy}
+
             />
             {!isEnrolled ? (
                 <QuizEnrollGate
-                    anatPart="QuizEnrollGate"
+
                     title={enrollTitle}
                     description={enrollDescription}
                     ctaLabel={enrollCtaLabel}
                     onEnroll={onEnroll}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : (
                 <>
                     <QuizSetup
-                        anatPart="QuizSetup"
+
                         label={setupLabel}
                         name={setupName}
                         onNameChange={onSetupNameChange}
@@ -328,10 +326,10 @@ const QuizPage = ({
                         isPending={isSetupPending}
                         errorMessage={setupErrorMessage}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                     <QuizProgressPanel
-                        anatPart="QuizProgressPanel"
+
                         label={progressLabel}
                         view={progressView}
                         onViewChange={onProgressViewChange}
@@ -339,7 +337,7 @@ const QuizPage = ({
                         stats={progressStats}
                         sessions={progressSessions}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             )}
@@ -349,7 +347,7 @@ const QuizPage = ({
     const activeSection = (
         <>
             <WorkSessionHeader
-                anatPart="WorkSessionHeader"
+
                 backLabel={activeBackLabel}
                 onBack={onActiveBack}
                 title={activeTitle}
@@ -361,10 +359,10 @@ const QuizPage = ({
                 onStepPress={onActiveStepPress}
                 finishLabel={activeFinishLabel}
                 onFinish={onActiveFinish}
-                showAnatomy={showAnatomy}
+
             />
             <QuizQuestion
-                anatPart="QuizQuestion"
+
                 question={question}
                 levelLabel={questionLevelLabel}
                 answer={answer}
@@ -378,7 +376,7 @@ const QuizPage = ({
                 onNext={onAnswerNext}
                 isPending={isAnswerPending}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -386,7 +384,7 @@ const QuizPage = ({
     const recapSection = (
         <>
             <WorkSessionHeader
-                anatPart="WorkSessionHeader"
+
                 backLabel={recapBackLabel}
                 onBack={onRecapBack}
                 title={recapTitle}
@@ -396,15 +394,15 @@ const QuizPage = ({
                 doneSteps={recapDoneSteps}
                 finishLabel={recapFinishLabel}
                 onFinish={onRecapFinish}
-                showAnatomy={showAnatomy}
+
             />
             <QuizRecapList
-                anatPart="QuizRecapList"
+
                 cards={recapCards}
                 ratingOptions={recapRatingOptions}
                 onRate={onRecapRate}
                 ratingAriaLabel={recapRatingAriaLabel}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -412,20 +410,20 @@ const QuizPage = ({
     const quizPhases = (
         <>
             {phase === "setup" ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={setupSection} />
+                <StackV gap={6} body={setupSection} />
             ) : null}
 
             {phase === "active" ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={activeSection} />
+                <StackV gap={6} body={activeSection} />
             ) : null}
 
             {phase === "recap" ? (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={recapSection} />
+                <StackV gap={6} body={recapSection} />
             ) : null}
         </>
     )
 
-    const quizBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={quizPhases} />
+    const quizBody = <StackV gap={7} body={quizPhases} />
 
     return <Container size="md" padding={6} body={quizBody} />
 }

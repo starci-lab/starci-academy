@@ -97,8 +97,8 @@ const ControlledPremiumGateModal = ({
             <PremiumGateModal
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}
-                showAnatomy
-                anatPart="PremiumGateModal"
+               
+
                 {...modalProps}
             />
         </div>

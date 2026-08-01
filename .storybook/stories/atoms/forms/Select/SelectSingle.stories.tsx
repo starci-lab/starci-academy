@@ -55,7 +55,7 @@ export const Default: Story = {
                                         options={OPTIONS}
                                         placeholder="Choose a course"
                                         ariaLabel="Course"
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -93,7 +93,7 @@ export const WithLabel: Story = {
                                         placeholder="Choose a course"
                                         label="Course"
                                         hint="Pick the track you want to follow."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -131,7 +131,7 @@ export const Required: Story = {
                                         placeholder="Choose a course"
                                         label="Course"
                                         isRequired
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -172,7 +172,7 @@ export const Value: Story = {
                             code: "<SelectSingle value={null} onValueChange={setV} options={OPTIONS} placeholder=\"Choose a course\" ariaLabel=\"Course\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <SelectSingle value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose a course" ariaLabel="Course" showAnatomy />
+                                    <SelectSingle value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose a course" ariaLabel="Course" />
                                 </div>
                             ),
                         },
@@ -217,7 +217,7 @@ export const Disabled: Story = {
                                     placeholder="Choose a course"
                                     label="Course"
                                     isDisabled
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -256,7 +256,7 @@ export const Invalid: Story = {
                                     placeholder="Choose a course"
                                     label="Course"
                                     isInvalid
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -292,7 +292,7 @@ export const Error: Story = {
                                         placeholder="Choose a course"
                                         label="Course"
                                         errorMessage="Please choose a course."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -321,7 +321,7 @@ export const Skeleton: Story = {
                         code: "<SelectSingle label=\"Course\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <SelectSingle value={null} onValueChange={() => {}} options={OPTIONS} label="Course" isSkeleton showAnatomy />
+                                <SelectSingle value={null} onValueChange={() => {}} options={OPTIONS} label="Course" isSkeleton />
                             </div>
                         ),
                     },

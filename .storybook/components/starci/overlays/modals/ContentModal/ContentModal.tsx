@@ -73,9 +73,7 @@ export interface ContentModalProps {
     /** Extra classes merged onto the dialog. */
     className?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -90,10 +88,8 @@ const ContentModal = ({
     content,
     isSkeleton = false,
     className,
-    showAnatomy = false,
-    anatPart,
 }: ContentModalProps) => (
-    <div data-anat-part={anatPart}>
+    <div>
         <ModalShell
             isOpen={isOpen}
             onOpenChange={onOpenChange}
@@ -108,22 +104,22 @@ const ContentModal = ({
                     <MarkdownContent
                         source={content.title}
                         measure="compact"
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "MarkdownContent (title)" : undefined}
+
+
                     />
                 </div>
             ) : null}
-            showAnatomy={showAnatomy}
+
         >
             <ScrollShadow hideScrollBar>
                 {isSkeleton ? (
-                    <MarkdownContent source="" isSkeleton showAnatomy={showAnatomy} anatPart={showAnatomy ? "MarkdownContent (body)" : undefined} />
+                    <MarkdownContent source="" isSkeleton />
                 ) : (
                     <MarkdownContent
                         source={content?.body ?? ""}
                         measure="reading"
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "MarkdownContent (body)" : undefined}
+
+
                     />
                 )}
             </ScrollShadow>

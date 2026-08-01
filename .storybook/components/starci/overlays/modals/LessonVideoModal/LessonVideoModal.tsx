@@ -141,9 +141,7 @@ export interface LessonVideoModalProps {
     /** `true` → the meta row and link mirror their own skeleton; see file header. */
     isLoading?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** {@link LessonVideoKind} → chip tone + tooltip. Every value is `warning` — a stage badge, not a verdict. */
@@ -190,7 +188,6 @@ const PLAYER_GAP_DESCRIPTION =
 
 /** Props for the internal {@link PlayerGap} placeholder. */
 interface PlayerGapProps {
-    showAnatomy?: boolean
 }
 
 /**
@@ -201,17 +198,17 @@ interface PlayerGapProps {
  * `FoundationResourceBody` already established for this same situation,
  * rather than a new hand-rolled box.
  */
-const PlayerGap = ({ showAnatomy = false }: PlayerGapProps) => (
+const PlayerGap = ({ }: PlayerGapProps) => (
     <SurfaceCard
         contentClassName="aspect-video"
-        anatPart={showAnatomy ? "SurfaceCard" : undefined}
-        showAnatomy={showAnatomy}
+
+
         body={() => (
             <EmptyState
                 icon={PlayIcon}
                 title={PLAYER_GAP_TITLE}
                 description={PLAYER_GAP_DESCRIPTION}
-                anatPart={showAnatomy ? "EmptyState" : undefined}
+
             />
         )}
     />
@@ -229,21 +226,19 @@ const LessonVideoModal = ({
     onOpenChange,
     video,
     isLoading = false,
-    showAnatomy = false,
-    anatPart,
 }: LessonVideoModalProps) => {
     const playerAndLink = (
         <>
-            <PlayerGap showAnatomy={showAnatomy} />
+            <PlayerGap />
             {isLoading ? (
-                <Typography size="sm" isSkeleton classNames={["w-3/4"]} showAnatomy={showAnatomy} />
+                <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
             ) : (
                 <Typography
                     size="sm"
                     isLink
                     href={video?.url ?? ""}
                     text={video?.url ?? ""}
-                    showAnatomy={showAnatomy}
+
                 />
             )}
         </>
@@ -255,16 +250,16 @@ const LessonVideoModal = ({
                 <MarkdownContent
                     source={video.description}
                     measure="compact"
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "MarkdownContent (description)" : undefined}
+
+
                 />
             ) : null}
             {video?.caption?.trim() ? (
                 <MarkdownContent
                     source={video.caption}
                     measure="compact"
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "MarkdownContent (caption)" : undefined}
+
+
                 />
             ) : null}
         </>
@@ -275,7 +270,7 @@ const LessonVideoModal = ({
             <Cluster
                 gap={3}
                 justify="center"
-                anatPart={showAnatomy ? "Cluster" : undefined}
+
                 items={[
                     {
                         key: "kind",
@@ -284,7 +279,7 @@ const LessonVideoModal = ({
                                 value={video?.kind ?? LessonVideoKind.RawStream}
                                 map={KIND_MAP}
                                 isSkeleton={isLoading}
-                                anatPart={showAnatomy ? "EnumChip" : undefined}
+
                             />
                         ),
                     },
@@ -296,7 +291,7 @@ const LessonVideoModal = ({
                                 tone="default"
                                 size="sm"
                                 isSkeleton={isLoading}
-                                anatPart={showAnatomy ? "InlineIconLabel" : undefined}
+
                             >
                                 {formatDuration(video?.durationMs ?? 0)}
                             </InlineIconLabel>
@@ -310,20 +305,20 @@ const LessonVideoModal = ({
                                 color="muted"
                                 isSkeleton
                                 classNames={["w-1/3"]}
-                                showAnatomy={showAnatomy}
+
                             />
                         ) : (
                             <Typography
                                 size="sm"
                                 color="muted"
                                 text={HOST_PLATFORM_LABEL[video?.hostPlatform ?? VideoHostPlatform.Youtube]}
-                                showAnatomy={showAnatomy}
+
                             />
                         ),
                     },
                 ]}
             />
-            <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={playerAndLink} />
+            <StackV gap={4} align="center" body={playerAndLink} />
             {!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? (
                 // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
                 // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
@@ -333,13 +328,13 @@ const LessonVideoModal = ({
                 // code. Left at the composite's default tone rather than shipping a
                 // className that silently does nothing — a real, marked gap, not this
                 // port's to close (`MarkdownContent` is composite tier, out of scope here).
-                <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={descriptionAndCaption} />
+                <StackV gap={4} body={descriptionAndCaption} />
             ) : null}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -351,14 +346,14 @@ const LessonVideoModal = ({
                     // feeds the result into the slot, same idiom as `ContentHeader`'s `PageHeader`
                     // title skeleton.
                     isLoading ? (
-                        <Typography weight="bold" isSkeleton showAnatomy={showAnatomy} />
+                        <Typography weight="bold" isSkeleton />
                     ) : (
                         video?.title ?? ""
                     )
                 }
-                showAnatomy={showAnatomy}
+
             >
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={metaAndPlayer} />
+                <StackV gap={6} body={metaAndPlayer} />
             </ModalShell>
         </div>
     )

@@ -63,9 +63,7 @@ export interface ProfileLockedStateProps {
     /** Extra classes on the root. */
     className?: string
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -78,8 +76,6 @@ const ProfileLockedState = ({
     user,
     onGoCourses,
     className,
-    anatPart,
-    showAnatomy = false,
 }: ProfileLockedStateProps) => {
     // No `anatPart` here (yet, deliberately): `ProfileHero` has no story of its own at
     // the time of writing, so `check-orphan-parts` treats a badge with no `storyId` to
@@ -89,18 +85,18 @@ const ProfileLockedState = ({
         <>
             <ProfileHero
                 user={user}
-                showAnatomy={showAnatomy}
+
             />
             <SurfaceCard
                 padding={6}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
+
                 body={() => (
                     <EmptyState
                         icon={LockIcon}
                         title="This profile is set to private"
                         description="The profile owner has hidden their public activity — you can still explore other courses."
-                        anatPart={showAnatomy ? "EmptyState" : undefined}
+
                     >
                         <Button
                             label="Browse courses"
@@ -112,7 +108,7 @@ const ProfileLockedState = ({
             />
         </>
     )
-    return <StackV gap={6} padding={6} className={className} anatPart={anatPart} body={lockedBody} />
+    return <StackV gap={6} padding={6} className={className} body={lockedBody} />
 }
 
 export { ProfileLockedState }

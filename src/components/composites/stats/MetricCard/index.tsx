@@ -49,7 +49,7 @@ interface MetricCardOwnProps {
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     /**
-     * When `true`, each composed part emits `data-anat-part="<name>"` so a
+     * When `true`, each composed part emits `` so a
      * BlockAnatomy panel can badge it on-render. Off by default (production).
      */
 }

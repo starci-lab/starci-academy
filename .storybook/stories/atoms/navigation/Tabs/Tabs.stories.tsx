@@ -74,7 +74,7 @@ export const Default: Story = {
                         code: `<Tabs ariaLabel="Course" selectedKey="overview" onSelectionChange={fn}
   items={[{ key: "overview", label: "Overview" }, ...]} />`,
                         render: (
-                            <Tabs ariaLabel="Course" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} showAnatomy />
+                            <Tabs ariaLabel="Course" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} />
                         ),
                     },
                     {
@@ -89,7 +89,7 @@ export const Default: Story = {
                                 selectedKey="overview"
                                 onSelectionChange={() => {}}
                                 items={BASE_ITEMS}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -107,7 +107,7 @@ export const Default: Story = {
                                     { key: "pro", label: "Pro" },
                                     { key: "premium", label: "Premium", isDisabled: true },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -141,7 +141,7 @@ export const WithIcon: Story = {
                                     { key: "stats", label: "Stats", icon: ChartBarIcon },
                                     { key: "history", label: "History", icon: ClockIcon },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -175,7 +175,7 @@ export const WithBadge: Story = {
                                     { key: "mentions", label: "Mentions", badge: "9+" },
                                     { key: "archived", label: "Archived" },
                                 ]}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -206,7 +206,7 @@ export const Skeleton: Story = {
                         why: "A filled pill shimmer stands where the segmented selected tab would sit, matching the primary variant's own resting shape. Nothing about the eventual tab labels shifts the strip's width once real data lands.",
                         code: "<Tabs isSkeleton ariaLabel=\"…\" selectedKey=\"\" onSelectionChange={fn} items={[…]} />",
                         render: (
-                            <Tabs isSkeleton ariaLabel="Course" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} showAnatomy />
+                            <Tabs isSkeleton ariaLabel="Course" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} />
                         ),
                     },
                     {
@@ -221,7 +221,7 @@ export const Skeleton: Story = {
                                 selectedKey="overview"
                                 onSelectionChange={() => {}}
                                 items={BASE_ITEMS}
-                                showAnatomy
+                               
                             />
                         ),
                     },

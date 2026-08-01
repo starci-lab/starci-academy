@@ -91,7 +91,7 @@ export interface ModalShellBaseProps {
     classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (close trigger / header / body / footer)
-     * emits `data-anat-part="<name>"` so a BlockAnatomy panel can badge it
+     * emits `` so a BlockAnatomy panel can badge it
      * on-render. Off by default (production).
      */
 }

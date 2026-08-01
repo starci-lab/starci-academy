@@ -107,7 +107,6 @@ export interface FlexBaseProps {
      */
     classNames?: Array<AllowedClassName>
     /** Name this box in a BlockAnatomy panel. */
-    anatPart?: string
     /**
      * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the
@@ -157,7 +156,6 @@ const FlexBase = ({
     nested = false,
     body,
     classNames,
-    anatPart,
     pattern,
 }: FlexBaseProps) => (
     // No self-name fallback: `Flex` is internal-only (see the export note below) and has
@@ -167,7 +165,7 @@ const FlexBase = ({
     <Tag
         data-tier="frame"
         data-component="Flex"
-        data-anat-part={anatPart}
+
         data-principles={pattern}
         className={cn(
             inline ? "inline-flex" : "flex",

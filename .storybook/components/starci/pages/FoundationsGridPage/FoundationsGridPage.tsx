@@ -82,7 +82,6 @@ export interface FoundationsGridPageProps {
      */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -106,28 +105,27 @@ const FoundationsGridPage = ({
     onSelectCategory,
     pagination,
     isSkeleton = false,
-    showAnatomy = false,
 }: FoundationsGridPageProps) => {
     const categoriesSection = (
         <>
             <FoundationCategorySearchBar
-                anatPart="FoundationCategorySearchBar"
+
                 query={searchQuery}
                 onQueryChange={onSearchQueryChange}
                 suggestions={suggestions}
                 onSelectSuggestion={onSelectSuggestion}
                 count={categoryCount}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <FoundationCategoryList
-                anatPart="FoundationCategoryList"
+
                 categories={categories}
                 searchQuery={searchQuery}
                 onSelectCategory={onSelectCategory}
                 pagination={pagination}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -135,25 +133,25 @@ const FoundationsGridPage = ({
     const gridSections = (
         <>
             <FoundationCategoryHeader
-                anatPart="FoundationCategoryHeader"
+
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <TrialEnrollBanner
-                anatPart="TrialEnrollBanner"
+
                 isVisible={isTrialBannerVisible}
                 onEnroll={onEnrollTrial}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={categoriesSection} />
+            <StackV gap={6} body={categoriesSection} />
         </>
     )
 
-    const gridBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={gridSections} />
+    const gridBody = <StackV gap={6} body={gridSections} />
 
     return <Container size="md" padding={6} body={gridBody} />
 }

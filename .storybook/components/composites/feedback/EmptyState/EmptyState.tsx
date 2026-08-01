@@ -75,7 +75,6 @@ export interface EmptyStateProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * When on, each composed part with a FIXED identity emits `data-anat-part`
      * (`Code`/`Title`/`Description`, all as `Typography`/`Typography`) for a
@@ -86,7 +85,6 @@ export interface EmptyStateProps {
      * hint list, one or two buttons), so there is no single fixed component for a
      * panel link to point to — a badge with nowhere to link is worse than no badge.
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -109,8 +107,6 @@ export const EmptyState = ({
     tone = "neutral",
     size = "default",
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: EmptyStateProps) => {
     if (size === "compact") {
         // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
@@ -118,7 +114,7 @@ export const EmptyState = ({
         return (
             <span
                 className={cn("block", classNames)}
-                data-anat-part={showAnatomy ? "Typography" : anatPart}
+
                 data-tier="composite"
                 data-component="EmptyState"
             >
@@ -132,7 +128,7 @@ export const EmptyState = ({
 
     return (
         <div
-            data-anat-part={anatPart}
+
             className={cn(
                 isPage
                     ? "mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-8 text-center"
@@ -143,7 +139,7 @@ export const EmptyState = ({
             data-component="EmptyState"
         >
             {code != null ? (
-                <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                <div>
                     <Typography size="h1" weight="bold" color="muted" text={code} />
                 </div>
             ) : null}
@@ -160,11 +156,11 @@ export const EmptyState = ({
                     gap={3}
                     body={
                         <>
-                            <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <div>
                                 <Typography size="h4" weight="semibold" align="center" text={title} />
                             </div>
                             {description ? (
-                                <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <div>
                                     <Typography size="sm" text={description} color="muted" />
                                 </div>
                             ) : null}
@@ -173,11 +169,11 @@ export const EmptyState = ({
                 />
             ) : (
                 <>
-                    <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <div>
                         <Typography text={title} weight="medium" />
                     </div>
                     {description ? (
-                        <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <div>
                             <Typography size="xs" text={description} color="muted" />
                         </div>
                     ) : null}

@@ -104,7 +104,6 @@ export interface FoundationsCategoryPageProps {
      */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -134,12 +133,11 @@ const FoundationsCategoryPage = ({
     onPageChange,
     resourceListAriaLabel,
     isSkeleton = false,
-    showAnatomy = false,
 }: FoundationsCategoryPageProps) => {
     const resourcesSection = (
         <>
             <FoundationSearchBar
-                anatPart="FoundationSearchBar"
+
                 query={searchQuery}
                 onQueryChange={onSearchQueryChange}
                 suggestions={suggestions}
@@ -147,10 +145,10 @@ const FoundationsCategoryPage = ({
                 resultCount={resultCount}
                 isCountLoading={isResultCountLoading}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <FoundationResourceList
-                anatPart="FoundationResourceList"
+
                 resources={resources}
                 isLoading={isSkeleton || isResourcesLoading}
                 error={resourcesError}
@@ -159,7 +157,7 @@ const FoundationsCategoryPage = ({
                 totalPages={totalPages}
                 onPageChange={onPageChange}
                 ariaLabel={resourceListAriaLabel}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -167,25 +165,25 @@ const FoundationsCategoryPage = ({
     const categorySections = (
         <>
             <FoundationsHeader
-                anatPart="FoundationsHeader"
+
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <TrialEnrollBanner
-                anatPart="TrialEnrollBanner"
+
                 isVisible={isTrialNudgeVisible}
                 onEnroll={onEnrollTrial}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={resourcesSection} />
+            <StackV gap={6} body={resourcesSection} />
         </>
     )
 
-    const categoryBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={categorySections} />
+    const categoryBody = <StackV gap={7} body={categorySections} />
 
     return <Container size="md" padding={6} body={categoryBody} />
 }

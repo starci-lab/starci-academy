@@ -68,9 +68,7 @@ export interface RatingBarProps {
     /** `true` → the group draws its own tile mirror. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -79,28 +77,28 @@ export interface RatingBarProps {
  * depends on the loop variables `option`/`position` from the `.map()` that
  * calls it.
  */
-const ratingTileBody = (option: RatingOption, position: number, showAnatomy: boolean): ReactNode => (
+const ratingTileBody = (option: RatingOption, position: number): ReactNode => (
     <StackV
         gap={3}
-        anatPart={showAnatomy ? "StackV" : undefined}
+
         body={
             <>
                 <StackH
                     gap={3}
                     align="center"
                     justify="between"
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <>
-                            <Typography size="sm" weight="medium" text={option.label} showAnatomy={showAnatomy} />
+                            <Typography size="sm" weight="medium" text={option.label} />
                             {/* One chip per tile, and it goes to the KEY — that is the classifying
                                 mark. The interval below is a quiet fact, so it stays as text. */}
-                            <Chip tone="default" text={String(position + 1)} showAnatomy={showAnatomy} />
+                            <Chip tone="default" text={String(position + 1)} />
                         </>
                     }
                 />
                 {option.hint != null ? (
-                    <Typography size="xs" color="muted" text={option.hint} showAnatomy={showAnatomy} />
+                    <Typography size="xs" color="muted" text={option.hint} />
                 ) : null}
             </>
         }
@@ -118,20 +116,18 @@ const RatingBar = ({
     ariaLabel,
     isPending = false,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: RatingBarProps) => {
     const items: Array<SurfaceCardPressableGroupItem> = options.map((option, position) => ({
         key: String(option.grade),
         onPress: () => onRate(option.grade),
         isDisabled: isPending,
         withVerdict: { enable: true, color: GRADE_COLOR[option.grade] },
-        content: ratingTileBody(option, position, showAnatomy),
+        content: ratingTileBody(option, position),
     }))
 
     return (
-        <div data-anat-part={anatPart}>
-            <div data-anat-part={showAnatomy ? "SurfaceCardPressableGroup" : undefined}>
+        <div>
+            <div>
                 <SurfaceCardPressableGroup
                     ariaLabel={ariaLabel}
                     columns={{ base: 2, md: 4 }}

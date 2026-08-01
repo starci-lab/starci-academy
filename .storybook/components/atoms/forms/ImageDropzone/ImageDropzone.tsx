@@ -59,7 +59,6 @@ export interface ImageDropzoneProps {
      */
     isSkeleton?: boolean
     /** When `true`, each composed part emits `data-anat-part` so a BlockAnatomy panel can badge it. Off by default. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -84,7 +83,6 @@ const ImageDropzoneBase = ({
     isDragActive: isDragActiveProp,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
 }: ImageDropzoneProps) => {
     const { getRootProps, getInputProps, isDragActive: isDragActiveInternal } = useDropzone({
         accept: ACCEPT,
@@ -118,18 +116,18 @@ const ImageDropzoneBase = ({
             >
                 <HeroSkeleton
                     className="size-8 rounded-full"
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                 />
                 {/* Same bar `Typography size="sm" isSkeleton` would draw — SKEL_H.sm = h-[14px]. */}
                 <HeroSkeleton
                     className="inline-block h-[14px] w-1/2 rounded"
-                    data-anat-part={showAnatomy ? "Label" : undefined}
+
                 />
                 {hint ? (
                     // Same bar `Typography size="xs" isSkeleton` would draw — SKEL_H.xs = h-3.
                     <HeroSkeleton
                         className="inline-block h-3 w-1/3 rounded"
-                        data-anat-part={showAnatomy ? "Hint" : undefined}
+
                     />
                 ) : null}
             </div>
@@ -161,7 +159,7 @@ const ImageDropzoneBase = ({
                     "text-sm font-medium text-center",
                     isDragActive ? "text-accent-soft-foreground" : "text-foreground",
                 )}
-                data-anat-part={showAnatomy ? "Label" : undefined}
+
             >
                 {label}
             </span>
@@ -169,7 +167,7 @@ const ImageDropzoneBase = ({
                 // Raw text — same classes `Typography size="xs" color="muted" align="center"` would emit.
                 <span
                     className="text-xs font-normal text-muted text-center"
-                    data-anat-part={showAnatomy ? "Hint" : undefined}
+
                 >
                     {hint}
                 </span>

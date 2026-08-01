@@ -80,10 +80,9 @@ export interface DrawerShellBaseProps {
     classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (close trigger / header / body / footer)
-     * emits `data-anat-part="<name>"` so a BlockAnatomy panel can badge it
+     * emits `` so a BlockAnatomy panel can badge it
      * on-render. Off by default (production).
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -109,7 +108,6 @@ const Base = ({
     footerClassName,
     classNames,
     children,
-    showAnatomy = false,
 }: DrawerShellBaseProps) => {
     const hasHeader = header != null || title != null
     const main = body ?? children
@@ -123,9 +121,9 @@ const Base = ({
             <Drawer.Backdrop>
                 <Drawer.Content className={contentClassName} placement={placement}>
                     <Drawer.Dialog className={cn("gap-3", dialogClassName, classNames)}>
-                        <Drawer.CloseTrigger data-anat-part={showAnatomy ? "Drawer.CloseTrigger" : undefined} />
+                        <Drawer.CloseTrigger />
                         {header ? (
-                            <Drawer.Header data-anat-part={showAnatomy ? "Drawer.Header" : undefined}>{header}</Drawer.Header>
+                            <Drawer.Header>{header}</Drawer.Header>
                         ) : title != null ? (
                             <Drawer.Header>
                                 {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
@@ -139,13 +137,13 @@ const Base = ({
                                             <>
                                                 <Typography
                                                     weight="bold"
-                                                    showAnatomy={showAnatomy}
+
                                                     text={title}
                                                 />
                                                 {description != null ? (
                                                     <Typography size="sm"
                                                         color="muted"
-                                                        showAnatomy={showAnatomy}
+
                                                         text={description}
                                                     />
                                                 ) : null}
@@ -156,7 +154,7 @@ const Base = ({
                             </Drawer.Header>
                         ) : null}
                         <Drawer.Body
-                            data-anat-part={showAnatomy ? "Drawer.Body" : undefined}
+
                             className={cn(
                                 // `mt-0!` only cancels HeroUI's shipped margin; the gap the
                                 // reader sees comes from the Dialog's own `gap-3` (same rule
@@ -170,7 +168,7 @@ const Base = ({
                         </Drawer.Body>
                         {footer != null ? (
                             <Drawer.Footer
-                                data-anat-part={showAnatomy ? "Drawer.Footer" : undefined}
+
                                 className={cn("mt-0!", footerClassName)}
                             >
                                 {footer}

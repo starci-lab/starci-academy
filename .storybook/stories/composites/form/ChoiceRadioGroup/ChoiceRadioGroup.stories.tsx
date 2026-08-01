@@ -84,7 +84,7 @@ export const Default: Story = {
                             code: "<ChoiceRadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel=\"Skill level\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <ChoiceRadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel="Skill level" showAnatomy />
+                                    <ChoiceRadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel="Skill level" />
                                 </div>
                             ),
                         },
@@ -115,7 +115,7 @@ export const Selected: Story = {
                             code: "<ChoiceRadioGroup value=\"intermediate\" onValueChange={setValue} options={OPTIONS} ariaLabel=\"Skill level\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <ChoiceRadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel="Skill level" showAnatomy />
+                                    <ChoiceRadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel="Skill level" />
                                 </div>
                             ),
                         },
@@ -151,7 +151,7 @@ export const WithLabel: Story = {
                                         onValueChange={setValue}
                                         options={OPTIONS}
                                         groupLabel="Current skill level"
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -189,7 +189,7 @@ export const WithHint: Story = {
                                         options={OPTIONS}
                                         groupLabel="Current skill level"
                                         hint="Used to personalize your learning path."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -227,7 +227,7 @@ export const Required: Story = {
                                         options={OPTIONS}
                                         groupLabel="Current skill level"
                                         isRequired
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -263,7 +263,7 @@ export const Disabled: Story = {
                                     options={OPTIONS}
                                     ariaLabel="Skill level"
                                     isDisabled
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -299,7 +299,7 @@ export const Error: Story = {
                                         options={OPTIONS}
                                         groupLabel="Current skill level"
                                         errorMessage="Please choose your current skill level."
-                                        showAnatomy
+                                       
                                     />
                                 </div>
                             ),
@@ -329,7 +329,7 @@ export const Loading: Story = {
                         code: "<ChoiceRadioGroup value=\"\" onValueChange={setValue} options={OPTIONS} isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ChoiceRadioGroup value="" onValueChange={() => {}} options={OPTIONS} isSkeleton showAnatomy />
+                                <ChoiceRadioGroup value="" onValueChange={() => {}} options={OPTIONS} isSkeleton />
                             </div>
                         ),
                     },

@@ -48,7 +48,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * ⚠️ `SurfaceCard.Pressable` and `Image` have NO `anatPart` prop of their own
  * (only `showAnatomy`) — unlike `PageHeader`/`Breadcrumbs` in `ContentHeader`,
  * neither accepts a caller-supplied part name. Both are wrapped in a plain
- * `<div data-anat-part={…}>` instead, same pattern `ContentHeader` uses for
+ * `<div>` instead, same pattern `ContentHeader` uses for
  * `Breadcrumbs`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -82,9 +82,7 @@ export interface ConsultantCardProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -96,13 +94,11 @@ const ConsultantCard = ({
     consultant,
     onOpen,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ConsultantCardProps) => {
     const { id, fullName, jobTitle, companyTitle, description, avatarUrl } = consultant
 
     const nameRow = (
-        <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={(
+        <StackV gap={1} body={(
             <>
                 <Typography
                     size="sm"
@@ -110,7 +106,7 @@ const ConsultantCard = ({
                     truncate
                     isSkeleton={isSkeleton}
                     text={fullName}
-                    showAnatomy={showAnatomy}
+
                 />
                 {isSkeleton || jobTitle ? (
                     <Typography
@@ -119,7 +115,7 @@ const ConsultantCard = ({
                         truncate
                         isSkeleton={isSkeleton}
                         text={jobTitle}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : null}
             </>
@@ -128,14 +124,14 @@ const ConsultantCard = ({
 
     const consultantInfo = (
         <>
-            <div data-anat-part={showAnatomy ? "Image" : undefined}>
+            <div>
                 <Image
                     src={avatarUrl}
                     alt={fullName}
                     ratio="square"
                     radius="lg"
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
             {nameRow}
@@ -147,7 +143,7 @@ const ConsultantCard = ({
                     prefixIcon={BuildingsIcon}
                     isSkeleton={isSkeleton}
                     text={companyTitle}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             {isSkeleton || description ? (
@@ -157,20 +153,20 @@ const ConsultantCard = ({
                     lineClamp={2}
                     isSkeleton={isSkeleton}
                     text={description}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <div data-anat-part={showAnatomy ? "SurfaceCard" : undefined}>
+        <div>
+            <div>
                 <SurfaceCard
                     onPress={() => onOpen(id)}
                     isDisabled={isSkeleton}
-                    showAnatomy={showAnatomy}
-                    body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={consultantInfo} />}
+
+                    body={() => <StackV gap={4} body={consultantInfo} />}
                 />
             </div>
         </div>

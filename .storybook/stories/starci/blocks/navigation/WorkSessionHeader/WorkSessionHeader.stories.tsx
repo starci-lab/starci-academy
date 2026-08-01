@@ -76,8 +76,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <WorkSessionHeader
-                                anatPart="WorkSessionHeader"
-                                showAnatomy
+
+                               
                                 backLabel="Exit"
                                 onBack={() => {}}
                                 title="Quick Questions"
@@ -152,8 +152,8 @@ export const RevisitingGraded: Story = {
 />`,
                         render: (
                             <WorkSessionHeader
-                                anatPart="WorkSessionHeader"
-                                showAnatomy
+
+                               
                                 backLabel="Exit"
                                 onBack={() => {}}
                                 counter="Question 2 / 10"
@@ -196,8 +196,8 @@ export const NoFinish: Story = {
 />`,
                         render: (
                             <WorkSessionHeader
-                                anatPart="WorkSessionHeader"
-                                showAnatomy
+
+                               
                                 backLabel="Exit"
                                 onBack={() => {}}
                                 title="Review"
@@ -230,7 +230,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "Before the session data arrives there is no counter, no total and no current step to draw, so the band mirrors its own shape — a back-link-width bar, a counter-width bar, and a flat rail bar with no segments — rather than showing a blank band or borrowing an unrelated skeleton shape.",
                         code: "<WorkSessionHeader isSkeleton backLabel=\"Exit\" onBack={() => {}} />",
-                        render: <WorkSessionHeader isSkeleton backLabel="Exit" onBack={() => {}} anatPart="WorkSessionHeader" showAnatomy />,
+                        render: <WorkSessionHeader isSkeleton backLabel="Exit" onBack={() => {}} />,
                     },
                 ]}
             />

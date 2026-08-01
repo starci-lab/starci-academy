@@ -38,8 +38,8 @@ const LeftOnlyDemo = () => {
     const [key, setKey] = useState("overview")
     return (
         <DoubleTabsCard
-            anatPart="DoubleTabsCard"
-            showAnatomy
+
+           
             leftTabs={{
                 items: [
                     { key: "overview", label: "Overview" },
@@ -60,8 +60,8 @@ const TwoGroupsDemo = () => {
     const [right, setRight] = useState("week")
     return (
         <DoubleTabsCard
-            anatPart="DoubleTabsCard"
-            showAnatomy
+
+           
             leftTabs={{
                 items: [
                     { key: "overview", label: "Overview" },
@@ -155,8 +155,8 @@ export const Nested: Story = {
                         code: "<DoubleTabsCard cardVariant=\"nested\" leftTabs={...}>...</DoubleTabsCard>",
                         render: (
                             <DoubleTabsCard
-                                anatPart="DoubleTabsCard"
-                                showAnatomy
+
+                               
                                 cardVariant="nested"
                                 leftTabs={{
                                     items: [

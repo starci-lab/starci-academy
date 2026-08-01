@@ -39,7 +39,7 @@ export const Default: Story = {
                             code: "<InputTextarea value={v} onValueChange={setV} rows={3} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputTextarea value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
+                                    <InputTextarea value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" />
                                 </div>
                             ),
                         },
@@ -72,7 +72,7 @@ export const Placeholder: Story = {
                             code: "<InputTextarea placeholder=\"Lesson notes…\" value={v} onValueChange={setV} rows={3} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputTextarea placeholder="Lesson notes…" value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
+                                    <InputTextarea placeholder="Lesson notes…" value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" />
                                 </div>
                             ),
                         },
@@ -102,7 +102,7 @@ export const WithLabel: Story = {
                             code: "<InputTextarea label=\"Notes\" hint=\"Only visible to you\" value={v} onValueChange={setV} rows={3} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputTextarea label="Notes" hint="Only visible to you" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                                    <InputTextarea label="Notes" hint="Only visible to you" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" />
                                 </div>
                             ),
                         },
@@ -132,7 +132,7 @@ export const Required: Story = {
                             code: "<InputTextarea label=\"Notes\" isRequired value={v} onValueChange={setV} rows={3} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputTextarea label="Notes" isRequired value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                                    <InputTextarea label="Notes" isRequired value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" />
                                 </div>
                             ),
                         },
@@ -162,7 +162,7 @@ export const Filled: Story = {
                             code: "<InputTextarea label=\"Notes\" value=\"This session covers…\" onValueChange={setV} rows={3} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputTextarea label="Notes" value={value} onValueChange={setValue} rows={3} showAnatomy />
+                                    <InputTextarea label="Notes" value={value} onValueChange={setValue} rows={3} />
                                 </div>
                             ),
                         },
@@ -192,7 +192,7 @@ export const Disabled: Story = {
                             code: "<InputTextarea label=\"Notes\" value=\"This session…\" isDisabled onValueChange={setV} rows={3} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputTextarea label="Notes" value={value} onValueChange={setValue} rows={3} isDisabled showAnatomy />
+                                    <InputTextarea label="Notes" value={value} onValueChange={setValue} rows={3} isDisabled />
                                 </div>
                             ),
                         },
@@ -225,7 +225,7 @@ export const Invalid: Story = {
                             code: "<InputTextarea label=\"Notes\" isInvalid value={v} onValueChange={setV} rows={3} placeholder=\"Lesson notes…\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputTextarea label="Notes" isInvalid value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                                    <InputTextarea label="Notes" isInvalid value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" />
                                 </div>
                             ),
                         },
@@ -255,7 +255,7 @@ export const Error: Story = {
                             code: "<InputTextarea label=\"Notes\" errorMessage=\"Notes cannot be empty\" value={v} onValueChange={setV} rows={3} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputTextarea label="Notes" errorMessage="Notes cannot be empty" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                                    <InputTextarea label="Notes" errorMessage="Notes cannot be empty" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" />
                                 </div>
                             ),
                         },
@@ -283,7 +283,7 @@ export const Loading: Story = {
                         code: "<InputTextarea label=\"Notes\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <InputTextarea label="Notes" value="" onValueChange={() => {}} isSkeleton showAnatomy />
+                                <InputTextarea label="Notes" value="" onValueChange={() => {}} isSkeleton />
                             </div>
                         ),
                     },

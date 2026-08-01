@@ -59,9 +59,7 @@ export interface ContentPaywallProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -80,31 +78,29 @@ const ContentPaywall = ({
     ctaLabel,
     onPurchase,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ContentPaywallProps) => {
     const offer = (
         <>
-            <IconTile icon={LockIcon} tone="accent" size="sm" showAnatomy={showAnatomy} />
+            <IconTile icon={LockIcon} tone="accent" size="sm" />
             {/* real source (`PremiumPaywall/index.tsx:54`): `text-xl font-semibold` (a bare div,
                 not routed through Typography) — matches `size="h4"` (heading, 20px), not body `lg`. */}
-            <Typography size="h4" weight="semibold" align="center" text={title} showAnatomy={showAnatomy} />
+            <Typography size="h4" weight="semibold" align="center" text={title} />
             {description != null ? (
-                <Typography size="sm" color="muted" align="center" text={description} showAnatomy={showAnatomy} />
+                <Typography size="sm" color="muted" align="center" text={description} />
             ) : null}
             <PriceTagProminent
                 discounted={discountedPriceVnd}
                 original={originalPriceVnd}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "PriceTagProminent" : undefined}
+
             />
             {currentPhase != null ? (
                 <PhaseScarcityNote
                     currentPhase={currentPhase}
                     seatsRemaining={seatsRemaining}
                     nextPhasePriceVnd={nextPhasePriceVnd}
-                    anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
             <Button
@@ -113,14 +109,14 @@ const ContentPaywall = ({
                 suffixIcon={ArrowRightIcon}
                 iconSlide
                 onPress={onPurchase}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={offer} />
+        <div>
+            <StackV gap={4} align="center" body={offer} />
         </div>
     )
 }

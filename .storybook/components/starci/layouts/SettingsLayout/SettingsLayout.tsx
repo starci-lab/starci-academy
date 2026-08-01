@@ -86,9 +86,7 @@ export interface SettingsLayoutProps {
     /** `localStorage` key persisting the collapsed flag. */
     storageKey: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this layout so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -107,13 +105,11 @@ const SettingsLayout = ({
     collapseLabel,
     expandLabel,
     storageKey,
-    showAnatomy = false,
-    anatPart,
 }: SettingsLayoutProps) => {
     const navAndContent = (
         <>
             <SettingsSidebarNav
-                anatPart={showAnatomy ? "SettingsSidebarNav" : undefined}
+
                 groups={groups}
                 activeHref={activeHref}
                 onNavigate={onNavigate}
@@ -123,7 +119,7 @@ const SettingsLayout = ({
                 storageKey={storageKey}
             />
             <Container
-                anatPart={showAnatomy ? "Container" : undefined}
+
                 size="md"
                 padding={6}
                 classNames={["min-w-0", "flex-1"]}
@@ -133,11 +129,11 @@ const SettingsLayout = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackV
                 gap={1}
                 className="@app-md:flex-row @app-md:items-start"
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={navAndContent}
             />
         </div>

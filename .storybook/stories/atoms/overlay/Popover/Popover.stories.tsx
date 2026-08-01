@@ -77,7 +77,7 @@ export const Default: Story = {
                                     content="Last session was 2 days ago. Keep the streak alive by studying every day."
                                     placement="bottom"
                                     defaultOpen
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -110,7 +110,7 @@ export const WithHeading: Story = {
                                     content="Study today to keep it going. Miss one day and it resets to zero."
                                     placement="bottom"
                                     defaultOpen
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -143,7 +143,7 @@ export const WithTriggerIcon: Story = {
                                     content="Score = number of criteria passed divided by the total criteria in the question's checklist."
                                     placement="bottom"
                                     defaultOpen
-                                    showAnatomy
+                                   
                                 />
                             </div>
                         ),
@@ -175,7 +175,7 @@ export const TriggerVariant: Story = {
                         code: "<Popover triggerVariant=\"primary\" triggerLabel=\"Primary\" content=\"...\" />",
                         render: (
                             <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
-                                <Popover triggerVariant="primary" triggerLabel="Primary" content="Additional detail appears here when this trigger opens." showAnatomy />
+                                <Popover triggerVariant="primary" triggerLabel="Primary" content="Additional detail appears here when this trigger opens." />
                             </div>
                         ),
                     },
@@ -185,7 +185,7 @@ export const TriggerVariant: Story = {
                         code: "<Popover triggerVariant=\"secondary\" triggerLabel=\"Secondary\" content=\"...\" />",
                         render: (
                             <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
-                                <Popover triggerVariant="secondary" triggerLabel="Secondary" content="Additional detail appears here when this trigger opens." showAnatomy />
+                                <Popover triggerVariant="secondary" triggerLabel="Secondary" content="Additional detail appears here when this trigger opens." />
                             </div>
                         ),
                     },
@@ -195,7 +195,7 @@ export const TriggerVariant: Story = {
                         code: "<Popover triggerVariant=\"tertiary\" triggerLabel=\"Tertiary\" content=\"...\" />",
                         render: (
                             <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
-                                <Popover triggerVariant="tertiary" triggerLabel="Tertiary" content="Additional detail appears here when this trigger opens." showAnatomy />
+                                <Popover triggerVariant="tertiary" triggerLabel="Tertiary" content="Additional detail appears here when this trigger opens." />
                             </div>
                         ),
                     },
@@ -205,7 +205,7 @@ export const TriggerVariant: Story = {
                         code: "<Popover triggerVariant=\"ghost\" triggerLabel=\"Ghost\" content=\"...\" />",
                         render: (
                             <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
-                                <Popover triggerVariant="ghost" triggerLabel="Ghost" content="Additional detail appears here when this trigger opens." showAnatomy />
+                                <Popover triggerVariant="ghost" triggerLabel="Ghost" content="Additional detail appears here when this trigger opens." />
                             </div>
                         ),
                     },
@@ -240,7 +240,7 @@ export const Placement: Story = {
                         code: "<Popover placement=\"top\" ... />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Top" content="The panel repositions to the space around the trigger." placement="top" defaultOpen showAnatomy />
+                                <Popover triggerLabel="Top" content="The panel repositions to the space around the trigger." placement="top" defaultOpen />
                             </div>
                         ),
                     },
@@ -250,7 +250,7 @@ export const Placement: Story = {
                         code: "<Popover placement=\"top start\" ... />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Top start" content="The panel repositions to the space around the trigger." placement="top start" defaultOpen showAnatomy />
+                                <Popover triggerLabel="Top start" content="The panel repositions to the space around the trigger." placement="top start" defaultOpen />
                             </div>
                         ),
                     },
@@ -260,7 +260,7 @@ export const Placement: Story = {
                         code: "<Popover placement=\"top end\" ... />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Top end" content="The panel repositions to the space around the trigger." placement="top end" defaultOpen showAnatomy />
+                                <Popover triggerLabel="Top end" content="The panel repositions to the space around the trigger." placement="top end" defaultOpen />
                             </div>
                         ),
                     },
@@ -270,7 +270,7 @@ export const Placement: Story = {
                         code: "<Popover placement=\"bottom\" ... />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Bottom" content="The panel repositions to the space around the trigger." placement="bottom" defaultOpen showAnatomy />
+                                <Popover triggerLabel="Bottom" content="The panel repositions to the space around the trigger." placement="bottom" defaultOpen />
                             </div>
                         ),
                     },
@@ -280,7 +280,7 @@ export const Placement: Story = {
                         code: "<Popover placement=\"bottom start\" ... />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Bottom start" content="The panel repositions to the space around the trigger." placement="bottom start" defaultOpen showAnatomy />
+                                <Popover triggerLabel="Bottom start" content="The panel repositions to the space around the trigger." placement="bottom start" defaultOpen />
                             </div>
                         ),
                     },
@@ -290,7 +290,7 @@ export const Placement: Story = {
                         code: "<Popover placement=\"bottom end\" ... />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Bottom end" content="The panel repositions to the space around the trigger." placement="bottom end" defaultOpen showAnatomy />
+                                <Popover triggerLabel="Bottom end" content="The panel repositions to the space around the trigger." placement="bottom end" defaultOpen />
                             </div>
                         ),
                     },
@@ -300,7 +300,7 @@ export const Placement: Story = {
                         code: "<Popover placement=\"left\" ... />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Left" content="The panel repositions to the space around the trigger." placement="left" defaultOpen showAnatomy />
+                                <Popover triggerLabel="Left" content="The panel repositions to the space around the trigger." placement="left" defaultOpen />
                             </div>
                         ),
                     },
@@ -310,7 +310,7 @@ export const Placement: Story = {
                         code: "<Popover placement=\"right\" ... />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Right" content="The panel repositions to the space around the trigger." placement="right" defaultOpen showAnatomy />
+                                <Popover triggerLabel="Right" content="The panel repositions to the space around the trigger." placement="right" defaultOpen />
                             </div>
                         ),
                     },
@@ -340,7 +340,7 @@ export const ShowArrow: Story = {
                         code: "<Popover showArrow content=\"...\" />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Arrow shown" content="The arrow points back to the trigger that opened this panel." showArrow defaultOpen showAnatomy />
+                                <Popover triggerLabel="Arrow shown" content="The arrow points back to the trigger that opened this panel." showArrow defaultOpen />
                             </div>
                         ),
                     },
@@ -350,7 +350,7 @@ export const ShowArrow: Story = {
                         code: "<Popover showArrow={false} content=\"...\" />",
                         render: (
                             <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
-                                <Popover triggerLabel="Arrow hidden" content="The arrow points back to the trigger that opened this panel." showArrow={false} defaultOpen showAnatomy />
+                                <Popover triggerLabel="Arrow hidden" content="The arrow points back to the trigger that opened this panel." showArrow={false} defaultOpen />
                             </div>
                         ),
                     },

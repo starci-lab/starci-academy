@@ -96,16 +96,13 @@ export interface FooterProps {
     /** Extra class on the root `<footer>` (placement only). */
     className?: string
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /** Props for the internal {@link FooterLinkColumn} — one titled list of link rows. */
 interface FooterLinkColumnProps {
     title: string
     links: Array<FooterLinkItem>
-    showAnatomy?: boolean
 }
 
 /**
@@ -113,13 +110,13 @@ interface FooterLinkColumnProps {
  * (same convention `Navbar`'s internal `NavbarLanguageMenu`/`NavbarThemeSwitch`
  * use) — its own `StackV`/`Typography`/`Link` parts are tagged directly.
  */
-const FooterLinkColumn = ({ title, links, showAnatomy }: FooterLinkColumnProps) => {
+const FooterLinkColumn = ({ title, links }: FooterLinkColumnProps) => {
     const rows = links.map((link) => (
         <HeroUILink
             key={link.id}
             onPress={link.onPress}
             className="w-fit cursor-pointer text-sm text-muted transition-colors hover:text-foreground"
-            data-anat-part={showAnatomy ? "Link" : undefined}
+
         >
             {link.label}
         </HeroUILink>
@@ -127,12 +124,12 @@ const FooterLinkColumn = ({ title, links, showAnatomy }: FooterLinkColumnProps) 
 
     const column = (
         <>
-            <Typography size="sm" weight="bold" text={title} showAnatomy={showAnatomy} />
-            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={rows} />
+            <Typography size="sm" weight="bold" text={title} />
+            <StackV gap={2} body={rows} />
         </>
     )
 
-    return <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={column} />
+    return <StackV gap={4} body={column} />
 }
 
 /**
@@ -148,8 +145,6 @@ const Footer = ({
     onTermsPress,
     onPrivacyPress,
     className,
-    anatPart,
-    showAnatomy = false,
 }: FooterProps) => {
     const year = new Date().getFullYear()
 
@@ -167,7 +162,7 @@ const Footer = ({
     const brandMark = (
         <>
             <Logo size="footer" />
-            <StackV gap={1} className="hidden @app-md:flex" anatPart={showAnatomy ? "StackV" : undefined} body={wordmark} />
+            <StackV gap={1} className="hidden @app-md:flex" body={wordmark} />
         </>
     )
 
@@ -179,7 +174,7 @@ const Footer = ({
                 onPress={social.onPress}
                 aria-label={social.label}
                 className="text-muted transition-colors hover:text-foreground"
-                data-anat-part={showAnatomy ? "Link" : undefined}
+
             >
                 <Icon className="size-5" aria-hidden />
             </HeroUILink>
@@ -188,29 +183,29 @@ const Footer = ({
 
     const brandColumn = (
         <>
-            <StackH gap={1} classNames={["w-fit", "self-start"]} anatPart={showAnatomy ? "StackH" : undefined} body={brandMark} />
+            <StackH gap={1} classNames={["w-fit", "self-start"]} body={brandMark} />
             <Typography
                 size="sm"
                 color="muted"
                 text="Learn by building real systems with your own hands — ready for any technical interview."
-                showAnatomy={showAnatomy}
+
             />
-            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={socialLinks} />
+            <StackH gap={3} body={socialLinks} />
         </>
     )
 
     const linkColumns = (
         <>
-            <FooterLinkColumn title="Explore" links={exploreLinks} showAnatomy={showAnatomy} />
-            <FooterLinkColumn title="Support" links={supportLinks} showAnatomy={showAnatomy} />
+            <FooterLinkColumn title="Explore" links={exploreLinks} />
+            <FooterLinkColumn title="Support" links={supportLinks} />
         </>
     )
 
     // top region: brand + tagline + socials (left) · two link columns (right)
     const topRegion = (
         <>
-            <StackV gap={4} className="max-w-sm" anatPart={showAnatomy ? "StackV" : undefined} body={brandColumn} />
-            <StackH gap={7} wrap anatPart={showAnatomy ? "StackH" : undefined} body={linkColumns} />
+            <StackV gap={4} className="max-w-sm" body={brandColumn} />
+            <StackH gap={7} wrap body={linkColumns} />
         </>
     )
 
@@ -219,14 +214,14 @@ const Footer = ({
             <HeroUILink
                 onPress={onTermsPress}
                 className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
-                data-anat-part={showAnatomy ? "Link" : undefined}
+
             >
                 Terms
             </HeroUILink>
             <HeroUILink
                 onPress={onPrivacyPress}
                 className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
-                data-anat-part={showAnatomy ? "Link" : undefined}
+
             >
                 Privacy
             </HeroUILink>
@@ -240,9 +235,9 @@ const Footer = ({
                 size="xs"
                 color="muted"
                 text={`© ${year} StarCi Academy · Built by Nguyễn Văn Tự Cường`} // vn-ok: the author's real name
-                showAnatomy={showAnatomy}
+
             />
-            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={legalLinks} />
+            <StackH gap={3} body={legalLinks} />
         </>
     )
 
@@ -252,26 +247,26 @@ const Footer = ({
                 gap={7}
                 justify="between"
                 className="flex-col @app-md:flex-row"
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={topRegion}
             />
             <StackH
                 gap={3}
                 justify="between"
                 className="flex-col items-start @app-sm:flex-row @app-sm:items-center"
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={bottomBar}
             />
         </>
     )
 
     const footerBody = (
-        <StackV gap={6} divider showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={sections} />
+        <StackV gap={6} divider body={sections} />
     )
 
     return (
-        <footer data-anat-part={anatPart} className={cn("border-t border-default bg-surface", className)}>
-            <Container size="xl" padding={6} anatPart={showAnatomy ? "Container" : undefined} body={footerBody} />
+        <footer className={cn("border-t border-default bg-surface", className)}>
+            <Container size="xl" padding={6} body={footerBody} />
         </footer>
     )
 }

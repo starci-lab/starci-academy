@@ -64,8 +64,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <PlaygroundSetupHeader
-                                anatPart="PlaygroundSetupHeader"
-                                showAnatomy
+
+                               
                                 breadcrumbLabel="Playground"
                                 onBack={() => {}}
                                 title="Debug a leaking Node.js service"

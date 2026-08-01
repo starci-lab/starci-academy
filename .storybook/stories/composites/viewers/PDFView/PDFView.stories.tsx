@@ -31,7 +31,7 @@ export const Empty: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
             <div className="w-[420px]">
-                <PDFView src="" title="No document yet" heightClassName="h-[200px]" anatPart="PDFView" showAnatomy />
+                <PDFView src="" title="No document yet" heightClassName="h-[200px]" />
             </div>
         </div>
     ),
@@ -47,8 +47,8 @@ export const SinglePage: Story = {
                     title="NestJS lecture slides"
                     showAllPages={false}
                     heightClassName="h-[320px]"
-                    anatPart="PDFView"
-                    showAnatomy
+
+                   
                 />
             </div>
         </div>
@@ -65,8 +65,8 @@ export const AllPagesScroll: Story = {
                     title="System Design lecture slides"
                     allowVerticalScroll
                     heightClassName="h-[420px]"
-                    anatPart="PDFView"
-                    showAnatomy
+
+                   
                 />
             </div>
         </div>
@@ -84,8 +84,8 @@ export const FitToContainer: Story = {
                     fitToContainer
                     allowVerticalScroll
                     heightClassName="h-[400px]"
-                    anatPart="PDFView"
-                    showAnatomy
+
+                   
                 />
             </div>
         </div>
@@ -101,8 +101,8 @@ export const LoadError: Story = {
                     src="https://storage.example.invalid/file-not-found.pdf"
                     title="Document failed to load"
                     heightClassName="h-[200px]"
-                    anatPart="PDFView"
-                    showAnatomy
+
+                   
                 />
             </div>
         </div>
@@ -130,7 +130,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "Covers 'the whole PDF file hasn't arrived yet' — no `Document` mounted, just one full-footprint `HeroSkeleton` sized by `heightClassName`. Distinct from the per-page shimmer `PdfViewportPage` draws once the file HAS loaded but a given page hasn't scrolled into view yet.",
                         code: "<PDFView isSkeleton />",
-                        render: <PDFView isSkeleton anatPart="PDFView" showAnatomy />,
+                        render: <PDFView isSkeleton />,
                     },
                 ]}
             />

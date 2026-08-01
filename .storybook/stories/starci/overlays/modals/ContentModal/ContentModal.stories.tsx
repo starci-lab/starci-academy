@@ -97,7 +97,7 @@ const ControlledContentModal = ({
                                 isOpen={isOpen}
                                 onOpenChange={setIsOpen}
                                 content={content}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -133,8 +133,8 @@ export const Skeleton: Story = {
                                 isOpen
                                 onOpenChange={() => {}}
                                 isSkeleton
-                                anatPart="ContentModal"
-                                showAnatomy
+
+                               
                             />
                         ),
                     },

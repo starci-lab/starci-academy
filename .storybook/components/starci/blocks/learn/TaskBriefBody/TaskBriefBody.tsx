@@ -121,9 +121,7 @@ export interface TaskBriefBodyProps {
     /** `true` → title/description and the brief-body guess switch to their own shimmer. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Fixed copy for the locked-preview notice — this block owns its own wording (§14d.1). */
@@ -161,8 +159,6 @@ const TaskBriefBody = ({
     relatedItems,
     relatedLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: TaskBriefBodyProps) => {
     const trimmedBrief = briefBody?.trim() ?? ""
     // Schema-generation test, identical to `src`'s `(displayTask?.briefs?.length ?? 0) === 0`:
@@ -174,9 +170,9 @@ const TaskBriefBody = ({
     const criteriaItems: Array<SurfaceCardAccordionItem> = (legacyCriteria ?? []).map((item, index) => ({
         id: item.key,
         title: `${index + 1}. ${item.text}`,
-        titleEnd: () => <Chip tone="accent" text={`${item.score} pts`} showAnatomy={showAnatomy} />,
+        titleEnd: () => <Chip tone="accent" text={`${item.score} pts`} />,
         body: item.hint?.trim() ? (
-            <MarkdownContent source={item.hint} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+            <MarkdownContent source={item.hint} measure="compact" />
         ) : (
             <Typography size="sm" color="muted" isItalic text={CRITERIA_NO_HINT} />
         ),
@@ -188,9 +184,9 @@ const TaskBriefBody = ({
             body={
                 <>
                     <Typography size="xs" weight="semibold" color="muted" text={IMPLEMENTATION_GUIDE_HEADING} />
-                    <MarkdownContent source={item.guide} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                    <MarkdownContent source={item.guide} measure="compact" />
                     <Typography size="xs" weight="semibold" color="muted" text={IMPLEMENTATION_EXAMPLE_HEADING} />
-                    <MarkdownContent source={item.example} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                    <MarkdownContent source={item.example} measure="compact" />
                 </>
             }
         />
@@ -207,14 +203,14 @@ const TaskBriefBody = ({
             {/* TitleDesc — always present; both lines fall back to their own shimmer bar. */}
             <StackV
                 gap={2}
-                anatPart={showAnatomy ? "StackV" : undefined}
+
                 body={
                     <>
-                        <Typography size="h3" weight="bold" isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} text={title} showAnatomy={showAnatomy} />
+                        <Typography size="h3" weight="bold" isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} text={title} />
                         {isSkeleton ? (
-                            <Typography size="sm" color="muted" isSkeleton classNames={["w-2/3"]} showAnatomy={showAnatomy} />
+                            <Typography size="sm" color="muted" isSkeleton classNames={["w-2/3"]} />
                         ) : description != null && description.trim().length > 0 ? (
-                            <Typography size="sm" color="muted" text={description} showAnatomy={showAnatomy} />
+                            <Typography size="sm" color="muted" text={description} />
                         ) : null}
                     </>
                 }
@@ -231,7 +227,7 @@ const TaskBriefBody = ({
                     description={LOCKED_ALERT_DESCRIPTION}
                     actionLabel={LOCKED_ALERT_BUTTON_LABEL}
                     onAction={onGoToCurrentTask}
-                    anatPart={showAnatomy ? "Callout" : undefined}
+
                 />
             ) : null}
 
@@ -243,13 +239,13 @@ const TaskBriefBody = ({
                 isSkeleton ? (
                     <StackV
                         gap={2}
-                        anatPart={showAnatomy ? "StackV" : undefined}
+
                         body={BRIEF_SKELETON_LINE_WIDTHS.map((width, index) => (
                             <Typography key={index} size="base" isSkeleton classNames={[width]} />
                         ))}
                     />
                 ) : (
-                    <MarkdownContent source={trimmedBrief} measure="reading" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                    <MarkdownContent source={trimmedBrief} measure="reading" />
                 )
             ) : null}
 
@@ -257,23 +253,23 @@ const TaskBriefBody = ({
             {showLegacy ? (
                 <StackV
                     gap={4}
-                    anatPart={showAnatomy ? "StackV" : undefined}
+
                     body={
                         <>
-                            <Typography size="sm" weight="semibold" text={CRITERIA_LABEL} showAnatomy={showAnatomy} />
+                            <Typography size="sm" weight="semibold" text={CRITERIA_LABEL} />
                             <SurfaceCardAccordion
                                 items={criteriaItems}
                                 allowsMultipleExpanded
                                 emptyState={CriteriaEmptyState}
-                                anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                                showAnatomy={showAnatomy}
+
+
                             />
                             {implementationItems.length > 0 ? (
                                 <SurfaceCardAccordion
                                     items={implementationItems}
                                     allowsMultipleExpanded
-                                    anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
-                                    showAnatomy={showAnatomy}
+
+
                                 />
                             ) : null}
                         </>
@@ -286,14 +282,14 @@ const TaskBriefBody = ({
                 items={relatedItems}
                 label={relatedLabel}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "ContentRelatedList" : undefined}
-                showAnatomy={showAnatomy}
+
+
             />
         </>
     )
 
     return (
-        <StackV gap={6} anatPart={anatPart} showAnatomy={showAnatomy} body={readingColumn} />
+        <StackV gap={6} body={readingColumn} />
     )
 }
 

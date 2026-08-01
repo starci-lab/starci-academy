@@ -50,8 +50,8 @@ export const HasReplies: Story = {
                         code: "<QaConversationHeader asker={asker} isFounderAsker participants={participants} replyCount={3} onCollapse={collapse} />",
                         render: (
                             <QaConversationHeader
-                                anatPart="QaConversationHeader"
-                                showAnatomy
+
+                               
                                 asker={ASKER}
                                 isFounderAsker
                                 participants={PARTICIPANTS}

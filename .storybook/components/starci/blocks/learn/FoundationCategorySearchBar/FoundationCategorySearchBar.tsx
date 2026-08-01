@@ -62,9 +62,7 @@ export interface FoundationCategorySearchBarProps {
     /** Renders the field's + count's skeleton mirrors instead of the real controls. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Vietnamese count wording, ported verbatim from `foundations.categoryCount`. */
@@ -83,8 +81,6 @@ const FoundationCategorySearchBar = ({
     onSelectSuggestion,
     count,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FoundationCategorySearchBarProps) => {
     // domain entity → the atom's generic item shape (no `description` line: a
     // category suggestion carries only a bare name).
@@ -94,15 +90,15 @@ const FoundationCategorySearchBar = ({
     }))
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <StackH
                 gap={4}
                 justify="between"
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "StackH" : undefined}
+
+
                 body={
                     <>
-                        <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "SearchAutocomplete" : undefined}>
+                        <div className="min-w-0 flex-1">
                             <SearchAutocomplete
                                 items={items}
                                 inputValue={query}
@@ -110,18 +106,18 @@ const FoundationCategorySearchBar = ({
                                 onSelect={onSelectSuggestion}
                                 placeholder="Search topics..."
                                 isSkeleton={isSkeleton}
-                                showAnatomy={showAnatomy}
+
                             />
                         </div>
                         {isSkeleton ? (
-                            <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} showAnatomy={showAnatomy} />
+                            <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} />
                         ) : count !== undefined ? (
                             <Typography
                                 size="sm"
                                 color="muted"
                                 text={countLabel(count)}
                                 classNames={["shrink-0"]}
-                                showAnatomy={showAnatomy}
+
                             />
                         ) : null}
                     </>

@@ -59,9 +59,7 @@ export interface ContentPagerProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -74,8 +72,6 @@ const ContentPager = ({
     next,
     ariaLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ContentPagerProps) => {
     // Nothing to step to in either direction ⇒ draw nothing at all. Reached on the
     // first and last lesson of a course, which are ordinary, not exceptional.
@@ -87,15 +83,15 @@ const ContentPager = ({
     if (previous) {
         const previousLabel = (
             <>
-                <Typography size="xs" color="muted" text="Previous content" showAnatomy={showAnatomy} />
-                <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" text="Previous content" />
+                <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} />
             </>
         )
         const previousCard = (
             <StackH
                 gap={4}
                 align="center"
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
                     <>
                         {/* DIV position (icon §1c/§4.2): this card is a control with its own FIXED
@@ -106,7 +102,7 @@ const ContentPager = ({
                             (was flat `size-4`, teacher confirmed 2026-07-29). Weight omitted → Phosphor
                             default `regular`, correct at `size-5` (§3.2, was `bold`). */}
                         <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                        <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={previousLabel} />
+                        <StackV gap={1} body={previousLabel} />
                     </>
                 }
             />
@@ -120,8 +116,8 @@ const ContentPager = ({
     if (next) {
         const nextLabel = (
             <>
-                <Typography size="xs" color="muted" align="end" text="Next content" showAnatomy={showAnatomy} />
-                <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" align="end" text="Next content" />
+                <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} />
             </>
         )
         const nextCard = (
@@ -129,10 +125,10 @@ const ContentPager = ({
                 gap={4}
                 align="center"
                 justify="end"
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
                     <>
-                        <StackV gap={1} align="end" anatPart={showAnatomy ? "StackV" : undefined} body={nextLabel} />
+                        <StackV gap={1} align="end" body={nextLabel} />
                         {/* Same DIV position/size reasoning as the mirrored left caret above. */}
                         <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                     </>
@@ -155,11 +151,11 @@ const ContentPager = ({
     }
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             {/* The group owns the card box and the grid but takes no `anatPart` of its
                 own, so the block names it from the outside — otherwise the one node that
                 decides this block's whole shape would be missing from the tree. */}
-            <div data-anat-part={showAnatomy ? "SurfaceCardPressableGroup" : undefined}>
+            <div>
                 <SurfaceCardPressableGroup
                     ariaLabel={ariaLabel}
                     columns={{ base: 1, sm: 2 }}

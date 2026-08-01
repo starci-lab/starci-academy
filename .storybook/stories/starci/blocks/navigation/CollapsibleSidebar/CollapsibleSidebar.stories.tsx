@@ -115,8 +115,8 @@ export const Default: Story = {
 </CollapsibleSidebar>`,
                             render: (
                                 <CollapsibleSidebar
-                                    anatPart="CollapsibleSidebar"
-                                    showAnatomy
+
+                                   
                                     title="Coursework"
                                     collapseLabel="Collapse"
                                     expandLabel="Expand"

@@ -50,8 +50,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <CourseQaEngagementStrip
-                                anatPart="CourseQaEngagementStrip"
-                                showAnatomy
+
+                               
                                 enrollmentCount={214}
                                 totalQuestions={38}
                                 answeredQuestions={31}

@@ -150,7 +150,7 @@ export const Reading: Story = {
                         name: "prose document",
                         why: "Headings, paragraphs, a list, a quote, emphasis, inline code and links — the grammar most lessons are written in. Every `h2`/`h3` carries a slug `id` + a hover `#` deep-link (the TOC hook); the internal `/lessons/...` link stays in-tab while the external docs link opens a new tab — both routed through the same `Typography` atom, distinguished only by `target`/`rel`.",
                         code: "<MarkdownContent source={lessonBody} />",
-                        render: <MarkdownContent anatPart="MarkdownContent" showAnatomy source={PROSE} />,
+                        render: <MarkdownContent source={PROSE} />,
                     },
                     {
                         name: "fenced code block",
@@ -180,7 +180,7 @@ export const Reading: Story = {
                         name: "muted label + chip row",
                         why: "`:::muted` renders a small muted eyebrow label (the \"Input\"/\"Output\" idiom lessons already use); `:::chip` turns a block of keyword lines into a wrapped row of real `Chip` atoms, one pill per line.",
                         code: "<MarkdownContent source={inputLabelWithChips} />",
-                        render: <MarkdownContent showAnatomy anatPart="MarkdownContent" source={MUTED_AND_CHIP} />,
+                        render: <MarkdownContent source={MUTED_AND_CHIP} />,
                     },
                     {
                         name: "tab/code/preview directive",
@@ -210,7 +210,7 @@ export const Compact: Story = {
                         name: "measure = compact",
                         why: "Every step of the rhythm tightens for markdown quoted inside another surface, such as a chat answer or a card. The document is a passenger there rather than the page, and reading-page spacing would make the surface around it look broken. Code, tables, mermaid and directives all render identically at this measure, just tighter.",
                         code: "<MarkdownContent source={answer} measure=\"compact\" />",
-                        render: <MarkdownContent anatPart="MarkdownContent" showAnatomy source={PROSE} measure="compact" />,
+                        render: <MarkdownContent source={PROSE} measure="compact" />,
                     },
                 ]}
             />
@@ -234,7 +234,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "The composite owns its own loading mirror — before this, the one caller that needed it (MockInterviewScorecard's follow-up question) swapped in a bare `Typography isSkeleton` instead, which drew a different shape than the real document ever does.",
                         code: "<MarkdownContent source={followUp} isSkeleton />",
-                        render: <MarkdownContent anatPart="MarkdownContent" showAnatomy source="" isSkeleton />,
+                        render: <MarkdownContent source="" isSkeleton />,
                     },
                 ]}
             />

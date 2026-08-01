@@ -107,7 +107,6 @@ export interface ChallengePageProps {
      */
     isSkeleton?: boolean
     /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -135,12 +134,11 @@ const ChallengePage = ({
     maxScore,
     passThreshold,
     isSkeleton = false,
-    showAnatomy = false,
 }: ChallengePageProps) => {
     const readColumn = (
         <>
             <ChallengeHeader
-                anatPart="ChallengeHeader"
+
                 onBackPress={onBackPress}
                 backLabel={backLabel}
                 title={title}
@@ -149,17 +147,17 @@ const ChallengePage = ({
                 difficulty={difficulty}
                 status={status}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <ChallengeBrief
-                anatPart="ChallengeBrief"
+
                 prerequisites={prerequisites}
                 requirements={requirements}
                 steps={steps}
                 outputs={outputs}
                 hint={hint}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -167,28 +165,28 @@ const ChallengePage = ({
     const actColumn = (
         <>
             <ChallengeDeliverableList
-                anatPart="ChallengeDeliverableList"
+
                 items={deliverables}
                 onOpenGradingSettings={onOpenGradingSettings}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <ChallengeScoreCard
-                anatPart="ChallengeScoreCard"
+
                 earnedScore={earnedScore}
                 maxScore={maxScore}
                 passThreshold={passThreshold}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
 
     const challengeBody = (
         <SplitWorkspace
-            anatPart={showAnatomy ? "SplitWorkspace" : undefined}
-            main={<StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={readColumn} />}
-            aside={<StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={actColumn} />}
+
+            main={<StackV gap={7} body={readColumn} />}
+            aside={<StackV gap={6} body={actColumn} />}
         />
     )
 

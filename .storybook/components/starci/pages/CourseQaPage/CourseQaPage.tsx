@@ -157,7 +157,6 @@ export interface CourseQaPageProps {
      */
     isSkeleton?: boolean
     /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -188,7 +187,6 @@ const CourseQaPage = ({
     onAnswered,
     onGoToContent,
     isSkeleton = false,
-    showAnatomy = false,
 }: CourseQaPageProps) => {
     // Screen-local UI state for the composer's in-progress keystrokes — see
     // file header for why this is not a prop pair on this screen's contract.
@@ -213,15 +211,15 @@ const CourseQaPage = ({
     const questionSection = (
         <>
             <CourseQaEngagementStrip
-                anatPart="CourseQaEngagementStrip"
+
                 enrollmentCount={enrollmentCount}
                 totalQuestions={totalQuestions}
                 answeredQuestions={answeredQuestions}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <CourseQaComposer
-                anatPart="CourseQaComposer"
+
                 mode="collapsible"
                 currentUser={composerUser}
                 value={draft}
@@ -229,10 +227,10 @@ const CourseQaPage = ({
                 placeholder="Ask a question about this course…"
                 onSubmit={handleAskQuestion}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <CourseQaToolbar
-                anatPart="CourseQaToolbar"
+
                 filter={filter}
                 onFilterChange={onFilterChange}
                 searchValue={searchValue}
@@ -240,10 +238,10 @@ const CourseQaPage = ({
                 resultCount={totalQuestions}
                 filterAriaLabel={FILTER_ARIA_LABEL}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <CourseQaQuestionList
-                anatPart="CourseQaQuestionList"
+
                 questions={questions}
                 isLoading={isSkeleton}
                 page={page}
@@ -254,7 +252,7 @@ const CourseQaPage = ({
                 onAnswered={onAnswered}
                 pagerAriaLabel={PAGER_ARIA_LABEL}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -262,30 +260,30 @@ const CourseQaPage = ({
     const courseQaSections = (
         <>
             <CourseQaHeader
-                anatPart="CourseQaHeader"
+
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             {isInvitationEmpty ? (
                 <CourseQaInvite
-                    anatPart="CourseQaInvite"
+
                     title={INVITE_TITLE}
                     hint={INVITE_HINT}
                     ctaLabel={INVITE_CTA}
                     onGoToContent={onGoToContent}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : (
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={questionSection} />
+                <StackV gap={6} body={questionSection} />
             )}
         </>
     )
 
-    const courseQaBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={courseQaSections} />
+    const courseQaBody = <StackV gap={6} body={courseQaSections} />
 
     return <Container size="md" padding={6} body={courseQaBody} />
 }

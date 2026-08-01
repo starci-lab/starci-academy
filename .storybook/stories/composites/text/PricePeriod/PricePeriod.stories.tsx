@@ -58,7 +58,7 @@ export const Default: Story = {
                         name: "amount only, size = \"md\" (default)",
                         why: "The amount renders alone as a semibold h3, with no struck price and no trailing period text. This is the plainest shape the unit can take — a flat one-time price with nothing to compare it against.",
                         code: "<PricePeriod amount=\"199,000₫\" />",
-                        render: <PricePeriod amount="199,000₫" anatPart="PricePeriod" />,
+                        render: <PricePeriod amount="199,000₫" />,
                     },
                 ]}
             />

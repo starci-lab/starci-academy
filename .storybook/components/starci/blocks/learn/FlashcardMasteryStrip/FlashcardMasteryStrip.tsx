@@ -69,9 +69,7 @@ export interface FlashcardMasteryStripProps {
     /** `true` → the numbers shimmer and the bar goes inert while the deck's stats load. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -113,8 +111,6 @@ const FlashcardMasteryStrip = ({
     retention,
     totalReviewed,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FlashcardMasteryStripProps) => {
     const pct = total > 0 ? Math.round((mastered / total) * 100) : 0
     const hasStreak = streak != null
@@ -134,7 +130,7 @@ const FlashcardMasteryStrip = ({
             <StackH
                 gap={2}
                 align="baseline"
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
                     <>
                         <Typography
@@ -142,14 +138,14 @@ const FlashcardMasteryStrip = ({
                             weight="bold"
                             isSkeleton={isSkeleton}
                             text={`${mastered}/${total}`}
-                            showAnatomy={showAnatomy}
+
                         />
                         <Typography
                             size="sm"
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={`${pct}%`}
-                            showAnatomy={showAnatomy}
+
                         />
                     </>
                 }
@@ -160,31 +156,31 @@ const FlashcardMasteryStrip = ({
                 hideLegend={isSkeleton}
                 ariaLabel={ariaLabel}
                 caption={isSkeleton ? undefined : masteryCaption(totalReviewed, retention)}
-                anatPart={showAnatomy ? "SegmentBar" : undefined}
+
             />
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 label="Mastered"
                 action={() =>
                     isSkeleton ? (
-                        <Chip isSkeleton showAnatomy={showAnatomy} />
+                        <Chip isSkeleton />
                     ) : hasStreak ? (
                         <Chip
                             tone="warning"
                             icon={FlameIcon}
                             text={`${streak}-day streak`}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : undefined
                 }
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={masteryReadout} />}
+
+
+                body={() => <StackV gap={4} body={masteryReadout} />}
             />
         </div>
     )

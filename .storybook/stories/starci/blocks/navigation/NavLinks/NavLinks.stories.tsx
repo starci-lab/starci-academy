@@ -63,8 +63,8 @@ export const Row: Story = {
 />`,
                         render: (
                             <NavLinks
-                                anatPart="NavLinks"
-                                showAnatomy
+
+                               
                                 items={[
                                     { label: "Home", path: "/", isActive: false },
                                     { label: "Courses", path: "/course", isActive: true },

@@ -98,8 +98,8 @@ export const Sheet: Story = {
 />`,
                         render: (
                             <ConnectSheetExample
-                                anatPart="PlaygroundConnectSheet"
-                                showAnatomy
+
+                               
                                 connection="connected"
                                 latencyMs={42}
                                 device={DEVICE}
@@ -175,8 +175,8 @@ export const Skeleton: Story = {
 />`,
                         render: (
                             <ConnectSheetExample
-                                anatPart="PlaygroundConnectSheet"
-                                showAnatomy
+
+                               
                                 isSkeleton
                                 onReconnect={() => {}}
                             />

@@ -29,9 +29,7 @@ import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/
 /** Props for {@link FoundationResourceEmpty}. */
 export interface FoundationResourceEmptyProps {
     /** When on, emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -41,9 +39,9 @@ export interface FoundationResourceEmptyProps {
  *
  * @param props - {@link FoundationResourceEmptyProps}
  */
-const FoundationResourceEmpty = ({ showAnatomy = false, anatPart }: FoundationResourceEmptyProps) => (
+const FoundationResourceEmpty = ({ }: FoundationResourceEmptyProps) => (
     <AsyncContentEmpty
-        anatPart={anatPart ?? (showAnatomy ? "AsyncContentEmpty" : undefined)}
+
         title="This category doesn't have any resources yet."
     />
 )

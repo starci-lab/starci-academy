@@ -76,8 +76,8 @@ export const ScoreCard: Story = {
 />`,
                         render: (
                             <SubmissionScoreCard
-                                anatPart="SubmissionScoreCard"
-                                showAnatomy
+
+                               
                                 label="Grading result"
                                 score={82}
                                 maxScore={100}

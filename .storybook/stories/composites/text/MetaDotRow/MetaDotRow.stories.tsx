@@ -63,7 +63,7 @@ export const Items: Story = {
                         name: "items = one fragment",
                         why: "A lone fragment renders with no `·` mark beside it, since a mark only ever sits between two fragments. This is the shape a bare price tag or a single status word takes when there is nothing else to separate it from.",
                         code: "<MetaDotRow items={[\"Free\"]} />",
-                        render: <MetaDotRow items={["Free"]} anatPart="MetaDotRow" />,
+                        render: <MetaDotRow items={["Free"]} />,
                     },
                     {
                         name: "items = two fragments",

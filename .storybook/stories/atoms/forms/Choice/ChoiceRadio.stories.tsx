@@ -80,7 +80,7 @@ export const Default: Story = {
                             render: (
                                 <div data-tier="fixture" className="w-72">
                                     <HeroRadioGroup aria-label="Plan" value={value} onChange={setValue} className="flex flex-col gap-2">
-                                        <ChoiceRadio value="starter" label="Starter plan" showAnatomy />
+                                        <ChoiceRadio value="starter" label="Starter plan" />
                                     </HeroRadioGroup>
                                 </div>
                             ),
@@ -113,7 +113,7 @@ export const Selected: Story = {
                             render: (
                                 <div data-tier="fixture" className="w-72">
                                     <HeroRadioGroup aria-label="Plan" value={value} onChange={setValue} className="flex flex-col gap-2">
-                                        <ChoiceRadio value="starter" label="Starter plan" showAnatomy />
+                                        <ChoiceRadio value="starter" label="Starter plan" />
                                     </HeroRadioGroup>
                                 </div>
                             ),
@@ -144,7 +144,7 @@ export const Disabled: Story = {
                         render: (
                             <div data-tier="fixture" className="w-72">
                                 <HeroRadioGroup aria-label="Plan" value="starter" onChange={() => {}} className="flex flex-col gap-2">
-                                    <ChoiceRadio value="starter" label="Starter plan" isDisabled showAnatomy />
+                                    <ChoiceRadio value="starter" label="Starter plan" isDisabled />
                                 </HeroRadioGroup>
                             </div>
                         ),
@@ -172,7 +172,7 @@ export const Loading: Story = {
                         code: "<ChoiceRadio value=\"\" label=\"\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <ChoiceRadio value="" label="" isSkeleton showAnatomy />
+                                <ChoiceRadio value="" label="" isSkeleton />
                             </div>
                         ),
                     },

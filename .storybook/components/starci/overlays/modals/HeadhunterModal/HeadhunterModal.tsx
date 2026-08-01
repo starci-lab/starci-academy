@@ -87,9 +87,7 @@ export interface HeadhunterModalProps {
     /** `true` → the composed body mirrors itself while the consultant is still resolving. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -105,18 +103,16 @@ const HeadhunterModal = ({
     onOpenCompany,
     onImproveCv,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: HeadhunterModalProps) => {
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 title={MODAL_TITLE}
                 containerClassName="modal__container--narrow"
                 scroll="inside"
-                showAnatomy={showAnatomy}
+
             >
                 {consultant ? (
                     <ConsultantProfileBody
@@ -124,8 +120,8 @@ const HeadhunterModal = ({
                         onOpenCompany={onOpenCompany}
                         onImproveCv={onImproveCv}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "ConsultantProfileBody" : undefined}
+
+
                     />
                 ) : null}
             </ModalShell>

@@ -71,8 +71,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <RatingBar
-                                anatPart="RatingBar"
-                                showAnatomy
+
+                               
                                 options={OPTIONS}
                                 ariaLabel="How well did you remember it"
                                 onRate={() => {}}
@@ -137,8 +137,8 @@ export const Skeleton: Story = {
                         code: "<RatingBar options={options} ariaLabel=\"How well did you remember it\" isSkeleton onRate={rate} />",
                         render: (
                             <RatingBar
-                                anatPart="RatingBar"
-                                showAnatomy
+
+                               
                                 options={OPTIONS}
                                 ariaLabel="How well did you remember it"
                                 isSkeleton

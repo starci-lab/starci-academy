@@ -63,8 +63,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <FoundationSearchBar
-                                anatPart="FoundationSearchBar"
-                                showAnatomy
+
+                               
                                 query=""
                                 onQueryChange={() => {}}
                                 suggestions={[]}

@@ -105,7 +105,7 @@ export const Default: Story = {
                         render: (
                             <FoundationsGridPage
                                 {...BASE}
-                                showAnatomy
+                               
                                 isTrialBannerVisible
                                 categoryCount={24}
                                 categories={CATEGORIES}
@@ -176,7 +176,7 @@ export const Skeleton: Story = {
                         render: (
                             <FoundationsGridPage
                                 {...BASE}
-                                showAnatomy
+                               
                                 isSkeleton
                                 isTrialBannerVisible={false}
                                 categories={[]}

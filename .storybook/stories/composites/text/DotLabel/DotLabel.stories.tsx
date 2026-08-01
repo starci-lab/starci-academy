@@ -65,7 +65,7 @@ export const Default: Story = {
                         name: "no prop turned on (tone = \"muted\")",
                         why: "The swatch carries a Tailwind `bg-success` token and the label reads in muted text — the plainest shape the composite can take, since a status line reads as secondary text while the swatch already carries the emphasis.",
                         code: "<DotLabel color=\"bg-success\" label=\"Running\" />",
-                        render: <DotLabel color="bg-success" label="Running" showAnatomy anatPart="DotLabel" />,
+                        render: <DotLabel color="bg-success" label="Running" />,
                     },
                 ]}
             />

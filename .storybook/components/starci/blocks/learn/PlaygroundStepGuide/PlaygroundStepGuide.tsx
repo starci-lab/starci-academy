@@ -110,9 +110,7 @@ export interface PlaygroundStepGuideProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -127,8 +125,6 @@ const PlaygroundStepGuide = ({
     onVerify,
     onLeaveComplete,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundStepGuideProps) => {
     if (isSkeleton) {
         const loadingStep = (
@@ -136,7 +132,7 @@ const PlaygroundStepGuide = ({
                 <HeroSkeleton className="h-6 w-48 rounded" />
                 <StackV
                     gap={2}
-                    anatPart={showAnatomy ? "StackV" : undefined}
+
                     body={
                         <>
                             <HeroSkeleton className="h-4 w-full rounded" />
@@ -148,26 +144,26 @@ const PlaygroundStepGuide = ({
             </>
         )
         return (
-            <div data-anat-part={anatPart}>
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={loadingStep} />
+            <div>
+                <StackV gap={6} body={loadingStep} />
             </div>
         )
     }
     if (step == null) {
         return (
-            <div data-anat-part={anatPart}>
+            <div>
                 <EmptyState
                     icon={CheckCircleIcon}
                     tone="neutral"
                     title="All steps completed!"
                     description="You've made it through this playground path. Head back to the hub to pick the next exercise."
-                    anatPart={showAnatomy ? "EmptyState" : undefined}
+
                 >
                     <Button
                         label="Back to Playground hub"
                         variant="secondary"
                         onPress={onLeaveComplete}
-                        showAnatomy={showAnatomy}
+
                     />
                 </EmptyState>
             </div>
@@ -180,11 +176,11 @@ const PlaygroundStepGuide = ({
     const verifyPendingStatus = (
         <StackH
             gap={3}
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
-                    <Spinner size="sm" tone="accent" showAnatomy={showAnatomy} />
-                    <Typography size="sm" color="muted" text="Checking…" showAnatomy={showAnatomy} />
+                    <Spinner size="sm" tone="accent" />
+                    <Typography size="sm" color="muted" text="Checking…" />
                 </>
             }
         />
@@ -193,7 +189,7 @@ const PlaygroundStepGuide = ({
     const verifyControls = (
         <StackV
             gap={2}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {verifyState === "waitingForConnection" ? (
@@ -201,7 +197,7 @@ const PlaygroundStepGuide = ({
                             size="sm"
                             color="muted"
                             text="Waiting for a connection to your learning machine…"
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
 
@@ -210,7 +206,7 @@ const PlaygroundStepGuide = ({
                             label="Verify this step"
                             variant="primary"
                             onPress={onVerify}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
 
@@ -221,7 +217,7 @@ const PlaygroundStepGuide = ({
                             size="xs"
                             color="danger"
                             text="Didn't see the expected result yet — rerun the command and verify again."
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -232,14 +228,14 @@ const PlaygroundStepGuide = ({
     const commandSection = step.commandHint != null ? (
         <StackV
             gap={2}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <Typography size="xs" weight="medium" color="muted" text="Command to run" showAnatomy={showAnatomy} />
+                    <Typography size="xs" weight="medium" color="muted" text="Command to run" />
                     <MarkdownContent
                         source={commandFence(step.commandHint)}
                         measure="compact"
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                     />
                 </>
             }
@@ -248,16 +244,16 @@ const PlaygroundStepGuide = ({
 
     const guideBody = (
         <>
-            <Typography size="h4" weight="bold" text={step.title} showAnatomy={showAnatomy} />
-            <MarkdownContent source={step.body} measure="reading" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+            <Typography size="h4" weight="bold" text={step.title} />
+            <MarkdownContent source={step.body} measure="reading" />
             {commandSection}
             {verifyControls}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={guideBody} />
+        <div>
+            <StackV gap={6} body={guideBody} />
         </div>
     )
 }

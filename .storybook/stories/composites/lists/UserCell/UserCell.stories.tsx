@@ -129,7 +129,7 @@ type Story = StoryObj<typeof UserCell>
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Avatar": {
-        role: "the HeroUI avatar frame inside the composed Avatar, surfacing here because showAnatomy forwards straight through",
+        role: "the HeroUI avatar frame inside the composed Avatar, surfacing here because forwards straight through",
         tier: "heroui",
     },
     "AvatarImage": {
@@ -166,7 +166,7 @@ export const Default: Story = {
                         name: "no avatar URL, no handle, no trailing",
                         why: "The avatar falls back to its generated face and only one line of text — the name — renders below it. This is the baseline shape every other leaf on this page differs from by exactly one prop.",
                         code: "<UserCell username=\"oliviabennett\" displayName=\"Olivia Bennett\" />",
-                        render: <UserCell username="oliviabennett" displayName="Olivia Bennett" avatar={null} showAnatomy />,
+                        render: <UserCell username="oliviabennett" displayName="Olivia Bennett" avatar={null} />,
                     },
                 ]}
             />
@@ -188,7 +188,7 @@ export const Sizes: Story = {
                         name: "size = \"sm\"",
                         why: "Only the avatar preset and the row's own gap shrink; the text scale stays put, so a size swap never reflows the name column width. A comment thread or a member list stacks many rows at once, so the tighter density keeps the list scannable.",
                         code: "<UserCell username=\"marcusreed\" displayName=\"Marcus Reed\" size=\"sm\" />",
-                        render: <UserCell username="marcusreed" displayName="Marcus Reed" avatar={null} size="sm" showAnatomy />,
+                        render: <UserCell username="marcusreed" displayName="Marcus Reed" avatar={null} size="sm" />,
                     },
                     {
                         name: "size = \"md\"",
@@ -216,7 +216,7 @@ export const Handle: Story = {
                         name: "handle = undefined",
                         why: "Only one text line renders — the name — with no reserved blank line waiting under it. A row where the display name alone is enough to tell people apart doesn't need a second line taking up space.",
                         code: "<UserCell username=\"nataliecross\" displayName=\"Natalie Cross\" />",
-                        render: <UserCell username="nataliecross" displayName="Natalie Cross" avatar={null} showAnatomy />,
+                        render: <UserCell username="nataliecross" displayName="Natalie Cross" avatar={null} />,
                     },
                     {
                         name: "handle = \"@nataliecross\"",
@@ -247,7 +247,7 @@ export const Trailing: Story = {
                         name: "trailing = undefined",
                         why: "The row ends right after the name/handle column, with no reserved space on the right edge. Nothing renders in the slot because nothing was passed to it.",
                         code: "<UserCell username=\"emmafoster\" displayName=\"Emma Foster\" handle=\"@emmafoster\" />",
-                        render: <UserCell username="emmafoster" displayName="Emma Foster" avatar={null} handle="@emmafoster" showAnatomy />,
+                        render: <UserCell username="emmafoster" displayName="Emma Foster" avatar={null} handle="@emmafoster" />,
                     },
                     {
                         name: "trailing = AdminBadge",
@@ -303,13 +303,13 @@ export const LeadingIcon: Story = {
                         name: "leadingIcon = undefined (default)",
                         why: "The row renders `Avatar` exactly as every other leaf on this page — a course/org row with no glyph of its own falls back to the same generated-face avatar a person row would get.",
                         code: "<UserCell username=\"riverdale-cs101\" displayName=\"CS101 Study Group\" handle=\"12 members\" />",
-                        render: <UserCell username="riverdale-cs101" displayName="CS101 Study Group" avatar={null} handle="12 members" showAnatomy />,
+                        render: <UserCell username="riverdale-cs101" displayName="CS101 Study Group" avatar={null} handle="12 members" />,
                     },
                     {
                         name: "leadingIcon = GraduationCapIcon",
                         why: "`Avatar` swaps for a framed `IconTile` at its own `\"sm\"` step (40px) — a course/org glyph leads the row instead of a face, for rows that aren't a person (a leaderboard row for a team, a \"posted in <course>\" byline). `leadingTone` (default `\"accent\"`) tints the tile the same way `IconTile`'s own `tone` prop does.",
                         code: "<UserCell username=\"riverdale-cs101\" displayName=\"CS101 Study Group\" handle=\"12 members\" leadingIcon={GraduationCapIcon} />",
-                        render: <UserCell username="riverdale-cs101" displayName="CS101 Study Group" handle="12 members" leadingIcon={GraduationCapIcon} showAnatomy />,
+                        render: <UserCell username="riverdale-cs101" displayName="CS101 Study Group" handle="12 members" leadingIcon={GraduationCapIcon} />,
                     },
                 ]}
             />
@@ -336,7 +336,7 @@ export const OwnRow: Story = {
                         name: "isOwnRow = false (default)",
                         why: "The `Name` node renders in the default foreground tone, no different from any other row in the list. This is the plain peer row, the shape every row in a leaderboard or a thread starts from.",
                         code: "<UserCell username=\"danielortiz\" displayName=\"Daniel Ortiz\" handle=\"@danielortiz\" />",
-                        render: <UserCell username="danielortiz" displayName="Daniel Ortiz" avatar={null} handle="@danielortiz" showAnatomy />,
+                        render: <UserCell username="danielortiz" displayName="Daniel Ortiz" avatar={null} handle="@danielortiz" />,
                     },
                     {
                         name: "isOwnRow = true",
@@ -374,7 +374,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, size = \"sm\"",
                         why: "The avatar circle mirrors the `sm` preset instead of a hard-coded width, because the shimmer delegates straight to `Avatar isSkeleton size={size}`. The name and (when a handle is set) handle bars mirror the live row's two-line shape at the same density, each drawn by `Typography isSkeleton`.",
                         code: "<UserCell username=\"placeholder\" handle=\"@placeholder\" size=\"sm\" isSkeleton />",
-                        render: <UserCell username="placeholder" handle="@placeholder" size="sm" isSkeleton showAnatomy />,
+                        render: <UserCell username="placeholder" handle="@placeholder" size="sm" isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, size = \"md\"",

@@ -83,7 +83,7 @@ export const Default: Story = {
                         why: "Only the body region renders: a SurfaceCard profile row sits directly inside the frame with no header above it. `children` is accepted here as the shorthand for `body`, since the frame is a pure wrapper with nothing of its own to draw around the content.",
                         code: "<Section>\n  <SurfaceCard body={() => <ProfileRow />} />\n</Section>",
                         render: (
-                            <Section showAnatomy>
+                            <Section>
                                 <CardBody />
                             </Section>
                         ),
@@ -119,7 +119,7 @@ export const HeaderProps: Story = {
 </Section>`,
                         render: (
                             <Section
-                                showAnatomy
+                               
                                 header={{
                                     title: "My courses",
                                     description: "Sorted by most recently studied.",
@@ -157,7 +157,7 @@ export const Slots: Story = {
 />`,
                         render: (
                             <Section
-                                showAnatomy
+                               
                                 header={<SectionHeader level={3} title="Saved posts" />}
                                 body={<CardBody />}
                                 footer={<Typography size="xs" text="Updated 5 minutes ago" color="muted" />}
@@ -177,16 +177,15 @@ interface GapSampleProps {
     /** Caption text shown under the sample's header. */
     caption: string
     /** `true` → this is the sample currently inspected by the anatomy overlay. */
-    showAnatomy?: boolean
 }
 
 /** One `gap` column for comparing rhythm — every sample shares the same composition, only the step changes. */
-const GapSample = ({ gap, caption, showAnatomy }: GapSampleProps) => (
+const GapSample = ({ gap, caption, }: GapSampleProps) => (
     <Section
         gap={gap}
         header={{ level: 3, title: `gap=${gap}`, description: caption }}
         body={<CardBody />}
-        showAnatomy={showAnatomy}
+
     />
 )
 
@@ -211,49 +210,49 @@ export const Gaps: Story = {
                         name: "1 — must touch",
                         why: "The header sits flush against the body with no seam at all, so the two read as one continuous surface rather than a heading over a region. A `Section` header rarely earns this step; it is shown so the tight end of the ladder stays recognisable.",
                         code: "<Section gap={1} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={1} caption="Step 1 — header and body touch, one surface." showAnatomy />,
+                        render: <GapSample gap={1} caption="Step 1 — header and body touch, one surface." />,
                     },
                     {
                         name: "2 — a joint, not a seam",
                         why: "A hairline seam keeps the header and body apart while the pair still reads as one unit, the relationship an icon has with the word beside it. Too close for a header that should read as its own region.",
                         code: "<Section gap={2} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={2} caption="Step 2 — a joint, not yet a seam." showAnatomy />,
+                        render: <GapSample gap={2} caption="Step 2 — a joint, not yet a seam." />,
                     },
                     {
                         name: "3 — two halves of one composed unit",
                         why: "The header and body read as one cluster rather than two separate regions. This is the closest step on the scale that still counts as a seam, meant for a header and body that are really one composed unit.",
                         code: "<Section gap={3} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={3} caption="Step 3 — header and body are one cluster." showAnatomy />,
+                        render: <GapSample gap={3} caption="Step 3 — header and body are one cluster." />,
                     },
                     {
                         name: "4 — a label stuck to the list below it",
                         why: "The header pulls right up against a list or a group of items below it. Use it when the header reads as a label stuck to what follows rather than a heading over a whole standalone region.",
                         code: "<Section gap={4} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={4} caption="Step 4 — the header sits stuck to a list/group." showAnatomy />,
+                        render: <GapSample gap={4} caption="Step 4 — the header sits stuck to a list/group." />,
                     },
                     {
                         name: "5 — open, no sentence yet",
                         why: "`gap.md` records this rung as chosen by 56 app call sites but not yet read, so there is no sentence yet to check a header/body seam against. Shown here for completeness rather than as a considered choice — inventing a reason now would be guessing and citing the count as if it had spoken.",
                         code: "<Section gap={5} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={5} caption="Step 5 — no sentence written yet." showAnatomy />,
+                        render: <GapSample gap={5} caption="Step 5 — no sentence written yet." />,
                     },
                     {
                         name: "6 — a heading over its own region (default)",
                         why: "The default step opens the widest rhythm between the header and the body that still reads as ONE region, the spacing a page uses between its major sections. Reach for it whenever the region stands on its own rather than being visually grouped with something above or below it.",
                         code: "<Section gap={6} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={6} caption="Step 6 — default, the rhythm between the PAGE's regions." showAnatomy />,
+                        render: <GapSample gap={6} caption="Step 6 — default, the rhythm between the PAGE's regions." />,
                     },
                     {
                         name: "7 — a page frame holding separate features",
                         why: "The header opens a page-band gap, wider than the default region rhythm. This is the step a page-level frame reaches for when the header and body are less a single region and more two things sharing a page — replacing the old `page` word, which rendered `gap-8` (8 real uses) where this step's `gap-10` has 55.",
                         code: "<Section gap={7} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={7} caption="Step 7 — page bands, wider than a region rhythm." showAnatomy />,
+                        render: <GapSample gap={7} caption="Step 7 — page bands, wider than a region rhythm." />,
                     },
                     {
                         name: "8 — marketing air",
                         why: "The widest rung the scale offers, for full-width marketing bands rather than a page's teaching content. A `Section` header rarely reaches this far; it is shown here only to bound the ladder.",
                         code: "<Section gap={8} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={8} caption="Step 8 — marketing air, bounds the ladder." showAnatomy />,
+                        render: <GapSample gap={8} caption="Step 8 — marketing air, bounds the ladder." />,
                     },
                 ]}
             />

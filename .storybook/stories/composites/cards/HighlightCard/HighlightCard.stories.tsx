@@ -98,7 +98,7 @@ export const Default: Story = {
                             why: "The sweep renders at full emphasis behind the wrapped ProfileCard, drawing the reader's eye to this one card on the surface. Reach for this on the single card that genuinely needs to stand out — a second highlighted card on the same screen cancels this one's emphasis out.",
                             code: "<HighlightCard><ProfileCard /></HighlightCard>",
                             render: (
-                                <HighlightCard anatPart="HighlightCard">
+                                <HighlightCard>
                                     <ProfileCard />
                                 </HighlightCard>
                             ),
@@ -127,7 +127,7 @@ export const Skeleton: Story = {
                             why: "The sweep renders behind the real ProfileCard, the shape isSkeleton mutes below.",
                             code: "<HighlightCard><ProfileCard /></HighlightCard>",
                             render: (
-                                <HighlightCard anatPart="HighlightCard">
+                                <HighlightCard>
                                     <ProfileCard />
                                 </HighlightCard>
                             ),
@@ -137,7 +137,7 @@ export const Skeleton: Story = {
                             why: "No sweep layer mounts at all — only the wrapped ProfileCardSkeleton's own shimmer shows, sitting in the frame the sweep would otherwise wrap. False emphasis on a loading card would tell the reader something is ready to look at when nothing is.",
                             code: "<HighlightCard isSkeleton><ProfileCardSkeleton /></HighlightCard>",
                             render: (
-                                <HighlightCard isSkeleton anatPart="HighlightCard">
+                                <HighlightCard isSkeleton>
                                     <ProfileCardSkeleton />
                                 </HighlightCard>
                             ),

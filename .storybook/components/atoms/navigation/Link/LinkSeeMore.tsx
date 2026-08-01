@@ -52,7 +52,6 @@ interface LinkSeeMoreOwnProps {
     /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -125,23 +124,22 @@ export const LinkSeeMore = ({
     isSkeleton = false,
     skeletonWidth,
     classNames,
-    showAnatomy = false,
 }: LinkSeeMoreProps) => {
     if (isSkeleton) {
         // Same `inline-flex items-center gap-1` (icon-text) row as the real render; arrow
         // box matches `ARROW_CLASS[size]` and the label bar rides
         // `SKEL_TEXT_BAR[size]` so the row's height never moves once the real
         // label lands. `decorative`/`href`/`onPress` don't affect this shape —
-        // they only change what happens on press — so no `data-anat-part="Link"`
+        // they only change what happens on press — so no ``
         // here: this branch renders neither the HeroUI `Link` nor the plain
         // `<a>`/`<span>` the other branches produce.
         return (
             <span data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" className={cn("inline-flex w-fit shrink-0 items-center gap-1", classNames)}>
                 <HeroSkeleton
                     className={cn(SKEL_TEXT_BAR[size], skeletonWidth ?? "w-1/4")}
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                 />
-                <HeroSkeleton className={cn(ARROW_CLASS[size], "rounded-full")} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className={cn(ARROW_CLASS[size], "rounded-full")} />
             </span>
         )
     }
@@ -200,7 +198,7 @@ export const LinkSeeMore = ({
         <HeroUILink
             data-tier="atom"
             data-component="LinkSeeMore"
-            data-anat-part={showAnatomy ? "Link" : undefined}
+
             data-principles="icon-text"
             onPress={onPress}
             className={interactiveClassName}

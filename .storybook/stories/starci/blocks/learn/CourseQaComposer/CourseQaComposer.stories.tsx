@@ -56,8 +56,8 @@ export const CollapsedPrompt: Story = {
 />`,
                         render: (
                             <CourseQaComposer
-                                anatPart="CourseQaComposer"
-                                showAnatomy
+
+                               
                                 mode="collapsible"
                                 currentUser={CURRENT_USER}
                                 value=""
@@ -133,8 +133,8 @@ export const ExpandedForm: Story = {
 />`,
                         render: (
                             <CourseQaComposer
-                                anatPart="CourseQaComposer"
-                                showAnatomy
+
+                               
                                 mode="collapsible"
                                 initialValue="Why does"
                                 currentUser={CURRENT_USER}

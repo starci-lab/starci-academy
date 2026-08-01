@@ -78,7 +78,7 @@ export const Even: Story = {
 />`,
                             render: (
                                 <StatGridCard
-                                    showAnatomy
+                                   
                                     items={[
                                         { key: "lessons", content: statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
                                         { key: "studyDays", content: statCell(icon(FlameIcon), "Study days", 4, 5) },
@@ -117,7 +117,7 @@ export const OddOverflow: Story = {
 />`,
                             render: (
                                 <StatGridCard
-                                    showAnatomy
+                                   
                                     items={[
                                         { key: "lessons", content: statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
                                         { key: "studyDays", content: statCell(icon(FlameIcon), "Study days", 4, 5) },
@@ -152,7 +152,7 @@ export const Single: Story = {
                             code: "<StatGridCard items={[{ key: \"lessons\", content: statCell(<BookOpenIcon />, \"Lessons\", 2, 5) }]} />",
                             render: (
                                 <StatGridCard
-                                    showAnatomy
+                                   
                                     items={[
                                         { key: "lessons", content: statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
                                     ]}

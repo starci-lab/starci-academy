@@ -102,19 +102,17 @@ const ControlledGroup = <T extends string>({
     ariaLabel,
     columns,
     width = "480px",
-    showAnatomy,
 }: {
     items: Array<SurfaceCardSelectableGroupItem<T>>
     initialValue: T
     ariaLabel: string
     columns?: 1 | 2 | 3
     width?: string
-    showAnatomy?: boolean
 }) => {
     const [value, setValue] = useState<T>(initialValue)
     return (
         <div data-tier="fixture" style={{ width }}>
-            <SurfaceCardSelectableGroup items={items} value={value} onChange={setValue} ariaLabel={ariaLabel} columns={columns} showAnatomy={showAnatomy} />
+            <SurfaceCardSelectableGroup items={items} value={value} onChange={setValue} ariaLabel={ariaLabel} columns={columns} />
         </div>
     )
 }
@@ -146,7 +144,7 @@ export const Default: Story = {
   onChange={setValue}
   ariaLabel="Select plan"
 />`,
-                        render: <ControlledGroup items={PLAN_ITEMS} initialValue="pro" ariaLabel="Select plan" columns={2} showAnatomy />,
+                        render: <ControlledGroup items={PLAN_ITEMS} initialValue="pro" ariaLabel="Select plan" columns={2} />,
                     },
                 ]}
             />
@@ -170,7 +168,7 @@ export const Columns: Story = {
                         name: "columns = 1",
                         why: "The cards stack straight down in a single column. This is the shape for a narrow sidebar where the group has no room to sit side by side.",
                         code: "<SurfaceCardSelectableGroup items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel=\"Select plan\" columns={1} />",
-                        render: <ControlledGroup items={PLAN_ITEMS} initialValue="free" ariaLabel="Select plan (1 column)" columns={1} width="360px" showAnatomy />,
+                        render: <ControlledGroup items={PLAN_ITEMS} initialValue="free" ariaLabel="Select plan (1 column)" columns={1} width="360px" />,
                     },
                     {
                         name: "columns = 2",

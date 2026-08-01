@@ -26,7 +26,6 @@ interface SnippetIconOwnProps {
      */
     isCopied?: boolean
     /** `true` → tag each part with `data-anat-part` so a `BlockAnatomy` panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -65,7 +64,6 @@ const SnippetIconBase = ({
     copyString,
     isCopied,
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: SnippetIconProps) => {
     const [copiedState, setCopiedState] = useState(false)
@@ -93,7 +91,7 @@ const SnippetIconBase = ({
                 data-tier="atom"
                 data-component="SnippetIcon"
                 className={cn("w-5 h-5 shrink-0 rounded-full", classNames)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
             />
         )
     }
@@ -107,7 +105,7 @@ const SnippetIconBase = ({
             onClick={handleCopy}
             className={cn("cursor-pointer", classNames)}
             whileTap={{ scale: 0.9 }}
-            data-anat-part={showAnatomy ? "SnippetIcon" : undefined}
+
         >
             <AnimatePresence mode="wait">
                 {copied ? (
@@ -117,7 +115,7 @@ const SnippetIconBase = ({
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.85, opacity: 0 }}
                         transition={{ duration: 0.15, ease: "easeOut" }}
-                        data-anat-part={showAnatomy ? "Icon" : undefined}
+
                     >
                         <CheckCircleIcon className="w-5 h-5" />
                     </motion.span>
@@ -128,7 +126,7 @@ const SnippetIconBase = ({
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.85, opacity: 0 }}
                         transition={{ duration: 0.15, ease: "easeOut" }}
-                        data-anat-part={showAnatomy ? "Icon" : undefined}
+
                     >
                         <CopyIcon className="w-5 h-5" />
                     </motion.span>

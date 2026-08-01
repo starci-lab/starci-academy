@@ -44,7 +44,7 @@ export const Default: Story = {
                             code: "<InputCurrency value={v} onValueChange={setV} currency=\"VND\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputCurrency value={value} onValueChange={setValue} ariaLabel="Amount" showAnatomy />
+                                    <InputCurrency value={value} onValueChange={setValue} ariaLabel="Amount" />
                                 </div>
                             ),
                         },
@@ -74,7 +74,7 @@ export const WithLabel: Story = {
                             code: "<InputCurrency label=\"Tuition\" hint=\"In VND\" value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputCurrency label="Tuition" hint="In VND" value={value} onValueChange={setValue} showAnatomy />
+                                    <InputCurrency label="Tuition" hint="In VND" value={value} onValueChange={setValue} />
                                 </div>
                             ),
                         },
@@ -104,7 +104,7 @@ export const Required: Story = {
                             code: "<InputCurrency label=\"Tuition\" isRequired value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputCurrency label="Tuition" isRequired value={value} onValueChange={setValue} showAnatomy />
+                                    <InputCurrency label="Tuition" isRequired value={value} onValueChange={setValue} />
                                 </div>
                             ),
                         },
@@ -134,7 +134,7 @@ export const Filled: Story = {
                             code: "<InputCurrency label=\"Tuition\" value={1500000} onValueChange={setV} currency=\"VND\" />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputCurrency label="Tuition" value={value} onValueChange={setValue} showAnatomy />
+                                    <InputCurrency label="Tuition" value={value} onValueChange={setValue} />
                                 </div>
                             ),
                         },
@@ -164,7 +164,7 @@ export const Disabled: Story = {
                             code: "<InputCurrency label=\"Tuition\" value={1500000} onValueChange={setV} isDisabled />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputCurrency label="Tuition" value={value} onValueChange={setValue} isDisabled showAnatomy />
+                                    <InputCurrency label="Tuition" value={value} onValueChange={setValue} isDisabled />
                                 </div>
                             ),
                         },
@@ -194,7 +194,7 @@ export const Error: Story = {
                             code: "<InputCurrency label=\"Tuition\" errorMessage=\"Tuition must be greater than 0\" value={0} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputCurrency label="Tuition" errorMessage="Tuition must be greater than 0" value={value} onValueChange={setValue} showAnatomy />
+                                    <InputCurrency label="Tuition" errorMessage="Tuition must be greater than 0" value={value} onValueChange={setValue} />
                                 </div>
                             ),
                         },
@@ -222,7 +222,7 @@ export const Loading: Story = {
                         code: "<InputCurrency label=\"Tuition\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <InputCurrency label="Tuition" value={0} onValueChange={() => {}} isSkeleton showAnatomy />
+                                <InputCurrency label="Tuition" value={0} onValueChange={() => {}} isSkeleton />
                             </div>
                         ),
                     },

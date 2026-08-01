@@ -26,8 +26,7 @@ export interface StatGridCardProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: emit `data-anat-part="Cell"` on each grid cell for a BlockAnatomy panel. */
-    showAnatomy?: boolean
+    /** Storybook-only: emit `` on each grid cell for a BlockAnatomy panel. */
 }
 
 /**
@@ -45,7 +44,7 @@ export interface StatGridCardProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "StatGridCard" } as const
 
-export const StatGridCard = ({ items, classNames, showAnatomy = false }: StatGridCardProps) => {
+export const StatGridCard = ({ items, classNames}: StatGridCardProps) => {
     const total = items.length
     const isOddTotal = total % 2 === 1
 

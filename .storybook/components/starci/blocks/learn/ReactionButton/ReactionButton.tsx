@@ -106,9 +106,7 @@ export interface ReactionButtonProps {
     /** `true` → the trigger + summary switch to their own shimmer. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -122,8 +120,6 @@ const ReactionButton = ({
     onReact,
     isPending = false,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ReactionButtonProps) => {
     // controlled so the popover closes as soon as an emotion is picked — mirrors real ReactionBar
     const [isOpen, setIsOpen] = useState(false)
@@ -142,7 +138,7 @@ const ReactionButton = ({
     }
 
     if (isSkeleton) {
-        return <span data-anat-part={anatPart} className="inline-block h-8 w-28 animate-pulse rounded-full bg-default" />
+        return <span className="inline-block h-8 w-28 animate-pulse rounded-full bg-default" />
     }
 
     // compact summary: stacked top emojis + total — dropped entirely at zero
@@ -150,7 +146,7 @@ const ReactionButton = ({
         <StackH
             gap={3}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <span className="flex items-center -space-x-1">
@@ -158,7 +154,7 @@ const ReactionButton = ({
                             <ReactionGlyph key={reaction.type} type={reaction.type} size="sm" />
                         ))}
                     </span>
-                    <Typography size="sm" text={String(total)} showAnatomy={showAnatomy} />
+                    <Typography size="sm" text={String(total)} />
                 </>
             }
         />
@@ -173,7 +169,7 @@ const ReactionButton = ({
                         variant="tertiary"
                         isDisabled={isPending}
                         className="rounded-full"
-                        data-anat-part={showAnatomy ? "Button" : undefined}
+
                     >
                         <ReactionGlyph type={myReaction ?? "like"} size="sm" />
                         <span className="text-sm">
@@ -182,7 +178,7 @@ const ReactionButton = ({
                     </HeroButton>
                 </HeroPopover.Trigger>
                 {/* inset-exception: pill geometry of the vendor popover body, the shape HeroUI ships */}
-                <HeroPopover.Content className="overflow-visible rounded-full px-2 py-1" data-anat-part={showAnatomy ? "Popover.Content" : undefined}>
+                <HeroPopover.Content className="overflow-visible rounded-full px-2 py-1">
                     <ReactionPicker
                         items={REACTIONS.map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}
                         activeKey={myReaction}
@@ -196,7 +192,7 @@ const ReactionButton = ({
     )
 
     return (
-        <StackH gap={3} align="center" anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)} body={triggerAndSummary} />
+        <StackH gap={3} align="center" body={triggerAndSummary} />
     )
 }
 

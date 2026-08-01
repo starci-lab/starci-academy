@@ -83,7 +83,7 @@ export const Default: Story = {
                         name: "no prop turned on (size = base, color = default)",
                         why: "A plain inline span carrying just the text, at the default body size and the page's own foreground color. This is what a bare Typography call renders before any prop is turned on.",
                         code: "<Typography text=\"Grade assignments with the premium model\" />",
-                        render: <Typography text="Grade assignments with the premium model" showAnatomy />,
+                        render: <Typography text="Grade assignments with the premium model" />,
                     },
                 ]}
             />
@@ -110,7 +110,7 @@ export const Sizes: Story = {
                         name: "size = \"xs\"",
                         why: "The smallest body step, for a timestamp or a metadata line that should sit quietly under something more important.",
                         code: "<Typography size=\"xs\" text=\"Last synced 2 minutes ago\" />",
-                        render: <Typography size="xs" text="Last synced 2 minutes ago" showAnatomy />,
+                        render: <Typography size="xs" text="Last synced 2 minutes ago" />,
                     },
                     {
                         name: "size = \"sm\"",
@@ -191,7 +191,7 @@ export const Colors: Story = {
                         name: "color = \"default\"",
                         why: "The page's own foreground color — what every leaf renders when color is left unset.",
                         code: "<Typography text=\"Primary text\" />",
-                        render: <Typography text="Primary text" showAnatomy />,
+                        render: <Typography text="Primary text" />,
                     },
                     {
                         name: "color = \"muted\"",
@@ -274,7 +274,7 @@ export const Weight: Story = {
                         name: "weight = \"medium\", size = \"base\"",
                         why: "Working emphasis inside a paragraph, one step up from plain body text without going as heavy as bold.",
                         code: "<Typography text=\"Reviewed by the grading team\" weight=\"medium\" />",
-                        render: <Typography text="Reviewed by the grading team" weight="medium" showAnatomy />,
+                        render: <Typography text="Reviewed by the grading team" weight="medium" />,
                     },
                     {
                         name: "weight = \"semibold\", size = \"base\" (folds to medium)",
@@ -315,7 +315,7 @@ export const Italic: Story = {
                         name: "isItalic = true, color = default",
                         why: "A flagged note rendered in italics so it visually reads as commentary about the row, not the row's own content.",
                         code: "<Typography text=\"This assignment was auto-flagged for review\" isItalic />",
-                        render: <Typography text="This assignment was auto-flagged for review" isItalic showAnatomy />,
+                        render: <Typography text="This assignment was auto-flagged for review" isItalic />,
                     },
                     {
                         name: "isItalic = true, color = muted, size = sm",
@@ -344,7 +344,7 @@ export const Struck: Story = {
                         name: "isStruck = true",
                         why: "The struck line on its own, for a value being called out as superseded even without a replacement shown beside it.",
                         code: "<Typography text=\"$49.00\" isStruck color=\"muted\" />",
-                        render: <Typography text="$49.00" isStruck color="muted" showAnatomy />,
+                        render: <Typography text="$49.00" isStruck color="muted" />,
                     },
                     {
                         name: "isStruck = true, paired with the replacement value",
@@ -380,7 +380,7 @@ export const Align: Story = {
                         code: "<Typography size=\"h3\" text=\"Grading rubric\" align=\"start\" />",
                         render: (
                             <div data-tier="fixture" className="w-72 rounded-2xl border border-default p-3">
-                                <Typography size="h3" text="Grading rubric" align="start" showAnatomy />
+                                <Typography size="h3" text="Grading rubric" align="start" />
                             </div>
                         ),
                     },
@@ -427,7 +427,7 @@ export const TabularNums: Story = {
                         code: "<div className=\"flex flex-col\">\n  <Typography text=\"$1,284.00\" weight=\"bold\" />\n  <Typography text=\"$128,400.00\" weight=\"bold\" />\n</div>",
                         render: (
                             <div data-tier="fixture" className="flex flex-col">
-                                <Typography text="$1,284.00" weight="bold" showAnatomy />
+                                <Typography text="$1,284.00" weight="bold" />
                                 <Typography text="$128,400.00" weight="bold" />
                             </div>
                         ),
@@ -466,7 +466,7 @@ export const Truncate: Story = {
                         code: "<Typography text=\"An assignment title long enough to overflow its card\" truncate />",
                         render: (
                             <div data-tier="fixture" className="max-w-[220px] rounded-2xl border border-default p-3">
-                                <Typography text="An assignment title long enough to overflow its card" truncate showAnatomy />
+                                <Typography text="An assignment title long enough to overflow its card" truncate />
                             </div>
                         ),
                     },
@@ -503,7 +503,7 @@ export const LineClamp: Story = {
                         code: "<Typography text=\"A long assignment description that keeps going well past a single line of available width\" lineClamp={1} />",
                         render: (
                             <div data-tier="fixture" className="max-w-[260px] rounded-2xl border border-default p-3">
-                                <Typography text="A long assignment description that keeps going well past a single line of available width" lineClamp={1} showAnatomy />
+                                <Typography text="A long assignment description that keeps going well past a single line of available width" lineClamp={1} />
                             </div>
                         ),
                     },
@@ -550,7 +550,7 @@ export const NoWrap: Story = {
                         code: "<Typography text=\"Submission received and queued for grading\" />",
                         render: (
                             <div data-tier="fixture" className="max-w-[180px] rounded-2xl border border-default p-3">
-                                <Typography text="Submission received and queued for grading" showAnatomy />
+                                <Typography text="Submission received and queued for grading" />
                             </div>
                         ),
                     },
@@ -585,7 +585,7 @@ export const PreserveWhitespace: Story = {
                         name: "preserveWhitespace = false (default) — collapses",
                         why: "The text's own newlines collapse into a single line, the normal HTML behaviour for any run of whitespace.",
                         code: "<Typography text={\"Line one\\nLine two\\nLine three\"} />",
-                        render: <Typography text={"Line one\nLine two\nLine three"} showAnatomy />,
+                        render: <Typography text={"Line one\nLine two\nLine three"} />,
                     },
                     {
                         name: "preserveWhitespace = true — line breaks kept",
@@ -616,7 +616,7 @@ export const IsInline: Story = {
                         code: "<p>\n  Your next milestone is <Typography size=\"h3\" text=\"Module 3\" isInline /> — start whenever you are ready.\n</p>",
                         render: (
                             <p data-tier="fixture" className="max-w-md">
-                                Your next milestone is <Typography size="h3" text="Module 3" isInline showAnatomy /> — start whenever you are ready.
+                                Your next milestone is <Typography size="h3" text="Module 3" isInline /> — start whenever you are ready.
                             </p>
                         ),
                     },
@@ -651,7 +651,7 @@ export const ParseInlineCode: Story = {
                         name: "parseInlineCode = false (default) — backticks render literally",
                         why: "Without it, backtick characters in the string are just characters — they render as-is, with no styling applied to the segment between them.",
                         code: "<Typography text=\"Run `npm install` before you start\" />",
-                        render: <Typography text="Run `npm install` before you start" showAnatomy />,
+                        render: <Typography text="Run `npm install` before you start" />,
                     },
                     {
                         name: "parseInlineCode = true — backtick segment styled",
@@ -683,7 +683,7 @@ export const PrefixIcon: Story = {
                         name: "prefixIcon = CheckCircleIcon",
                         why: "A leading check mark grows before the label to confirm a completed state, at the same font-driven scale the text renders at.",
                         code: "<Typography text=\"Passed\" prefixIcon={CheckCircleIcon} />",
-                        render: <Typography text="Passed" prefixIcon={CheckCircleIcon} showAnatomy />,
+                        render: <Typography text="Passed" prefixIcon={CheckCircleIcon} />,
                     },
                     {
                         name: "prefixIcon set, color = \"danger\"",
@@ -718,7 +718,7 @@ export const SuffixIcon: Story = {
                         name: "suffixIcon = ArrowRightIcon",
                         why: "A trailing arrow after the label, for a text link into more detail — \"View results →\".",
                         code: "<Typography text=\"View results\" suffixIcon={ArrowRightIcon} color=\"accent\" />",
-                        render: <Typography text="View results" suffixIcon={ArrowRightIcon} color="accent" showAnatomy />,
+                        render: <Typography text="View results" suffixIcon={ArrowRightIcon} color="accent" />,
                     },
                     {
                         name: "prefixIcon and suffixIcon both set",
@@ -747,7 +747,7 @@ export const IconSlide: Story = {
                         name: "iconSlide = true, suffixIcon (trailing arrow) — hover the text",
                         why: "On hover, the trailing arrow slides right, nudging the reader onward — the same `translate`-based transition `Button` uses, so a leading and a trailing arrow never fight each other's motion rule.",
                         code: "<Typography text=\"See more\" suffixIcon={ArrowRightIcon} iconSlide color=\"accent\" />",
-                        render: <Typography text="See more" suffixIcon={ArrowRightIcon} iconSlide color="accent" showAnatomy />,
+                        render: <Typography text="See more" suffixIcon={ArrowRightIcon} iconSlide color="accent" />,
                     },
                     {
                         name: "iconSlide = true, prefixIcon (leading arrow) — hover the text",
@@ -780,7 +780,7 @@ export const Link: Story = {
                         name: "isLink = true (default accent, no href)",
                         why: "The plain link look: accent color with a hover underline, for an in-app action reached through onPress rather than a real navigation target.",
                         code: "<Typography text=\"View details\" isLink onPress={() => {}} />",
-                        render: <Typography text="View details" isLink onPress={() => {}} showAnatomy />,
+                        render: <Typography text="View details" isLink onPress={() => {}} />,
                     },
                     {
                         name: "isLink = true, color = \"muted\", href + target + rel set",
@@ -813,7 +813,7 @@ export const UnderlineOnHover: Story = {
                         name: "isLink = true, underlineOnHover = false (default) — plain underline",
                         why: "The default isLink underline: offset-2, colored with the link's own accent tone.",
                         code: "<Typography text=\"View details\" isLink onPress={() => {}} />",
-                        render: <Typography text="View details" isLink onPress={() => {}} showAnatomy />,
+                        render: <Typography text="View details" isLink onPress={() => {}} />,
                     },
                     {
                         name: "isLink = true, underlineOnHover = true — quiet underline",
@@ -848,7 +848,7 @@ export const UnderlineOnGroupHover: Story = {
                         code: "<div className=\"group\">\n  <Typography text=\"Multi-stage build: drop the toolchain from the runtime image\" underlineOnGroupHover />\n</div>",
                         render: (
                             <div data-tier="fixture" className="group w-fit cursor-pointer rounded-lg border border-dashed border-accent p-3">
-                                <Typography text="Multi-stage build: drop the toolchain from the runtime image" underlineOnGroupHover showAnatomy />
+                                <Typography text="Multi-stage build: drop the toolchain from the runtime image" underlineOnGroupHover />
                             </div>
                         ),
                     },
@@ -876,7 +876,7 @@ export const IsButton: Story = {
                         name: "isButton = true, no hoverColor",
                         why: "A plain pressable label, cursor-pointer with no other visual change — the bare shape before hoverColor adds a transition.",
                         code: "<Typography text=\"Reply\" isButton onPress={() => {}} />",
-                        render: <Typography text="Reply" isButton onPress={() => {}} showAnatomy />,
+                        render: <Typography text="Reply" isButton onPress={() => {}} />,
                     },
                     {
                         name: "isButton = true, color = \"muted\", hoverColor = \"default\"",
@@ -910,7 +910,7 @@ export const HoverColor: Story = {
                         name: "color = \"muted\", hoverColor = \"default\" — hover to see the shift",
                         why: "A quiet action that steps up to full foreground on hover, the shape used for a low-emphasis \"Reply\"/\"Edit\".",
                         code: "<Typography text=\"Edit\" isButton color=\"muted\" hoverColor=\"default\" onPress={() => {}} />",
-                        render: <Typography text="Edit" isButton color="muted" hoverColor="default" onPress={() => {}} showAnatomy />,
+                        render: <Typography text="Edit" isButton color="muted" hoverColor="default" onPress={() => {}} />,
                     },
                     {
                         name: "color = \"muted\", hoverColor = \"danger\" — hover to see the shift",
@@ -949,7 +949,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, size = \"sm\"",
                         why: "A shimmer bar at the height of small body text, the placeholder for a caption or metadata line before its data arrives.",
                         code: "<Typography size=\"sm\" isSkeleton />",
-                        render: <Typography size="sm" isSkeleton showAnatomy />,
+                        render: <Typography size="sm" isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, size = \"base\" (default)",

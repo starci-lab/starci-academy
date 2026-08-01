@@ -43,7 +43,7 @@ export const Default: Story = {
                             code: "<InputSearch value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch value={value} onValueChange={setValue} ariaLabel="Search" showAnatomy />
+                                    <InputSearch value={value} onValueChange={setValue} ariaLabel="Search" />
                                 </div>
                             ),
                         },
@@ -77,7 +77,7 @@ export const Placeholder: Story = {
                             code: "<InputSearch placeholder=\"Search courses…\" value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch placeholder="Search courses…" value={value} onValueChange={setValue} showAnatomy />
+                                    <InputSearch placeholder="Search courses…" value={value} onValueChange={setValue} />
                                 </div>
                             ),
                         },
@@ -107,7 +107,7 @@ export const WithLabel: Story = {
                             code: "<InputSearch label=\"Search courses\" hint=\"By name or skill\" value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" hint="By name or skill" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                    <InputSearch label="Search courses" hint="By name or skill" value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -137,7 +137,7 @@ export const Required: Story = {
                             code: "<InputSearch label=\"Search courses\" isRequired value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" isRequired value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                    <InputSearch label="Search courses" isRequired value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -167,7 +167,7 @@ export const Filled: Story = {
                             code: "<InputSearch label=\"Search courses\" value=\"React\" onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                    <InputSearch label="Search courses" value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -197,7 +197,7 @@ export const Disabled: Story = {
                             code: "<InputSearch label=\"Search courses\" value=\"React\" isDisabled onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" value={value} onValueChange={setValue} isDisabled placeholder="Search courses…" showAnatomy />
+                                    <InputSearch label="Search courses" value={value} onValueChange={setValue} isDisabled placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -231,7 +231,7 @@ export const Invalid: Story = {
                             code: "<InputSearch label=\"Search courses\" isInvalid value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" isInvalid value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                    <InputSearch label="Search courses" isInvalid value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -261,7 +261,7 @@ export const Error: Story = {
                             code: "<InputSearch label=\"Search courses\" errorMessage=\"Invalid search term\" value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" errorMessage="Invalid search term" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                    <InputSearch label="Search courses" errorMessage="Invalid search term" value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -289,7 +289,7 @@ export const Loading: Story = {
                         code: "<InputSearch label=\"Search courses\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <InputSearch label="Search courses" value="" onValueChange={() => {}} isSkeleton showAnatomy />
+                                <InputSearch label="Search courses" value="" onValueChange={() => {}} isSkeleton />
                             </div>
                         ),
                     },

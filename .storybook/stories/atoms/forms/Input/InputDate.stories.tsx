@@ -41,7 +41,7 @@ export const Default: Story = {
                             name: "label, hint, errorMessage all unset",
                             why: "The field renders only its bare date segments and the calendar trigger — no `Label`, `Description`, or `Error` node appears above or below it. This is the baseline every other leaf below adds exactly one thing to.",
                             code: "<InputDate value={value} onValueChange={setValue} />",
-                            render: <InputDate value={value} onValueChange={setValue} ariaLabel="Start date" showAnatomy />,
+                            render: <InputDate value={value} onValueChange={setValue} ariaLabel="Start date" />,
                         },
                     ]}
                 />
@@ -68,7 +68,7 @@ export const WithLabel: Story = {
                             name: "label and hint set",
                             why: "A `Label` node grows above the control and a muted `Description` line grows below it. Both exist so the field reads on its own, without a caller having to place a separate caption nearby.",
                             code: "<InputDate label=\"Start date\" hint=\"Format: dd/mm/yyyy\" value={value} onValueChange={setValue} />",
-                            render: <InputDate label="Start date" hint="Format: dd/mm/yyyy" value={value} onValueChange={setValue} showAnatomy />,
+                            render: <InputDate label="Start date" hint="Format: dd/mm/yyyy" value={value} onValueChange={setValue} />,
                         },
                     ]}
                 />
@@ -95,7 +95,7 @@ export const Required: Story = {
                             name: "isRequired = true",
                             why: "A `*` mark is appended right after the label text — no separate node, no extra colour. It exists purely so the reader can scan a form and see which fields are mandatory without opening each one.",
                             code: "<InputDate label=\"Start date\" isRequired value={value} onValueChange={setValue} />",
-                            render: <InputDate label="Start date" isRequired value={value} onValueChange={setValue} showAnatomy />,
+                            render: <InputDate label="Start date" isRequired value={value} onValueChange={setValue} />,
                         },
                     ]}
                 />
@@ -122,7 +122,7 @@ export const Filled: Story = {
                             name: "value = a real DateValue (not null)",
                             why: "The date segments print the picked day/month/year instead of standing empty. Nothing else in the tree changes — this only proves the control reads a real controlled value the same way it reads `null`.",
                             code: "<InputDate label=\"Start date\" value={parseDate(\"2026-07-25\")} onValueChange={setValue} />",
-                            render: <InputDate label="Start date" value={value} onValueChange={setValue} showAnatomy />,
+                            render: <InputDate label="Start date" value={value} onValueChange={setValue} />,
                         },
                     ]}
                 />
@@ -149,7 +149,7 @@ export const Disabled: Story = {
                             name: "isDisabled = true",
                             why: "The date segments and the calendar trigger both lock against input and the label dims. This is the resting state for a date the caller already decided is fixed for now, so the reader is not tempted to try editing it.",
                             code: "<InputDate label=\"Start date\" value={parseDate(\"2026-07-25\")} onValueChange={setValue} isDisabled />",
-                            render: <InputDate label="Start date" value={value} onValueChange={setValue} isDisabled showAnatomy />,
+                            render: <InputDate label="Start date" value={value} onValueChange={setValue} isDisabled />,
                         },
                     ]}
                 />
@@ -176,7 +176,7 @@ export const Error: Story = {
                             name: "errorMessage set",
                             why: "An `Error` line grows below the control in the danger colour and the control border switches to its invalid state. Both changes fire together off the same prop, so a caller can never show one without the other.",
                             code: "<InputDate label=\"Start date\" errorMessage=\"Please choose a date\" value={value} onValueChange={setValue} />",
-                            render: <InputDate label="Start date" errorMessage="Please choose a date" value={value} onValueChange={setValue} showAnatomy />,
+                            render: <InputDate label="Start date" errorMessage="Please choose a date" value={value} onValueChange={setValue} />,
                         },
                     ]}
                 />
@@ -201,7 +201,7 @@ export const Loading: Story = {
                         name: "isSkeleton = true, label set",
                         why: "The label still renders as real text, but the control area collapses into a shimmer box — no segments, no calendar trigger. The label stays real so the reader keeps their place in the form while the value itself is still loading.",
                         code: "<InputDate label=\"Start date\" isSkeleton />",
-                        render: <InputDate label="Start date" value={null} onValueChange={() => {}} isSkeleton showAnatomy />,
+                        render: <InputDate label="Start date" value={null} onValueChange={() => {}} isSkeleton />,
                     },
                 ]}
             />

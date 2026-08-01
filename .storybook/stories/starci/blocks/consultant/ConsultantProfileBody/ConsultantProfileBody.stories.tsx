@@ -90,8 +90,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ConsultantProfileBody
-                                anatPart="ConsultantProfileBody"
-                                showAnatomy
+
+                               
                                 consultant={FULL_CONSULTANT}
                                 onOpenCompany={() => {}}
                             />

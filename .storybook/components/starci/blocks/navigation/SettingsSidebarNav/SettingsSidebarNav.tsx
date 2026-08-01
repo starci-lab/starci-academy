@@ -170,7 +170,6 @@ interface DesktopNavRowProps {
     /** Fired with the row's `href` when it is pressed. */
     onNavigate: (href: string) => void
     /** Forwarded from the block's own `showAnatomy`. */
-    showAnatomy: boolean
 }
 
 /**
@@ -181,7 +180,7 @@ interface DesktopNavRowProps {
  *
  * @param props - {@link DesktopNavRowProps}
  */
-const DesktopNavRow = ({ item, isActive, onNavigate, showAnatomy }: DesktopNavRowProps) => {
+const DesktopNavRow = ({ item, isActive, onNavigate }: DesktopNavRowProps) => {
     const collapsed = useSidebarCollapsed()
     const Icon = DESTINATION_ICON[item.key]
     const rowContent = (
@@ -193,7 +192,7 @@ const DesktopNavRow = ({ item, isActive, onNavigate, showAnatomy }: DesktopNavRo
                     weight={isActive ? "medium" : undefined}
                     text={DESTINATION_LABEL[item.key]}
                     truncate
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
         </>
@@ -210,7 +209,7 @@ const DesktopNavRow = ({ item, isActive, onNavigate, showAnatomy }: DesktopNavRo
                 isActive ? "bg-accent-soft text-accent-soft-foreground" : "text-foreground hover:bg-default/40",
             )}
         >
-            <StackH gap={2} align="center" justify={collapsed ? "center" : "start"} anatPart={showAnatomy ? "StackH" : undefined} body={rowContent} />
+            <StackH gap={2} align="center" justify={collapsed ? "center" : "start"} body={rowContent} />
         </button>
     )
 }
@@ -234,9 +233,7 @@ export interface SettingsSidebarNavProps {
     /** Accessible name for the mobile pill nav landmark. Defaults to {@link title}. */
     mobileNavAriaLabel?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -255,15 +252,13 @@ const SettingsSidebarNav = ({
     expandLabel,
     storageKey,
     mobileNavAriaLabel,
-    showAnatomy = false,
-    anatPart,
 }: SettingsSidebarNavProps) => {
     // Mobile leaf flattens every group into one scroll strip — grouping only matters to the
     // desktop rail's dividers, the mobile bar has no room to spare on a section caption.
     const flatItems = groups.flatMap((group) => group.items)
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             {/* ── Desktop rail — hidden below @app-md; wraps the reused `CollapsibleSidebar`
                 (chrome) with this block's own rows/dividers (domain content). */}
             <div className="hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app-md:h-[calc(100dvh-4rem)]">
@@ -273,8 +268,8 @@ const SettingsSidebarNav = ({
                     expandLabel={expandLabel}
                     storageKey={storageKey}
                     className="h-full"
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "CollapsibleSidebar" : undefined}
+
+
                 >
                     {groups.map((group, index) => (
                         <React.Fragment key={group.key}>
@@ -282,17 +277,17 @@ const SettingsSidebarNav = ({
                                 `SidebarNavGroup` gap (see file header). Spacing between it
                                 and its neighbours is owned by `CollapsibleSidebar`'s own
                                 `StackV gap={4}`, not a margin on this Divider. */}
-                            {index > 0 ? <Divider showAnatomy={showAnatomy} /> : null}
+                            {index > 0 ? <Divider /> : null}
                             <StackV
                                 gap={1}
-                                anatPart={showAnatomy ? "StackV" : undefined}
+
                                 body={group.items.map((item) => (
                                     <DesktopNavRow
                                         key={item.key}
                                         item={item}
                                         isActive={item.href === activeHref}
                                         onNavigate={onNavigate}
-                                        showAnatomy={showAnatomy}
+
                                     />
                                 ))}
                             />
@@ -307,14 +302,14 @@ const SettingsSidebarNav = ({
                 <StackH
                     gap={3}
                     className="overflow-x-auto border-b border-default bg-background/80 px-3 py-2 backdrop-blur-xl"
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={flatItems.map((item) => {
                         const isActive = item.href === activeHref
                         const Icon = DESTINATION_ICON[item.key]
                         const pillContent = (
                             <>
                                 <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
-                                <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap showAnatomy={showAnatomy} />
+                                <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />
                             </>
                         )
                         return (
@@ -328,7 +323,7 @@ const SettingsSidebarNav = ({
                                     isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
                                 )}
                             >
-                                <StackH gap={2} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={pillContent} />
+                                <StackH gap={2} align="center" body={pillContent} />
                             </button>
                         )
                     })}

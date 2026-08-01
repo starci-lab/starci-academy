@@ -67,9 +67,7 @@ export interface LearnNudgesBaseProps {
     /** Number of placeholder rows when `isSkeleton`. Default 2 — the most common nudge count. */
     skeletonRows?: number
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 /**
  * What to do today — a shortcut list into the next learning task.
@@ -80,15 +78,13 @@ const LearnNudgesBase = ({
     items,
     isSkeleton = false,
     skeletonRows = 2,
-    showAnatomy = false,
-    anatPart,
 }: LearnNudgesBaseProps) => (
     <SurfaceCardList
         // The heading is OWNED by the BLOCK — the caller does NOT pass `heading`
         // (§14d.1, teacher's call 2026-07-26). This cluster always answers the
         // same one question, so the lead-in is a constant.
         label="Things to do today"
-        anatPart={anatPart ?? (showAnatomy ? "SurfaceCardList" : undefined)}
+
         items={
             isSkeleton
                 // GO THROUGH THE EXACT SAME RENDER PATH: still `SurfaceCardList`,
@@ -102,7 +98,7 @@ const LearnNudgesBase = ({
                             size="sm"
                             isSkeleton
                             classNames={["w-2/3"]}
-                            showAnatomy={showAnatomy}
+
                         />
                     ),
                 }))

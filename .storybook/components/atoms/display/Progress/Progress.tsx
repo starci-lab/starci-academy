@@ -46,7 +46,6 @@ interface ProgressTrackProps {
     /** Render the leaf skeleton instead of the indicator. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -66,7 +65,6 @@ const ProgressBar = ({
     size = "md",
     ariaLabel = "Progress",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
@@ -75,7 +73,7 @@ const ProgressBar = ({
                 data-tier="atom"
                 data-component="ProgressBar"
                 className={cn("h-2 w-full rounded-full", classNames)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
             />
         )
     }
@@ -92,10 +90,10 @@ const ProgressBar = ({
             className={cn("w-full", classNames)}
         >
             <HeroProgressBar.Track
-                data-anat-part={showAnatomy ? "ProgressBar.Track" : undefined}
+
             >
                 <HeroProgressBar.Fill
-                    data-anat-part={showAnatomy ? "ProgressBar.Fill" : undefined}
+
                 />
             </HeroProgressBar.Track>
         </HeroProgressBar>
@@ -111,7 +109,6 @@ const ProgressCircle = ({
     size = "md",
     ariaLabel = "Progress",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
@@ -120,7 +117,7 @@ const ProgressCircle = ({
                 data-tier="atom"
                 data-component="ProgressCircle"
                 className={cn("rounded-full", CIRCLE_BOX[size], classNames)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
             />
         )
     }
@@ -137,11 +134,11 @@ const ProgressCircle = ({
             className={cn(classNames)}
         >
             <HeroProgressCircle.Track
-                data-anat-part={showAnatomy ? "ProgressCircle.Track" : undefined}
+
             >
                 <HeroProgressCircle.TrackCircle />
                 <HeroProgressCircle.FillCircle
-                    data-anat-part={showAnatomy ? "ProgressCircle.FillCircle" : undefined}
+
                 />
             </HeroProgressCircle.Track>
         </HeroProgressCircle>
@@ -159,7 +156,6 @@ interface MeterOwnProps {
     /** Accessible name (announced by screen readers). */
     ariaLabel?: string
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -185,7 +181,6 @@ const Meter = ({
     size = "md",
     ariaLabel = "Meter",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: MeterProps) => {
     if (isSkeleton) {
@@ -194,7 +189,7 @@ const Meter = ({
                 data-tier="atom"
                 data-component="ProgressGauge"
                 className={cn("h-2 w-full rounded-full", classNames)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
             />
         )
     }
@@ -210,10 +205,10 @@ const Meter = ({
             className={cn("w-full", classNames)}
         >
             <HeroMeter.Track
-                data-anat-part={showAnatomy ? "Meter.Track" : undefined}
+
             >
                 <HeroMeter.Fill
-                    data-anat-part={showAnatomy ? "Meter.Fill" : undefined}
+
                 />
             </HeroMeter.Track>
         </HeroMeter>

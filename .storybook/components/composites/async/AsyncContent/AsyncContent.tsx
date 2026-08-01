@@ -10,7 +10,6 @@ import { EmptyState, type EmptyStateIcon } from "@sb-components/composites/feedb
 // is FORBIDDEN from touching `_legacy` — an import at the composite tier would drag the
 // whole dead branch back into the screen (caught by the 2026-07-27 deep-scan).
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
@@ -86,9 +85,7 @@ interface MessageProps {
      * frame directly had to name its wrapping Container after the frame — which put the
      * frame's name and its story link on an element that is not the frame at all.
      */
-    anatPart?: string
     /** On → emit `data-anat-part` on each part so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -107,9 +104,9 @@ const withDuotone = (Icon: PhosphorIcon): EmptyStateIcon => {
  * Build the `action` slot's content: a free-form `action` node wins; otherwise
  * the `onRetry` + `retryLabel` pair is wrapped into a secondary size-sm `Button`.
  */
-const composeAction = ({ action, onRetry, retryLabel, showAnatomy }: MessageProps): ReactNode => {
+const composeAction = ({ action, onRetry, retryLabel }: MessageProps): ReactNode => {
     if (action != null) {
-        return showAnatomy ? <span data-anat-part="Action">{action}</span> : action
+        return action
     }
     if (onRetry && retryLabel) {
         return (
@@ -118,7 +115,7 @@ const composeAction = ({ action, onRetry, retryLabel, showAnatomy }: MessageProp
                 size="sm"
                 onPress={onRetry}
                 label={retryLabel}
-                showAnatomy={showAnatomy}
+
             />
         )
     }
@@ -173,7 +170,6 @@ export interface AsyncContentBaseProps {
     /** Shorthand for {@link AsyncContentBaseProps.content}. */
     children?: ReactNode
     /** Dev/spec: overlay an anatomy annotation around the branch currently rendering. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -197,37 +193,20 @@ const Base = ({
     errorContent,
     content,
     children,
-    showAnatomy = false,
 }: AsyncContentBaseProps) => {
     let branch: React.ReactNode
-    // Anatomy label = the node the switch PICKED, so a BlockAnatomy leaf badges the
-    // branch actually on screen (each branch is its own leaf with its own tree).
-    let branchName: string
     if (error && errorContent) {
         branch = <ErrorMessage {...errorContent} />
-        branchName = "AsyncContentError"
     } else if (isLoading) {
         branch = skeleton
-        branchName = "Skeleton"
     } else if (isEmpty) {
         branch = emptyContent ? <Empty {...emptyContent} /> : null
-        branchName = "AsyncContentEmpty"
     } else {
         branch = content ?? children
-        branchName = "Content"
     }
     // `branch == null` = the SILENT empty branch: nothing rendered, so there is no
     // node to annotate — skip the overlay instead of badging an empty box.
-    return showAnatomy && branch != null ? (
-        <div className="relative" data-anat>
-            {branch}
-            <AnatomyOverlay
-                label={branchName}
-                tier="composite"
-                href="/?path=/docs/composites-async-asynccontent-asynccontent-base--docs"
-            />
-        </div>
-    ) : <>{branch}</>
+    return <>{branch}</>
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -249,10 +228,10 @@ export type AsyncContentEmptyProps = MessageProps
  * @param props - {@link AsyncContentEmptyProps}
  */
 const Empty = (props: AsyncContentEmptyProps) => {
-    const { title, description, icon, classNames, anatPart, showAnatomy } = props
+    const { title, description, icon, classNames } = props
     return (
         <EmptyState
-            anatPart={anatPart ?? (showAnatomy ? "EmptyState" : undefined)}
+
             classNames={classNames}
             icon={withDuotone(icon ?? TrayIcon)}
             title={title}
@@ -279,10 +258,10 @@ export type AsyncContentErrorProps = MessageProps
  * @param props - {@link AsyncContentErrorProps}
  */
 const ErrorMessage = (props: AsyncContentErrorProps) => {
-    const { title, description, icon, classNames, anatPart, showAnatomy } = props
+    const { title, description, icon, classNames } = props
     return (
         <EmptyState
-            anatPart={anatPart ?? (showAnatomy ? "EmptyState" : undefined)}
+
             classNames={classNames}
             tone="danger"
             icon={withDuotone(icon ?? WarningIcon)}

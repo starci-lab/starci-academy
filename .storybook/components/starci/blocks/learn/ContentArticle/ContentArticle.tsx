@@ -75,9 +75,7 @@ export interface ContentArticleProps {
     /** `true` → the card draws a body mirror instead of the document. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -92,15 +90,13 @@ const ContentArticle = ({
     offer,
     hintText,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ContentArticleProps) => {
     const lessonBody = (
         <>
             {hintText != null && !isLocked ? (
                 <Callout
                     title={hintText}
-                    anatPart={showAnatomy ? "Callout" : undefined}
+
                 />
             ) : null}
             <div className="relative">
@@ -108,7 +104,7 @@ const ContentArticle = ({
                     <MarkdownContent
                         source={body}
                         measure="reading"
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                     />
                 </div>
                 {isLocked ? (
@@ -129,19 +125,19 @@ const ContentArticle = ({
                     nextPhasePriceVnd={offer.nextPhasePriceVnd}
                     ctaLabel={offer.ctaLabel}
                     onPurchase={offer.onPurchase}
-                    anatPart={showAnatomy ? "ContentPaywall" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={lessonBody} />}
+
+                body={() => <StackV gap={6} body={lessonBody} />}
             />
         </div>
     )

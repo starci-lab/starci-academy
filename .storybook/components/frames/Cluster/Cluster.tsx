@@ -75,13 +75,11 @@ export interface ClusterBaseProps {
      * still not see it, and it counts as unused. Same gap already patched on
      * `PageHeader`/`Divider`/`ChoiceSwitch`.
      */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /** `true` → tag each item with `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /**
      * The layout pattern this track's seam realises — a token from `test-runner/patterns.mjs`.
      * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
@@ -105,14 +103,12 @@ const ClusterBase = ({
     justify = "start",
     separator = false,
     classNames,
-    showAnatomy = false,
-    anatPart,
     pattern,
 }: ClusterBaseProps) => (
     <div
         data-tier="frame"
         data-component="Cluster"
-        data-anat-part={anatPart}
+
         data-principles={pattern}
         className={cn(
             "flex flex-wrap",
@@ -126,7 +122,7 @@ const ClusterBase = ({
             // The wrapper is unconditional; only the badge on it is not. Rendering it only when
             // the overlay is on made the overlay change what it was measuring — the wrapper is a
             // flex child, so turning inspection on moved the row it was meant to describe.
-            const body = <div data-anat-part={showAnatomy ? "Item" : undefined}>{item.content}</div>
+            const body = <div>{item.content}</div>
             return (
                 <React.Fragment key={item.key}>
                     {/* The mark carries no margin of its own — the track's `gap` already

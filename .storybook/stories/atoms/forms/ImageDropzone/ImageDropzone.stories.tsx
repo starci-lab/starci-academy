@@ -6,7 +6,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * `Typography` — OUR OWN atom, with its own story to jump to (the label and,
  * when set, the `hint` line both mount one each — see `ImageDropzone.tsx` passing
- * `anatPart="Typography"` explicitly, § two-law pass, 2026-07-28).
+ * `` explicitly, § two-law pass, 2026-07-28).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": { tier: "atom", role: "label / hint text", storyId: "atoms-text-typography-typography--plain" },
@@ -94,7 +94,7 @@ export const Default: Story = {
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-                                showAnatomy
+                               
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -122,7 +122,7 @@ export const Hint: Story = {
                         name: "hint unset",
                         why: "No hint line appears under the label, since there is no boolean to switch it on: an empty hint would just be a blank line. This is the shape a caller reaches for when the label alone already says enough.",
                         code: "<ImageDropzone onFile={handleFile} label=\"Click to choose an image\" />",
-                        render: <ImageDropzone showAnatomy onFile={() => {}} label="Click to choose an image" />,
+                        render: <ImageDropzone onFile={() => {}} label="Click to choose an image" />,
                     },
                     {
                         name: "hint = \"PNG, JPG, WEBP, GIF · up to 5 MB\"",
@@ -134,7 +134,7 @@ export const Hint: Story = {
 />`,
                         render: (
                             <ImageDropzone
-                                showAnatomy
+                               
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                                 hint="PNG, JPG, WEBP, GIF · up to 5 MB"
@@ -165,7 +165,7 @@ export const Icon: Story = {
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-                                showAnatomy
+                               
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -182,7 +182,7 @@ export const Icon: Story = {
 />`,
                         render: (
                             <ImageDropzone
-                                showAnatomy
+                               
                                 onFile={() => {}}
                                 label="Add a profile photo"
                                 hint="Square images look best"
@@ -219,7 +219,7 @@ export const DragActive: Story = {
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-                                showAnatomy
+                               
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -235,7 +235,7 @@ export const DragActive: Story = {
 />`,
                         render: (
                             <ImageDropzone
-                                showAnatomy
+                               
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                                 isDragActive

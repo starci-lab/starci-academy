@@ -63,7 +63,7 @@ export const Default: Story = {
                             name: "totalPages = 5 (under the collapse threshold)",
                             why: "Every page link from 1 to 5 renders in a row, with no `Ellipsis` node anywhere in it. Below the collapse threshold there is nothing worth hiding, so showing every page keeps the whole range one glance away.",
                             code: "<Pagination currentPage={page} totalPages={5} onPageChange={setPage} />",
-                            render: <Pagination currentPage={page} totalPages={5} onPageChange={setPage} showAnatomy />,
+                            render: <Pagination currentPage={page} totalPages={5} onPageChange={setPage} />,
                         },
                     ]}
                 />
@@ -88,7 +88,7 @@ export const ManyPages: Story = {
                             name: "totalPages = 24, currentPage = 12 (over the collapse threshold)",
                             why: "Two `Ellipsis` nodes appear, collapsing the run between page 1 and page 11, and between page 13 and page 24, into `1 · … · 11 12 13 · … · 24`. Listing all 24 links would make the current page hard to find, so only the first, last, and immediate neighbours of the current page stay visible.",
                             code: "<Pagination currentPage={12} totalPages={24} onPageChange={setPage} />",
-                            render: <Pagination currentPage={page} totalPages={24} onPageChange={setPage} showAnatomy />,
+                            render: <Pagination currentPage={page} totalPages={24} onPageChange={setPage} />,
                         },
                     ]}
                 />
@@ -111,7 +111,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "The whole page-link row is replaced by a row of shimmer squares owned by this atom, instead of any real `Previous`/`Link`/`Next` node. Windowing can't be previewed here because `totalPages` is exactly the number that hasn't loaded yet, so a single representative shape is all a caller can show.",
                         code: "<Pagination isSkeleton currentPage={1} totalPages={5} onPageChange={fn} />",
-                        render: <Pagination isSkeleton currentPage={1} totalPages={5} onPageChange={() => {}} showAnatomy />,
+                        render: <Pagination isSkeleton currentPage={1} totalPages={5} onPageChange={() => {}} />,
                     },
                 ]}
             />

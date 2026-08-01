@@ -19,7 +19,7 @@ type Story = StoryObj<typeof RichText>
 export const Empty: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="" anatPart="RichText" showAnatomy />
+            <RichText text="" />
         </div>
     ),
 }
@@ -28,7 +28,7 @@ export const Empty: Story = {
 export const PlainText: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="Press the Submit button to send your answer, the system will grade it right away." anatPart="RichText" showAnatomy />
+            <RichText text="Press the Submit button to send your answer, the system will grade it right away." />
         </div>
     ),
 }
@@ -37,7 +37,7 @@ export const PlainText: Story = {
 export const Code: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="Use `useEffect` to sync state with the DOM after rendering." anatPart="RichText" showAnatomy />
+            <RichText text="Use `useEffect` to sync state with the DOM after rendering." />
         </div>
     ),
 }
@@ -46,7 +46,7 @@ export const Code: Story = {
 export const Bold: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="**Note:** this exercise counts as bonus points toward the weekly leaderboard." anatPart="RichText" showAnatomy />
+            <RichText text="**Note:** this exercise counts as bonus points toward the weekly leaderboard." />
         </div>
     ),
 }
@@ -55,7 +55,7 @@ export const Bold: Story = {
 export const Italic: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="_Optional_, but it's best to finish it before moving on to the next module." anatPart="RichText" showAnatomy />
+            <RichText text="_Optional_, but it's best to finish it before moving on to the next module." />
         </div>
     ),
 }
@@ -64,7 +64,7 @@ export const Italic: Story = {
 export const Link: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="See more in the [React Hooks documentation](https://react.dev/reference/react)." anatPart="RichText" showAnatomy />
+            <RichText text="See more in the [React Hooks documentation](https://react.dev/reference/react)." />
         </div>
     ),
 }
@@ -73,7 +73,7 @@ export const Link: Story = {
 export const LineBreaks: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text={"Step 1: read the problem.\nStep 2: write the code.\nStep 3: run the tests."} anatPart="RichText" showAnatomy />
+            <RichText text={"Step 1: read the problem.\nStep 2: write the code.\nStep 3: run the tests."} />
         </div>
     ),
 }
@@ -82,7 +82,7 @@ export const LineBreaks: Story = {
 export const Combined: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="Run `npm install` then **rebuild** before submitting, check the [guide](https://starci.dev/docs) if you're stuck." anatPart="RichText" showAnatomy />
+            <RichText text="Run `npm install` then **rebuild** before submitting, check the [guide](https://starci.dev/docs) if you're stuck." />
         </div>
     ),
 }
@@ -91,7 +91,7 @@ export const Combined: Story = {
 export const Nested: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="**Warning: _time is almost up_, submit now** before the system closes automatically." anatPart="RichText" showAnatomy />
+            <RichText text="**Warning: _time is almost up_, submit now** before the system closes automatically." />
         </div>
     ),
 }
@@ -100,7 +100,7 @@ export const Nested: Story = {
 export const MalformedFallback: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <RichText text="An unmatched backtick ` shows up verbatim, without breaking the layout." anatPart="RichText" showAnatomy />
+            <RichText text="An unmatched backtick ` shows up verbatim, without breaking the layout." />
         </div>
     ),
 }
@@ -109,10 +109,10 @@ export const MalformedFallback: Story = {
 export const SizeScale: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8 flex flex-col gap-3">
-            <RichText size="body-xs" text="Size `body-xs` — a very small caption." anatPart="RichText" showAnatomy />
-            <RichText size="body-sm" text="Size `body-sm` — the default when no size is passed." anatPart="RichText" showAnatomy />
-            <RichText size="body" text="Size `body` — normal reading body text." anatPart="RichText" showAnatomy />
-            <RichText size="h4" text="Size `h4` — a small heading with markup" anatPart="RichText" showAnatomy />
+            <RichText size="body-xs" text="Size `body-xs` — a very small caption." />
+            <RichText size="body-sm" text="Size `body-sm` — the default when no size is passed." />
+            <RichText size="body" text="Size `body` — normal reading body text." />
+            <RichText size="h4" text="Size `h4` — a small heading with markup" />
         </div>
     ),
 }
@@ -121,8 +121,8 @@ export const SizeScale: Story = {
 export const ColorScale: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8 flex flex-col gap-3">
-            <RichText color="default" text="Color `default` — the main content." anatPart="RichText" showAnatomy />
-            <RichText color="muted" text="Color `muted` — a secondary, less important note." anatPart="RichText" showAnatomy />
+            <RichText color="default" text="Color `default` — the main content." />
+            <RichText color="muted" text="Color `muted` — a secondary, less important note." />
         </div>
     ),
 }
@@ -148,7 +148,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "The atom-level `HeroSkeleton` bar stands in for whatever inline copy hasn't loaded yet — a title, a caption, a short instruction — since `RichText` never knows its own length ahead of the real `text`.",
                         code: "<RichText isSkeleton />",
-                        render: <RichText isSkeleton anatPart="RichText" showAnatomy />,
+                        render: <RichText isSkeleton />,
                     },
                 ]}
             />

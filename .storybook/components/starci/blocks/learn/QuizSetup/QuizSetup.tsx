@@ -91,9 +91,7 @@ export interface QuizSetupProps {
     /** `true` → the card draws its own mirror while the setup data loads. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -114,22 +112,20 @@ const QuizSetup = ({
     isPending = false,
     errorMessage,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: QuizSetupProps) => {
     const nameField = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Session name" showAnatomy={showAnatomy} />
+                    <Typography size="sm" weight="medium" text="Session name" />
                     <InputText
                         value={name}
                         onValueChange={onNameChange}
                         placeholder="e.g. review Docker before the interview"
                         ariaLabel="Session name"
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             }
@@ -139,15 +135,15 @@ const QuizSetup = ({
     const lengthField = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Length" showAnatomy={showAnatomy} />
+                    <Typography size="sm" weight="medium" text="Length" />
                     <ButtonRadioGroup
                         ariaLabel="Session length"
                         value={length}
                         onChange={onLengthChange}
-                        showAnatomy={showAnatomy}
+
                         items={(Object.keys(LENGTH_LABEL) as Array<QuizLength>).map((key) => ({
                             value: key,
                             content: `${LENGTH_LABEL[key]} · ${LENGTH_CARDS[key]} questions`,
@@ -161,15 +157,15 @@ const QuizSetup = ({
     const levelField = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Level" showAnatomy={showAnatomy} />
+                    <Typography size="sm" weight="medium" text="Level" />
                     <ButtonRadioGroup
                         ariaLabel="Question level"
                         value={level}
                         onChange={onLevelChange}
-                        showAnatomy={showAnatomy}
+
                         items={(Object.keys(LEVEL_LABEL) as Array<QuizLevel>).map((key) => ({
                             value: key,
                             content: LEVEL_LABEL[key],
@@ -184,7 +180,7 @@ const QuizSetup = ({
         <StackH
             gap={3}
             justify="end"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <Button
                     label={`Start · ${LENGTH_CARDS[length]} questions`}
@@ -192,7 +188,7 @@ const QuizSetup = ({
                     prefixIcon={PlayIcon}
                     onPress={onStart}
                     isPending={isPending}
-                    showAnatomy={showAnatomy}
+
                 />
             }
         />
@@ -203,14 +199,14 @@ const QuizSetup = ({
     const actionField = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {errorMessage != null ? (
                         <Callout
                             status="danger"
                             title={errorMessage}
-                            anatPart={showAnatomy ? "Callout" : undefined}
+
                         />
                     ) : null}
                     {submitRow}
@@ -230,7 +226,7 @@ const QuizSetup = ({
                     description={`In progress · ${resumable.answered}/${resumable.total} questions`}
                     actionLabel="Continue"
                     onAction={resumable.onResume}
-                    anatPart={showAnatomy ? "Callout" : undefined}
+
                 />
             ) : null}
 
@@ -242,12 +238,12 @@ const QuizSetup = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 label={label}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={formBody} />}
+
+                body={() => <StackV gap={6} body={formBody} />}
             />
         </div>
     )

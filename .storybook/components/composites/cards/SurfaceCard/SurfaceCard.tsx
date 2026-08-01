@@ -11,7 +11,6 @@ import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelPr
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/composites/cards/verdict-band"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
-import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { RichText } from "@sb-components/composites/viewers/RichText/RichText"
 import { PADDING_CLASS, type AllowedGap, type AllowedPadding } from "@sb-components/frames/_spacing"
@@ -142,19 +141,17 @@ const RowAnchor = ({
     ariaCurrent,
     className,
     children,
-    anatPart,
 }: {
     href: string
     onClick?: () => void
     ariaCurrent?: boolean
     className?: string
     children: ReactNode
-    anatPart?: string
 }) => {
     if (href.startsWith("/")) {
-        return <Link href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className} data-anat-part={anatPart}>{children}</Link>
+        return <Link href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</Link>
     }
-    return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className} data-anat-part={anatPart}>{children}</a>
+    return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</a>
 }
 /**
  * Discriminates the two accessible-name contracts for a PRESSABLE card: without
@@ -299,13 +296,11 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     /** Extra classes on the surface (content) wrapper. */
     contentClassName?: string
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * Storybook-only: when true, each composed part (`SurfaceCardHeader` / the
      * surface content wrapper / `description`) emits a `data-anat-part` so the
      * anatomy panel can anchor badges. No visual effect.
      */
-    showAnatomy?: boolean
 }
 export type SurfaceCardBaseProps = SurfaceCardBaseOwnProps & PressableActionsProps
 /**
@@ -339,8 +334,6 @@ const Base = ({
     ariaLabel,
     classNames,
     contentClassName,
-    anatPart,
-    showAnatomy = false,
 }: SurfaceCardBaseProps) => {
     const { ripples, add: addRipple, clear: clearRipple } = useRipple()
     const content = composeSlots({ header, body, footer, isSkeleton })
@@ -492,7 +485,7 @@ const Base = ({
             body={
                 <>
                     {highlighted}
-                    {showAnatomy ? <div data-anat-part="RichText">{caption}</div> : caption}
+                    {caption}
                 </>
             }
         />
@@ -506,18 +499,18 @@ const Base = ({
             action={action}
             subtleLabel={subtleLabel}
             isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
+
         />
     )
     return (
         <section
-            data-anat-part={anatPart}
+
             data-principles={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
             data-tier="composite"
             data-component="SurfaceCard"
         >
-            {label != null && showAnatomy ? <div data-anat-part="SurfaceCardHeader">{labelRow}</div> : labelRow}
+            {labelRow}
             {cardWithCaption}
         </section>
     )
@@ -545,7 +538,6 @@ export interface SurfaceCardNestedSection {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 /** Props for {@link SurfaceCardNested}. */
 export interface SurfaceCardNestedProps extends SlotProps {
@@ -597,9 +589,7 @@ export interface SurfaceCardNestedProps extends SlotProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
-    showAnatomy?: boolean
 }
 /**
  * One inner section row — a flush row (no own border/radius) with an optional
@@ -610,7 +600,7 @@ export interface SurfaceCardNestedProps extends SlotProps {
  * title (nav-link affordance) — NO press-scale/ripple. Non-interactive → plain
  * `<div>` with no `cursor-pointer` (no false click affordance).
  */
-const NestedSection = ({ title, eyebrow, content: Content, onPress, href, classNames, anatPart, isSkeleton = false }: Omit<SurfaceCardNestedSection, "key"> & { isSkeleton?: boolean }) => {
+const NestedSection = ({ title, eyebrow, content: Content, onPress, href, classNames, isSkeleton = false }: Omit<SurfaceCardNestedSection, "key"> & { isSkeleton?: boolean }) => {
     const interactive = Boolean(onPress || href)
     // §10: parent owns the gap (tight) — eyebrow/title/content no longer self-margin.
     const body = (
@@ -638,7 +628,7 @@ const NestedSection = ({ title, eyebrow, content: Content, onPress, href, classN
         return (
             <a
                 href={href}
-                data-anat-part={anatPart}
+
                 className={cn(
                     "group block w-full cursor-pointer p-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent",
                     classNames,
@@ -653,7 +643,7 @@ const NestedSection = ({ title, eyebrow, content: Content, onPress, href, classN
             <button
                 type="button"
                 onClick={onPress}
-                data-anat-part={anatPart}
+
                 className={cn(
                     "group block w-full cursor-pointer p-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent",
                     classNames,
@@ -664,7 +654,7 @@ const NestedSection = ({ title, eyebrow, content: Content, onPress, href, classN
         )
     }
     return (
-        <div data-anat-part={anatPart} className={cn("p-3", classNames)}>
+        <div className={cn("p-3", classNames)}>
             {body}
         </div>
     )
@@ -690,8 +680,6 @@ const Nested = ({
     variant = "surface",
     isSkeleton = false,
     classNames,
-    anatPart,
-    showAnatomy,
 }: SurfaceCardNestedProps) => {
     const hasHeader = Header != null || title != null || Icon != null || Meta != null
     // The `items` path = the frame builds the row ⇒ the flag FLOWS ON straight into
@@ -703,7 +691,7 @@ const Nested = ({
         : (Body ? <Body isSkeleton={isSkeleton} /> : null)
     return (
         <div
-            data-anat-part={anatPart}
+
             className={cn(
                 "overflow-hidden",
                 radius === "xl" ? "rounded-xl" : "rounded-3xl",
@@ -935,7 +923,6 @@ export interface SurfaceCardPressableGroupProps {
      * Dev/spec: tag each direct tile (`SurfaceCard` / `SkeletonTile`) with an
      * {@link AnatomyOverlay} anchor so a BlockAnatomy panel can badge it on-render.
      */
-    showAnatomy?: boolean
     /** Where the grid sits inside its parent. */
     classNames?: Array<AllowedClassName>
 }
@@ -981,11 +968,10 @@ interface PressableGroupSkeletonTileProps {
      */
     classNames?: Array<AllowedClassName>
     /** Storybook-only: names the Avatar mirror so a BlockAnatomy panel can badge/link it. Avatar has no anatPart of its own, so the frame wraps it instead. */
-    showAnatomy?: boolean
 }
-const PressableGroupSkeletonTile = ({ classNames, showAnatomy }: PressableGroupSkeletonTileProps) => (
+const PressableGroupSkeletonTile = ({ classNames }: PressableGroupSkeletonTileProps) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", classNames)}>
-        <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+        <div className="shrink-0">
             <Avatar isSkeleton size="md" />
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
@@ -1016,7 +1002,6 @@ const PressableGroup = ({
     keyboardShortcut = false,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
 }: SurfaceCardPressableGroupProps) => {
     // Reading `items` through a ref keeps the window listener subscribed ONCE
     // instead of tearing down and re-adding on each render.
@@ -1061,7 +1046,7 @@ const PressableGroup = ({
                 role="group"
                 aria-label={ariaLabel}
                 className={cn(classNames)}
-                data-anat-part={showAnatomy ? "Grid" : undefined}
+
                 data-tier="composite"
                 data-component="SurfaceCardPressableGroup"
             >
@@ -1070,14 +1055,7 @@ const PressableGroup = ({
                     gap={gap}
                     items={items.map((item) => ({
                         key: item.key,
-                        content: showAnatomy ? (
-                            <div className="relative" data-anat>
-                                <PressableGroupSkeletonTile classNames={item.classNames} showAnatomy={showAnatomy} />
-                                <AnatomyOverlay label="SkeletonTile" tier="composite" />
-                            </div>
-                        ) : (
-                            <PressableGroupSkeletonTile classNames={item.classNames} />
-                        ),
+                        content: <PressableGroupSkeletonTile classNames={item.classNames} />,
                     }))}
                 />
             </div>
@@ -1092,7 +1070,7 @@ const PressableGroup = ({
             role="group"
             aria-label={ariaLabel}
             className={cn(classNames)}
-            data-anat-part={showAnatomy ? "Grid" : undefined}
+
             data-tier="composite"
             data-component="SurfaceCardPressableGroup"
         >
@@ -1121,12 +1099,7 @@ const PressableGroup = ({
                     )
                     return {
                         key: item.key,
-                        content: showAnatomy ? (
-                            <div className="relative" data-anat>
-                                {tile}
-                                <AnatomyOverlay label="SurfaceCard" tier="composite" />
-                            </div>
-                        ) : tile,
+                        content: tile,
                     }
                 })}
             />
@@ -1172,7 +1145,6 @@ export interface SurfaceCardSelectableGroupProps<T extends string> {
      * Dev/spec: tag each card's own direct parts (`Icon` / `Label` / `Badge`) so a
      * BlockAnatomy panel can badge them.
      */
-    showAnatomy?: boolean
 }
 /**
  * Fixed column count → the responsive {@link GridColumns} step-set that reads as that count
@@ -1213,7 +1185,6 @@ const SelectableGroup = <T extends string>({
     ariaLabel,
     columns = 2,
     classNames,
-    showAnatomy = false,
 }: SurfaceCardSelectableGroupProps<T>) => (
         <RadioGroup
             aria-label={ariaLabel}
@@ -1367,7 +1338,6 @@ export interface SurfaceCardListItem {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 /** Props for {@link SurfaceCardList}. */
 export interface SurfaceCardListProps extends SurfaceLabelProps {
@@ -1406,9 +1376,7 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Description) for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 /** Resolves an item's left DATA band — `withVerdict` (full shape) wins over the `tone` shorthand. */
 /**
@@ -1467,7 +1435,6 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         isDisabled = false,
         hover = "fill",
         classNames,
-        anatPart,
     } = item
     const withVerdict = itemVerdict(item)
     const interactive = Boolean(onPress || href)
@@ -1551,12 +1518,12 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         </>
     )
     if (href) {
-        return <RowAnchor href={href} onClick={onPress} ariaCurrent={selected} className={rowClassName} anatPart={anatPart}>{content}</RowAnchor>
+        return <RowAnchor href={href} onClick={onPress} ariaCurrent={selected} className={rowClassName}>{content}</RowAnchor>
     }
     if (onPress) {
-        return <button type="button" onClick={onPress} disabled={isDisabled} aria-current={selected ? "true" : undefined} className={rowClassName} data-anat-part={anatPart}>{content}</button>
+        return <button type="button" onClick={onPress} disabled={isDisabled} aria-current={selected ? "true" : undefined} className={rowClassName}>{content}</button>
     }
-    return <div aria-current={selected ? "true" : undefined} className={rowClassName} data-anat-part={anatPart}>{content}</div>
+    return <div aria-current={selected ? "true" : undefined} className={rowClassName}>{content}</div>
 }
 /**
  * One FREE-FORM row (`item.content`) — bespoke content instead of the fixed
@@ -1569,7 +1536,7 @@ interface ListFreeRowProps {
     item: SurfaceCardListItem
 }
 const ListFreeRow = ({ item }: ListFreeRowProps) => {
-    const { content: Content, onPress, href, isDisabled = false, hover = "fill", classNames, anatPart } = item
+    const { content: Content, onPress, href, isDisabled = false, hover = "fill", classNames } = item
     const withVerdict = itemVerdict(item)
     const interactive = Boolean(onPress || href)
     const itemClassName = cn(
@@ -1588,12 +1555,12 @@ const ListFreeRow = ({ item }: ListFreeRowProps) => {
         return null
     }
     if (href) {
-        return <RowAnchor href={href} onClick={onPress} className={itemClassName} anatPart={anatPart}><Content /></RowAnchor>
+        return <RowAnchor href={href} onClick={onPress} className={itemClassName}><Content /></RowAnchor>
     }
     if (onPress) {
-        return <button type="button" onClick={onPress} disabled={isDisabled} className={itemClassName} data-anat-part={anatPart}><Content /></button>
+        return <button type="button" onClick={onPress} disabled={isDisabled} className={itemClassName}><Content /></button>
     }
-    return <div className={itemClassName} data-anat-part={anatPart}><Content /></div>
+    return <div className={itemClassName}><Content /></div>
 }
 /**
  * Bounded SURFACE list card: one `bg-surface` container with a large radius holding
@@ -1615,8 +1582,6 @@ const List = ({
     seeMoreLabel,
     action,
     subtleLabel = false,
-    anatPart,
-    showAnatomy = false,
 }: SurfaceCardListProps) => {
     const isEmpty = items.length === 0
     // The flag FLOWS ON straight into the real row — the row keeps its box/padding/
@@ -1631,7 +1596,7 @@ const List = ({
     const bare = label == null && description == null
     const surface = (
         <div
-            data-anat-part={bare ? anatPart : undefined}
+
             className={cn(
                 "overflow-hidden",
                 surfaceFrame(variant),
@@ -1653,14 +1618,14 @@ const List = ({
             body={
                 <>
                     {surface}
-                    <div data-anat-part={showAnatomy ? "RichText" : undefined}>{caption}</div>
+                    <div>{caption}</div>
                 </>
             }
         />
     ) : surface
     return (
         <section
-            data-anat-part={anatPart}
+
             data-principles={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
             data-tier="composite"
@@ -1675,7 +1640,7 @@ const List = ({
                     action={action}
                     subtleLabel={subtleLabel}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
             {withCaption}
@@ -1762,9 +1727,7 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Row) for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 /**
  * An "Accordion Card": one bounded `bg-surface` frame holding collapsible sections,
@@ -1795,8 +1758,6 @@ const AccordionCard = ({
     description,
     isSkeleton = false,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: SurfaceCardAccordionProps) => {
     const bare = label == null && description == null
     const atomItems: Array<AccordionAtomItem> = items.map((item) => ({
@@ -1839,18 +1800,18 @@ const AccordionCard = ({
     const frame = !isSkeleton && items.length === 0 && EmptyState != null ? (
         <div
             className={cn("overflow-hidden p-8", surfaceFrame(variant))}
-            data-anat-part={bare ? anatPart : undefined}
+
         >
             <EmptyState />
         </div>
     ) : (
-        <div className={cn("overflow-hidden", surfaceFrame(variant))} data-anat-part={bare ? anatPart : undefined}>
+        <div className={cn("overflow-hidden", surfaceFrame(variant))}>
             <AccordionAtom
                 items={atomItems}
                 allowsMultiple={allowsMultipleExpanded}
                 defaultExpandedKeys={defaultExpandedKeys ? Array.from(defaultExpandedKeys) : undefined}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </div>
     )
@@ -1870,7 +1831,7 @@ const AccordionCard = ({
     ) : frame
     return (
         <section
-            data-anat-part={anatPart}
+
             data-principles={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
             data-tier="composite"
@@ -1885,7 +1846,7 @@ const AccordionCard = ({
                     action={action}
                     subtleLabel={subtleLabel}
                     isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
             {withCaption}
@@ -1914,13 +1875,13 @@ const TONE_CLS: Record<MarkTone, string> = {
 }
 /** {@link markIcon} — exported so a caller (e.g. a progress row) can reuse the ONE
  * icon-per-status mapping instead of hand-rolling a parallel one (instructor's final call, 2026-07-29). */
-export const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: string | undefined): ReactNode => {
+export const markIcon = (mark: ListMark, tone: MarkTone | undefined): ReactNode => {
     if (mark === "check") {
         return (
             <CheckCircleIcon
                 aria-hidden
                 focusable="false"
-                data-anat-part={anatPart}
+
                 className={cn("size-5 shrink-0", TONE_CLS[tone ?? "success"])}
             />
         )
@@ -1930,7 +1891,7 @@ export const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: s
             <XCircleIcon
                 aria-hidden
                 focusable="false"
-                data-anat-part={anatPart}
+
                 className={cn("size-5 shrink-0", TONE_CLS[tone ?? "muted"])}
             />
         )
@@ -1940,7 +1901,7 @@ export const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: s
             <CircleIcon
                 aria-hidden
                 focusable="false"
-                data-anat-part={anatPart}
+
                 className={cn("size-5 shrink-0", TONE_CLS[tone ?? "neutral"])}
             />
         )
@@ -1966,10 +1927,6 @@ export interface SurfaceCardCrossListItem {
      * e.g. a red ✗ "lost all progress"), not mere absence. Ignored for `none`.
      */
     tone?: MarkTone
-    /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
-    /** Anatomy tag for the leading mark ICON slot (per-slot — the icon is internal, not a prop). */
-    markAnatPart?: string
 }
 /** Props for {@link SurfaceCardCrossList}. */
 export interface SurfaceCardCrossListProps {
@@ -1990,13 +1947,11 @@ export interface SurfaceCardCrossListProps {
     /** Where the list root sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * When on, every row (real or self-generated skeleton) emits
-     * `data-anat-part="CrossListItem"` for the anatomy panel — unless the item
+     * `` for the anatomy panel — unless the item
      * carries its own `anatPart`.
      */
-    showAnatomy?: boolean
 }
 /**
  * One row of a {@link SurfaceCardCrossList}: an optional leading mark + a free body,
@@ -2017,8 +1972,6 @@ const CrossListRow = ({
     tone,
     text,
     isSkeleton = false,
-    anatPart,
-    markAnatPart,
 }: Omit<SurfaceCardCrossListItem, "key" | "text"> & { text?: string; isSkeleton?: boolean }) => (
     <StackH
         as="li"
@@ -2026,7 +1979,7 @@ const CrossListRow = ({
         align="start"
         padding={4}
         className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-        anatPart={anatPart}
+
         body={
             isSkeleton ? (
                 <>
@@ -2037,7 +1990,7 @@ const CrossListRow = ({
                 </>
             ) : (
                 <>
-                    {markIcon(mark, tone, markAnatPart)}
+                    {markIcon(mark, tone)}
                     <div className="min-w-0 flex-1"><Typography size="sm" text={text ?? ""} /></div>
                 </>
             )
@@ -2060,12 +2013,10 @@ const CrossList = ({
     isSkeleton = false,
     skeletonRows = 3,
     classNames,
-    anatPart,
-    showAnatomy,
 }: SurfaceCardCrossListProps) => (
     <ul
         className={cn("overflow-hidden", surfaceFrame(variant), classNames)}
-        data-anat-part={anatPart}
+
         data-tier="composite"
         data-component="SurfaceCardCrossList"
     >
@@ -2079,8 +2030,7 @@ const CrossList = ({
                     mark={item.mark}
                     tone={item.tone}
                     text={item.text}
-                    anatPart={item.anatPart}
-                    markAnatPart={item.markAnatPart}
+
                 />
             ))}
     </ul>

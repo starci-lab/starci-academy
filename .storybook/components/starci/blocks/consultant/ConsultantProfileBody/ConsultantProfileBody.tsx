@@ -113,9 +113,7 @@ export interface ConsultantProfileBodyProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Fixed copy for the locked-contact callout — block-owned wording (§14d.1), see file header. */
@@ -135,13 +133,11 @@ const ConsultantProfileBody = ({
     onOpenCompany,
     onImproveCv,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ConsultantProfileBodyProps) => {
     const { fullName, jobTitle, companyTitle, description, avatarUrl, contactUnlocked, contactLinks } = consultant
 
     const nameRow = (
-        <StackV gap={1} align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+        <StackV gap={1} align="center" body={(
             <>
                 <Typography
                     size="h4"
@@ -149,7 +145,7 @@ const ConsultantProfileBody = ({
                     align="center"
                     isSkeleton={isSkeleton}
                     text={fullName}
-                    showAnatomy={showAnatomy}
+
                 />
                 {isSkeleton || jobTitle ? (
                     <Typography
@@ -158,7 +154,7 @@ const ConsultantProfileBody = ({
                         align="center"
                         isSkeleton={isSkeleton}
                         text={jobTitle}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : null}
             </>
@@ -167,16 +163,16 @@ const ConsultantProfileBody = ({
 
     // identity: centered photo, name+role, pressable company row
     const identity = (
-        <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+        <StackV gap={4} align="center" body={(
             <>
-                <div className="w-28" data-anat-part={showAnatomy ? "Image" : undefined}>
+                <div className="w-28">
                     <Image
                         src={avatarUrl}
                         alt={fullName}
                         ratio="square"
                         radius="full"
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                 </div>
                 {nameRow}
@@ -189,7 +185,7 @@ const ConsultantProfileBody = ({
                         prefixIcon={BuildingsIcon}
                         onPress={onOpenCompany}
                         isDisabled={isSkeleton || !onOpenCompany}
-                        showAnatomy={showAnatomy}
+
                     />
                 ) : null}
             </>
@@ -198,14 +194,14 @@ const ConsultantProfileBody = ({
 
     // contact fork — see file header for why loading shimmers neutrally
     const contactFork = isSkeleton ? (
-        <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+        <StackV gap={2} body={(
             <>
-                <Typography size="sm" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
-                <Typography size="sm" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
+                <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
+                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
             </>
         )} />
     ) : contactUnlocked ? (
-        <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={
+        <StackV gap={2} body={
             (contactLinks ?? []).map((link) => (
                 <Typography
                     key={link.key}
@@ -214,7 +210,7 @@ const ConsultantProfileBody = ({
                     href={link.href}
                     prefixIcon={link.icon}
                     text={link.label}
-                    showAnatomy={showAnatomy}
+
                 />
             ))
         } />
@@ -226,14 +222,14 @@ const ConsultantProfileBody = ({
             description={LOCKED_DESCRIPTION}
             actionLabel={onImproveCv ? LOCKED_CTA_LABEL : undefined}
             onAction={onImproveCv}
-            showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "Callout" : undefined}
+
+
         />
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+        <div>
+            <StackV gap={6} body={(
                 <>
                     {identity}
                     {/* full bio — no clamp, unlike ConsultantCard's directory teaser */}
@@ -243,7 +239,7 @@ const ConsultantProfileBody = ({
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={description}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                     {contactFork}

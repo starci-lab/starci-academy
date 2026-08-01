@@ -58,7 +58,7 @@ export const Default: Story = {
                         render: (
                             <div data-tier="fixture" className="@container" style={{ width: 375 }}>
                                 <SplitWorkspace
-                                    anatPart="SplitWorkspace"
+
                                     main={<Tile label="main — reading column" tall />}
                                     aside={<Tile label="aside — action column" />}
                                 />

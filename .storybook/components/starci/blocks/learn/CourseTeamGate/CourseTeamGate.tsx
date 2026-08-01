@@ -59,9 +59,7 @@ export interface CourseTeamGateBaseProps {
      * Passed DOWN to `Callout` so the anatomy panel can see what this block
      * refs. Without forwarding it, the anatomy view can't tell what it's built from.
      */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -75,8 +73,6 @@ const CourseTeamGateBase = ({
     isInTeam,
     onJoin,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: CourseTeamGateBaseProps) => {
     // Loading: `isEnrolled`/`isInTeam` haven't come back yet, so we can't decide
     // whether to self-hide — show the `Alert` atom's mirror (see the
@@ -88,7 +84,7 @@ const CourseTeamGateBase = ({
                 isSkeleton
                 status="warning"
                 icon={GithubLogoIcon}
-                showAnatomy={showAnatomy}
+
             />
         )
     }
@@ -100,7 +96,7 @@ const CourseTeamGateBase = ({
 
     return (
         <Callout
-            anatPart={anatPart ?? (showAnatomy ? "Callout" : undefined)}
+
             status="warning"
             icon={GithubLogoIcon}
             title="You haven't joined the course's GitHub team yet"

@@ -19,13 +19,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 const SectionCard = ({
     children,
     classNames,
-    anatPart,
 }: {
     children: React.ReactNode
     classNames?: Array<AllowedClassName>
-    anatPart?: string
 }) => (
-    <Card className={cn(classNames)} data-anat-part={anatPart} data-tier="composite" data-component="MetricCard">
+    <Card className={cn(classNames)} data-tier="composite" data-component="MetricCard">
         <CardContent>
             <StackV gap={4} body={children} />
         </CardContent>
@@ -51,12 +49,10 @@ interface MetricCardOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
-     * When `true`, each composed part emits `data-anat-part="<name>"` so a
+     * When `true`, each composed part emits `` so a
      * BlockAnatomy panel can badge it on-render. Off by default (production).
      */
-    showAnatomy?: boolean
 }
 
 /**
@@ -100,27 +96,25 @@ export const MetricCard = ({
     hint,
     isSkeleton = false,
     classNames,
-    anatPart,
-    showAnatomy = false,
 }: MetricCardProps) => {
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
-        <SectionCard classNames={classNames} anatPart={anatPart}>
+        <SectionCard classNames={classNames}>
             <StackV
                 gap={3}
                 body={
                     <>
                         {/* Primary metric value — large and visually prominent */}
-                        <Typography size="h4" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={value} />
+                        <Typography size="h4" isSkeleton={isSkeleton} text={value} />
 
                         {/* Descriptive label — body-sm foreground, the prominent line */}
-                        <Typography size="sm" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={label} />
+                        <Typography size="sm" isSkeleton={isSkeleton} text={label} />
 
                         {/* Optional hint — small + muted footnote, DISTINCT from the label.
                             While loading there is no `hint` to test yet, so the composite still
                             decides to shimmer a third line (the count is its call, not the atom's). */}
                         {hint !== undefined || isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={hint} />
+                            <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={hint} />
                         ) : null}
                     </>
                 }

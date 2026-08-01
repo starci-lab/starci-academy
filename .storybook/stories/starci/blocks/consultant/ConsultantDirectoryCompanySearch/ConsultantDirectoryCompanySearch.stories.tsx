@@ -62,8 +62,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ConsultantDirectoryCompanySearch
-                                anatPart="ConsultantDirectoryCompanySearch"
-                                showAnatomy
+
+                               
                                 query=""
                                 onQueryChange={() => {}}
                                 suggestions={[]}

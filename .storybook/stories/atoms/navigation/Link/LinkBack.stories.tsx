@@ -66,7 +66,7 @@ export const Default: Story = {
                         name: "label unset, target unset",
                         why: "The link renders the generic string \"Back\" inside its span because neither the label nor the target prop is set. Hover still slides the arrow left and underlines the label the same as every other call shape, since that motion is fixed rather than prop-driven.",
                         code: "<LinkBack onPress={goBack} />",
-                        render: <LinkBack onPress={() => {}} showAnatomy />,
+                        render: <LinkBack onPress={() => {}} />,
                     },
                 ]}
             />
@@ -92,7 +92,7 @@ export const TargetSet: Story = {
                         name: "target = \"challenge\"",
                         why: "The span now reads \"Back to challenge\" because the target prop is set and gets interpolated into the same generic string. The product wants the destination named so the user knows where the back action lands, without adding any new element to the DOM.",
                         code: "<LinkBack target=\"challenge\" onPress={goBack} />",
-                        render: <LinkBack target="challenge" onPress={() => {}} showAnatomy />,
+                        render: <LinkBack target="challenge" onPress={() => {}} />,
                     },
                 ]}
             />
@@ -118,7 +118,7 @@ export const LabelSet: Story = {
                         name: "label = \"Back to all courses\"",
                         why: "The span shows the full custom string \"Back to all courses\" because the label prop overrides the generic text outright. The product wants full control of the wording in places where the default \"Back to {target}\" phrasing does not fit the copy.",
                         code: "<LinkBack label=\"Back to all courses\" onPress={goBack} />",
-                        render: <LinkBack label="Back to all courses" onPress={() => {}} showAnatomy />,
+                        render: <LinkBack label="Back to all courses" onPress={() => {}} />,
                     },
                 ]}
             />

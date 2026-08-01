@@ -48,7 +48,6 @@ interface PricePeriodOwnProps {
     /** Amount size — also drives `original`/`period`'s size via {@link SIZE_TO_TOKENS}. Defaults to `"md"` (h3). */
     size?: PricePeriodSize
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -82,7 +81,6 @@ export const PricePeriod = ({
     period,
     size = "md",
     isSkeleton = false,
-    anatPart,
     classNames,
 }: PricePeriodProps) => {
     const tokens = SIZE_TO_TOKENS[size]
@@ -92,7 +90,7 @@ export const PricePeriod = ({
             data-tier="composite"
             data-component="PricePeriod"
             data-principles="value-row"
-            data-anat-part={anatPart}
+
             className={cn("flex flex-wrap items-baseline gap-2", classNames)}
         >
             {/* Main amount — prominent, sized off {@link SIZE_TO_TOKENS}. */}

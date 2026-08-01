@@ -35,9 +35,7 @@ export interface QaReactionBarProps {
     /** `true` → renders a shimmer mirror instead of the live control. */
     isSkeleton?: boolean
     /** When on, emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it. */
-    anatPart?: string
 }
 
 /**
@@ -50,15 +48,13 @@ const QaReactionBar = ({
     myReaction,
     onReact,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: QaReactionBarProps) => {
     const hasReacted = myReaction != null
 
     if (isSkeleton) {
         return (
             <span
-                data-anat-part={anatPart}
+
                 className="inline-block h-5 w-10 animate-pulse rounded-full bg-default"
             />
         )
@@ -67,7 +63,7 @@ const QaReactionBar = ({
     return (
         <button
             type="button"
-            data-anat-part={anatPart}
+
             onClick={() => onReact(hasReacted ? null : "like")}
             aria-pressed={hasReacted}
             aria-label={hasReacted ? "Unlike" : "Like"}
@@ -79,7 +75,7 @@ const QaReactionBar = ({
         >
             <HeartIcon weight={hasReacted ? "fill" : "regular"} aria-hidden focusable="false" className="size-3.5 shrink-0" />
             {count > 0 ? (
-                <Typography size="xs" text={String(count)} showAnatomy={showAnatomy} />
+                <Typography size="xs" text={String(count)} />
             ) : null}
         </button>
     )

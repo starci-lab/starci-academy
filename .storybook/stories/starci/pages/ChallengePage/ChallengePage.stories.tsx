@@ -174,7 +174,7 @@ export const NotAttempted: Story = {
 />`,
                         render: (
                             <ChallengePage
-                                showAnatomy
+                               
                                 onBackPress={() => {}}
                                 title="Build a Task management REST API"
                                 description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
@@ -223,7 +223,7 @@ export const Graded: Story = {
 />`,
                         render: (
                             <ChallengePage
-                                showAnatomy
+                               
                                 onBackPress={() => {}}
                                 title="Build a Task management REST API"
                                 description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
@@ -372,7 +372,7 @@ export const Skeleton: Story = {
                         code: "<ChallengePage {...props} isSkeleton />",
                         render: (
                             <ChallengePage
-                                showAnatomy
+                               
                                 onBackPress={() => {}}
                                 title="Build a Task management REST API"
                                 description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."

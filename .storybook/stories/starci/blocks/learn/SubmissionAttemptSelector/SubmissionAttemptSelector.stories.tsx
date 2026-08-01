@@ -73,8 +73,8 @@ export const AttemptRow: Story = {
 />`,
                         render: (
                             <SubmissionAttemptSelector
-                                anatPart="SubmissionAttemptSelector"
-                                showAnatomy
+
+                               
                                 attempts={[]}
                                 ariaLabel="Select attempt"
                                 isLoading

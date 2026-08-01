@@ -154,7 +154,7 @@ const GridBase = ({ items, columns, gap, classNames, pattern}: GridBaseProps) =>
             // plain (non-spanning) cell keeps the old behaviour untouched.
             //
             // ⚠️ 2026-07-28: this wrapper used to ALSO grow under `` alone (not
-            // just `spanClass`) so it could carry `data-anat-part="Cell"`. Dropped: "Cell"
+            // just `spanClass`) so it could carry ``. Dropped: "Cell"
             // had no component or story of its own — it is just this `min-w-0`/`col-span`
             // box, the frame's own geometry (§13z's logic one tier up), not a separate part
             // a reader could click through to. No story ever declared it, so the badge only

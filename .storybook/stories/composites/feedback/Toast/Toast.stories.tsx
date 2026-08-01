@@ -61,7 +61,7 @@ export const Statuses: Story = {
                                 status="success"
                                 title="Submission saved"
                                 description="Grading results will be ready in a few minutes."
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -134,7 +134,7 @@ export const WithAction: Story = {
                                 action={UndoAction}
                                 onClose={() => {}}
                                 closeLabel="Dismiss notification"
-                                showAnatomy
+                               
                             />
                         ),
                     },

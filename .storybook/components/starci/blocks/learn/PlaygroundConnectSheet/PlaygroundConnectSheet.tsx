@@ -115,9 +115,7 @@ interface PlaygroundConnectSheetOwnProps {
     /** Fired with the next expanded state when the learner presses the toggle. */
     onOpenChange: (open: boolean) => void
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -214,18 +212,16 @@ const PlaygroundConnectSheet = ({
     open,
     onOpenChange,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: PlaygroundConnectSheetProps) => {
     if (isSkeleton) {
         return (
-            <div data-anat-part={anatPart} className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
+            <div className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
                 <StackH
                     gap={4}
                     align="center"
                     justify="between"
                     padding={4}
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <>
                             <HeroSkeleton className="h-5 w-24 rounded-full" />
@@ -247,14 +243,14 @@ const PlaygroundConnectSheet = ({
         <StackH
             gap={3}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <Chip
                         tone={STATUS_TONE[safeConnection]}
                         dotClassName={STATUS_DOT_CLASS[safeConnection]}
                         text={STATUS_LABEL[safeConnection]}
-                        showAnatomy={showAnatomy}
+
                     />
                     {isConnected && latencyMs != null ? (
                         <Typography
@@ -262,7 +258,7 @@ const PlaygroundConnectSheet = ({
                             color="muted"
                             tabularNums
                             text={`${latencyMs} ms`}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -274,7 +270,7 @@ const PlaygroundConnectSheet = ({
         <StackH
             gap={3}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <Button
@@ -306,30 +302,30 @@ const PlaygroundConnectSheet = ({
             color={LOG_COLOR[entry.level]}
             tabularNums={false}
             text={entry.line}
-            showAnatomy={showAnatomy}
+
         />
     )
 
     const sheetBody = showDeviceBody ? (
         <>
-            <div data-anat-part={showAnatomy ? "StatRibbon" : undefined}>
-                <StatRibbon items={buildDeviceItems(device)} valueType="body" bordered showAnatomy={showAnatomy} />
+            <div>
+                <StatRibbon items={buildDeviceItems(device)} valueType="body" bordered />
             </div>
-            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={(agentLog ?? []).map(renderLogLine)} />
+            <StackV gap={2} body={(agentLog ?? []).map(renderLogLine)} />
         </>
     ) : (
-        <Typography size="sm" color="muted" text={NOT_CONNECTED_HINT} showAnatomy={showAnatomy} />
+        <Typography size="sm" color="muted" text={NOT_CONNECTED_HINT} />
     )
 
     return (
-        <div data-anat-part={anatPart} className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
+        <div className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
             {/* PEEK — always visible: status + reconnect, plus the toggle that opens the body. */}
             <StackH
                 gap={4}
                 align="center"
                 justify="between"
                 padding={4}
-                anatPart={showAnatomy ? "StackH" : undefined}
+
                 body={
                     <>
                         {statusGroup}
@@ -340,7 +336,7 @@ const PlaygroundConnectSheet = ({
             {/* BODY — mounted only while open, matching a real bottom-sheet's collapsed state. */}
             {open ? (
                 <div className="border-t border-default">
-                    <StackV gap={4} padding={4} anatPart={showAnatomy ? "StackV" : undefined} body={sheetBody} />
+                    <StackV gap={4} padding={4} body={sheetBody} />
                 </div>
             ) : null}
         </div>

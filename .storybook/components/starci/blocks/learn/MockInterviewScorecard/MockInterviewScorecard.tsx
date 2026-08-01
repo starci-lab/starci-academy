@@ -143,9 +143,7 @@ export interface MockInterviewScorecardProps {
     /** `true` → every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** Verdict → callout tone. */
@@ -187,22 +185,20 @@ const ScoreRow = ({
     label,
     score,
     max,
-    showAnatomy,
 }: {
     label: string
     score: number
     max: number
-    showAnatomy: boolean
 }) => (
     <StackH
         gap={4}
         align="center"
-        anatPart={showAnatomy ? "StackH" : undefined}
+
         body={
             <>
-                <Typography size="sm" truncate classNames={["shrink-0"]} text={label} showAnatomy={showAnatomy} />
-                <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} anatPart={showAnatomy ? "ProgressMeter" : undefined} showAnatomy={showAnatomy} />
-                <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} showAnatomy={showAnatomy} />
+                <Typography size="sm" truncate classNames={["shrink-0"]} text={label} />
+                <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} />
+                <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} />
             </>
         }
     />
@@ -245,8 +241,6 @@ const MockInterviewScorecard = ({
     promptTitle,
     createdAt,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: MockInterviewScorecardProps) => {
     const hasByline = isSkeleton || promptTitle != null || createdAt != null
     const hasScoreRows = isSkeleton || phaseOrQuestionScores.length > 0
@@ -261,7 +255,7 @@ const MockInterviewScorecard = ({
         tone: "success",
         text: (
             <div className="[&_p]:m-0">
-                <MarkdownContent source={strength} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                <MarkdownContent source={strength} measure="compact" />
             </div>
         ),
     }))
@@ -272,7 +266,7 @@ const MockInterviewScorecard = ({
         tone: "danger",
         text: (
             <div className="[&_p]:m-0">
-                <MarkdownContent source={gap} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                <MarkdownContent source={gap} measure="compact" />
             </div>
         ),
     }))
@@ -284,18 +278,18 @@ const MockInterviewScorecard = ({
             gap={4}
             justify="between"
             wrap
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     {isSkeleton ? (
-                        <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
+                        <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} />
                     ) : promptTitle != null ? (
-                        <Typography size="sm" weight="medium" text={promptTitle} showAnatomy={showAnatomy} />
+                        <Typography size="sm" weight="medium" text={promptTitle} />
                     ) : null}
                     {isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
+                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} />
                     ) : createdAt != null ? (
-                        <Typography size="xs" color="muted" text={createdAt} showAnatomy={showAnatomy} />
+                        <Typography size="xs" color="muted" text={createdAt} />
                     ) : null}
                 </>
             }
@@ -309,7 +303,7 @@ const MockInterviewScorecard = ({
                     <ScoreRowSkeleton key={`score-skeleton-${index}`} />
                 ))
                 : phaseOrQuestionScores.map((row) => (
-                    <ScoreRow key={row.key} label={row.label} score={row.score} max={row.max} showAnatomy={showAnatomy} />
+                    <ScoreRow key={row.key} label={row.label} score={row.score} max={row.max} />
                 ))}
         </>
     )
@@ -321,22 +315,22 @@ const MockInterviewScorecard = ({
                     <ScoreRowSkeleton key={`attribute-skeleton-${index}`} />
                 ))
                 : attributeScores.map((row) => (
-                    <ScoreRow key={row.key} label={row.label} score={row.score} max={100} showAnatomy={showAnatomy} />
+                    <ScoreRow key={row.key} label={row.label} score={row.score} max={100} />
                 ))}
         </>
     )
 
     const strengthsBody = (
         <>
-            <Typography size="sm" weight="medium" text="Strengths" showAnatomy={showAnatomy} />
-            <SurfaceCardCrossList items={strengthItems} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} showAnatomy={showAnatomy} />
+            <Typography size="sm" weight="medium" text="Strengths" />
+            <SurfaceCardCrossList items={strengthItems} isSkeleton={isSkeleton} />
         </>
     )
 
     const gapsBody = (
         <>
-            <Typography size="sm" weight="medium" text="Areas to improve" showAnatomy={showAnatomy} />
-            <SurfaceCardCrossList items={gapItems} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} showAnatomy={showAnatomy} />
+            <Typography size="sm" weight="medium" text="Areas to improve" />
+            <SurfaceCardCrossList items={gapItems} isSkeleton={isSkeleton} />
         </>
     )
 
@@ -344,11 +338,11 @@ const MockInterviewScorecard = ({
         <StackH
             gap={2}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
-                    <Typography size="xs" color="muted" text="Weakest:" showAnatomy={showAnatomy} />
-                    <Chip tone="warning" text={weakAreaLabel} showAnatomy={showAnatomy} />
+                    <Typography size="xs" color="muted" text="Weakest:" />
+                    <Chip tone="warning" text={weakAreaLabel} />
                 </>
             }
         />
@@ -358,7 +352,7 @@ const MockInterviewScorecard = ({
         <StackH
             gap={4}
             wrap
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <Button
@@ -369,7 +363,7 @@ const MockInterviewScorecard = ({
                         suffixIcon={ArrowRightIcon}
                         iconSlide
                         onPress={onStudyWeakArea}
-                        showAnatomy={showAnatomy}
+
                     />
                     <Button
                         isSkeleton={isSkeleton}
@@ -377,7 +371,7 @@ const MockInterviewScorecard = ({
                         size="lg"
                         label="Work on personal project"
                         onPress={onCapstone}
-                        showAnatomy={showAnatomy}
+
                     />
                     {onRetry != null || isSkeleton ? (
                         <Button
@@ -386,7 +380,7 @@ const MockInterviewScorecard = ({
                             size="lg"
                             label="Retry interview"
                             onPress={onRetry}
-                            showAnatomy={showAnatomy}
+
                         />
                     ) : null}
                 </>
@@ -408,40 +402,40 @@ const MockInterviewScorecard = ({
             {/* Verdict banner. `Callout` has no `isSkeleton` of its own (a message
                 frame, not a data-bearing one) — a bare bar stands in, in the same slot. */}
             {isSkeleton ? (
-                <HeroSkeleton className="h-20 w-full rounded-2xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-20 w-full rounded-2xl" />
             ) : (
                 <Callout
                     status={VERDICT_STATUS[verdict]}
                     icon={VERDICT_ICON[verdict]}
                     title={`${overallScore}/100 · ${VERDICT_LABEL[verdict]}`}
-                    anatPart={showAnatomy ? "Callout" : undefined}
+
                 />
             )}
 
             {hasScoreRows ? (
                 <SurfaceCard
                     label="Score by section"
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    showAnatomy={showAnatomy}
-                    body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={scoreBreakdownBody} />}
+
+
+                    body={() => <StackV gap={4} body={scoreBreakdownBody} />}
                 />
             ) : null}
 
             {hasAttributeRows ? (
                 <SurfaceCard
                     label="Score by criterion"
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    showAnatomy={showAnatomy}
-                    body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={attributeBreakdownBody} />}
+
+
+                    body={() => <StackV gap={4} body={attributeBreakdownBody} />}
                 />
             ) : null}
 
             {hasStrengths ? (
-                <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={strengthsBody} />
+                <StackV gap={3} body={strengthsBody} />
             ) : null}
 
             {hasGaps ? (
-                <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={gapsBody} />
+                <StackV gap={3} body={gapsBody} />
             ) : null}
 
             {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
@@ -450,28 +444,28 @@ const MockInterviewScorecard = ({
             {hasFollowUp ? (
                 <SurfaceCard
                     label="Follow-up question"
-                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                     body={() => (
                         <div className="italic [&_p]:m-0">
                             <MarkdownContent
                                 source={followUpQuestion ?? ""}
                                 measure="compact"
                                 isSkeleton={isSkeleton}
-                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                             />
                         </div>
                     )}
                 />
             ) : null}
 
-            <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={ctaSection} />
+            <StackV gap={3} body={ctaSection} />
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={scorecardBody} />
+        <div>
+            <StackV gap={6} body={scorecardBody} />
         </div>
     )
 }

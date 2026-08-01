@@ -94,8 +94,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <TaskSubmissionPanel
-                                anatPart="TaskSubmissionPanel"
-                                showAnatomy
+
+                               
                                 githubUrl="https://github.com/hocvien/de-tai-tot-nghiep"
                                 onGithubUrlChange={() => {}}
                                 autosaveStatus="saved"
@@ -202,8 +202,8 @@ export const NoResult: Story = {
 />`,
                         render: (
                             <TaskSubmissionPanel
-                                anatPart="TaskSubmissionPanel"
-                                showAnatomy
+
+                               
                                 githubUrl=""
                                 onGithubUrlChange={() => {}}
                                 autosaveStatus="idle"
@@ -226,8 +226,8 @@ const SettingsOpenDemo = () => {
     const [isOpen, setIsOpen] = useState(true)
     return (
         <TaskSubmissionPanel
-            anatPart="TaskSubmissionPanel"
-            showAnatomy
+
+           
             githubUrl="https://github.com/hocvien/de-tai-tot-nghiep"
             onGithubUrlChange={() => {}}
             autosaveStatus="saved"
@@ -283,8 +283,8 @@ export const Skeleton: Story = {
                         code: "<TaskSubmissionPanel isSkeleton githubUrl=\"\" autosaveStatus=\"idle\" … />",
                         render: (
                             <TaskSubmissionPanel
-                                anatPart="TaskSubmissionPanel"
-                                showAnatomy
+
+                               
                                 githubUrl=""
                                 onGithubUrlChange={() => {}}
                                 autosaveStatus="idle"

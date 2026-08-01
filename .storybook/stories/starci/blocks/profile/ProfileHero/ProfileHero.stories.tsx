@@ -104,8 +104,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ProfileHero
-                                anatPart="ProfileHero"
-                                showAnatomy
+
+                               
                                 user={FULL_USER}
                                 following={false}
                                 onToggleFollow={() => {}}
@@ -214,8 +214,8 @@ export const Minimal: Story = {
 />`,
                         render: (
                             <ProfileHero
-                                anatPart="ProfileHero"
-                                showAnatomy
+
+                               
                                 user={MINIMAL_USER}
                                 onToggleFollow={() => {}}
                                 onShare={() => {}}

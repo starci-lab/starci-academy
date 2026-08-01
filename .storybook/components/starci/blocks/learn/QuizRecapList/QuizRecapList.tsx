@@ -55,9 +55,7 @@ interface QuizRecapListOwnProps {
     /** Card count to shimmer while `isSkeleton` (no real `cards` yet). Defaults to `3`. */
     skeletonCount?: number
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -80,52 +78,51 @@ const recapCardBody = (
     ratingOptions: Array<RatingOption>,
     onRate: (cardKey: string, grade: number) => void,
     ratingAriaLabel: string,
-    showAnatomy: boolean,
 ): ReactNode => (
     <StackV
         gap={6}
-        anatPart={showAnatomy ? "StackV" : undefined}
+
         body={
             <>
                 <StackH
                     gap={3}
                     align="center"
-                    anatPart={showAnatomy ? "StackH" : undefined}
+
                     body={
                         <Chip
                             tone={card.wasCorrect ? "success" : "danger"}
                             text={card.wasCorrect ? "Correct" : "Incorrect"}
-                            showAnatomy={showAnatomy}
+
                         />
                     }
                 />
                 <MarkdownContent
                     source={card.question}
                     measure="compact"
-                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                 />
                 {card.givenAnswer != null ? (
                     <StackV
                         gap={3}
-                        anatPart={showAnatomy ? "StackV" : undefined}
+
                         body={
                             <>
-                                <Typography size="xs" color="muted" text="Your answer" showAnatomy={showAnatomy} />
-                                <Typography size="sm" text={card.givenAnswer} showAnatomy={showAnatomy} />
+                                <Typography size="xs" color="muted" text="Your answer" />
+                                <Typography size="sm" text={card.givenAnswer} />
                             </>
                         }
                     />
                 ) : null}
                 <StackV
                     gap={3}
-                    anatPart={showAnatomy ? "StackV" : undefined}
+
                     body={
                         <>
-                            <Typography size="xs" color="muted" text="Expected answer" showAnatomy={showAnatomy} />
+                            <Typography size="xs" color="muted" text="Expected answer" />
                             <MarkdownContent
                                 source={card.expectedAnswer}
                                 measure="compact"
-                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                             />
                         </>
                     }
@@ -137,8 +134,8 @@ const recapCardBody = (
                     options={ratingOptions}
                     onRate={(grade) => onRate(card.key, grade)}
                     ariaLabel={ratingAriaLabel}
-                    anatPart={showAnatomy ? "RatingBar" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             </>
         }
@@ -157,8 +154,6 @@ const QuizRecapList = ({
     ratingAriaLabel,
     isSkeleton = false,
     skeletonCount = 3,
-    showAnatomy = false,
-    anatPart,
 }: QuizRecapListProps) => {
     if (isSkeleton) {
         const skeletonCardBody = (
@@ -171,8 +166,8 @@ const QuizRecapList = ({
         const skeletonCards = Array.from({ length: skeletonCount }, (_unused, index) => (
             <SurfaceCard
                 key={index}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={skeletonCardBody} />}
+
+                body={() => <StackV gap={6} body={skeletonCardBody} />}
             />
         ))
         const loadingBody = (
@@ -182,8 +177,8 @@ const QuizRecapList = ({
             </>
         )
         return (
-            <div data-anat-part={anatPart}>
-                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={loadingBody} />
+            <div>
+                <StackV gap={6} body={loadingBody} />
             </div>
         )
     }
@@ -192,8 +187,8 @@ const QuizRecapList = ({
     const recapCards = (cards ?? []).map((card) => (
         <SurfaceCard
             key={card.key}
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
-            body={() => recapCardBody(card, ratingOptions, onRate, ratingAriaLabel, showAnatomy)}
+
+            body={() => recapCardBody(card, ratingOptions, onRate, ratingAriaLabel)}
         />
     ))
 
@@ -205,15 +200,15 @@ const QuizRecapList = ({
                 size="sm"
                 color="muted"
                 text={unrated > 0 ? `${unrated}/${(cards ?? []).length} cards left to self-grade` : `All ${(cards ?? []).length} cards self-graded`}
-                showAnatomy={showAnatomy}
+
             />
             {recapCards}
         </>
     )
 
     return (
-        <div data-anat-part={anatPart}>
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={recapBody} />
+        <div>
+            <StackV gap={6} body={recapBody} />
         </div>
     )
 }

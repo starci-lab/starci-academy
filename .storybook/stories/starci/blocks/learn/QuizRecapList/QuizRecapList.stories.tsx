@@ -89,8 +89,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <QuizRecapList
-                                anatPart="QuizRecapList"
-                                showAnatomy
+
+                               
                                 cards={CARDS}
                                 ratingOptions={RATING_OPTIONS}
                                 ratingAriaLabel="How well do you remember this"
@@ -163,8 +163,8 @@ export const Skeleton: Story = {
 />`,
                         render: (
                             <QuizRecapList
-                                anatPart="QuizRecapList"
-                                showAnatomy
+
+                               
                                 ratingOptions={RATING_OPTIONS}
                                 ratingAriaLabel="How well do you remember this"
                                 onRate={() => {}}

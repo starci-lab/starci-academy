@@ -90,7 +90,7 @@ export const Default: Story = {
                         name: "only title set, everything else default",
                         why: "Only the title line renders — default status tint, default soft tone, and no description, body, custom icon, action, or close button. This is what a caller gets by supplying nothing but the required text.",
                         code: "<Alert title=\"Note saved\" />",
-                        render: <Alert title="Note saved" showAnatomy />,
+                        render: <Alert title="Note saved" />,
                     },
                 ]}
             />
@@ -113,31 +113,31 @@ export const Statuses: Story = {
                         name: "status = \"default\"",
                         why: "The alert takes a neutral tint with no default icon and a plain title colour. This valence carries no urgency at all — it's for supporting information that isn't good or bad news.",
                         code: "<Alert status=\"default\" title=\"Neutral note\" description=\"Carries no valence — for supporting information.\" />",
-                        render: <Alert status="default" title="Neutral note" description="Carries no valence — for supporting information." showAnatomy />,
+                        render: <Alert status="default" title="Neutral note" description="Carries no valence — for supporting information." />,
                     },
                     {
                         name: "status = \"accent\"",
                         why: "The alert takes the accent tint and its matching default icon. This valence is for a helpful tip, not a warning or an error.",
                         code: "<Alert status=\"accent\" title=\"Study tip\" description=\"Review the cards due today before starting a new lesson.\" />",
-                        render: <Alert status="accent" title="Study tip" description="Review the cards due today before starting a new lesson." showAnatomy />,
+                        render: <Alert status="accent" title="Study tip" description="Review the cards due today before starting a new lesson." />,
                     },
                     {
                         name: "status = \"success\"",
                         why: "The alert takes the success tint and its matching check-style icon. This valence confirms something the reader did went through correctly.",
                         code: "<Alert status=\"success\" title=\"Submission saved\" description=\"Grading results will be ready in a few minutes.\" />",
-                        render: <Alert status="success" title="Submission saved" description="Grading results will be ready in a few minutes." showAnatomy />,
+                        render: <Alert status="success" title="Submission saved" description="Grading results will be ready in a few minutes." />,
                     },
                     {
                         name: "status = \"warning\"",
                         why: "The alert takes the warning tint and its matching caution icon. This valence flags something worth the reader's attention before it becomes a real problem.",
                         code: "<Alert status=\"warning\" title=\"You haven't joined the course's GitHub team\" description=\"Some labs need repo access — join to unlock them.\" />",
-                        render: <Alert status="warning" title="You haven't joined the course's GitHub team" description="Some labs need repo access — join to unlock them." showAnatomy />,
+                        render: <Alert status="warning" title="You haven't joined the course's GitHub team" description="Some labs need repo access — join to unlock them." />,
                     },
                     {
                         name: "status = \"danger\"",
                         why: "The alert takes the danger tint and its matching error icon. This valence marks something that already failed and needs the reader to act.",
                         code: "<Alert status=\"danger\" title=\"Couldn't load the content\" description=\"The connection dropped — try again in a moment.\" />",
-                        render: <Alert status="danger" title="Couldn't load the content" description="The connection dropped — try again in a moment." showAnatomy />,
+                        render: <Alert status="danger" title="Couldn't load the content" description="The connection dropped — try again in a moment." />,
                     },
                 ]}
             />
@@ -160,13 +160,13 @@ export const Tone: Story = {
                         name: "tone = \"soft\"",
                         why: "The alert renders as a flat tint strip, the shape `Callout` uses when it sits inside a surface. This tone reads as belonging to the page it's embedded in, not floating above it.",
                         code: "<Alert tone=\"soft\" status=\"warning\" title=\"…\" />",
-                        render: <Alert tone="soft" status="warning" title="Flat tint (soft)" description="The shape Callout uses — a flat strip inside a surface." showAnatomy />,
+                        render: <Alert tone="soft" status="warning" title="Flat tint (soft)" description="The shape Callout uses — a flat strip inside a surface." />,
                     },
                     {
                         name: "tone = \"plain\"",
                         why: "The alert keeps HeroUI's own default tint, the shape `Toast` uses. This tone reads as floating above the page rather than embedded in it, matching a toast's brief, detached appearance.",
                         code: "<Alert tone=\"plain\" status=\"warning\" title=\"…\" />",
-                        render: <Alert tone="plain" status="warning" title="Default tint (plain)" description="The shape Toast uses — HeroUI's own tint, meant to float." showAnatomy />,
+                        render: <Alert tone="plain" status="warning" title="Default tint (plain)" description="The shape Toast uses — HeroUI's own tint, meant to float." />,
                     },
                 ]}
             />
@@ -189,13 +189,13 @@ export const Icon: Story = {
                         name: "icon unset",
                         why: "The alert falls back to the status glyph — here, the warning triangle. This is the default whenever a caller doesn't need a more specific icon than the status already implies.",
                         code: "<Alert status=\"warning\" title=\"…\" />",
-                        render: <Alert status="warning" title="Default icon" description="No `icon` passed — falls back to the status glyph." showAnatomy />,
+                        render: <Alert status="warning" title="Default icon" description="No `icon` passed — falls back to the status glyph." />,
                     },
                     {
                         name: "icon set",
                         why: "A custom icon component takes the glyph's place, still pinned to the same size-5 box and still coloured by the status. Only the shape of the glyph itself changes.",
                         code: "<Alert status=\"warning\" icon={GithubLogoIcon} title=\"…\" />",
-                        render: <Alert status="warning" icon={GithubLogoIcon} title="Join the GitHub team" description="A custom icon replaces the status default." showAnatomy />,
+                        render: <Alert status="warning" icon={GithubLogoIcon} title="Join the GitHub team" description="A custom icon replaces the status default." />,
                     },
                 ]}
             />
@@ -229,7 +229,7 @@ export const Body: Story = {
                                         <li>A screenshot of the result</li>
                                     </ul>
                                 )}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -260,7 +260,7 @@ export const Action: Story = {
                                 title="You haven't joined the course's GitHub team"
                                 description="Some labs need repo access — join to unlock them."
                                 action={<Button size="sm" label="Join team" onPress={() => {}} />}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -292,7 +292,7 @@ export const Close: Story = {
                                 description="Some labs need repo access — join to unlock them."
                                 onClose={() => {}}
                                 closeAriaLabel="Close"
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -317,13 +317,13 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, status = \"accent\", tone = \"soft\" (default)",
                         why: "The frame and icon stay real — only the title and description turn into shimmer bars sized to the real line boxes they will become. The status tint is still visible on the frame even while the text is loading.",
                         code: "<Alert status=\"accent\" isSkeleton />",
-                        render: <Alert status="accent" isSkeleton showAnatomy />,
+                        render: <Alert status="accent" isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, status = \"danger\", tone = \"plain\"",
                         why: "The same shimmer bars render, this time on the floating `plain` tone instead of the flat `soft` strip. Combining `tone` with `isSkeleton` proves the two props are independent of each other.",
                         code: "<Alert status=\"danger\" tone=\"plain\" isSkeleton />",
-                        render: <Alert status="danger" tone="plain" isSkeleton showAnatomy />,
+                        render: <Alert status="danger" tone="plain" isSkeleton />,
                     },
                 ]}
             />

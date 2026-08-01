@@ -117,7 +117,6 @@ export interface GridBaseProps {
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the frame is used but the panel cannot see it.
      */
-    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -137,11 +136,11 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, anatPart, classNames, pattern }: GridBaseProps) => (
+const GridBase = ({ items, columns, gap, classNames, pattern }: GridBaseProps) => (
     <div
         data-tier="frame"
         data-component="Grid"
-        data-anat-part={anatPart}
+
         data-principles={pattern}
         className={cn(
             "grid",
@@ -161,7 +160,7 @@ const GridBase = ({ items, columns, gap, anatPart, classNames, pattern }: GridBa
             // plain (non-spanning) cell keeps the old behaviour untouched.
             //
             // ⚠️ 2026-07-28: this wrapper used to ALSO grow under `showAnatomy` alone (not
-            // just `spanClass`) so it could carry `data-anat-part="Cell"`. Dropped: "Cell"
+            // just `spanClass`) so it could carry ``. Dropped: "Cell"
             // had no component or story of its own — it is just this `min-w-0`/`col-span`
             // box, the frame's own geometry (§13z's logic one tier up), not a separate part
             // a reader could click through to. No story ever declared it, so the badge only

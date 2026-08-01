@@ -102,7 +102,7 @@ export const Session: Story = {
 />`,
                         render: (
                             <PlaygroundSessionPage
-                                showAnatomy
+                               
                                 backLabel="Leave the lab"
                                 onBack={() => {}}
                                 title="Docker for a web app"

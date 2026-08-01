@@ -91,19 +91,19 @@ export interface CourseContentsLayoutProps {
  * Empty state — the course has no contents yet.
  *
  * The frame and the content each carry THEIR OWN name. Until 2026-07-27 the wrapping
- * `Container` wore `anatPart="AsyncContentEmpty"` while the real frame emitted nothing,
+ * `Container` wore `` while the real frame emitted nothing,
  * so the single node in the Empty tree was the CONTAINER wearing the name (and the story
  * link) of the thing inside it, and `Container` — a dep like any other frame — vanished
  * from this state even though the content state declares it.
  */
 const CourseContentsEmpty = () => (
     <Container
-        anatPart="Container"
+
         size="md"
         padding={6}
         body={
             <AsyncContentEmpty
-                anatPart="AsyncContentEmpty"
+
                 icon={StackIcon}
                 title="This course has no lessons yet"
                 description="Content is still being written — check back later."
@@ -137,7 +137,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             is_enrolled). The old version gated it backwards, on `viewer === "trial"`. The
             block hides itself, so the screen just hands over the facts. */}
             <CourseTeamGate
-                anatPart="CourseTeamGate"
+
                 isEnrolled={viewer === "paid"}
                 isInTeam={false}
                 onJoin={() => {}}
@@ -145,7 +145,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             />
             {viewer === "trial" ? (
                 <TrialConversionStrip
-                    anatPart="TrialConversionStrip"
+
                     freeLessonsRemaining={9}
                     price={SAMPLE_PRICE}
                     onEnroll={() => {}}
@@ -162,7 +162,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             cluster is. The hero already has a frame + arc ring + a "Continue" button, so
             adding "Continue learning" would be saying it twice. */}
             <ContinueLearning
-                anatPart="ContinueLearning"
+
                 lessonIndex={4}
                 lessonTitle="Writing an optimized Dockerfile"
                 lessonsRead={8}
@@ -174,12 +174,12 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                 isSkeleton={isSkeleton}
             />
             <LearnNudges
-                anatPart="LearnNudges"
+
                 items={NUDGES}
                 isSkeleton={isSkeleton}
             />
             <KeepGoingPath
-                anatPart="KeepGoingPath"
+
                 module={{ index: 2, name: "Containerization" }}
                 contents={KEEP_GOING}
                 isSkeleton={isSkeleton}
@@ -196,7 +196,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             story, NOT here. Teacher's call 2026-07-25: this cluster carries business meaning
             (read/unread) so it's a BLOCK, the screen no longer calls the composite directly. */}
             <CourseBrief
-                anatPart="CourseBrief"
+
                 breadcrumbItems={[
                     { key: "courses", label: "Courses", onPress: () => {} },
                     { key: "course", label: "DevOps Mastery" },
@@ -208,11 +208,11 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                 learnerCount={2481}
                 isSkeleton={isSkeleton}
             />
-            <StackV gap={6} anatPart="StackV" body={learnSection} />
+            <StackV gap={6} body={learnSection} />
         </>
     )
 
-    const courseContentsBody = <StackV gap={7} anatPart="StackV" body={courseContentsSections} />
+    const courseContentsBody = <StackV gap={7} body={courseContentsSections} />
 
     return (
         // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div` (§13):
@@ -229,6 +229,6 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
         // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
         // card. Writing `gap={7}` with nothing to receive it is worse than not writing it at
         // all: reading the code makes it look like the rhythm was already set.
-        <Container size="md" padding={6} anatPart="Container" body={courseContentsBody} />
+        <Container size="md" padding={6} body={courseContentsBody} />
     )
 }

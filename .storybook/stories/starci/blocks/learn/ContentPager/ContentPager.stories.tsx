@@ -64,8 +64,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ContentPager
-                                anatPart="ContentPager"
-                                showAnatomy
+
+                               
                                 ariaLabel="Go to previous or next content"
                                 previous={PREVIOUS}
                                 next={NEXT}
@@ -99,8 +99,8 @@ export const NextOnly: Story = {
 />`,
                         render: (
                             <ContentPager
-                                anatPart="ContentPager"
-                                showAnatomy
+
+                               
                                 ariaLabel="Go to previous or next content"
                                 next={NEXT}
                             />
@@ -133,8 +133,8 @@ export const PreviousOnly: Story = {
 />`,
                         render: (
                             <ContentPager
-                                anatPart="ContentPager"
-                                showAnatomy
+
+                               
                                 ariaLabel="Go to previous or next content"
                                 previous={PREVIOUS}
                             />
@@ -164,8 +164,8 @@ export const Skeleton: Story = {
                         code: "<ContentPager ariaLabel=\"Go to previous or next content\" isSkeleton />",
                         render: (
                             <ContentPager
-                                anatPart="ContentPager"
-                                showAnatomy
+
+                               
                                 ariaLabel="Go to previous or next content"
                                 isSkeleton
                             />

@@ -45,7 +45,7 @@ export const HorizontalMidFlow: Story = {
                         name: "currentIndex = 1 (mid-flow)",
                         why: "The track lays three Indicator/Label/Description groups end to end with a Connector between each pair, and with `currentIndex=1` the first step shows its done check, the second carries the current accent ring, and the third stays muted as upcoming. Showing all three states together in one track lets a reader compare done, current, and upcoming without switching leaves.",
                         code: "<Stepper steps={CHECKOUT_STEPS} currentIndex={1} />",
-                        render: <Stepper steps={CHECKOUT_STEPS} currentIndex={1} showAnatomy />,
+                        render: <Stepper steps={CHECKOUT_STEPS} currentIndex={1} />,
                     },
                 ]}
             />
@@ -73,7 +73,7 @@ export const Vertical: Story = {
                                 currentIndex={1}
                                 orientation="vertical"
                                 onStepPress={() => {}}
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -97,7 +97,7 @@ export const AllComplete: Story = {
                         name: "currentIndex = steps.length",
                         why: "Every Indicator switches to its done check and every Connector turns success-toned, because `currentIndex` has moved past the last step. This is the terminal state a checkout flow reaches right before it hands the learner off to a receipt or confirmation screen.",
                         code: "<Stepper steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} />",
-                        render: <Stepper steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} showAnatomy />,
+                        render: <Stepper steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} />,
                     },
                 ]}
             />

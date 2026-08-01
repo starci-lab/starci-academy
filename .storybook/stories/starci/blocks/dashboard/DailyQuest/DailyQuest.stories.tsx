@@ -90,8 +90,8 @@ export const Loading: Story = {
                         code: "<DailyQuest quest={null} isLoading /* … */ />",
                         render: (
                             <DailyQuest
-                                anatPart="DailyQuest"
-                                showAnatomy
+
+                               
                                 quest={null}
                                 isLoading
                                 onRetry={() => {}}
@@ -123,8 +123,8 @@ export const ErrorLeaf: Story = {
                         code: "<DailyQuest quest={null} isLoading={false} error={new Error(\"network\")} onRetry={onRetry} /* … */ />",
                         render: (
                             <DailyQuest
-                                anatPart="DailyQuest"
-                                showAnatomy
+
+                               
                                 quest={null}
                                 isLoading={false}
                                 error={new globalThis.Error("network")}
@@ -188,8 +188,8 @@ export const Content: Story = {
                         code: "<DailyQuest quest={incompleteQuest} isLoading={false} /* … */ />",
                         render: (
                             <DailyQuest
-                                anatPart="DailyQuest"
-                                showAnatomy
+
+                               
                                 quest={INCOMPLETE_QUEST}
                                 isLoading={false}
                                 onRetry={() => {}}

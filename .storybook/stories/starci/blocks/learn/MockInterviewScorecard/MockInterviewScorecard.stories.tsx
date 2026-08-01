@@ -98,8 +98,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <MockInterviewScorecard
-                                anatPart="MockInterviewScorecard"
-                                showAnatomy
+
+                               
                                 verdict="pass"
                                 overallScore={82}
                                 phaseOrQuestionScores={SCORE_ROWS}
@@ -218,8 +218,8 @@ export const Skeleton: Story = {
 />`,
                         render: (
                             <MockInterviewScorecard
-                                anatPart="MockInterviewScorecard"
-                                showAnatomy
+
+                               
                                 verdict="pass"
                                 overallScore={0}
                                 phaseOrQuestionScores={[]}

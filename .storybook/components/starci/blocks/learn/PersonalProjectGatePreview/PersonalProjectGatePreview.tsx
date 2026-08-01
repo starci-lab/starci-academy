@@ -94,9 +94,7 @@ export interface PersonalProjectGatePreviewProps {
     /** Placement class only (§14d.1) — not for restyling. */
     className?: string
     /** `true` → every composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block itself (§11a). */
-    anatPart?: string
 }
 
 /**
@@ -112,8 +110,6 @@ const PersonalProjectGatePreview = ({
     items,
     isSkeleton = false,
     className,
-    showAnatomy = false,
-    anatPart,
 }: PersonalProjectGatePreviewProps) => {
     // Depends on the loop variable, so it cannot be hoisted to a const above the
     // return — a small named helper instead, in the style this file already uses.
@@ -122,8 +118,8 @@ const PersonalProjectGatePreview = ({
             key={index}
             gap={2}
             align="center"
-            showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "StackH" : undefined}
+
+
             body={
                 <>
                     <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
@@ -132,7 +128,7 @@ const PersonalProjectGatePreview = ({
                         truncate
                         isSkeleton={isSkeleton}
                         text={item.title}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             }
@@ -142,8 +138,8 @@ const PersonalProjectGatePreview = ({
     const taskList = (
         <StackV
             gap={4}
-            showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
+
             body={items.map(renderTaskRow)}
         />
     )
@@ -152,30 +148,30 @@ const PersonalProjectGatePreview = ({
         <StackV
             gap={6}
             className={className}
-            anatPart={anatPart}
-            showAnatomy={showAnatomy}
+
+
             body={
                 <>
                     <ContinueCardHero
                         title={heroTitle}
                         subtitle={heroSubtitle}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "ContinueCardHero" : undefined}
+
+
                     />
                     <ProgressMeter
                         value={progress.value}
                         max={progress.max}
                         label={progress.label}
                         showValue
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "ProgressMeter" : undefined}
+
+
                     />
                     <SurfaceCard
                         label={TASK_LABEL}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "SurfaceCard" : undefined}
+
+
                         body={() => taskList}
                     />
                 </>

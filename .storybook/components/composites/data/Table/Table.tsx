@@ -84,7 +84,6 @@ export interface TableBaseProps {
      */
     classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
-    showAnatomy?: boolean
 }
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -127,19 +126,18 @@ const TableBase = ({
     isSkeleton = false,
     onRowPress,
     classNames,
-    showAnatomy = false,
 }: TableBaseProps) => {
     // The header is CONFIGURATION (known before any data arrives) → the skeleton keeps
     // the REAL header, only cells become bars; the frame/column widths never jump once data lands (§8).
     const header = (
-        <HeroTable.Header data-anat-part={showAnatomy ? "Table.Header" : undefined}>
+        <HeroTable.Header>
             {columns.map((column, index) => (
                 <HeroTable.Column
                     key={column.key}
                     id={column.key}
                     isRowHeader={index === 0}
                     style={column.width != null ? { width: column.width } : undefined}
-                    data-anat-part={showAnatomy ? "Table.Column" : undefined}
+
                 >
                     <CellBox align={column.align}>{column.header}</CellBox>
                 </HeroTable.Column>
@@ -148,9 +146,9 @@ const TableBase = ({
     )
 
     const body = isSkeleton ? (
-        <HeroTable.Body data-anat-part={showAnatomy ? "Table.Body" : undefined}>
+        <HeroTable.Body>
             {Array.from({ length: items.length || SKELETON_ROWS_FALLBACK }).map((_, rowIndex) => (
-                <HeroTable.Row key={rowIndex} id={`skeleton-${rowIndex}`} data-anat-part={showAnatomy ? "Table.Row" : undefined}>
+                <HeroTable.Row key={rowIndex} id={`skeleton-${rowIndex}`}>
                     {columns.map((column) => (
                         <HeroTable.Cell key={column.key}>
                             {/* The bar is 14px tall < the real cell's 20px line-height → wrap it in an
@@ -158,7 +156,7 @@ const TableBase = ({
                                 layout jump). Balance the height with `items-center`, NOT with margin
                                 (§10a). The tag sits OUTSIDE the atom (the atom takes no rest props) —
                                 same reason as `CellBox`. */}
-                            <span className="flex h-5 items-center" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <span className="flex h-5 items-center">
                                 <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
                             </span>
                         </HeroTable.Cell>
@@ -168,7 +166,7 @@ const TableBase = ({
         </HeroTable.Body>
     ) : (
         <HeroTable.Body
-            data-anat-part={showAnatomy ? "Table.Body" : undefined}
+
             renderEmptyState={
                 EmptyContent != null
                     ? () => (
@@ -187,7 +185,7 @@ const TableBase = ({
                     key={item.key}
                     id={item.key}
                     onAction={onRowPress != null ? () => onRowPress(item.key) : undefined}
-                    data-anat-part={showAnatomy ? "Table.Row" : undefined}
+
                 >
                     {columns.map((column) => (
                         <HeroTable.Cell key={column.key}>
@@ -203,12 +201,12 @@ const TableBase = ({
         <HeroTable
             variant="primary"
             className={cn(classNames)}
-            data-anat-part={showAnatomy ? "Table" : undefined}
+
             data-tier="composite"
             data-component="Table"
         >
-            <HeroTable.ScrollContainer data-anat-part={showAnatomy ? "Table.ScrollContainer" : undefined}>
-                <HeroTable.Content aria-label={ariaLabel} data-anat-part={showAnatomy ? "Table.Content" : undefined}>
+            <HeroTable.ScrollContainer>
+                <HeroTable.Content aria-label={ariaLabel}>
                     {header}
                     {body}
                 </HeroTable.Content>

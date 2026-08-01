@@ -53,8 +53,8 @@ const Controlled = (props: ControlledProps) => {
     const [searchValue, setSearchValue] = useState(props.initialSearch)
     return (
         <CourseQaToolbar
-            anatPart="CourseQaToolbar"
-            showAnatomy
+
+           
             filter={filter}
             onFilterChange={setFilter}
             searchValue={searchValue}

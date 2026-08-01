@@ -62,9 +62,7 @@ export interface QuizQuestionProps {
     /** `true` → the card mirrors itself while the question is drawn. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -86,8 +84,6 @@ const QuizQuestion = ({
     onNext,
     isPending = false,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: QuizQuestionProps) => {
     const isGraded = verdict != null
 
@@ -95,22 +91,22 @@ const QuizQuestion = ({
         <StackH
             gap={3}
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
-            body={<Chip tone="default" text={levelLabel} showAnatomy={showAnatomy} />}
+
+            body={<Chip tone="default" text={levelLabel} />}
         />
     ) : null
 
     const expectedAnswerBlock = expectedAnswer != null ? (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Expected answer" showAnatomy={showAnatomy} />
+                    <Typography size="sm" weight="medium" text="Expected answer" />
                     <MarkdownContent
                         source={expectedAnswer}
                         measure="compact"
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                     />
                 </>
             }
@@ -120,13 +116,13 @@ const QuizQuestion = ({
     const gradedDetails = isGraded ? (
         <StackV
             gap={6}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <StackH
                         gap={3}
                         align="center"
-                        anatPart={showAnatomy ? "StackH" : undefined}
+
                         body={
                             // One chip for the classifying axis. The reasoning below is an
                             // ordinary document — two loud signals and the learner reads the
@@ -135,7 +131,7 @@ const QuizQuestion = ({
                                 tone={verdict === "correct" ? "success" : "danger"}
                                 icon={verdict === "correct" ? CheckCircleIcon : XCircleIcon}
                                 text={verdict === "correct" ? "Correct" : "Not quite"}
-                                showAnatomy={showAnatomy}
+
                             />
                         }
                     />
@@ -144,7 +140,7 @@ const QuizQuestion = ({
                         <MarkdownContent
                             source={explanation}
                             measure="compact"
-                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                         />
                     ) : null}
                 </>
@@ -156,10 +152,10 @@ const QuizQuestion = ({
         <StackH
             gap={3}
             justify="end"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 isGraded ? (
-                    <Button label={nextLabel} variant="primary" onPress={onNext} showAnatomy={showAnatomy} />
+                    <Button label={nextLabel} variant="primary" onPress={onNext} />
                 ) : (
                     <Button
                         label={submitLabel}
@@ -167,7 +163,7 @@ const QuizQuestion = ({
                         onPress={onSubmit}
                         isDisabled={answer.trim().length === 0}
                         isPending={isPending}
-                        showAnatomy={showAnatomy}
+
                     />
                 )
             }
@@ -181,7 +177,7 @@ const QuizQuestion = ({
             <MarkdownContent
                 source={question}
                 measure="reading"
-                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
             />
 
             {/* Read-only rather than emptied: the whole value of a drill is comparing
@@ -194,7 +190,7 @@ const QuizQuestion = ({
                 ariaLabel="Answer"
                 rows={4}
                 isDisabled={isGraded}
-                showAnatomy={showAnatomy}
+
             />
 
             {gradedDetails}
@@ -204,11 +200,11 @@ const QuizQuestion = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={questionBody} />}
+
+                body={() => <StackV gap={6} body={questionBody} />}
             />
         </div>
     )

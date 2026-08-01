@@ -73,8 +73,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <MindMapRail
-                                anatPart="MindMapRail"
-                                showAnatomy
+
+                               
                                 query=""
                                 onQuery={() => {}}
                                 tier="all"
@@ -179,8 +179,8 @@ export const FilterOpen: Story = {
 />`,
                         render: (
                             <MindMapRail
-                                anatPart="MindMapRail"
-                                showAnatomy
+
+                               
                                 query=""
                                 onQuery={() => {}}
                                 tier="high"

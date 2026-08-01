@@ -78,9 +78,7 @@ export interface CourseBriefBaseProps {
      */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -97,8 +95,6 @@ const CourseBriefBase = ({
     hours,
     learnerCount,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: CourseBriefBaseProps) => {
     // Meta strip joined by the BLOCK from NUMBERS — units, separators, thousands
     // grouping are all presentation; the caller doesn't touch this (§14d.1).
@@ -109,12 +105,12 @@ const CourseBriefBase = ({
     ].filter(Boolean)
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <PageHeader
-                anatPart={showAnatomy ? "PageHeader" : undefined}
+
                 breadcrumb={
                     isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                        <div className="w-fit">
                             {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old
                         capability of ResponsiveBreadcrumb, now a prop of the Breadcrumbs atom). */}
                             <Breadcrumbs
@@ -132,9 +128,9 @@ const CourseBriefBase = ({
                         // boundary) — call the `Typography` atom directly with the EXACT
                         // size/weight `PageHeader` itself uses for `title` (size="h3"
                         // weight="bold"), then feed the result into the slot.
-                        <Typography size="h3" weight="bold" isSkeleton showAnatomy={showAnatomy} />
+                        <Typography size="h3" weight="bold" isSkeleton />
                     ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
+                        <span>{title}</span>
                     )
                 }
                 description={
@@ -145,17 +141,17 @@ const CourseBriefBase = ({
                         // description empty) — it's the most common line in the cluster; keeping
                         // the layout stable (§8) matters more than saving one shimmer line for
                         // the rare case with no description.
-                        <Typography size="sm" color="muted" isSkeleton showAnatomy={showAnatomy} />
+                        <Typography size="sm" color="muted" isSkeleton />
                     ) : (
                         description
                     )
                 }
                 meta={
                     isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} showAnatomy={showAnatomy} />
+                        <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} />
                     ) : metaParts.length > 0 ? (
                         <span>
-                            <Typography size="xs" color="muted" text={metaParts.join(" · ")} showAnatomy={showAnatomy} />
+                            <Typography size="xs" color="muted" text={metaParts.join(" · ")} />
                         </span>
                     ) : undefined
                 }

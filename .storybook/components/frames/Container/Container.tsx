@@ -114,7 +114,6 @@ export interface ContainerBaseProps {
      * emitting an undeclared "Container" node the panel could never show, exactly the
      * "badge that leads nowhere" the anatomy gate exists to catch.
      */
-    anatPart?: string
     /**
      * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
@@ -143,7 +142,6 @@ const ContainerBase = ({
     padding = 6,
     body,
     classNames,
-    anatPart,
     pattern,
 }: ContainerBaseProps) => {
     return (
@@ -163,7 +161,7 @@ const ContainerBase = ({
         <div
             data-tier="frame"
             data-component="Container"
-            data-anat-part={anatPart}
+
             className={cn(
                 "@container mx-auto w-full",
                 SIZE_CLASS[size],

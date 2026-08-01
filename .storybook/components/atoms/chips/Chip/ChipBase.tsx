@@ -60,7 +60,6 @@ interface ChipBaseOwnProps {
     /** Accessibility label for the × button (caller supplies the translated string). */
     removeLabel?: string
     /** `true` → tags each part with `data-anat-part` for the BlockAnatomy badge. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -108,7 +107,6 @@ export const ChipBase = ({
     onRemove,
     removeLabel,
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: ChipBaseProps) => {
     // The dot appears only when the caller gives it a color (see {@link ChipLeadingProps}).
@@ -130,7 +128,7 @@ export const ChipBase = ({
                 // loading look) — NOT the word "Skeleton" (that's a STATE, not an
                 // identity, and this element is the same `HeroChip` the real branch
                 // below renders).
-                data-anat-part={showAnatomy ? "Chip" : undefined}
+
             >
                 {hasDot || Icon ? <HeroSkeleton className="size-3 shrink-0 rounded-full" /> : null}
                 <HeroChip.Label>
@@ -184,12 +182,12 @@ export const ChipBase = ({
             // w-fit: chip is a content-hugging pill — without it, `align-items: stretch`
             // on a flex-col parent stretches the chip the full row.
             className={cn("w-fit", classNames)}
-            data-anat-part={showAnatomy ? "Chip" : undefined}
+
         >
             {leading}
             {/* Real component rendered here is HeroUI's `Chip.Label` compound member —
                 name the node after it, not the generic slot word "Label". */}
-            <HeroChip.Label data-anat-part={showAnatomy ? "Chip.Label" : undefined}>{text}</HeroChip.Label>
+            <HeroChip.Label>{text}</HeroChip.Label>
             {onRemove ? (
                 // × button sized to the chip (size-4 hit area, size-3 glyph), takes the
                 // chip's tone via `currentColor` — not `Button isIconOnly` (that's ~32px,

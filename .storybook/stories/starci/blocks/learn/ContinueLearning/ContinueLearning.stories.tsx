@@ -70,7 +70,7 @@ export const Default: Story = {
     progressPercent={34}
     onResume={handleResume}
 />`,
-                        render: <ContinueLearning {...SAMPLE} anatPart="ContinueCardHero" onResume={() => {}} />,
+                        render: <ContinueLearning {...SAMPLE} onResume={() => {}} />,
                     },
                 ]}
             />
@@ -93,7 +93,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton",
                         why: "The tree stays exactly the same as the leaf above, since `isSkeleton` is a state rather than a separate leaf. The block does not draw shimmer bars itself, the flag flows straight down to `ContinueCard`, whose own owner decides its resting shape (§12c).",
                         code: "<ContinueLearning {...data} isSkeleton />",
-                        render: <ContinueLearning {...SAMPLE} anatPart="ContinueCardHero" isSkeleton />,
+                        render: <ContinueLearning {...SAMPLE} isSkeleton />,
                     },
                 ]}
             />

@@ -97,7 +97,7 @@ export const Resource: Story = {
 />`,
                         render: (
                             <FoundationResourcePage
-                                showAnatomy
+                               
                                 breadcrumbItems={CRUMBS}
                                 title="Managing processes in Linux"
                                 description="Processes, signals, and how the shell tracks a running program."
@@ -186,7 +186,7 @@ export const Empty: Story = {
 />`,
                         render: (
                             <FoundationResourcePage
-                                showAnatomy
+                               
                                 breadcrumbItems={CRUMBS}
                                 title=""
                                 kind={FoundationKind.Document}
@@ -220,7 +220,7 @@ export const Skeleton: Story = {
                         code: "<FoundationResourcePage {...props} isSkeleton isEnrollmentKnown={false} />",
                         render: (
                             <FoundationResourcePage
-                                showAnatomy
+                               
                                 breadcrumbItems={CRUMBS}
                                 title=""
                                 kind={FoundationKind.Document}

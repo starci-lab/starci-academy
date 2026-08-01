@@ -38,7 +38,7 @@ const ARCHITECTURE_EDGES: Array<Edge> = [
 export const Architecture: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <FlowDiagram nodes={ARCHITECTURE_NODES} edges={ARCHITECTURE_EDGES} anatPart="FlowDiagram" showAnatomy />
+            <FlowDiagram nodes={ARCHITECTURE_NODES} edges={ARCHITECTURE_EDGES} />
         </div>
     ),
 }
@@ -59,8 +59,8 @@ export const LinearSequence: Story = {
                     { id: "learn-practice", source: "learn", target: "practice" },
                     { id: "practice-certificate", source: "practice", target: "certificate" },
                 ]}
-                anatPart="FlowDiagram"
-                showAnatomy
+
+               
             />
         </div>
     ),
@@ -87,7 +87,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "A per-node shimmer isn't feasible before the graph is fetched — positions and edges are exactly the unknown — so the whole canvas mirrors as ONE bordered block instead, at the same `h-[420px] w-full` footprint, with no `ReactFlow` mounted.",
                         code: "<FlowDiagram isSkeleton />",
-                        render: <FlowDiagram isSkeleton anatPart="FlowDiagram" showAnatomy />,
+                        render: <FlowDiagram isSkeleton />,
                     },
                 ]}
             />

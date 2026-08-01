@@ -89,9 +89,7 @@ export interface QuotaBarProps {
     /** `true` → the block draws its own row mirror (label, bar, caption all shimmer). */
     isSkeleton?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     className?: string
 }
 
@@ -107,8 +105,6 @@ const QuotaBar = ({
     showUnit = false,
     resetLabel,
     isSkeleton = false,
-    anatPart,
-    showAnatomy = false,
     className,
 }: QuotaBarProps) => {
     const ratio = limit > 0
@@ -131,7 +127,7 @@ const QuotaBar = ({
             gap={3}
             align="center"
             justify="between"
-            anatPart={showAnatomy ? "LabelRow" : undefined}
+
             body={(
                 <>
                     <Typography
@@ -139,7 +135,7 @@ const QuotaBar = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         classNames={isSkeleton ? ["w-1/4"] : undefined}
-                        showAnatomy={showAnatomy}
+
                         text={label}
                     />
                     <Typography
@@ -148,7 +144,7 @@ const QuotaBar = ({
                         tabularNums
                         isSkeleton={isSkeleton}
                         classNames={isSkeleton ? ["w-1/3"] : undefined}
-                        showAnatomy={showAnatomy}
+
                         text={(
                             <>
                                 {used}
@@ -172,7 +168,7 @@ const QuotaBar = ({
     // which tags its OWN internal track/fill parts. A wrapping `div` is how
     // `RatingBar` names a same-shaped atom/composite for the parent's tree too.
     const bar = (
-        <div data-anat-part={showAnatomy ? "Bar" : undefined}>
+        <div>
             <ProgressBar
                 value={value}
                 max={100}
@@ -180,7 +176,7 @@ const QuotaBar = ({
                 size="sm"
                 ariaLabel={label}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </div>
     )
@@ -189,7 +185,7 @@ const QuotaBar = ({
         <StackV
             gap={4}
             className={className}
-            anatPart={anatPart ?? (showAnatomy ? "StackV" : undefined)}
+
             body={(
                 <>
                     {labelRow}
@@ -200,7 +196,7 @@ const QuotaBar = ({
                             color="muted"
                             isSkeleton={isSkeleton}
                             classNames={isSkeleton ? ["w-1/2"] : undefined}
-                            showAnatomy={showAnatomy}
+
                             text={resetLabel ?? undefined}
                         />
                     ) : null}

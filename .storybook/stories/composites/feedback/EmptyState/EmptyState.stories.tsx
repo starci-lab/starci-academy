@@ -94,7 +94,7 @@ export const TitleOnly: Story = {
                         code: `<EmptyState
   title="No data yet"
 />`,
-                        render: <EmptyState showAnatomy title="No data yet" />,
+                        render: <EmptyState title="No data yet" />,
                     },
                 ]}
             />,
@@ -118,7 +118,7 @@ export const IconAndTitle: Story = {
   icon={PackageIcon}
   title="No courses yet"
 />`,
-                        render: <EmptyState showAnatomy icon={PackageIcon} title="No courses yet" />,
+                        render: <EmptyState icon={PackageIcon} title="No courses yet" />,
                     },
                 ]}
             />,
@@ -145,7 +145,7 @@ export const Description: Story = {
 />`,
                         render: (
                             <EmptyState
-                                showAnatomy
+                               
                                 icon={MagnifyingGlassIcon}
                                 title="No results found"
                                 description="Try different filters or a shorter search term."
@@ -185,7 +185,7 @@ export const Action: Story = {
 />`,
                         render: (
                             <EmptyState
-                                showAnatomy
+                               
                                 icon={PackageIcon}
                                 title="This list is empty"
                                 description="You haven't saved any items to this list yet."
@@ -205,7 +205,7 @@ export const Action: Story = {
 />`,
                         render: (
                             <EmptyState
-                                showAnatomy
+                               
                                 tone="danger"
                                 icon={WarningCircleIcon}
                                 title="Couldn't load the data"
@@ -242,7 +242,7 @@ export const WithBody: Story = {
 />`,
                         render: (
                             <EmptyState
-                                showAnatomy
+                               
                                 icon={MagnifyingGlassIcon}
                                 title="No results found"
                                 description="A few things that usually help:"
@@ -289,7 +289,7 @@ export const FullPage: Story = {
 />`,
                     render: (
                         <EmptyState
-                            showAnatomy
+                           
                             size="page"
                             code="404"
                             title="Page not found"
@@ -353,7 +353,7 @@ export const Compact: Story = {
 />`,
                             render: (
                                 <EmptyState
-                                    showAnatomy
+                                   
                                     size="compact"
                                     title="No submissions yet for this assignment."
                                     icon={WarningIcon}

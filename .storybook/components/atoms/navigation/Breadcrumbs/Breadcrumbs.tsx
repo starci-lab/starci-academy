@@ -69,7 +69,6 @@ export interface BreadcrumbsBaseProps {
      */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
-    showAnatomy?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -91,7 +90,6 @@ const BreadcrumbsBase = ({
     collapseFrom,
     backLabel = "Back",
     isSkeleton = false,
-    showAnatomy = false,
     classNames,
 }: BreadcrumbsBaseProps) => {
     if (isSkeleton) {
@@ -107,15 +105,15 @@ const BreadcrumbsBase = ({
 
         const trailBars = (
             <div data-tier="atom" data-component="Breadcrumbs" className={cn("flex items-center gap-2", classNames)}>
-                <HeroSkeleton className="h-4 w-1/4 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                <HeroSkeleton className="h-4 w-1/2 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-4 w-1/4 rounded-md" />
+                <HeroSkeleton className="h-4 w-1/3 rounded-md" />
+                <HeroSkeleton className="h-4 w-1/2 rounded-md" />
             </div>
         )
         const backBar = (
             <div data-tier="atom" data-component="Breadcrumbs" data-principles="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
-                <HeroSkeleton className="size-3.5 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="size-3.5 rounded-full" />
+                <HeroSkeleton className="h-4 w-1/3 rounded-md" />
             </div>
         )
 
@@ -151,16 +149,16 @@ const BreadcrumbsBase = ({
         <HeroBreadcrumbs
             data-tier="atom"
             data-component="Breadcrumbs"
-            data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}
+
             className={cn(collapseMobile && "hidden @app-sm:flex", classNames)}
         >
             {rendered.map((entry) =>
                 entry === ELLIPSIS_KEY ? (
-                    <HeroBreadcrumbs.Item key={ELLIPSIS_KEY} data-anat-part={showAnatomy ? "Breadcrumbs.Item" : undefined}>
+                    <HeroBreadcrumbs.Item key={ELLIPSIS_KEY}>
                         …
                     </HeroBreadcrumbs.Item>
                 ) : (
-                    <HeroBreadcrumbs.Item key={entry.key} onPress={entry.onPress} data-anat-part={showAnatomy ? "Breadcrumbs.Item" : undefined}>
+                    <HeroBreadcrumbs.Item key={entry.key} onPress={entry.onPress}>
                         {entry.label}
                     </HeroBreadcrumbs.Item>
                 ),
@@ -185,7 +183,7 @@ const BreadcrumbsBase = ({
             <HeroLink
                 data-tier="atom"
                 data-component="Breadcrumbs"
-                data-anat-part={showAnatomy ? "Link" : undefined}
+
                 data-principles="icon-text"
                 onPress={parent?.onPress}
                 className={cn(

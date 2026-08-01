@@ -103,8 +103,8 @@ export const FindingsAccordion: Story = {
 />`,
                         render: (
                             <SubmissionFindingsList
-                                anatPart="SubmissionFindingsList"
-                                showAnatomy
+
+                               
                                 findings={[]}
                                 label="Feedback"
                                 isLoading

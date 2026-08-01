@@ -87,8 +87,8 @@ export const Default: Story = {
 }} />`,
                         render: (
                             <PlaygroundDeviceSnapshot
-                                anatPart="PlaygroundDeviceSnapshot"
-                                showAnatomy
+
+                               
                                 deviceInfo={NVIDIA_DEVICE}
                             />
                         ),

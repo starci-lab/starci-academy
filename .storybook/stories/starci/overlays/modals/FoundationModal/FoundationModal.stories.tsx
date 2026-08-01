@@ -82,8 +82,8 @@ const ControlledFoundationModal = ({
             <FoundationModal
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}
-                showAnatomy
-                anatPart="FoundationModal"
+               
+
                 {...modalProps}
             />
         </div>

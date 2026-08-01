@@ -132,7 +132,6 @@ export interface LeaderboardPageProps {
      */
     isSkeleton?: boolean
     /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -169,30 +168,29 @@ const LeaderboardPage = ({
     celebrateKey,
     meLabel,
     isSkeleton = false,
-    showAnatomy = false,
 }: LeaderboardPageProps) => {
     const boardSection = (
         <>
             <LeaderboardCategoryNav
-                anatPart="LeaderboardCategoryNav"
+
                 className="@app-lg:hidden"
                 items={categoryItems}
                 selected={selectedCategory}
                 onSelect={onCategorySelect}
                 ariaLabel={categoryAriaLabel}
-                showAnatomy={showAnatomy}
+
             />
             <LeaderboardToolbar
-                anatPart="LeaderboardToolbar"
+
                 categoryLabel={categoryLabel}
                 updatedAt={updatedAt}
                 onRefresh={onRefresh}
                 isRefreshing={isRefreshing}
                 refreshLabel={refreshLabel}
-                showAnatomy={showAnatomy}
+
             />
             <LeaderboardBoard
-                anatPart="LeaderboardBoard"
+
                 isLoading={isBoardLoading}
                 isEmpty={isBoardEmpty}
                 error={boardError}
@@ -205,7 +203,7 @@ const LeaderboardPage = ({
                 celebrateKey={celebrateKey}
                 meLabel={meLabel}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -213,24 +211,24 @@ const LeaderboardPage = ({
     const leaderboardSections = (
         <>
             <LeaderboardHeader
-                anatPart="LeaderboardHeader"
+
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
+
             />
             <TrialEnrollBanner
-                anatPart="TrialEnrollBanner"
+
                 isVisible={isEnrollmentKnown && !isEnrolled}
                 onEnroll={onEnroll}
-                showAnatomy={showAnatomy}
+
             />
-            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={boardSection} />
+            <StackV gap={6} body={boardSection} />
         </>
     )
 
-    const leaderboardBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={leaderboardSections} />
+    const leaderboardBody = <StackV gap={7} body={leaderboardSections} />
 
     return <Container size="md" padding={6} body={leaderboardBody} />
 }

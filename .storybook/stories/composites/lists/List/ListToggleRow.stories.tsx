@@ -80,7 +80,7 @@ export const Default: Story = {
                                     description="Allow visitors to see the Projects tab on your public profile"
                                     checked={checked}
                                     onCheckedChange={setChecked}
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -118,7 +118,7 @@ export const Selected: Story = {
                                     description="Allow visitors to see the Projects tab on your public profile"
                                     checked={checked}
                                     onCheckedChange={setChecked}
-                                    showAnatomy
+                                   
                                 />
                             ),
                         },
@@ -146,7 +146,7 @@ export const NoDescription: Story = {
                             why: "TitledText keeps only the title line and the description line drops out entirely, yet the row still stays vertically centred against the switch. The node is still the same TitledText, it simply renders one line instead of two.",
                             code: "<ListToggleRow label=\"Dark mode\" checked={checked} onCheckedChange={setChecked} />",
                             render: (
-                                <ListToggleRow label="Dark mode" checked={checked} onCheckedChange={setChecked} showAnatomy />
+                                <ListToggleRow label="Dark mode" checked={checked} onCheckedChange={setChecked} />
                             ),
                         },
                     ]}
@@ -186,7 +186,7 @@ export const Disabled: Story = {
                                 checked={false}
                                 onCheckedChange={() => {}}
                                 isDisabled
-                                showAnatomy
+                               
                             />
                         ),
                     },
@@ -217,7 +217,7 @@ export const Loading: Story = {
                                 checked={false}
                                 onCheckedChange={() => {}}
                                 isSkeleton
-                                showAnatomy
+                               
                             />
                         ),
                     },

@@ -62,8 +62,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ChallengeScoreCard
-                                anatPart="ChallengeScoreCard"
-                                showAnatomy
+
+                               
                                 earnedScore={9}
                                 maxScore={10}
                                 passThreshold={0.8}

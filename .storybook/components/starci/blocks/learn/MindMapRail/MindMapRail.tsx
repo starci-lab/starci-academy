@@ -57,7 +57,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *      of leaf 1. ⚠️ Same portal limit `Popover`'s own story documents: the
  *      panel (and this `ButtonRadioGroup` inside it) renders into
  *      `document.body`, outside the render box `BlockAnatomy` scans by DOM
- *      ancestry — `data-anat-part="ButtonRadioGroup"` is still emitted (the
+ *      ancestry — `` is still emitted (the
  *      honest name for what's there), it just never reaches the Structure tab.
  *
  * ⭐ JUDGEMENT CALL — `defaultFilterOpen` (uncontrolled, optional) exists ONLY
@@ -131,9 +131,7 @@ export interface MindMapRailProps {
     /** Dev/spec only: pins the funnel popover open (see file header's judgement call). */
     defaultFilterOpen?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /** The block's own wording for the tier filter — never handed in by the caller (§14d.1). */
@@ -205,8 +203,6 @@ const MindMapRail = ({
     tierAriaLabel,
     isSkeleton = false,
     defaultFilterOpen = false,
-    showAnatomy = false,
-    anatPart,
 }: MindMapRailProps) => {
     const hasQuery = query.trim().length > 0
     const isFiltered = tier !== "all"
@@ -216,13 +212,11 @@ const MindMapRail = ({
             icon: MagnifyingGlassIcon,
             title: `No keywords match "${query}"`,
             description: EMPTY_DESCRIPTION_WITH_QUERY,
-            anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-            showAnatomy,
+
         }
         : {
             title: EMPTY_TITLE_NO_QUERY,
-            anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-            showAnatomy,
+
         }
 
     const rows: Array<SurfaceCardListItem> = items.map((item) => resultRow(item, selectedId, onPick))
@@ -233,14 +227,14 @@ const MindMapRail = ({
             triggerIcon={FunnelSimpleIcon}
             heading={FILTER_HEADING}
             defaultOpen={defaultFilterOpen}
-            showAnatomy={showAnatomy}
+
             content={
-                <div data-anat-part={showAnatomy ? "ButtonRadioGroup" : undefined}>
+                <div>
                     <ButtonRadioGroup
                         ariaLabel={tierAriaLabel}
                         value={tier}
                         onChange={onTier}
-                        showAnatomy={showAnatomy}
+
                         items={TIER_ORDER.map((key) => ({ value: key, content: TIER_LABEL[key] }))}
                     />
                 </div>
@@ -250,40 +244,40 @@ const MindMapRail = ({
 
     const searchRow = (
         <>
-            <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputSearch" : undefined}>
+            <div className="min-w-0 flex-1">
                 <InputSearch
                     value={query}
                     onValueChange={onQuery}
                     placeholder={SEARCH_PLACEHOLDER}
                     ariaLabel={ariaLabel}
-                    showAnatomy={showAnatomy}
+
                 />
             </div>
-            <div data-anat-part={showAnatomy ? (isFiltered ? "Badge" : "Popover") : undefined}>
+            <div>
                 {/* `Badge` only wraps the trigger when a non-default tier is active — `dot` has
                     no built-in "hide me" reading the way `count` does (§ Badge file header: count
                     ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
                     block's own condition instead of a prop the atom could resolve alone. */}
-                {isFiltered ? <Badge dot showAnatomy={showAnatomy}>{filterTrigger}</Badge> : filterTrigger}
+                {isFiltered ? <Badge dot>{filterTrigger}</Badge> : filterTrigger}
             </div>
         </>
     )
 
     const railBody = (
         <>
-            <StackH gap={3} wrap anatPart={showAnatomy ? "StackH" : undefined} body={searchRow} />
+            <StackH gap={3} wrap body={searchRow} />
             <AsyncContent
                 isLoading={isLoading || isSkeleton}
-                skeleton={<SurfaceCardList items={skeletonRows()} isSkeleton anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
+                skeleton={<SurfaceCardList items={skeletonRows()} isSkeleton />}
                 isEmpty={items.length === 0}
                 emptyContent={emptyContent}
-                showAnatomy={showAnatomy}
-                content={<SurfaceCardList items={rows} anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
+
+                content={<SurfaceCardList items={rows} />}
             />
         </>
     )
 
-    return <StackV gap={3} anatPart={anatPart} body={railBody} />
+    return <StackV gap={3} body={railBody} />
 }
 
 export { MindMapRail }

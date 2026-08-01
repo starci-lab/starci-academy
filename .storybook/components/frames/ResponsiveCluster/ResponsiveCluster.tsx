@@ -69,7 +69,6 @@ export interface ResponsiveClusterProps {
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node.
      * Missing this prop means the frame is used but the panel cannot see it.
      */
-    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -115,7 +114,6 @@ const ResponsiveClusterBase = ({
     gap,
     at,
     justify,
-    anatPart,
     classNames,
     "data-tier": dataTier,
     "data-component": dataComponent,
@@ -124,7 +122,7 @@ const ResponsiveClusterBase = ({
     <div
         data-tier={dataTier}
         data-component={dataComponent}
-        data-anat-part={anatPart}
+
         data-principles={pattern}
         className={cn(
             "flex w-full flex-col items-center",

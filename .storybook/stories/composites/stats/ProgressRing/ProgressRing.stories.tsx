@@ -134,25 +134,25 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, size = \"sm\", caption unset",
                         why: "The ring shimmer renders at `size-16`, the exact diameter `SIZE_MAP.sm.ring` gives the real ring — per §12g.0 the skeleton follows the size axis the caller already picked, so the layout doesn't jump once `value` lands. No caption bar exists, since no `caption` was passed.",
                         code: "<ProgressRing isSkeleton size=\"sm\" />",
-                        render: <ProgressRing isSkeleton size="sm" anatPart="ProgressRing" showAnatomy />,
+                        render: <ProgressRing isSkeleton size="sm" />,
                     },
                     {
                         name: "isSkeleton = true, size = \"md\" (default), caption unset",
                         why: "The ring shimmer grows to `size-24`, matching `SIZE_MAP.md.ring` — the default size most stat rows use.",
                         code: "<ProgressRing isSkeleton />",
-                        render: <ProgressRing isSkeleton anatPart="ProgressRing" showAnatomy />,
+                        render: <ProgressRing isSkeleton />,
                     },
                     {
                         name: "isSkeleton = true, size = \"lg\", caption unset",
                         why: "The ring shimmer reaches its largest diameter, `size-32`, matching `SIZE_MAP.lg.ring` — the scale a hero stat anchoring a page would use.",
                         code: "<ProgressRing isSkeleton size=\"lg\" />",
-                        render: <ProgressRing isSkeleton size="lg" anatPart="ProgressRing" showAnatomy />,
+                        render: <ProgressRing isSkeleton size="lg" />,
                     },
                     {
                         name: "isSkeleton = true, size = \"lg\", caption set",
                         why: "A second, shorter bar appears below the ring, mirroring where the caption text would sit once real data lands — the component only checks whether `caption` is passed, not what it says, so the shimmer bar's presence tracks that prop directly.",
                         code: "<ProgressRing isSkeleton size=\"lg\" caption=\"Course progress\" />",
-                        render: <ProgressRing isSkeleton size="lg" caption="Course progress" anatPart="ProgressRing" showAnatomy />,
+                        render: <ProgressRing isSkeleton size="lg" caption="Course progress" />,
                     },
                 ]}
             />

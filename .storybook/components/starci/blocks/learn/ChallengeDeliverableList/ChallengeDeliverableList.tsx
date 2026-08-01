@@ -204,9 +204,7 @@ export interface ChallengeDeliverableListProps {
     /** `true` → the card draws its own mirror while the requirements load. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -320,17 +318,17 @@ const AUTOSAVE_LABEL: Record<ChallengeDeliverableAutosaveStatus, string> = {
  * `size="xs"` but a different weight reads as a different font size —
  * resynced so the same info-type shares one typeface treatment (§2d).
  */
-const scoreEnd = (item: ChallengeDeliverableItem, showAnatomy: boolean) =>
+const scoreEnd = (item: ChallengeDeliverableItem) =>
     item.graded != null ? (
         <Typography
             size="xs"
             weight="medium"
             tabularNums
             text={`${item.graded.earnedScore}/${item.graded.requiredScore}`}
-            showAnatomy={showAnatomy}
+
         />
     ) : (
-        <ScoreValue points={item.points} anatPart={showAnatomy ? "ScoreValue" : undefined} />
+        <ScoreValue points={item.points} />
     )
 
 /**
@@ -338,11 +336,11 @@ const scoreEnd = (item: ChallengeDeliverableItem, showAnatomy: boolean) =>
  * text — rides `titleStart`, not composed into `title` itself (see file header).
  * Delegates the actual icon+tone to `SurfaceCard`'s `markIcon` (see `STATUS_MARK`).
  */
-const triggerIcon = (item: ChallengeDeliverableItem, showAnatomy: boolean) =>
-    markIcon(STATUS_MARK[item.status], STATUS_TONE[item.status], showAnatomy ? "StatusIcon" : undefined)
+const triggerIcon = (item: ChallengeDeliverableItem) =>
+    markIcon(STATUS_MARK[item.status], STATUS_TONE[item.status])
 
 /** One requirement's panel: description → URL field → actions → the graded result once it exists. */
-const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) => {
+const deliverableBody = (item: ChallengeDeliverableItem) => {
     // AUDIT 2026-07-30 round-14 (teacher's call after a pushback): dropped `justify="end"` —
     // everything else in the panel (description, URL field, verdict chip, "Latest feedback"
     // trigger) hugs the left edge, only this button row drifted right so it read like it
@@ -358,13 +356,13 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
                 onPress={item.onSubmit}
                 isDisabled={item.url.trim().length === 0}
                 isPending={item.isPending}
-                showAnatomy={showAnatomy}
+
             />
             <Button
                 label="View History"
                 variant="secondary"
                 onPress={item.onViewHistory}
-                showAnatomy={showAnatomy}
+
             />
         </>
     )
@@ -399,7 +397,7 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
     const gradedSection = item.graded != null ? (
         <StackV
             gap={4}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     {/* AUDIT 2026-07-30 round-13 (teacher: "the green section is too busy", settled
@@ -414,10 +412,10 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
                         gap={3}
                         align="center"
                         wrap
-                        anatPart={showAnatomy ? "StackH" : undefined}
+
                         body={
                             <>
-                                <EnumChip value={item.graded.verdict} map={VERDICT_MAP} anatPart={showAnatomy ? "EnumChip" : undefined} />
+                                <EnumChip value={item.graded.verdict} map={VERDICT_MAP} />
                                 {item.graded.attemptNumber != null ? (
                                     <Typography
                                         size="xs"
@@ -425,7 +423,7 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
                                         text={item.graded.processedAt != null
                                             ? `attempt #${item.graded.attemptNumber} · ${item.graded.processedAt}`
                                             : `attempt #${item.graded.attemptNumber}`}
-                                        showAnatomy={showAnatomy}
+
                                     />
                                 ) : null}
                             </>
@@ -435,9 +433,9 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
                     {item.graded.shortFeedback != null ? (
                         <Disclosure
                             title="Latest feedback"
-                            showAnatomy={showAnatomy}
+
                             body={() => (
-                                <Typography size="sm" text={item.graded?.shortFeedback} showAnatomy={showAnatomy} />
+                                <Typography size="sm" text={item.graded?.shortFeedback} />
                             )}
                         />
                     ) : null}
@@ -449,7 +447,7 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
     const panel = (
         <>
             {item.description != null ? (
-                <MarkdownContent source={item.description} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                <MarkdownContent source={item.description} measure="compact" />
             ) : null}
 
             <InputText
@@ -460,7 +458,7 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
                 placeholder="https://github.com/…"
                 ariaLabel={`Submission URL — ${item.title}`}
                 isDisabled={item.isPending}
-                showAnatomy={showAnatomy}
+
             />
 
             {/* Grading-status strip — BETWEEN the URL field and the button row, the exact spot
@@ -477,20 +475,20 @@ const deliverableBody = (item: ChallengeDeliverableItem, showAnatomy: boolean) =
                     title={JOB_STATUS_CALLOUT[item.jobStatus].title}
                     description={JOB_STATUS_CALLOUT[item.jobStatus].description}
                     body={item.jobStatus === "failed" && item.jobError != null
-                        ? <Typography size="xs" color="danger" text={item.jobError} showAnatomy={showAnatomy} />
+                        ? <Typography size="xs" color="danger" text={item.jobError} />
                         : undefined}
-                    anatPart={showAnatomy ? "Callout" : undefined}
-                    showAnatomy={showAnatomy}
+
+
                 />
             ) : null}
 
-            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={actions} />
+            <StackH gap={3} body={actions} />
 
             {gradedSection}
         </>
     )
 
-    return <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={panel} />
+    return <StackV gap={4} body={panel} />
 }
 
 /**
@@ -503,8 +501,6 @@ const ChallengeDeliverableList = ({
     autosaveStatus,
     onOpenGradingSettings,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: ChallengeDeliverableListProps) => {
     // The first requirement that has not PASSED opens by default, so a returning
     // learner lands on what they still owe instead of requirement #1 every time.
@@ -512,10 +508,10 @@ const ChallengeDeliverableList = ({
 
     const accordionItems: Array<SurfaceCardAccordionItem> = items.map((item, index) => ({
         id: item.id,
-        titleStart: triggerIcon(item, showAnatomy),
+        titleStart: triggerIcon(item),
         title: `${index + 1}. ${item.title}`,
-        titleEnd: scoreEnd(item, showAnatomy),
-        body: deliverableBody(item, showAnatomy),
+        titleEnd: scoreEnd(item),
+        body: deliverableBody(item),
     }))
 
     // ONE surface, not two (teacher's call 2026-07-29): the accordion IS the card's entire
@@ -539,7 +535,7 @@ const ChallengeDeliverableList = ({
                     size="xs"
                     color={autosaveStatus === "failed" ? "danger" : "muted"}
                     text={AUTOSAVE_LABEL[autosaveStatus]}
-                    showAnatomy={showAnatomy}
+
                 />
             ) : null}
             <SurfaceCardAccordion
@@ -553,20 +549,20 @@ const ChallengeDeliverableList = ({
                         size="sm"
                         onPress={onOpenGradingSettings}
                         isSkeleton={isSkeleton}
-                        showAnatomy={showAnatomy}
+
                     />
                 )}
                 items={accordionItems}
                 defaultExpandedKeys={firstOpenId != null ? new Set([firstOpenId]) : undefined}
                 isSkeleton={isSkeleton}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "SurfaceCardAccordion" : undefined}
+
+
             />
         </>
     )
 
     return (
-        <StackV gap={3} anatPart={anatPart} showAnatomy={showAnatomy} body={listBody} />
+        <StackV gap={3} body={listBody} />
     )
 }
 

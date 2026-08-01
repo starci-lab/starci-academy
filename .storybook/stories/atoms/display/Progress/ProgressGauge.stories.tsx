@@ -71,7 +71,7 @@ export const Value: Story = {
                         name: "value = 72, max = 100 (default)",
                         why: "The fill sits at 72% of the track's width. `max` defaults to 100, so a bare `value` reads directly as a percentage.",
                         code: "<ProgressGauge value={72} />   // max defaults to 100",
-                        render: <ProgressGauge value={72} ariaLabel="Disk usage out of 100" showAnatomy />,
+                        render: <ProgressGauge value={72} ariaLabel="Disk usage out of 100" />,
                     },
                     {
                         name: "value = 72, max = 200",
@@ -100,7 +100,7 @@ export const Colors: Story = {
                         name: "color = accent",
                         why: "The fill renders in the neutral accent tone. This is the default reading, used when the number carries no verdict of its own yet.",
                         code: "<ProgressGauge color=\"accent\" value={55} />",
-                        render: <ProgressGauge color="accent" value={55} ariaLabel="Storage used" showAnatomy />,
+                        render: <ProgressGauge color="accent" value={55} ariaLabel="Storage used" />,
                     },
                     {
                         name: "color = success",
@@ -147,7 +147,7 @@ export const Sizes: Story = {
                         name: "size = sm",
                         why: "The track renders at its shortest height. Use this in a compact row where several meters sit close together.",
                         code: "<ProgressGauge size=\"sm\" value={62} />",
-                        render: <ProgressGauge size="sm" value={62} ariaLabel="Compact row" showAnatomy />,
+                        render: <ProgressGauge size="sm" value={62} ariaLabel="Compact row" />,
                     },
                     {
                         name: "size = md (default)",
@@ -181,7 +181,7 @@ export const Loading: Story = {
                         name: "isSkeleton = true",
                         why: "The track is replaced by a shimmer bar at the same height as the real track, no fill and no value. Since the atom draws its own shimmer, nothing shifts once the measurement lands and the real fill appears.",
                         code: "<ProgressGauge isSkeleton />",
-                        render: <ProgressGauge isSkeleton showAnatomy />,
+                        render: <ProgressGauge isSkeleton />,
                     },
                 ]}
             />

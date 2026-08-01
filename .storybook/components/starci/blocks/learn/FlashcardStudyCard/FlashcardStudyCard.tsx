@@ -94,9 +94,7 @@ export interface FlashcardStudyCardProps {
     /** `true` → the card draws its own mirror instead of the real content. */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 /**
@@ -123,8 +121,6 @@ const FlashcardStudyCard = ({
     onPrev,
     onNext,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: FlashcardStudyCardProps) => {
     const hasMeta = levelLabel != null || (tags != null && tags.length > 0)
     const tagItems: Array<ChipGroupItem> = (tags ?? []).map((tag) => ({ key: tag, text: tag }))
@@ -134,17 +130,17 @@ const FlashcardStudyCard = ({
             gap={3}
             wrap
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     {levelLabel != null ? (
-                        <Chip tone="default" text={levelLabel} showAnatomy={showAnatomy} />
+                        <Chip tone="default" text={levelLabel} />
                     ) : null}
                     {tagItems.length > 0 ? (
                         <ChipGroup
                             items={tagItems}
-                            anatPart={showAnatomy ? "ChipGroup" : undefined}
-                            showAnatomy={showAnatomy}
+
+
                         />
                     ) : null}
                 </>
@@ -159,30 +155,30 @@ const FlashcardStudyCard = ({
     const lockNotice = (
         <StackV
             gap={3}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <StackH
                         gap={3}
                         align="center"
-                        anatPart={showAnatomy ? "StackH" : undefined}
+
                         body={
                             <>
                                 <LockIcon aria-hidden focusable="false" weight="bold" className="size-5 shrink-0 text-muted" />
                                 <StackV
                                     gap={1}
-                                    anatPart={showAnatomy ? "StackV" : undefined}
+
                                     body={
                                         <>
-                                            <Typography size="sm" weight="medium" text="Answer locked" showAnatomy={showAnatomy} />
-                                            <Typography size="xs" color="muted" text="Upgrade to Premium to see this card's answer and explanation" showAnatomy={showAnatomy} />
+                                            <Typography size="sm" weight="medium" text="Answer locked" />
+                                            <Typography size="xs" color="muted" text="Upgrade to Premium to see this card's answer and explanation" />
                                         </>
                                     }
                                 />
                             </>
                         }
                     />
-                    <Button label="Unlock this card" variant="primary" onPress={onUnlock} showAnatomy={showAnatomy} />
+                    <Button label="Unlock this card" variant="primary" onPress={onUnlock} />
                 </>
             }
         />
@@ -191,19 +187,19 @@ const FlashcardStudyCard = ({
     const answerBody = (
         <StackV
             gap={6}
-            anatPart={showAnatomy ? "StackV" : undefined}
+
             body={
                 <>
                     <StackV
                         gap={3}
-                        anatPart={showAnatomy ? "StackV" : undefined}
+
                         body={
                             <>
-                                <Typography size="xs" color="muted" text="Answer" showAnatomy={showAnatomy} />
+                                <Typography size="xs" color="muted" text="Answer" />
                                 <MarkdownContent
                                     source={answer ?? ""}
                                     measure="compact"
-                                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                                 />
                             </>
                         }
@@ -211,14 +207,14 @@ const FlashcardStudyCard = ({
                     {explanation != null ? (
                         <StackV
                             gap={3}
-                            anatPart={showAnatomy ? "StackV" : undefined}
+
                             body={
                                 <>
-                                    <Typography size="xs" color="muted" text="Explanation" showAnatomy={showAnatomy} />
+                                    <Typography size="xs" color="muted" text="Explanation" />
                                     <MarkdownContent
                                         source={explanation}
                                         measure="compact"
-                                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
                                     />
                                 </>
                             }
@@ -231,8 +227,8 @@ const FlashcardStudyCard = ({
                         onRate={onRate}
                         ariaLabel="Choose recall level"
                         isPending={isRatingPending}
-                        anatPart={showAnatomy ? "RatingBar" : undefined}
-                        showAnatomy={showAnatomy}
+
+
                     />
                 </>
             }
@@ -245,7 +241,7 @@ const FlashcardStudyCard = ({
             gap={3}
             justify="between"
             align="center"
-            anatPart={showAnatomy ? "StackH" : undefined}
+
             body={
                 <>
                     <Button
@@ -255,10 +251,10 @@ const FlashcardStudyCard = ({
                         variant="tertiary"
                         isDisabled={isFirst}
                         onPress={onPrev}
-                        showAnatomy={showAnatomy}
+
                     />
                     {!revealed ? (
-                        <Button label="Show answer" variant="primary" onPress={onReveal} showAnatomy={showAnatomy} />
+                        <Button label="Show answer" variant="primary" onPress={onReveal} />
                     ) : null}
                     <Button
                         isIconOnly
@@ -267,7 +263,7 @@ const FlashcardStudyCard = ({
                         variant="tertiary"
                         isDisabled={isLast}
                         onPress={onNext}
-                        showAnatomy={showAnatomy}
+
                     />
                 </>
             }
@@ -280,7 +276,7 @@ const FlashcardStudyCard = ({
             <MarkdownContent
                 source={question}
                 measure="compact"
-                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+
             />
             {revealed ? (isLocked ? lockNotice : answerBody) : null}
             {navRow}
@@ -288,11 +284,11 @@ const FlashcardStudyCard = ({
     )
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <SurfaceCard
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={cardBody} />}
+
+                body={() => <StackV gap={6} body={cardBody} />}
             />
         </div>
     )

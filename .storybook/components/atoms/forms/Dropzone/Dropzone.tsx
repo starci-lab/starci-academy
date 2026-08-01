@@ -34,7 +34,6 @@ export interface DropzoneProps {
      */
     classNames?: Array<AllowedClassName>
     /** When true, the loading `Skeleton` emits a `data-anat-part` so the anatomy panel can anchor its badge. */
-    showAnatomy?: boolean
 }
 
 /**
@@ -51,7 +50,6 @@ const DropzoneBase = ({
     onBlur,
     isSkeleton = false,
     classNames,
-    showAnatomy = false,
 }: DropzoneProps) => {
     const onDrop = useCallback((acceptedFiles: Array<File>) => {
         onValueChange(acceptedFiles[0] ?? null)
@@ -73,7 +71,7 @@ const DropzoneBase = ({
             <div data-tier="atom" data-component="Dropzone" className={cn("flex flex-col gap-2", classNames)}>
                 <HeroSkeleton
                     className="h-[68px] w-full rounded-3xl"
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+
                 />
             </div>
         )

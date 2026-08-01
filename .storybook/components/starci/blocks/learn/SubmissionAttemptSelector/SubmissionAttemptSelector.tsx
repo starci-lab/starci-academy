@@ -107,9 +107,7 @@ export interface SubmissionAttemptSelectorProps {
     /** `true` → a parent-forced skeleton paint, same branch as `isLoading` (see file header). */
     isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
 }
 
 const EMPTY_LABEL_DEFAULT = "No attempts to choose from yet"
@@ -122,29 +120,28 @@ const NONE_SELECTED = ""
 const SKELETON_ITEM_COUNT = 3
 
 /** Turns one attempt into its `Chip` — the verdict glyph, "Attempt N", and its score. */
-const attemptChip = (attempt: SubmissionAttempt, showAnatomy: boolean) => (
+const attemptChip = (attempt: SubmissionAttempt) => (
     <Chip
         icon={attempt.isPassing ? CheckCircleIcon : XCircleIcon}
         tone={attempt.isPassing ? "success" : "danger"}
         text={attempt.score != null ? `Attempt ${attempt.attemptNumber} · ${attempt.score}` : `Attempt ${attempt.attemptNumber}`}
-        showAnatomy={showAnatomy}
+
     />
 )
 
 /** Props for {@link AttemptRowSkeleton}. */
 interface AttemptRowSkeletonProps {
     /** `true` → each skeleton pill emits `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy: boolean
 }
 
 /** Mirrors the real strip's footprint while attempts are loading — pill-for-pill, no data. */
-const AttemptRowSkeleton = ({ showAnatomy }: AttemptRowSkeletonProps) => (
+const AttemptRowSkeleton = ({  }: AttemptRowSkeletonProps) => (
     <Cluster
         gap={3}
-        anatPart={showAnatomy ? "Cluster" : undefined}
+
         items={Array.from({ length: SKELETON_ITEM_COUNT }, (_, index) => ({
             key: `skeleton-${index}`,
-            content: <Button isSkeleton size="sm" showAnatomy={showAnatomy} />,
+            content: <Button isSkeleton size="sm" />,
         }))}
     />
 )
@@ -171,49 +168,45 @@ const SubmissionAttemptSelector = ({
     onRetry,
     retryLabel,
     isSkeleton = false,
-    showAnatomy = false,
-    anatPart,
 }: SubmissionAttemptSelectorProps) => {
     const hasOverflow = (overflowCount ?? 0) > 0
 
     const emptyContent: AsyncContentEmptyProps = {
         title: emptyLabel ?? EMPTY_LABEL_DEFAULT,
-        anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
-        showAnatomy,
+
     }
 
     const errorContent: AsyncContentErrorProps = {
         title: ERROR_TITLE,
         onRetry,
         retryLabel,
-        anatPart: showAnatomy ? "AsyncContentError" : undefined,
-        showAnatomy,
+
     }
 
     const items: Array<ButtonRadioGroupItem<string>> = attempts.map((attempt) => ({
         value: attempt.id,
-        content: attemptChip(attempt, showAnatomy),
+        content: attemptChip(attempt),
     }))
 
     return (
-        <div data-anat-part={anatPart}>
+        <div>
             <AsyncContent
                 // A parent-forced skeleton and this row's own in-flight fetch share the
                 // one loading branch `AsyncContent` exposes (see file header).
                 isLoading={isLoading || isSkeleton}
-                skeleton={<AttemptRowSkeleton showAnatomy={showAnatomy} />}
+                skeleton={<AttemptRowSkeleton />}
                 isEmpty={isEmpty}
                 emptyContent={emptyContent}
                 error={error}
                 errorContent={errorContent}
-                showAnatomy={showAnatomy}
+
                 content={
                     <ButtonRadioGroup
                         ariaLabel={ariaLabel}
                         value={selectedId ?? NONE_SELECTED}
                         onChange={onSelect}
                         items={items}
-                        showAnatomy={showAnatomy}
+
                         trailing={
                             hasOverflow ? (
                                 <Button
@@ -221,7 +214,7 @@ const SubmissionAttemptSelector = ({
                                     size="sm"
                                     label={overflowLabel ?? `+${overflowCount}`}
                                     onPress={onOverflowPress}
-                                    showAnatomy={showAnatomy}
+
                                 />
                             ) : undefined
                         }

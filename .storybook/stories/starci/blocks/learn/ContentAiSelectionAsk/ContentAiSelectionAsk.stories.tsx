@@ -51,8 +51,8 @@ export const Full: Story = {
 />`,
                         render: (
                             <ContentAiSelectionAsk
-                                anatPart="ContentAiSelectionAsk"
-                                showAnatomy
+
+                               
                                 anchor={{ x: 220, y: 160 }}
                                 onOpen={() => {}}
                             />

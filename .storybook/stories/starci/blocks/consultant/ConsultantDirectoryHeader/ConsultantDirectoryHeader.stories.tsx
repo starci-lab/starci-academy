@@ -70,8 +70,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ConsultantDirectoryHeader
-                                anatPart="ConsultantDirectoryHeader"
-                                showAnatomy
+
+                               
                                 breadcrumbItems={CRUMBS}
                                 title="Consultant directory"
                                 description="Book a 1:1 session with the consultants supporting the DevOps Mastery course."
@@ -116,8 +116,8 @@ export const Skeleton: Story = {
                         code: "<ConsultantDirectoryHeader title=\"\" isSkeleton />",
                         render: (
                             <ConsultantDirectoryHeader
-                                anatPart="ConsultantDirectoryHeader"
-                                showAnatomy
+
+                               
                                 title=""
                                 isSkeleton
                             />

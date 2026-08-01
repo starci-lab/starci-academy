@@ -68,7 +68,6 @@ export interface SplitWorkspaceProps {
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /**
      * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
@@ -109,13 +108,12 @@ const SplitWorkspace = ({
     aside,
     at = "xl",
     classNames,
-    anatPart,
     pattern,
 }: SplitWorkspaceProps) => (
     <div
         data-tier="frame"
         data-component="SplitWorkspace"
-        data-anat-part={anatPart}
+
         data-principles={pattern}
         className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
     >

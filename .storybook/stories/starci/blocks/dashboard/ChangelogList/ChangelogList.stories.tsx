@@ -86,8 +86,8 @@ export const Default: Story = {
 />`,
                         render: (
                             <ChangelogList
-                                anatPart="ChangelogList"
-                                showAnatomy
+
+                               
                                 entries={[]}
                                 isLoading={false}
                             />
@@ -134,8 +134,8 @@ export const Loading: Story = {
 />`,
                         render: (
                             <ChangelogList
-                                anatPart="ChangelogList"
-                                showAnatomy
+
+                               
                                 entries={[]}
                                 isLoading
                             />
@@ -170,8 +170,8 @@ export const Error: Story = {
 />`,
                         render: (
                             <ChangelogList
-                                anatPart="ChangelogList"
-                                showAnatomy
+
+                               
                                 entries={[]}
                                 isLoading={false}
                                 error={new globalThis.Error("network")}

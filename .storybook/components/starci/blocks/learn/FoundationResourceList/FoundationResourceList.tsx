@@ -43,7 +43,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *   • Position numbering ("1. Title") — see the judgement call below for what
  *     "position" means across pages.
  *   • The kind → chip label lookup (`KIND_CHIP_MAP`).
- *   • The "Đề xuất" recommended-chip text.
+ *   • The "Recommended" recommended-chip text.
  *   • Choosing between "no resources yet" and `no matches for "X"` from the
  *     typed `searchQuery` prop — never a pre-formatted empty-state string
  *     (§14d.1's exact trap: a caller handing over `emptyMessage: string`
@@ -58,7 +58,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *     message ⇒ its own LEAF (`Prop \`error\``, §2②: "optional + presence
  *     grows/removes a node ⇒ exactly one leaf").
  *   • `resources.length === 0` (with or without `searchQuery`) is DATA
- *     returning `0` — R0's own worked example ("0 · 1-3 · nhiều · null ⇒
+ *     returning `0` — R0's own worked example ("0 · 1-3 · many · null ⇒
  *     STATE") — so the two empty messages are STATES of the same `Default`
  *     leaf as a populated page, not leaves of their own. `AsyncContent` still
  *     swaps the rendered branch for this case, same as it does for
@@ -108,7 +108,7 @@ export interface FoundationResourceItem {
     thumbnailUrl?: string
     /** Drives the kind chip via {@link KIND_CHIP_MAP}. */
     kind: FoundationKindEnum
-    /** `true` → an extra "Đề xuất" chip rides beside the kind chip. */
+    /** `true` → an extra "Recommended" chip rides beside the kind chip. */
     isRecommended?: boolean
     /** Fired when the row is pressed. */
     onPress: () => void
@@ -140,18 +140,18 @@ export interface FoundationResourceListProps {
 
 /** kind → chip label/color — the block's own vocabulary (§14d.1), never handed in by a caller. */
 const KIND_CHIP_MAP: Record<FoundationKindEnum, EnumChipEntry> = {
-    article: { label: "Bài viết" },
+    article: { label: "Article" },
     video: { label: "Video", color: "accent" },
-    exercise: { label: "Bài tập", color: "warning" },
-    reference: { label: "Tài liệu", color: "success" },
+    exercise: { label: "Exercise", color: "warning" },
+    reference: { label: "Reference", color: "success" },
 }
 
 /** The block's own wording for the recommended chip. */
-const RECOMMENDED_LABEL = "Đề xuất"
+const RECOMMENDED_LABEL = "Recommended"
 
-const ERROR_TITLE = "Không tải được danh sách tài nguyên"
-const EMPTY_TITLE_NO_QUERY = "Chưa có tài nguyên nào ở đây"
-const EMPTY_DESCRIPTION_WITH_QUERY = "Thử một từ khoá khác."
+const ERROR_TITLE = "Could not load the resource list"
+const EMPTY_TITLE_NO_QUERY = "No resources here yet"
+const EMPTY_DESCRIPTION_WITH_QUERY = "Try a different keyword."
 
 /** How many placeholder rows mirror the list while `resources` hasn't landed yet. */
 const SKELETON_ROW_COUNT = 4
@@ -167,17 +167,17 @@ const resourceMeta = (resource: FoundationResourceItem, showAnatomy: boolean) =>
     if (resource.isRecommended) {
         chips.push({
             key: "recommended",
-            content: <Chip tone="accent" text={RECOMMENDED_LABEL} anatPart={showAnatomy ? "Chip" : undefined} />,
+            content: <Chip tone="accent" text={RECOMMENDED_LABEL} showAnatomy={showAnatomy} />,
         })
     }
-    return <Cluster gap="related" items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
+    return <Cluster gap={3} items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
 }
 
 /** Placeholder rows for the loading mirror — no data, no press handler (§12c). */
 const skeletonRows = (showAnatomy: boolean): Array<SurfaceCardListItem> =>
     Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
         key: `skeleton-${index}`,
-        leading: <IconTile isSkeleton size="sm" showAnatomy={showAnatomy} anatPart={showAnatomy ? "IconTile" : undefined} />,
+        leading: () => <IconTile isSkeleton size="sm" showAnatomy={showAnatomy} />,
         title: "",
         subtitle: "",
     }))
@@ -185,20 +185,19 @@ const skeletonRows = (showAnatomy: boolean): Array<SurfaceCardListItem> =>
 /** One real row: numbered title, blurb, thumbnail-or-glyph, kind+recommended chips, caret. */
 const resourceRow = (resource: FoundationResourceItem, position: number, showAnatomy: boolean): SurfaceCardListItem => ({
     key: resource.id,
-    leading: (
+    leading: () => (
         <IconTile
             src={resource.thumbnailUrl}
             icon={StackIcon}
             size="sm"
             showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "IconTile" : undefined}
         />
     ),
     // The block owns the numbering (§14d.1) — see file header for why it is
     // LOCAL to the current page rather than a running count across pages.
     title: `${position}. ${resource.title}`,
     subtitle: resource.description,
-    meta: resourceMeta(resource, showAnatomy),
+    meta: () => resourceMeta(resource, showAnatomy),
     trailingIcon: CaretRightIcon,
     onPress: resource.onPress,
 })
@@ -227,7 +226,7 @@ const FoundationResourceList = ({
     const emptyContent: AsyncContentEmptyProps = hasQuery
         ? {
             icon: MagnifyingGlassIcon,
-            title: `Không tìm thấy tài nguyên nào khớp "${searchQuery}"`,
+            title: `No resources found matching "${searchQuery}"`,
             description: EMPTY_DESCRIPTION_WITH_QUERY,
             anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
             showAnatomy,
@@ -264,7 +263,7 @@ const FoundationResourceList = ({
                 showAnatomy={showAnatomy}
                 content={
                     <StackV
-                        gap="related"
+                        gap={3}
                         anatPart={showAnatomy ? "StackV" : undefined}
                         body={
                             <>

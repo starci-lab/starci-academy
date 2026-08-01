@@ -34,8 +34,8 @@ export interface OtpInputProps extends WithClassNames<undefined> {
     isInvalid?: boolean
     /**
      * Error line shown under the field while {@link isInvalid} is `true`. Prefer
-     * a message that says how to fix it ("Mã không đúng, kiểm tra lại email"),
-     * not just "sai". Rendered `body-xs` in the danger token.
+     * a message that says how to fix it ("Code is incorrect, check your email again"),
+     * not just "wrong". Rendered `body-xs` in the danger token.
      */
     errorMessage?: React.ReactNode
     /**
@@ -44,7 +44,7 @@ export interface OtpInputProps extends WithClassNames<undefined> {
      */
     autoFocus?: boolean
     /**
-     * Optional label rendered above the slots (e.g. "Mã xác minh"). Omit for a
+     * Optional label rendered above the slots (e.g. "Verification code"). Omit for a
      * bare field.
      */
     label?: React.ReactNode
@@ -64,11 +64,11 @@ export interface OtpInputProps extends WithClassNames<undefined> {
  *
  * @example
  * <OtpInput
- *   label="Mã xác minh"
+ *   label="Verification code"
  *   value={code}
  *   onChange={setCode}
  *   isInvalid={hasError}
- *   errorMessage="Mã không đúng, kiểm tra lại email của bạn."
+ *   errorMessage="Code is incorrect, check your email again."
  * />
  *
  * @see Story: .storybook/stories/blocks/form/OtpInput/OtpInput.stories

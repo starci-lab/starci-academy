@@ -7,24 +7,27 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `ModalShell.*`, the dialog-scaffold KHUNG
- * namespace (thầy 2026-07-25, canon §13a). Authored in Storybook (not `src`);
+ * STORYBOOK-LOCAL DESIGN SPEC — `ModalShell.*`, the dialog-scaffold FRAME
+ * namespace (teacher's call, 2026-07-25, canon §13a). Authored in Storybook (not `src`);
  * synced to `src` later. No `@/components` imports (design-spec ports stay
  * self-contained).
  *
- * KHUNG API LAW (§13b): `.Base` is a WRAPPER frame → the named slots
+ * FRAME API LAW (§13b): `.Base` is a WRAPPER frame → the named slots
  * `header`/`body`/`footer` are the main road, `children` stays as shorthand
  * for `body`. `footer` is a REAL slot now (rendered as HeroUI `Modal.Footer`)
  * — before this refactor every caller hand-rolled a
  * `<div className="flex justify-end gap-2">` CTA row INSIDE the body, which is
- * exactly the "nhét nhiều thứ vào 1 chỗ" the slot law exists to stop.
- * Nothing here repeats, so no `items` member. Namespace only — no bare
+ * exactly the "several things crammed into one place" the slot law exists to
+ * stop. Nothing here repeats, so no `items` member. Namespace only — no bare
  * component export.
  *
  * A tier-3 presentational frame — it owns no state of its own; the caller
  * threads open/close state plus the header and body content via props.
  * ─────────────────────────────────────────────────────────────────────────────
  */
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ModalShell" } as const
 
 /** Props for {@link ModalShell}. */
 export interface ModalShellBaseProps {
@@ -76,17 +79,14 @@ export interface ModalShellBaseProps {
     scroll?: React.ComponentProps<typeof Modal.Container>["scroll"]
     /** Extra classes merged onto `Modal.Container` (merged after the `scroll="inside"` max-height default). */
     containerClassName?: string
-    /** Extra classes merged onto `Modal.Dialog`, in addition to {@link className}. */
+    /** Extra classes merged onto `Modal.Dialog`, in addition to {@link ModalShellBaseProps.classNames}. */
     dialogClassName?: string
     /** Extra classes merged onto `Modal.Body`. */
     bodyClassName?: string
     /** Extra classes merged onto `Modal.Footer`. */
     footerClassName?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /**
@@ -119,7 +119,6 @@ const Base = ({
     dialogClassName,
     bodyClassName,
     footerClassName,
-    className,
     classNames,
     children,
     showAnatomy = false,
@@ -127,59 +126,71 @@ const Base = ({
     const hasHeader = header != null || title != null
     const main = body ?? children
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            data-tier="composite"
+            data-component="ModalShell"
+        >
             <Modal.Backdrop>
                 <Modal.Container
                     className={cn(scroll === "inside" && "max-h-[85vh]", containerClassName)}
                     scroll={scroll}
                     size={size}
                 >
-                    {/* ⭐ Cha giữ nhịp (thầy chốt (a), 2026-07-27). Dialog vốn ĐÃ là flex nhưng
-                        `rowGap: normal`, nên seam phải do con tự đẩy bằng `mt-*!` — mà `!` là để
-                        đè CSS của HeroUI (`.modal__header + .modal__body { mt-2 }`, `mt-5` trước
-                        footer), không phải để giành với cha.
-                        Nay `gap-4` ở đây + `mt-0!` ở con: MỘT seam, MỘT chủ (§10a). */}
-                    <Modal.Dialog className={cn("gap-3", dialogClassName, className, classNames)}>
+                    {/* ⭐ The PARENT keeps the rhythm (teacher's call (a), 2026-07-27). The Dialog is
+                        ALREADY a flex, but with `rowGap: normal`, so the seam must be pushed by the
+                        child itself via `mt-*!` — the `!` only overrides HeroUI's own CSS
+                        (`.modal__header + .modal__body { mt-2 }`, `mt-5` before the footer), not to
+                        compete with the parent.
+                        Now `gap-4` here + `mt-0!` on the child: ONE seam, ONE owner (§10a). */}
+                    <Modal.Dialog className={cn("gap-3", dialogClassName, classNames)}>
                         <Modal.CloseTrigger data-anat-part={showAnatomy ? "Modal.CloseTrigger" : undefined} />
                         {header ? (
                             <Modal.Header data-anat-part={showAnatomy ? "Modal.Header" : undefined}>{header}</Modal.Header>
                         ) : title != null ? (
                             <Modal.Header>
-                                <StackV
-                                    gap="tight"
-                                    className={cn("pr-8", titleClassName)}
-                                    body={
-                                        <>
-                                            <Typography
-                                                weight="bold"
-                                                showAnatomy={showAnatomy}
-                                                anatPart={showAnatomy ? "Typography" : undefined}
-                                                text={title}
-                                            />
-                                            {description != null ? (
-                                                <Typography size="sm"
-                                                    color="muted"
+                                {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
+                                    ride a plain wrapper — neither is an `AllowedClassName`, so the typed
+                                    `StackV` frame keeps its closed `classNames` union. */}
+                                <div className={cn("pr-8", titleClassName)}>
+                                    <StackV
+                                        gap={2}
+                                        pattern="title-subtitle"
+                                        body={
+                                            <>
+                                                <Typography
+                                                    weight="bold"
                                                     showAnatomy={showAnatomy}
-                                                    anatPart={showAnatomy ? "Typography" : undefined}
-                                                    text={description}
+                                                    text={title}
                                                 />
-                                            ) : null}
-                                        </>
-                                    }
-                                />
+                                                {description != null ? (
+                                                    <Typography size="sm"
+                                                        color="muted"
+                                                        showAnatomy={showAnatomy}
+                                                        text={description}
+                                                    />
+                                                ) : null}
+                                            </>
+                                        }
+                                    />
+                                </div>
                             </Modal.Header>
                         ) : null}
-                        {/* ⚠️ `bodyStartsWithTabs` ĐÃ XOÁ cùng lượt này. Nó bắt caller khai "body
-                            của tôi mở đầu bằng tabs" để khung trừ bớt 4px — tức KHUNG ĐANG HỎI
-                            NỘI DUNG BÊN TRONG NÓ LÀ LOẠI GÌ, thứ mà định nghĩa frame cấm.
-                            4px ấy sinh ra vì `Tabs` có đệm trên của riêng nó; đệm đó là hình học
-                            của `Tabs`, phải do chính nó lo (§13z), không phải để khung bù từ ngoài.
-                            Hệ quả có thật: ca tabs đổi 12px thành 16px. */}
+                        {/* ⚠️ `bodyStartsWithTabs` was DELETED in this same pass. It made the
+                            caller declare "my body starts with tabs" so the frame could subtract
+                            4px — which means the FRAME WAS ASKING WHAT KIND OF CONTENT SITS
+                            INSIDE IT, exactly what the definition of a frame forbids.
+                            That 4px exists because `Tabs` has its own top padding; that padding is
+                            `Tabs`'s own geometry, and it must own it itself (§13z), not have the
+                            frame compensate for it from outside.
+                            Real consequence: a tabs case turned 12px into 16px. */}
                         <Modal.Body
                             data-anat-part={showAnatomy ? "Modal.Body" : undefined}
                             className={cn(
-                                // `mt-0!` chỉ để TẮT margin HeroUI ship sẵn; nhịp do `gap-4` của
-                                // Dialog quyết. Số 0 nằm trên thang nên không phải ngoại lệ.
+                                // `mt-0!` only TURNS OFF the margin HeroUI ships with; the rhythm is
+                                // decided by the Dialog's own `gap-4`. The 0 sits on the scale, so it
+                                // is not an exception.
                                 hasHeader && "mt-0!",
                                 bodyClassName,
                             )}

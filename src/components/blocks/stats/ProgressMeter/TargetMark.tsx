@@ -16,10 +16,10 @@ export interface ProgressMeterTargetMarkProps extends WithClassNames<undefined> 
  * (`w-1 h-5`, `bg-surface` + hairline) that overshoots the thin bar so it reads
  * as a clean "notch" at the goal position, with an optional short label floating
  * above it. Extracted from `ProgressMeter` so the marker's look lives in ONE
- * place (thầy 2026-07-18: *"màu đỏ tách thành component riêng ... anchor render
- * cùng kích thước w-1 với h-5 và rounded, màu là bg-surface"*).
+ * place (teacher 2026-07-18: *"pull the red color out into its own component ...
+ * the anchor renders at the same size, w-1 by h-5 and rounded, the color is bg-surface"*).
  *
- * `bg-accent` (thầy 2026-07-18: *"để màu accent được k?"*) — the goal marker is
+ * `bg-accent` (teacher 2026-07-18: *"can it be accent color?"*) — the goal marker is
  * a neutral brand tone, distinct from the bar's own band (danger/warning/success)
  * value color, so it reads as "the line to reach" not another value. Centered on
  * the bar via `top-1/2 -translate-y-1/2` (the parent meter forces an `h-5` bar row

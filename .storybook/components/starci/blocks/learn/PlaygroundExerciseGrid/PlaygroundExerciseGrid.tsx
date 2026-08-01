@@ -1,7 +1,7 @@
 import React from "react"
 import { ArrowRightIcon, ListChecksIcon, TerminalWindowIcon } from "@phosphor-icons/react"
 import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -30,7 +30,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *      icon out BESIDE the content in a row, which is the wrong shape here;
  *      `PlaygroundCard`'s own layout stacks the tile icon above its text).
  *
- *   3. THE CLOSING "Vào playground →" CUE ROW is DECORATIVE affordance text,
+ *   3. THE CLOSING "Enter playground →" CUE ROW is DECORATIVE affordance text,
  *      not a second interactive element. Because the whole tile is ONE press
  *      target (`SurfaceCardPressableGroup`'s "simple" whole-card pattern — no
  *      `actions` passed), nesting a real `<button>`/`<a>` for the cue inside it
@@ -42,7 +42,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *   4. THE EMPTY BRANCH is OWNED HERE, not exposed as a separate top-level
  *      block. `SurfaceCardPressableGroup` renders nothing (`null`) for zero
  *      items, so a caller-visible hole would appear with no explanation. This
- *      block instead swaps in `FeedbackEmpty` — the SAME composite
+ *      block instead swaps in `EmptyState` — the SAME composite
  *      `FoundationCategoryList` reaches for on its own bounded list — mirroring
  *      that block's judgement to keep the surface's SPOT on the screen filled
  *      by a real, worded state rather than a component that silently vanishes.
@@ -52,7 +52,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * never changes the STRUCTURE: it is still one `role="group"` grid, just every
  * tile mirrored by the composite's own generic skeleton tile — so it stays a
  * state, not its own leaf. Losing all exercises DOES change the structure (the
- * grid is replaced outright by `FeedbackEmpty`), so `Empty` earns its own leaf.
+ * grid is replaced outright by `EmptyState`), so `Empty` earns its own leaf.
  *
  * JUDGEMENT CALL — SKELETON PLACEHOLDER COUNT. `SurfaceCardPressableGroup`
  * returns `null` for an empty `items` array REGARDLESS of `isSkeleton` (it
@@ -105,14 +105,14 @@ export interface PlaygroundExerciseGridProps {
 }
 
 /** Step-count wording — the block's own vocabulary (§14d.1: a block owns its wording). */
-const stepCountLabel = (count: number) => `${count} bước`
+const stepCountLabel = (count: number) => `${count} steps`
 
 /** The closing affordance cue — decorative, never its own press target (see file header, judgement 3). */
-const CUE_LABEL = "Vào playground"
+const CUE_LABEL = "Enter playground"
 
 /** The library-itself-is-empty wording — this course has no Playground exercises at all. */
-const EMPTY_TITLE = "Chưa có bài thực hành nào"
-const EMPTY_DESCRIPTION = "Khoá học này chưa có bài Playground — quay lại sau nhé."
+const EMPTY_TITLE = "No hands-on exercises yet"
+const EMPTY_DESCRIPTION = "This course has no Playground exercise yet — check back later."
 
 /** Guessed placeholder rows for the first fetch (§12c), mirroring `FoundationCategoryList`'s convention. */
 const SKELETON_EXERCISES: Array<PlaygroundExerciseGridItem> = Array.from({ length: 4 }, (_unused, index) => ({
@@ -147,7 +147,7 @@ const PlaygroundExerciseGrid = ({
     const renderExerciseContent = (exercise: PlaygroundExerciseGridItem) => {
         const titleAndSteps = (
             <StackV
-                gap="tight"
+                gap={2}
                 body={
                     <>
                         <div data-anat-part={showAnatomy ? "Typography" : undefined}>
@@ -163,7 +163,7 @@ const PlaygroundExerciseGrid = ({
 
         return (
             <StackV
-                gap="grouped"
+                gap={4}
                 body={
                     <>
                         <div data-anat-part={showAnatomy ? "IconTile" : undefined}>
@@ -201,11 +201,11 @@ const PlaygroundExerciseGrid = ({
     if (!isSkeleton && exercises.length === 0) {
         return (
             <div data-anat-part={anatPart}>
-                <FeedbackEmpty
+                <EmptyState
                     icon={TerminalWindowIcon}
                     title={EMPTY_TITLE}
                     description={EMPTY_DESCRIPTION}
-                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+                    anatPart={showAnatomy ? "EmptyState" : undefined}
                     showAnatomy={showAnatomy}
                 />
             </div>

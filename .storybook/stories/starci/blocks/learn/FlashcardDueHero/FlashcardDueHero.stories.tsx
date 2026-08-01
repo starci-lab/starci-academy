@@ -7,7 +7,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * many cards are due today, the primary Start CTA, and — when a batch was
  * left mid-way — the resume card instead. See the component's own file
  * header for why each shape below is its own LEAF rather than one shape with
- * flags, and why `FeedbackEmpty` joined the reuse list beyond what this run
+ * flags, and why `EmptyState` joined the reuse list beyond what this run
  * was handed.
  *
  * 📐 THREE LEAVES BY STRUCTURE (§14d.2): "No resume in progress" (due count +
@@ -29,18 +29,18 @@ export default meta
 type Story = StoryObj<typeof FlashcardDueHero>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCard": { tier: "composite", role: "the labelled section frame (\"Ôn tập hôm nay\"); it stays put across the 'No resume' and 'Nothing due' leaves so the section never disappears just because today is empty", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
+    "SurfaceCard": { tier: "composite", role: "the labelled section frame (\"Review today\"); it stays put across the 'No resume' and 'Nothing due' leaves so the section never disappears just because today is empty", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical track holding the due-count text cluster above the Start button, and — one level in — the tighter track grouping the three text lines together", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the due-count headline, its \"thẻ đến hạn hôm nay\" caption, or the review/new breakdown — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the due-count headline, its \"cards due today\" caption, or the review/new breakdown — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
     "Button": { tier: "atom", role: "the primary Start CTA, only present when there is no paused batch to resume instead", storyId: "atoms-buttons-button-button--default" },
     "ContinueCardHero": { tier: "block", role: "the resume card — replaces the whole due-count cluster once a batch is mid-way, same reasoning ContinueLearningBase already applies to a paused lesson", storyId: "starci-blocks-learn-continuecard-hero-progress--not-urgent" },
-    "FeedbackEmpty": { tier: "composite", role: "the caught-up message that takes the due-count cluster's place once nothing is left to review, with no action since there is nothing left to start", storyId: "composites-feedback-feedback-feedbackempty--icon-and-title" },
+    "EmptyState": { tier: "composite", role: "the caught-up message that takes the due-count cluster's place once nothing is left to review, with no action since there is nothing left to start", storyId: "composites-feedback-emptystate-emptystate--icon-and-title" },
 }
 
 /** LEAF — no paused batch: due-count cluster + primary Start button. */
 export const NoResume: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardDueHero"
                 tier="block"
@@ -98,7 +98,7 @@ export const NoResume: Story = {
 /** LEAF — a due batch was started earlier and never finished: the whole card becomes `ContinueCardHero`. */
 export const Resume: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardDueHero"
                 tier="block"
@@ -138,7 +138,7 @@ export const Resume: Story = {
 /** LEAF — every due card has been reviewed: the due-count cluster and Start button both vanish. */
 export const NothingDue: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardDueHero"
                 tier="block"

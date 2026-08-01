@@ -11,6 +11,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
@@ -55,8 +56,8 @@ export interface TrialConversionStripProps {
     isSkeleton?: boolean
     /** Fired when the enroll CTA is pressed (caller owns opening the payment flow). */
     onEnroll?: () => void
-    /** Extra classes on the root. */
-    className?: string
+    /** Layout utilities on the root, from the closed positioning union (SurfaceCard's `className` door was deleted, COMPOSITE-4). */
+    classNames?: Array<AllowedClassName>
     /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
     showAnatomy?: boolean
     /**
@@ -81,7 +82,7 @@ const TrialConversionStripBase = ({
     price,
     isSkeleton = false,
     onEnroll,
-    className,
+    classNames,
     showAnatomy = false,
     anatPart,
 }: TrialConversionStripProps) => {
@@ -95,13 +96,13 @@ const TrialConversionStripBase = ({
         : undefined
 
     const headerRow = (
-        <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={(
+        <StackH gap={4} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={(
             <>
                 <IconTile
                     icon={LockIcon}
                     tone="accent"
                     size="sm"
-                    anatPart={showAnatomy ? "IconTile" : undefined}
+                    showAnatomy={showAnatomy}
                 />
                 {/* The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
                 ONE frame, not two separate `Typography` (decided 2026-07-27).
@@ -112,14 +113,14 @@ const TrialConversionStripBase = ({
                 NOTE: the old version had the title at `base` (16px) + description `sm` —
                 one step larger than the row's standard scale. */}
                 <TitledText
-                    className="flex-1"
+                    classNames={["flex-1"]}
                     anatPart={showAnatomy ? "TitledText" : undefined}
                     isSkeleton={isSkeleton && !price}
-                    title="Học thử — mở khoá toàn bộ khoá học"
+                    title="Free trial — unlock the full course"
                     subtitle={
                         hasFreeLeft
-                            ? `Còn ${freeLessonsRemaining} bài miễn phí chưa đọc — đọc tiếp hoặc mở khoá toàn bộ ngay.`
-                            : "Bạn đã đọc hết bài học miễn phí — mở khoá toàn bộ khoá học để tiếp tục."
+                            ? `${freeLessonsRemaining} free lessons left unread — keep reading or unlock the full course now.`
+                            : "You've read every free lesson — unlock the full course to keep going."
                     }
                 />
             </>
@@ -138,14 +139,14 @@ const TrialConversionStripBase = ({
     // card reads 24/12/12/24 — two groups, which is what it is. It was `tight`
     // (1) before either fix, a step §10b reserves for pairs inside an atom.
     const priceColumn = (
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
             isSkeleton && !price ? (
                 // 2026-07-12: the CTA card renders instantly once the outline
                 // resolves, but the price is a second fetch — mirror the price
                 // line instead of showing an empty gap until it lands.
                 <>
-                    <Typography size="h4" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                    <Typography size="xs" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="h4" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
+                    <Typography size="xs" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
                 </>
             ) : price?.discountedPriceVnd != null ? (
                 <>
@@ -182,7 +183,7 @@ const TrialConversionStripBase = ({
     // adding a `border-t` on top says the same thing twice in two languages.
     const footerRow = (
         <StackH
-            gap="section"
+            gap={6}
             align="end"
             justify="between"
             wrap
@@ -199,11 +200,11 @@ const TrialConversionStripBase = ({
                         variant="primary"
                         size="lg"
                         classNames={["shrink-0"]}
-                        label="Mở khoá toàn bộ khoá học"
+                        label="Unlock the full course"
                         suffixIcon={ArrowRightIcon}
                         iconSlide
                         onPress={onEnroll}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 </>
             )}
@@ -223,15 +224,16 @@ const TrialConversionStripBase = ({
             // so the Deps tree can see the surface FRAME (otherwise the root node is
             // missing and the tree reads as if the block still drew its own surface).
             anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
-            className={className}
-        >
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={(
-                <>
-                    {headerRow}
-                    {footerRow}
-                </>
-            )} />
-        </SurfaceCard>
+            classNames={classNames}
+            body={() => (
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={(
+                    <>
+                        {headerRow}
+                        {footerRow}
+                    </>
+                )} />
+            )}
+        />
     )
 }
 

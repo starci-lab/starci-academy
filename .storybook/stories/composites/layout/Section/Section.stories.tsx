@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import { type SeamScale } from "@sb-components/frames/_spacing"
+import { type AllowedGap } from "@sb-components/frames/_spacing"
 import { Section, SectionHeader } from "@sb-components/composites/layout/Section/Section"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
@@ -40,7 +40,7 @@ type Story = StoryObj<typeof Section>
 
 /** Standard fixture (C-fixture) = ProfileCard: avatar + title + description inside one card face. */
 const ProfileRow = () => (
-    <div className="flex items-center gap-3">
+    <div data-tier="fixture" className="flex items-center gap-3">
         <Avatar name="StarCi Academy" size="md" />
         <div className="flex min-w-0 flex-col">
             <Typography size="sm" text="StarCi Academy" weight="medium" truncate />
@@ -51,9 +51,7 @@ const ProfileRow = () => (
 
 /** Sample body: a region usually holds one (or more) card faces, not bare text. */
 const CardBody = () => (
-    <SurfaceCard>
-        <ProfileRow />
-    </SurfaceCard>
+    <SurfaceCard body={() => <ProfileRow />} />
 )
 
 // `header` in object-props form is a FIXED internal choice — the frame always builds its own
@@ -71,7 +69,7 @@ const FULL_PARTS: Array<AnatomyNode> = []
 /** `children` = shorthand for `body`: a wrapping frame that accepts any content, no header. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Section"
                 tier="composite"
@@ -83,7 +81,7 @@ export const Default: Story = {
                     {
                         name: "children set, no header",
                         why: "Only the body region renders: a SurfaceCard profile row sits directly inside the frame with no header above it. `children` is accepted here as the shorthand for `body`, since the frame is a pure wrapper with nothing of its own to draw around the content.",
-                        code: "<Section>\n  <SurfaceCard><ProfileRow /></SurfaceCard>\n</Section>",
+                        code: "<Section>\n  <SurfaceCard body={() => <ProfileRow />} />\n</Section>",
                         render: (
                             <Section showAnatomy>
                                 <CardBody />
@@ -99,7 +97,7 @@ export const Default: Story = {
 /** `header` accepts the PROPS of `SectionHeader`, the MAIN path: the frame builds the header itself. */
 export const HeaderProps: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Section"
                 tier="composite"
@@ -112,20 +110,20 @@ export const HeaderProps: Story = {
                         why: "Passing the object form (`{ title, description, action }`) makes the frame render its own `SectionHeader` above the body, and `showAnatomy` flows down into that header too. This is the main path: the frame builds the header FOR the caller instead of the caller assembling a header node by hand.",
                         code: `<Section
   header={{
-    title: "Khoá của tôi",
-    description: "Sắp theo lần học gần nhất.",
-    action: <Button label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} />,
+    title: "My courses",
+    description: "Sorted by most recently studied.",
+    action: <Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} />,
   }}
 >
-  <SurfaceCard><ProfileRow /></SurfaceCard>
+  <SurfaceCard body={() => <ProfileRow />} />
 </Section>`,
                         render: (
                             <Section
                                 showAnatomy
                                 header={{
-                                    title: "Khoá của tôi",
-                                    description: "Sắp theo lần học gần nhất.",
-                                    action: <Button label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />,
+                                    title: "My courses",
+                                    description: "Sorted by most recently studied.",
+                                    action: <Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />,
                                 }}
                             >
                                 <CardBody />
@@ -141,7 +139,7 @@ export const HeaderProps: Story = {
 /** All 3 slots filled — `header` in this leaf is a free-form NODE (the escape hatch when a region's header isn't written by the frame itself). */
 export const Slots: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Section"
                 tier="composite"
@@ -153,16 +151,16 @@ export const Slots: Story = {
                         name: "header (node) + body + footer",
                         why: "All three regions are filled at once, and `header` here is a free-form node (a `SectionHeader` built by hand) rather than the object shorthand, useful when the top row is something other than a title, such as a toolbar or a tab row. `body` wins over `children` whenever both are passed, which is what lets this leaf also demonstrate the `footer` region.",
                         code: `<Section
-  header={<SectionHeader level={3} title="Bài đã lưu" />}
-  body={<SurfaceCard><ProfileRow /></SurfaceCard>}
-  footer={<Typography size="xs" text="Cập nhật 5 phút trước" color="muted" />}
+  header={<SectionHeader level={3} title="Saved posts" />}
+  body={<SurfaceCard body={() => <ProfileRow />} />}
+  footer={<Typography size="xs" text="Updated 5 minutes ago" color="muted" />}
 />`,
                         render: (
                             <Section
                                 showAnatomy
-                                header={<SectionHeader level={3} title="Bài đã lưu" />}
+                                header={<SectionHeader level={3} title="Saved posts" />}
                                 body={<CardBody />}
-                                footer={<Typography size="xs" text="Cập nhật 5 phút trước" color="muted" />}
+                                footer={<Typography size="xs" text="Updated 5 minutes ago" color="muted" />}
                             />
                         ),
                     },
@@ -174,15 +172,15 @@ export const Slots: Story = {
 
 /** Props for the demo gap sample. */
 interface GapSampleProps {
-    /** The `SeamScale` step this sample demonstrates. */
-    gap: SeamScale
+    /** The `AllowedGap` step this sample demonstrates. */
+    gap: AllowedGap
     /** Caption text shown under the sample's header. */
     caption: string
     /** `true` → this is the sample currently inspected by the anatomy overlay. */
     showAnatomy?: boolean
 }
 
-/** One `gap` (§10c) column for comparing rhythm — every sample shares the same composition, only the token changes. */
+/** One `gap` column for comparing rhythm — every sample shares the same composition, only the step changes. */
 const GapSample = ({ gap, caption, showAnatomy }: GapSampleProps) => (
     <Section
         gap={gap}
@@ -193,42 +191,69 @@ const GapSample = ({ gap, caption, showAnatomy }: GapSampleProps) => (
 )
 
 /**
- * `gap`, the vertical rhythm between regions, forced onto the §10c scale by a union
- * literal (`0 · 1 · 2 · 3 · 6 · 8`). `gap-4`/`gap-5` are TYPE errors, not review comments.
+ * `gap`, the vertical rhythm between regions, forced onto the eight-rung `AllowedGap` scale
+ * by a union literal. 2026-08-01 (wave-3 numeric-scale migration): the old six-word union is
+ * gone with no deprecated stage, so every state below is titled by its step number — the
+ * number is now the whole vocabulary a reader has — with the sentence from `gap.md` that
+ * earns it riding along as the check against taste the word used to provide.
  */
 export const Gaps: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Section"
                 tier="composite"
                 leaf="Gaps"
                 parts={HEADER_BODY_PARTS}
-                reason="The vertical rhythm between header, body and footer, forced onto the six `SeamScale` words by a union literal (§10c). A number is a TYPE error rather than a review comment, and the word is chosen from what the header IS to the body: a heading over its own region, a label stuck to a list, or one half of a single composed unit."
+                reason="The vertical rhythm between header, body and footer, forced onto the eight `AllowedGap` steps by a union literal. An off-scale value is a TYPE error rather than a review comment, and the step is chosen from what the header IS to the body: a heading over its own region, a label stuck to a list, or one half of a single composed unit."
                 states={[
                     {
-                        name: "a heading over its own region",
-                        why: "The default `gap=\"section\"` opens the widest rhythm between the header and the body, the spacing a page uses between its major regions. Reach for it whenever the region stands on its own rather than being visually grouped with something above or below it.",
-                        code: "<Section gap=\"section\" header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap="section" caption="Default — the rhythm between the PAGE's regions." showAnatomy />,
+                        name: "1 — must touch",
+                        why: "The header sits flush against the body with no seam at all, so the two read as one continuous surface rather than a heading over a region. A `Section` header rarely earns this step; it is shown so the tight end of the ladder stays recognisable.",
+                        code: "<Section gap={1} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={1} caption="Step 1 — header and body touch, one surface." showAnatomy />,
                     },
                     {
-                        name: "a label stuck to the list below it",
-                        why: "Tightening to `gap=\"grouped\"` pulls the header right up against a list or a group of items below it. Use it when the header reads as a label stuck to what follows rather than a heading over a whole standalone region.",
-                        code: "<Section gap=\"grouped\" header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap="grouped" caption="Grouped — the header sits stuck to a list/group." showAnatomy />,
+                        name: "2 — a joint, not a seam",
+                        why: "A hairline seam keeps the header and body apart while the pair still reads as one unit, the relationship an icon has with the word beside it. Too close for a header that should read as its own region.",
+                        code: "<Section gap={2} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={2} caption="Step 2 — a joint, not yet a seam." showAnatomy />,
                     },
                     {
-                        name: "two halves of one composed unit",
-                        why: "At `gap=\"related\"` the header and body read as one cluster rather than two separate regions. This is the closest step on the scale, meant for a header and body that are really one composed unit.",
-                        code: "<Section gap=\"related\" header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap="related" caption="Related — header and body are one cluster." showAnatomy />,
+                        name: "3 — two halves of one composed unit",
+                        why: "The header and body read as one cluster rather than two separate regions. This is the closest step on the scale that still counts as a seam, meant for a header and body that are really one composed unit.",
+                        code: "<Section gap={3} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={3} caption="Step 3 — header and body are one cluster." showAnatomy />,
                     },
                     {
-                        name: "a page frame holding separate features",
-                        why: "At `gap=\"page\"` the header opens the widest gap the scale allows. This is the step a page-level frame reaches for, wider than the default `section` rhythm.",
-                        code: "<Section gap=\"page\" header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap="page" caption="Page — the widest step, used at the page frame." showAnatomy />,
+                        name: "4 — a label stuck to the list below it",
+                        why: "The header pulls right up against a list or a group of items below it. Use it when the header reads as a label stuck to what follows rather than a heading over a whole standalone region.",
+                        code: "<Section gap={4} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={4} caption="Step 4 — the header sits stuck to a list/group." showAnatomy />,
+                    },
+                    {
+                        name: "5 — open, no sentence yet",
+                        why: "`gap.md` records this rung as chosen by 56 app call sites but not yet read, so there is no sentence yet to check a header/body seam against. Shown here for completeness rather than as a considered choice — inventing a reason now would be guessing and citing the count as if it had spoken.",
+                        code: "<Section gap={5} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={5} caption="Step 5 — no sentence written yet." showAnatomy />,
+                    },
+                    {
+                        name: "6 — a heading over its own region (default)",
+                        why: "The default step opens the widest rhythm between the header and the body that still reads as ONE region, the spacing a page uses between its major sections. Reach for it whenever the region stands on its own rather than being visually grouped with something above or below it.",
+                        code: "<Section gap={6} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={6} caption="Step 6 — default, the rhythm between the PAGE's regions." showAnatomy />,
+                    },
+                    {
+                        name: "7 — a page frame holding separate features",
+                        why: "The header opens a page-band gap, wider than the default region rhythm. This is the step a page-level frame reaches for when the header and body are less a single region and more two things sharing a page — replacing the old `page` word, which rendered `gap-8` (8 real uses) where this step's `gap-10` has 55.",
+                        code: "<Section gap={7} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={7} caption="Step 7 — page bands, wider than a region rhythm." showAnatomy />,
+                    },
+                    {
+                        name: "8 — marketing air",
+                        why: "The widest rung the scale offers, for full-width marketing bands rather than a page's teaching content. A `Section` header rarely reaches this far; it is shown here only to bound the ladder.",
+                        code: "<Section gap={8} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={8} caption="Step 8 — marketing air, bounds the ladder." showAnatomy />,
                     },
                 ]}
             />

@@ -49,15 +49,7 @@ export interface TabsExtendedProps {
      * (already hug-content via `.extended-tabs`).
      */
     size?: "sm" | "md"
-    /**
-     * Extra classes on the root `Tabs`.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
 
@@ -75,13 +67,14 @@ export const TabsExtended = ({
     selectedKey,
     onSelectionChange,
     children,
-    className,
     classNames,
     variant = "secondary",
     size = "md",
 }: TabsExtendedProps) => {
     return (
         <HeroTabs
+            data-tier="atom"
+            data-component="TabsExtended"
             variant={variant}
             selectedKey={selectedKey}
             onSelectionChange={(key) => onSelectionChange(String(key))}
@@ -91,7 +84,6 @@ export const TabsExtended = ({
                 // one-line label (w-fit) instead of stacking words.
                 "whitespace-nowrap",
                 variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
-                className,
                 classNames,
             )}
         >
@@ -99,3 +91,5 @@ export const TabsExtended = ({
         </HeroTabs>
     )
 }
+
+export const meta = { tier: "atom", name: "TabsExtended" } as const

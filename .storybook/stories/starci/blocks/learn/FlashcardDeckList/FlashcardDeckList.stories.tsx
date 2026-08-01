@@ -38,8 +38,8 @@ type Story = StoryObj<typeof FlashcardDeckList>
 const DECKS: Array<FlashcardDeckListDeck> = [
     {
         id: "docker-basics",
-        title: "Docker cơ bản",
-        description: "Image, container, volume — nền tảng trước khi vào Compose.",
+        title: "Docker basics",
+        description: "Images, containers, volumes — the groundwork before Compose.",
         difficulty: "beginner",
         dueCount: 6,
         masteredCount: 14,
@@ -47,8 +47,8 @@ const DECKS: Array<FlashcardDeckListDeck> = [
     },
     {
         id: "dockerfile-optimize",
-        title: "Tối ưu Dockerfile",
-        description: "Layer cache, multi-stage build, giảm kích thước image.",
+        title: "Optimizing Dockerfiles",
+        description: "Layer caching, multi-stage builds, shrinking image size.",
         difficulty: "intermediate",
         masteredCount: 8,
         totalCount: 25,
@@ -63,7 +63,7 @@ const DECKS: Array<FlashcardDeckListDeck> = [
     },
     {
         id: "k8s-scheduling",
-        title: "K8s Scheduling nâng cao",
+        title: "Advanced K8s scheduling",
         description: "Affinity, taint/toleration, resource request/limit.",
         difficulty: "insane",
         masteredCount: 0,
@@ -129,7 +129,7 @@ const Interactive = ({
 /** LEAF 1 — tiles inside a responsive `Grid`. */
 export const GridView: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
@@ -140,7 +140,7 @@ export const GridView: Story = {
                 states={[
                     {
                         name: "view = \"grid\", showProgress = true",
-                        why: "The default browse shape — each deck is a tile carrying its title, blurb, difficulty and (when a card is due) a due chip, its mastery meter, and a decorative \"Học ngay\" cue. The whole tile is one press target, so the CTA never becomes a second nested button.",
+                        why: "The default browse shape — each deck is a tile carrying its title, blurb, difficulty and (when a card is due) a due chip, its mastery meter, and a decorative \"Study now\" cue. The whole tile is one press target, so the CTA never becomes a second nested button.",
                         code: `<FlashcardDeckList
     decks={decks}
     query={query}
@@ -170,7 +170,7 @@ export const GridView: Story = {
 /** LEAF 2 — rows inside one bounded `SurfaceCardList`. */
 export const LineView: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
@@ -200,7 +200,7 @@ export const LineView: Story = {
 /** LEAF 3 — the track becomes the empty message; forks on whether a search query is active. */
 export const SearchEmpty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
@@ -210,10 +210,10 @@ export const SearchEmpty: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "query = \"kubernetes nâng cao\", decks = []",
+                        name: "query = \"advanced kubernetes\", decks = []",
                         why: "The search field stays live and shows exactly what was typed, but the grid/list itself is REPLACED by one centred message naming the query — there is nothing left to browse for this term, so no empty grid or empty list ever renders.",
-                        code: "<FlashcardDeckList decks={[]} query=\"kubernetes nâng cao\" /* … */ />",
-                        render: <Interactive decks={[]} initialView="grid" initialQuery="kubernetes nâng cao" showProgress showAnatomy />,
+                        code: "<FlashcardDeckList decks={[]} query=\"advanced kubernetes\" /* … */ />",
+                        render: <Interactive decks={[]} initialView="grid" initialQuery="advanced kubernetes" showProgress showAnatomy />,
                     },
                     {
                         name: "query = \"\", decks = []",
@@ -230,7 +230,7 @@ export const SearchEmpty: Story = {
 /** LEAF 4 — `decks` still empty and `isSkeleton` on; a guessed count mirrors the current view's shape. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"

@@ -101,8 +101,8 @@ const isTerminalStatus = (status: JobStatus | undefined): boolean =>
 
 /**
  * Coding-problem detail + editor — a full-bleed 2-pane IDE (`/practice/[slug]`).
- * LEFT = tabbed reading column (`ExtendedTabs`: Mô tả / Lời giải / Nộp trước);
- * RIGHT = Monaco editor over a `CodeConsole` (Test case / Kết quả) whose result
+ * LEFT = tabbed reading column (`ExtendedTabs`: Description / Solution / Submissions);
+ * RIGHT = Monaco editor over a `CodeConsole` (Test case / Result) whose result
  * tab renders the judged PER-CASE outcome (`TestCaseResultGrid` off the API's
  * `perCaseResults`) plus runtime/memory stats. The submit → async-judge →
  * realtime-verdict flow (SWR + `/job_notifications` socket + anti-cheat
@@ -646,7 +646,7 @@ export const PracticeProblem = () => {
                     />
                 </div>
 
-                {/* bottom console — Test case / Kết quả + Run/Submit bar */}
+                {/* bottom console — Test case / Result + Run/Submit bar */}
                 <CodeConsole
                     className="h-[42%]"
                     ariaLabel={t("codingPractice.consoleLabel")}
@@ -659,8 +659,8 @@ export const PracticeProblem = () => {
                     hint={t("codingPractice.runVsSubmit")}
                     actions={(
                         <>
-                            {/* "Chạy thử trên sample" cần endpoint judge-sample riêng ở BE —
-                                chưa có, để disabled (console hint giải thích) thay vì âm thầm bỏ. */}
+                            {/* "Run on sample" needs a dedicated judge-sample endpoint on the BE —
+                                doesn't exist yet, so it's left disabled (the console hint explains it) instead of silently dropping it. */}
                             <Button
                                 size="sm"
                                 variant="secondary"

@@ -40,7 +40,7 @@ export interface AddToCartButtonProps extends WithClassNames<undefined> {
  * "Remove from cart" button (leading X icon, no trailing icon) — `variant="danger-soft"`
  * regardless of the caller's `variant` prop (removing a cart line IS a destructive
  * toggle, just a repeated/low-drama one — same family as the repeatable-item delete
- * button, not a lone `danger`-solid action; teacher: "ý là danger-soft ấy trò", after
+ * button, not a lone `danger`-solid action; teacher: "I meant danger-soft", after
  * an earlier pass over-corrected to plain `secondary`). Adding routes through
  * {@link useCartEntry} so a GUEST is sent to the auth modal (with the add replayed
  * after sign-in) instead of hitting the auth-only cart mutation; removing (only

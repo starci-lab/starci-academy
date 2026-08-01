@@ -29,7 +29,7 @@ export const E2eResultButton = (): React.JSX.Element | null => {
             onPress={open}
             className="inline-flex items-center gap-2 text-sm font-medium text-accent-soft-foreground underline-offset-4 hover:underline"
         >
-            {`Xem kết quả kiểm thử E2E (${passed}/${flows.length} luồng pass) →`}
+            {`View E2E test results (${passed}/${flows.length} flows passed) →`}
         </Link>
     )
 }

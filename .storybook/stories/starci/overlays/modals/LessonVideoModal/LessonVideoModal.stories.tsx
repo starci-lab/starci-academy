@@ -30,9 +30,9 @@ export default meta
 
 type Story = StoryObj<typeof LessonVideoModal>
 
-// DOM thật (size="lg" scroll="inside"): Modal.CloseTrigger + Modal.Header >
+// Real DOM (size="lg" scroll="inside"): Modal.CloseTrigger + Modal.Header >
 // Typography(title) + Modal.Body > StackV > Cluster(EnumChip + InlineIconLabel
-// + Typography[host platform]) + StackV(SurfaceCard>FeedbackEmpty[player gap]
+// + Typography[host platform]) + StackV(SurfaceCard>EmptyState[player gap]
 // + Typography[isLink url]) + StackV(MarkdownContent[description]? +
 // MarkdownContent[caption]?).
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -43,13 +43,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "EnumChip": { tier: "composite", role: "production-stage chip (raw / edited / premium), always warning-toned", storyId: "composites-chips-enumchip--warning" },
     "InlineIconLabel": { tier: "composite", role: "clock icon + formatted HH:mm duration", storyId: "composites-texts-inlineiconlabel--count" },
     "SurfaceCard": { tier: "composite", role: "the aspect-video card face the player-gap placeholder sits in, reusing the exact pairing `FoundationResourceBody` already established for its own video gap", storyId: "composites-cards-surfacecard-surfacecard--default" },
-    "FeedbackEmpty": { tier: "composite", role: "the honest label naming the gap — play glyph, title, description — instead of a silent fake player", storyId: "composites-feedback-feedback-feedbackempty--description" },
+    "EmptyState": { tier: "composite", role: "the honest label naming the gap — play glyph, title, description — instead of a silent fake player", storyId: "composites-feedback-emptystate-emptystate--description" },
     "MarkdownContent (description)": { tier: "composite", role: "one-paragraph context under the player, compact measure", storyId: "composites-viewers-markdowncontent--compact" },
     "MarkdownContent (caption)": { tier: "composite", role: "short caption/attribution, compact measure", storyId: "composites-viewers-markdowncontent--compact" },
 }
 
 const RAW_STREAM_VIDEO: LessonVideo = {
-    title: "Buổi live: Dependency Injection trong NestJS",
+    title: "Live session: Dependency Injection in NestJS",
     kind: LessonVideoKind.RawStream,
     durationMs: 87 * 60_000,
     hostPlatform: VideoHostPlatform.Youtube,
@@ -57,13 +57,13 @@ const RAW_STREAM_VIDEO: LessonVideo = {
 }
 
 const PREMIUM_VIDEO: LessonVideo = {
-    title: "Dependency Injection trong NestJS — bản dựng",
+    title: "Dependency Injection in NestJS — edited recording",
     kind: LessonVideoKind.PremiumRecord,
     durationMs: 14 * 60_000 + 32 * 1000,
     hostPlatform: VideoHostPlatform.CloudflareStream,
     url: "https://videos.starci.academy/di-nestjs-premium",
-    description: "Bản dựng cắt gọn từ buổi live gốc, giữ lại đúng phần giải thích Dependency Injection và bỏ các đoạn hỏi đáp lan man.",
-    caption: "Quay tại studio StarCi, tháng 7/2026.",
+    description: "An edited cut of the original livestream, keeping just the Dependency Injection explanation and trimming the rambling Q&A.",
+    caption: "Filmed at the StarCi studio, July 2026.",
 }
 
 /** Controlled wrapper — the trigger reopens the modal after it closes. */
@@ -75,12 +75,12 @@ const ControlledLessonVideoModal = ({
 } & Omit<LessonVideoModalProps, "isOpen" | "onOpenChange">) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <LessonVideoModal
@@ -117,7 +117,7 @@ export const Default: Story = {
     isOpen={isOpen}
     onOpenChange={setIsOpen}
     video={{
-        title: "Buổi live: Dependency Injection trong NestJS",
+        title: "Live session: Dependency Injection in NestJS",
         kind: LessonVideoKind.RawStream,
         durationMs: 87 * 60_000,
         hostPlatform: VideoHostPlatform.Youtube,
@@ -138,13 +138,13 @@ export const Default: Story = {
     isOpen={isOpen}
     onOpenChange={setIsOpen}
     video={{
-        title: "Dependency Injection trong NestJS — bản dựng",
+        title: "Dependency Injection in NestJS — edited recording",
         kind: LessonVideoKind.PremiumRecord,
         durationMs: 14 * 60_000 + 32 * 1000,
         hostPlatform: VideoHostPlatform.CloudflareStream,
         url: "https://videos.starci.academy/di-nestjs-premium",
-        description: "Bản dựng cắt gọn từ buổi live gốc...",
-        caption: "Quay tại studio StarCi, tháng 7/2026.",
+        description: "An edited cut of the original livestream...",
+        caption: "Filmed at the StarCi studio, July 2026.",
     }}
 />`,
                     render: (

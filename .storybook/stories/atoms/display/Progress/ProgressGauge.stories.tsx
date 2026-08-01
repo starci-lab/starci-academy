@@ -3,27 +3,28 @@ import { ProgressGauge } from "@sb-components/atoms/display/Progress/Progress"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `ProgressGauge`: ĐO LƯỜNG tĩnh (dung lượng, pin, hạn mức), bọc THẲNG
- * HeroUI/react-aria Meter.
+ * ATOM — `ProgressGauge`: a static MEASUREMENT (storage, battery, quota), wrapping
+ * HeroUI/react-aria Meter DIRECTLY.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Bộ leaf: `Value` (gộp `value`+`max` — hai prop nhưng
- * MỘT hình, cùng lối `Chip` gộp `dotColor`/`dotClassName` vào leaf `Dot`) ·
- * `Colors` · `Sizes` · `Loading`.
+ * 📐 **1 PROP = 1 LEAF** (§12g). Leaf set: `Value` (merges `value`+`max` — two props
+ * but ONE shape, same as `Chip` merging `dotColor`/`dotClassName` into the `Dot`
+ * leaf) · `Colors` · `Sizes` · `Loading`.
  *
- * ⛔ KHÔNG có leaf `Indeterminate` — react-aria Meter luôn determinate; một phép đo
- * lường không thể "không rõ" (khác `ProgressBar`/`Circle`).
- * ⛔ `ariaLabel` KHÔNG có leaf (§12g.1): nó chỉ chạy vào `aria-label`, không đổi pixel.
+ * ⛔ NO `Indeterminate` leaf — react-aria Meter is always determinate; a
+ * measurement can never be "unknown" (unlike `ProgressBar`/`Circle`).
+ * ⛔ `ariaLabel` has NO leaf (§12g.1): it only feeds `aria-label`, it never changes a pixel.
  *
- * ⭐ `Meter` gọi thẳng `HeroMeter` riêng, KHÔNG compose lại `ProgressBar`.
- * `Meter.Track`/`Meter.Fill` LÀ compound component thật của HeroUI (không phải
- * khe nội tại) ⇒ `tier: "heroui"`, không `storyId` (§ naming pass, 2026-07-28) —
- * đổi tên thật từ `Track`/`Fill`, tên đó từng đụng trùng `ProgressBar`/
- * `ProgressCircle`'s own `Track`/`Fill` (compound KHÁC NHAU dù cùng chữ).
+ * ⭐ `Meter` calls its own `HeroMeter` directly, it does NOT recompose `ProgressBar`.
+ * `Meter.Track`/`Meter.Fill` ARE real HeroUI compound components (not an internal
+ * slot) ⇒ `tier: "heroui"`, no `storyId` (§ naming pass, 2026-07-28) — renamed
+ * from `Track`/`Fill`, names that used to collide with `ProgressBar`/
+ * `ProgressCircle`'s own `Track`/`Fill` (DIFFERENT compounds despite the same name).
  *
- * ⚠️ Sửa 2026-07-26: leaf `Bands` cũ chỉ render 3/5 giá trị `color` (thiếu `accent`,
- * `default`) — giá trị sót sẽ mọc thành story lạc chỗ, nên đổi thành leaf `Colors` phủ
- * đủ union; ý "tone = ngưỡng" chuyển vào `reason`. Leaf `Sizes` trước đây KHÔNG tồn tại
- * dù `size` đổi chiều cao thật.
+ * ⚠️ Fixed 2026-07-26: the old `Bands` leaf only rendered 3 of 5 `color` values
+ * (missing `accent`, `default`) — a missed value would grow into a stray story, so
+ * it was renamed to `Colors` covering the full union; the "tone = threshold" idea
+ * moved into `reason`. The `Sizes` leaf did NOT exist before, even though `size`
+ * genuinely changes the height.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Meter.Track": {
@@ -52,12 +53,13 @@ export default meta
 type Story = StoryObj<typeof ProgressGauge>
 
 /**
- * Leaf props `value` / `max` — HAI prop nhưng MỘT hình: cả hai chỉ đẩy cùng một vạch
- * fill. Tách đôi sẽ ra hai khung y hệt, nên gộp (neo: `Chip` leaf `Dot`).
+ * Leaf props `value` / `max` — TWO props but ONE shape: both only push the same
+ * fill mark. Splitting them would give two identical frames, so they're merged
+ * (anchor: `Chip`'s `Dot` leaf).
  */
 export const Value: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressGauge"
                 tier="atom"
@@ -83,10 +85,10 @@ export const Value: Story = {
     ),
 }
 
-/** Leaf prop `color` — 5 tone, render ĐỦ union (bản cũ chỉ có 3). */
+/** Leaf prop `color` — 5 tones, rendering the FULL union (the old version only had 3). */
 export const Colors: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressGauge"
                 tier="atom"
@@ -130,10 +132,10 @@ export const Colors: Story = {
     ),
 }
 
-/** Leaf prop `size` — 3 mốc chiều cao, render ĐỦ union. */
+/** Leaf prop `size` — 3 height steps, rendering the FULL union. */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressGauge"
                 tier="atom"
@@ -165,10 +167,10 @@ export const Sizes: Story = {
     ),
 }
 
-/** Leaf prop `isSkeleton` — atom tự vẽ shimmer của chính nó (§12c), không dùng Skeleton.*. */
+/** Leaf prop `isSkeleton` — the atom draws its own shimmer (§12c), not using Skeleton.*. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressGauge"
                 tier="atom"

@@ -3,13 +3,13 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ContinueCardItem } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { WarningIcon } from "@phosphor-icons/react"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-// `FeedbackEmpty` takes icon as a COMPONENT ref and forces `size-8` itself (§4/§5) — Phosphor's
+// `EmptyState` takes icon as a COMPONENT ref and forces `size-8` itself (§4/§5) — Phosphor's
 // `weight="duotone"` can no longer ride along, so it's wrapped as a component to KEEP the stroke style.
-const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...props} weight="duotone" />
+const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon data-tier="fixture" {...props} weight="duotone" />
 
 /**
  * DESIGN — the `item` variant of ContinueCard: one of N "resume the in-progress
@@ -40,7 +40,7 @@ export default meta
 type Story = StoryObj<typeof ContinueCardItem>
 
 /** Canvas padding only — the card's own width goes through `renderClassName`. */
-const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
+const frame = (node: React.ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
 
 // ⭐ 2026-07-27 (deep-scan from the `CourseContents` screen): this tree PREVIOUSLY described a
 // DEAD structure — `HighlightCard` (now the `isHighlight` prop on `SurfaceCard`) · `SectionCard`
@@ -82,12 +82,12 @@ const ITEM_PARTS: Array<AnatomyNode> = [
                     },
                 ],
             },
-            { name: "LinkSeeMore", tier: "atom", role: "CTA \"Tiếp tục →\" on its own row — hover/click lives on the link ITSELF, not wrapping the whole card (wrapping would nest controls and steal hover)", storyId: "atoms-navigation-link-linkseemore--default" },
+            { name: "LinkSeeMore", tier: "atom", role: "CTA \"Continue →\" on its own row — hover/click lives on the link ITSELF, not wrapping the whole card (wrapping would nest controls and steal hover)", storyId: "atoms-navigation-link-linkseemore--default" },
         ],
     },
 ]
 
-// error leaf: connection drop → `FeedbackEmpty` sits INSIDE the frame, the Retry button is in the `action` prop.
+// error leaf: connection drop → `EmptyState` sits INSIDE the frame, the Retry button is in the `action` prop.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
@@ -96,7 +96,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         storyId: "composites-cards-surfacecard-surfacecard--default",
         children: [
             {
-                name: "FeedbackEmpty",
+                name: "EmptyState",
                 tier: "composite",
                 role: "danger tone + icon + description + a Retry button",
                 state: "danger",
@@ -128,7 +128,7 @@ const ITEM_SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "outer row — one horizontal track (children are ARBITRARY ⇒ `Stack`, not `Cluster`, §13b)", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "text column — title on top, meta/subtitle underneath", storyId: "frames-stack-stackv--default" },
     "Typography": { tier: "atom", role: "the item name — medium weight, truncate", storyId: "atoms-text-typography-typography--plain" },
-    "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the \"Tiếp tục →\" CTA — `LinkSeeMore` has no `isSkeleton` shape of its own yet, so `.Item` builds this shimmer bar directly, matching the label's text size" },
+    "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the \"Continue →\" CTA — `LinkSeeMore` has no `isSkeleton` shape of its own yet, so `.Item` builds this shimmer bar directly, matching the label's text size" },
 }
 
 /** The loaded item card — one representative (grid is the consumer's concern). Migrated to `states` 2026-07-27. */
@@ -142,7 +142,7 @@ export const Content: Story = {
                 parts={ITEM_PARTS}
                 renderClassName="mx-auto max-w-4xl"
                 reason={
-                    "The \"item\" variant (1-of-N — the story shows 1 representative card, the grid is the consumer's concern). Each state is 1 leaf in the folder: Item (content, SeeMoreLink CTA) · Loading (Skeleton mirrors the item LAYOUT, NO progress/sweep) · Network-drop error (FeedbackEmpty tone=\"danger\" inside SectionCard). Skeleton mirrors layout, no pulse/animation."
+                    "The \"item\" variant (1-of-N — the story shows 1 representative card, the grid is the consumer's concern). Each state is 1 leaf in the folder: Item (content, SeeMoreLink CTA) · Loading (Skeleton mirrors the item LAYOUT, NO progress/sweep) · Network-drop error (EmptyState tone=\"danger\" inside SectionCard). Skeleton mirrors layout, no pulse/animation."
                 }
                 states={[
                     {
@@ -154,7 +154,7 @@ export const Content: Story = {
     href="/courses/nestjs-api/lessons/5"
 />`,
                         render: (
-                            <div className="w-80">
+                            <div data-tier="fixture" className="w-80">
                                 <ContinueCardItem title="Building a RESTful API with NestJS" subtitle="Reading" href="/courses/nestjs-api/lessons/5" showAnatomy />
                             </div>
                         ),
@@ -190,7 +190,7 @@ export const Skeleton: Story = {
     isSkeleton
 />`,
                         render: (
-                            <div className="w-80">
+                            <div data-tier="fixture" className="w-80">
                                 <ContinueCardItem
                                     title="Building a RESTful API with NestJS"
                                     subtitle="Reading"
@@ -219,29 +219,34 @@ export const LoadError: Story = {
                 states={[
                     {
                         name: "network request for this card failed",
-                        why: "`Title`/`Subtitle`/`SeeMoreLink` disappear and `FeedbackEmpty` mounts in their place, danger-toned, with a Retry button inside the same `SurfaceCard` frame. The frame itself must never vanish on error, so the reader still sees a card-shaped region instead of a hole in the grid.",
-                        code: `<SurfaceCard>
-    <FeedbackEmpty
-        tone="danger"
-        title="Connection lost"
-        description="The network seems to have dropped. Check your connection and try again."
-        action={<Button variant="secondary" label="Retry" />}
-    />
-</SurfaceCard>`,
+                        why: "`Title`/`Subtitle`/`SeeMoreLink` disappear and `EmptyState` mounts in their place, danger-toned, with a Retry button inside the same `SurfaceCard` frame. The frame itself must never vanish on error, so the reader still sees a card-shaped region instead of a hole in the grid.",
+                        code: `<SurfaceCard
+    body={() => (
+        <EmptyState
+            tone="danger"
+            title="Connection lost"
+            description="The network seems to have dropped. Check your connection and try again."
+            action={<Button variant="secondary" label="Retry" />}
+        />
+    )}
+/>`,
                         render: (
-                            <div className="w-80">
-                                <SurfaceCard anatPart="SurfaceCard">
-                                    <FeedbackEmpty
-                                        anatPart="FeedbackEmpty"
-                                        tone="danger"
-                                        icon={WarningDuotone}
-                                        title="Connection lost"
-                                        description="The network seems to have dropped. Check your connection and try again."
-                                        action={
-                                            <Button variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
-                                        }
-                                    />
-                                </SurfaceCard>
+                            <div data-tier="fixture" className="w-80">
+                                <SurfaceCard
+                                    anatPart="SurfaceCard"
+                                    body={() => (
+                                        <EmptyState
+                                            anatPart="EmptyState"
+                                            tone="danger"
+                                            icon={WarningDuotone}
+                                            title="Connection lost"
+                                            description="The network seems to have dropped. Check your connection and try again."
+                                            action={
+                                                <Button variant="secondary" size="sm" label="Retry" onPress={() => {}} />
+                                            }
+                                        />
+                                    )}
+                                />
                             </div>
                         ),
                     },

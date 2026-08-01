@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ⚠️ STATE SCOPE (§12f/§13) — `KeyValueList` is a REPEATING-LIST scaffold: it only
@@ -12,10 +11,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * The layout/type scale of ONE row (muted label · medium value · `hint`) is a state
  * of `KeyValueRow` → lives in story `KeyValueRow`, NOT repeated here.
  *
- * `Loading`: the scaffold has NO `isSkeleton` flag (it doesn't know what the value
- * is, and the row count is the consumer's call) — the caller MIRRORS by pouring
- * `Skeleton.Typography` into exactly the `label`/`value` cells, keeping the same
- * scaffold + row count (§8, no layout jump).
+ * `label`/`value` are `string` (COMPOSITE-8 — "the same trap one level in"): the
+ * scaffold owns its own loading state via `isSkeleton`/`skeletonRows` (see the
+ * `Skeleton` leaf below), so a caller never hand-builds a shimmer pair into `items`.
  *
  * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
  * `states` entry, since none of them stacks more than one rendering.
@@ -33,9 +31,9 @@ type Story = StoryObj<typeof KeyValueList>
 
 /** Order summary — `value` is an ALREADY-formatted string (the scaffold doesn't convert units/currency). */
 const ITEMS = [
-    { key: "tuition", label: "Học phí", value: "1.200.000 ₫" },
-    { key: "discount", label: "Giảm giá", hint: "Mã STARCI20", value: "-200.000 ₫" },
-    { key: "vat", label: "Thuế VAT", value: "0 ₫" },
+    { key: "tuition", label: "Tuition", value: "$49.00" },
+    { key: "discount", label: "Discount", hint: "Code STARCI20", value: "-$8.00" },
+    { key: "vat", label: "VAT", value: "$0.00" },
 ]
 
 /**
@@ -70,7 +68,7 @@ const DIVIDER_PARTS: Array<AnatomyNode> = [
 /** Default — `items` is DATA (§13b forbids children); default gap `3` (vertical rows). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeyValueList"
                 tier="composite"
@@ -84,9 +82,9 @@ export const Default: Story = {
                         why: "Three `KeyValueRow` nodes stack with no line between them, spaced at the default `gap` step. This is the plain summary shape for a short list of facts the reader scans top to bottom without needing a seam between them.",
                         code: `<KeyValueList
     items={[
-        { key: "tuition", label: "Học phí", value: "1.200.000 ₫" },
-        { key: "discount", label: "Giảm giá", hint: "Mã STARCI20", value: "-200.000 ₫" },
-        { key: "vat", label: "Thuế VAT", value: "0 ₫" },
+        { key: "tuition", label: "Tuition", value: "$49.00" },
+        { key: "discount", label: "Discount", hint: "Code STARCI20", value: "-$8.00" },
+        { key: "vat", label: "VAT", value: "$0.00" },
     ]}
 />`,
                         render: <KeyValueList showAnatomy items={ITEMS} />,
@@ -100,7 +98,7 @@ export const Default: Story = {
 /** WithDivider — the divider line is the SEAM between two rows: the LAST row gets no line. */
 export const WithDivider: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeyValueList"
                 tier="composite"
@@ -124,7 +122,7 @@ export const WithDivider: Story = {
 /** WithTotal — summary shape: N regular lines + a final `emphasis` line, separated by a divider. */
 export const WithTotal: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeyValueList"
                 tier="composite"
@@ -140,14 +138,14 @@ export const WithTotal: Story = {
     divider
     items={[
         …ITEMS,
-        { key: "total", label: "Tổng cộng", value: "1.000.000 ₫", emphasis: true },
+        { key: "total", label: "Total", value: "$41.00", emphasis: true },
     ]}
 />`,
                         render: (
                             <KeyValueList
                                 showAnatomy
                                 divider
-                                items={[...ITEMS, { key: "total", label: "Tổng cộng", value: "1.000.000 ₫", emphasis: true }]}
+                                items={[...ITEMS, { key: "total", label: "Total", value: "$41.00", emphasis: true }]}
                             />
                         ),
                     },
@@ -157,49 +155,10 @@ export const WithTotal: Story = {
     ),
 }
 
-/** Loading — caller MIRRORS: keeps the scaffold + row count, only pours skeleton bars into the 2 cells. */
-export const Loading: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy
-                name="KeyValueList"
-                tier="composite"
-                leaf="Loading"
-                renderClassName="max-w-sm"
-                parts={LIST_PARTS}
-                reason="The scaffold owns no `isSkeleton` flag of its own — it doesn't know what the value means, and the row count is the consumer's call, so the consumer is the one who has to mirror the resting shape."
-                states={[
-                    {
-                        name: "label and value cells replaced with Typography isSkeleton",
-                        why: "Each cell that would hold real text instead holds a shimmer bar, but the scaffold, the row count, and the gap between rows stay exactly the real tree. The footprint therefore never jumps once the real label/value pairs land.",
-                        code: `<KeyValueList
-    items={ITEMS.map((item) => ({
-        key: item.key,
-        label: <Typography size="sm" isSkeleton className="w-24" />,
-        value: <Typography size="sm" isSkeleton className="w-20" />,
-    }))}
-/>`,
-                        render: (
-                            <KeyValueList
-                                showAnatomy
-                                items={ITEMS.map((item) => ({
-                                    key: item.key,
-                                    label: <Typography size="sm" isSkeleton className="w-24" />,
-                                    value: <Typography size="sm" isSkeleton className="w-20" />,
-                                }))}
-                            />
-                        ),
-                    },
-                ]}
-            />
-        </div>
-    ),
-}
-
-/** LEAF — the caller flips `isSkeleton`; the scaffold generates `skeletonRows` placeholder `KeyValueRow` nodes itself (§12g.0a, added 2026-07-29 — before this the composite had no `isSkeleton` of its own and `Loading` above had to mirror the shape by hand into `items`). */
+/** LEAF — the caller flips `isSkeleton`; the scaffold generates `skeletonRows` placeholder `KeyValueRow` nodes itself (§12g.0a, added 2026-07-29). `label`/`value` are `string` (COMPOSITE-8), so loading is never hand-mirrored into `items` — this flag is the only path. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeyValueList"
                 tier="composite"

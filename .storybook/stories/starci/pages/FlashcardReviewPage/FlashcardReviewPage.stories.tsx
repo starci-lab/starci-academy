@@ -30,16 +30,16 @@ export default meta
 type Story = StoryObj<typeof FlashcardReviewPage>
 
 const DECKS = [
-    { id: "docker", title: "Docker cơ bản", description: "Image, layer và cache", difficulty: "beginner" as const, dueCount: 6, masteredCount: 18, totalCount: 30 },
-    { id: "k8s", title: "Kubernetes networking", description: "Service, Ingress, DNS nội bộ", difficulty: "advanced" as const, masteredCount: 4, totalCount: 40 },
-    { id: "cicd", title: "CI/CD pipeline", description: "Build, test, deploy tự động", difficulty: "intermediate" as const, dueCount: 2, masteredCount: 12, totalCount: 20 },
+    { id: "docker", title: "Docker basics", description: "Images, layers, and cache", difficulty: "beginner" as const, dueCount: 6, masteredCount: 18, totalCount: 30 },
+    { id: "k8s", title: "Kubernetes networking", description: "Service, Ingress, internal DNS", difficulty: "advanced" as const, masteredCount: 4, totalCount: 40 },
+    { id: "cicd", title: "CI/CD pipeline", description: "Build, test, deploy automatically", difficulty: "intermediate" as const, dueCount: 2, masteredCount: 12, totalCount: 20 },
 ]
 
 const RATING_OPTIONS = [
-    { grade: 0, label: "Quên", hint: "Gặp lại hôm nay" },
-    { grade: 1, label: "Khó", hint: "Gặp lại sau 1 ngày" },
-    { grade: 2, label: "Được", hint: "Gặp lại sau 4 ngày" },
-    { grade: 3, label: "Dễ", hint: "Gặp lại sau 10 ngày" },
+    { grade: 0, label: "Forgot", hint: "See it again today" },
+    { grade: 1, label: "Hard", hint: "See it again in 1 day" },
+    { grade: 2, label: "Good", hint: "See it again in 4 days" },
+    { grade: 3, label: "Easy", hint: "See it again in 10 days" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -55,7 +55,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — overview: the mode switch plus the three overview blocks. */
 export const Overview: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardReviewPage"
                 tier="screen"
@@ -64,13 +64,13 @@ export const Overview: Story = {
                 annotate={ANNOTATE}
                 states={[
                     {
-                        name: "dueResume = undefined (không có đợt ôn dở)",
+                        name: "dueResume = undefined (no paused review)",
                         why: "The learner has nothing paused, so the due hero shows the plain due-count shape with a Start CTA. This is the shape most visits to the overview open on — nothing left over from before, three blocks stacked answering three different questions.",
                         code: `<FlashcardReviewPage
     phase="overview"
     flashcardMode="study"
     onFlashcardModeChange={setMode}
-    flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+    flashcardModeAriaLabel="Flashcard mode"
     dueCount={8}
     dueReviewCount={5}
     dueNewCount={3}
@@ -100,7 +100,7 @@ export const Overview: Story = {
                                 phase="overview"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 dueCount={8}
                                 dueReviewCount={5}
                                 dueNewCount={3}
@@ -122,7 +122,7 @@ export const Overview: Story = {
                                 onDeckPageChange={() => {}}
                                 onSelectDeck={() => {}}
                                 showDeckProgress
-                                sessionBackLabel="Thoát"
+                                sessionBackLabel="Exit"
                                 onSessionBack={() => {}}
                                 sessionCounter=""
                                 sessionTotal={0}
@@ -140,7 +140,7 @@ export const Overview: Story = {
                         ),
                     },
                     {
-                        name: "dueResume = { current: 4, total: 10 } (còn đợt ôn dở)",
+                        name: "dueResume = { current: 4, total: 10 } (a paused review is waiting)",
                         why: "A batch was paused halfway; the due hero's whole shape swaps to a resume card, so the due-count breakdown steps aside — finishing what's in flight outranks a fresh total. The mastery strip and deck list underneath do not move.",
                         code: `<FlashcardReviewPage
     phase="overview"
@@ -152,7 +152,7 @@ export const Overview: Story = {
                                 phase="overview"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 dueCount={10}
                                 dueReviewCount={7}
                                 dueNewCount={3}
@@ -175,7 +175,7 @@ export const Overview: Story = {
                                 onDeckPageChange={() => {}}
                                 onSelectDeck={() => {}}
                                 showDeckProgress
-                                sessionBackLabel="Thoát"
+                                sessionBackLabel="Exit"
                                 onSessionBack={() => {}}
                                 sessionCounter=""
                                 sessionTotal={0}
@@ -201,7 +201,7 @@ export const Overview: Story = {
 /** LEAF — the caller flips `isSkeleton`; only the three overview blocks that can mirror themselves do. */
 export const OverviewLoading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardReviewPage"
                 tier="screen"
@@ -225,7 +225,7 @@ export const OverviewLoading: Story = {
                                 phase="overview"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 dueCount={0}
                                 dueReviewCount={0}
                                 dueNewCount={0}
@@ -246,7 +246,7 @@ export const OverviewLoading: Story = {
                                 onSelectDeck={() => {}}
                                 showDeckProgress
                                 isSkeleton
-                                sessionBackLabel="Thoát"
+                                sessionBackLabel="Exit"
                                 onSessionBack={() => {}}
                                 sessionCounter=""
                                 sessionTotal={0}
@@ -272,7 +272,7 @@ export const OverviewLoading: Story = {
 /** LEAF — session: the session band plus one card, the mode switch gone. */
 export const Session: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardReviewPage"
                 tier="screen"
@@ -281,18 +281,18 @@ export const Session: Story = {
                 annotate={ANNOTATE}
                 states={[
                     {
-                        name: "cardRevealed = false (chưa lật)",
+                        name: "cardRevealed = false (not flipped yet)",
                         why: "The learner is on card 3 of 10, question showing — FlashcardModeSwitch is entirely gone (switching mode mid-session would throw the run away), and the session band's rail shows two graded steps with the third standing taller. This is the shape most of a review session looks like.",
                         code: `<FlashcardReviewPage
     phase="session"
-    sessionBackLabel="Thoát"
+    sessionBackLabel="Exit"
     onSessionBack={leave}
-    sessionTitle="Ôn tập hôm nay"
-    sessionCounter="Thẻ 3 / 10"
+    sessionTitle="Today's Review"
+    sessionCounter="Card 3 / 10"
     sessionTotal={10}
     sessionCurrent={3}
     sessionDoneSteps={[1, 2]}
-    sessionFinishLabel="Kết thúc"
+    sessionFinishLabel="Finish"
     onSessionFinish={finish}
     cardQuestion={question}
     cardLevelLabel="Middle"
@@ -312,7 +312,7 @@ export const Session: Story = {
                                 phase="session"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 dueCount={0}
                                 dueReviewCount={0}
                                 dueNewCount={0}
@@ -332,17 +332,17 @@ export const Session: Story = {
                                 onDeckPageChange={() => {}}
                                 onSelectDeck={() => {}}
                                 showDeckProgress
-                                sessionBackLabel="Thoát"
+                                sessionBackLabel="Exit"
                                 onSessionBack={() => {}}
-                                sessionTitle="Ôn tập hôm nay"
-                                sessionCounter="Thẻ 3 / 10"
+                                sessionTitle="Today's Review"
+                                sessionCounter="Card 3 / 10"
                                 sessionTotal={10}
                                 sessionCurrent={3}
                                 sessionDoneSteps={[1, 2]}
                                 onSessionStepPress={() => {}}
-                                sessionFinishLabel="Kết thúc"
+                                sessionFinishLabel="Finish"
                                 onSessionFinish={() => {}}
-                                cardQuestion="Vì sao đặt `COPY . .` trước `npm ci` lại làm hỏng cache của Dockerfile?"
+                                cardQuestion="Why does putting `COPY . .` before `npm ci` break the Dockerfile's cache?"
                                 cardLevelLabel="Middle"
                                 cardTags={["docker", "cache"]}
                                 cardRevealed={false}
@@ -357,7 +357,7 @@ export const Session: Story = {
                         ),
                     },
                     {
-                        name: "cardRevealed = true (đã lật, chờ chấm)",
+                        name: "cardRevealed = true (flipped, awaiting rating)",
                         why: "The same card, now revealed: the answer and explanation appear under the question, and RatingBar takes the question's place at the foot of the card — grading is the only thing left to do before moving on.",
                         code: `<FlashcardReviewPage
     phase="session"
@@ -371,7 +371,7 @@ export const Session: Story = {
                                 phase="session"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 dueCount={0}
                                 dueReviewCount={0}
                                 dueNewCount={0}
@@ -391,23 +391,23 @@ export const Session: Story = {
                                 onDeckPageChange={() => {}}
                                 onSelectDeck={() => {}}
                                 showDeckProgress
-                                sessionBackLabel="Thoát"
+                                sessionBackLabel="Exit"
                                 onSessionBack={() => {}}
-                                sessionTitle="Ôn tập hôm nay"
-                                sessionCounter="Thẻ 3 / 10"
+                                sessionTitle="Today's Review"
+                                sessionCounter="Card 3 / 10"
                                 sessionTotal={10}
                                 sessionCurrent={3}
                                 sessionDoneSteps={[1, 2]}
                                 onSessionStepPress={() => {}}
-                                sessionFinishLabel="Kết thúc"
+                                sessionFinishLabel="Finish"
                                 onSessionFinish={() => {}}
-                                cardQuestion="Vì sao đặt `COPY . .` trước `npm ci` lại làm hỏng cache của Dockerfile?"
+                                cardQuestion="Why does putting `COPY . .` before `npm ci` break the Dockerfile's cache?"
                                 cardLevelLabel="Middle"
                                 cardTags={["docker", "cache"]}
                                 cardRevealed
                                 onCardReveal={() => {}}
-                                cardAnswer="Mọi thay đổi code làm **vỡ cache** của bước cài phụ thuộc, nên lần build nào cũng cài lại từ đầu."
-                                cardExplanation="COPY sớm khiến Docker coi bước cài phụ thuộc là đã đổi mỗi lần code đổi, nên nó luôn build lại từ bước đó."
+                                cardAnswer="Every code change **breaks the cache** of the dependency-install step, so every build reinstalls from scratch."
+                                cardExplanation="Copying early makes Docker treat the dependency-install step as changed every time the code changes, so it always rebuilds from that step onward."
                                 cardRatingOptions={RATING_OPTIONS}
                                 onCardRate={() => {}}
                                 isCardFirst={false}

@@ -32,7 +32,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * cannot exist in `src`, unlike a lesson's optional read state.
  *
  * TWO CHIPS CAN BE TRUE TOGETHER, `src` shows them side by side (kind chip +
- * a green "Nên xem" pill), so this block keeps that shape rather than folding
+ * a green "Recommended" pill), so this block keeps that shape rather than folding
  * to `no-adjacent-chip`'s "one chip, rest as text" idiom — see `ModuleHeader`'s
  * file header for the same call on its tier + count chips. Both KIND and
  * RECOMMENDED classify the resource (what it is / whether it is singled out),
@@ -41,12 +41,12 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * with no `tone` → `neutral`) so they read as a lower tier than kind/recommended.
  *
  * AUTHOR IS TEXT, NOT A CHIP — `src`'s `FoundationMeta` renders it as a plain
- * muted line below the chip row ("Tác giả: {author}"), never inside a pill.
+ * muted line below the chip row ("Author: {author}"), never inside a pill.
  * It is attribution, not a classifying fact, so a chip would overstate it.
  *
  * CONTRACT — the block takes DATA, never a pre-formatted string (§14d.1):
- * `author` is the raw name, the block owns the "Tác giả: " prefix itself; a
- * caller that could pass `authorLabel="Tác giả: Rob Pike"` would own the
+ * `author` is the raw name, the block owns the "Author: " prefix itself; a
+ * caller that could pass `authorLabel="Author: Rob Pike"` would own the
  * join and the block would stop owning its own wording.
  *
  * SKELETON — kind is skeletonised through `EnumChip`'s own `isSkeleton` (same
@@ -77,9 +77,9 @@ export enum FoundationKind {
  * The block owns this table (§14d.1: no caller-supplied color/label).
  */
 const KIND_MAP: Record<FoundationKind, EnumChipEntry> = {
-    [FoundationKind.ExternalLink]: { color: "accent", label: "Liên kết ngoài" },
+    [FoundationKind.ExternalLink]: { color: "accent", label: "External link" },
     [FoundationKind.Video]: { color: "accent", label: "Video" },
-    [FoundationKind.Document]: { color: "accent", label: "Bài viết" },
+    [FoundationKind.Document]: { color: "accent", label: "Article" },
 }
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */
@@ -114,7 +114,7 @@ export interface FoundationHeaderProps {
     isRecommended?: boolean
     /** Topic tags. Empty or omitted → no tag chips render. */
     tags?: Array<FoundationHeaderTag>
-    /** Author or source attribution — the block adds "Tác giả: " itself. Omit or empty → no author line. */
+    /** Author or source attribution — the block adds "Author: " itself. Omit or empty → no author line. */
     author?: string
     /**
      * `true` → every composed atom switches to its own shimmer. The flag FLOWS
@@ -154,7 +154,7 @@ const FoundationHeader = ({
     const metaCluster = (
         <>
             <StackH
-                gap="related"
+                gap={3}
                 align="center"
                 wrap
                 anatPart={showAnatomy ? "StackH" : undefined}
@@ -167,31 +167,31 @@ const FoundationHeader = ({
                             anatPart={showAnatomy ? "EnumChip" : undefined}
                         />
                         {isSkeleton ? (
-                            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                            <Chip isSkeleton showAnatomy={showAnatomy} />
                         ) : isRecommended ? (
-                            <Chip tone="success" text="Nên xem" anatPart={showAnatomy ? "Chip" : undefined} />
+                            <Chip tone="success" text="Recommended" showAnatomy={showAnatomy} />
                         ) : null}
                         {isSkeleton ? (
                             <>
-                                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
-                                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                                <Chip isSkeleton showAnatomy={showAnatomy} />
+                                <Chip isSkeleton showAnatomy={showAnatomy} />
                             </>
                         ) : hasTags ? (
                             (tags ?? []).map((tag) => (
-                                <Chip key={tag.key} text={tag.label} anatPart={showAnatomy ? "Chip" : undefined} />
+                                <Chip key={tag.key} text={tag.label} showAnatomy={showAnatomy} />
                             ))
                         ) : null}
                     </>
                 }
             />
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
             ) : hasAuthor ? (
                 <Typography
                     size="xs"
                     color="muted"
-                    text={`Tác giả: ${author}`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`Author: ${author}`}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -201,7 +201,8 @@ const FoundationHeader = ({
         <div data-anat-part={anatPart}>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
-                breadcrumb={
+                isSkeleton={isSkeleton}
+                breadcrumb={() => (
                     <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
                         <Breadcrumbs
                             collapseOnMobile
@@ -210,26 +211,11 @@ const FoundationHeader = ({
                             isSkeleton={isSkeleton}
                         />
                     </div>
-                }
-                title={
-                    isSkeleton ? (
-                        // `PageHeader` has no `isSkeleton` of its own, so the block calls the
-                        // atom directly with the EXACT size/weight the frame uses for a title
-                        // and feeds the result into the slot.
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                    )
-                }
-                description={
-                    isSkeleton ? (
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        description
-                    )
-                }
-                meta={
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={metaCluster} />
+                )}
+                title={title}
+                description={description}
+                meta={() =>
+                    <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={metaCluster} />
                 }
             />
         </div>

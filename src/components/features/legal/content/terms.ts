@@ -13,75 +13,75 @@ import type {
 export const TERMS_LAST_UPDATED = "2026-06-21"
 
 const vi: LegalDocument = {
-    intro: "Chào mừng bạn đến với StarCi Academy (academy.starci.org). Bằng việc tạo tài khoản hoặc sử dụng nền tảng, bạn đồng ý với các Điều khoản dịch vụ dưới đây.",
+    intro: "Welcome to StarCi Academy (academy.starci.org). By creating an account or using the platform, you agree to the Terms of Service below.",
     sections: [
         {
-            heading: "1. Dịch vụ",
+            heading: "1. The service",
             paragraphs: [
-                "StarCi là nền tảng học lập trình tự học theo lộ trình (Fullstack, System Design, DevOps, AI/LLM), gồm nội dung bài học, thử thách (challenge), chấm điểm bằng AI và dự án capstone. Chúng tôi có thể cập nhật, thêm hoặc gỡ tính năng và nội dung theo thời gian.",
+                "StarCi is a self-paced programming learning platform organised into tracks (Fullstack, System Design, DevOps, AI/LLM), covering lesson content, challenges, AI grading and capstone projects. We may update, add or remove features and content over time.",
             ],
         },
         {
-            heading: "2. Tài khoản",
+            heading: "2. Accounts",
             paragraphs: [
-                "Bạn cần tài khoản để dùng phần lớn tính năng. Bạn chịu trách nhiệm cho mọi hoạt động dưới tài khoản của mình và phải giữ thông tin đăng nhập an toàn. Cung cấp thông tin chính xác khi đăng ký. Tài khoản dành cho một cá nhân — không chia sẻ.",
+                "You need an account to use most features. You are responsible for everything done under your account and must keep your credentials safe. Provide accurate information when signing up. An account is for one individual — do not share it.",
             ],
         },
         {
-            heading: "3. Thanh toán, gói và hoàn tiền",
+            heading: "3. Payments, plans and refunds",
             items: [
-                { text: "Một số khóa học và gói là trả phí. Giá có thể thay đổi theo giai đoạn (ví dụ ưu đãi tiên phong / sớm / thường) và được hiển thị trước khi bạn thanh toán." },
-                { text: "Thanh toán được xử lý qua cổng bên thứ ba (PayOS, Sepay, Stripe, PayPal, NOWPayments). Việc thanh toán cũng chịu điều khoản của các cổng đó." },
-                { text: "Sau khi mua, bạn được cấp quyền truy cập nội dung tương ứng. Yêu cầu hoàn tiền được xem xét theo từng trường hợp; vui lòng liên hệ chúng tôi." },
+                { text: "Some courses and plans are paid. Prices may change by phase (e.g. pioneer / early / standard pricing) and are shown before you pay." },
+                { text: "Payments are processed by third-party gateways (PayOS, Sepay, Stripe, PayPal, NOWPayments). Paying is also subject to those gateways' terms." },
+                { text: "After a purchase you are granted access to the corresponding content. Refund requests are reviewed case by case; please contact us." },
             ],
         },
         {
-            heading: "4. Quyền sở hữu trí tuệ",
+            heading: "4. Intellectual property",
             items: [
-                { text: "Toàn bộ nội dung khóa học, bài học, challenge và tài liệu thuộc về StarCi (hoặc bên cấp phép). Bạn được dùng cho mục đích học tập cá nhân; không sao chép, phân phối lại, bán hoặc công khai nếu không có sự cho phép." },
-                { label: "Code và bài làm của bạn vẫn thuộc về bạn.", text: "Khi nộp repo để chấm, bạn cho phép chúng tôi truy cập và xử lý nó (kể cả qua dịch vụ AI) chỉ nhằm mục đích chấm điểm và phản hồi." },
+                { text: "All course content, lessons, challenges and materials belong to StarCi (or its licensors). You may use them for your own personal learning; do not copy, redistribute, sell or publish them without permission." },
+                { label: "Your code and your work stay yours.", text: "When you submit a repo for grading, you allow us to access and process it (including through AI services) solely for grading and feedback." },
             ],
         },
         {
-            heading: "5. Sử dụng được phép",
+            heading: "5. Acceptable use",
             paragraphs: [
-                "Bạn đồng ý không: chia sẻ tài khoản; sao chép hoặc phát tán lại nội dung trả phí; thu thập dữ liệu tự động (scrape); lạm dụng tính năng AI hoặc cố gắng vượt giới hạn; can thiệp vào hoạt động hoặc bảo mật của nền tảng; hoặc dùng dịch vụ cho mục đích trái pháp luật.",
+                "You agree not to: share your account; copy or redistribute paid content; scrape data automatically; abuse the AI features or try to bypass limits; interfere with the platform's operation or security; or use the service for unlawful purposes.",
             ],
         },
         {
-            heading: "6. Chấm điểm bằng AI",
+            heading: "6. AI grading",
             paragraphs: [
-                "Kết quả chấm và phản hồi bằng AI mang tính tham khảo và hỗ trợ học tập — chúng tôi không đảm bảo chính xác tuyệt đối và kết quả có thể thay đổi. Điểm số dùng cho mục đích học tập trên nền tảng, không phải chứng nhận chính thức.",
+                "AI scores and feedback are indicative and meant to support learning — we do not guarantee absolute accuracy and results may vary. Scores are for learning on the platform, not an official certification.",
             ],
         },
         {
-            heading: "7. Giới hạn trách nhiệm",
+            heading: "7. Limitation of liability",
             paragraphs: [
-                "Dịch vụ được cung cấp \"nguyên trạng\". Trong phạm vi pháp luật cho phép, StarCi không chịu trách nhiệm cho thiệt hại gián tiếp phát sinh từ việc sử dụng (hoặc không thể sử dụng) dịch vụ. Chúng tôi cố gắng duy trì hoạt động ổn định nhưng không cam kết không gián đoạn.",
+                "The service is provided \"as is\". To the extent permitted by law, StarCi is not liable for indirect damages arising from the use of (or inability to use) the service. We work to keep the service stable but do not guarantee uninterrupted availability.",
             ],
         },
         {
-            heading: "8. Đình chỉ và chấm dứt",
+            heading: "8. Suspension and termination",
             paragraphs: [
-                "Chúng tôi có thể đình chỉ hoặc chấm dứt tài khoản vi phạm các điều khoản này. Bạn có thể ngừng sử dụng và yêu cầu xóa tài khoản bất cứ lúc nào.",
+                "We may suspend or terminate accounts that breach these terms. You may stop using the service and request account deletion at any time.",
             ],
         },
         {
-            heading: "9. Luật áp dụng",
+            heading: "9. Governing law",
             paragraphs: [
-                "Các điều khoản này được điều chỉnh bởi pháp luật Việt Nam. Tranh chấp sẽ được giải quyết thông qua thương lượng thiện chí trước; nếu không đạt, theo thẩm quyền của tòa án Việt Nam.",
+                "These terms are governed by the laws of Vietnam. Disputes will first be resolved through good-faith negotiation; failing that, by the competent Vietnamese courts.",
             ],
         },
         {
-            heading: "10. Thay đổi điều khoản",
+            heading: "10. Changes to these terms",
             paragraphs: [
-                "Chúng tôi có thể cập nhật các điều khoản này. Thay đổi quan trọng sẽ được thông báo; tiếp tục sử dụng dịch vụ sau khi cập nhật đồng nghĩa với việc bạn chấp nhận.",
+                "We may update these terms. Material changes will be announced; continuing to use the service after an update means you accept it.",
             ],
         },
         {
-            heading: "11. Liên hệ",
+            heading: "11. Contact",
             paragraphs: [
-                "Mọi câu hỏi về điều khoản, vui lòng liên hệ: cuongnvtse160875@gmail.com.",
+                "For any question about these terms, contact: cuongnvtse160875@gmail.com.",
             ],
         },
     ],

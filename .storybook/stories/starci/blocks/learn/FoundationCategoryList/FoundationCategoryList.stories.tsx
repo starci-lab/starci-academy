@@ -16,7 +16,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *     the row content switches to shimmer — so it stays a STATE of this leaf,
  *     the same call `FoundationCategorySearchBar`'s file header already makes
  *     for its own `isSkeleton`.
- *   - `Empty` — the rows are REPLACED by `FeedbackEmpty`, bounded inside the
+ *   - `Empty` — the rows are REPLACED by `EmptyState`, bounded inside the
  *     same `SurfaceCardList` surface. Forks into its two wording states by
  *     whether a search query drove the empty result.
  */
@@ -42,20 +42,20 @@ const CATEGORIES: Array<FoundationCategoryListItem> = [
     {
         id: "docker",
         title: "Docker",
-        description: "Đóng gói và chạy ứng dụng nhất quán trên mọi môi trường.",
+        description: "Package and run applications consistently across every environment.",
         thumbnailUrl: THUMBNAIL_SRC,
         logoSrc: LOGO_SRC,
     },
     {
         id: "kubernetes",
         title: "Kubernetes",
-        description: "Điều phối container ở quy mô cluster.",
+        description: "Orchestrate containers at cluster scale.",
         logoSrc: LOGO_SRC,
     },
     {
         id: "terraform",
         title: "Terraform",
-        description: "Hạ tầng dưới dạng mã, khai báo và tái lập được.",
+        description: "Infrastructure as code, declarative and reproducible.",
         thumbnailUrl: THUMBNAIL_SRC,
     },
     {
@@ -86,10 +86,10 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         role: "the page nav under the list, shown only once there is a real page of rows to page through",
         storyId: "atoms-navigation-pagination-pagination--default",
     },
-    "FeedbackEmpty": {
+    "EmptyState": {
         tier: "composite",
         role: "the empty message riding inside SurfaceCardList's own bounded emptyState slot; wording forks on whether a search query drove the empty result",
-        storyId: "composites-feedback-feedback-feedbackempty--overview",
+        storyId: "composites-feedback-emptystate-emptystate--overview",
     },
 }
 
@@ -99,7 +99,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationCategoryList"
                 tier="block"
@@ -145,12 +145,12 @@ export const Default: Story = {
 }
 
 /**
- * LEAF — `Empty`: the rows are replaced by `FeedbackEmpty`, forking on whether
+ * LEAF — `Empty`: the rows are replaced by `EmptyState`, forking on whether
  * a search query drove the empty result (see file header, judgement 2).
  */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationCategoryList"
                 tier="block"

@@ -15,7 +15,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * ⭐ THE COUNT LINE ONLY SHOWS BESIDE REAL CARDS. It lives inside
  * `AsyncContent`'s `content` branch, not as chrome above the whole switch — a
- * "0 chuyên viên tư vấn" line stacked on top of the empty message would say
+ * "0 consultants" line stacked on top of the empty message would say
  * the same thing twice.
  *
  * 📐 ONE LEAF (`Default`). `isLoading`/`isEmpty` swap which `AsyncContent`
@@ -37,24 +37,24 @@ type Story = StoryObj<typeof ConsultantDirectoryGrid>
 const CONSULTANTS: Array<ConsultantCardConsultant> = [
     {
         id: "c1",
-        fullName: "Trần Minh Khôi",
+        fullName: "Alex Tran",
         jobTitle: "Senior IT Recruiter",
         companyTitle: "TalentBridge",
-        description: "6 năm tuyển dụng backend & DevOps cho các công ty product Đông Nam Á.",
+        description: "6 years recruiting backend & DevOps talent for Southeast Asian product companies.",
     },
     {
         id: "c2",
-        fullName: "Nguyễn Hải Yến",
+        fullName: "Yen Nguyen",
         jobTitle: "Tech Recruitment Lead",
         companyTitle: "HireStack",
-        description: "Chuyên tuyển frontend & mobile cho startup Series A trở lên.",
+        description: "Specializes in frontend & mobile hires for Series A and later startups.",
     },
     {
         id: "c3",
-        fullName: "Phạm Đức Anh",
+        fullName: "Duc Pham",
         jobTitle: "IT Headhunter",
         companyTitle: "NextRole",
-        description: "Kết nối kỹ sư data/AI với các công ty đang mở rộng đội ngũ.",
+        description: "Connects data/AI engineers with companies scaling up their teams.",
     },
 ]
 
@@ -72,7 +72,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ConsultantDirectoryGrid"
                 tier="block"
@@ -86,8 +86,8 @@ export const Default: Story = {
                         code: `<ConsultantDirectoryGrid
     isLoading
     onOpenConsultant={openConsultant}
-    emptyTitle="Chưa có chuyên viên tư vấn nào trong khoá học này"
-    ariaLabel="Danh sách chuyên viên tư vấn"
+    emptyTitle="No consultants yet for this course"
+    ariaLabel="Consultant directory"
 />`,
                         render: (
                             <ConsultantDirectoryGrid
@@ -95,8 +95,8 @@ export const Default: Story = {
                                 showAnatomy
                                 isLoading
                                 onOpenConsultant={() => {}}
-                                emptyTitle="Chưa có chuyên viên tư vấn nào trong khoá học này"
-                                ariaLabel="Danh sách chuyên viên tư vấn"
+                                emptyTitle="No consultants yet for this course"
+                                ariaLabel="Consultant directory"
                             />
                         ),
                     },
@@ -108,8 +108,8 @@ export const Default: Story = {
     count={0}
     isLoading={false}
     onOpenConsultant={openConsultant}
-    emptyTitle="Chưa có chuyên viên tư vấn nào trong khoá học này"
-    ariaLabel="Danh sách chuyên viên tư vấn"
+    emptyTitle="No consultants yet for this course"
+    ariaLabel="Consultant directory"
 />`,
                         render: (
                             <ConsultantDirectoryGrid
@@ -117,21 +117,21 @@ export const Default: Story = {
                                 count={0}
                                 isLoading={false}
                                 onOpenConsultant={() => {}}
-                                emptyTitle="Chưa có chuyên viên tư vấn nào trong khoá học này"
-                                ariaLabel="Danh sách chuyên viên tư vấn"
+                                emptyTitle="No consultants yet for this course"
+                                ariaLabel="Consultant directory"
                             />
                         ),
                     },
                     {
                         name: "consultants.length = 3",
-                        why: "The common case: a resolved, non-empty list. The count line ('3 chuyên viên tư vấn') rides above the grid inside the same content branch, and the grid lays the three cards out on the container's own width.",
+                        why: "The common case: a resolved, non-empty list. The count line ('3 consultants') rides above the grid inside the same content branch, and the grid lays the three cards out on the container's own width.",
                         code: `<ConsultantDirectoryGrid
     consultants={consultants}
     count={3}
     isLoading={false}
     onOpenConsultant={openConsultant}
-    emptyTitle="Chưa có chuyên viên tư vấn nào trong khoá học này"
-    ariaLabel="Danh sách chuyên viên tư vấn"
+    emptyTitle="No consultants yet for this course"
+    ariaLabel="Consultant directory"
 />`,
                         render: (
                             <ConsultantDirectoryGrid
@@ -139,8 +139,8 @@ export const Default: Story = {
                                 count={CONSULTANTS.length}
                                 isLoading={false}
                                 onOpenConsultant={() => {}}
-                                emptyTitle="Chưa có chuyên viên tư vấn nào trong khoá học này"
-                                ariaLabel="Danh sách chuyên viên tư vấn"
+                                emptyTitle="No consultants yet for this course"
+                                ariaLabel="Consultant directory"
                             />
                         ),
                     },

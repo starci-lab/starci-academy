@@ -39,8 +39,8 @@ export type FlashcardMode = "study" | "quiz"
  * flashcards pane, and a caller that could pass it would own the wording.
  */
 const MODE_LABEL: Record<FlashcardMode, string> = {
-    study: "Học thẻ",
-    quiz: "Hỏi nhanh",
+    study: "Study cards",
+    quiz: "Quick quiz",
 }
 
 const MODE_ICON: Record<FlashcardMode, TabItem["icon"]> = {

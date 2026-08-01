@@ -38,8 +38,8 @@ export interface FlashcardReviewerProps extends WithClassNames<undefined> {
      * `flashcards/review/decks/[deckId]/sessions/[sessionId]` route — this
      * component then hydrates straight from THAT session (no resolve-or-start
      * call) instead of resolving one itself. Absent when reached via the bare
-     * `.../decks/[deckId]` route (thầy 2026-07-11 đính chính: "để lưu lại phiên
-     * ôn" — that bare route is now a RESOLVE-ONLY shim: it resolves-or-starts a
+     * `.../decks/[deckId]` route (teacher 2026-07-11 correction: "so the review
+     * session gets saved" — that bare route is now a RESOLVE-ONLY shim: it resolves-or-starts a
      * session then `router.push`es into the sessioned URL, mirroring
      * `QuizSession`'s `startSession` → `router.push` idiom). Mirrors
      * `QuizSessionProps.resumeSessionId`.
@@ -47,8 +47,8 @@ export interface FlashcardReviewerProps extends WithClassNames<undefined> {
     sessionId?: string
     /** Returns to the study overview (due + mastery + deck list). Passed straight
      *  through as `WorkSessionHeader`'s `onBack` (mirrors `QuizSession`'s own
-     *  `exitToSetup` — thầy 2026-07-09: "cả 2 phần review và quiz đều không có
-     *  nút back về"). */
+     *  `exitToSetup` — teacher 2026-07-09: "neither the review nor the quiz
+     *  section has a back button"). */
     onBack?: () => void
 }
 
@@ -108,10 +108,10 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     // drives the progress bar's per-segment green under free navigation
     // (2026-07-12; mirrors `DueReview`). Persisted via `gradedIndexes` sync.
     const [gradedIndexes, setGradedIndexes] = useState<Set<number>>(() => new Set())
-    // explicit "Kết thúc" — end the run now regardless of position.
+    // explicit "Finish" — end the run now regardless of position.
     const [finished, setFinished] = useState(false)
-    // confirm-before-exit, mirroring MockInterviewSession: "leave" (Thoát) · "endEarly"
-    // (Kết thúc sớm — end the study run now). null = no dialog open.
+    // confirm-before-exit, mirroring MockInterviewSession: "leave" (Exit) · "endEarly"
+    // (Finish early — end the study run now). null = no dialog open.
     const [confirmAction, setConfirmAction] = useState<null | "leave" | "endEarly">(null)
 
     // load the full deck graph (cards with question + answer)
@@ -125,8 +125,8 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
         },
     )
 
-    // ── resumable review session (2026-07-09: "đều lưu session lại để build
-    // stats" — mirrors QuizSession's own start/sync/complete/resume wiring,
+    // ── resumable review session (2026-07-09: "always save the session to
+    // build stats" — mirrors QuizSession's own start/sync/complete/resume wiring,
     // scoped to this ONE deck instead of the whole course) ──────────────────
     const runStartSession = useMutateStartFlashcardReviewSessionSwr()
     const runSyncSession = useMutateSyncFlashcardReviewSessionProgressSwr()
@@ -135,7 +135,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     // lookup, used to resolve-or-start before a sessioned URL exists yet.
     const inProgressSessionSwr = useQueryMyInProgressFlashcardReviewSessionSwr(deckId, courseId)
     // sessioned route: resolve THIS EXACT session by id (not an MRU guess) —
-    // fixes a visible jank on load (2026-07-12: "cái này cũng giật này"). The
+    // fixes a visible jank on load (2026-07-12: "this one jitters too"). The
     // old code reused `inProgressSessionSwr` here too and manually checked
     // `resumable.sessionId === sessionId` as a workaround for using the wrong
     // query; worse, that query's `isLoading` wasn't part of `AsyncContent`'s
@@ -144,8 +144,8 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     const sessionByIdSwr = useQueryMyFlashcardReviewSessionBySessionIdSwr(sessionId, courseId)
 
     // cards in review order. When a session resolves, its PERSISTED `cardIds` is
-    // the source of truth for WHICH cards + their order — so "Chỉ thẻ cần ôn"
-    // ("due" mode, thầy 2026-07-13) actually shows only its narrowed subset
+    // the source of truth for WHICH cards + their order — so "Due cards only"
+    // ("due" mode, teacher 2026-07-13) actually shows only its narrowed subset
     // instead of the whole deck. Order follows the session's `cardIds` exactly
     // (a card id no longer in the deck is dropped). Before a session exists (the
     // bare `?deckId=` shim, which starts a FULL draw), fall back to the whole
@@ -182,7 +182,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     const completedRef = useRef(false)
 
     // once the deck's cards AND the in-progress check have both settled — TWO
-    // routes into this component (2026-07-11 đính chính: "để lưu lại phiên ôn"):
+    // routes into this component (2026-07-11 correction: "so the review session gets saved"):
     // (a) reached via the dedicated `.../decks/[deckId]/sessions/[sessionId]`
     //     route (`sessionId` prop set) → hydrate straight from THAT session
     //     (no start call); a stale/invalid id (expired past 24h, or bogus) falls
@@ -197,8 +197,8 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     // start a fresh session + redirect into its sessioned URL — used by the
     // resolve effect (2 branches below). Routed through
     // `runGraphQL` (toast on failure, no success toast — best-effort/silent
-    // success) instead of a bare `.catch(() => {})` (thầy 2026-07-11: "fe
-    // không nuốt lỗi, dùng runGraphQL đi") — a failed start now surfaces to
+    // success) instead of a bare `.catch(() => {})` (teacher 2026-07-11: "FE
+    // shouldn't swallow errors, use runGraphQL") — a failed start now surfaces to
     // the learner instead of leaving the shim route stuck silently.
     const startSessionAndRedirect = useCallback(
         async (redirectBase: string) => {
@@ -220,8 +220,8 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             )
             if (freshId) {
                 sessionIdRef.current = freshId
-                // the live URL carries ONLY the sessionId, no `?deckId=` (thầy
-                // 2026-07-11: "bỏ deck đi, only session thôi" — no more `decks/<id>`
+                // the live URL carries ONLY the sessionId, no `?deckId=` (teacher
+                // 2026-07-11: "drop the deck, session only" — no more `decks/<id>`
                 // path segment either; `review/sessions/[sessionId]` is shared with
                 // `DueReview`). `Flashcards` resolves deck identity back out via
                 // `myFlashcardReviewSessionBySessionId` — the session already
@@ -235,7 +235,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     // every card in the deck was already graded (`reviewedCount` reaches the
     // deck size) but `status` never flipped to "completed" — the earlier
     // completion call never landed (2026-07-12, same root cause traced in
-    // `QuizSession`: "submit rồi mà F5 về câu cuối"). Clamping `currentIndex`
+    // `QuizSession`: "already submitted but F5 goes back to the last question"). Clamping `currentIndex`
     // to `cards.length - 1` would ALWAYS re-show the last card (that index
     // can't tell "about to answer" from "just answered" apart) — resolve to
     // the FULL length instead so `done` computes true immediately and the
@@ -350,21 +350,21 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
         setCurrentIndex((index) => Math.max(index - 1, 0))
     }
     // jump straight to ANY step from the progress-segment bar — free navigation,
-    // "cả trước và sau, chưa tới vẫn click được" (2026-07-12, mirrors `DueReview`).
+    // "both before and after, clickable even before you reach it" (2026-07-12, mirrors `DueReview`).
     const goToIndex = useCallback((position: number) => {
         setRevealed(false)
         setCurrentIndex(position)
     }, [])
-    // "Tiếp" — the explicit, symmetric counterpart to "Trước": browse forward
+    // "Next" — the explicit, symmetric counterpart to "Previous": browse forward
     // WITHOUT revealing/grading (mirrors `goPrev`; both are just the free-nav
-    // `goToIndex` under the hood, per thầy 2026-07-12: "next prev" flanking the
-    // primary "Xem đáp án" CTA, researched against Mochi/Anki's ← → idiom).
+    // `goToIndex` under the hood, per teacher 2026-07-12: "next prev" flanking the
+    // primary "Show answer" CTA, researched against Mochi/Anki's ← → idiom).
     const goNext = useCallback(() => {
         setRevealed(false)
         setCurrentIndex((index) => Math.min(index + 1, cards.length - 1))
     }, [cards.length])
     // end the run now → the completion effect (`done`) fires + navigates to the
-    // result route. Distinct from "Thoát" (back-link: leave, keep resumable).
+    // result route. Distinct from "Exit" (back-link: leave, keep resumable).
     const onFinish = useCallback(() => setFinished(true), [])
 
     // grade the current card, reschedule it (SM-2), then advance
@@ -431,7 +431,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                     ).then(() => {
                         // invalidate any resumable-session indicator elsewhere reading
                         // THIS exact key (mirrors the identical fix on `DueReview`,
-                        // 2026-07-12: "bấm nút back thì về 2 trong khi đang là 5" — a
+                        // 2026-07-12: "pressing back showed 2 while it was actually 5" — a
                         // per-grade sync never invalidated the cache, only the `done`
                         // completion path did, so a revisit mid-session could read a
                         // stale currentIndex even though the DB itself was correct).
@@ -446,8 +446,8 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     // the run just finished (past the last card) — close out the persisted
     // session ONCE so `myFlashcardReviewHistory`/`myFlashcardReviewStats` can
     // read it; guarded so a re-render at `done` never double-fires it. Routed
-    // through `runGraphQL` (thầy 2026-07-11: "fe không nuốt lỗi, dùng
-    // runGraphQL đi") instead of a silent catch.
+    // through `runGraphQL` (teacher 2026-07-11: "FE shouldn't swallow errors,
+    // use runGraphQL") instead of a silent catch.
     useEffect(() => {
         if (!done || completedRef.current || !sessionIdRef.current || !courseHeaders) {
             return
@@ -490,7 +490,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
             // (effect above). `AsyncContent` checks `error` BEFORE `isLoading`
             // (bug fixed 2026-07-11: gate `error`/`isEmpty` on `sessionId` too, not
             // just `isLoading` — a genuine deck-query error used to leak through
-            // as "chưa có Flashcards" on the shim even while still resolving).
+            // as "no Flashcards yet" on the shim even while still resolving).
             // `cards.length > 0 && !initResolved` (2026-07-12 fix): once the deck
             // itself has loaded, ALSO hold the skeleton until the resume/start
             // effect has actually applied `currentIndex`/`reviewedCount` — not just
@@ -516,7 +516,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                 // re-derived client-side here), so this branch never has a real end
                 // state to render — just the "saving" interim until that navigation
                 // lands. KEEP the same `WorkSessionHeader` chrome the just-finished
-                // ACTIVE phase used (thầy wanted the loading state to render like the
+                // ACTIVE phase used (teacher wanted the loading state to render like the
                 // active session's header, not swap to `PageHeader` early).
                 <div className={cn("flex w-full flex-col", className)}>
                     <WorkSessionHeader
@@ -544,11 +544,11 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                 <div className={cn("flex w-full flex-col", className)}>
                     {/* shared header: WorkSessionHeader (deck identity + card counter +
                         level/tag meta chips inline + progress segments) — same shell as
-                        QuizSession's "Hỏi nhanh" (thầy 2026-07-11: "ôn thẻ giao diện y
-                        chang"). Level/tag folded INTO the header row, no separate row below.
+                        QuizSession's "Quick quiz" (teacher 2026-07-11: "review-card UI,
+                        exactly identical"). Level/tag folded INTO the header row, no separate row below.
                         `title` disambiguates this single-deck study mode from DueReview's
-                        cross-deck due-review sharing the exact same shell (thầy 2026-07-12:
-                        "2 cái trang này y chang nhau"). */}
+                        cross-deck due-review sharing the exact same shell (teacher 2026-07-12:
+                        "these two pages are exactly identical"). */}
                     <WorkSessionHeader
                         backLabel={t("flashcard.exit")}
                         onBack={() => setConfirmAction("leave")}
@@ -561,7 +561,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         // `current` = VIEWED card (accent/pink follows the cursor);
                         // green/done is per-card via `doneSet={gradedIndexes}` so a
                         // card graded out of order stays green (2026-07-12, free-nav
-                        // "cả trước và sau"). Every segment clickable; "Kết thúc"
+                        // "both before and after"). Every segment clickable; "Finish"
                         // ends the run explicitly.
                         current={currentIndex}
                         total={cards.length}
@@ -592,7 +592,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                             {/* the flip card: question → answer (+ optional depth); the
                                 level/tag chips ride under the QUESTION via `belowFront`
-                                (thầy 2026-07-13: "chip gap-3 ở dưới câu hỏi"), moved out
+                                (teacher 2026-07-13: "chips gap-3 under the question"), moved out
                                 of the header `meta` slot. */}
                             <FlipCard
                                 revealed={revealed}
@@ -666,15 +666,17 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                     />
                                 </SectionCard>
                             ) : (
-                                // "Xem đáp án" (primary, lấp hết chỗ trống còn lại) · "Tiếp"/"Trước"
-                                // ICON-ONLY (caret, không text) — thầy 2026-07-13 (devtools) đổi lần 3:
-                                // bỏ text 2 nút nav, đổi `grid` cột cố định → `flex` + `flex-1` (chỉ
-                                // primary co giãn, 2 nút icon giữ kích thước cố định). gap-2.
+                                // "Show answer" (primary, fills the rest of the space) · "Next"/"Previous"
+                                // ICON-ONLY (caret, no text) — teacher 2026-07-13 (devtools) 3rd revision:
+                                // dropped the text on both nav buttons, changed the fixed-column `grid` →
+                                // `flex` + `flex-1` (only the primary stretches, the 2 icon buttons keep a
+                                // fixed size). gap-2.
                                 <div className="flex flex-wrap items-center gap-2">
-                                    {/* KHÔNG expand full-width trên desktop — hug-content, nằm bên trái
-                                        cùng 2 nút caret (thầy 2026-07-13: "tất cả nằm bên trái, không
-                                        expand trừ khi card nhỏ"). `w-full` chỉ dưới `sm:` (mobile, tap
-                                        target rộng hơn dễ bấm), `@app-sm:w-auto` trở lên hug-content. */}
+                                    {/* does NOT expand full-width on desktop — hug-content, sits on the left
+                                        alongside the 2 caret buttons (teacher 2026-07-13: "everything sits on
+                                        the left, don't expand unless the card is small"). `w-full` only below
+                                        `sm:` (mobile, a wider tap target is easier to press), `@app-sm:w-auto`
+                                        and up is hug-content. */}
                                     <Button size="sm" variant="primary" className="w-full @app-sm:w-auto" onPress={() => setRevealed(true)}>
                                         {t("flashcard.showAnswer")}
                                     </Button>

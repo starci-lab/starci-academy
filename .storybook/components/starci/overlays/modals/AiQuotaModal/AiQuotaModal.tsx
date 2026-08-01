@@ -147,9 +147,9 @@ export interface AiQuotaModalProps {
 
 /** Tab → label. The block's own vocabulary (§14d.1), same pattern as `ContentModeNav`'s `MODE_LABEL`. */
 const TAB_LABEL: Record<AiQuotaModalTab, string> = {
-    auto: "Tự động",
-    subscription: "Gói đăng ký",
-    history: "Lịch sử",
+    auto: "Auto",
+    subscription: "Subscription",
+    history: "History",
 }
 
 /** Fixed tab order — a 3-way switch, not caller-supplied labels (§14d.1). */
@@ -196,18 +196,18 @@ const AiQuotaModal = ({
             <Typography
                 size="base"
                 weight="bold"
-                text="Mức sử dụng AI"
-                anatPart={showAnatomy ? "Typography" : undefined}
+                text="AI usage"
+                showAnatomy={showAnatomy}
             />
             {tier != null ? (
-                <Chip tone="accent" text={TIER_LABEL[tier]} anatPart={showAnatomy ? "Chip" : undefined} />
+                <Chip tone="accent" text={TIER_LABEL[tier]} showAnatomy={showAnatomy} />
             ) : null}
         </>
     )
 
     const header = (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             className="pr-8"
             anatPart={showAnatomy ? "StackH" : undefined}
@@ -252,7 +252,7 @@ const AiQuotaModal = ({
                     items={TAB_ITEMS}
                     selectedKey={activeTab}
                     onSelectionChange={(key) => onTabChange(key as AiQuotaModalTab)}
-                    ariaLabel="Mức sử dụng AI"
+                    ariaLabel="AI usage"
                 />
             </div>
             {panel}
@@ -270,15 +270,15 @@ const AiQuotaModal = ({
                 className={className}
                 footer={
                     <LinkSeeMore
-                        label="Xem đầy đủ mức sử dụng"
+                        label="View full usage"
                         onPress={onViewDetails}
                         size="sm"
-                        anatPart={showAnatomy ? "Link" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 }
                 showAnatomy={showAnatomy}
             >
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={tabsAndPanel} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={tabsAndPanel} />
             </ModalShell>
         </div>
     )

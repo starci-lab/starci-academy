@@ -62,16 +62,7 @@ interface ChipBaseOwnProps {
     /** `true` → tags each part with `data-anat-part` for the BlockAnatomy badge. */
     showAnatomy?: boolean
     /**
-     * `data-anat-part` name on the chip's root. A wrapping component (e.g. `ChipGroup`)
-     * passes `"Chip"` down so the dependency tree recognizes this as a Chip and links to
-     * its story — that tree is built from the DOM, so without the label it's invisible.
-     */
-    anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -118,8 +109,6 @@ export const ChipBase = ({
     removeLabel,
     isSkeleton = false,
     showAnatomy = false,
-    anatPart,
-    className,
     classNames,
 }: ChipBaseProps) => {
     // The dot appears only when the caller gives it a color (see {@link ChipLeadingProps}).
@@ -132,14 +121,16 @@ export const ChipBase = ({
         const slots = (hasDot || Icon ? 1 : 0) + (onRemove ? 1 : 0)
         return (
             <HeroChip
+                data-tier="atom"
+                data-component="Chip"
                 color={tone}
                 variant="soft"
-                className={cn("w-fit", className, classNames)}
+                className={cn("w-fit", classNames)}
                 // Node name = the REAL component rendered here (HeroUI `Chip`, in its
                 // loading look) — NOT the word "Skeleton" (that's a STATE, not an
                 // identity, and this element is the same `HeroChip` the real branch
                 // below renders).
-                data-anat-part={anatPart ?? (showAnatomy ? "Chip" : undefined)}
+                data-anat-part={showAnatomy ? "Chip" : undefined}
             >
                 {hasDot || Icon ? <HeroSkeleton className="size-3 shrink-0 rounded-full" /> : null}
                 <HeroChip.Label>
@@ -177,6 +168,8 @@ export const ChipBase = ({
 
     return (
         <HeroChip
+            data-tier="atom"
+            data-component="Chip"
             color={tone}
             variant="soft"
             // No `size` passed — this is HeroUI's base size already. `chipVariants
@@ -190,8 +183,8 @@ export const ChipBase = ({
             //
             // w-fit: chip is a content-hugging pill — without it, `align-items: stretch`
             // on a flex-col parent stretches the chip the full row.
-            className={cn("w-fit", className, classNames)}
-            data-anat-part={anatPart}
+            className={cn("w-fit", classNames)}
+            data-anat-part={showAnatomy ? "Chip" : undefined}
         >
             {leading}
             {/* Real component rendered here is HeroUI's `Chip.Label` compound member —
@@ -215,3 +208,5 @@ export const ChipBase = ({
         </HeroChip>
     )
 }
+
+export const meta = { tier: "atom", name: "Chip" } as const

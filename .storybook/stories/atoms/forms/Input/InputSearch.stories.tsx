@@ -8,15 +8,16 @@ export default meta
 type Story = StoryObj
 
 /**
- * ATOM LÁ — `InputSearch` bọc thẳng HeroUI `SearchField` (leading icon + clear sẵn)
- * + `FieldFrame` nội bộ (§11a). Không component nào ở đây có story riêng ⇒
- * `annotate` không có `storyId` — nhưng heroui `SearchField.Group` cùng
- * `Label`/`Skeleton` của `FieldFrame` vẫn cần tier `heroui` để panel hai-luật
- * không lặng lẽ bỏ sót chúng (2026-07-28).
+ * LEAF ATOM — `InputSearch` wraps HeroUI `SearchField` directly (leading icon +
+ * built-in clear) + an internal `FieldFrame` (§11a). No component here has its own
+ * story ⇒ `annotate` carries no `storyId` — but HeroUI's `SearchField.Group` along
+ * with `FieldFrame`'s own `Label`/`Skeleton` still need tier `heroui` so the
+ * two-rule panel doesn't silently miss them (2026-07-28).
  *
- * ⭐ 2026-07-26 (§12g): leaf `Invalid` tách khỏi `Error` — `isInvalid` một mình chỉ
- * đổi viền (không dòng chữ), `errorMessage` mới kéo theo viền + dòng đỏ. Hai prop
- * khác pixel nhau nên phải là hai leaf khác nhau (§12g.1: đổi pixel = có leaf).
+ * ⭐ 2026-07-26 (§12g): leaf `Invalid` split off from `Error` — `isInvalid` alone
+ * only changes the border (no message line), `errorMessage` is what pulls in the
+ * border plus the red line. Two props that differ by a pixel must be two separate
+ * leaves (§12g.1: a pixel change means a leaf).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SearchField.Group": { tier: "heroui", role: "search field group with icon" },
@@ -41,7 +42,7 @@ export const Default: Story = {
                             why: "Only the search field renders: a magnifier leading icon inside `FieldFrame`, no label row above it and no hint or error line below it. This is the bare control, the shape every other leaf below adds one thing on top of.",
                             code: "<InputSearch value={v} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputSearch value={value} onValueChange={setValue} ariaLabel="Search" showAnatomy />
                                 </div>
                             ),
@@ -50,13 +51,14 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /**
- * Leaf prop `placeholder` — chữ mờ chỉ hiện khi ô rỗng. Trước 2026-07-26 nó bị nhét
- * vào leaf `Default` nên prop có hình mà không có leaf nào sở hữu (§12g).
+ * Leaf prop `placeholder` — the ghost text only shows while the field is empty.
+ * Before 2026-07-26 it was stuffed into leaf `Default`, so the prop had a visible
+ * shape with no leaf of its own owning it (§12g).
  */
 export const Placeholder: Story = {
     render: () => {
@@ -74,7 +76,7 @@ export const Placeholder: Story = {
                             why: "The ghost text sits inside the empty field and disappears the moment a first character is typed. It only shows while the field holds no value, so it never competes with real input.",
                             code: "<InputSearch placeholder=\"Search courses…\" value={v} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputSearch placeholder="Search courses…" value={value} onValueChange={setValue} showAnatomy />
                                 </div>
                             ),
@@ -83,7 +85,7 @@ export const Placeholder: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -104,7 +106,7 @@ export const WithLabel: Story = {
                             why: "A label row grows above the field and a muted hint line grows below it, on top of the same bare field from `Default`. Naming the field and explaining what to type in it are two separate slots that a caller can add independently.",
                             code: "<InputSearch label=\"Search courses\" hint=\"By name or skill\" value={v} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputSearch label="Search courses" hint="By name or skill" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
                                 </div>
                             ),
@@ -113,7 +115,7 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -134,7 +136,7 @@ export const Required: Story = {
                             why: "A `*` mark appears right after the label text, nothing else in the field changes. It's the one visual cue that tells the learner this search is not optional before they can move on.",
                             code: "<InputSearch label=\"Search courses\" isRequired value={v} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputSearch label="Search courses" isRequired value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
                                 </div>
                             ),
@@ -143,7 +145,7 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -164,7 +166,7 @@ export const Filled: Story = {
                             why: "A trailing clear (×) button grows in the field once `value` holds text, next to the label from `WithLabel`. HeroUI's `SearchField` only offers a way to blank the field back out when there's something to blank.",
                             code: "<InputSearch label=\"Search courses\" value=\"React\" onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputSearch label="Search courses" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
                                 </div>
                             ),
@@ -173,7 +175,7 @@ export const Filled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -194,7 +196,7 @@ export const Disabled: Story = {
                             why: "The whole field locks and the label dims along with it, no node is added or removed. This is the state a search bar takes while whatever it filters hasn't finished loading yet.",
                             code: "<InputSearch label=\"Search courses\" value=\"React\" isDisabled onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputSearch label="Search courses" value={value} onValueChange={setValue} isDisabled placeholder="Search courses…" showAnatomy />
                                 </div>
                             ),
@@ -203,7 +205,7 @@ export const Disabled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -228,7 +230,7 @@ export const Invalid: Story = {
                             why: "The field's border turns red and nothing else changes, no message line grows below it. `isInvalid` alone only marks the control as wrong; it takes a separate `errorMessage` (the next leaf) to say why.",
                             code: "<InputSearch label=\"Search courses\" isInvalid value={v} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputSearch label="Search courses" isInvalid value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
                                 </div>
                             ),
@@ -237,7 +239,7 @@ export const Invalid: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -258,7 +260,7 @@ export const Error: Story = {
                             why: "The same red border from `Invalid` shows, plus a red message line grows below the field carrying the actual text. Setting `errorMessage` implies `isInvalid` on its own, so a caller never has to pass both.",
                             code: "<InputSearch label=\"Search courses\" errorMessage=\"Invalid search term\" value={v} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputSearch label="Search courses" errorMessage="Invalid search term" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
                                 </div>
                             ),
@@ -267,14 +269,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /** Loading — label skeleton mirrored above the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InputSearch"
                 tier="atom"
@@ -286,7 +288,7 @@ export const Loading: Story = {
                         why: "The field box and the label both switch to shimmer bars in the same layout the loaded control will occupy. Mirroring the label too, instead of only the box, keeps the row height from jumping once the real label text arrives.",
                         code: "<InputSearch label=\"Search courses\" isSkeleton />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <InputSearch label="Search courses" value="" onValueChange={() => {}} isSkeleton showAnatomy />
                             </div>
                         ),

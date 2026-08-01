@@ -35,7 +35,7 @@ export interface PageHeaderProps extends WithClassNames<undefined> {
     actions?: ReactNode
     /**
      * Optional meta row placed BELOW the title/description — typically a row of
-     * stat/meta chips ("24 Module · 87 Nội dung …"). Rendered `gap-3` from the
+     * stat/meta chips ("24 Modules · 87 Content Items …"). Rendered `gap-3` from the
      * title block. Omit when the header carries no stats.
      */
     meta?: ReactNode

@@ -1,9 +1,10 @@
 import type { LocalizedGuide } from "./types"
 
 /**
- * Linux Ollama install guide (RAG Setup: engine step). Chỉ lo CÀI + CHẠY Ollama —
- * tải model là bước RIÊNG ngay sau đó của Setup. Mọi tín hiệu KIỂM ĐƯỢC BẰNG LỆNH
- * (`systemctl is-active`, `ollama list`, HTTP :11434) — không mô tả GUI.
+ * Linux Ollama install guide (RAG Setup: engine step). Only covers INSTALLING + RUNNING
+ * Ollama — downloading the model is a SEPARATE step right after in Setup. Every signal
+ * is VERIFIABLE BY COMMAND (`systemctl is-active`, `ollama list`, HTTP :11434) — no GUI
+ * description.
  */
 export const RAG_LINUX_GUIDE: LocalizedGuide = {
     vi: `

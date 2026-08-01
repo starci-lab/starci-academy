@@ -1,6 +1,6 @@
 import { HouseIcon, UserCircleMinusIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -13,25 +13,25 @@ import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedb
  * title) that has no equivalent anywhere in this design system, and this run is
  * the ONLY consumer that would want one. Inventing a numeral-hero shape for a
  * single caller is the opposite of what a composite tier is for — so this block
- * composes `FeedbackEmpty` (composites/feedback/Feedback) in its plain
+ * composes `EmptyState` (composites/feedback/Feedback) in its plain
  * icon+title+description+action shape instead of adding a `code` slot. If a
  * second numeral-style 404/500 consumer shows up later, THAT is the trigger to
- * revisit `FeedbackEmpty size="page"` + `code` (already supported, see its
+ * revisit `EmptyState size="page"` + `code` (already supported, see its
  * stories' `FullPage` leaf) — not to build a parallel shell now for one caller.
  *
  * WHY A BLOCK: picking "this is a not-found kind of empty, not a broken-fetch
  * kind" (tone stays neutral, not danger) and which icon reads as "no such
- * profile" is a domain call about the profile feature — `FeedbackEmpty` itself
+ * profile" is a domain call about the profile feature — `EmptyState` itself
  * has no opinion on either.
  *
- * COMPOSE: `FeedbackEmpty` for the centered icon/title/description/action stack
+ * COMPOSE: `EmptyState` for the centered icon/title/description/action stack
  * (reused as-is, not rebuilt); `Button` for the single way out, built by this
  * block so the caller never has to hold the atom.
  *
  * PROPS — `title`/`description` are TYPED, pre-translated strings (§14d.1): the
  * block owns the WORDING SLOT, but the exact copy is still resolved by the
  * caller/i18n at the screen layer, same split as `CourseQaInvite`. The one
- * piece of copy this block DOES own outright is the CTA label ("Về trang chủ")
+ * piece of copy this block DOES own outright is the CTA label ("Back to home")
  * — unlike `CourseQaInvite`, the caller here only supplies a callback
  * (`onGoHome`), never a label, because "go back to the home route" is the one
  * and only exit a 404 state ever offers, not a per-caller decision.
@@ -46,14 +46,14 @@ import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedb
  *
  * ⚠️ NO `SurfaceCard` wrapper. Unlike `CourseQaInvite` (a state living inside a
  * course's Q&A tab, sitting on a card among other tab content), this block
- * fills the WHOLE route — same footing as `FeedbackEmpty`'s own `FullPage`
+ * fills the WHOLE route — same footing as `EmptyState`'s own `FullPage`
  * story, which also renders card-free.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Props for {@link ProfileNotFoundState}. */
 export interface ProfileNotFoundStateProps {
-    /** Headline saying the profile could not be found, localized by the caller — e.g. "Không tìm thấy hồ sơ". */
+    /** Headline saying the profile could not be found, localized by the caller — e.g. "Profile not found". */
     title: string
     /** Supporting sentence explaining why (removed, private, or never existed), localized by the caller. */
     description: string
@@ -79,20 +79,19 @@ const ProfileNotFoundState = ({
     anatPart,
 }: ProfileNotFoundStateProps) => (
     <div data-anat-part={anatPart}>
-        <FeedbackEmpty
+        <EmptyState
             icon={UserCircleMinusIcon}
             title={title}
             description={description}
             action={(
                 <Button
-                    label="Về trang chủ"
+                    label="Back to home"
                     variant="primary"
                     prefixIcon={HouseIcon}
                     onPress={onGoHome}
-                    anatPart={showAnatomy ? "Button" : undefined}
                 />
             )}
-            anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+            anatPart={showAnatomy ? "EmptyState" : undefined}
         />
     </div>
 )

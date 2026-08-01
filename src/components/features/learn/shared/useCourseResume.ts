@@ -16,7 +16,7 @@ export interface UseCourseResumeResult {
     outlineSwr: ReturnType<typeof useQueryMyCourseOutlineSwr>
     /** The loaded outline payload, or `null` while loading / on error. */
     outline: MyCourseOutlinePayload | null
-    /** The resume pointer the "Tiếp tục" action targets (content-first), or null. */
+    /** The resume pointer the "Continue" action targets (content-first), or null. */
     resumePointer: MyCourseOutlineCurrentTask | null
     /** Deep link the resume action opens, or `null` when nothing is resolvable. */
     resumeHref: string | null
@@ -29,7 +29,7 @@ export interface UseCourseResumeResult {
 }
 
 /**
- * The single source for the course "Tiếp tục học" (resume) pointer — shared by the
+ * The single source for the course "Continue learning" (resume) pointer — shared by the
  * content home ({@link import("../CourseContents").CourseContents}) and the sidebar
  * resume rail ({@link import("../LearnShell/ResumeRail").ResumeRail}) so both read
  * ONE computation off ONE SWR cache (deduped by key). CONTENT-FIRST: prefers

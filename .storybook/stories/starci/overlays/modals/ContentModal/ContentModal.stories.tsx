@@ -24,8 +24,8 @@ export default meta
 
 type Story = StoryObj<typeof ContentModal>
 
-// DOM thật (size="full" scroll="inside"): Modal.CloseTrigger + Modal.Header
-// (chỉ khi content.title tồn tại — MarkdownContent measure="compact") +
+// Real DOM (size="full" scroll="inside"): Modal.CloseTrigger + Modal.Header
+// (only when content.title exists — MarkdownContent measure="compact") +
 // Modal.Body > ScrollShadow > MarkdownContent measure="reading".
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Modal.CloseTrigger": { tier: "heroui", role: "the close button, upper-right" },
@@ -36,16 +36,16 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 const SAMPLE_DOCUMENT: ContentModalDocument = {
-    title: "Giới thiệu về Dependency Injection",
-    body: `## Vì sao cần Dependency Injection
+    title: "Introduction to Dependency Injection",
+    body: `## Why Dependency Injection matters
 
-Dependency Injection (DI) giúp tách rời việc **tạo ra** một đối tượng khỏi việc
-**sử dụng** nó. Thay vì một class tự khởi tạo các phụ thuộc của mình, nó nhận
-chúng từ bên ngoài — qua constructor, property, hoặc method.
+Dependency Injection (DI) separates **creating** an object from **using** it.
+Instead of a class instantiating its own dependencies, it receives them from
+the outside — through a constructor, a property, or a method.
 
-- Dễ kiểm thử: có thể thay phụ thuộc thật bằng mock/stub.
-- Giảm coupling: class không cần biết cách dựng phụ thuộc, chỉ cần biết interface.
-- Dễ mở rộng: đổi implementation mà không sửa nơi tiêu thụ.
+- Easier to test: swap a real dependency for a mock/stub.
+- Less coupling: a class only needs to know the interface, not how to build the dependency.
+- Easier to extend: swap the implementation without touching the consumer.
 
 \`\`\`ts
 class OrderService {
@@ -53,11 +53,11 @@ class OrderService {
 }
 \`\`\`
 
-> Nguyên tắc: "phụ thuộc vào abstraction, không phụ thuộc vào chi tiết cụ thể."
+> Principle: "depend on abstractions, not on concrete details."
 
-Trong các framework như NestJS, container DI tự động dựng và tiêm các phụ thuộc
-theo scope (singleton, request, transient), giúp lập trình viên không phải nối
-dây tay cho từng lớp.`,
+In frameworks like NestJS, the DI container automatically builds and injects
+dependencies by scope (singleton, request, transient), so developers never
+have to wire each layer together by hand.`,
 }
 
 /** Controlled wrapper — the trigger reopens the modal after it closes. */
@@ -68,12 +68,12 @@ const ControlledContentModal = ({
 }) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
                 label="Open lesson"
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <BlockAnatomy
@@ -90,7 +90,7 @@ const ControlledContentModal = ({
                         code: `<ContentModal
   isOpen={isOpen}
   onOpenChange={setIsOpen}
-  content={{ title: "Giới thiệu về Dependency Injection", body: "## Vì sao..." }}
+  content={{ title: "Introduction to Dependency Injection", body: "## Why..." }}
 />`,
                         render: (
                             <ContentModal
@@ -115,7 +115,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`, DISTINCT from `content` being omitted (the source's own "no header, empty body" genuine-empty state, not a loading one — see the component file header's "TITLE IS CONDITIONAL" note). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentModal"
                 tier="block"

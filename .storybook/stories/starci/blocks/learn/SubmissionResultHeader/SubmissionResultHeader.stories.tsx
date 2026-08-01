@@ -41,7 +41,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the one shape this block draws: back-link → title → description. */
 export const Header: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SubmissionResultHeader"
                 tier="block"
@@ -54,19 +54,19 @@ export const Header: Story = {
                         name: "default",
                         why: "The learner has just landed on the result of a graded submission. The back-link returns to the challenge solve page (the run stays there, resumable), and the title/description repeat the requirement that was graded so the verdict below has context.",
                         code: `<SubmissionResultHeader
-    backLabel="Quay lại bài giải"
+    backLabel="Back to solve page"
     onBack={() => {}}
-    title="Chuẩn hoá schema bảng đơn hàng"
-    description="Tách bảng đơn hàng thành 3NF, giữ nguyên các ràng buộc khoá ngoại hiện có."
+    title="Normalize the orders table schema"
+    description="Split the orders table into 3NF, keeping every existing foreign-key constraint intact."
 />`,
                         render: (
                             <SubmissionResultHeader
                                 anatPart="SubmissionResultHeader"
                                 showAnatomy
-                                backLabel="Quay lại bài giải"
+                                backLabel="Back to solve page"
                                 onBack={() => {}}
-                                title="Chuẩn hoá schema bảng đơn hàng"
-                                description="Tách bảng đơn hàng thành 3NF, giữ nguyên các ràng buộc khoá ngoại hiện có."
+                                title="Normalize the orders table schema"
+                                description="Split the orders table into 3NF, keeping every existing foreign-key constraint intact."
                             />
                         ),
                     },

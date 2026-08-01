@@ -46,8 +46,6 @@ export interface AccordionBaseProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -66,7 +64,6 @@ const AccordionBase = ({
     defaultExpandedKeys,
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: AccordionBaseProps) => {
     if (isSkeleton) {
@@ -74,11 +71,17 @@ const AccordionBase = ({
         // data-anat-part — the wrapping div isn't a real component, tagging it
         // would be a made-up name.
         return (
-            <div className={cn("flex flex-col gap-2", className, classNames)}>
+            <div data-tier="atom" data-component="Accordion" className={cn("flex flex-col gap-2", classNames)}>
                 {items.map((item) => (
                     <div key={item.key} className="flex items-center justify-between rounded-xl border border-default-200 px-4 py-3">
-                        <HeroSkeleton className="h-4 w-1/2 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        <HeroSkeleton className="size-4 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        <HeroSkeleton
+                            className="h-4 w-1/2 rounded-md"
+                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                        />
+                        <HeroSkeleton
+                            className="size-4 rounded-md"
+                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                        />
                     </div>
                 ))}
             </div>
@@ -87,17 +90,28 @@ const AccordionBase = ({
 
     return (
         <HeroDisclosureGroup
+            data-tier="atom"
+            data-component="Accordion"
             allowsMultipleExpanded={allowsMultiple}
             defaultExpandedKeys={defaultExpandedKeys}
-            className={cn(className, classNames)}
+            className={cn(classNames)}
             data-anat-part={showAnatomy ? "DisclosureGroup" : undefined}
         >
             {items.map((item) => (
-                <HeroDisclosure key={item.key} id={item.key} isDisabled={item.isDisabled} data-anat-part={showAnatomy ? "Disclosure" : undefined}>
+                <HeroDisclosure
+                    key={item.key}
+                    id={item.key}
+                    isDisabled={item.isDisabled}
+                    data-anat-part={showAnatomy ? "Disclosure" : undefined}
+                >
                     <HeroDisclosure.Heading>
-                        <HeroDisclosure.Trigger data-anat-part={showAnatomy ? "Disclosure.Trigger" : undefined}>
+                        <HeroDisclosure.Trigger
+                            data-anat-part={showAnatomy ? "Disclosure.Trigger" : undefined}
+                        >
                             {item.title}
-                            <HeroDisclosure.Indicator data-anat-part={showAnatomy ? "Disclosure.Indicator" : undefined}>
+                            <HeroDisclosure.Indicator
+                                data-anat-part={showAnatomy ? "Disclosure.Indicator" : undefined}
+                            >
                                 {/* Left empty, HeroUI renders its own chevron instead — pass an icon
                                     here to keep a single icon set. The vendor clones this element,
                                     preserving data-expanded/data-slot and applying its own
@@ -106,7 +120,9 @@ const AccordionBase = ({
                             </HeroDisclosure.Indicator>
                         </HeroDisclosure.Trigger>
                     </HeroDisclosure.Heading>
-                    <HeroDisclosure.Content data-anat-part={showAnatomy ? "Disclosure.Content" : undefined}>
+                    <HeroDisclosure.Content
+                        data-anat-part={showAnatomy ? "Disclosure.Content" : undefined}
+                    >
                         <HeroDisclosure.Body>{item.content}</HeroDisclosure.Body>
                     </HeroDisclosure.Content>
                 </HeroDisclosure>
@@ -121,3 +137,5 @@ const AccordionBase = ({
  * prop-driven).
  */
 export { AccordionBase as Accordion }
+
+export const meta = { tier: "atom", name: "Accordion" } as const

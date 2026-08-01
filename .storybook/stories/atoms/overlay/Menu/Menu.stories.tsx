@@ -4,32 +4,36 @@ import { Menu } from "@sb-components/atoms/overlay/Menu/Menu"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Menu`: atom menu DUY NHẤT, bọc thẳng HeroUI `Dropdown` (Trigger ·
- * Popover · Menu · Section · Item). Không có atom con nào tách ra story riêng —
- * `items`/`sections`/icon/disabled đều là LEAF prop-driven của chính `Menu`.
+ * ATOM — `Menu`: the ONE menu atom, wrapping HeroUI `Dropdown` directly (Trigger ·
+ * Popover · Menu · Section · Item). No child atom splits off into its own story —
+ * `items`/`sections`/icon/disabled are all LEAF prop-driven states of `Menu` itself.
  *
- * 🌿 `annotate` (2026-07-28): mọi import HeroUI mà `Menu.tsx` render thẳng đều khai
- * `tier: "heroui"` — tầng `heroui` KHÔNG cần `storyId` (không có story của TA để trỏ
- * sang). Tên node đúng bằng tên import THẬT (`DropdownTrigger`/`DropdownPopover`/
- * `DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`), không phải vai nó đóng.
+ * 🌿 `annotate` (2026-07-28): every HeroUI import that `Menu.tsx` renders directly
+ * declares `tier: "heroui"` — the `heroui` tier needs NO `storyId` (there's no story
+ * of OURS to point to). The node name matches the REAL import name
+ * (`DropdownTrigger`/`DropdownPopover`/`DropdownMenu`/`DropdownSection`/`Header`/
+ * `DropdownItem`), not the role it plays.
  *
- * ⚠️ Vẫn còn GIỚI HẠN PORTAL: `DropdownPopover` (và mọi thứ lồng trong nó —
- * `DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`) render ra `document.body`,
- * NGOÀI render-box mà {@link BlockAnatomy} quét, nên dù đã khai `annotate` chúng vẫn
- * KHÔNG hiện trong cây Structure — khai đúng tên vẫn cần, chỉ là honesty của DATA,
- * không phải lời hứa sẽ THẤY được. Chỉ `DropdownTrigger` (không portal) và `Skeleton`
- * (nhánh `isSkeleton`, không dựng Dropdown) thực sự lên cây.
+ * ⚠️ Still a PORTAL LIMITATION: `DropdownPopover` (and everything nested inside it —
+ * `DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`) renders into
+ * `document.body`, OUTSIDE the render-box that {@link BlockAnatomy} scans, so even
+ * with `annotate` declared they still do NOT show up in the Structure tree —
+ * declaring the correct name still matters, it's about DATA honesty, not a promise
+ * they'll actually be VISIBLE. Only `DropdownTrigger` (not portaled) and `Skeleton`
+ * (the `isSkeleton` branch, which never mounts the Dropdown) actually reach the tree.
  *
- * ✍️ Chữ hiện ra UI (label menu, `triggerLabel`, `why`/`reason`) viết TIẾNG ANH
- * (thầy chốt 2026-07-26) — kể cả nội dung demo, không riêng phần chú giải panel.
+ * ✍️ Text shown on the UI (menu labels, `triggerLabel`, `why`/`reason`) is written in
+ * ENGLISH (teacher's call 2026-07-26) — including demo content, not just the panel
+ * commentary.
  *
- * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
+ * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a).
  */
 
 /**
- * Mọi import `@heroui/react` (+ `Header` từ `react-aria-components`, cùng hoàn cảnh:
- * thư viện ngoài, không có story của ta) mà `Menu` render thẳng. Dùng CHUNG cho
- * mọi leaf trong file — cây thật vẫn phụ thuộc leaf đang mở render gì.
+ * Every `@heroui/react` import (+ `Header` from `react-aria-components`, same
+ * situation: an outside library, no story of ours) that `Menu` renders directly.
+ * Shared ACROSS every leaf in this file — the actual tree still depends on what the
+ * open leaf renders.
  */
 const MENU_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "DropdownTrigger": { tier: "heroui", role: "Pressable trigger wrapper (react-aria DialogTrigger) around the HeroButton." },
@@ -52,10 +56,10 @@ export default meta
 
 type Story = StoryObj<typeof Menu>
 
-/** Leaf TRẦN — danh sách phẳng, không icon, không section. */
+/** Bare leaf — a flat list, no icon, no section. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Menu"
                 tier="atom"
@@ -68,7 +72,7 @@ export const Default: Story = {
                         why: "The three items render as a plain list with no leading icon and no group header, and picking a row fires onAction with that row's key. defaultOpen pins the menu open here purely so the popover is visible without a click.",
                         code: "<Menu triggerLabel=\"Account\" items={[{ key: \"profile\", label: \"My profile\" }, …]} onAction={fn} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerLabel="Account"
                                     ariaLabel="Account"
@@ -90,10 +94,10 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `triggerVariant` — ĐỦ union 4 giá trị, đổi HÌNH nút trigger, thấy ngay cả khi menu đóng. */
+/** Leaf for prop `triggerVariant` — FULL 4-value union, changing the trigger button's LOOK, visible even with the menu closed. */
 export const TriggerVariants: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Menu"
                 tier="atom"
@@ -106,7 +110,7 @@ export const TriggerVariants: Story = {
                         why: "The trigger renders as a primary HeroButton, the loudest visual weight in the button system, while the menu stays closed so the trigger's own look is what the reader compares. Reach for primary when this menu is the main action in its area and should draw the eye first.",
                         code: "<Menu triggerVariant=\"primary\" triggerLabel=\"Primary\" items={[…]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerVariant="primary"
                                     triggerLabel="Primary"
@@ -126,7 +130,7 @@ export const TriggerVariants: Story = {
                         why: "The trigger renders as a secondary HeroButton, one step down from primary, while the menu stays closed. Reach for secondary when the menu is useful but should not compete with a primary action sitting nearby.",
                         code: "<Menu triggerVariant=\"secondary\" triggerLabel=\"Secondary\" items={[…]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerVariant="secondary"
                                     triggerLabel="Secondary"
@@ -146,7 +150,7 @@ export const TriggerVariants: Story = {
                         why: "The trigger renders as a tertiary HeroButton, quieter again, while the menu stays closed. Reach for tertiary when the menu is a minor option that should recede into the surrounding layout.",
                         code: "<Menu triggerVariant=\"tertiary\" triggerLabel=\"Tertiary\" items={[…]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerVariant="tertiary"
                                     triggerLabel="Tertiary"
@@ -166,7 +170,7 @@ export const TriggerVariants: Story = {
                         why: "The trigger renders as a ghost HeroButton with no fill, while the menu stays closed. Reach for ghost when the menu should sit almost invisibly until the reader hovers or focuses it.",
                         code: "<Menu triggerVariant=\"ghost\" triggerLabel=\"Ghost\" items={[…]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerVariant="ghost"
                                     triggerLabel="Ghost"
@@ -187,10 +191,10 @@ export const TriggerVariants: Story = {
     ),
 }
 
-/** Leaf prop `icon` trên item — leading icon là COMPONENT phosphor. */
+/** Leaf for prop `icon` on an item — the leading icon is a Phosphor COMPONENT. */
 export const WithIcons: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Menu"
                 tier="atom"
@@ -202,7 +206,7 @@ export const WithIcons: Story = {
                         why: "Each of the four rows gains a leading Phosphor icon pinned to size-4 with a fixed stroke weight, the atom sets both, no story ever passes a weight itself. Reach for an icon on a row when its action reads faster as a symbol than as text alone.",
                         code: "<Menu triggerLabel=\"Actions\" items={[{ key: \"edit\", label: \"Edit\", icon: PencilSimpleIcon }, …]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerLabel="Actions"
                                     ariaLabel="Actions"
@@ -225,10 +229,10 @@ export const WithIcons: Story = {
     ),
 }
 
-/** Leaf prop `triggerIcon` — nhãn nút kèm glyph dẫn đầu. */
+/** Leaf for prop `triggerIcon` — the trigger label with a leading glyph. */
 export const WithTriggerIcon: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Menu"
                 tier="atom"
@@ -240,7 +244,7 @@ export const WithTriggerIcon: Story = {
                         why: "The trigger label gains a leading caret icon sized to the trigger's own text size, with the same fixed stroke weight every icon in the system uses. Callers never pass a weight themselves, so a sort trigger and any other trigger icon stay visually identical.",
                         code: "<Menu triggerLabel=\"Sort\" triggerIcon={CaretDownIcon} items={[…]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerLabel="Sort"
                                     triggerIcon={CaretDownIcon}
@@ -263,10 +267,10 @@ export const WithTriggerIcon: Story = {
     ),
 }
 
-/** Leaf prop `sections` — nhóm dòng có tiêu đề, thay cho danh sách phẳng. */
+/** Leaf for prop `sections` — titled row groups, replacing the flat list. */
 export const WithSections: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Menu"
                 tier="atom"
@@ -278,7 +282,7 @@ export const WithSections: Story = {
                         why: "The rows split into two titled groups, Account and Session, each with its own react-aria header above it, instead of one flat list. sections and items are mutually exclusive, so a menu picks one shape or the other, never both at once.",
                         code: "<Menu triggerLabel=\"Menu\" sections={[{ key: \"acct\", title: \"Account\", items: [...] }, …]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerLabel="Account menu"
                                     ariaLabel="Account menu"
@@ -310,10 +314,10 @@ export const WithSections: Story = {
     ),
 }
 
-/** Leaf prop `isDisabled` trên item — một dòng không chọn được. */
+/** Leaf for prop `isDisabled` on an item — one row that cannot be picked. */
 export const DisabledItem: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Menu"
                 tier="atom"
@@ -325,7 +329,7 @@ export const DisabledItem: Story = {
                         why: "The Archive row dims and stops firing onAction while Edit and Delete on either side of it stay fully active. A disabled row is for an action the reader can see exists but cannot use yet, such as one gated behind a permission.",
                         code: "<Menu triggerLabel=\"Actions\" items={[{ key: \"archive\", label: \"Archive\", isDisabled: true }, …]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <Menu
                                     triggerLabel="Actions"
                                     ariaLabel="Actions"
@@ -347,10 +351,10 @@ export const DisabledItem: Story = {
     ),
 }
 
-/** Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c), số row bám theo số item thật. */
+/** Leaf for prop `isSkeleton` — CO-LOCATED shimmer (§12c), row count tracks the real item count. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Menu"
                 tier="atom"
@@ -363,7 +367,7 @@ export const Skeleton: Story = {
                         why: "Three shimmer rows render in place of the three real items, since the row count follows the real items array rather than a fixed guess. Matching the real count keeps the trigger's popover from changing height once the real rows arrive.",
                         code: "<Menu isSkeleton triggerLabel=\"Account\" items={[{ key: \"profile\", label: \"My profile\" }, …]} />",
                         render: (
-                            <div className="flex justify-center py-4">
+                            <div data-tier="fixture" className="flex justify-center py-4">
                                 <div className="w-56">
                                     <Menu
                                         triggerLabel="Account"

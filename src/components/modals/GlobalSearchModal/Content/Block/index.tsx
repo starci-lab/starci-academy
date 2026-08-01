@@ -118,8 +118,8 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                 const textLines = item.texts ?? []
                 const textValue = [titleLine, ...textLines].join(" ").replace(/<[^>]*>/g, "")
 
-                // course state chip: enrolled → success "Đã đăng ký"; not-enrolled+free → success
-                // "Miễn phí"; paid → no chip (absence implies paid).
+                // course state chip: enrolled → success "Enrolled"; not-enrolled+free → success
+                // "Free"; paid → no chip (absence implies paid).
                 const showEnrolledChip = kind === "course" && item.isEnrolled === true
                 const showCourseFreeChip = kind === "course" && item.isEnrolled !== true && item.isFree === true
                 // content free chip vs premium lock hint (lock = needs enrollment, not a buy button).

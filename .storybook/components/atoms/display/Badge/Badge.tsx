@@ -45,8 +45,6 @@ export interface BadgeBaseProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -70,14 +68,15 @@ const BadgeBase = ({
     placement = "top-right",
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: BadgeBaseProps) => {
     if (isSkeleton) {
         // Leaf skeleton: a dot shimmer when `dot`, otherwise a short count pill.
         return (
             <HeroSkeleton
-                className={cn(dot ? "size-2.5 rounded-full" : "h-4 w-6 rounded-full", className, classNames)}
+                data-tier="atom"
+                data-component="Badge"
+                className={cn(dot ? "size-2.5 rounded-full" : "h-4 w-6 rounded-full", classNames)}
                 data-anat-part={showAnatomy ? "Skeleton" : undefined}
             />
         )
@@ -89,10 +88,14 @@ const BadgeBase = ({
 
     const badge = hidden ? null : (
         <HeroBadge
+            // Root marker only when this IS the root — with `children`, `Badge.Anchor`
+            // below is the root instead, and this element becomes its nested part.
+            data-tier={!children ? "atom" : undefined}
+            data-component={!children ? "Badge" : undefined}
             color={color}
             size={size}
             placement={placement}
-            className={cn(dot && "min-w-0 p-0", !children && "static", className, classNames)}
+            className={cn(dot && "min-w-0 p-0", !children && "static", classNames)}
             data-anat-part={showAnatomy ? "Badge" : undefined}
         >
             {label}
@@ -104,7 +107,7 @@ const BadgeBase = ({
         return badge
     }
     return (
-        <HeroBadge.Anchor data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
+        <HeroBadge.Anchor data-tier="atom" data-component="Badge" data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
             {/* Caller slot — `children` belongs to whoever anchors on this badge,
                 not to Badge's own anatomy, so this wrapper stays unbadged. */}
             <span className="inline-flex">
@@ -120,3 +123,5 @@ const BadgeBase = ({
  * badge; count / dot / cap / standalone are LEAVES of it (prop-driven).
  */
 export { BadgeBase as Badge }
+
+export const meta = { tier: "atom", name: "Badge" } as const

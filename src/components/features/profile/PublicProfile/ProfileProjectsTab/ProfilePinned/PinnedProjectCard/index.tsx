@@ -28,7 +28,7 @@ export interface PinnedProjectCardProps extends WithClassNames<undefined> {
 /**
  * Display-only card for one pinned project (public-profile showcase, GitHub-pinned
  * style). Reads as a credential when the capstone is verified: a type badge
- * (Capstone / Dự án) leads, the title links out (whole card is the outbound link),
+ * (Capstone / Project) leads, the title links out (whole card is the outbound link),
  * a one-line description gives context, tech chips cap at {@link MAX_TECH_CHIPS}
  * with a "+N" overflow, and a verified course pin gets a success-toned border plus
  * a "Verified by StarCi" footer strip — the strongest trust signal.
@@ -53,7 +53,7 @@ export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) =>
         <>
             <div className="flex flex-col gap-2 p-4">
                 <div className="flex items-center justify-between gap-2">
-                    {/* type badge — Capstone (success) vs Dự án (muted) */}
+                    {/* type badge — Capstone (success) vs Project (muted) */}
                     <span
                         className={cn(
                             "inline-flex items-center gap-1 rounded-full px-2 py-0 text-xs",

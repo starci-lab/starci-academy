@@ -26,7 +26,7 @@ export const TaskResultsSkeleton = ({
 }: TaskResultsSkeletonProps = {}) => {
     return (
         <div className={cn("flex flex-col gap-3", className)}>
-            {/* title row: "Kết quả" label + StarCi AI badge */}
+            {/* title row: "Result" label + StarCi AI badge */}
             <div className="flex items-center gap-2">
                 <SkeletonText size="base" width="w-24" />
                 <Skeleton className="h-6 w-16 rounded-full" />

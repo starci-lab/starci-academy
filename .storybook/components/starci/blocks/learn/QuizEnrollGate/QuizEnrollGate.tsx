@@ -1,7 +1,7 @@
 import React from "react"
 import { LockIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -25,7 +25,7 @@ import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedb
 
 /** Props for {@link QuizEnrollGate}. */
 export interface QuizEnrollGateProps {
-    /** Headline, localized by the caller — e.g. "Ghi danh để luyện hỏi nhanh". */
+    /** Headline, localized by the caller — e.g. "Enroll for quick-fire practice". */
     title: string
     /** One sentence on what enrolling opens up. */
     description?: string
@@ -53,19 +53,19 @@ const QuizEnrollGate = ({
     anatPart,
 }: QuizEnrollGateProps) => (
     <div data-anat-part={anatPart}>
-        <FeedbackEmpty
+        <EmptyState
             icon={LockIcon}
             title={title}
             description={description}
-            anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+            anatPart={showAnatomy ? "EmptyState" : undefined}
         >
             <Button
                 label={ctaLabel}
                 variant="primary"
                 onPress={onEnroll}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
-        </FeedbackEmpty>
+        </EmptyState>
     </div>
 )
 

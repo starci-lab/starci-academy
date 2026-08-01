@@ -29,23 +29,23 @@ export default meta
 type Story = StoryObj<typeof MindMapPage>
 
 const RAIL_ITEMS: Array<MindMapRailItem> = [
-    { id: "k1", label: "Docker layer", popularity: 82, breadcrumb: "Container hoá > Docker" },
-    { id: "k2", label: "Multi-stage build", popularity: 58, breadcrumb: "Container hoá > Docker > Build" },
-    { id: "k3", label: "BuildKit cache mount", popularity: 21, breadcrumb: "Container hoá > Docker > Build" },
+    { id: "k1", label: "Docker layer", popularity: 82, breadcrumb: "Containerization > Docker" },
+    { id: "k2", label: "Multi-stage build", popularity: 58, breadcrumb: "Containerization > Docker > Build" },
+    { id: "k3", label: "BuildKit cache mount", popularity: 21, breadcrumb: "Containerization > Docker > Build" },
 ]
 
 const LEGEND_ITEMS: Array<LegendItem> = [
-    { key: "current", label: "Đang ở đây", color: "var(--accent)" },
-    { key: "done", label: "Đã học", color: "var(--success)" },
-    { key: "inProgress", label: "Đang học", color: "var(--warning)" },
-    { key: "notStarted", label: "Chưa học", color: "var(--muted)" },
-    { key: "locked", label: "Chưa mở khoá", color: "var(--separator)" },
+    { key: "current", label: "Currently here", color: "var(--accent)" },
+    { key: "done", label: "Completed", color: "var(--success)" },
+    { key: "inProgress", label: "In progress", color: "var(--warning)" },
+    { key: "notStarted", label: "Not started", color: "var(--muted)" },
+    { key: "locked", label: "Locked", color: "var(--separator)" },
 ]
 
 const FULLSCREEN_ARIA_LABELS = {
-    zoomIn: "Phóng to",
-    zoomOut: "Thu nhỏ",
-    toggleFullscreen: "Toàn màn hình",
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+    toggleFullscreen: "Toggle fullscreen",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -80,9 +80,9 @@ export const WorkspaceDefault: Story = {
     onTier={setTier}
     items={railItems}
     onPick={setSelectedId}
-    railAriaLabel="Tìm khái niệm"
-    railTierAriaLabel="Lọc theo độ phổ biến"
-    railResizeAriaLabel="Kéo để đổi bề rộng"
+    railAriaLabel="Search concepts"
+    railTierAriaLabel="Filter by popularity"
+    railResizeAriaLabel="Drag to resize"
 />`,
                     render: (
                         <MindMapPage
@@ -94,9 +94,9 @@ export const WorkspaceDefault: Story = {
                             onTier={() => {}}
                             items={RAIL_ITEMS}
                             onPick={() => {}}
-                            railAriaLabel="Tìm khái niệm"
-                            railTierAriaLabel="Lọc theo độ phổ biến"
-                            railResizeAriaLabel="Kéo để đổi bề rộng"
+                            railAriaLabel="Search concepts"
+                            railTierAriaLabel="Filter by popularity"
+                            railResizeAriaLabel="Drag to resize"
                         />
                     ),
                 },
@@ -129,9 +129,9 @@ export const WorkspaceLoading: Story = {
                             onTier={() => {}}
                             items={RAIL_ITEMS}
                             onPick={() => {}}
-                            railAriaLabel="Tìm khái niệm"
-                            railTierAriaLabel="Lọc theo độ phổ biến"
-                            railResizeAriaLabel="Kéo để đổi bề rộng"
+                            railAriaLabel="Search concepts"
+                            railTierAriaLabel="Filter by popularity"
+                            railResizeAriaLabel="Drag to resize"
                             isSkeleton
                         />
                     ),
@@ -165,9 +165,9 @@ export const WorkspaceEmpty: Story = {
                             onTier={() => {}}
                             items={[]}
                             onPick={() => {}}
-                            railAriaLabel="Tìm khái niệm"
-                            railTierAriaLabel="Lọc theo độ phổ biến"
-                            railResizeAriaLabel="Kéo để đổi bề rộng"
+                            railAriaLabel="Search concepts"
+                            railTierAriaLabel="Filter by popularity"
+                            railResizeAriaLabel="Drag to resize"
                             isEmpty
                         />
                     ),
@@ -197,11 +197,11 @@ export const StandaloneDefault: Story = {
     resumeHref="/course/devops/learn/content/l2"
     allContentDone={false}
     onResume={onResume}
-    continueAriaLabel="Tiếp tục học"
+    continueAriaLabel="Continue learning"
     legendItems={legendItems}
     onZoomIn={onZoomIn} onZoomOut={onZoomOut} onToggleFullscreen={onToggleFullscreen}
     isFullscreen={false}
-    fullscreenAriaLabels={{ zoomIn: "Phóng to", zoomOut: "Thu nhỏ", toggleFullscreen: "Toàn màn hình" }}
+    fullscreenAriaLabels={{ zoomIn: "Zoom in", zoomOut: "Zoom out", toggleFullscreen: "Toggle fullscreen" }}
 />`,
                     render: (
                         <MindMapPage
@@ -219,7 +219,7 @@ export const StandaloneDefault: Story = {
                             resumeHref="/course/devops/learn/content/l2"
                             allContentDone={false}
                             onResume={() => {}}
-                            continueAriaLabel="Tiếp tục học"
+                            continueAriaLabel="Continue learning"
                             legendItems={LEGEND_ITEMS}
                             onZoomIn={() => {}}
                             onZoomOut={() => {}}

@@ -16,7 +16,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *     removes/adds a node — only the tile content switches to shimmer — so it
  *     stays a STATE of this leaf, the same call `FoundationCategoryList`'s
  *     file header already makes for its own `isSkeleton`.
- *   - `Empty` — the grid is REPLACED by `FeedbackEmpty`, because the course
+ *   - `Empty` — the grid is REPLACED by `EmptyState`, because the course
  *     has no Playground exercises at all.
  */
 const meta: Meta<typeof PlaygroundExerciseGrid> = {
@@ -31,10 +31,10 @@ export default meta
 type Story = StoryObj<typeof PlaygroundExerciseGrid>
 
 const EXERCISES: Array<PlaygroundExerciseGridItem> = [
-    { id: "docker-build", title: "Viết Dockerfile đầu tiên", stepCount: 5 },
-    { id: "compose-stack", title: "Ghép stack nhiều service với Compose", stepCount: 7 },
-    { id: "k8s-deploy", title: "Deploy một Deployment lên Kubernetes", stepCount: 6 },
-    { id: "k8s-debug", title: "Debug một Pod đang CrashLoopBackOff", stepCount: 4 },
+    { id: "docker-build", title: "Write your first Dockerfile", stepCount: 5 },
+    { id: "compose-stack", title: "Compose a multi-service stack", stepCount: 7 },
+    { id: "k8s-deploy", title: "Deploy a Deployment to Kubernetes", stepCount: 6 },
+    { id: "k8s-debug", title: "Debug a Pod stuck in CrashLoopBackOff", stepCount: 4 },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -58,10 +58,10 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         role: "the step-count badge under each tile's title, the one quiet fact this domain surfaces per exercise",
         storyId: "atoms-chips-chip-chip--icon",
     },
-    "FeedbackEmpty": {
+    "EmptyState": {
         tier: "composite",
         role: "the empty message that replaces the grid outright when the course has no Playground exercises",
-        storyId: "composites-feedback-feedback-feedbackempty--icon-and-title",
+        storyId: "composites-feedback-emptystate-emptystate--icon-and-title",
     },
 }
 
@@ -71,7 +71,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundExerciseGrid"
                 tier="block"
@@ -86,7 +86,7 @@ export const Default: Story = {
                         code: `<PlaygroundExerciseGrid
     exercises={exercises}
     onSelect={(id) => router.push(\`/learn/playground/\${id}\`)}
-    ariaLabel="Bài thực hành Playground"
+    ariaLabel="Playground exercises"
 />`,
                         render: (
                             <PlaygroundExerciseGrid
@@ -94,20 +94,20 @@ export const Default: Story = {
                                 showAnatomy
                                 exercises={EXERCISES}
                                 onSelect={() => {}}
-                                ariaLabel="Bài thực hành Playground"
+                                ariaLabel="Playground exercises"
                             />
                         ),
                     },
                     {
                         name: "isSkeleton = true, exercises = []",
                         why: "The first fetch hasn't resolved yet — the same bounded grid mirrors itself with four guessed placeholder tiles (this block's own SSOT count), none of them a press target, via the composite's own generic skeleton tile.",
-                        code: "<PlaygroundExerciseGrid isSkeleton exercises={[]} onSelect={openExercise} ariaLabel=\"Bài thực hành Playground\" />",
+                        code: "<PlaygroundExerciseGrid isSkeleton exercises={[]} onSelect={openExercise} ariaLabel=\"Playground exercises\" />",
                         render: (
                             <PlaygroundExerciseGrid
                                 isSkeleton
                                 exercises={[]}
                                 onSelect={() => {}}
-                                ariaLabel="Bài thực hành Playground"
+                                ariaLabel="Playground exercises"
                             />
                         ),
                     },
@@ -117,10 +117,10 @@ export const Default: Story = {
     ),
 }
 
-/** LEAF — `Empty`: the grid is replaced by `FeedbackEmpty` — the course has no Playground exercises. */
+/** LEAF — `Empty`: the grid is replaced by `EmptyState` — the course has no Playground exercises. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundExerciseGrid"
                 tier="block"
@@ -132,14 +132,14 @@ export const Empty: Story = {
                     {
                         name: "exercises = []",
                         why: "This course has not shipped a single Playground exercise yet, so the grid is replaced outright by a worded empty state rather than vanishing into a silent hole on the screen.",
-                        code: "<PlaygroundExerciseGrid exercises={[]} onSelect={openExercise} ariaLabel=\"Bài thực hành Playground\" />",
+                        code: "<PlaygroundExerciseGrid exercises={[]} onSelect={openExercise} ariaLabel=\"Playground exercises\" />",
                         render: (
                             <PlaygroundExerciseGrid
                                 anatPart="PlaygroundExerciseGrid"
                                 showAnatomy
                                 exercises={[]}
                                 onSelect={() => {}}
-                                ariaLabel="Bài thực hành Playground"
+                                ariaLabel="Playground exercises"
                             />
                         ),
                     },

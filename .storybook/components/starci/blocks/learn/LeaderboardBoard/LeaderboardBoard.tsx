@@ -5,7 +5,7 @@ import { TrophyIcon } from "@phosphor-icons/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { UserCell } from "@sb-components/atoms/display/UserCell/UserCell"
+import { UserCell } from "@sb-components/composites/lists/UserCell/UserCell"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -51,7 +51,7 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  * without also discarding the board that's already on screen.
  *
  * ⭐ THE RANK NUMBER IS BLOCK WORDING, `primaryLabel`/`secondaryLabel` ARE NOT.
- * `standing.rank` is typed domain data (a number); the sentence "Hạng #12" is
+ * `standing.rank` is typed domain data (a number); the sentence "Rank #12" is
  * built HERE (§14d.1 — typed data in, a sentence out). `primaryLabel`/
  * `secondaryLabel` arrive pre-worded from the caller because they carry
  * screen-specific business phrasing (which stat counts as "primary" this season)
@@ -73,11 +73,11 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /** The viewer's own standing, shown above the podium. */
 export interface LeaderboardStanding {
-    /** The viewer's numeric position on the board. The block words this into "Hạng #N" itself. */
+    /** The viewer's numeric position on the board. The block words this into "Rank #N" itself. */
     rank: number
     /** Primary stat line, already worded by the caller (screen-specific — e.g. an XP total). */
     primaryLabel: string
-    /** Optional quiet context line under the primary stat (e.g. "Top 5% toàn khoá"). */
+    /** Optional quiet context line under the primary stat (e.g. "Top 5% of the course"). */
     secondaryLabel?: string
 }
 
@@ -175,8 +175,8 @@ interface PodiumProps {
 const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkeleton: boolean, showAnatomy: boolean) => {
     const riser = (
         <div className={`flex w-full items-center justify-center rounded-t-xl bg-accent-soft ${PODIUM_RISER_HEIGHT[entry.rank]}`}>
-            {/* src thật (`Podium/index.tsx:103-112`): số hạng là 1 div TRẦN, không
-                khai size nào (kế thừa base/16px), chỉ `font-bold` — không phải `lg`. */}
+            {/* real `src` (`Podium/index.tsx:103-112`): the rank number is a BARE div,
+                declaring no size at all (inherits base/16px), just `font-bold` — not `lg`. */}
             <Typography
                 size="base"
                 weight="bold"
@@ -184,14 +184,14 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : String(entry.rank)}
                 color="accent-soft"
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
         </div>
     )
     return (
         <StackV
             key={entry.rank}
-            gap="tight"
+            gap={2}
             align="center"
             className="w-24"
             anatPart={showAnatomy ? "StackV" : undefined}
@@ -216,14 +216,14 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : entry.username}
                         classNames={["w-full"]}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     <Typography
                         size="xs"
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : entry.pointsLabel}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     {riser}
                     {entry.isMe ? <span className="sr-only">{meLabel}</span> : null}
@@ -235,7 +235,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
 
 const Podium = ({ entries, meLabel, isSkeleton, showAnatomy }: PodiumProps) => (
     <StackH
-        gap="related"
+        gap={3}
         justify="center"
         align="end"
         anatPart={showAnatomy ? "StackH" : undefined}
@@ -328,7 +328,7 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean, show
     href: row.profileHref,
     content: (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -341,23 +341,23 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean, show
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : `#${row.rank}`}
                         classNames={["w-1/4", "shrink-0"]}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "UserCell" : undefined}>
                         <UserCell
                             username={row.username}
                             avatar={row.avatar}
                             isOwnRow={row.isMe}
-                            trailing={
+                            trailing={({ isSkeleton: slotSkeleton }: { isSkeleton?: boolean }) => (
                                 <Typography
                                     size="sm"
                                     weight="medium"
                                     tabularNums
-                                    isSkeleton={isSkeleton}
-                                    text={isSkeleton ? undefined : row.valueLabel}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
+                                    isSkeleton={slotSkeleton}
+                                    text={slotSkeleton ? undefined : row.valueLabel}
+                                    showAnatomy={showAnatomy}
                                 />
-                            }
+                            )}
                             isSkeleton={isSkeleton}
                             showAnatomy={showAnatomy}
                         />
@@ -396,8 +396,8 @@ const buildListItems = (
                         color="muted"
                         align="center"
                         isSkeleton={isSkeleton}
-                        text={isSkeleton ? undefined : `⋯ Còn ${hiddenBetweenCount} người ở giữa`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text={isSkeleton ? undefined : `⋯ ${hiddenBetweenCount} more in between`}
+                        showAnatomy={showAnatomy}
                     />
                 ),
             }
@@ -420,24 +420,24 @@ interface BoardProps {
 const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton, showAnatomy }: BoardProps) => {
     const standingLabels = standing ? (
         <StackV
-            gap="flush"
+            gap={1}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    {/* The rank NUMBER is typed data; "Hạng #N" is the block's own wording (§14d.1). */}
+                    {/* The rank NUMBER is typed data; "Rank #N" is the block's own wording (§14d.1). */}
                     <Typography
                         size="base"
                         weight="bold"
                         tabularNums
                         isSkeleton={isSkeleton}
-                        text={isSkeleton ? undefined : `Hạng #${standing.rank}`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text={isSkeleton ? undefined : `Rank #${standing.rank}`}
+                        showAnatomy={showAnatomy}
                     />
                     <Typography
                         size="sm"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : standing.primaryLabel}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     {standing.secondaryLabel ? (
                         <Typography
@@ -445,7 +445,7 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={isSkeleton ? undefined : standing.secondaryLabel}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -454,24 +454,27 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
     ) : null
 
     const standingCard = standing ? (
-        <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-            <StackH
-                gap="related"
-                align="center"
-                anatPart={showAnatomy ? "StackH" : undefined}
-                body={
-                    <>
-                        <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} anatPart={showAnatomy ? "IconTile" : undefined} />
-                        {standingLabels}
-                    </>
-                }
-            />
-        </SurfaceCard>
+        <SurfaceCard
+            anatPart={showAnatomy ? "SurfaceCard" : undefined}
+            body={() => (
+                <StackH
+                    gap={3}
+                    align="center"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <>
+                            <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                            {standingLabels}
+                        </>
+                    }
+                />
+            )}
+        />
     ) : null
 
     return (
         <StackV
-            gap="section"
+            gap={6}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -545,15 +548,15 @@ const LeaderboardBoard = ({
             }
             isEmpty={isEmpty}
             emptyContent={{
-                title: "Bảng xếp hạng chưa có ai",
-                description: "Hoàn thành một bài học để giành vị trí đầu tiên.",
+                title: "The leaderboard has no one yet",
+                description: "Complete a lesson to claim the first spot.",
             }}
             error={error}
             errorContent={{
-                title: "Không tải được bảng xếp hạng",
-                description: "Thử lại để xem thứ hạng mới nhất.",
+                title: "Couldn't load the leaderboard",
+                description: "Try again to see the latest standings.",
                 onRetry,
-                retryLabel: "Thử lại",
+                retryLabel: "Try again",
             }}
             showAnatomy={showAnatomy}
         >

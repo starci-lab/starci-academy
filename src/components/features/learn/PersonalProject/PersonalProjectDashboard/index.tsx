@@ -46,9 +46,9 @@ const toRepoLabel = (url: string): string =>
  * Mirrors the course-content home (`CourseContents`) layout so the two learn home
  * surfaces read consistently: TIER-1 breadcrumb → TIER-2 header (project title +
  * description + a GitHub status chip) → TIER-3 a {@link ContinueCard} `hero` for
- * the next task (chip "Tiếp tục") + progress meter, above the keep-going path =
+ * the next task (chip "Continue") + progress meter, above the keep-going path =
  * current milestone tasks as {@link ContinueCard} `item` cards (with per-card
- * "Tiếp tục >" CTA) in a frameless {@link LabeledCard} grid. The milestone LIST
+ * "Continue >" CTA) in a frameless {@link LabeledCard} grid. The milestone LIST
  * for the whole project lives in the left rail — the body only surfaces "where
  * you are + what's next". Every value is grounded in real BE fields
  * (`milestoneTaskProgress`, enrollment github).
@@ -239,7 +239,7 @@ export const PersonalProjectDashboard = ({
                         </Typography>
                     </div>
 
-                    {/* keep-going: ContinueCard item grid — "Tiếp tục >" lives on each
+                    {/* keep-going: ContinueCard item grid — "Continue >" lives on each
                         card (Storybook Item), not as a soft see-more beside the label. */}
                     {currentMilestone ? (
                         <LabeledCard

@@ -59,7 +59,7 @@ const languageExtensionFor = (lang: string): Array<Extension> => {
 /**
  * Which tool the {@link MockInterviewWorkspace} shows — driven ENTIRELY by the
  * current question, never by a candidate-facing switcher (2026-07-09 feedback:
- * a manual Whiteboard/Code/Notes tab bar read as "xàm" busywork). A
+ * a manual Whiteboard/Code/Notes tab bar read as "pointless" busywork). A
  * debug/review/optimize question (given code) renders straight to `"code"`; a
  * `mode="design"` phase renders straight to `"whiteboard"`.
  */
@@ -154,7 +154,7 @@ export const MockInterviewWorkspace = ({
             {/* a REAL editor (CodeMirror) — a debug/review/optimize question seeds its given
                 code here for the candidate to FIX in place (not a plain textarea): line numbers +
                 syntax highlighting = editing, not narrating. Switched from Monaco (2026-07-17,
-                thầy: "code terminal này hơi xấu" + pointed at react-codemirror's theme gallery) —
+                instructor: "this code terminal looks kind of ugly" + pointed at react-codemirror's theme gallery) —
                 CM6 ships a clean, tunable theme system (no VS-Code-IDE chrome to fight) and its
                 content DOM disables the browser's native spellcheck by default, so the red
                 squiggly-underline bug Monaco had doesn't exist here at all. NO own outer border /

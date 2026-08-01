@@ -38,17 +38,7 @@ interface LinkBackOwnProps {
     skeletonWidth?: SkeletonWidth
     /** `true` → tag the root with `data-anat-part="Link"` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** Anatomy tag override — a composite forwards its OWN atom name here (e.g. `"LinkBack"`) so the deps tree can jump to this atom's own story instead of the underlying HeroUI element. */
-    anatPart?: string
-    /**
-     * Extra classes on the link.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
 
@@ -78,18 +68,16 @@ export const LinkBack = ({
     isSkeleton = false,
     skeletonWidth,
     showAnatomy = false,
-    anatPart,
-    className,
     classNames,
 }: LinkBackProps) => {
     if (isSkeleton) {
-        // Same `flex items-center gap-2` row as the real render; icon box
+        // Same `flex items-center gap-1` (icon-text) row as the real render; icon box
         // matches `size-3.5`, and the label bar rides `SKELETON_TEXT_BAR_SM`
         // (14px bar in the 20px `text-sm` line box) so the row's height does
         // not change when the real label lands. No `data-anat-part="Link"`
         // here since nothing HeroUI-Link-shaped renders in this branch.
         return (
-            <div className={cn("flex w-fit items-center gap-2", className, classNames)} data-anat-part={anatPart}>
+            <div data-tier="atom" data-component="LinkBack" data-principles="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
                 <HeroSkeleton className="size-3.5 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 <HeroSkeleton
                     className={cn(SKELETON_TEXT_BAR_SM, skeletonWidth ?? "w-1/4")}
@@ -103,11 +91,13 @@ export const LinkBack = ({
 
     return (
         <HeroUILink
+            data-tier="atom"
+            data-component="LinkBack"
             onPress={onPress}
-            data-anat-part={anatPart ?? (showAnatomy ? "Link" : undefined)}
+            data-anat-part={showAnatomy ? "Link" : undefined}
+            data-principles="icon-text"
             className={cn(
-                "group flex w-fit cursor-pointer items-center gap-2 text-sm text-muted no-underline transition-colors hover:text-foreground",
-                className,
+                "group flex w-fit cursor-pointer items-center gap-1 text-sm text-muted no-underline transition-colors hover:text-foreground",
                 classNames,
             )}
         >
@@ -128,3 +118,5 @@ export const LinkBack = ({
         </HeroUILink>
     )
 }
+
+export const meta = { tier: "atom", name: "LinkBack" } as const

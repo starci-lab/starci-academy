@@ -27,7 +27,7 @@ export interface LeaderboardRow {
     username: string | null
     /** Avatar URL (null → generated fallback). */
     avatar?: string | null
-    /** Pre-formatted trailing value (e.g. "640 điểm" / "1420 XP"). */
+    /** Pre-formatted trailing value (e.g. "640 pts" / "1420 XP"). */
     valueLabel: React.ReactNode
     /** True → highlight as the viewer (accent value + `meLabel` suffix). */
     isMe?: boolean
@@ -48,9 +48,9 @@ export interface LeaderboardRow {
 export interface LeaderboardStanding {
     /** Viewer's rank — drives the leading {@link IconTile} badge (medal ≤3 / cup 4+). */
     rank: number
-    /** Primary line (e.g. "Hạng #1 · top 20%"). */
+    /** Primary line (e.g. "Rank #1 · top 20%"). */
     primary: React.ReactNode
-    /** Secondary muted line (e.g. "640 điểm · Reset sau 1 ngày 18 giờ"). */
+    /** Secondary muted line (e.g. "640 pts · Resets in 1 day 18 hours"). */
     secondary?: React.ReactNode
 }
 
@@ -79,7 +79,7 @@ export interface LeaderboardListCardProps extends WithClassNames<undefined> {
     rows: Array<LeaderboardRow>
     /** Pinned self-row when the viewer sits below the shown slice. */
     selfRow?: LeaderboardRow
-    /** Ellipsis label above the pinned self-row (e.g. "còn 41 người"). */
+    /** Ellipsis label above the pinned self-row (e.g. "41 more people"). */
     ellipsisLabel?: React.ReactNode
     /** "You" suffix appended to the viewer's own row name. */
     meLabel?: React.ReactNode
@@ -89,9 +89,9 @@ export interface LeaderboardListCardProps extends WithClassNames<undefined> {
  * The ONE shared render for a dashboard leaderboard preview — a {@link LabeledCard}
  * with the viewer's own standing (rank-driven {@link IconTile} badge: medal for the
  * podium, cup below) over a bordered {@link SurfaceListCard} of ranked rows (top-3
- * wear place medals). Both the weekly "League tuần" and the global "Top học viên"
- * cards map their data into this, so they render IDENTICALLY (thầy 2026-07-17 "2
- * mục y chang"); only the per-context `trailing` slot (rank-delta caret vs follow)
+ * wear place medals). Both the weekly "Weekly league" and the global "Top learners"
+ * cards map their data into this, so they render IDENTICALLY (teacher 2026-07-17 "2
+ * identical sections"); only the per-context `trailing` slot (rank-delta caret vs follow)
  * and the emergent badge differ. Presentational + props-only; containers own the fetch.
  *
  * @param props - {@link LeaderboardListCardProps}
@@ -125,7 +125,7 @@ export const LeaderboardListCard = ({
             <SurfaceListCardItem key={row.key} withVerdict={row.verdict}>
                 <div className="flex items-center gap-3">
                     {/* top-3 → place medal (🥇🥈🥉); rank 4+ → plain number. Number matches the
-                        medal's w-6 CENTERED slot (thầy 2026-07-17 "4,5 còn lệch") at the same
+                        medal's w-6 CENTERED slot (teacher 2026-07-17 "4 and 5 still misaligned") at the same
                         text-sm foreground as the name (same-row same-size, `visual-hierarchy`). */}
                     {row.rank <= 3 ? (
                         <span className="flex w-6 shrink-0 items-center justify-center">
@@ -147,7 +147,7 @@ export const LeaderboardListCard = ({
                         <div className="flex min-w-0 flex-1 items-center">{identity}</div>
                     )}
                     {/* value = meta → always muted + right-aligned tabular so the XP column
-                        lines up across rows (thầy 2026-07-17: accent moves to the NAME, value
+                        lines up across rows (teacher 2026-07-17: accent moves to the NAME, value
                         stays muted). */}
                     <Typography
                         type="body-sm"
@@ -191,7 +191,7 @@ export const LeaderboardListCard = ({
                 <SurfaceListCard bordered>
                     {rows.map(renderRow)}
                     {/* viewer below the slice → collapsed-rows ellipsis + pinned self-row.
-                        Renders as a REAL row (thầy 2026-07-17): a `SurfaceListCardItem` so it
+                        Renders as a REAL row (teacher 2026-07-17): a `SurfaceListCardItem` so it
                         gets the same `p-3` + full-bleed separator, a transparent bg that INHERITS
                         the card's `bg-surface` (no `bg-surface-secondary` banner), and `min-h-8`
                         on the inner box to match the avatar rows' height exactly (avatar sm =

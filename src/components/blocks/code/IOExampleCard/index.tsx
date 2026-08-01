@@ -10,7 +10,7 @@ export type IORowTone = "default" | "success" | "danger"
 export interface IOExampleRow {
     /** Stable key. */
     key: string
-    /** Small muted label above the value (e.g. "Đầu vào", "Mong đợi"). */
+    /** Small muted label above the value (e.g. "Input", "Expected"). */
     label: ReactNode
     /** The literal value, rendered monospace and pre-wrapped. */
     value: string

@@ -88,9 +88,9 @@ export interface GroupPressableCardProps extends WithClassNames<undefined> {
     keyboardShortcut?: boolean
 }
 
-// Compact grid cell, not a standalone top-level card: one nấc down from
+// Compact grid cell, not a standalone top-level card: one step down from
 // `PressableCard`'s own `rounded-3xl`/`shadow-surface` default (concentric
-// radius: card 24px − 1 step → 16px) and one nấc UP from the flat button /
+// radius: card 24px − 1 step → 16px) and one step UP from the flat button /
 // `shadow-field` input — `GroupPressableCard` is the ONLY place this chrome
 // lives; `PressableCard` used standalone (a real full-size card, e.g.
 // `ConsultantCard`) keeps its own bigger default untouched.

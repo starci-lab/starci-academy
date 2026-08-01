@@ -6,7 +6,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContinueLearning` (dashboard): the "Tiếp tục học" content slot —
+ * BLOCK — `ContinueLearning` (dashboard): the "Continue learning" content slot —
  * a capped set of resume targets (recently-read lessons, mixed with AT MOST one
  * in-progress challenge), or an onboarding CTA when there is nothing to resume
  * yet. Content only — the PAGE frames it with a label; this block never draws
@@ -87,8 +87,8 @@ export interface ContinueLearningProps {
 
 /** Subtitle word per kind — the block's own wording (§14d.1: design never sees "lesson"/"challenge"). */
 const KIND_LABEL: Record<ContinueLearningItemKind, string> = {
-    lesson: "Đang đọc",
-    challenge: "Thử thách đang làm",
+    lesson: "Currently reading",
+    challenge: "Challenge in progress",
 }
 
 /** Placeholder tiles for the guessed 3-card skeleton grid (§12c) — never carry a press handler. */
@@ -99,7 +99,7 @@ const SKELETON_ITEMS: Array<ContinueLearningItem> = [
 ]
 
 /**
- * The dashboard's "Tiếp tục học" content. See the file header for the full
+ * The dashboard's "Continue learning" content. See the file header for the full
  * leaf/state contract.
  *
  * @param props - {@link ContinueLearningProps}
@@ -134,23 +134,22 @@ const ContinueLearning = ({
         <div data-anat-part={anatPart}>
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
-                skeleton={<Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap="grouped" showAnatomy={showAnatomy} />}
+                skeleton={<Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} showAnatomy={showAnatomy} />}
                 isEmpty={!isLoading && items.length === 0}
                 emptyContent={{
                     title: hasCourses
-                        ? "Bạn chưa đọc bài học hoặc làm thử thách nào."
-                        : "Bạn chưa tham gia khoá học nào.",
+                        ? "You haven't read any lessons or attempted any challenges yet."
+                        : "You haven't joined any courses yet.",
                     description: hasCourses
-                        ? "Bắt đầu một bài học để nội dung \"Tiếp tục học\" xuất hiện ở đây."
+                        ? "Start a lesson so it shows up here under \"Continue learning\"."
                         : undefined,
                     action: (
                         <Button
                             variant="primary"
                             size="sm"
-                            label="Xem khoá học"
+                            label="Browse courses"
                             onPress={onBrowseCourses}
                             showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Button" : undefined}
                         />
                     ),
                     anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
@@ -158,7 +157,7 @@ const ContinueLearning = ({
                 }}
                 showAnatomy={showAnatomy}
             >
-                <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap="grouped" showAnatomy={showAnatomy} />
+                <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} showAnatomy={showAnatomy} />
             </AsyncContent>
         </div>
     )

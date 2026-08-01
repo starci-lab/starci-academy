@@ -3,9 +3,9 @@ import { CourseQaEngagementStrip } from "@sb-components/starci/blocks/learn/Cour
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `CourseQaEngagementStrip`: the "không học một mình" honest aggregate
- * under `CourseQaHeader` on a course Q&A board — enrolled learners, then
- * answered/total questions. See the component file header for the full
+ * BLOCK — `CourseQaEngagementStrip`: the "you're not learning alone" honest
+ * aggregate under `CourseQaHeader` on a course Q&A board — enrolled learners,
+ * then answered/total questions. See the component file header for the full
  * real-numbers-only contract and the leaf/state judgement call.
  */
 const meta: Meta<typeof CourseQaEngagementStrip> = {
@@ -31,7 +31,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaEngagementStrip"
                 tier="block"
@@ -74,7 +74,7 @@ export const Default: Story = {
                     },
                     {
                         name: "empty board",
-                        why: "Zero questions asked would make \"0/38 đã được giải đáp\" a lie by omission — it reads as abandonment, not as a fresh board. The second line swaps to an honest admission that nothing has been asked yet instead of computing a ratio from zero.",
+                        why: "Zero questions asked would make \"0/38 answered\" a lie by omission — it reads as abandonment, not as a fresh board. The second line swaps to an honest admission that nothing has been asked yet instead of computing a ratio from zero.",
                         code: `<CourseQaEngagementStrip
     enrollmentCount={12}
     totalQuestions={0}

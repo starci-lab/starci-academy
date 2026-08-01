@@ -5,15 +5,16 @@ import { Form, FormActions, FormSection } from "@sb-components/composites/form/F
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (composite tier §13) — `Form`: vỏ `<form>` THẬT (submit bằng ENTER) +
- * cột nội dung theo nhịp `gap` (§10c) + slot `actions` ở đáy.
+ * SHELL (composite tier §13) — `Form`: a REAL `<form>` shell (submit on ENTER)
+ * + a content column following the `gap` rhythm (§10c) + an `actions` slot at
+ * the bottom.
  *
- * ⚠️ PHẠM VI STATE (§12f): story ở đây chỉ render state do CHÍNH khung đẻ ra —
- * `isDisabled` (khoá cả form qua `<fieldset disabled>`) và cách nó bố trí
- * `body`/`actions`. Nhãn/hint/lỗi/required của field là state của ATOM
- * (`Atoms/Forms/Input/*`, §12e) — KHÔNG lặp ở đây. Pending của từng nút là state
- * của `Atoms/Buttons/Button` — ở đây nó chỉ xuất hiện như MỘT PHẦN của trạng thái
- * "đang submit" mà khung sở hữu.
+ * ⚠️ STATE SCOPE (§12f): the stories here only render state that the shell
+ * ITSELF produces — `isDisabled` (locks the whole form via `<fieldset
+ * disabled>`) and how it lays out `body`/`actions`. A field's label/hint/error/
+ * required is the ATOM's state (`Atoms/Forms/Input/*`, §12e) — NOT repeated
+ * here. Each button's pending state belongs to `Atoms/Buttons/Button` — here it
+ * only shows up as ONE PART of the "submitting" state the shell owns.
  */
 const meta: Meta<typeof Form> = {
     title: "Composites/Form/Form/Form",
@@ -29,15 +30,17 @@ export default meta
 type Story = StoryObj<typeof Form>
 
 /**
- * Khung KHÔNG badge `Body`/`Actions` (2026-07-28, §11a.1 LOẠI 3): cả hai bọc node
- * TUỲ Ý caller đưa vào (field bất kỳ, hoặc `actions` — thường là `FormActions`
- * nhưng không hề bị ép kiểu), nên không có MỘT component cố định để trỏ sang —
- * component đã bỏ hẳn hai badge này. Không còn part nào của RIÊNG `Form` để
- * khai ở đây; những node THẬT xuất hiện trong canvas dưới đây (vd `Typography`
- * của `FormSection`) đã có `storyId` khai sẵn ở `FormSection.stories.tsx`.
+ * The shell does NOT badge `Body`/`Actions` (2026-07-28, §11a.1 CASE 3): both
+ * wrap an ARBITRARY node the caller supplies (any field, or `actions` —
+ * usually a `FormActions` but never enforced), so there is no ONE fixed
+ * component for a panel link to point to — the component has dropped both
+ * badges entirely. There is no part left that belongs to `Form` alone to
+ * declare here; the REAL nodes that show up in the canvas below (e.g. the
+ * `Typography` inside `FormSection`) already have a `storyId` declared in
+ * `FormSection.stories.tsx`.
  */
 
-/** Fixture field thật — atom `Input.*` TỰ mang label/hint/required (§12e). */
+/** A real fixture field — the `Input.*` atom carries its OWN label/hint/required (§12e). */
 const AccountFields = () => {
     const [name, setName] = useState("Quang Nguyen")
     const [email, setEmail] = useState("quang@starci.dev")
@@ -49,7 +52,7 @@ const AccountFields = () => {
     )
 }
 
-/** Default — `children` là lối rút gọn của `body`; `actions` là slot riêng ở đáy. */
+/** Default — `children` is the shorthand for `body`; `actions` is its own slot at the bottom. */
 export const Default: Story = {
     render: () => {
         const Demo = () => (
@@ -63,7 +66,7 @@ export const Default: Story = {
                         name: "isDisabled not set, children shorthand fills body",
                         why: "The frame renders as a live, editable form: the fieldset stays enabled and `children` fills the `body` slot as the shorthand for it, while `actions` sits in its own slot at the bottom. This is the resting shape a reader lands on before anything is submitted or locked.",
                         code: `<Form
-  gap="section"
+  gap={6}
   onSubmit={() => save()}
   actions={<FormActions items={[{ key: "cancel", label: "Cancel", variant: "secondary" }, { key: "save", label: "Save" }]} />}
 >
@@ -73,7 +76,7 @@ export const Default: Story = {
   </FormSection>
 </Form>`,
                         render: (
-                            <div className="w-96">
+                            <div data-tier="fixture" className="w-96">
                                 <Form
                                     showAnatomy
                                     onSubmit={() => {}}
@@ -96,14 +99,14 @@ export const Default: Story = {
                 ]}
             />
         )
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /**
- * Submitting — đang gửi: khung khoá CẢ form (`isDisabled`) trong khi nút chính
- * quay spinner. Đây là state của KHUNG (một `<fieldset disabled>` phủ mọi control),
- * không phải state riêng của nút.
+ * Submitting — mid-send: the shell locks the WHOLE form (`isDisabled`) while
+ * the primary button spins. This is the SHELL's state (one `<fieldset
+ * disabled>` covering every control), not a state private to the button.
  */
 export const Submitting: Story = {
     render: () => {
@@ -123,7 +126,7 @@ export const Submitting: Story = {
   …
 </Form>`,
                         render: (
-                            <div className="w-96">
+                            <div data-tier="fixture" className="w-96">
                                 <Form
                                     showAnatomy
                                     isDisabled
@@ -147,13 +150,14 @@ export const Submitting: Story = {
                 ]}
             />
         )
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /**
- * Disabled — form khoá mà KHÔNG có gì đang chạy (chưa đủ quyền, đang chờ điều
- * kiện mở). Cùng cơ chế `<fieldset disabled>`, khác ở chỗ không nút nào pending.
+ * Disabled — the form is locked while NOTHING is running (not enough
+ * permission yet, waiting on an unlock condition). Same `<fieldset disabled>`
+ * mechanism, the difference being no button is pending.
  */
 export const Disabled: Story = {
     render: () => {
@@ -170,7 +174,7 @@ export const Disabled: Story = {
   …
 </Form>`,
                         render: (
-                            <div className="w-96">
+                            <div data-tier="fixture" className="w-96">
                                 <Form
                                     showAnatomy
                                     isDisabled
@@ -194,6 +198,6 @@ export const Disabled: Story = {
                 ]}
             />
         )
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }

@@ -7,12 +7,13 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  *
  * ⭐ This block was born 2026-07-27 (teacher: "design is only the UI/UX layer"):
  * the `CourseContents` screen used to import `ContinueCard` (the design tier)
- * DIRECTLY and assemble the string `"Đã đọc 8/23 bài"` itself. The domain wording
+ * DIRECTLY and assemble the string `"Read 8/23 lessons"` itself. The domain wording
  * now lives HERE; the screen only hands over NUMBERS.
  *
  * §11f — leaves split by STRUCTURE: there's only ONE structure, so `isSkeleton`
- * is a STATE of that same leaf, not a second leaf. `shell` helper đã xoá, mỗi
- * leaf giờ tự khai `states[]` (thầy chốt bố cục C, 2026-07-27).
+ * is a STATE of that same leaf, not a second leaf. The `shell` helper has been
+ * removed; each leaf now declares its own `states[]` (teacher finalized layout
+ * C, 2026-07-27).
  */
 const meta: Meta<typeof ContinueLearning> = {
     title: "StarCi/Blocks/Learn/ContinueLearning/ContinueLearning",
@@ -28,7 +29,7 @@ type Story = StoryObj<typeof ContinueLearning>
 /** Sample data — all NUMBERS, exactly what the screen is allowed to hand down (§14d.1). */
 const SAMPLE = {
     lessonIndex: 4,
-    lessonTitle: "Viết Dockerfile tối ưu",
+    lessonTitle: "Writing an optimized Dockerfile",
     lessonsRead: 8,
     lessonsTotal: 23,
     challengesDone: 2,
@@ -48,7 +49,7 @@ const PARTS: Array<AnatomyNode> = [
 /** The ONE leaf — has data. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContinueLearning"
                 tier="block"
@@ -58,10 +59,10 @@ export const Default: Story = {
                 states={[
                     {
                         name: "lessonIndex/lessonsRead/lessonsTotal/challengesDone/challengesTotal set",
-                        why: "The block assembles the two lines of copy from numbers alone: `Bài 4 · …` and `Đã đọc 8/23 bài`. Design never sees what \"bài\" or \"thử thách\" even mean, it only draws the strings this block already wrote.",
+                        why: "The block assembles the two lines of copy from numbers alone: `Lesson 4 · …` and `Read 8/23 lessons`. Design never sees what \"lesson\" or \"challenge\" even mean, it only draws the strings this block already wrote.",
                         code: `<ContinueLearning
     lessonIndex={4}
-    lessonTitle="Viết Dockerfile tối ưu"
+    lessonTitle="Writing an optimized Dockerfile"
     lessonsRead={8}
     lessonsTotal={23}
     challengesDone={2}
@@ -80,7 +81,7 @@ export const Default: Story = {
 /** STATE `isSkeleton` — the SAME structure, the flag flows straight down to design (§11f/§12c). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContinueLearning"
                 tier="block"

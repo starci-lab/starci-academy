@@ -53,8 +53,8 @@ export interface MindMapFullscreenButtonAriaLabels {
     zoomOut: string
     /**
      * Name for the fullscreen toggle. The caller passes ONE label that already
-     * reads correctly for the current `isFullscreen` state (e.g. "Toàn màn hình"
-     * vs "Thoát toàn màn hình") — the block does not invent english/vi wording,
+     * reads correctly for the current `isFullscreen` state (e.g. "Fullscreen"
+     * vs "Exit fullscreen") — the block does not invent english/vi wording,
      * per §14d.1.
      */
     toggleFullscreen: string
@@ -100,7 +100,7 @@ const MindMapFullscreenButton = ({
     return (
         <div data-anat-part={anatPart}>
             <StackV
-                gap="tight"
+                gap={2}
                 showAnatomy={showAnatomy}
                 body={
                     <>
@@ -112,7 +112,7 @@ const MindMapFullscreenButton = ({
                             prefixIcon={MagnifyingGlassPlusIcon}
                             ariaLabel={ariaLabels.zoomIn}
                             onPress={onZoomIn}
-                            anatPart={buttonAnatPart}
+                            showAnatomy={showAnatomy}
                         />
                         <ButtonBase
                             isIconOnly
@@ -122,7 +122,7 @@ const MindMapFullscreenButton = ({
                             prefixIcon={MagnifyingGlassMinusIcon}
                             ariaLabel={ariaLabels.zoomOut}
                             onPress={onZoomOut}
-                            anatPart={buttonAnatPart}
+                            showAnatomy={showAnatomy}
                         />
                         <ButtonBase
                             isIconOnly
@@ -134,7 +134,7 @@ const MindMapFullscreenButton = ({
                             prefixIcon={isFullscreen ? ArrowsInIcon : ArrowsOutIcon}
                             ariaLabel={ariaLabels.toggleFullscreen}
                             onPress={onToggleFullscreen}
-                            anatPart={buttonAnatPart}
+                            showAnatomy={showAnatomy}
                         />
                     </>
                 }

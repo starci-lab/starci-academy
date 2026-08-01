@@ -33,25 +33,25 @@ type Story = StoryObj<typeof ProfileLockedState>
 
 const USER: ProfileHeroUser = {
     id: "u_locked_1",
-    fullName: "Minh Trần",
+    fullName: "Minh Tran",
     handle: "minh.tran",
     roleTitle: "Backend Engineer",
-    bio: "Học DevOps Mastery, đang làm capstone container hoá.",
-    location: "Đà Nẵng, Việt Nam",
+    bio: "Studying DevOps Mastery, currently working on a containerization capstone.",
+    location: "Da Nang, Vietnam",
     followersCount: 8,
     joinedAt: "2025-03-01T00:00:00.000Z",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the card face holding the private-profile notice in place of the tabbed activity region", storyId: "composites-cards-surfacecard-surfacecard--default" },
-    "FeedbackEmpty": { tier: "composite", role: "the centered icon/title/description stack stating the profile is private", storyId: "composites-feedback-feedback-feedbackempty--action" },
+    "EmptyState": { tier: "composite", role: "the centered icon/title/description stack stating the profile is private", storyId: "composites-feedback-emptystate-emptystate--action" },
     "Button": { tier: "atom", role: "the single way out — browse courses instead of this profile's activity", storyId: "atoms-buttons-button-button--default" },
 }
 
 /** LEAF — a non-owner lands on a profile its owner has locked. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProfileLockedState"
                 tier="block"

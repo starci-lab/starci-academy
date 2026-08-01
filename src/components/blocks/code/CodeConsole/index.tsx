@@ -6,7 +6,7 @@ import { Tabs, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
 
-/** One tab of a {@link CodeConsole} (e.g. "Test case", "Kết quả"). */
+/** One tab of a {@link CodeConsole} (e.g. "Test case", "Result"). */
 export interface CodeConsoleTab {
     /** Stable tab id. */
     key: string

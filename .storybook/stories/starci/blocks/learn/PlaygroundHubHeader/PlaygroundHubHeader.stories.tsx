@@ -38,7 +38,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the only shape this block has: title + optional purpose line. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundHubHeader"
                 tier="block"
@@ -52,14 +52,14 @@ export const Default: Story = {
                         why: "The hub data has loaded, so the title and purpose line render as plain text. This is the shape every learner sees the moment they open the playground hub for their course.",
                         code: `<PlaygroundHubHeader
     title="Playground"
-    description="Bài thực hành Docker và Kubernetes. Bạn gõ lệnh thật trên máy mình, có hướng dẫn từng bước."
+    description="Hands-on Docker and Kubernetes exercises. You type real commands on your own machine, with step-by-step guidance."
 />`,
                         render: (
                             <PlaygroundHubHeader
                                 anatPart="PlaygroundHubHeader"
                                 showAnatomy
                                 title="Playground"
-                                description="Bài thực hành Docker và Kubernetes. Bạn gõ lệnh thật trên máy mình, có hướng dẫn từng bước."
+                                description="Hands-on Docker and Kubernetes exercises. You type real commands on your own machine, with step-by-step guidance."
                             />
                         ),
                     },

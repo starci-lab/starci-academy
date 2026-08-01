@@ -98,10 +98,10 @@ export const ProgressMeter = ({
             ) : null}
             {/* With a target marker, force the bar row to the pill's own height (`h-5`)
                 and center the bar in it, so the `h-5` pill sits EXACTLY on the track
-                midline (thầy 2026-07-18: "nấc này ở giữa" — the bare `.relative` was as
-                tall as ProgressBar's box, taller than the h-1 track, so `top-1/2` landed
-                above the visible line). Reserve top room (`mt-5`) for a floating label so
-                it never overlaps the caption above. */}
+                midline (teacher, 2026-07-18: "this notch should sit in the middle" — the
+                bare `.relative` was as tall as ProgressBar's box, taller than the h-1 track,
+                so `top-1/2` landed above the visible line). Reserve top room (`mt-5`) for a
+                floating label so it never overlaps the caption above. */}
             <div
                 className={cn(
                     "relative",

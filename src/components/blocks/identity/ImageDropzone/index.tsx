@@ -22,9 +22,9 @@ const ACCEPT = {
 export interface ImageDropzoneProps extends WithClassNames<undefined> {
     /** Called with the dropped / picked image file (type + size filtered). */
     onFile: (file: File) => void
-    /** Primary CTA (e.g. "Kéo thả ảnh vào đây, hoặc bấm để chọn"). */
+    /** Primary CTA (e.g. "Drag and drop an image here, or click to choose"). */
     label: ReactNode
-    /** Format/size hint below the CTA (e.g. "PNG, JPG, WEBP, GIF · tối đa 5 MB"). */
+    /** Format/size hint below the CTA (e.g. "PNG, JPG, WEBP, GIF · up to 5 MB"). */
     hint?: ReactNode
     /** Override the default {@link ImageIcon} (phosphor `*Icon`). */
     icon?: ReactNode

@@ -52,7 +52,7 @@ interface TriggerBoxProps {
 
 /** A bordered term used as the tooltip trigger. */
 const TriggerBox = ({ label = "Hover to see it" }: TriggerBoxProps) => (
-    <span className="inline-flex cursor-help rounded-xl border border-default-200 bg-default-100 px-3 py-2 text-sm font-medium text-foreground">
+    <span data-tier="fixture" className="inline-flex cursor-help rounded-xl border border-default-200 bg-default-100 px-3 py-2 text-sm font-medium text-foreground">
         {label}
     </span>
 )
@@ -60,7 +60,7 @@ const TriggerBox = ({ label = "Hover to see it" }: TriggerBoxProps) => (
 /** Default — top-placed hint, pre-opened to soak. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Tooltip"
                 tier="atom"
@@ -73,7 +73,7 @@ export const Default: Story = {
                         why: "The panel is pinned open with `defaultOpen` so its hover state can be inspected without a mouse, and it sits above the trigger since `placement` defaults to top. A tooltip has to explain the exact element beside it, which is why this atom is one of only two allowed to keep `children` (the other is Badge) instead of taking a separate trigger prop.",
                         code: "<Tooltip label=\"Weekly XP ranking\" placement=\"top\">\n  <TermChip />\n</Tooltip>",
                         render: (
-                            <div className="flex justify-center py-12">
+                            <div data-tier="fixture" className="flex justify-center py-12">
                                 <Tooltip label="Ranked by total XP earned this week" placement="top" defaultOpen showAnatomy>
                                     <TriggerBox label="Weekly rank" />
                                 </Tooltip>
@@ -89,7 +89,7 @@ export const Default: Story = {
 /** Placements — top · bottom · left · right, each side gets a trigger pinned open. */
 export const Placements: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Tooltip"
                 tier="atom"
@@ -101,7 +101,7 @@ export const Placements: Story = {
                         why: "The trigger is pinned open with the panel anchored above it, since `placement` is set to top. This is the default anchor shown here explicitly so all four sides can be compared leaf by leaf.",
                         code: "<Tooltip label=\"Placement top\" placement=\"top\">…</Tooltip>",
                         render: (
-                            <div className="flex justify-center py-12">
+                            <div data-tier="fixture" className="flex justify-center py-12">
                                 <Tooltip label="Placement top" placement="top" defaultOpen showAnatomy>
                                     <TriggerBox label="Top" />
                                 </Tooltip>
@@ -113,7 +113,7 @@ export const Placements: Story = {
                         why: "The trigger is pinned open with the panel anchored below it, since `placement` is set to bottom. Bottom placement is the fallback the atom reaches for when a trigger sits too close to the top of the viewport for the panel to fit above it.",
                         code: "<Tooltip label=\"Placement bottom\" placement=\"bottom\">…</Tooltip>",
                         render: (
-                            <div className="flex justify-center py-12">
+                            <div data-tier="fixture" className="flex justify-center py-12">
                                 <Tooltip label="Placement bottom" placement="bottom" defaultOpen showAnatomy>
                                     <TriggerBox label="Bottom" />
                                 </Tooltip>
@@ -125,7 +125,7 @@ export const Placements: Story = {
                         why: "The trigger is pinned open with the panel anchored to its left edge, since `placement` is set to left. Left placement lets a caller keep the hint clear of content that sits directly above or below the trigger.",
                         code: "<Tooltip label=\"Placement left\" placement=\"left\">…</Tooltip>",
                         render: (
-                            <div className="flex justify-center py-12">
+                            <div data-tier="fixture" className="flex justify-center py-12">
                                 <Tooltip label="Placement left" placement="left" defaultOpen showAnatomy>
                                     <TriggerBox label="Left" />
                                 </Tooltip>
@@ -137,7 +137,7 @@ export const Placements: Story = {
                         why: "The trigger is pinned open with the panel anchored to its right edge, since `placement` is set to right. Right placement mirrors left for triggers sitting near the left edge of their container.",
                         code: "<Tooltip label=\"Placement right\" placement=\"right\">…</Tooltip>",
                         render: (
-                            <div className="flex justify-center py-12">
+                            <div data-tier="fixture" className="flex justify-center py-12">
                                 <Tooltip label="Placement right" placement="right" defaultOpen showAnatomy>
                                     <TriggerBox label="Right" />
                                 </Tooltip>

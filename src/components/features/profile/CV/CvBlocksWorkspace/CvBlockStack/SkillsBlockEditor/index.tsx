@@ -20,7 +20,7 @@ import type { CvBlock, CvBlockEditorProps, CvBlockItem } from "../../../types"
  * Curated tech-stack suggestions — a stand-in for a future "course tags /
  * selectedLang on challenge submissions" source (no FE query for that exists
  * yet). Static suggestions are explicitly acceptable here per the frozen
- * contract ("luôn tự khai, rủi ro thấp, không cần nhãn").
+ * contract ("always self-declared, low risk, no label needed").
  */
 const SUGGESTED_SKILLS: Array<string> = [
     "TypeScript",

@@ -7,23 +7,23 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
 
 /**
- * Start a FRESH cross-deck "Đến hạn hôm nay" (due) review session EAGERLY,
- * right from the CTA that opens it (`DueReviewHero`'s "Ôn N thẻ" button) —
+ * Start a FRESH cross-deck "Due today" (due) review session EAGERLY,
+ * right from the CTA that opens it (`DueReviewHero`'s "Review N cards" button) —
  * mirrors {@link useStartFlashcardReviewSession} / `QuizSession`'s own
  * `startSession`: the CTA goes `isPending` while the session persists, and
- * the caller only `router.push`es once a real sessionId comes back (thầy
- * 2026-07-11: "bấm vô học thì isPending ở cái nút học, ôn 55 thẻ cũng
- * isPending").
+ * the caller only `router.push`es once a real sessionId comes back (instructor
+ * 2026-07-11: "tapping Study puts isPending on the Study button, reviewing 55
+ * cards is still isPending").
  *
  * ALWAYS calls `start` directly — no resumable-lookup-and-reuse here anymore
- * (thầy 2026-07-12: "nếu đang có session bỏ dở => override lại session đó
- * (xóa cũ tạo mới)"). The `start` mutation itself already retires any prior
+ * (instructor 2026-07-12: "if there's an abandoned session in progress => override
+ * that session (delete the old one, create a new one)"). The `start` mutation itself already retires any prior
  * `in_progress` draw for the enrollment before persisting the new one
  * (`FlashcardDueReviewSessionService.start`), so this button always means
  * "begin now" — resuming a dangling session is a SEPARATE, explicit choice
  * via the dedicated `ContinueCard` (`DueReviewHero`'s own resume card, fed by
  * `useQueryMyInProgressFlashcardDueReviewSessionSwr`). Removing the
- * check-then-reuse race here also fixes 2 bugs it caused: clicking "Học"
+ * check-then-reuse race here also fixes 2 bugs it caused: clicking "Study"
  * sometimes landing straight on the results page (a resumable session that
  * had already flipped to non-in_progress by the time it was reused), and the
  * due-review sessionId changing on every click (two independent resolve-or-

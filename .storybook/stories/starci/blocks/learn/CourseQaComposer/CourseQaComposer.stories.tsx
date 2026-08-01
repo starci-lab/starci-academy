@@ -4,7 +4,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * BLOCK — `CourseQaComposer`: the ONE writing shape reused three ways on a
- * course Q&A board — the root "hỏi chung khoá học" collapsible pill, an
+ * course Q&A board — the root "ask the whole course" collapsible pill, an
  * answer's inline edit form, and an inline reply form. See the component file
  * header for the full mode/`initialValue`/fold-back contract and why this is
  * genuinely new rather than a duplicate of `_legacy/blocks/feed/Composer`.
@@ -34,7 +34,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — `CollapsedPrompt`: the root composer before it is opened — avatar + pill, nothing else composed. */
 export const CollapsedPrompt: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaComposer"
                 tier="block"
@@ -45,13 +45,13 @@ export const CollapsedPrompt: Story = {
                 states={[
                     {
                         name: "collapsed, viewer known",
-                        why: "The root \"hỏi chung khoá học\" composer boots as a slim avatar + placeholder pill rather than an open textarea, so an empty grey box never dominates the Q&A board before anyone has clicked in. A press anywhere on the pill opens the full form.",
+                        why: "The root \"ask the whole course\" composer boots as a slim avatar + placeholder pill rather than an open textarea, so an empty grey box never dominates the Q&A board before anyone has clicked in. A press anywhere on the pill opens the full form.",
                         code: `<CourseQaComposer
     mode="collapsible"
     currentUser={{ name: "Minh Anh" }}
     value=""
     onValueChange={setDraft}
-    placeholder="Đặt câu hỏi cho khoá học này…"
+    placeholder="Ask a question about this course…"
     onSubmit={submitQuestion}
 />`,
                         render: (
@@ -62,7 +62,7 @@ export const CollapsedPrompt: Story = {
                                 currentUser={CURRENT_USER}
                                 value=""
                                 onValueChange={() => {}}
-                                placeholder="Đặt câu hỏi cho khoá học này…"
+                                placeholder="Ask a question about this course…"
                                 onSubmit={() => {}}
                             />
                         ),
@@ -74,7 +74,7 @@ export const CollapsedPrompt: Story = {
     mode="collapsible"
     value=""
     onValueChange={setDraft}
-    placeholder="Đặt câu hỏi cho khoá học này…"
+    placeholder="Ask a question about this course…"
     onSubmit={submitQuestion}
 />`,
                         render: (
@@ -82,7 +82,7 @@ export const CollapsedPrompt: Story = {
                                 mode="collapsible"
                                 value=""
                                 onValueChange={() => {}}
-                                placeholder="Đặt câu hỏi cho khoá học này…"
+                                placeholder="Ask a question about this course…"
                                 onSubmit={() => {}}
                             />
                         ),
@@ -110,7 +110,7 @@ export const CollapsedPrompt: Story = {
 /** LEAF — `ExpandedForm`: the open shape — avatar + textarea + action row. Root (opened), inline edit, and inline reply all land here. */
 export const ExpandedForm: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaComposer"
                 tier="block"
@@ -128,7 +128,7 @@ export const ExpandedForm: Story = {
     currentUser={{ name: "Minh Anh" }}
     value={draft}
     onValueChange={setDraft}
-    placeholder="Đặt câu hỏi cho khoá học này…"
+    placeholder="Ask a question about this course…"
     onSubmit={submitQuestion}
 />`,
                         render: (
@@ -136,11 +136,11 @@ export const ExpandedForm: Story = {
                                 anatPart="CourseQaComposer"
                                 showAnatomy
                                 mode="collapsible"
-                                initialValue="Vì sao"
+                                initialValue="Why does"
                                 currentUser={CURRENT_USER}
-                                value="Vì sao bài tập 3 lại yêu cầu dùng generic thay vì any?"
+                                value="Why does exercise 3 require using generics instead of any?"
                                 onValueChange={() => {}}
-                                placeholder="Đặt câu hỏi cho khoá học này…"
+                                placeholder="Ask a question about this course…"
                                 onSubmit={() => {}}
                             />
                         ),
@@ -153,17 +153,17 @@ export const ExpandedForm: Story = {
     initialValue={answer.body}
     value={draft}
     onValueChange={setDraft}
-    submitLabel="Lưu"
+    submitLabel="Save"
     onSubmit={saveAnswer}
     onCancel={stopEditing}
 />`,
                         render: (
                             <CourseQaComposer
                                 mode="plain"
-                                initialValue="Generic giữ được kiểu cụ thể qua lần gọi, any thì mất hết."
-                                value="Generic giữ được kiểu cụ thể qua lần gọi, any thì mất hết — nên trình biên dịch vẫn bắt lỗi sai kiểu."
+                                initialValue="Generics keep the concrete type across the call; any throws it away."
+                                value="Generics keep the concrete type across the call, any throws it away — so the compiler still catches type errors."
                                 onValueChange={() => {}}
-                                submitLabel="Lưu"
+                                submitLabel="Save"
                                 onSubmit={() => {}}
                                 onCancel={() => {}}
                             />
@@ -177,8 +177,8 @@ export const ExpandedForm: Story = {
     currentUser={{ name: "Minh Anh" }}
     value={draft}
     onValueChange={setDraft}
-    placeholder="Viết phản hồi…"
-    submitLabel="Trả lời"
+    placeholder="Write a reply…"
+    submitLabel="Reply"
     onSubmit={submitReply}
     onCancel={closeReply}
 />`,
@@ -188,8 +188,8 @@ export const ExpandedForm: Story = {
                                 currentUser={CURRENT_USER}
                                 value=""
                                 onValueChange={() => {}}
-                                placeholder="Viết phản hồi…"
-                                submitLabel="Trả lời"
+                                placeholder="Write a reply…"
+                                submitLabel="Reply"
                                 onSubmit={() => {}}
                                 onCancel={() => {}}
                             />
@@ -202,7 +202,7 @@ export const ExpandedForm: Story = {
                         render: (
                             <CourseQaComposer
                                 mode="plain"
-                                value="Đang gửi câu trả lời này…"
+                                value="Sending this reply…"
                                 onValueChange={() => {}}
                                 onSubmit={() => {}}
                                 onCancel={() => {}}

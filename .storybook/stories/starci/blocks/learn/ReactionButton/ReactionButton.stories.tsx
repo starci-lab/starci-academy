@@ -40,7 +40,7 @@ const COUNTS = [
 /** LEAF — the reaction control on its own. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ReactionButton"
                 tier="block"
@@ -56,7 +56,7 @@ export const Full: Story = {
                     },
                     {
                         name: "myReaction = 'love'",
-                        why: "The viewer picked \"Yêu thích\" — the trigger swaps its emoji and label to that pick. Picking the same emotion again removes it.",
+                        why: "The viewer picked \"Love\" — the trigger swaps its emoji and label to that pick. Picking the same emotion again removes it.",
                         code: "<ReactionButton myReaction=\"love\" counts={[...]} onReact={react} />",
                         render: <ReactionButton myReaction="love" counts={COUNTS.map((c) => (c.type === "love" ? { ...c, count: c.count + 1 } : c))} onReact={() => {}} />,
                     },
@@ -81,7 +81,7 @@ export const Full: Story = {
 /** LEAF — the caller flips `isSkeleton`. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ReactionButton"
                 tier="block"

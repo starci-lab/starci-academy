@@ -3,7 +3,7 @@ import { CircleDashedIcon, CubeIcon, PlugsIcon } from "@phosphor-icons/react"
 import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCardAccordion, type SurfaceCardAccordionItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { ListRow } from "@sb-components/composites/lists/List/List"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -18,7 +18,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * collapsible row, no list row of its own: `SurfaceCard.Accordion` is the SAME
  * composite `SubmissionFindingsList`/`ChallengeBrief` use for a bounded card of
  * collapsible sections, `List.Row` is the SAME row `ContentRelatedList`'s rows
- * are built from, `Feedback.Empty` is the SAME centered placeholder every other
+ * are built from, `EmptyState` is the SAME centered placeholder every other
  * pre-content block in this catalog uses for "nothing here yet". The only new
  * code is the DOMAIN: what a resource snapshot looks like and how to read it.
  *
@@ -35,7 +35,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *     degrades to `tone="neutral"` on anything it doesn't recognize is the only
  *     safe contract here — a closed map would throw or silently mislabel the
  *     first status word the CLI changes.
- *   • The panel's own header wording ("Tài nguyên") — fixed, not a prop. This
+ *   • The panel's own header wording ("Resources") — fixed, not a prop. This
  *     panel always shows the same thing (the paired machine's resources), so
  *     there is no second caller who would ever need to relabel it — a `label`
  *     prop here would just be a pre-formatted string with one call site (§14d.1).
@@ -49,14 +49,14 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * `connection` from `"notConnected"` to `"connected"` is not a different block
  * appearing, it's the SAME panel updating what it has to say.
  *
- * ⭐ WHY TWO SEPARATE `Feedback.Empty` CALLS INSTEAD OF ONE SHARED ELSE-BRANCH.
+ * ⭐ WHY TWO SEPARATE `EmptyState` CALLS INSTEAD OF ONE SHARED ELSE-BRANCH.
  * "Not connected" and "connected, nothing yet" are different FACTS or a learner
  * would wrongly read "empty" as "broken" right after pairing succeeds — pairing
  * worked, the first snapshot just hasn't arrived. Distinct icon + copy per state
  * keeps that reassurance instead of collapsing both into one generic "no data".
  *
  * NEVER SKELETONISED. There is no `isSkeleton` prop: the "waiting for the first
- * snapshot" `Feedback.Empty` already IS the loading state for this panel (the
+ * snapshot" `EmptyState` already IS the loading state for this panel (the
  * socket has nothing to shimmer — it either has no snapshot yet or a real one).
  * Adding a second flag on top would just be two ways to say the same thing.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -92,7 +92,7 @@ export interface PlaygroundResourcePanelProps {
 }
 
 /** The panel's own fixed header wording — see the file header for why this isn't a prop. */
-const PANEL_LABEL = "Tài nguyên"
+const PANEL_LABEL = "Resources"
 
 /** One resource kind bucket, in first-seen order. */
 interface PlaygroundResourceGroup {
@@ -143,22 +143,22 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup, showAnatomy: boole
         <Chip
             tone="default"
             text={String(group.resources.length)}
-            anatPart={showAnatomy ? "Chip" : undefined}
+            showAnatomy={showAnatomy}
         />
     ),
     body: (
         <StackV
-            gap="flush"
+            gap={1}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={group.resources.map((resource, index) => (
                 <ListRow
                     key={`${group.kind}:${resource.name}`}
                     title={resource.name}
-                    meta={(
+                    meta={() => (
                         <Chip
                             tone={toneForStatus(resource.status)}
                             text={resource.status}
-                            anatPart={showAnatomy ? "Chip" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     )}
                     divider={index < group.resources.length - 1}
@@ -187,18 +187,18 @@ const PlaygroundResourcePanel = ({
     const groups = hasResources ? groupByKind(resources) : []
 
     const body = !isConnected ? (
-        <FeedbackEmpty
+        <EmptyState
             icon={PlugsIcon}
-            title="Chưa ghép máy"
-            description="Ghép máy để xem tài nguyên đang chạy trong workspace."
-            anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+            title="Not paired yet"
+            description="Pair a machine to see the resources running in your workspace."
+            anatPart={showAnatomy ? "EmptyState" : undefined}
         />
     ) : !hasResources ? (
-        <FeedbackEmpty
+        <EmptyState
             icon={CircleDashedIcon}
-            title="Đang chờ dữ liệu"
-            description="Máy đã ghép xong, đang chờ ảnh chụp tài nguyên đầu tiên."
-            anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+            title="Waiting for data"
+            description="Machine paired — waiting for the first resource snapshot."
+            anatPart={showAnatomy ? "EmptyState" : undefined}
         />
     ) : (
         <SurfaceCardAccordion
@@ -212,7 +212,7 @@ const PlaygroundResourcePanel = ({
 
     const headerRow = (
         <StackH
-            gap="related"
+            gap={3}
             justify="between"
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
@@ -244,7 +244,7 @@ const PlaygroundResourcePanel = ({
 
     return (
         <StackV
-            gap="grouped"
+            gap={4}
             anatPart={anatPart}
             body={
                 <>

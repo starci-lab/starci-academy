@@ -9,7 +9,7 @@ import { CrossListItem } from "@/components/blocks/cards/CrossListCard"
 
 /** One feature row inside a pricing tier. */
 export interface PricingTableFeature {
-    /** The feature description shown on the row (e.g. "Chấm bài không giới hạn"). */
+    /** The feature description shown on the row (e.g. "Unlimited grading"). */
     label: string
     /**
      * Whether this tier includes the feature. `true` renders a success check,
@@ -22,21 +22,21 @@ export interface PricingTableFeature {
 export interface PricingTableTier {
     /** Stable identifier passed back through `onSelectTier` when the CTA is pressed. */
     id: string
-    /** Display name of the tier (e.g. "Cơ bản", "Chuyên nghiệp"). */
+    /** Display name of the tier (e.g. "Basic", "Professional"). */
     name: string
     /**
      * Pre-formatted price string (e.g. "0₫", "299.000₫"). Passed straight through —
      * the caller owns currency + formatting, mirroring {@link PriceTag}. */
     price: string
-    /** Optional billing period label rendered muted next to the price (e.g. "/tháng"). */
+    /** Optional billing period label rendered muted next to the price (e.g. "/month"). */
     period?: string
     /** Optional one-line description under the tier name. */
     description?: string
     /** Feature rows for this tier — keep the labels consistent across tiers so they align. */
     features: PricingTableFeature[]
-    /** Call-to-action label for this tier's button (e.g. "Chọn gói"). */
+    /** Call-to-action label for this tier's button (e.g. "Choose plan"). */
     ctaLabel: string
-    /** When true this tier is emphasized with an accent frame + a "phổ biến" ribbon. */
+    /** When true this tier is emphasized with an accent frame + a "most popular" ribbon. */
     isHighlighted?: boolean
 }
 
@@ -53,7 +53,7 @@ export interface PricingTableProps extends WithClassNames<undefined> {
      */
     tiers: PricingTableTier[]
     /**
-     * Label shown on the ribbon of a highlighted tier. Defaults to "Phổ biến".
+     * Label shown on the ribbon of a highlighted tier. Defaults to "Most popular".
      */
     highlightLabel?: string
     /**
@@ -69,7 +69,7 @@ export interface PricingTableProps extends WithClassNames<undefined> {
  * {@link PricingCard} carrying a name, a pre-formatted price + period, an optional
  * description, a feature list with per-feature included/excluded marks (success
  * {@link CheckIcon} vs muted {@link XIcon}), and a CTA button. One tier may carry a
- * "phổ biến" highlight ribbon via `isHighlighted`.
+ * "most popular" highlight ribbon via `isHighlighted`.
  *
  * The layout is a responsive multi-column comparison (its whole purpose): columns
  * on desktop (`md` and up), stacked on mobile. Tier-3 presentational — props-only,
@@ -80,8 +80,8 @@ export interface PricingTableProps extends WithClassNames<undefined> {
  * @example
  * <PricingTable
  *     tiers={[
- *         { id: "free", name: "Miễn phí", price: "0₫", ctaLabel: "Bắt đầu", features: [...] },
- *         { id: "pro", name: "Chuyên nghiệp", price: "299.000₫", period: "/tháng", ctaLabel: "Chọn gói", isHighlighted: true, features: [...] },
+ *         { id: "free", name: "Free", price: "0₫", ctaLabel: "Get started", features: [...] },
+ *         { id: "pro", name: "Professional", price: "299.000₫", period: "/month", ctaLabel: "Choose plan", isHighlighted: true, features: [...] },
  *     ]}
  *     onSelectTier={(id) => console.log(id)}
  * />
@@ -89,7 +89,7 @@ export interface PricingTableProps extends WithClassNames<undefined> {
  */
 export const PricingTable = ({
     tiers,
-    highlightLabel = "Phổ biến",
+    highlightLabel = "Most popular",
     onSelectTier,
     className,
 }: PricingTableProps) => {

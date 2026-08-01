@@ -24,9 +24,9 @@ import { pathConfig } from "@/resources/path"
 
 /** Props for {@link FlashcardQuizHistory}. */
 export interface FlashcardQuizHistoryProps extends WithClassNames<undefined> {
-    /** Course whose quick-quiz ("Hỏi nhanh") history to list. */
+    /** Course whose quick-quiz ("Quick Quiz") history to list. */
     courseId: string
-    /** Jumps the setup tab strip back to "Bắt đầu" — wired from `InterviewSession`
+    /** Jumps the setup tab strip back to "Start" — wired from `InterviewSession`
      *  so the empty state's action can start a fresh run without this component
      *  owning the tab switcher itself. */
     onStartQuiz?: () => void
@@ -40,8 +40,8 @@ const scoreColorOf = (ratio: number): "success" | "warning" | "danger" =>
     ratio >= 0.8 ? "success" : ratio >= 0.6 ? "warning" : "danger"
 
 /**
- * "Hỏi nhanh" run history — the setup screen's "Lịch sử" tab. A one-line toolbar
- * (thầy 2026-07-17: bỏ 2 hàng chip lọc inline, dồn vào SEARCH + PHỄU như profile
+ * "Quick Quiz" run history — the setup screen's "History" tab. A one-line toolbar
+ * (instructor's call, 2026-07-17: drop the 2 inline filter-chip rows, fold into SEARCH + FUNNEL like profile
  * challenges): a `SearchInput` filters runs by weak-tag name (client-side), and the
  * mode/level facets live behind a `FunnelIcon` popover. Offset-paginated ("load
  * more"), each row shows its score (correctCount/cardCount) and expands inline to
@@ -67,7 +67,7 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
     const [modeFilter, setModeFilter] = useState<"all" | string>("all")
     const [levelFilter, setLevelFilter] = useState<"all" | string>("all")
     // free-text search over each run's WEAK TAGS (the only searchable text a run
-    // carries — a run has no title/deck) — thầy 2026-07-17 chốt "search thật theo weak-tag".
+    // carries — a run has no title/deck) — instructor's call, 2026-07-17, final: "search should really be by weak-tag".
     const [search, setSearch] = useState("")
     const [filterOpen, setFilterOpen] = useState(false)
 
@@ -296,8 +296,8 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
             ) : (
                 <div className={cn("flex flex-col gap-3", className)}>
                     {/* toolbar: search (weak-tag) + FUNNEL popover (mode/level facets) + count —
-                        one clean line, mirrors ProfileChallengeManage (thầy 2026-07-17: bỏ 2 hàng
-                        chip inline, dồn vào search + phễu). */}
+                        one clean line, mirrors ProfileChallengeManage (instructor's call, 2026-07-17: drop
+                        the 2 inline chip rows, fold into search + funnel). */}
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex min-w-0 flex-1 items-center gap-3">
                             <SearchInput
@@ -376,7 +376,7 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
 
                     {filteredItems.length === 0 ? (
                         // filter/search excluded everything — keep the SAME bounded-card shape as the
-                        // populated `SurfaceListCard` sibling (không để message trần cạnh 1 card,
+                        // populated `SurfaceListCard` sibling (don't leave a bare message beside a card,
                         // `components/card.md` §2 frameless-section-empty-state-needs-card).
                         <Card>
                             <CardContent>

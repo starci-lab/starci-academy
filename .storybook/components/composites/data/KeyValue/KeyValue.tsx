@@ -1,10 +1,10 @@
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
+import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIcon"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
+import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -20,8 +20,10 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
  *
  * COMPOSITE API LAW:
  *   • The composite carries NO domain content and **does NOT format** money/dates/units —
- *     the consumer passes an ALREADY-formatted node into `value` (`"1,200,000 ₫"`,
- *     `<Chip/>`…).
+ *     the consumer passes an ALREADY-formatted `string` into `value` (`"1,200,000 ₫"`).
+ *     `label`/`value` are `string`, never `ReactNode` (COMPOSITE-8, "the same trap one
+ *     level in") — the row wraps each in `Typography` itself, which is what lets it
+ *     shimmer either one while `isSkeleton`.
  *   • The composite does NOT grow functionality (no self-computed totals): `emphasis` is
  *     only a visual STRESS for a total row, the number is still supplied by the consumer.
  *   • `.List` is a repeated list ⇒ `items` is REQUIRED, children are forbidden.
@@ -30,11 +32,14 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
  * `text-*`/`font-*`), rules go through the `Divider` atom. The composite only handles
  * LAYOUT + the spacing scale.
  *
- * §10 — the gap scale is ENFORCED BY TYPE ({@link SeamScale}): only `0·1·2·3·6·8`, the
+ * §10 — the gap scale is ENFORCED BY TYPE ({@link AllowedGap}): only `1..8`, the
  * composite doesn't accept arbitrary numbers so it can't drift off the scale.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "KeyValue" } as const
 
 // ─────────────────────────────────────────────────────────────────────────────
 // .Row — ONE label–value pair
@@ -42,25 +47,35 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
 /** Props every {@link KeyValueRow} carries regardless of loading state. */
 interface KeyValueRowOwnProps {
-    /** Sub-line below the label (explanation/unit/condition) — muted, smaller size. */
-    hint?: ReactNode
+    /**
+     * Sub-line below the label (explanation/unit/condition) — muted, smaller size.
+     * A plain `string`: the row wraps it in `Typography` itself (COMPOSITE-8) — a
+     * built node here would already be called and unable to shimmer.
+     */
+    hint?: string
     /** `true` → a TOTAL row: label goes to foreground medium, value goes to base size + bold. */
     emphasis?: boolean
     /** `true` → draws a SEPARATOR line below the row (seam between this row and the next). */
     divider?: boolean
-    /** Gap between the row's content and the `divider` line (§10). Default `3`. */
-    gap?: SeamScale
+    /** Gap between the row's content and the `divider` line (§10). Default `4` (`gap-3`). */
+    gap?: AllowedGap
+    /**
+     * `true` → renders a one-tap {@link SnippetIcon} copy affordance beside the
+     * value, copying the row's `value` string to the clipboard. Additive:
+     * default `false`, so an existing row with no `copyable` renders exactly as
+     * before. The affordance is skipped entirely while `isSkeleton` — there is
+     * nothing real yet to copy, so the row decides not to draw it rather than
+     * shimmer a control with no value behind it (COMPOSITE-10).
+     */
+    copyable?: boolean
     /**
      * Anatomy tag for THIS composite itself — lets the PARENT badge it as ONE node (§11a.1).
      * Without this prop the composite doesn't make it into the Deps tree: using a
      * `frame`/`composite` tier node that the panel can't see counts as not using it.
      */
     anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
@@ -73,8 +88,8 @@ interface KeyValueRowOwnProps {
  */
 export type KeyValueRowProps = KeyValueRowOwnProps &
     (
-        | { isSkeleton: true; label?: ReactNode; value?: ReactNode }
-        | { isSkeleton?: false; label: ReactNode; value: ReactNode }
+        | { isSkeleton: true; label?: string; value?: string }
+        | { isSkeleton?: false; label: string; value: string }
     )
 
 /**
@@ -90,78 +105,77 @@ const KeyValueRow = ({
     hint,
     emphasis = false,
     divider = false,
-    gap = "grouped",
+    gap = 4,
+    copyable = false,
     isSkeleton = false,
-    className,
     classNames,
     showAnatomy = false,
     anatPart,
 }: KeyValueRowProps) => {
-    // Mirrors `pairContent` below one-for-one: same `Typography` sizes the real
-    // label/hint/value use, handed `isSkeleton` instead of `text`.
-    const skeletonPair = (
-        <>
-            <StackV
-                gap="tight"
-                classNames={["min-w-0"]}
-                body={
-                    <>
-                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-                        {hint != null ? <Typography size="xs" isSkeleton classNames={["w-1/4"]} /> : null}
-                    </>
-                }
-            />
-            <Typography size="sm" isSkeleton classNames={["w-1/4", "shrink-0"]} />
-        </>
-    )
-    // Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1).
+    // COMPOSITE-10: ONE render path — same two-column `StackH`, same label+hint
+    // `StackV` cluster, in both states. Every piece of text goes through
+    // `Typography`'s own `isSkeleton` (§12c: the atom draws its own bar, sized to
+    // its own value) — there is no second, hand-built skeleton pair to keep in
+    // sync with this one.
+    // Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1) — the
+    // same "a label continuing into its hint" shape the registry names `title-subtitle`.
     const pairContent = (
         <>
             <StackV
-                gap="tight"
+                gap={2}
                 classNames={["min-w-0"]}
+                pattern="title-subtitle"
                 body={
                     <>
                         <span data-anat-part={showAnatomy ? "Typography" : undefined}>
                             <Typography size="sm"
                                 text={label}
-                                color={emphasis ? undefined : "muted"}
-                                weight={emphasis ? "medium" : undefined}
+                                color={isSkeleton ? undefined : (emphasis ? undefined : "muted")}
+                                weight={isSkeleton ? undefined : (emphasis ? "medium" : undefined)}
+                                isSkeleton={isSkeleton}
+                                classNames={isSkeleton ? ["w-1/3"] : undefined}
                             />
                         </span>
                         {hint != null ? (
                             <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                                <Typography size="xs" text={hint} color="muted" />
+                                <Typography size="xs"
+                                    text={hint}
+                                    color={isSkeleton ? undefined : "muted"}
+                                    isSkeleton={isSkeleton}
+                                    classNames={isSkeleton ? ["w-1/4"] : undefined}
+                                />
                             </span>
                         ) : null}
                     </>
                 }
             />
-            <span className="shrink-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
-                {emphasis ? (
-                    <Typography text={value} weight="bold" tabularNums />
-                ) : (
-                    <Typography size="sm" text={value} weight="medium" tabularNums />
-                )}
+            <span
+                className={cn("flex shrink-0 items-center", copyable && !isSkeleton && "gap-2")}
+                data-principles={copyable && !isSkeleton ? "flex-action" : undefined}
+            >
+                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    {emphasis ? (
+                        <Typography text={value} weight={isSkeleton ? undefined : "bold"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/4"] : undefined} />
+                    ) : (
+                        <Typography size="sm" text={value} weight={isSkeleton ? undefined : "medium"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/4"] : undefined} />
+                    )}
+                </span>
+                {copyable && !isSkeleton ? (
+                    <span data-anat-part={showAnatomy ? "SnippetIcon" : undefined}>
+                        {/* `value` is guaranteed a real string whenever `!isSkeleton` (the
+                            discriminated union above) — the `?? ""` only satisfies narrowing
+                            across the destructure and is never seen. */}
+                        <SnippetIcon copyString={value ?? ""} showAnatomy={showAnatomy} />
+                    </span>
+                ) : null}
             </span>
         </>
     )
-    const row = isSkeleton ? (
+    const row = (
         <StackH
             align="start"
             justify="between"
-            gap="related"
-            className={className}
-            classNames={classNames}
-            anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
-            body={skeletonPair}
-        />
-    ) : (
-        <StackH
-            align="start"
-            justify="between"
-            gap="related"
-            className={className}
+            gap={3}
             classNames={classNames}
             anatPart={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
             body={pairContent}
@@ -188,22 +202,24 @@ const KeyValueRow = ({
 export interface KeyValueListItem {
     /** React key. */
     key: string
-    /** Label (left side). */
-    label: ReactNode
-    /** Value (right side) — an already-formatted node. */
-    value: ReactNode
-    /** Sub-line below the label. */
-    hint?: ReactNode
+    /** Label (left side). `string` — the row wraps it in `Typography` itself. */
+    label: string
+    /** Value (right side) — an already-formatted `string` (COMPOSITE-8). */
+    value: string
+    /** Sub-line below the label. Plain `string` — see {@link KeyValueRowOwnProps.hint}. */
+    hint?: string
     /** `true` → a TOTAL row (visual emphasis). */
     emphasis?: boolean
+    /** `true` → this row gets the {@link KeyValueRowOwnProps.copyable} copy affordance. */
+    copyable?: boolean
 }
 
 /** Props for {@link KeyValueList}. */
 export interface KeyValueListProps {
     /** The rows, in reading order. REQUIRED — a repeated list = data (§13b). */
     items: ReadonlyArray<KeyValueListItem>
-    /** Gap between rows, ENFORCED by the §10 scale. Default `3` (vertical rows = `grouped`). */
-    gap?: SeamScale
+    /** Gap between rows, ENFORCED by the §10 scale. Default `4` (`gap-3`, vertical rows). */
+    gap?: AllowedGap
     /** `true` → draws a separator line BETWEEN rows (the last row has none). */
     divider?: boolean
     /**
@@ -219,11 +235,8 @@ export interface KeyValueListProps {
      * `frame`/`composite` tier node that the panel can't see counts as not using it.
      */
     anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
@@ -241,16 +254,20 @@ export interface KeyValueListProps {
  */
 const KeyValueList = ({
     items,
-    gap = "grouped",
+    gap = 4,
     divider = false,
     isSkeleton = false,
     skeletonRows = 3,
-    className,
     classNames,
     showAnatomy = false,
     anatPart,
 }: KeyValueListProps) => (
-    <div data-anat-part={anatPart} className={cn("flex flex-col", GAP_CLASS[gap], className, classNames)}>
+    <div
+        data-anat-part={anatPart}
+        className={cn("flex flex-col", GAP_CLASS[gap], classNames)}
+        data-tier="composite"
+        data-component="KeyValueList"
+    >
         {isSkeleton
             ? Array.from({ length: skeletonRows }, (_unused, index) => (
                 <KeyValueRow key={index} isSkeleton divider={divider && index < skeletonRows - 1} gap={gap} showAnatomy={showAnatomy} />

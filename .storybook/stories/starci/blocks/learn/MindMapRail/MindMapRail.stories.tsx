@@ -37,7 +37,7 @@ const RESULTS: Array<MindMapRailItem> = [
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "StackH": { tier: "frame", role: "the horizontal frame holding the search field and the funnel trigger, so both sit on one row with one seam", storyId: "frames-stack-stackh--wrap" },
+    "StackH": { tier: "frame", role: "the horizontal frame holding the search field and the funnel trigger, so both sit on one row with one seam", storyId: "frames-stack-stackh--at" },
     "InputSearch": { tier: "atom", role: "the query field this rail reads and writes on every keystroke", storyId: "atoms-forms-input-inputsearch--default" },
     "Popover": { tier: "atom", role: "the funnel trigger + its panel; this block never hand-rolls a dropdown", storyId: "atoms-overlay-popover-popover--with-trigger-icon" },
     "Badge": { tier: "atom", role: "a dot on the funnel trigger, present only while a non-default tier is active", storyId: "atoms-display-badge-badge--anchored" },
@@ -49,7 +49,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — funnel popover closed: loading / empty / populated are states of this one tree. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MindMapRail"
                 tier="block"
@@ -68,8 +68,8 @@ export const Default: Story = {
     items={[]}
     onPick={handlePick}
     isLoading
-    ariaLabel="Tìm từ khoá trong bản đồ"
-    tierAriaLabel="Độ phổ biến"
+    ariaLabel="Search keywords in the mind map"
+    tierAriaLabel="Popularity tier"
 />`,
                         render: (
                             <MindMapRail
@@ -82,8 +82,8 @@ export const Default: Story = {
                                 items={[]}
                                 onPick={() => {}}
                                 isLoading
-                                ariaLabel="Tìm từ khoá trong bản đồ"
-                                tierAriaLabel="Độ phổ biến"
+                                ariaLabel="Search keywords in the mind map"
+                                tierAriaLabel="Popularity tier"
                             />
                         ),
                     },
@@ -98,8 +98,8 @@ export const Default: Story = {
     items={[]}
     onPick={handlePick}
     isLoading={false}
-    ariaLabel="Tìm từ khoá trong bản đồ"
-    tierAriaLabel="Độ phổ biến"
+    ariaLabel="Search keywords in the mind map"
+    tierAriaLabel="Popularity tier"
 />`,
                         render: (
                             <MindMapRail
@@ -110,8 +110,8 @@ export const Default: Story = {
                                 items={[]}
                                 onPick={() => {}}
                                 isLoading={false}
-                                ariaLabel="Tìm từ khoá trong bản đồ"
-                                tierAriaLabel="Độ phổ biến"
+                                ariaLabel="Search keywords in the mind map"
+                                tierAriaLabel="Popularity tier"
                             />
                         ),
                     },
@@ -127,8 +127,8 @@ export const Default: Story = {
     selectedId="load-balancer"
     onPick={handlePick}
     isLoading={false}
-    ariaLabel="Tìm từ khoá trong bản đồ"
-    tierAriaLabel="Độ phổ biến"
+    ariaLabel="Search keywords in the mind map"
+    tierAriaLabel="Popularity tier"
 />`,
                         render: (
                             <MindMapRail
@@ -140,8 +140,8 @@ export const Default: Story = {
                                 selectedId="load-balancer"
                                 onPick={() => {}}
                                 isLoading={false}
-                                ariaLabel="Tìm từ khoá trong bản đồ"
-                                tierAriaLabel="Độ phổ biến"
+                                ariaLabel="Search keywords in the mind map"
+                                tierAriaLabel="Popularity tier"
                             />
                         ),
                     },
@@ -154,7 +154,7 @@ export const Default: Story = {
 /** LEAF — funnel popover expanded: the tier `ButtonRadioGroup` becomes a real node. */
 export const FilterOpen: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MindMapRail"
                 tier="block"
@@ -173,8 +173,8 @@ export const FilterOpen: Story = {
     items={results.filter((r) => r.popularity >= 70)}
     onPick={handlePick}
     isLoading={false}
-    ariaLabel="Tìm từ khoá trong bản đồ"
-    tierAriaLabel="Độ phổ biến"
+    ariaLabel="Search keywords in the mind map"
+    tierAriaLabel="Popularity tier"
     defaultFilterOpen
 />`,
                         render: (
@@ -188,8 +188,8 @@ export const FilterOpen: Story = {
                                 items={RESULTS.filter((result) => result.popularity >= 70)}
                                 onPick={() => {}}
                                 isLoading={false}
-                                ariaLabel="Tìm từ khoá trong bản đồ"
-                                tierAriaLabel="Độ phổ biến"
+                                ariaLabel="Search keywords in the mind map"
+                                tierAriaLabel="Popularity tier"
                                 defaultFilterOpen
                             />
                         ),

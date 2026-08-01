@@ -41,7 +41,7 @@ const missingPillarOf = (track: UserJobReadinessTrack): MissingPillar => {
 }
 
 /**
- * Dashboard "Độ sẵn sàng của tôi" self-widget — the growth-loop nudge for the
+ * Dashboard "My job readiness" self-widget — the growth-loop nudge for the
  * viewer's OWN job-readiness snapshot: a headline (strongest track's depth +
  * band, plus the global foundation percentile), its capstone/interview/CV
  * pillar bars (each rendered only when attempted), and a single CTA aimed at

@@ -14,7 +14,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * correctly; the full set of message variants lives in story `AsyncContentEmpty` /
  * `AsyncContentError`, NOT repeated here.
  *
- * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
+ * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a).
  */
 const meta: Meta<typeof AsyncContent> = {
     title: "Composites/Async/AsyncContent/AsyncContent",
@@ -34,7 +34,7 @@ type Story = StoryObj<typeof AsyncContent>
  * avatar + title + description.
  */
 const ProfileCard = () => (
-    <Card>
+    <Card data-tier="fixture">
         <CardContent className="flex-row items-center gap-3">
             <Avatar className="size-10 shrink-0">
                 <AvatarFallback>SC</AvatarFallback>
@@ -55,18 +55,18 @@ const ProfileCard = () => (
  * `Skeleton.<Piece>`, so the card doesn't jump height when it resolves.
  */
 const ProfileCardSkeleton = () => (
-    <Card>
+    <Card data-tier="fixture">
         <CardContent className="flex-row items-center gap-3">
-            <AvatarAtom isSkeleton size="md" className="shrink-0" />
+            <AvatarAtom isSkeleton size="md" classNames={["shrink-0"]} />
             <div className="flex min-w-0 grow flex-col">
-                <Typography size="sm" isSkeleton className="w-1/3" />
-                <Typography size="xs" isSkeleton className="w-2/3" />
+                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+                <Typography size="xs" isSkeleton classNames={["w-2/3"]} />
             </div>
         </CardContent>
     </Card>
 )
 
-const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+const shell = (node: React.ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
 
 /**
  * ANATOMY IS PER-LEAF: each branch renders a COMPLETELY DIFFERENT tree, so every
@@ -200,7 +200,7 @@ export const Empty: Story = {
                         code: `<AsyncContent
     isLoading={false}
     isEmpty
-    emptyContent={{ title: "Chưa có nội dung", description: "Khi có bài học liên quan, chúng sẽ hiện ở đây." }}
+    emptyContent={{ title: "No content yet", description: "Related lessons will show up here once there are any." }}
     skeleton={<ProfileCardSkeleton />}
 >
     <ProfileCard />
@@ -210,8 +210,8 @@ export const Empty: Story = {
                                 isLoading={false}
                                 isEmpty
                                 emptyContent={{
-                                    title: "Chưa có nội dung",
-                                    description: "Khi có bài học liên quan, chúng sẽ hiện ở đây.",
+                                    title: "No content yet",
+                                    description: "Related lessons will show up here once there are any.",
                                 }}
                                 skeleton={<ProfileCardSkeleton />}
                                 showAnatomy
@@ -271,7 +271,7 @@ export const Error: Story = {
                         code: `<AsyncContent
     isLoading
     error={new Error("network")}
-    errorContent={{ title: "Không tải được nội dung", onRetry: () => {}, retryLabel: "Thử lại" }}
+    errorContent={{ title: "Couldn't load content", onRetry: () => {}, retryLabel: "Retry" }}
     skeleton={<ProfileCardSkeleton />}
 >
     <ProfileCard />
@@ -281,10 +281,10 @@ export const Error: Story = {
                                 isLoading
                                 error={new globalThis.Error("network")}
                                 errorContent={{
-                                    title: "Không tải được nội dung",
-                                    description: "Kiểm tra kết nối rồi thử lại.",
+                                    title: "Couldn't load content",
+                                    description: "Check your connection and try again.",
                                     onRetry: () => {},
-                                    retryLabel: "Thử lại",
+                                    retryLabel: "Retry",
                                 }}
                                 skeleton={<ProfileCardSkeleton />}
                                 showAnatomy

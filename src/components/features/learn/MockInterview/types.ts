@@ -17,8 +17,8 @@ export type MockInterviewPhaseKey =
 /**
  * The TOP-LEVEL flow a mock-interview session runs — "mode split" (2026-07-06).
  * `qna` draws N independent questions, each randomly assigned its own
- * {@link MockInterviewKind} at draw time (mixed within one session, "y như
- * phỏng vấn thật"); `design` keeps the unchanged 5-phase capstone flow,
+ * {@link MockInterviewKind} at draw time (mixed within one session, "just like
+ * a real interview"); `design` keeps the unchanged 5-phase capstone flow,
  * reached from its own setup entry point.
  */
 export type MockInterviewMode = "qna" | "design"
@@ -43,7 +43,7 @@ export type MockInterviewPromptSource = "capstone" | "classic"
 export interface MockInterviewPromptSummary {
     /** Prompt id (passed to the interviewer + grade calls). */
     id: string
-    /** System name shown in the picker (e.g. "Flash sale: trừ tồn kho atomic"). */
+    /** System name shown in the picker (e.g. "Flash sale: atomic stock decrement"). */
     title: string
     /** Difficulty tier (mirrors the backend `ChallengeDifficulty`). */
     difficulty: string
@@ -77,10 +77,10 @@ export interface MockInterviewTurn {
  * Per-phase score in the scorecard. For `kind="design"` this is one of the 5
  * canonical {@link MockInterviewPhaseKey} values (i18n-resolved via
  * `mockInterview.phase.<key>`). For Q&A kinds the server instead sends a
- * ready-to-render label like `"Câu 1"` — rendered AS-IS, no i18n lookup.
+ * ready-to-render label like `"Question 1"` — rendered AS-IS, no i18n lookup.
  */
 export interface MockInterviewPhaseScore {
-    /** Which phase (design), or a server-labeled question ("Câu 1", "Câu 2" …) for Q&A kinds. */
+    /** Which phase (design), or a server-labeled question ("Question 1", "Question 2" …) for Q&A kinds. */
     phase: string
     /** Earned points for the phase/question. */
     score: number

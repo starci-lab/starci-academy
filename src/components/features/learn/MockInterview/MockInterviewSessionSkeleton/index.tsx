@@ -24,7 +24,7 @@ export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undef
             {/* sub-navbar band — mirrors WorkSessionHeader */}
             <div className="sticky top-16 z-10 border-b border-default bg-surface">
                 <div className="flex items-center gap-3 px-4 py-2 @app-sm:px-6">
-                    {/* back-link ("Rời") */}
+                    {/* back-link ("Leave") */}
                     <Skeleton className="h-4 w-14 rounded" />
                     <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
                     {/* identity — persona avatar + name */}
@@ -33,7 +33,7 @@ export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undef
                         <Skeleton className="hidden h-4 w-20 rounded @app-sm:block" />
                     </span>
                     <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
-                    {/* "Câu x/N" counter */}
+                    {/* "Question x/N" counter */}
                     <Skeleton className="h-4 w-20 rounded" />
                     <span className="flex-1" />
                     {/* countdown timer */}

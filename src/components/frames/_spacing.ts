@@ -1,99 +1,317 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * FRAME TIER — the SHARED spacing/alignment vocabulary of the khung namespaces
- * (`Stack` · `Split` · `Cluster` · `Grid`). Internal module (`_`-prefixed): it is
- * a type + class table, NOT a component, and never leaves this folder.
+ * FRAME TIER — the SHARED spacing/alignment vocabulary of the frame tier
+ * (`Stack` · `Split` · `Cluster` · `Grid` · `Flex` · `ResponsiveRow` · `Container`).
+ * Internal module (`_`-prefixed): it is a type + class table, NOT a component,
+ * and never leaves this folder.
  *
- * ⭐ WHY THIS FILE EXISTS (principles §10c): the spacing scale is
- * `flush(0) · tight(1) · related(2) · grouped(3) · section(6) · page(8)` — SIX
- * values, nothing else. A khung that took `gap: number` would let `gap-4`/`gap-5`
- * back in through the front door, so every khung types its `gap` as
- * {@link SpaceScale} — a UNION LITERAL. Off-scale is then a TYPE ERROR at the
- * call site, not a lint finding after the fact. This is the reason the frame
- * tier owns gap at all: it is the enforcement point of §10.
+ * SSOT FOR THE COUNTS AND THE REASONING:
+ *   design/storybook/architecture/principles/gap.md
+ *   design/storybook/architecture/principles/padding.md
+ *   design/storybook/architecture/principles/responsive.md
+ * This file only encodes what those hold. principles/README.md's rule for the
+ * folder — "a value is written out here and nowhere else" — is why the class
+ * tables live beside the type instead of inside each frame that consumes them.
  *
- * §10a also decides WHO owns the seam: `gap` belongs to the PARENT (the khung),
- * never to the child — so children of these frames must not carry `margin`.
+ * WHY NUMBERS, NOT WORDS (the migration this file carries out). The scale used
+ * to be `flush · tight · related · grouped · section · page`, and it is gone —
+ * there is no deprecated stage, the old union does not exist any more:
+ *
+ *   gap="flush"    -> gap={1}      padding="flush" -> padding={1}
+ *   gap="tight"    -> gap={2}      padding="snug"  -> padding={3}
+ *   gap="related"  -> gap={3}      padding="cozy"  -> padding={4}
+ *   gap="grouped"  -> gap={4}      padding="roomy" -> padding={6}
+ *   gap="section"  -> gap={6}      padding="airy"  -> padding={6}  (p-8 never
+ *   gap="page"     -> gap={7}       earned its own step — see padding.md)
+ *
+ * The seventh rung is `gap-8` (32px), the LAYOUT seam — two columns left/right,
+ * a header and the content under it. It was `gap-10` (40px) for a while, chosen
+ * on raw counts, but the design decision is 32px: it sits one step above the
+ * `gap-6` (24px) block seam, and the ladder 24 → 32 → 48 reads cleaner than
+ * 24 → 40 → 48. `gap-10` call sites migrate down to `gap-8`; `gap-12` (marketing
+ * air) is the eighth. See gap.md — layout-split.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
- * The SEAM between two things, named by the RELATIONSHIP instead of by a number
- * (teacher, 2026-07-27: the caller picks a variant, not a step).
+ * A step on the gap scale. An INDEX into the table below, never a measurement:
+ * `gap={3}` is `gap-2` (8px) because row `3` says so, not because `3` means
+ * anything in pixels. `gap={2}` twice is not `gap={4}` — see gap.md.
  *
- * Why a word and not a number, with the measurement that settled it: 72 percent of every
- * gap call-site in this tree sat on the two steps that are hardest to tell apart, 50 on
- * `3` and 43 on `2`. A number lets the author pick what LOOKS right and the reasoning
- * never reaches the code. A word forces the question, and a wrong answer becomes a wrong
- * WORD that a reader can see: `gap="related"` on a stack of unlike rows is invisible in review,
- * while `gap="related"` on that same stack reads as false at once.
- *
- * Pick by asking these in order, stopping at the first yes:
- *
- * | Ask | Step |
- * |---|---|
- * | are the two things ONE unit of meaning, such as a title and its subtitle? | `flush` |
- * | is one a MARK attached to the other, such as an icon before its label? | `tight` |
- * | are they PEERS in one set, such as a row of chips or two buttons? | `related` |
- * | are they ROWS stacked inside one surface, such as list rows or a caption under its owner? | `grouped` |
- * | are they different REGIONS of one thing, such as header, body and footer? | `section` |
- * | are they separate FEATURES on a page, such as one block beside another? | `page` |
- *
- * For the `related` versus `grouped` case, where most call-sites live: could you reorder the
- * two without changing the meaning? If yes they are peers, so `related`. If the order carries
- * meaning, or each row is a different kind of thing, they are rows of a surface, so `grouped`.
+ * Eight rungs, each earned by call sites counted on `src/components`
+ * (gap.md): the six carried over from the old word scale, plus the two the
+ * app's wide end actually uses — `7` (`gap-10`, page bands, 55 uses) and `8`
+ * (`gap-12`, marketing air, 9 uses). Step `5` (`gap-4`) has no settled meaning
+ * yet; 56 call sites chose it, which earns the rung, but nobody has read them
+ * (see gap.md's open question).
  */
-export type SeamScale = "flush" | "tight" | "related" | "grouped" | "section" | "page"
+export type AllowedGap = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
 
-/**
- * Seam step → literal Tailwind class. Written out because Tailwind never emits an
- * interpolated class; a table is the only way the class ships in CSS.
- */
-export const GAP_CLASS: Record<SeamScale, string> = {
-    flush: "gap-0",
-    tight: "gap-1",
-    related: "gap-2",
-    grouped: "gap-3",
-    section: "gap-6",
-    page: "gap-8",
+/** {@link AllowedGap} step → literal Tailwind class. Tailwind never emits an interpolated class, so this is written out in full rather than templated. */
+export const GAP_CLASS: Record<AllowedGap, string> = {
+    1: "gap-0",
+    2: "gap-1",
+    3: "gap-2",
+    4: "gap-3",
+    5: "gap-4",
+    6: "gap-6",
+    7: "gap-8",
+    8: "gap-12",
+}
+
+/** {@link AllowedGap} step at the `@app-sm` container query. */
+const GAP_CLASS_SM: Record<AllowedGap, string> = {
+    1: "@app-sm:gap-0",
+    2: "@app-sm:gap-1",
+    3: "@app-sm:gap-2",
+    4: "@app-sm:gap-3",
+    5: "@app-sm:gap-4",
+    6: "@app-sm:gap-6",
+    7: "@app-sm:gap-8",
+    8: "@app-sm:gap-12",
+}
+
+/** {@link AllowedGap} step at the `@app-md` container query. */
+const GAP_CLASS_MD: Record<AllowedGap, string> = {
+    1: "@app-md:gap-0",
+    2: "@app-md:gap-1",
+    3: "@app-md:gap-2",
+    4: "@app-md:gap-3",
+    5: "@app-md:gap-4",
+    6: "@app-md:gap-6",
+    7: "@app-md:gap-8",
+    8: "@app-md:gap-12",
+}
+
+/** {@link AllowedGap} step at the `@app-lg` container query. */
+const GAP_CLASS_LG: Record<AllowedGap, string> = {
+    1: "@app-lg:gap-0",
+    2: "@app-lg:gap-1",
+    3: "@app-lg:gap-2",
+    4: "@app-lg:gap-3",
+    5: "@app-lg:gap-4",
+    6: "@app-lg:gap-6",
+    7: "@app-lg:gap-8",
+    8: "@app-lg:gap-12",
+}
+
+/** {@link AllowedGap} step at the `@app-xl` container query. */
+const GAP_CLASS_XL: Record<AllowedGap, string> = {
+    1: "@app-xl:gap-0",
+    2: "@app-xl:gap-1",
+    3: "@app-xl:gap-2",
+    4: "@app-xl:gap-3",
+    5: "@app-xl:gap-4",
+    6: "@app-xl:gap-6",
+    7: "@app-xl:gap-8",
+    8: "@app-xl:gap-12",
 }
 
 /**
- * The INSET of a surface, named by HOW MUCH AIR the surface gives its content
- * (teacher, 2026-07-27: "name it now, margin and padding belong to the frame tier too").
+ * A value, or that value per container width. One generic for every scale in this folder —
+ * see responsive.md for why `ResponsiveGap`/`ResponsivePadding` would be three copies of the
+ * same idea. `base` is required in the object form: a responsive value with no floor depends
+ * on which breakpoint happens to match first, and that is not a decision anybody made.
  *
- * A separate vocabulary from {@link SeamScale} on purpose. A seam word answers "what are
- * these two things to each other", which says nothing about the inside of one surface, so
- * `padding="related"` would be a sentence with no meaning. An inset word answers a different
- * question: how tightly does this surface hold what it contains.
- *
- * FIVE steps, not six. A scale earns a step by being chosen, not by existing in Tailwind.
- *
- * | word | class | what it is for |
- * |---|---|---|
- * | `flush` | `p-0` | content touches the edge: a cover image, a table that scrolls |
- * | `snug`  | `p-2` | compact chrome: a collapsed sidebar item, a small icon button, a chip |
- * | `cozy`  | `p-3` | the interior of a card, the house rule |
- * | `roomy` | `p-6` | a page measure or a container |
- * | `airy`  | `p-8` | a hero or an empty state that wants to breathe |
- *
- * HOW `snug` WAS FOUND, because the mistake is more useful than the fix. The first count
- * behind this scale said 46 call sites use exactly `0·3·6·8` and NOT ONE uses `2`, so the
- * scale shipped with four steps. That count only looked at the `padding` PROP. The gate meant
- * to catch hand-written classes was meanwhile checking against the SIX steps of
- * {@link SeamScale} rather than these, so `p-2` written by hand passed a check built to reject
- * it — and 34 real call sites had settled on exactly that value, every one of them compact
- * chrome. Once the gate was tightened on 2026-07-29 those 34 had nowhere legitimate to go: the
- * scale jumped from `0` straight to `12`. The evidence said the scale was short a step, not
- * that 34 call sites were wrong.
- *
- * Two lessons worth keeping. A count that covers one spelling of a thing (the prop) and not
- * the other (the class) will under-report, and a scale derived from that count inherits the
- * blind spot. And a gate checking the WRONG scale is worse than no gate, because the silence
- * reads as agreement. Adding a value is additive: the compiler forces every
- * `Record<InsetScale, …>` table to cover the new member.
+ * The four steps are container queries (`@app-sm` … `@app-xl`), never viewport media queries —
+ * see responsive.md for why a component must not know how wide the screen is.
  */
-export type InsetScale = "flush" | "snug" | "cozy" | "roomy" | "airy"
+export type Responsive<T> = T | { base: T; sm?: T; md?: T; lg?: T; xl?: T }
+
+const isResponsiveValue = <T,>(v: Responsive<T>): v is { base: T; sm?: T; md?: T; lg?: T; xl?: T } =>
+    typeof v === "object" && v !== null && "base" in v
+
+/**
+ * Resolve a {@link Responsive}<{@link AllowedGap}> into the class list a frame's `cn()` composes.
+ * Centralised here rather than in each of the six frames that take `gap`, so the responsive
+ * shape is read the same way everywhere — see principles/README.md's "one place" rule.
+ */
+export function gapClassNames(gap: Responsive<AllowedGap>): Array<string | false> {
+    if (!isResponsiveValue(gap)) return [GAP_CLASS[gap]]
+    return [
+        GAP_CLASS[gap.base],
+        gap.sm != null && GAP_CLASS_SM[gap.sm],
+        gap.md != null && GAP_CLASS_MD[gap.md],
+        gap.lg != null && GAP_CLASS_LG[gap.lg],
+        gap.xl != null && GAP_CLASS_XL[gap.xl],
+    ]
+}
+
+/**
+ * A step on the padding scale. An index, never a measurement, same discipline as
+ * {@link AllowedGap}. Six rungs (padding.md): `p-5`/`p-7`/`p-9`/`p-10` dropped by evidence,
+ * `p-8` folds into `6` — `airy` never earned a step of its own.
+ */
+export type AllowedPadding = 1 | 2 | 3 | 4 | 5 | 6
+
+/** {@link AllowedPadding} step → literal `p-*` class, all four sides. */
+export const PADDING_CLASS: Record<AllowedPadding, string> = {
+    1: "p-0",
+    2: "p-1",
+    3: "p-2",
+    4: "p-3",
+    5: "p-4",
+    6: "p-6",
+}
+
+/** {@link AllowedPadding} step → literal `px-*` class. padding.md: the dominant horizontal shape. */
+const PADDING_X_CLASS: Record<AllowedPadding, string> = {
+    1: "px-0",
+    2: "px-1",
+    3: "px-2",
+    4: "px-3",
+    5: "px-4",
+    6: "px-6",
+}
+
+/** {@link AllowedPadding} step → literal `py-*` class. padding.md: the dominant vertical shape. */
+const PADDING_Y_CLASS: Record<AllowedPadding, string> = {
+    1: "py-0",
+    2: "py-1",
+    3: "py-2",
+    4: "py-3",
+    5: "py-4",
+    6: "py-6",
+}
+
+const PADDING_CLASS_SM: Record<AllowedPadding, string> = {
+    1: "@app-sm:p-0",
+    2: "@app-sm:p-1",
+    3: "@app-sm:p-2",
+    4: "@app-sm:p-3",
+    5: "@app-sm:p-4",
+    6: "@app-sm:p-6",
+}
+const PADDING_X_CLASS_SM: Record<AllowedPadding, string> = {
+    1: "@app-sm:px-0",
+    2: "@app-sm:px-1",
+    3: "@app-sm:px-2",
+    4: "@app-sm:px-3",
+    5: "@app-sm:px-4",
+    6: "@app-sm:px-6",
+}
+const PADDING_Y_CLASS_SM: Record<AllowedPadding, string> = {
+    1: "@app-sm:py-0",
+    2: "@app-sm:py-1",
+    3: "@app-sm:py-2",
+    4: "@app-sm:py-3",
+    5: "@app-sm:py-4",
+    6: "@app-sm:py-6",
+}
+
+const PADDING_CLASS_MD: Record<AllowedPadding, string> = {
+    1: "@app-md:p-0",
+    2: "@app-md:p-1",
+    3: "@app-md:p-2",
+    4: "@app-md:p-3",
+    5: "@app-md:p-4",
+    6: "@app-md:p-6",
+}
+const PADDING_X_CLASS_MD: Record<AllowedPadding, string> = {
+    1: "@app-md:px-0",
+    2: "@app-md:px-1",
+    3: "@app-md:px-2",
+    4: "@app-md:px-3",
+    5: "@app-md:px-4",
+    6: "@app-md:px-6",
+}
+const PADDING_Y_CLASS_MD: Record<AllowedPadding, string> = {
+    1: "@app-md:py-0",
+    2: "@app-md:py-1",
+    3: "@app-md:py-2",
+    4: "@app-md:py-3",
+    5: "@app-md:py-4",
+    6: "@app-md:py-6",
+}
+
+const PADDING_CLASS_LG: Record<AllowedPadding, string> = {
+    1: "@app-lg:p-0",
+    2: "@app-lg:p-1",
+    3: "@app-lg:p-2",
+    4: "@app-lg:p-3",
+    5: "@app-lg:p-4",
+    6: "@app-lg:p-6",
+}
+const PADDING_X_CLASS_LG: Record<AllowedPadding, string> = {
+    1: "@app-lg:px-0",
+    2: "@app-lg:px-1",
+    3: "@app-lg:px-2",
+    4: "@app-lg:px-3",
+    5: "@app-lg:px-4",
+    6: "@app-lg:px-6",
+}
+const PADDING_Y_CLASS_LG: Record<AllowedPadding, string> = {
+    1: "@app-lg:py-0",
+    2: "@app-lg:py-1",
+    3: "@app-lg:py-2",
+    4: "@app-lg:py-3",
+    5: "@app-lg:py-4",
+    6: "@app-lg:py-6",
+}
+
+const PADDING_CLASS_XL: Record<AllowedPadding, string> = {
+    1: "@app-xl:p-0",
+    2: "@app-xl:p-1",
+    3: "@app-xl:p-2",
+    4: "@app-xl:p-3",
+    5: "@app-xl:p-4",
+    6: "@app-xl:p-6",
+}
+const PADDING_X_CLASS_XL: Record<AllowedPadding, string> = {
+    1: "@app-xl:px-0",
+    2: "@app-xl:px-1",
+    3: "@app-xl:px-2",
+    4: "@app-xl:px-3",
+    5: "@app-xl:px-4",
+    6: "@app-xl:px-6",
+}
+const PADDING_Y_CLASS_XL: Record<AllowedPadding, string> = {
+    1: "@app-xl:py-0",
+    2: "@app-xl:py-1",
+    3: "@app-xl:py-2",
+    4: "@app-xl:py-3",
+    5: "@app-xl:py-4",
+    6: "@app-xl:py-6",
+}
+
+type PaddingTable = { all: Record<AllowedPadding, string>; x: Record<AllowedPadding, string>; y: Record<AllowedPadding, string> }
+
+const PADDING_TABLE: Record<"base" | "sm" | "md" | "lg" | "xl", PaddingTable> = {
+    base: { all: PADDING_CLASS, x: PADDING_X_CLASS, y: PADDING_Y_CLASS },
+    sm: { all: PADDING_CLASS_SM, x: PADDING_X_CLASS_SM, y: PADDING_Y_CLASS_SM },
+    md: { all: PADDING_CLASS_MD, x: PADDING_X_CLASS_MD, y: PADDING_Y_CLASS_MD },
+    lg: { all: PADDING_CLASS_LG, x: PADDING_X_CLASS_LG, y: PADDING_Y_CLASS_LG },
+    xl: { all: PADDING_CLASS_XL, x: PADDING_X_CLASS_XL, y: PADDING_Y_CLASS_XL },
+}
+
+/**
+ * Padding may differ per axis, because in this tree it usually does (padding.md: the dominant
+ * horizontal value is `4`, the dominant vertical value is `2` — a single scalar cannot say that).
+ */
+export type PaddingValue = AllowedPadding | { x?: AllowedPadding; y?: AllowedPadding }
+
+const isPaddingAxisValue = (v: PaddingValue): v is { x?: AllowedPadding; y?: AllowedPadding } =>
+    typeof v === "object" && v !== null
+
+function paddingValueClassNames(value: PaddingValue, table: PaddingTable): Array<string | false> {
+    if (!isPaddingAxisValue(value)) return [table.all[value]]
+    return [value.x != null && table.x[value.x], value.y != null && table.y[value.y]]
+}
+
+/**
+ * Resolve a {@link Responsive}<{@link PaddingValue}> into the class list a frame's `cn()`
+ * composes. Centralised for the same reason {@link gapClassNames} is.
+ */
+export function paddingClassNames(padding: Responsive<PaddingValue>): Array<string | false> {
+    if (!isResponsiveValue(padding)) return paddingValueClassNames(padding, PADDING_TABLE.base)
+    return [
+        ...paddingValueClassNames(padding.base, PADDING_TABLE.base),
+        ...(padding.sm != null ? paddingValueClassNames(padding.sm, PADDING_TABLE.sm) : []),
+        ...(padding.md != null ? paddingValueClassNames(padding.md, PADDING_TABLE.md) : []),
+        ...(padding.lg != null ? paddingValueClassNames(padding.lg, PADDING_TABLE.lg) : []),
+        ...(padding.xl != null ? paddingValueClassNames(padding.xl, PADDING_TABLE.xl) : []),
+    ]
+}
 
 /**
  * Cross-axis alignment of a track.
@@ -126,22 +344,4 @@ export const JUSTIFY_CLASS: Record<LayoutJustify, string> = {
     center: "justify-center",
     end: "justify-end",
     between: "justify-between",
-}
-
-/**
- * Scale step → literal `p-*` Tailwind class. Same §10c scale as {@link GAP_CLASS},
- * written out for the same reason (Tailwind never emits an interpolated `p-${n}`).
- *
- * 2026-07-26 (thầy): SSOT chuyển về ĐÂY từ `layout/Container/Container.tsx` — nó
- * khai `PADDING_CLASS` cục bộ trước, `cards/SurfaceCard/SurfaceCard.tsx` cần bảng
- * y hệt cho trục `padding` (đổi từ `flushContent?: boolean`) nên gộp về một nguồn
- * thay vì đẻ bản sao thứ hai. `Container.tsx` giờ import từ đây thay vì giữ bảng
- * cục bộ.
- */
-export const PADDING_CLASS: Record<InsetScale, string> = {
-    flush: "p-0",
-    snug: "p-2",
-    cozy: "p-3",
-    roomy: "p-6",
-    airy: "p-8",
 }

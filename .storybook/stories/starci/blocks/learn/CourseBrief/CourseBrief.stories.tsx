@@ -15,8 +15,9 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 📐 **LEAF by STRUCTURE** (§14d.2): the two leaves below are REAL leaves because
  * they **lose a node**. A long trail only changes the crumb count ⇒ a STATE,
- * rendered together inside the full-set leaf's `states[]` (thầy chốt bố cục C,
- * 2026-07-27) — `leafShell` đã bị xoá vì nó chỉ để xếp state tay.
+ * rendered together inside the full-set leaf's `states[]` (mentor's call, layout
+ * C, 2026-07-27) — `leafShell` was removed since it only existed to arrange
+ * states by hand.
  */
 const meta: Meta<typeof CourseBrief> = {
     title: "StarCi/Blocks/Learn/CourseBrief/CourseBrief",
@@ -30,7 +31,7 @@ export default meta
 type Story = StoryObj<typeof CourseBrief>
 
 const CRUMBS = [
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery" },
 ]
 
@@ -51,7 +52,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full set: breadcrumb → course name → description → meta strip. Includes the long-trail case (state). */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseBrief"
                 tier="block"
@@ -77,7 +78,7 @@ export const Full: Story = {
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
                                 title="DevOps Mastery"
-                                description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
+                                description="From CI/CD to Kubernetes production — a hands-on path."
                                 moduleCount={8}
                                 hours={14}
                                 learnerCount={2481}
@@ -102,11 +103,11 @@ export const Full: Story = {
                         render: (
                             <CourseBrief
                                 breadcrumbItems={[
-                                    { key: "home", label: "Trang chủ", onPress: () => {} },
-                                    { key: "courses", label: "Khoá học", onPress: () => {} },
+                                    { key: "home", label: "Home", onPress: () => {} },
+                                    { key: "courses", label: "Courses", onPress: () => {} },
                                     { key: "devops", label: "DevOps", onPress: () => {} },
-                                    { key: "module", label: "Chương 2", onPress: () => {} },
-                                    { key: "course", label: "Container hoá" },
+                                    { key: "module", label: "Chapter 2", onPress: () => {} },
+                                    { key: "course", label: "Containerization" },
                                 ]}
                                 title="DevOps Mastery"
                                 moduleCount={8}
@@ -123,7 +124,7 @@ export const Full: Story = {
 /** LEAF — arriving straight from another page ⇒ **loses** the `Breadcrumbs` node. */
 export const NoBreadcrumb: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseBrief"
                 tier="block"
@@ -147,7 +148,7 @@ export const NoBreadcrumb: Story = {
                                 anatPart="CourseBrief"
                                 showAnatomy
                                 title="DevOps Mastery"
-                                description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
+                                description="From CI/CD to Kubernetes production — a hands-on path."
                                 moduleCount={8}
                                 hours={14}
                                 learnerCount={2481}
@@ -163,7 +164,7 @@ export const NoBreadcrumb: Story = {
 /** LEAF — a brand-new course ⇒ **loses** both `Meta` and the description; the cluster shrinks to breadcrumb + name. */
 export const TitleOnly: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseBrief"
                 tier="block"
@@ -198,7 +199,7 @@ export const TitleOnly: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseBrief"
                 tier="block"

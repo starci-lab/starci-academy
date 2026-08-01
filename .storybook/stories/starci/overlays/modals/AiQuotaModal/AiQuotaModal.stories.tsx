@@ -44,7 +44,7 @@ export default meta
 
 type Story = StoryObj<typeof AiQuotaModal>
 
-// DOM thật (size="lg" scroll="inside"): Modal.CloseTrigger + Modal.Header > StackH >
+// Real DOM (size="lg" scroll="inside"): Modal.CloseTrigger + Modal.Header > StackH >
 // Typography + Chip? + Modal.Body > StackV > Tabs + (AiQuotaLane | AiQuotaSubscriptionPanel |
 // AiQuotaHistoryPanel) + Modal.Footer > Link.
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -63,13 +63,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 const AUTO_DATA: AiQuotaLaneData = {
-    window5h: { used: 8, limit: 20, resetLabel: "Reset lúc 20:00 hôm nay" },
-    windowWeek: { used: 90, limit: 200, resetLabel: "Reset lúc 00:00 Thứ Hai" },
+    window5h: { used: 8, limit: 20, resetLabel: "Resets at 8:00 PM today" },
+    windowWeek: { used: 90, limit: 200, resetLabel: "Resets at midnight Monday" },
 }
 
 const PRO_LANE: AiQuotaLaneData = {
-    window5h: { used: 6, limit: 40, resetLabel: "Reset lúc 19:20 hôm nay" },
-    windowWeek: { used: 140, limit: 500, resetLabel: "Reset lúc 00:00 Thứ Hai" },
+    window5h: { used: 6, limit: 40, resetLabel: "Resets at 7:20 PM today" },
+    windowWeek: { used: 140, limit: 500, resetLabel: "Resets at midnight Monday" },
 }
 
 const CHART_POINTS: AiQuotaModalHistoryState["chartPoints"] = [
@@ -102,12 +102,12 @@ const ControlledAiQuotaModal = ({
     const [isOpen, setIsOpen] = useState(true)
     const [activeTab, setActiveTab] = useState<AiQuotaModalTab>(initialTab)
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <AiQuotaModal
@@ -134,7 +134,7 @@ export const Default: Story = {
             tier="block"
             leaf="Default"
             annotate={ANNOTATE}
-            reason="The root overlay scaffold: it decides there are three tabs, their fixed order and Vietnamese labels, and the single panel slot each fills, plus the header's optional tier chip — while ModalShell only knows a header/body/footer trio and the three sibling `ai`-group blocks only know their own tab's content."
+            reason="The root overlay scaffold: it decides there are three tabs, their fixed order and labels, and the single panel slot each fills, plus the header's optional tier chip — while ModalShell only knows a header/body/footer trio and the three sibling `ai`-group blocks only know their own tab's content."
             states={[
                 {
                     name: "Auto tab · free plan (no tier chip) · data loaded",

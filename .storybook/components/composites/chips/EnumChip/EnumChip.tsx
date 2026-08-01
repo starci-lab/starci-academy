@@ -14,7 +14,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * HeroUI soft-chip colors usable by an {@link EnumChip}.
  *
- * Alias, not a redeclaration (thầy chốt 2026-07-29): the exact same five
+ * Alias, not a redeclaration (per the teacher's final call, 2026-07-29): the exact same five
  * values `Chip`'s own `ChipTone` already carries — this used to need
  * `COLOR_TO_TONE` to translate `default → neutral` between two hand-typed
  * copies of the same vocabulary. Both sides being the same alias makes the
@@ -30,10 +30,10 @@ export type EnumChipColor = ChipTone
 /**
  * The ONLY icons an {@link EnumChipEntry} can name — a CLOSED set, not an
  * arbitrary `IconComponent`. AUDIT 2026-07-30 (feedback ChallengePage/Graded
- * round-2, thầy chốt): a string selector like `ListMark`
+ * round-2, per the teacher's final call): a string selector like `ListMark`
  * (`SurfaceCard.tsx`'s own "check"/"cross"/"pending"/"none" vocabulary), NOT
  * a raw icon reference — narrowing to a curated set is the whole point of
- * "quốc dân" symbols (§2a: check/cross, nothing caller-chosen). Extend this
+ * "universal" symbols (§2a: check/cross, nothing caller-chosen). Extend this
  * union the day a THIRD symbol earns the same bar, don't loosen the type.
  */
 export type EnumChipIcon = "check" | "cross"
@@ -54,7 +54,7 @@ export interface EnumChipEntry {
     /**
      * Optional leading icon — one of {@link EnumChipIcon}, not a component.
      * Omit for every existing map entry that never had one; only add where
-     * the value itself is a "quốc dân" symbol, e.g. a failed/not-passed
+     * the value itself is a "universal" symbol, e.g. a failed/not-passed
      * verdict (AUDIT 2026-07-30, feedback ChallengePage/Graded round-2).
      */
     icon?: EnumChipIcon
@@ -93,18 +93,23 @@ export interface EnumChipProps<E extends string> {
  *
  * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): gained `icon` per entry
  * (was "text-only, no leading icon"). Additive, per-value — most maps stay text-only;
- * a value only gets an icon when it is a "quốc dân" symbol (check/cross), not a habit.
+ * a value only gets an icon when it is a "universal" symbol (check/cross), not a habit.
  *
- * ⚠️ Đổi 2026-07-26: trước đây dựng trên `StatusChip` — component đó đã xoá vì nó chỉ là
- * `Chip` khoá cứng `tone`, không thêm hành vi nào. Giờ gọi thẳng atom.
+ * ⚠️ Changed 2026-07-26: this used to build on top of `StatusChip` — that component was
+ * deleted because it was just `Chip` with `tone` hardcoded, adding no behavior of its own.
+ * Now it calls the atom directly.
  *
  * @param props - {@link EnumChipProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "EnumChip" } as const
+
 export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton, anatPart }: EnumChipProps<E>) => {
     if (isSkeleton) {
-        // KHÔNG còn đắp `h-6` ở đây nữa: shimmer của atom trước kia cao `h-7`, lệch 4px
-        // so với hộp chip thật, nên call-site phải vá hình hộ. Atom đã sửa (2026-07-26) —
-        // call-site phải vá hình của atom chính là dấu hiệu atom sai, không phải chỗ này sai.
+        // No longer patching in `h-6` here: the atom's shimmer used to stand `h-7` tall,
+        // 4px off from the real chip box, so the call site had to paper over the shape.
+        // The atom was fixed (2026-07-26) — a call site having to patch the atom's shape
+        // is itself the sign the atom is wrong, not this spot.
         return <Chip isSkeleton className={className} classNames={classNames} anatPart={anatPart} />
     }
     const entry = map[value]

@@ -44,9 +44,9 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *
  * 📐 FOUR JUDGEMENT CALLS worth naming up front:
  *
- * 1. **RANK IS A NUMBER, "Hạng #N" IS THE BLOCK'S OWN SENTENCE** (§14d.1) — same
+ * 1. **RANK IS A NUMBER, "Rank #N" IS THE BLOCK'S OWN SENTENCE** (§14d.1) — same
  *    convention `LeaderboardBoard` already uses for its own `rank: number` +
- *    `Hạng #${standing.rank}` line. The caller hands over the ordinal only.
+ *    `Rank #${standing.rank}` line. The caller hands over the ordinal only.
  * 2. **THE RANK FRAME IS A RING, NOT A NEW AVATAR SHAPE.** `Avatar` already owns
  *    its size/skeleton/fallback chain (§4) — a colour ring is a `className` on
  *    top of it, exactly the `ring-2 ring-accent ring-offset-2` idiom `Stepper`
@@ -100,7 +100,7 @@ export interface ProfileSocialLinks {
 export interface ProfileBadge {
     /** Stable id — used as the chip's React key. */
     id: string
-    /** Badge label, already worded by the caller's domain (e.g. "Người cố vấn hàng đầu"). */
+    /** Badge label, already worded by the caller's domain (e.g. "Top mentor"). */
     label: string
     /** Optional leading glyph for the badge chip. */
     icon?: IconComponent
@@ -118,7 +118,7 @@ export interface ProfileHeroUser {
     roleTitle?: string
     /** Short bio/about text. Row disappears when absent. */
     bio?: string
-    /** Free-text location (e.g. "Hà Nội, Việt Nam"). Row disappears when absent. */
+    /** Free-text location (e.g. "Hanoi, Vietnam"). Row disappears when absent. */
     location?: string
     /** How this person works. Row disappears when absent. */
     workMode?: ProfileWorkMode
@@ -140,9 +140,9 @@ export interface ProfileHeroUser {
 export interface ProfileHeroProps {
     /** The profiled person. */
     user: ProfileHeroUser
-    /** `true` → the viewer IS this person: the primary CTA becomes "Chỉnh sửa hồ sơ", follow/hire never show. */
+    /** `true` → the viewer IS this person: the primary CTA becomes "Edit profile", follow/hire never show. */
     isSelf?: boolean
-    /** `true` (and not `isSelf`) → the primary CTA becomes "Thuê tôi" instead of follow. */
+    /** `true` (and not `isSelf`) → the primary CTA becomes "Hire me" instead of follow. */
     canHire?: boolean
     /** Whether the viewer already follows this person. Ignored when `isSelf`/`canHire`. */
     following?: boolean
@@ -150,9 +150,9 @@ export interface ProfileHeroProps {
     isFollowPending?: boolean
     /** Fired when the viewer toggles follow (only reachable when neither `isSelf` nor `canHire`). */
     onToggleFollow?: () => void
-    /** Fired when the viewer presses "Thuê tôi" (only reachable when `canHire` and not `isSelf`). See file header, judgement call 3. */
+    /** Fired when the viewer presses "Hire me" (only reachable when `canHire` and not `isSelf`). See file header, judgement call 3. */
     onHire?: () => void
-    /** Fired when the profile owner presses "Chỉnh sửa hồ sơ" (only reachable when `isSelf`). */
+    /** Fired when the profile owner presses "Edit profile" (only reachable when `isSelf`). */
     onEdit?: () => void
     /** Fired when the share action is pressed. */
     onShare?: () => void
@@ -188,7 +188,7 @@ interface ProfileRankAvatarProps {
     showAnatomy?: boolean
 }
 
-/** Avatar with an optional rank-tinted ring, plus the "Hạng #N" caption underneath. */
+/** Avatar with an optional rank-tinted ring, plus the "Rank #N" caption underneath. */
 const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false, showAnatomy = false }: ProfileRankAvatarProps) => {
     const rankBody = (
         <>
@@ -208,13 +208,13 @@ const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false, showAnat
                     color="muted"
                     weight="medium"
                     isSkeleton={isSkeleton}
-                    text={rank != null ? `Hạng #${rank}` : undefined}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={rank != null ? `Rank #${rank}` : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
     )
-    return <StackV gap="tight" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={rankBody} />
+    return <StackV gap={2} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={rankBody} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -237,18 +237,18 @@ const ProfileFollowers = ({ followersCount, isSkeleton = false, showAnatomy = fa
                 tabularNums
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : String(followersCount ?? 0)}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             <Typography
                 size="xs"
                 color="muted"
                 isSkeleton={isSkeleton}
-                text="Người theo dõi"
-                anatPart={showAnatomy ? "Typography" : undefined}
+                text="Followers"
+                showAnatomy={showAnatomy}
             />
         </>
     )
-    return <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={followersBody} />
+    return <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={followersBody} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -269,7 +269,7 @@ const ProfileBadges = ({ badges, isSkeleton = false, showAnatomy = false }: Prof
     const items = isSkeleton
         ? SKELETON_BADGE_KEYS.map((key) => ({
             key,
-            content: <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />,
+            content: <Chip isSkeleton showAnatomy={showAnatomy} />,
         }))
         : (badges ?? []).map((badge) => ({
             key: badge.id,
@@ -278,11 +278,11 @@ const ProfileBadges = ({ badges, isSkeleton = false, showAnatomy = false }: Prof
                     tone="accent"
                     icon={badge.icon}
                     text={badge.label}
-                    anatPart={showAnatomy ? "Chip" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ),
         }))
-    return <Cluster items={items} gap="tight" anatPart={showAnatomy ? "Cluster" : undefined} showAnatomy={showAnatomy} />
+    return <Cluster items={items} gap={2} anatPart={showAnatomy ? "Cluster" : undefined} showAnatomy={showAnatomy} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -298,16 +298,16 @@ interface ShareProfileButtonProps {
 /** Icon-only share trigger — the caller decides what "share" does (copy link, open a sheet, …). */
 const ShareProfileButton = ({ onShare, isSkeleton = false, showAnatomy = false }: ShareProfileButtonProps) => {
     if (isSkeleton) {
-        return <Button isSkeleton isIconOnly anatPart={showAnatomy ? "Button" : undefined} />
+        return <Button isSkeleton isIconOnly showAnatomy={showAnatomy} />
     }
     return (
         <Button
             isIconOnly
             variant="tertiary"
             prefixIcon={ShareNetworkIcon}
-            ariaLabel="Chia sẻ hồ sơ"
+            ariaLabel="Share profile"
             onPress={onShare}
-            anatPart={showAnatomy ? "Button" : undefined}
+            showAnatomy={showAnatomy}
         />
     )
 }
@@ -338,13 +338,13 @@ interface ResolvePrimaryActionParams {
 const resolvePrimaryAction = (params: ResolvePrimaryActionParams): PrimaryAction => {
     const { isSelf, canHire, following, isFollowPending, onEdit, onHire, onToggleFollow } = params
     if (isSelf) {
-        return { label: "Chỉnh sửa hồ sơ", variant: "secondary", prefixIcon: PencilSimpleIcon, onPress: onEdit }
+        return { label: "Edit profile", variant: "secondary", prefixIcon: PencilSimpleIcon, onPress: onEdit }
     }
     if (canHire) {
-        return { label: "Thuê tôi", variant: "primary", prefixIcon: HandshakeIcon, onPress: onHire }
+        return { label: "Hire me", variant: "primary", prefixIcon: HandshakeIcon, onPress: onHire }
     }
     return {
-        label: following ? "Đang theo dõi" : "Theo dõi",
+        label: following ? "Following" : "Follow",
         variant: following ? "secondary" : "primary",
         prefixIcon: following ? UserCheckIcon : UserPlusIcon,
         onPress: onToggleFollow,
@@ -367,10 +367,10 @@ interface ProfileSocialMetaEntry {
 const SOCIAL_META: ReadonlyArray<ProfileSocialMetaEntry> = [
     { key: "github", icon: GithubLogoIcon, label: "GitHub" },
     { key: "linkedin", icon: LinkedinLogoIcon, label: "LinkedIn" },
-    { key: "website", icon: GlobeIcon, label: "Trang cá nhân" },
+    { key: "website", icon: GlobeIcon, label: "Personal site" },
 ]
 
-/** `Intl`-formatted "Tháng M, YYYY" from an ISO date string. Empty input → empty string (no bogus date printed). */
+/** `Intl`-formatted "Month M, YYYY" from an ISO date string. Empty input → empty string (no bogus date printed). */
 const formatJoinedDate = (isoDate: string): string => {
     const date = new Date(isoDate)
     if (Number.isNaN(date.getTime())) return ""
@@ -379,9 +379,9 @@ const formatJoinedDate = (isoDate: string): string => {
 
 /** How this person works, worded by the block (§14d.1). */
 const WORK_MODE_MAP: Record<ProfileWorkMode, EnumChipEntry> = {
-    remote: { label: "Từ xa" },
-    onsite: { label: "Tại văn phòng" },
-    hybrid: { label: "Kết hợp", color: "accent" },
+    remote: { label: "Remote" },
+    onsite: { label: "Onsite" },
+    hybrid: { label: "Hybrid", color: "accent" },
 }
 
 /**
@@ -422,7 +422,7 @@ const ProfileHero = ({
                 align="center"
                 isSkeleton={isSkeleton}
                 text={fullName}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             <Typography
                 size="sm"
@@ -430,7 +430,7 @@ const ProfileHero = ({
                 align="center"
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : `@${handle}`}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             {isSkeleton || roleTitle ? (
                 <Typography
@@ -439,7 +439,7 @@ const ProfileHero = ({
                     align="center"
                     isSkeleton={isSkeleton}
                     text={roleTitle}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -454,7 +454,7 @@ const ProfileHero = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="flush" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={nameBlock} />
+            <StackV gap={1} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={nameBlock} />
         </>
     )
 
@@ -477,7 +477,7 @@ const ProfileHero = ({
                 onPress={action.onPress}
                 isPending={action.isPending}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
             <ShareProfileButton onShare={onShare} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
         </>
@@ -498,33 +498,33 @@ const ProfileHero = ({
                             isSkeleton={isSkeleton}
                             truncate
                             text={isSkeleton ? undefined : entry.label}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     </>
                 )
-                return <StackH key={entry.key} gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={socialRow} />
+                return <StackH key={entry.key} gap={2} anatPart={showAnatomy ? "StackH" : undefined} body={socialRow} />
             })}
             <InlineIconLabel
-                icon={<CalendarBlankIcon />}
+                icon={CalendarBlankIcon}
                 tone="default"
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "InlineIconLabel" : undefined}
             >
-                {isSkeleton ? undefined : `Tham gia ${formatJoinedDate(joinedAt)}`}
+                {isSkeleton ? undefined : `Joined ${formatJoinedDate(joinedAt)}`}
             </InlineIconLabel>
         </>
     )
 
     const metaSection = hasMetaList ? (
         <>
-            <Divider anatPart={showAnatomy ? "Divider" : undefined} />
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={metaList} />
+            <Divider showAnatomy={showAnatomy} />
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={metaList} />
         </>
     ) : null
 
     const cardBody = (
         <>
-            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={identitySection} />
+            <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={identitySection} />
 
             {isSkeleton || bio ? (
                 <Typography
@@ -534,13 +534,13 @@ const ProfileHero = ({
                     lineClamp={3}
                     isSkeleton={isSkeleton}
                     text={bio}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
 
             {hasLocationRow ? (
                 <Cluster
-                    gap="related"
+                    gap={3}
                     justify="center"
                     anatPart={showAnatomy ? "Cluster" : undefined}
                     showAnatomy={showAnatomy}
@@ -551,7 +551,7 @@ const ProfileHero = ({
                                     key: "location",
                                     content: (
                                         <InlineIconLabel
-                                            icon={<MapPinIcon />}
+                                            icon={MapPinIcon}
                                             isSkeleton={isSkeleton}
                                             anatPart={showAnatomy ? "InlineIconLabel" : undefined}
                                         >
@@ -580,9 +580,9 @@ const ProfileHero = ({
                 />
             ) : null}
 
-            <StackH gap="related" divider anatPart={showAnatomy ? "StackH" : undefined} body={statsRow} />
+            <StackH gap={3} divider anatPart={showAnatomy ? "StackH" : undefined} body={statsRow} />
 
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={actionsRow} />
+            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={actionsRow} />
 
             {metaSection}
         </>
@@ -590,9 +590,11 @@ const ProfileHero = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={cardBody} />
-            </SurfaceCard>
+            <SurfaceCard
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                showAnatomy={showAnatomy}
+                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={cardBody} />}
+            />
         </div>
     )
 }

@@ -21,13 +21,14 @@ import { Pagination } from "@sb-components/atoms/navigation/Pagination/Paginatio
  * requirement — every past attempt, client-paginated, opened over the active
  * result screen.
  *
- * ⭐ REBUILT to match real `src` (2026-07-29, thầy: "có trang này mà" — caught
+ * ⭐ REBUILT to match real `src` (2026-07-29, reviewer: "there's already a page
+ * for this" — caught
  * that the previous version was never actually checked against a real
  * counterpart). Real: `src/components/drawers/SubmissionResultHistoryDrawer/
  * index.tsx`. THE INTERACTION MODEL IS DIFFERENT FROM THE FIRST DRAFT: a row IS
  * the select action — tapping ANY row both picks that attempt AND closes the
  * drawer (`onSelect(id); onOpenChange(false)`), same one gesture. There are no
- * separate "xem chi tiết"/"xem bài nộp" buttons on the row — that was invented
+ * separate "view details"/"view submission" buttons on the row — that was invented
  * without a real source to check against.
  *
  * ⭐ PAGINATION IS OWNED HERE, NOT BY THE CALLER. Real `src` fetches the FULL
@@ -56,7 +57,7 @@ import { Pagination } from "@sb-components/atoms/navigation/Pagination/Paginatio
 export interface SubmissionAttemptRecord {
     /** Stable id — the value reported to {@link SubmissionAttemptsDrawerProps.onSelect}. */
     id: string
-    /** 1-based order the attempt was made in — the row turns this into "Lần N". */
+    /** 1-based order the attempt was made in — the row turns this into "Attempt N". */
     attemptNumber: number
     /** `null` → not graded yet; the row shows an "ungraded" chip instead of a number. */
     score: number | null
@@ -64,7 +65,7 @@ export interface SubmissionAttemptRecord {
     maxScore: number | null
     /** Drives the verdict icon + `Chip` tone once `score` is set — pass (`success`) or fail (`danger`). */
     isPassing: boolean
-    /** Already-humanized relative time (e.g. "2 giờ trước"). Absent → the byline row drops the time. */
+    /** Already-humanized relative time (e.g. "2 hours ago"). Absent → the byline row drops the time. */
     processedTimeAgo?: string
     /** The model that graded this attempt. Absent → the byline row does not draw at all (same rule `SubmissionScoreCard` uses). */
     gradedByModel?: string
@@ -103,11 +104,11 @@ export interface SubmissionAttemptsDrawerProps {
 }
 
 /** Fixed, block-owned title (§14d.1) — real `src` appends the live count, so this does too. */
-const DRAWER_TITLE = "Lịch sử các lần nộp"
-const EMPTY_TITLE = "Chưa có lần nộp nào"
-const ERROR_TITLE = "Không tải được lịch sử nộp bài"
-const PAGER_ARIA_LABEL = "Phân trang lịch sử nộp bài"
-const UNGRADED_LABEL = "Chưa chấm"
+const DRAWER_TITLE = "Submission history"
+const EMPTY_TITLE = "No submissions yet"
+const ERROR_TITLE = "Couldn't load the submission history"
+const PAGER_ARIA_LABEL = "Submission history pagination"
+const UNGRADED_LABEL = "Ungraded"
 
 /** Attempts per page — same constant real `src` uses. */
 const HISTORY_PAGE_SIZE = 6
@@ -133,12 +134,12 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
     const attemptLabelAndChip = (
         <>
             <Typography
-                text={`Lần ${attempt.attemptNumber}`}
+                text={`Attempt ${attempt.attemptNumber}`}
                 size="sm"
                 weight="medium"
-                anatPart={showAnatomy ? "Typography (attempt line)" : undefined}
+                showAnatomy={showAnatomy}
             />
-            <Chip tone={chip.tone} icon={chip.icon} text={chip.text} anatPart={showAnatomy ? "Chip" : undefined} />
+            <Chip tone={chip.tone} icon={chip.icon} text={chip.text} showAnatomy={showAnatomy} />
         </>
     )
 
@@ -147,13 +148,13 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
     // so `between` only ever splits two things, not three.
     const attemptLineContent = (
         <>
-            <StackH gap="related" align="center" body={attemptLabelAndChip} />
+            <StackH gap={3} align="center" body={attemptLabelAndChip} />
             {attempt.processedTimeAgo != null ? (
                 <Typography
                     text={attempt.processedTimeAgo}
                     size="xs"
                     color="muted"
-                    anatPart={showAnatomy ? "Typography (timeago)" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -162,12 +163,12 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
     const bylineContent = (
         <>
             <InlineIconLabel
-                icon={<SparkleIcon aria-hidden focusable="false" />}
+                icon={SparkleIcon}
                 tone="default"
                 size="xs"
                 anatPart={showAnatomy ? "InlineIconLabel" : undefined}
             >
-                {`Đã chấm bởi ${attempt.gradedByModel}`}
+                {`Graded by ${attempt.gradedByModel}`}
             </InlineIconLabel>
             {attempt.modelCategory != null ? (
                 <EnumChip
@@ -182,20 +183,20 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, showAnatomy: boolea
     const rowContent = (
         <>
             <StackH
-                gap="related"
+                gap={3}
                 align="center"
                 justify="between"
                 anatPart={showAnatomy ? "StackH (attempt line)" : undefined}
                 body={attemptLineContent}
             />
             {attempt.gradedByModel != null ? (
-                <StackH gap="related" align="center" wrap anatPart={showAnatomy ? "StackH (byline)" : undefined} body={bylineContent} />
+                <StackH gap={3} align="center" wrap anatPart={showAnatomy ? "StackH (byline)" : undefined} body={bylineContent} />
             ) : null}
         </>
     )
 
     return (
-        <StackV gap="tight" anatPart={showAnatomy ? "StackV (row)" : undefined} body={rowContent} />
+        <StackV gap={2} anatPart={showAnatomy ? "StackV (row)" : undefined} body={rowContent} />
     )
 }
 
@@ -303,7 +304,7 @@ const SubmissionAttemptsDrawer = ({
                     isLoading={isLoading}
                     skeleton={
                         <StackV
-                            gap="related"
+                            gap={3}
                             anatPart={showAnatomy ? "StackV (skeleton list)" : undefined}
                             body={skeletonRows}
                         />
@@ -315,7 +316,7 @@ const SubmissionAttemptsDrawer = ({
                     showAnatomy={showAnatomy}
                     content={
                         <StackV
-                            gap="grouped"
+                            gap={4}
                             showAnatomy={showAnatomy}
                             anatPart={showAnatomy ? "StackV (list + pager)" : undefined}
                             body={listAndPager}

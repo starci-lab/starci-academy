@@ -19,7 +19,7 @@ type Story = StoryObj<typeof HighlightChip>
 /** Neutral (default): value + label, no leading icon — the plain figure pill. */
 export const ValueAndLabel: Story = {
     render: () => (
-        <div className="rounded-2xl border p-8">
+        <div data-tier="fixture" className="rounded-2xl border p-8">
             <HighlightChip value={24} label="Module" />
         </div>
     ),
@@ -28,8 +28,8 @@ export const ValueAndLabel: Story = {
 /** WithIcon: an optional leading Phosphor icon before the bold value. */
 export const WithIcon: Story = {
     render: () => (
-        <div className="rounded-2xl border p-8">
-            <HighlightChip icon={<BookOpenIcon aria-hidden focusable="false" />} value={276} label="Bài thực hành" />
+        <div data-tier="fixture" className="rounded-2xl border p-8">
+            <HighlightChip icon={<BookOpenIcon data-tier="fixture" aria-hidden focusable="false" />} value={276} label="Exercises" />
         </div>
     ),
 }
@@ -37,7 +37,7 @@ export const WithIcon: Story = {
 /** Neutral: the default tone — undetermined / plain figure. */
 export const Neutral: Story = {
     render: () => (
-        <div className="rounded-2xl border p-8">
+        <div data-tier="fixture" className="rounded-2xl border p-8">
             <HighlightChip tone="default" value={24} label="Module" />
         </div>
     ),
@@ -46,8 +46,8 @@ export const Neutral: Story = {
 /** Success: a positive figure — e.g. completed count. */
 export const Success: Story = {
     render: () => (
-        <div className="rounded-2xl border p-8">
-            <HighlightChip tone="success" value={128} label="Hoàn thành" />
+        <div data-tier="fixture" className="rounded-2xl border p-8">
+            <HighlightChip tone="success" value={128} label="Completed" />
         </div>
     ),
 }
@@ -55,8 +55,8 @@ export const Success: Story = {
 /** Warning: a figure that needs attention — e.g. items due soon. */
 export const Warning: Story = {
     render: () => (
-        <div className="rounded-2xl border p-8">
-            <HighlightChip tone="warning" value={5} label="Sắp hết hạn" />
+        <div data-tier="fixture" className="rounded-2xl border p-8">
+            <HighlightChip tone="warning" value={5} label="Expiring soon" />
         </div>
     ),
 }
@@ -64,8 +64,8 @@ export const Warning: Story = {
 /** Danger: a negative figure — e.g. failed / cancelled count. */
 export const Danger: Story = {
     render: () => (
-        <div className="rounded-2xl border p-8">
-            <HighlightChip tone="danger" value={2} label="Thất bại" />
+        <div data-tier="fixture" className="rounded-2xl border p-8">
+            <HighlightChip tone="danger" value={2} label="Failed" />
         </div>
     ),
 }
@@ -73,13 +73,13 @@ export const Danger: Story = {
 /** Accent: a highlighted figure that draws attention. */
 export const Accent: Story = {
     render: () => (
-        <div className="rounded-2xl border p-8">
-            <HighlightChip tone="accent" value={12} label="Mới" />
+        <div data-tier="fixture" className="rounded-2xl border p-8">
+            <HighlightChip tone="accent" value={12} label="New" />
         </div>
     ),
 }
 
-/** Chú giải cho bar shimmer — HeroUI `Skeleton` đứng thay cho cả pill (§12g.0a). */
+/** Annotation for the bar shimmer — HeroUI `Skeleton` stands in for the whole pill (§12g.0a). */
 const ANNOTATE_SKELETON: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "the pill-shaped shimmer bar standing in for the whole chip while `isSkeleton`" },
 }
@@ -87,7 +87,7 @@ const ANNOTATE_SKELETON: Record<string, AnatomyAnnotation> = {
 /** LEAF — the caller flips `isSkeleton`; a pill-shaped shimmer bar stands in for the whole chip, since a soft-tinted stat pill has no icon/value/label to show yet. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="HighlightChip"
                 tier="composite"

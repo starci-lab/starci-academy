@@ -21,8 +21,6 @@ export interface StatGridCardItem {
 export interface StatGridCardProps {
     /** Cells, in display order. */
     items: Array<StatGridCardItem>
-    /** Extra classes on the root element. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -44,12 +42,19 @@ export interface StatGridCardProps {
  *
  * @param props - {@link StatGridCardProps}
  */
-export const StatGridCard = ({ items, className, classNames, showAnatomy = false }: StatGridCardProps) => {
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "StatGridCard" } as const
+
+export const StatGridCard = ({ items, classNames, showAnatomy = false }: StatGridCardProps) => {
     const total = items.length
     const isOddTotal = total % 2 === 1
 
     return (
-        <div className={cn("grid grid-cols-2 overflow-hidden rounded-3xl border border-default bg-surface", className, classNames)}>
+        <div
+            className={cn("grid grid-cols-2 overflow-hidden rounded-3xl border border-default bg-surface", classNames)}
+            data-tier="composite"
+            data-component="StatGridCard"
+        >
             {items.map((item, index) => {
                 const isLastOddSpan = isOddTotal && index === total - 1
                 const isRightCol = index % 2 === 1
@@ -57,6 +62,7 @@ export const StatGridCard = ({ items, className, classNames, showAnatomy = false
                 return (
                     <div
                         key={item.key}
+                        data-principles="cell-pad"
                         className={cn(
                             "flex flex-col gap-3 p-3",
                             isLastOddSpan && "col-span-2",

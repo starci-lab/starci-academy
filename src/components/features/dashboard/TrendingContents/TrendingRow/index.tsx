@@ -20,7 +20,7 @@ export interface TrendingRowProps {
 }
 
 /**
- * One row of the "Nổi bật tuần này" most-read list: a leading rank number (top-3
+ * One row of the "Trending this week" most-read list: a leading rank number (top-3
  * accented, the rest muted) and the lesson title — a whole-row clickable
  * surface-list item. The dashboard has no course context, so pressing resolves the
  * content's canonical path before navigating ({@link useResolveRouteNavigation}).

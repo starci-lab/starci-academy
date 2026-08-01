@@ -82,7 +82,7 @@ const CommentThreadItem = ({
             onClick={() => setReplying((previous) => !previous)}
             className="cursor-pointer text-xs font-medium text-muted transition-colors hover:text-foreground"
         >
-            Trả lời
+            Reply
         </button>
     )
 
@@ -113,15 +113,15 @@ const CommentThreadItem = ({
                 actions={replyAction}
             />
 
-            {/* inline reply composer, revealed by the "Trả lời" affordance */}
+            {/* inline reply composer, revealed by the "Reply" affordance */}
             {replying ? (
                 <Composer
                     value={replyValue}
                     onChange={setReplyValue}
                     onSubmit={submitReply}
                     avatarSrc={avatarSrc}
-                    placeholder="Viết câu trả lời..."
-                    submitLabel="Trả lời"
+                    placeholder="Write a reply..."
+                    submitLabel="Reply"
                     className="pl-9"
                 />
             ) : null}
@@ -149,7 +149,7 @@ const CommentThreadItem = ({
  * CommentThread assembles a nested discussion from the existing
  * {@link CommunityCommentRow} (one per node) and {@link Composer} (root box + each
  * inline reply). Replies indent one level per depth behind a guide rail that caps
- * after a few levels so deep threads stay readable; every node exposes a "Trả lời"
+ * after a few levels so deep threads stay readable; every node exposes a "Reply"
  * affordance that reveals its own reply composer, and a top-level composer adds a
  * root comment. Reaction handling is a straight pass-through to each row.
  *
@@ -194,7 +194,7 @@ export const CommentThread = ({
                 onChange={setRootValue}
                 onSubmit={submitRoot}
                 avatarSrc={avatarSrc}
-                placeholder="Viết bình luận..."
+                placeholder="Write a comment..."
             />
 
             {/* the thread */}

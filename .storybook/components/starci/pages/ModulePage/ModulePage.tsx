@@ -98,7 +98,7 @@ export interface ModulePageProps {
     /** Challenges already completed / total challenges in the module. */
     challengesDone?: number
     challengesTotal?: number
-    /** Press "Tiếp tục học". */
+    /** Press "Continue learning". */
     onResume?: () => void
 
     // ── 4. browse lessons — `ModuleLessonList` ──────────────────────────────
@@ -139,13 +139,13 @@ const ModulePageEmpty = () => (
     <Container
         anatPart="Container"
         size="md"
-        padding="roomy"
+        padding={6}
         body={
             <AsyncContentEmpty
                 anatPart="AsyncContentEmpty"
                 icon={StackIcon}
-                title="Chương này chưa có bài học nào"
-                description="Nội dung đang được biên soạn — quay lại sau nhé."
+                title="This module has no lessons yet"
+                description="Content is still being written — check back later."
             />
         }
     />
@@ -260,14 +260,14 @@ const ModulePage = ({
                     showAnatomy={showAnatomy}
                 />
             ) : (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={moduleContent} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={moduleContent} />
             )}
         </>
     )
 
-    const moduleBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={moduleSections} />
+    const moduleBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={moduleSections} />
 
-    return <Container size="md" padding="roomy" anatPart={showAnatomy ? "Container" : undefined} body={moduleBody} />
+    return <Container size="md" padding={6} anatPart={showAnatomy ? "Container" : undefined} body={moduleBody} />
 }
 
 export { ModulePage }

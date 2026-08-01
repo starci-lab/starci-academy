@@ -13,7 +13,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `composites/navigation` is two TAB GROUPS, not a fact strip. See the
  * component's own file header for the full reasoning.
  *
- * OWNS TWO PIECES OF WORDING (§14d.1): the "Xếp hạng theo …" template and the
+ * OWNS TWO PIECES OF WORDING (§14d.1): the "Ranked by …" template and the
  * relative-time phrasing built from a plain `updatedAt: Date` — the caller
  * never hands over a ready-made sentence.
  *
@@ -44,7 +44,7 @@ const THREE_HOURS_AGO = new Date(Date.now() - 3 * 60 * 60_000)
 /** LEAF — the toolbar strip above the ranked list. */
 export const Toolbar: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LeaderboardToolbar"
                 tier="block"
@@ -54,29 +54,29 @@ export const Toolbar: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "categoryLabel = \"XP tuần này\", updatedAt = 5 phút trước",
+                        name: "categoryLabel = \"This week's XP\", updatedAt = 5 minutes ago",
                         why: "The common resting state: the board finished its first load a few minutes ago, so the strip names what it is ranked by and how fresh that ranking is. The refresh button stays plain — nothing is in flight.",
-                        code: "<LeaderboardToolbar categoryLabel=\"XP tuần này\" updatedAt={fiveMinutesAgo} refreshLabel=\"Làm mới\" onRefresh={refresh} />",
+                        code: "<LeaderboardToolbar categoryLabel=\"This week's XP\" updatedAt={fiveMinutesAgo} refreshLabel=\"Refresh\" onRefresh={refresh} />",
                         render: (
                             <LeaderboardToolbar
                                 anatPart="LeaderboardToolbar"
                                 showAnatomy
-                                categoryLabel="XP tuần này"
+                                categoryLabel="This week's XP"
                                 updatedAt={FIVE_MINUTES_AGO}
-                                refreshLabel="Làm mới"
+                                refreshLabel="Refresh"
                                 onRefresh={() => {}}
                             />
                         ),
                     },
                     {
-                        name: "updatedAt = 3 giờ trước",
+                        name: "updatedAt = 3 hours ago",
                         why: "The relative wording steps up a unit once the gap crosses an hour, so a reader glancing at the strip can tell this ranking is getting stale without doing the arithmetic themselves.",
-                        code: "<LeaderboardToolbar categoryLabel=\"Điểm khoá học\" updatedAt={threeHoursAgo} refreshLabel=\"Làm mới\" onRefresh={refresh} />",
+                        code: "<LeaderboardToolbar categoryLabel=\"Course score\" updatedAt={threeHoursAgo} refreshLabel=\"Refresh\" onRefresh={refresh} />",
                         render: (
                             <LeaderboardToolbar
-                                categoryLabel="Điểm khoá học"
+                                categoryLabel="Course score"
                                 updatedAt={THREE_HOURS_AGO}
-                                refreshLabel="Làm mới"
+                                refreshLabel="Refresh"
                                 onRefresh={() => {}}
                             />
                         ),
@@ -84,11 +84,11 @@ export const Toolbar: Story = {
                     {
                         name: "updatedAt = undefined",
                         why: "Nothing has loaded yet, so the strip claims no timestamp at all rather than showing a fake 'just now'. The label and the button still render immediately, because this strip lives OUTSIDE the board's async region.",
-                        code: "<LeaderboardToolbar categoryLabel=\"XP tuần này\" refreshLabel=\"Làm mới\" onRefresh={refresh} />",
+                        code: "<LeaderboardToolbar categoryLabel=\"This week's XP\" refreshLabel=\"Refresh\" onRefresh={refresh} />",
                         render: (
                             <LeaderboardToolbar
-                                categoryLabel="XP tuần này"
-                                refreshLabel="Làm mới"
+                                categoryLabel="This week's XP"
+                                refreshLabel="Refresh"
                                 onRefresh={() => {}}
                             />
                         ),
@@ -96,13 +96,13 @@ export const Toolbar: Story = {
                     {
                         name: "isRefreshing = true",
                         why: "A refresh is in flight, so the button carries its own busy skin and locks the press. Nothing else in the row moves, which is why a reader cannot fire a second refresh mid-flight by mistake.",
-                        code: "<LeaderboardToolbar categoryLabel=\"XP tuần này\" updatedAt={fiveMinutesAgo} isRefreshing refreshLabel=\"Làm mới\" onRefresh={refresh} />",
+                        code: "<LeaderboardToolbar categoryLabel=\"This week's XP\" updatedAt={fiveMinutesAgo} isRefreshing refreshLabel=\"Refresh\" onRefresh={refresh} />",
                         render: (
                             <LeaderboardToolbar
-                                categoryLabel="XP tuần này"
+                                categoryLabel="This week's XP"
                                 updatedAt={FIVE_MINUTES_AGO}
                                 isRefreshing
-                                refreshLabel="Làm mới"
+                                refreshLabel="Refresh"
                                 onRefresh={() => {}}
                             />
                         ),

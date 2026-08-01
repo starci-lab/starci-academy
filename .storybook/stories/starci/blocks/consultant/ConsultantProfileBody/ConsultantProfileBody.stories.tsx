@@ -41,19 +41,19 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Image": { tier: "atom", role: "the consultant's photo, owning its own loading skeleton and fallback glyph so the block never has to branch on load state itself", storyId: "atoms-media-image-image--with-image" },
     "Typography": { tier: "atom", role: "one of the block's own text lines — name, role, bio or a contact link — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
     "Button": { tier: "atom", role: "the pressable company row — opens the company the consultant works at, disabled while there is nowhere to open yet", storyId: "atoms-buttons-button-button--default" },
-    "FeedbackCallout": { tier: "composite", role: "the locked-contact notice — a status alert with one built-in CTA button, reused rather than hand-rolled (same precedent as TaskLockedAlert)", storyId: "composites-feedback-feedback-feedbackcallout--with-action" },
+    "Callout": { tier: "composite", role: "the locked-contact notice — a status alert with one built-in CTA button, reused rather than hand-rolled (same precedent as TaskLockedAlert)", storyId: "composites-feedback-callout-callout--with-action" },
 }
 
 const FULL_CONSULTANT = {
-    fullName: "Nguyễn Thu Hà",
-    jobTitle: "Chuyên viên tuyển dụng Backend",
-    companyTitle: "TechCorp Việt Nam",
+    fullName: "Sarah Bennett",
+    jobTitle: "Backend Recruiting Specialist",
+    companyTitle: "TechCorp Vietnam",
     description:
-        "5 năm tuyển dụng kỹ sư backend cho các công ty product tại Việt Nam. Từng phỏng vấn hơn 300 ứng viên cho các vị trí từ Junior đến Staff Engineer, ưu tiên tuyển các bạn có nền tảng hệ thống phân tán vững và từng làm việc với đội ngũ đa quốc gia.",
+        "5 years recruiting backend engineers for product companies in Vietnam. Has interviewed more than 300 candidates for roles ranging from Junior to Staff Engineer, with a preference for candidates who have a solid distributed-systems background and experience working with multinational teams.",
     avatarUrl: PHOTO_SRC,
     contactUnlocked: true,
     contactLinks: [
-        { key: "email", label: "hoa.nguyen@techcorp.vn", href: "mailto:hoa.nguyen@techcorp.vn", icon: EnvelopeSimpleIcon },
+        { key: "email", label: "sarah.bennett@techcorp.vn", href: "mailto:sarah.bennett@techcorp.vn", icon: EnvelopeSimpleIcon },
         { key: "phone", label: "090 123 4567", href: "tel:0901234567", icon: PhoneIcon },
     ],
 }
@@ -61,7 +61,7 @@ const FULL_CONSULTANT = {
 /** LEAF — full profile, contact unlocked: photo → name+role → company → bio → contact links. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ConsultantProfileBody"
                 tier="block"
@@ -75,14 +75,14 @@ export const Default: Story = {
                         why: "Once contact is unlocked, the profile ends with the consultant's real reach-out links (email, phone) instead of an offer to unlock them — the fork this block exists to draw.",
                         code: `<ConsultantProfileBody
     consultant={{
-        fullName: "Nguyễn Thu Hà",
-        jobTitle: "Chuyên viên tuyển dụng Backend",
-        companyTitle: "TechCorp Việt Nam",
-        description: "5 năm tuyển dụng kỹ sư backend...",
+        fullName: "Sarah Bennett",
+        jobTitle: "Backend Recruiting Specialist",
+        companyTitle: "TechCorp Vietnam",
+        description: "5 years recruiting backend engineers...",
         avatarUrl: photoUrl,
         contactUnlocked: true,
         contactLinks: [
-            { key: "email", label: "hoa.nguyen@techcorp.vn", href: "mailto:hoa.nguyen@techcorp.vn", icon: EnvelopeSimpleIcon },
+            { key: "email", label: "sarah.bennett@techcorp.vn", href: "mailto:sarah.bennett@techcorp.vn", icon: EnvelopeSimpleIcon },
             { key: "phone", label: "090 123 4567", href: "tel:0901234567", icon: PhoneIcon },
         ],
     }}
@@ -99,7 +99,7 @@ export const Default: Story = {
                     },
                     {
                         name: "contactUnlocked = false",
-                        why: "Contact not yet unlocked: the same outer frame ends with a locked callout and one CTA ('Cải thiện CV') instead of the link list — a STATE of this same leaf, not a different shape.",
+                        why: "Contact not yet unlocked: the same outer frame ends with a locked callout and one CTA ('Improve resume') instead of the link list — a STATE of this same leaf, not a different shape.",
                         code: `<ConsultantProfileBody
     consultant={{
         ...consultant,

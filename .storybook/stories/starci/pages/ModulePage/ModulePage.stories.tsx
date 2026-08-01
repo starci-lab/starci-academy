@@ -39,48 +39,48 @@ type Story = StoryObj<typeof ModulePage>
 
 const BASE = {
     breadcrumbItems: [
-        { key: "courses", label: "Khoá học", onPress: () => {} },
+        { key: "courses", label: "Courses", onPress: () => {} },
         { key: "course", label: "DevOps Mastery", onPress: () => {} },
-        { key: "module", label: "Chương 2 · Container hoá" },
+        { key: "module", label: "Chapter 2 · Containerization" },
     ],
-    title: "Chương 2 · Container hoá",
-    description: "Từ image tối ưu tới multi-stage build — mọi thứ cần để đóng gói một app cho production.",
+    title: "Chapter 2 · Containerization",
+    description: "From optimized images to multi-stage builds — everything you need to package an app for production.",
     tier: CourseContentTier.Intermediate,
     lessonCount: 6,
     minutesTotal: 78,
     challengeCount: 4,
-    resumeLessonTitle: "Viết Dockerfile tối ưu",
+    resumeLessonTitle: "Writing an optimized Dockerfile",
     lessonsRead: 2,
     lessonsTotal: 6,
     challengesDone: 1,
     challengesTotal: 4,
     onResume: () => {},
     lessons: [
-        { id: "l1", title: "Docker là gì", minutesRead: 6, challengeCount: 1, isRead: true, isPremium: false, difficulty: "beginner" as const },
-        { id: "l2", title: "Viết Dockerfile tối ưu", minutesRead: 12, challengeCount: 1, isRead: false, isPremium: false, difficulty: "intermediate" as const },
+        { id: "l1", title: "What is Docker", minutesRead: 6, challengeCount: 1, isRead: true, isPremium: false, difficulty: "beginner" as const },
+        { id: "l2", title: "Writing an optimized Dockerfile", minutesRead: 12, challengeCount: 1, isRead: false, isPremium: false, difficulty: "intermediate" as const },
         { id: "l3", title: "Multi-stage build", minutesRead: 9, challengeCount: 1, isRead: false, isPremium: true, difficulty: "intermediate" as const },
-        { id: "l4", title: "Ghim tag cho production", minutesRead: 7, challengeCount: 1, isRead: false, isPremium: true, difficulty: "advanced" as const },
+        { id: "l4", title: "Pinning tags for production", minutesRead: 7, challengeCount: 1, isRead: false, isPremium: true, difficulty: "advanced" as const },
     ],
     resumeLessonId: "l2",
     onSelectLesson: () => {},
     challenges: [
-        { id: "c1", title: "Viết Dockerfile cho một app Node", difficulty: "beginner" as const, completed: true, lessonId: "l1" },
-        { id: "c2", title: "Cắt image xuống dưới 100MB", difficulty: "intermediate" as const, completed: false, lessonId: "l2" },
-        { id: "c3", title: "Tách build stage khỏi runtime stage", difficulty: "advanced" as const, completed: false, lessonId: "l3" },
+        { id: "c1", title: "Write a Dockerfile for a Node app", difficulty: "beginner" as const, completed: true, lessonId: "l1" },
+        { id: "c2", title: "Trim an image down below 100MB", difficulty: "intermediate" as const, completed: false, lessonId: "l2" },
+        { id: "c3", title: "Separate the build stage from the runtime stage", difficulty: "advanced" as const, completed: false, lessonId: "l3" },
     ],
     onSelectChallenge: () => {},
 }
 
 const PAYWALL = {
     isLocked: true,
-    paywallTitle: "Phần còn lại dành cho học viên",
-    paywallDescription: "Mở khoá toàn bộ bài học, thử thách và sandbox của khoá này.",
+    paywallTitle: "The rest is for enrolled learners",
+    paywallDescription: "Unlock every lesson, challenge, and sandbox in this course.",
     discountedPriceVnd: 1290000,
     originalPriceVnd: 1990000,
     currentPhase: PricingPhase.Pioneer,
     seatsRemaining: 12,
     nextPhasePriceVnd: 1590000,
-    paywallCtaLabel: "Mở khoá khoá học",
+    paywallCtaLabel: "Unlock this course",
     onPurchase: () => {},
 }
 
@@ -98,7 +98,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — an UNLOCKED module with challenges: the whole spine, header to challenge list. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModulePage"
                 tier="screen"
@@ -110,7 +110,7 @@ export const Full: Story = {
                         name: "isLocked = false, challenges.length > 0",
                         why: "Every function of the screen is present: orient, resume + completion, browse lessons, browse challenges. Each of the five nodes below is a block or a frame — the screen itself draws no shape of its own.",
                         code: `<ModulePage
-    title="Chương 2 · Container hoá"
+    title="Chapter 2 · Containerization"
     lessons={lessons}
     challenges={challenges}
     …
@@ -126,7 +126,7 @@ export const Full: Story = {
 /** LEAF — an unlocked module with NO challenges yet ⇒ **loses one whole block**, a screen-owned decision. */
 export const NoChallenges: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModulePage"
                 tier="screen"
@@ -152,7 +152,7 @@ export const NoChallenges: Story = {
 /** LEAF — a LOCKED module ⇒ **the paywall replaces resume + both lists**, not stacked above them. */
 export const Locked: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModulePage"
                 tier="screen"
@@ -166,7 +166,7 @@ export const Locked: Story = {
                         code: `<ModulePage
     {...props}
     isLocked
-    paywallTitle="Phần còn lại dành cho học viên"
+    paywallTitle="The rest is for enrolled learners"
     discountedPriceVnd={1290000}
     …
 />`,
@@ -181,7 +181,7 @@ export const Locked: Story = {
 /** LEAF — the module has no lessons at all ⇒ **the entire spine is replaced**, not just one block. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModulePage"
                 tier="screen"
@@ -204,7 +204,7 @@ export const Empty: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block draws its own resting shape. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModulePage"
                 tier="screen"

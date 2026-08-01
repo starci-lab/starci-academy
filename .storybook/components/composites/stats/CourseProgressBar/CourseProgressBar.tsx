@@ -1,6 +1,5 @@
 import React from "react"
-import type { ReactNode } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
@@ -15,8 +14,12 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 export interface CourseProgressDimension {
     /** Stable key (also used as the i18n label lookup elsewhere). */
     key: string
-    /** Legend label. */
-    label: ReactNode
+    /**
+     * Legend label. `string`, not `ReactNode` — passed straight into
+     * {@link Legend}'s `label` field, which the composite wraps in `Typography`
+     * itself.
+     */
+    label: string
     /** Real completed count for this dimension. */
     completed: number
     /** Real total count for this dimension — dimensions with `total === 0` render no lane at all. */
@@ -31,8 +34,6 @@ interface CourseProgressBarOwnProps {
     ariaLabel: string
     /** Hide the legend row under the bar. */
     hideLegend?: boolean
-    /** Extra classes on the root element. */
-    className?: string
     /** Layout utilities on the root element, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
 }
@@ -61,31 +62,16 @@ const PALETTE = ["var(--accent)", "var(--success)", "var(--warning)", "var(--dan
  *
  * @param props - {@link CourseProgressBarProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "CourseProgressBar" } as const
+
 export const CourseProgressBar = ({
     dims,
     ariaLabel,
     hideLegend,
     isSkeleton = false,
-    className,
     classNames,
 }: CourseProgressBarProps) => {
-    if (isSkeleton) {
-        return (
-            <StackV
-                gap="related"
-                className={className}
-                classNames={classNames}
-                body={
-                    <>
-                        {/* the multi-lane track (below) has no atom counterpart — see file
-                            header note — so this shimmer stays hand-drawn as a single flat bar */}
-                        <HeroSkeleton className="h-1 w-full rounded-full" />
-                        {!hideLegend ? <Legend isSkeleton /> : null}
-                    </>
-                }
-            />
-        )
-    }
     const lanes = (dims ?? [])
         .filter((dim) => dim.total > 0)
         .map((dim, index) => ({
@@ -96,35 +82,42 @@ export const CourseProgressBar = ({
 
     return (
         <StackV
-            gap="related"
-            className={className}
+            gap={3}
             classNames={classNames}
             body={
                 <>
+                    {/* ATOM GAP: equal-width multi-lane track has no atom counterpart (see
+                        file header note), so it stays a hand-drawn real element — the SAME
+                        track renders in both states; isSkeleton hides the lanes for a flat
+                        neutral fill instead of reaching for a vendor Skeleton or hand-rolling
+                        a bespoke `animate-pulse` shimmer (COMPOSITE-10). */}
                     <div
                         role="img"
                         aria-label={ariaLabel}
-                        className="flex h-1 w-full overflow-hidden rounded-full bg-default"
+                        className={cn("flex h-1 w-full overflow-hidden rounded-full bg-default")}
                     >
-                        {lanes.map((lane, index) => (
-                            <div
-                                key={lane.key}
-                                className={cn("h-full flex-1", index > 0 && "border-l border-default")}
-                            >
+                        {isSkeleton
+                            ? null
+                            : lanes.map((lane, index) => (
                                 <div
-                                    className="h-full"
-                                    style={{ width: `${lane.ratio * 100}%`, backgroundColor: lane.color }}
-                                />
-                            </div>
-                        ))}
+                                    key={lane.key}
+                                    className={cn("h-full flex-1", index > 0 && "border-l border-default")}
+                                >
+                                    <div
+                                        className="h-full"
+                                        style={{ width: `${lane.ratio * 100}%`, backgroundColor: lane.color }}
+                                    />
+                                </div>
+                            ))}
                     </div>
                     {!hideLegend ? (
                         <Legend
-                            items={lanes.map((lane) => ({
+                            isSkeleton={isSkeleton}
+                            items={isSkeleton ? undefined : lanes.map((lane) => ({
                                 key: lane.key,
                                 label: lane.label,
                                 color: lane.color,
-                                suffix: <>&nbsp;·&nbsp;{lane.completed}</>,
+                                suffix: ` · ${lane.completed}`,
                             }))}
                         />
                     ) : null}

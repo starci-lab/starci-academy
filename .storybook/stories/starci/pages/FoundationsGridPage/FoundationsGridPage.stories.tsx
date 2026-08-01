@@ -42,29 +42,29 @@ const CATEGORIES = [
     {
         id: "docker",
         title: "Docker",
-        description: "Đóng gói và chạy ứng dụng nhất quán trên mọi môi trường.",
+        description: "Package and run applications consistently across every environment.",
     },
     {
         id: "kubernetes",
         title: "Kubernetes",
-        description: "Điều phối container ở quy mô cluster.",
+        description: "Orchestrate containers at cluster scale.",
     },
     {
         id: "terraform",
         title: "Terraform",
-        description: "Hạ tầng dưới dạng mã, khai báo và tái lập được.",
+        description: "Infrastructure as code, declarative and reproducible.",
     },
     {
         id: "observability",
         title: "Observability",
-        description: "Log, metric và trace khi hệ thống chạy thật.",
+        description: "Logs, metrics, and traces from a system running in production.",
     },
 ]
 
 const BASE = {
     breadcrumbItems: BREADCRUMBS,
     title: "Foundations",
-    description: "Nền móng kỹ thuật trước khi bước vào framework — chọn một chủ đề để bắt đầu.",
+    description: "Technical fundamentals before you dive into a framework — pick a topic to get started.",
     searchQuery: "",
     onSearchQueryChange: () => {},
     suggestions: [],
@@ -84,7 +84,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the screen's one shape: header, trial nudge, search row, list. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationsGridPage"
                 tier="screen"
@@ -161,7 +161,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block that can mirror itself does. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationsGridPage"
                 tier="screen"

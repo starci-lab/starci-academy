@@ -1,5 +1,6 @@
 import React from "react"
 import { cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `ReactionPicker` — a row of image buttons, each scaling up and lifting with
@@ -12,6 +13,12 @@ import { cn } from "@heroui/react"
  *
  * `reactionPop` is a `@keyframes` defined in `src/app/globals.css` (Storybook's
  * `preview.tsx` imports the same file).
+ *
+ * @noSkeleton the reactions are a fixed set the caller declares, not a value fetched behind this
+ * component. There is nothing standing behind the row to wait for, so a shimmer here would be a
+ * shimmer for nothing — and the row already animates itself in, which is the opposite of a
+ * placeholder holding space. If a product ever loads its reaction set over the wire, that product
+ * has an async decision to make and it belongs to the block that owns the fetch, not here.
  */
 
 /** One pickable item in a {@link ReactionPicker} row. */
@@ -32,8 +39,8 @@ export interface ReactionPickerProps {
     activeKey?: string | null
     /** Fired with the picked item's key. */
     onSelect: (key: string) => void
-    /** Extra classes on the row. */
-    className?: string
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -41,8 +48,8 @@ export interface ReactionPickerProps {
  *
  * @param props - {@link ReactionPickerProps}
  */
-const ReactionPicker = ({ items, activeKey = null, onSelect, className }: ReactionPickerProps) => (
-    <div className={cn("flex items-center gap-1", className)}>
+const ReactionPicker = ({ items, activeKey = null, onSelect, classNames }: ReactionPickerProps) => (
+    <div data-tier="atom" data-component="ReactionPicker" className={cn("flex items-center gap-1", classNames)}>
         {items.map((item, index) => (
             <button
                 key={item.key}
@@ -73,3 +80,5 @@ const ReactionPicker = ({ items, activeKey = null, onSelect, className }: Reacti
 )
 
 export { ReactionPicker }
+
+export const meta = { tier: "atom", name: "ReactionPicker" } as const

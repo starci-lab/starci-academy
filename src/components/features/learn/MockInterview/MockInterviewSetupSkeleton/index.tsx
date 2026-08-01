@@ -3,11 +3,11 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
- * Loading placeholder for the mock-interview green room's "Bạn sắp được
- * phỏng vấn" card — the only piece of {@link import("../index").MockInterview}
+ * Loading placeholder for the mock-interview green room's "You're about to be
+ * interviewed" card — the only piece of {@link import("../index").MockInterview}
  * visible before `courseId`/`courseDisplayId`/the enrollment check resolve.
- * Mirrors the real card 1:1: persona avatar + name/role, the title + "N câu ·
- * mức X · ~Y phút" meta line, and the primary CTA — so resolving never
+ * Mirrors the real card 1:1: persona avatar + name/role, the title + "N questions ·
+ * level X · ~Y minutes" meta line, and the primary CTA — so resolving never
  * collapses or jumps the surface.
  */
 export const MockInterviewSetupSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
@@ -22,12 +22,12 @@ export const MockInterviewSetupSkeleton = ({ className }: WithClassNames<undefin
                         <Skeleton.Typography type="body-xs" width="1/4" />
                     </div>
                 </div>
-                {/* title + "N câu · mức X · ~Y phút" meta */}
+                {/* title + "N questions · level X · ~Y minutes" meta */}
                 <div className="flex flex-col gap-1">
                     <Skeleton.Typography type="h4" width="1/2" />
                     <Skeleton.Typography type="body-sm" width="2/3" />
                 </div>
-                {/* primary CTA — "Vào phòng phỏng vấn" */}
+                {/* primary CTA — "Enter interview room" */}
                 <div className="flex flex-wrap items-center gap-3">
                     <Skeleton.Button width="w-48" />
                 </div>

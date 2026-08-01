@@ -6,12 +6,12 @@ export type VerdictBandVariant = "accent" | "success" | "warning" | "danger"
 
 /**
  * Shared shape for the `withVerdict` left-band prop on {@link SectionCard}/
- * {@link SurfaceListCardItem} (`card.md` §3i — "card mang tín hiệu từ DATA").
+ * {@link SurfaceListCardItem} (`card.md` §3i — "a card carries its signal from DATA").
  * Pass exactly ONE of `variant` (semantic token, literal-safe) or `color` (raw
  * Tailwind palette color + shade, e.g. `"amber-500"` — built at runtime as
  * `before:bg-${color}`, safelisted via the `@source inline(...)` grid in
  * `globals.css` since Tailwind can't see a dynamically-built class as a literal).
- * Left band ONLY reads as a DATA signal — never ad-hoc "vùng active" decoration
+ * Left band ONLY reads as a DATA signal — never ad-hoc "active zone" decoration
  * (`card.md` §3g).
  */
 export interface VerdictBand {
@@ -38,8 +38,8 @@ const VERDICT_VARIANT_CLASS: Record<VerdictBandVariant, string> = {
  * Resolves a {@link VerdictBand} into a 2px left-edge band, or `undefined` when disabled.
  *
  * The band is an INSET box-shadow (`inset 2px 0 0 0 <colour>`) — it hugs the left edge AND follows
- * the card's `border-radius`, so it CURVES ("móc") around the top-left / bottom-left corners
- * instead of being cut flat at the rounded corner (thầy 2026-07-18: "cái móc lên"). box-shadow is
+ * the card's `border-radius`, so it CURVES ("hooks") around the top-left / bottom-left corners
+ * instead of being cut flat at the rounded corner (teacher 2026-07-18: "that hook curving up"). box-shadow is
  * untouched by HeroUI's `.card { border ... !important }` reset, so no `!important` dance; and it
  * needs no `overflow-hidden`. `pl-4` keeps the content off the bar. On a flush-row consumer
  * (`SurfaceListCard`) the first/last row must own the matching corner radius for the hook to land

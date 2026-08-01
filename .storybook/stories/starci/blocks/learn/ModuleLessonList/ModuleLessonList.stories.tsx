@@ -12,7 +12,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * screen/section wrapping it supplies that.
  *
  * THE BLOCK OWNS: the status icon per row (`resume`/`read`/`unread`) · the
- * subtitle sentence ("N phút đọc · M thử thách") · whether a difficulty chip and
+ * subtitle sentence ("N min read · M challenges") · whether a difficulty chip and
  * a premium lock ride on the trailing side. The caller only supplies data.
  *
  * 📐 ONE LEAF for the data shape (§11f + §14d.2): every row-level difference
@@ -32,11 +32,11 @@ export default meta
 type Story = StoryObj<typeof ModuleLessonList>
 
 const LESSONS: Array<ModuleLessonListLesson> = [
-    { id: "l1", title: "Docker là gì", minutesRead: 6, challengeCount: 2, isRead: true, isPremium: false, difficulty: "beginner" },
-    { id: "l2", title: "Viết Dockerfile tối ưu", minutesRead: 12, challengeCount: 3, isRead: false, isPremium: false, difficulty: "intermediate" },
+    { id: "l1", title: "What is Docker", minutesRead: 6, challengeCount: 2, isRead: true, isPremium: false, difficulty: "beginner" },
+    { id: "l2", title: "Writing an optimized Dockerfile", minutesRead: 12, challengeCount: 3, isRead: false, isPremium: false, difficulty: "intermediate" },
     { id: "l3", title: "Multi-stage build", minutesRead: 9, challengeCount: 4, isRead: false, isPremium: true, difficulty: "advanced" },
-    { id: "l4", title: "Tự viết Operator", minutesRead: 22, challengeCount: 5, isRead: false, isPremium: true, difficulty: "insane" },
-    { id: "l5", title: "Ghi chú nhanh về BuildKit", minutesRead: 4, challengeCount: 0, isRead: false, isPremium: false },
+    { id: "l4", title: "Writing your own Operator", minutesRead: 22, challengeCount: 5, isRead: false, isPremium: true, difficulty: "insane" },
+    { id: "l5", title: "Quick notes on BuildKit", minutesRead: 4, challengeCount: 0, isRead: false, isPremium: false },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -59,7 +59,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const List: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleLessonList"
                 tier="block"
@@ -100,7 +100,7 @@ export const List: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleLessonList"
                 tier="block"

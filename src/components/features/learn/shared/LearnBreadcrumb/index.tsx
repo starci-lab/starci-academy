@@ -18,11 +18,11 @@ export interface LearnBreadcrumbProps {
     current?: ReactNode
     /**
      * Optional intermediate clickable crumb inserted between `<course>` and `current` — for a
-     * sub-view of a learn tab (e.g. a flashcard deck under "Ôn tập": the section crumb links back
+     * sub-view of a learn tab (e.g. a flashcard deck under "Review": the section crumb links back
      * to the tab's overview, `current` is the deck name). Only used when `current` is set.
      */
     section?: {
-        /** Section label (e.g. "Ôn tập"). */
+        /** Section label (e.g. "Review"). */
         label: ReactNode
         /** Navigate back to the section overview. */
         onPress: () => void

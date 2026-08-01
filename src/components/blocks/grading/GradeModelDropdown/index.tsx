@@ -213,7 +213,7 @@ export type GradeModelDropdownProps = WithClassNames<undefined> & {
      * Render the trigger as a real `Button` (`variant="tertiary"`) instead of the
      * bare inline trigger, so it reads as a button among sibling toggle-button/
      * button-style pickers (e.g. Mock Interview's `FlexWrapButtonRadio` pills, or
-     * the CV editor's "Mẫu" template picker). Mutually exclusive with
+     * the CV editor's "Template" picker). Mutually exclusive with
      * `isDropdown` — pick whichever the trigger's siblings are (Select fields →
      * `isDropdown`; buttons/pills → `isButton`).
      */
@@ -496,8 +496,8 @@ export const GradeModelDropdown = ({
                                         && model.supportedTasks?.length
                                         && !model.supportedTasks.includes(task))
                                     if (!model.available) {
-                                        // DISABLED (not locked): model/provider tạm không khả dụng
-                                        // (key không hợp lệ / provider down) → icon CẢNH BÁO.
+                                        // DISABLED (not locked): model/provider is temporarily unavailable
+                                        // (invalid key / provider down) → WARNING icon.
                                         return (
                                             <DropdownItem
                                                 key={key}
@@ -521,7 +521,7 @@ export const GradeModelDropdown = ({
                                         )
                                     }
                                     if (requiresPlan && !canPremium) {
-                                        // LOCKED: cần nâng gói HOẶC enroll khoá để mở tier cao.
+                                        // LOCKED: needs a plan upgrade OR course enrollment to unlock the higher tier.
                                         return (
                                             <DropdownItem
                                                 key={key}
@@ -547,8 +547,8 @@ export const GradeModelDropdown = ({
                                         )
                                     }
                                     if (belowFloor || offTask) {
-                                        // WARNING (amber): dưới mức khuyến nghị HOẶC không hợp tác vụ —
-                                        // vẫn chọn được nhưng kết quả có thể kém.
+                                        // WARNING (amber): below the recommended level OR not suited for the task —
+                                        // still selectable but results may be worse.
                                         return (
                                             <DropdownItem
                                                 key={key}

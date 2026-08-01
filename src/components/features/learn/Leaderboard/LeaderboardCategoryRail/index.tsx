@@ -26,7 +26,7 @@ interface RailItem {
     label: string
     /** Viewer's XP in this category. */
     xp: number
-    /** Optional muted caption ("9 bài · ×3" / "Sắp có"). */
+    /** Optional muted caption ("9 lessons · ×3" / "Coming soon"). */
     caption?: string
     disabled?: boolean
 }
@@ -116,7 +116,7 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
                             )}
                         >
                             {/* icon inherits the button's text colour (muted / accent-soft
-                                when selected) — same colour as the label, per thầy. */}
+                                when selected) — same colour as the label, per the teacher's note. */}
                             <item.icon aria-hidden focusable="false" className="size-4 shrink-0" />
                             <span>{item.label}</span>
                             {!item.disabled ? (
@@ -156,7 +156,7 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
                         className="cursor-pointer rounded-2xl px-3 py-2 data-[disabled=true]:cursor-not-allowed data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-[disabled=true]:opacity-55"
                     >
                         <div className="flex items-center gap-3">
-                            {/* icon = SAME colour as the label (thầy): foreground normally,
+                            {/* icon = SAME colour as the label (per the teacher's note): foreground normally,
                                 accent-soft when this category is the selected one. */}
                             <item.icon
                                 aria-hidden

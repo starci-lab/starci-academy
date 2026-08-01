@@ -5,7 +5,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Alert`: the ONE port down to HeroUI Alert (`FeedbackCallout`
+ * ATOM — `Alert`: the ONE port down to HeroUI Alert (`Callout`
  * and `Toast` both compose from here).
  *
  * 📐 **1 PROP = 1 LEAF** (§12g — the law of the ATOM TIER). This file's earlier
@@ -78,13 +78,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** The BARE leaf — only `title`, every other prop stays default (status=default, tone=soft, no icon/description/body/action/close). */
 export const Default: Story = {
     render: () => (
-        <div className="max-w-xl p-8">
+        <div data-tier="fixture" className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert"
                 tier="atom"
                 leaf="Bare alert"
                 annotate={ANNOTATE}
-                reason="The one port down to HeroUI Alert — FeedbackCallout and Toast both compose from here. Every leaf below differs by exactly one prop, so this is the baseline you compare against."
+                reason="The one port down to HeroUI Alert — Callout and Toast both compose from here. Every leaf below differs by exactly one prop, so this is the baseline you compare against."
                 states={[
                     {
                         name: "only title set, everything else default",
@@ -101,7 +101,7 @@ export const Default: Story = {
 /** Leaf prop `status` — 5 MEANINGS, renders the FULL union. Changes the tint + default icon + Title colour all at once. */
 export const Statuses: Story = {
     render: () => (
-        <div className="max-w-xl p-8">
+        <div data-tier="fixture" className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert"
                 tier="atom"
@@ -145,10 +145,10 @@ export const Statuses: Story = {
     ),
 }
 
-/** Leaf prop `tone` — về WHERE it sits, not a new colour: `soft` is flat, INSIDE a surface; `plain` keeps HeroUI's own tint so the alert floats (toast). */
+/** Leaf prop `tone` — about WHERE it sits, not a new colour: `soft` is flat, INSIDE a surface; `plain` keeps HeroUI's own tint so the alert floats (toast). */
 export const Tone: Story = {
     render: () => (
-        <div className="max-w-xl p-8">
+        <div data-tier="fixture" className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert"
                 tier="atom"
@@ -158,9 +158,9 @@ export const Tone: Story = {
                 states={[
                     {
                         name: "tone = \"soft\"",
-                        why: "The alert renders as a flat tint strip, the shape `FeedbackCallout` uses when it sits inside a surface. This tone reads as belonging to the page it's embedded in, not floating above it.",
+                        why: "The alert renders as a flat tint strip, the shape `Callout` uses when it sits inside a surface. This tone reads as belonging to the page it's embedded in, not floating above it.",
                         code: "<Alert tone=\"soft\" status=\"warning\" title=\"…\" />",
-                        render: <Alert tone="soft" status="warning" title="Flat tint (soft)" description="The shape FeedbackCallout uses — a flat strip inside a surface." showAnatomy />,
+                        render: <Alert tone="soft" status="warning" title="Flat tint (soft)" description="The shape Callout uses — a flat strip inside a surface." showAnatomy />,
                     },
                     {
                         name: "tone = \"plain\"",
@@ -177,7 +177,7 @@ export const Tone: Story = {
 /** Leaf prop `icon` — replaces the status's default glyph with a different icon COMPONENT. */
 export const Icon: Story = {
     render: () => (
-        <div className="max-w-xl p-8">
+        <div data-tier="fixture" className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert"
                 tier="atom"
@@ -206,7 +206,7 @@ export const Icon: Story = {
 /** Leaf prop `body` (§12b) — the free-form area under the description, the ONLY way in since the atom does not open `children`. */
 export const Body: Story = {
     render: () => (
-        <div className="max-w-xl p-8">
+        <div data-tier="fixture" className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert"
                 tier="atom"
@@ -224,7 +224,7 @@ export const Body: Story = {
                                 title="Submission is missing 2 items"
                                 description="Add them, then resubmit for grading."
                                 body={(
-                                    <ul className="list-disc space-y-1 pl-4 text-sm">
+                                    <ul data-tier="fixture" className="list-disc space-y-1 pl-4 text-sm">
                                         <li>A README describing how to run the project</li>
                                         <li>A screenshot of the result</li>
                                     </ul>
@@ -242,7 +242,7 @@ export const Body: Story = {
 /** Leaf prop `action` — a free-form NODE slot from the caller, placed before the × button. NOT a dep since the atom owns nothing inside it. */
 export const Action: Story = {
     render: () => (
-        <div className="max-w-xl p-8">
+        <div data-tier="fixture" className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert"
                 tier="atom"
@@ -273,7 +273,7 @@ export const Action: Story = {
 /** Leaf prop `onClose` — the atom builds the × button ITSELF from `Button`. The `Close` node is this atom's ONE true DEP. */
 export const Close: Story = {
     render: () => (
-        <div className="max-w-xl p-8">
+        <div data-tier="fixture" className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert"
                 tier="atom"
@@ -305,7 +305,7 @@ export const Close: Story = {
 /** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c): the frame + icon stay REAL, only the text turns to bars. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="max-w-xl p-8">
+        <div data-tier="fixture" className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert"
                 tier="atom"

@@ -3,7 +3,7 @@ import { SubmissionFindingsList, type SubmissionFinding } from "@sb-components/s
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `SubmissionFindingsList`: "Góp ý" — one accordion row per quality-gate
+ * BLOCK — `SubmissionFindingsList`: "Feedback" — one accordion row per quality-gate
  * finding on a graded attempt: severity icon + plain-text message (backtick
  * code only — a trigger title is never richtext) + location chip in the
  * trigger, markdown detail + a linked file location + a markdown suggestion
@@ -39,33 +39,33 @@ const FINDINGS: Array<SubmissionFinding> = [
     {
         id: "index-missing",
         severity: "medium",
-        message: "Thiếu index cho cột `user_id` trên bảng `submissions`",
-        detail: "Truy vấn lọc theo `user_id` đang full-scan cả bảng — chậm dần khi số lượt nộp tăng lên.",
-        suggestion: "Thêm `CREATE INDEX idx_submissions_user_id ON submissions(user_id);` trong migration kế tiếp.",
+        message: "Missing index on column `user_id` in table `submissions`",
+        detail: "Queries filtering by `user_id` are doing a full table scan — this gets slower as the number of submissions grows.",
+        suggestion: "Add `CREATE INDEX idx_submissions_user_id ON submissions(user_id);` in the next migration.",
         location: "src/db/migrations/002_submissions.sql",
         sortIndex: 0,
     },
     {
         id: "jwt-missing",
         severity: "high",
-        message: "Endpoint `/api/submit` không xác thực JWT trước khi ghi DB",
-        detail: "Bất kỳ request nào cũng ghi được submission thay cho người khác nếu biết trước `userId`.",
-        suggestion: "Bọc route bằng middleware `requireAuth` và đối chiếu `req.user.id` với payload trước khi ghi.",
+        message: "Endpoint `/api/submit` doesn't verify the JWT before writing to the DB",
+        detail: "Any request can write a submission on someone else's behalf if it knows their `userId` ahead of time.",
+        suggestion: "Wrap the route with `requireAuth` middleware and cross-check `req.user.id` against the payload before writing.",
         location: "src/routes/submit.ts",
         sortIndex: 0,
     },
     {
         id: "race-condition",
         severity: "high",
-        message: "Hai request nộp bài cùng lúc có thể ghi đè điểm của nhau",
-        detail: "Không có khoá lạc quan (`version`) trên bản ghi `submission`, nên request xử lý sau luôn thắng bất kể điểm nào cao hơn.",
-        suggestion: "Thêm cột `version` và kiểm tra `WHERE version = :expected` khi UPDATE.",
+        message: "Two simultaneous submission requests can overwrite each other's score",
+        detail: "There's no optimistic lock (`version`) on the `submission` record, so whichever request finishes processing last always wins, regardless of which score is higher.",
+        suggestion: "Add a `version` column and check `WHERE version = :expected` on UPDATE.",
         sortIndex: 1,
     },
     {
         id: "naming",
         severity: "low",
-        message: "Biến `tempResult` đặt tên không rõ nghĩa",
+        message: "Variable `tempResult` is not descriptively named",
     },
 ]
 
@@ -84,7 +84,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the findings card: loading → empty → error → populated (severity-sorted). */
 export const FindingsAccordion: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SubmissionFindingsList"
                 tier="block"
@@ -98,7 +98,7 @@ export const FindingsAccordion: Story = {
                         why: "The list's own fetch is in flight, so the card draws its own self-mirror — same frame, same trigger-row shape — rather than collapsing to nothing. A parent-forced `isSkeleton` paint fires the exact same branch.",
                         code: `<SubmissionFindingsList
     findings={[]}
-    label="Góp ý"
+    label="Feedback"
     isLoading
 />`,
                         render: (
@@ -106,7 +106,7 @@ export const FindingsAccordion: Story = {
                                 anatPart="SubmissionFindingsList"
                                 showAnatomy
                                 findings={[]}
-                                label="Góp ý"
+                                label="Feedback"
                                 isLoading
                             />
                         ),
@@ -116,13 +116,13 @@ export const FindingsAccordion: Story = {
                         why: "The grading pass came back clean, so the card shows one message inside its own frame instead of an empty accordion that reads as broken chrome.",
                         code: `<SubmissionFindingsList
     findings={[]}
-    label="Góp ý"
+    label="Feedback"
     isEmpty
 />`,
                         render: (
                             <SubmissionFindingsList
                                 findings={[]}
-                                label="Góp ý"
+                                label="Feedback"
                                 isEmpty
                             />
                         ),
@@ -132,18 +132,18 @@ export const FindingsAccordion: Story = {
                         why: "The fetch failed, which outranks even a stale loading flag — the reader sees why nothing is listed and a way to try again, staying inside the same bounded card rather than the whole section vanishing.",
                         code: `<SubmissionFindingsList
     findings={[]}
-    label="Góp ý"
+    label="Feedback"
     error={fetchError}
     onRetry={retry}
-    retryLabel="Thử lại"
+    retryLabel="Retry"
 />`,
                         render: (
                             <SubmissionFindingsList
                                 findings={[]}
-                                label="Góp ý"
+                                label="Feedback"
                                 error={new Error("network")}
                                 onRetry={() => {}}
-                                retryLabel="Thử lại"
+                                retryLabel="Retry"
                             />
                         ),
                     },
@@ -153,13 +153,13 @@ export const FindingsAccordion: Story = {
                         code: `<SubmissionFindingsList
     findings={findings}
     repositoryUrl="https://github.com/starci-academy/challenge-submissions.git"
-    label="Góp ý"
+    label="Feedback"
 />`,
                         render: (
                             <SubmissionFindingsList
                                 findings={FINDINGS}
                                 repositoryUrl={REPOSITORY_URL}
-                                label="Góp ý"
+                                label="Feedback"
                             />
                         ),
                     },

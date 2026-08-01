@@ -4,7 +4,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * BLOCK — `NavLinks`: the desktop primary-route row inside the site's top nav —
- * "Trang chủ / Khóa học / Cộng đồng / Liên hệ", one of them pinned as current.
+ * "Home / Courses / Community / Contact", one of them pinned as current.
  *
  * ⭐ PRESENTATIONAL HALF OF A CONTAINER. The real `src` `NavLinks` derives its
  * own `items` from `next-intl` + `usePathname()` and self-navigates with
@@ -40,7 +40,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the desktop route row, one state per which route is current. */
 export const Row: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="NavLinks"
                 tier="block"
@@ -50,14 +50,14 @@ export const Row: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "isActive = \"Khóa học\"",
+                        name: "isActive = \"Courses\"",
                         why: "The learner is somewhere under /course, so that route renders the accent-soft current pill while the other three stay muted text links. Only one item is ever current at a time — the caller's own route match decides which.",
                         code: `<NavLinks
     items={[
-        { label: "Trang chủ", path: "/", isActive: false },
-        { label: "Khóa học", path: "/course", isActive: true },
-        { label: "Cộng đồng", path: "/community", isActive: false },
-        { label: "Liên hệ", path: "/contact", isActive: false },
+        { label: "Home", path: "/", isActive: false },
+        { label: "Courses", path: "/course", isActive: true },
+        { label: "Community", path: "/community", isActive: false },
+        { label: "Contact", path: "/contact", isActive: false },
     ]}
     onNavigate={router.push}
 />`,
@@ -66,34 +66,34 @@ export const Row: Story = {
                                 anatPart="NavLinks"
                                 showAnatomy
                                 items={[
-                                    { label: "Trang chủ", path: "/", isActive: false },
-                                    { label: "Khóa học", path: "/course", isActive: true },
-                                    { label: "Cộng đồng", path: "/community", isActive: false },
-                                    { label: "Liên hệ", path: "/contact", isActive: false },
+                                    { label: "Home", path: "/", isActive: false },
+                                    { label: "Courses", path: "/course", isActive: true },
+                                    { label: "Community", path: "/community", isActive: false },
+                                    { label: "Contact", path: "/contact", isActive: false },
                                 ]}
                                 onNavigate={() => {}}
                             />
                         ),
                     },
                     {
-                        name: "isActive = \"Trang chủ\"",
+                        name: "isActive = \"Home\"",
                         why: "The visitor is on the homepage, so the FIRST item carries the current pill instead — proving the pill follows `isActive` per item rather than being pinned to a fixed position in the row.",
                         code: `<NavLinks
     items={[
-        { label: "Trang chủ", path: "/", isActive: true },
-        { label: "Khóa học", path: "/course", isActive: false },
-        { label: "Cộng đồng", path: "/community", isActive: false },
-        { label: "Liên hệ", path: "/contact", isActive: false },
+        { label: "Home", path: "/", isActive: true },
+        { label: "Courses", path: "/course", isActive: false },
+        { label: "Community", path: "/community", isActive: false },
+        { label: "Contact", path: "/contact", isActive: false },
     ]}
     onNavigate={router.push}
 />`,
                         render: (
                             <NavLinks
                                 items={[
-                                    { label: "Trang chủ", path: "/", isActive: true },
-                                    { label: "Khóa học", path: "/course", isActive: false },
-                                    { label: "Cộng đồng", path: "/community", isActive: false },
-                                    { label: "Liên hệ", path: "/contact", isActive: false },
+                                    { label: "Home", path: "/", isActive: true },
+                                    { label: "Courses", path: "/course", isActive: false },
+                                    { label: "Community", path: "/community", isActive: false },
+                                    { label: "Contact", path: "/contact", isActive: false },
                                 ]}
                                 onNavigate={() => {}}
                             />

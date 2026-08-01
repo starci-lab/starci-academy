@@ -10,7 +10,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * follow-up, weak-area tag, retry) is a STATE of this one leaf rather than its
  * own leaf.
  *
- * REUSE NOTE: the verdict banner goes through `Feedback.Callout`, the score and
+ * REUSE NOTE: the verdict banner goes through `Callout`, the score and
  * attribute breakdowns are hand-laid `ProgressMeter` rows (no existing composite
  * owns "labeled meter list" — same call `ChallengeScoreCard` already makes), and
  * strengths/gaps go through `SurfaceCard.CrossList` — an addition to the task's
@@ -29,33 +29,33 @@ export default meta
 type Story = StoryObj<typeof MockInterviewScorecard>
 
 const SCORE_ROWS = [
-    { key: "requirements", label: "Yêu cầu & phạm vi", score: 18, max: 20 },
-    { key: "estimation", label: "Ước lượng dung lượng", score: 10, max: 20 },
-    { key: "highLevel", label: "Thiết kế tổng thể", score: 16, max: 20 },
-    { key: "deepDive", label: "Đào sâu thành phần", score: 14, max: 20 },
-    { key: "tradeoffs", label: "Đánh đổi & giới hạn", score: 17, max: 20 },
+    { key: "requirements", label: "Requirements & scope", score: 18, max: 20 },
+    { key: "estimation", label: "Capacity estimation", score: 10, max: 20 },
+    { key: "highLevel", label: "High-level design", score: 16, max: 20 },
+    { key: "deepDive", label: "Component deep dive", score: 14, max: 20 },
+    { key: "tradeoffs", label: "Trade-offs & limits", score: 17, max: 20 },
 ]
 
 const ATTRIBUTE_ROWS = [
-    { key: "communication", label: "Giao tiếp", score: 78 },
-    { key: "structuredThinking", label: "Tư duy có cấu trúc", score: 62 },
-    { key: "tradeoffAwareness", label: "Nhận thức đánh đổi", score: 85 },
+    { key: "communication", label: "Communication", score: 78 },
+    { key: "structuredThinking", label: "Structured thinking", score: 62 },
+    { key: "tradeoffAwareness", label: "Trade-off awareness", score: 85 },
 ]
 
 const STRENGTHS = [
-    "Ước lượng QPS và băng thông có công thức rõ ràng, không đoán mò.",
-    "Chủ động nêu điểm nghẽn (bottleneck) trước khi được hỏi.",
+    "Estimated QPS and bandwidth with a clear formula, not guesswork.",
+    "Proactively called out the bottleneck before being asked.",
 ]
 
 const GAPS = [
-    "Chưa tính đến chiến lược cache invalidation khi dữ liệu đổi.",
-    "Bỏ sót phương án chống trùng lặp (idempotency) cho API ghi.",
+    "Didn't account for a cache invalidation strategy when data changes.",
+    "Missed an idempotency approach for the write API.",
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical track separating the byline, the verdict banner and every breakdown card, one seam per region", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "a horizontal row inside one part — a score row's label+bar+value, or the CTA row", storyId: "frames-stack-stackh--default" },
-    "FeedbackCallout": { tier: "composite", role: "the verdict banner — tone/icon/wording driven entirely by the `verdict` enum", storyId: "composites-feedback-feedback-feedbackcallout--default" },
+    "Callout": { tier: "composite", role: "the verdict banner — tone/icon/wording driven entirely by the `verdict` enum", storyId: "composites-feedback-callout-callout--default" },
     "SurfaceCard": { tier: "composite", role: "the bounded card face for the score breakdown, the attribute breakdown, and the follow-up question", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "ProgressMeter": { tier: "composite", role: "one score row's bar, value-colored by how close it is to its own max", storyId: "composites-stats-progressmeter--label-and-value" },
     "SurfaceCardCrossList": { tier: "composite", role: "the strengths (✓) / gaps (✗) list — marked rows in a bounded card with its own skeleton mirror", storyId: "composites-cards-surfacecard-surfacecardcrosslist--checks" },
@@ -63,13 +63,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Chip": { tier: "atom", role: "tags the weak area the primary CTA is about to send the learner back into", storyId: "atoms-chips-chip-chip--default" },
     "Typography": { tier: "atom", role: "one of the block's own text lines — a row label, a score value, a section caption, or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
     "Button": { tier: "atom", role: "one of the three CTAs — study the weak area, do the capstone, or retry", storyId: "atoms-buttons-button-button--default" },
-    "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the verdict banner — `FeedbackCallout` has no `isSkeleton` shape of its own, so this block draws the shimmer bar directly, in the banner's own slot" },
+    "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the verdict banner — `Callout` has no `isSkeleton` shape of its own, so this block draws the shimmer bar directly, in the banner's own slot" },
 }
 
 /** LEAF — the graded scorecard, every optional section present or absent as a STATE. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MockInterviewScorecard"
                 tier="block"
@@ -79,7 +79,7 @@ export const Full: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "verdict = pass, mọi phần đều có dữ liệu",
+                        name: "verdict = pass, every section has data",
                         why: "The candidate cleared the bar, so the banner reads success and every breakdown/strength/gap/follow-up section is present at once — the fullest shape this card ever draws, and the one every other state is measured against.",
                         code: `<MockInterviewScorecard
     verdict="pass"
@@ -88,10 +88,10 @@ export const Full: Story = {
     attributeScores={attributeRows}
     strengths={strengths}
     gaps={gaps}
-    followUpQuestion="Nếu traffic tăng gấp 10 lần vào giờ cao điểm, bạn sẽ scale thành phần nào trước?"
-    weakAreaLabel="Ước lượng dung lượng"
-    promptTitle="Thiết kế hệ thống rút gọn URL"
-    createdAt="28 thg 7, 2026 · 14:32"
+    followUpQuestion="If traffic spikes 10x during peak hours, which component would you scale first?"
+    weakAreaLabel="Capacity estimation"
+    promptTitle="Design a URL shortener system"
+    createdAt="Jul 28, 2026 · 14:32"
     onStudyWeakArea={...}
     onCapstone={...}
     onRetry={...}
@@ -106,10 +106,10 @@ export const Full: Story = {
                                 attributeScores={ATTRIBUTE_ROWS}
                                 strengths={STRENGTHS}
                                 gaps={GAPS}
-                                followUpQuestion="Nếu traffic tăng gấp 10 lần vào giờ cao điểm, bạn sẽ scale thành phần nào trước?"
-                                weakAreaLabel="Ước lượng dung lượng"
-                                promptTitle="Thiết kế hệ thống rút gọn URL"
-                                createdAt="28 thg 7, 2026 · 14:32"
+                                followUpQuestion="If traffic spikes 10x during peak hours, which component would you scale first?"
+                                weakAreaLabel="Capacity estimation"
+                                promptTitle="Design a URL shortener system"
+                                createdAt="Jul 28, 2026 · 14:32"
                                 onStudyWeakArea={() => {}}
                                 onCapstone={() => {}}
                                 onRetry={() => {}}
@@ -128,10 +128,10 @@ export const Full: Story = {
                                 attributeScores={ATTRIBUTE_ROWS}
                                 strengths={STRENGTHS}
                                 gaps={GAPS}
-                                followUpQuestion="Nếu traffic tăng gấp 10 lần vào giờ cao điểm, bạn sẽ scale thành phần nào trước?"
-                                weakAreaLabel="Ước lượng dung lượng"
-                                promptTitle="Thiết kế hệ thống rút gọn URL"
-                                createdAt="28 thg 7, 2026 · 14:32"
+                                followUpQuestion="If traffic spikes 10x during peak hours, which component would you scale first?"
+                                weakAreaLabel="Capacity estimation"
+                                promptTitle="Design a URL shortener system"
+                                createdAt="Jul 28, 2026 · 14:32"
                                 onStudyWeakArea={() => {}}
                                 onCapstone={() => {}}
                                 onRetry={() => {}}
@@ -150,15 +150,15 @@ export const Full: Story = {
                                 attributeScores={ATTRIBUTE_ROWS.map((row) => ({ ...row, score: Math.round(row.score * 0.4) }))}
                                 strengths={[STRENGTHS[0]]}
                                 gaps={GAPS}
-                                weakAreaLabel="Ước lượng dung lượng"
-                                promptTitle="Thiết kế hệ thống rút gọn URL"
+                                weakAreaLabel="Capacity estimation"
+                                promptTitle="Design a URL shortener system"
                                 onStudyWeakArea={() => {}}
                                 onCapstone={() => {}}
                             />
                         ),
                     },
                     {
-                        name: "chỉ có phần bắt buộc — không byline/attribute/strengths/gaps/follow-up/weak-area/retry",
+                        name: "only required fields present — no byline/attribute/strengths/gaps/follow-up/weak-area/retry",
                         why: "An older graded attempt (or one predating a field) carries only the verdict, the score breakdown and the two required CTAs — every optional section drops out together, and the card still reads as a complete result rather than a broken one.",
                         code: `<MockInterviewScorecard
     verdict="pass"
@@ -192,7 +192,7 @@ export const Full: Story = {
 /** LEAF — the caller flips `isSkeleton`, so every part this block draws itself mirrors as shimmer. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MockInterviewScorecard"
                 tier="block"
@@ -203,7 +203,7 @@ export const Skeleton: Story = {
                 states={[
                     {
                         name: "isSkeleton = true",
-                        why: "The grade hasn't landed yet, so the block paints the fullest shape it can (byline, banner, both breakdowns, strengths, gaps, follow-up, all three CTAs) as shimmer — `FeedbackCallout` and `ProgressMeter` have no `isSkeleton` of their own, so a bare bar stands in each's exact slot instead.",
+                        why: "The grade hasn't landed yet, so the block paints the fullest shape it can (byline, banner, both breakdowns, strengths, gaps, follow-up, all three CTAs) as shimmer — `Callout` and `ProgressMeter` have no `isSkeleton` of their own, so a bare bar stands in each's exact slot instead.",
                         code: `<MockInterviewScorecard
     verdict="pass"
     overallScore={0}

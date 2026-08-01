@@ -49,7 +49,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⛔ NO "LEVEL RAN OUT OF QUESTIONS" LEAF EITHER, for the same reason. The
  * planner's tree wanted the screen to swap `QuizQuestion` for a raw
- * `FeedbackEmpty` composite mid-`active`-phase — but §0's import boundary is
+ * `EmptyState` composite mid-`active`-phase — but §0's import boundary is
  * exact: a screen calls blocks and frames, never a composite directly (the one
  * documented exception, `CourseContents`'s `AsyncContentEmpty`, replaces the
  * ENTIRE screen, not one phase's one node). There is no block in today's catalog
@@ -144,9 +144,9 @@ export interface QuizPageProps {
     activeBackLabel: string
     /** Fired when the learner leaves without ending the run. */
     onActiveBack: () => void
-    /** Session title, e.g. "Hỏi nhanh". */
+    /** Session title, e.g. "Quick quiz". */
     activeTitle?: string
-    /** Where the learner is, already worded — e.g. "Câu 3 / 10". */
+    /** Where the learner is, already worded — e.g. "Question 3 / 10". */
     activeCounter: string
     /** Time remaining, e.g. "2:14". Omitted → the run is untimed. */
     activeTimeLeft?: string
@@ -412,22 +412,22 @@ const QuizPage = ({
     const quizPhases = (
         <>
             {phase === "setup" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={setupSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={setupSection} />
             ) : null}
 
             {phase === "active" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={activeSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={activeSection} />
             ) : null}
 
             {phase === "recap" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={recapSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={recapSection} />
             ) : null}
         </>
     )
 
-    const quizBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={quizPhases} />
+    const quizBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={quizPhases} />
 
-    return <Container size="md" padding="roomy" body={quizBody} />
+    return <Container size="md" padding={6} body={quizBody} />
 }
 
 export { QuizPage }

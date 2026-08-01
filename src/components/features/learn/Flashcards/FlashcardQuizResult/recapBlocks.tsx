@@ -13,7 +13,7 @@ import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 
 /**
- * Shared "Hỏi nhanh" recap/result blocks — LIFTED out of `QuizSession` so BOTH the
+ * Shared "Quick quiz" recap/result blocks — LIFTED out of `QuizSession` so BOTH the
  * live end-of-run recap and the URL-addressable {@link import("./index").FlashcardQuizResult}
  * surface render the exact same components instead of duplicating them. Each block
  * is a self-contained conversion node (enroll upsell, weak-tags demand bridge, AI
@@ -209,8 +209,8 @@ export interface RecapReadinessCalloutProps {
 
 /**
  * Recap Zone D — the cross-link toward the AI Mock Interview (StarCi's actual
- * AI-graded, credit-costing differentiator), so a learner who finishes "Hỏi
- * nhanh" feeling good is pointed at it instead of never hearing it exists.
+ * AI-graded, credit-costing differentiator), so a learner who finishes "Quick
+ * quiz" feeling good is pointed at it instead of never hearing it exists.
  * Locked state stays visible (transparent about the threshold) rather than hiding.
  */
 export const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapReadinessCalloutProps) => {

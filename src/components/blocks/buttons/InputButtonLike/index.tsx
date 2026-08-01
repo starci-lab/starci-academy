@@ -32,7 +32,7 @@ export interface InputButtonLikeProps extends WithClassNames<undefined> {
 }
 
 /**
- * A button disguised as an input field ("button trá hình"). It carries the
+ * A button disguised as an input field (a "fake field" button). It carries the
  * native HeroUI field look — rounded-field shell, field background + border,
  * muted placeholder text — but behaves as a single press target with no inner
  * dividers, so it can trigger an overlay/command palette instead of accepting
@@ -59,14 +59,14 @@ export const InputButtonLike = ({
                 className,
             )}
         >
-            <span className="inline-flex min-w-0 items-center gap-2">
+            <span className="inline-flex min-w-0 items-center gap-1" data-principles="icon-text">
                 {icon}
                 <span className="truncate text-sm text-field-placeholder">
                     {placeholder}
                 </span>
             </span>
             {suffix ? (
-                <span className="inline-flex shrink-0 items-center gap-2">
+                <span className="inline-flex shrink-0 items-center gap-1" data-principles="icon-text">
                     {suffix}
                 </span>
             ) : null}

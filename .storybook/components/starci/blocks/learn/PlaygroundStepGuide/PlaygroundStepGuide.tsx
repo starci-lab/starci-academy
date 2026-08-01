@@ -2,7 +2,7 @@ import React from "react"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
@@ -24,7 +24,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * command fence — same viewer, twice, matching the real
  * `PlaygroundStepGuide.tsx` source's dual use: prose through the standard
  * grammar, the command through the SAME renderer's fenced-code-with-copy
- * skin instead of a hand-rolled `<pre>`), `Feedback.Empty` for completion
+ * skin instead of a hand-rolled `<pre>`), `EmptyState` for completion
  * (not a bespoke "all done" card), `Typography`/`Button`/`Spinner` at the
  * atom tier, `StackV`/`StackH` for every seam.
  *
@@ -64,7 +64,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * than a state of `Full`. So: `Step` (has a command) and `StepNoCommand` (a
  * read-only explainer step) are two leaves; `verifyState` stays a STATE inside
  * each, since it never changes which nodes are on screen. `Complete` is the
- * third leaf — swapping the entire pane for `Feedback.Empty` is the largest
+ * third leaf — swapping the entire pane for `EmptyState` is the largest
  * structural change this block can make.
  *
  * A BLOCK OWNS ITS WORDING (§14d.1). The verify label, the pending/missed/
@@ -78,7 +78,7 @@ const commandFence = (command: string) => "```bash\n" + command + "\n```"
 
 /** One step's authored content. */
 export interface PlaygroundStep {
-    /** Step heading, e.g. "Bước 2 · Build image". */
+    /** Step heading, e.g. "Step 2 · Build image". */
     title: string
     /** Instructions body, markdown — what to do and why. */
     body: string
@@ -135,7 +135,7 @@ const PlaygroundStepGuide = ({
             <>
                 <HeroSkeleton className="h-6 w-48 rounded" />
                 <StackV
-                    gap="tight"
+                    gap={2}
                     anatPart={showAnatomy ? "StackV" : undefined}
                     body={
                         <>
@@ -149,27 +149,27 @@ const PlaygroundStepGuide = ({
         )
         return (
             <div data-anat-part={anatPart}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={loadingStep} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={loadingStep} />
             </div>
         )
     }
     if (step == null) {
         return (
             <div data-anat-part={anatPart}>
-                <FeedbackEmpty
+                <EmptyState
                     icon={CheckCircleIcon}
                     tone="neutral"
-                    title="Đã hoàn thành mọi bước!"
-                    description="Bạn đã đi hết lộ trình playground này. Quay lại trung tâm để chọn bài tiếp theo."
-                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+                    title="All steps completed!"
+                    description="You've made it through this playground path. Head back to the hub to pick the next exercise."
+                    anatPart={showAnatomy ? "EmptyState" : undefined}
                 >
                     <Button
-                        label="Về trung tâm Playground"
+                        label="Back to Playground hub"
                         variant="secondary"
                         onPress={onLeaveComplete}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
-                </FeedbackEmpty>
+                </EmptyState>
             </div>
         )
     }
@@ -179,12 +179,12 @@ const PlaygroundStepGuide = ({
     // button.
     const verifyPendingStatus = (
         <StackH
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     <Spinner size="sm" tone="accent" showAnatomy={showAnatomy} />
-                    <Typography size="sm" color="muted" text="Đang kiểm tra…" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" color="muted" text="Checking…" showAnatomy={showAnatomy} />
                 </>
             }
         />
@@ -192,7 +192,7 @@ const PlaygroundStepGuide = ({
 
     const verifyControls = (
         <StackV
-            gap="tight"
+            gap={2}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -200,17 +200,17 @@ const PlaygroundStepGuide = ({
                         <Typography
                             size="sm"
                             color="muted"
-                            text="Đang chờ kết nối tới máy học của bạn…"
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            text="Waiting for a connection to your learning machine…"
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
 
                     {verifyState === "ready" || verifyState === "missed" ? (
                         <Button
-                            label="Xác minh bước này"
+                            label="Verify this step"
                             variant="primary"
                             onPress={onVerify}
-                            anatPart={showAnatomy ? "Button" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
 
@@ -220,8 +220,8 @@ const PlaygroundStepGuide = ({
                         <Typography
                             size="xs"
                             color="danger"
-                            text="Chưa thấy kết quả đúng — chạy lại lệnh rồi xác minh lần nữa nhé."
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            text="Didn't see the expected result yet — rerun the command and verify again."
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -231,11 +231,11 @@ const PlaygroundStepGuide = ({
 
     const commandSection = step.commandHint != null ? (
         <StackV
-            gap="tight"
+            gap={2}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    <Typography size="xs" weight="medium" color="muted" text="Lệnh cần chạy" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" weight="medium" color="muted" text="Command to run" showAnatomy={showAnatomy} />
                     <MarkdownContent
                         source={commandFence(step.commandHint)}
                         measure="compact"
@@ -248,7 +248,7 @@ const PlaygroundStepGuide = ({
 
     const guideBody = (
         <>
-            <Typography size="h4" weight="bold" text={step.title} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="h4" weight="bold" text={step.title} showAnatomy={showAnatomy} />
             <MarkdownContent source={step.body} measure="reading" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
             {commandSection}
             {verifyControls}
@@ -257,7 +257,7 @@ const PlaygroundStepGuide = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={guideBody} />
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={guideBody} />
         </div>
     )
 }

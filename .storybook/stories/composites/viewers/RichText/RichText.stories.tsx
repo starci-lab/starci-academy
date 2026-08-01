@@ -18,7 +18,7 @@ type Story = StoryObj<typeof RichText>
 /** Empty `text` → renders nothing (Typography with no children), takes no unexpected space. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <RichText text="" anatPart="RichText" showAnatomy />
         </div>
     ),
@@ -27,8 +27,8 @@ export const Empty: Story = {
 /** No marker matches → the text renders verbatim, no wrapping node. */
 export const PlainText: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text="Bấm nút Nộp bài để gửi câu trả lời, hệ thống sẽ chấm điểm ngay." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text="Press the Submit button to send your answer, the system will grade it right away." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -36,8 +36,8 @@ export const PlainText: Story = {
 /** `` `code` `` — backtick span; NOT recursed, so its label prints literally. */
 export const Code: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text="Dùng `useEffect` để đồng bộ state với DOM sau khi render." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text="Use `useEffect` to sync state with the DOM after rendering." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -45,8 +45,8 @@ export const Code: Story = {
 /** `**bold**` — emphasis for a warning or a key condition inside instructions. */
 export const Bold: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text="**Lưu ý:** bài tập này tính điểm cộng vào bảng xếp hạng tuần." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text="**Note:** this exercise counts as bonus points toward the weekly leaderboard." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -54,8 +54,8 @@ export const Bold: Story = {
 /** `_italic_` — softer emphasis than bold, e.g. an optional note. */
 export const Italic: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text="_Không bắt buộc_, nhưng nên hoàn thành trước khi qua module kế tiếp." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text="_Optional_, but it's best to finish it before moving on to the next module." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -63,8 +63,8 @@ export const Italic: Story = {
 /** `[label](url)` — always opens a new tab (`target=_blank`, `rel=noopener`). */
 export const Link: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text="Xem thêm tại [tài liệu React Hooks](https://react.dev/reference/react)." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text="See more in the [React Hooks documentation](https://react.dev/reference/react)." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -72,8 +72,8 @@ export const Link: Story = {
 /** Each `\n` becomes a `<br/>` — short step lists without a real `<ul>`. */
 export const LineBreaks: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text={"Bước 1: đọc đề bài.\nBước 2: viết code.\nBước 3: chạy test."} anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text={"Step 1: read the problem.\nStep 2: write the code.\nStep 3: run the tests."} anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -81,8 +81,8 @@ export const LineBreaks: Story = {
 /** `renderInline` recurses on the remainder, so one sentence can mix code + bold + link. */
 export const Combined: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text="Điền `npm install` rồi **build lại** trước khi nộp, xem [hướng dẫn](https://starci.dev/docs) nếu bí." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text="Run `npm install` then **rebuild** before submitting, check the [guide](https://starci.dev/docs) if you're stuck." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -90,8 +90,8 @@ export const Combined: Story = {
 /** Nested markers (bold containing italic) — both `recurse: true`, so the inner label is re-parsed. */
 export const Nested: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text="**Cảnh báo: _sắp hết thời gian_, nộp bài ngay** trước khi hệ thống tự đóng." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text="**Warning: _time is almost up_, submit now** before the system closes automatically." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -99,8 +99,8 @@ export const Nested: Story = {
 /** Malformed / unmatched marker → falls back to plain text, no throw, no broken layout. */
 export const MalformedFallback: Story = {
     render: () => (
-        <div className="p-8">
-            <RichText text="Dấu backtick lẻ ` không khép sẽ hiện nguyên văn, không vỡ layout." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8">
+            <RichText text="An unmatched backtick ` shows up verbatim, without breaking the layout." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -108,11 +108,11 @@ export const MalformedFallback: Story = {
 /** `size` mirrors the `Typography` type scale (body-xs → body-sm default → body → h4). */
 export const SizeScale: Story = {
     render: () => (
-        <div className="p-8 flex flex-col gap-3">
-            <RichText size="body-xs" text="Cỡ `body-xs` — chú thích rất nhỏ." anatPart="RichText" showAnatomy />
-            <RichText size="body-sm" text="Cỡ `body-sm` — mặc định khi không truyền size." anatPart="RichText" showAnatomy />
-            <RichText size="body" text="Cỡ `body` — thân bài đọc bình thường." anatPart="RichText" showAnatomy />
-            <RichText size="h4" text="Cỡ `h4` — tiêu đề nhỏ có markup" anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8 flex flex-col gap-3">
+            <RichText size="body-xs" text="Size `body-xs` — a very small caption." anatPart="RichText" showAnatomy />
+            <RichText size="body-sm" text="Size `body-sm` — the default when no size is passed." anatPart="RichText" showAnatomy />
+            <RichText size="body" text="Size `body` — normal reading body text." anatPart="RichText" showAnatomy />
+            <RichText size="h4" text="Size `h4` — a small heading with markup" anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -120,9 +120,9 @@ export const SizeScale: Story = {
 /** `color` omitted → inherits Typography default; `muted` for secondary asides. */
 export const ColorScale: Story = {
     render: () => (
-        <div className="p-8 flex flex-col gap-3">
-            <RichText color="default" text="Màu `default` — nội dung chính." anatPart="RichText" showAnatomy />
-            <RichText color="muted" text="Màu `muted` — phụ chú, ít quan trọng hơn." anatPart="RichText" showAnatomy />
+        <div data-tier="fixture" className="p-8 flex flex-col gap-3">
+            <RichText color="default" text="Color `default` — the main content." anatPart="RichText" showAnatomy />
+            <RichText color="muted" text="Color `muted` — a secondary, less important note." anatPart="RichText" showAnatomy />
         </div>
     ),
 }
@@ -135,7 +135,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the caller flips `isSkeleton`; a single shimmer bar stands in for the short inline copy (§12g.0a), matching that `RichText` only ever holds one line/measure of text, unlike `MarkdownContent`'s multi-line document mirror. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="RichText"
                 tier="composite"

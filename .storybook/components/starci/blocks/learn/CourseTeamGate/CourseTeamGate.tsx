@@ -1,6 +1,6 @@
 import React from "react"
 import { GithubLogoIcon } from "@phosphor-icons/react"
-import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
@@ -8,7 +8,7 @@ import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
  * BLOCK — `CourseTeamGate`: reminds the learner to join the course's GitHub team.
  *
  * REASON FOR EXISTING (§14a): a screen may only list BLOCKS. Before this, the
- * `/learn/content` screen called `FeedbackCallout` (composite tier) directly and wrote
+ * `/learn/content` screen called `Callout` (composite tier) directly and wrote
  * the content itself — the screen was declaring a feature's details instead of just
  * naming it. This block is thin, but it exists for the TIER BOUNDARY + because it
  * owns the SHOW CONDITION (below).
@@ -24,7 +24,7 @@ import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
  * from the tree approved on 07/24 (the tree explicitly says "paid, not yet in team").
  * Keep this note so it doesn't flip back again.
  *
- * §14c — the block only ASSEMBLES: all of its visuals go through `FeedbackCallout`,
+ * §14c — the block only ASSEMBLES: all of its visuals go through `Callout`,
  * it draws nothing itself.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -46,17 +46,17 @@ export interface CourseTeamGateBaseProps {
      * (not knowing yet means we can't decide whether to SELF-HIDE — the mirror must
      * show to hold the slot in the loading tree).
      *
-     * ⚠️ `FeedbackCallout` (the frame this block still uses on the live branch) does
+     * ⚠️ `Callout` (the frame this block still uses on the live branch) does
      * NOT have `isSkeleton` yet and sits OUTSIDE the 4 files touched this pass, so the
-     * flag can't be forwarded through it. But `FeedbackCallout` is just a thin wrapper
+     * flag can't be forwarded through it. But `Callout` is just a thin wrapper
      * over the `Alert` atom — and THAT atom already has `isSkeleton` (§12c). The
      * skeleton branch below calls `Alert` DIRECTLY (same `status`/`icon` that
-     * `FeedbackCallout` will use on the live branch) instead of hand-rolling a parallel
+     * `Callout` will use on the live branch) instead of hand-rolling a parallel
      * warning box.
      */
     isSkeleton?: boolean
     /**
-     * Passed DOWN to `FeedbackCallout` so the anatomy panel can see what this block
+     * Passed DOWN to `Callout` so the anatomy panel can see what this block
      * refs. Without forwarding it, the anatomy view can't tell what it's built from.
      */
     showAnatomy?: boolean
@@ -81,14 +81,14 @@ const CourseTeamGateBase = ({
     // Loading: `isEnrolled`/`isInTeam` haven't come back yet, so we can't decide
     // whether to self-hide — show the `Alert` atom's mirror (see the
     // `isSkeleton` doc above for why it calls the atom directly instead of
-    // `FeedbackCallout`).
+    // `Callout`).
     if (isSkeleton) {
         return (
             <Alert
                 isSkeleton
                 status="warning"
                 icon={GithubLogoIcon}
-                anatPart={anatPart ?? (showAnatomy ? "Alert" : undefined)}
+                showAnatomy={showAnatomy}
             />
         )
     }
@@ -99,13 +99,13 @@ const CourseTeamGateBase = ({
     }
 
     return (
-        <FeedbackCallout
-            anatPart={anatPart ?? (showAnatomy ? "FeedbackCallout" : undefined)}
+        <Callout
+            anatPart={anatPart ?? (showAnatomy ? "Callout" : undefined)}
             status="warning"
             icon={GithubLogoIcon}
-            title="Bạn chưa vào GitHub team của khoá"
-            description="Một số bài lab cần quyền repo — bấm để tham gia."
-            actionLabel="Vào team"
+            title="You haven't joined the course's GitHub team yet"
+            description="Some labs need repo access — tap to join."
+            actionLabel="Join team"
             onAction={onJoin}
         />
     )

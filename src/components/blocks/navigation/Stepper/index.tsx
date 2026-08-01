@@ -8,7 +8,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export interface StepperStep {
     /** Stable identity for the step (used as the React key). */
     id: string
-    /** Short step label (e.g. `"Thông tin"`). */
+    /** Short step label (e.g. `"Information"`). */
     label: React.ReactNode
     /** Optional one-line description shown under the label. */
     description?: React.ReactNode
@@ -75,9 +75,9 @@ const StepIndicator = ({ state, index }: { state: StepState; index: number }) =>
  * @example
  * <Stepper
  *   steps={[
- *     { id: "a", label: "Thông tin" },
- *     { id: "b", label: "Xác nhận" },
- *     { id: "c", label: "Hoàn tất" },
+ *     { id: "a", label: "Information" },
+ *     { id: "b", label: "Confirmation" },
+ *     { id: "c", label: "Done" },
  *   ]}
  *   currentIndex={1}
  * />

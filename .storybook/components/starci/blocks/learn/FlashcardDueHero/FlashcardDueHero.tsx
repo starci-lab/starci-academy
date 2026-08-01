@@ -1,7 +1,7 @@
 import React from "react"
 import { ArrowRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { ContinueCardHero } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -19,20 +19,20 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * card + a CTA row from scratch". Three composites already draw everything
  * this block needs — `SurfaceCard`'s `label` slot for the section frame,
  * `ContinueCardHero` for "resume something already in flight", and
- * `FeedbackEmpty` for "there is nothing here" — so this file contains no new
+ * `EmptyState` for "there is nothing here" — so this file contains no new
  * card chrome, no new empty-state layout, no hand-rolled `flex gap-*`.
  *
- * ⚠️ `FeedbackEmpty` WASN'T in this task's compose-from list but IS the
+ * ⚠️ `EmptyState` WASN'T in this task's compose-from list but IS the
  * canonical composite the same block family already reaches for — see
  * `ContinueCardHero.{Progress,NoProgress}.stories.tsx`'s `LoadError` leaf,
- * which drops `FeedbackEmpty` straight inside a `SurfaceCard`. "Nothing due"
+ * which drops `EmptyState` straight inside a `SurfaceCard`. "Nothing due"
  * is that exact shape (frame stays, body swaps to a message), so building a
  * second hand-rolled empty state next to an existing one would be the same
  * mistake this run exists to correct, just aimed at a different composite.
  *
  * 📐 THREE LEAVES BY STRUCTURE (§14d.2), not one leaf with two booleans:
  *
- *   1. **No resume in progress** — `SurfaceCard` (labelled "Ôn tập hôm nay")
+ *   1. **No resume in progress** — `SurfaceCard` (labelled "Review today")
  *      ⊃ the due-count text cluster + a primary `Button` that starts a fresh
  *      batch.
  *   2. **Resume in progress** — the due summary steps ASIDE and
@@ -46,7 +46,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *      is what `ContinueLearningBase` already does for the identical reason.
  *   3. **Nothing due** — the due-count cluster and the Start button both
  *      disappear; `SurfaceCard`'s frame stays (so the section never
- *      vanishes), and `FeedbackEmpty` replaces the body with a "you're
+ *      vanishes), and `EmptyState` replaces the body with a "you're
  *      caught up" message. No `action` — there is nothing left to start.
  *
  * `isSkeleton` is a STATE inside leaf 1, not a fourth leaf: before the load
@@ -59,12 +59,12 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * three numbers (`dueCount`/`dueReviewCount`/`newCount`); this block decides
  * the copy, the split, and which of the two sub-counts get news value. A
  * zero sub-count is dropped from the breakdown line rather than printed as
- * "0 thẻ mới" — same "a zero is not news" rule `ContentModeNav` applies to
+ * "0 new cards" — same "a zero is not news" rule `ContentModeNav` applies to
  * its own tab counts.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** `FeedbackEmpty` takes its icon as a COMPONENT ref and forces `size-8` itself (§4/§5) — `weight="duotone"` can't ride along on a bare import, so it's pinned here. */
+/** `EmptyState` takes its icon as a COMPONENT ref and forces `size-8` itself (§4/§5) — `weight="duotone"` can't ride along on a bare import, so it's pinned here. */
 const CheckCircleDuotone = (props: React.SVGProps<SVGSVGElement>) => <CheckCircleIcon {...props} weight="duotone" />
 
 /** The paused due-batch the reader can pick back up. */
@@ -104,17 +104,17 @@ export interface FlashcardDueHeroProps {
 }
 
 /** The section label every non-resume leaf shares — a section always answers "what is this card". */
-const SECTION_LABEL = "Ôn tập hôm nay"
+const SECTION_LABEL = "Review today"
 
 /**
- * Builds the "N cần ôn lại · M thẻ mới" line. A sub-count of zero carries no
+ * Builds the "N due for review · M new cards" line. A sub-count of zero carries no
  * news (§ rule shared with `ContentModeNav`'s tab counts), so it is dropped
  * instead of printed.
  */
 const buildBreakdown = (dueReviewCount: number, newCount: number): string =>
     [
-        dueReviewCount > 0 ? `${dueReviewCount} cần ôn lại` : null,
-        newCount > 0 ? `${newCount} thẻ mới` : null,
+        dueReviewCount > 0 ? `${dueReviewCount} due for review` : null,
+        newCount > 0 ? `${newCount} new cards` : null,
     ]
         .filter((part): part is string => part != null)
         .join(" · ")
@@ -144,8 +144,8 @@ const FlashcardDueHero = ({
         return (
             <ContinueCardHero
                 anatPart={anatPart ?? (showAnatomy ? "ContinueCardHero" : undefined)}
-                title="Tiếp tục đợt ôn dở"
-                meta={[`${resume.current}/${resume.total} thẻ đã ôn trong đợt này`]}
+                title="Continue your unfinished review"
+                meta={[`${resume.current}/${resume.total} cards reviewed in this batch`]}
                 value={resume.current}
                 max={resume.total}
                 onPress={resume.onPress}
@@ -162,14 +162,15 @@ const FlashcardDueHero = ({
                 label={SECTION_LABEL}
                 anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
                 showAnatomy={showAnatomy}
-            >
-                <FeedbackEmpty
-                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-                    icon={CheckCircleDuotone}
-                    title="Đã ôn hết thẻ đến hạn hôm nay!"
-                    description="Quay lại vào ngày mai để giữ chuỗi ôn tập của bạn."
-                />
-            </SurfaceCard>
+                body={() => (
+                    <EmptyState
+                        anatPart={showAnatomy ? "EmptyState" : undefined}
+                        icon={CheckCircleDuotone}
+                        title="You've reviewed every card due today!"
+                        description="Come back tomorrow to keep your review streak going."
+                    />
+                )}
+            />
         )
     }
 
@@ -183,22 +184,22 @@ const FlashcardDueHero = ({
                 weight="bold"
                 tabularNums
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
                 text={String(dueCount)}
             />
             <Typography
                 size="sm"
                 color="muted"
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "Typography" : undefined}
-                text="thẻ đến hạn hôm nay"
+                showAnatomy={showAnatomy}
+                text="cards due today"
             />
             {breakdown ? (
                 <Typography
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                     text={breakdown}
                 />
             ) : null}
@@ -207,16 +208,16 @@ const FlashcardDueHero = ({
 
     const heroBody = (
         <>
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={dueCountLines} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={dueCountLines} />
             <Button
                 variant="primary"
-                label="Bắt đầu ôn tập"
+                label="Start reviewing"
                 suffixIcon={ArrowRightIcon}
                 iconSlide
                 onPress={onStart}
                 isPending={isStarting}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
                 classNames={["w-fit"]}
             />
         </>
@@ -228,9 +229,8 @@ const FlashcardDueHero = ({
             anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-        >
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={heroBody} />
-        </SurfaceCard>
+            body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={heroBody} />}
+        />
     )
 }
 

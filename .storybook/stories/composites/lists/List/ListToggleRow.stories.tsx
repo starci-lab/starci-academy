@@ -57,7 +57,7 @@ export const Default: Story = {
     render: function Render() {
         const [checked, setChecked] = useState(false)
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <BlockAnatomy
                     name="ListToggleRow"
                     tier="composite"
@@ -69,15 +69,15 @@ export const Default: Story = {
                             name: "checked = false, description set",
                             why: "The row shows a label with a muted description line beneath it and the switch sits off. This is the row's resting shape before the learner has touched the toggle.",
                             code: `<ListToggleRow
-  label="Hiển thị dự án"
-  description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
+  label="Show projects"
+  description="Allow visitors to see the Projects tab on your public profile"
   checked={checked}
   onCheckedChange={setChecked}
 />`,
                             render: (
                                 <ListToggleRow
-                                    label="Hiển thị dự án"
-                                    description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
+                                    label="Show projects"
+                                    description="Allow visitors to see the Projects tab on your public profile"
                                     checked={checked}
                                     onCheckedChange={setChecked}
                                     showAnatomy
@@ -96,7 +96,7 @@ export const Selected: Story = {
     render: function Render() {
         const [checked, setChecked] = useState(true)
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <BlockAnatomy
                     name="ListToggleRow"
                     tier="composite"
@@ -114,8 +114,8 @@ export const Selected: Story = {
 />`,
                             render: (
                                 <ListToggleRow
-                                    label="Hiển thị dự án"
-                                    description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
+                                    label="Show projects"
+                                    description="Allow visitors to see the Projects tab on your public profile"
                                     checked={checked}
                                     onCheckedChange={setChecked}
                                     showAnatomy
@@ -134,7 +134,7 @@ export const NoDescription: Story = {
     render: function Render() {
         const [checked, setChecked] = useState(true)
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <BlockAnatomy
                     name="ListToggleRow"
                     tier="composite"
@@ -146,7 +146,7 @@ export const NoDescription: Story = {
                             why: "TitledText keeps only the title line and the description line drops out entirely, yet the row still stays vertically centred against the switch. The node is still the same TitledText, it simply renders one line instead of two.",
                             code: "<ListToggleRow label=\"Dark mode\" checked={checked} onCheckedChange={setChecked} />",
                             render: (
-                                <ListToggleRow label="Chế độ tối" checked={checked} onCheckedChange={setChecked} showAnatomy />
+                                <ListToggleRow label="Dark mode" checked={checked} onCheckedChange={setChecked} showAnatomy />
                             ),
                         },
                     ]}
@@ -157,13 +157,13 @@ export const NoDescription: Story = {
 }
 
 /**
- * Disabled: grounded in the hand-roll's "Khoá hồ sơ" override — when the
+ * Disabled: grounded in the hand-roll's "Lock profile" override — when the
  * profile lock is on, every per-section visibility row dims + stops
  * accepting input.
  */
 export const Disabled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ListToggleRow"
                 tier="composite"
@@ -181,8 +181,8 @@ export const Disabled: Story = {
 />`,
                         render: (
                             <ListToggleRow
-                                label="Hiển thị dự án"
-                                description="Đang bị khoá bởi chế độ khoá hồ sơ"
+                                label="Show projects"
+                                description="Locked by profile lock mode"
                                 checked={false}
                                 onCheckedChange={() => {}}
                                 isDisabled
@@ -199,7 +199,7 @@ export const Disabled: Story = {
 /** Loading: `isSkeleton` mirrors label + description bars and the switch pill, so the row never jumps when data arrives. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ListToggleRow"
                 tier="composite"
@@ -212,8 +212,8 @@ export const Loading: Story = {
                         code: "<ListToggleRow label=\"Show projects\" description=\"Allow visitors to see the Projects tab\" isSkeleton />",
                         render: (
                             <ListToggleRow
-                                label="Hiển thị dự án"
-                                description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
+                                label="Show projects"
+                                description="Allow visitors to see the Projects tab on your public profile"
                                 checked={false}
                                 onCheckedChange={() => {}}
                                 isSkeleton

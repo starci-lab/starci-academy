@@ -29,7 +29,7 @@ export interface LabeledAccordionCardProps extends WithClassNames<undefined> {
     /**
      * Section label rendered OUTSIDE (above) the card — forwarded to {@link LabeledCard}.
      * OMIT it when the card sits in a pane that already carries a heading/tab of its
-     * own (e.g. the Playground Lab "Tài nguyên" tab): a second label there is
+     * own (e.g. the Playground Lab "Resources" tab): a second label there is
      * label-on-label (accordion.md §3d). With no label the card renders bare
      * (just the {@link SurfaceListCard} frame), no section wrapper.
      */
@@ -139,7 +139,7 @@ const AccordionFrame = ({
  * the accordion can stay transparent and ride on it (accordion.md §3d / §3e, card.md §3).
  *
  * Use when a "list card" needs its rows to collapse/expand by group (e.g. the Playground
- * Lab "Tài nguyên" tab grouped by kind) — never hand-roll a `<button>` + caret, which
+ * Lab "Resources" tab grouped by kind) — never hand-roll a `<button>` + caret, which
  * reimplements the keyboard/aria HeroUI already ships. Each item's trigger is `title`
  * (+ optional `subtitle` line, + optional trailing `titleEnd` chip); the panel `body` is
  * free content.

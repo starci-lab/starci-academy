@@ -31,10 +31,11 @@ type Story = StoryObj<typeof TrialConversionStrip>
 
 /** Frame each leaf's anatomy panel with breathing room, capped to the strip's real width. */
 /**
- * Đệm canvas của story. Bề ngang của CHỦ THỂ đi qua `renderClassName` của `BlockAnatomy`, không
- * bọc ở đây: bọc ở đây thì panel thừa hưởng `max-w-xl` và ba cột chữ bị nhồi vào 576px.
+ * Story canvas padding only. The SUBJECT's own width goes through `BlockAnatomy`'s
+ * `renderClassName`, not wrapped here: wrapping it here would make the panel inherit
+ * `max-w-xl` and squeeze its three text columns into 576px.
  */
-const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
+const frame = (node: React.ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
 
 /** Sample landed price preview — early-bird phase, 22% off, 12 seats left before it rises. */
 const SAMPLE_PRICE: TrialConversionStripPrice = {

@@ -40,19 +40,19 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 const routedPageContent = (
     <>
         <Typography size="lg" weight="bold" text="Headhunting Company: Coup Fund" />
-        <Typography size="sm" color="muted" text="Đây là placeholder cho nội dung `page.tsx` thật của route này — layout không biết và không cần biết bên trong nó vẽ gì." />
+        <Typography size="sm" color="muted" text="This is a placeholder for the real `page.tsx` content of this route — the layout doesn't know and doesn't need to know what's drawn inside it." />
     </>
 )
 
 /** A stand-in for whatever `page.tsx` mounts inside `children` — this layout never learns what it is. */
 const RoutedPage = () => (
-    <StackV gap="grouped" body={routedPageContent} />
+    <StackV gap={4} body={routedPageContent} />
 )
 
 /** LEAF — the only shape this layout has: rail beside routed content, over two container widths. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="HeadhuntingCompaniesLayout"
                 tier="screen"
@@ -65,7 +65,7 @@ export const Default: Story = {
                         why: "Wide enough for the real app shell's column, so the nav-rail slot shows: a fixed, sticky-positioned aside carrying the §B3 gap marker, beside the routed page content taking the rest of the row.",
                         code: "<HeadhuntingCompaniesLayout>\n    <RoutedPage />\n</HeadhuntingCompaniesLayout>",
                         render: (
-                            <div className="@container" style={{ width: "72rem", maxWidth: "100%" }}>
+                            <div data-tier="fixture" className="@container" style={{ width: "72rem", maxWidth: "100%" }}>
                                 <HeadhuntingCompaniesLayout showAnatomy anatPart="HeadhuntingCompaniesLayout">
                                     <RoutedPage />
                                 </HeadhuntingCompaniesLayout>
@@ -77,7 +77,7 @@ export const Default: Story = {
                         why: "Below the desktop tier the rail is not collapsed into a bar or a drawer — it is simply absent, matching the real screen's own lack of a mobile substitute. The routed content takes the full row on its own.",
                         code: "<HeadhuntingCompaniesLayout>\n    <RoutedPage />\n</HeadhuntingCompaniesLayout>",
                         render: (
-                            <div className="@container" style={{ width: "36rem", maxWidth: "100%" }}>
+                            <div data-tier="fixture" className="@container" style={{ width: "36rem", maxWidth: "100%" }}>
                                 <HeadhuntingCompaniesLayout showAnatomy anatPart="HeadhuntingCompaniesLayout">
                                     <RoutedPage />
                                 </HeadhuntingCompaniesLayout>

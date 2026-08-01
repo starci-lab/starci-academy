@@ -17,7 +17,7 @@ type Story = StoryObj<typeof ProgressRing>
 
 export const SizeSmall: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={68} size="sm" />
         </div>
     ),
@@ -25,7 +25,7 @@ export const SizeSmall: Story = {
 
 export const SizeMedium: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={68} size="md" />
         </div>
     ),
@@ -33,7 +33,7 @@ export const SizeMedium: Story = {
 
 export const SizeLarge: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={68} size="lg" />
         </div>
     ),
@@ -41,7 +41,7 @@ export const SizeLarge: Story = {
 
 export const Zero: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={0} size="lg" caption="Not started" />
         </div>
     ),
@@ -49,7 +49,7 @@ export const Zero: Story = {
 
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={100} size="lg" tone="success" caption="Completed" />
         </div>
     ),
@@ -57,7 +57,7 @@ export const Full: Story = {
 
 export const ToneAccent: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={68} tone="accent" caption="Course progress" />
         </div>
     ),
@@ -65,7 +65,7 @@ export const ToneAccent: Story = {
 
 export const ToneSuccess: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={92} tone="success" caption="Test score" />
         </div>
     ),
@@ -73,7 +73,7 @@ export const ToneSuccess: Story = {
 
 export const ToneWarning: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={45} tone="warning" caption="This week's progress" />
         </div>
     ),
@@ -81,7 +81,7 @@ export const ToneWarning: Story = {
 
 export const ToneDanger: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={18} tone="danger" caption="Completion rate" />
         </div>
     ),
@@ -89,7 +89,7 @@ export const ToneDanger: Story = {
 
 export const WithCaption: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={68} size="lg" caption="Course progress" />
         </div>
     ),
@@ -98,7 +98,7 @@ export const WithCaption: Story = {
 /** Custom label overrides the centered percentage with a fraction when the count reads clearer. */
 export const CustomLabel: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={90} size="lg" tone="success" label="9/10" caption="Lessons completed" />
         </div>
     ),
@@ -106,13 +106,13 @@ export const CustomLabel: Story = {
 
 export const WithoutCaption: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ProgressRing value={68} size="lg" />
         </div>
     ),
 }
 
-/** Chú giải cho ring/caption shimmer — cùng một HeroUI `Skeleton` cho cả ring lẫn caption bar. */
+/** Annotation for the ring/caption shimmer — the same HeroUI `Skeleton` for both the ring and the caption bar. */
 const ANNOTATE_SKELETON: Record<string, AnatomyAnnotation> = {
     "Skeleton": {
         tier: "heroui",
@@ -123,7 +123,7 @@ const ANNOTATE_SKELETON: Record<string, AnatomyAnnotation> = {
 /** LEAF — the caller flips `isSkeleton`; a circular ring shimmer stands in for the real ring, sized off the SAME `SIZE_MAP` the real ring reads so nothing jumps once `value` lands. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressRing"
                 tier="composite"

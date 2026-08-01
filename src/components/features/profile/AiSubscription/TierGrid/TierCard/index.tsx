@@ -92,7 +92,7 @@ export const TierCard = ({
             description={tier.description ?? ""}
             price={(
                 <>
-                    {/* VND number prominent + "/tháng" */}
+                    {/* VND number prominent + "/month" */}
                     <div className="flex flex-wrap items-baseline gap-x-2">
                         <Typography type="h3" weight="bold">
                             {formatVnd(tier.priceVnd)}

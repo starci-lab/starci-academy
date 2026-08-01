@@ -41,12 +41,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * HeroUI directly ⇒ deps is EMPTY"). `Control`/`Label` in the DOM are internal slots
  * of this option row itself.
  *
- * DI TRÚ SANG API `states[]` (thầy chốt 2026-07-27, canon §8): mỗi leaf ở đây vốn
- * đã chỉ dựng MỘT bản render, nên mỗi leaf giờ có ĐÚNG một phần tử `states` — chỉ
- * đổi chỗ chứa `why`/`code`/`render`, không đổi hình.
+ * MIGRATED TO THE `states[]` API (mentor's call, 2026-07-27, canon §8): each leaf
+ * here originally rendered just ONE variant, so each leaf now has EXACTLY one
+ * `states` entry — only the container for `why`/`code`/`render` changed, not the
+ * shape.
  *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`why`/`code`) and demo labels inside
- * the render frame are written in ENGLISH; JSDoc/comments stay in Vietnamese.
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`why`/`code`), demo labels inside
+ * the render frame, and all JSDoc/comments are written in ENGLISH.
  */
 const meta: Meta<typeof ChoiceRadio> = {
     title: "Atoms/Forms/Choice/ChoiceRadio",
@@ -77,7 +78,7 @@ export const Default: Story = {
                             why: "The dot renders empty and the label sits beside it exactly as HeroUI Radio.Content lays it out, with no fill inside the control. Selection lives entirely on the group's value rather than on this row, so unselected is simply what a row looks like before its value is chosen.",
                             code: "<ChoiceRadio value=\"starter\" label=\"Starter plan\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <HeroRadioGroup aria-label="Plan" value={value} onChange={setValue} className="flex flex-col gap-2">
                                         <ChoiceRadio value="starter" label="Starter plan" showAnatomy />
                                     </HeroRadioGroup>
@@ -88,7 +89,7 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -110,7 +111,7 @@ export const Selected: Story = {
                             why: "The dot switches to filled while every other node in the tree stays exactly the same shape as the unselected state. The group's value now equals this row's value, which is what keeps a set of radios mutually exclusive without each row tracking the others itself.",
                             code: "<ChoiceRadio value=\"starter\" label=\"Starter plan\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <HeroRadioGroup aria-label="Plan" value={value} onChange={setValue} className="flex flex-col gap-2">
                                         <ChoiceRadio value="starter" label="Starter plan" showAnatomy />
                                     </HeroRadioGroup>
@@ -121,14 +122,14 @@ export const Selected: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /** Leaf prop `isDisabled` — locks ONE row individually (locking the whole group is a RadioGroup state). */
 export const Disabled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChoiceRadio"
                 tier="atom"
@@ -141,7 +142,7 @@ export const Disabled: Story = {
                         why: "The row dims and stops responding to pointer or keyboard input, while the dot and label nodes keep the same shape as an enabled row. This lets one option go off the table, such as a sold-out plan tier, without locking every other option in the group.",
                         code: "<ChoiceRadio value=\"starter\" label=\"Starter plan\" isDisabled />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <HeroRadioGroup aria-label="Plan" value="starter" onChange={() => {}} className="flex flex-col gap-2">
                                     <ChoiceRadio value="starter" label="Starter plan" isDisabled showAnatomy />
                                 </HeroRadioGroup>
@@ -157,7 +158,7 @@ export const Disabled: Story = {
 /** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c): dot + label bar. No radio-context needed. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChoiceRadio"
                 tier="atom"
@@ -170,7 +171,7 @@ export const Loading: Story = {
                         why: "The dot and label are replaced by two shimmer bars sized to their resting footprint, drawn by the row itself rather than a shared skeleton component. A group's own Loading leaf just stacks several of these rows, so nothing here depends on a radio-context.",
                         code: "<ChoiceRadio value=\"\" label=\"\" isSkeleton />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <ChoiceRadio value="" label="" isSkeleton showAnatomy />
                             </div>
                         ),

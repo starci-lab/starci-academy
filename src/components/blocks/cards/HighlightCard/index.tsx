@@ -12,7 +12,7 @@ export interface HighlightCardProps extends WithClassNames<undefined> {
 
 /**
  * Wraps a card with a single accent-colored arc SWEEPING around it, sitting as its own
- * layer BEHIND it (peeking out past the edges by 2px) — a pure "nổi bật" (stand-out)
+ * layer BEHIND it (peeking out past the edges by 2px) — a pure "stand-out"
  * decoration, NOT a data signal (contrast with `SectionCard`'s `withVerdict`, a static
  * left band that DOES encode band/tier/zone data — `card.md` §3i vs §3j). Renders as 2
  * stacked cards: the INNER layer (bigger, behind, carries the sweeping-light effect) and

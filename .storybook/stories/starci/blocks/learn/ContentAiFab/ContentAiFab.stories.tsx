@@ -33,7 +33,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the floating trigger. `isOpen` decides whether it renders at all. */
 export const Default: Story = {
     render: () => (
-        <div className="relative h-64 rounded-2xl bg-default-100 p-8">
+        <div data-tier="fixture" className="relative h-64 rounded-2xl bg-default-100 p-8">
             <BlockAnatomy
                 name="ContentAiFab"
                 tier="block"

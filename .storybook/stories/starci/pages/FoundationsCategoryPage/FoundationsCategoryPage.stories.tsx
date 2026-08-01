@@ -33,7 +33,7 @@ export default meta
 type Story = StoryObj<typeof FoundationsCategoryPage>
 
 const BREADCRUMBS = [
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
     { key: "foundations", label: "Foundations", onPress: () => {} },
     { key: "category", label: "Docker" },
@@ -43,7 +43,7 @@ const RESOURCES = [
     {
         id: "docker-cheatsheet",
         title: "Docker command cheatsheet",
-        description: "Mọi lệnh Docker hay dùng nhất, gom lại một trang để tra nhanh.",
+        description: "The Docker commands you will reach for most, all on one page for quick lookup.",
         thumbnailUrl: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=200",
         kind: "reference" as const,
         isRecommended: true,
@@ -51,22 +51,22 @@ const RESOURCES = [
     },
     {
         id: "multistage-video",
-        title: "Multi-stage build trong 8 phút",
-        description: "Video ngắn giải thích vì sao stage build giữ compiler còn stage cuối thì không.",
+        title: "Multi-stage builds in 8 minutes",
+        description: "A short video explaining why the build stage keeps the compiler while the final stage does not.",
         kind: "video" as const,
         onPress: () => {},
     },
     {
         id: "cache-article",
-        title: "Image layer và cache hoạt động ra sao",
-        description: "Mỗi lệnh trong Dockerfile đẻ một layer, thứ tự lệnh quyết định cache còn dùng được không.",
+        title: "How image layers and cache actually work",
+        description: "Every command in a Dockerfile creates a layer, and the command order decides whether the cache still holds.",
         thumbnailUrl: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=200",
         kind: "article" as const,
         onPress: () => {},
     },
     {
         id: "registry-exercise",
-        title: "Đẩy image lên registry và ghim tag",
+        title: "Push an image to a registry and pin a tag",
         kind: "exercise" as const,
         isRecommended: true,
         onPress: () => {},
@@ -76,14 +76,14 @@ const RESOURCES = [
 const BASE = {
     breadcrumbItems: BREADCRUMBS,
     title: "Docker",
-    description: "Đóng gói và chạy ứng dụng nhất quán trên mọi môi trường.",
+    description: "Package and run applications consistently across every environment.",
     onEnrollTrial: () => {},
     searchQuery: "",
     onSearchQueryChange: () => {},
     suggestions: [],
     onSelectSuggestion: () => {},
     onPageChange: () => {},
-    resourceListAriaLabel: "Tài nguyên Docker",
+    resourceListAriaLabel: "Docker resources",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -97,7 +97,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the screen's one shape: header, trial nudge, search row, resource list. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationsCategoryPage"
                 tier="screen"
@@ -185,7 +185,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block that can mirror itself does, and the trial nudge is forced hidden until its status is known. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationsCategoryPage"
                 tier="screen"

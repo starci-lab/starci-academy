@@ -19,7 +19,7 @@ export interface PriceBreakdown {
     phaseLabel?: string
     /** Loyalty discount percent (0 = no loyalty row). */
     loyaltyPercent: number
-    /** Localised loyalty note (e.g. "đã sở hữu 2 khóa") appended to the loyalty row. */
+    /** Localised loyalty note (e.g. "already owns 2 courses") appended to the loyalty row. */
     loyaltyNote?: string
 }
 

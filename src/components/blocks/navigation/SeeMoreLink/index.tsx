@@ -14,7 +14,7 @@ export type SeeMoreLinkSize = "sm" | "xs"
 
 /** Props for the {@link SeeMoreLink} block. */
 export interface SeeMoreLinkProps extends WithClassNames<undefined> {
-    /** Link label — e.g. "Xem thêm", "Tiếp tục", "Xem tất cả". */
+    /** Link label — e.g. "See more", "Continue", "View all". */
     children: ReactNode
     /**
      * Press handler. Ignored when {@link href} is set, and when
@@ -34,7 +34,7 @@ export interface SeeMoreLinkProps extends WithClassNames<undefined> {
     size?: SeeMoreLinkSize
 }
 
-/** Shared look — semibold accent text (matches LabeledCard "Xem thêm"). */
+/** Shared look — semibold accent text (matches LabeledCard "See more"). */
 const baseClassName = (size: SeeMoreLinkSize, className?: string) =>
     cn(
         "inline-flex w-fit shrink-0 items-center gap-1 font-semibold text-accent-soft-foreground no-underline",
@@ -43,7 +43,7 @@ const baseClassName = (size: SeeMoreLinkSize, className?: string) =>
     )
 
 /**
- * The shared "Xem thêm →" / "Tiếp tục →" affordance: semibold accent text + a
+ * The shared "See more →" / "Continue →" affordance: semibold accent text + a
  * caret that slides right on hover, with an opacity fade (no underline). Used by
  * LabeledCard `onSeeMore` and ContinueCard `item` CTA so both read as the same
  * control.

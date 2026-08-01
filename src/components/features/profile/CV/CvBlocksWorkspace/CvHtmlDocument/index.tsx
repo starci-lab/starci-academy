@@ -343,8 +343,8 @@ const MINIMAL_ACCENT = "#111111"
 
 /** classic (default) — every block stacked in one column with accent section
  * rules. The NAME renders as plain foreground ink (TEXT_COLOR), not the accent
- * — accent is reserved for the section-title rules only (thầy: "mẫu cổ điển để
- * text-foreground"). Personal is special-cased (mirrors modern/sidebar below)
+ * — accent is reserved for the section-title rules only (teacher: "the classic template should
+ * use text-foreground"). Personal is special-cased (mirrors modern/sidebar below)
  * so only its name color is overridden; the rest still flow through the
  * generic `CvBlockView` with the real accent for their section headings. */
 const ClassicTemplate = ({ blocks, accent, scale }: CvTemplateProps) => {

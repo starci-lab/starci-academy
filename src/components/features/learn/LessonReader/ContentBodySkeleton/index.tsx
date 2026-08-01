@@ -40,12 +40,12 @@ const MARKDOWN_ARTICLE_SECTIONS: Array<MarkdownArticleSection> = [
 
 /**
  * Markdown article block: section headings (`text-xl` in prose) + body paragraphs.
- * gap-3 giữa các section; gap-2 giữa heading và paragraph trong mỗi section.
+ * gap-3 between sections; gap-2 between the heading and paragraph within each section.
  */
 const MarkdownArticleSkeleton = () => (
     <div className="flex flex-col gap-3">
         {MARKDOWN_ARTICLE_SECTIONS.map((section, index) => (
-            // gap-2 = heading ↔ paragraph (cụm con sát nhau trong 1 section)
+            // gap-2 = heading ↔ paragraph (a tight sub-cluster within one section)
             <div key={index} className="flex flex-col gap-2">
                 <SkeletonText size="xl" width={section.headingWidth} />
                 <SkeletonParagraph size="sm" lines={section.lines} />
@@ -77,7 +77,7 @@ export const ContentBodySkeleton = ({
     variant = "v2",
 }: ContentBodySkeletonProps) => {
     if (variant === "legacy") {
-        // gap-3 = toolbar ↔ article (trong 1 block skeleton)
+        // gap-3 = toolbar ↔ article (within one skeleton block)
         return (
             <div className={cn("flex flex-col gap-3 text-sm text-muted", className)}>
                 <ActionToolbarSkeleton />

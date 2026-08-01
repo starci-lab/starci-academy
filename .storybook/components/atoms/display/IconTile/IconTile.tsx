@@ -49,10 +49,6 @@ interface IconTileOwnProps {
     size?: IconTileSize
     /** `true` → attaches `data-anat-part` to each part for the BlockAnatomy badge. */
     showAnatomy?: boolean
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -138,10 +134,8 @@ const IconTileBase = ({
     tone = "accent",
     size = "sm",
     isSkeleton = false,
-    className,
     classNames,
     showAnatomy = false,
-    anatPart,
 }: IconTileProps) => {
     // a broken cover URL (404 / unsynced asset) falls back to the icon instead of a
     // broken-image glyph; reset when the src changes.
@@ -155,26 +149,29 @@ const IconTileBase = ({
     if (isSkeleton) {
         return (
             <HeroSkeleton
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
-                className={cn("shrink-0", SIZE_BOX[size], SHAPE_CLASS, className, classNames)}
+                data-tier="atom"
+                data-component="IconTile"
+                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                className={cn("shrink-0", SIZE_BOX[size], SHAPE_CLASS, classNames)}
             />
         )
     }
 
     return (
-        // Tile/Cover/Icon are plain elements, not importable components, so none
-        // of them gets a self-badge fallback here; only `anatPart` from a parent
-        // names this root as one opaque node.
+        // Tile/Cover/Icon are plain elements, not importable components — but the
+        // tile itself IS the atom, so it badges as its own name like any other
+        // atom's root (Rule 10); there is nothing here for a caller to name better.
         <div
             aria-hidden
-            data-anat-part={anatPart}
+            data-tier="atom"
+            data-component="IconTile"
+            data-anat-part={showAnatomy ? "IconTile" : undefined}
             className={cn(
                 "flex shrink-0 items-center justify-center overflow-hidden",
                 SIZE_BOX[size],
                 SHAPE_CLASS,
                 // skip the tint when a cover image fills the tile
                 showImage ? null : TONE[tone],
-                className,
                 classNames,
             )}
         >
@@ -198,3 +195,5 @@ const IconTileBase = ({
 
 /** `IconTile.*` — framed icon-tile namespace. */
 export { IconTileBase as IconTile }
+
+export const meta = { tier: "atom", name: "IconTile" } as const

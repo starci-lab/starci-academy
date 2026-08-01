@@ -3,13 +3,13 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ContinueCardHero } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { WarningIcon } from "@phosphor-icons/react"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-// `FeedbackEmpty` accepts icon as a COMPONENT ref and forces `size-8` itself (§4/§5) —
+// `EmptyState` accepts icon as a COMPONENT ref and forces `size-8` itself (§4/§5) —
 // phosphor's `weight="duotone"` can no longer tag along, so it's wrapped in a component to KEEP the artwork.
-const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...props} weight="duotone" />
+const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon data-tier="fixture" {...props} weight="duotone" />
 
 /**
  * DESIGN — the `hero` ContinueCard in its NO-PROGRESS shape (no `value` → no
@@ -31,7 +31,7 @@ export default meta
 type Story = StoryObj<typeof ContinueCardHero>
 
 /** Plain canvas — each story wraps its render in its own per-leaf BlockAnatomy. */
-const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+const shell = (node: React.ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
 
 // scenario base = the no-progress-yet shape (no value passed → ProgressMeter doesn't render).
 const noProgressBase = {
@@ -97,7 +97,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// error leaf: network drop → `FeedbackEmpty` SITS INSIDE the frame, the Retry button is in the `action` prop.
+// error leaf: network drop → `EmptyState` SITS INSIDE the frame, the Retry button is in the `action` prop.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
@@ -106,7 +106,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         storyId: "composites-cards-surfacecard-surfacecard--default",
         children: [
             {
-                name: "FeedbackEmpty",
+                name: "EmptyState",
                 tier: "composite",
                 role: "danger tone + icon + description + a Retry button",
                 state: "danger",
@@ -140,7 +140,7 @@ export const NotStarted: Story = {
     onPress={handleResume}
 />`,
                         render: (
-                            <div className="w-96">
+                            <div data-tier="fixture" className="w-96">
                                 <ContinueCardHero {...noProgressBase} />
                             </div>
                         ),
@@ -175,7 +175,7 @@ export const Skeleton: Story = {
     isSkeleton
 />`,
                         render: (
-                            <div className="w-96">
+                            <div data-tier="fixture" className="w-96">
                                 <ContinueCardHero {...noProgressBase} isSkeleton />
                             </div>
                         ),
@@ -197,29 +197,34 @@ export const LoadError: Story = {
                 states={[
                     {
                         name: "load fails (network drop)",
-                        why: "The card's own frame stays unchanged while its body swaps to FeedbackEmpty tone danger with a retry button, dropping every other card node. An error must never make the frame itself disappear, so the reader always sees the same card outline, just with a different message inside it.",
-                        code: `<SurfaceCard>
-    <FeedbackEmpty
-        tone="danger"
-        title="Connection lost"
-        description="The network seems to have dropped. Check your connection and try again."
-        action={<Button variant="secondary" label="Retry" />}
-    />
-</SurfaceCard>`,
+                        why: "The card's own frame stays unchanged while its body swaps to EmptyState tone danger with a retry button, dropping every other card node. An error must never make the frame itself disappear, so the reader always sees the same card outline, just with a different message inside it.",
+                        code: `<SurfaceCard
+    body={() => (
+        <EmptyState
+            tone="danger"
+            title="Connection lost"
+            description="The network seems to have dropped. Check your connection and try again."
+            action={<Button variant="secondary" label="Retry" />}
+        />
+    )}
+/>`,
                         render: (
-                            <div className="w-96 p-8">
-                                <SurfaceCard anatPart="SurfaceCard">
-                                    <FeedbackEmpty
-                                        anatPart="FeedbackEmpty"
-                                        tone="danger"
-                                        icon={WarningDuotone}
-                                        title="Connection lost"
-                                        description="The network seems to have dropped. Check your connection and try again."
-                                        action={
-                                            <Button variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
-                                        }
-                                    />
-                                </SurfaceCard>
+                            <div data-tier="fixture" className="w-96 p-8">
+                                <SurfaceCard
+                                    anatPart="SurfaceCard"
+                                    body={() => (
+                                        <EmptyState
+                                            anatPart="EmptyState"
+                                            tone="danger"
+                                            icon={WarningDuotone}
+                                            title="Connection lost"
+                                            description="The network seems to have dropped. Check your connection and try again."
+                                            action={
+                                                <Button variant="secondary" size="sm" label="Retry" onPress={() => {}} />
+                                            }
+                                        />
+                                    )}
+                                />
                             </div>
                         ),
                     },

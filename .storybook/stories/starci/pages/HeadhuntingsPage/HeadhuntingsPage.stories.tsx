@@ -40,52 +40,52 @@ export default meta
 type Story = StoryObj<typeof HeadhuntingsPage>
 
 const BREADCRUMBS = [
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "directory", label: "Danh sách tư vấn viên" },
+    { key: "directory", label: "Consultant directory" },
 ]
 
 const CONSULTANTS = [
     {
         id: "c1",
-        fullName: "Trần Minh Khôi",
+        fullName: "Tran Minh Khoi",
         jobTitle: "Senior IT Recruiter",
         companyTitle: "TalentBridge",
-        description: "6 năm tuyển dụng backend & DevOps cho các công ty product Đông Nam Á.",
+        description: "6 years recruiting backend & DevOps engineers for Southeast Asian product companies.",
     },
     {
         id: "c2",
-        fullName: "Nguyễn Hải Yến",
+        fullName: "Nguyen Hai Yen",
         jobTitle: "Tech Recruitment Lead",
         companyTitle: "HireStack",
-        description: "Chuyên tuyển frontend & mobile cho startup Series A trở lên.",
+        description: "Specializes in frontend & mobile hires for Series A and later startups.",
     },
     {
         id: "c3",
-        fullName: "Phạm Đức Anh",
+        fullName: "Pham Duc Anh",
         jobTitle: "IT Headhunter",
         companyTitle: "NextRole",
-        description: "Kết nối kỹ sư data/AI với các công ty đang mở rộng đội ngũ.",
+        description: "Connects data/AI engineers with companies growing their teams.",
     },
 ]
 
 const COMPANY_SUGGESTIONS = [
-    { id: "shopee-vn", label: "Shopee Việt Nam" },
+    { id: "shopee-vn", label: "Shopee Vietnam" },
     { id: "tiki", label: "Tiki Corporation" },
     { id: "fpt-software", label: "FPT Software" },
 ]
 
 const BASE = {
     breadcrumbItems: BREADCRUMBS,
-    title: "Danh sách tư vấn viên",
-    description: "Đặt lịch 1:1 với các tư vấn viên đang đồng hành cùng khoá DevOps Mastery.",
+    title: "Consultant directory",
+    description: "Book a 1:1 session with the consultants supporting the DevOps Mastery course.",
     companyQuery: "",
     onCompanyQueryChange: () => {},
     companySuggestions: [],
     onSelectCompany: () => {},
     onOpenConsultant: () => {},
-    consultantsEmptyTitle: "Chưa có chuyên viên tư vấn nào trong khoá học này",
-    consultantsAriaLabel: "Danh sách chuyên viên tư vấn",
+    consultantsEmptyTitle: "No consultants on this course yet",
+    consultantsAriaLabel: "Consultant roster",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -98,7 +98,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the screen's one shape: header, company search row, consultant roster. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="HeadhuntingsPage"
                 tier="screen"
@@ -110,7 +110,7 @@ export const Default: Story = {
                         name: "resting search, roster populated",
                         why: "The everyday shape: an untouched company search field above a roster of consultants that has already resolved. Every function of the screen is present, in the order the reader meets them.",
                         code: `<HeadhuntingsPage
-    title="Danh sách tư vấn viên"
+    title="Consultant directory"
     companyQuery=""
     companySuggestions={[]}
     consultants={consultants}
@@ -177,7 +177,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block that can mirror itself does. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="HeadhuntingsPage"
                 tier="screen"

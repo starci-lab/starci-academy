@@ -92,7 +92,7 @@ import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster
  *   Loading leaf without wiring a fetch flag — that also routes to the Loading
  *   branch. Both is-a's converge on one `AsyncContent.isLoading` computation
  *   rather than opening a second, competing branch.
- * ★6 — the asker's own question is labelled "Bạn" instead of their real name
+ * ★6 — the asker's own question is labelled "You" instead of their real name
  *   (mirrors `QuestionRow`'s `isMineQuestion`), the one piece of `currentUserId`
  *   the placeholder DOES use — everything else `currentUserId`/`currentUser`/
  *   `onAnswered` carry is pure pass-through for the future `QaQuestionThread`
@@ -100,8 +100,8 @@ import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster
  * ★7 — the chip-pill row keeps exactly ONE `Chip` (status — the axis worth
  *   scanning the whole list for) per row; the scope tag rides as plain muted
  *   text beside it instead of a second chip (`eslint-plugin-starci-fe`'s
- *   `no-adjacent-chip`: "≥2 chip kề nhau — giữ 1 chip, phần còn lại text +
- *   icon inline"). The real `src` sibling (`QaInboxRow`) uses two chips; this
+ *   `no-adjacent-chip`: "≥2 adjacent chips — keep 1 chip, the rest as inline
+ *   text + icon"). The real `src` sibling (`QaInboxRow`) uses two chips; this
  *   port deliberately diverges to honor THIS Storybook's own enforcement gate.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -127,7 +127,7 @@ export interface CourseQaQuestionItem {
     id: string
     /** Who asked it. */
     author: CourseQaQuestionAuthor
-    /** Already-formatted relative time, e.g. "2 giờ trước" (no i18n layer at this tier). */
+    /** Already-formatted relative time, e.g. "2 hours ago" (no i18n layer at this tier). */
     createdTimeAgo: string
     /** `true` → a pin glyph rides beside the asker's name. */
     isPinned?: boolean
@@ -135,7 +135,7 @@ export interface CourseQaQuestionItem {
     isFounderAuthor?: boolean
     /** One/two-line preview of the question body. */
     preview: string
-    /** Which lesson (or "chung khóa") this question belongs to. */
+    /** Which lesson (or "general/course-wide") this question belongs to. */
     scope: CourseQaQuestionScope
     /** How many answers this question has. `0` ⇒ unanswered. */
     replyCount: number
@@ -165,7 +165,7 @@ export interface CourseQaQuestionListProps {
     totalPages: number
     /** Fired with the 1-based page the viewer picked. */
     onPageChange: (page: number) => void
-    /** Signed-in viewer's id (drives the "Bạn" swap, ★6); `null` when signed out. */
+    /** Signed-in viewer's id (drives the "You" swap, ★6); `null` when signed out. */
     currentUserId: string | null
     /** Signed-in viewer's identity — pass-through for the `QaQuestionThread` swap (★2). */
     currentUser: CourseQaCurrentUser | null
@@ -184,21 +184,21 @@ export interface CourseQaQuestionListProps {
 /** How many placeholder rows mirror the list while the first page loads — matches `CourseQaSkeleton.tsx`. */
 const SKELETON_ROW_COUNT = 4
 
-const ERROR_TITLE = "Không tải được danh sách câu hỏi"
-const RETRY_LABEL = "Thử lại"
-const EMPTY_TITLE = "Không có câu hỏi nào khớp bộ lọc hiện tại"
-const EMPTY_DESCRIPTION = "Thử đổi bộ lọc hoặc từ khoá tìm kiếm khác."
+const ERROR_TITLE = "Couldn't load the question list"
+const RETRY_LABEL = "Retry"
+const EMPTY_TITLE = "No questions match the current filter"
+const EMPTY_DESCRIPTION = "Try a different filter or search term."
 
 /** The block's own scope→label vocabulary (§14d.1) — never handed in pre-formatted. */
 const scopeLabel = (scope: CourseQaQuestionScope): string =>
-    scope.kind === "lesson" ? `Bài: ${scope.lessonTitle}` : "Chung"
+    scope.kind === "lesson" ? `Lesson: ${scope.lessonTitle}` : "General"
 
 /** The block's own status→label vocabulary (§14d.1). */
 const statusLabel = (replyCount: number, answeredByFounder?: boolean): string => {
     if (replyCount <= 0) {
-        return "Chưa trả lời"
+        return "Not answered yet"
     }
-    return answeredByFounder ? "Người hướng dẫn đã trả lời" : "Đã trả lời"
+    return answeredByFounder ? "Instructor answered" : "Answered"
 }
 
 /** Props for the local {@link SkeletonQuestionRow}. */
@@ -219,34 +219,34 @@ interface SkeletonQuestionRowProps {
 const SkeletonQuestionRow = ({ showAnatomy }: SkeletonQuestionRowProps) => {
     const previewLines = (
         <>
-            <Typography size="sm" isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Typography" : undefined} />
-            <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" isSkeleton classNames={["w-full"]} showAnatomy={showAnatomy} />
+            <Typography size="sm" isSkeleton classNames={["w-2/3"]} showAnatomy={showAnatomy} />
         </>
     )
 
     const chipRow = (
         <>
-            <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-            <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+            <Typography size="xs" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
+            <Chip isSkeleton showAnatomy={showAnatomy} />
         </>
     )
 
     const textColumn = (
         <>
             {/* asker + time line */}
-            <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
             {/* two-line preview */}
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={previewLines} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={previewLines} />
             {/* chip-pill row — ONE chip (status, the classification axis) + the scope
                 as a plain shimmer bar, matching the real row's own text-inline treatment
                 (eslint `starci-fe/no-adjacent-chip`, ★7 below). */}
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={chipRow} />
+            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={chipRow} />
         </>
     )
 
     return (
         <StackH
-            gap="grouped"
+            gap={4}
             align="start"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -255,7 +255,7 @@ const SkeletonQuestionRow = ({ showAnatomy }: SkeletonQuestionRowProps) => {
                     <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
                         <Avatar isSkeleton size="sm" showAnatomy={showAnatomy} />
                     </div>
-                    <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={textColumn} />
+                    <StackV gap={2} classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={textColumn} />
                     {/* status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares */}
                     <HeroSkeleton className="size-2 shrink-0 rounded-full" />
                 </>
@@ -281,7 +281,7 @@ interface QuestionPreviewRowProps {
 const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPreviewRowProps) => {
     const isMine = currentUserId != null && currentUserId === question.author.id
     const isAnswered = question.replyCount > 0
-    const askerName = isMine ? "Bạn" : question.author.displayName
+    const askerName = isMine ? "You" : question.author.displayName
 
     // ONE chip for the row's classification axis (status — the thing worth scanning
     // the list for); the scope rides as plain muted text beside it instead of a
@@ -289,7 +289,7 @@ const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPr
     const chips: Array<ClusterItem> = [
         {
             key: "scope",
-            content: <Typography size="xs" color="muted" text={scopeLabel(question.scope)} anatPart={showAnatomy ? "Typography" : undefined} />,
+            content: <Typography size="xs" color="muted" text={scopeLabel(question.scope)} showAnatomy={showAnatomy} />,
         },
         {
             key: "status",
@@ -297,7 +297,7 @@ const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPr
                 <Chip
                     tone={isAnswered ? "success" : "default"}
                     text={statusLabel(question.replyCount, question.answeredByFounder)}
-                    anatPart={showAnatomy ? "Chip" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ),
         },
@@ -309,7 +309,7 @@ const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPr
         chips.push({
             key: "replyCount",
             content: (
-                <Typography size="xs" color="muted" text={`${question.replyCount} phản hồi`} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" text={`${question.replyCount} replies`} showAnatomy={showAnatomy} />
             ),
         })
     }
@@ -319,25 +319,25 @@ const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPr
             {question.isPinned ? (
                 <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
             ) : null}
-            <Typography size="xs" weight="medium" text={askerName} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" weight="medium" text={askerName} showAnatomy={showAnatomy} />
             {question.isFounderAuthor ? (
                 <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
             ) : null}
-            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} showAnatomy={showAnatomy} />
         </>
     )
 
     const textColumn = (
         <>
-            <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={nameLine} />
-            <Typography size="sm" lineClamp={2} text={question.preview} anatPart={showAnatomy ? "Typography" : undefined} />
-            <Cluster gap="related" items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
+            <StackH gap={2} anatPart={showAnatomy ? "StackH" : undefined} body={nameLine} />
+            <Typography size="sm" lineClamp={2} text={question.preview} showAnatomy={showAnatomy} />
+            <Cluster gap={3} items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
         </>
     )
 
     return (
         <StackH
-            gap="grouped"
+            gap={4}
             align="start"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -352,7 +352,7 @@ const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPr
                             showAnatomy={showAnatomy}
                         />
                     </div>
-                    <StackV gap="tight" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={textColumn} />
+                    <StackV gap={2} classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={textColumn} />
                     <span
                         aria-hidden
                         className={`size-2 shrink-0 rounded-full ${isAnswered ? "bg-success" : "bg-warning"}`}
@@ -367,7 +367,7 @@ const QuestionPreviewRow = ({ question, currentUserId, showAnatomy }: QuestionPr
 const skeletonItems = (showAnatomy: boolean): Array<SurfaceCardListItem> =>
     Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
         key: `skeleton-${index}`,
-        content: <SkeletonQuestionRow showAnatomy={showAnatomy} />,
+        content: () => <SkeletonQuestionRow showAnatomy={showAnatomy} />,
     }))
 
 /** The Content branch's real rows — each a {@link QuestionPreviewRow} (★2 gap stand-in). */
@@ -378,7 +378,7 @@ const questionItems = (
 ): Array<SurfaceCardListItem> =>
     questions.map((question) => ({
         key: question.id,
-        content: <QuestionPreviewRow question={question} currentUserId={currentUserId} showAnatomy={showAnatomy} />,
+        content: () => <QuestionPreviewRow question={question} currentUserId={currentUserId} showAnatomy={showAnatomy} />,
     }))
 
 /**
@@ -443,7 +443,7 @@ const CourseQaQuestionList = ({
                 showAnatomy={showAnatomy}
                 content={
                     <StackV
-                        gap="grouped"
+                        gap={4}
                         anatPart={showAnatomy ? "StackV" : undefined}
                         body={
                             <>

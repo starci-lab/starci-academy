@@ -1,5 +1,4 @@
 import React from "react"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
@@ -76,24 +75,9 @@ const PlaygroundHubHeader = ({
         <div data-anat-part={anatPart}>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
-                title={
-                    isSkeleton ? (
-                        // `PageHeader` has no `isSkeleton` of its own, so the block calls the
-                        // atom directly with the EXACT size/weight the frame uses for a title
-                        // and feeds the result into the slot — same move `ContentHeader` and
-                        // `FoundationsHeader` make.
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                    )
-                }
-                description={
-                    isSkeleton ? (
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        description
-                    )
-                }
+                isSkeleton={isSkeleton}
+                title={title}
+                description={description}
             />
         </div>
     )

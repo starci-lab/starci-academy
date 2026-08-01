@@ -71,12 +71,7 @@ export interface TabsBaseProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
 
@@ -93,7 +88,6 @@ export const TabsBase = ({
     variant = "primary",
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: TabsBaseProps) => {
     if (isSkeleton) {
@@ -105,7 +99,7 @@ export const TabsBase = ({
         // real component, tagging it would be a made-up name.
         if (variant === "secondary") {
             return (
-                <div className={cn("flex items-center gap-2", className, classNames)}>
+                <div data-tier="atom" data-component="Tabs" className={cn("flex items-center gap-2", classNames)}>
                     {items.map((item) => (
                         <div key={item.key} className="flex flex-col items-center gap-2 px-1 py-2">
                             <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
@@ -116,7 +110,7 @@ export const TabsBase = ({
             )
         }
         return (
-            <div className={cn("flex items-center gap-2", className, classNames)}>
+            <div data-tier="atom" data-component="Tabs" className={cn("flex items-center gap-2", classNames)}>
                 {items.map((item) => (
                     <HeroSkeleton key={item.key} className="h-9 w-1/3 rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 ))}
@@ -125,10 +119,12 @@ export const TabsBase = ({
     }
     return (
         <HeroTabs
+            data-tier="atom"
+            data-component="Tabs"
             variant={variant}
             selectedKey={selectedKey}
             onSelectionChange={(key) => onSelectionChange(String(key))}
-            className={cn("whitespace-nowrap", className, classNames)}
+            className={cn("whitespace-nowrap", classNames)}
         >
             <HeroTabs.ListContainer>
                 <HeroTabs.List aria-label={ariaLabel}>
@@ -185,3 +181,5 @@ export const TabsBase = ({
         </HeroTabs>
     )
 }
+
+export const meta = { tier: "atom", name: "Tabs" } as const

@@ -37,7 +37,7 @@ export const RankDeltaCaret = ({
     // no last-period baseline → an EMPTY SPACER that still reserves the column width
     // (the caller's `className` carries the `w-8`), so a #1 row with no movement keeps
     // the value/delta columns aligned with the rows below it instead of letting the
-    // value slide right into the empty slot (thầy 2026-07-17 "xanh là phải thẳng hàng").
+    // value slide right into the empty slot (the teacher, 2026-07-17: "the green ones need to line up").
     if (delta === null) {
         return <span className={cn(className)} aria-hidden />
     }

@@ -47,7 +47,7 @@ const EMBEDDING_MODEL = "nomic-embed-text"
 /**
  * Below this many seconds the pairing-code countdown switches from muted to a
  * danger tone. One minute is enough to still act on (paste the command, or hit
- * "lấy mã mới") but short enough that the colour change isn't crying wolf.
+ * "get a new code") but short enough that the colour change isn't crying wolf.
  */
 const PAIR_CODE_URGENT_SECONDS = 60
 
@@ -177,14 +177,14 @@ export interface PlaygroundPrepareProps extends WithClassNames<undefined> {
     /**
      * The paired machine's hardware snapshot (`device:info`), or `null` before an
      * agent reports one. Rendered as the SAME `StatRibbon` the Lab shows, so the
-     * learner sees the identical "Máy của bạn" panel on both surfaces instead of a
+     * learner sees the identical "Your machine" panel on both surfaces instead of a
      * thinner one-line callout here — Setup is where they decide the machine is
      * good enough, so it should show the most, not the least.
      */
     deviceInfo?: PlaygroundDeviceInfo | null
     /** Rows passed straight to {@link ReadinessChecklist}. */
     readinessItems: Array<ReadinessChecklistItem>
-    /** Whether the "Bắt đầu playground" button is enabled. */
+    /** Whether the "Start playground" button is enabled. */
     allReady: boolean
     /** Enter the workspace once the machine is ready. */
     onEnter: () => void
@@ -301,7 +301,7 @@ export const PlaygroundPrepare = ({
 
     // Which RAG models are already pulled — read straight off the readiness rows the
     // provider computed from `ollama:status`, so step 3 can DROP its suggestion once
-    // there is nothing left to install ("cài rồi thì khỏi gợi ý"). A pull command
+    // there is nothing left to install ("already installed, no need to suggest it"). A pull command
     // for a model you already have is noise, and worse, it reads as "still not done".
     const genInstalled = readyById.get("gen") === true
     const embedInstalled = readyById.get("embed") === true
@@ -332,18 +332,18 @@ export const PlaygroundPrepare = ({
 
     // ORDER: pair the agent FIRST, then install the engine.
     //
-    // Every "Kiểm tra lại" runs THROUGH the agent (browser → gateway → agent →
+    // Every "Check again" runs THROUGH the agent (browser → gateway → agent →
     // `env:report`), so an engine step placed before the pairing step can never
     // verify itself — the learner installs Docker, presses check, and the only
-    // honest answer the UI can give is "chưa nối được agent". Pairing needs
+    // honest answer the UI can give is "couldn't connect to the agent yet". Pairing needs
     // nothing but Node, so it's both the cheapest step AND the one that makes
     // every later check actually work.
     // An EXPIRED code must stop being copyable — showing a dead command with a
     // warning beside it still invites the paste, and the agent's failure then
-    // reads as "agent hỏng" rather than "mã đã hết hạn". Swap the command out for
+    // reads as "the agent is broken" rather than "the code has expired". Swap the command out for
     // the one action that helps.
     /**
-     * "Lấy mã mới" — available at ALL times, not only after expiry: a learner may
+     * "Get a new code" — available at ALL times, not only after expiry: a learner may
      * need to rotate a code they read out on a screen-share, or point the session
      * at a different machine, long before 15 minutes are up.
      *
@@ -353,7 +353,7 @@ export const PlaygroundPrepare = ({
      * `danger`.
      *
      * Lives in the step's ACTION ROW (not its body) so it sits on one line beside
-     * "Kiểm tra lại": the two used to be rendered by different branches of the
+     * "Check again": the two used to be rendered by different branches of the
      * tree — body vs shared footer — which is why nothing could line them up.
      */
     const renderRefreshCodeButton = () => (
@@ -437,11 +437,11 @@ export const PlaygroundPrepare = ({
         body: renderPairBody(),
         // countdown + the Node/terminal requirement share one muted line
         meta: pairingCodeExpired ? undefined : renderPairMeta(),
-        // rendered in the action row beside "Kiểm tra lại", never in the body
+        // rendered in the action row beside "Check again", never in the body
         actions: onRefreshPairingCode ? renderRefreshCodeButton() : undefined,
         readyId: "agent",
         // An expired code means pairing is IMPOSSIBLE right now, so "check again"
-        // could only ever answer "chưa nối được agent" — a button that is
+        // could only ever answer "couldn't connect to the agent yet" — a button that is
         // guaranteed to fail is worse than no button. Leave exactly one action:
         // get a new code.
         hideCheck: pairingCodeExpired,
@@ -527,7 +527,7 @@ export const PlaygroundPrepare = ({
         // mirrors the Flashcards hub (stacked labeled sections) — the full-bleed
         // 2-pane belongs to the Lab route, where the learner actually works.
         <div className={cn("flex flex-col gap-6", className)}>
-            {/* ── TIẾP TỤC — the page's single primary action, first thing on screen ── */}
+            {/* ── CONTINUE — the page's single primary action, first thing on screen ── */}
             <LabeledCard label={t("playground.prepare.continueLabel")}>
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex flex-col gap-0">
@@ -554,7 +554,7 @@ export const PlaygroundPrepare = ({
                 </div>
             </LabeledCard>
 
-            {/* ── MÁY CỦA BẠN — the same StatRibbon the Lab renders, not a thinner
+            {/* ── YOUR MACHINE — the same StatRibbon the Lab renders, not a thinner
                     one-line callout. Setup is where the learner decides the machine is
                     good enough, so it should show the MOST detail, not the least; and
                     identical panels across the two surfaces mean they don't have to
@@ -606,11 +606,11 @@ export const PlaygroundPrepare = ({
             ) : null}
 
             {/* The model recommendation used to ALSO live here as a standalone callout,
-                duplicating step 3 ("Tải model"). Two surfaces recommending the same
+                duplicating step 3 ("Pull model"). Two surfaces recommending the same
                 pull read as noise — and both kept showing after the models were already
                 installed. The recommendation now lives ONLY inside step 3, where it can
                 also disappear once there is nothing left to install (teacher 2026-07-20:
-                "thống nhất gợi ý, 1 cái thôi · cài rồi thì khỏi gợi ý"). */}
+                "one unified suggestion only · already installed, no need to suggest it"). */}
 
             {/* One NAMED card per setup step — a numbered title + why it matters +
                     the commands + its own check button. Cards (not an accordion): each
@@ -649,7 +649,7 @@ export const PlaygroundPrepare = ({
                                             <Button
                                                 size="sm"
                                                 // tertiary, not secondary: no primary stands in this
-                                                // cluster (the surface's only primary is "Bắt đầu
+                                                // cluster (the surface's only primary is "Start
                                                 // playground" in the Continue card) — button.md §1.
                                                 variant="tertiary"
                                                 className="min-w-0 flex-1 sm:flex-none"
@@ -677,10 +677,10 @@ export const PlaygroundPrepare = ({
                                     </div>
                                     {/* Everything below the row is the RESULT of the last press,
                                             so it lives in one place instead of being scattered. */}
-                                    {/* Refused check — say WHY, in danger tone: "chưa nối được
-                                            agent" is a different problem from "đã kiểm, chưa
-                                            sẵn sàng", and the learner's next move differs too
-                                            (chạy npx vs mở engine). */}
+                                    {/* Refused check — say WHY, in danger tone: "couldn't connect to the
+                                            agent yet" is a different problem from "checked, not
+                                            ready yet", and the learner's next move differs too
+                                            (run npx vs open the engine). */}
                                     {checkError === step.id && !agentConnected ? (
                                         <Typography type="body-xs" className="text-danger-soft-foreground">
                                             {t("playground.prepare.checkNoAgent")}
@@ -695,10 +695,10 @@ export const PlaygroundPrepare = ({
                     </LabeledCard>
                 )
             })}
-            {/* ── TRẠNG THÁI MÁY — last section of the column, not a side panel ── */}
+            {/* ── MACHINE STATUS — last section of the column, not a side panel ── */}
             <LabeledList label={t("playground.prepare.readinessHeading")}>
                 {/* `bordered`: nested on the page surface, where shadow-surface can
-                    render invisible (card.md §0 "GIỮ border" + `bordered` 2026-07-13). */}
+                    render invisible (card.md §0 "KEEP the border" + `bordered` 2026-07-13). */}
                 <SurfaceListCard bordered>
                     <ReadinessChecklist
                         items={readinessItems}

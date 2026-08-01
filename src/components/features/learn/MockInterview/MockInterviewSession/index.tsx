@@ -150,34 +150,34 @@ const LEVEL_TO_TIER: Record<string, MockInterviewTier> = {
     senior: "cao",
 }
 
-/** Tier notches, in ascending order — the {@link FlexWrapButtonRadio}'s fixed item order (setup's shared Mức control). */
+/** Tier notches, in ascending order — the {@link FlexWrapButtonRadio}'s fixed item order (setup's shared Level control). */
 const TIERS: ReadonlyArray<MockInterviewTier> = ["so", "trung", "cao"]
 
 /** Number of questions drawn for a `mode="qna"` session (mirrors the BE's default seed count). */
 const QNA_QUESTION_COUNT = 5
 
 /**
- * Setup's top-level config mode (Vòng 5) — "Tự động" (default) is the flat,
+ * Setup's top-level config mode (Round 5) — "Auto" (default) is the flat,
  * sensible-default mock-exam run (random everything, feeds job-readiness);
- * "Tùy chỉnh" reveals the deliberate-practice controls below and does NOT
+ * "Custom" reveals the deliberate-practice controls below and does NOT
  * feed job-readiness (kept a clean signal from random runs only).
  */
 type MockInterviewConfigMode = "auto" | "configurable"
 
 /**
- * "Tùy chỉnh"'s question-count options, in ascending order. Kept as STRINGS
+ * "Custom"'s question-count options, in ascending order. Kept as STRINGS
  * (not numbers) because {@link FlexWrapButtonRadio} is a `<T extends string>`
  * single-select — parsed back to a number only when building the request.
  */
 const QUESTION_COUNT_OPTIONS: ReadonlyArray<"3" | "5" | "10"> = ["3", "5", "10"]
 
-/** "Tùy chỉnh"'s per-question cognitive frames, in fixed display order. */
+/** "Custom"'s per-question cognitive frames, in fixed display order. */
 const KIND_OPTIONS: ReadonlyArray<MockInterviewKind> = ["theory", "reasoning", "scenario"]
 
 /**
- * Pseudo-value for the kind picker's "Tất cả" button — pressed when NO kind filter is set
+ * Pseudo-value for the kind picker's "All" button — pressed when NO kind filter is set
  * (`selectedKinds` empty). Lets the whole row be ONE canonical {@link FlexWrapButtonRadio}
- * (multi) like the Ngôn ngữ picker, instead of a hand-rolled pill sitting beside the group.
+ * (multi) like the Language picker, instead of a hand-rolled pill sitting beside the group.
  */
 const KIND_ALL = "all" as const
 
@@ -219,7 +219,7 @@ const isStaticBankPrompt = (prompt: DrawnMockInterviewPrompt | undefined): boole
  * optimize). A plain theory/reasoning/scenario question has nothing to draw
  * or edit there — its answer is spoken/typed — so the workspace toggle is
  * disabled entirely rather than opening an empty, purposeless pane
- * (2026-07-09 feedback: a blank "Bảng vẽ kiến trúc" for a theory question).
+ * (2026-07-09 feedback: a blank "Architecture diagram board" for a theory question).
  */
 const questionHasWorkspaceTool = (isDesignMode: boolean, givenCodes: Array<{ lang: string, code: string }> | undefined): boolean =>
     isDesignMode || Boolean(givenCodes && givenCodes.length > 0)
@@ -275,12 +275,12 @@ const TIME_LIMIT_WARNING_SECONDS = 5 * 60
 /**
  * Mock interview — two top-level MODES (2026-07-06 "mode split"): `qna` draws
  * N independent questions, each RANDOMLY assigned one of 3 cognitive frames
- * (theory/reasoning/scenario) at draw time — mixed within one session, "y như
- * phỏng vấn thật" — badged per-question ("Câu 2/5 · Tình huống"); `design`
+ * (theory/reasoning/scenario) at draw time — mixed within one session, "just
+ * like a real interview" — badged per-question ("Question 2/5 · Scenario"); `design`
  * keeps the unchanged 5-phase system-design flow, reached from its own setup
  * button (System-Design courses only).
  *
- * Setup is flat (no per-control cards): a 3-notch tier (Sơ/Trung/Cao) drives
+ * Setup is flat (no per-control cards): a 3-notch tier (Junior/Mid/Senior) drives
  * both the random draw and the rubric's strictness; the prompt/questions are
  * only revealed once the session starts (like a real interview). The
  * right-pane workspace ({@link MockInterviewWorkspace}) renders straight to
@@ -345,7 +345,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     const startSessionSwr = useMutateStartMockInterviewSessionSwr()
     // the viewer's resumable in-progress session for this course (24h TTL), if any —
     // read BOTH by the rehydrate effect below (when `resumeSessionId` is present) and
-    // by the setup screen's "Resume phiên" card (always, so it can offer resuming even
+    // by the setup screen's "Resume session" card (always, so it can offer resuming even
     // when the learner just landed on the plain `/mock-interview` route).
     const inProgressSessionSwr = useQueryMyInProgressMockInterviewSessionSwr(courseId)
     const syncTurnsSwr = useMutateSyncMockInterviewSessionTurnsSwr()
@@ -363,7 +363,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     const authCheckSwr = useQueryUserSwr()
 
     const [phase, setPhase] = useState<MockInterviewPhase>("setup")
-    // which setup tab is active ("Bắt đầu" / "Lịch sử" / "Thống kê") — setup phase only.
+    // which setup tab is active ("Start" / "History" / "Stats") — setup phase only.
     // Seeded from `?tab=` so a shared/refreshed link lands back on the same tab (mirrors
     // the `?phase=` sync below, and `layouts/dashboard-hub.md`'s own "?tab= must be
     // shareable" precedent) — "begin" is the implicit default, never written to the URL.
@@ -372,7 +372,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         return initial === "history" || initial === "stats" ? initial : "begin"
     })
     const [tier, setTier] = useState<MockInterviewTier>("trung")
-    // learner-chosen name for this run, set at setup ("Tùy chỉnh phiên") — optional;
+    // learner-chosen name for this run, set at setup ("Customize session") — optional;
     // blank falls back to a TIME-BASED display name derived from `createdAt` once
     // the session exists (see `sessionDisplayName`), never random-generated.
     const [sessionName, setSessionName] = useState("")
@@ -394,13 +394,13 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             return [...previous, lang]
         })
     }, [])
-    // setup's "Tự động" vs "Tùy chỉnh" toggle — see MockInterviewConfigMode.
+    // setup's "Auto" vs "Custom" toggle — see MockInterviewConfigMode.
     const [configMode, setConfigMode] = useState<MockInterviewConfigMode>("auto")
-    // "Tùy chỉnh" only — Số câu (single-select, kept as a string — see QUESTION_COUNT_OPTIONS).
+    // "Custom" only — question count (single-select, kept as a string — see QUESTION_COUNT_OPTIONS).
     const [questionCount, setQuestionCount] = useState<"3" | "5" | "10">("5")
-    // "Tùy chỉnh" only — Kiểu câu (multi-select; empty array reads as "Tất cả").
+    // "Custom" only — question type (multi-select; empty array reads as "All").
     const [selectedKinds, setSelectedKinds] = useState<Array<MockInterviewKind>>([])
-    // "Tùy chỉnh" only — Cách trả lời, shapes the qna composer (voice-only/text-only/both).
+    // "Custom" only — answer method, shapes the qna composer (voice-only/text-only/both).
     const [answerMode, setAnswerMode] = useState<MockInterviewAnswerMode>("both")
     // the TOP-LEVEL flow the current/last-started run is in — "qna" (default,
     // started from the primary CTA) draws N questions each randomly assigned
@@ -408,7 +408,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // courses only) keeps the unchanged 5-phase flow.
     const [mode, setMode] = useState<MockInterviewMode>("qna")
     // the prompt drawn for the CURRENT run — only set once the session starts (by the
-    // server), so it is never shown on the setup screen (revealed after "Bắt đầu",
+    // server), so it is never shown on the setup screen (revealed after "Start",
     // like a real exam)
     const [selectedPrompt, setSelectedPrompt] = useState<DrawnMockInterviewPrompt | undefined>(undefined)
     // set when the server-side draw itself fails — surfaced on the setup screen so the
@@ -449,7 +449,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // true once the session has hit its 1-hour deadline (detected by the
     // client tick below reaching 0, OR by an ask coming back
     // `error==="SESSION_EXPIRED"` — whichever happens first) — drives the
-    // one-shot auto-grade effect + the Grading screen's "hết giờ" banner.
+    // one-shot auto-grade effect + the Grading screen's "time's up" banner.
     const [timedOut, setTimedOut] = useState(false)
     // guards the auto-grade-on-timeout effect to fire at most once
     const timedOutGradedRef = useRef(false)
@@ -471,7 +471,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
 
     // right-pane workspace — which tool renders, driven ENTIRELY by the current
     // question (2026-07-09: dropped the candidate-facing Whiteboard/Code/Notes tab
-    // bar + the Notes tool itself — "render thẳng công cụ", no manual picking).
+    // bar + the Notes tool itself — "render the tool directly", no manual picking).
     // "design" always renders the whiteboard (its capstones are architecture
     // systems); "qna" renders code only for a debug/review/optimize question.
     const [workspaceTool, setWorkspaceTool] = useState<"whiteboard" | "code">("whiteboard")
@@ -481,19 +481,19 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     }>({ nodes: [], edges: [] })
     const [codeState, setCodeState] = useState<MockInterviewCodeState>(MOCK_INTERVIEW_CODE_STATE_DEFAULT)
     // mode="qna" only — the single answer field's typed draft. Voice input mirrors into
-    // this same value (see the effect below) so gõ/nói land in ONE editable field
+    // this same value (see the effect below) so typing/speaking land in ONE editable field
     // instead of the old mic-only flow with nowhere to type.
     const [answerDraft, setAnswerDraft] = useState("")
     // whether the CURRENT question has a workspace tool to show. Reset to
     // `questionHasWorkspaceTool(...)` at every question/phase transition — no
-    // manual toggle anymore (2026-07-13, thầy: "câu nào cần công cụ thì phải
-    // hiện... không thì render empty card"): the right pane is ALWAYS visible,
+    // manual toggle anymore (2026-07-13, instructor: "whichever question needs the
+    // tool must show it... otherwise render an empty card"): the right pane is ALWAYS visible,
     // it just renders the tool when this is true or an `EmptyState` when false.
     // Stays MOUNTED when true (never `hidden`) so an in-progress sketch/code
     // buffer is never lost.
     const [workspaceOpen, setWorkspaceOpen] = useState(false)
-    // green room — whether the (collapsed-by-default) "Tùy chỉnh phiên" config is open.
-    // Defaults sensible (Tự động), so the pre-interview screen reads as a calm waiting
+    // green room — whether the (collapsed-by-default) "Customize session" config is open.
+    // Defaults sensible (Auto), so the pre-interview screen reads as a calm waiting
     // room, not a settings form; power users expand it to tune the run.
     const [configOpen, setConfigOpen] = useState(false)
     // whether the "no voice for this language installed" nudge is open — the browser's
@@ -510,7 +510,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // brand persona (face + name), no seniority label. Tier scales questions, not this.
     const persona = personaFor()
 
-    // "Luyện thiết kế hệ thống" is only offered for a System-Design course — its
+    // "Practice system design" is only offered for a System-Design course — its
     // capstones are architecture systems, the only ones the unchanged 5-phase
     // script fits.
     // TODO: refine to "a module large enough for a design interview" once a
@@ -525,7 +525,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     const currentKind = currentSeedTopic?.kind
     const totalQuestions = selectedPrompt?.seedTopics.length ?? QNA_QUESTION_COUNT
     const isLastQuestion = questionIndex >= totalQuestions - 1
-    // the single question card (mode="qna", Vòng 5) shows ONLY the interviewer's turn for
+    // the single question card (mode="qna", Round 5) shows ONLY the interviewer's turn for
     // the CURRENT question — never the short seed-title preview, which used to render
     // ALONGSIDE the full generated question and read as a duplicate.
     const currentQuestionTurn = [...turns].reverse().find(
@@ -534,7 +534,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
 
 
     // mirror the finalized STT transcript into the single answer draft while listening,
-    // so gõ (typing) and nói (voice) both land in ONE editable field. Skipped on the
+    // so typing and voice both land in ONE editable field. Skipped on the
     // very first (empty) tick after `start()` resets the hook's own transcript, so a
     // manually-typed draft is never wiped the instant the mic is tapped.
     useEffect(() => {
@@ -600,7 +600,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     }, [phase, pathname, searchParams, router])
 
     // mirror the setup tab into the URL (`?tab=history` / `?tab=stats`) — same technique
-    // as the `phase` mirror above, so "Lịch sử"/"Thống kê" are shareable/refresh-safe
+    // as the `phase` mirror above, so "History"/"Stats" are shareable/refresh-safe
     // links. "begin" (the default) is never written, keeping the common-case URL clean.
     useEffect(() => {
         const want = setupTab === "begin" ? null : setupTab
@@ -794,22 +794,22 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     }, [])
 
     // ask the SERVER to draw a fresh prompt for the current tier and start a new run.
-    // Re-drawing (rather than reusing the same prompt) is also how "Phỏng vấn lại"
+    // Re-drawing (rather than reusing the same prompt) is also how "Retry interview"
     // behaves — retrying asks the server for a fresh draw of the SAME mode/tier, never
     // the same prompt twice. The client never picks the prompt itself — it only asks
     // for one and stores the `sessionId` the server hands back, which
     // `gradeMockInterviewSession` later looks up server-side to trust the
     // stored prompt/level/mode instead of whatever the client echoes.
     //
-    // Takes an explicit mode so the two setup entry points ("Bắt đầu phỏng vấn" →
-    // qna, "Luyện thiết kế hệ thống" → design) each start the RIGHT mode without
+    // Takes an explicit mode so the two setup entry points ("Start interview" →
+    // qna, "Practice system design" → design) each start the RIGHT mode without
     // racing `setMode` — retry (no arg) reuses whichever mode the last run was in.
     const startSession = useCallback(async (nextMode: MockInterviewMode = mode) => {
         setStartError(null)
         setStartingMode(nextMode)
         setMode(nextMode)
-        // "Tự động" = random everything (all kinds, default question count) + counts
-        // toward job-readiness. "Tùy chỉnh" sends the picked question count/kinds and
+        // "Auto" = random everything (all kinds, default question count) + counts
+        // toward job-readiness. "Custom" sends the picked question count/kinds and
         // is EXCLUDED from job-readiness (kept a clean signal from random runs only).
         // mode="design" always counts (server forces it regardless of what's sent).
         const isConfigurable = nextMode === "qna" && configMode === "configurable"
@@ -1011,8 +1011,8 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // covers every append site (interviewer turns from `askNextTurn`/`deliverStaticQuestion`,
     // candidate turns from `submitAnswer`/`submitQnaAnswer`) without sprinkling a trigger
     // call at each one. Never awaited by the caller; still routed through `runGraphQL`
-    // (toast on failure, no success toast) rather than a silent catch (thầy 2026-07-11:
-    // "fe không nuốt lỗi, dùng runGraphQL đi") — a failed sync only degrades resumability
+    // (toast on failure, no success toast) rather than a silent catch (instructor 2026-07-11:
+    // "FE shouldn't swallow errors, use runGraphQL") — a failed sync only degrades resumability
     // (`myInProgressMockInterviewSession`), it never blocks the live interview, but the
     // candidate should still see it.
     const syncTurnsTrigger = syncTurnsSwr.trigger
@@ -1052,7 +1052,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         // elapsed timer) — spamming the sync mutation far more than "the transcript changed".
     }, [phase, turns, questionIndex, phaseIndex, syncTurnsTrigger, runGraphQL, t])
 
-    // mode="design" only (Vòng 5) — record the current spoken answer as a candidate
+    // mode="design" only (Round 5) — record the current spoken answer as a candidate
     // turn, then ask the interviewer to probe/follow-up on it within the SAME phase,
     // then clear the mic buffer. A real system-design interview is a multi-turn
     // Socratic back-and-forth per phase, so this stays as-is. mode="qna" uses
@@ -1208,8 +1208,8 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // "session time limit" — react to `timedOut` (flipped by either the client
     // countdown tick or a server SESSION_EXPIRED ask rejection) by auto-grading
     // with whatever transcript exists so far — the candidate's answer in
-    // progress (not yet submitted) is dropped, matching the "chấm những gì đã
-    // có, bỏ câu dở" ruling (no grace period). Guarded to fire at most once.
+    // progress (not yet submitted) is dropped, matching the "grade what's there,
+    // drop the unfinished one" ruling (no grace period). Guarded to fire at most once.
     useEffect(() => {
         if (!timedOut || timedOutGradedRef.current || phase !== "interview") {
             return
@@ -1218,9 +1218,9 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         void finishAndGrade()
     }, [timedOut, phase, finishAndGrade])
 
-    // mode="qna" only (Vòng 5) — "hỏi từng câu": record the answer, then move STRAIGHT
+    // mode="qna" only (Round 5) — "ask one question at a time": record the answer, then move STRAIGHT
     // to the next question (or straight to grading on the last one) — one combined
-    // action instead of the old "gửi câu trả lời" + separate "câu tiếp theo" buttons.
+    // action instead of the old "submit answer" + separate "next question" buttons.
     // No same-question follow-up probe (that stays design-only, see `submitAnswer`).
     const submitQnaAnswer = useCallback(() => {
         const answer = answerDraft.trim()
@@ -1319,7 +1319,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
 
     // ── the shared WORK-SURFACE HEADER BAND ────────────────────────────────
     // The full-bleed interview is a focused work surface, so it has NO PageHeader;
-    // instead this one aligned top band IS its header — back-link ("Thoát"), the
+    // instead this one aligned top band IS its header — back-link ("Exit"), the
     // StarCi identity, the question/phase counter, the timer, and (Q&A) the tools
     // toggle, with a full-width progress meter as its bottom edge. One band spans
     // the whole surface so the two panes share an aligned top (fixes the old
@@ -1327,7 +1327,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // (not just above the `qna`/`design` returns) so `grading` can reuse the EXACT
     // same chrome as the just-finished interview instead of switching to a
     // headerless centered card (2026-07-12, mirrors the same correction made for
-    // Flashcards Quiz/Review: "ý là bỏ màu đen vào màu đỏ" — keep the active
+    // Flashcards Quiz/Review: "the point is don't drop black into red" — keep the active
     // phase's header through the brief loading hand-off, don't swap early).
     const renderWorkHeader = (opts: {
         counter: React.ReactNode
@@ -1393,7 +1393,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         const estCount = configMode === "configurable" ? Number(questionCount) : QNA_QUESTION_COUNT
         const estMinutes = estCount * 3
 
-        // "Resume phiên" — surfaces the viewer's resumable in-progress session (if any)
+        // "Resume session" — surfaces the viewer's resumable in-progress session (if any)
         // for this course, one card above the interview history so leaving mid-run never
         // reads as lost work. `value`/`max` mirror however progress is measured for that
         // session's mode elsewhere in this file: qna counts questions (same as the
@@ -1477,7 +1477,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 {/* history + stats stay MOUNTED (hidden toggle, not conditional render) so
                     their accumulated list state survives switching setup tabs and back — the
                     previous conditional render unmounted them, dropping the loaded history
-                    (thầy 2026-07-17: "vẫn dính lỗi chuyển tabs mất lịch sử"). Mirrors
+                    (instructor 2026-07-17: "still has the bug where switching tabs loses history"). Mirrors
                     MockInterviewWorkspace's own keep-mounted tools. */}
                 <div className={cn(setupTab !== "history" && "hidden")}>
                     <MockInterviewHistory courseId={courseId} courseDisplayId={courseDisplayId} onStartInterview={() => setSetupTab("begin")} />
@@ -1560,7 +1560,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             </div>
                         </Card>
 
-                        {/* Tùy chỉnh phiên — collapsed by default; all run config lives here so the
+                        {/* Customize session — collapsed by default; all run config lives here so the
                     green room stays calm. Every control is a WrapButton/chip; the grading
                     model sits INSIDE the card as an isDropdown field with its weekly credit. */}
                         <div className="flex flex-col gap-3">
@@ -1590,7 +1590,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                     contentClassName="flex flex-col gap-3"
                                 >
                                     {/* session name — optional, time-based fallback (see `sessionDisplayName`);
-                                lets a learner tell runs apart in "Lịch sử"/resume without forcing a name. */}
+                                lets a learner tell runs apart in "History"/resume without forcing a name. */}
                                     <div className="flex flex-col gap-2">
                                         <Label>{t("common.sessionNameLabel")}</Label>
                                         <TextField variant="secondary" className="w-full">
@@ -1619,9 +1619,9 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                     </div>
 
                                     {configMode === "configurable" ? (
-                                        // Knobs that exist ONLY in "Tùy chỉnh" — grouped into their OWN card so they
+                                        // Knobs that exist ONLY in "Custom" — grouped into their OWN card so they
                                         // read as one block that appears WITH the mode, not loose fields mixed in with
-                                        // the always-on ones (Mức / Ngôn ngữ / Model).
+                                        // the always-on ones (Level / Language / Model).
                                         // SURFACE-IN-SURFACE = BORDER, not shadow: this sits inside the config
                                         // LabeledCard, where the global card skin (elevation) would be invisible. A
                                         // HeroUI <Card> can't carry a border (globals force `.card{border:none
@@ -1643,8 +1643,8 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
 
                                             <div className="flex flex-col gap-2">
                                                 <Label>{t("mockInterview.kindPickerLabel")}</Label>
-                                                {/* same canonical control as its siblings (Số câu / Cách trả lời / Ngôn ngữ) —
-                                            multi-select, with "Tất cả" as the KIND_ALL pseudo-value meaning "no filter". */}
+                                                {/* same canonical control as its siblings (question count / answer method / language) —
+                                            multi-select, with "All" as the KIND_ALL pseudo-value meaning "no filter". */}
                                                 <FlexWrapButtonRadio<KindPickerValue>
                                                     multiple
                                                     ariaLabel={t("mockInterview.kindPickerLabel")}
@@ -1775,7 +1775,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                         {/* "session time limit" — HONEST: never let a timeout-triggered grade
                             read as a random/silent cutoff. Only shown when THIS grade was
-                            auto-triggered by the 1-hour deadline, not a manual "Kết thúc sớm". */}
+                            auto-triggered by the 1-hour deadline, not a manual "End early". */}
                         {timedOut ? (
                             <Callout status="warning" title={t("mockInterview.sessionExpiredBanner")} />
                         ) : null}
@@ -1851,7 +1851,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         </ModalShell>
     )
 
-    // ── INTERVIEW, mode="qna" (Vòng 5 — "hỏi từng câu"): 1 câu, 1 ô trả lời ──
+    // ── INTERVIEW, mode="qna" (Round 5 — "ask one question at a time"): 1 question, 1 answer box ──
     // Full-bleed work surface: a shared header band on top, then the conversation as
     // a centered readable column — which expands into a first-class RIGHT workspace
     // pane on demand (a code/whiteboard question auto-opens it). No ragged in-column
@@ -1884,7 +1884,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             // Needed so the 2-pane grid below can `flex-1` into the REMAINING height
             // (under the sticky WorkSessionHeader) instead of only being as tall as its
             // own content — otherwise the pane divider stops short of "full" (2026-07-13,
-            // thầy: "divider kéo dài full ấy").
+            // instructor: "that divider that stretches the full width").
             <div className={cn("flex h-[calc(100dvh-4rem)] w-full flex-col", className)}>
                 <VoiceUnavailableModal
                     isOpen={voiceModalOpen}
@@ -1906,7 +1906,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     current: questionIndex,
                     // grade before the last question (rarely needed — auto-finishes on the
                     // last) — pinned to the header's right edge (WorkSessionHeader's own
-                    // "Kết thúc" affordance) instead of a floating link under the mic.
+                    // "Finish" affordance) instead of a floating link under the mic.
                     onFinish: () => setConfirmAction("endEarly"),
                     finishLabel: t("mockInterview.finishEarly"),
                 })}
@@ -1915,19 +1915,20 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     horizontal padding: the LEFT pane keeps its own reading padding, but the RIGHT
                     workspace pane BLEEDS to the viewport's right/top/bottom edges and is separated
                     only by a LEFT border — a docked IDE-style tool panel, NOT a floating card
-                    (2026-07-17, thầy: "height full và sát mép phải, bên trái có border"). Each pane
-                    scrolls on its own at `lg` ([[full-bleed-work-surface]] "mỗi pane cuộn riêng");
+                    (2026-07-17, instructor: "full height and flush against the right edge, with a
+                    border on the left"). Each pane
+                    scrolls on its own at `lg` ([[full-bleed-work-surface]] "each pane scrolls independently");
                     on mobile the grid stacks and the whole body scrolls. */}
                 <div className="grid min-h-0 flex-1 overflow-y-auto @app-lg:overflow-hidden @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
                     {/* LEFT — the conversation, with its own reading padding + scroll. `justify-center`
                         vertically centers this (naturally short) column within the full-viewport-tall
-                        grid row instead of pinning it to the top (2026-07-17, thầy: "bố cục chưa
-                        gọn/cân đối" — the workspace pane fills the row's full height, so the
+                        grid row instead of pinning it to the top (2026-07-17, instructor: "the layout
+                        isn't tidy/balanced yet" — the workspace pane fills the row's full height, so the
                         conversation reads as a floating top-pinned island unless centered to match). */}
                     <div className="flex min-w-0 flex-col justify-center gap-6 px-4 py-6 @app-sm:px-6 @app-lg:overflow-y-auto">
                         {errorCallout}
 
-                        {/* interviewer presence — StarCi face + name + "đang nói" pulse + TTS
+                        {/* interviewer presence — StarCi face + name + "speaking" pulse + TTS
                             toggle, wrapping THIS question's streamed turn (once) as the body */}
                         <InterviewerPresence
                             persona={persona}
@@ -1948,7 +1949,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                     <Spinner size="sm" />
                                 )
                             ) : currentQuestionTurn ? (
-                                // "Code loaded into the Code tab" hint chip REMOVED (2026-07-17, thầy:
+                                // "Code loaded into the Code tab" hint chip REMOVED (2026-07-17, instructor:
                                 // aesthetic pass) — stale copy from when the workspace was a tabbed,
                                 // hide-by-default pane (2026-07-09 removed the tabs; 2026-07-13 made the
                                 // workspace pane ALWAYS visible); the given code already sits right next
@@ -2003,8 +2004,8 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     {/* RIGHT — the workspace, a DOCKED tool panel: full row height, bleeding to the
                         viewport's right/top/bottom edges (the container has no padding on this side),
                         separated from the conversation by ONE left border only — an IDE-style side
-                        panel, not a floating rounded card (2026-07-17, thầy: "height full và sát mép
-                        phải, bên trái có border"). Supersedes the earlier bordered-card treatment.
+                        panel, not a floating rounded card (2026-07-17, instructor: "full height and
+                        flush against the right edge, with a border on the left"). Supersedes the earlier bordered-card treatment.
                         Inside, `p-6` gives the tool breathing room from the border/edges. On mobile
                         the grid stacks, so the divider becomes a TOP border and a min-height keeps
                         the editor usable. Tool stays MOUNTED once shown so an in-progress sketch/code
@@ -2040,7 +2041,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // list in the left pane.
     // `h-[calc(100dvh-4rem)]` + the grid's `flex-1 min-h-0 overflow-y-auto` mirror the
     // `qna` branch above (2026-07-17 — this branch never got the viewport-lock fix noted
-    // in [[full-bleed-work-surface]]'s "CHƯA áp cho nhánh design"; now required so the
+    // in [[full-bleed-work-surface]]'s "NOT YET applied to the design branch"; now required so the
     // whiteboard's `h-full` below has a definite height to fill instead of collapsing).
     return (
         <div className={cn("flex h-[calc(100dvh-4rem)] w-full flex-col", className)}>

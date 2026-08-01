@@ -36,8 +36,8 @@ export default meta
 type Story = StoryObj<typeof LeaderboardPage>
 
 const CRUMBS = [
-    { key: "home", label: "Trang chủ", onPress: () => {} },
-    { key: "leaderboard", label: "Bảng xếp hạng" },
+    { key: "home", label: "Home", onPress: () => {} },
+    { key: "leaderboard", label: "Leaderboard" },
 ]
 
 const CATEGORY_ITEMS = [
@@ -52,34 +52,34 @@ const FIVE_MINUTES_AGO = new Date(Date.now() - 5 * 60_000)
 // Same fixture shape as `LeaderboardBoard`'s own story — no top-3 entry is
 // ever the viewer while `selfRow` also places the viewer at rank 42.
 const PODIUM = [
-    { rank: 2 as const, username: "hoang.tran", pointsLabel: "3.980 XP" },
-    { rank: 1 as const, username: "minh.le", pointsLabel: "4.510 XP" },
-    { rank: 3 as const, username: "thao.dang", pointsLabel: "3.640 XP" },
+    { rank: 2 as const, username: "hoang.tran", pointsLabel: "3,980 XP" },
+    { rank: 1 as const, username: "minh.le", pointsLabel: "4,510 XP" },
+    { rank: 3 as const, username: "thao.dang", pointsLabel: "3,640 XP" },
 ]
 
 const ROWS = [
-    { key: "r4", rank: 4, username: "duc.nguyen", valueLabel: "3.120 XP" },
-    { key: "r5", rank: 5, username: "linh.vo", valueLabel: "2.980 XP" },
-    { key: "r6", rank: 6, username: "an.bui", valueLabel: "2.760 XP" },
+    { key: "r4", rank: 4, username: "duc.nguyen", valueLabel: "3,120 XP" },
+    { key: "r5", rank: 5, username: "linh.vo", valueLabel: "2,980 XP" },
+    { key: "r6", rank: 6, username: "an.bui", valueLabel: "2,760 XP" },
 ]
 
-const SELF_ROW = { key: "self", rank: 42, username: "quynh.pham", valueLabel: "1.240 XP", isMe: true, profileHref: "/u/quynh.pham" }
+const SELF_ROW = { key: "self", rank: 42, username: "quynh.pham", valueLabel: "1,240 XP", isMe: true, profileHref: "/u/quynh.pham" }
 
-const STANDING = { rank: 42, primaryLabel: "1.240 XP tuần này", secondaryLabel: "Top 15% toàn khoá" }
+const STANDING = { rank: 42, primaryLabel: "1,240 XP this week", secondaryLabel: "Top 15% of the course" }
 
 const BASE = {
     breadcrumbItems: CRUMBS,
-    title: "Bảng xếp hạng",
-    description: "Xếp hạng theo tổng điểm luyện tập trong tháng này",
+    title: "Leaderboard",
+    description: "Ranked by total practice score this month",
     onEnroll: () => {},
     categoryItems: CATEGORY_ITEMS,
     selectedCategory: "total" as const,
     onCategorySelect: () => {},
-    categoryAriaLabel: "Hạng mục xếp hạng",
-    categoryLabel: "Tổng điểm",
+    categoryAriaLabel: "Ranking category",
+    categoryLabel: "Total score",
     updatedAt: FIVE_MINUTES_AGO,
     onRefresh: () => {},
-    refreshLabel: "Làm mới",
+    refreshLabel: "Refresh",
     isBoardLoading: false,
     isBoardEmpty: false,
     onBoardRetry: () => {},
@@ -89,7 +89,7 @@ const BASE = {
     selfRow: SELF_ROW,
     hiddenBetweenCount: 35,
     celebrateKey: 1,
-    meLabel: "Bạn",
+    meLabel: "You",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -104,7 +104,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — a reader who has NOT enrolled: every function is present, banner included. */
 export const Ranked: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LeaderboardPage"
                 tier="screen"
@@ -116,7 +116,7 @@ export const Ranked: Story = {
                         name: "isEnrollmentKnown = true, isEnrolled = false",
                         why: "Every function of the screen is present, in the order the reader meets them: page identity, the ambient nudge toward enrolling, the category row, the toolbar, then the ranking itself. Each of the five nodes below is a block — the screen itself draws no shape at all.",
                         code: `<LeaderboardPage
-    title="Bảng xếp hạng"
+    title="Leaderboard"
     isEnrollmentKnown
     isEnrolled={false}
     categoryItems={categories}
@@ -141,7 +141,7 @@ export const Ranked: Story = {
 /** LEAF — an ENROLLED reader ⇒ **loses the whole enroll-nudge node**, nothing else changes. */
 export const Enrolled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LeaderboardPage"
                 tier="screen"
@@ -153,7 +153,7 @@ export const Enrolled: Story = {
                         name: "isEnrollmentKnown = true, isEnrolled = true",
                         why: "`TrialEnrollBanner` self-hides once the reader is already enrolled — one whole block disappears from the tree, not just a line of text inside it. Everything below it keeps its place, which is why the category row does not jump around depending on enrollment.",
                         code: `<LeaderboardPage
-    title="Bảng xếp hạng"
+    title="Leaderboard"
     isEnrollmentKnown
     isEnrolled
     …
@@ -176,7 +176,7 @@ export const Enrolled: Story = {
 /** LEAF — the caller flips `isSkeleton`; header and board mirror themselves, the category row and toolbar do not. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LeaderboardPage"
                 tier="screen"

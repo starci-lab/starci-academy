@@ -3,7 +3,7 @@ import { PlaygroundDeviceSnapshot, type PlaygroundDeviceInfo } from "@sb-compone
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundDeviceSnapshot`: "Máy của bạn" — the paired agent's raw
+ * BLOCK — `PlaygroundDeviceSnapshot`: "Your machine" — the paired agent's raw
  * hardware report turned into the same 4-cell `StatRibbon` the Lab route shows,
  * so setup and the live lab never disagree about what the machine can run.
  *
@@ -61,7 +61,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the 4-cell ribbon: OS · CPU · RAM · GPU. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundDeviceSnapshot"
                 tier="block"

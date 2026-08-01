@@ -1,9 +1,9 @@
 import React from "react"
-import type { ReactNode } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -15,8 +15,12 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 export interface SegmentBarSegment {
     /** Stable key. */
     key: string
-    /** Legend label (the name; the count is appended automatically). */
-    label: ReactNode
+    /**
+     * Legend label (the name; the count is appended automatically). `string`,
+     * not `ReactNode` — the composite renders it itself (inline in the ladder
+     * strip, or via {@link Legend} otherwise).
+     */
+    label: string
     /** Raw count — segment width is its share of the total. */
     value: number
     /** CSS colour for the slice + legend dot (e.g. `var(--success)`). Falls back to a palette. */
@@ -41,10 +45,17 @@ interface SegmentBarOwnProps {
      * count suffix since the % is already visible on the strip.
      */
     inlineLabels?: boolean
-    /** Optional muted takeaway sentence rendered below the legend. */
-    caption?: ReactNode
-    /** Extra classes on the root element. */
-    className?: string
+    /**
+     * Optional muted takeaway sentence rendered below the legend. `string`, not
+     * `ReactNode` — the composite wraps it in `Typography` itself, so it must be
+     * able to build it (a pre-built node could not be told it is loading).
+     */
+    caption?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** When on, emit `data-anat-part` on this bar's own direct sub-parts (Bar · Legend · Caption) so its own `BlockAnatomy` panel can badge them. */
@@ -79,6 +90,9 @@ const PALETTE = [
  *
  * @param props - {@link SegmentBarProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "SegmentBar" } as const
+
 export const SegmentBar = ({
     segments,
     ariaLabel,
@@ -87,36 +101,13 @@ export const SegmentBar = ({
     inlineLabels,
     caption,
     isSkeleton = false,
-    className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: SegmentBarProps) => {
-    if (isSkeleton) {
-        return (
-            <StackV
-                gap="related"
-                anatPart={anatPart}
-                className={className}
-                body={
-                    <>
-                        <HeroSkeleton
-                            className={cn("w-full", inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full")}
-                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
-                        />
-                        {!hideLegend ? (
-                            <Legend isSkeleton anatPart={showAnatomy ? "Legend" : undefined} showAnatomy={showAnatomy} />
-                        ) : null}
-                        {caption !== undefined ? (
-                            <HeroSkeleton className="h-3 w-32 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        ) : null}
-                    </>
-                }
-            />
-        )
-    }
     // `segments` is REQUIRED whenever `isSkeleton` is false (discriminated union above) —
-    // already guaranteed by the early return at `isSkeleton` — the `?? []` only satisfies
-    // narrowing across the destructure, it never actually fires.
+    // guaranteed by the type at every real call site — the `?? []` only satisfies narrowing
+    // across the destructure, and is never seen while `isSkeleton`.
     const total = max ?? ((segments ?? []).reduce((acc, segment) => acc + segment.value, 0) || 1)
     const colored = (segments ?? []).map((segment, index) => ({
         ...segment,
@@ -128,6 +119,10 @@ export const SegmentBar = ({
 
     const barContent = (
         <>
+            {/* ATOM GAP: the proportion-slice track has no atom counterpart, so it stays a
+                real element in both states — `isSkeleton` swaps its slices for a flat
+                neutral fill instead of reaching for a vendor `Skeleton` or hand-rolling a
+                bespoke `animate-pulse` shimmer (COMPOSITE-10). */}
             <div
                 role="img"
                 aria-label={ariaLabel}
@@ -136,7 +131,7 @@ export const SegmentBar = ({
                     inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full",
                 )}
             >
-                {filled.map((segment) => (
+                {isSkeleton ? null : filled.map((segment) => (
                     <div
                         key={segment.key}
                         className={cn(
@@ -160,7 +155,7 @@ export const SegmentBar = ({
                         ) : null}
                     </div>
                 ))}
-                {remainder > 0 ? (
+                {!isSkeleton && remainder > 0 ? (
                     <div
                         aria-hidden
                         className="h-full min-w-0"
@@ -172,22 +167,21 @@ export const SegmentBar = ({
                 <Legend
                     anatPart={showAnatomy ? "Legend" : undefined}
                     showAnatomy={showAnatomy}
-                    items={colored.map((segment) => ({
+                    isSkeleton={isSkeleton}
+                    items={isSkeleton ? undefined : colored.map((segment) => ({
                         key: segment.key,
                         label: segment.label,
                         color: segment.color,
                         // the strip already prints the % inline in ladder mode, so
                         // drop the count suffix there; otherwise show the real count.
-                        suffix: !inlineLabels ? <>&nbsp;·&nbsp;{segment.value}</> : undefined,
+                        suffix: !inlineLabels ? ` · ${segment.value}` : undefined,
                     }))}
                 />
             ) : null}
-            {caption ? (
-                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                    <Typography size="xs" color="muted" text={caption} />
-                </span>
+            {caption !== undefined ? (
+                <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={caption} />
             ) : null}
         </>
     )
-    return <StackV gap="related" anatPart={anatPart} className={className} body={barContent} />
+    return <StackV gap={3} anatPart={anatPart} classNames={classNames} body={barContent} />
 }

@@ -24,7 +24,7 @@ export interface CheckListCardProps extends WithClassNames<undefined> {
  * variant="surface"` look, but static — no expand, no click). Pair it with a
  * `LabeledCard frameless` for the section label (label outside — no card-in-card).
  *
- * **Surface-in-surface:** inside a modal/drawer, pass `bordered` (viền, không
+ * **Surface-in-surface:** inside a modal/drawer, pass `bordered` (border, not
  * shadow). Top-level on the page → omit `bordered` (shadow).
  *
  * For clickable rows use `SurfaceListCard` instead — this one is for read-only

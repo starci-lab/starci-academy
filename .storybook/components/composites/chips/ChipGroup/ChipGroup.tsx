@@ -1,4 +1,3 @@
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
@@ -19,7 +18,7 @@ export interface ChipGroupItem {
     /** React key. Set explicitly so two chips with identical text don't collide. */
     key: string
     /** Chip label. */
-    text: ReactNode
+    text: string
 }
 /** Props for {@link ChipGroup} — a row of chips that collapses overflow into "+N". */
 export interface ChipGroupProps {
@@ -42,14 +41,15 @@ export interface ChipGroupProps {
     showAnatomy?: boolean
     /** `data-anat-part` name on the row's root, so a wrapping component can name this cluster. */
     anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ChipGroup" } as const
+
 export const ChipGroup = ({
     items,
     maxVisible = 3,
@@ -57,7 +57,6 @@ export const ChipGroup = ({
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
-    className,
     classNames,
 }: ChipGroupProps) => {
     // Dependency-tree label: the tree is built from the DOM, so the group must name
@@ -65,14 +64,20 @@ export const ChipGroup = ({
     const chipPart = showAnatomy ? "Chip" : undefined
     if (isSkeleton) {
         return (
-            <div className={cn("flex flex-wrap items-center gap-2", className, classNames)} data-anat-part={anatPart}>
+            <div
+                className={cn("flex flex-wrap items-center gap-2", classNames)}
+                data-anat-part={anatPart}
+                data-tier="composite"
+                data-component="ChipGroup"
+                data-principles="chip-row"
+            >
                 {/* Matches the resting footprint: `maxVisible` cells, each drawing its own
                     shimmer — the group doesn't draw it for them, or the two shapes would
                     drift apart. */}
                 {Array.from({ length: maxVisible }).map((_, index) => (
                     // Shimmer carries no tone (plain gray), so `tone` isn't passed down —
                     // passing a prop with no effect would make a reader think it does something.
-                    <Chip key={index} isSkeleton anatPart={chipPart} />
+                    <Chip key={index} isSkeleton showAnatomy={showAnatomy} />
                 ))}
             </div>
         )
@@ -81,9 +86,15 @@ export const ChipGroup = ({
     // Only counts real overflow for `+N`; clamped to 0 so a shorter row doesn't go negative.
     const overflowCount = Math.max(0, items.length - maxVisible)
     return (
-        <div className={cn("flex flex-wrap items-center gap-2", className, classNames)} data-anat-part={anatPart}>
+        <div
+            className={cn("flex flex-wrap items-center gap-2", classNames)}
+            data-anat-part={anatPart}
+            data-tier="composite"
+            data-component="ChipGroup"
+            data-principles="chip-row"
+        >
             {visibleItems.map(({ key, text }) => (
-                <Chip key={key} text={text} tone={tone} anatPart={chipPart} />
+                <Chip key={key} text={text} tone={tone} showAnatomy={showAnatomy} />
             ))}
             {overflowCount > 0 ? (
                 <Tooltip
@@ -91,14 +102,14 @@ export const ChipGroup = ({
                     label={
                         // Tooltip lists the full row, including the visible part —
                         // opening it shows "everything", not just "what's hidden".
-                        <div className="flex max-h-[200px] flex-col gap-2 overflow-y-auto">
+                        <div data-principles="sibling-stack" className="flex max-h-[200px] flex-col gap-2 overflow-y-auto">
                             {items.map(({ key, text }) => (
                                 <span key={key}>{text}</span>
                             ))}
                         </div>
                     }
                 >
-                    <Chip text={`+${overflowCount}`} tone={tone} anatPart={chipPart} />
+                    <Chip text={`+${overflowCount}`} tone={tone} showAnatomy={showAnatomy} />
                 </Tooltip>
             ) : null}
         </div>

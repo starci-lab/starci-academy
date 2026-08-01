@@ -33,7 +33,7 @@ const centreHandleStyle = { left: "50%", top: "50%", transform: "translate(-50%,
  * (hubs big, leaves small) + soft glow + colored ring, with the label CENTRED on it,
  * its font scaled by the same degree (hub labels read bigger). No connecting edges —
  * a pure constellation. When `selected`, a popover floats above with a one-line blurb
- * (i18n by node id) + a "Vào khóa" CTA.
+ * (i18n by node id) + an "Enter course" CTA.
  *
  * @param props - React Flow {@link NodeProps} carrying {@link ConceptNodeData}.
  */
@@ -71,7 +71,7 @@ export const ConceptNode = ({ id, data }: NodeProps) => {
             {selected ? (
                 <div
                     className="nodrag nopan absolute bottom-full left-1/2 z-50 mb-2 w-60 -translate-x-1/2 cursor-default rounded-2xl border border-default bg-surface p-3 text-left"
-                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- chỉ chặn click-through xuống canvas; không có action nên keyboard không cần duplicate
+                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- only blocks click-through to the canvas; there is no action, so no keyboard duplicate is needed
                     onClick={(event) => event.stopPropagation()}
                 >
                     <div className="mb-1 flex items-center gap-2">

@@ -6,7 +6,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `Toolbar.*`, the KHUNG of a nav/control ROW above a panel.
+ * COMPOSITE TIER (§13) — `Toolbar.*`, the FRAME of a nav/control ROW above a panel.
  *
  * ⚠️ RENAMED (2026-07-25): this was `TabsCard`. The name was a lie — there is no
  * card anywhere in it: the root is `flex items-center justify-between gap-3`,
@@ -16,7 +16,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * that right group into a compact dropdown below `@app-sm`. Behaviour and skin
  * are carried over VERBATIM; this is a rename, not a redesign.
  *
- * KHUNG API LAW (§13b): `Toolbar` is NOT a generic wrapper — every channel
+ * FRAME API LAW (§13b): `Toolbar` is NOT a generic wrapper — every channel
  * is a named slot. The two tab groups arrive as DATA (`items` + `selectedKey` +
  * `onSelectionChange`, {@link ToolbarTabGroup}), never as children; only
  * `leftEnd` is a free node slot. Namespace only — no bare component export.
@@ -47,8 +47,8 @@ export interface ToolbarTabItem {
     label: ReactNode
     /**
      * Set → shown INSTEAD of `label` below `@app-sm` (e.g. "TS" for "TypeScript"),
-     * `label` returns from `@app-sm` up — a deliberate call (thầy 2026-07-29,
-     * "thầy lượng, không tin source"): a shortened tab beats collapsing the group
+     * `label` returns from `@app-sm` up — a deliberate call (teacher's ruling,
+     * 2026-07-29, "go by judgment, not by trusting the source"): a shortened tab beats collapsing the group
      * behind `collapseRightOnMobile`'s dropdown when every option should stay
      * reachable in one tap. Omit → unchanged (no compact swap).
      */
@@ -113,8 +113,6 @@ export interface ToolbarBaseProps {
      * padding/text. No effect on `"secondary"` (already hug-content).
      */
     size?: "sm" | "md"
-    /** Extra classes on the toolbar row. */
-    className?: string
     /** Layout utilities on the toolbar row, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this toolbar. */
@@ -150,6 +148,9 @@ const TAB_CLASS_NEUTRAL =
  *
  * @param props - {@link ToolbarBaseProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Toolbar" } as const
+
 const ToolbarBase = ({
     leftTabs,
     leftEnd,
@@ -158,7 +159,6 @@ const ToolbarBase = ({
     rightTabsNeutral,
     variant = "secondary",
     size = "md",
-    className,
     classNames,
     showAnatomy = false,
     anatPart,
@@ -184,7 +184,7 @@ const ToolbarBase = ({
                             )}
                         >
                             <StackH
-                                gap="related"
+                                gap={3}
                                 body={
                                     <>
                                         {item.icon}
@@ -258,8 +258,9 @@ const ToolbarBase = ({
                     {/* `item.icon` stays OFF each row on purpose — it's the closed trigger's
                         only content (no room for text there), but once the popover is open
                         every row already reads its own full label; repeating the same icon
-                        on every row adds no information (§5a.2, "icon quốc dân": no icon
-                        purely decorating text that already reads on its own). */}
+                        on every row adds no information (§5a.2, the "everyone already knows
+                        this icon" rule: no icon purely decorating text that already reads on
+                        its own). */}
                     <ListBox.Root aria-label={group.ariaLabel}>
                         {group.items.map((item) => (
                             <ListBox.Item
@@ -280,7 +281,7 @@ const ToolbarBase = ({
     }
     const leftGroup = leftEnd ? (
         <StackH
-            gap="tight"
+            gap={2}
             classNames={["min-w-0"]}
             body={
                 <>
@@ -308,9 +309,9 @@ const ToolbarBase = ({
         : null
     return (
         <StackH
-            gap="grouped"
+            gap={4}
             justify="between"
-            className={cn(showAnatomy && "relative", className, classNames)}
+            classNames={classNames}
             anatPart={anatPart}
             body={
                 <>
@@ -328,7 +329,7 @@ const ToolbarBase = ({
     )
 }
 /**
- * The nav/control-row KHUNG namespace — one member for now:
+ * The nav/control-row FRAME namespace — one member for now:
  *
  * | Member | Content channel |
  * |---|---|

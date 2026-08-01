@@ -2,7 +2,6 @@ import type { Preview } from "@storybook/nextjs"
 import React from "react"
 import { NextIntlClientProvider } from "next-intl"
 import { HeroUIProvider } from "../src/components/providers/HeroUIProvider"
-import messages from "../src/messages/vi.json"
 import "../src/app/globals.css"
 
 /**
@@ -20,7 +19,7 @@ import "../src/app/globals.css"
  * Only ONE thing is visible and therefore only one thing is hidden: the BlockAnatomy PANEL,
  * the bordered card holding the Deps/Code tabs. `AnatomyOverlay` is NOT hidden here because
  * it has nothing to hide — since 2026-07-26 it paints no badge at all, it only emits an
- * invisible `data-anat-marker` span that the panel reads to derive the tree. (Its own JSDoc
+ * invisible `data-component` span that the panel reads to derive the tree. (Its own JSDoc
  * still claims a "dashed outline + corner tag"; that is stale and tracked separately.)
  *
  * Matched by `data-sb-anatomy-panel`, the hook `BlockAnatomy` puts on the panel itself. The
@@ -85,7 +84,12 @@ const preview: Preview = {
             const theme = context.globals.theme || "light"
             const anatomy = context.globals.anatomy || "off"
             return (
-                <NextIntlClientProvider locale="vi" messages={messages}>
+                <NextIntlClientProvider
+                    locale="en"
+                    messages={{}}
+                    getMessageFallback={({ namespace, key }) => (namespace ? `${namespace}.${key}` : key)}
+                    onError={() => {}}
+                >
                     <HeroUIProvider>
                         {anatomy === "off" ? <style>{ANATOMY_OFF_CSS}</style> : null}
                         {/* `@container` MIRRORS the app shell: the real app renders inside a

@@ -8,7 +8,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * BLOCK — `CourseQaComposer`: the ONE writing-shape reused three ways inside a
- * course Q&A board — the root "hỏi chung khoá học" composer (a collapsible
+ * course Q&A board — the root "ask the whole course" composer (a collapsible
  * avatar pill that opens into a textarea), an answer's inline EDIT form, and an
  * inline REPLY form.
  *
@@ -16,7 +16,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * (`src/components/features/community/Discussion/CommentComposer.tsx`) has no
  * Storybook port anywhere, including `_legacy`. The one component that LOOKS
  * related, `_legacy/blocks/feed/Composer`, is a DIFFERENT real-app shape —
- * always-open, no avatar pill, used only for the bottom "viết câu trả lời" box
+ * always-open, no avatar pill, used only for the bottom "write an answer" box
  * in the real `QuestionRow`. This block's `mode="plain"` covers exactly that
  * ground (always-expanded, avatar optional), so `_legacy/blocks/feed/Composer`
  * stays as its own thing rather than being folded in — this is a THIRD,
@@ -73,9 +73,9 @@ export interface CourseQaComposerUser {
 export interface CourseQaComposerProps {
     /**
      * `"collapsible"` — boots as a slim avatar + placeholder pill, opens into the
-     * full form on press (the root "hỏi chung khoá học" composer). `"plain"` —
+     * full form on press (the root "ask the whole course" composer). `"plain"` —
      * always the full form (an answer's inline edit, an inline reply, or a
-     * bottom "viết câu trả lời" box).
+     * bottom "write an answer" box).
      */
     mode: CourseQaComposerMode
     /** The signed-in viewer. Omitted → no leading avatar is drawn (either shape). */
@@ -93,7 +93,7 @@ export interface CourseQaComposerProps {
     onValueChange: (value: string) => void
     /** Placeholder for both the collapsed pill and the open textarea. */
     placeholder?: string
-    /** Label for the submit button. Defaults to `"Gửi"`. */
+    /** Label for the submit button. Defaults to `"Send"`. */
     submitLabel?: string
     /**
      * Fired when the viewer submits. The caller already holds the draft via
@@ -136,7 +136,7 @@ const CourseQaComposer = ({
     value,
     onValueChange,
     placeholder,
-    submitLabel = "Gửi",
+    submitLabel = "Send",
     onSubmit,
     onCancel,
     isPending = false,
@@ -184,14 +184,14 @@ const CourseQaComposer = ({
         return (
             <div data-anat-part={anatPart}>
                 <StackH
-                    gap="related"
+                    gap={3}
                     anatPart={showAnatomy ? "StackH" : undefined}
                     body={
                         <>
                             {avatar}
                             <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "InputButtonLike" : undefined}>
                                 <InputButtonLike
-                                    placeholder={placeholder ?? "Đặt câu hỏi cho khoá học này…"}
+                                    placeholder={placeholder ?? "Ask a question about this course…"}
                                     onPress={() => setExpanded(true)}
                                     isSkeleton={isSkeleton}
                                 />
@@ -208,13 +208,13 @@ const CourseQaComposer = ({
         <>
             {showCancel ? (
                 <Button
-                    label="Huỷ"
+                    label="Cancel"
                     variant="tertiary"
                     size="sm"
                     onPress={handleCancel}
                     isDisabled={isPending}
                     isSkeleton={isSkeleton}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
             <Button
@@ -225,7 +225,7 @@ const CourseQaComposer = ({
                 isDisabled={!canSubmit}
                 isPending={isPending}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
         </>
     )
@@ -236,25 +236,25 @@ const CourseQaComposer = ({
                 value={value}
                 onValueChange={onValueChange}
                 placeholder={placeholder}
-                ariaLabel={placeholder ?? "Nội dung"}
+                ariaLabel={placeholder ?? "Content"}
                 rows={3}
                 isDisabled={isPending}
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackH gap="related" justify="end" anatPart={showAnatomy ? "StackH" : undefined} body={actionRow} />
+            <StackH gap={3} justify="end" anatPart={showAnatomy ? "StackH" : undefined} body={actionRow} />
         </>
     )
 
     return (
         <div data-anat-part={anatPart}>
             <StackH
-                gap="related"
+                gap={3}
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
                     <>
                         {avatar}
-                        <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={form} />
+                        <StackV gap={3} classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={form} />
                     </>
                 }
             />

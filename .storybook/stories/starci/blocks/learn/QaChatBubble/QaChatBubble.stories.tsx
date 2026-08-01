@@ -27,7 +27,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — role decides tint + which corner clips toward a tail: user (own message) vs assistant (everyone else). */
 export const Roles: Story = {
     render: () => (
-        <div className="flex flex-col gap-4 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-4 p-8">
             <BlockAnatomy
                 name="QaChatBubble"
                 tier="block"
@@ -38,11 +38,11 @@ export const Roles: Story = {
                     {
                         name: "role = assistant (someone else's message)",
                         why: "Neutral surface, tail toward the left — this is what every OTHER participant's message looks like.",
-                        code: "<QaChatBubble role=\"assistant\"><MarkdownContent source=\"Bạn thử restart container chưa?\" measure=\"compact\" /></QaChatBubble>",
+                        code: "<QaChatBubble role=\"assistant\"><MarkdownContent source=\"Have you tried restarting the container?\" measure=\"compact\" /></QaChatBubble>",
                         render: (
-                            <div className="flex w-full max-w-sm justify-start">
+                            <div data-tier="fixture" className="flex w-full max-w-sm justify-start">
                                 <QaChatBubble anatPart="QaChatBubble" role="assistant">
-                                    <MarkdownContent showAnatomy anatPart="MarkdownContent" source="Bạn thử restart container chưa?" measure="compact" />
+                                    <MarkdownContent showAnatomy anatPart="MarkdownContent" source="Have you tried restarting the container?" measure="compact" />
                                 </QaChatBubble>
                             </div>
                         ),
@@ -50,11 +50,11 @@ export const Roles: Story = {
                     {
                         name: "role = user (the viewer's own message)",
                         why: "Accent surface, tail toward the right — the viewer's own message reads as visually theirs without needing an extra label.",
-                        code: "<QaChatBubble role=\"user\"><MarkdownContent source=\"Mình restart rồi vẫn lỗi ạ\" measure=\"compact\" /></QaChatBubble>",
+                        code: "<QaChatBubble role=\"user\"><MarkdownContent source=\"I restarted it but I'm still getting the error.\" measure=\"compact\" /></QaChatBubble>",
                         render: (
-                            <div className="flex w-full max-w-sm justify-end">
+                            <div data-tier="fixture" className="flex w-full max-w-sm justify-end">
                                 <QaChatBubble role="user">
-                                    <MarkdownContent source="Mình restart rồi vẫn lỗi ạ" measure="compact" />
+                                    <MarkdownContent source="I restarted it but I'm still getting the error." measure="compact" />
                                 </QaChatBubble>
                             </div>
                         ),

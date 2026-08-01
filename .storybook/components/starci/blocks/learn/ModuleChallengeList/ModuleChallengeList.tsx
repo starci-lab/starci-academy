@@ -142,7 +142,7 @@ const ModuleChallengeList = ({
                 title: challenge.title,
                 // Only a SOLVED challenge earns the subtitle — an unsolved row says
                 // nothing extra, the difficulty chip is already the row's other fact.
-                subtitle: challenge.completed ? "Đã hoàn thành" : undefined,
+                subtitle: challenge.completed ? "Completed" : undefined,
                 onPress: () => onSelectChallenge(challenge.lessonId),
                 // Meta holds EXACTLY ONE thing: difficulty. The shape is owned by
                 // DESIGN — this block doesn't reshape the chip (§14d.1). The flag

@@ -1,25 +1,25 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { PADDING_CLASS, type InsetScale } from "@sb-components/frames/_spacing"
+import { paddingClassNames, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (khung) — `Container.*`: CONTENT MEASURE. One member, `Container`
+ * LAYOUT (frame) — `Container.*`: CONTENT MEASURE. One member, `Container`
  * (one measure has one shape; width and padding are PROPS, §6b).
  *
- * KHUNG API LAW (§13b): a wrapping khung ⇒ ONE named slot `body`
+ * FRAME API LAW (§13b): a wrapping frame ⇒ ONE named slot `body`
  * are the main road, `children` is a shorthand for `body`. No repeating list, so
  * no `items`.
  *
- * ⭐ WHY THIS KHUNG EXISTS (teacher's call, 2026-07-26). The old `Page.Container`
+ * ⭐ WHY THIS FRAME EXISTS (teacher's call, 2026-07-26). The old `Page.Container`
  * had NO `mx-auto`, NO `max-w`, and padded only on the RIGHT side — so every page
  * hand-rolled its own measure: `mx-auto flex w-full max-w-3xl flex-col gap-6`
  * repeated 14 times, `mx-auto w-full max-w-3xl` 12 times, and `max-w-3xl` appeared
  * 72 times across `src`. Content measure is a REAL concept, so it deserves a named
- * khung, not a hand-copied class string.
+ * frame, not a hand-copied class string.
  *
- * ⭐⭐ THIS KHUNG OPENS `@container` (teacher's call, 2026-07-26) — the single most
+ * ⭐⭐ THIS FRAME OPENS `@container` (teacher's call, 2026-07-26) — the single most
  * important decision in this file, read carefully before touching it:
  *
  * `@app-sm/md/lg/xl` are container queries — they measure the NEAREST `@container`.
@@ -28,7 +28,7 @@ import { PADDING_CLASS, type InsetScale } from "@sb-components/frames/_spacing"
  * `max-w-3xl` measure. Result: a `Grid` asking for 4 columns at the `lg` tier still
  * jumped to 4 columns even though its containing measure was only 48rem wide.
  *
- * This khung opens its OWN `@container` ⇒ every `@app-*` inside it measures **this
+ * This frame opens its OWN `@container` ⇒ every `@app-*` inside it measures **this
  * measure**, not the shell anymore. A grid in a narrow measure knows it's narrow.
  *
  * ⭐ THE NICE PAYOFF — `size` speaks the SAME LANGUAGE as the breakpoint. Both come
@@ -49,8 +49,8 @@ import { PADDING_CLASS, type InsetScale } from "@sb-components/frames/_spacing"
  * never fires** — the grid will sit still at the `md` tier. Not a bug, just a
  * measure too narrow for 4 columns.
  *
- * §10: `padding` and `gap` are {@link InsetScale} union literals — off-scale is a
- * tsc error at the call site, not something caught in review.
+ * `padding` is a {@link Responsive}<{@link PaddingValue}> — off-scale is a tsc error at
+ * the call site, not something caught in review.
  * §13: no domain content, no behavior — layout only.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -86,11 +86,11 @@ export interface ContainerBaseProps {
      */
     size?: ContainerSize
     /**
-     * Padding around the content, §10c scale. Default `6` (teacher's call: web
-     * measure = `p-6`). Set `0` when the child hugs the edge itself (edge-to-edge
-     * cover image, a table that scrolls horizontally).
+     * Padding around the content. Default `6` (teacher's call: web measure = `p-6`). Set `1`
+     * (`p-0`) when the child hugs the edge itself (edge-to-edge cover image, a table that
+     * scrolls horizontally).
      */
-    padding?: InsetScale
+    padding?: Responsive<PaddingValue>
     /**
      * The content this measure wraps. ONE region — a measure has no second one.
      *
@@ -115,6 +115,19 @@ export interface ContainerBaseProps {
      * "badge that leads nowhere" the anatomy gate exists to catch.
      */
     anatPart?: string
+    /**
+     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
+     * A frame does not KNOW its pattern — the caller does, exactly like `anatPart` — so it is passed in.
+     * ⚠️ Unlike every other frame, `Container`'s OUTER div (which carries `data-tier`/
+     * `data-component`/`data-anat-part`) has NO padding — it is the unpadded `@container` +
+     * `max-w` measure (see header note on why padding must live on a second, inner div). The
+     * padding class is on the INNER div, so `data-principles` lands there too — the element that
+     * actually carries the gap, per this change's own rule, not the element beside the other
+     * data-* markers.
+     */
+    pattern?: string
 }
 
 /**
@@ -127,14 +140,15 @@ export interface ContainerBaseProps {
  */
 const ContainerBase = ({
     size = "md",
-    padding = "roomy",
+    padding = 6,
     body,
     classNames,
     anatPart,
+    pattern,
 }: ContainerBaseProps) => {
     return (
-        // TWO layers, not one (thầy 2026-07-29, "desktop là phải render flex chứ
-        // nhỉ?" — traced to here). A `@container` measures its QUERY CONTAINER'S
+        // TWO layers, not one (teacher, 2026-07-29, "shouldn't desktop render as
+        // flex?" — traced to here). A `@container` measures its QUERY CONTAINER'S
         // OWN content-box, which EXCLUDES that same element's own padding — so
         // putting `p-*` on the SAME div that opens `@container` silently shrinks
         // the measured width by the padding amount. For most `size` steps this
@@ -147,6 +161,8 @@ const ContainerBase = ({
         // OUTER div owns `@container`+`max-w` (unpadded, so it can actually
         // reach the full `size` cap), the INNER div owns padding.
         <div
+            data-tier="frame"
+            data-component="Container"
             data-anat-part={anatPart}
             className={cn(
                 "@container mx-auto w-full",
@@ -154,7 +170,7 @@ const ContainerBase = ({
                 classNames,
             )}
         >
-            <div className={PADDING_CLASS[padding]}>
+            <div data-principles={pattern} className={cn(...paddingClassNames(padding))}>
                 {body}
             </div>
         </div>
@@ -162,10 +178,13 @@ const ContainerBase = ({
 }
 
 /**
- * `Container.*` — CONTENT MEASURE khung. Namespace, no bare component export (§13a).
+ * `Container.*` — CONTENT MEASURE frame. Namespace, no bare component export (§13a).
  *
  * | Member | Content entry point |
  * |---|---|
  * | `.Base` | slot `header`/`body`/`footer` (+ `children` = body) |
  */
 export { ContainerBase as Container }
+
+/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+export const meta = { tier: "frame", name: "Container" } as const

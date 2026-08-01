@@ -36,7 +36,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the one card shape; ready vs pending vs loading are states inside it. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundEnterBanner"
                 tier="block"

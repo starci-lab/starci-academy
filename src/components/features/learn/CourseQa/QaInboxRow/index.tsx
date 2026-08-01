@@ -25,7 +25,7 @@ export interface QaInboxRowProps extends WithClassNames<undefined> {
 /**
  * One collapsed row in the course-Q&A social inbox: the asker (avatar + name +
  * founder badge + relative time), a two-line preview of the question, a scope tag
- * (a static "Bài: …" / "Chung" tag), an answered/unanswered status badge, the reply
+ * (a static "Lesson: …" / "General" tag), an answered/unanswered status badge, the reply
  * count, and a status dot for scanning the list at a glance. The WHOLE row is a
  * single press target that opens the conversation — the lesson-funnel link lives on
  * the question bubble inside the opened thread, so the collapsed row stays a clean,

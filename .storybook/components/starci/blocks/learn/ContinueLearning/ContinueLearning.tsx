@@ -74,10 +74,10 @@ const ContinueLearningBase = ({
     // node, never a domain concept).
     <ContinueCardHero
         anatPart={anatPart}
-        title={`Bài ${lessonIndex} · ${lessonTitle}`}
+        title={`Lesson ${lessonIndex} · ${lessonTitle}`}
         meta={[
-            `Đã đọc ${lessonsRead}/${lessonsTotal} bài`,
-            `Hoàn thành ${challengesDone}/${challengesTotal} thử thách`,
+            `Read ${lessonsRead}/${lessonsTotal} lessons`,
+            `Completed ${challengesDone}/${challengesTotal} challenges`,
         ]}
         value={progressPercent}
         max={100}

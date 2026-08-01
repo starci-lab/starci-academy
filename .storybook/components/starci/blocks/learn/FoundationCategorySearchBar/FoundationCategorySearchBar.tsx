@@ -7,7 +7,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * ─────────────────────────────────────────────────────────────────────────────
  * BLOCK — `FoundationCategorySearchBar`: the search row on the Foundations hub,
  * exactly as `FoundationsCategoryGridLayout` draws it in `src` — a debounced
- * autocomplete field on the left, a live "N chủ đề" count riding beside it on
+ * autocomplete field on the left, a live "N topics" count riding beside it on
  * the right, one `StackH` seam apart.
  *
  * NEW, not a rebuild — `SearchAutocomplete` is an ATOM the screen cannot call
@@ -23,11 +23,11 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  *      mode-label table (§14d.1) — the caller hands over a bare `count`
  *      number, never a pre-formatted string. Ported straight from the real
  *      copy (`vi.json` foundations.categoryCount`):
- *        - 0            → "Chưa có chủ đề" (a real, newsworthy zero — the
+ *        - 0            → "No topics yet" (a real, newsworthy zero — the
  *                          search genuinely turned up nothing — unlike
  *                          `ContentModeNav`'s badge count, where 0 is not
  *                          news and is hidden instead)
- *        - N ≥ 1        → "N chủ đề"
+ *        - N ≥ 1        → "N topics"
  *      `count` itself stays OPTIONAL and undefined ⇒ nothing is rendered:
  *      that is the "count not known yet" case (first paint, before the
  *      category list has answered), distinct from the real zero above.
@@ -68,7 +68,7 @@ export interface FoundationCategorySearchBarProps {
 }
 
 /** Vietnamese count wording, ported verbatim from `foundations.categoryCount`. */
-const countLabel = (count: number): string => (count === 0 ? "Chưa có chủ đề" : `${count} chủ đề`)
+const countLabel = (count: number): string => (count === 0 ? "No topics yet" : `${count} topics`)
 
 /**
  * The Foundations hub's search row. See the file header for why the count's
@@ -96,7 +96,7 @@ const FoundationCategorySearchBar = ({
     return (
         <div data-anat-part={anatPart}>
             <StackH
-                gap="grouped"
+                gap={4}
                 justify="between"
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "StackH" : undefined}
@@ -108,7 +108,7 @@ const FoundationCategorySearchBar = ({
                                 inputValue={query}
                                 onInputChange={onQueryChange}
                                 onSelect={onSelectSuggestion}
-                                placeholder="Tìm chủ đề..."
+                                placeholder="Search topics..."
                                 isSkeleton={isSkeleton}
                                 showAnatomy={showAnatomy}
                             />

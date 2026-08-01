@@ -7,7 +7,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export interface ErrorPageStateProps extends WithClassNames<undefined> {
     /** Large status numeral (e.g. `"404"`, `"500"`) shown at the top. */
     code: ReactNode
-    /** Headline (e.g. "Không tìm thấy trang"). */
+    /** Headline (e.g. "Page not found"). */
     title: ReactNode
     /** Optional supporting line under the title. */
     description?: ReactNode

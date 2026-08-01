@@ -18,7 +18,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `WeeklyGoals`: "Mục tiêu tuần" — the composite weekly-goal summary
+ * BLOCK — `WeeklyGoals`: "Weekly Goals" — the composite weekly-goal summary
  * plus the fixed six-metric breakdown (lessons / study-days / challenges /
  * coding / flashcards / milestones), each with a bar once it has an effective
  * target, plus an optional coin-reward hint.
@@ -48,18 +48,18 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ THE RESET COUNTDOWN ARRIVES PRE-WORDED (§14d.1 — same boundary as
  * `ChallengeDeliverableItem.processedAt`): this block does not own date/locale
- * math, so `resetInLabel` is a caller-built string ("còn 3 ngày 12 giờ nữa"),
+ * math, so `resetInLabel` is a caller-built string ("3 days 12 hours left"),
  * omitted while unknown instead of a raw `resetAt` ISO timestamp for this block
  * to parse.
  *
  * ⭐ THE SUMMARY SENTENCE AND THE RATIO/REWARD LINES ARE BLOCK WORDING, NOT
- * CALLER STRINGS (same convention as `LeaderboardBoard`'s "Hạng #N"): `percent`
+ * CALLER STRINGS (same convention as `LeaderboardBoard`'s "Rank #N"): `percent`
  * / `completed` / `total` / `current` / `target` / `coinReward` are typed
  * numbers, and the Vietnamese sentence around them is built HERE, once, so
  * every screen embedding this block reads the identical wording.
  *
  * ⭐ `label` PER ITEM IS A CALLER STRING, THE ICON IS NOT. The metric NAME
- * ("Bài học", "Ngày học"…) is screen copy the block never owns (it never calls
+ * ("Lessons", "Study days"…) is screen copy the block never owns (it never calls
  * `useTranslations` itself, same rule `ProgressMeter.label` documents); the
  * icon-per-key mapping is a pure display constant, kept local exactly like
  * `ChallengeDeliverableList`'s own `STATUS_MARK` table.
@@ -84,7 +84,7 @@ export type WeeklyGoalKey = "lessons" | "studyDays" | "challenges" | "coding" | 
 export interface WeeklyGoalItem {
     /** Which metric this row is. */
     key: WeeklyGoalKey
-    /** Already-localized metric name (e.g. "Bài học") — screen copy, not owned by this block. */
+    /** Already-localized metric name (e.g. "Lessons") — screen copy, not owned by this block. */
     label: string
     /** The current-week value. */
     current: number
@@ -109,7 +109,7 @@ export interface WeeklyGoalsData {
         /** Always 6 — the fixed metric count. */
         total: number
     }
-    /** Already-worded countdown to the weekly reset (e.g. "còn 3 ngày 12 giờ nữa"). Omit while unknown. */
+    /** Already-worded countdown to the weekly reset (e.g. "3 days 12 hours left"). Omit while unknown. */
     resetInLabel?: string
 }
 
@@ -154,7 +154,7 @@ const goalCellContent = (
     const effectiveTarget = item.target ?? defaultTargets[item.key]
 
     const iconLabel = (
-        <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={(
+        <StackH gap={2} anatPart={showAnatomy ? "StackH" : undefined} body={(
             <>
                 {isSkeleton ? (
                     <HeroSkeleton
@@ -168,14 +168,14 @@ const goalCellContent = (
                     size="sm"
                     isSkeleton={isSkeleton}
                     text={item.label}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             </>
         )} />
     )
 
     const labelRow = (
-        <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={(
+        <StackH gap={3} justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={(
             <>
                 {iconLabel}
                 <Typography
@@ -184,14 +184,14 @@ const goalCellContent = (
                     tabularNums
                     isSkeleton={isSkeleton}
                     text={isSkeleton ? undefined : `${item.current}/${effectiveTarget}`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             </>
         )} />
     )
 
     return (
-        <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={(
+        <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={(
             <>
                 {labelRow}
                 {isSkeleton ? (
@@ -210,8 +210,8 @@ const goalCellContent = (
                     <Typography
                         size="xs"
                         color={item.canClaim ? "accent" : "muted"}
-                        text={`+${item.coinReward} xu khi đạt`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text={`+${item.coinReward} coins when met`}
+                        showAnatomy={showAnatomy}
                     />
                 ) : null}
             </>
@@ -243,20 +243,20 @@ interface ContentProps {
 const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton, showAnatomy }: ContentProps) => {
     const summary = isSkeleton
         ? undefined
-        : `${composite.percent}% hoàn thành (${composite.completed}/${composite.total} mục tiêu)${resetInLabel != null ? ` · ${resetInLabel}` : ""}`
+        : `${composite.percent}% complete (${composite.completed}/${composite.total} goals)${resetInLabel != null ? ` · ${resetInLabel}` : ""}`
     const gridItems: Array<StatGridCardItem> = items.map((item) => ({
         key: item.key,
         content: goalCellContent(item, defaultTargets, isSkeleton, showAnatomy),
     }))
     return (
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={(
+        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={(
             <>
                 <Typography
                     size="sm"
                     weight="medium"
                     isSkeleton={isSkeleton}
                     text={summary}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
                 <div data-anat-part={showAnatomy ? "StatGridCard" : undefined}>
                     <StatGridCard items={gridItems} showAnatomy={showAnatomy} />
@@ -267,7 +267,7 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton, s
 }
 
 /**
- * "Mục tiêu tuần" — the weekly-goal summary + six-metric breakdown. See the
+ * "Weekly Goals" — the weekly-goal summary + six-metric breakdown. See the
  * file header for the full contract.
  *
  * @param props - {@link WeeklyGoalsProps}
@@ -283,42 +283,43 @@ const WeeklyGoals = ({
     anatPart,
 }: WeeklyGoalsProps) => (
     <SurfaceCard
-        label="Mục tiêu tuần"
+        label="Weekly Goals"
         anatPart={anatPart}
         showAnatomy={showAnatomy}
-    >
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={(
-                <Content
-                    items={loadingItems(defaultTargets)}
-                    composite={{ percent: 0, completed: 0, total: 6 }}
-                    defaultTargets={defaultTargets}
-                    isSkeleton
-                    showAnatomy={showAnatomy}
-                />
-            )}
-            error={error}
-            errorContent={{
-                title: "Không tải được mục tiêu tuần",
-                description: "Thử lại để xem tiến độ mới nhất.",
-                onRetry,
-                retryLabel: "Thử lại",
-            }}
-            showAnatomy={showAnatomy}
-        >
-            {data ? (
-                <Content
-                    items={data.items}
-                    composite={data.composite}
-                    resetInLabel={data.resetInLabel}
-                    defaultTargets={defaultTargets}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-            ) : null}
-        </AsyncContent>
-    </SurfaceCard>
+        body={() => (
+            <AsyncContent
+                isLoading={isLoading}
+                skeleton={(
+                    <Content
+                        items={loadingItems(defaultTargets)}
+                        composite={{ percent: 0, completed: 0, total: 6 }}
+                        defaultTargets={defaultTargets}
+                        isSkeleton
+                        showAnatomy={showAnatomy}
+                    />
+                )}
+                error={error}
+                errorContent={{
+                    title: "Couldn't load weekly goals",
+                    description: "Retry to see the latest progress.",
+                    onRetry,
+                    retryLabel: "Retry",
+                }}
+                showAnatomy={showAnatomy}
+            >
+                {data ? (
+                    <Content
+                        items={data.items}
+                        composite={data.composite}
+                        resetInLabel={data.resetInLabel}
+                        defaultTargets={defaultTargets}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                ) : null}
+            </AsyncContent>
+        )}
+    />
 )
 
 export { WeeklyGoals }

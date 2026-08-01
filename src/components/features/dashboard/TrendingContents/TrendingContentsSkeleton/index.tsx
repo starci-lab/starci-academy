@@ -22,7 +22,7 @@ export type TrendingContentsSkeletonProps = WithClassNames<undefined>
 
 /**
  * Loading placeholder for {@link import("../").TrendingContents}: mirrors the real
- * "Nổi bật tuần này" card — the same frameless `LabeledCard` (label + flame icon)
+ * "Trending this week" card — the same frameless `LabeledCard` (label + flame icon)
  * over a `SurfaceListCard` of rank-box + title rows — so the card does not pop in
  * / jump when the trending query resolves.
  *

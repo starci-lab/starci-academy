@@ -32,7 +32,7 @@ import { ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks/marketing/S
 /** Props for {@link LearnLoopScroll}. */
 export type LearnLoopScrollProps = WithClassNames<undefined>
 
-/** Icon cho từng bước của vòng học (keys khớp `landing.learnLoop.items.{key}`). */
+/** Icon for each step of the learning loop (keys match `landing.learnLoop.items.{key}`). */
 const STEP_ICONS: Record<string, React.ReactNode> = {
     read: <BookOpenIcon aria-hidden focusable="false" />,
     grade: <RobotIcon aria-hidden focusable="false" />,
@@ -40,7 +40,7 @@ const STEP_ICONS: Record<string, React.ReactNode> = {
     rank: <TrophyIcon aria-hidden focusable="false" />,
 }
 
-/** Address-bar của từng panel (đọc như màn hình thật của sản phẩm). */
+/** Address bar for each panel (reads like a real screen of the product). */
 const STEP_URL: Record<string, string> = {
     read: "starci.academy/learn/dead-letter-queue",
     grade: "starci.academy/submit",
@@ -49,14 +49,14 @@ const STEP_URL: Record<string, string> = {
 }
 
 /**
- * Bài đọc minh hoạ bước "Đọc" — CÙNG một bài (Dead Letter Queue) viết ở 4 ngôn ngữ.
- * Mỗi tab đổi tên file + code; bấm để chuyển. Code cố ý "sâu" hơn 1 dòng cho thật.
+ * Sample lesson illustrating the "Read" step — the SAME lesson (Dead Letter Queue) written in 4 languages.
+ * Each tab swaps the filename + code; click to switch. The code is deliberately more than 1 line deep, for realism.
  */
 const READ_LESSON = [
     {
         label: "TS",
         file: "order-consumer.ts",
-        code: `// retry; quá ngưỡng → DLQ
+        code: `// retry; past the threshold → DLQ
 async function onMessage(msg: Message) {
   try { await handle(msg); await msg.ack() }
   catch {
@@ -68,7 +68,7 @@ async function onMessage(msg: Message) {
     {
         label: "Java",
         file: "OrderConsumer.java",
-        code: `// retry; quá ngưỡng → DLQ
+        code: `// retry; past the threshold → DLQ
 void onMessage(Message msg) {
   try { handle(msg); msg.ack(); }
   catch (Exception e) {
@@ -80,7 +80,7 @@ void onMessage(Message msg) {
     {
         label: "C#",
         file: "OrderConsumer.cs",
-        code: `// retry; quá ngưỡng → DLQ
+        code: `// retry; past the threshold → DLQ
 async Task OnMessage(Message msg) {
   try { await Handle(msg); await msg.AckAsync(); }
   catch (Exception e) {
@@ -100,10 +100,10 @@ async Task OnMessage(Message msg) {
     },
 ] as const
 
-/** Token cho tint code (comment · string · keyword) — đủ cho demo, không phải full lexer. */
+/** Token for code tinting (comment · string · keyword) — enough for the demo, not a full lexer. */
 const CODE_TOKEN = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|\b(const|let|var|async|await|function|func|return|if|else|for|class|public|private|static|void|new|using|namespace|package|import|from|type|struct|interface|defer|throw|catch|try|final|int|Task|Exception|nil|err)\b/g
 
-/** Tô màu 1 dòng code: comment → muted · string → warning · keyword → accent. */
+/** Colors one line of code: comment → muted · string → warning · keyword → accent. */
 const tintLine = (line: string): React.ReactNode => {
     if (line === "") {
         return " "
@@ -128,7 +128,7 @@ const tintLine = (line: string): React.ReactNode => {
     return out
 }
 
-/** Khối code có số dòng + tint (mono). */
+/** Code block with line numbers + tint (mono). */
 const CodeBlock = ({ code }: { code: string }) => {
     const lines = code.split("\n")
     return (
@@ -143,7 +143,7 @@ const CodeBlock = ({ code }: { code: string }) => {
     )
 }
 
-/** Bảng xếp hạng minh hoạ (marketing, không phải data thật). */
+/** Sample leaderboard (marketing, not real data). */
 const RANK_ROWS = [
     { rank: 1, name: "minh.dev", xp: 4280 },
     { rank: 2, name: "huyen.codes", xp: 2715 },
@@ -151,15 +151,15 @@ const RANK_ROWS = [
 ] as const
 
 /**
- * Visual cột phải đổi theo bước — flat, dựng bằng token (không ảnh thật), mỗi panel
- * neo bằng icon của bước. Bốn panel: Đọc (tab 4 ngôn ngữ + code tint) · Chấm AI (score
- * ring + tiêu chí pass/warn) · Capstone (mini sơ đồ kiến trúc) · Bảng xếp hạng (medal +
- * avatar + thanh XP + dòng "Bạn"). Phần tử trong panel vào sân theo stagger nhẹ.
+ * The right-column visual changes per step — flat, built from tokens (no real images), each panel
+ * anchored by the step's icon. Four panels: Read (4-language tabs + code tint) · AI Grading (score
+ * ring + pass/warn criteria) · Capstone (mini architecture diagram) · Leaderboard (medal +
+ * avatar + XP bar + a "You" row). Elements inside each panel enter with a light stagger.
  */
 const StepVisual = ({ stepKey }: { stepKey: string }) => {
     const t = useTranslations()
     const reduce = useReducedMotion()
-    // ngôn ngữ đang chọn ở bước "Đọc" (tab bấm được; reset khi panel re-mount)
+    // the currently selected language in the "Read" step (clickable tab; resets when the panel re-mounts)
     const [readLang, setReadLang] = useState(0)
 
     const childVariants = reduce
@@ -170,8 +170,8 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
         show: { transition: { staggerChildren: reduce ? 0 : 0.07, delayChildren: reduce ? 0 : 0.05 } },
     }
 
-    // Panel phải = block LabeledCard (label NGOÀI: icon bước + title · tag bên phải). Body
-    // = visual của bước + 1 dòng mô tả (mỗi card "nói" thêm, không trơ visual). Stagger nhẹ.
+    // The right panel = a LabeledCard block (label OUTSIDE: step icon + title · tag on the right). Body
+    // = the step's visual + one line of description (each card "says" a bit more, not a bare visual). Light stagger.
     const shell = (children: React.ReactNode, align: "center" | "start" = "center") => (
         <ShowcaseMockup
             url={STEP_URL[stepKey]}
@@ -226,18 +226,18 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
 
     if (stepKey === "grade") {
         const criteria = [
-            { ok: true, text: "Idempotency key xử lý đúng.", pts: "+30" },
-            { ok: true, text: "Retry + backoff hợp lý.", pts: "+25" },
-            { ok: false, text: "Thiếu rate-limit ở gateway.", pts: "−8" },
+            { ok: true, text: "Idempotency key handled correctly.", pts: "+30" },
+            { ok: true, text: "Sensible retry + backoff.", pts: "+25" },
+            { ok: false, text: "Missing rate-limit at the gateway.", pts: "−8" },
         ]
         return shell(
             <>
-                {/* verdict = HeroUI Alert style (đúng SubmissionResult): tint success + icon + điểm */}
+                {/* verdict = HeroUI Alert style (matches SubmissionResult): success tint + icon + score */}
                 <motion.div variants={childVariants} className="flex items-center gap-3 rounded-xl bg-success-soft px-3 py-2">
                     <CheckCircleIcon aria-hidden focusable="false" className="size-7 shrink-0 text-success-soft-foreground" />
                     <div className="flex flex-1 flex-col">
                         <span className="text-sm font-semibold text-success-soft-foreground">{t("submissionResult.passed")} · 92/100</span>
-                        <span className="text-xs text-success-soft-foreground/80">cần ≥ 70 để qua</span>
+                        <span className="text-xs text-success-soft-foreground/80">need ≥ 70 to pass</span>
                     </div>
                     <span className="shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success-soft-foreground">+120 XP</span>
                 </motion.div>
@@ -260,9 +260,9 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
 
     if (stepKey === "capstone") {
         const milestones = [
-            { label: "Dựng khung & CI", state: "done" },
+            { label: "Scaffold & CI", state: "done" },
             { label: "Auth + API Gateway", state: "done" },
-            { label: "Tách service · DB-per-service", state: "active" },
+            { label: "Split services · DB-per-service", state: "active" },
         ] as const
         return shell(
             <>
@@ -275,8 +275,8 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                 </motion.div>
                 <motion.div variants={childVariants} className="flex flex-col gap-2">
                     <div className="flex items-center justify-between text-xs text-muted">
-                        <span>Tiến độ</span>
-                        <span>8/20 chặng · 40%</span>
+                        <span>Progress</span>
+                        <span>8/20 milestones · 40%</span>
                     </div>
                     <div className="h-1.5 overflow-hidden rounded-full bg-default">
                         <div className="h-full rounded-full bg-accent" style={{ width: "40%" }} />
@@ -305,8 +305,8 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
     return shell(
         <motion.div variants={childVariants} className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold">Tuần này</span>
-                <span className="text-xs text-muted">XP tích luỹ</span>
+                <span className="text-sm font-semibold">This week</span>
+                <span className="text-xs text-muted">XP earned</span>
             </div>
             {RANK_ROWS.map((row) => (
                 <div key={row.rank} className="flex flex-col gap-1">
@@ -317,7 +317,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                         <UserAvatar className="size-7" username={row.name} seed={row.name} />
                         <span className="flex-1 truncate text-sm">{row.name}</span>
                         <span className={cn("text-sm", row.rank === 1 ? "font-semibold text-accent-soft-foreground" : "text-muted")}>
-                            {row.xp.toLocaleString("vi-VN")}
+                            {row.xp.toLocaleString("en-US")}
                         </span>
                     </div>
                     <div className="ml-7 h-1.5 overflow-hidden rounded-full bg-default">
@@ -330,8 +330,8 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
             ))}
             <div className="mt-1 flex items-center gap-2 rounded-xl bg-accent-soft px-3 py-2">
                 <span className="w-5 text-center text-sm font-semibold text-accent-soft-foreground">12</span>
-                <UserAvatar className="size-7" username="Bạn" seed="ban-viewer" />
-                <span className="flex-1 truncate text-sm text-accent-soft-foreground">Bạn</span>
+                <UserAvatar className="size-7" username="You" seed="ban-viewer" />
+                <span className="flex-1 truncate text-sm text-accent-soft-foreground">You</span>
                 <span className="flex items-center gap-1 text-xs text-success-soft-foreground">
                     <ArrowUpIcon aria-hidden focusable="false" className="size-3" />3
                 </span>
@@ -340,11 +340,11 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
     )
 }
 
-/** Thẻ bước cho layout tĩnh (fallback mobile / reduced-motion). */
+/** Step card for the static layout (mobile / reduced-motion fallback). */
 /**
- * Danh sách 4 bước (ListBox) dùng chung cho cả 2 biến thể. `active` = bước đang chọn;
- * bấm 1 bước → `onSelect(index)` (pinned: cuộn tới đúng bước · static: set active trực
- * tiếp). done (index < active) hiện check xanh; active = accent.
+ * The 4-step list (ListBox) shared by both variants. `active` = the step currently selected;
+ * clicking a step → `onSelect(index)` (pinned: scrolls to that step · static: sets active
+ * directly). done (index < active) shows a green check; active = accent.
  */
 const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: number) => void }) => {
     const t = useTranslations()
@@ -400,7 +400,7 @@ const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: 
     )
 }
 
-/** Visual panel đổi theo bước (crossfade) — dùng chung cho cả 2 biến thể. */
+/** The visual panel that changes per step (crossfade) — shared by both variants. */
 const LoopPanel = ({ activeKey }: { activeKey: string }) => (
     <div className="relative min-h-[320px]">
         <AnimatePresence mode="wait">
@@ -417,10 +417,10 @@ const LoopPanel = ({ activeKey }: { activeKey: string }) => (
     </div>
 )
 
-/** Heading dùng chung cho cả 2 biến thể (tĩnh + pinned). */
+/** Heading shared by both variants (static + pinned). */
 const LoopHeading = () => {
     const t = useTranslations()
-    // CTA "vào cày thử" — cuộn xuống khối Lộ trình (#courses) để chọn track + học thử.
+    // CTA "jump in and try it" — scrolls down to the Tracks block (#courses) to pick a track + try a lesson.
     const onJumpIn = () => document.getElementById("courses")?.scrollIntoView({ behavior: "smooth" })
     return (
         <div className="flex flex-col items-center gap-6">
@@ -438,9 +438,9 @@ const LoopHeading = () => {
 }
 
 /**
- * Layout CLICK-DRIVEN (mobile / reduced-motion / trước mount) — list bấm được + panel
- * đổi theo bước, KHÔNG scroll-hijack. Cùng list+panel với pinned, chỉ khác: bấm 1 bước
- * = set active trực tiếp (không cuộn). Mobile: list trên · panel dưới (1 cột).
+ * CLICK-DRIVEN layout (mobile / reduced-motion / before mount) — a clickable list + a panel
+ * that changes per step, NO scroll-hijack. Same list+panel as pinned, the only difference: clicking
+ * a step sets active directly (no scrolling). Mobile: list on top · panel below (1 column).
  */
 const LearnLoopStatic = ({ className }: LearnLoopScrollProps) => {
     const [active, setActive] = useState(0)
@@ -458,10 +458,11 @@ const LearnLoopStatic = ({ className }: LearnLoopScrollProps) => {
 }
 
 /**
- * Biến thể PINNED (desktop) — tách riêng để `useScroll`'s target ref LUÔN gắn vào
- * `<section>` được render (tránh "Target ref defined but not hydrated" khi nhánh
- * fallback không gắn ref). Ghim khối giữa màn; cuộn → bước active 01→04 + visual phải
- * đổi + thanh tiến độ; cuộn hết → `sticky` nhả. Bấm bước ở ListBox → cuộn tới đúng đó.
+ * PINNED variant (desktop) — split out so `useScroll`'s target ref is ALWAYS attached to
+ * the rendered `<section>` (avoiding "Target ref defined but not hydrated" when the
+ * fallback branch attaches no ref). Pins the block centered on screen; scrolling → active
+ * step 01→04 + the right visual changes + a progress bar; scrolling past → `sticky` releases.
+ * Clicking a step in the ListBox → scrolls to that step.
  */
 const LearnLoopPinned = ({ className }: LearnLoopScrollProps) => {
     const sectionRef = useRef<HTMLDivElement>(null)
@@ -477,7 +478,7 @@ const LearnLoopPinned = ({ className }: LearnLoopScrollProps) => {
         setActive(index)
     })
 
-    /** Cuộn cửa sổ tới vị trí ứng với bước `index` (khi bấm ListBox). */
+    /** Scrolls the window to the position matching step `index` (when the ListBox is clicked). */
     const jumpToStep = (index: number) => {
         const element = sectionRef.current
         if (!element) {
@@ -497,7 +498,7 @@ const LearnLoopPinned = ({ className }: LearnLoopScrollProps) => {
             <div className="sticky top-0 flex h-screen flex-col justify-center gap-16 py-12">
                 <LoopHeading />
                 <div className="grid grid-cols-1 items-center gap-x-12 gap-y-12 @app-lg:grid-cols-2 @app-lg:gap-y-20">
-                    {/* TRÁI — list 4 bước (scroll lái active; bấm → cuộn tới). PHẢI — visual đổi. */}
+                    {/* LEFT — the 4-step list (scroll drives active; click → scrolls to it). RIGHT — the visual that changes. */}
                     <div>
                         <LoopStepList active={active} onSelect={jumpToStep} />
                     </div>
@@ -509,11 +510,11 @@ const LearnLoopPinned = ({ className }: LearnLoopScrollProps) => {
 }
 
 /**
- * Section "Cách học" (vòng học 4 bước). Desktop (sau mount, không reduced-motion) →
- * {@link LearnLoopPinned} (scroll-pinned giống ika.xyz). Mobile / reduced-motion /
- * trước khi mount → {@link LearnLoopStatic} (4 thẻ tĩnh, không scroll-hijack + a11y).
- * Tách 2 biến thể để `useScroll` (trong Pinned) chỉ chạy khi `<section ref>` thật sự
- * render — tránh lỗi "Target ref defined but not hydrated".
+ * "How you learn" section (the 4-step learning loop). Desktop (after mount, no reduced-motion) →
+ * {@link LearnLoopPinned} (scroll-pinned, like ika.xyz). Mobile / reduced-motion /
+ * before mount → {@link LearnLoopStatic} (4 static cards, no scroll-hijack + a11y).
+ * Split into 2 variants so `useScroll` (inside Pinned) only runs once the `<section ref>` actually
+ * renders — avoiding the "Target ref defined but not hydrated" error.
  *
  * @param props - optional className (placement only).
  */

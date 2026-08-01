@@ -1,9 +1,10 @@
 import type { LocalizedGuide } from "./types"
 
 /**
- * macOS Ollama install guide (RAG Setup: engine step). Chỉ lo CÀI + CHẠY Ollama —
- * việc tải model là bước RIÊNG ngay sau đó của Setup, đừng nhắc lại ở đây. Mọi tín hiệu
- * KIỂM ĐƯỢC BẰNG LỆNH (`ollama list`, HTTP :11434) — không mô tả GUI.
+ * macOS Ollama install guide (RAG Setup: engine step). ONLY covers INSTALLING +
+ * RUNNING Ollama — downloading the model is a SEPARATE step right after this one
+ * in Setup, don't repeat it here. Every signal is VERIFIABLE BY COMMAND
+ * (`ollama list`, HTTP :11434) — no GUI description.
  */
 export const RAG_MACOS_GUIDE: LocalizedGuide = {
     vi: `

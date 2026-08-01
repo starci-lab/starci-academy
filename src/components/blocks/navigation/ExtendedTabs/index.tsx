@@ -22,7 +22,7 @@ export interface ExtendedTabsProps extends WithClassNames<undefined> {
      * panel content — HeroUI's own default rendering (segmented pill,
      * full-width, evenly-stretched tabs), untouched by the `.extended-tabs`
      * hug-content override. Use `"primary"` for top-level section switches
-     * (e.g. Bắt đầu/Lịch sử/Thống kê), `"secondary"` for a content filter/
+     * (e.g. Begin/History/Stats), `"secondary"` for a content filter/
      * language-switcher riding alongside a reading column.
      */
     variant?: "primary" | "secondary"

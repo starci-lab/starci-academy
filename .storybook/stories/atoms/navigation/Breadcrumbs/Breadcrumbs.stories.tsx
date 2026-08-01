@@ -52,7 +52,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** Default — full trail; the last crumb is the current page (no `onPress`). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Breadcrumbs"
                 tier="atom"
@@ -84,7 +84,7 @@ export const Default: Story = {
 /** Truncated — trail longer than `maxItems` → the middle collapses into '…' (first · … · last two). */
 export const Truncated: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Breadcrumbs"
                 tier="atom"
@@ -118,7 +118,7 @@ export const Truncated: Story = {
 /** CollapsedLongTrail — `collapseFrom` → a long trail switches entirely to '← Back' at EVERY width. */
 export const CollapsedLongTrail: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Breadcrumbs"
                 tier="atom"
@@ -152,7 +152,7 @@ export const CollapsedLongTrail: Story = {
 /** CollapsedOnMobile — below `@app-sm` (375px container) the trail gives way to a back link. */
 export const CollapsedOnMobile: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Breadcrumbs"
                 tier="atom"
@@ -164,7 +164,7 @@ export const CollapsedOnMobile: Story = {
                         why: "The trail swaps for a back link only while the CONTAINER is narrow, and shows the full trail from `@app-sm` up. The fixed 375px wrapper is the mobile signal here, since this reads a container query rather than the viewport addon.",
                         code: "<Breadcrumbs collapseOnMobile backLabel=\"Back\" items={[…]} />",
                         render: (
-                            <div className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
+                            <div data-tier="fixture" className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
                                 <Breadcrumbs
                                     collapseOnMobile
                                     backLabel="Back"
@@ -199,7 +199,7 @@ export const CollapsedOnMobile: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Breadcrumbs"
                 tier="atom"
@@ -245,7 +245,7 @@ export const Skeleton: Story = {
                         why: "The narrow-container skeleton mirrors the back-link shape, matching `CollapsedOnMobile`'s real behaviour at the same width. The same container query drives both the loaded and the loading trail, so neither ever disagrees with the other.",
                         code: "<Breadcrumbs isSkeleton collapseOnMobile items={[…3 crumbs]} />",
                         render: (
-                            <div className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
+                            <div data-tier="fixture" className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
                                 <Breadcrumbs
                                     isSkeleton
                                     collapseOnMobile

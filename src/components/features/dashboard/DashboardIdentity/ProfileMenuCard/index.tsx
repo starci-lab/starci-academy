@@ -81,8 +81,8 @@ export const ProfileMenuCard = ({
         ],
     )
 
-    // Ring colour: real seniority hue (junior=đồng · middle=bạc · senior=vàng). beginner/unranked reads as a
-    // neutral grey (#8C95A1) → use the `--border` token so it's theme-clean, not a hardcoded xám.
+    // Ring colour: real seniority hue (junior=bronze · middle=silver · senior=gold). beginner/unranked reads as a
+    // neutral grey (#8C95A1) → use the `--border` token so it's theme-clean, not a hardcoded grey.
     const ringColor = info.ring && info.rank !== "beginner" ? info.ring : "var(--border)"
 
     if (!user) {
@@ -120,7 +120,7 @@ export const ProfileMenuCard = ({
                     </span>
                 </div>
             </div>
-            {/* trailing caret at the right edge; weight bold + slides on hover (mirrors "Tiếp tục →") */}
+            {/* trailing caret at the right edge; weight bold + slides on hover (mirrors "Continue →") */}
             <CaretRightIcon weight="bold" className="size-4 shrink-0 text-muted transition-transform group-hover:translate-x-1" />
         </Link>
     )

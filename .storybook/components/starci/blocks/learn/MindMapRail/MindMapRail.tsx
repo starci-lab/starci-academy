@@ -138,9 +138,9 @@ export interface MindMapRailProps {
 
 /** The block's own wording for the tier filter — never handed in by the caller (§14d.1). */
 const TIER_LABEL: Record<MindMapRailTier, string> = {
-    all: "Tất cả",
-    medium: "Trung bình",
-    high: "Cao",
+    all: "All",
+    medium: "Medium",
+    high: "High",
 }
 
 const TIER_ORDER: Array<MindMapRailTier> = ["all", "medium", "high"]
@@ -157,11 +157,11 @@ const popularityTone = (popularity: number): VerdictBandVariant | undefined => {
     return undefined
 }
 
-const FILTER_TRIGGER_LABEL = "Lọc"
-const FILTER_HEADING = "Độ phổ biến"
-const SEARCH_PLACEHOLDER = "Tìm từ khoá..."
-const EMPTY_TITLE_NO_QUERY = "Chưa có từ khoá nào trong bản đồ này"
-const EMPTY_DESCRIPTION_WITH_QUERY = "Thử một từ khoá khác hoặc bỏ bớt bộ lọc."
+const FILTER_TRIGGER_LABEL = "Filter"
+const FILTER_HEADING = "Popularity"
+const SEARCH_PLACEHOLDER = "Search keywords..."
+const EMPTY_TITLE_NO_QUERY = "No keywords in this map yet"
+const EMPTY_DESCRIPTION_WITH_QUERY = "Try a different keyword or loosen the filter."
 
 /** How many placeholder rows mirror the list while `items` hasn't landed yet. */
 const SKELETON_ROW_COUNT = 5
@@ -214,7 +214,7 @@ const MindMapRail = ({
     const emptyContent: AsyncContentEmptyProps = hasQuery
         ? {
             icon: MagnifyingGlassIcon,
-            title: `Không tìm thấy từ khoá nào khớp "${query}"`,
+            title: `No keywords match "${query}"`,
             description: EMPTY_DESCRIPTION_WITH_QUERY,
             anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
             showAnatomy,
@@ -271,7 +271,7 @@ const MindMapRail = ({
 
     const railBody = (
         <>
-            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined} body={searchRow} />
+            <StackH gap={3} wrap anatPart={showAnatomy ? "StackH" : undefined} body={searchRow} />
             <AsyncContent
                 isLoading={isLoading || isSkeleton}
                 skeleton={<SurfaceCardList items={skeletonRows()} isSkeleton anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
@@ -283,7 +283,7 @@ const MindMapRail = ({
         </>
     )
 
-    return <StackV gap="related" anatPart={anatPart} body={railBody} />
+    return <StackV gap={3} anatPart={anatPart} body={railBody} />
 }
 
 export { MindMapRail }

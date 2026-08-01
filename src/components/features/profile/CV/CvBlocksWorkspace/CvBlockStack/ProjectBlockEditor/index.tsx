@@ -19,7 +19,7 @@ import { AiRewriteButton } from "../shared/AiRewriteButton"
 import { RepeatableItemCard } from "../shared/RepeatableItemCard"
 import { PickFromStarciSelect } from "./PickFromStarciSelect"
 
-/** A brand-new, self-reported project entry ("+ Thêm dự án ngoài"). */
+/** A brand-new, self-reported project entry ("+ Add outside project"). */
 const emptySelfItem = (): CvBlockItem => ({
     id: crypto.randomUUID(),
     source: CvBlockItemSource.Self,
@@ -31,11 +31,11 @@ export interface ProjectBlockEditorProps extends WithClassNames<undefined>, CvBl
 
 /**
  * Project block editor — the ONLY block whose items carry `source` /
- * `sourceRef`: picked from a passed StarCi capstone (tagged "Đã xác thực",
- * success) via {@link PickFromStarciSelect}, or typed manually via "+ Thêm dự
- * án ngoài" (tagged "Tự khai", muted). Every item — verified or self — shares
+ * `sourceRef`: picked from a passed StarCi capstone (tagged "Verified",
+ * success) via {@link PickFromStarciSelect}, or typed manually via "+ Add outside
+ * project" (tagged "Self-reported", muted). Every item — verified or self — shares
  * the same editable fields (title/description/bullets) plus its own "✨ AI
- * viết giúp"; verified items pass `capstoneAttemptId` (their `sourceRef`) so
+ * write for me"; verified items pass `capstoneAttemptId` (their `sourceRef`) so
  * the rewrite is grounded (RAG) on the real capstone data.
  *
  * @param props - {@link ProjectBlockEditorProps}
@@ -149,7 +149,7 @@ export const ProjectBlockEditor = ({ className, block, onChange, onAiRewrite }: 
                             />
                         </TextField>
 
-                        {/* AI viết giúp ONLY for StarCi-verified items — their `sourceRef`
+                        {/* AI write-for-me ONLY for StarCi-verified items — their `sourceRef`
                             grounds the rewrite (RAG) on the real capstone. Self-reported
                             items have nothing real to ground on, so no AI assist. */}
                         {onAiRewrite && isVerified ? (

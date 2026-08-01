@@ -27,7 +27,7 @@ import sceneJson from "./scene.json"
 
 /**
  * Mini 3D architecture scene (real WebGL via react-three-fiber) for the landing hero, in a
- * flat isometric "tiles on a grid" style (à la isomer / FossFLOW): a square iso floor board
+ * flat isometric "tiles on a grid" style (in the style of isomer / FossFLOW): a square iso floor board
  * where every node is a flat-shaded slab centred on its own cell, wired into a small DAG.
  *
  * Fully DATA-DRIVEN: topology (nodes / edges / failures), board layout and camera come from a

@@ -1,7 +1,6 @@
-import React from "react"
 import type { ReactNode } from "react"
-import { Chip, cn, Skeleton as HeroSkeleton } from "@heroui/react"
-import type { ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
+import { cn } from "@heroui/react"
+import { Chip, type ChipTone, type IconComponent } from "@sb-components/atoms/chips/Chip/Chip"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
@@ -14,14 +13,13 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
 interface WithClassNames<T> {
     classNames?: T
-    className?: string
 }
 
 /**
  * Semantic tone of the highlight chip — drives the soft tint
  * (`bg-<tone>/10 text-<tone>`). Neutral maps to the default color.
  *
- * Alias, not a redeclaration (thầy chốt 2026-07-29): the atom {@link ChipTone}
+ * Alias, not a redeclaration (instructor's final call, 2026-07-29): the atom {@link ChipTone}
  * already carries these exact five values in this exact order — a hand-typed
  * copy here was a second source of truth for the same vocabulary.
  */
@@ -30,13 +28,15 @@ export type HighlightChipTone = ChipTone
 /** Props every {@link HighlightChip} carries regardless of loading state. */
 interface HighlightChipOwnProps extends WithClassNames<Array<AllowedClassName>> {
     /**
-     * Semantic tone driving the soft-tinted color. Defaults to "default" (trung lập).
+     * Semantic tone driving the soft-tinted color. Defaults to "default" (neutral).
      */
     tone?: HighlightChipTone
     /**
-     * Optional leading icon (typically a Phosphor `*Icon`) before the value.
+     * Optional leading icon, passed as a COMPONENT reference (e.g. `icon={BookIcon}`),
+     * never JSX — the house `Chip` atom renders it, at its own glyph scale (COMPOSITE-8:
+     * a node arrives already called, so this composite could not hand it `isSkeleton`).
      */
-    icon?: ReactNode
+    icon?: IconComponent
 }
 
 /**
@@ -51,34 +51,34 @@ export type HighlightChipProps = HighlightChipOwnProps &
 
 /**
  * Stat / meta chip with a highlighted value: a soft-tinted pill rendering an
- * optional leading icon, a bold `value`, then a `label` — e.g. "24 Module",
- * "276 Bài thực hành". Pure and props-only (tone drives the color). Used in the
+ * optional leading icon, a bold `value`, then a `label` — e.g. "24 Modules",
+ * "276 Practice exercises". Pure and props-only (tone drives the color). Used in the
  * `PageHeader` meta row to show a course's figures.
  */
-export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, className, classNames }: HighlightChipProps) => {
-    if (isSkeleton) {
-        // STOPPED (COMPOSITE-10): the real branch below renders `Chip` straight
-        // from `@heroui/react` with `size="sm"`, not the house `Chip` atom
-        // (`@sb-components/atoms/chips/Chip/Chip`, imported here only for its
-        // `ChipTone` type). That atom has no `size` prop — its own skeleton
-        // renders the un-sized `.chip` padding (24px tall), not the 20px
-        // `size="sm"` box this component actually draws — so forwarding
-        // `isSkeleton` to it would change the loading pill's height, not just
-        // its shape. Left hand-drawn until the real branch is migrated onto
-        // the atom.
-        return <HeroSkeleton className={cn("h-6 w-20 rounded-full", className, classNames)} />
-    }
-    return (
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "HighlightChip" } as const
+
+export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, classNames }: HighlightChipProps) => (
+    // Wrapping span exists only to carry the composite's own position (`classNames`)
+    // and its tier tags — `Chip` (the house atom) is the one real element rendered,
+    // one render path whether loading or not (COMPOSITE-10: the atom draws its own
+    // shimmer, sized to the same box, this composite only forwards the flag).
+    <span
+        className={cn("inline-flex", classNames)}
+        data-tier="composite"
+        data-component="HighlightChip"
+    >
         <Chip
-            color={tone}
-            variant="soft"
-            size="sm"
-            className={cn(className, classNames)}
-        >
-            {icon}
-            <Chip.Label>
-                <span className="font-medium">{value}</span> {label}
-            </Chip.Label>
-        </Chip>
-    )
-}
+            tone={tone}
+            icon={icon}
+            isSkeleton={isSkeleton}
+            text={
+                isSkeleton ? undefined : (
+                    <>
+                        <span className="font-medium">{value}</span> {label}
+                    </>
+                )
+            }
+        />
+    </span>
+)

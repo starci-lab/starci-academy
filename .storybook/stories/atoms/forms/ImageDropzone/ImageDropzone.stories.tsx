@@ -13,24 +13,28 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * ATOM — `ImageDropzone`: vùng thả/chọn MỘT ảnh duy nhất của hệ.
+ * ATOM — `ImageDropzone`: the system's drop/pick zone for a SINGLE image.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — luật của TẦNG ATOM). Prop sinh hình: `hint` (dòng gợi ý
- * định dạng/kích thước), `icon` (đổi glyph giữa), và `isDragActive` (ghim state kéo-thả
- * từ ngoài). `label` luôn có, nằm sẵn ở `Default`. `onFile`, `className`, `showAnatomy`
- * không sinh hình nên không có leaf.
+ * 📐 **1 PROP = 1 LEAF** (§12g — the ATOM-tier rule). Props that produce a shape:
+ * `hint` (format/size guidance line), `icon` (swaps the center glyph), and
+ * `isDragActive` (pins the drag state from outside). `label` is always present,
+ * already shown in `Default`. `onFile`, `className`, `showAnatomy` don't produce
+ * a shape, so they have no leaf.
  *
- * Sửa 2026-07-26 (theo chặng 1 dọn atom):
- *   • Leaf `Icon` đổi call-site từ `icon={<CameraIcon />}` (node) sang `icon={CameraIcon}`
- *     (component) — atom tự ép size (`size-8`), và vì `size-8 ≥ size-5` (§5.0a) nên
- *     KHÔNG truyền `weight`, glyph giữ nét `regular` mặc định (khác Chip vốn `size-3`
- *     phải ép `bold`).
- *   • Leaf MỚI `DragActive` — trước đây viền đặc + nền tint + icon/label đổi màu khi kéo
- *     file qua là STATE NỘI BỘ của `useDropzone`, không leaf nào ép vào được. Atom giờ
- *     nhận `isDragActive?: boolean` để ghim từ ngoài (không truyền ⇒ hành vi cũ không đổi).
+ * Fixed 2026-07-26 (part of the first atom-cleanup pass):
+ *   • Leaf `Icon` changed its call site from `icon={<CameraIcon />}` (a node) to
+ *     `icon={CameraIcon}` (a component) — the atom forces its own size (`size-8`),
+ *     and since `size-8 ≥ size-5` (§5.0a) it does NOT pass `weight`, leaving the
+ *     glyph at its default `regular` stroke (unlike Chip, whose `size-3` forces
+ *     `bold`).
+ *   • NEW leaf `DragActive` — previously the solid border + background tint + the
+ *     icon/label color change while dragging a file over the box was INTERNAL
+ *     state of `useDropzone`, with no leaf able to force it. The atom now accepts
+ *     `isDragActive?: boolean` to pin it from outside (leaving it unset keeps the
+ *     old behavior unchanged).
  */
 
-/** Hướng dẫn hiện đầu trang autodocs. Chữ trên UI viết TIẾNG ANH (thầy chốt 2026-07-26). */
+/** Copy shown at the top of the autodocs page. On-screen text is written in ENGLISH (teacher finalized 2026-07-26). */
 const IMAGE_DROPZONE_DOC = `
 ## What it takes
 
@@ -72,10 +76,10 @@ export default meta
 
 type Story = StoryObj<typeof ImageDropzone>
 
-/** Leaf TRẦN — chỉ prop bắt buộc `label`, không `hint`, glyph mặc định, không kéo-thả. */
+/** Bare leaf — only the required `label` prop, no `hint`, default glyph, no drag active. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ImageDropzone"
                 tier="atom"
@@ -102,10 +106,10 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `hint` — dòng gợi ý định dạng/kích thước, chỉ hiện khi được truyền. */
+/** Leaf prop `hint` — format/size guidance line, shown only when passed. */
 export const Hint: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ImageDropzone"
                 tier="atom"
@@ -143,10 +147,10 @@ export const Hint: Story = {
     ),
 }
 
-/** Leaf prop `icon` — glyph GIỮA, nhận COMPONENT chứ không phải node đã render. */
+/** Leaf prop `icon` — the CENTER glyph, takes a COMPONENT rather than a rendered node. */
 export const Icon: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ImageDropzone"
                 tier="atom"
@@ -193,13 +197,14 @@ export const Icon: Story = {
 }
 
 /**
- * Leaf prop `isDragActive` — ghim state kéo-thả từ ngoài. Trước đây (chặng 1) không có
- * cách nào ép hình này vào story vì nó chỉ sống trong `useDropzone`; giờ atom nhận prop
- * để đè lên, nên hình viền đặc + nền tint + icon/label đổi màu có mặt được ở đây.
+ * Leaf prop `isDragActive` — pins the drag state from outside. Previously (first
+ * pass) there was no way to force this shape into a story since it only lived
+ * inside `useDropzone`; now the atom accepts a prop to override it, so the solid
+ * border + background tint + icon/label color change can show up here.
  */
 export const DragActive: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ImageDropzone"
                 tier="atom"

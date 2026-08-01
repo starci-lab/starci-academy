@@ -8,16 +8,18 @@ export default meta
 type Story = StoryObj
 
 /**
- * ATOM — `InputNumber`: numeric field + stepper (HeroUI NumberField), bọc qua
- * `FieldFrame` nội bộ (§12e — form atom tự mang label/hint/errorMessage/required,
- * KHÔNG có tầng Field riêng).
+ * ATOM — `InputNumber`: numeric field + stepper (HeroUI NumberField), wrapped
+ * through `FieldFrame` internally (§12e — a form atom carries its own
+ * label/hint/errorMessage/required, there's NO separate Field tier).
  *
- * Không component nào ở đây có story riêng ⇒ `annotate` không có `storyId` —
- * nhưng heroui `NumberField.Group` cùng `Label`/`Skeleton` của `FieldFrame` vẫn
- * cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
+ * No component here has its own story ⇒ `annotate` carries no `storyId` — but
+ * the heroui `NumberField.Group` along with `FieldFrame`'s `Label`/`Skeleton`
+ * still need tier `heroui` so the two-rule panel doesn't silently skip them
+ * (2026-07-28).
  *
- * a11y: control COMPOUND (stepper + input) không nối `htmlFor` được → atom tự đổ
- * `label`/`ariaLabel` vào `aria-label` qua helper `fieldName` (§12e).
+ * a11y: this is a COMPOUND control (stepper + input) that can't wire up
+ * `htmlFor` → the atom pours `label`/`ariaLabel` into `aria-label` itself via
+ * the `fieldName` helper (§12e).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "NumberField.Group": { tier: "heroui", role: "number stepper group" },
@@ -42,7 +44,7 @@ export const Default: Story = {
                             why: "Only the numeric field with its decrement/increment stepper renders, no label row above it and no hint or error line below it. This is the bare control, the shape every other leaf below adds one thing on top of.",
                             code: "<InputNumber value={v} onValueChange={setV} minValue={0} maxValue={10} step={1} />",
                             render: (
-                                <div className="w-56">
+                                <div data-tier="fixture" className="w-56">
                                     <InputNumber value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} ariaLabel="Quantity" showAnatomy />
                                 </div>
                             ),
@@ -51,7 +53,7 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -72,7 +74,7 @@ export const WithLabel: Story = {
                             why: "A label row grows above the field and a muted hint line grows below it, on top of the same bare field from `Default`. Naming the field and explaining its range are two separate slots a caller can add independently.",
                             code: "<InputNumber label=\"Quantity\" hint=\"0 to 10\" value={v} onValueChange={setV} minValue={0} maxValue={10} />",
                             render: (
-                                <div className="w-56">
+                                <div data-tier="fixture" className="w-56">
                                     <InputNumber label="Quantity" hint="0 to 10" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} showAnatomy />
                                 </div>
                             ),
@@ -81,7 +83,7 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -102,7 +104,7 @@ export const Required: Story = {
                             why: "A `*` mark appears right after the label text, nothing else in the field changes. It's the one visual cue that tells the learner this quantity is not optional before they can move on.",
                             code: "<InputNumber label=\"Quantity\" isRequired value={v} onValueChange={setV} minValue={0} maxValue={10} />",
                             render: (
-                                <div className="w-56">
+                                <div data-tier="fixture" className="w-56">
                                     <InputNumber label="Quantity" isRequired value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} showAnatomy />
                                 </div>
                             ),
@@ -111,7 +113,7 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -132,7 +134,7 @@ export const Filled: Story = {
                             why: "The stepper reads the same number the field holds, alongside the label from `WithLabel`. The tree doesn't change from an empty field, only the digit painted inside it does.",
                             code: "<InputNumber label=\"Quantity\" value={5} onValueChange={setV} minValue={0} maxValue={10} />",
                             render: (
-                                <div className="w-56">
+                                <div data-tier="fixture" className="w-56">
                                     <InputNumber label="Quantity" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} showAnatomy />
                                 </div>
                             ),
@@ -141,7 +143,7 @@ export const Filled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -162,7 +164,7 @@ export const Disabled: Story = {
                             why: "The stepper buttons and the input both lock and the label fades along with them, no node is added or removed. This is the state a quantity field takes while whatever it controls can't be changed right now.",
                             code: "<InputNumber label=\"Quantity\" value={5} onValueChange={setV} isDisabled />",
                             render: (
-                                <div className="w-56">
+                                <div data-tier="fixture" className="w-56">
                                     <InputNumber label="Quantity" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} isDisabled showAnatomy />
                                 </div>
                             ),
@@ -171,7 +173,7 @@ export const Disabled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -192,7 +194,7 @@ export const Error: Story = {
                             why: "The field's border turns red and a red message line grows below it carrying the actual text, on top of the label from `WithLabel`. Setting `errorMessage` implies the invalid border on its own, so a caller never has to pass a separate invalid flag too.",
                             code: "<InputNumber label=\"Quantity\" errorMessage=\"Above the max of 10\" value={15} onValueChange={setV} />",
                             render: (
-                                <div className="w-56">
+                                <div data-tier="fixture" className="w-56">
                                     <InputNumber label="Quantity" errorMessage="Above the max of 10" value={value} onValueChange={setValue} minValue={0} maxValue={10} step={1} showAnatomy />
                                 </div>
                             ),
@@ -201,14 +203,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /** Loading — label skeleton mirrors above the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InputNumber"
                 tier="atom"
@@ -220,7 +222,7 @@ export const Loading: Story = {
                         why: "The field box and the label both switch to shimmer bars in the same layout the loaded control will occupy. Mirroring the label too, instead of only the box, keeps the row height from jumping once the real label text arrives.",
                         code: "<InputNumber label=\"Quantity\" isSkeleton />",
                         render: (
-                            <div className="w-56">
+                            <div data-tier="fixture" className="w-56">
                                 <InputNumber label="Quantity" value={0} onValueChange={() => {}} isSkeleton showAnatomy />
                             </div>
                         ),

@@ -60,7 +60,7 @@ const Controlled = (props: ControlledProps) => {
             searchValue={searchValue}
             onSearchChange={setSearchValue}
             resultCount={props.resultCount}
-            filterAriaLabel="Lọc câu hỏi"
+            filterAriaLabel="Filter questions"
             isSkeleton={props.isSkeleton}
         />
     )
@@ -69,7 +69,7 @@ const Controlled = (props: ControlledProps) => {
 /** LEAF — filter tabs + search + count, in their loaded/loading/queried states. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaToolbar"
                 tier="block"
@@ -87,20 +87,20 @@ export const Default: Story = {
     searchValue=""
     onSearchChange={setSearch}
     resultCount={4}
-    filterAriaLabel="Lọc câu hỏi"
+    filterAriaLabel="Filter questions"
 />`,
                         render: <Controlled initialFilter="unanswered" initialSearch="" resultCount={4} />,
                     },
                     {
                         name: "filter = all, searchValue = \"docker\"",
-                        why: "Switching to \"Tất cả\" and typing a query narrows the same list — the tab row and the field are independent controls the screen folds into one request, so both can hold a value at once.",
+                        why: "Switching to \"All\" and typing a query narrows the same list — the tab row and the field are independent controls the screen folds into one request, so both can hold a value at once.",
                         code: `<CourseQaToolbar
     filter="all"
     onFilterChange={setFilter}
     searchValue="docker"
     onSearchChange={setSearch}
     resultCount={12}
-    filterAriaLabel="Lọc câu hỏi"
+    filterAriaLabel="Filter questions"
 />`,
                         render: <Controlled initialFilter="all" initialSearch="docker" resultCount={12} />,
                     },
@@ -113,7 +113,7 @@ export const Default: Story = {
     searchValue=""
     onSearchChange={setSearch}
     resultCount={0}
-    filterAriaLabel="Lọc câu hỏi"
+    filterAriaLabel="Filter questions"
     isSkeleton
 />`,
                         render: <Controlled initialFilter="unanswered" initialSearch="" resultCount={0} isSkeleton />,

@@ -24,9 +24,9 @@ export default meta
 type Story = StoryObj<typeof CourseQaHeader>
 
 const CRUMBS = [
-    { key: "home", label: "Trang chủ", onPress: () => {} },
-    { key: "course", label: "Lập trình Frontend", onPress: () => {} },
-    { key: "qa", label: "Hỏi đáp" },
+    { key: "home", label: "Home", onPress: () => {} },
+    { key: "course", label: "Frontend Development", onPress: () => {} },
+    { key: "qa", label: "Q&A" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -38,7 +38,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the whole header: trail → title → optional description. */
 export const Header: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaHeader"
                 tier="block"
@@ -52,16 +52,16 @@ export const Header: Story = {
                         why: "The full identity cluster: trail, title, and a one-sentence description of what this Q&A board is for. This is what a learner sees the first time they open the course's Q&A tab.",
                         code: `<CourseQaHeader
     breadcrumbItems={crumbs}
-    title="Hỏi đáp"
-    description="Đặt câu hỏi và trao đổi với giảng viên, trợ giảng và học viên khác trong khóa học"
+    title="Q&A"
+    description="Ask questions and discuss with instructors, teaching assistants, and other learners in the course"
 />`,
                         render: (
                             <CourseQaHeader
                                 anatPart="CourseQaHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Hỏi đáp"
-                                description="Đặt câu hỏi và trao đổi với giảng viên, trợ giảng và học viên khác trong khóa học"
+                                title="Q&A"
+                                description="Ask questions and discuss with instructors, teaching assistants, and other learners in the course"
                             />
                         ),
                     },
@@ -70,12 +70,12 @@ export const Header: Story = {
                         why: "A returning learner who already knows what the board is for does not need the sentence repeated on every visit, so the caller may drop it — the title alone still reads as a complete page identity.",
                         code: `<CourseQaHeader
     breadcrumbItems={crumbs}
-    title="Hỏi đáp"
+    title="Q&A"
 />`,
                         render: (
                             <CourseQaHeader
                                 breadcrumbItems={CRUMBS}
-                                title="Hỏi đáp"
+                                title="Q&A"
                             />
                         ),
                     },

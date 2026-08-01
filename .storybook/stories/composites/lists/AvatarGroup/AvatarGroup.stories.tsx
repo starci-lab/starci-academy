@@ -68,7 +68,7 @@ type Story = StoryObj<typeof AvatarGroup>
 /** Bare leaf — `items` maps straight to the row, no `max`/`total`/`size`/`isSkeleton` turned on yet. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AvatarGroup"
                 tier="composite"
@@ -93,7 +93,7 @@ export const Default: Story = {
  */
 export const Overflow: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AvatarGroup"
                 tier="composite"
@@ -121,7 +121,7 @@ export const Overflow: Story = {
 /** Leaf prop `size` — CLUSTER LEVEL (§12d), the whole row is always same-sized. FULL 3-tier union. */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AvatarGroup"
                 tier="composite"
@@ -165,7 +165,7 @@ export const Sizes: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AvatarGroup"
                 tier="composite"

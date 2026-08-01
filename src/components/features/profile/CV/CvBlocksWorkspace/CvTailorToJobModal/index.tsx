@@ -36,7 +36,7 @@ export interface CvTailorToJobModalProps extends WithClassNames<undefined> {
 }
 
 /**
- * "Chỉnh theo tin tuyển dụng" entry point — a modal with a job-description
+ * "Tailor to job posting" entry point — a modal with a job-description
  * textarea that calls `tailorCvBlocks` (AI adjustment, not persisted) and
  * hands the adjusted blocks back to the caller to load into the editor.
  *

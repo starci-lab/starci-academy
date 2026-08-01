@@ -98,8 +98,8 @@ const RAIL_STORAGE_KEY = "learn-shell-rail-width"
 const RAIL_DEFAULT_WIDTH = 320
 const RAIL_MIN_WIDTH = 256
 const RAIL_MAX_WIDTH = 480
-const RAIL_ARIA_LABEL = "Kéo để đổi bề rộng khung bên"
-const RAIL_LOADING_LABEL = "Đang tải khung bên"
+const RAIL_ARIA_LABEL = "Drag to resize the side panel"
+const RAIL_LOADING_LABEL = "Loading side panel"
 
 /**
  * Fields `LearnShell` relays into `EnrollGate` — see the file header's
@@ -119,7 +119,7 @@ export interface LearnShellEnrollGateProps
 export interface LearnShellSelectionAsk {
     /** Viewport point to plant the pill at (already resolved by the caller). */
     anchor: ContentAiSelectionAskAnchor
-    /** `true` → the pill carries the "Mới" badge. */
+    /** `true` → the pill carries the "New" badge. */
     isNew?: boolean
 }
 
@@ -187,7 +187,7 @@ const LearnShell = ({
                     showAnatomy={showAnatomy}
                 >
                     <StackV
-                        gap="flush"
+                        gap={1}
                         align="center"
                         justify="center"
                         classNames={["h-full"]}
@@ -217,7 +217,7 @@ const LearnShell = ({
                 />
             ) : (
                 <StackH
-                    gap="flush"
+                    gap={1}
                     className="min-h-[calc(100dvh-4rem)]"
                     anatPart={showAnatomy ? "StackH" : undefined}
                     body={railAndContent}

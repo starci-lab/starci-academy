@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import type { ReactNode } from "react"
 import { TrashIcon, FloppyDiskIcon } from "@phosphor-icons/react"
 import type { ButtonSize } from "@sb-components/atoms/buttons/Button/Button"
 import { ButtonGroup, type ButtonGroupItem } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
  * ⚠️ STATE SCOPE (teacher's call 2026-07-25): `ButtonGroup` does NOT grow new meaning —
@@ -24,7 +26,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * just no cell reminding you anymore, read carefully when writing a leaf.
  *
  * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`role`/`hint`/`code`) and demo labels
- * in the render frame are written in ENGLISH; JSDoc/comments stay in Vietnamese, §
+ * in the render frame, along with all JSDoc/comments, are written in ENGLISH; §
  * anchors live here.
  *
  * 🎨 Icons = Phosphor (§5.0); stroke weight is enforced by the atom per cluster `size` (§5.0a).
@@ -44,10 +46,11 @@ type Story = StoryObj<typeof ButtonGroup>
  * (it wraps HeroUI directly); this cluster DOES have deps, and is the only component in
  * the family that does.
  *
- * The key MUST match the `data-anat-part` that `ButtonGroup` emits — it always attaches
- * the name `"Button"` to the root of every child button (see `ButtonGroup.tsx`),
- * even when `isSkeleton`. Only ONE entry: since 2026-07-26 `Button.Icon` was removed, an
- * item with no label is also `ButtonBase` with `isIconOnly`.
+ * The key MUST match the `data-anat-part` that shows up on every child button. Since
+ * ATOM-10 (2026-07-31), `ButtonGroup` no longer hands a part name down — it only forwards
+ * the `showAnatomy` boolean, and each `Button` badges itself as `"Button"`. Only ONE entry:
+ * since 2026-07-26 `Button.Icon` was removed, an item with no label is also `ButtonBase`
+ * with `isIconOnly`.
  */
 const GROUP_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button": {
@@ -67,7 +70,7 @@ const items = (suffix: string): Array<ButtonGroupItem> => [
 /** Leaf prop `items` — the cluster is built from DATA; an item with no `label` becomes an icon-only button. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ButtonGroup"
                 tier="composite"
@@ -95,7 +98,7 @@ export const Default: Story = {
 /** Leaf prop `size` — set at the CLUSTER level: a row of buttons is always the same size (§12d). */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ButtonGroup"
                 tier="composite"
@@ -117,7 +120,7 @@ export const Sizes: Story = {
 /** Leaf prop `isSkeleton` — turned on at the cluster level, each item draws its own shimmer. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ButtonGroup"
                 tier="composite"
@@ -130,6 +133,54 @@ export const Skeleton: Story = {
                     code: `<ButtonGroup isSkeleton size="${size}" items={[…3 items…]} />`,
                     render: <ButtonGroup size={size} isSkeleton items={items(`(${size})`)} showAnatomy />,
                 }))}
+            />
+        </div>
+    ),
+}
+/**
+ * `@app-sm` (the default `at`) reads the nearest `@container`, not the viewport — demoing
+ * the switch means opening a `@container` at a real width, same as `RailShell`'s story does.
+ */
+const ResponsiveFrame = ({ width, label, children }: { width: string; label: string; children: ReactNode }) => (
+    <div data-tier="fixture" className="flex flex-col gap-2">
+        <Typography size="xs" text={label} color="muted" />
+        <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>
+            {children}
+        </div>
+    </div>
+)
+/** Leaf prop `at` — the named container step this row leaves a full-width column for a packed row at. */
+export const Responsive: Story = {
+    render: () => (
+        <div data-tier="fixture" className="p-8">
+            <BlockAnatomy
+                name="ButtonGroup"
+                tier="composite"
+                leaf="Prop `at`"
+                annotate={GROUP_ANNOTATE}
+                reason="A composite does not draw its own flex track (FRAME-1) — the row/column switch and the gap between buttons both belong to the frame underneath (`ResponsiveCluster`), named at a container step rather than wherever the labels happen to overflow (FRAME-10)."
+                states={[
+                    {
+                        name: "narrow container (320px, below @app-sm): full-width column",
+                        why: "Each button stretches to the row's full width and stacks, one per line — the shape a drawer or a phone-width modal needs, never triggered by content wrapping.",
+                        code: `<ButtonGroup items={[…]} />          // at="sm" = default`,
+                        render: (
+                            <ResponsiveFrame width="20rem" label="container 320px, below @app-sm, full-width column">
+                                <ButtonGroup items={items("(narrow)")} showAnatomy />
+                            </ResponsiveFrame>
+                        ),
+                    },
+                    {
+                        name: "wide container (720px, at or above @app-sm = 40rem/640px): packed row",
+                        why: "The same three buttons pack into one row at the shared gap step (3 → gap-2), with no re-render, no boolean flag — the same container simply crossed the named width.",
+                        code: `<ButtonGroup items={[…]} />          // at="sm" = default`,
+                        render: (
+                            <ResponsiveFrame width="45rem" label="container 720px, at @app-sm, packed row">
+                                <ButtonGroup items={items("(wide)")} showAnatomy />
+                            </ResponsiveFrame>
+                        ),
+                    },
+                ]}
             />
         </div>
     ),

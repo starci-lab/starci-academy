@@ -18,7 +18,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * + status line, `isAsking` drives the streaming cursor under the question,
  * `questionMarkdown` decides whether there is a question at all).
  *
- * ⭐ WHY NOT COMPOSE `UserCell` (atoms/display/UserCell) FOR THE IDENTITY ROW.
+ * ⭐ WHY NOT COMPOSE `UserCell` (composites/lists/UserCell) FOR THE IDENTITY ROW.
  * `UserCell` was checked first — it is the catalog's avatar+name row — but its
  * second line is `handle` (an `@username`), and an interviewer's second line is
  * `role` (a static job title): same POSITION, different MEANING, and `UserCell`
@@ -59,7 +59,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /** Who is interviewing — identity only, no session state. */
 export interface InterviewerPresencePersona {
-    /** Display name, e.g. "Chị Mai". */
+    /** Display name, e.g. "Ms. Mai". */
     name: string
     /** Static role/title shown under the name, e.g. "Backend Engineer". */
     role: string
@@ -77,7 +77,7 @@ export interface InterviewerPresenceProps {
      * independent from `isAsking`.
      */
     speaking: boolean
-    /** Status text shown beside the pulse while `speaking` is true, e.g. "Đang đọc câu hỏi". Localized by the caller. */
+    /** Status text shown beside the pulse while `speaking` is true, e.g. "Reading the question". Localized by the caller. */
     speakingLabel: string
     /**
      * `true` → this session offers a TTS toggle at all. Omitted/`false` → the
@@ -160,7 +160,7 @@ const InterviewerPresence = ({
 
     const speakingStatus = speaking ? (
         <StackH
-            gap="tight"
+            gap={2}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -172,7 +172,6 @@ const InterviewerPresence = ({
                         color="accent"
                         weight="medium"
                         showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Typography" : undefined}
                     />
                 </>
             }
@@ -181,7 +180,7 @@ const InterviewerPresence = ({
 
     const nameAndRole = (
         <StackV
-            gap="flush"
+            gap={1}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -189,10 +188,9 @@ const InterviewerPresence = ({
                         text={persona.name}
                         weight="medium"
                         showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Typography" : undefined}
                     />
                     <StackH
-                        gap="related"
+                        gap={3}
                         align="center"
                         anatPart={showAnatomy ? "StackH" : undefined}
                         body={
@@ -202,7 +200,6 @@ const InterviewerPresence = ({
                                     size="sm"
                                     color="muted"
                                     showAnatomy={showAnatomy}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
                                 />
                                 {speakingStatus}
                             </>
@@ -215,7 +212,7 @@ const InterviewerPresence = ({
 
     const identity = (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -235,13 +232,12 @@ const InterviewerPresence = ({
             ariaLabel={ttsAriaLabel}
             onPress={onToggleTts}
             showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "Button" : undefined}
         />
     ) : null
 
     const headerRow = (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             justify="between"
             anatPart={showAnatomy ? "StackH" : undefined}
@@ -256,7 +252,7 @@ const InterviewerPresence = ({
 
     const typingDots = isAsking ? (
         <StackH
-            gap="tight"
+            gap={2}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -271,7 +267,7 @@ const InterviewerPresence = ({
 
     const questionRegion = hasQuestion ? (
         <StackV
-            gap="tight"
+            gap={2}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -290,7 +286,7 @@ const InterviewerPresence = ({
     return (
         <div data-anat-part={anatPart}>
             <StackV
-                gap="related"
+                gap={3}
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
                     <>

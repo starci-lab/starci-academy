@@ -9,13 +9,13 @@ import type { NotificationItemProps } from "@/components/blocks/notifications/No
 
 /**
  * One day-group section of a {@link NotificationList}: an optional label (e.g.
- * "Hôm nay" / "Trước đó") followed by its notification rows. Omit `label` for an
+ * "Today" / "Earlier") followed by its notification rows. Omit `label` for an
  * ungrouped run of items.
  */
 export interface NotificationGroup {
     /**
      * Optional section heading rendered small + muted above the group (e.g.
-     * "Hôm nay", "Trước đó"). Omit for an unlabeled group.
+     * "Today", "Earlier"). Omit for an unlabeled group.
      */
     label?: ReactNode
     /** The notification rows belonging to this section, in display order. */
@@ -33,7 +33,7 @@ export interface NotificationListProps extends WithClassNames<undefined> {
     /**
      * Optional header title. When provided a header row renders with this title
      * and — when {@link NotificationListProps.onMarkAllRead} is set — a
-     * "Đánh dấu tất cả đã đọc" text button. Omit for a bare list.
+     * "Mark all as read" text button. Omit for a bare list.
      */
     title?: ReactNode
     /**
@@ -43,13 +43,13 @@ export interface NotificationListProps extends WithClassNames<undefined> {
     onMarkAllRead?: () => void
     /**
      * Optional label for the mark-all-read button. Defaults to
-     * "Đánh dấu tất cả đã đọc". Only rendered when
+     * "Mark all as read". Only rendered when
      * {@link NotificationListProps.onMarkAllRead} is set.
      */
     markAllReadLabel?: ReactNode
     /**
      * Optional custom empty state shown when there are no items. Falls back to a
-     * built-in {@link EmptyState} ("Chưa có thông báo nào") when omitted.
+     * built-in {@link EmptyState} ("No notifications yet") when omitted.
      */
     emptyState?: ReactNode
 }
@@ -57,16 +57,16 @@ export interface NotificationListProps extends WithClassNames<undefined> {
 /** Built-in fallback empty state shown when no groups carry any items. */
 const DefaultEmptyState = (
     <EmptyState
-        title="Chưa có thông báo nào"
-        description="Khi có hoạt động mới trên khoá học của bạn, thông báo sẽ xuất hiện ở đây."
+        title="No notifications yet"
+        description="When there's new activity in your courses, notifications show up here."
     />
 )
 
 /**
  * NotificationList — a scrollable, optionally day-grouped list of
- * {@link NotificationItem} rows. Renders an optional header ("Thông báo" + a
- * mark-all-read text button), section labels per group ("Hôm nay" / "Trước
- * đó"), and an {@link EmptyState} when no items are present. The body scrolls
+ * {@link NotificationItem} rows. Renders an optional header ("Notifications" + a
+ * mark-all-read text button), section labels per group ("Today" / "Earlier"),
+ * and an {@link EmptyState} when no items are present. The body scrolls
  * inside a capped max height so a long history never grows the container.
  *
  * Tier-3 presentational block: props-only, no store, no SWR, no side-effects.
@@ -76,9 +76,9 @@ const DefaultEmptyState = (
  *
  * @example
  * <NotificationList
- *   title="Thông báo"
+ *   title="Notifications"
  *   onMarkAllRead={() => {}}
- *   groups={[{ label: "Hôm nay", items: [...] }]}
+ *   groups={[{ label: "Today", items: [...] }]}
  * />
  * @see Story: .storybook/stories/blocks/notifications/NotificationList/NotificationList.stories
  */
@@ -86,7 +86,7 @@ export const NotificationList = ({
     groups,
     title,
     onMarkAllRead,
-    markAllReadLabel = "Đánh dấu tất cả đã đọc",
+    markAllReadLabel = "Mark all as read",
     emptyState,
     className,
 }: NotificationListProps) => {

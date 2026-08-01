@@ -25,7 +25,7 @@ export type CvEditorToolbarBarProps = WithClassNames<undefined>
  * reads as the navbar's second row — no divider between them; the Navbar owns
  * the single bottom border). Back link + editable CV name + Word/PDF export.
  *
- * Back link + editable CV name + a "Tải .tex" download (client-side, the raw
+ * Back link + editable CV name + a "Download .tex" download (client-side, the raw
  * LaTeX source) and the PDF export (compiled server-side via tectonic — Word
  * was dropped in the full-LaTeX pivot).
  *

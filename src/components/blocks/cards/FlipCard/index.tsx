@@ -11,16 +11,16 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 export interface FlipCardProps extends WithClassNames<undefined> {
     /** Whether the answer card is currently revealed below the question. */
     revealed: boolean
-    /** Label shown OUTSIDE (above) the question card — e.g. "Câu hỏi". */
+    /** Label shown OUTSIDE (above) the question card — e.g. "Question". */
     questionLabel: ReactNode
-    /** Label shown OUTSIDE (above) the answer card — e.g. "Đáp án". */
+    /** Label shown OUTSIDE (above) the answer card — e.g. "Answer". */
     answerLabel: ReactNode
     /** Front (prompt) content — composed by the caller; sits in the question card. */
     front: ReactNode
     /**
      * Optional content rendered DIRECTLY under the question card (grouped with it,
      * `gap-3`) — ABOVE the answer, so it stays anchored to the question when the
-     * answer reveals below (thầy 2026-07-13: "chip gap-3 ở dưới câu hỏi"). Used for
+     * answer reveals below (teacher 2026-07-13: "chips gap-3 under the question"). Used for
      * the card's level/tag chips.
      */
     belowFront?: ReactNode
@@ -30,20 +30,20 @@ export interface FlipCardProps extends WithClassNames<undefined> {
 
 /**
  * Anki-style "no-flip" prompt/answer pair: the question and the answer are TWO
- * SEPARATE {@link LabeledCard}s — each label ("Câu hỏi" / "Đáp án") sits OUTSIDE,
- * above its card (thầy 2026-07-12: "câu hỏi, đáp án ở ngoài kiểu labeled card"),
+ * SEPARATE {@link LabeledCard}s — each label ("Question" / "Answer") sits OUTSIDE,
+ * above its card (teacher 2026-07-12: "question, answer outside as a labeled card"),
  * not an eyebrow inside the card. The answer card reveals below the question one
- * (height-animate) once {@link revealed}. Retrieval-practice research (thầy
+ * (height-animate) once {@link revealed}. Retrieval-practice research (teacher
  * 2026-07-11) says what matters for recall is committing to an answer BEFORE
- * seeing it — the caller owns the "Xem đáp án" reveal control and renders it
+ * seeing it — the caller owns the "Show answer" reveal control and renders it
  * BETWEEN this block and the rating; this block is purely presentational.
  * @param props - {@link FlipCardProps}
  */
 export const FlipCard = ({ revealed, questionLabel, answerLabel, front, belowFront, back, className }: FlipCardProps) => {
     // `overflow-hidden` is only needed WHILE the height animates — left on at
     // rest, it permanently clips the answer `Card`'s own box-shadow along every
-    // edge, so it read flatter than the question card right above it (thầy:
-    // "cái màu vàng render dạng card giống cái màu đỏ được không? có
+    // edge, so it read flatter than the question card right above it (teacher:
+    // "can the yellow one render as a card like the red one, with a
     // shadow..."). Drop it once the reveal animation settles so the shadow
     // shows in full, same as the un-clipped question card.
     const [animating, setAnimating] = useState(false)

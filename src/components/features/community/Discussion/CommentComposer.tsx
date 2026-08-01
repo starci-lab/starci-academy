@@ -37,7 +37,7 @@ export interface CommentComposerProps extends WithClassNames<undefined> {
  * A textarea + submit control used for new comments, replies, and edits.
  *
  * For the top-level composer pass `collapsible` + `currentUser`: it renders as a slim
- * avatar + placeholder pill and expands to the textarea on focus (à la YouTube / GitHub),
+ * avatar + placeholder pill and expands to the textarea on focus (in the style of YouTube / GitHub),
  * so an empty grey box never dominates the discussion zone.
  *
  * Presentational: owns only the draft text + expand state; submit/cancel are delegated.

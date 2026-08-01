@@ -20,7 +20,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * ⭐ PASS/FAIL TINTING + THRESHOLD WORDING IS OWNED HERE, mirroring the real
  * `SubmissionResult` component's `isPassing`/`scoreLabel` helpers: the hero
  * number and the verdict chip flip the SAME success/danger tone together (one
- * signal, not two disagreeing ones), and the "cần thêm N điểm" sub-line does
+ * signal, not two disagreeing ones), and the "need N more points" sub-line does
  * the `passScore − score` subtraction itself rather than taking a pre-computed
  * string from the caller (§14d.1 — a block owns its own wording, never a
  * formatted string prop).
@@ -50,7 +50,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * not just the model name.
  *
  * `gradedByLabel` is an OPTIONAL override of the row's leading word (default
- * "Đã chấm bởi", owned here). It exists for callers that need a different
+ * "Graded by", owned here). It exists for callers that need a different
  * attribution phrasing for the same shape — e.g. a re-grade — without handing
  * the block a whole pre-built sentence.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -61,11 +61,11 @@ export type AiModelCategory = "free" | "economy" | "balanced" | "premium" | "fro
 
 /** Category → `EnumChip` presentation. See the file header for why the ramp folds onto 5 semantic tones. */
 export const MODEL_CATEGORY_MAP: Record<AiModelCategory, EnumChipEntry> = {
-    free: { color: "default", label: "Miễn phí" },
-    economy: { color: "success", label: "Tiết kiệm" },
-    balanced: { color: "accent", label: "Cân bằng" },
-    premium: { color: "warning", label: "Cao cấp" },
-    frontier: { color: "danger", label: "Đỉnh" },
+    free: { color: "default", label: "Free" },
+    economy: { color: "success", label: "Economy" },
+    balanced: { color: "accent", label: "Balanced" },
+    premium: { color: "warning", label: "Premium" },
+    frontier: { color: "danger", label: "Frontier" },
 }
 
 /** Props for {@link SubmissionScoreCard}. */
@@ -76,23 +76,23 @@ export interface SubmissionScoreCardProps {
     maxScore?: number
     /** Whether this score cleared the pass bar — drives the tinting on the hero number and the verdict chip. */
     isPassing: boolean
-    /** The pass bar itself, in points. Only used to compute the "cần thêm N điểm" sub-line while failing. */
+    /** The pass bar itself, in points. Only used to compute the "need N more points" sub-line while failing. */
     passScore?: number
     /** A short line of grader feedback, plain text. */
     shortFeedback?: string
     /** Link to the full submission. Omit to hide the link entirely. */
     submissionUrl?: string
-    /** Link text for {@link submissionUrl}. Defaults to "Xem bài nộp". */
+    /** Link text for {@link submissionUrl}. Defaults to "View submission". */
     submissionLabel?: string
     /** The model that produced this grade. Omit when no model was recorded — the whole byline row then drops. */
     gradedByModel?: string
     /** Cost/quality tier of {@link gradedByModel}, shown as a trailing chip. */
     modelCategory?: AiModelCategory
-    /** Overrides the byline's leading word. Defaults to "Đã chấm bởi". */
+    /** Overrides the byline's leading word. Defaults to "Graded by". */
     gradedByLabel?: string
-    /** Relative time since grading, already localized (e.g. "5 phút trước"). */
+    /** Relative time since grading, already localized (e.g. "5 minutes ago"). */
     timeAgo?: string
-    /** Section label above the card, e.g. "Kết quả chấm điểm". */
+    /** Section label above the card, e.g. "Grading result". */
     label: string
     /** `true` → every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
@@ -141,7 +141,7 @@ const SubmissionScoreCard = ({
                 color={verdictTone}
                 isSkeleton={isSkeleton}
                 text={String(score)}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             {maxScore != null ? (
                 <Typography
@@ -150,35 +150,35 @@ const SubmissionScoreCard = ({
                     tabularNums
                     isSkeleton={isSkeleton}
                     text={`/ ${maxScore}`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
             <Chip
                 tone={verdictTone}
                 icon={isPassing ? CheckCircleIcon : XCircleIcon}
-                text={isPassing ? "Đạt" : "Chưa đạt"}
+                text={isPassing ? "Passed" : "Not yet passed"}
                 isSkeleton={isSkeleton}
-                anatPart={showAnatomy ? "Chip" : undefined}
+                showAnatomy={showAnatomy}
             />
         </>
     )
 
     const modelByline = gradedByModel != null ? (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             wrap
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     <InlineIconLabel
-                        icon={<SparkleIcon aria-hidden focusable="false" />}
+                        icon={SparkleIcon}
                         tone="default"
                         size="xs"
                         isSkeleton={isSkeleton}
                         anatPart={showAnatomy ? "InlineIconLabel" : undefined}
                     >
-                        {`${gradedByLabel ?? "Đã chấm bởi"} ${gradedByModel}`}
+                        {`${gradedByLabel ?? "Graded by"} ${gradedByModel}`}
                     </InlineIconLabel>
                     {modelCategory != null ? (
                         <EnumChip
@@ -194,7 +194,7 @@ const SubmissionScoreCard = ({
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={timeAgo}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -204,15 +204,15 @@ const SubmissionScoreCard = ({
 
     const scoreSummary = (
         <>
-            <StackH gap="grouped" align="baseline" wrap anatPart={showAnatomy ? "StackH" : undefined} body={scoreRow} />
+            <StackH gap={4} align="baseline" wrap anatPart={showAnatomy ? "StackH" : undefined} body={scoreRow} />
 
             {pointsNeeded != null && pointsNeeded > 0 ? (
                 <Typography
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    text={`Cần thêm ${pointsNeeded} điểm để đạt mốc ${passScore} điểm`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`Need ${pointsNeeded} more points to reach the ${passScore}-point pass mark`}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
 
@@ -221,7 +221,7 @@ const SubmissionScoreCard = ({
                     size="sm"
                     isSkeleton={isSkeleton}
                     text={shortFeedback}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
 
@@ -231,8 +231,8 @@ const SubmissionScoreCard = ({
                     isLink
                     href={submissionUrl}
                     isSkeleton={isSkeleton}
-                    text={submissionLabel ?? "Xem bài nộp"}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={submissionLabel ?? "View submission"}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
 
@@ -246,9 +246,8 @@ const SubmissionScoreCard = ({
                 label={label}
                 isSkeleton={isSkeleton}
                 anatPart={showAnatomy ? "SurfaceCard" : undefined}
-            >
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={scoreSummary} />
-            </SurfaceCard>
+                body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={scoreSummary} />}
+            />
         </div>
     )
 }

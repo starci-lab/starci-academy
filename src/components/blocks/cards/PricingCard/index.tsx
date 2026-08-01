@@ -20,7 +20,7 @@ export interface PricingCardProps extends WithClassNames<undefined> {
      */
     originalPrice?: React.ReactNode
     /**
-     * Billing period label rendered muted next to the price (e.g. "/tháng",
+     * Billing period label rendered muted next to the price (e.g. "/mo",
      * "/month"). Omit if not applicable.
      */
     period?: React.ReactNode
@@ -36,7 +36,7 @@ export interface PricingCardProps extends WithClassNames<undefined> {
     cta: React.ReactNode
     /**
      * Optional badge label shown beside the tier name to call out a popular or
-     * recommended tier (e.g. "Phổ biến", "Best value"). Omit to hide the badge.
+     * recommended tier (e.g. "Popular", "Best value"). Omit to hide the badge.
      * Rendered as a shrink-to-content Chip (`w-fit`) — never full-width.
      */
     badge?: React.ReactNode

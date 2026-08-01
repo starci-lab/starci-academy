@@ -12,7 +12,7 @@ export interface InterviewerPresenceProps extends WithClassNames<undefined> {
     persona: MockInterviewPersona
     /** Whether the interviewer is currently "speaking" (a question is streaming in). */
     speaking: boolean
-    /** Label shown next to the speaking pulse (e.g. "đang nói"). */
+    /** Label shown next to the speaking pulse (e.g. "speaking"). */
     speakingLabel: string
     /** Whether the browser supports text-to-speech (hides the toggle when false). */
     ttsSupported: boolean
@@ -28,7 +28,7 @@ export interface InterviewerPresenceProps extends WithClassNames<undefined> {
     children?: React.ReactNode
 }
 
-/** One animated bar of the "đang nói" pulse. */
+/** One animated bar of the "speaking" pulse. */
 const PulseBar = ({ delayMs, heightClass }: { delayMs: number; heightClass: string }) => (
     <span
         className={cn("w-[3px] animate-pulse rounded-full bg-accent", heightClass)}
@@ -39,7 +39,7 @@ const PulseBar = ({ delayMs, heightClass }: { delayMs: number; heightClass: stri
 
 /**
  * The interviewer's PRESENCE in the room — a monogram avatar + name + role, a
- * "đang nói" pulse while a question streams in, and a speaker toggle for
+ * "speaking" pulse while a question streams in, and a speaker toggle for
  * text-to-speech. Optionally wraps the question body (`children`) below a
  * divider, turning the old faceless gray question box into "someone is
  * interviewing you". Header-only (no children) for the design thread, where

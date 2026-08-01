@@ -4,25 +4,25 @@ import { Badge } from "@sb-components/atoms/display/Badge/Badge"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Badge`: bọc thẳng HeroUI `Badge` (+ `Badge.Anchor` khi có `children`).
- * Atom lá — không dựng lại atom NÀO CỦA TA có story riêng ⇒ không có dep tầng atom.
- * `Content` là span NỘI BỘ giữ `children` tự do (khe, không có nhà để nhảy tới),
- * không phải dep.
+ * ATOM — `Badge`: wraps HeroUI `Badge` directly (+ `Badge.Anchor` when it has `children`).
+ * Leaf atom — it doesn't compose any of our own atoms that have their own story ⇒ no atom-tier deps.
+ * `Content` is an INTERNAL span holding free-form `children` (a slot, with nowhere of its own to jump to),
+ * not a dep.
  *
- * ⚠️ 2026-07-28 (naming pass): `Badge`/`Badge.Anchor`/`Skeleton` ĐỀU là import
- * `@heroui/react` render trực tiếp ⇒ khai `tier: "heroui"` (không `storyId`) —
- * trước đây bị bỏ sót hoàn toàn (annotate rỗng), cây nói dối bằng cách bỏ sót.
- * `Anchor` đổi tên thật thành `Badge.Anchor` cho khớp compound HeroUI.
+ * ⚠️ 2026-07-28 (naming pass): `Badge`/`Badge.Anchor`/`Skeleton` are ALL a direct
+ * `@heroui/react` import rendered straight through ⇒ declare `tier: "heroui"` (no `storyId`) —
+ * previously this was missed entirely (empty annotate), the tree lying by omission.
+ * `Anchor` was actually renamed to `Badge.Anchor` to match the HeroUI compound.
  *
- * `Badge` là atom-WRAPPER hợp lệ giữ `children` (§12b) — anchor cần bọc phần tử
- * nó treo lên, không phải lỗ hổng cấm children.
+ * `Badge` is a valid atom-WRAPPER holding `children` (§12b) — the anchor needs to wrap the
+ * element it hangs off, this is not a children-forbidden loophole.
  *
- * DI TRÚ SANG API `states[]` (thầy chốt 2026-07-27, canon §8): mỗi giá trị prop
- * (`count`/`dot`/`max` cho `Anchored` · từng tone cho `Colors` · từng cỡ cho
- * `Sizes` · từng góc cho `Placement`) từng bị xếp cạnh nhau trong CÙNG một
- * `children`, chỉ MỘT phần tử được `showAnatomy`. Giờ mỗi giá trị là một STATE
- * riêng, panel chỉ mount đúng state đang chọn nên cây deps và code snippet thuộc
- * đúng nó thay vì trộn lẫn cả hàng.
+ * MIGRATED TO the `states[]` API (teacher's call on 2026-07-27, canon §8): each prop value
+ * (`count`/`dot`/`max` for `Anchored` · each tone for `Colors` · each size for
+ * `Sizes` · each corner for `Placement`) used to be laid out side by side in the SAME
+ * `children`, with only ONE element getting `showAnatomy`. Now each value is its own STATE,
+ * and the panel mounts only the currently selected state, so the deps tree and code snippet
+ * belong to it alone instead of being mixed together across the whole row.
  */
 /** Every node this atom renders is a direct HeroUI import — all `tier: "heroui"`, no `storyId`. */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -51,19 +51,19 @@ export default meta
 
 type Story = StoryObj<typeof Badge>
 
-// A small anchor host for the badge (bell icon) — the badge treo góc phần tử này.
-// Icon Phosphor (§5⃣0, một bộ duy nhất); `size-6` > `size-5` ⇒ giữ weight mặc định
-// `regular`, KHÔNG truyền weight (§5⃣0a — chỉ icon nhỏ hơn size-5 mới cần bold).
-const BellHost = () => <BellIcon className="text-muted size-6" aria-hidden />
+// A small anchor host for the badge (bell icon) — the badge hangs off a corner of this element.
+// Phosphor icon (§5⃣0, a single set); `size-6` > `size-5` ⇒ keep the default
+// `regular` weight, do NOT pass a weight (§5⃣0a — only icons smaller than size-5 need bold).
+const BellHost = () => <BellIcon data-tier="fixture" className="text-muted size-6" aria-hidden />
 
 /**
- * Leaf props `count` / `dot` / `max` — badge treo góc phần tử (`Badge.Anchor`).
- * BA state đều dựng CÙNG một cây (Anchor › Content + Badge), chỉ khác NHÃN bên
- * trong ⇒ đó là giá trị của cùng một prop-family, không phải ba leaf riêng.
+ * Leaf props `count` / `dot` / `max` — the badge hangs off an anchor element (`Badge.Anchor`).
+ * All THREE states build the SAME tree (Anchor › Content + Badge), differing only in the LABEL
+ * inside ⇒ they are values of the same prop-family, not three separate leaves.
  */
 export const Anchored: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Badge"
                 tier="atom"
@@ -107,10 +107,10 @@ export const Anchored: Story = {
     ),
 }
 
-/** Leaf prop `color` — ĐỦ union tone (danger · accent · success · warning · default). */
+/** Leaf prop `color` — FULL union of tones (danger · accent · success · warning · default). */
 export const Colors: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Badge"
                 tier="atom"
@@ -154,10 +154,10 @@ export const Colors: Story = {
     ),
 }
 
-/** Leaf prop `size` — ĐỦ union kích cỡ (sm · md · lg), đổi pixel ngay cả khi đứng riêng. */
+/** Leaf prop `size` — FULL union of sizes (sm · md · lg), changing pixels even standing alone. */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Badge"
                 tier="atom"
@@ -189,10 +189,10 @@ export const Sizes: Story = {
     ),
 }
 
-/** Leaf prop `placement` — ĐỦ bốn góc, cùng một anchor thật để thấy badge treo góc nào. */
+/** Leaf prop `placement` — FULL four corners, using the same real anchor to see which corner the badge hangs off. */
 export const Placement: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Badge"
                 tier="atom"
@@ -246,10 +246,10 @@ export const Placement: Story = {
     ),
 }
 
-/** Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c), không dùng Skeleton.* dùng chung. */
+/** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c), not using a shared Skeleton.*. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Badge"
                 tier="atom"

@@ -55,15 +55,7 @@ export interface TooltipBaseProps {
     defaultOpen?: boolean
     /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Tooltip.Trigger`/`Tooltip.Content`/`Tooltip.Arrow`) so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /**
-     * Extra classes on the trigger wrapper.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
 
@@ -82,12 +74,11 @@ const TooltipBase = ({
     isOpen,
     defaultOpen,
     showAnatomy = false,
-    className,
     classNames,
 }: TooltipBaseProps) => {
     return (
-        <HeroTooltip delay={delay} isOpen={isOpen} defaultOpen={defaultOpen}>
-            <HeroTooltip.Trigger className={cn(className, classNames)} data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}>
+        <HeroTooltip data-tier="atom" data-component="Tooltip" delay={delay} isOpen={isOpen} defaultOpen={defaultOpen}>
+            <HeroTooltip.Trigger className={cn(classNames)} data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}>
                 {children}
             </HeroTooltip.Trigger>
             <HeroTooltip.Content
@@ -105,3 +96,5 @@ const TooltipBase = ({
 
 /** `Tooltip.*` — the hover-hint atom namespace. One of two atoms that keep `children` (wrapper required). */
 export { TooltipBase as Tooltip }
+
+export const meta = { tier: "atom", name: "Tooltip" } as const

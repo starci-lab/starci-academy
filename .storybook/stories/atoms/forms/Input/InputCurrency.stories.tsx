@@ -9,14 +9,16 @@ type Story = StoryObj
 
 /**
  * ATOM — `InputCurrency`: money-amount field (HeroUI NumberField + `formatOptions`
- * currency), bọc qua `FieldFrame` nội bộ (§12e).
+ * currency), wrapped internally through `FieldFrame` (§12e).
  *
- * Không component nào ở đây có story riêng ⇒ `annotate` không có `storyId` —
- * nhưng heroui `NumberField.Group` cùng `Label`/`Skeleton` của `FieldFrame` vẫn
- * cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
+ * No component here has its own story ⇒ `annotate` carries no `storyId` — but the
+ * heroui `NumberField.Group` along with `FieldFrame`'s own `Label`/`Skeleton` still
+ * need the `heroui` tier so the two-rule panel doesn't silently miss them
+ * (2026-07-28).
  *
- * a11y: control COMPOUND (stepper + input) không nối `htmlFor` được → atom tự đổ
- * `label`/`ariaLabel` vào `aria-label` qua helper `fieldName` (§12e).
+ * a11y: the control is COMPOUND (stepper + input), so it can't wire an `htmlFor` —
+ * the atom feeds `label`/`ariaLabel` into `aria-label` itself via the `fieldName`
+ * helper (§12e).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "NumberField.Group": { tier: "heroui", role: "currency stepper group" },
@@ -41,7 +43,7 @@ export const Default: Story = {
                             why: "The field renders as a bare stepper-and-input box with no label, hint, or error text around it. The atom formats the amount as currency itself, so nothing on screen is a raw unformatted number.",
                             code: "<InputCurrency value={v} onValueChange={setV} currency=\"VND\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputCurrency value={value} onValueChange={setValue} ariaLabel="Amount" showAnatomy />
                                 </div>
                             ),
@@ -50,7 +52,7 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -71,7 +73,7 @@ export const WithLabel: Story = {
                             why: "A label appears above the stepper box and a hint line appears beneath it, telling the payer what the amount is for before they touch the field. The stepper and formatting stay exactly as in Default.",
                             code: "<InputCurrency label=\"Tuition\" hint=\"In VND\" value={v} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputCurrency label="Tuition" hint="In VND" value={value} onValueChange={setValue} showAnatomy />
                                 </div>
                             ),
@@ -80,7 +82,7 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -101,7 +103,7 @@ export const Required: Story = {
                             why: "The label gains a trailing asterisk mark while every other part of the field stays the same as the plain labelled case. The mark is the only signal that this amount cannot be left unset.",
                             code: "<InputCurrency label=\"Tuition\" isRequired value={v} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputCurrency label="Tuition" isRequired value={value} onValueChange={setValue} showAnatomy />
                                 </div>
                             ),
@@ -110,7 +112,7 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -131,7 +133,7 @@ export const Filled: Story = {
                             why: "The box shows the real amount grouped and prefixed with the currency symbol instead of a bare stepper at zero. This is the field's steady resting look once a real tuition figure has landed in it.",
                             code: "<InputCurrency label=\"Tuition\" value={1500000} onValueChange={setV} currency=\"VND\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputCurrency label="Tuition" value={value} onValueChange={setValue} showAnatomy />
                                 </div>
                             ),
@@ -140,7 +142,7 @@ export const Filled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -161,7 +163,7 @@ export const Disabled: Story = {
                             why: "Both the increment/decrement stepper and the input lock against further changes, and the label fades to the disabled tone. The field still shows the amount, it simply refuses new input.",
                             code: "<InputCurrency label=\"Tuition\" value={1500000} onValueChange={setV} isDisabled />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputCurrency label="Tuition" value={value} onValueChange={setValue} isDisabled showAnatomy />
                                 </div>
                             ),
@@ -170,7 +172,7 @@ export const Disabled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -191,7 +193,7 @@ export const Error: Story = {
                             why: "A red message line appears under the field and its border turns red at the same time, both driven by the same `errorMessage` string. The label above stays neutral, so only the amount field itself reports the problem.",
                             code: "<InputCurrency label=\"Tuition\" errorMessage=\"Tuition must be greater than 0\" value={0} onValueChange={setV} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputCurrency label="Tuition" errorMessage="Tuition must be greater than 0" value={value} onValueChange={setValue} showAnatomy />
                                 </div>
                             ),
@@ -200,14 +202,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /** Loading — label skeleton mirrors above the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InputCurrency"
                 tier="atom"
@@ -219,7 +221,7 @@ export const Loading: Story = {
                         why: "The label mirrors into a shimmer bar sitting above a shimmer box the same size as the real stepper field. Nothing about the eventual label or field size shifts the layout once the real amount arrives.",
                         code: "<InputCurrency label=\"Tuition\" isSkeleton />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <InputCurrency label="Tuition" value={0} onValueChange={() => {}} isSkeleton showAnatomy />
                             </div>
                         ),

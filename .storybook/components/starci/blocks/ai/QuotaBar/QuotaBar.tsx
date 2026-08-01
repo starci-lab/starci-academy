@@ -84,7 +84,7 @@ export interface QuotaBarProps {
     unit?: string
     /** `true` → append {@link QuotaBarProps.unit} after the used/limit counts. */
     showUnit?: boolean
-    /** Reset time shown under the bar (e.g. "Reset lúc 18:50 01/06"). `null`/omitted hides the row. */
+    /** Reset time shown under the bar (e.g. "Resets at 18:50 01/06"). `null`/omitted hides the row. */
     resetLabel?: string | null
     /** `true` → the block draws its own row mirror (label, bar, caption all shimmer). */
     isSkeleton?: boolean
@@ -128,7 +128,7 @@ const QuotaBar = ({
     // are exactly two fixed slots here, not a repeating same-kind list.
     const labelRow = (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             justify="between"
             anatPart={showAnatomy ? "LabelRow" : undefined}
@@ -139,7 +139,7 @@ const QuotaBar = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         classNames={isSkeleton ? ["w-1/4"] : undefined}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                         text={label}
                     />
                     <Typography
@@ -148,7 +148,7 @@ const QuotaBar = ({
                         tabularNums
                         isSkeleton={isSkeleton}
                         classNames={isSkeleton ? ["w-1/3"] : undefined}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                         text={(
                             <>
                                 {used}
@@ -187,7 +187,7 @@ const QuotaBar = ({
 
     return (
         <StackV
-            gap="grouped"
+            gap={4}
             className={className}
             anatPart={anatPart ?? (showAnatomy ? "StackV" : undefined)}
             body={(
@@ -200,7 +200,7 @@ const QuotaBar = ({
                             color="muted"
                             isSkeleton={isSkeleton}
                             classNames={isSkeleton ? ["w-1/2"] : undefined}
-                            anatPart={showAnatomy ? "ResetCaption" : undefined}
+                            showAnatomy={showAnatomy}
                             text={resetLabel ?? undefined}
                         />
                     ) : null}

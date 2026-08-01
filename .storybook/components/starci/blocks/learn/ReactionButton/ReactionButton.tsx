@@ -24,8 +24,8 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * none of which that atom's fixed opinions allow. Real `src` reaches for raw
  * HeroUI for the exact same reason.
  *
- * THE SIX-BUTTON ROW ITSELF IS THE ATOM `ReactionPicker` (thầy 2026-07-28 —
- * "CSS phức tạp chỉ ở atom/frame"). This block only supplies data; the
+ * THE SIX-BUTTON ROW ITSELF IS THE ATOM `ReactionPicker` (teacher 2026-07-28 —
+ * "complex CSS only in atoms/frames"). This block only supplies data; the
  * animation/hover CSS lives there.
  *
  * COUNTS ARE DATA, THE VOCABULARY IS NOT. The caller hands over `counts`
@@ -50,12 +50,12 @@ interface ReactionDescriptor {
 }
 
 const REACTIONS: ReadonlyArray<ReactionDescriptor> = [
-    { type: "like", emoji: "👍", label: "Thích" },
-    { type: "love", emoji: "❤️", label: "Yêu thích" },
+    { type: "like", emoji: "👍", label: "Like" },
+    { type: "love", emoji: "❤️", label: "Love" },
     { type: "haha", emoji: "😂", label: "Haha" },
     { type: "wow", emoji: "😮", label: "Wow" },
-    { type: "sad", emoji: "😢", label: "Buồn" },
-    { type: "angry", emoji: "😡", label: "Phẫn nộ" },
+    { type: "sad", emoji: "😢", label: "Sad" },
+    { type: "angry", emoji: "😡", label: "Angry" },
 ]
 
 const REACTION_BY_TYPE: Record<ReactionType, ReactionDescriptor> = REACTIONS.reduce(
@@ -148,7 +148,7 @@ const ReactionButton = ({
     // compact summary: stacked top emojis + total — dropped entirely at zero
     const summaryRow = total > 0 ? (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -158,7 +158,7 @@ const ReactionButton = ({
                             <ReactionGlyph key={reaction.type} type={reaction.type} size="sm" />
                         ))}
                     </span>
-                    <Typography size="sm" text={String(total)} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" text={String(total)} showAnatomy={showAnatomy} />
                 </>
             }
         />
@@ -177,7 +177,7 @@ const ReactionButton = ({
                     >
                         <ReactionGlyph type={myReaction ?? "like"} size="sm" />
                         <span className="text-sm">
-                            {myReaction ? REACTION_BY_TYPE[myReaction].label : "Bày tỏ cảm xúc"}
+                            {myReaction ? REACTION_BY_TYPE[myReaction].label : "React"}
                         </span>
                     </HeroButton>
                 </HeroPopover.Trigger>
@@ -196,7 +196,7 @@ const ReactionButton = ({
     )
 
     return (
-        <StackH gap="related" align="center" anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)} body={triggerAndSummary} />
+        <StackH gap={3} align="center" anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)} body={triggerAndSummary} />
     )
 }
 

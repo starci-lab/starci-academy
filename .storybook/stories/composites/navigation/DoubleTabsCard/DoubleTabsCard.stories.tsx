@@ -42,15 +42,15 @@ const LeftOnlyDemo = () => {
             showAnatomy
             leftTabs={{
                 items: [
-                    { key: "overview", label: "Tổng quan" },
-                    { key: "activity", label: "Hoạt động" },
+                    { key: "overview", label: "Overview" },
+                    { key: "activity", label: "Activity" },
                 ],
                 selectedKey: key,
-                ariaLabel: "Chuyển tab",
+                ariaLabel: "Switch tab",
                 onSelectionChange: (k) => setKey(String(k)),
             }}
         >
-            <Typography size="sm" color="muted" text={key === "overview" ? "Nội dung tổng quan." : "Nội dung hoạt động."} />
+            <Typography size="sm" color="muted" text={key === "overview" ? "Overview content." : "Activity content."} />
         </DoubleTabsCard>
     )
 }
@@ -64,20 +64,20 @@ const TwoGroupsDemo = () => {
             showAnatomy
             leftTabs={{
                 items: [
-                    { key: "overview", label: "Tổng quan" },
-                    { key: "activity", label: "Hoạt động" },
+                    { key: "overview", label: "Overview" },
+                    { key: "activity", label: "Activity" },
                 ],
                 selectedKey: left,
-                ariaLabel: "Chuyển tab",
+                ariaLabel: "Switch tab",
                 onSelectionChange: (k) => setLeft(String(k)),
             }}
             rightTabs={{
                 items: [
-                    { key: "week", label: "Tuần" },
-                    { key: "month", label: "Tháng" },
+                    { key: "week", label: "Week" },
+                    { key: "month", label: "Month" },
                 ],
                 selectedKey: right,
-                ariaLabel: "Khoảng thời gian",
+                ariaLabel: "Time range",
                 onSelectionChange: (k) => setRight(String(k)),
             }}
             rightTabsNeutral
@@ -90,7 +90,7 @@ const TwoGroupsDemo = () => {
 /** LEAF — one tab group, plain card face. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="DoubleTabsCard"
                 tier="composite"
@@ -116,7 +116,7 @@ export const Default: Story = {
 /** LEAF — two tab groups (left + right), matching `Toolbar`'s own two-group shape. */
 export const TwoGroups: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="DoubleTabsCard"
                 tier="composite"
@@ -140,7 +140,7 @@ export const TwoGroups: Story = {
 /** LEAF — `cardVariant="nested"`, for a card sitting INSIDE another face. */
 export const Nested: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="DoubleTabsCard"
                 tier="composite"
@@ -160,15 +160,15 @@ export const Nested: Story = {
                                 cardVariant="nested"
                                 leftTabs={{
                                     items: [
-                                        { key: "overview", label: "Tổng quan" },
-                                        { key: "activity", label: "Hoạt động" },
+                                        { key: "overview", label: "Overview" },
+                                        { key: "activity", label: "Activity" },
                                     ],
                                     selectedKey: "overview",
-                                    ariaLabel: "Chuyển tab",
+                                    ariaLabel: "Switch tab",
                                     onSelectionChange: () => {},
                                 }}
                             >
-                                <Typography size="sm" color="muted" text="Nội dung tổng quan." />
+                                <Typography size="sm" color="muted" text="Overview content." />
                             </DoubleTabsCard>
                         ),
                     },

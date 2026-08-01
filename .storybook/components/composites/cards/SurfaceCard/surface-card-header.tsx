@@ -1,9 +1,9 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { LinkSeeMore } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -18,16 +18,29 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /** Shared label props every `Surface*Card` accepts to render a header above the surface. */
 export interface SurfaceLabelProps {
-    /** Section title rendered OUTSIDE (above) the surface. Omit → no header. */
-    label?: ReactNode
-    /** Passive muted tag pinned RIGHT of the label (a unit/count/currency), NOT an action. */
-    labelEnd?: ReactNode
+    /**
+     * Section title rendered OUTSIDE (above) the surface. Omit → no header.
+     *
+     * `string`, not `ReactNode` (COMPOSITE-8): the header wraps it in `Typography`
+     * itself, so `isSkeleton` can reach the text it renders instead of arriving as
+     * an already-built node it cannot reopen.
+     */
+    label?: string
+    /** Passive muted tag pinned RIGHT of the label (a unit/count/currency), NOT an action. Text — see {@link SurfaceLabelProps.label}. */
+    labelEnd?: string
     /** Renders a right-aligned see-more link (semibold accent + hover caret). */
     onSeeMore?: () => void
     /** Text for the see-more link. Defaults to "See more". */
-    seeMoreLabel?: ReactNode
-    /** Arbitrary right-aligned slot (a manage button). Wins over `onSeeMore` and `labelEnd`. */
-    action?: ReactNode
+    seeMoreLabel?: string
+    /**
+     * Arbitrary right-aligned slot (a manage button). Wins over `onSeeMore` and
+     * `labelEnd`.
+     *
+     * A COMPONENT reference, not a built node (COMPOSITE-8) — the header calls it
+     * with `isSkeleton` so it can build its own resting state, the same way it
+     * calls every other slot it renders.
+     */
+    action?: ComponentTypeWithSkeleton
     /** Render the label as a SUBTLE eyebrow (`text-xs text-muted`, tighter gap). */
     subtleLabel?: boolean
     /**
@@ -59,7 +72,7 @@ export const SurfaceCardHeader = ({
     labelEnd,
     onSeeMore,
     seeMoreLabel = "See more",
-    action,
+    action: Action,
     subtleLabel = false,
     isSkeleton = false,
     showAnatomy = false,
@@ -84,7 +97,7 @@ export const SurfaceCardHeader = ({
             text={label}
         />
     )
-    const endSlot = action ?? (onSeeMore ? (
+    const endSlot = Action ? <Action isSkeleton={isSkeleton} /> : (onSeeMore ? (
         // This is an ATOM with its own story ⇒ the node is named so it becomes a
         // clickable DEP in the panel; the badge stops here, no drilling into the
         // atom's insides (§11a).
@@ -103,11 +116,11 @@ export const SurfaceCardHeader = ({
     ) : null)
     return (
         <StackH
-            gap="grouped"
+            gap={4}
             justify="between"
             body={
                 <>
-                    <StackH gap="related" classNames={["min-w-0"]} body={labelSlot} />
+                    <StackH gap={3} classNames={["min-w-0"]} body={labelSlot} />
                     {endSlot}
                 </>
             }

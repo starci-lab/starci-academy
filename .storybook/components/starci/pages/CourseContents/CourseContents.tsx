@@ -24,7 +24,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * you left off) · `LearnNudges` (what to do today) · `KeepGoingPath` (keep going in the
  * chapter).
  *
- * The list above names BLOCKS. It used to say `FeedbackCallout` for the gate — that is
+ * The list above names BLOCKS. It used to say `Callout` for the gate — that is
  * the FRAME the gate uses internally, not the block the screen calls. Naming the frame
  * here is the same mistake that keeps the node out of the anatomy tree (the DOM emits
  * `CourseTeamGate`), so the two must be kept in the same words.
@@ -58,15 +58,15 @@ const SAMPLE_PRICE: TrialConversionStripPrice = {
 // Plain DATA — the visuals (state icon, difficulty chip, lock mark) are owned by the
 // `KeepGoingPath` block. The screen doesn't know what an "in-progress" lesson looks like.
 const KEEP_GOING: Array<KeepGoingContent> = [
-    { id: "l1", title: "Docker là gì", minutes: 6, state: "done", difficulty: "beginner", onPress: () => {} },
-    { id: "l2", title: "Viết Dockerfile tối ưu", minutes: 12, state: "active", difficulty: "intermediate", onPress: () => {} },
+    { id: "l1", title: "What is Docker", minutes: 6, state: "done", difficulty: "beginner", onPress: () => {} },
+    { id: "l2", title: "Writing an optimized Dockerfile", minutes: 12, state: "active", difficulty: "intermediate", onPress: () => {} },
     { id: "l3", title: "Multi-stage build", minutes: 9, state: "todo", difficulty: "intermediate", locked: true, onPress: () => {} },
 ]
 // Plain DATA — `kind` is an ENUM; the `LearnNudges` block decides the icon itself (§14b).
 const NUDGES: Array<LearnNudge> = [
-    { id: "flashcards", kind: "flashcards", title: "Ôn 12 thẻ đến hạn hôm nay", onPress: () => {} },
-    { id: "mock-interview", kind: "interview", title: "Luyện phỏng vấn cho capstone", onPress: () => {} },
-    { id: "league", kind: "league", title: "Bạn đang hạng #42 tuần này", onPress: () => {} },
+    { id: "flashcards", kind: "flashcards", title: "Review 12 cards due today", onPress: () => {} },
+    { id: "mock-interview", kind: "interview", title: "Practice interviewing for your capstone", onPress: () => {} },
+    { id: "league", kind: "league", title: "You're ranked #42 this week", onPress: () => {} },
 ]
 /** Props for {@link CourseContents}. */
 export interface CourseContentsLayoutProps {
@@ -100,13 +100,13 @@ const CourseContentsEmpty = () => (
     <Container
         anatPart="Container"
         size="md"
-        padding="roomy"
+        padding={6}
         body={
             <AsyncContentEmpty
                 anatPart="AsyncContentEmpty"
                 icon={StackIcon}
-                title="Khoá này chưa có bài học nào"
-                description="Nội dung đang được biên soạn — quay lại sau nhé."
+                title="This course has no lessons yet"
+                description="Content is still being written — check back later."
             />
         }
     />
@@ -164,7 +164,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             <ContinueLearning
                 anatPart="ContinueLearning"
                 lessonIndex={4}
-                lessonTitle="Viết Dockerfile tối ưu"
+                lessonTitle="Writing an optimized Dockerfile"
                 lessonsRead={8}
                 lessonsTotal={23}
                 challengesDone={2}
@@ -180,7 +180,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             />
             <KeepGoingPath
                 anatPart="KeepGoingPath"
-                module={{ index: 2, name: "Container hoá" }}
+                module={{ index: 2, name: "Containerization" }}
                 contents={KEEP_GOING}
                 isSkeleton={isSkeleton}
             />
@@ -198,37 +198,37 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             <CourseBrief
                 anatPart="CourseBrief"
                 breadcrumbItems={[
-                    { key: "courses", label: "Khoá học", onPress: () => {} },
+                    { key: "courses", label: "Courses", onPress: () => {} },
                     { key: "course", label: "DevOps Mastery" },
                 ]}
                 title="DevOps Mastery"
-                description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
+                description="From CI/CD to production Kubernetes — a hands-on learning path."
                 moduleCount={8}
                 hours={14}
                 learnerCount={2481}
                 isSkeleton={isSkeleton}
             />
-            <StackV gap="section" anatPart="StackV" body={learnSection} />
+            <StackV gap={6} anatPart="StackV" body={learnSection} />
         </>
     )
 
-    const courseContentsBody = <StackV gap="page" anatPart="StackV" body={courseContentsSections} />
+    const courseContentsBody = <StackV gap={7} anatPart="StackV" body={courseContentsSections} />
 
     return (
         // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div` (§13):
-        //   • `mx-auto max-w-3xl p-6` → `Container size="md" padding="roomy"` — `md` reads
+        //   • `mx-auto max-w-3xl p-6` → `Container size="md" padding={6}` — `md` reads
         //     from the token `--container-app-md`, the same 768px but from the RIGHT SOURCE;
         //     `max-w-3xl` is a different scale, and if the token changes it drifts silently
         //     (see the `SIZE_CLASS` JSDoc).
-        //   • `gap-10` → `gap="page"`. `10` is NOT on the §10c scale (0·1·2·3·6·8) — the frame's
+        //   • `gap-10` → `gap={7}`. `10` is NOT on the §10c scale (0·1·2·3·6·8) — the frame's
         //     `InsetScale` type means an off-scale value is now a TYPE ERROR at the call site,
         //     it can no longer slip through. This is exactly where the §10 rule gets enforced.
         // WARNING, 2026-07-27 — `gap` has been REMOVED from this call: `Container` only applies
         // `gap` when using the `header`/`footer` slots; passing `body` directly means that
         // prop is DROPPED SILENTLY. Measured consequence: the seam between `CourseBrief` and
         // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
-        // card. Writing `gap="page"` with nothing to receive it is worse than not writing it at
+        // card. Writing `gap={7}` with nothing to receive it is worse than not writing it at
         // all: reading the code makes it look like the rhythm was already set.
-        <Container size="md" padding="roomy" anatPart="Container" body={courseContentsBody} />
+        <Container size="md" padding={6} anatPart="Container" body={courseContentsBody} />
     )
 }

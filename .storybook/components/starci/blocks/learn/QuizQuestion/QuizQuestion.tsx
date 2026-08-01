@@ -93,20 +93,20 @@ const QuizQuestion = ({
 
     const levelRow = levelLabel != null ? (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
-            body={<Chip tone="default" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />}
+            body={<Chip tone="default" text={levelLabel} showAnatomy={showAnatomy} />}
         />
     ) : null
 
     const expectedAnswerBlock = expectedAnswer != null ? (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Đáp án mong đợi" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" weight="medium" text="Expected answer" showAnatomy={showAnatomy} />
                     <MarkdownContent
                         source={expectedAnswer}
                         measure="compact"
@@ -119,12 +119,12 @@ const QuizQuestion = ({
 
     const gradedDetails = isGraded ? (
         <StackV
-            gap="section"
+            gap={6}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
                     <StackH
-                        gap="related"
+                        gap={3}
                         align="center"
                         anatPart={showAnatomy ? "StackH" : undefined}
                         body={
@@ -134,8 +134,8 @@ const QuizQuestion = ({
                             <Chip
                                 tone={verdict === "correct" ? "success" : "danger"}
                                 icon={verdict === "correct" ? CheckCircleIcon : XCircleIcon}
-                                text={verdict === "correct" ? "Đúng" : "Chưa đúng"}
-                                anatPart={showAnatomy ? "Chip" : undefined}
+                                text={verdict === "correct" ? "Correct" : "Not quite"}
+                                showAnatomy={showAnatomy}
                             />
                         }
                     />
@@ -154,12 +154,12 @@ const QuizQuestion = ({
 
     const actionRow = (
         <StackH
-            gap="related"
+            gap={3}
             justify="end"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 isGraded ? (
-                    <Button label={nextLabel} variant="primary" onPress={onNext} anatPart={showAnatomy ? "Button" : undefined} />
+                    <Button label={nextLabel} variant="primary" onPress={onNext} showAnatomy={showAnatomy} />
                 ) : (
                     <Button
                         label={submitLabel}
@@ -167,7 +167,7 @@ const QuizQuestion = ({
                         onPress={onSubmit}
                         isDisabled={answer.trim().length === 0}
                         isPending={isPending}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 )
             }
@@ -190,8 +190,8 @@ const QuizQuestion = ({
             <InputTextarea
                 value={answer}
                 onValueChange={onAnswerChange}
-                placeholder="Trả lời như đang nói với người phỏng vấn"
-                ariaLabel="Câu trả lời"
+                placeholder="Answer as if you're speaking to the interviewer"
+                ariaLabel="Answer"
                 rows={4}
                 isDisabled={isGraded}
                 showAnatomy={showAnatomy}
@@ -205,9 +205,11 @@ const QuizQuestion = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={questionBody} />
-            </SurfaceCard>
+            <SurfaceCard
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={questionBody} />}
+            />
         </div>
     )
 }

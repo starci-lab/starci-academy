@@ -6,7 +6,7 @@ import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { ButtonRadioGroup } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -36,9 +36,9 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * candidate who left mid-interview is not asked to scroll past a fresh-start
  * button to find their own session.
  *
- * ⭐ PERSONA IS NOT `UserCell`. The sibling atom `UserCell` composes
+ * ⭐ PERSONA IS NOT `UserCell`. The sibling composite `UserCell` composes
  * avatar+name+`@handle` for an ACCOUNT identity; an interviewer persona's
- * second line is a ROLE ("Senior Backend @ ngân hàng số"), not a handle, and
+ * second line is a ROLE ("Senior Backend @ a digital bank"), not a handle, and
  * this block's own compose list names `Avatar`+`Typography` directly rather
  * than `UserCell` — so the identity row is built from those two atoms instead
  * of reaching for a component shaped for a different kind of row.
@@ -47,14 +47,14 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * on/off and Design-mode on/off each add or remove a real node (the banner,
  * the second button) — by the letter of §14d.2 that reads as "new leaf per
  * structural change". This run's brief pins the scope explicitly ("one leaf
- * this pass: identity + tier + name + start"; the "Tùy chỉnh" deep-config body
+ * this pass: identity + tier + name + start"; the "Customize" deep-config body
  * is a SECOND leaf, deferred out of scope) — so every combination this pass
  * covers is filed as STATES of that one leaf rather than split further,
  * matching how `QuizRecapList`'s sibling story keeps its data combinations in
  * one leaf. `isSkeleton` is a state for the same reason `SurfaceCard` docs it
  * as one (§11f): it changes the STATE of an already-built tree, not its shape.
  *
- * NEVER RENDERS THE "Tùy chỉnh" DISCLOSURE. That deep-config body (languages /
+ * NEVER RENDERS THE "Customize" DISCLOSURE. That deep-config body (languages /
  * question kinds / answer mode / AI model) is real scope but a DIFFERENT leaf
  * — this pass only builds identity + tier + name + start, so `Disclosure` is
  * not composed here at all rather than stubbed in half-built (§B3: a gap left
@@ -66,13 +66,13 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** How hard the interviewer's questions run. The block owns the Vietnamese label (§14d.1). */
+/** How hard the interviewer's questions run. The block owns the label (§14d.1). */
 export type MockInterviewTier = "junior" | "mid" | "senior"
 
 const TIER_LABEL: Record<MockInterviewTier, string> = {
-    junior: "Sơ cấp",
-    mid: "Trung cấp",
-    senior: "Cao cấp",
+    junior: "Junior",
+    mid: "Mid-level",
+    senior: "Senior",
 }
 
 /** Which start action is in flight, so the busy affordance lands on the right button. */
@@ -82,7 +82,7 @@ export type MockInterviewStartMode = "qna" | "design"
 export interface MockInterviewPersona {
     /** Interviewer's display name. */
     name: string
-    /** Role line under the name, e.g. "Senior Backend @ ngân hàng số" — NOT a handle. */
+    /** Role line under the name, e.g. "Senior Backend @ a digital bank" — NOT a handle. */
     role: string
     /** Uploaded avatar URL. Absent → `Avatar`'s own generated/initials fallback. */
     avatarSrc?: string
@@ -92,7 +92,7 @@ export interface MockInterviewPersona {
 export interface MockInterviewResumable {
     /** What the run was called when it was started. */
     name: string
-    /** Where the run left off, already worded by the caller — e.g. "Đang dở câu 3". */
+    /** Where the run left off, already worded by the caller — e.g. "Left off at question 3". */
     progressLabel: string
     /** Fired when the candidate picks the run back up. */
     onResume: () => void
@@ -100,7 +100,7 @@ export interface MockInterviewResumable {
 
 /** Props for {@link MockInterviewSetup}. */
 export interface MockInterviewSetupProps {
-    /** Section label, localized by the caller — e.g. "Chuẩn bị phỏng vấn". */
+    /** Section label, localized by the caller — e.g. "Prepare for the interview". */
     label: string
     /** The interviewer greeting the candidate. */
     persona: MockInterviewPersona
@@ -167,12 +167,12 @@ const MockInterviewSetup = ({
     // Making them scroll past a start button to find their own session is
     // how a run gets abandoned twice — same reasoning as `QuizSetup`.
     const resumeBanner = resumable != null ? (
-        <FeedbackCallout
+        <Callout
             title={resumable.name}
             description={resumable.progressLabel}
-            actionLabel="Tiếp tục"
+            actionLabel="Continue"
             onAction={resumable.onResume}
-            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+            anatPart={showAnatomy ? "Callout" : undefined}
         />
     ) : null
 
@@ -183,14 +183,14 @@ const MockInterviewSetup = ({
                 weight="medium"
                 isSkeleton={isSkeleton}
                 text={persona.name}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             <Typography
                 size="xs"
                 color="muted"
                 isSkeleton={isSkeleton}
                 text={persona.role}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
         </>
     )
@@ -199,7 +199,7 @@ const MockInterviewSetup = ({
     // `UserCell`): the second line is a ROLE, not an `@handle`.
     const identityRow = (
         <StackH
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
@@ -213,7 +213,7 @@ const MockInterviewSetup = ({
                             showAnatomy={showAnatomy}
                         />
                     </div>
-                    <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={personaDetails} />
+                    <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={personaDetails} />
                 </>
             }
         />
@@ -221,16 +221,16 @@ const MockInterviewSetup = ({
 
     const sessionNameField = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Tên phiên" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" weight="medium" text="Session name" showAnatomy={showAnatomy} />
                     <InputText
                         value={sessionName}
                         onValueChange={onSessionNameChange}
-                        placeholder="Ví dụ: Vòng 1 - Backend"
-                        ariaLabel="Tên phiên"
+                        placeholder="e.g. Round 1 - Backend"
+                        ariaLabel="Session name"
                         isSkeleton={isSkeleton}
                         showAnatomy={showAnatomy}
                     />
@@ -241,13 +241,13 @@ const MockInterviewSetup = ({
 
     const tierField = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Cấp độ" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" weight="medium" text="Level" showAnatomy={showAnatomy} />
                     <ButtonRadioGroup
-                        ariaLabel="Cấp độ phỏng vấn"
+                        ariaLabel="Interview level"
                         value={tier}
                         onChange={onTierChange}
                         showAnatomy={showAnatomy}
@@ -263,30 +263,30 @@ const MockInterviewSetup = ({
 
     const actionsRow = (
         <StackH
-            gap="related"
+            gap={3}
             justify="end"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     {showDesignStart ? (
                         <Button
-                            label="Bắt đầu Design"
+                            label="Start Design"
                             variant="secondary"
                             prefixIcon={FlowArrowIcon}
                             onPress={onStartDesign}
                             isPending={isPending && startingMode === "design"}
                             isDisabled={isPending && startingMode !== "design"}
-                            anatPart={showAnatomy ? "Button" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                     <Button
-                        label="Bắt đầu Q&A"
+                        label="Start Q&A"
                         variant="primary"
                         prefixIcon={PlayIcon}
                         onPress={onStartQna}
                         isPending={isPending && startingMode === "qna"}
                         isDisabled={isPending && startingMode !== "qna"}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 </>
             }
@@ -297,15 +297,15 @@ const MockInterviewSetup = ({
     // card it would read as a problem with the whole form.
     const footer = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
                     {errorMessage != null ? (
-                        <FeedbackCallout
+                        <Callout
                             status="danger"
                             title={errorMessage}
-                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                            anatPart={showAnatomy ? "Callout" : undefined}
                         />
                     ) : null}
                     {actionsRow}
@@ -326,9 +326,12 @@ const MockInterviewSetup = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard label={label} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={setupBody} />
-            </SurfaceCard>
+            <SurfaceCard
+                label={label}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={setupBody} />}
+            />
         </div>
     )
 }

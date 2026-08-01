@@ -1,29 +1,27 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import { type LayoutAlign, type LayoutJustify, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
+import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 import { Flex } from "@sb-components/frames/Flex/Flex"
-
-/** `nested` — see its own prop doc. Centralized so the classes live in exactly one place. */
-const NESTED_CLS = "border-l border-default pl-3 @app-sm:pl-6"
+import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * LAYOUT (frame) — `Stack.*`: the base one-axis track. Two members = two AXES,
  * the only real shapes a stack has:
  *   • `StackV` — stacks VERTICALLY (column).
- *   • `StackH` — stacks HORIZONTALLY (row); only this axis can `wrap`.
+ *   • `StackH` — stacks HORIZONTALLY (row); only this axis takes `at` (FRAME-10:
+ *     the container step it wraps below, never a bare boolean).
  *
  * FRAME API LAW (§13b): a stack WRAPS arbitrary content — it is not a repeating
  * list — so `children` is the road (there is no `header`/`body`/`footer` trio to
  * name: a track has exactly ONE slot, its content). `items` would be wrong here;
  * see `Cluster`/`Grid` for the repeat-list frames of this folder.
  *
- * ⭐ WHY THIS FRAME EXISTS (§10): `gap` is typed {@link InsetScale} — a UNION
- * LITERAL of `0·1·2·3·6·8`. Off-scale (`gap-4`, `gap-5`, `gap-1.5`) cannot even
- * be typed, so the §10 scale is enforced by the COMPILER instead of by review.
+ * ⭐ WHY THIS FRAME EXISTS: `gap` is typed {@link Responsive}<{@link AllowedGap}> — a
+ * CLOSED index into the house gap table. Off-scale (`gap-4.5`, `gap-[13px]`) cannot even
+ * be typed, so the scale is enforced by the COMPILER instead of by review.
  * `gap` is REQUIRED for the same reason: an implicit default would let the seam
  * be chosen by accident, and §10a says a seam has exactly one deliberate owner.
  *
@@ -37,11 +35,10 @@ const NESTED_CLS = "border-l border-default pl-3 @app-sm:pl-6"
 /** Props shared by both axes of {@link Stack}. */
 export interface StackBaseProps {
     /**
-     * Seam between children on the §10 scale — REQUIRED, union literal only
-     * (`0` flush · `1` tight · `2` related · `3` grouped · `6` section · `8` page).
+     * Seam between children on the house gap scale — REQUIRED.
      * The PARENT owns this seam (§10a), so children must not carry margin.
      */
-    gap: SeamScale
+    gap: Responsive<AllowedGap>
     /** Cross-axis alignment (`V` → horizontal, `H` → vertical). */
     align?: LayoutAlign
     /** Main-axis distribution (`V` → vertical, `H` → horizontal). */
@@ -57,12 +54,12 @@ export interface StackBaseProps {
      * proper road always wins — the same force that produced 227 hand-written
      * `flex flex-col gap-4` in the first place.
      */
-    padding?: InsetScale
+    padding?: Responsive<PaddingValue>
     /**
      * `true` → a left guide border + matching indent (`pl-3`, `@app-sm:pl-6`),
      * for a track that is ONE LEVEL DEEPER than its caller (a threaded reply,
      * a nested tree row) — the frame owns the exact classes so no block ever
-     * hand-writes `border-l`/`pl-*` itself (thầy 2026-07-28). Same vocabulary
+     * hand-writes `border-l`/`pl-*` itself (per the teacher's note, 2026-07-28). Same vocabulary
      * as `SurfaceCard`'s own `variant="nested"` (border marks "inside a
      * parent", not a fresh outer face) — this is that same idea for a track.
      */
@@ -87,15 +84,18 @@ export interface StackBaseProps {
     anatPart?: string
     /** The stacked content. A wrapper frame takes a named slot (§13b). */
     body?: ReactNode
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /** `true` → tag this frame's parts with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
+    /**
+     * The layout pattern this track's seam realises — forwarded straight to the `Flex` this
+     * track renders through, the same way `gap`/`align`/`justify` are. See `Flex`'s own
+     * `pattern` doc for the full contract.
+     */
+    pattern?: string
 }
 
 /** Props for {@link StackV} — a vertical track (no row-only prop to add). */
@@ -104,11 +104,13 @@ export type StackVProps = StackBaseProps
 /** Props for {@link StackH} — a horizontal track. */
 export interface StackHProps extends StackBaseProps {
     /**
-     * `true` → children flow onto a new line when the row runs out of width.
-     * ROW-ONLY: a column already grows without bound, so wrapping is meaningless
-     * on `StackV` and is not offered there.
+     * Container step the row switches from wrapped to single-line at (FRAME-10). Below `at`
+     * children flow onto a new line when the row runs out of width; at `at` and above the row
+     * stays single-line. ROW-ONLY: a column already grows without bound, so this is meaningless
+     * on `StackV` and is not offered there. Left out, the row never wraps — same behaviour the
+     * old `wrap={false}` default had.
      */
-    wrap?: boolean
+    at?: ResponsiveRowSwitch
 }
 
 /**
@@ -132,7 +134,7 @@ const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal"
                     key={`stack-divider-${index}`}
                     orientation={ruleOrientation}
                     classNames={ruleOrientation === "vertical" ? ["self-stretch"] : undefined}
-                    anatPart={showAnatomy ? "Divider" : undefined}
+                    showAnatomy={showAnatomy}
                 />,
                 child,
             ],
@@ -154,10 +156,10 @@ const StackV = ({
     nested = false,
     body,
     padding,
-    className,
     classNames,
     showAnatomy = false,
     anatPart,
+    pattern,
 }: StackVProps) => (
     <Flex
         as={Tag}
@@ -167,9 +169,10 @@ const StackV = ({
         padding={padding}
         align={align}
         justify={justify}
-        className={cn(nested && NESTED_CLS, className)}
+        nested={nested}
         classNames={classNames}
         anatPart={anatPart}
+        pattern={pattern}
         body={divider ? interleaveDividers(body, "vertical", showAnatomy) : body}
     />
 )
@@ -180,15 +183,15 @@ const StackH = ({
     gap,
     align = "center",
     justify,
-    wrap = false,
+    at,
     divider = false,
     nested = false,
     body,
     padding,
-    className,
     classNames,
     showAnatomy = false,
     anatPart,
+    pattern,
 }: StackHProps) => (
     <Flex
         as={Tag}
@@ -198,12 +201,28 @@ const StackH = ({
         padding={padding}
         align={align}
         justify={justify}
-        wrap={wrap}
-        className={cn(nested && NESTED_CLS, className)}
+        at={at}
+        nested={nested}
         classNames={classNames}
         anatPart={anatPart}
+        pattern={pattern}
         body={divider ? interleaveDividers(body, "horizontal", showAnatomy) : body}
     />
 )
 
 export { StackV, StackH }
+
+/**
+ * Source-level tier marker — lets a gate read the tier without guessing from the folder path.
+ *
+ * Shaped as a record, not the single `{ tier, name }` most frame files export: this file has
+ * TWO public components, not one, and neither is more "the" component this file names. See
+ * `Flex.tsx`'s own `meta` note for the DOM side of this — `StackV`/`StackH` render no element
+ * of their own (100% delegated to `Flex`), so `data-component` on a rendered Stack instance
+ * reads `"Flex"`, not `"StackV"`/`"StackH"`; this export is the source-level identity, which a
+ * gate can still read even though the DOM cannot show it.
+ */
+export const meta = {
+    StackV: { tier: "frame", name: "StackV" },
+    StackH: { tier: "frame", name: "StackH" },
+} as const

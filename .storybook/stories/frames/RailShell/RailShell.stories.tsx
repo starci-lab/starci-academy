@@ -6,10 +6,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE: `RailShell` là KHUNG rail-DẪN-ĐẦU + thân co. State nó sinh ra =
- * quan hệ giữa HAI PHÍA CÓ TÊN qua mốc `@app-md`: xếp chồng khi hẹp, hai cột khi rộng,
- * và rail có ghim hay không. Bề rộng rail (288px) và mốc (`@app-md`) là khung TỰ SỞ HỮU,
- * không phải prop — hai nguồn `src` thật đồng ý ở cả hai số, chỉ bất đồng ở sticky.
+ * ⚠️ STATE SCOPE: `RailShell` is a frame with a LEADING rail + a shrinking body. The
+ * state it produces is the relationship between the TWO NAMED SIDES across the
+ * `@app-md` threshold: stacked when narrow, two columns when wide, and whether the
+ * rail is pinned or not. The rail width (288px) and the threshold (`@app-md`) are
+ * SELF-OWNED by the frame, not a prop — the two real `src` sources agree on both
+ * numbers, disagreeing only on sticky.
  */
 const meta: Meta<typeof RailShell> = {
     title: "Frames/RailShell/RailShell",
@@ -25,8 +27,9 @@ export default meta
 type Story = StoryObj<typeof RailShell>
 
 /**
- * `@app-md` đo CONTAINER gần nhất, không đo cửa sổ — muốn demo mốc thì phải tự mở một
- * `@container` đúng bề ngang, đúng như app shell làm.
+ * `@app-md` measures the nearest CONTAINER, not the viewport — demoing the
+ * threshold means opening a `@container` at a real width, the same way the app
+ * shell does.
  */
 interface FrameProps {
     /** width of the simulated `@container`, e.g. `"48rem"` */
@@ -38,7 +41,7 @@ interface FrameProps {
 }
 
 const Frame = ({ width, label, children }: FrameProps) => (
-    <div className="flex flex-col gap-2">
+    <div data-tier="fixture" className="flex flex-col gap-2">
         <Typography size="xs" text={label} color="muted" />
         <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>
             {children}
@@ -48,21 +51,21 @@ const Frame = ({ width, label, children }: FrameProps) => (
 
 /** A stand-in for whatever the caller puts in a slot — never real content. */
 const Box = ({ label, lines }: { label: string; lines: number }) => (
-    <StackV gap="grouped" body={<>
+    <StackV gap={4} body={<>
         <Typography size="sm" text={label} weight="medium" />
         {Array.from({ length: lines }, (_, index) => (
-            <div key={index} className="h-10 rounded-2xl bg-surface-secondary" />
+            <div data-tier="fixture" key={index} className="h-10 rounded-2xl bg-surface-secondary" />
         ))}
     </>} />
 )
 
 /**
- * Default — rail dẫn đầu, thân theo sau. Hình đi đúng 2 chỗ trong `src`:
- * dashboard (identity + tab đang mở) và settings (nav + panel).
+ * Default — the rail leads, the body follows. The shape matches the two real
+ * spots in `src`: dashboard (identity + the open tab) and settings (nav + panel).
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="RailShell"
                 tier="frame"
@@ -93,12 +96,13 @@ export const Default: Story = {
 }
 
 /**
- * Breakpoint — dưới `@app-md` hai phía thành CỘT, rail lên trên. Mốc đo bề ngang
- * CONTAINER chứ không đo viewport, và nó được KHAI BÁO — không phải `wrap` rồi hy vọng.
+ * Breakpoint — below `@app-md` the two sides become a COLUMN, the rail moves on
+ * top. The threshold measures the CONTAINER's width, not the viewport, and it is
+ * DECLARED — not a `wrap` left to hope for the best.
  */
 export const Breakpoint: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="RailShell"
                 tier="frame"
@@ -140,12 +144,13 @@ export const Breakpoint: Story = {
 }
 
 /**
- * IsRailSticky — prop DUY NHẤT của khung này, và nó tồn tại vì hai nguồn `src` thật
- * bất đồng đúng ở đây: dashboard cuộn rail theo trang, settings ghim rail vào viewport.
+ * IsRailSticky — the ONLY prop this frame has, and it exists because the two real
+ * `src` sources disagree exactly here: dashboard scrolls the rail with the page,
+ * settings pins the rail to the viewport.
  */
 export const IsRailSticky: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="RailShell"
                 tier="frame"

@@ -18,7 +18,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * inside the `Default` leaf rather than a third leaf.
  *
  * The chat body itself is a deliberate SCOPE-CUT GAP (`SurfaceCard` +
- * `FeedbackEmpty`) standing in for the real `ChatThread`/`ChatComposer` blocks
+ * `EmptyState`) standing in for the real `ChatThread`/`ChatComposer` blocks
  * — see the component's own file header for why.
  */
 const meta: Meta<typeof ContentAiChatDrawer> = {
@@ -50,7 +50,7 @@ const MODE_SWITCH_PART: AnatomyNode = {
 const BODY_PARTS: Array<AnatomyNode> = [
     { name: "Drawer.Body", tier: "heroui", role: "the drawer's scrollable body region" },
     { name: "SurfaceCard", tier: "composite", role: "the bounded face standing in for the real chat panel's outer shell", storyId: "composites-cards-surfacecard-surfacecard--default" },
-    { name: "FeedbackEmpty", tier: "composite", role: "the scope-cut gap message — icon + honest title/description — replacing ChatThread/ChatComposer", storyId: "composites-feedback-feedback-feedbackempty--description" },
+    { name: "EmptyState", tier: "composite", role: "the scope-cut gap message — icon + honest title/description — replacing ChatThread/ChatComposer", storyId: "composites-feedback-emptystate-emptystate--description" },
 ]
 
 /** Controlled wrapper — opens on mount; the trigger reopens after a close. Mirrors `DrawerShell`'s own story helper. */
@@ -84,7 +84,7 @@ const ControlledDrawer = ({
     const [isOpen, setIsOpen] = useState(true)
     const [mode, setMode] = useState<ContentAiChatDrawerMode>(initialMode ?? "drawer")
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <div className="flex flex-col gap-2">
                 <Label>{label}</Label>
                 <HeroTypography type="body-sm" color="muted">{hint}</HeroTypography>
@@ -124,23 +124,23 @@ const ControlledDrawer = ({
 /** LEAF 1 — mode switch present: title supplied, then the fixed fallback wording. */
 export const Default: Story = {
     render: () => (
-        <div className="flex flex-col gap-8">
+        <div data-tier="fixture" className="flex flex-col gap-8">
             <ControlledDrawer
                 label="Desktop — mode switch shown, title supplied"
                 hint="mode + onModeChange both passed → the rail⇄drawer switch renders beside the title."
                 leaf="Default"
                 parts={[...SHELL_PARTS, MODE_SWITCH_PART, ...BODY_PARTS]}
                 reason="DrawerShell's own title/description path only stacks two text lines vertically, with no room for a trailing control, so this block builds the title + switch as one custom row through DrawerShell's `header` slot instead."
-                stateName='title = "Đóng gói ứng dụng bằng Docker", mode = "drawer"'
+                stateName='title = "Packaging an app with Docker", mode = "drawer"'
                 why="The caller's real lesson title renders bold and truncates rather than wrapping, and the switch sits opposite it on the same row, both inside the pr-8 room the shell's close button needs."
                 code={`<ContentAiChatDrawer
     isOpen={isOpen}
     onOpenChange={setIsOpen}
-    title="Đóng gói ứng dụng bằng Docker"
+    title="Packaging an app with Docker"
     mode={mode}
     onModeChange={setMode}
 />`}
-                title="Đóng gói ứng dụng bằng Docker"
+                title="Packaging an app with Docker"
                 withModeSwitch
             />
             <ControlledDrawer
@@ -148,7 +148,7 @@ export const Default: Story = {
                 hint="Same structure as above (STATE, not a new leaf) — `title` left unset resolves to the block's own fixed fallback wording, same idiom as ContentAiFab's fixed ARIA_LABEL."
                 leaf="Default"
                 parts={[...SHELL_PARTS, MODE_SWITCH_PART, ...BODY_PARTS]}
-                stateName='title = undefined → fallback "Hỏi StarCi AI"'
+                stateName='title = undefined → fallback "Ask StarCi AI"'
                 why="Nothing about the DOM shape changes from the state above — only which string the same Typography leaf renders — which is why this is a second state of the Default leaf rather than its own leaf."
                 code={"<ContentAiChatDrawer isOpen={isOpen} onOpenChange={setIsOpen} mode={mode} onModeChange={setMode} />"}
                 withModeSwitch
@@ -160,7 +160,7 @@ export const Default: Story = {
 /** LEAF 2 — mode switch absent: mode/onModeChange both omitted, matching the forced-mobile shape (`placement="bottom"`). */
 export const NoModeSwitch: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ControlledDrawer
                 label="Mobile — forced drawer, no mode switch"
                 hint='mode + onModeChange both omitted → the switch does not render at all (not disabled). placement="bottom" mirrors what the caller passes on a phone.'
@@ -172,10 +172,10 @@ export const NoModeSwitch: Story = {
                 code={`<ContentAiChatDrawer
     isOpen={isOpen}
     onOpenChange={setIsOpen}
-    title="Đóng gói ứng dụng bằng Docker"
+    title="Packaging an app with Docker"
     placement="bottom"
 />`}
-                title="Đóng gói ứng dụng bằng Docker"
+                title="Packaging an app with Docker"
                 placement="bottom"
                 withModeSwitch={false}
             />

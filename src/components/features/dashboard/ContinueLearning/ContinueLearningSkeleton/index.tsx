@@ -19,7 +19,7 @@ export type ContinueLearningSkeletonProps = WithClassNames<undefined>
  * resume-cards grid — three placeholder cards in the same
  * `@app-sm:grid-cols-2 @app-lg:grid-cols-3` layout, each echoing a {@link import("../ResumeCard").ResumeCard}'s
  * `ContinueCard variant="item"` anatomy: NO leading icon, a title + subtitle
- * column, then the "Tiếp tục →" CTA (`SeeMoreLink`) on its OWN row below — no
+ * column, then the "Continue →" CTA (`SeeMoreLink`) on its OWN row below — no
  * progress-meter line (`hideProgress`). So it reserves the real height and never
  * jumps when the leaf queries resolve. (Was wrong: drew a round avatar the item
  * card never has + an inline-right CTA instead of the own-row link.)
@@ -36,7 +36,7 @@ export const ContinueLearningSkeleton = ({
                         <Skeleton.Typography type="body-sm" width="3/4" />
                         <Skeleton.Typography type="body-xs" width="1/2" />
                     </div>
-                    {/* CTA "Tiếp tục →" — own row below the title (SeeMoreLink), not inline-right */}
+                    {/* CTA "Continue →" — own row below the title (SeeMoreLink), not inline-right */}
                     <Skeleton.Typography type="body-sm" width="1/3" />
                 </CardContent>
             </Card>

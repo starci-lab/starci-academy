@@ -46,7 +46,7 @@ export interface SidebarNavAccordionGroupProps extends WithClassNames<undefined>
  * Playground's Docker/Kubernetes/RAG exercises) that doesn't warrant its own
  * flat rows cluttering the nav. Built on HeroUI `Accordion` (`variant="default"`
  * — it sits directly on the sidebar's own background, not a card surface, per
- * `fe/components/accordion.md` §3 "chọn da theo ngữ cảnh nền"), single item,
+ * `fe/components/accordion.md` §3 "pick the skin based on the background context"), single item,
  * closed by default.
  *
  * @param props - {@link SidebarNavAccordionGroupProps}

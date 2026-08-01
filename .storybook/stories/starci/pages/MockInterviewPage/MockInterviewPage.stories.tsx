@@ -6,7 +6,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * SCREEN — `MockInterviewPage`: get ready for a mock interview, work through
  * it live, then read the debrief. See the component's own file header for the
  * full phase model and the three marked GAPs it leaves rather than fakes
- * (the confirm dialog on leave/end-early, the "Tùy chỉnh" config body, and the
+ * (the confirm dialog on leave/end-early, the "Customize" config body, and the
  * docked whiteboard/code workspace pane).
  *
  * A screen owns a LIST OF FUNCTIONS and nothing else. Seven blocks — three
@@ -31,17 +31,17 @@ export default meta
 type Story = StoryObj<typeof MockInterviewPage>
 
 const PERSONA = {
-    name: "Chị Hà Vy",
-    role: "Senior Backend @ ngân hàng số",
+    name: "Ha Vy",
+    role: "Senior Backend @ a digital bank",
     avatarSrc: undefined,
 }
 
 const VOICE_LABELS = {
-    pushToTalk: "Nhấn để trả lời",
-    listening: "Đang nghe...",
-    typeInstead: "Gõ thay vì nói",
-    useVoice: "Dùng giọng nói",
-    placeholder: "Nhập câu trả lời của bạn",
+    pushToTalk: "Press to answer",
+    listening: "Listening...",
+    typeInstead: "Type instead of speaking",
+    useVoice: "Use voice",
+    placeholder: "Type your answer",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -59,7 +59,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — setup: identity header plus the green-room card, several real setup states. */
 export const Setup: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MockInterviewPage"
                 tier="screen"
@@ -72,11 +72,11 @@ export const Setup: Story = {
                         why: "No run was left behind and the course has no Design round, so the card opens straight on the form with one start button — the plain first-visit shape most candidates see.",
                         code: `<MockInterviewPage
     phase="setup"
-    setupBackLabel="Học phần"
+    setupBackLabel="Module"
     onSetupBack={back}
-    setupTitle="Phỏng vấn thử"
-    setupDescription="Luyện trả lời như một buổi phỏng vấn thật"
-    setupLabel="Chuẩn bị phỏng vấn"
+    setupTitle="Mock interview"
+    setupDescription="Practice answering like a real interview"
+    setupLabel="Prepare for the interview"
     persona={persona}
     sessionName={name}
     onSessionNameChange={setName}
@@ -90,28 +90,28 @@ export const Setup: Story = {
                             <MockInterviewPage
                                 showAnatomy
                                 phase="setup"
-                                setupBackLabel="Học phần"
+                                setupBackLabel="Module"
                                 onSetupBack={() => {}}
-                                setupTitle="Phỏng vấn thử"
-                                setupDescription="Luyện trả lời như một buổi phỏng vấn thật"
-                                setupLabel="Chuẩn bị phỏng vấn"
+                                setupTitle="Mock interview"
+                                setupDescription="Practice answering like a real interview"
+                                setupLabel="Prepare for the interview"
                                 persona={PERSONA}
-                                sessionName="Vòng 1 - Backend"
+                                sessionName="Round 1 - Backend"
                                 onSessionNameChange={() => {}}
                                 tier="mid"
                                 onTierChange={() => {}}
                                 isDesignAvailable={false}
                                 onStartQna={() => {}}
-                                liveBackLabel="Thoát"
+                                liveBackLabel="Exit"
                                 onLiveBack={() => {}}
                                 liveCounter=""
                                 liveTotal={0}
                                 liveCurrent={0}
                                 interviewerPersona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
-                                muteLabel="Tắt tiếng"
-                                unmuteLabel="Bật tiếng"
+                                speakingLabel="Reading the question"
+                                muteLabel="Mute"
+                                unmuteLabel="Unmute"
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
@@ -122,9 +122,9 @@ export const Setup: Story = {
                                 voiceLabels={VOICE_LABELS}
                                 isLastQuestion={false}
                                 onAnswerSubmit={() => {}}
-                                resultBackLabel="Quay lại phỏng vấn thử"
+                                resultBackLabel="Back to mock interview"
                                 onResultBack={() => {}}
-                                resultTitle="Kết quả phỏng vấn"
+                                resultTitle="Interview results"
                                 verdict="pass"
                                 overallScore={0}
                                 phaseOrQuestionScores={[]}
@@ -144,36 +144,36 @@ export const Setup: Story = {
     isDesignAvailable
     onStartQna={startQna}
     onStartDesign={startDesign}
-    resumable={{ name: "Vòng 1 - Backend", progressLabel: "Đang dở câu 3", onResume: resume }}
+    resumable={{ name: "Round 1 - Backend", progressLabel: "Stopped at question 3", onResume: resume }}
     …
 />`,
                         render: (
                             <MockInterviewPage
                                 phase="setup"
-                                setupBackLabel="Học phần"
+                                setupBackLabel="Module"
                                 onSetupBack={() => {}}
-                                setupTitle="Phỏng vấn thử"
-                                setupDescription="Luyện trả lời như một buổi phỏng vấn thật"
-                                setupLabel="Chuẩn bị phỏng vấn"
+                                setupTitle="Mock interview"
+                                setupDescription="Practice answering like a real interview"
+                                setupLabel="Prepare for the interview"
                                 persona={PERSONA}
-                                sessionName="Thiết kế hệ thống rút gọn URL"
+                                sessionName="Design a URL shortener system"
                                 onSessionNameChange={() => {}}
                                 tier="senior"
                                 onTierChange={() => {}}
                                 isDesignAvailable
                                 onStartQna={() => {}}
                                 onStartDesign={() => {}}
-                                resumable={{ name: "Vòng 1 - Backend", progressLabel: "Đang dở câu 3", onResume: () => {} }}
-                                liveBackLabel="Thoát"
+                                resumable={{ name: "Round 1 - Backend", progressLabel: "Stopped at question 3", onResume: () => {} }}
+                                liveBackLabel="Exit"
                                 onLiveBack={() => {}}
                                 liveCounter=""
                                 liveTotal={0}
                                 liveCurrent={0}
                                 interviewerPersona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
-                                muteLabel="Tắt tiếng"
-                                unmuteLabel="Bật tiếng"
+                                speakingLabel="Reading the question"
+                                muteLabel="Mute"
+                                unmuteLabel="Unmute"
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
@@ -184,9 +184,9 @@ export const Setup: Story = {
                                 voiceLabels={VOICE_LABELS}
                                 isLastQuestion={false}
                                 onAnswerSubmit={() => {}}
-                                resultBackLabel="Quay lại phỏng vấn thử"
+                                resultBackLabel="Back to mock interview"
                                 onResultBack={() => {}}
-                                resultTitle="Kết quả phỏng vấn"
+                                resultTitle="Interview results"
                                 verdict="pass"
                                 overallScore={0}
                                 phaseOrQuestionScores={[]}
@@ -205,10 +205,10 @@ export const Setup: Story = {
                         render: (
                             <MockInterviewPage
                                 phase="setup"
-                                setupBackLabel="Học phần"
+                                setupBackLabel="Module"
                                 onSetupBack={() => {}}
-                                setupTitle="Phỏng vấn thử"
-                                setupLabel="Chuẩn bị phỏng vấn"
+                                setupTitle="Mock interview"
+                                setupLabel="Prepare for the interview"
                                 persona={PERSONA}
                                 sessionName=""
                                 onSessionNameChange={() => {}}
@@ -217,16 +217,16 @@ export const Setup: Story = {
                                 isDesignAvailable={false}
                                 onStartQna={() => {}}
                                 isSkeleton
-                                liveBackLabel="Thoát"
+                                liveBackLabel="Exit"
                                 onLiveBack={() => {}}
                                 liveCounter=""
                                 liveTotal={0}
                                 liveCurrent={0}
                                 interviewerPersona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
-                                muteLabel="Tắt tiếng"
-                                unmuteLabel="Bật tiếng"
+                                speakingLabel="Reading the question"
+                                muteLabel="Mute"
+                                unmuteLabel="Unmute"
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
@@ -237,9 +237,9 @@ export const Setup: Story = {
                                 voiceLabels={VOICE_LABELS}
                                 isLastQuestion={false}
                                 onAnswerSubmit={() => {}}
-                                resultBackLabel="Quay lại phỏng vấn thử"
+                                resultBackLabel="Back to mock interview"
                                 onResultBack={() => {}}
-                                resultTitle="Kết quả phỏng vấn"
+                                resultTitle="Interview results"
                                 verdict="pass"
                                 overallScore={0}
                                 phaseOrQuestionScores={[]}
@@ -260,7 +260,7 @@ export const Setup: Story = {
 /** LEAF — live: session band, interviewer, answer composer, submit action. */
 export const Live: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MockInterviewPage"
                 tier="screen"
@@ -273,27 +273,27 @@ export const Live: Story = {
                         why: "This is not the last question, so the submit action reads \"answer & continue\". The interviewer's own pulse ring is off (TTS already finished reading), and the mic is live — the candidate's own words are still filling the answer.",
                         code: `<MockInterviewPage
     phase="live"
-    liveBackLabel="Thoát"
+    liveBackLabel="Exit"
     onLiveBack={leave}
-    liveTitle="Vòng 1 - Backend"
-    liveCounter="Câu 2 / 5"
+    liveTitle="Round 1 - Backend"
+    liveCounter="Question 2 / 5"
     liveTotal={5}
     liveCurrent={2}
     liveDoneSteps={[1]}
-    liveFinishLabel="Kết thúc"
+    liveFinishLabel="Finish"
     onLiveFinish={finishEarly}
     interviewerPersona={persona}
     speaking={false}
-    speakingLabel="Đang đọc câu hỏi"
-    muteLabel="Tắt tiếng"
-    unmuteLabel="Bật tiếng"
+    speakingLabel="Reading the question"
+    muteLabel="Mute"
+    unmuteLabel="Unmute"
     ttsSupported
     ttsEnabled
     onToggleTts={toggleTts}
-    questionMarkdown="Bạn thiết kế cache cho API đọc nhiều hơn ghi như thế nào?"
+    questionMarkdown="How would you design caching for a read-heavy API?"
     sttSupported
     listening
-    interimTranscript="Mình sẽ dùng Redis làm cache tầng..."
+    interimTranscript="I will use Redis as a caching layer..."
     answerValue=""
     onAnswerValueChange={setAnswer}
     onToggleListen={toggleListen}
@@ -308,39 +308,39 @@ export const Live: Story = {
                             <MockInterviewPage
                                 showAnatomy
                                 phase="live"
-                                setupBackLabel="Học phần"
+                                setupBackLabel="Module"
                                 onSetupBack={() => {}}
-                                setupTitle="Phỏng vấn thử"
-                                setupLabel="Chuẩn bị phỏng vấn"
+                                setupTitle="Mock interview"
+                                setupLabel="Prepare for the interview"
                                 persona={PERSONA}
-                                sessionName="Vòng 1 - Backend"
+                                sessionName="Round 1 - Backend"
                                 onSessionNameChange={() => {}}
                                 tier="mid"
                                 onTierChange={() => {}}
                                 isDesignAvailable={false}
                                 onStartQna={() => {}}
-                                liveBackLabel="Thoát"
+                                liveBackLabel="Exit"
                                 onLiveBack={() => {}}
-                                liveTitle="Vòng 1 - Backend"
-                                liveCounter="Câu 2 / 5"
+                                liveTitle="Round 1 - Backend"
+                                liveCounter="Question 2 / 5"
                                 liveTotal={5}
                                 liveCurrent={2}
                                 liveDoneSteps={[1]}
                                 onLiveStepPress={() => {}}
-                                liveFinishLabel="Kết thúc"
+                                liveFinishLabel="Finish"
                                 onLiveFinish={() => {}}
                                 interviewerPersona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
+                                speakingLabel="Reading the question"
                                 ttsSupported
                                 ttsEnabled
                                 onToggleTts={() => {}}
-                                muteLabel="Tắt tiếng"
-                                unmuteLabel="Bật tiếng"
-                                questionMarkdown="Bạn thiết kế cache cho API đọc nhiều hơn ghi như thế nào?"
+                                muteLabel="Mute"
+                                unmuteLabel="Unmute"
+                                questionMarkdown="How would you design caching for a read-heavy API?"
                                 sttSupported
                                 listening
-                                interimTranscript="Mình sẽ dùng Redis làm cache tầng..."
+                                interimTranscript="I will use Redis as a caching layer..."
                                 answerValue=""
                                 onAnswerValueChange={() => {}}
                                 onToggleListen={() => {}}
@@ -349,9 +349,9 @@ export const Live: Story = {
                                 isLastQuestion={false}
                                 onAnswerSubmit={() => {}}
                                 isAnswerSubmitDisabled
-                                resultBackLabel="Quay lại phỏng vấn thử"
+                                resultBackLabel="Back to mock interview"
                                 onResultBack={() => {}}
-                                resultTitle="Kết quả phỏng vấn"
+                                resultTitle="Interview results"
                                 verdict="pass"
                                 overallScore={0}
                                 phaseOrQuestionScores={[]}
@@ -368,59 +368,59 @@ export const Live: Story = {
                         why: "isAsking drives InterviewerPresence's own typing cue while this question's words arrive; isLastQuestion swaps the submit action's label to \"answer & finish\" and the answer is non-blank, so the action is pressable.",
                         code: `<MockInterviewPage
     phase="live"
-    liveCounter="Câu 5 / 5"
+    liveCounter="Question 5 / 5"
     liveCurrent={5}
     liveDoneSteps={[1, 2, 3, 4]}
     isAsking
-    questionMarkdown="Trade-off giữa..."
-    answerValue="Em sẽ ưu tiên..."
+    questionMarkdown="Trade-off between..."
+    answerValue="I would prioritize..."
     isLastQuestion
     …
 />`,
                         render: (
                             <MockInterviewPage
                                 phase="live"
-                                setupBackLabel="Học phần"
+                                setupBackLabel="Module"
                                 onSetupBack={() => {}}
-                                setupTitle="Phỏng vấn thử"
-                                setupLabel="Chuẩn bị phỏng vấn"
+                                setupTitle="Mock interview"
+                                setupLabel="Prepare for the interview"
                                 persona={PERSONA}
-                                sessionName="Vòng 1 - Backend"
+                                sessionName="Round 1 - Backend"
                                 onSessionNameChange={() => {}}
                                 tier="mid"
                                 onTierChange={() => {}}
                                 isDesignAvailable={false}
                                 onStartQna={() => {}}
-                                liveBackLabel="Thoát"
+                                liveBackLabel="Exit"
                                 onLiveBack={() => {}}
-                                liveTitle="Vòng 1 - Backend"
-                                liveCounter="Câu 5 / 5"
+                                liveTitle="Round 1 - Backend"
+                                liveCounter="Question 5 / 5"
                                 liveTotal={5}
                                 liveCurrent={5}
                                 liveDoneSteps={[1, 2, 3, 4]}
                                 onLiveStepPress={() => {}}
-                                liveFinishLabel="Kết thúc"
+                                liveFinishLabel="Finish"
                                 onLiveFinish={() => {}}
                                 interviewerPersona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
-                                muteLabel="Tắt tiếng"
-                                unmuteLabel="Bật tiếng"
-                                questionMarkdown="Trade-off giữa consistency và availability trong hệ thống bạn vừa vẽ là gì?"
+                                speakingLabel="Reading the question"
+                                muteLabel="Mute"
+                                unmuteLabel="Unmute"
+                                questionMarkdown="What is the trade-off between consistency and availability in the system you just designed?"
                                 isAsking
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
-                                answerValue="Em sẽ ưu tiên availability cho API đọc, còn ghi thì..."
+                                answerValue="I would prioritize availability for read APIs, while for writes..."
                                 onAnswerValueChange={() => {}}
                                 onToggleListen={() => {}}
                                 answerMode="both"
                                 voiceLabels={VOICE_LABELS}
                                 isLastQuestion
                                 onAnswerSubmit={() => {}}
-                                resultBackLabel="Quay lại phỏng vấn thử"
+                                resultBackLabel="Back to mock interview"
                                 onResultBack={() => {}}
-                                resultTitle="Kết quả phỏng vấn"
+                                resultTitle="Interview results"
                                 verdict="pass"
                                 overallScore={0}
                                 phaseOrQuestionScores={[]}
@@ -441,7 +441,7 @@ export const Live: Story = {
 /** LEAF — result: debrief identity header plus the scorecard. */
 export const Result: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MockInterviewPage"
                 tier="screen"
@@ -454,16 +454,16 @@ export const Result: Story = {
                         why: "A near-pass run: the scorecard's own weakest-area CTA and retry action both fire back into this screen — onRetry is how a candidate reaches setup again for another run, so no separate \"back to setup\" control is drawn beside it.",
                         code: `<MockInterviewPage
     phase="result"
-    resultBackLabel="Quay lại phỏng vấn thử"
+    resultBackLabel="Back to mock interview"
     onResultBack={back}
-    resultTitle="Kết quả phỏng vấn"
+    resultTitle="Interview results"
     verdict="borderline"
     overallScore={68}
     phaseOrQuestionScores={scores}
     attributeScores={attributes}
     strengths={strengths}
     gaps={gaps}
-    weakAreaLabel="Thiết kế cache"
+    weakAreaLabel="Cache design"
     onStudyWeakArea={studyWeakArea}
     onCapstone={capstone}
     onRetry={retry}
@@ -473,27 +473,27 @@ export const Result: Story = {
                             <MockInterviewPage
                                 showAnatomy
                                 phase="result"
-                                setupBackLabel="Học phần"
+                                setupBackLabel="Module"
                                 onSetupBack={() => {}}
-                                setupTitle="Phỏng vấn thử"
-                                setupLabel="Chuẩn bị phỏng vấn"
+                                setupTitle="Mock interview"
+                                setupLabel="Prepare for the interview"
                                 persona={PERSONA}
-                                sessionName="Vòng 1 - Backend"
+                                sessionName="Round 1 - Backend"
                                 onSessionNameChange={() => {}}
                                 tier="mid"
                                 onTierChange={() => {}}
                                 isDesignAvailable={false}
                                 onStartQna={() => {}}
-                                liveBackLabel="Thoát"
+                                liveBackLabel="Exit"
                                 onLiveBack={() => {}}
                                 liveCounter=""
                                 liveTotal={0}
                                 liveCurrent={0}
                                 interviewerPersona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
-                                muteLabel="Tắt tiếng"
-                                unmuteLabel="Bật tiếng"
+                                speakingLabel="Reading the question"
+                                muteLabel="Mute"
+                                unmuteLabel="Unmute"
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
@@ -504,30 +504,30 @@ export const Result: Story = {
                                 voiceLabels={VOICE_LABELS}
                                 isLastQuestion={false}
                                 onAnswerSubmit={() => {}}
-                                resultBackLabel="Quay lại phỏng vấn thử"
+                                resultBackLabel="Back to mock interview"
                                 onResultBack={() => {}}
-                                resultTitle="Kết quả phỏng vấn"
-                                resultDescription="Vòng 1 - Backend · Trung cấp"
+                                resultTitle="Interview results"
+                                resultDescription="Round 1 - Backend · Mid-level"
                                 verdict="borderline"
                                 overallScore={68}
                                 phaseOrQuestionScores={[
-                                    { key: "q1", label: "Câu 1", score: 16, max: 20 },
-                                    { key: "q2", label: "Câu 2", score: 12, max: 20 },
-                                    { key: "q3", label: "Câu 3", score: 18, max: 20 },
+                                    { key: "q1", label: "Question 1", score: 16, max: 20 },
+                                    { key: "q2", label: "Question 2", score: 12, max: 20 },
+                                    { key: "q3", label: "Question 3", score: 18, max: 20 },
                                 ]}
                                 attributeScores={[
-                                    { key: "communication", label: "Giao tiếp", score: 74 },
-                                    { key: "structure", label: "Tư duy có cấu trúc", score: 58 },
+                                    { key: "communication", label: "Communication", score: 74 },
+                                    { key: "structure", label: "Structured thinking", score: 58 },
                                 ]}
-                                strengths={["Giải thích rõ ràng luồng dữ liệu"]}
-                                gaps={["Chưa nêu được cách xử lý cache invalidation"]}
-                                followUpQuestion="Nếu cache bị lệch dữ liệu với DB thì bạn phát hiện bằng cách nào?"
-                                weakAreaLabel="Thiết kế cache"
+                                strengths={["Clearly explained the data flow"]}
+                                gaps={["Did not cover how to handle cache invalidation"]}
+                                followUpQuestion="If the cache drifts out of sync with the DB, how would you detect it?"
+                                weakAreaLabel="Cache design"
                                 onStudyWeakArea={() => {}}
                                 onCapstone={() => {}}
                                 onRetry={() => {}}
-                                promptTitle="Thiết kế hệ thống rút gọn URL"
-                                createdAt="28 thg 7, 2026 · 14:32"
+                                promptTitle="Design a URL shortener system"
+                                createdAt="Jul 28, 2026 · 2:32 PM"
                             />
                         ),
                     },
@@ -538,27 +538,27 @@ export const Result: Story = {
                         render: (
                             <MockInterviewPage
                                 phase="result"
-                                setupBackLabel="Học phần"
+                                setupBackLabel="Module"
                                 onSetupBack={() => {}}
-                                setupTitle="Phỏng vấn thử"
-                                setupLabel="Chuẩn bị phỏng vấn"
+                                setupTitle="Mock interview"
+                                setupLabel="Prepare for the interview"
                                 persona={PERSONA}
-                                sessionName="Vòng 1 - Backend"
+                                sessionName="Round 1 - Backend"
                                 onSessionNameChange={() => {}}
                                 tier="mid"
                                 onTierChange={() => {}}
                                 isDesignAvailable={false}
                                 onStartQna={() => {}}
-                                liveBackLabel="Thoát"
+                                liveBackLabel="Exit"
                                 onLiveBack={() => {}}
                                 liveCounter=""
                                 liveTotal={0}
                                 liveCurrent={0}
                                 interviewerPersona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
-                                muteLabel="Tắt tiếng"
-                                unmuteLabel="Bật tiếng"
+                                speakingLabel="Reading the question"
+                                muteLabel="Mute"
+                                unmuteLabel="Unmute"
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
@@ -569,9 +569,9 @@ export const Result: Story = {
                                 voiceLabels={VOICE_LABELS}
                                 isLastQuestion={false}
                                 onAnswerSubmit={() => {}}
-                                resultBackLabel="Quay lại phỏng vấn thử"
+                                resultBackLabel="Back to mock interview"
                                 onResultBack={() => {}}
-                                resultTitle="Kết quả phỏng vấn"
+                                resultTitle="Interview results"
                                 verdict="pass"
                                 overallScore={0}
                                 phaseOrQuestionScores={[]}

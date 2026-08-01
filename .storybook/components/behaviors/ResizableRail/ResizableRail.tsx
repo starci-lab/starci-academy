@@ -12,7 +12,7 @@ import { cn } from "@heroui/react"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `ResizableRail.*`, the drag-to-resize side-rail
- * KHUNG namespace (thầy 2026-07-25, canon §13a). Authored in Storybook (not
+ * FRAME namespace (teacher 2026-07-25, canon §13a). Authored in Storybook (not
  * `src`); synced to `src` later. No `@/components` imports (design-spec ports
  * stay self-contained).
  *

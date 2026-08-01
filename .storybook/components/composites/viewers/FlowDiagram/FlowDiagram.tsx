@@ -12,7 +12,7 @@ import {
     ReactFlow,
     ReactFlowProvider,
 } from "@xyflow/react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
@@ -52,6 +52,7 @@ const FlowDiagramCardNode = ({ data, selected }: NodeProps) => {
             {/* Connection points — required for a CUSTOM node or edges never draw. */}
             <Handle type="target" position={Position.Top} className="!size-2 !border-none !bg-muted" />
             <div
+                data-principles="title-subtitle"
                 className={cn(
                     "flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border bg-surface px-3 py-2 text-center shadow-sm transition-colors",
                     selected ? "border-accent ring-2 ring-accent/40" : "border-default",
@@ -71,15 +72,22 @@ const FlowDiagramCardNode = ({ data, selected }: NodeProps) => {
 /** Node type map registered on the canvas. */
 const NODE_TYPES = { [FLOW_DIAGRAM_CARD_NODE_TYPE]: FlowDiagramCardNode }
 
+/**
+ * How many placeholder cards the loading canvas shows. A per-node shimmer isn't
+ * feasible before the graph is fetched (positions/edges are exactly the unknown),
+ * so the composite picks a small, fixed cluster of the SAME card shape a real node
+ * uses (COMPOSITE-10: it decides WHICH parts shimmer and HOW MANY; each card's
+ * `Typography` decides its own shimmer shape).
+ */
+const SKELETON_NODE_COUNT = 3
+
 /** Props {@link FlowDiagram} carries regardless of loading state. */
 interface FlowDiagramOwnProps {
-    /** Extra classes on the outer canvas frame. */
-    className?: string
     /** Where the canvas frame sits inside its parent. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
-    /** `true` → tag the skeleton placeholder with `data-anat-part="Skeleton"`. */
+    /** `true` → tag the skeleton placeholder cards' `Typography` for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
 
@@ -114,41 +122,51 @@ export type FlowDiagramProps = FlowDiagramOwnProps &
  *
  * @param props - See {@link FlowDiagramProps}.
  */
-export const FlowDiagram = ({ nodes, edges, isSkeleton = false, className, classNames, anatPart, showAnatomy = false }: FlowDiagramProps) => {
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "FlowDiagram" } as const
+
+export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames, anatPart, showAnatomy = false }: FlowDiagramProps) => {
     const nodeTypes = useMemo(() => NODE_TYPES, [])
 
-    // A per-node shimmer isn't feasible before the graph is fetched (positions/edges are
-    // exactly the unknown), so the whole canvas mirrors as ONE bordered block instead —
-    // same footprint, no `ReactFlow` mounted (nodes/edges have no real value yet).
-    if (isSkeleton) {
-        return (
-            <HeroSkeleton
-                className={cn("h-[420px] w-full rounded-large", className, classNames)}
-                data-anat-part={showAnatomy ? "Skeleton" : anatPart}
-            />
-        )
-    }
-
+    // The frame stays real throughout — same footprint, border, radius whether or not
+    // a graph has loaded (COMPOSITE-10: "a card that is loading is still a card").
     return (
         <div
-            className={cn("h-[420px] w-full overflow-hidden rounded-large border border-default", className, classNames)}
+            className={cn("h-[420px] w-full overflow-hidden rounded-large border border-default", classNames)}
             data-anat-part={anatPart}
+            data-tier="composite"
+            data-component="FlowDiagram"
         >
-            <ReactFlowProvider>
-                <ReactFlow
-                    className="text-foreground"
-                    defaultEdges={edges}
-                    defaultNodes={nodes}
-                    fitView
-                    fitViewOptions={{ padding: 0.2 }}
-                    maxZoom={2}
-                    minZoom={0.2}
-                    nodeTypes={nodeTypes}
-                    proOptions={{ hideAttribution: true }}
-                >
-                    <Background gap={16} variant={BackgroundVariant.Dots} />
-                </ReactFlow>
-            </ReactFlowProvider>
+            {isSkeleton ? (
+                <div className="flex h-full items-center justify-center gap-4 p-6">
+                    {Array.from({ length: SKELETON_NODE_COUNT }, (_, index) => (
+                        <div
+                            key={index}
+                            data-principles="title-subtitle"
+                            className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
+                        >
+                            <Typography size="sm" weight="medium" isSkeleton showAnatomy={showAnatomy} />
+                            <Typography size="xs" color="muted" isSkeleton showAnatomy={showAnatomy} />
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <ReactFlowProvider>
+                    <ReactFlow
+                        className="text-foreground"
+                        defaultEdges={edges}
+                        defaultNodes={nodes}
+                        fitView
+                        fitViewOptions={{ padding: 0.2 }}
+                        maxZoom={2}
+                        minZoom={0.2}
+                        nodeTypes={nodeTypes}
+                        proOptions={{ hideAttribution: true }}
+                    >
+                        <Background gap={16} variant={BackgroundVariant.Dots} />
+                    </ReactFlow>
+                </ReactFlowProvider>
+            )}
         </div>
     )
 }

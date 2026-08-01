@@ -37,13 +37,13 @@ export default meta
 
 type Story = StoryObj<typeof ContentPage>
 
-const BODY = `## Vì sao image phình
+const BODY = `## Why images bloat
 
-Mỗi lệnh trong \`Dockerfile\` đẻ ra một **layer**, và layer thì cộng dồn — xoá file ở layer
-sau không lấy lại chỗ đã chiếm ở layer trước.
+Every command in a \`Dockerfile\` produces a **layer**, and layers accumulate — deleting a
+file in a later layer doesn't reclaim the space it took in an earlier one.
 
-- \`COPY . .\` trước \`npm ci\` làm cache vỡ mỗi lần sửa code
-- toolchain nằm lại trong image chạy thật
+- \`COPY . .\` before \`npm ci\` breaks the cache on every code change
+- the toolchain stays behind in the real runtime image
 
 \`\`\`dockerfile
 FROM node:22-alpine AS build
@@ -52,21 +52,21 @@ COPY package*.json ./
 RUN npm ci
 \`\`\`
 
-Phần dưới đi vào multi-stage build và cách ghim tag cho production.`
+The rest covers multi-stage builds and how to pin tags for production.`
 
 const BASE = {
     breadcrumbItems: [
-        { key: "courses", label: "Khoá học", onPress: () => {} },
+        { key: "courses", label: "Courses", onPress: () => {} },
         { key: "course", label: "DevOps Mastery", onPress: () => {} },
-        { key: "module", label: "Chương 2 · Container hoá" },
+        { key: "module", label: "Chapter 2 · Containerization" },
     ],
-    title: "Viết Dockerfile tối ưu",
-    description: "Layer, cache và multi-stage build — ba thứ quyết định image nặng hay nhẹ.",
+    title: "Writing an optimized Dockerfile",
+    description: "Layers, caching, and multi-stage builds — the three things that decide whether an image is heavy or light.",
     minutesRead: 12,
     challengeCount: 3,
     outcomes: [
-        { key: "layer", text: "Đọc được từng layer trong một image và biết layer nào đang phình" },
-        { key: "cache", text: "Sắp xếp Dockerfile để cache còn dùng lại được sau mỗi lần sửa code" },
+        { key: "layer", text: "Read each layer in an image and tell which one is bloating it" },
+        { key: "cache", text: "Order a Dockerfile so the cache still holds after every code change" },
     ],
     modes: [
         { mode: "content" as const },
@@ -78,19 +78,19 @@ const BASE = {
     onModeChange: () => {},
     body: BODY,
     onReact: () => {},
-    relatedLabel: "Có thể bạn muốn đọc",
+    relatedLabel: "You might also want to read",
     relatedItems: [
-        { key: "cache", title: "Image layer và cache hoạt động ra sao", breadcrumb: "Container hoá · Docker", href: "#cache" },
+        { key: "cache", title: "How image layers and caching actually work", breadcrumb: "Containerization · Docker", href: "#cache" },
     ],
-    discussionLabel: "Thảo luận",
+    discussionLabel: "Discussion",
     currentUserId: "viewer-1",
-    currentUser: { username: "Bạn" },
+    currentUser: { username: "You" },
     comments: [
         {
             id: "c1",
             author: { id: "u1", username: "Minh Anh" },
-            createdTimeAgo: "2 giờ trước",
-            body: "Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from.",
+            createdTimeAgo: "2 hours ago",
+            body: "I followed the multi-stage steps and the image is still 800MB — turns out I forgot COPY --from.",
             replyCount: 0,
             myReaction: null,
         },
@@ -103,10 +103,10 @@ const BASE = {
     onDeleteComment: () => {},
     onReactComment: () => {},
     onLoadReplies: () => {},
-    previous: { title: "Image layer và cache hoạt động ra sao", href: "#prev" },
-    next: { title: "Multi-stage build: bỏ toolchain khỏi image chạy thật", href: "#next" },
-    pagerAriaLabel: "Chuyển nội dung trước hoặc tiếp",
-    tabsAriaLabel: "Cách xem bài học",
+    previous: { title: "How image layers and caching actually work", href: "#prev" },
+    next: { title: "Multi-stage builds: keeping the toolchain out of the real runtime image", href: "#next" },
+    pagerAriaLabel: "Go to the previous or next lesson",
+    tabsAriaLabel: "How to view the lesson",
     languages: [
         { key: "typescript", label: "TypeScript" },
         { key: "java", label: "Java" },
@@ -114,19 +114,19 @@ const BASE = {
         { key: "go", label: "Go" },
     ],
     language: "typescript",
-    languageAriaLabel: "Ngôn ngữ code",
+    languageAriaLabel: "Code language",
     onLanguageChange: () => {},
 }
 
 const OFFER = {
-    title: "Phần còn lại dành cho học viên",
-    description: "Mở khoá toàn bộ bài học, thử thách và sandbox của khoá này.",
+    title: "The rest is for enrolled students",
+    description: "Unlock every lesson, challenge, and sandbox in this course.",
     discountedPriceVnd: 1290000,
     originalPriceVnd: 1990000,
     currentPhase: PricingPhase.Pioneer,
     seatsRemaining: 12,
     nextPhasePriceVnd: 1590000,
-    ctaLabel: "Mở khoá khoá học",
+    ctaLabel: "Unlock this course",
     onPurchase: () => {},
 }
 
@@ -145,7 +145,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — an OPEN lesson: the whole spine, header to pager. */
 export const Reading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentPage"
                 tier="screen"
@@ -157,13 +157,13 @@ export const Reading: Story = {
                         name: "isLocked = false",
                         why: "Every function of the screen is present, in the order the reader meets them: what the lesson is, how to look at it, the lesson, then the four things worth doing once it has been read. Each of the eight nodes below is a block — the screen itself draws no shape at all.",
                         code: `<ContentPage
-    title="Viết Dockerfile tối ưu"
+    title="Writing an optimized Dockerfile"
     body={lesson.body}
     modes={modes}
     mode="content"
     …
 />`,
-                        render: <ContentPage {...BASE} showAnatomy isRead myReaction="like" reactionCounts={[{ type: "like", count: 80 }, { type: "love", count: 32 }, { type: "haha", count: 16 }]} viewCount={2481} hintText="Bôi đen một đoạn để hỏi AI về đúng chỗ đó." />,
+                        render: <ContentPage {...BASE} showAnatomy isRead myReaction="like" reactionCounts={[{ type: "like", count: 80 }, { type: "love", count: 32 }, { type: "haha", count: 16 }]} viewCount={2481} hintText="Highlight a passage to ask AI about that exact spot." />,
                     },
                 ]}
             />
@@ -174,7 +174,7 @@ export const Reading: Story = {
 /** LEAF — a LOCKED lesson ⇒ **loses the whole footer**, not just the body's tail. */
 export const Locked: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentPage"
                 tier="screen"
@@ -186,7 +186,7 @@ export const Locked: Story = {
                         name: "isLocked = true",
                         why: "The lesson fades into its offer, and the reaction bar, related list, discussion and pager are all gone — four blocks removed by one condition. A reader stopped at a paywall has one decision to make, and leaving four more things to do underneath would compete with it rather than support it.",
                         code: `<ContentPage
-    title="Viết Dockerfile tối ưu"
+    title="Writing an optimized Dockerfile"
     body={lesson.body}
     isLocked
     offer={offer}
@@ -202,7 +202,7 @@ export const Locked: Story = {
 
 /** One `@container`-wrapped render at a fixed device width — same helper shape `CourseContents` uses. */
 const containerWidth = (width: number | undefined, showAnatomy?: boolean) => (
-    <div className="@container" style={width ? { width, maxWidth: "100%" } : undefined}>
+    <div data-tier="fixture" className="@container" style={width ? { width, maxWidth: "100%" } : undefined}>
         <ContentPage {...BASE} showAnatomy={showAnatomy} isRead myReaction="like" reactionCounts={[{ type: "like", count: 80 }, { type: "love", count: 32 }, { type: "haha", count: 16 }]} viewCount={2481} />
     </div>
 )
@@ -216,7 +216,7 @@ const containerWidth = (width: number | undefined, showAnatomy?: boolean) => (
  */
 export const PracticeNudgeResponsive: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentPage"
                 tier="screen"
@@ -255,7 +255,7 @@ export const PracticeNudgeResponsive: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block that can mirror does, the tab row does not. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentPage"
                 tier="screen"

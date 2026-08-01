@@ -42,7 +42,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 /** CTA label — a design CONSTANT, not opened to the caller (§14d.1). */
-const CTA_LABEL = "Tiếp tục"
+const CTA_LABEL = "Continue"
 /** Data shared by both members — ALL DATA props, no presentation props. */
 interface ContinueCardDataProps {
     /** Name of the thing in progress (course / chapter / lesson / interview session). */
@@ -118,13 +118,13 @@ const CardBody = ({
 }: ContinueCardDataProps & { cta: React.ReactNode }) => {
     const titleAndMeta = (
         <>
-            <Typography weight="medium" truncate anatPart={showAnatomy ? "Typography" : undefined} isSkeleton={isSkeleton} text={title} />
+            <Typography weight="medium" truncate showAnatomy={showAnatomy} isSkeleton={isSkeleton} text={title} />
             {isSkeleton ? (
                 // `ListMeta` (the scaffold the live branch uses here) has no `isSkeleton`
                 // yet and sits outside this round's boundary — CardBody calls that scaffold
                 // DIRECTLY so it builds ONE shimmer bar in place of the meta/subtitle row
                 // (the real shape always has EXACTLY ONE of the two) using atom `Typography`.
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
             ) : meta?.length || timeLeft ? (
                 <ListMeta
                     items={meta ?? []}
@@ -134,16 +134,18 @@ const CardBody = ({
                             // Same kind of information (time left) ⇒ the same element in
                             // EVERY case; only the TONE escalates: `default` while time
                             // remains, `warning` when it's about to run out.
-                            <Chip
-                                tone={urgent ? "warning" : "default"}
-                                anatPart={showAnatomy ? "Chip" : undefined}
-                                text={timeLeft}
-                            />
+                            () => (
+                                <Chip
+                                    tone={urgent ? "warning" : "default"}
+                                    showAnatomy={showAnatomy}
+                                    text={timeLeft}
+                                />
+                            )
                         ) : undefined
                     }
                 />
             ) : subtitle ? (
-                <Typography size="xs" color="muted" truncate anatPart={showAnatomy ? "Typography" : undefined} text={subtitle} />
+                <Typography size="xs" color="muted" truncate showAnatomy={showAnatomy} text={subtitle} />
             ) : null}
         </>
     )
@@ -158,12 +160,12 @@ const CardBody = ({
                 `min-w-0 flex-1` stays in `className`: that's its PLACEMENT within the parent row
                 (§14d.1 allows `className` for placement), not the scaffold's own shape. */}
             <StackH
-                gap="grouped"
+                gap={4}
                 align="center"
                 className="relative"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
-                    <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={titleAndMeta} />
+                    <StackV gap={3} classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={titleAndMeta} />
                 }
             />
             {/* Progress SITS right under the text cluster, BEFORE the button (teacher
@@ -195,28 +197,29 @@ const ContinueCardHero = (props: ContinueCardHeroProps) => {
             isSkeleton={isSkeleton}
             anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
             contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
-        >
-            <CardBody
-                {...props}
-                cta={
-                    // Atom `Button` already has `isSkeleton` (§12c) — the flag flows
-                    // straight down, no need to build a separate bar here. The label is a
-                    // design CONSTANT (§14d.1). The atom accepts `label` + `suffixIcon` as a
-                    // COMPONENT REF (§12b) and forces its own glyph scale + weight (§4/§5.0a).
-                    <Button
-                        isSkeleton={isSkeleton}
-                        variant="primary"
-                        size="sm"
-                        label={CTA_LABEL}
-                        suffixIcon={ArrowRightIcon}
-                        iconSlide
-                        onPress={onPress}
-                        anatPart={showAnatomy ? "Button" : undefined}
-                        classNames={["w-fit", "shrink-0"]}
-                    />
-                }
-            />
-        </SurfaceCard>
+            body={() => (
+                <CardBody
+                    {...props}
+                    cta={
+                        // Atom `Button` already has `isSkeleton` (§12c) — the flag flows
+                        // straight down, no need to build a separate bar here. The label is a
+                        // design CONSTANT (§14d.1). The atom accepts `label` + `suffixIcon` as a
+                        // COMPONENT REF (§12b) and forces its own glyph scale + weight (§4/§5.0a).
+                        <Button
+                            isSkeleton={isSkeleton}
+                            variant="primary"
+                            size="sm"
+                            label={CTA_LABEL}
+                            suffixIcon={ArrowRightIcon}
+                            iconSlide
+                            onPress={onPress}
+                            showAnatomy={showAnatomy}
+                            classNames={["w-fit", "shrink-0"]}
+                        />
+                    }
+                />
+            )}
+        />
     )
 }
 /**
@@ -233,31 +236,32 @@ const ContinueCardItem = (props: ContinueCardItemProps) => {
             isSkeleton={isSkeleton}
             anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
             contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
-        >
-            <CardBody
-                {...props}
-                cta={
-                    isSkeleton ? (
-                        // Atom `LinkSeeMore` has no `isSkeleton` yet and sits outside this
-                        // round's boundary — `.Item` calls that atom DIRECTLY so it builds a
-                        // text shimmer bar matching the "Tiếp tục" label's size (`text-sm`, see
-                        // `LinkSeeMore.tsx`) instead of branching off to build a whole fake link.
-                        // The tag sits on the REAL heroui `Skeleton` element itself (not the
-                        // wrapping span) — same convention as the progress-bar mirror above.
-                        <span>
-                            <HeroSkeleton className="h-[14px] w-20 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        </span>
-                    ) : (
-                        <LinkSeeMore
-                            href={href}
-                            onPress={onPress}
-                            anatPart={showAnatomy ? "LinkSeeMore" : undefined}
-                            label={CTA_LABEL}
-                        />
-                    )
-                }
-            />
-        </SurfaceCard>
+            body={() => (
+                <CardBody
+                    {...props}
+                    cta={
+                        isSkeleton ? (
+                            // Atom `LinkSeeMore` has no `isSkeleton` yet and sits outside this
+                            // round's boundary — `.Item` calls that atom DIRECTLY so it builds a
+                            // text shimmer bar matching the "Continue" label's size (`text-sm`, see
+                            // `LinkSeeMore.tsx`) instead of branching off to build a whole fake link.
+                            // The tag sits on the REAL heroui `Skeleton` element itself (not the
+                            // wrapping span) — same convention as the progress-bar mirror above.
+                            <span>
+                                <HeroSkeleton className="h-[14px] w-20 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                            </span>
+                        ) : (
+                            <LinkSeeMore
+                                href={href}
+                                onPress={onPress}
+                                showAnatomy={showAnatomy}
+                                label={CTA_LABEL}
+                            />
+                        )
+                    }
+                />
+            )}
+        />
     )
 }
 /**

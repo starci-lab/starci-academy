@@ -3,7 +3,7 @@ import { PlaygroundReadinessChecklist } from "@sb-components/starci/blocks/learn
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundReadinessChecklist`: the consolidated "Trạng thái máy" list
+ * BLOCK — `PlaygroundReadinessChecklist`: the consolidated "Machine status" list
  * — every playground prerequisite at a glance, one row each.
  *
  * REUSE, NOT A NEW SHAPE — a near-direct port of the existing `ReadinessChecklist`
@@ -37,32 +37,32 @@ const ITEMS = [
         key: "engine",
         kind: "engine" as const,
         label: "Docker engine",
-        readyDescription: "Đang chạy · v29.5.2",
-        pendingDescription: "Chưa kiểm tra.",
+        readyDescription: "Running · v29.5.2",
+        pendingDescription: "Not checked yet.",
         ready: true,
     },
     {
         key: "agent",
         kind: "agent" as const,
         label: "StarCi Agent",
-        readyDescription: "Agent đã bắt tay với phiên này.",
-        pendingDescription: "Chạy lệnh ghép nối để agent kết nối.",
+        readyDescription: "The agent has paired with this session.",
+        pendingDescription: "Run the pairing command to connect the agent.",
         ready: true,
     },
     {
         key: "genModel",
         kind: "genModel" as const,
-        label: "Mô hình sinh (generation)",
-        readyDescription: "Đã chọn qwen2.5-coder:7b qua Ollama.",
-        pendingDescription: "Chưa chọn mô hình sinh cho phiên này.",
+        label: "Generation model",
+        readyDescription: "qwen2.5-coder:7b selected via Ollama.",
+        pendingDescription: "No generation model chosen for this session yet.",
         ready: false,
     },
     {
         key: "embedModel",
         kind: "embedModel" as const,
-        label: "Mô hình embedding",
-        readyDescription: "Đã chọn bge-m3 qua Ollama.",
-        pendingDescription: "Chưa chọn mô hình embedding cho phiên này.",
+        label: "Embedding model",
+        readyDescription: "bge-m3 selected via Ollama.",
+        pendingDescription: "No embedding model chosen for this session yet.",
         ready: false,
     },
 ]
@@ -76,7 +76,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the only shape this block draws: a bounded list, one row per prerequisite. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundReadinessChecklist"
                 tier="block"
@@ -116,7 +116,7 @@ export const Default: Story = {
 /** LEAF — `isSkeleton` is a leaf at every tier (§12c: the owner of the shape owns the skeleton). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundReadinessChecklist"
                 tier="block"

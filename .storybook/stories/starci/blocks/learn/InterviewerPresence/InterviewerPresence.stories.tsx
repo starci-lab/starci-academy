@@ -29,7 +29,7 @@ export default meta
 type Story = StoryObj<typeof InterviewerPresence>
 
 const PERSONA = {
-    name: "Chị Mai",
+    name: "Ms. Mai",
     role: "Backend Engineer · Solution Architect",
 }
 
@@ -45,7 +45,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the interviewer header: identity → optional speaking cue → optional TTS toggle → optional question. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InterviewerPresence"
                 tier="block"
@@ -55,17 +55,17 @@ export const Full: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "idle — chưa có câu hỏi",
+                        name: "idle — no question yet",
                         why: "Between questions the interviewer sits still: no pulse, no TTS status, and no question region at all. This is the shape the learner sees the instant a session opens, before the interviewer has said a word.",
                         code: `<InterviewerPresence
-    persona={{ name: "Chị Mai", role: "Backend Engineer · Solution Architect" }}
+    persona={{ name: "Ms. Mai", role: "Backend Engineer · Solution Architect" }}
     speaking={false}
-    speakingLabel="Đang đọc câu hỏi"
+    speakingLabel="Reading the question aloud"
     ttsSupported
     ttsEnabled
     onToggleTts={() => {}}
-    muteLabel="Tắt đọc câu hỏi"
-    unmuteLabel="Bật đọc câu hỏi"
+    muteLabel="Mute question audio"
+    unmuteLabel="Unmute question audio"
 />`,
                         render: (
                             <InterviewerPresence
@@ -73,92 +73,92 @@ export const Full: Story = {
                                 showAnatomy
                                 persona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
+                                speakingLabel="Reading the question aloud"
                                 ttsSupported
                                 ttsEnabled
                                 onToggleTts={() => {}}
-                                muteLabel="Tắt đọc câu hỏi"
-                                unmuteLabel="Bật đọc câu hỏi"
+                                muteLabel="Mute question audio"
+                                unmuteLabel="Unmute question audio"
                             />
                         ),
                     },
                     {
-                        name: "đang đọc câu hỏi (TTS + văn bản còn chảy)",
+                        name: "reading the question aloud (TTS + text still streaming)",
                         why: "TTS is voicing the question right now, so the pulse ring and the speaking status line light up; the question text is only half arrived, so typing dots sit under it. `speaking` and `isAsking` are both true here but they answer two different questions — audio versus text — and either can be true without the other.",
                         code: `<InterviewerPresence
-    persona={{ name: "Chị Mai", role: "Backend Engineer · Solution Architect" }}
+    persona={{ name: "Ms. Mai", role: "Backend Engineer · Solution Architect" }}
     speaking
-    speakingLabel="Đang đọc câu hỏi"
+    speakingLabel="Reading the question aloud"
     ttsSupported
     ttsEnabled
     onToggleTts={() => {}}
-    muteLabel="Tắt đọc câu hỏi"
-    unmuteLabel="Bật đọc câu hỏi"
-    questionMarkdown="Giả sử bạn đang thiết kế một service xử lý thanh toán, làm sao để đảm bảo một request bị retry không tính tiền"
+    muteLabel="Mute question audio"
+    unmuteLabel="Unmute question audio"
+    questionMarkdown="Suppose you're designing a payment-processing service, how do you make sure a retried request doesn't get charged"
     isAsking
 />`,
                         render: (
                             <InterviewerPresence
                                 persona={PERSONA}
                                 speaking
-                                speakingLabel="Đang đọc câu hỏi"
+                                speakingLabel="Reading the question aloud"
                                 ttsSupported
                                 ttsEnabled
                                 onToggleTts={() => {}}
-                                muteLabel="Tắt đọc câu hỏi"
-                                unmuteLabel="Bật đọc câu hỏi"
-                                questionMarkdown="Giả sử bạn đang thiết kế một service xử lý thanh toán, làm sao để đảm bảo một request bị retry không tính tiền"
+                                muteLabel="Mute question audio"
+                                unmuteLabel="Unmute question audio"
+                                questionMarkdown="Suppose you're designing a payment-processing service, how do you make sure a retried request doesn't get charged"
                                 isAsking
                             />
                         ),
                     },
                     {
-                        name: "câu hỏi đã hiện đầy đủ, chờ trả lời",
+                        name: "question fully shown, waiting for an answer",
                         why: "The question has fully arrived and the audio has finished, so the pulse, the status line, and the typing dots all drop out together, leaving a plain finished question. This is the resting shape the learner spends most of their time reading.",
                         code: `<InterviewerPresence
-    persona={{ name: "Chị Mai", role: "Backend Engineer · Solution Architect" }}
+    persona={{ name: "Ms. Mai", role: "Backend Engineer · Solution Architect" }}
     speaking={false}
-    speakingLabel="Đang đọc câu hỏi"
+    speakingLabel="Reading the question aloud"
     ttsSupported
     ttsEnabled
     onToggleTts={() => {}}
-    muteLabel="Tắt đọc câu hỏi"
-    unmuteLabel="Bật đọc câu hỏi"
-    questionMarkdown="Giả sử bạn đang thiết kế một service xử lý thanh toán, làm sao để đảm bảo một request bị retry không tính tiền hai lần?"
+    muteLabel="Mute question audio"
+    unmuteLabel="Unmute question audio"
+    questionMarkdown="Suppose you're designing a payment-processing service, how do you make sure a retried request doesn't get charged twice?"
 />`,
                         render: (
                             <InterviewerPresence
                                 persona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
+                                speakingLabel="Reading the question aloud"
                                 ttsSupported
                                 ttsEnabled
                                 onToggleTts={() => {}}
-                                muteLabel="Tắt đọc câu hỏi"
-                                unmuteLabel="Bật đọc câu hỏi"
-                                questionMarkdown="Giả sử bạn đang thiết kế một service xử lý thanh toán, làm sao để đảm bảo một request bị retry không tính tiền hai lần?"
+                                muteLabel="Mute question audio"
+                                unmuteLabel="Unmute question audio"
+                                questionMarkdown="Suppose you're designing a payment-processing service, how do you make sure a retried request doesn't get charged twice?"
                             />
                         ),
                     },
                     {
-                        name: "TTS không khả dụng",
+                        name: "TTS unavailable",
                         why: "This device or plan cannot speak the question aloud, so the toggle is not drawn at all rather than shown disabled — a control that cannot do anything is not a control. The question still reads normally; only the audio affordance is gone.",
                         code: `<InterviewerPresence
-    persona={{ name: "Chị Mai", role: "Backend Engineer · Solution Architect" }}
+    persona={{ name: "Ms. Mai", role: "Backend Engineer · Solution Architect" }}
     speaking={false}
-    speakingLabel="Đang đọc câu hỏi"
-    muteLabel="Tắt đọc câu hỏi"
-    unmuteLabel="Bật đọc câu hỏi"
-    questionMarkdown="Bạn sẽ debug thế nào khi một job cron chạy trùng hai lần trong hệ thống phân tán?"
+    speakingLabel="Reading the question aloud"
+    muteLabel="Mute question audio"
+    unmuteLabel="Unmute question audio"
+    questionMarkdown="How would you debug a cron job that runs twice in a distributed system?"
 />`,
                         render: (
                             <InterviewerPresence
                                 persona={PERSONA}
                                 speaking={false}
-                                speakingLabel="Đang đọc câu hỏi"
-                                muteLabel="Tắt đọc câu hỏi"
-                                unmuteLabel="Bật đọc câu hỏi"
-                                questionMarkdown="Bạn sẽ debug thế nào khi một job cron chạy trùng hai lần trong hệ thống phân tán?"
+                                speakingLabel="Reading the question aloud"
+                                muteLabel="Mute question audio"
+                                unmuteLabel="Unmute question audio"
+                                questionMarkdown="How would you debug a cron job that runs twice in a distributed system?"
                             />
                         ),
                     },

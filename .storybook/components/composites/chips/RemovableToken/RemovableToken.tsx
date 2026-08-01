@@ -1,9 +1,7 @@
-import React from "react"
-import type { ReactNode } from "react"
-import { Button, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { XIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { Button as ButtonAtom } from "@sb-components/atoms/buttons/Button/Button"
+import { Button, type IconComponent } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
@@ -24,13 +22,15 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /** Props for the {@link RemovableToken} composite. */
 export interface RemovableTokenProps {
-    /** Token label content. */
-    label: ReactNode
+    /** Token label content — text the composite wraps itself (in `Typography`). */
+    label: string
     /**
-     * Optional LEADING glyph before the label. The COMPOSITE owns the size
-     * (§4) — pass the icon TRẦN (no `size-*`); it's forced to `size-4` here.
+     * Optional LEADING glyph before the label, passed as a COMPONENT reference
+     * (e.g. `icon={FolderIcon}`), never JSX — the composite renders it at its own
+     * scale (`size-4`) and, being a reference rather than an already-called node,
+     * can still call it during `isSkeleton` (unlike a frozen element).
      */
-    icon?: ReactNode
+    icon?: IconComponent
     /**
      * Renders a trailing edit affordance — a small tertiary `Button` (× icon +
      * {@link RemovableTokenProps.editLabel}), mirroring the ground-truth
@@ -40,7 +40,7 @@ export interface RemovableTokenProps {
      */
     onEdit?: () => void
     /** Label for the edit affordance's button text. Defaults to "Change". */
-    editLabel?: ReactNode
+    editLabel?: string
     /**
      * Renders a trailing COMPACT close (×) — click it to remove the token
      * outright (no re-pick flow). Own compact scale (size-6 hit, size-4
@@ -51,8 +51,6 @@ export interface RemovableTokenProps {
     removeLabel?: string
     /** Disables both affordances and dims the token. */
     isDisabled?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -71,48 +69,52 @@ export interface RemovableTokenProps {
  *
  * @param props - {@link RemovableTokenProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "RemovableToken" } as const
+
 export const RemovableToken = ({
     label,
-    icon,
+    icon: Icon,
     onEdit,
     editLabel = "Change",
     onRemove,
     removeLabel = "Remove",
     isDisabled = false,
-    className,
     classNames,
     isSkeleton = false,
 }: RemovableTokenProps) => {
-    if (isSkeleton) {
-        return (
-            <div
-                className={cn(
-                    "flex items-center justify-between gap-3 rounded-2xl border border-default px-3 py-3",
-                    className,
-                    classNames,
-                )}
-            >
-                <StackH
-                    gap="related"
-                    classNames={["min-w-0"]}
-                    body={
-                        <>
-                            {/* STOPPED (COMPOSITE-10): `icon` is an arbitrary caller-supplied
-                                node (wrapped in a bare span in the real branch below), not an
-                                atom — there is no `Icon` atom in the house to hand `isSkeleton`
-                                to for a generic glyph placeholder. Left hand-drawn. */}
-                            <HeroSkeleton className="size-4 shrink-0 rounded" />
-                            {/* Real branch renders `Typography size="sm" weight="medium"` here — forward `isSkeleton` to it. */}
-                            <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-                        </>
-                    }
-                />
-                {/* Real branch's `onEdit` affordance is a `Button size="sm"` — forward `isSkeleton`
-                    to the house `Button` atom instead of hand-measuring its pill. */}
-                <ButtonAtom isSkeleton size="sm" classNames={["shrink-0"]} />
-            </div>
-        )
-    }
+    // One render path: the row's own frame stays identical whether loading or not;
+    // only the trailing affordance's CONTENT differs (a shimmer pill vs the real
+    // edit/remove controls) — `Button`/`Typography` each draw their own shimmer,
+    // this composite only decides which parts show and how many (COMPOSITE-10).
+    const trailing = isSkeleton ? (
+        <Button isSkeleton size="sm" classNames={["shrink-0"]} />
+    ) : onEdit || onRemove ? (
+        <StackH
+            gap={3}
+            classNames={["shrink-0"]}
+            body={
+                <>
+                    {onEdit ? (
+                        <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit} prefixIcon={XIcon} label={editLabel} />
+                    ) : null}
+                    {onRemove ? (
+                        // Compact chip-scale close × (NOT the button-scale edit
+                        // affordance above) — a real <button> for a11y.
+                        <button
+                            type="button"
+                            aria-label={removeLabel}
+                            disabled={isDisabled}
+                            onClick={onRemove}
+                            className="inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted outline-none transition hover:bg-default hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed [&_svg]:size-4"
+                        >
+                            <XIcon aria-hidden focusable="false" />
+                        </button>
+                    ) : null}
+                </>
+            }
+        />
+    ) : null
 
     return (
         <div
@@ -120,56 +122,38 @@ export const RemovableToken = ({
             className={cn(
                 "flex items-center justify-between gap-3 rounded-2xl border border-default px-3 py-3",
                 isDisabled && "opacity-50",
-                className,
                 classNames,
             )}
+            data-tier="composite"
+            data-component="RemovableToken"
+            data-principles="cell-pad"
         >
             <StackH
-                gap="related"
+                gap={3}
                 classNames={["min-w-0"]}
                 body={
                     <>
-                        {icon ? (
-                            // COMPOSITE owns the size (§4) — force the caller's bare icon
-                            // down to the row's glyph scale (matches the body-sm label).
+                        {Icon ? (
+                            // COMPOSITE owns the size (§4) — the atom's own scale, not the
+                            // caller's. A component reference can still be called during
+                            // `isSkeleton` (it's static chrome, not loaded data), so it
+                            // always renders — no shimmer needed for it either way.
                             <span aria-hidden className="inline-flex shrink-0 [&_svg]:size-4">
-                                {icon}
+                                <Icon />
                             </span>
                         ) : null}
-                        <Typography size="sm" weight="medium" truncate text={label} />
+                        <Typography
+                            size="sm"
+                            weight="medium"
+                            truncate
+                            isSkeleton={isSkeleton}
+                            classNames={isSkeleton ? ["w-1/3"] : undefined}
+                            text={label}
+                        />
                     </>
                 }
             />
-
-            {(onEdit || onRemove) && (
-                <StackH
-                    gap="related"
-                    classNames={["shrink-0"]}
-                    body={
-                        <>
-                            {onEdit ? (
-                                <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit}>
-                                    <XIcon aria-hidden focusable="false" className="size-4" />
-                                    {editLabel}
-                                </Button>
-                            ) : null}
-                            {onRemove ? (
-                                // Compact chip-scale close × (NOT the button-scale edit
-                                // affordance above) — a real <button> for a11y.
-                                <button
-                                    type="button"
-                                    aria-label={removeLabel}
-                                    disabled={isDisabled}
-                                    onClick={onRemove}
-                                    className="inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted outline-none transition hover:bg-default hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed [&_svg]:size-4"
-                                >
-                                    <XIcon aria-hidden focusable="false" />
-                                </button>
-                            ) : null}
-                        </>
-                    }
-                />
-            )}
+            {trailing}
         </div>
     )
 }

@@ -20,7 +20,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ §14d.1 — THE BLOCK OWNS THE SENTENCE, not the caller. `allReady` and
  * `pendingCount` are two raw booleans/numbers; nowhere does the caller hand a
- * pre-formatted "Còn 2 bước…" string. The status line is built HERE from that
+ * pre-formatted "2 steps left…" string. The status line is built HERE from that
  * data, same discipline `FlashcardDueHero.buildBreakdown` applies to its own
  * due-count line.
  *
@@ -63,7 +63,7 @@ export interface PlaygroundEnterBannerProps {
 }
 
 /** The section label above the card — also doubles as the CTA's own wording (the decision this whole card is). */
-const SECTION_LABEL = "Tiếp tục"
+const SECTION_LABEL = "Continue"
 
 /**
  * Builds the readiness sentence from raw data (§14d.1) — never handed a
@@ -71,8 +71,8 @@ const SECTION_LABEL = "Tiếp tục"
  */
 const buildReadinessText = (allReady: boolean, pendingCount: number): string =>
     allReady
-        ? "Đã hoàn tất mọi bước chuẩn bị, sẵn sàng vào phòng lab."
-        : `Còn ${pendingCount} bước cần hoàn tất trước khi vào.`
+        ? "All prep steps are done — ready to enter the lab."
+        : `${pendingCount} steps left before you can enter.`
 
 /**
  * The playground page's single primary decision card. See the file header
@@ -95,36 +95,37 @@ const PlaygroundEnterBanner = ({
             anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-        >
-            <StackV
-                gap="grouped"
-                anatPart={showAnatomy ? "StackV" : undefined}
-                body={
-                    <>
-                        <Typography
-                            size="sm"
-                            color={allReady ? "success" : "muted"}
-                            weight={allReady ? "medium" : undefined}
-                            prefixIcon={allReady ? CheckCircleIcon : undefined}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Typography" : undefined}
-                            text={readiness}
-                        />
-                        <Button
-                            variant="primary"
-                            label={SECTION_LABEL}
-                            suffixIcon={ArrowRightIcon}
-                            iconSlide
-                            onPress={onEnter}
-                            isDisabled={!allReady}
-                            isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                            classNames={["w-fit"]}
-                        />
-                    </>
-                }
-            />
-        </SurfaceCard>
+            body={() => (
+                <StackV
+                    gap={4}
+                    anatPart={showAnatomy ? "StackV" : undefined}
+                    body={
+                        <>
+                            <Typography
+                                size="sm"
+                                color={allReady ? "success" : "muted"}
+                                weight={allReady ? "medium" : undefined}
+                                prefixIcon={allReady ? CheckCircleIcon : undefined}
+                                isSkeleton={isSkeleton}
+                                showAnatomy={showAnatomy}
+                                text={readiness}
+                            />
+                            <Button
+                                variant="primary"
+                                label={SECTION_LABEL}
+                                suffixIcon={ArrowRightIcon}
+                                iconSlide
+                                onPress={onEnter}
+                                isDisabled={!allReady}
+                                isSkeleton={isSkeleton}
+                                showAnatomy={showAnatomy}
+                                classNames={["w-fit"]}
+                            />
+                        </>
+                    }
+                />
+            )}
+        />
     )
 }
 

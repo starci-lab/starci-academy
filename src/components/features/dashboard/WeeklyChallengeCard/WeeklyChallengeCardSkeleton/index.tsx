@@ -19,7 +19,7 @@ export type WeeklyChallengeCardSkeletonProps = WithClassNames<undefined>
 
 /**
  * Loading placeholder for {@link import("../").WeeklyChallengeCard}: mirrors the real
- * "Thử thách tuần" card — the same `LabeledCard` (label + flame) wrapping the title,
+ * "Weekly challenge" card — the same `LabeledCard` (label + flame) wrapping the title,
  * the countdown + status row, the passer count, and a short finisher list — so the
  * card does not pop in / jump when the weekly-challenge query resolves.
  *

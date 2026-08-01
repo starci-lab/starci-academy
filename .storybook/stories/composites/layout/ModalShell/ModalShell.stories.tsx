@@ -6,7 +6,7 @@ import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShe
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `ModalShell` — the dialog scaffold khung:
+ * `ModalShell` — the dialog scaffold frame:
  * `Modal > Backdrop > Container > Dialog > CloseTrigger + Header? + Body + Footer?`.
  * Named slots `header`/`body`/`footer` are the main road; `children` is
  * shorthand for `body`. `footer` replaces the hand-rolled
@@ -26,9 +26,10 @@ export default meta
 
 type Story = StoryObj<typeof ModalShell>
 
-// DOM thật: Modal > Backdrop > Container > Dialog > CloseTrigger + Header?(Title·Description
-// hoặc custom `header`) + Body + Footer?. CloseTrigger/Body luôn có mặt; Title+Description chỉ ở
-// nhánh header đơn giản, Header (opaque) chỉ ở nhánh custom, Footer chỉ khi truyền slot `footer`.
+// Real DOM: Modal > Backdrop > Container > Dialog > CloseTrigger + Header?(Title·Description
+// or custom `header`) + Body + Footer?. CloseTrigger/Body are always present; Title+Description
+// only on the simple-header branch, Header (opaque) only on the custom branch, Footer only when
+// the `footer` slot is passed.
 const TITLE_DESC_FOOTER_PARTS: Array<AnatomyNode> = [
     { name: "Modal.CloseTrigger", tier: "heroui", role: "the close button, in the upper-right corner" },
     { name: "Typography", tier: "atom", role: "the modal's title, bold body text", storyId: "atoms-text-typography-typography--plain" },
@@ -79,7 +80,7 @@ const ControlledModal = ({
 } & Omit<React.ComponentProps<typeof ModalShell>, "isOpen" | "onOpenChange" | "children">) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
-        <div className="flex flex-col gap-3">
+        <div data-tier="fixture" className="flex flex-col gap-3">
             <div className="flex flex-col gap-2">
                 <Label>{label}</Label>
                 <Typography type="body-sm" color="muted">{hint}</Typography>
@@ -118,7 +119,7 @@ interface BorderedListProps {
 
 // TODO: swap for SurfaceCardList local when ported — bordered surface-in-surface list.
 const BorderedList = ({ children }: BorderedListProps) => (
-    <div className="overflow-hidden rounded-3xl border border-default bg-surface">{children}</div>
+    <div data-tier="fixture" className="overflow-hidden rounded-3xl border border-default bg-surface">{children}</div>
 )
 
 /** Props for the `BorderedRow` demo row below. */
@@ -130,7 +131,7 @@ interface BorderedRowProps {
 }
 
 const BorderedRow = ({ title, meta }: BorderedRowProps) => (
-    <div className="flex items-center justify-between gap-3 border-b border-separator px-4 py-3 last:border-b-0">
+    <div data-tier="fixture" className="flex items-center justify-between gap-3 border-b border-separator px-4 py-3 last:border-b-0">
         <Typography type="body-sm">{title}</Typography>
         {meta ? <span className="shrink-0">{meta}</span> : null}
     </div>
@@ -144,9 +145,9 @@ interface CheckListProps {
 
 // TODO: swap for SurfaceCardCrossList local (bordered, mark="check") when ported.
 const CheckList = ({ items }: CheckListProps) => (
-    <div className="overflow-hidden rounded-3xl border border-default bg-surface">
+    <div data-tier="fixture" className="overflow-hidden rounded-3xl border border-default bg-surface">
         {items.map((item) => (
-            <div key={item} className="flex items-center gap-2 border-b border-separator px-4 py-3 last:border-b-0">
+            <div data-tier="fixture" key={item} className="flex items-center gap-2 border-b border-separator px-4 py-3 last:border-b-0">
                 <CheckIcon className="size-4 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />
                 <Typography type="body-sm">{item}</Typography>
             </div>
@@ -159,7 +160,7 @@ const LeadingTabsDemo = () => {
     const [tab, setTab] = useState<"email" | "push">("email")
     return (
         <>
-            <Tabs
+            <Tabs data-tier="fixture"
                 selectedKey={tab}
                 onSelectionChange={(key) => setTab(String(key) as "email" | "push")}
             >
@@ -177,7 +178,7 @@ const LeadingTabsDemo = () => {
                 </Tabs.ListContainer>
             </Tabs>
 
-            <ScrollShadow hideScrollBar offset={8} className="h-72 overflow-y-auto">
+            <ScrollShadow data-tier="fixture" hideScrollBar offset={8} className="h-72 overflow-y-auto">
                 {tab === "email" ? (
                     <div className="flex min-h-full flex-col gap-3">
                         <Typography type="body-sm" color="muted">
@@ -191,7 +192,7 @@ const LeadingTabsDemo = () => {
                             { id: "notify-email-footer", label: "Email signature", value: "" },
                             { id: "notify-email-digest", label: "Weekly digest sent at", value: "" },
                         ].map((field) => (
-                            <TextField key={field.id} variant="secondary">
+                            <TextField data-tier="fixture" key={field.id} variant="secondary">
                                 <Label htmlFor={field.id}>{field.label}</Label>
                                 <Input id={field.id} defaultValue={field.value} placeholder={field.label} />
                             </TextField>
@@ -220,11 +221,11 @@ const LeadingTabsDemo = () => {
 /** Confirm modal: `title` + `description` + `footer` — all three regions are slots, the caller writes no layout div. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ControlledModal
                 label="Title + description + footer"
                 trigger="Open modal"
-                hint="Cả 3 vùng đều là slot. Nút CTA truyền TRẦN vào `footer` — Modal.Footer đã tự justify-end gap-2."
+                hint="All 3 regions are slots. The CTA button passes BARE into `footer` — Modal.Footer already applies its own justify-end gap-2."
                 title="Confirm unenrollment"
                 description="You will lose all your learning progress for this course. This action cannot be undone."
                 leaf="Default"
@@ -239,14 +240,14 @@ export const Default: Story = {
   footer={<Button variant="danger">Unenroll</Button>}
 />`}
                 body={(
-                    <Typography type="body-sm" color="muted">
+                    <Typography data-tier="fixture" type="body-sm" color="muted">
                         Your submissions and grades for this course will be removed as well.
                     </Typography>
                 )}
                 footer={(
                     <>
-                        <Button variant="secondary" size="sm">Close</Button>
-                        <Button variant="danger" size="sm">Unenroll</Button>
+                        <Button data-tier="fixture" variant="secondary" size="sm">Close</Button>
+                        <Button data-tier="fixture" variant="danger" size="sm">Unenroll</Button>
                     </>
                 )}
             />
@@ -257,13 +258,13 @@ export const Default: Story = {
 /** Custom header: a caller-built node (chip, identity line) — it must leave room for the close button itself (`pr-8`). */
 export const CustomHeader: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ControlledModal
                 label="Custom header"
                 trigger="Open modal with custom header"
                 hint="the header is a caller-built node, so it must leave room for the close button ITSELF — hence pr-8."
                 header={
-                    <div className="flex flex-col gap-1 pr-8">
+                    <div data-tier="fixture" className="flex flex-col gap-1 pr-8">
                         <Typography type="body" weight="bold">Invite students</Typography>
                         <Typography type="body-xs" color="muted">Fullstack Mastery course</Typography>
                     </div>
@@ -287,7 +288,7 @@ export const CustomHeader: Story = {
 /** Scrollable body: `scroll="inside"` → the shell attaches `max-h-[85vh]`; a nested list is bordered (surface-in-surface). */
 export const ScrollableBody: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ControlledModal
                 label="Scrollable body + surface list"
                 trigger="Open long scrolling modal"
@@ -308,7 +309,7 @@ export const ScrollableBody: Story = {
                         <BorderedRow
                             key={index}
                             title={`Transaction #${1000 + index}`}
-                            meta={<Typography type="body-sm" color="muted">1.200.000đ</Typography>}
+                            meta={<Typography data-tier="fixture" type="body-sm" color="muted">$1,200,000</Typography>}
                         />
                     ))}
                 </BorderedList>
@@ -320,7 +321,7 @@ export const ScrollableBody: Story = {
 /** Leading tabs: the strip stands apart and does not scroll with the body. */
 export const WithLeadingTabs: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ControlledModal
                 label="Body leading with tabs"
                 trigger="Open modal with tabs"
@@ -344,7 +345,7 @@ export const WithLeadingTabs: Story = {
 /** Clustered body + footer: label + bordered check list in `body`, the two CTAs in `footer`. */
 export const PlainFormClusters: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ControlledModal
                 label="Body grouped (gap-3) · cluster related (gap-2) · CTA in footer"
                 trigger="Open cluster form modal"
@@ -364,8 +365,8 @@ export const PlainFormClusters: Story = {
 </ModalShell>`}
                 footer={(
                     <>
-                        <Button variant="tertiary" size="sm">Later</Button>
-                        <Button variant="primary" size="sm">Continue to payment</Button>
+                        <Button data-tier="fixture" variant="tertiary" size="sm">Later</Button>
+                        <Button data-tier="fixture" variant="primary" size="sm">Continue to payment</Button>
                     </>
                 )}
             >

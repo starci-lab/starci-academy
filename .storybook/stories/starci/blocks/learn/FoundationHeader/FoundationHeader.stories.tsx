@@ -45,10 +45,10 @@ export default meta
 type Story = StoryObj<typeof FoundationHeader>
 
 const CRUMBS = [
-    { key: "home", label: "Trang chủ", onPress: () => {} },
+    { key: "home", label: "Home", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "hub", label: "Nền tảng", onPress: () => {} },
-    { key: "category", label: "Linux cơ bản", onPress: () => {} },
+    { key: "hub", label: "Foundations", onPress: () => {} },
+    { key: "category", label: "Linux Basics", onPress: () => {} },
 ]
 
 const TAGS = [
@@ -69,7 +69,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the resource identity cluster: trail → title → description → meta row (kind + recommended + tags + author). Every difference below is a DATA condition inside this one leaf, not a structural one. */
 export const Overview: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationHeader"
                 tier="block"
@@ -83,8 +83,8 @@ export const Overview: Story = {
                         why: "Every optional field is present: the kind chip opens the row, the success-toned recommended pill follows it, then the topic tags, and the author line closes the cluster. This is the richest shape the meta row ever takes, so it is the anatomy reference.",
                         code: `<FoundationHeader
     breadcrumbItems={crumbs}
-    title="Quản lý tiến trình trong Linux"
-    description="Process, signal và cách shell theo dõi chương trình đang chạy."
+    title="Managing processes in Linux"
+    description="Processes, signals, and how the shell tracks a running program."
     kind={FoundationKind.Document}
     isRecommended
     tags={tags}
@@ -95,8 +95,8 @@ export const Overview: Story = {
                                 anatPart="FoundationHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Quản lý tiến trình trong Linux"
-                                description="Process, signal và cách shell theo dõi chương trình đang chạy."
+                                title="Managing processes in Linux"
+                                description="Processes, signals, and how the shell tracks a running program."
                                 kind={FoundationKind.Document}
                                 isRecommended
                                 tags={TAGS}
@@ -109,13 +109,13 @@ export const Overview: Story = {
                         why: "Only the required kind chip stays: the recommended pill drops out, the tag row is gone, and the author line does not render at all — a resource with none of the optional attribution still reads as complete, not as missing information.",
                         code: `<FoundationHeader
     breadcrumbItems={crumbs}
-    title="Giới thiệu Docker network"
+    title="Introduction to Docker networking"
     kind={FoundationKind.Video}
 />`,
                         render: (
                             <FoundationHeader
                                 breadcrumbItems={CRUMBS}
-                                title="Giới thiệu Docker network"
+                                title="Introduction to Docker networking"
                                 kind={FoundationKind.Video}
                             />
                         ),

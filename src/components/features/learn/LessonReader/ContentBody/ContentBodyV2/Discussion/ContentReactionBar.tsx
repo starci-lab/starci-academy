@@ -13,7 +13,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Reaction footer for a lesson — the emotion picker + view count that belongs to
- * the CONTENT, rendered at the foot of the reading card (border-t divider) à la
+ * the CONTENT, rendered at the foot of the reading card (border-t divider) in the style of
  * Medium / Substack, not as an orphan strip between cards.
  *
  * Owns its own reaction summary SWR keyed identically to {@link import("./index").ContentDiscussion}

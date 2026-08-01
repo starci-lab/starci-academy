@@ -1,5 +1,5 @@
 /**
- * Shared time-bucketing for the flashcard "Lịch sử" surfaces (thầy 2026-07-13
+ * Shared time-bucketing for the flashcard "History" surfaces (teacher, 2026-07-13
  * relayout: history rendered as time buckets, mirroring the activity-log pattern
  * — "bucket events by meaningful time windows"). Groups already-fetched,
  * `updatedAt DESC`-ordered history items into ordered day-relative buckets so a
@@ -23,8 +23,8 @@ const DAY_MS = 24 * 60 * 60 * 1000
 /**
  * Day-relative bucket for one ISO timestamp (`now` passed in so callers stay
  * pure/testable). Windows finer-grained than the original today/week/month/older
- * (thầy 2026-07-17 "render kiểu 1 ngày 3 ngày 7 ngày 1 tháng 1 năm"): ≤1d, ≤3d,
- * ≤7d, ≤30d (~1 tháng), ≤365d (~1 năm), else older.
+ * (teacher, 2026-07-17: "render it as 1 day, 3 days, 7 days, 1 month, 1 year"): ≤1d, ≤3d,
+ * ≤7d, ≤30d (~1 month), ≤365d (~1 year), else older.
  */
 const bucketFor = (iso: string, now: number): TimeBucketKey => {
     const diffDays = Math.floor((now - new Date(iso).getTime()) / DAY_MS)

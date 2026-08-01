@@ -7,7 +7,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ChallengeScoreCard`: "Kết quả của bạn" — the ONE aggregate fact for a
+ * BLOCK — `ChallengeScoreCard`: "Your results" — the ONE aggregate fact for a
  * finished challenge attempt, the earned/max score read against the pass line.
  *
  * SIBLING OF `ChallengeDeliverableList`, NOT PART OF IT (per the task brief).
@@ -80,8 +80,8 @@ const ChallengeScoreCard = ({
     // meter — same defensive floor `ProgressMeter` itself applies internally.
     const safeMax = maxScore > 0 ? maxScore : 1
     const targetScore = passThreshold * safeMax
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-14, thầy: "màu sắc không make
-    // sense lắm"): the fill now ANSWERS the question this card exists to answer. It used to
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-14, instructor: "the colors
+    // don't really make sense"): the fill now ANSWERS the question this card exists to answer. It used to
     // ride `ProgressMeter`'s default `accent` — the brand tone — so a 52/70 attempt sitting
     // BELOW its own 80% pass line looked exactly like one sitting above it: the bar carried
     // a ratio but no verdict. `ProgressMeter`'s own prop doc already reserves the semantic
@@ -89,12 +89,12 @@ const ChallengeScoreCard = ({
     // The target tick stays NEUTRAL (see `TargetMark`) so the two never compete for meaning.
     const meterColor = earnedScore >= targetScore ? "success" : "danger"
 
-    // Score reading — earned score prominent, "/ max điểm" riding beside it as the unit
+    // Score reading — earned score prominent, "/ max points" riding beside it as the unit
     // that gives it meaning (`tight`: a mark attached to the number, not a peer of it).
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): thêm `weight="bold"` —
-    // con số ĐỨNG RIÊNG làm tâm điểm của card = Tier A, luôn bold; thiếu weight thì HeroUI
-    // mặc định 600 (semibold), không phải 700 (bold) canon đòi. Đối chứng:
-    // `ChallengeHeader.tsx` cùng vai trò đã khai đúng weight="bold".
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): added `weight="bold"` —
+    // the number STANDING ALONE as the card's focal point = Tier A, always bold; without
+    // weight, HeroUI defaults to 600 (semibold), not the 700 (bold) canon requires. Cross-check:
+    // `ChallengeHeader.tsx`, same role, already declares weight="bold" correctly.
     const scoreReading = (
         <>
             <Typography
@@ -103,22 +103,22 @@ const ChallengeScoreCard = ({
                 tabularNums
                 isSkeleton={isSkeleton}
                 text={earnedScore}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             <Typography
                 size="sm"
                 color="muted"
                 tabularNums
                 isSkeleton={isSkeleton}
-                text={`/ ${maxScore} điểm`}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                text={`/ ${maxScore} points`}
+                showAnatomy={showAnatomy}
             />
         </>
     )
 
     const scoreBody = (
         <>
-            <StackH gap="tight" align="baseline" anatPart={showAnatomy ? "StackH" : undefined} body={scoreReading} />
+            <StackH gap={2} align="baseline" anatPart={showAnatomy ? "StackH" : undefined} body={scoreReading} />
             {isSkeleton ? (
                 <HeroSkeleton
                     className="h-1 w-full rounded-full"
@@ -139,14 +139,13 @@ const ChallengeScoreCard = ({
 
     return (
         <SurfaceCard
-            label="Kết quả của bạn"
-            description="Đạt yêu cầu cần hoàn thành đủ mọi tiêu chí, không chỉ đạt điểm tổng."
+            label="Your results"
+            description="Passing needs every requirement completed, not just the total score."
             isSkeleton={isSkeleton}
             anatPart={anatPart}
             showAnatomy={showAnatomy}
-        >
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={scoreBody} />
-        </SurfaceCard>
+            body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={scoreBody} />}
+        />
     )
 }
 

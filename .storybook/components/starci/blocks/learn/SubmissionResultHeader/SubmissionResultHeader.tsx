@@ -47,7 +47,7 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /** Props for {@link SubmissionResultHeader}. */
 export interface SubmissionResultHeaderProps {
-    /** Back-link label, localized by the caller, e.g. "Quay lại bài giải". */
+    /** Back-link label, localized by the caller, e.g. "Back to the solution". */
     backLabel: string
     /** Fired when the learner leaves the result page for the challenge solve page. */
     onBack: () => void
@@ -86,27 +86,16 @@ const SubmissionResultHeader = ({
         <div data-anat-part={anatPart}>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
-                breadcrumb={
+                isSkeleton={isSkeleton}
+                breadcrumb={() =>
                     isSkeleton ? (
-                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
                     ) : (
-                        <LinkBack label={backLabel} onPress={onBack} anatPart={showAnatomy ? "LinkBack" : undefined} />
+                        <LinkBack label={backLabel} onPress={onBack} showAnatomy={showAnatomy} />
                     )
                 }
-                title={
-                    isSkeleton ? (
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                    )
-                }
-                description={
-                    isSkeleton ? (
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        description
-                    )
-                }
+                title={title}
+                description={description}
             />
         </div>
     )

@@ -84,7 +84,7 @@ const getNodeText = (node: React.ReactNode): string => {
 
 /**
  * Slugify heading text into a URL-safe anchor id (diacritics stripped, Vietnamese
- * `đ`→`d`, non-alphanumerics collapsed to single hyphens). Deterministic so the
+ * Vietnamese d-with-stroke folded to `d`, non-alphanumerics collapsed to single hyphens). Deterministic so the
  * rendered heading id and any "on this page" outline reading it from the DOM agree.
  * @param text - The raw heading text.
  * @returns The anchor slug.
@@ -93,7 +93,7 @@ const slugify = (text: string): string =>
     text
         .normalize("NFKD")
         .replace(/[̀-ͯ]/g, "")
-        .replace(/[đĐ]/g, "d")
+        .replace(/[đĐ]/g, "d") // vn-ok: slug transliteration of the VI letter
         .toLowerCase()
         .trim()
         .replace(/[^a-z0-9]+/g, "-")
@@ -156,7 +156,7 @@ const ArcSection = ({ index, children }: { index?: number, children?: React.Reac
     const [expanded, setExpanded] = React.useState(isCore)
     // the label is `children[0]` (a `<strong>` for the lead-bold-paragraph shape, or
     // the whole `mutedblock` div for the `:::muted` shape) — force it onto its own
-    // line as a small MUTED "eyebrow" (thầy 2026-07-12: label = `text-xs text-muted`,
+    // line as a small MUTED "eyebrow" (teacher, 2026-07-12: label = `text-xs text-muted`,
     // no per-section colour — the section labels are authored inconsistently so a
     // colour-by-label map rendered wrong; a uniform muted label reads cleaner).
     // `!` = guaranteed win over whatever colour/size the label's own renderer gave it.
@@ -252,7 +252,7 @@ export const buildMarkdownRenderers = ({
         // Custom `:::chip` directive tag (see remarkChip in ./index): a wrapped row of soft chips,
         // one per authored keyword line. `items` is the `|`-joined keyword list.
         chipblock: ({ items }: { items?: string }) => (
-            <span className="my-2 flex flex-wrap gap-2">
+            <span data-principles="sibling-stack" className="my-2 flex flex-wrap gap-2">
                 {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
                     <HeroUI.Chip key={index} size="sm" variant="soft" color="default">{keyword}</HeroUI.Chip>
                 ))}
@@ -323,7 +323,7 @@ export const buildMarkdownRenderers = ({
                 return children
             }
             // plain mode: inline code renders as its raw text (no mono/background) —
-            // thầy 2026-07-17 "render thô" cho flashcard + mock interview.
+            // teacher, 2026-07-17: "render it raw" for flashcard + mock interview.
             if (plain) {
                 return <>{code}</>
             }
@@ -379,7 +379,7 @@ export const buildMarkdownRenderers = ({
             </blockquote>
         ),
         // Bold = weight only — no colour jump — so a keyword-heavy paragraph doesn't flicker.
-        // plain mode drops the weight/italic entirely → raw text (thầy 2026-07-17 "render thô").
+        // plain mode drops the weight/italic entirely → raw text (teacher, 2026-07-17: "render it raw").
         strong: ({ children }) => (plain ? <>{children}</> : <strong className="font-semibold">{children}</strong>),
         em: ({ children }) => (plain ? <>{children}</> : <em className="italic">{children}</em>),
         hr: () => <hr className={`${reading ? "my-6 " : ""}border-default`} />,
@@ -391,9 +391,9 @@ export const buildMarkdownRenderers = ({
         p: ({ children, node }) => {
             // a paragraph whose ENTIRE content is one `**bold**` span is a common
             // "fake heading" authoring idiom (e.g. flashcard answers structured
-            // "**Trả lời thẳng** ...", "**Vì sao** ...") — read it as a section
+            // "**Direct answer** ...", "**Why** ...") — read it as a section
             // LABEL (muted, small), not a normal bold sentence, so it lines up
-            // with the surrounding UI labels ("Câu hỏi"/"Đáp án" are
+            // with the surrounding UI labels ("Question"/"Answer" are
             // `body-xs muted`) instead of standing out as loud black bold.
             const soleChild = node?.children?.length === 1 ? node.children[0] : null
             const isStandaloneLabel = Boolean(
@@ -407,7 +407,7 @@ export const buildMarkdownRenderers = ({
             )
         },
         a: ({ href, children }) => {
-        // plain mode: strip the link chrome (accent + underline) → raw text (thầy 2026-07-17).
+        // plain mode: strip the link chrome (accent + underline) → raw text (teacher, 2026-07-17).
             if (plain) {
                 return <>{children}</>
             }

@@ -3,20 +3,20 @@ import { Image } from "@sb-components/atoms/media/Image/Image"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Image`: framed image bọc `<img>`, tự lo skeleton lúc fetch + fallback
- * khi lỗi/rỗng. Icon lib = `@phosphor-icons/react` (§5.0). Không compose atom
- * nào có story riêng ⇒ ATOM LÁ. `Frame`/`Img`/`Fallback` chỉ là KHE nội bộ,
- * không phải component có nhà để nhảy tới — không badge (LOẠI 2b, `check-orphan-parts.mjs`).
- * RIÊNG `Skeleton` LÀ HeroUI's own `Skeleton` render thẳng nên badge + khai
- * `annotate: { "Skeleton": { tier: "heroui" } }` (LOẠI 2a) — panel chỉ nhận
- * node có `storyId` hoặc `tier: "heroui"`.
+ * ATOM — `Image`: framed image wrapping `<img>`, handling its own skeleton while
+ * fetching + a fallback on error/empty. Icon lib = `@phosphor-icons/react` (§5.0). It
+ * doesn't compose any atom with its own story ⇒ LEAF ATOM. `Frame`/`Img`/`Fallback` are just
+ * internal SLOTS, not components with a home to jump to — no badge (CATEGORY 2b, `check-orphan-parts.mjs`).
+ * `Skeleton` alone IS HeroUI's own `Skeleton` rendered straight through, so it gets a badge + the
+ * `annotate: { "Skeleton": { tier: "heroui" } }` declaration (CATEGORY 2a) — the panel only accepts
+ * a node with a `storyId` or `tier: "heroui"`.
  *
- * 📐 **HAI LEAF** (§14d.2 — leaf tách theo CẤU TRÚC):
- *   • `WithImage` — cây có node `Img`. Loaded · loading (skeleton phủ) · dùng
- *     `fallbackSrc` · các `ratio`/`radius`/`fit` đều CÙNG cây DOM ⇒ chúng là
- *     STATE/VARIANT nằm trong MỘT leaf, không tách story riêng.
- *   • `FallbackGlyph` — node `Img` BIẾN MẤT, thay bằng node `Fallback`. Mất node
- *     ⇒ đây mới đúng là leaf thứ hai.
+ * 📐 **TWO LEAVES** (§14d.2 — leaves split by STRUCTURE):
+ *   • `WithImage` — the tree has an `Img` node. Loaded · loading (skeleton overlay) · using
+ *     `fallbackSrc` · every `ratio`/`radius`/`fit` share the SAME DOM tree ⇒ they are
+ *     STATES/VARIANTS living inside ONE leaf, not split into separate stories.
+ *   • `FallbackGlyph` — the `Img` node DISAPPEARS, replaced by a `Fallback` node. A node is lost
+ *     ⇒ this is genuinely the second leaf.
  */
 const meta: Meta<typeof Image> = {
     title: "Atoms/Media/Image/Image",
@@ -49,7 +49,7 @@ const FALLBACK_SRC =
  */
 export const WithImage: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Image"
                 tier="atom"
@@ -62,7 +62,7 @@ export const WithImage: Story = {
                         why: "The real `<img>` renders at full opacity inside the frame. This is the resting shape every other state below is compared against.",
                         code: "<Image src={url} alt=\"Course cover\" ratio=\"video\" />",
                         render: (
-                            <div className="w-40">
+                            <div data-tier="fixture" className="w-40">
                                 <Image src={OK_SRC} alt="Course cover" ratio="video" loading="eager" showAnatomy />
                             </div>
                         ),
@@ -72,7 +72,7 @@ export const WithImage: Story = {
                         why: "A skeleton shimmer covers the frame and the `<img>` itself sits underneath at opacity-0 until it fires `onLoad`. The atom manages this on its own so a parent that's still fetching data only has to flip one flag.",
                         code: "<Image isSkeleton src={url} alt=\"Loading\" ratio=\"video\" />",
                         render: (
-                            <div className="w-40">
+                            <div data-tier="fixture" className="w-40">
                                 <Image isSkeleton src={OK_SRC} alt="Loading" ratio="video" />
                             </div>
                         ),
@@ -82,7 +82,7 @@ export const WithImage: Story = {
                         why: "An `<img>` still renders, just sourced from `fallbackSrc` instead of the missing `src`. The tree stays the same shape as the loaded state, only which URL feeds the tag differs.",
                         code: "<Image src={null} fallbackSrc={defaultUrl} alt=\"Avatar\" ratio=\"video\" />",
                         render: (
-                            <div className="w-40">
+                            <div data-tier="fixture" className="w-40">
                                 <Image src={null} fallbackSrc={FALLBACK_SRC} alt="Avatar" ratio="video" loading="eager" />
                             </div>
                         ),
@@ -92,7 +92,7 @@ export const WithImage: Story = {
                         why: "The frame becomes a perfect circle instead of the default rounded rectangle. This shape is used for avatar-style images.",
                         code: "<Image src={url} alt=\"…\" ratio=\"square\" radius=\"full\" />",
                         render: (
-                            <div className="w-24">
+                            <div data-tier="fixture" className="w-24">
                                 <Image src={OK_SRC} alt="Square, full radius" ratio="square" radius="full" loading="eager" />
                             </div>
                         ),
@@ -102,7 +102,7 @@ export const WithImage: Story = {
                         why: "The frame locks to a 16:9 box. This is the ratio used for course covers and thumbnails.",
                         code: "<Image src={url} alt=\"Course cover\" ratio=\"video\" />",
                         render: (
-                            <div className="w-40">
+                            <div data-tier="fixture" className="w-40">
                                 <Image src={OK_SRC} alt="Video ratio" ratio="video" loading="eager" />
                             </div>
                         ),
@@ -112,7 +112,7 @@ export const WithImage: Story = {
                         why: "The frame locks to a tall 3:4 box and the image shrinks to fit entirely inside it instead of cropping to cover the box. Use `contain` when clipping the image would cut off meaningful content.",
                         code: "<Image src={url} alt=\"…\" ratio=\"portrait\" fit=\"contain\" />",
                         render: (
-                            <div className="w-24">
+                            <div data-tier="fixture" className="w-24">
                                 <Image src={OK_SRC} alt="Portrait, contain" ratio="portrait" fit="contain" loading="eager" />
                             </div>
                         ),
@@ -126,7 +126,7 @@ export const WithImage: Story = {
 /** Leaf 2 — the `Img` node is GONE: an errored/empty src with no `fallbackSrc` shows a glyph instead. */
 export const FallbackGlyph: Story = {
     render: () => (
-        <div className="w-80 p-8">
+        <div data-tier="fixture" className="w-80 p-8">
             <BlockAnatomy
                 name="Image"
                 tier="atom"

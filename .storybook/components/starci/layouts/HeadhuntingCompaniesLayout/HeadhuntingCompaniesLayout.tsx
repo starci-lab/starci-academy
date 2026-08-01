@@ -85,8 +85,8 @@ const HeadhuntingCompaniesLayout = ({
                 anything, it is simply absent — the real screen has no mobile bar. */}
             <div className="hidden shrink-0 @app-lg:sticky @app-lg:top-0 @app-lg:block @app-lg:w-64">
                 <AsyncContentEmpty
-                    title="Điều hướng khoá học"
-                    description="Cây chương/bài của khoá học chưa dựng ở lượt này — chỗ đứng đã có, nội dung để lượt sau."
+                    title="Course navigation"
+                    description="The course chapter/lesson tree is not built in this pass — the slot is here, the content comes later."
                     icon={SidebarIcon}
                     anatPart={showAnatomy ? "CourseNavSidebarGap" : undefined}
                 />
@@ -99,7 +99,7 @@ const HeadhuntingCompaniesLayout = ({
     )
 
     return (
-        <StackH gap="section" align="start" className={className} anatPart={anatPart} body={navAndContent} />
+        <StackH gap={6} align="start" className={className} anatPart={anatPart} body={navAndContent} />
     )
 }
 

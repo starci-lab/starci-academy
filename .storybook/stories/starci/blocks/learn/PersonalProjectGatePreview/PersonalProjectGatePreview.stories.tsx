@@ -33,10 +33,10 @@ export default meta
 type Story = StoryObj<typeof PersonalProjectGatePreview>
 
 const TASKS: Array<PersonalProjectGatePreviewTask> = [
-    { title: "Khởi tạo repo + README" },
-    { title: "Thiết kế schema cơ sở dữ liệu" },
-    { title: "Dựng API xác thực người dùng" },
-    { title: "Viết test cho luồng đăng ký" },
+    { title: "Initialize repo + README" },
+    { title: "Design the database schema" },
+    { title: "Build the user authentication API" },
+    { title: "Write tests for the sign-up flow" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -51,7 +51,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the capstone teaser. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectGatePreview"
                 tier="block"
@@ -61,21 +61,21 @@ export const Full: Story = {
                 renderClassName="mx-auto max-w-md"
                 states={[
                     {
-                        name: "Dữ liệu thật",
+                        name: "Real data",
                         why: "The headline names the actual capstone project, the meter shows real overall completion, and the task card lists milestone-0's real titles in order — the exact shape a trial viewer sees behind EnrollGate's fade.",
                         code: `<PersonalProjectGatePreview
-    heroTitle="Nền tảng đặt lịch khám bệnh"
-    heroSubtitle="Dự án cá nhân — xây một hệ thống đặt lịch end-to-end"
-    progress={{ value: 15, max: 100, label: "Tiến độ dự án cá nhân" }}
+    heroTitle="Doctor appointment booking platform"
+    heroSubtitle="Capstone project — build an end-to-end booking system"
+    progress={{ value: 15, max: 100, label: "Capstone progress" }}
     items={tasks}
 />`,
                         render: (
                             <PersonalProjectGatePreview
                                 anatPart="PersonalProjectGatePreview"
                                 showAnatomy
-                                heroTitle="Nền tảng đặt lịch khám bệnh"
-                                heroSubtitle="Dự án cá nhân — xây một hệ thống đặt lịch end-to-end"
-                                progress={{ value: 15, max: 100, label: "Tiến độ dự án cá nhân" }}
+                                heroTitle="Doctor appointment booking platform"
+                                heroSubtitle="Capstone project — build an end-to-end booking system"
+                                progress={{ value: 15, max: 100, label: "Capstone progress" }}
                                 items={TASKS}
                             />
                         ),
@@ -84,17 +84,17 @@ export const Full: Story = {
                         name: "isSkeleton = true",
                         why: "The hero card, the task card's label, and every task row's title switch to shimmer together — the same flag reaching straight into ContinueCardHero, SurfaceCard, and each row's Typography, with no separate skeleton tree built for this block.",
                         code: `<PersonalProjectGatePreview
-    heroTitle="Nền tảng đặt lịch khám bệnh"
-    heroSubtitle="Dự án cá nhân — xây một hệ thống đặt lịch end-to-end"
-    progress={{ value: 15, max: 100, label: "Tiến độ dự án cá nhân" }}
+    heroTitle="Doctor appointment booking platform"
+    heroSubtitle="Capstone project — build an end-to-end booking system"
+    progress={{ value: 15, max: 100, label: "Capstone progress" }}
     items={tasks}
     isSkeleton
 />`,
                         render: (
                             <PersonalProjectGatePreview
-                                heroTitle="Nền tảng đặt lịch khám bệnh"
-                                heroSubtitle="Dự án cá nhân — xây một hệ thống đặt lịch end-to-end"
-                                progress={{ value: 15, max: 100, label: "Tiến độ dự án cá nhân" }}
+                                heroTitle="Doctor appointment booking platform"
+                                heroSubtitle="Capstone project — build an end-to-end booking system"
+                                progress={{ value: 15, max: 100, label: "Capstone progress" }}
                                 items={TASKS}
                                 isSkeleton
                             />

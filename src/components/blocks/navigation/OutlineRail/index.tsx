@@ -63,11 +63,11 @@ export interface OutlineRailGroup {
 
 /** The rail header — the rail's progress + one primary action. */
 export interface OutlineRailHeader {
-    /** Label for the overall-progress row (e.g. "Tiến độ"). */
+    /** Label for the overall-progress row (e.g. "Progress"). */
     label: ReactNode
     /** Overall progress driving the header meter. */
     progress: { done: number; total: number }
-    /** Pre-formatted overall count (e.g. "2/12 bài"). */
+    /** Pre-formatted overall count (e.g. "2/12 lessons"). */
     countLabel: ReactNode
     /** Optional primary "continue / resume" action. */
     continue?: { label: ReactNode; onPress: () => void }

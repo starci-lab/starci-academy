@@ -37,9 +37,9 @@ export default meta
 type Story = StoryObj<typeof ConsultantDirectoryHeader>
 
 const CRUMBS = [
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "directory", label: "Danh sách tư vấn viên" },
+    { key: "directory", label: "Consultant directory" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -51,7 +51,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full set: trail → title → optional description. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ConsultantDirectoryHeader"
                 tier="block"
@@ -65,16 +65,16 @@ export const Default: Story = {
                         why: "The directory has a one-sentence summary, so it renders directly below the title. This is the shape most course directories show, since the screen usually gives visitors a short pitch for who is listed.",
                         code: `<ConsultantDirectoryHeader
     breadcrumbItems={crumbs}
-    title="Danh sách tư vấn viên"
-    description="Đặt lịch 1:1 với các tư vấn viên đang đồng hành cùng khoá DevOps Mastery."
+    title="Consultant directory"
+    description="Book a 1:1 session with the consultants supporting the DevOps Mastery course."
 />`,
                         render: (
                             <ConsultantDirectoryHeader
                                 anatPart="ConsultantDirectoryHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Danh sách tư vấn viên"
-                                description="Đặt lịch 1:1 với các tư vấn viên đang đồng hành cùng khoá DevOps Mastery."
+                                title="Consultant directory"
+                                description="Book a 1:1 session with the consultants supporting the DevOps Mastery course."
                             />
                         ),
                     },
@@ -83,12 +83,12 @@ export const Default: Story = {
                         why: "No summary was authored for this directory, so the description line drops out and the header ends right after the title. The trail and title keep their place regardless — only this one line is optional.",
                         code: `<ConsultantDirectoryHeader
     breadcrumbItems={crumbs}
-    title="Danh sách tư vấn viên"
+    title="Consultant directory"
 />`,
                         render: (
                             <ConsultantDirectoryHeader
                                 breadcrumbItems={CRUMBS}
-                                title="Danh sách tư vấn viên"
+                                title="Consultant directory"
                             />
                         ),
                     },
@@ -101,7 +101,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`, so every atom swaps to its own mirror. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ConsultantDirectoryHeader"
                 tier="block"

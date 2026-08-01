@@ -36,42 +36,42 @@ export default meta
 type Story = StoryObj<typeof PersonalProjectResultScreen>
 
 const BASE = {
-    backLabel: "Quay lại nhiệm vụ",
+    backLabel: "Back to task",
     onBack: () => {},
-    title: "Mốc 3 — Triển khai hàng đợi xử lý bất đồng bộ",
-    description: "Dựng một worker queue xử lý job chấm điểm, kèm retry và dead-letter queue.",
+    title: "Milestone 3 — Implement an async processing queue",
+    description: "Build a worker queue that processes grading jobs, with retry and a dead-letter queue.",
     attempts: [
         { id: "a1", attemptNumber: 1, score: 58, isPassing: false },
         { id: "a2", attemptNumber: 2, score: 91, isPassing: true },
     ],
     selectedAttemptId: "a2",
     onSelectAttempt: () => {},
-    attemptsAriaLabel: "Các lần làm",
-    scoreLabel: "Kết quả",
+    attemptsAriaLabel: "Attempts",
+    scoreLabel: "Result",
     score: 91,
     maxScore: 100,
-    shortFeedback: "Queue và retry đúng hướng, dead-letter queue xử lý gọn.",
+    shortFeedback: "Queue and retry logic are on the right track; the dead-letter queue is handled cleanly.",
     submissionUrl: "https://github.com/starci-academy/capstone-submissions/tree/main/attempt-2",
     gradedByModel: "qwen2.5-coder-32b",
     modelCategory: "economy" as const,
-    timeAgo: "12 phút trước",
-    findingsLabel: "Góp ý",
+    timeAgo: "12 minutes ago",
+    findingsLabel: "Feedback",
     findings: [
         {
             id: "f1",
-            message: "Chưa giới hạn số lần retry cho một job lỗi",
-            detail: "Một job lỗi liên tục sẽ retry vô hạn, chiếm hết worker.",
-            suggestion: "Thêm `maxAttempts` và đẩy job sang dead-letter queue khi vượt ngưỡng.",
+            message: "No limit on retry attempts for a failing job",
+            detail: "A job that keeps failing will retry indefinitely, tying up all the workers.",
+            suggestion: "Add `maxAttempts` and push the job to the dead-letter queue once it exceeds the threshold.",
             location: "src/queue/worker.service.ts",
             severity: "medium" as const,
         },
     ],
     repositoryUrl: "https://github.com/starci-academy/capstone-submissions",
-    relatedLabel: "Có thể bạn muốn đọc lại",
+    relatedLabel: "You might want to revisit",
     relatedItems: [
-        { key: "queues", title: "Vì sao cần dead-letter queue", snippet: "Job lỗi liên tục sẽ làm nghẽn cả hàng đợi nếu không tách riêng.", href: "#queues" },
+        { key: "queues", title: "Why you need a dead-letter queue", snippet: "A job that keeps failing will clog the entire queue if it isn't isolated.", href: "#queues" },
     ],
-    nextTask: { title: "Mốc 4 — Thêm cơ chế idempotency cho job xử lý thanh toán" },
+    nextTask: { title: "Milestone 4 — Add idempotency to the payment processing job" },
     onGoToNextTask: () => {},
 }
 
@@ -91,7 +91,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — no attempt selected yet ⇒ the score/findings/handoff cluster is absent, not empty. */
 export const NoSelection: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectResultScreen"
                 tier="block"
@@ -117,7 +117,7 @@ export const NoSelection: Story = {
 /** LEAF — a PASSING attempt with a next task queued ⇒ score + findings + the next-task handoff, no related-reading nudge. */
 export const Passing: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectResultScreen"
                 tier="block"
@@ -131,7 +131,7 @@ export const Passing: Story = {
                         code: `<PersonalProjectResultScreen
     {...props}
     isPassing
-    nextTask={{ title: "Mốc 4 — Thêm cơ chế idempotency cho job xử lý thanh toán" }}
+    nextTask={{ title: "Milestone 4 — Add idempotency to the payment processing job" }}
 />`,
                         render: <PersonalProjectResultScreen {...BASE} showAnatomy isPassing />,
                     },
@@ -144,7 +144,7 @@ export const Passing: Story = {
 /** LEAF — a FAILING attempt ⇒ score + findings + related-reading nudge, no next-task handoff. */
 export const Failing: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectResultScreen"
                 tier="block"
@@ -171,7 +171,7 @@ export const Failing: Story = {
 /** LEAF — a PASSING attempt with no next task queued ⇒ neither the related-reading nudge nor the handoff appears. */
 export const PassingNoNextTask: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectResultScreen"
                 tier="block"
@@ -198,7 +198,7 @@ export const PassingNoNextTask: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block mirrors, including the still-absent cluster. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectResultScreen"
                 tier="block"

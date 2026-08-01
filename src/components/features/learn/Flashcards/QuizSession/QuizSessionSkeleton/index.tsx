@@ -9,14 +9,14 @@ const WORD_BANK_TILES = 6
 const CLOZE_BLANKS = 3
 
 /**
- * Loading placeholder for the "Hỏi nhanh" active run. Mirrors the real shape
+ * Loading placeholder for the "Quick quiz" active run. Mirrors the real shape
  * top-to-bottom: the edge-to-edge {@link import("@/components/blocks/navigation/WorkSessionHeader").WorkSessionHeader}
  * band (back-link · identity · counter · progress-segment bar), then a
  * `max-w-3xl` centered body — level/tag chips, the cloze question card (label +
  * two lines of question text + an instruction line + a mock paragraph with
  * rounded-lg blank tiles woven between text bars — same shape as the real
- * fill-in-the-blank chips), the "Ngân hàng từ" word-bank chip row, and the
- * "Kiểm tra" CTA — so the run resolves in place without a layout jump.
+ * fill-in-the-blank chips), the "Word bank" word-bank chip row, and the
+ * "Check" CTA — so the run resolves in place without a layout jump.
  */
 export const QuizSessionSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
     return (
@@ -64,7 +64,7 @@ export const QuizSessionSkeleton = ({ className }: WithClassNames<undefined> = {
                     </div>
                 </div>
 
-                {/* word bank — label + wrapped chip tiles, then the "Kiểm tra" CTA */}
+                {/* word bank — label + wrapped chip tiles, then the "Check" CTA */}
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-3">
                         <Skeleton.Typography type="body-xs" width="1/4" />

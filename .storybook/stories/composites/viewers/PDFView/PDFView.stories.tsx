@@ -29,9 +29,9 @@ const SAMPLE_PDF = "data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PCAvVHlw
  */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-[420px]">
-                <PDFView src="" title="Chưa có tài liệu" heightClassName="h-[200px]" anatPart="PDFView" showAnatomy />
+                <PDFView src="" title="No document yet" heightClassName="h-[200px]" anatPart="PDFView" showAnatomy />
             </div>
         </div>
     ),
@@ -40,11 +40,11 @@ export const Empty: Story = {
 /** Single page (`showAllPages=false`) — a quick preview / thumbnail of the first page. */
 export const SinglePage: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-[420px]">
                 <PDFView
                     src={SAMPLE_PDF}
-                    title="Slide bài giảng NestJS"
+                    title="NestJS lecture slides"
                     showAllPages={false}
                     heightClassName="h-[320px]"
                     anatPart="PDFView"
@@ -58,11 +58,11 @@ export const SinglePage: Story = {
 /** All pages, vertical scroll — read a multi-page document inline. */
 export const AllPagesScroll: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-[420px]">
                 <PDFView
                     src={SAMPLE_PDF}
-                    title="Slide bài giảng System Design"
+                    title="System Design lecture slides"
                     allowVerticalScroll
                     heightClassName="h-[420px]"
                     anatPart="PDFView"
@@ -76,11 +76,11 @@ export const AllPagesScroll: Story = {
 /** `fitToContainer` — the PDF re-measures the container width (responsive modal / drawer). */
 export const FitToContainer: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-full max-w-2xl">
                 <PDFView
                     src={SAMPLE_PDF}
-                    title="Hợp đồng dịch vụ StarCi"
+                    title="StarCi service agreement"
                     fitToContainer
                     allowVerticalScroll
                     heightClassName="h-[400px]"
@@ -95,11 +95,11 @@ export const FitToContainer: Story = {
 /** Error — `src` points at an unreachable file → react-pdf shows "Failed to render PDF." (needs the worker to reach the error path). */
 export const LoadError: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-[420px]">
                 <PDFView
-                    src="https://storage.example.invalid/file-khong-ton-tai.pdf"
-                    title="Tài liệu không tải được"
+                    src="https://storage.example.invalid/file-not-found.pdf"
+                    title="Document failed to load"
                     heightClassName="h-[200px]"
                     anatPart="PDFView"
                     showAnatomy
@@ -117,7 +117,7 @@ const ANNOTATE_SKELETON: Record<string, AnatomyAnnotation> = {
 /** LEAF — the caller flips `isSkeleton`; the whole viewer shimmers because the file itself hasn't arrived, distinct from the per-page mirror `PdfViewportPage` already draws for a page not yet scrolled into view once the file HAS loaded. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PDFView"
                 tier="composite"

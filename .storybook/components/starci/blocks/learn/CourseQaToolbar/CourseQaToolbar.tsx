@@ -27,10 +27,10 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * OWNS THE FILTER → LABEL TABLE (§14d.1), same precedent as `ContentModeNav`'s
  * `MODE_LABEL`: the caller says which {@link CourseQaFilter} is active, it
  * never hands over a pre-built tab list — this block is the one place that
- * knows a course Q&A filter is called "Chưa trả lời" / "Đã trả lời" / etc.
+ * knows a course Q&A filter is called "Unanswered" / "Answered" / etc.
  * Order and wording are ported verbatim from `vi.json`'s `courseQa.filter.*`.
  *
- * OWNS THE COUNT'S WORDING too, same `${count} câu hỏi` template as `src`'s
+ * OWNS THE COUNT'S WORDING too, same `${count} questions` template as `src`'s
  * `courseQa.count` — the caller hands over a bare `resultCount` number, never
  * a formatted string.
  *
@@ -58,15 +58,15 @@ const FILTER_ORDER: ReadonlyArray<CourseQaFilter> = ["unanswered", "answered", "
 
 /** Filter → tab label, ported verbatim from `vi.json`'s `courseQa.filter.*`. */
 const FILTER_LABEL: Record<CourseQaFilter, string> = {
-    unanswered: "Chưa trả lời",
-    answered: "Đã trả lời",
-    engagement: "Sôi nổi nhất",
-    mine: "Của tôi",
-    all: "Tất cả",
+    unanswered: "Unanswered",
+    answered: "Answered",
+    engagement: "Most active",
+    mine: "Mine",
+    all: "All",
 }
 
 /** The board's own count wording — the caller hands over a bare number, never a formatted string. */
-const resultCountLabel = (count: number): string => `${count} câu hỏi`
+const resultCountLabel = (count: number): string => `${count} questions`
 
 /** Props for {@link CourseQaToolbar}. */
 export interface CourseQaToolbarProps {
@@ -122,8 +122,8 @@ const CourseQaToolbar = ({
                 <InputSearch
                     value={searchValue}
                     onValueChange={onSearchChange}
-                    placeholder="Tìm câu hỏi..."
-                    ariaLabel="Tìm câu hỏi"
+                    placeholder="Search questions..."
+                    ariaLabel="Search questions"
                     showAnatomy={showAnatomy}
                 />
             </div>
@@ -134,7 +134,6 @@ const CourseQaToolbar = ({
                     isSkeleton
                     classNames={["shrink-0"]}
                     showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Typography" : undefined}
                 />
             ) : (
                 <Typography
@@ -144,7 +143,6 @@ const CourseQaToolbar = ({
                     text={resultCountLabel(resultCount)}
                     classNames={["shrink-0"]}
                     showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Typography" : undefined}
                 />
             )}
         </>
@@ -163,13 +161,13 @@ const CourseQaToolbar = ({
                     showAnatomy={showAnatomy}
                 />
             </div>
-            <StackH gap="related" justify="between" wrap showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackH" : undefined} body={searchAndCount} />
+            <StackH gap={3} justify="between" wrap showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackH" : undefined} body={searchAndCount} />
         </>
     )
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="grouped" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={strip} />
+            <StackV gap={4} showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={strip} />
         </div>
     )
 }

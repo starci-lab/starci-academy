@@ -50,9 +50,9 @@ const REWARD_ICON: Record<string, ReactNode> = {
 }
 
 /**
- * Coin-shop catalog grouped into user-facing SECTIONS by reward `kind` (thầy
- * 2026-07-17 "chia nhiều hạng mục ra"). `aiCredit` + `digital` read as one
- * "tăng tốc học" bucket; `voucher` and `physical` each stand alone. Order = display
+ * Coin-shop catalog grouped into user-facing SECTIONS by reward `kind` (instructor's
+ * call, 2026-07-17, "split into more categories"). `aiCredit` + `digital` read as one
+ * "speed up learning" bucket; `voucher` and `physical` each stand alone. Order = display
  * order. A reward whose `kind` matches no section is not shown in the grouped view —
  * every current kind is covered here; adding a new kind means adding a section.
  */
@@ -84,9 +84,9 @@ const EMPTY_SHIPPING: ShippingForm = {
 export type RewardCatalogProps = WithClassNames<undefined>
 
 /**
- * The Coin shop's "Cửa hàng" tab: the redeemable catalog grid. Self-fetches the
+ * The Coin shop's "Store" tab: the redeemable catalog grid. Self-fetches the
  * catalog + the viewer's balance (the wallet SWR key is shared with the header
- * and the "Ví của tôi" tab, so a redeem here refreshes both instantly). Physical
+ * and the "My Wallet" tab, so a redeem here refreshes both instantly). Physical
  * rewards expand an inline shipping form before redeeming; a `voucher`/`aiCredit`
  * redemption surfaces its takeaway (code to copy / bonus credit granted) in a
  * dismissible callout above the grid.
@@ -294,7 +294,7 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                                                             } else {
                                                                 // Coin is real + redeem is irreversible — confirm
                                                                 // before spending (mirrors the shipping form's own
-                                                                // "Xác nhận đổi" step for physical rewards).
+                                                                // "Confirm redeem" step for physical rewards).
                                                                 setConfirming(reward)
                                                             }
                                                         }}
@@ -379,7 +379,7 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
 
             {/* spend confirmation for non-physical rewards — Coin is real + redeem is
                 irreversible, so a single accidental tap must never fire it (mirrors the
-                shipping form's own "Xác nhận đổi" step for physical rewards). */}
+                shipping form's own "Confirm redeem" step for physical rewards). */}
             <ModalShell
                 isOpen={confirming !== null}
                 onOpenChange={(open) => {

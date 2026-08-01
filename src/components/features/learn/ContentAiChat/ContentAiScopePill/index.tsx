@@ -18,7 +18,7 @@ export type ContentAiScopePillProps = WithClassNames<undefined>
  *
  * It sits in the header because the header used to repeat the same thing as a
  * plain title: the rail said "DevOps Mastery" up top and the pill said
- * "Cả khoá · DevOps Mastery" at the bottom. One surface, one identity — and
+ * "Whole course · DevOps Mastery" at the bottom. One surface, one identity — and
  * putting it where the title was keeps the scope SWITCH next to the name it
  * changes, instead of two screen-heights apart.
  *

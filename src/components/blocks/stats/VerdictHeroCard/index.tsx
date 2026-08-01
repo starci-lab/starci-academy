@@ -20,7 +20,7 @@ export interface VerdictHeroMeter {
 
 /** One mini stat in a {@link VerdictHeroCard}'s optional split row (e.g. "mature vs young" retention). */
 export interface VerdictHeroSplit {
-    /** Muted caption above the value (e.g. "Thẻ đã học kỹ"). */
+    /** Muted caption above the value (e.g. "Cards mastered"). */
     label: ReactNode
     /** The split's own value — pass the unit inline if it needs one (this row has no separate `unit` prop). */
     value: ReactNode
@@ -36,7 +36,7 @@ export interface VerdictHeroCardProps extends WithClassNames<undefined> {
     unit?: string
     /** Verdict tone — see {@link VerdictHeroBand}. Drives the left accent border + value color + (when {@link VerdictHeroCardProps.meter} is set) the bar fill. */
     band: VerdictHeroBand
-    /** The one-line judgment sentence (e.g. "Bạn đang quá tải — nạp thẻ mới nhanh hơn tốc độ ghi nhớ."). This is the "phán xử" — always render a real verdict, never a bare restatement of the number. */
+    /** The one-line judgment sentence (e.g. "You're overloaded — adding new cards faster than you can retain them."). This is the "verdict" — always render a real verdict, never a bare restatement of the number. */
     verdict: ReactNode
     /** Optional muted line under the verdict, giving the evidence behind it. */
     sub?: ReactNode
@@ -56,15 +56,15 @@ const BAND_TEXT: Record<VerdictHeroBand, string> = {
 }
 
 /**
- * The "phán xử" (judgment) hero shared by all 3 Thống kê surfaces (review /
+ * The "verdict" (judgment) hero shared by all 3 Statistics surfaces (review /
  * interview / quiz): a band-colored headline value, a one-line verdict
  * sentence, an optional muted evidence sub-line, an optional
  * {@link ProgressMeter} with a target mark, an optional 2-up split
- * breakdown, and an optional primary action slot. Replaces the old "trơ số"
+ * breakdown, and an optional primary action slot. Replaces the old "bare number"
  * hero — every zone here reads verdict → evidence → action, never a number
  * alone (`stats-insight-redesign` proposal).
  *
- * No left accent band (2026-07-18 — thầy: bỏ verdict; the §3i `SectionCard
+ * No left accent band (2026-07-18 — the teacher: drop the verdict band; the §3i `SectionCard
  * withVerdict` band was dropped, the `band` prop now only colors the value / meter
  * / split values). The `splits` render as ONE surface-in-surface StatPair card
  * (border, bg-surface, full-height divider), and the meter's target mark is the

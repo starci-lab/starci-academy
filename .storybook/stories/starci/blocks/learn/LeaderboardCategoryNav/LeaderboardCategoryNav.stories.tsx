@@ -43,7 +43,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the mobile chip row, one state per selected category. */
 export const ChipRow: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LeaderboardCategoryNav"
                 tier="block"
@@ -59,7 +59,7 @@ export const ChipRow: Story = {
     items={categories}
     selected="total"
     onSelect={setCategory}
-    ariaLabel="Hạng mục xếp hạng"
+    ariaLabel="Leaderboard category"
 />`,
                         render: (
                             <LeaderboardCategoryNav
@@ -68,7 +68,7 @@ export const ChipRow: Story = {
                                 items={ITEMS}
                                 selected="total"
                                 onSelect={() => {}}
-                                ariaLabel="Hạng mục xếp hạng"
+                                ariaLabel="Leaderboard category"
                             />
                         ),
                     },
@@ -79,14 +79,14 @@ export const ChipRow: Story = {
     items={categories}
     selected="milestone"
     onSelect={setCategory}
-    ariaLabel="Hạng mục xếp hạng"
+    ariaLabel="Leaderboard category"
 />`,
                         render: (
                             <LeaderboardCategoryNav
                                 items={ITEMS}
                                 selected="milestone"
                                 onSelect={() => {}}
-                                ariaLabel="Hạng mục xếp hạng"
+                                ariaLabel="Leaderboard category"
                             />
                         ),
                     },

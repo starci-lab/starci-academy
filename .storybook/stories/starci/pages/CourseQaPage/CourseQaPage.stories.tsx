@@ -8,8 +8,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * hands each one typed data.
  *
  * SIX FUNCTIONS, in the order the reader meets them: what this board is · the
- * "không học một mình" honest readout · ask a new question · filter/search the
- * board · the questions themselves, paged.
+ * "you're not learning alone" honest readout · ask a new question ·
+ * filter/search the board · the questions themselves, paged.
  *
  * ⭐ THE SCREEN OWNS EXACTLY ONE BRANCH, THE SAME WAY `ContentPage` OWNS ITS
  * `!isLocked` BRANCH: `isInvitationEmpty`, ported verbatim from `src`'s own
@@ -31,12 +31,12 @@ type Story = StoryObj<typeof CourseQaPage>
 
 const BASE = {
     breadcrumbItems: [
-        { key: "courses", label: "Khoá học" },
+        { key: "courses", label: "Courses" },
         { key: "course", label: "DevOps Mastery" },
-        { key: "qa", label: "Hỏi đáp" },
+        { key: "qa", label: "Q&A" },
     ],
-    title: "Hỏi đáp",
-    description: "Đặt câu hỏi cho cả khoá học, hoặc trả lời câu hỏi của người khác.",
+    title: "Q&A",
+    description: "Ask a question for the whole course, or answer someone else's.",
     enrollmentCount: 842,
     totalQuestions: 37,
     answeredQuestions: 24,
@@ -58,18 +58,18 @@ const QUESTIONS = [
     {
         id: "q1",
         author: { id: "u-minh-anh", displayName: "Minh Anh" },
-        createdTimeAgo: "2 giờ trước",
+        createdTimeAgo: "2 hours ago",
         isPinned: true,
-        preview: "Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from. Có cách nào tự phát hiện lỗi này sớm hơn không ạ?",
-        scope: { kind: "lesson" as const, lessonTitle: "Viết Dockerfile tối ưu" },
+        preview: "I followed the multi-stage steps and the image is still 800MB — turns out I forgot COPY --from. Is there a way to catch this kind of mistake earlier?",
+        scope: { kind: "lesson" as const, lessonTitle: "Writing an optimized Dockerfile" },
         replyCount: 0,
     },
     {
         id: "q2",
-        author: { id: "u-hai", displayName: "Hải Đăng" },
-        createdTimeAgo: "1 ngày trước",
+        author: { id: "u-hai", displayName: "Hai Dang" },
+        createdTimeAgo: "1 day ago",
         isFounderAuthor: false,
-        preview: "Khoá học có đề cập tới rootless container không, hay chỉ dừng ở Docker daemon thường?",
+        preview: "Does the course cover rootless containers, or does it stop at the regular Docker daemon?",
         scope: { kind: "general" as const },
         replyCount: 3,
         answeredByFounder: true,
@@ -89,7 +89,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — `Populated`: the board already has questions; every function is on screen. */
 export const Populated: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaPage"
                 tier="screen"
@@ -101,7 +101,7 @@ export const Populated: Story = {
                         name: "questions.length > 0",
                         why: "Every function of the screen is present, in the order the reader meets them: identity, the honest readout, the composer, the toolbar, then the paged list. The screen itself draws no shape at all — six blocks stacked by one frame.",
                         code: `<CourseQaPage
-    title="Hỏi đáp"
+    title="Q&A"
     totalQuestions={37}
     answeredQuestions={24}
     filter="unanswered"
@@ -119,7 +119,7 @@ export const Populated: Story = {
 /** LEAF — `Invitation`: the board has never had a single question ⇒ **loses every other function**, not just an empty list row. */
 export const Invitation: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaPage"
                 tier="screen"
@@ -146,7 +146,7 @@ export const Invitation: Story = {
 /** STATE — the caller flips `isSkeleton`; every block mirrors itself and the invitation branch is skipped in favour of the populated shape. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaPage"
                 tier="screen"

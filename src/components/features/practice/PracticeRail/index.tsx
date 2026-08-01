@@ -47,7 +47,7 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
     const { filters, setFilters } = usePracticeFilters()
     const [query, setQuery] = useState("")
 
-    /** Resolve a topic's display label ("Tất cả chủ đề" or a domain name). */
+    /** Resolve a topic's display label ("All topics" or a domain name). */
     const topicLabel = (domain: DomainFilter): string =>
         domain === "all"
             ? t("practice.filters.allDomains")

@@ -1,6 +1,5 @@
 import React from "react"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
@@ -89,7 +88,8 @@ const FoundationsHeader = ({
         <div data-anat-part={anatPart}>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
-                breadcrumb={
+                isSkeleton={isSkeleton}
+                breadcrumb={() =>
                     isSkeleton || breadcrumbItems?.length ? (
                         <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
                             <Breadcrumbs
@@ -101,24 +101,8 @@ const FoundationsHeader = ({
                         </div>
                     ) : undefined
                 }
-                title={
-                    isSkeleton ? (
-                        // `PageHeader` has no `isSkeleton` of its own, so the block calls the
-                        // atom directly with the EXACT size/weight the frame uses for a title
-                        // and feeds the result into the slot — same move `ContentHeader` and
-                        // `ModuleHeader` make.
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                    )
-                }
-                description={
-                    isSkeleton ? (
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        description
-                    )
-                }
+                title={title}
+                description={description}
             />
         </div>
     )

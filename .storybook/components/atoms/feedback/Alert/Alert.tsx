@@ -1,12 +1,11 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import { Alert as HeroAlert, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, XIcon } from "@phosphor-icons/react"
-import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `Alert.Base` — the single "message with a valence and an exit" atom. It is
- * the only component that imports `Alert` from `@heroui/react`; `FeedbackCallout`
+ * the only component that imports `Alert` from `@heroui/react`; `Callout`
  * (placed inside a surface) and `Toast` (floating) both compose from it.
  *
  * Owns: `status` → tint mapping, default icon per valence, glyph scale, ×
@@ -83,12 +82,6 @@ const STATUS_CLOSE_TONE: Record<AlertStatus, string> = {
 /** Glyph scale — one size for every alert. */
 const GLYPH_SCALE = "[&_svg]:size-5!"
 
-/**
- * The × glyph of the close button. `Button size="sm"` forces it down to
- * `size-3.5`, so it needs `weight="bold"` to match the stroke weight of the
- * `size-5` indicator glyph on the same row.
- */
-const CloseGlyph = (props: SVGProps<SVGSVGElement>) => <XIcon {...props} weight="bold" />
 
 /** Props SPECIFIC to {@link Alert.Base} — EXCEPT the `title`/`isSkeleton` pair (see {@link AlertBaseProps}). */
 interface AlertBaseOwnProps {
@@ -109,17 +102,9 @@ interface AlertBaseOwnProps {
     /** Accessible label for the × (caller passes a localised string). */
     closeAriaLabel?: string
     /**
-     * Placement utilities only (e.g. `mb-4`) — NOT for restyling the alert.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
@@ -153,22 +138,22 @@ const AlertBase = ({
     action,
     onClose,
     closeAriaLabel,
-    className,
     classNames,
-    anatPart,
     showAnatomy = false,
     isSkeleton = false,
 }: AlertBaseProps) => {
     const Icon = icon ?? STATUS_ICON[status]
     return (
         <HeroAlert
+            data-tier="atom"
+            data-component="Alert"
             // Vendor `HeroAlert.status` is a closed union without `info`.
             // `"default"` is a safe stand-in because this atom's own
             // `STATUS_TINT`/`STATUS_ICON`/`STATUS_CLOSE_TONE` (all `info`-aware)
             // drive the actual paint via explicit className.
             status={status === "info" ? "default" : status}
-            className={cn("shadow-none", tone === "soft" && STATUS_TINT[status], className, classNames)}
-            data-anat-part={anatPart}
+            className={cn("shadow-none", tone === "soft" && STATUS_TINT[status], classNames)}
+            data-anat-part={showAnatomy ? "Alert" : undefined}
         >
             {/* The scaffold owns the glyph scale — callers hand a bare icon component. */}
             <HeroAlert.Indicator className={GLYPH_SCALE} data-anat-part={showAnatomy ? "Alert.Indicator" : undefined}>
@@ -201,29 +186,29 @@ const AlertBase = ({
                         ) : null}
                     </>
                 )}
-                {/* `body` is a caller slot — the node inside belongs to whoever passed
-                    it, so the wrapper does not badge it. */}
                 {body != null ? (
                     <div className="mt-2 w-full">{body}</div>
                 ) : null}
             </HeroAlert.Content>
-            {/* `action` is a caller slot too (usually `Button`, not enforced) —
-                not badged for the same reason as `body` above. */}
             {action ? (
                 <div className="shrink-0">{action}</div>
             ) : null}
             {onClose ? (
-                // Badge stops at the "Close" node (atom `Button`) — doesn't drill into its internals.
-                <span className="shrink-0" data-anat-part={showAnatomy ? "Button" : undefined}>
-                    <Button isIconOnly
-                        prefixIcon={CloseGlyph}
-                        ariaLabel={closeAriaLabel ?? "Close"}
-                        variant="ghost"
-                        size="sm"
-                        onPress={onClose}
-                        className={STATUS_CLOSE_TONE[status]}
-                    />
-                </span>
+                // Alert draws its own close chrome — a raw button, not the house `Button` atom.
+                // An atom is the floor: importing another atom would make this a composite (ATOM-3).
+                // A ghost icon-button is a handful of utility classes, so it stays inline here.
+                <button
+                    type="button"
+                    onClick={onClose}
+                    aria-label={closeAriaLabel ?? "Close"}
+                    data-anat-part={showAnatomy ? "Close" : undefined}
+                    className={cn(
+                        "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-lg p-1.5 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent",
+                        STATUS_CLOSE_TONE[status],
+                    )}
+                >
+                    <XIcon weight="bold" className="size-3.5" />
+                </button>
             ) : null}
         </HeroAlert>
     )
@@ -231,6 +216,8 @@ const AlertBase = ({
 
 /**
  * `Alert.*` — the alert atom namespace. `Alert.Base` is the single alert
- * surface; `FeedbackCallout` and `Toast` both compose from it.
+ * surface; `Callout` and `Toast` both compose from it.
  */
 export { AlertBase as Alert }
+
+export const meta = { tier: "atom", name: "Alert" } as const

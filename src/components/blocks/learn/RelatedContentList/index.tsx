@@ -32,7 +32,7 @@ export interface RelatedContentListProps extends WithClassNames<undefined> {
      * The current surface's OWN source id (this lesson / task / deck). Filtered out
      * of the results so the block never suggests the page the learner is already on
      * — a title-derived query (e.g. LessonReader's `content.title`) always returns
-     * itself as the top hit, which reads as a bug ("nên đọc: bài chính nó").
+     * itself as the top hit, which reads as a bug ("suggested reading: itself").
      */
     excludeId?: string
     /** Max rows shown. Defaults to 3. */

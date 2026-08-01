@@ -21,6 +21,9 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "DrawerShell" } as const
+
 /** Props for {@link DrawerShell}. */
 export interface DrawerShellBaseProps {
     /** Whether the drawer is currently open. Forwarded to HeroUI `<Drawer>`. */
@@ -65,17 +68,14 @@ export interface DrawerShellBaseProps {
     children?: ReactNode
     /** Extra classes merged onto `Drawer.Content` (the sliding panel itself — width/height). */
     contentClassName?: string
-    /** Extra classes merged onto `Drawer.Dialog`, in addition to {@link className}. */
+    /** Extra classes merged onto `Drawer.Dialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
     dialogClassName?: string
     /** Extra classes merged onto `Drawer.Body`. */
     bodyClassName?: string
     /** Extra classes merged onto `Drawer.Footer`. */
     footerClassName?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /**
@@ -107,7 +107,6 @@ const Base = ({
     dialogClassName,
     bodyClassName,
     footerClassName,
-    className,
     classNames,
     children,
     showAnatomy = false,
@@ -115,37 +114,45 @@ const Base = ({
     const hasHeader = header != null || title != null
     const main = body ?? children
     return (
-        <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Drawer
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            data-tier="composite"
+            data-component="DrawerShell"
+        >
             <Drawer.Backdrop>
                 <Drawer.Content className={contentClassName} placement={placement}>
-                    <Drawer.Dialog className={cn("gap-3", dialogClassName, className, classNames)}>
+                    <Drawer.Dialog className={cn("gap-3", dialogClassName, classNames)}>
                         <Drawer.CloseTrigger data-anat-part={showAnatomy ? "Drawer.CloseTrigger" : undefined} />
                         {header ? (
                             <Drawer.Header data-anat-part={showAnatomy ? "Drawer.Header" : undefined}>{header}</Drawer.Header>
                         ) : title != null ? (
                             <Drawer.Header>
-                                <StackV
-                                    gap="tight"
-                                    className={cn("pr-8", titleClassName)}
-                                    body={
-                                        <>
-                                            <Typography
-                                                weight="bold"
-                                                showAnatomy={showAnatomy}
-                                                anatPart={showAnatomy ? "Typography" : undefined}
-                                                text={title}
-                                            />
-                                            {description != null ? (
-                                                <Typography size="sm"
-                                                    color="muted"
+                                {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
+                                    ride a plain wrapper — neither is an `AllowedClassName`, so the typed
+                                    `StackV` frame keeps its closed `classNames` union. */}
+                                <div className={cn("pr-8", titleClassName)}>
+                                    <StackV
+                                        gap={2}
+                                        pattern="title-subtitle"
+                                        body={
+                                            <>
+                                                <Typography
+                                                    weight="bold"
                                                     showAnatomy={showAnatomy}
-                                                    anatPart={showAnatomy ? "Typography" : undefined}
-                                                    text={description}
+                                                    text={title}
                                                 />
-                                            ) : null}
-                                        </>
-                                    }
-                                />
+                                                {description != null ? (
+                                                    <Typography size="sm"
+                                                        color="muted"
+                                                        showAnatomy={showAnatomy}
+                                                        text={description}
+                                                    />
+                                                ) : null}
+                                            </>
+                                        }
+                                    />
+                                </div>
                             </Drawer.Header>
                         ) : null}
                         <Drawer.Body

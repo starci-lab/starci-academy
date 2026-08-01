@@ -9,7 +9,7 @@ export interface DeadlineCalloutForecastBar {
     label: ReactNode
     /** Fill height as a share of the row, `0..1` — the caller normalizes against the busiest day. */
     ratio: number
-    /** True marks this as the overload day ("sẽ dồn cục") — fills danger instead of the neutral accent tone. */
+    /** True marks this as the overload day ("will pile up") — fills danger instead of the neutral accent tone. */
     spike?: boolean
 }
 
@@ -17,7 +17,7 @@ export interface DeadlineCalloutForecastBar {
 export interface DeadlineCalloutProps extends WithClassNames<undefined> {
     /** How many items are about to be lost — rendered large inside the tinted panel. */
     count: number
-    /** The deadline sentence (e.g. "12 thẻ sẽ tuột trước Thứ 5"). */
+    /** The deadline sentence (e.g. "12 cards will slip before Thursday"). */
     title: ReactNode
     /** Optional supporting line under the title, inside the tinted panel (what happens if the learner waits). */
     hint?: ReactNode

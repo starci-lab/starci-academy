@@ -47,13 +47,13 @@ export const Default: Story = {
                             name: "no label, no hint, no error",
                             why: "The field renders as a masked box (dots instead of characters) with only the show/hide eye button beside it, no label, hint, or error line. This is the baseline every other leaf below adds exactly one prop to.",
                             code: "<InputPassword value={v} onValueChange={setV} />",
-                            render: <div className="w-72"><InputPassword value={value} onValueChange={setValue} ariaLabel="Password" showAnatomy /></div>,
+                            render: <div data-tier="fixture" className="w-72"><InputPassword value={value} onValueChange={setValue} ariaLabel="Password" showAnatomy /></div>,
                         },
                     ]}
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -78,13 +78,13 @@ export const Placeholder: Story = {
                             name: "placeholder set, value = \"\"",
                             why: "Ghost text sits inside the masked box only while the field is empty, and typing the first character hides it immediately. Because `Default` above already holds a value, this leaf is the only one where the placeholder actually has a chance to show.",
                             code: "<InputPassword placeholder=\"Password\" value={v} onValueChange={setV} />",
-                            render: <div className="w-72"><InputPassword placeholder="Password" value={value} onValueChange={setValue} ariaLabel="Password" showAnatomy /></div>,
+                            render: <div data-tier="fixture" className="w-72"><InputPassword placeholder="Password" value={value} onValueChange={setValue} ariaLabel="Password" showAnatomy /></div>,
                         },
                     ]}
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -104,13 +104,13 @@ export const WithLabel: Story = {
                             name: "label + hint set",
                             why: "A label appears above the masked field and a hint line appears below it, with the box and eye button unchanged from Default. The hint is the natural place to spell out a length or character rule, since a masked field cannot show that rule inside the value itself.",
                             code: "<InputPassword label=\"Password\" hint=\"At least 8 characters\" value={v} onValueChange={setV} />",
-                            render: <div className="w-72"><InputPassword label="Password" hint="At least 8 characters" value={value} onValueChange={setValue} placeholder="Password" showAnatomy /></div>,
+                            render: <div data-tier="fixture" className="w-72"><InputPassword label="Password" hint="At least 8 characters" value={value} onValueChange={setValue} placeholder="Password" showAnatomy /></div>,
                         },
                     ]}
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -130,13 +130,13 @@ export const Required: Story = {
                             name: "isRequired = true",
                             why: "A `*` mark appears right after the label text, with nothing else in the field changing. It tells the learner this field cannot be left blank before they ever try to submit the form.",
                             code: "<InputPassword label=\"Password\" isRequired value={v} onValueChange={setV} />",
-                            render: <div className="w-72"><InputPassword label="Password" isRequired value={value} onValueChange={setValue} placeholder="Password" showAnatomy /></div>,
+                            render: <div data-tier="fixture" className="w-72"><InputPassword label="Password" isRequired value={value} onValueChange={setValue} placeholder="Password" showAnatomy /></div>,
                         },
                     ]}
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -156,13 +156,13 @@ export const Filled: Story = {
                             name: "value = \"SuperSecure!2026\"",
                             why: "The box now shows a row of masking dots instead of standing empty, one dot per character typed. The value stays masked even while filled, since a password field never reveals its content just because it holds one.",
                             code: "<InputPassword label=\"Password\" value=\"SuperSecure!2026\" onValueChange={setV} />",
-                            render: <div className="w-72"><InputPassword label="Password" value={value} onValueChange={setValue} showAnatomy /></div>,
+                            render: <div data-tier="fixture" className="w-72"><InputPassword label="Password" value={value} onValueChange={setValue} showAnatomy /></div>,
                         },
                     ]}
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -182,13 +182,13 @@ export const Disabled: Story = {
                             name: "isDisabled = true",
                             why: "The whole field dims and stops accepting focus, typing, or a reveal toggle, while the label and its masked value stay visible but muted. Use it when the password field's value is fixed by something else in the form, so editing or revealing it here would be misleading.",
                             code: "<InputPassword label=\"Password\" value=\"SuperSecure!2026\" isDisabled onValueChange={setV} />",
-                            render: <div className="w-72"><InputPassword label="Password" value={value} onValueChange={setValue} isDisabled showAnatomy /></div>,
+                            render: <div data-tier="fixture" className="w-72"><InputPassword label="Password" value={value} onValueChange={setValue} isDisabled showAnatomy /></div>,
                         },
                     ]}
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -212,13 +212,13 @@ export const Invalid: Story = {
                             name: "isInvalid = true, no errorMessage",
                             why: "The border turns red while no error line appears underneath it, and the label stays normal, because `isInvalid` alone carries no message to print. Compare it against `Error` next: that leaf adds `errorMessage`, which is the only thing that grows a red text line below the same red border.",
                             code: "<InputPassword label=\"Password\" isInvalid value={v} onValueChange={setV} />",
-                            render: <div className="w-72"><InputPassword label="Password" isInvalid value={value} onValueChange={setValue} placeholder="Password" showAnatomy /></div>,
+                            render: <div data-tier="fixture" className="w-72"><InputPassword label="Password" isInvalid value={value} onValueChange={setValue} placeholder="Password" showAnatomy /></div>,
                         },
                     ]}
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -238,20 +238,20 @@ export const Error: Story = {
                             name: "errorMessage set",
                             why: "The border turns red exactly as in `Invalid`, and now a red message line also appears below the field explaining what is wrong. Printing the actual reason, not just a red border, is what lets the learner fix the problem without guessing.",
                             code: "<InputPassword label=\"Password\" errorMessage=\"Password is too short\" value={v} onValueChange={setV} />",
-                            render: <div className="w-72"><InputPassword label="Password" errorMessage="Password is too short" value={value} onValueChange={setValue} placeholder="Password" showAnatomy /></div>,
+                            render: <div data-tier="fixture" className="w-72"><InputPassword label="Password" errorMessage="Password is too short" value={value} onValueChange={setValue} placeholder="Password" showAnatomy /></div>,
                         },
                     ]}
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /** Loading — label skeleton mirrored above the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InputPassword"
                 tier="atom"
@@ -262,7 +262,7 @@ export const Loading: Story = {
                         name: "isSkeleton = true, label set",
                         why: "A shimmering bar mirrors the label's position above a shimmering box, standing in for both before any data has arrived. Mirroring the label's own position, rather than skipping it, is what keeps the field from jumping once the real label and value land.",
                         code: "<InputPassword label=\"Password\" isSkeleton />",
-                        render: <div className="w-72"><InputPassword label="Password" value="" onValueChange={() => {}} isSkeleton showAnatomy /></div>,
+                        render: <div data-tier="fixture" className="w-72"><InputPassword label="Password" value="" onValueChange={() => {}} isSkeleton showAnatomy /></div>,
                     },
                 ]}
             />

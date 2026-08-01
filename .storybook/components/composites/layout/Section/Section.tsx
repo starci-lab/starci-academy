@@ -3,15 +3,15 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography, type TypographySize } from "@sb-components/atoms/text/Typography/Typography"
-import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
+import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `Section.*`, the KHUNG of a VÙNG inside a page.
+ * COMPOSITE TIER (§13) — `Section.*`, the frame of a REGION inside a page.
  *
  * A section is the region between a page and a card: a titled band of a route
- * (`Khoá của tôi`, `Hoạt động gần đây`) that owns NO chrome of its own — no
+ * ("My courses", "Recent activity") that owns NO chrome of its own — no
  * surface fill, no border, no radius, no padding. It only stacks a header, a
  * body and an optional footer at ONE rhythm (§10).
  *
@@ -34,13 +34,16 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * - No repeating list here, so no `items` member (§13b list clause N/A).
  * - Namespace only — no bare component export.
  *
- * §10: the vertical rhythm is a TYPED token (`SeamScale`), not a free number —
- * the frame cannot be asked for an off-scale `gap-4`/`gap-5`.
+ * §10: the vertical rhythm is a TYPED token ({@link AllowedGap}), not a free number —
+ * the frame cannot be asked for an off-scale step.
  * §13c: text goes through the `Typography.*` ATOM, never a hand-rolled `<p>`;
  * `action` takes a `Button.*` atom node from the caller (the frame stays
  * feature-less — it never decides WHAT the action is).
  * ─────────────────────────────────────────────────────────────────────────────
  */
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Section" } as const
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared scale
@@ -60,11 +63,11 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  */
 export type SectionLevel = 1 | 2 | 3
 
-/** level → CỠ chữ mỗi dòng dùng. Một bảng DỮ LIỆU, call-site không phải chọn. */
+/** level → the text size each line uses. A DATA table — the call-site never chooses it by hand. */
 const TITLE_SIZE: Record<SectionLevel, TypographySize> = { 1: "lg", 2: "base", 3: "sm" }
 const DESCRIPTION_SIZE: Record<SectionLevel, TypographySize> = { 1: "sm", 2: "sm", 3: "xs" }
 const EYEBROW_SIZE: Record<SectionLevel, TypographySize> = { 1: "sm", 2: "xs", 3: "xs" }
-/** §9b: the two top ranks read as headings (bold); the sub-section rank only nhấn (medium). */
+/** §9b: the two top ranks read as headings (bold); the sub-section rank is only emphasized (medium). */
 const TITLE_WEIGHT: Record<SectionLevel, "bold" | "medium"> = {
     1: "bold",
     2: "bold",
@@ -80,18 +83,15 @@ export interface SectionHeaderProps {
     /** Muted kicker ABOVE the title — context, not a second title (e.g. a course name). */
     eyebrow?: ReactNode
     /**
-     * Right-aligned control slot — pass a `Button.*` atom node ("Xem tất cả",
-     * "Quản lý"). Rendered `shrink-0` so it never squeezes the title column. The
+     * Right-aligned control slot — pass a `Button.*` atom node ("View all",
+     * "Manage"). Rendered `shrink-0` so it never squeezes the title column. The
      * frame never decides WHAT the action does (that would be a feature, §13).
      */
     action?: ReactNode
     /** Heading rank → the text scale of every line. Default `2`. */
     level?: SectionLevel
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
@@ -115,7 +115,6 @@ const Header = ({
     eyebrow,
     action,
     level = 2,
-    className,
     classNames,
     anatPart,
     showAnatomy = false,
@@ -123,8 +122,8 @@ const Header = ({
     const titleSize = TITLE_SIZE[level]
     const descriptionSize = DESCRIPTION_SIZE[level]
     const eyebrowSize = EYEBROW_SIZE[level]
-    // eyebrow ↔ title ↔ description are ONE text unit → tight gap="tight" (§10b
-    // "inside a lower-tier component"), not the grouped gap="grouped" used BETWEEN regions.
+    // eyebrow ↔ title ↔ description are ONE text unit → tight gap={2} (§10b
+    // "inside a lower-tier component"), not the grouped gap={4} used BETWEEN regions.
     const titleBlock = (
         <>
             {eyebrow != null ? (
@@ -147,13 +146,12 @@ const Header = ({
         <StackH
             align="start"
             justify="between"
-            gap="grouped"
-            className={className}
+            gap={4}
             classNames={classNames}
             anatPart={anatPart}
             body={
                 <>
-                    <StackV gap="tight" classNames={["min-w-0"]} body={titleBlock} />
+                    <StackV gap={2} pattern="title-subtitle" classNames={["min-w-0"]} body={titleBlock} />
                     {action != null ? (
                         <div className="shrink-0">{action}</div>
                     ) : null}
@@ -184,21 +182,18 @@ export interface SectionBaseProps {
     header?: SectionHeaderSlot
     /** Main region. Equivalent to `children`; wins over it when both are passed. */
     body?: ReactNode
-    /** Bottom region (a closing CTA row, a caption, a "xem thêm" link). */
+    /** Bottom region (a closing CTA row, a caption, a "see more" link). */
     footer?: ReactNode
     /** Shorthand for {@link SectionBaseProps.body} — a wrapper frame wraps anything. */
     children?: ReactNode
     /**
      * Vertical rhythm between header ↔ body ↔ footer, on the §10c scale ONLY.
-     * Default `6` (`section`) — the rhythm between regions of a page. Drop to
-     * `3` (`grouped`) when the header is just a label over a tight list.
+     * Default `{6}` (`gap-6`) — the rhythm between regions of a page. Drop to
+     * `{4}` (`gap-3`) when the header is just a label over a tight list.
      */
-    gap?: SeamScale
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
+    gap?: AllowedGap
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
@@ -227,7 +222,7 @@ const Base = ({
     body,
     footer,
     children,
-    gap = "section",    className,
+    gap = 6,
     classNames,
     anatPart,
     showAnatomy = false,
@@ -242,7 +237,13 @@ const Base = ({
             ? <Header {...header} showAnatomy={showAnatomy} anatPart={showAnatomy ? "SectionHeader" : undefined} />
             : header
     return (
-        <section className={cn("flex flex-col", GAP_CLASS[gap], className, classNames)} data-anat-part={anatPart}>
+        <section
+            className={cn("flex flex-col", GAP_CLASS[gap], classNames)}
+            data-anat-part={anatPart}
+            data-tier="composite"
+            data-component="Section"
+            data-principles={gap === 6 ? "block-boundary" : undefined}
+        >
             {headerNode != null ? (
                 <div>{headerNode}</div>
             ) : null}
@@ -257,7 +258,7 @@ const Base = ({
 }
 
 /**
- * The section KHUNG namespace — the frame of a VÙNG inside a page, two members:
+ * The section frame namespace — the frame of a region inside a page, two members:
  *
  * | Member | Content channel |
  * |---|---|

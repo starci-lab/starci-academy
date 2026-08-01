@@ -40,7 +40,7 @@ export const OverviewCourses = ({ className, label, onSeeMore, seeMoreLabel }: O
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
-    // only the profile OWNER sees the "Học thử" chip — don't broadcast "hasn't paid"
+    // only the profile OWNER sees the "Free trial" chip — don't broadcast "hasn't paid"
     // for a course on someone else's public profile.
     const viewerId = useAppSelector((state) => state.user.user?.id)
     const isOwnProfile = Boolean(viewerId) && viewerId === userId

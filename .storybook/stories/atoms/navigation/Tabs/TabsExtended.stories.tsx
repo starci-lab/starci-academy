@@ -6,56 +6,63 @@ import { HouseIcon, CompassIcon, GraduationCapIcon } from "@phosphor-icons/react
 import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ATOM — `TabsExtended`: StarCi tab strip, bọc HeroUI `Tabs` root. Chuyển vào
- * namespace `Tabs.*` 2026-07-26 (trước đây là `ExtendedTabs.Base` đứng riêng —
- * xem header `TabsExtended.tsx` cho lý do gộp, và vì sao `children` ở đây là
- * NGOẠI LỆ hợp lệ chứ không phải nợ).
+ * ATOM — `TabsExtended`: the StarCi tab strip, wrapping the HeroUI `Tabs` root.
+ * Moved into the `Tabs.*` namespace 2026-07-26 (previously stood alone as
+ * `ExtendedTabs.Base` — see the `TabsExtended.tsx` header for why it was merged,
+ * and why `children` here is a valid EXCEPTION rather than debt).
  *
- * 📐 **1 PROP CÓ HÌNH = 1 LEAF** (§12g — luật TẦNG ATOM, khác §14d.2 của tầng trên).
- * Bộ leaf = `Default` (trần) + một leaf mỗi prop CÓ HÌNH: `variant` · `size`.
- * `selectedKey`/`onSelectionChange` là cơ chế controlled bắt buộc (không phải giá
- * trị-để-so-sánh nên KHÔNG có leaf riêng), `className` là escape hatch (KHÔNG có
- * leaf, cùng lý do `Chip` loại `className`).
+ * 📐 **1 PROP THAT PRODUCES A SHAPE = 1 LEAF** (§12g — the ATOM-tier rule, unlike
+ * §14d.2 for the tier above). Leaf set = `Default` (bare) + one leaf per prop
+ * THAT PRODUCES A SHAPE: `variant` · `size`. `selectedKey`/`onSelectionChange` is
+ * the mandatory controlled mechanism (not a value to compare, so it has NO leaf
+ * of its own), `className` is an escape hatch (NO leaf, same reason `Chip`
+ * excludes `className`).
  *
- * `children` là NGOẠI LỆ CÓ TÊN §12b (atom-WRAPPER) — thẩm tra lại 2026-07-26 và
- * GIỮ NGUYÊN kết luận gốc. Bản ghi giữa chừng từng gọi đây là "nợ thật" vì thấy
- * `Tabs` đi được bằng `items`; sai, vì nó không đọc consumer: `Toolbar` gắn vào
- * mỗi tab class theo `accent`/`muted` và ẩn nhãn responsive — thứ một `TabItem` dữ
- * liệu không chở nổi. Xem header `TabsExtended.tsx`. Theo §12g.2, prop kiểu
- * "dựng ra N con" (ở đây là `children` thay vì `items`) CÓ leaf và leaf đó CHÍNH LÀ
- * `Default` — không đẻ thêm leaf `Children`.
+ * `children` is a NAMED EXCEPTION under §12b (atom-WRAPPER) — re-examined
+ * 2026-07-26 and the original conclusion STANDS. A mid-stream note once called
+ * this "real debt" on the grounds that `Tabs` gets by with `items`; that's wrong,
+ * because it ignores the consumer: `Toolbar` attaches an `accent`/`muted` class to
+ * each tab and hides responsive labels — something a data-only `TabItem` can't
+ * carry. See the `TabsExtended.tsx` header. Per §12g.2, a prop of the "builds N
+ * children" kind (here `children` instead of `items`) DOES have a leaf, and that
+ * leaf IS `Default` — no separate `Children` leaf is spawned.
  *
- * BỘ LEAF BÊ NGUYÊN từ `ExtendedTabs.Base.stories.tsx` (đã audit lượt trước, KHÔNG
- * audit lại ở lượt gộp này) — chỉ đổi import/tên hiển thị sang `TabsExtended`:
+ * The leaf set was CARRIED OVER AS-IS from `ExtendedTabs.Base.stories.tsx`
+ * (audited in a prior pass, NOT re-audited in this merge pass) — only the
+ * import/display name changed to `TabsExtended`:
  *
- * ⚠️ ĐÃ GỘP 2026-07-26 (leaf, trước khi namespace gộp): bản trước tách 5 leaf theo
- * CẤU LỚP (`InputWFit` / `FullWidthTruncate` / `PrimaryLarge` / `Secondary` /
- * `SecondaryWithIcons`) — đúng luật §14d.2 (cấu trúc) chứ không phải §12g (prop) của
- * tầng atom. Kết quả: prop `variant` không có chỗ nào render đủ union trong MỘT
- * leaf, và `size` bị xé thành hai leaf không tên theo prop. Gộp lại:
- * `InputWFit`+`FullWidthTruncate` → leaf `Size` (đúng là hai GIÁ TRỊ của `size`, hoá
- * ra khớp luôn với đoạn comment "truncates (w-full) or sizes to label (w-fit)" trong
- * `TabsExtended.tsx`); `PrimaryLarge`+`Secondary` → leaf `Variant`.
- * `SecondaryWithIcons` không phải giá trị mới của prop nào (icon nằm trong
- * `children`, không phải prop của atom này) — nội dung của nó chuyển vào làm ví dụ
- * `secondary` bên trong leaf `Variant` thay vì đứng tên leaf riêng.
+ * ⚠️ MERGED 2026-07-26 (leaves, before the namespace merge): the previous version
+ * split 5 leaves by STRUCTURE (`InputWFit` / `FullWidthTruncate` / `PrimaryLarge` /
+ * `Secondary` / `SecondaryWithIcons`) — correct under §14d.2 (structure) rather
+ * than §12g (prop) for the atom tier. Result: the `variant` prop had nowhere
+ * rendering its full union in ONE leaf, and `size` was torn across two leaves not
+ * named after the prop. Merged: `InputWFit`+`FullWidthTruncate` → leaf `Size`
+ * (these really are the two VALUES of `size`, which turns out to match the
+ * "truncates (w-full) or sizes to label (w-fit)" comment in `TabsExtended.tsx`);
+ * `PrimaryLarge`+`Secondary` → leaf `Variant`. `SecondaryWithIcons` wasn't a new
+ * value of any prop (the icon lives in `children`, not a prop of this atom) — its
+ * content moved into the `secondary` example inside the `Variant` leaf instead of
+ * standing as its own named leaf.
  *
- * `annotate` (2026-07-27, heroui tier thêm vào canon): atom bọc thẳng HeroUI `Tabs`
- * (không qua atom `Tabs` của hệ, alias `HeroTabs`), và phần DOM duy nhất nó SỞ
- * HỮU là gốc `<Tabs>` — còn cây `Tabs.ListContainer > Tabs.List > Tabs.Tab` là của
- * STORY dựng (chính là `children`), nên CHỈ gốc `<Tabs>` được tag (`"Tabs"`, tier
- * heroui, khớp identifier import). Trước đây bỏ hẳn `showAnatomy`/`data-anat-part` —
- * đúng là "cây nói dối bằng cách bỏ sót" (Popover mở được mà cây không hiện gì): atom
- * này render một `HeroTabs` THẬT mà không nút nào của cây từng thấy nó.
+ * `annotate` (2026-07-27, heroui tier added to canon): the atom wraps HeroUI
+ * `Tabs` directly (not through the system's own `Tabs` atom, aliased `HeroTabs`),
+ * and the only DOM node it OWNS is the root `<Tabs>` — the
+ * `Tabs.ListContainer > Tabs.List > Tabs.Tab` tree below it belongs to the STORY
+ * that builds it (i.e. `children`), so ONLY the root `<Tabs>` is tagged (`"Tabs"`,
+ * heroui tier, matching the import identifier). Previously `showAnatomy`/
+ * `data-anat-part` were dropped entirely — a genuine case of "the tree lies by
+ * omission" (the Popover opens fine but the tree shows nothing): this atom
+ * renders a REAL `HeroTabs` that no tree node ever saw.
  *
- * 🔎 GHI NHẬN (không sửa ở đây — ngoài phạm vi soát leaf, xem header component cho
- * bản đầy đủ): component tự khai trong header là "full port of
- * `@/components/blocks/navigation/ExtendedTabs`" — một block cũ bê thẳng vào atom,
- * chưa qua thiết kế atom. Không dùng atom `Tabs` của hệ (import thẳng HeroUI
- * `Tabs`) nên trùng lặp một phần bề mặt với `Tabs`; so với `Tabs` (nhận
- * `items`, tự dựng DOM, chọn-1-trong-N — đúng hình atom khép kín), `TabsExtended`
- * nhận `children` thô và không tự giới hạn N tab hay cấu trúc mỗi tab — gần hình một
- * khung slot-trơ (`frame`) hơn là atom nội dung.
+ * 🔎 NOTE (not fixed here — out of scope for a leaf audit, see the component
+ * header for the full account): the component's own header describes it as a
+ * "full port of `@/components/blocks/navigation/ExtendedTabs`" — an old block
+ * carried straight into an atom, never redesigned as one. It doesn't use the
+ * system's own `Tabs` atom (imports HeroUI `Tabs` directly), so it overlaps in
+ * surface with `Tabs`; compared to `Tabs` (takes `items`, builds its own DOM,
+ * choose-1-of-N — the shape of a proper self-contained atom), `TabsExtended`
+ * takes raw `children` and doesn't constrain the tab count or each tab's
+ * structure on its own — closer to a bare slot `frame` than a content atom.
  *
  * 2026-07-27: migrated to the `states` API (§8) — `Variant`/`Size` now render their
  * union as `states[]` tabs instead of a stacked column under one shared `note`.
@@ -93,10 +100,10 @@ const Controlled = ({
         </TabsExtended>
     )
 }
-/** Leaf TRẦN — `variant="secondary"` mặc định, `children` là ví dụ tối thiểu (§12g.2). */
+/** Bare leaf — `variant="secondary"` default, `children` is a minimal example (§12g.2). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TabsExtended"
                 tier="atom"
@@ -142,10 +149,10 @@ export const Default: Story = {
         </div>
     ),
 }
-/** Leaf prop `variant` — ĐỦ union `"primary" | "secondary"`, render trong CÙNG một leaf. */
+/** Leaf prop `variant` — the FULL union `"primary" | "secondary"`, rendered in the SAME leaf. */
 export const Variant: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TabsExtended"
                 tier="atom"
@@ -219,10 +226,10 @@ export const Variant: Story = {
         </div>
     ),
 }
-/** Leaf prop `size` — ĐỦ union `"sm" | "md"`, cả hai đặt trên `variant="primary"` vì `size` không có tác dụng trên `secondary`. */
+/** Leaf prop `size` — the FULL union `"sm" | "md"`, both set on `variant="primary"` since `size` has no effect on `secondary`. */
 export const Size: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TabsExtended"
                 tier="atom"
@@ -256,7 +263,7 @@ export const Size: Story = {
                         why: "The strip stretches to `w-full` and splits its segments evenly (the default). Inside a squeezed container a segment truncates its label instead of wrapping, since every `Tabs.Tab` is forced `whitespace-nowrap`.",
                         code: "<TabsExtended variant=\"primary\" size=\"md\" selectedKey={key} onSelectionChange={setKey}>…</TabsExtended>",
                         render: (
-                            <div className="w-64">
+                            <div data-tier="fixture" className="w-64">
                                 <Controlled defaultKey="grid" variant="primary" size="md">
                                     <HeroTabs.ListContainer>
                                         <HeroTabs.List aria-label="View mode">

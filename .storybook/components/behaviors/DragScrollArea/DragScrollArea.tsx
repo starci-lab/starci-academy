@@ -7,7 +7,7 @@ import { motion, type PanInfo } from "framer-motion"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `DragScrollArea.*`, the pointer-pan scroll
- * region KHUNG namespace (thầy 2026-07-25, canon §13a). Authored in Storybook
+ * region FRAME namespace (teacher 2026-07-25, canon §13a). Authored in Storybook
  * (not `src`); synced to `src` later. No `@/components` imports (design-spec
  * ports stay self-contained).
  *

@@ -38,10 +38,10 @@ export default meta
 type Story = StoryObj<typeof FoundationsHeader>
 
 const CRUMBS = [
-    { key: "home", label: "Trang chủ", onPress: () => {} },
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "home", label: "Home", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "foundations", label: "Nền tảng", onPress: () => {} },
+    { key: "foundations", label: "Foundations", onPress: () => {} },
     { key: "category", label: "Linux & Shell" },
 ]
 
@@ -54,7 +54,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full set: trail → title → optional description. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationsHeader"
                 tier="block"
@@ -69,7 +69,7 @@ export const Full: Story = {
                         code: `<FoundationsHeader
     breadcrumbItems={crumbs}
     title="Linux & Shell"
-    description="Làm chủ dòng lệnh, quyền hạn và các thao tác hệ thống nền tảng cho mọi kỹ sư."
+    description="Master the command line, permissions, and the core system operations every engineer needs."
 />`,
                         render: (
                             <FoundationsHeader
@@ -77,7 +77,7 @@ export const Full: Story = {
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
                                 title="Linux & Shell"
-                                description="Làm chủ dòng lệnh, quyền hạn và các thao tác hệ thống nền tảng cho mọi kỹ sư."
+                                description="Master the command line, permissions, and the core system operations every engineer needs."
                             />
                         ),
                     },
@@ -104,7 +104,7 @@ export const Full: Story = {
 /** LEAF — the caller flips `isSkeleton`, so every atom swaps to its own mirror. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationsHeader"
                 tier="block"

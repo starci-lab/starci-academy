@@ -90,7 +90,7 @@ const ACCENT_OPTIONS: Array<string> = [
 /** How long to wait after the last edit before autosaving. */
 const AUTOSAVE_DEBOUNCE_MS = 1000
 
-/** Which pane the mobile `Sửa | Xem` toggle is showing. */
+/** Which pane the mobile `Edit | Preview` toggle is showing. */
 type MobilePane = "edit" | "preview"
 
 /**
@@ -100,10 +100,10 @@ type MobilePane = "edit" | "preview"
  */
 type WorkspaceMode = "block" | "latex"
 
-/** Font-scale segments the style rail offers ("Cỡ chữ"). */
+/** Font-scale segments the style rail offers ("Font size"). */
 const FONT_SCALE_VALUES: Array<CvFontScale> = ["sm", "md", "lg"]
 
-/** CV-language segments the style rail offers ("Ngôn ngữ CV"). */
+/** CV-language segments the style rail offers ("CV language"). */
 const LANGUAGE_VALUES: Array<CvLanguage> = ["vi", "en"]
 
 /** Props for {@link CvEditor}. */
@@ -140,8 +140,8 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
     const pickableAchievementsSwr = useQueryMyPickableCvAchievementsSwr()
     const capstoneCount = pickableAchievementsSwr.data?.milestoneTaskAttempts.length ?? 0
 
-    // AI model picker ("Trợ lý AI") — drives both "AI viết giúp" (per-block
-    // rewrite) and "Chỉnh theo tin tuyển dụng" (tailor-to-JD). Auto lane
+    // AI model picker ("AI assistant") — drives both "AI rewrite" (per-block
+    // rewrite) and "Tailor to job posting" (tailor-to-JD). Auto lane
     // (both null) omits the model from the mutations below.
     const aiModelsSwr = useQueryAiModelsSwr()
     const aiSettingsSwr = useQueryMyAiSettingsSwr()
@@ -171,7 +171,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
     /**
      * The CV's CURRENT `.tex` — regenerated from the blocks in block mode, or the
      * user's hand-edited buffer in LaTeX mode. Feeds the compiled-PDF preview, the
-     * PDF export, and the "Tải .tex" download.
+     * PDF export, and the "Download .tex" action.
      */
     const currentTex = useMemo(() => {
         if (!draft) {
@@ -431,17 +431,17 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                         )}
                     >
                         {/* Long style/config list → ScrollShadow (fade edges) on desktop
-                            (rule: rail dài → ScrollShadow, not bare overflow). Mobile flows
+                            (rule: long rail → ScrollShadow, not bare overflow). Mobile flows
                             naturally in the page stack (no fixed-height scroll). */}
                         <ScrollShadow
                             hideScrollBar
                             className="flex flex-col gap-6 p-6 @app-lg:min-h-0 @app-lg:flex-1 @app-lg:overflow-y-auto"
                         >
-                            {/* Mẫu (template) — coarsest style lever, so it sits at the top.
+                            {/* Template — coarsest style lever, so it sits at the top.
                             Shows the CURRENT value and opens a picker (the thumbnail
                             gallery), rendered as `Button variant="tertiary"` — matching
-                            the "Trợ lý AI" picker below (both button-style pickers;
-                            Phông chữ/Cỡ chữ stay real `Select` fields). */}
+                            the "AI assistant" picker below (both button-style pickers;
+                            Font/Font size stay real `Select` fields). */}
                             <div className="flex flex-col gap-3">
                                 <Label>{t("cv.builder.template.label")}</Label>
                                 <Button
@@ -571,10 +571,10 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                                 </Select.Root>
                             </div>
 
-                            {/* AI assistant — the model picker for "AI viết giúp" rewrites,
-                            rendered `isButton` (matches the "Mẫu" picker above — both
-                            button-style pickers; Phông chữ/Cỡ chữ stay real `Select`
-                            fields). Sits ABOVE "Truy cập nhanh" (thầy: trợ lý AI ở trên).
+                            {/* AI assistant — the model picker for "AI rewrite" rewrites,
+                            rendered `isButton` (matches the "Template" picker above — both
+                            button-style pickers; Font/Font size stay real `Select`
+                            fields). Sits ABOVE "Quick access" (reviewer: AI assistant goes on top).
                             Credit caption = shared `GradeCreditCaption` (weekly pool, same
                             as every other AI surface — see canon
                             `ai-credit-caption-bound-to-picker-not-button.md`). */}
@@ -599,7 +599,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                             </div>
 
                             {/* Quick access — both ingest entry points: paste an existing CV +
-                            tailor to a job description (thầy: cả 2 ở truy cập nhanh). */}
+                            tailor to a job description (reviewer: both belong in quick access). */}
                             <div className="flex flex-col gap-2">
                                 <Label>{t("cv.builder.quickAccessLabel")}</Label>
                                 <Button variant="tertiary" className="w-full justify-start" onPress={() => setIsSplitModalOpen(true)}>
@@ -678,7 +678,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                     {/* Content — edit pane (block form | raw LaTeX) | compiled-PDF preview,
                         each an independent scroll region. */}
                     <div className="grid min-w-0 flex-1 grid-cols-1 gap-6 p-6 @app-lg:grid-cols-2 @app-lg:overflow-hidden">
-                        {/* Edit pane — a Khối | LaTeX toggle over either the block form or
+                        {/* Edit pane — a Block | LaTeX toggle over either the block form or
                             the raw `.tex` editor. */}
                         <div
                             className={cn(

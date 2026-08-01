@@ -25,20 +25,20 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * reason — this is that same move, not a new pattern.
  *
  * OWNS TWO PIECES OF WORDING (§14d.1):
- *   • the "Xếp hạng theo …" template — the caller hands over the bare category
- *     (e.g. "XP tuần này"), never the finished sentence;
+ *   • the "Ranked by …" template — the caller hands over the bare category
+ *     (e.g. "this week's XP"), never the finished sentence;
  *   • the relative-time phrasing built from `updatedAt` (a `Date`, not a
- *     pre-formatted string) — "Vừa cập nhật" / "N phút trước" / "N giờ trước" /
- *     "N ngày trước". A caller that could pass a ready-made string would decide
+ *     pre-formatted string) — "Just updated" / "N minutes ago" / "N hours ago" /
+ *     "N days ago". A caller that could pass a ready-made string would decide
  *     the grouping and two callers could drift on wording.
  *   `refreshLabel` is the ONE exception, same idiom as `ariaLabel` on
  *   `ContentModeNav`/`WorkSessionHeader`'s `backLabel`/`finishLabel`: blocks
  *   carry no i18n, so a short trigger word is handed in already localized —
- *   it is not a pre-formatted SENTENCE, just a word like "Làm mới".
+ *   it is not a pre-formatted SENTENCE, just a word like "Refresh".
  *
  * ⚠️ RELATIVE TIME IS COMPUTED AT RENDER, NOT LIVE-TICKING. `formatUpdatedAt`
  * reads `Date.now()` once per render. A toolbar strip is not a stopwatch — it
- * is fine for "5 phút trước" to become "6 phút trước" only the next time this
+ * is fine for "5 minutes ago" to become "6 minutes ago" only the next time this
  * block re-renders (e.g. after the next successful refresh), rather than
  * wiring an interval that would re-render the whole strip every minute for a
  * fact nobody is staring at. Judgement call, flagged rather than silent.
@@ -53,7 +53,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Props for {@link LeaderboardToolbar}. */
 export interface LeaderboardToolbarProps {
-    /** What the ranking is sorted by, e.g. "XP tuần này". The block builds the sentence around it. */
+    /** What the ranking is sorted by, e.g. "this week's XP". The block builds the sentence around it. */
     categoryLabel: string
     /** When the board last refreshed. Omitted → nothing has loaded yet, so no timestamp is claimed. */
     updatedAt?: Date
@@ -61,7 +61,7 @@ export interface LeaderboardToolbarProps {
     onRefresh: () => void
     /** `true` → a refresh is in flight; the button carries its own busy skin and locks the press. */
     isRefreshing?: boolean
-    /** Localized trigger word for the refresh button, e.g. "Làm mới" (blocks carry no i18n). */
+    /** Localized trigger word for the refresh button, e.g. "Refresh" (blocks carry no i18n). */
     refreshLabel: string
     /** Extra classes on the row, from the closed atom/frame union. */
     classNames?: Array<AllowedClassName>
@@ -77,12 +77,12 @@ export interface LeaderboardToolbarProps {
  */
 const formatUpdatedAt = (updatedAt: Date): string => {
     const diffMinutes = Math.floor((Date.now() - updatedAt.getTime()) / 60_000)
-    if (diffMinutes < 1) return "Vừa cập nhật"
-    if (diffMinutes < 60) return `Cập nhật ${diffMinutes} phút trước`
+    if (diffMinutes < 1) return "Just updated"
+    if (diffMinutes < 60) return `Updated ${diffMinutes} minutes ago`
     const diffHours = Math.floor(diffMinutes / 60)
-    if (diffHours < 24) return `Cập nhật ${diffHours} giờ trước`
+    if (diffHours < 24) return `Updated ${diffHours} hours ago`
     const diffDays = Math.floor(diffHours / 24)
-    return `Cập nhật ${diffDays} ngày trước`
+    return `Updated ${diffDays} days ago`
 }
 
 /**
@@ -102,7 +102,7 @@ const LeaderboardToolbar = ({
     anatPart,
 }: LeaderboardToolbarProps) => (
     <StackH
-        gap="related"
+        gap={3}
         align="center"
         classNames={classNames}
         anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)}
@@ -111,8 +111,8 @@ const LeaderboardToolbar = ({
                 <Typography
                     size="sm"
                     weight="medium"
-                    text={`Xếp hạng theo ${categoryLabel}`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`Ranked by ${categoryLabel}`}
+                    showAnatomy={showAnatomy}
                 />
                 {/* no icon here — §5a.2: a clock needs an ASSOCIATION step to read as "time"
                     (not a universal symbol like ✓/🔒), and the text already carries the fact. */}
@@ -121,7 +121,7 @@ const LeaderboardToolbar = ({
                         size="xs"
                         color="muted"
                         text={formatUpdatedAt(updatedAt)}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 ) : null}
                 {/* Pushes the refresh button to the row's trailing edge without a second
@@ -134,7 +134,6 @@ const LeaderboardToolbar = ({
                     prefixIcon={ArrowClockwiseIcon}
                     isPending={isRefreshing}
                     onPress={onRefresh}
-                    anatPart={showAnatomy ? "Button" : undefined}
                 />
             </>
         }

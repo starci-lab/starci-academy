@@ -102,7 +102,7 @@ const ConsultantCard = ({
     const { id, fullName, jobTitle, companyTitle, description, avatarUrl } = consultant
 
     const nameRow = (
-        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={(
+        <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={(
             <>
                 <Typography
                     size="sm"
@@ -110,7 +110,7 @@ const ConsultantCard = ({
                     truncate
                     isSkeleton={isSkeleton}
                     text={fullName}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
                 {isSkeleton || jobTitle ? (
                     <Typography
@@ -119,7 +119,7 @@ const ConsultantCard = ({
                         truncate
                         isSkeleton={isSkeleton}
                         text={jobTitle}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 ) : null}
             </>
@@ -147,7 +147,7 @@ const ConsultantCard = ({
                     prefixIcon={BuildingsIcon}
                     isSkeleton={isSkeleton}
                     text={companyTitle}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
             {isSkeleton || description ? (
@@ -157,7 +157,7 @@ const ConsultantCard = ({
                     lineClamp={2}
                     isSkeleton={isSkeleton}
                     text={description}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -170,9 +170,8 @@ const ConsultantCard = ({
                     onPress={() => onOpen(id)}
                     isDisabled={isSkeleton}
                     showAnatomy={showAnatomy}
-                >
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={consultantInfo} />
-                </SurfaceCard>
+                    body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={consultantInfo} />}
+                />
             </div>
         </div>
     )

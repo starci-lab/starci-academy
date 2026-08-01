@@ -78,7 +78,7 @@ import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/bl
  * the CTA label in one run-on sentence per tile. Naming the tile after the
  * title only keeps the announcement to what a card actually IS.
  *
- * ⭐ JUDGEMENT CALL — the CTA at the foot of a grid tile ("Học ngay" by default,
+ * ⭐ JUDGEMENT CALL — the CTA at the foot of a grid tile ("Study now" by default,
  * `ctaLabel`) is DECORATIVE text, not a second interactive element. The whole
  * tile is already one press target (`onSelectDeck`); nesting a real `<button>`
  * inside `SurfaceCard`'s own `<button>` is illegal HTML, and the
@@ -133,7 +133,7 @@ export interface FlashcardDeckListProps {
     onPageChange: (page: number) => void
     /** Fired with a deck's id when its tile/row is pressed. */
     onSelectDeck: (id: string) => void
-    /** Overrides the default grid-tile CTA wording ("Học ngay"). Localization override, not domain data (mirrors `seeMoreLabel`/`removeLabel`). */
+    /** Overrides the default grid-tile CTA wording ("Study now"). Localization override, not domain data (mirrors `seeMoreLabel`/`removeLabel`). */
     ctaLabel?: string
     /** `true` → grid tiles and list rows also carry the per-viewer mastery meter. `false` → a plain browse surface with no progress talk. */
     showProgress: boolean
@@ -146,12 +146,12 @@ export interface FlashcardDeckListProps {
 }
 
 /** The block's own wording for the grid-tile CTA — overridable via `ctaLabel`. */
-const DEFAULT_CTA_LABEL = "Học ngay"
+const DEFAULT_CTA_LABEL = "Study now"
 
 /** View-toggle tabs — icon only, labels are `sr-only` (the atom takes a `ReactNode` label, so this is within its own contract, not a hack around it). */
 const VIEW_ITEMS: Array<TabItem> = [
-    { key: "grid", label: <span className="sr-only">Dạng lưới</span>, icon: SquaresFourIcon },
-    { key: "line", label: <span className="sr-only">Dạng danh sách</span>, icon: RowsIcon },
+    { key: "grid", label: <span className="sr-only">Grid view</span>, icon: SquaresFourIcon },
+    { key: "line", label: <span className="sr-only">List view</span>, icon: RowsIcon },
 ]
 
 /** Placeholder rows/tiles for the guessed skeleton count (§12c) — never carry a press handler. */
@@ -212,14 +212,14 @@ const FlashcardDeckList = ({
         if (deck.dueCount) {
             chips.push({
                 key: "due",
-                content: <Chip tone="warning" text={`${deck.dueCount} đến hạn`} anatPart={showAnatomy ? "Chip" : undefined} />,
+                content: <Chip tone="warning" text={`${deck.dueCount} due`} />,
             })
         }
         const titleAndDescription = (
             <>
-                <Typography size="sm" weight="medium" truncate text={deck.title} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" weight="medium" truncate text={deck.title} showAnatomy={showAnatomy} />
                 {deck.description ? (
-                    <Typography size="xs" color="muted" lineClamp={2} text={deck.description} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" color="muted" lineClamp={2} text={deck.description} showAnatomy={showAnatomy} />
                 ) : null}
             </>
         )
@@ -230,7 +230,7 @@ const FlashcardDeckList = ({
                     <ProgressGauge
                         value={((deck.masteredCount ?? 0) / deck.totalCount) * 100}
                         size="sm"
-                        ariaLabel={`Mức độ thuộc bộ thẻ ${deck.title}`}
+                        ariaLabel={`Mastery level for the ${deck.title} deck`}
                         showAnatomy={showAnatomy}
                     />
                 </div>
@@ -238,7 +238,7 @@ const FlashcardDeckList = ({
                     size="xs"
                     color="muted"
                     text={`${deck.masteredCount ?? 0}/${deck.totalCount}`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             </>
         )
@@ -250,7 +250,7 @@ const FlashcardDeckList = ({
                     weight="medium"
                     color="accent-soft"
                     text={ctaLabel ?? DEFAULT_CTA_LABEL}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
                 <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-accent-soft-foreground" />
             </>
@@ -258,17 +258,17 @@ const FlashcardDeckList = ({
 
         const tileBody = (
             <>
-                <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={titleAndDescription} />
-                <Cluster gap="related" items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
+                <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={titleAndDescription} />
+                <Cluster gap={3} items={chips} anatPart={showAnatomy ? "Cluster" : undefined} />
                 {showProgress && deck.totalCount > 0 ? (
-                    <StackH gap="tight" anatPart={showAnatomy ? "StackH" : undefined} body={progressRow} />
+                    <StackH gap={2} anatPart={showAnatomy ? "StackH" : undefined} body={progressRow} />
                 ) : null}
-                <StackH gap="tight" justify="end" anatPart={showAnatomy ? "StackH" : undefined} body={ctaRow} />
+                <StackH gap={2} justify="end" anatPart={showAnatomy ? "StackH" : undefined} body={ctaRow} />
             </>
         )
 
         return (
-            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={tileBody} />
+            <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={tileBody} />
         )
     }
 
@@ -286,9 +286,8 @@ const FlashcardDeckList = ({
                     onPress={() => onSelectDeck(deck.id)}
                     ariaLabel={deck.title}
                     showAnatomy={showAnatomy}
-                >
-                    {isSkeleton ? null : deckTileBody(deck)}
-                </SurfaceCard>
+                    body={() => (isSkeleton ? null : deckTileBody(deck))}
+                />
             </div>
         ),
     }))
@@ -303,7 +302,7 @@ const FlashcardDeckList = ({
             if (deck.dueCount) {
                 metaChips.push({
                     key: "due",
-                    content: <Chip tone="warning" text={`${deck.dueCount} đến hạn`} anatPart={showAnatomy ? "Chip" : undefined} />,
+                    content: <Chip tone="warning" text={`${deck.dueCount} due`} />,
                 })
             }
         }
@@ -313,11 +312,11 @@ const FlashcardDeckList = ({
             title: deck.title,
             // The block owns this fallback (§14d.1): a deck with no blurb still says
             // something useful — its card count — instead of a blank second line.
-            subtitle: deck.description ?? `${deck.totalCount} thẻ`,
-            meta: metaChips.length > 0 ? <Cluster gap="related" items={metaChips} anatPart={showAnatomy ? "Cluster" : undefined} /> : undefined,
+            subtitle: deck.description ?? `${deck.totalCount} cards`,
+            meta: metaChips.length > 0 ? () => <Cluster gap={3} items={metaChips} anatPart={showAnatomy ? "Cluster" : undefined} /> : undefined,
             trailing:
                 showProgress && !isSkeleton && deck.totalCount > 0 ? (
-                    <Typography size="xs" color="muted" text={`${deck.masteredCount ?? 0}/${deck.totalCount}`} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" color="muted" text={`${deck.masteredCount ?? 0}/${deck.totalCount}`} showAnatomy={showAnatomy} />
                 ) : undefined,
             onPress: usingPlaceholders ? undefined : () => onSelectDeck(deck.id),
         }
@@ -326,14 +325,14 @@ const FlashcardDeckList = ({
     const track = isEmpty ? (
         <AsyncContentEmpty
             icon={hasQuery ? MagnifyingGlassIcon : undefined}
-            title={hasQuery ? `Không tìm thấy bộ thẻ nào khớp “${query}”` : "Chưa có bộ thẻ nào trong khoá học này"}
-            description={hasQuery ? "Thử một từ khoá khác." : undefined}
+            title={hasQuery ? `No decks match “${query}”` : "This course has no decks yet"}
+            description={hasQuery ? "Try a different search term." : undefined}
             anatPart={showAnatomy ? "AsyncContentEmpty" : undefined}
             showAnatomy={showAnatomy}
         />
     ) : view === "grid" ? (
         <div data-anat-part={showAnatomy ? "Grid" : undefined}>
-            <Grid columns={{ base: 1, sm: 2, md: 3 }} gap="grouped" items={tiles} showAnatomy={showAnatomy} />
+            <Grid columns={{ base: 1, sm: 2, md: 3 }} gap={4} items={tiles} showAnatomy={showAnatomy} />
         </div>
     ) : (
         <SurfaceCardList anatPart={showAnatomy ? "SurfaceCardList" : undefined} isSkeleton={isSkeleton} items={rows} />
@@ -345,8 +344,8 @@ const FlashcardDeckList = ({
                 <InputSearch
                     value={query}
                     onValueChange={onQueryChange}
-                    placeholder="Tìm bộ thẻ"
-                    ariaLabel="Tìm bộ thẻ"
+                    placeholder="Search decks"
+                    ariaLabel="Search decks"
                     showAnatomy={showAnatomy}
                 />
             </div>
@@ -355,7 +354,7 @@ const FlashcardDeckList = ({
                     items={VIEW_ITEMS}
                     selectedKey={view}
                     onSelectionChange={(key) => onViewChange(key as FlashcardDeckListView)}
-                    ariaLabel="Kiểu hiển thị"
+                    ariaLabel="Display style"
                     showAnatomy={showAnatomy}
                 />
             </div>
@@ -364,7 +363,7 @@ const FlashcardDeckList = ({
 
     const listBody = (
         <>
-            <StackH gap="related" wrap anatPart={showAnatomy ? "StackH" : undefined} body={searchAndView} />
+            <StackH gap={3} wrap anatPart={showAnatomy ? "StackH" : undefined} body={searchAndView} />
             {track}
             {!isSkeleton && decks.length > 0 ? (
                 <div data-anat-part={showAnatomy ? "Pagination" : undefined}>
@@ -375,7 +374,7 @@ const FlashcardDeckList = ({
     )
 
     return (
-        <StackV gap="grouped" anatPart={anatPart} body={listBody} />
+        <StackV gap={4} anatPart={anatPart} body={listBody} />
     )
 }
 

@@ -5,7 +5,7 @@ import { ButtonRadioGroup } from "@sb-components/composites/buttons/ButtonRadioG
 import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -17,8 +17,8 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * words and the lengths behind them; the caller says which level is picked, never
  * what "Middle" reads as or how many cards `deep` means.
  *
- * ⭐ LENGTH IS A CHOICE OF SHAPE, NOT A NUMBER. The learner picks "nhanh" or
- * "sâu"; the block turns that into 5 or 10 cards and SAYS so on the button. A
+ * ⭐ LENGTH IS A CHOICE OF SHAPE, NOT A NUMBER. The learner picks "quick" or
+ * "deep"; the block turns that into 5 or 10 cards and SAYS so on the button. A
  * caller passing a card count would move the judgement about what a short run is
  * out of the design system and into whoever wired the screen.
  *
@@ -43,7 +43,7 @@ export type QuizLevel = "junior" | "middle" | "senior" | "staff"
 /** Card count per length. The BLOCK owns this — it is the judgement, not a prop. */
 const LENGTH_CARDS: Record<QuizLength, number> = { quick: 5, deep: 10 }
 
-const LENGTH_LABEL: Record<QuizLength, string> = { quick: "Nhanh", deep: "Sâu" }
+const LENGTH_LABEL: Record<QuizLength, string> = { quick: "Quick", deep: "Deep" }
 
 const LEVEL_LABEL: Record<QuizLevel, string> = {
     junior: "Junior",
@@ -66,7 +66,7 @@ export interface QuizResumable {
 
 /** Props for {@link QuizSetup}. */
 export interface QuizSetupProps {
-    /** Section label, localized by the caller — e.g. "Dựng phiên". */
+    /** Section label, localized by the caller — e.g. "Set up session". */
     label: string
     /** Current run name. */
     name: string
@@ -119,16 +119,16 @@ const QuizSetup = ({
 }: QuizSetupProps) => {
     const nameField = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Tên phiên" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" weight="medium" text="Session name" showAnatomy={showAnatomy} />
                     <InputText
                         value={name}
                         onValueChange={onNameChange}
-                        placeholder="Ví dụ: ôn Docker trước phỏng vấn"
-                        ariaLabel="Tên phiên"
+                        placeholder="e.g. review Docker before the interview"
+                        ariaLabel="Session name"
                         showAnatomy={showAnatomy}
                     />
                 </>
@@ -138,19 +138,19 @@ const QuizSetup = ({
 
     const lengthField = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Độ dài" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" weight="medium" text="Length" showAnatomy={showAnatomy} />
                     <ButtonRadioGroup
-                        ariaLabel="Độ dài phiên"
+                        ariaLabel="Session length"
                         value={length}
                         onChange={onLengthChange}
                         showAnatomy={showAnatomy}
                         items={(Object.keys(LENGTH_LABEL) as Array<QuizLength>).map((key) => ({
                             value: key,
-                            content: `${LENGTH_LABEL[key]} · ${LENGTH_CARDS[key]} câu`,
+                            content: `${LENGTH_LABEL[key]} · ${LENGTH_CARDS[key]} questions`,
                         }))}
                     />
                 </>
@@ -160,13 +160,13 @@ const QuizSetup = ({
 
     const levelField = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    <Typography size="sm" weight="medium" text="Cấp độ" anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" weight="medium" text="Level" showAnatomy={showAnatomy} />
                     <ButtonRadioGroup
-                        ariaLabel="Cấp độ câu hỏi"
+                        ariaLabel="Question level"
                         value={level}
                         onChange={onLevelChange}
                         showAnatomy={showAnatomy}
@@ -182,17 +182,17 @@ const QuizSetup = ({
 
     const submitRow = (
         <StackH
-            gap="related"
+            gap={3}
             justify="end"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <Button
-                    label={`Bắt đầu · ${LENGTH_CARDS[length]} câu`}
+                    label={`Start · ${LENGTH_CARDS[length]} questions`}
                     variant="primary"
                     prefixIcon={PlayIcon}
                     onPress={onStart}
                     isPending={isPending}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             }
         />
@@ -202,15 +202,15 @@ const QuizSetup = ({
     // would read as a problem with the whole form.
     const actionField = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
                     {errorMessage != null ? (
-                        <FeedbackCallout
+                        <Callout
                             status="danger"
                             title={errorMessage}
-                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                            anatPart={showAnatomy ? "Callout" : undefined}
                         />
                     ) : null}
                     {submitRow}
@@ -225,12 +225,12 @@ const QuizSetup = ({
                 // A learner who left mid-run almost always means to come back. Making
                 // them scroll past a start button to find their own session is how one
                 // run gets abandoned twice.
-                <FeedbackCallout
+                <Callout
                     title={resumable.name}
-                    description={`Đang dở ${resumable.answered}/${resumable.total} câu`}
-                    actionLabel="Tiếp tục"
+                    description={`In progress · ${resumable.answered}/${resumable.total} questions`}
+                    actionLabel="Continue"
                     onAction={resumable.onResume}
-                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                    anatPart={showAnatomy ? "Callout" : undefined}
                 />
             ) : null}
 
@@ -243,9 +243,12 @@ const QuizSetup = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard label={label} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={formBody} />
-            </SurfaceCard>
+            <SurfaceCard
+                label={label}
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={formBody} />}
+            />
         </div>
     )
 }

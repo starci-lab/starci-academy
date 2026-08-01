@@ -24,25 +24,25 @@ const meta: Meta<typeof AsyncContentEmpty> = {
 export default meta
 type Story = StoryObj<typeof AsyncContentEmpty>
 /** Plain canvas for each leaf's anatomy panel. */
-const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
-// This frame is a THIN layer over the `FeedbackEmpty` composite. Icon/title/description
-// are VALUES passed into FeedbackEmpty's props, so they don't split into separate
+const shell = (node: React.ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
+// This frame is a THIN layer over the `EmptyState` composite. Icon/title/description
+// are VALUES passed into EmptyState's props, so they don't split into separate
 // nodes — only `action` is a node that gets COMPOSED in, so it only shows up in the
 // tree of the leaf that has a button.
 const MESSAGE_PARTS: Array<AnatomyNode> = [
     {
-        name: "FeedbackEmpty",
+        name: "EmptyState",
         tier: "composite",
         role: "icon + title + description + action frame, centered",
-        storyId: "composites-feedback-feedback-feedbackempty--title-only",
+        storyId: "composites-feedback-emptystate-emptystate--title-only",
     },
 ]
 const RETRY_PARTS: Array<AnatomyNode> = [
     {
-        name: "FeedbackEmpty",
+        name: "EmptyState",
         tier: "composite",
         role: "icon + title + description + action frame, centered",
-        storyId: "composites-feedback-feedback-feedbackempty--title-only",
+        storyId: "composites-feedback-emptystate-emptystate--title-only",
         children: [
             { name: "Button", tier: "atom", role: "shorthand onRetry + retryLabel → button placed in the action slot", state: "secondary", storyId: "atoms-buttons-button-button--default" },
         ],
@@ -50,10 +50,10 @@ const RETRY_PARTS: Array<AnatomyNode> = [
 ]
 const ACTION_PARTS: Array<AnatomyNode> = [
     {
-        name: "FeedbackEmpty",
+        name: "EmptyState",
         tier: "composite",
         role: "icon + title + description + action frame, centered",
-        storyId: "composites-feedback-feedback-feedbackempty--title-only",
+        storyId: "composites-feedback-emptystate-emptystate--title-only",
         children: [
             { name: "Action", tier: "composite", role: "general-purpose action slot, taking any node the caller passes in" },
         ],
@@ -68,15 +68,15 @@ export const Basic: Story = {
                 tier="composite"
                 leaf="Basic"
                 parts={MESSAGE_PARTS}
-                reason="The empty state of an async data area needs the exact anatomy of FeedbackEmpty (icon + title + description + centered action). AsyncContentEmpty only adds a default TrayIcon and wraps onRetry/retryLabel into a button for the action slot, a thin layer over FeedbackEmpty that redraws nothing of its own."
+                reason="The empty state of an async data area needs the exact anatomy of EmptyState (icon + title + description + centered action). AsyncContentEmpty only adds a default TrayIcon and wraps onRetry/retryLabel into a button for the action slot, a thin layer over EmptyState that redraws nothing of its own."
                 states={[
                     {
                         name: "title set, no other slot set",
                         why: "The default TrayIcon sits above the title, with no description line and no action row below it. This is the most compact shape the frame can take, for a data area that simply has nothing to show yet.",
                         code: `<AsyncContentEmpty
-  title="Chưa có dữ liệu"
+  title="No data yet"
 />`,
-                        render: <AsyncContentEmpty title="Chưa có dữ liệu" showAnatomy />,
+                        render: <AsyncContentEmpty title="No data yet" showAnatomy />,
                     },
                 ]}
             />,
@@ -96,13 +96,13 @@ export const WithDescription: Story = {
                         name: "title set, description set",
                         why: "A muted description line grows under the title, a node the Basic leaf does not carry. The extra sentence exists for a message that needs more context than the title alone can give.",
                         code: `<AsyncContentEmpty
-  title="Danh sách trống"
-  description="Bạn chưa lưu mục nào vào danh sách này."
+  title="List is empty"
+  description="You haven't saved any items to this list yet."
 />`,
                         render: (
                             <AsyncContentEmpty
-                                title="Danh sách trống"
-                                description="Bạn chưa lưu mục nào vào danh sách này."
+                                title="List is empty"
+                                description="You haven't saved any items to this list yet."
                                 showAnatomy
                             />
                         ),
@@ -125,17 +125,17 @@ export const WithRetry: Story = {
                         name: "onRetry set, retryLabel set",
                         why: "A secondary size-sm Button grows in the action slot, built by the frame itself rather than passed in as a node. Missing either onRetry or retryLabel leaves the action slot empty, so both must be set together for the button to appear.",
                         code: `<AsyncContentEmpty
-  title="Không tìm thấy kết quả"
-  description="Thử đổi bộ lọc hoặc tải lại để xem thêm."
+  title="No results found"
+  description="Try changing your filters or reloading to see more."
   onRetry={() => {}}
-  retryLabel="Tải lại"
+  retryLabel="Reload"
 />`,
                         render: (
                             <AsyncContentEmpty
-                                title="Không tìm thấy kết quả"
-                                description="Thử đổi bộ lọc hoặc tải lại để xem thêm."
+                                title="No results found"
+                                description="Try changing your filters or reloading to see more."
                                 onRetry={() => {}}
-                                retryLabel="Tải lại"
+                                retryLabel="Reload"
                                 showAnatomy
                             />
                         ),
@@ -158,15 +158,15 @@ export const WithAction: Story = {
                         name: "action set (node, wins over onRetry/retryLabel)",
                         why: "The exact node passed through action lands in the action slot instead of the frame's own retry button. This is for when the thing to do is not \"retry\" but something else, such as creating a new item, so the caller passes the node straight through.",
                         code: `<AsyncContentEmpty
-  title="Chưa có bộ thẻ nào"
-  description="Tạo bộ thẻ đầu tiên để bắt đầu ôn tập."
-  action={<Button size="sm" icon={<PlusIcon />}>Tạo bộ thẻ</Button>}
+  title="No decks yet"
+  description="Create your first deck to start reviewing."
+  action={<Button size="sm" icon={<PlusIcon />}>Create deck</Button>}
 />`,
                         render: (
                             <AsyncContentEmpty
-                                title="Chưa có bộ thẻ nào"
-                                description="Tạo bộ thẻ đầu tiên để bắt đầu ôn tập."
-                                action={<Button size="sm" icon={<PlusIcon />}>Tạo bộ thẻ</Button>}
+                                title="No decks yet"
+                                description="Create your first deck to start reviewing."
+                                action={<Button size="sm" icon={<PlusIcon data-tier="fixture" />}>Create deck</Button>}
                                 showAnatomy
                             />
                         ),
@@ -187,17 +187,17 @@ export const CustomIcon: Story = {
                 states={[
                     {
                         name: "icon set (overrides default TrayIcon)",
-                        why: "The glyph above the title swaps from the default TrayIcon to whatever icon is passed in, here MagnifyingGlassIcon. Icon is a value handed into FeedbackEmpty rather than a composed node, so the parts tree stays the same as the leaves without it.",
+                        why: "The glyph above the title swaps from the default TrayIcon to whatever icon is passed in, here MagnifyingGlassIcon. Icon is a value handed into EmptyState rather than a composed node, so the parts tree stays the same as the leaves without it.",
                         code: `<AsyncContentEmpty
   icon={<MagnifyingGlassIcon weight="duotone" />}
-  title="Không có kết quả khớp"
-  description="Không có mục nào khớp với từ khoá bạn nhập."
+  title="No matching results"
+  description="No items match the keyword you entered."
 />`,
                         render: (
                             <AsyncContentEmpty
                                 icon={MagnifyingGlassIcon}
-                                title="Không có kết quả khớp"
-                                description="Không có mục nào khớp với từ khoá bạn nhập."
+                                title="No matching results"
+                                description="No items match the keyword you entered."
                                 showAnatomy
                             />
                         ),

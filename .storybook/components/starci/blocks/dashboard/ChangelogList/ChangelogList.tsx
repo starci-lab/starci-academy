@@ -5,7 +5,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ChangelogList`: the dashboard right-rail "Có gì mới" list — dated
+ * BLOCK — `ChangelogList`: the dashboard right-rail "What's new" list — dated
  * changelog rows (an optional category, a title that opens the entry when it
  * has a destination, an optional one-line body), ported from
  * `@/components/features/dashboard/ChangelogList` (`framed=true` path — the
@@ -15,7 +15,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * REUSE, NOT A NEW SHAPE:
  *   • `SurfaceCardNested` (composite) — the card-in-card frame WITH A HEADER
  *     BAR sitting INSIDE the frame. Its `title` slot carries the section label
- *     ("Có gì mới") and its `items` slot carries the divided rows. This block
+ *     ("What's new") and its `items` slot carries the divided rows. This block
  *     never builds a card box, a header bar or a divider by hand.
  *   • `AsyncContent` (composite) — the error → loading → empty → content
  *     switch. Left `emptyContent` UNSET on purpose (see the empty-state note
@@ -49,8 +49,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  *     null`). Reusing the composite's own silent branch instead of adding a
  *     second `return null` guard keeps that behaviour in ONE place.
  *
- * ⭐ JUDGEMENT CALL — the meta line reads as plain muted text ("3 thg 11 ·
- * Tính năng"), not a colored category pill. `SurfaceCardNestedSection` gives
+ * ⭐ JUDGEMENT CALL — the meta line reads as plain muted text ("Nov 3 ·
+ * Feature"), not a colored category pill. `SurfaceCardNestedSection` gives
  * each row exactly ONE `eyebrow` slot, rendered through `Typography`'s own
  * `text` prop (a `<span>`) — there is no second per-row chip channel to hang
  * a `Chip` off without reaching past the resolved primitive. Documented here
@@ -104,7 +104,7 @@ export interface ChangelogListProps {
     isLoading: boolean
     /** Truthy → the list falls to its error message; own LEAF (beats loading/empty). */
     error?: unknown
-    /** Fired when the reader presses "Thử lại" on the error branch. Omit to render the error with no action. */
+    /** Fired when the reader presses "Retry" on the error branch. Omit to render the error with no action. */
     onRetry?: () => void
     /** Extra classes on the root. */
     className?: string
@@ -115,17 +115,17 @@ export interface ChangelogListProps {
 }
 
 /** The block's own section label — matches `dashboard.changelog` in `vi.json`. */
-const TITLE = "Có gì mới"
+const TITLE = "What's new"
 
 /** category → meta-line label — the block's own vocabulary (§14d.1), never handed in by a caller. */
 const CATEGORY_LABEL: Record<ChangelogCategory, string> = {
-    feature: "Tính năng",
-    fix: "Sửa lỗi",
-    announcement: "Thông báo",
+    feature: "Feature",
+    fix: "Fix",
+    announcement: "Announcement",
 }
 
-const ERROR_TITLE = "Không tải được changelog. Vui lòng thử lại."
-const RETRY_LABEL = "Thử lại"
+const ERROR_TITLE = "Couldn't load the changelog. Please try again."
+const RETRY_LABEL = "Retry"
 
 /** How many placeholder rows mirror the list while `entries` hasn't landed yet. */
 const SKELETON_ROW_COUNT = 4
@@ -145,7 +145,7 @@ const skeletonItems = (): Array<SurfaceCardNestedSection> =>
         key: `skeleton-${index}`,
         eyebrow: "x",
         title: "x",
-        content: <Typography size="sm" color="muted" isSkeleton text="x" />,
+        content: () => <Typography size="sm" color="muted" isSkeleton text="x" />,
     }))
 
 /** One real row: meta line, title (linked when `linkUrl` is set), optional body. */
@@ -153,12 +153,12 @@ const entryItem = (entry: ChangelogListEntry): SurfaceCardNestedSection => ({
     key: entry.id,
     eyebrow: metaLine(entry),
     title: entry.title,
-    content: entry.body ? <Typography size="sm" color="muted" text={entry.body} /> : undefined,
+    content: entry.body ? () => <Typography size="sm" color="muted" text={entry.body} /> : undefined,
     href: entry.linkUrl ?? undefined,
 })
 
 /**
- * The dashboard "Có gì mới" rail. See the file header for the full contract,
+ * The dashboard "What's new" rail. See the file header for the full contract,
  * the leaf boundary reasoning and the judgement calls (meta-line text instead
  * of a chip, whole-row link, no outer label wrapper, plain-text body).
  *

@@ -11,7 +11,7 @@ export type Difficulty = "beginner" | "intermediate" | "advanced" | "insane"
  * difficulty color ramp. Import this instead of re-declaring the mapping so no
  * surface diverges. A Tailwind palette ramp (sequential, hottest = hardest), not the
  * 5 semantic tokens (`accent`/`success`/`warning`/`danger`/`default`): difficulty is a
- * TIER, not a status, and 4 bậc would otherwise collide onto `danger` twice. Change
+ * TIER, not a status, and 4 tiers would otherwise collide onto `danger` twice. Change
  * the ramp here once.
  */
 export const DIFFICULTY_COLOR: Record<Difficulty, string> = {

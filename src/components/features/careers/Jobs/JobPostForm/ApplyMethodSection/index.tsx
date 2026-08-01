@@ -22,7 +22,7 @@ export interface ApplyMethodSectionProps {
 }
 
 /**
- * "Cách ứng tuyển" section of the job-post form — a 2-option toggle between an
+ * "How to apply" section of the job-post form — a 2-option toggle between an
  * external application link and an email address, showing only the matching
  * input.
  *

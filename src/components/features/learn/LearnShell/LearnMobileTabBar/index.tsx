@@ -22,11 +22,11 @@ import { setMobileView, type MobileLearnView } from "@/redux/slices/sidebar"
  * The desktop 4-column layout (course-nav · content-map · content · on-this-page)
  * has no room on phones, so this collapses it into an app-style bottom-tab: one
  * full-screen view at a time, thumb-reachable. Three tabs —
- *  - **Mục lục**: course-nav rows ({@link SidebarNavItem}) + the {@link ContentMap}
+ *  - **Contents**: course-nav rows ({@link SidebarNavItem}) + the {@link ContentMap}
  *    lesson list (both are "navigation");
- *  - **Bài học**: the content itself (the reader is rendered by the shell — this
+ *  - **Lesson**: the content itself (the reader is rendered by the shell — this
  *    tab just closes the overlays);
- *  - **Trên trang**: the {@link OnThisPage} outline (self-hides → tab omitted when
+ *  - **On this page**: the {@link OnThisPage} outline (self-hides → tab omitted when
  *    the lesson has no headings).
  *
  * Selecting a new lesson lands the reader back on the content view. State lives in
@@ -47,7 +47,7 @@ export const LearnMobileTabBar = () => {
         dispatch(setMobileView("content"))
     }, [contentId, dispatch])
 
-    // never strand the user on a "Trên trang" tab that just vanished
+    // never strand the user on an "On this page" tab that just vanished
     useEffect(() => {
         if (view === "toc" && !hasToc) {
             dispatch(setMobileView("content"))
@@ -64,7 +64,7 @@ export const LearnMobileTabBar = () => {
 
     return (
         <>
-            {/* full-screen "Mục lục" overlay — course-nav + the lesson list */}
+            {/* full-screen "Contents" overlay — course-nav + the lesson list */}
             {view === "map" && (
                 <div className="fixed top-16 bottom-16 left-0 right-[var(--app-rail-w,0px)] z-30 overflow-y-auto bg-background @app-lg:hidden">
                     <div className="flex flex-col gap-3 p-6">
@@ -83,7 +83,7 @@ export const LearnMobileTabBar = () => {
                 </div>
             )}
 
-            {/* full-screen "Trên trang" overlay — the lesson outline + actions */}
+            {/* full-screen "On this page" overlay — the lesson outline + actions */}
             {view === "toc" && hasToc && (
                 <div className="fixed top-16 bottom-16 left-0 right-[var(--app-rail-w,0px)] z-30 overflow-y-auto bg-background @app-lg:hidden">
                     <OnThisPage mobile />

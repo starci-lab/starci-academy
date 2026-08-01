@@ -19,7 +19,6 @@ import type { DateValue } from "@internationalized/date"
 // that is where HeroUI's own TimeField imports it from (NOT @internationalized/date, which
 // only exports the concrete `Time` class used to CONSTRUCT a value).
 import type { TimeValue } from "react-aria-components"
-import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
@@ -47,13 +46,17 @@ export interface FrameProps {
  * `Input.*` — the field-control atom namespace (wraps HeroUI form controls).
  *
  * Members are grouped by input kind — `InputText` · `InputTextarea` ·
- * `InputNumber` · `InputDate` (plus Search/Password/Time/OTP/Tags/Currency).
+ * `InputNumber` · `InputDate` (plus Search/Password/Time/OTP/Currency).
  * Each member composes `FieldFrame` directly to carry its own label, hint,
  * error, and required mark via {@link FrameProps} — there is no separate
  * `Field` wrapper component.
  *
  * `isSkeleton` renders a field-box skeleton co-located on the atom, without
  * importing the `Skeleton.*` compound.
+ *
+ * `InputTags` stops being a member here — the token row rebuilds one `Chip`
+ * per tag, which moved it to `composites/form/InputTags` (ATOM-8: rendering
+ * another house atom once per item is the composite signal, not the atom one).
  */
 
 /**
@@ -67,21 +70,15 @@ export interface FieldSkeletonProps {
     /** Height class of the bar — matches the real control it stands in for. */
     heightCls?: string
     /**
-     * Placement class only.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
     showAnatomy?: boolean
 }
 
-const FieldSkeleton = ({ heightCls = "h-9", className, classNames, showAnatomy }: FieldSkeletonProps) => (
-    <HeroSkeleton className={cn("w-full rounded-xl", heightCls, className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+export const FieldSkeleton = ({ heightCls = "h-9", showAnatomy, classNames }: FieldSkeletonProps) => (
+    <HeroSkeleton data-tier="atom" data-component="FieldSkeleton" className={cn("w-full rounded-xl", heightCls, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
 )
 
 /** Shared props for text-string members, excluding the value pair and `isSkeleton`. */
@@ -93,12 +90,7 @@ interface StringFieldOwnProps extends FrameProps {
     ariaLabel?: string
     showAnatomy?: boolean
     /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -121,7 +113,7 @@ type InputTextProps = StringFieldProps & {
 }
 
 /** `InputText` — single-line text (HeroUI TextField+Input) with label/hint/error. */
-const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, showAnatomy, className, classNames, label, hint, errorMessage, isRequired, variant = "primary" }: InputTextProps) => {
+const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, showAnatomy, classNames, label, hint, errorMessage, isRequired, variant = "primary" }: InputTextProps) => {
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
@@ -134,10 +126,9 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
             id={controlId}
-            skeletonControl={<FieldSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
-            <HeroTextField variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className, classNames)}>
-                {/* data-anat-part uses the real HeroUI component name (`Input`), not a generic slot word. */}
+            <HeroTextField data-tier="atom" data-component="InputText" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
                 <HeroInput
                     id={controlId}
                     placeholder={placeholder}
@@ -170,7 +161,6 @@ const InputTextarea = ({
     rows = 3,
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -190,10 +180,9 @@ const InputTextarea = ({
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
             id={controlId}
-            skeletonControl={<FieldSkeleton heightCls="h-24" className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton heightCls="h-24" classNames={classNames} showAnatomy={showAnatomy} />}
         >
-            <HeroTextField variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className, classNames)}>
-                {/* data-anat-part uses the real HeroUI component name (`TextArea`), not a generic slot word. */}
+            <HeroTextField data-tier="atom" data-component="InputTextarea" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
                 <HeroTextArea
                     id={controlId}
                     rows={rows}
@@ -220,7 +209,6 @@ const InputNumber = ({
     ariaLabel,
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -238,12 +226,7 @@ const InputNumber = ({
     isSkeleton?: boolean
     showAnatomy?: boolean
     /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 } & FrameProps) => {
@@ -257,9 +240,11 @@ const InputNumber = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<FieldSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroNumberField
+                data-tier="atom"
+                data-component="InputNumber"
                 aria-label={fieldName(label, ariaLabel)}
                 value={value}
                 onChange={onValueChange}
@@ -269,10 +254,9 @@ const InputNumber = ({
                 isInvalid={invalid}
                 isDisabled={isDisabled}
                 fullWidth
-                className={cn(className, classNames)}
+                className={cn(classNames)}
             >
-                {/* data-anat-part uses the real HeroUI component name (`NumberField.Group`); there's
-                    no wrapping div here since it had no styling of its own. */}
+                {/* There's no wrapping div here since it had no styling of its own. */}
                 <HeroNumberField.Group data-anat-part={showAnatomy ? "NumberField.Group" : undefined}>
                     <HeroNumberField.DecrementButton />
                     <HeroNumberField.Input />
@@ -294,7 +278,6 @@ const InputDate = ({
     ariaLabel = "Pick a date",
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -311,12 +294,7 @@ const InputDate = ({
     isSkeleton?: boolean
     showAnatomy?: boolean
     /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 } & FrameProps) => {
@@ -330,9 +308,11 @@ const InputDate = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<FieldSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroDatePicker
+                data-tier="atom"
+                data-component="InputDate"
                 aria-label={fieldName(label, ariaLabel)}
                 isInvalid={invalid}
                 isDisabled={isDisabled}
@@ -340,9 +320,8 @@ const InputDate = ({
                 onChange={onValueChange}
                 minValue={minValue}
                 maxValue={maxValue}
-                className={cn("w-full", className, classNames)}
+                className={cn("w-full", classNames)}
             >
-                {/* data-anat-part uses the real HeroUI component name (`DateField.Group`), not a generic slot word. */}
                 <DateField.Group fullWidth variant="secondary" data-anat-part={showAnatomy ? "DateField.Group" : undefined}>
                     <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
                     <DateField.Suffix>
@@ -369,7 +348,6 @@ const InputSearch = ({
     ariaLabel = "Search",
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -388,17 +366,18 @@ const InputSearch = ({
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
             id={controlId}
-            skeletonControl={<FieldSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroSearchField
+                data-tier="atom"
+                data-component="InputSearch"
                 aria-label={fieldName(label, ariaLabel)}
                 value={value}
                 onChange={onValueChange}
                 isInvalid={invalid}
                 isDisabled={isDisabled}
-                className={cn("w-full", className, classNames)}
+                className={cn("w-full", classNames)}
             >
-                {/* data-anat-part uses the real HeroUI component name (`SearchField.Group`), not a generic slot word. */}
                 <HeroSearchField.Group data-anat-part={showAnatomy ? "SearchField.Group" : undefined}>
                     <HeroSearchField.SearchIcon />
                     <HeroSearchField.Input id={controlId} placeholder={placeholder} />
@@ -418,7 +397,6 @@ const InputPassword = ({
     ariaLabel,
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -438,12 +416,11 @@ const InputPassword = ({
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
             id={controlId}
-            skeletonControl={<FieldSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
-            <HeroTextField aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className, classNames)}>
+            <HeroTextField data-tier="atom" data-component="InputPassword" aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
                 <div className="relative">
-                    {/* data-anat-part uses the real HeroUI component name (`Input`); the wrapping
-                        div stays only for `relative` positioning, not as a badged component. */}
+                    {/* The wrapping div stays only for `relative` positioning. */}
                     <HeroInput
                         id={controlId}
                         type={reveal ? "text" : "password"}
@@ -481,7 +458,6 @@ const InputCurrency = ({
     ariaLabel,
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -501,12 +477,7 @@ const InputCurrency = ({
     isSkeleton?: boolean
     showAnatomy?: boolean
     /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 } & FrameProps) => {
@@ -520,9 +491,11 @@ const InputCurrency = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<FieldSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroNumberField
+                data-tier="atom"
+                data-component="InputCurrency"
                 aria-label={fieldName(label, ariaLabel)}
                 value={value}
                 onChange={onValueChange}
@@ -535,10 +508,9 @@ const InputCurrency = ({
                 isInvalid={invalid}
                 isDisabled={isDisabled}
                 fullWidth
-                className={cn(className, classNames)}
+                className={cn(classNames)}
             >
-                {/* data-anat-part uses the real HeroUI component name (`NumberField.Group`); there's
-                    no wrapping div here since it had no styling of its own. */}
+                {/* There's no wrapping div here since it had no styling of its own. */}
                 <HeroNumberField.Group data-anat-part={showAnatomy ? "NumberField.Group" : undefined}>
                     <HeroNumberField.DecrementButton />
                     <HeroNumberField.Input />
@@ -558,7 +530,6 @@ const InputTime = ({
     ariaLabel = "Pick a time",
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -573,12 +544,7 @@ const InputTime = ({
     isSkeleton?: boolean
     showAnatomy?: boolean
     /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 } & FrameProps) => {
@@ -592,18 +558,19 @@ const InputTime = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<FieldSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<FieldSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroTimeField
+                data-tier="atom"
+                data-component="InputTime"
                 aria-label={fieldName(label, ariaLabel)}
                 isInvalid={invalid}
                 isDisabled={isDisabled}
                 value={value}
                 onChange={onValueChange}
                 fullWidth
-                className={cn("w-full", className, classNames)}
+                className={cn("w-full", classNames)}
             >
-                {/* data-anat-part uses the real HeroUI component name (`TimeField.Group`), not a generic slot word. */}
                 <HeroTimeField.Group fullWidth variant="secondary" data-anat-part={showAnatomy ? "TimeField.Group" : undefined}>
                     <HeroTimeField.Input>{(segment) => <HeroTimeField.Segment segment={segment} />}</HeroTimeField.Input>
                 </HeroTimeField.Group>
@@ -623,7 +590,6 @@ const InputOtp = ({
     ariaLabel,
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -641,12 +607,7 @@ const InputOtp = ({
     isSkeleton?: boolean
     showAnatomy?: boolean
     /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 } & FrameProps) => {
@@ -662,7 +623,7 @@ const InputOtp = ({
             showAnatomy={showAnatomy}
             skeletonControl={
                 // Leaf skeleton OWNED by the atom — a row of `length` cell-shaped squares.
-                <div className={cn("flex items-center gap-2", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+                <div className={cn("flex items-center gap-2", classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
                     {Array.from({ length }, (_, index) => (
                         <HeroSkeleton key={index} className="h-10 w-9 rounded-xl" />
                     ))}
@@ -670,6 +631,8 @@ const InputOtp = ({
             }
         >
             <HeroInputOTP
+                data-tier="atom"
+                data-component="InputOtp"
                 aria-label={fieldName(label, ariaLabel)}
                 maxLength={length}
                 value={value}
@@ -677,9 +640,8 @@ const InputOtp = ({
                 isInvalid={invalid}
                 isDisabled={isDisabled}
                 autoFocus={autoFocus}
-                className={cn(className, classNames)}
+                className={cn(classNames)}
             >
-                {/* data-anat-part uses the real HeroUI component name (`InputOTP.Group`), not a generic slot word. */}
                 <HeroInputOTP.Group data-anat-part={showAnatomy ? "InputOTP.Group" : undefined}>
                     {Array.from({ length }, (_, index) => (
                         <HeroInputOTP.Slot key={index} index={index} />
@@ -690,113 +652,24 @@ const InputOtp = ({
     )
 }
 
-/** `InputTags` — token input: `value` a string[], add with Enter, remove with × (composes Chip). */
-const InputTags = ({
-    value,
-    onValueChange,
-    placeholder,
-    isDisabled,
-    isInvalid,
-    ariaLabel = "Tags",
-    removeLabel = "Remove tag",
-    isSkeleton,
-    showAnatomy,
-    className,
-    classNames,
-    label,
-    hint,
-    errorMessage,
-    isRequired,
-}: {
-    value: string[]
-    onValueChange: (value: string[]) => void
-    placeholder?: string
-    isDisabled?: boolean
-    isInvalid?: boolean
-    ariaLabel?: string
-    removeLabel?: string
-    isSkeleton?: boolean
-    showAnatomy?: boolean
-    /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
-} & FrameProps) => {
-    // Ephemeral draft text (like Password's `reveal`) — NOT part of the semantic value.
-    const [draft, setDraft] = useState("")
-    const controlId = useId()
-    const invalid = isInvalid || errorMessage != null
-    const commit = () => {
-        const token = draft.trim()
-        if (token && !value.includes(token)) {
-            onValueChange([...value, token])
-        }
-        setDraft("")
-    }
-    const removeAt = (index: number) => onValueChange(value.filter((_, i) => i !== index))
-    return (
-        <FieldFrame
-            label={label}
-            hint={hint}
-            errorMessage={errorMessage}
-            isRequired={isRequired}
-            isDisabled={isDisabled}
-            isSkeleton={isSkeleton}
-            showAnatomy={showAnatomy}
-            id={controlId}
-            skeletonControl={<FieldSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
-        >
-            <div
-                className={cn(
-                    "bg-default-100 flex w-full flex-wrap items-center gap-2 rounded-xl border px-2 py-1.5",
-                    invalid ? "border-danger" : "border-default-200",
-                    isDisabled && "pointer-events-none opacity-50",
-                    className,
-                    classNames,
-                )}
-            >
-                {value.map((tag, index) => (
-                    <span key={`${tag}-${index}`} className="inline-flex">
-                        {/* data-anat-part uses the real component name (`Chip`, our own atom),
-                            not the wrapping span's slot word. */}
-                        <Chip
-                            text={tag}
-                            onRemove={isDisabled ? undefined : () => removeAt(index)}
-                            removeLabel={removeLabel}
-                            anatPart={showAnatomy ? "Chip" : undefined}
-                        />
-                    </span>
-                ))}
-                <input
-                    id={controlId}
-                    aria-label={fieldName(label, ariaLabel)}
-                    value={draft}
-                    disabled={isDisabled}
-                    placeholder={value.length === 0 ? placeholder : undefined}
-                    onChange={(event) => setDraft(event.target.value)}
-                    onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                            event.preventDefault()
-                            commit()
-                        } else if (event.key === "Backspace" && draft === "" && value.length > 0) {
-                            removeAt(value.length - 1)
-                        }
-                    }}
-                    className="min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none"
-                />
-            </div>
-        </FieldFrame>
-    )
-}
-
 /**
  * `Input.*` — field-control atom namespace. Each member carries its own
  * label, hint, and error via {@link FrameProps}; no higher-level component
- * composes the members.
+ * composes the members. `InputTags` is not a member here anymore — it moved
+ * to `composites/form/InputTags` (ATOM-8: it rebuilt one `Chip` per tag,
+ * which is the composite signal, not the atom one).
  */
-export { InputText, InputTextarea, InputNumber, InputDate, InputSearch, InputPassword, InputCurrency, InputTime, InputOtp, InputTags }
+export { InputText, InputTextarea, InputNumber, InputDate, InputSearch, InputPassword, InputCurrency, InputTime, InputOtp }
+
+export const meta = [
+    { tier: "atom", name: "FieldSkeleton" },
+    { tier: "atom", name: "InputText" },
+    { tier: "atom", name: "InputTextarea" },
+    { tier: "atom", name: "InputNumber" },
+    { tier: "atom", name: "InputDate" },
+    { tier: "atom", name: "InputSearch" },
+    { tier: "atom", name: "InputPassword" },
+    { tier: "atom", name: "InputCurrency" },
+    { tier: "atom", name: "InputTime" },
+    { tier: "atom", name: "InputOtp" },
+] as const

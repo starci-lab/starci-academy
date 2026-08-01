@@ -63,25 +63,28 @@ const ACCEPT = ["application/pdf"]
 const MAX = 5 * 1024 * 1024
 
 /**
- * ATOM — `Dropzone`: ô kéo-thả file DUY NHẤT của hệ, hand-rolled (deliberately
- * NOT `FieldShell` — xem note trong component). Không compose atom nào có story
- * riêng ⇒ ATOM LÁ, không có `annotate` (§12 — "atom lá bọc thẳng HeroUI/hand-roll
- * thì bỏ hẳn prop, đừng để `{}`"). `DropBox`/`ErrorMessage`/`Skeleton` chỉ là KHE
- * nội bộ, không phải deps.
+ * ATOM — `Dropzone`: the system's ONE AND ONLY drag-drop file box, hand-rolled
+ * (deliberately NOT `FieldShell` — see the note in the component). It doesn't
+ * compose any atom with its own story ⇒ LEAF ATOM, so it carries no `annotate`
+ * (§12 — "a leaf atom wrapping HeroUI/hand-rolled directly drops the prop
+ * entirely, never leaves it as `{}`"). `DropBox`/`ErrorMessage`/`Skeleton` are
+ * just internal slots, not deps.
  *
- * 📐 Bộ leaf theo §12g — mỗi leaf ứng với MỘT prop có hình: `file` (nội dung
- * trong khung đổi từ hint sang tên file), `errorMessage` (viền đỏ + dòng lỗi),
- * `isSkeleton` (mirror khung lúc chưa sẵn sàng). `hint` luôn có nên nằm sẵn ở
- * leaf trần (`Empty`), không tách leaf riêng.
+ * 📐 Leaf set per §12g — each leaf maps to ONE prop with visible shape: `file`
+ * (the box's content swaps from the hint to the file name), `errorMessage`
+ * (red border + error line), `isSkeleton` (a mirror of the box before it's
+ * ready). `hint` is always present, so it already lives on the bare leaf
+ * (`Empty`) rather than getting its own leaf.
  *
- * Mỗi leaf dưới đây có ĐÚNG một state trong `states[]` (thầy chốt bố cục C,
- * 2026-07-27) — atom-tier vẫn 1 prop = 1 leaf, chỉ đổi chỗ chứa render/why/code.
+ * Every leaf below carries EXACTLY one state in `states[]` (teacher's call on
+ * layout C, 2026-07-27) — the atom tier still keeps 1 prop = 1 leaf, only the
+ * render/why/code container changes.
  */
 
 /** Baseline: entering a form, the drop area shows the hint, no file picked yet. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Dropzone"
                 tier="atom"
@@ -103,7 +106,7 @@ export const Empty: Story = {
 /** Leaf prop `file` — once a file is picked, its name replaces the hint line. */
 export const WithFile: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Dropzone"
                 tier="atom"
@@ -124,7 +127,7 @@ export const WithFile: Story = {
 /** Leaf prop `errorMessage` — wrong mime type or over the size cap: border goes danger, an error line appears below. */
 export const Error: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Dropzone"
                 tier="atom"
@@ -152,7 +155,7 @@ export const Error: Story = {
 /** Leaf prop `isSkeleton` — loading placeholder mirroring the dashed box's shape/rounding. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Dropzone"
                 tier="atom"

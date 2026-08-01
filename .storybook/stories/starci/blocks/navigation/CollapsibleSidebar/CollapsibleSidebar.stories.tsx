@@ -6,7 +6,7 @@ import { ButtonBase } from "@sb-components/atoms/buttons/Button/ButtonBase"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE (PREREQUISITE) — `CollapsibleSidebar`: content-agnostic vỏ for a
+ * COMPOSITE (PREREQUISITE) — `CollapsibleSidebar`: a content-agnostic shell for a
  * left navigation sidebar that collapses IN PLACE (no overlay/Drawer). Owns
  * collapse/expand, the width animation, persisting the choice to
  * `localStorage`, and a `useSidebarCollapsed` context so nav-row content can
@@ -48,11 +48,11 @@ interface DemoNavRowData {
 const DemoNavRow = ({ label, icon: Icon }: DemoNavRowData) => {
     const collapsed = useSidebarCollapsed()
     return collapsed ? (
-        <div className="flex items-center justify-center rounded-lg p-2 text-muted" title={label}>
+        <div data-tier="fixture" className="flex items-center justify-center rounded-lg p-2 text-muted" title={label}>
             <Icon className="size-5" aria-hidden />
         </div>
     ) : (
-        <div className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm text-foreground">
+        <div data-tier="fixture" className="flex items-center gap-2 rounded-lg px-2 py-2 text-sm text-foreground">
             <Icon className="size-4" aria-hidden />
             <span>{label}</span>
         </div>
@@ -60,10 +60,10 @@ const DemoNavRow = ({ label, icon: Icon }: DemoNavRowData) => {
 }
 
 const DEMO_ROWS: Array<DemoNavRowData> = [
-    { key: "content", label: "Nội dung khoá học", icon: BookOpenIcon },
+    { key: "content", label: "Course content", icon: BookOpenIcon },
     { key: "sandbox", label: "Sandbox", icon: FlaskIcon },
-    { key: "leaderboard", label: "Bảng xếp hạng", icon: ChartBarIcon },
-    { key: "settings", label: "Cài đặt", icon: GearSixIcon },
+    { key: "leaderboard", label: "Leaderboard", icon: ChartBarIcon },
+    { key: "settings", label: "Settings", icon: GearSixIcon },
 ]
 
 /** Distinct storage keys per state so switching the BlockAnatomy state tab never leaks
@@ -93,11 +93,11 @@ export const Default: Story = {
         seed(STORAGE_KEY_WITH_TOP_SLOT, "false")
         seed(STORAGE_KEY_COLLAPSED, "true")
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <BlockAnatomy
                     name="CollapsibleSidebar"
                     tier="composite"
-                    leaf="Sidebar vỏ"
+                    leaf="Sidebar shell"
                     parts={[]}
                     annotate={ANNOTATE}
                     renderClassName="h-[32rem] overflow-hidden rounded-2xl border border-default"
@@ -106,9 +106,9 @@ export const Default: Story = {
                             name: "expanded",
                             why: "Default, first-mount shape: full panel, title visible, nav rows show icon + label. This is what a reader sees before ever touching the toggle.",
                             code: `<CollapsibleSidebar
-    title="Học phần"
-    collapseLabel="Thu gọn"
-    expandLabel="Mở rộng"
+    title="Coursework"
+    collapseLabel="Collapse"
+    expandLabel="Expand"
     storageKey="learn-sidebar-collapsed"
 >
     {navRows}
@@ -117,9 +117,9 @@ export const Default: Story = {
                                 <CollapsibleSidebar
                                     anatPart="CollapsibleSidebar"
                                     showAnatomy
-                                    title="Học phần"
-                                    collapseLabel="Thu gọn"
-                                    expandLabel="Mở rộng"
+                                    title="Coursework"
+                                    collapseLabel="Collapse"
+                                    expandLabel="Expand"
                                     storageKey={STORAGE_KEY_EXPANDED}
                                 >
                                     {DEMO_ROWS.map((row) => (
@@ -132,9 +132,9 @@ export const Default: Story = {
                             name: "topSlot set",
                             why: "A caller pins content BETWEEN the header and the scroll area — always visible, never scrolls away. The real use is a resume-progress pill (`ResumeRail`, out of scope this pass); here a plain button stands in for it.",
                             code: `<CollapsibleSidebar
-    title="Học phần"
-    collapseLabel="Thu gọn"
-    expandLabel="Mở rộng"
+    title="Coursework"
+    collapseLabel="Collapse"
+    expandLabel="Expand"
     storageKey="learn-sidebar-collapsed"
     topSlot={<ResumeButton />}
 >
@@ -142,17 +142,17 @@ export const Default: Story = {
 </CollapsibleSidebar>`,
                             render: (
                                 <CollapsibleSidebar
-                                    title="Học phần"
-                                    collapseLabel="Thu gọn"
-                                    expandLabel="Mở rộng"
+                                    title="Coursework"
+                                    collapseLabel="Collapse"
+                                    expandLabel="Expand"
                                     storageKey={STORAGE_KEY_WITH_TOP_SLOT}
                                     topSlot={(
                                         <ButtonBase
-                                            label="Tiếp tục học"
+                                            label="Continue learning"
                                             prefixIcon={PlayIcon}
                                             variant="secondary"
                                             size="sm"
-                                            className="mb-4 w-full"
+                                            classNames={["w-full"]}
                                             onPress={() => {}}
                                         />
                                     )}
@@ -168,18 +168,18 @@ export const Default: Story = {
                             why: "The reader (or a previous page) toggled the rail shut. The choice is read from `localStorage` on mount — seeded here to `true` — so it survives navigation between pages sharing this sidebar. The title fades out, rows drop to icon-only via `useSidebarCollapsed`, and the toggle's aria-label flips to `expandLabel`.",
                             code: `// localStorage["learn-sidebar-collapsed"] === "true" from a prior toggle
 <CollapsibleSidebar
-    title="Học phần"
-    collapseLabel="Thu gọn"
-    expandLabel="Mở rộng"
+    title="Coursework"
+    collapseLabel="Collapse"
+    expandLabel="Expand"
     storageKey="learn-sidebar-collapsed"
 >
     {navRows}
 </CollapsibleSidebar>`,
                             render: (
                                 <CollapsibleSidebar
-                                    title="Học phần"
-                                    collapseLabel="Thu gọn"
-                                    expandLabel="Mở rộng"
+                                    title="Coursework"
+                                    collapseLabel="Collapse"
+                                    expandLabel="Expand"
                                     storageKey={STORAGE_KEY_COLLAPSED}
                                 >
                                     {DEMO_ROWS.map((row) => (

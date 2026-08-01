@@ -40,9 +40,9 @@ const FUTURE_SERVICES: Array<FutureServiceSeed> = [
 ]
 
 /**
- * Builds the "Tương lai — microservices" ROADMAP scene: the monolith `Core API`
+ * Builds the "Future — microservices" ROADMAP scene: the monolith `Core API`
  * decomposed into the planned services, all wired through an event bus with
- * dashed `eventual` edges. HONESTY (rule doc §Luật 5): every node is tone
+ * dashed `eventual` edges. HONESTY (rule doc §Rule 5): every node is tone
  * `normal` (ghost/neutral) with NO status badge — this scene is never bound to
  * health and never shows "checking". The "Coming soon" framing lives in the UI
  * chrome around it (a caption / chip), not as a fake dot here.

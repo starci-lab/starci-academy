@@ -31,42 +31,42 @@ export default meta
 type Story = StoryObj<typeof ChallengeBrief>
 
 const PREREQUISITES = [
-    { key: "prereq-1", body: "Đã cài Node.js 20 trở lên" },
-    { key: "prereq-2", body: "Có tài khoản GitHub và biết tạo repo mới" },
+    { key: "prereq-1", body: "Node.js 20 or later installed" },
+    { key: "prereq-2", body: "A GitHub account and know how to create a new repo" },
 ]
 
 const REQUIREMENTS = [
     {
         key: "req-1",
-        title: "Dựng API CRUD cho Task",
+        title: "Build a CRUD API for Task",
         points: 40,
-        body: "Xây REST API `/tasks` hỗ trợ tạo, đọc, sửa, xoá — mỗi route trả đúng mã trạng thái HTTP.",
+        body: "Build a REST API `/tasks` supporting create, read, update, delete — each route returns the correct HTTP status code.",
     },
     {
         key: "req-2",
-        title: "Viết test cho từng route",
+        title: "Write tests for each route",
         points: 30,
-        body: "Ít nhất một test integration cho mỗi route, chạy được bằng `npm test`.",
+        body: "At least one integration test per route, runnable with `npm test`.",
     },
     {
         key: "req-3",
         title: "Validate input",
-        body: "Từ chối payload thiếu trường bắt buộc bằng lỗi 400 rõ ràng — không tính điểm riêng, nhưng vẫn được chấm khi review.",
+        body: "Reject a payload missing a required field with a clear 400 error — no separate points, but still graded during review.",
     },
 ]
 
 const STEPS = [
-    { key: "step-1", title: "Khởi tạo dự án", body: "Chạy `npm init` rồi cài Express và TypeORM." },
-    { key: "step-2", body: "Định nghĩa entity `Task` với các trường `title`, `done`, `createdAt`." },
-    { key: "step-3", title: "Nối route vào controller", body: "Map từng route `/tasks/*` sang hàm xử lý tương ứng." },
+    { key: "step-1", title: "Initialize the project", body: "Run `npm init` then install Express and TypeORM." },
+    { key: "step-2", body: "Define the `Task` entity with the `title`, `done`, `createdAt` fields." },
+    { key: "step-3", title: "Wire routes to the controller", body: "Map each `/tasks/*` route to its corresponding handler function." },
 ]
 
 const OUTPUTS = [
-    { key: "out-1", body: "`GET /tasks` trả về mảng JSON các task hiện có" },
-    { key: "out-2", body: "`POST /tasks` trả về task vừa tạo kèm `id`" },
+    { key: "out-1", body: "`GET /tasks` returns a JSON array of the existing tasks" },
+    { key: "out-2", body: "`POST /tasks` returns the newly created task along with its `id`" },
 ]
 
-const HINT = "Nếu route trả 500 khi test, kiểm tra lại xem đã `await` migration trước khi server lắng nghe request chưa."
+const HINT = "If a route returns 500 during testing, check whether you `await` the migration before the server starts listening for requests."
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame stacking the (up to) five sections, owning the section-wide seam between them", storyId: "frames-stack-stackv--default" },
@@ -82,7 +82,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full set: prerequisites → requirements → steps → outputs → hint. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeBrief"
                 tier="block"

@@ -15,7 +15,7 @@ export default meta
 
 type Story = StoryObj<typeof SegmentBar>
 
-// leaf có legend (Proportional/WithMax/ManyGroups/Empty): track + legend, không caption.
+// leaves with a legend (Proportional/WithMax/ManyGroups/Empty): track + legend, no caption.
 // The track is bespoke internal geometry (a `role="img"` div, §13z) with no dedicated
 // sub-story to link to, so it carries no badge — a link-less node is worse than none.
 // `Legend` IS the real `Legend` composite this file renders directly.
@@ -23,10 +23,10 @@ const BAR_LEGEND_PARTS: Array<AnatomyNode> = [
     { name: "Legend", tier: "composite", role: "the colour dot + label + count row under the track", storyId: "composites-stats-legend--basic" },
 ]
 
-// leaf HideLegend: chỉ còn track, legend bị ẩn hẳn. Track stays unbadged (see above).
+// leaf HideLegend: only the track remains, the legend is fully hidden. Track stays unbadged (see above).
 const BAR_ONLY_PARTS: Array<AnatomyNode> = []
 
-// leaf InlineLabels: có cả legend + caption (câu takeaway muted dưới cùng). Caption renders
+// leaf InlineLabels: both legend and caption (the muted takeaway sentence at the bottom). Caption renders
 // straight HeroUI `Typography`, so it is named for that real import, not its role.
 const BAR_LEGEND_CAPTION_PARTS: Array<AnatomyNode> = [
     { name: "Legend", tier: "composite", role: "the colour dot + label row under the track (no count suffix, already printed on the band)", storyId: "composites-stats-legend--basic" },
@@ -45,7 +45,7 @@ const BAR_SKELETON_PARTS: Array<AnatomyNode> = [
 /** No shared total — slices always fill 100% as shares of each other. */
 export const Proportional: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SegmentBar"
                 tier="composite"
@@ -80,7 +80,7 @@ export const Proportional: Story = {
 /** `max` set → widths are `value / max`, leaving an empty remainder for true progress. */
 export const WithMax: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SegmentBar"
                 tier="composite"
@@ -115,7 +115,7 @@ export const WithMax: Story = {
 /** `hideLegend` — the bar is a quick summary inside a block that already has its own legend. */
 export const HideLegend: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SegmentBar"
                 tier="composite"
@@ -150,7 +150,7 @@ export const HideLegend: Story = {
 /** Many groups — the legend wraps neatly instead of overflowing. */
 export const ManyGroups: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SegmentBar"
                 tier="composite"
@@ -187,7 +187,7 @@ export const ManyGroups: Story = {
 /** `inlineLabels` — a thick ladder strip; each band prints its own label + %, plus a closing caption. */
 export const InlineLabels: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SegmentBar"
                 tier="composite"
@@ -229,7 +229,7 @@ export const InlineLabels: Story = {
 /** No data yet (all zero) — the bar shows an empty track instead of dividing by zero. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SegmentBar"
                 tier="composite"
@@ -264,7 +264,7 @@ export const Empty: Story = {
 /** LEAF — the caller flips `isSkeleton`; a flat track shimmer stands in for the coloured proportion strip while data loads. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SegmentBar"
                 tier="composite"

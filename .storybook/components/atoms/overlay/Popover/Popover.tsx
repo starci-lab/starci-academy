@@ -55,15 +55,7 @@ export interface PopoverBaseProps {
     onOpenChange?: (isOpen: boolean) => void
     /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Button`/`Popover.Content`/`Popover.Arrow`/`Popover.Heading`) so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /**
-     * Extra classes on the trigger.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
 
@@ -84,12 +76,11 @@ const PopoverBase = ({
     defaultOpen,
     onOpenChange,
     showAnatomy = false,
-    className,
     classNames,
 }: PopoverBaseProps) => {
     return (
-        <HeroPopover isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroButton variant={triggerVariant} className={cn(className, classNames)} data-anat-part={showAnatomy ? "Button" : undefined}>
+        <HeroPopover data-tier="atom" data-component="Popover" isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
+            <HeroButton variant={triggerVariant} className={cn(classNames)} data-anat-part={showAnatomy ? "Button" : undefined}>
                 {TriggerIcon ? (
                     // `!` needed: HeroUI's `.button svg` rule has higher specificity. This
                     // span is a plain wrapper around a caller-supplied icon, not a named
@@ -122,3 +113,5 @@ const PopoverBase = ({
 
 /** `Popover.*` — the click-panel atom namespace. `heading`/`arrow`/`placement` are all leaf props. */
 export { PopoverBase as Popover }
+
+export const meta = { tier: "atom", name: "Popover" } as const

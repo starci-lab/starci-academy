@@ -8,7 +8,7 @@ import { LocalStorageId } from "@/modules/storage/local/enums/id"
  * Shared "has the learner discovered selection-ask?" flag, backed by
  * localStorage. Two surfaces read it: the one-time inline tip above the lesson
  * article ({@link import("./SelectionHintCallout").SelectionHintCallout}) and
- * the "Mới" tag on the floating ask button ({@link import("./index").ContentAiSelectionAsk}).
+ * the "New" tag on the floating ask button ({@link import("./index").ContentAiSelectionAsk}).
  * Both hide the moment it flips to `seen`, so we never keep nudging someone who
  * already found the feature (restraint). `seen` defaults to `false` for SSR and
  * is hydrated from localStorage on the client.
@@ -18,7 +18,7 @@ interface SelectionHintState {
     seen: boolean
     /** Read the persisted flag (client-only) — call once on mount; idempotent. */
     hydrate: () => void
-    /** Mark discovered (on dismiss OR first use) + persist; hides the tip and the "Mới" tag. */
+    /** Mark discovered (on dismiss OR first use) + persist; hides the tip and the "New" tag. */
     markSeen: () => void
 }
 

@@ -84,7 +84,7 @@ const EFFECT_OPTIONS: ReadonlyArray<BackgroundEffect> = [
 const ACCENT_PERSIST_DEBOUNCE_MS = 500
 
 /**
- * Settings → "Giao diện": pick an accent color (10 presets or a free-form
+ * Settings → "Appearance": pick an accent color (10 presets or a free-form
  * `ColorPicker`) and an ambient background effect (10 options, tinted by the
  * chosen accent) — independent of light/dark mode, which stays on the navbar
  * toggle. Both persist to `UserEntity` via `updateProfile` (server is the

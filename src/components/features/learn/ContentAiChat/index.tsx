@@ -110,7 +110,7 @@ type ContentIntentKind = "content" | "challenge" | "flashcard"
  * they now live purely as empty-state suggestion chips ({@link SUGGESTION_KEYS})
  * and the slash grammar is gone entirely: learners here are beginners, often on a
  * phone, and a two-level `<verb> <noun>` grammar was a power-user affordance most
- * never discovered. Typing "tìm thử thách…" already routes here via
+ * never discovered. Typing "find challenges…" already routes here via
  * {@link detectContentIntent}.
  */
 interface RetrievalSkill {
@@ -150,7 +150,7 @@ const EMPTY_STATE_SKILLS: Record<ChatContextScope, ReadonlyArray<string>> = {
 /**
  * Label for a retrieval chip, worded for the scope it will actually search.
  *
- * The labels used to be fixed lesson-wording ("Tìm challenges liên quan BÀI NÀY")
+ * The labels used to be fixed lesson-wording ("Find challenges related to THIS LESSON")
  * and rendered in both scopes, so on a lesson-less surface the chat offered to
  * search a lesson that was not open — and answered with hits from unrelated
  * modules. The search itself was always course-wide; only the promise was wrong.
@@ -176,18 +176,18 @@ const retrievalLabelKey = (token: string, scope: ChatContextScope): string =>
 type ChatContextScope = "content" | "course" | "task" | "challenge" | "quiz" | "foundation"
 
 /** A find-verb that signals the learner wants a LIST of course content, not a chat answer. */
-const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)/i
+const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)/i // vn-ok: matches what the learner types, in either app locale
 
 /** Kind noun → the corpus kind to search. */
 const CONTENT_INTENT_KINDS: Array<{ re: RegExp, kind: ContentIntentKind }> = [
-    { re: /(flashcard|thẻ)/i, kind: "flashcard" },
-    { re: /(thử thách|challenge|bài tập)/i, kind: "challenge" },
-    { re: /(bài học|bài|lesson|nội dung)/i, kind: "content" },
+    { re: /(flashcard|thẻ)/i, kind: "flashcard" }, // vn-ok: learner input, either locale
+    { re: /(thử thách|challenge|bài tập)/i, kind: "challenge" }, // vn-ok: learner input, either locale
+    { re: /(bài học|bài|lesson|nội dung)/i, kind: "content" }, // vn-ok: learner input, either locale
 ]
 
 /**
  * Detect an in-chat "find <kind> for this" intent — requires BOTH a find-verb
- * and a kind noun so a normal question ("tóm tắt bài này") never hijacks the chat
+ * and a kind noun so a normal question ("summarize this lesson") never hijacks the chat
  * into a search. Returns the kind to render, or null for a normal answer.
  * MVP intent lives client-side; the BE classifier + persisted tool turn is phase 2.
  */
@@ -217,7 +217,7 @@ const TOOL_RESULT_LIMIT = 5
  * The open lesson's OWN challenges, shaped as tool-result rows.
  *
  * A challenge hangs off exactly one content (FK `content_id`), so while a lesson
- * is open "thử thách của bài này" is an exact list, not a similarity guess — this
+ * is open "this lesson's own challenges" is an exact list, not a similarity guess — this
  * reads the challenges-by-content query instead of RAG. Never locked: the learner
  * is already reading the parent lesson, so they can open its challenges.
  *
@@ -278,7 +278,7 @@ interface ChatMessage {
     isQuotaError?: boolean
     /**
      * In-chat tool result (generative-UI part) — when the learner asks to FIND
-     * content ("tìm flashcard cho phần này"), this assistant turn renders a
+     * content ("find flashcards for this section"), this assistant turn renders a
      * pickable {@link ChatToolResult} list instead of streamed text.
      */
     toolResult?: {
@@ -346,14 +346,14 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const [currentSessionId, setCurrentSessionId] = useState<string | null>(null)
     const [view, setView] = useState<PanelView>("chat")
     const [searchTerm, setSearchTerm] = useState("")
-    // "Đã lưu trữ" toggle — folds archived conversations into the history list
+    // "Archived" toggle — folds archived conversations into the history list
     // (born-archived selection chats + anything manually archived). Default off.
     const [showArchived, setShowArchived] = useState(false)
     // inline-rename state: which history row is being renamed + its draft title
     const [renamingSessionId, setRenamingSessionId] = useState<string | null>(null)
     const [renameDraft, setRenameDraft] = useState("")
 
-    // "Tìm nội dung khóa" (search view) — debounced so typing never fires an
+    // "Search course content" (search view) — debounced so typing never fires an
     // embedding call per keystroke (unlike the plain-ILIKE conversations search above)
     const [contentSearchQuery, setContentSearchQuery] = useState("")
     const [debouncedContentSearchQuery, setDebouncedContentSearchQuery] = useState("")
@@ -649,7 +649,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
      * Two data paths, because they answer two different questions:
      * - **Challenges while a lesson is open** come from the challenges-OF-THIS-CONTENT
      *   query, not RAG. A challenge belongs to exactly one lesson (FK `content_id`),
-     *   so "thử thách của bài này" has an EXACT, complete answer; semantic search
+     *   so "this lesson's own challenges" has an EXACT, complete answer; semantic search
      *   could rank this lesson's own challenges below another lesson's, or miss them.
      * - **Everything else** is a semantic question ("what in this course relates to
      *   what I'm reading") → course-wide RAG.
@@ -666,7 +666,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         ])
         setInput("")
         // ground the RAG search on the LESSON'S OWN topic, not the literal chat
-        // phrase — "tìm flashcard liên quan" carries no topical signal (embeds
+        // phrase — "find related flashcards" carries no topical signal (embeds
         // near nothing), so the search must run on what the learner is actually
         // reading (mirrors RelatedContentList's query={content.title}, the
         // pattern the eval measured at 93.8% recall@6).
@@ -739,7 +739,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             if (!sessionId) {
                 // creating the conversation failed (offline, or the server rejected
                 // the request) — surface it instead of a silent no-op, so a dead
-                // "Giải thích đoạn này" / send is never a mystery. Show the question
+                // "Explain this passage" / send is never a mystery. Show the question
                 // the learner sent + a one-line error under it.
                 setMessages((prev) => [
                     ...prev,
@@ -754,11 +754,11 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         // when a passage is selected, wrap the turn so the UI shows only the
         // question (<display>) while the model also gets the hidden <context>: the
         // selected passage + its surrounding paragraph/section. A weak/degraded model
-        // otherwise under-uses the passage and replies "hãy gửi đoạn văn cụ thể", so
+        // otherwise under-uses the passage and replies "please send me the specific passage", so
         // the context ends with an explicit directive that the passage IS provided
         // and must be answered directly — never asked for again.
         const content = selection
-            ? `<display>${raw}</display>\n<context>${selectionContext ?? `Đoạn được chọn: «${selection}»`}\nLƯU Ý: đoạn được chọn đã có ngay trên đây — hãy giải thích/trả lời TRỰC TIẾP về nó dựa trên nội dung bài và kiến thức của bạn; TUYỆT ĐỐI không yêu cầu người học gửi hay nêu lại đoạn văn.</context>`
+            ? `<display>${raw}</display>\n<context>${selectionContext ?? `Đoạn được chọn: «${selection}»`}\nLƯU Ý: đoạn được chọn đã có ngay trên đây — hãy giải thích/trả lời TRỰC TIẾP về nó dựa trên nội dung bài và kiến thức của bạn; TUYỆT ĐỐI không yêu cầu người học gửi hay nêu lại đoạn văn.</context>` // vn-ok: tutor prompt in the learner's language
             : raw
         const history = messages.map((message) => ({
             role: message.role,
@@ -926,12 +926,12 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             return
         }
         // the label IS the question that lands in the thread, so it has to be the
-        // scoped one — this is what put "Tìm challenges liên quan bài này" in the
+        // scoped one — this is what put "Find challenges related to this lesson" in the
         // transcript on a surface with no lesson open
         void runContentIntent(t(retrievalLabelKey(skill.token, scope)), skill.kind)
     }, [course?.id, runContentIntent, scope, t])
 
-    /** Plain input — parent composer/quote box owns fill + padding; this is chỉ chỗ gõ
+    /** Plain input — parent composer/quote box owns fill + padding; this is just where you type
      *  (no HeroUI field chrome, so it never nests a second border/ring inside the box). */
     const chatInputField = () => (
         <input
@@ -943,7 +943,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={(event) => {
                 // plain composer: Enter sends. A retrieval ask needs no special
-                // grammar — `detectContentIntent` picks "tìm thử thách…" out of
+                // grammar — `detectContentIntent` picks "find challenges…" out of
                 // ordinary typing inside `onSend`.
                 if (event.key === "Enter") {
                     event.preventDefault()
@@ -1117,7 +1117,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                                     by showing which line matched. */}
                                                 <Typography type="body-xs" color="muted" className="truncate">
                                                     {/* content rows carry their lesson title; course rows read
-                                                        "Cả khoá"; task/foundation rows have no origin title (null),
+                                                        "Whole course"; task/foundation rows have no origin title (null),
                                                         so they fall back to just the turn count rather than a
                                                         misleading course-wide label. */}
                                                     {searchTerm.trim() && session.snippet
@@ -1130,7 +1130,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                                 </Typography>
                                             </button>
                                         )}
-                                        {/* overflow menu ⋯ — Đổi tên · Lưu trữ · Xoá (hidden while
+                                        {/* overflow menu ⋯ — Rename · Archive · Delete (hidden while
                                             this row is being renamed) */}
                                         {renamingSessionId === session.id ? null : (
                                             <Dropdown>
@@ -1200,7 +1200,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         )
     }
 
-    // ── search view ("Tìm nội dung khóa") ──────────────────────────────────
+    // ── search view ("Search course content") ──────────────────────────────────
     if (view === "search") {
         // same exclusion as the in-chat skills: the chat never surfaces capstone
         // tasks, so its own "see all" view must not either (see ContentIntentKind)

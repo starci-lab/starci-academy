@@ -9,18 +9,19 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Toolbar` — khung HÀNG điều hướng/điều khiển nằm TRÊN một panel: nhóm tab chính
- * ghim trái (+ cụm action `leftEnd` ngay sau nó), nhóm tab phụ ghim phải, thu gọn thành
- * dropdown dưới `@app-sm`. Không chrome (không nền/viền/bo/padding), root là
- * `flex items-center justify-between gap-3`.
+ * `Toolbar` — the nav/control-ROW frame sitting ABOVE a panel: the primary tab
+ * group pinned left (+ an action cluster `leftEnd` right after it), a secondary
+ * tab group pinned right, collapsing into a dropdown below `@app-sm`. No chrome
+ * (no fill/border/radius/padding), root is `flex items-center justify-between gap-3`.
  *
- * ⚠️ ĐỔI TÊN (2026-07-25): trước đây là `TabsCard` — tên SAI vì trong nó không có card
- * nào cả. Hành vi/thị giác giữ NGUYÊN, chỉ đổi tên + gom vào namespace `Toolbar.*` (§13a).
+ * ⚠️ RENAMED (2026-07-25): this used to be `TabsCard` — the WRONG name, since there
+ * is no card in it at all. Behavior/visuals stay UNCHANGED; only the name changed
+ * + it moved into the `Toolbar.*` namespace (§13a).
  *
- * ⚠️ PHẠM VI STATE (§12f/§13): nhóm tab đi vào bằng DỮ LIỆU (`items`/`selectedKey`/
- * `onSelectionChange`), nên state hiển thị của TỪNG tab (disabled/muted) do khung này vẽ
- * → có nhà ở đây. Nội dung panel bên dưới KHÔNG phải state của khung: các story chỉ kèm
- * một mặt card để thấy tab đổi thật.
+ * ⚠️ STATE SCOPE (§12f/§13): tab groups come in as DATA (`items`/`selectedKey`/
+ * `onSelectionChange`), so the display state of EACH tab (disabled/muted) is drawn
+ * by this frame → its home is here. The panel content below is NOT this frame's
+ * state — the stories only attach a card face so the tab switch reads as real.
  */
 const meta: Meta<typeof Toolbar> = {
     title: "Composites/Navigation/Toolbar/Toolbar",
@@ -36,16 +37,17 @@ export default meta
 type Story = StoryObj<typeof Toolbar>
 
 const CONTENT_TABS: Array<ToolbarTabItem> = [
-    { key: "overview", label: "Tổng quan" },
-    { key: "content", label: "Nội dung" },
-    { key: "reviews", label: "Đánh giá" },
+    { key: "overview", label: "Overview" },
+    { key: "content", label: "Content" },
+    { key: "reviews", label: "Reviews" },
 ]
 
-// `icon` của tab là NODE dựng sẵn nên story tự ép size + weight: `size-4` nhỏ hơn
-// `size-5` ⇒ bù `weight="bold"` cho nét không mảnh đi (§5.0a).
+// A tab's `icon` is a pre-built NODE, so the story forces its own size + weight:
+// `size-4` is smaller than `size-5` ⇒ compensate with `weight="bold"` so the stroke
+// doesn't thin out (§5.0a).
 const LANGUAGE_TABS: Array<ToolbarTabItem> = [
-    { key: "vi", label: "Tiếng Việt", icon: <GlobeIcon className="size-4" weight="bold" /> },
-    { key: "en", label: "English", icon: <GlobeIcon className="size-4" weight="bold" /> },
+    { key: "vi", label: "Vietnamese", icon: <GlobeIcon data-tier="fixture" className="size-4" weight="bold" /> },
+    { key: "en", label: "English", icon: <GlobeIcon data-tier="fixture" className="size-4" weight="bold" /> },
 ]
 
 /** One row of the `PANEL_CONTENT` lookup — the title/body shown for a single tab key. */
@@ -57,13 +59,13 @@ interface PanelRow {
 }
 
 const PANEL_CONTENT: Record<string, PanelRow> = {
-    overview: { title: "Tổng quan", body: "Giới thiệu khoá học, kết quả đạt được và lộ trình theo từng tuần." },
-    content: { title: "Nội dung", body: "Danh sách bài học và bài tập của từng module, kèm thời lượng." },
-    reviews: { title: "Đánh giá", body: "Phản hồi và điểm số từ học viên đã hoàn thành khoá." },
-    start: { title: "Bắt đầu", body: "Cấu hình ban đầu và các bước để khu vực này chạy được." },
-    history: { title: "Lịch sử", body: "Mọi hoạt động đã diễn ra, mới nhất trước." },
-    stats: { title: "Thống kê", body: "Số liệu tổng hợp của khu vực — hiện đang khoá." },
-    pro: { title: "Nâng cao", body: "Nội dung dành cho gói trả phí — caller chặn lượt chọn để mở paywall." },
+    overview: { title: "Overview", body: "Course overview, expected outcomes, and the week-by-week roadmap." },
+    content: { title: "Content", body: "The lesson and exercise list for each module, with durations." },
+    reviews: { title: "Reviews", body: "Feedback and ratings from students who have finished the course." },
+    start: { title: "Start", body: "Initial setup and the steps needed to get this area running." },
+    history: { title: "History", body: "Every past activity, newest first." },
+    stats: { title: "Stats", body: "Aggregate stats for this area — currently locked." },
+    pro: { title: "Pro", body: "Content reserved for the paid plan — the caller blocks selection to open the paywall." },
 }
 
 /** Props for the `TabPanel` helper. */
@@ -72,20 +74,22 @@ interface TabPanelProps {
     selectedKey: string
 }
 
-/** Panel đổi theo tab đang chọn — bấm tab là khối dưới render lại (chứng minh tab sống). */
+/** Panel content follows the selected tab — clicking a tab re-renders the block below (proof the tabs are live). */
 const TabPanel = ({ selectedKey }: TabPanelProps) => {
     const panel = PANEL_CONTENT[selectedKey]
     return (
-        <SurfaceCard>
-            <div className="flex flex-col gap-2">
-                <Typography text={panel?.title} weight="bold" />
-                <Typography size="sm" text={panel?.body} color="muted" />
-            </div>
-        </SurfaceCard>
+        <SurfaceCard
+            body={() => (
+                <div className="flex flex-col gap-2">
+                    <Typography text={panel?.title} weight="bold" />
+                    <Typography size="sm" text={panel?.body} color="muted" />
+                </div>
+            )}
+        />
     )
 }
 
-/** Giữ state tab trái/phải hộ story — hai nhóm của `Toolbar` đều CONTROLLED. */
+/** Holds the left/right tab state for the story — both of `Toolbar`'s groups are CONTROLLED. */
 const Controlled = (props: Omit<ToolbarBaseProps, "leftTabs" | "rightTabs"> & {
     leftItems: Array<ToolbarTabItem>
     leftAriaLabel?: string
@@ -96,17 +100,17 @@ const Controlled = (props: Omit<ToolbarBaseProps, "leftTabs" | "rightTabs"> & {
 }) => {
     const {
         leftItems,
-        leftAriaLabel = "Phần của khoá",
+        leftAriaLabel = "Course section",
         defaultLeftKey,
         rightItems,
-        rightAriaLabel = "Ngôn ngữ",
+        rightAriaLabel = "Language",
         defaultRightKey,
         ...rest
     } = props
     const [leftKey, setLeftKey] = useState(defaultLeftKey)
     const [rightKey, setRightKey] = useState(defaultRightKey ?? "")
     return (
-        <div className="flex w-[36rem] max-w-full flex-col gap-3">
+        <div data-tier="fixture" className="flex w-[36rem] max-w-full flex-col gap-3">
             <Toolbar
                 {...rest}
                 leftTabs={{
@@ -127,14 +131,14 @@ const Controlled = (props: Omit<ToolbarBaseProps, "leftTabs" | "rightTabs"> & {
     )
 }
 
-// Truyền icon dạng COMPONENT xuống atom — atom tự ép size + weight (§5.0a), story không chọn nét.
+// Pass the icon as a COMPONENT down to the atom — the atom forces its own size + weight (§5.0a); the story doesn't pick the stroke.
 const addButton: ReactNode = (
-    <Button isIconOnly prefixIcon={PlusIcon} ariaLabel="Thêm phần mới" variant="ghost" size="sm" onPress={() => {}} />
+    <Button isIconOnly prefixIcon={PlusIcon} ariaLabel="Add new section" variant="ghost" size="sm" onPress={() => {}} />
 )
 
-// Part mà Toolbar compose TRỰC TIẾP — LeftTabs (nhóm chính) · LeftEnd (cụm action
-// cạnh nó) · RightTabs (nhóm phụ, inline hoặc thu gọn thành Select dưới `@app-sm`).
-// Mỗi leaf chỉ khai đúng thứ nó render.
+// Parts Toolbar composes DIRECTLY — LeftTabs (main group) · LeftEnd (the action
+// cluster beside it) · RightTabs (secondary group, inline or collapsed to a Select
+// below `@app-sm`). Each leaf only declares exactly what it renders.
 const LEFT_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "TabsExtended", tier: "atom", role: "the main tab group, driving the whole panel below it", storyId: "atoms-navigation-tabs-tabsextended--default" },
 ]
@@ -156,10 +160,10 @@ const LEFT_END_PARTS: Array<AnatomyNode> = [
     { name: "TabsExtended", tier: "atom", role: "the main tab group", storyId: "atoms-navigation-tabs-tabsextended--default" },
 ]
 
-/** Một nhóm tab đổi TOÀN BỘ panel bên dưới (secondary, underline) — hình thái tối thiểu. */
+/** One tab group that switches the ENTIRE panel below (secondary, underline) — the minimal shape. */
 export const SingleGroup: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Toolbar"
                 tier="composite"
@@ -171,7 +175,7 @@ export const SingleGroup: Story = {
                         name: "only leftTabs passed",
                         why: "Only the LeftTabs group renders; there is no LeftEnd cluster and no RightTabs group. This is the minimal shape, a single tab group that switches the whole panel below it.",
                         code: `<Toolbar
-  leftTabs={{ items, selectedKey, ariaLabel: "Phần của khoá", onSelectionChange }}
+  leftTabs={{ items, selectedKey, ariaLabel: "Course section", onSelectionChange }}
 />`,
                         render: <Controlled leftItems={CONTENT_TABS} defaultLeftKey="overview" showAnatomy />,
                     },
@@ -181,10 +185,10 @@ export const SingleGroup: Story = {
     ),
 }
 
-/** `leftEnd`: action ghim ngay SAU nhóm trái — sibling của tab list, không lồng trong Tab. */
+/** `leftEnd`: an action pinned right AFTER the left group — a sibling of the tab list, never nested inside a Tab. */
 export const WithLeftEnd: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Toolbar"
                 tier="composite"
@@ -196,7 +200,7 @@ export const WithLeftEnd: Story = {
                         why: "A LeftEnd node appears right after LeftTabs as its sibling, gathered tight with `gap-1`, not nested inside any Tab. react-aria forbids nesting an interactive element inside `Tabs.Tab`, so an action like adding a new section has to live beside the tab list instead of inside it.",
                         code: `<Toolbar
   leftTabs={…}
-  leftEnd={<Button isIconOnly prefixIcon={PlusIcon} ariaLabel="Thêm phần mới" variant="ghost" size="sm" />}
+  leftEnd={<Button isIconOnly prefixIcon={PlusIcon} ariaLabel="Add new section" variant="ghost" size="sm" />}
 />`,
                         render: <Controlled leftItems={CONTENT_TABS} defaultLeftKey="overview" leftEnd={addButton} showAnatomy />,
                     },
@@ -206,10 +210,10 @@ export const WithLeftEnd: Story = {
     ),
 }
 
-/** Hai nhóm cùng hàng — nhóm phải INLINE, cùng chrome accent như nhóm trái. */
+/** Two groups on the same row — the right group INLINE, sharing the same accent chrome as the left one. */
 export const TwoGroups: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Toolbar"
                 tier="composite"
@@ -237,13 +241,14 @@ export const TwoGroups: Story = {
 }
 
 /**
- * `rightTabsNeutral` + `collapseRightOnMobile` — nhóm phải là công tắc "cùng nội dung,
- * khác cách trình bày" (đổi ngôn ngữ): chrome NEUTRAL để hàng chỉ có MỘT tín hiệu accent,
- * và thu gọn thành dropdown icon-only dưới `@app-sm`.
+ * `rightTabsNeutral` + `collapseRightOnMobile` — the right group is a "same content,
+ * different presentation" switch (a language toggle): NEUTRAL chrome so the row
+ * carries only ONE accent signal, and it collapses into an icon-only dropdown
+ * below `@app-sm`.
  */
 export const RightNeutralCollapsed: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Toolbar"
                 tier="composite"
@@ -278,19 +283,21 @@ export const RightNeutralCollapsed: Story = {
 }
 
 /**
- * `variant="primary"` — segmented pill full-width, cho hàng đổi HẲN nội dung panel.
+ * `variant="primary"` — a full-width segmented pill, for a row that replaces the
+ * panel content ENTIRELY.
  *
- * GỘP MỘT LEAF (§14d.2): `size="sm"` (tên cũ của leaf riêng: `Compact`) KHÔNG đổi
- * một node nào — vẫn đúng cụm LeftTabs đó, chỉ co `w-fit` + chữ/padding nhỏ hơn.
- * Cùng cây ⇒ là STATE của leaf này, không phải leaf thứ hai. `size` cũng chỉ tác
- * động lên `variant="primary"` (secondary vốn đã hug-content).
+ * MERGED INTO ONE LEAF (§14d.2): `size="sm"` (the old name of its own separate
+ * leaf, `Compact`) changes NO node — it's still the exact same LeftTabs cluster,
+ * only shrunk to `w-fit` with smaller text/padding. Same tree ⇒ a STATE of this
+ * leaf, not a second leaf. `size` also only affects `variant="primary"` (secondary
+ * is already hug-content).
  *
- * Chỉ bản `size` mặc định nằm trong `BlockAnatomy`; bản `size="sm"` là sibling
- * tham chiếu bên ngoài panel, nên leaf này giữ đúng một state.
+ * Only the default `size` sits inside `BlockAnatomy`; the `size="sm"` version is
+ * a reference sibling outside the panel, so this leaf keeps exactly one state.
  */
 export const PrimaryVariant: Story = {
     render: () => (
-        <div className="flex flex-col gap-6 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-6 p-8">
             <BlockAnatomy
                 name="Toolbar"
                 tier="composite"
@@ -304,11 +311,11 @@ export const PrimaryVariant: Story = {
                             <Controlled
                                 leftItems={[
                                     // icon tab `size-4` < `size-5` ⇒ `weight="bold"` (§5.0a).
-                                    { key: "start", label: "Bắt đầu", icon: <GearIcon className="size-4" weight="bold" /> },
-                                    { key: "history", label: "Lịch sử" },
-                                    { key: "stats", label: "Thống kê" },
+                                    { key: "start", label: "Start", icon: <GearIcon data-tier="fixture" className="size-4" weight="bold" /> },
+                                    { key: "history", label: "History" },
+                                    { key: "stats", label: "Stats" },
                                 ]}
-                                leftAriaLabel="Khu vực"
+                                leftAriaLabel="Area"
                                 defaultLeftKey="start"
                                 variant="primary"
                                 showAnatomy
@@ -321,11 +328,11 @@ export const PrimaryVariant: Story = {
                 smaller text/padding, but the composition is identical to the state above. */}
             <Controlled
                 leftItems={[
-                    { key: "start", label: "Bắt đầu", icon: <GearIcon className="size-4" weight="bold" /> },
-                    { key: "history", label: "Lịch sử" },
-                    { key: "stats", label: "Thống kê" },
+                    { key: "start", label: "Start", icon: <GearIcon data-tier="fixture" className="size-4" weight="bold" /> },
+                    { key: "history", label: "History" },
+                    { key: "stats", label: "Stats" },
                 ]}
-                leftAriaLabel="Khu vực (size sm)"
+                leftAriaLabel="Area (size sm)"
                 defaultLeftKey="start"
                 variant="primary"
                 size="sm"
@@ -335,12 +342,13 @@ export const PrimaryVariant: Story = {
 }
 
 /**
- * State của TỪNG tab do khung vẽ: `isDisabled` (chặn chọn, không bấm được) vs `muted`
- * (vẫn bấm được — parent chặn để mở paywall). Hai thứ KHÁC nhau, đừng dùng lẫn.
+ * State of EACH tab is drawn by the frame: `isDisabled` (locks selection, can't be
+ * pressed) vs `muted` (still pressable — the parent blocks it to open a paywall).
+ * Two DIFFERENT things — don't conflate them.
  */
 export const TabStates: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Toolbar"
                 tier="composite"
@@ -349,21 +357,21 @@ export const TabStates: Story = {
                 states={[
                     {
                         name: "one tab isDisabled, one tab muted",
-                        why: "The `Thống kê` tab locks hard, no focus and no selection reach it, while the `Nâng cao` tab still selects normally but renders muted. `isDisabled` is a hard lock the toolbar itself enforces; `muted` still lets the caller's own handler run so it can open a paywall instead.",
+                        why: "The `Stats` tab locks hard, no focus and no selection reach it, while the `Pro` tab still selects normally but renders muted. `isDisabled` is a hard lock the toolbar itself enforces; `muted` still lets the caller's own handler run so it can open a paywall instead.",
                         code: `leftTabs={{ items: [
-  { key: "start", label: "Bắt đầu" },
-  { key: "stats", label: "Thống kê", isDisabled: true },
-  { key: "pro", label: "Nâng cao", muted: true },
+  { key: "start", label: "Start" },
+  { key: "stats", label: "Stats", isDisabled: true },
+  { key: "pro", label: "Pro", muted: true },
 ], … }}`,
                         render: (
                             <Controlled
                                 leftItems={[
-                                    { key: "start", label: "Bắt đầu" },
-                                    { key: "history", label: "Lịch sử" },
-                                    { key: "stats", label: "Thống kê", isDisabled: true },
-                                    { key: "pro", label: "Nâng cao", muted: true },
+                                    { key: "start", label: "Start" },
+                                    { key: "history", label: "History" },
+                                    { key: "stats", label: "Stats", isDisabled: true },
+                                    { key: "pro", label: "Pro", muted: true },
                                 ]}
-                                leftAriaLabel="Khu vực"
+                                leftAriaLabel="Area"
                                 defaultLeftKey="start"
                                 showAnatomy
                             />

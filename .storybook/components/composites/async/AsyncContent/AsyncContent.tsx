@@ -4,13 +4,14 @@ import React from "react"
 import type { ReactNode, SVGProps } from "react"
 import { TrayIcon, WarningIcon, type Icon as PhosphorIcon } from "@phosphor-icons/react"
 
-import { FeedbackEmpty, type FeedbackIcon } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState, type EmptyStateIcon } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 // The ATOM `Button`, NOT the `_legacy` version (§0 + teacher, 2026-07-26):
 // `AsyncContent` sits in the closure of the `CourseContents` screen, and that screen
 // is FORBIDDEN from touching `_legacy` — an import at the composite tier would drag the
 // whole dead branch back into the screen (caught by the 2026-07-27 deep-scan).
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -72,11 +73,13 @@ interface MessageProps {
     onRetry?: () => void
     /** Shorthand: the (already translated) label of the retry button — required for the button to appear. */
     retryLabel?: ReactNode
-    /** Extra class on the wrapper. */
-    className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     */
+    classNames?: Array<AllowedClassName>
     /**
      * Name THIS frame in the BlockAnatomy panel, overriding the internal default
-     * (`"FeedbackEmpty"` / `"Feedback.Error"`).
+     * (`"EmptyState"` / `"Feedback.Error"`).
      *
      * Required by 11a.1: a caller badges its direct child by passing `anatPart` DOWN,
      * never by passing `showAnatomy` down. Without this prop, a screen that uses the
@@ -95,7 +98,7 @@ interface MessageProps {
  * already drifted (story duotone, screen not). The old `nodeAsIcon` adapter was
  * removed per its own debt note.
  */
-const withDuotone = (Icon: PhosphorIcon): FeedbackIcon => {
+const withDuotone = (Icon: PhosphorIcon): EmptyStateIcon => {
     const Glyph = (props: SVGProps<SVGSVGElement>) => <Icon {...props} weight="duotone" />
     return Glyph
 }
@@ -115,7 +118,7 @@ const composeAction = ({ action, onRetry, retryLabel, showAnatomy }: MessageProp
                 size="sm"
                 onPress={onRetry}
                 label={retryLabel}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
         )
     }
@@ -125,6 +128,9 @@ const composeAction = ({ action, onRetry, retryLabel, showAnatomy }: MessageProp
 // ─────────────────────────────────────────────────────────────────────────────
 // .Base — the 4-branch state switch (was `AsyncContent`)
 // ─────────────────────────────────────────────────────────────────────────────
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "AsyncContent" } as const
 
 /** Props for {@link AsyncContent}. */
 export interface AsyncContentBaseProps {
@@ -236,18 +242,18 @@ export type AsyncContentEmptyProps = MessageProps
  * and an action slot (or the "retry" shorthand), centred. This is the standard
  * `emptyContent` for {@link AsyncContent}.
  *
- * A THIN layer over the `FeedbackEmpty` frame: it only adds the default
+ * A THIN layer over the `EmptyState` frame: it only adds the default
  * `TrayIcon` and wraps `onRetry`/`retryLabel` into a button for the `action`
  * slot — it does NOT redraw the icon + title + description + button itself.
  *
  * @param props - {@link AsyncContentEmptyProps}
  */
 const Empty = (props: AsyncContentEmptyProps) => {
-    const { title, description, icon, className, anatPart, showAnatomy } = props
+    const { title, description, icon, classNames, anatPart, showAnatomy } = props
     return (
-        <FeedbackEmpty
-            anatPart={anatPart ?? (showAnatomy ? "FeedbackEmpty" : undefined)}
-            className={className}
+        <EmptyState
+            anatPart={anatPart ?? (showAnatomy ? "EmptyState" : undefined)}
+            classNames={classNames}
             icon={withDuotone(icon ?? TrayIcon)}
             title={title}
             description={description}
@@ -268,16 +274,16 @@ export type AsyncContentErrorProps = MessageProps
  * and an action slot (usually "retry"), centred. This is the standard
  * `errorContent` for {@link AsyncContent}.
  *
- * A THIN layer over the `FeedbackEmpty` frame with `tone="danger"`.
+ * A THIN layer over the `EmptyState` frame with `tone="danger"`.
  *
  * @param props - {@link AsyncContentErrorProps}
  */
 const ErrorMessage = (props: AsyncContentErrorProps) => {
-    const { title, description, icon, className, anatPart, showAnatomy } = props
+    const { title, description, icon, classNames, anatPart, showAnatomy } = props
     return (
-        <FeedbackEmpty
-            anatPart={anatPart ?? (showAnatomy ? "FeedbackEmpty" : undefined)}
-            className={className}
+        <EmptyState
+            anatPart={anatPart ?? (showAnatomy ? "EmptyState" : undefined)}
+            classNames={classNames}
             tone="danger"
             icon={withDuotone(icon ?? WarningIcon)}
             title={title}

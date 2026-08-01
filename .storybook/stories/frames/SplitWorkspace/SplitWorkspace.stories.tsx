@@ -9,7 +9,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * second shape to make configurable yet.
  *
  * ⭐ The one leaf that matters — `Default`'s 3 states are the EVIDENCE for the
- * axis switch (thầy 2026-07-29, "desktop là phải render flex chứ nhỉ?"):
+ * axis switch (teacher, 2026-07-29: "shouldn't desktop render as flex?"):
  * `main`/`aside` stack full-width below `@app-xl` (mobile/tablet) and only go
  * side-by-side from `@app-xl` (1280px) up — never a fixed row at every width.
  */
@@ -24,7 +24,7 @@ interface TileProps {
 
 /** A sample tile — just to see the two regions, carries no domain content (§13). */
 const Tile = ({ label, tall = false }: TileProps) => (
-    <div className={`rounded-xl border border-default bg-surface p-3 text-sm text-foreground ${tall ? "h-40" : ""}`}>{label}</div>
+    <div data-tier="fixture" className={`rounded-xl border border-default bg-surface p-3 text-sm text-foreground ${tall ? "h-40" : ""}`}>{label}</div>
 )
 
 const meta: Meta<typeof SplitWorkspace> = {
@@ -41,7 +41,7 @@ type Story = StoryObj<typeof SplitWorkspace>
 /** LEAF — the split, at 3 container widths. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SplitWorkspace"
                 tier="frame"
@@ -56,7 +56,7 @@ export const Default: Story = {
     <SplitWorkspace main={<Brief />} aside={<Actions />} />
 </div>`,
                         render: (
-                            <div className="@container" style={{ width: 375 }}>
+                            <div data-tier="fixture" className="@container" style={{ width: 375 }}>
                                 <SplitWorkspace
                                     anatPart="SplitWorkspace"
                                     main={<Tile label="main — reading column" tall />}
@@ -72,7 +72,7 @@ export const Default: Story = {
     <SplitWorkspace main={<Brief />} aside={<Actions />} />
 </div>`,
                         render: (
-                            <div className="@container" style={{ width: 768 }}>
+                            <div data-tier="fixture" className="@container" style={{ width: 768 }}>
                                 <SplitWorkspace
                                     main={<Tile label="main — reading column" tall />}
                                     aside={<Tile label="aside — action column" />}
@@ -87,7 +87,7 @@ export const Default: Story = {
     <SplitWorkspace main={<Brief />} aside={<Actions />} />
 </div>`,
                         render: (
-                            <div className="@container" style={{ width: 1280 }}>
+                            <div data-tier="fixture" className="@container" style={{ width: 1280 }}>
                                 <SplitWorkspace
                                     main={<Tile label="main — reading column" tall />}
                                     aside={<Tile label="aside — action column" />}

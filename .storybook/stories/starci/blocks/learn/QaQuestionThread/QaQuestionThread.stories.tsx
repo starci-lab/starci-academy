@@ -27,17 +27,17 @@ export default meta
 
 type Story = StoryObj<typeof QaQuestionThread>
 
-const ASKER = { id: "u-asker", displayName: "Minh Anh", avatarUrl: undefined }
-const FOUNDER = { id: "u-founder", displayName: "Thầy Quang", avatarUrl: undefined }
-const PEER = { id: "u-peer", displayName: "Bảo Long", avatarUrl: undefined }
+const ASKER = { id: "u-asker", displayName: "Amy Nguyen", avatarUrl: undefined }
+const FOUNDER = { id: "u-founder", displayName: "Coach Quang", avatarUrl: undefined }
+const PEER = { id: "u-peer", displayName: "Brandon Le", avatarUrl: undefined }
 
-const CURRENT_USER: QaQuestionThreadViewer = { username: "Bảo Long", avatar: undefined }
+const CURRENT_USER: QaQuestionThreadViewer = { username: "Brandon Le", avatar: undefined }
 
 const NESTED_REPLY: QaThreadAnswer = {
     id: "a-2-1",
-    body: "Đúng rồi, bạn thử xoá `.next` rồi build lại xem sao.",
+    body: "That's right, try deleting `.next` and building again.",
     author: FOUNDER,
-    createdTimeAgo: "5 phút trước",
+    createdTimeAgo: "5 minutes ago",
     reactionCount: 1,
     myReaction: null,
 }
@@ -45,17 +45,17 @@ const NESTED_REPLY: QaThreadAnswer = {
 const ANSWERS: Array<QaThreadAnswer> = [
     {
         id: "a-1",
-        body: "Bạn kiểm tra lại `next.config.js` xem `output` có đang set `standalone` không nhé.",
+        body: "Check whether `output` is set to `standalone` in your `next.config.js`.",
         author: PEER,
-        createdTimeAgo: "20 phút trước",
+        createdTimeAgo: "20 minutes ago",
         reactionCount: 2,
         myReaction: "like",
     },
     {
         id: "a-2",
-        body: "Mình nghĩ là do cache Turbopack thôi, không phải lỗi code của bạn — build bằng webpack thử xem.",
+        body: "I think it's just the Turbopack cache, not a bug in your code — try building with webpack instead.",
         author: FOUNDER,
-        createdTimeAgo: "10 phút trước",
+        createdTimeAgo: "10 minutes ago",
         isAcceptedAnswer: true,
         reactionCount: 4,
         myReaction: null,
@@ -67,10 +67,10 @@ const ANSWERS: Array<QaThreadAnswer> = [
 const QUESTION_ANSWERED: QaQuestionThreadQuestion = {
     id: "q-1",
     author: ASKER,
-    createdTimeAgo: "1 giờ trước",
+    createdTimeAgo: "1 hour ago",
     isPinned: true,
-    body: "Sao build production của em bị lỗi CSS cache hoài vậy ạ? Em đã thử xoá `node_modules` rồi mà vẫn không hết.",
-    scope: { kind: "lesson", lessonTitle: "Triển khai Next.js lên Vercel" },
+    body: "Why does my production build keep hitting CSS cache errors? I've tried deleting `node_modules` but it still happens.",
+    scope: { kind: "lesson", lessonTitle: "Deploying Next.js to Vercel" },
     replyCount: 3,
     answeredByFounder: true,
     reactionCount: 5,
@@ -82,8 +82,8 @@ const QUESTION_ANSWERED: QaQuestionThreadQuestion = {
 const QUESTION_UNANSWERED: QaQuestionThreadQuestion = {
     id: "q-2",
     author: PEER,
-    createdTimeAgo: "3 phút trước",
-    body: "Khoá học này có phần nào nói về testing E2E không ạ?",
+    createdTimeAgo: "3 minutes ago",
+    body: "Does this course cover E2E testing anywhere?",
     scope: { kind: "general" },
     replyCount: 0,
     reactionCount: 0,
@@ -117,7 +117,7 @@ const ExpandedPreview = (props: QaQuestionThreadProps) => {
         containerRef.current?.querySelector("button")?.click()
     }, [])
     return (
-        <div ref={containerRef}>
+        <div data-tier="fixture" ref={containerRef}>
             <QaQuestionThread {...props} />
         </div>
     )
@@ -126,7 +126,7 @@ const ExpandedPreview = (props: QaQuestionThreadProps) => {
 /** LEAF — `Collapsed`: the private social inbox row, whole row pressable. */
 export const Collapsed: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QaQuestionThread"
                 tier="block"
@@ -155,7 +155,7 @@ export const Collapsed: Story = {
                     },
                     {
                         name: "replyCount = 0",
-                        why: "A fresh, course-general question with nobody having answered yet: the scope chip reads \"Chung\" (no lesson tag), the status chip reads the neutral \"Chưa trả lời\" wording, and the status dot goes warning instead of success — the row's own honest signal that this one still needs an answer.",
+                        why: "A fresh, course-general question with nobody having answered yet: the scope chip reads \"General\" (no lesson tag), the status chip reads the neutral \"Unanswered\" wording, and the status dot goes warning instead of success — the row's own honest signal that this one still needs an answer.",
                         code: "<QaQuestionThread question={questionUnanswered} currentUserId={currentUserId} currentUser={currentUser} />",
                         render: (
                             <QaQuestionThread
@@ -187,7 +187,7 @@ export const Collapsed: Story = {
 /** LEAF — `Expanded`: the full conversation, opened. */
 export const Expanded: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QaQuestionThread"
                 tier="block"
@@ -198,7 +198,7 @@ export const Expanded: Story = {
                 states={[
                     {
                         name: "answers.length = 2 (one carrying a flattened reply)",
-                        why: "The header opens with the collapse control and the asker's identity; the question itself becomes the first chat bubble, left-aligned because the signed-in viewer (Bảo Long) is not its author; the two answers follow as their own bubbles, the founder's own one carrying the accepted-answer badge plus a flattened reply riding beside it with a reply-to tag instead of an indent; the bottom composer stays ready to add one more.",
+                        why: "The header opens with the collapse control and the asker's identity; the question itself becomes the first chat bubble, left-aligned because the signed-in viewer (Brandon Le) is not its author; the two answers follow as their own bubbles, the founder's own one carrying the accepted-answer badge plus a flattened reply riding beside it with a reply-to tag instead of an indent; the bottom composer stays ready to add one more.",
                         code: `<QaQuestionThread
     question={questionAnswered}
     currentUserId={currentUserId}

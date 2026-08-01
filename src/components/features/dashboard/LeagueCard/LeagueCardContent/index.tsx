@@ -38,11 +38,11 @@ export interface LeagueCardContentProps extends WithClassNames<undefined> {
 }
 
 /**
- * Dashboard "League tuần" card — maps the resolved weekly-league data into the shared
+ * Dashboard "Weekly League" card — maps the resolved weekly-league data into the shared
  * {@link LeaderboardListCard} (standing header with a rank-driven medal/cup badge, then
  * the top cohort as a medal-ranked list with a rank-movement caret per row). Renders
  * identically to the global {@link import("../../TopLearners").TopLearners} card; only
- * the trailing slot (caret vs follow) differs (thầy 2026-07-17 "2 mục y chang").
+ * the trailing slot (caret vs follow) differs (instructor's call, 2026-07-17, "two identical sections").
  *
  * @param props - {@link LeagueCardContentProps}
  */
@@ -97,8 +97,8 @@ export const LeagueCardContent = ({
         // band = weekly rank MOVEMENT (mirrors the ▴▾ `RankDeltaCaret`), NOT the cohort
         // promote/demote zone — a per-row signal that ALWAYS shows (no cohort-size gate,
         // so a small seed cohort still renders it): climbed → success, dropped → danger,
-        // unchanged / no last-week baseline → no band (thầy 2026-07-17: dashboard preview
-        // luôn hiện; khác /league page vốn dùng zone thăng/rớt).
+        // unchanged / no last-week baseline → no band (instructor's call, 2026-07-17: the dashboard
+        // preview always shows it; unlike the /league page, which uses the promote/demote zone instead).
         const delta = entry.rankDelta ?? 0
         return {
             key: entry.userGlobalId,

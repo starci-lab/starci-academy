@@ -28,14 +28,14 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * function — it never appears independent of browsing, so it is not a seventh
  * block here.
  *
- * TWO SEAMS, TWO OWNERS (§10a). The outer `StackV gap="section"` separates the
+ * TWO SEAMS, TWO OWNERS (§10a). The outer `StackV gap={6}` separates the
  * three REGIONS of the page — identity, the trial nudge, and the browse
- * cluster. The inner `StackV gap="section"` is its own separate owner for the
+ * cluster. The inner `StackV gap={6}` is its own separate owner for the
  * "browse cluster" — search row above list — mirroring the real
  * `FoundationsCategoryGrid` layout's own inner `gap-6` cluster between its
  * search row and its grid/pager (the `gap-3` inside that layout is a
  * DIFFERENT seam, internal to the search row itself, already handled by
- * `FoundationCategorySearchBar`'s own `StackH gap="grouped"`).
+ * `FoundationCategorySearchBar`'s own `StackH gap={4}`).
  *
  * ⚠️ `isSkeleton` flows to every block uniformly, INCLUDING the trial banner:
  * `TrialEnrollBanner` treats `isSkeleton` as a state that WINS over
@@ -149,13 +149,13 @@ const FoundationsGridPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={categoriesSection} />
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={categoriesSection} />
         </>
     )
 
-    const gridBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={gridSections} />
+    const gridBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={gridSections} />
 
-    return <Container size="md" padding="roomy" body={gridBody} />
+    return <Container size="md" padding={6} body={gridBody} />
 }
 
 export { FoundationsGridPage }

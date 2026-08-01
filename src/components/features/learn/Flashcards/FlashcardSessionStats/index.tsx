@@ -50,7 +50,7 @@ const GRADE_ROWS: ReadonlyArray<{
 ]
 
 /**
- * The end-of-session STATS surface for a "Học thẻ" review run (deck-review or
+ * The end-of-session STATS surface for a "Study cards" review run (deck-review or
  * cross-deck due-review) — the completion screen (replaces the old flat "done"
  * card) AND the render for revisiting a finished session by URL. Mirrors
  * `MockInterviewScorecard`'s shell: a centered `max-w-3xl` column of canonical
@@ -74,9 +74,9 @@ export const FlashcardSessionStats = ({
     const locale = useLocale()
     const statsSwr = useQueryMyFlashcardReviewSessionStatsBySessionIdSwr(sessionId, courseId)
     const stats = statsSwr.data
-    // which kind of run this was (single deck vs cross-deck "Đến hạn") + the deck
-    // identity when applicable — resolved purely from the sessionId (thầy
-    // 2026-07-13: "render lại kết quả phiên ôn gì, due hay deck"), same query the
+    // which kind of run this was (single deck vs cross-deck "Due") + the deck
+    // identity when applicable — resolved purely from the sessionId (teacher
+    // 2026-07-13: "re-render which review session it was, due or deck"), same query the
     // LIVE session already uses to pick its chrome.
     const sessionContextSwr = useQueryMyFlashcardReviewSessionBySessionIdSwr(sessionId, courseId)
     const sessionContext = sessionContextSwr.data
@@ -87,7 +87,7 @@ export const FlashcardSessionStats = ({
         [locale],
     )
 
-    // seconds → a compact localized duration ("45 giây" / "6 phút"); em-dash when unknown.
+    // seconds → a compact localized duration ("45 seconds" / "6 minutes"); em-dash when unknown.
     const formatDuration = (seconds: number | null): string => {
         if (seconds === null || seconds <= 0) {
             return "—"
@@ -101,8 +101,8 @@ export const FlashcardSessionStats = ({
     const relatedQuery = (stats?.weakTags ?? []).map((weak) => weak.tag).join(" ")
 
     // which run this was, folded straight into the TITLE text (not a separate
-    // chip — thầy 2026-07-13: "kiểu label ấy, bỏ chip, ví dụ là ghi là kết quả
-    // phiên ôn due") — falls back to the generic caption while resolving/absent
+    // chip — teacher 2026-07-13: "that kind of label, drop the chip, e.g. write it as the result
+    // of the due review session") — falls back to the generic caption while resolving/absent
     // (legacy session with no matching row).
     const headerCaption = !sessionContext
         ? t("flashcard.review.stats.headerCaption")
@@ -113,10 +113,10 @@ export const FlashcardSessionStats = ({
                 : t("flashcard.review.stats.headerCaption")
 
     return (
-        // reached via the "Học thẻ"/"Ôn thẻ đến hạn" LIVE session route
+        // reached via the "Study cards"/"Review due cards" LIVE session route
         // (`review/sessions/[sessionId]`), `fullBleed` for the whole session
         // including this recap phase — same gap as `FlashcardQuizResult`
-        // (2026-07-12, thầy: "thiếu padding p-6"). Owns its own page padding.
+        // (2026-07-12, teacher: "missing p-6 padding"). Owns its own page padding.
         <div className={cn("flex flex-col gap-6 px-4 py-6 @app-sm:px-6", className)}>
             <PageHeader
                 className="mx-auto w-full max-w-3xl"

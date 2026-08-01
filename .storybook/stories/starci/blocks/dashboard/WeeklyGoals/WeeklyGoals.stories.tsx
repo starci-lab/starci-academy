@@ -3,7 +3,7 @@ import { WeeklyGoals, type WeeklyGoalKey, type WeeklyGoalsData } from "@sb-compo
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `WeeklyGoals`: "Mục tiêu tuần" — the composite summary + six-metric
+ * BLOCK — `WeeklyGoals`: "Weekly Goals" — the composite summary + six-metric
  * breakdown. See the component's own file header for the full contract; this
  * file only adds the states.
  *
@@ -35,19 +35,19 @@ type Story = StoryObj<typeof WeeklyGoals>
 
 const FULL_DATA: WeeklyGoalsData = {
     items: [
-        { key: "lessons", label: "Bài học", current: 4, target: 5, coinReward: 20, canClaim: false },
-        { key: "studyDays", label: "Ngày học", current: 5, target: 5, coinReward: 15, canClaim: true },
-        { key: "challenges", label: "Thử thách", current: 1, target: 3, coinReward: 25, canClaim: false },
-        { key: "coding", label: "Bài code", current: 3, target: 3, coinReward: 20, canClaim: true },
-        { key: "flashcards", label: "Flashcard", current: 12, target: 20, coinReward: null, canClaim: false },
-        { key: "milestones", label: "Cột mốc", current: 0, target: 2, coinReward: null, canClaim: false },
+        { key: "lessons", label: "Lessons", current: 4, target: 5, coinReward: 20, canClaim: false },
+        { key: "studyDays", label: "Study days", current: 5, target: 5, coinReward: 15, canClaim: true },
+        { key: "challenges", label: "Challenges", current: 1, target: 3, coinReward: 25, canClaim: false },
+        { key: "coding", label: "Coding exercises", current: 3, target: 3, coinReward: 20, canClaim: true },
+        { key: "flashcards", label: "Flashcards", current: 12, target: 20, coinReward: null, canClaim: false },
+        { key: "milestones", label: "Milestones", current: 0, target: 2, coinReward: null, canClaim: false },
     ],
     composite: { percent: 68, completed: 2, total: 6 },
-    resetInLabel: "còn 3 ngày 12 giờ nữa",
+    resetInLabel: "3 days 12 hours left",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Mục tiêu tuần\" label above the summary and the six-metric grid", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
+    "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Weekly Goals\" label above the summary and the six-metric grid", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical frame stacking the summary sentence above the grid, or one metric cell's icon+label row above its meter", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "a metric cell's icon+label row, or the row splitting it from the current/target ratio", storyId: "frames-stack-stackh--default" },
     "Typography": { tier: "atom", role: "the summary sentence, a metric's label/ratio/coin-reward line, or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
@@ -59,7 +59,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the weekly-goals card: async lifecycle, summary and six-metric grid, all as states of one shape. */
 export const Content: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="WeeklyGoals"
                 tier="block"
@@ -76,12 +76,12 @@ export const Content: Story = {
     onRetry={refetch}
     data={{
         items: [
-            { key: "lessons", label: "Bài học", current: 4, target: 5, coinReward: 20, canClaim: false },
-            { key: "studyDays", label: "Ngày học", current: 5, target: 5, coinReward: 15, canClaim: true },
+            { key: "lessons", label: "Lessons", current: 4, target: 5, coinReward: 20, canClaim: false },
+            { key: "studyDays", label: "Study days", current: 5, target: 5, coinReward: 15, canClaim: true },
             // …
         ],
         composite: { percent: 68, completed: 2, total: 6 },
-        resetInLabel: "còn 3 ngày 12 giờ nữa",
+        resetInLabel: "3 days 12 hours left",
     }}
     defaultTargets={{ lessons: 5, studyDays: 5, challenges: 3, coding: 3, flashcards: 20, milestones: 2 }}
 />`,
@@ -103,7 +103,7 @@ export const Content: Story = {
     isLoading={false}
     onRetry={refetch}
     data={{
-        items: [{ key: "lessons", label: "Bài học", current: 0, target: 5, coinReward: null, canClaim: false }, …],
+        items: [{ key: "lessons", label: "Lessons", current: 0, target: 5, coinReward: null, canClaim: false }, …],
         composite: { percent: 0, completed: 0, total: 6 },
     }}
     defaultTargets={defaultTargets}

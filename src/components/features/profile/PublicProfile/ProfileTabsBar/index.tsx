@@ -55,7 +55,7 @@ export interface ProfileTabsBarProps extends WithClassNames<undefined> {
     /**
      * The viewed user's per-section visibility (all default true). A section tab is
      * withheld from VISITORS when its flag is false; the owner ({@link isSelf}) always
-     * sees every tab (with a "· ẩn" marker on hidden ones). Absent = all visible.
+     * sees every tab (with a "· hidden" marker on hidden ones). Absent = all visible.
      */
     sectionVisibility?: SectionVisibility
 }
@@ -63,7 +63,7 @@ export interface ProfileTabsBarProps extends WithClassNames<undefined> {
 /**
  * Build the href for a profile tab. Every tab nests under `/profile/<username>`,
  * INCLUDING "cv" — the public, read-only CV view (`/profile/<username>/cv`). The
- * owner's private editor stays reachable from the "Chỉnh sửa CV" button inside
+ * owner's private editor stays reachable from the "Edit CV" button inside
  * that view (the always-own `/profile/cv` gallery).
  */
 const tabHref = (locale: string, username: string, tabId: ProfileTab): string => {
@@ -107,7 +107,7 @@ export const ProfileTabsBar = ({ username, isSelf, hasPublicCv, sectionVisibilit
     const router = useRouter()
     const pathname = usePathname()
     // Whether a SECTION tab is hidden for the current viewer: false flag + visitor.
-    // The owner (isSelf) always sees it (just marked "· ẩn"); an absent flag = visible.
+    // The owner (isSelf) always sees it (just marked "· hidden"); an absent flag = visible.
     const isSectionHidden = useCallback(
         (tabId: ProfileTab): boolean =>
             !isSelf && isSectionTab(tabId) && sectionVisibility?.[tabId] === false,

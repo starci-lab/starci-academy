@@ -8,7 +8,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * BLOCK — `ContentReaction`: say how the lesson landed. `ReactionButton` on
  * the left, the quiet view count on the right, at the foot of the reading card.
  *
- * ⭐⭐ REBUILT 2026-07-28 (thầy: "chế nhiều quá" — the first cut was a single
+ * ⭐⭐ REBUILT 2026-07-28 (teacher: "over-engineered it" — the first cut was a single
  * boolean like/unlike toggle; real `src` is a Facebook-style SIX-EMOTION picker,
  * the SAME control used for the content reaction and every comment). The
  * trigger+picker+summary control itself was later EXTRACTED into its own block,
@@ -77,13 +77,13 @@ const ContentReaction = ({
                 anatPart={showAnatomy ? "ReactionButton" : undefined}
             />
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
             ) : viewCount != null ? (
                 <Typography
                     size="xs"
                     color="muted"
-                    text={`${viewCount.toLocaleString("vi-VN")} lượt xem`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`${viewCount.toLocaleString("en-US")} views`}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -91,7 +91,7 @@ const ContentReaction = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackH gap="related" align="center" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={row} />
+            <StackH gap={3} align="center" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={row} />
         </div>
     )
 }

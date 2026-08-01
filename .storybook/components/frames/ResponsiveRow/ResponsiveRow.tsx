@@ -2,7 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
+import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -63,20 +63,24 @@ export interface ResponsiveRowProps {
     columns: 1 | 2
     /** Container step the row switches from the fixed grid to the equal-share flex row at. */
     at: ResponsiveRowSwitch
-    /** Seam BELOW `at` (the grid gap). At/above `at` the row goes flush — see the file header. */
-    gap: SeamScale
+    /** Seam BELOW `at` (the grid gap), on the house gap scale. At/above `at` the row goes flush — see the file header. */
+    gap: Responsive<AllowedGap>
     /**
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the frame is used but the panel cannot see it.
      */
     anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * The layout pattern this row's seam realises — a token from `test-runner/patterns.mjs`.
+     * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
+     * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
+     * `pattern` doc for the full contract.
+     */
+    pattern?: string
 }
 
 /** Grid column count → literal class. Tailwind never emits an interpolated `grid-cols-${n}`. */
@@ -109,17 +113,19 @@ const ResponsiveRowBase = ({
     at,
     gap,
     anatPart,
-    className,
     classNames,
+    pattern,
 }: ResponsiveRowProps) => (
     <div
+        data-tier="frame"
+        data-component="ResponsiveRow"
         data-anat-part={anatPart}
+        data-principles={pattern}
         className={cn(
             "grid",
             COLUMNS_CLASS[columns],
-            GAP_CLASS[gap],
+            ...gapClassNames(gap),
             SWITCH_CLASS[at],
-            className,
             classNames,
         )}
     >
@@ -134,3 +140,6 @@ const ResponsiveRowBase = ({
  * component export (§13a).
  */
 export { ResponsiveRowBase as ResponsiveRow }
+
+/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+export const meta = { tier: "frame", name: "ResponsiveRow" } as const

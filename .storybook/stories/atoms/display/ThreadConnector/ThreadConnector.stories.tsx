@@ -6,7 +6,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `ThreadConnector`: the curved guide line linking a comment's avatar
- * down into a reply composer's own avatar (thầy 2026-07-29, Facebook-style
+ * down into a reply composer's own avatar (per teacher's note, 2026-07-29, Facebook-style
  * nested reply). Same family as `Stack.nested`'s straight indent-guide border,
  * bent into a corner instead of a straight drop.
  */
@@ -28,7 +28,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the connector sitting beside a reply composer's own avatar, under a parent comment. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ThreadConnector"
                 tier="atom"
@@ -40,14 +40,14 @@ export const Default: Story = {
                     {
                         name: "beside a reply composer's avatar",
                         why: "`ml-4` centers the line under a `size=\"sm\"` avatar's own center (32px wide); `self-stretch` fills whatever height the reply row ends up being, curving into the reply avatar's left edge.",
-                        code: `<StackH gap="tight" align="stretch" body={<>
+                        code: `<StackH gap={2} align="stretch" body={<>
     <ThreadConnector />
-    <Avatar name="Bạn" seed="viewer-1" size="sm" />
+    <Avatar name="You" seed="viewer-1" size="sm" />
 </>} />`,
                         render: (
-                            <StackH gap="tight" align="stretch" body={<>
+                            <StackH gap={2} align="stretch" body={<>
                                 <ThreadConnector />
-                                <Avatar name="Bạn" seed="viewer-1" size="sm" />
+                                <Avatar name="You" seed="viewer-1" size="sm" />
                             </>} />
                         ),
                     },

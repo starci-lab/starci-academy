@@ -59,8 +59,8 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ SCORE `null` IS A REAL STATE, NOT A LOADING STUB (§2) — an attempt that has
  * been submitted but not yet graded (e.g. the AI review job is still running).
- * The row shows "Đang chấm" in a neutral chip instead of a number, same idiom as
- * `TaskSubmissionPanel`'s "chưa có lần chấm điểm nào" — a named absence, never a
+ * The row shows "Grading" in a neutral chip instead of a number, same idiom as
+ * `TaskSubmissionPanel`'s "no graded attempts yet" — a named absence, never a
  * blank/undefined render.
  *
  * ⛔ OVERLAY, PRESENTATIONAL ONLY (Rule 13). `isOpen`/`onOpenChange` forward
@@ -74,7 +74,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 export interface PersonalProjectTaskAttempt {
     /** Stable id — the row's React key. */
     id: string
-    /** 1-based order the attempt was made in — the block turns this into "Lần N". */
+    /** 1-based order the attempt was made in — the block turns this into "Attempt N". */
     attemptNumber: number
     /** Points earned on this attempt. `null` → not graded yet (AI review still running). */
     score: number | null
@@ -123,10 +123,10 @@ export interface PersonalProjectTaskAttemptsDrawerProps {
 }
 
 /** Fixed, block-owned title — this drawer's whole reason to exist is this one list. */
-const DRAWER_TITLE = "Lịch sử các lần chấm AI"
+const DRAWER_TITLE = "AI grading history"
 
-const EMPTY_LABEL_DEFAULT = "Chưa có lần nộp nào cho nhiệm vụ này."
-const ERROR_TITLE = "Không tải được lịch sử chấm AI"
+const EMPTY_LABEL_DEFAULT = "No submissions yet for this task."
+const ERROR_TITLE = "Couldn't load the AI grading history"
 
 /** How many skeleton rows mirror the list while `attempts` hasn't landed yet. */
 const SKELETON_ROW_COUNT = 3
@@ -149,7 +149,7 @@ interface AttemptRowProps {
  */
 const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: AttemptRowProps) => {
     const scoreTone: ChipTone = attempt?.score != null ? "accent" : "default"
-    const scoreLabel = attempt?.score != null ? `${attempt.score} điểm` : "Đang chấm"
+    const scoreLabel = attempt?.score != null ? `${attempt.score} points` : "Grading"
     // A missing attempt (real, §2) drops the line; the skeleton branch always
     // reserves it so the mirror's footprint matches a typical populated row.
     const showFeedback = isSkeleton || attempt?.shortFeedback != null
@@ -161,15 +161,14 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                 weight="medium"
                 isSkeleton={isSkeleton}
                 classNames={isSkeleton ? ["w-1/4"] : undefined}
-                text={attempt != null ? `Lần ${attempt.attemptNumber}` : undefined}
-                anatPart={showAnatomy ? "Typography (attempt label)" : undefined}
+                text={attempt != null ? `Attempt ${attempt.attemptNumber}` : undefined}
+                showAnatomy={showAnatomy}
             />
             <Chip
                 icon={SparkleIcon}
                 tone={scoreTone}
                 isSkeleton={isSkeleton}
                 text={scoreLabel}
-                anatPart={showAnatomy ? "Chip" : undefined}
             />
         </>
     )
@@ -177,7 +176,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
     const rowLines = (
         <>
             <StackH
-                gap="grouped"
+                gap={4}
                 align="center"
                 justify="between"
                 wrap
@@ -192,11 +191,11 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
                     isSkeleton={isSkeleton}
                     classNames={isSkeleton ? ["w-2/3"] : undefined}
                     text={attempt?.shortFeedback ?? undefined}
-                    anatPart={showAnatomy ? "Typography (feedback)" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
             <InlineIconLabel
-                icon={<ClockIcon aria-hidden focusable="false" />}
+                icon={ClockIcon}
                 tone="default"
                 size="xs"
                 isSkeleton={isSkeleton}
@@ -208,7 +207,7 @@ const AttemptRow = ({ attempt, isSkeleton = false, showAnatomy = false }: Attemp
     )
 
     return (
-        <StackV gap="tight" showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={rowLines} />
+        <StackV gap={2} showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={rowLines} />
     )
 }
 
@@ -250,12 +249,12 @@ const PersonalProjectTaskAttemptsDrawer = ({
 
     const skeletonItems: Array<SurfaceCardListItem> = Array.from({ length: SKELETON_ROW_COUNT }, (_, index) => ({
         key: `skeleton-${index}`,
-        content: <AttemptRow isSkeleton showAnatomy={showAnatomy} />,
+        content: () => <AttemptRow isSkeleton showAnatomy={showAnatomy} />,
     }))
 
     const items: Array<SurfaceCardListItem> = attempts.map((attempt) => ({
         key: attempt.id,
-        content: <AttemptRow attempt={attempt} showAnatomy={showAnatomy} />,
+        content: () => <AttemptRow attempt={attempt} showAnatomy={showAnatomy} />,
     }))
 
     return (

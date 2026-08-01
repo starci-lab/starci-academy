@@ -21,7 +21,7 @@ type Story = StoryObj<typeof Legend>
 
 export const Basic: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <Legend
                 anatPart="Legend"
                 showAnatomy
@@ -38,7 +38,7 @@ export const Basic: Story = {
 /** Many items in a narrow block wrap to a new line instead of overflowing. */
 export const WrapMany: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-[220px]">
                 <Legend
                     anatPart="Legend"
@@ -59,14 +59,14 @@ export const WrapMany: Story = {
 /** Each entry carries a trailing `suffix` (a `· count` here) printed in the same muted line. */
 export const WithSuffix: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <Legend
                 anatPart="Legend"
                 showAnatomy
                 items={[
-                    { key: "content", label: "Content", color: "var(--accent)", suffix: <>&nbsp;·&nbsp;12</> },
-                    { key: "challenge", label: "Challenge", color: "var(--success)", suffix: <>&nbsp;·&nbsp;8</> },
-                    { key: "milestone", label: "Milestone", color: "var(--warning)", suffix: <>&nbsp;·&nbsp;3</> },
+                    { key: "content", label: "Content", color: "var(--accent)", suffix: " · 12" },
+                    { key: "challenge", label: "Challenge", color: "var(--success)", suffix: " · 8" },
+                    { key: "milestone", label: "Milestone", color: "var(--warning)", suffix: " · 3" },
                 ]}
             />
         </div>
@@ -76,15 +76,15 @@ export const WithSuffix: Story = {
 /** `direction="col"` stacks entries vertically instead of wrapping in a row. */
 export const Vertical: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <Legend
                 anatPart="Legend"
                 showAnatomy
                 direction="col"
                 items={[
-                    { key: "easy", label: "Easy", color: "var(--success)", suffix: <>&nbsp;·&nbsp;24</> },
-                    { key: "medium", label: "Medium", color: "var(--warning)", suffix: <>&nbsp;·&nbsp;11</> },
-                    { key: "hard", label: "Hard", color: "var(--danger)", suffix: <>&nbsp;·&nbsp;5</> },
+                    { key: "easy", label: "Easy", color: "var(--success)", suffix: " · 24" },
+                    { key: "medium", label: "Medium", color: "var(--warning)", suffix: " · 11" },
+                    { key: "hard", label: "Hard", color: "var(--danger)", suffix: " · 5" },
                 ]}
             />
         </div>
@@ -94,7 +94,7 @@ export const Vertical: Story = {
 /** `color` also accepts a Tailwind `bg-*` utility class (not only a raw value). */
 export const TailwindClassColors: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <Legend
                 anatPart="Legend"
                 showAnatomy
@@ -111,7 +111,7 @@ export const TailwindClassColors: Story = {
 /** Long labels — the colour dot keeps its fixed size, never shrinking with the text. */
 export const LongLabels: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-[260px]">
                 <Legend
                     anatPart="Legend"
@@ -129,7 +129,7 @@ export const LongLabels: Story = {
 /** LEAF — the caller flips `isSkeleton`; a shimmer row (dot + label bar) per entry stands in while the real colour/label pairing isn't known yet. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Legend"
                 tier="composite"

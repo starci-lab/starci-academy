@@ -30,12 +30,12 @@ export interface TruthListProps extends WithClassNames<undefined> {
 export const TruthList = ({ items, byline, className }: TruthListProps) => {
     return (
         <div className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
-            {/* Accordion Card: khung p-0 flush, accordion surface tự lo nền + separator + bo góc.
-                Mỗi sự thật = trigger (statement) bấm mở ra phần giải. KHÔNG Accordion.Indicator
-                → không caret (thầy chốt); hover trigger là affordance. */}
+            {/* Accordion Card: p-0 flush frame, the accordion surface owns its background + separators + corner radius.
+                Each truth = a trigger (statement) that opens its explanation. NO Accordion.Indicator
+                → no caret (teacher's ruling); the trigger hover is the affordance. */}
             <Accordion variant="surface" className="!rounded-none [&_*]:!rounded-none">
-                {/* accordion vuông toàn bộ → khung ngoài (overflow-hidden rounded-3xl) lo bo góc;
-                    item cuối flush phẳng với byline, không bo lòi khi hover. */}
+                {/* the accordion is fully square → the outer frame (overflow-hidden rounded-3xl) owns the radius;
+                    the last item sits flush with the byline and never bleeds a rounded edge on hover. */}
                 {items.map((item, index) => (
                     <Accordion.Item
                         key={index}

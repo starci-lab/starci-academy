@@ -1,25 +1,25 @@
 import React, { useState } from "react"
-import type { ReactNode } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `Disclosure.*`, the collapsible KHUNG namespace
- * (thầy 2026-07-25, canon §13a). Authored in Storybook (not `src`); synced to
- * `src` later. NO `@/components` imports.
+ * STORYBOOK-LOCAL DESIGN SPEC — `Disclosure.*`, the collapsible frame namespace
+ * (teacher's call, 2026-07-25, canon §13a). Authored in Storybook (not `src`);
+ * synced to `src` later. NO `@/components` imports.
  *
- * KHUNG API LAW (§13b): `.Base` is a WRAPPER frame → `title` names the trigger
+ * FRAME API LAW (§13b): `.Base` is a WRAPPER frame → `title` names the trigger
  * slot and `body` names the revealed region, with `children` kept as shorthand
  * for `body`. It reveals ONE region, not a repeating list, so the `items` rule
  * does NOT apply here — a multi-panel accordion is a DIFFERENT frame and lives
  * as `SurfaceCardAccordion` (items-driven), not as a member of this family.
  * Namespace only — no bare component export.
  *
- * Ground truth: MockInterviewSession's "Tùy chỉnh phiên" green-room row — a
+ * Ground truth: MockInterviewSession's "Customize session" green-room row — a
  * hand-rolled `<button aria-expanded>` with a leading `CaretDownIcon` that
  * rotates 180° on the local `configOpen` boolean, `text-muted
  * hover:text-foreground`, `w-fit` (hug-content) trigger; the config content
@@ -34,18 +34,27 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Disclosure" } as const
+
 /** Props for {@link Disclosure}. */
 export interface DisclosureBaseProps {
     /**
-     * Trigger label, rendered next to the caret. Bare `ReactNode` — the
-     * trigger owns the `text-sm` sizing and the muted → foreground hover
-     * color (§4); pass plain text/inline content, not a styled block.
+     * Trigger label, rendered next to the caret. The composite renders it
+     * through the `Typography` atom itself (§4: `text-sm`, muted → foreground
+     * on hover) and forwards `isSkeleton`, so this is plain text, not a
+     * pre-built node — see COMPOSITE-8.
      */
-    title: ReactNode
-    /** Content revealed under the trigger while expanded. Equivalent to `children`; wins over it when both are passed. */
-    body?: ReactNode
-    /** Shorthand for {@link DisclosureBaseProps.body} — a wrapper frame wraps anything. */
-    children?: ReactNode
+    title: string
+    /**
+     * Content revealed under the trigger while expanded, as a COMPONENT
+     * reference (COMPOSITE-8) — the composite calls it itself so it can
+     * forward `isSkeleton`, never an already-built node. Equivalent to
+     * `children`; wins over it when both are passed.
+     */
+    body?: ComponentTypeWithSkeleton
+    /** Shorthand for {@link DisclosureBaseProps.body} — same component-reference contract. */
+    children?: ComponentTypeWithSkeleton
     /**
      * Controlled expanded state. Omit to run uncontrolled (see
      * {@link DisclosureBaseProps.defaultOpen}) — same dual mode as `Switch`.
@@ -58,18 +67,16 @@ export interface DisclosureBaseProps {
     /** Disables the trigger — no toggle, dimmed, not focusable. */
     isDisabled?: boolean
     /**
-     * `true` → render this frame's OWN collapsed trigger-row mirror (§12c: chủ
-     * của hình là chủ của skeleton). The row keeps its real box — same `w-fit`,
-     * same `gap-2`, same real `CaretDownIcon` (a caret is SHAPE, not content) —
-     * and only the title turns into a shimmer bar. The body region stays
-     * unmounted, exactly like the collapsed real state.
+     * `true` → the real collapsed trigger row renders as-is (§12c: the owner
+     * of the shape is the owner of the skeleton) — same `w-fit`, same `gap-1`
+     * (icon-text), same real `CaretDownIcon` (a caret is SHAPE, not content)
+     * — and only `title` is handed to `Typography` with `isSkeleton`, which
+     * draws its own shimmer bar. The trigger is non-interactive and the body
+     * region stays unmounted, exactly like the collapsed real state.
      */
     isSkeleton?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /**
@@ -99,59 +106,29 @@ const Base = ({
     defaultOpen = false,
     isDisabled = false,
     isSkeleton = false,
-    className,
     classNames,
     showAnatomy = false,
 }: DisclosureBaseProps) => {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
     const isControlled = isOpen !== undefined
     const open = isControlled ? isOpen : uncontrolledOpen
-    const content = body ?? children
-
-    if (isSkeleton) {
-        // Mirror of the collapsed trigger row: SAME frame as the real branch
-        // (`flex flex-col gap-3` root + `w-fit items-center gap-2 text-muted` row),
-        // real caret kept, only the `text-sm` title swapped for a bar.
-        // text-sm = 14/20 → h-[14px] my-[3px] keeps the 20px line box, so
-        // toggling isSkeleton does not shift layout (§8).
-        return (
-            <StackV
-                gap="grouped"
-                className={className}
-                classNames={classNames}
-                body={
-                    <StackH
-                        gap="related"
-                        classNames={["w-fit"]}
-                        className="text-muted"
-                        body={
-                            <>
-                                {/* Caret is TRẦN cạnh nhãn `text-sm` (icon/§1c TEXT position — the
-                                    trigger `<button>` is `w-fit`, no padding of its own, so it hugs
-                                    the icon+label pair exactly like running text): size = font-size
-                                    1:1 of `text-sm` → `size-3.5`, not the flat `size-4` this used to
-                                    be (thầy chốt 2026-07-29, canon icon §4.2). */}
-                                <CaretDownIcon className="size-3.5 shrink-0" weight="bold" aria-hidden focusable="false" />
-                                <HeroSkeleton className={cn(SKELETON_TEXT_BAR_SM, "w-24")} />
-                            </>
-                        }
-                    />
-                }
-            />
-        )
-    }
+    const Content = body ?? children
 
     const toggle = () => {
-        if (isDisabled) return
+        if (isDisabled || isSkeleton) return
         const next = !open
         if (!isControlled) setUncontrolledOpen(next)
         onOpenChange?.(next)
     }
 
+    // ONE render path (§12c: the owner of the shape is the owner of the skeleton)
+    // — the real trigger row renders always; a loading caller only flips
+    // `isSkeleton` on the `Typography` title, which draws its own shimmer sized to
+    // `text-sm`. The caret stays real (it is SHAPE, not content) and the body
+    // region stays unmounted while loading, exactly like the collapsed real state.
     return (
         <StackV
-            gap="grouped"
-            className={className}
+            gap={4}
             classNames={classNames}
             body={
                 <>
@@ -160,25 +137,26 @@ const Base = ({
                         onClick={toggle}
                         aria-expanded={open}
                         disabled={isDisabled}
+                        data-principles="icon-text"
                         className={cn(
-                            "group flex w-fit items-center gap-2 text-muted outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent",
+                            "group flex w-fit items-center gap-1 text-muted outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent",
                             isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
                         )}
                     >
-                        {/* TEXT position (icon §1c/§4.2): TRẦN cạnh nhãn `text-sm`, no Ô/control
-                            bọc riêng — trigger is `w-fit`, hugs content like running text. Size =
-                            font-size 1:1 of `text-sm` → `size-3.5` (was flat `size-4`, thầy chốt
+                        {/* TEXT position (icon §1c/§4.2): BARE beside the `text-sm` label, no box/control
+                            of its own — trigger is `w-fit`, hugs content like running text. Size =
+                            font-size 1:1 of `text-sm` → `size-3.5` (was flat `size-4`, teacher's call
                             2026-07-29). Weight stays `bold` — `size-3.5` < `size-5` (§3.2). */}
                         <CaretDownIcon
-                            className={cn("size-3.5 shrink-0 transition-transform", open && "rotate-180")}
+                            className={cn("size-3.5 shrink-0 transition-transform", open && !isSkeleton && "rotate-180")}
                             weight="bold"
                             aria-hidden
                             focusable="false"
                         />
-                        <span className="text-sm">{title}</span>
+                        <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={title} />
                     </button>
-                    {open ? (
-                        <StackV gap="grouped" body={content} />
+                    {open && !isSkeleton && Content ? (
+                        <StackV gap={4} body={<Content isSkeleton={isSkeleton} />} />
                     ) : null}
                 </>
             }
@@ -187,7 +165,7 @@ const Base = ({
 }
 
 /**
- * The collapsible KHUNG namespace — one member:
+ * The collapsible frame namespace — one member:
  *
  * | Member | Content channel |
  * |---|---|

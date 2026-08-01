@@ -3,7 +3,7 @@ import { BuildingsIcon, LockIcon } from "@phosphor-icons/react"
 import { Image } from "@sb-components/atoms/media/Image/Image"
 import { Typography, type TypographyIcon } from "@sb-components/atoms/text/Typography/Typography"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -28,9 +28,9 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *   • `ConsultantCard` clamps the bio to 2 lines (a directory tile teaser);
  *     this block renders it in full — a profile IS the place to read it all.
  *
- * ⭐ JUDGMENT CALL — CONTACT FORK REUSES `FeedbackCallout`, not a hand-rolled
+ * ⭐ JUDGMENT CALL — CONTACT FORK REUSES `Callout`, not a hand-rolled
  * `Alert` + `Button` pair, same precedent `TaskLockedAlert`/`CourseTeamGate`
- * already set: `FeedbackCallout` already IS "a status alert + one CTA button
+ * already set: `Callout` already IS "a status alert + one CTA button
  * it builds and skins itself" (composites/feedback/Feedback). Rebuilding that
  * pair from bare atoms here would be the exact `ContentTabBar` mistake this
  * run exists to correct.
@@ -119,9 +119,9 @@ export interface ConsultantProfileBodyProps {
 }
 
 /** Fixed copy for the locked-contact callout — block-owned wording (§14d.1), see file header. */
-const LOCKED_TITLE = "Liên hệ đang bị khoá"
-const LOCKED_DESCRIPTION = "Cải thiện CV của bạn để mở khoá thông tin liên hệ của chuyên gia này."
-const LOCKED_CTA_LABEL = "Cải thiện CV"
+const LOCKED_TITLE = "Contact is locked"
+const LOCKED_DESCRIPTION = "Improve your CV to unlock this consultant's contact information."
+const LOCKED_CTA_LABEL = "Improve CV"
 
 /**
  * The full profile-detail content for one consultant. See the file header for
@@ -141,7 +141,7 @@ const ConsultantProfileBody = ({
     const { fullName, jobTitle, companyTitle, description, avatarUrl, contactUnlocked, contactLinks } = consultant
 
     const nameRow = (
-        <StackV gap="flush" align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+        <StackV gap={1} align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
             <>
                 <Typography
                     size="h4"
@@ -149,7 +149,7 @@ const ConsultantProfileBody = ({
                     align="center"
                     isSkeleton={isSkeleton}
                     text={fullName}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
                 {isSkeleton || jobTitle ? (
                     <Typography
@@ -158,7 +158,7 @@ const ConsultantProfileBody = ({
                         align="center"
                         isSkeleton={isSkeleton}
                         text={jobTitle}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 ) : null}
             </>
@@ -167,15 +167,14 @@ const ConsultantProfileBody = ({
 
     // identity: centered photo, name+role, pressable company row
     const identity = (
-        <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+        <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
             <>
-                <div data-anat-part={showAnatomy ? "Image" : undefined}>
+                <div className="w-28" data-anat-part={showAnatomy ? "Image" : undefined}>
                     <Image
                         src={avatarUrl}
                         alt={fullName}
                         ratio="square"
                         radius="full"
-                        className="w-28"
                         isSkeleton={isSkeleton}
                         showAnatomy={showAnatomy}
                     />
@@ -190,7 +189,7 @@ const ConsultantProfileBody = ({
                         prefixIcon={BuildingsIcon}
                         onPress={onOpenCompany}
                         isDisabled={isSkeleton || !onOpenCompany}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 ) : null}
             </>
@@ -199,14 +198,14 @@ const ConsultantProfileBody = ({
 
     // contact fork — see file header for why loading shimmers neutrally
     const contactFork = isSkeleton ? (
-        <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+        <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
             <>
-                <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                <Typography size="sm" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
+                <Typography size="sm" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
             </>
         )} />
     ) : contactUnlocked ? (
-        <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={
+        <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={
             (contactLinks ?? []).map((link) => (
                 <Typography
                     key={link.key}
@@ -215,12 +214,12 @@ const ConsultantProfileBody = ({
                     href={link.href}
                     prefixIcon={link.icon}
                     text={link.label}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ))
         } />
     ) : (
-        <FeedbackCallout
+        <Callout
             status="warning"
             icon={LockIcon}
             title={LOCKED_TITLE}
@@ -228,13 +227,13 @@ const ConsultantProfileBody = ({
             actionLabel={onImproveCv ? LOCKED_CTA_LABEL : undefined}
             onAction={onImproveCv}
             showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+            anatPart={showAnatomy ? "Callout" : undefined}
         />
     )
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={(
                 <>
                     {identity}
                     {/* full bio — no clamp, unlike ConsultantCard's directory teaser */}
@@ -244,7 +243,7 @@ const ConsultantProfileBody = ({
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={description}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                     {contactFork}

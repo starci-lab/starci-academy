@@ -41,7 +41,7 @@ interface RouteContentProps {
 
 /** Stand-in for a real `/learn/**` route's own content — this layout never knows what it is. */
 const RouteContent = ({ label }: RouteContentProps) => (
-    <div className="flex h-full flex-col gap-3 p-8">
+    <div data-tier="fixture" className="flex h-full flex-col gap-3 p-8">
         <div className="h-6 w-1/3 rounded bg-default" />
         <div className="h-4 w-2/3 rounded bg-default" />
         <div className="h-40 rounded-2xl bg-surface shadow-surface" />
@@ -53,7 +53,7 @@ const RouteContent = ({ label }: RouteContentProps) => (
 // "representative, non-interactive content, no `data-anat-part` of its own"
 // contract `EnrollGate`'s own story already uses for this exact prop.
 const MockPreview = () => (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-3">
+    <div data-tier="fixture" className="mx-auto flex w-full max-w-3xl flex-col gap-3">
         <div className="rounded-3xl bg-surface p-6 shadow-surface">
             <div className="h-5 w-2/3 rounded bg-default" />
             <div className="mt-3 h-3 w-1/3 rounded bg-default" />
@@ -284,8 +284,8 @@ export const EnrollGated: Story = {
     isEnrollGated
     isAssessmentLive={false}
     enrollGateProps={{
-        title: "Mở khoá Dự án cá nhân",
-        description: "Ghi danh để làm capstone thật, chấm điểm bằng AI.",
+        title: "Unlock the Personal Project",
+        description: "Enroll to build a real capstone project, graded by AI.",
         preview: <PersonalProjectGatePreview {...} />,
         price: { discountedVnd: 1990000, originalVnd: 2990000 },
         onEnroll: () => {},
@@ -303,8 +303,8 @@ export const EnrollGated: Story = {
                             isEnrollGated
                             isAssessmentLive={false}
                             enrollGateProps={{
-                                title: "Mở khoá Dự án cá nhân",
-                                description: "Ghi danh để làm capstone thật, chấm điểm bằng AI.",
+                                title: "Unlock the Personal Project",
+                                description: "Enroll to build a real capstone project, graded by AI.",
                                 preview: <MockPreview />,
                                 price: { discountedVnd: 1_990_000, originalVnd: 2_990_000 },
                                 onEnroll: () => {},
@@ -324,8 +324,8 @@ export const EnrollGated: Story = {
     isEnrollGated
     isAssessmentLive={false}
     enrollGateProps={{
-        title: "Mở khoá Dự án cá nhân",
-        description: "Ghi danh để làm capstone thật, chấm điểm bằng AI.",
+        title: "Unlock the Personal Project",
+        description: "Enroll to build a real capstone project, graded by AI.",
         price: { discountedVnd: 1990000, originalVnd: 2990000 },
         onEnroll: () => {},
     }}
@@ -340,8 +340,8 @@ export const EnrollGated: Story = {
                             isEnrollGated
                             isAssessmentLive={false}
                             enrollGateProps={{
-                                title: "Mở khoá Dự án cá nhân",
-                                description: "Ghi danh để làm capstone thật, chấm điểm bằng AI.",
+                                title: "Unlock the Personal Project",
+                                description: "Enroll to build a real capstone project, graded by AI.",
                                 price: { discountedVnd: 1_990_000, originalVnd: 2_990_000 },
                                 onEnroll: () => {},
                             }}

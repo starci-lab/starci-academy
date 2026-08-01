@@ -8,11 +8,12 @@ export default meta
 type Story = StoryObj
 
 /**
- * ATOM LÁ — `InputTextarea` bọc thẳng HeroUI `TextField`/`TextArea` + `FieldFrame`
- * nội bộ (§11a). Không component nào ở đây có story riêng ⇒ `annotate` không có
- * `storyId` — nhưng heroui `TextArea` cùng `Label`/`Skeleton` của `FieldFrame` vẫn
- * cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
- * `Description`/`Error` để nguyên, không khai — chỉ là `<p>` trần.
+ * LEAF ATOM — `InputTextarea` wraps HeroUI `TextField`/`TextArea` + an internal
+ * `FieldFrame` (§11a). No component here has its own story ⇒ `annotate` carries no
+ * `storyId` — but the heroui `TextArea` along with `FieldFrame`'s `Label`/`Skeleton`
+ * still need tier `heroui` so the two-law panel doesn't silently skip them
+ * (2026-07-28). `Description`/`Error` are left undeclared — they're just bare
+ * `<p>` tags.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "TextArea": { tier: "heroui", role: "multi-line text field" },
@@ -37,7 +38,7 @@ export const Default: Story = {
                             why: "The field renders as a bare empty box with no label above it and no hint or error line below it. This is the raw multi-line control for a spot where the surrounding layout already explains what the field is for.",
                             code: "<InputTextarea value={v} onValueChange={setV} rows={3} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputTextarea value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
                                 </div>
                             ),
@@ -46,7 +47,7 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -70,7 +71,7 @@ export const Placeholder: Story = {
                             why: "A muted ghost sentence sits inside the otherwise empty box, giving a content hint without pre-filling the field. It disappears the instant the value stops being empty, so it never gets mistaken for real text.",
                             code: "<InputTextarea placeholder=\"Lesson notes…\" value={v} onValueChange={setV} rows={3} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputTextarea placeholder="Lesson notes…" value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
                                 </div>
                             ),
@@ -79,7 +80,7 @@ export const Placeholder: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -100,7 +101,7 @@ export const WithLabel: Story = {
                             why: "A label appears above the box and a hint line appears beneath it, while the placeholder ghost text still shows inside the empty field. The three lines together tell the writer what to enter and why, before they have typed anything.",
                             code: "<InputTextarea label=\"Notes\" hint=\"Only visible to you\" value={v} onValueChange={setV} rows={3} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputTextarea label="Notes" hint="Only visible to you" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
                                 </div>
                             ),
@@ -109,7 +110,7 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -130,7 +131,7 @@ export const Required: Story = {
                             why: "The label gains a trailing asterisk mark while every other part of the field stays the same as the plain labelled case. The mark is the only signal that this field cannot be submitted empty.",
                             code: "<InputTextarea label=\"Notes\" isRequired value={v} onValueChange={setV} rows={3} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputTextarea label="Notes" isRequired value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
                                 </div>
                             ),
@@ -139,7 +140,7 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -160,7 +161,7 @@ export const Filled: Story = {
                             why: "The box fills with the learner's actual multi-line note instead of the empty box, and since the value is non-empty the placeholder never appears. This is the field's steady resting look once someone has already written something in it.",
                             code: "<InputTextarea label=\"Notes\" value=\"This session covers…\" onValueChange={setV} rows={3} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputTextarea label="Notes" value={value} onValueChange={setValue} rows={3} showAnatomy />
                                 </div>
                             ),
@@ -169,7 +170,7 @@ export const Filled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -190,7 +191,7 @@ export const Disabled: Story = {
                             why: "The control locks against further typing and both the label and the text inside dim to the disabled tone. The field still shows its content, it simply refuses new input.",
                             code: "<InputTextarea label=\"Notes\" value=\"This session…\" isDisabled onValueChange={setV} rows={3} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputTextarea label="Notes" value={value} onValueChange={setValue} rows={3} isDisabled showAnatomy />
                                 </div>
                             ),
@@ -199,7 +200,7 @@ export const Disabled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -223,7 +224,7 @@ export const Invalid: Story = {
                             why: "Only the field's border reddens, since `isInvalid` carries no companion `errorMessage` to print underneath it. Compare with the Error state below, where the same red border comes with a written reason.",
                             code: "<InputTextarea label=\"Notes\" isInvalid value={v} onValueChange={setV} rows={3} placeholder=\"Lesson notes…\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputTextarea label="Notes" isInvalid value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
                                 </div>
                             ),
@@ -232,7 +233,7 @@ export const Invalid: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -253,7 +254,7 @@ export const Error: Story = {
                             why: "A red message line appears under the field and the border turns red at the same time, both driven by the same `errorMessage` string. The label above stays neutral, so only the field itself reports the problem.",
                             code: "<InputTextarea label=\"Notes\" errorMessage=\"Notes cannot be empty\" value={v} onValueChange={setV} rows={3} />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <InputTextarea label="Notes" errorMessage="Notes cannot be empty" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
                                 </div>
                             ),
@@ -262,14 +263,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /** Loading — label skeleton mirrored above the taller field-box skeleton. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InputTextarea"
                 tier="atom"
@@ -281,7 +282,7 @@ export const Loading: Story = {
                         why: "The label mirrors into a shimmer bar sitting above a taller shimmer box matching the multi-line field's height. Nothing about the eventual label or field size shifts the layout once the real data arrives.",
                         code: "<InputTextarea label=\"Notes\" isSkeleton />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <InputTextarea label="Notes" value="" onValueChange={() => {}} isSkeleton showAnatomy />
                             </div>
                         ),

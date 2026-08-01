@@ -63,7 +63,7 @@ export const TaskSubmissionPanel = ({
                 <div className="flex flex-col gap-3">
                     <PersonalProjectSubmission />
                     {/* settings summary row → opens the drawer. Interactive, so it has a hover:
-                        the label "Cài đặt chấm điểm" underlines (a link affordance); the
+                        the label "Grading settings" underlines (a link affordance); the
                         right-side config preview stays muted (no colour change). */}
                     <button
                         type="button"

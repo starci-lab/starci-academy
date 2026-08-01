@@ -31,7 +31,7 @@ export interface SummaryCardProps extends WithClassNames<undefined> {
 /**
  * A compact pressable metric card (icon + big value + label, with a trailing
  * chevron) used in the profile overview to surface a deeper tab. Built on
- * {@link PressableCard} for the spring/hover feel; carries the bordered "viền"
+ * {@link PressableCard} for the spring/hover feel; carries the bordered "outline"
  * look via `card card--default`. Presentational — the caller wires `onPress`.
  *
  * @param props - {@link SummaryCardProps}

@@ -1,11 +1,8 @@
-import React from "react"
-import type { ReactNode } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { Button as ButtonAtom } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { StackH } from "@sb-components/frames/Stack/Stack"
+import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — a NEW composite (no `src` yet; synced later).
@@ -15,32 +12,36 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * hand-roll a list of `secondary`/`ghost` Buttons with the SAME shape — leading bare
  * icon (optional) + label, `justify-start text-start` — for: empty-state suggestion
  * chips, retrieval-skill chips, selected-passage quick-asks, and the skill menu.
- * Gom thành MỘT composite dùng chung (§4 ownership): mọi nơi cần "dãy nút chip gợi
- * ý" hay "hàng menu kỹ năng" compose composite NÀY — KHÔNG hand-roll lại danh sách
- * Button.
+ * Folded into ONE shared composite (§4 ownership): anywhere that needs "a row of
+ * suggestion chips" or "a skill-menu row" composes THIS composite — no hand-rolling
+ * a Button list again.
  *
- * COMPOSE base {@link Button} cho MỌI item (KHÔNG import HeroUI trực tiếp) — press/
- * pending/disabled sống ở base Button (§4); composite NÀY chỉ sở hữu LAYOUT (cụm vs
- * cột) + icon-size (§5: leading icon luôn ép `size-4 shrink-0 text-muted`, KHÔNG
- * dùng slot `icon` trailing-trượt của Button — chip icon đứng yên, dẫn trước nhãn).
+ * COMPOSES the base {@link Button} for EVERY item (does NOT import HeroUI directly) —
+ * press/pending/disabled live on the base Button (§4); this composite only owns
+ * LAYOUT (cluster vs column) + icon size (§5: the leading icon is always forced to
+ * `size-4 shrink-0 text-muted` — it does NOT use `Button`'s own trailing/sliding
+ * `icon` slot; a chip's icon stays put, leading the label).
  *
  * `direction`:
- * - `"wrap"` — cụm chip gợi ý: variant mặc định `secondary`, `flex-wrap gap-2`, mỗi
- *   chip auto-width, nhãn là children TRẦN của Button (không qua Typography — giống
- *   hệt cách base Button tự hiển thị nhãn của nó).
- * - `"column"` — danh sách dọc kiểu menu kỹ năng: variant mặc định `ghost`, mỗi hàng
- *   full-width `px-3 py-2`, nhãn qua {@link Typography} (`weight="medium"`, `truncate`)
- *   thay vì className `text-sm font-medium text-foreground` tay (canon §1: màu/đậm
- *   qua PROP, không class `text-*`/`font-*` trên Typography).
+ * - `"wrap"` — a cluster of suggestion chips: default variant `secondary`,
+ *   `flex-wrap gap-2`, each chip auto-width, the label is Button's own bare
+ *   children (not routed through Typography — same as how the base Button already
+ *   displays its own label).
+ * - `"column"` — a vertical skill-menu list: default variant `ghost`, each row is
+ *   full-width `px-3 py-2`, the label goes through {@link Typography}
+ *   (`weight="medium"`, `truncate`) instead of a hand-typed `text-sm font-medium
+ *   text-foreground` className (canon §1: color/weight go through a PROP, not a
+ *   `text-*`/`font-*` class on Typography).
  */
 
 /** One chip/row item. */
 export interface ChipButtonItem {
     /** Stable key; falls back to array index. */
     id?: string
-    label: ReactNode
-    /** Leading icon — TRẦN (bare Phosphor `*Icon`), composite ép size §5. */
-    icon?: ReactNode
+    /** Chip label — text the composite renders (via Typography in `column`, as bare children in `wrap`). */
+    label: string
+    /** Leading icon, passed as a COMPONENT reference (not built JSX) — the composite calls it itself and forces its size (§5). */
+    icon?: IconComponent
     onPress?: () => void
     isDisabled?: boolean
 }
@@ -53,19 +54,17 @@ export interface ChipButtonListProps {
     items: Array<ChipButtonItem>
     /** Button variant applied to every item. Defaults follow `direction` (wrap→secondary · column→ghost) when omitted. */
     variant?: ChipButtonListVariant
-    /** `"wrap"` = cụm chip flex-wrap · `"column"` = danh sách dọc full-width (menu). Defaults `"wrap"`. */
+    /** `"wrap"` = a flex-wrap chip cluster · `"column"` = a full-width vertical list (menu). Defaults `"wrap"`. */
     direction?: ChipButtonListDirection
-    /** `true` → render skeleton mirror (Button pill ×N cho wrap, hàng icon+label ×N cho column). */
+    /** `true` → render N placeholder `Button`s (`isSkeleton`) instead of `items` — same real `Button`, its own shimmer mirror. */
     isSkeleton?: boolean
-    /** Số item skeleton khi `isSkeleton` (chưa biết `items` thật). Mặc định 3. */
+    /** How many skeleton items to render when `isSkeleton` (the real `items` count isn't known yet). Defaults to 3. */
     skeletonCount?: number
     anatPart?: string
-    /** `true` → emit `data-anat-part` trên từng part (Button/icon/Typography) cho {@link BlockAnatomy}. */
+    /** `true` → emit `data-anat-part` on every part (Button/icon/Typography) for {@link BlockAnatomy}. */
     showAnatomy?: boolean
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -79,6 +78,9 @@ const CONTAINER_CLS: Record<ChipButtonListDirection, string> = {
     wrap: "flex flex-wrap gap-2",
     column: "flex flex-col gap-1",
 }
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ChipButtonList" } as const
 
 const ITEM_CLS: Record<ChipButtonListDirection, string> = {
     wrap: "justify-start text-start",
@@ -100,50 +102,29 @@ export const ChipButtonList = ({
     skeletonCount = 3,
     anatPart,
     showAnatomy = false,
-    className,
     classNames,
 }: ChipButtonListProps) => {
     const resolvedVariant = variant ?? DEFAULT_VARIANT[direction]
 
-    if (isSkeleton) {
-        return (
-            <div className={cn(CONTAINER_CLS[direction], className, classNames)} data-anat-part={anatPart}>
-                {direction === "column"
-                    ? Array.from({ length: skeletonCount }).map((_, index) => (
-                        <StackH
-                            key={index}
-                            gap="grouped"
-                            className="px-3 py-2"
-                            body={
-                                <>
-                                    <HeroSkeleton className="size-4 shrink-0 rounded" />
-                                    {/* §12c: chủ của hình là chủ của skeleton — Typography tự vẽ gạch của nó */}
-                                    <Typography
-                                        size="sm"
-                                        isSkeleton
-                                        showAnatomy={showAnatomy}
-                                        classNames={[index % 2 === 0 ? "w-2/3" : "w-1/2"]}
-                                    />
-                                </>
-                            }
-                        />
-                    ))
-                    : Array.from({ length: skeletonCount }).map((_, index) => (
-                        <ButtonAtom
-                            key={index}
-                            isSkeleton
-                            showAnatomy={showAnatomy}
-                            label=""
-                            classNames={[index % 2 === 0 ? "w-1/2" : "w-1/3"]}
-                        />
-                    ))}
-            </div>
-        )
-    }
-
-    return (
-        <div className={cn(CONTAINER_CLS[direction], className, classNames)} data-anat-part={anatPart}>
-            {items.map((item, index) => (
+    // ONE render path (§12c) — every item is the SAME real `Button`, whether the
+    // count comes from `items` (real) or `skeletonCount` (loading, the composite's
+    // own decision how many rows to guess). `Button` already owns an `isSkeleton`
+    // mirror sized to its own box (pill for `wrap`, full-width row for `column`);
+    // handing it the flag replaces the old hand-rolled icon+text shimmer row.
+    const rendered = isSkeleton
+        ? Array.from({ length: skeletonCount }, (_, index) => (
+            <Button
+                key={index}
+                isSkeleton
+                variant={resolvedVariant}
+                size={direction === "wrap" ? "sm" : "md"}
+                className={ITEM_CLS[direction]}
+                anatPart={showAnatomy ? "Button" : undefined}
+            />
+        ))
+        : items.map((item, index) => {
+            const Icon = item.icon
+            return (
                 <Button
                     key={item.id ?? index}
                     variant={resolvedVariant}
@@ -153,9 +134,9 @@ export const ChipButtonList = ({
                     isDisabled={item.isDisabled}
                     anatPart={showAnatomy ? "Button" : undefined}
                 >
-                    {item.icon ? (
-                        <span className="[&_svg]:size-4 shrink-0 text-muted">
-                            {item.icon}
+                    {Icon ? (
+                        <span aria-hidden className="[&_svg]:size-4 shrink-0 text-muted">
+                            <Icon />
                         </span>
                     ) : null}
                     {direction === "column" ? (
@@ -163,7 +144,6 @@ export const ChipButtonList = ({
                             weight="medium"
                             truncate
                             classNames={["min-w-0", "flex-1"]}
-                            anatPart={showAnatomy ? "Typography" : undefined}
                             showAnatomy={showAnatomy}
                             text={item.label}
                         />
@@ -171,7 +151,18 @@ export const ChipButtonList = ({
                         item.label
                     )}
                 </Button>
-            ))}
+            )
+        })
+
+    return (
+        <div
+            className={cn(CONTAINER_CLS[direction], classNames)}
+            data-anat-part={anatPart}
+            data-tier="composite"
+            data-component="ChipButtonList"
+            data-principles={direction === "wrap" ? "flex-action" : undefined}
+        >
+            {rendered}
         </div>
     )
 }

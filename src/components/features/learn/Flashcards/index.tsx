@@ -39,21 +39,21 @@ export interface FlashcardsProps extends WithClassNames<undefined> {
     /**
      * Present when reached via the dedicated `flashcards/quiz/sessions/[sessionId]`
      * route — threaded straight through to {@link QuizSession}, which
-     * rehydrates that server-persisted "Hỏi nhanh" run (24h TTL) instead of
+     * rehydrates that server-persisted "Quick quiz" run (24h TTL) instead of
      * showing the setup screen. Mirrors `MockInterviewProps.resumeSessionId`.
      */
     resumeQuizSessionId?: string
     /**
      * Present when reached via the dedicated, resumable
      * `flashcards/review/sessions/[sessionId]` route — covers BOTH a
-     * single-deck "Học thẻ" run and the cross-deck "Đến hạn hôm nay" (due)
-     * run; ONE shared live route/prop for both kinds now (thầy 2026-07-11:
-     * "bỏ deck đi, only session thôi" — supersedes the earlier separate
+     * single-deck "Study cards" run and the cross-deck "Due today" (due)
+     * run; ONE shared live route/prop for both kinds now (teacher, 2026-07-11:
+     * "drop the deck, session only" — supersedes the earlier separate
      * `resumeReviewSessionId`/`resumeDueReviewSessionId` props and the
      * `decks/[deckId]` route segment). `Flashcards` resolves which kind it is
      * (and the deck identity, when applicable) via
      * `myFlashcardReviewSessionBySessionId` — the session already persists
-     * that context server-side (thầy: "session đã persist hết rồi"), no
+     * that context server-side (teacher: "the session has already persisted everything"), no
      * `deckId` query hint needed — before rendering `FlashcardReviewer` (deck)
      * or `DueReview` (due). Mirrors `resumeQuizSessionId`.
      */
@@ -86,9 +86,9 @@ export interface FlashcardsProps extends WithClassNames<undefined> {
  * quiz mode drills the chosen deck by voice.
  *
  * Back navigation from a sub-view: the due session uses the breadcrumb's
- * clickable "Ôn tập" crumb; a deck reviewer ALSO gets its own in-pane
- * `BackLink` (thầy 2026-07-09: "cả 2 phần review và quiz đều không có nút
- * back về") since it's reachable via a direct `/decks/[id]` URL, same
+ * clickable "Review" crumb; a deck reviewer ALSO gets its own in-pane
+ * `BackLink` (teacher, 2026-07-09: "both the review and quiz sections have no
+ * back button") since it's reachable via a direct `/decks/[id]` URL, same
  * reasoning as `QuizSession`'s own exit link.
  * @param {FlashcardsProps} props Optional wrapper placement props.
  */
@@ -109,17 +109,17 @@ export const Flashcards = ({
     // suggestions (RAG) back into the course with it.
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
     const { mode, deckId, session, goMode, goDeck, goOverview } = useFlashcardNav()
-    // resumed straight into a live "Hỏi nhanh" (quiz) or "Học thẻ" (review/due)
+    // resumed straight into a live "Quick quiz" (quiz) or "Study cards" (review/due)
     // run (via the dedicated `flashcards/{quiz,review}/sessions/[sessionId]`
     // routes) — the session becomes a full-bleed focused work surface (its own
     // `WorkSessionHeader`), so the surrounding chrome (breadcrumb, mode tabs,
     // mobile nav, bounded column) steps aside instead of doubling up on the
     // session's own header.
     const isLive = Boolean(resumeQuizSessionId || resumeStudySessionId)
-    // resolve WHICH kind a "Học thẻ" session id is (deck-review vs cross-deck
+    // resolve WHICH kind a "Study cards" session id is (deck-review vs cross-deck
     // due) + the deck identity when applicable — the session already persists
-    // that context server-side (thầy 2026-07-11: "bỏ deck đi, only session
-    // thôi" + "session đã persist hết rồi"), no `deckId` query hint needed.
+    // that context server-side (teacher, 2026-07-11: "drop the deck, session
+    // only" + "the session has already persisted everything"), no `deckId` query hint needed.
     const studySessionContextSwr = useQueryMyFlashcardReviewSessionBySessionIdSwr(resumeStudySessionId, courseId)
     // recap stats for THAT session — its `status` is how we tell a finished
     // (completed/abandoned) session apart from an in-progress one. A finished
@@ -138,7 +138,7 @@ export const Flashcards = ({
     const studyStatusKnown = Boolean(courseId) && !sessionStatsSwr.isLoading
         && !studySessionContextSwr.isLoading && Boolean(studySessionContextSwr.data)
     const studyIsInProgress = sessionStats?.status === "in_progress"
-    // ... and the same gate for a resumed "Hỏi nhanh" (quiz) id: a finished
+    // ... and the same gate for a resumed "Quick quiz" (quiz) id: a finished
     // (completed/abandoned) or unknown session reached by direct URL/refresh must
     // render the RESULT surface, NOT be handed to the live `QuizSession` (whose
     // resume effect only accepts an in-progress session and would otherwise
@@ -181,11 +181,11 @@ export const Flashcards = ({
         )
     }, [resumeQuizSessionId, quizStatusKnown, quizIsInProgress, courseDisplayId, locale, router])
 
-    // which study-overview tab is active ("Ôn tập" / "Lịch sử" / "Thống kê") —
+    // which study-overview tab is active ("Review" / "History" / "Stats") —
     // overview only (no deck open, no due session). Seeded from `?tab=` so a
     // shared/refreshed link lands back on the same tab — mirrors QuizSession's
-    // own `setupTab` (thầy 2026-07-09: "muốn số liệu này thật sự có ý nghĩa,
-    // cần thêm bước build UI Lịch sử/Thống kê cho Review").
+    // own `setupTab` (teacher, 2026-07-09: "for these numbers to actually mean
+    // something, we need to add a step to build the History/Stats UI for Review").
     const [overviewTab, setOverviewTab] = useState<"overview" | "history" | "stats">(() => {
         const initial = searchParams.get("tab")
         return initial === "history" || initial === "stats" ? initial : "overview"
@@ -194,7 +194,7 @@ export const Flashcards = ({
     // mirrors its OWN setup tab into `?tab=`, and while a deck/due session is open
     // there are no overview tabs at all — so this effect MUST NOT run then, else two
     // components write the same param with different state and clobber each other in
-    // a loop (thầy 2026-07-13: "lịch sử bên này cứ bị giật cái url"). Gate on the
+    // a loop (teacher, 2026-07-13: "the history side here keeps glitching the url"). Gate on the
     // exact condition the overview `TabsCard` is rendered under (mode=study, no deck,
     // not a due run).
     const overviewTabsVisible = mode === "study" && session !== "due" && !deckId
@@ -228,8 +228,8 @@ export const Flashcards = ({
         },
     )
 
-    // breadcrumb: a sub-view (deck / due session) inserts a clickable "Ôn tập" crumb
-    // (→ overview) + names the sub-view; the overview/quiz just end at "Ôn tập".
+    // breadcrumb: a sub-view (deck / due session) inserts a clickable "Review" crumb
+    // (→ overview) + names the sub-view; the overview/quiz just end at "Review".
     const isDeck = mode === "study" && Boolean(deckId)
     const isDue = mode === "study" && session === "due"
     const breadcrumb = isDeck ? (
@@ -286,7 +286,7 @@ export const Flashcards = ({
         )
     }
 
-    // live "Hỏi nhanh" run — full-bleed work surface, its own `WorkSessionHeader`
+    // live "Quick quiz" run — full-bleed work surface, its own `WorkSessionHeader`
     // IS the header, so the breadcrumb/PageHeader, mobile nav, and mode tabs
     // (all "which surface am I on" chrome) step aside; nothing to switch away
     // from mid-run. No bounded `max-w-3xl` column either — matches the sticky
@@ -375,7 +375,7 @@ export const Flashcards = ({
                             <FlashcardReviewer key={deckId} deckId={deckId} onBack={goOverview} />
                         ) : (
                             <div className="flex flex-col gap-6">
-                                {/* NESTED under the outer "Học thẻ/Hỏi nhanh" mode switch above —
+                                {/* NESTED under the outer "Study cards/Quick quiz" mode switch above —
                                     same variant="secondary" + w-full demotion QuizSession's own
                                     setup tabs use, for the same reason (tabs.md §0d). */}
                                 <TabsCard

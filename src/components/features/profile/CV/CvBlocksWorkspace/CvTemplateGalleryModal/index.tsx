@@ -32,9 +32,9 @@ export interface CvTemplateGalleryModalProps extends WithClassNames<undefined> {
 }
 
 /**
- * "Thư viện mẫu" — a modal grid of LIVE template thumbnails (the user's own CV
+ * "Template Gallery" — a modal grid of LIVE template thumbnails (the user's own CV
  * rendered in each layout via {@link CvHtmlDocument}) + name + an ATS badge.
- * Single-column templates read "An toàn ATS"; the two-column one carries a
+ * Single-column templates read "ATS-safe"; the two-column one carries a
  * warning (ATS parsers + `.docx` export handle it worse — see
  * `CV-TEMPLATES-BRAINSTORM.md`). Picking a card applies the template and closes.
  *

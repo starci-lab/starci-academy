@@ -36,7 +36,7 @@ export const TagChips = ({ tags, maxVisible = 3, variant = "soft", classNames }:
     const t = useTranslations()
     const [menuOpen, setMenuOpen] = useState(false)
     const visibleTags = useMemo(() => tags.slice(0, maxVisible), [tags, maxVisible])
-    // Số tag bị gom lại; chỉ khi > 0 mới có "tràn" thật để hiện chip +N (tránh số âm/0 khi rỗng hoặc chưa tràn).
+    // How many tags were folded away; only when > 0 is there a real "overflow" worth a +N chip (avoids a negative/zero count when empty or not overflowing).
     const overflowCount = Math.max(0, tags.length - maxVisible)
     return (
         <div className="flex items-center gap-2">

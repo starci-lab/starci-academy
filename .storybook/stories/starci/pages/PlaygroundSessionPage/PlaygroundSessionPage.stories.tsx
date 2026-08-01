@@ -26,9 +26,9 @@ export default meta
 
 type Story = StoryObj<typeof PlaygroundSessionPage>
 
-const STEP_BODY = `Build image ứng dụng từ Dockerfile ở gốc repo.
+const STEP_BODY = `Build the app image from the Dockerfile at the root of the repo.
 
-Chạy lệnh bên dưới trong terminal của bạn, đợi build xong rồi bấm **Xác minh bước này**.`
+Run the command below in your own terminal, wait for the build to finish, then click **Verify this step**.`
 
 const RESOURCES = [
     { kind: "container", name: "web-app-1", status: "Up 2 hours" },
@@ -51,9 +51,9 @@ const DEVICE = {
 }
 
 const AGENT_LOG = [
-    { level: "info" as const, line: "Agent khởi động, đang dò cổng 41230…" },
-    { level: "success" as const, line: "Bắt tay với playground server thành công." },
-    { level: "info" as const, line: "Đồng bộ workspace container…" },
+    { level: "info" as const, line: "Agent starting up, probing port 41230…" },
+    { level: "success" as const, line: "Handshake with the playground server succeeded." },
+    { level: "info" as const, line: "Syncing workspace container…" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -68,7 +68,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the session: one two-pane workspace plus a docked sheet, three DATA states. */
 export const Session: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundSessionPage"
                 tier="screen"
@@ -81,9 +81,9 @@ export const Session: Story = {
                         name: "step set, verifyState = ready, connection = connected, sheet closed",
                         why: "The everyday moment of a run: the agent is paired, the resource panel shows what is actually running, and the guide's Verify button sits ready. The connect sheet stays collapsed to its peek row — the learner only opens it when something needs checking, not while things are working.",
                         code: `<PlaygroundSessionPage
-    backLabel="Rời phòng lab"
+    backLabel="Leave the lab"
     onBack={handleBack}
-    counter="Bước 2 / 5"
+    counter="Step 2 / 5"
     total={5}
     current={2}
     doneSteps={[1]}
@@ -103,15 +103,15 @@ export const Session: Story = {
                         render: (
                             <PlaygroundSessionPage
                                 showAnatomy
-                                backLabel="Rời phòng lab"
+                                backLabel="Leave the lab"
                                 onBack={() => {}}
-                                title="Docker cho web app"
-                                counter="Bước 2 / 5"
+                                title="Docker for a web app"
+                                counter="Step 2 / 5"
                                 total={5}
                                 current={2}
                                 doneSteps={[1]}
                                 step={{
-                                    title: "Bước 2 · Build image ứng dụng",
+                                    title: "Step 2 · Build the app image",
                                     body: STEP_BODY,
                                     commandHint: "docker build -t lab-app:latest .",
                                 }}
@@ -142,14 +142,14 @@ export const Session: Story = {
 />`,
                         render: (
                             <PlaygroundSessionPage
-                                backLabel="Rời phòng lab"
+                                backLabel="Leave the lab"
                                 onBack={() => {}}
-                                title="Docker cho web app"
-                                counter="Bước 1 / 5"
+                                title="Docker for a web app"
+                                counter="Step 1 / 5"
                                 total={5}
                                 current={1}
                                 step={{
-                                    title: "Bước 1 · Khởi động Postgres",
+                                    title: "Step 1 · Start Postgres",
                                     body: STEP_BODY,
                                     commandHint: "docker run --name pg-lab -e POSTGRES_PASSWORD=lab -p 5432:5432 -d postgres:16",
                                 }}
@@ -172,19 +172,19 @@ export const Session: Story = {
     …
     step={undefined}
     doneSteps={[1, 2, 3, 4, 5]}
-    finishLabel="Hoàn tất"
+    finishLabel="Finish"
     onFinish={handleFinish}
 />`,
                         render: (
                             <PlaygroundSessionPage
-                                backLabel="Rời phòng lab"
+                                backLabel="Leave the lab"
                                 onBack={() => {}}
-                                title="Docker cho web app"
-                                counter="Đã xong 5 / 5"
+                                title="Docker for a web app"
+                                counter="Finished 5 / 5"
                                 total={5}
                                 current={5}
                                 doneSteps={[1, 2, 3, 4, 5]}
-                                finishLabel="Hoàn tất"
+                                finishLabel="Finish"
                                 onFinish={() => {}}
                                 step={undefined}
                                 verifyState="ready"

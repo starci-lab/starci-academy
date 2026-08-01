@@ -189,9 +189,9 @@ export const Empty: Story = {
                     messages={[]}
                     emptyHint="Hỏi AI bất cứ điều gì về bài học này — giải thích khái niệm, gợi ý ví dụ, hoặc tìm nội dung liên quan."
                     suggestions={[
-                        { label: "Tóm tắt bài", icon: <SparkleIcon aria-hidden focusable="false" /> },
-                        { label: "Phần khó nhất?", icon: <SparkleIcon aria-hidden focusable="false" /> },
-                        { label: "Tìm flashcard", icon: <ListMagnifyingGlassIcon aria-hidden focusable="false" /> },
+                        { label: "Tóm tắt bài", icon: SparkleIcon },
+                        { label: "Phần khó nhất?", icon: SparkleIcon },
+                        { label: "Tìm flashcard", icon: ListMagnifyingGlassIcon },
                     ]}
                     showAnatomy
                 />
@@ -352,8 +352,8 @@ export const EmptyContentScope: Story = {
                         { label: "Cho mình ví dụ thực tế" },
                     ]}
                     skills={[
-                        { label: "Tìm thử thách của bài này", icon: <PuzzlePieceIcon aria-hidden focusable="false" /> },
-                        { label: "Tìm thẻ ôn của bài này", icon: <CardsIcon aria-hidden focusable="false" /> },
+                        { label: "Tìm thử thách của bài này", icon: PuzzlePieceIcon },
+                        { label: "Tìm thẻ ôn của bài này", icon: CardsIcon },
                     ]}
                     showAnatomy
                 />
@@ -378,9 +378,9 @@ export const EmptyCourseScope: Story = {
                     scope="course"
                     emptyHint="Bạn chưa mở bài nào. Cứ hỏi bất cứ điều gì về cả khoá này."
                     skills={[
-                        { label: "Tìm bài học trong khoá", icon: <BookOpenIcon aria-hidden focusable="false" /> },
-                        { label: "Tìm thử thách trong khoá", icon: <PuzzlePieceIcon aria-hidden focusable="false" /> },
-                        { label: "Tìm thẻ ôn trong khoá", icon: <CardsIcon aria-hidden focusable="false" /> },
+                        { label: "Tìm bài học trong khoá", icon: BookOpenIcon },
+                        { label: "Tìm thử thách trong khoá", icon: PuzzlePieceIcon },
+                        { label: "Tìm thẻ ôn trong khoá", icon: CardsIcon },
                     ]}
                     showAnatomy
                 />

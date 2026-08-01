@@ -36,10 +36,10 @@ export default meta
 type Story = StoryObj<typeof FoundationResourcePage>
 
 const CRUMBS = [
-    { key: "home", label: "Trang chủ", onPress: () => {} },
+    { key: "home", label: "Home", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "hub", label: "Nền tảng", onPress: () => {} },
-    { key: "category", label: "Linux cơ bản", onPress: () => {} },
+    { key: "hub", label: "Foundations", onPress: () => {} },
+    { key: "category", label: "Linux basics", onPress: () => {} },
 ]
 
 const TAGS = [
@@ -47,19 +47,19 @@ const TAGS = [
     { key: "shell", label: "Shell" },
 ]
 
-const MARKDOWN_BODY = `## Quản lý tiến trình trong Linux
+const MARKDOWN_BODY = `## Managing processes in Linux
 
-Mỗi tiến trình có một PID, một trạng thái, và một tập tín hiệu nó có thể nhận —
-\`kill -9\` không phải là cách "đúng" duy nhất để dừng một chương trình.
+Every process has a PID, a state, and a set of signals it can receive —
+\`kill -9\` isn't the only "correct" way to stop a program.
 
-- \`ps aux\` liệt kê mọi tiến trình đang chạy trên hệ thống
-- \`SIGTERM\` cho tiến trình cơ hội dọn dẹp trước khi thoát, \`SIGKILL\` thì không
+- \`ps aux\` lists every process currently running on the system
+- \`SIGTERM\` gives a process a chance to clean up before exiting, \`SIGKILL\` does not
 
 \`\`\`bash
 kill -TERM 1234
 \`\`\`
 
-Đọc tiếp phần dưới để hiểu cách shell theo dõi tiến trình con.`
+Keep reading below to see how the shell tracks its child processes.`
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame owning the seam between the trial banner and the resource below it, and again between the resource's identity and its body", storyId: "frames-stack-stackv--default" },
@@ -72,7 +72,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the resource open: trial banner (if applicable), identity, then body. Kind is a DATA condition, not a structural one — the screen's own tree never changes across it. */
 export const Resource: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourcePage"
                 tier="screen"
@@ -85,7 +85,7 @@ export const Resource: Story = {
                         why: "Every optional field is present and the viewer is on an unconverted trial, so both the nudge banner and the richest header shape show together: kind chip, recommended pill, tags, author, then the article in its own card. This is the anatomy reference.",
                         code: `<FoundationResourcePage
     breadcrumbItems={crumbs}
-    title="Quản lý tiến trình trong Linux"
+    title="Managing processes in Linux"
     kind={FoundationKind.Document}
     isRecommended
     tags={tags}
@@ -99,8 +99,8 @@ export const Resource: Story = {
                             <FoundationResourcePage
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Quản lý tiến trình trong Linux"
-                                description="Process, signal và cách shell theo dõi chương trình đang chạy."
+                                title="Managing processes in Linux"
+                                description="Processes, signals, and how the shell tracks a running program."
                                 kind={FoundationKind.Document}
                                 isRecommended
                                 tags={TAGS}
@@ -124,7 +124,7 @@ export const Resource: Story = {
                         render: (
                             <FoundationResourcePage
                                 breadcrumbItems={CRUMBS}
-                                title="Giới thiệu Docker network"
+                                title="Introduction to Docker networking"
                                 kind={FoundationKind.Video}
                                 isEnrollmentKnown
                                 isEnrolled
@@ -137,7 +137,7 @@ export const Resource: Story = {
                         why: "Status hasn't resolved, so the banner stays hidden rather than guess — same self-hiding ground as the block's own `Hidden` leaf. The body draws a single \"open\" button and hands the resolved URL to `onOpenLink`; the screen decides nothing about what \"open\" means.",
                         code: `<FoundationResourcePage
     kind={FoundationKind.ExternalLink}
-    linkTitle="Tài liệu chính thức Docker"
+    linkTitle="Official Docker documentation"
     linkUrl="https://docs.docker.com"
     onOpenLink={(url) => window.open(url, "_blank", "noopener,noreferrer")}
     isEnrollmentKnown={false}
@@ -147,9 +147,9 @@ export const Resource: Story = {
                         render: (
                             <FoundationResourcePage
                                 breadcrumbItems={CRUMBS}
-                                title="Tài liệu Docker network chính thức"
+                                title="Official Docker networking documentation"
                                 kind={FoundationKind.ExternalLink}
-                                linkTitle="Tài liệu chính thức Docker"
+                                linkTitle="Official Docker documentation"
                                 linkUrl="https://docs.docker.com"
                                 onOpenLink={() => {}}
                                 isEnrollmentKnown={false}
@@ -167,7 +167,7 @@ export const Resource: Story = {
 /** LEAF — the resource id resolved to nothing ⇒ **the identity + body pair is replaced wholesale**, not just emptied out one field at a time. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourcePage"
                 tier="screen"
@@ -206,7 +206,7 @@ export const Empty: Story = {
 /** LEAF — the caller flips `isSkeleton`; every mirrorable block draws its own resting shape. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourcePage"
                 tier="screen"

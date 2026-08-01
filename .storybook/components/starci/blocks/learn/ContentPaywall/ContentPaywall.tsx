@@ -34,7 +34,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /** Props for {@link ContentPaywall}. */
 export interface ContentPaywallProps {
-    /** Headline, localized by the caller — e.g. "Phần còn lại dành cho học viên". */
+    /** Headline, localized by the caller — e.g. "The rest is for enrolled learners". */
     title: string
     /** One sentence on what buying unlocks. */
     description?: string
@@ -86,11 +86,11 @@ const ContentPaywall = ({
     const offer = (
         <>
             <IconTile icon={LockIcon} tone="accent" size="sm" showAnatomy={showAnatomy} />
-            {/* src thật (`PremiumPaywall/index.tsx:54`): `text-xl font-semibold` (div trần,
-                không qua Typography) — khớp `size="h4"` (heading, 20px), không phải body `lg`. */}
-            <Typography size="h4" weight="semibold" align="center" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
+            {/* real source (`PremiumPaywall/index.tsx:54`): `text-xl font-semibold` (a bare div,
+                not routed through Typography) — matches `size="h4"` (heading, 20px), not body `lg`. */}
+            <Typography size="h4" weight="semibold" align="center" text={title} showAnatomy={showAnatomy} />
             {description != null ? (
-                <Typography size="sm" color="muted" align="center" text={description} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" color="muted" align="center" text={description} showAnatomy={showAnatomy} />
             ) : null}
             <PriceTagProminent
                 discounted={discountedPriceVnd}
@@ -113,14 +113,14 @@ const ContentPaywall = ({
                 suffixIcon={ArrowRightIcon}
                 iconSlide
                 onPress={onPurchase}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
         </>
     )
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={offer} />
+            <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={offer} />
         </div>
     )
 }

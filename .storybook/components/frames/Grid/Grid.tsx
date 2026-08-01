@@ -2,7 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
+import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -24,7 +24,7 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
  * Storybook preview) already provides — this frame deliberately does NOT open its
  * own container, or every grid would answer to its own width instead of the shell's.
  *
- * §10: `gap` is a {@link InsetScale} union literal and REQUIRED.
+ * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED.
  * §13: no domain content, no behaviour — placement only.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -111,22 +111,24 @@ export interface GridBaseProps {
      * decision. Steps are emitted in ascending width order (later wins).
      */
     columns: GridColumns
-    /** Seam between cells on the §10 scale — REQUIRED, union literal only. Both axes. */
-    gap: SeamScale
+    /** Seam between cells on the house gap scale — REQUIRED. Both axes. */
+    gap: Responsive<AllowedGap>
     /**
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the frame is used but the panel cannot see it.
      */
     anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → tag each cell with `data-anat-part` for a BlockAnatomy panel. */
-    showAnatomy?: boolean
+    /**
+     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
+     * A frame does not KNOW its pattern — the caller does, exactly like `anatPart` — so it is passed in.
+     */
+    pattern?: string
 }
 
 /**
@@ -135,18 +137,20 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, anatPart, className, classNames, showAnatomy = false }: GridBaseProps) => (
+const GridBase = ({ items, columns, gap, anatPart, classNames, pattern }: GridBaseProps) => (
     <div
+        data-tier="frame"
+        data-component="Grid"
         data-anat-part={anatPart}
+        data-principles={pattern}
         className={cn(
             "grid",
-            GAP_CLASS[gap],
+            ...gapClassNames(gap),
             BASE_COLUMNS_CLASS[columns.base ?? 1],
             // Ascending order: a later (wider) step must be able to win.
             columns.sm != null && SM_COLUMNS_CLASS[columns.sm],
             columns.md != null && MD_COLUMNS_CLASS[columns.md],
             columns.lg != null && LG_COLUMNS_CLASS[columns.lg],
-            className,
             classNames,
         )}
     >
@@ -183,3 +187,6 @@ const GridBase = ({ items, columns, gap, anatPart, className, classNames, showAn
  * component export (§13a).
  */
 export { GridBase as Grid }
+
+/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+export const meta = { tier: "frame", name: "Grid" } as const

@@ -24,7 +24,7 @@ export interface UseCourseEnrollmentResult {
     onEnroll: () => void
     /** Navigate into the learning experience (enrolled "continue"). */
     onContinueLearning: () => void
-    /** Start a trial enrollment (best-effort), then navigate into the content ("Học thử"). */
+    /** Start a trial enrollment (best-effort), then navigate into the content ("Trial"). */
     onTryLearning: () => void
 }
 

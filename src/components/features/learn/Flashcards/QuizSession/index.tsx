@@ -150,7 +150,7 @@ const shuffle = <T,>(input: Array<T>): Array<T> => {
 }
 
 /**
- * "Hỏi nhanh" — a non-AI, self-graded, gamified flashcard cloze quiz over a
+ * "Quick Quiz" — a non-AI, self-graded, gamified flashcard cloze quiz over a
  * course. The learner picks a mode + level, then for each drawn card fills the
  * blanks (key terms the author marked) from a word bank of correct terms +
  * sibling-card distractors, checks the answer objectively, reads the full model
@@ -177,7 +177,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         [courseId],
     )
 
-    // mastery ("Độ thuộc") + the pool of decks to draw cards from
+    // mastery ("Mastery level") + the pool of decks to draw cards from
     const decksSwr = useSWR(
         ["flashcard-decks-by-course", courseId],
         async () => {
@@ -191,7 +191,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     const decks = decksSwr.data
 
     // today's due-card ids — same SWR key/shape `DueReviewHero` already reads, so
-    // the scope-picker's "Chỉ thẻ cần ôn" and `startSession`'s draw-time filter
+    // the scope-picker's "Only cards due for review" and `startSession`'s draw-time filter
     // (below) share one fetch. `dueCount` also gates/dims the scope option when
     // nothing is due (mirrors `FlashcardReviewModeModal`'s `dueDisabled`).
     const dueSwr = useSWR(
@@ -236,7 +236,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
     // ── session state ────────────────────────────────────────────────────
     const [phase, setPhase] = useState<QuizPhase>("setup")
-    // which setup tab is active ("Bắt đầu" / "Lịch sử" / "Thống kê") — setup phase only.
+    // which setup tab is active ("Begin" / "History" / "Stats") — setup phase only.
     // Seeded from `?tab=` so a shared/refreshed link lands back on the same tab (mirrors
     // MockInterviewSession's own setupTab + `layouts/dashboard-hub.md`'s "?tab= must be
     // shareable" precedent) — "begin" is the implicit default, never written to the URL.
@@ -246,13 +246,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     })
     const [mode, setMode] = useState<QuizMode>("quick")
     const [level, setLevel] = useState<string | null>(null)
-    // learner-chosen name for this run, set at setup ("Cấu hình luyện") — optional;
+    // learner-chosen name for this run, set at setup ("Practice config") — optional;
     // blank falls back to a TIME-BASED display name derived from `updatedAt` once
     // the session exists (see `sessionDisplayName`), never random-generated.
     const [sessionName, setSessionName] = useState("")
-    // "Ôn tất cả" (draw from the whole pool) vs "Chỉ thẻ cần ôn" (draw only from
+    // "Review all" (draw from the whole pool) vs "Only cards due for review" (draw only from
     // today's due queue) — same 2 options + wording as `FlashcardReviewModeModal`
-    // (thầy 2026-07-13: "cấu hình luyện thêm ôn tất cả và chỉ thẻ cần ôn").
+    // (teacher 2026-07-13: "add review-all and only-cards-due to the practice config").
     const [scope, setScope] = useState<"all" | "due">("all")
     // cards drawn for the current run
     const [sessionCards, setSessionCards] = useState<Array<QuizCard>>([])
@@ -271,11 +271,11 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // in-session combo (consecutive well-answered cards) — drives the active HUD chip
     const [combo, setCombo] = useState(0)
     // confirm-before-exit for the two irreversible active-session actions, mirroring
-    // MockInterviewSession: "leave" (Thoát — abandon this run) · "endEarly" (Kết thúc
-    // sớm — grade with the cards done so far). null = no dialog open.
+    // MockInterviewSession: "leave" (Exit — abandon this run) · "endEarly" (End
+    // early — grade with the cards done so far). null = no dialog open.
     const [confirmAction, setConfirmAction] = useState<null | "leave" | "endEarly">(null)
     // true while `startSession` is drawing + persisting a fresh run — drives the
-    // "Bắt đầu luyện" button's own isPending (stays ON this screen; only the
+    // "Start practice" button's own isPending (stays ON this screen; only the
     // eventual navigation to `/quiz/[sessionId]` leaves it, restructured 2026-07-09).
     const [starting, setStarting] = useState(false)
     // set when `startSession` couldn't produce a playable session (no cards at the
@@ -296,7 +296,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // `deadlineAt` contract as Mock Interview's own HUD (never a local clock start).
     const [deadlineAt, setDeadlineAt] = useState<string | null>(null)
     const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null)
-    // dummy tick to force the setup screen's resume-card "còn N phút" to recompute
+    // dummy tick to force the setup screen's resume-card "N minutes left" to recompute
     // every 30s while it's on screen — same idiom as MockInterviewSession's own
     // `resumeCountdownTick` (the minutes value itself is computed inline in render).
     const [, setResumeCountdownTick] = useState(0)
@@ -363,8 +363,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
     // draw a fresh run: pool + filter by level + shuffle, persist it server-side,
     // THEN navigate to the resumable `/quiz/[sessionId]` route — stays on THIS
-    // (setup) screen the whole time, pending only on the CTA itself, per thầy's
-    // 2026-07-09 correction ("tạo phiên xong rồi mới load vào quiz kèm id" — no
+    // (setup) screen the whole time, pending only on the CTA itself, per the teacher's
+    // 2026-07-09 correction ("create the session first, then load into the quiz with its id" — no
     // more instant phase flip to a building-skeleton screen, and no more silent
     // local/non-resumable fallback when the persist call fails: a real failure
     // now surfaces inline instead of quietly degrading).
@@ -435,11 +435,11 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         }
     }, [decks, starting, level, scope, dueCardIds, sessionLength, t, courseHeaders, courseId, mode, sessionName, runStart, inProgressSessionSwr, displayId, locale, router])
 
-    // "Thoát" — leaves the active run for the setup screen. No confirm modal (unlike
+    // "Exit" — leaves the active run for the setup screen. No confirm modal (unlike
     // Mock Interview's leave, which is destructive/abandon-ungraded): a quiz run is
     // persisted server-side (`syncFlashcardQuizSessionProgress`) so navigating away
-    // just resumes later from the same card (thầy 2026-07-09: "cả 2 phần review và
-    // quiz đều không có nút back về").
+    // just resumes later from the same card (teacher 2026-07-09: "both the review and
+    // quiz parts have no back button").
     const exitToSetup = useCallback(() => {
         router.push(
             `${pathConfig().locale(locale).course(displayId).learn().flashcards().build()}/quiz`,
@@ -553,8 +553,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             // every card already has a recorded outcome — the run WAS finished,
             // but `status` never flipped to "completed" (the earlier `finish()`
             // call never landed server-side for whatever reason — network drop,
-            // a duplicate-submit race, etc. — 2026-07-12, thầy: "submit rồi mà
-            // F5 về câu cuối"). `currentIndex` alone can't tell "about to answer
+            // a duplicate-submit race, etc. — 2026-07-12, teacher: "submitted, but
+            // refreshing goes back to the last question"). `currentIndex` alone can't tell "about to answer
             // the LAST card" from "just answered it" apart — both persist the
             // same last-valid-index value — only `results` coverage can. Retry
             // completion instead of silently resuming into the (already
@@ -576,8 +576,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
     // "session time limit" — ticks every second while the run is active, counting
     // DOWN to the server-issued `deadlineAt` (never a local clock start). Mirrors
-    // `MockInterviewSession`'s own countdown effect (thầy 2026-07-11: "thêm thời
-    // gian mỗi phiên là 60 phút" — the deadline itself was already server-enforced
+    // `MockInterviewSession`'s own countdown effect (teacher 2026-07-11: "add a
+    // 60-minute time limit per session" — the deadline itself was already server-enforced
     // via `FLASHCARD_QUIZ_SESSION_DURATION_MS`; this makes it VISIBLE in the HUD).
     useEffect(() => {
         if (phase !== "active" || !deadlineAt) {
@@ -604,7 +604,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     }, [phase, inProgressSessionSwr.data])
 
     // mirror the setup tab into the URL (`?tab=history` / `?tab=stats`) — same technique
-    // as MockInterviewSession's own setupTab mirror, so "Lịch sử"/"Thống kê" are
+    // as MockInterviewSession's own setupTab mirror, so "History"/"Stats" are
     // shareable/refresh-safe links. "begin" (the default) is never written, keeping the
     // common-case URL clean.
     useEffect(() => {
@@ -622,13 +622,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
     }, [setupTab, pathname, searchParams, router])
 
-    // distractor pool: sibling cards' key terms, closest-topic first (à la
+    // distractor pool: sibling cards' key terms, closest-topic first (in the style of
     // Duolingo/Quizlet drawing from the session's own vocab) — same TAG, then
     // same DECK (still one coherent topic even without a shared tag), then the
     // whole session as a last resort. Without the deck tier, a thin same-tag
     // draw fell straight through to the WHOLE session/course pool, which is how
     // an unrelated term (e.g. a SQL clause) ended up in a NestJS DI question's
-    // word bank (thầy 2026-07-11 bug report).
+    // word bank (teacher 2026-07-11 bug report).
     const distractorPool = useMemo(() => {
         if (!card) {
             return []
@@ -644,7 +644,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
     // the cloze for the current card (null → fall back to a plain flip +
     // self-grade — only when the card itself has no clozable key terms;
-    // "Hỏi nhanh" and "Học thẻ" are unrelated features, so this is NOT a
+    // "Quick Quiz" and "Study Cards" are unrelated features, so this is NOT a
     // learner-facing method choice, just a per-card content fallback).
     const cloze = useMemo<ClozeQuestion | null>(
         () =>
@@ -750,8 +750,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             const nextIndex = index < sessionLength - 1 ? index + 1 : index
             // best-effort, fire-and-forget persistence for resume — never blocks
             // advancing the quiz; still routed through `runGraphQL` (toast on failure,
-            // no success toast) rather than a silent catch (thầy 2026-07-11: "fe
-            // không nuốt lỗi, dùng runGraphQL đi") — a failed sync only degrades
+            // no success toast) rather than a silent catch (teacher 2026-07-11: "FE
+            // shouldn't swallow errors, use runGraphQL") — a failed sync only degrades
             // resumability, but the learner should still see it.
             if (sessionId.current) {
                 const syncingSessionId = sessionId.current
@@ -803,7 +803,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         const learnPath = pathConfig().locale(locale).course(displayId).learn()
         return (
             <div className={cn("flex flex-col gap-6", className)}>
-                {/* NESTED under the outer "Học thẻ/Hỏi nhanh" mode switch (Flashcards/index.tsx,
+                {/* NESTED under the outer "Study Cards/Quick Quiz" mode switch (Flashcards/index.tsx,
                     also variant="primary") — a SECOND primary-weight pill here would render at
                     the exact same visual weight as that outer mode switch, erasing the
                     parent/child hierarchy (fe/components/tabs.md §0d, corrected 2026-07-09).
@@ -831,7 +831,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     <FlashcardQuizStats courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
                 ) : (
                     <>
-                        {/* Zone 0 — resume: a "Hỏi nhanh" run left in progress (24h TTL) deep-links
+                        {/* Zone 0 — resume: a "Quick Quiz" run left in progress (24h TTL) deep-links
                     straight back into it via the dedicated `.../quiz/[sessionId]` route,
                     ABOVE the ordinary setup zones. Demotes Zone 3's CTA to secondary below
                     so this reads as the screen's primary action while it's shown. */}
@@ -841,7 +841,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             // countdown), same idiom as MockInterviewSession's own resume card.
                             // The resume QUERY already hard-filters `createdAt >= now - duration`
                             // (lazy-expiry, no cron), so an expired session simply never reaches
-                            // here — no "hết giờ" branch needed, unlike mock-interview's 2-gate resume.
+                            // here — no "time's up" branch needed, unlike mock-interview's 2-gate resume.
                             const resumeRemainingMinutes = Math.max(
                                 0,
                                 Math.ceil((new Date(resumeData.deadlineAt).getTime() - Date.now()) / 60_000),
@@ -872,18 +872,18 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             <Callout status="danger" title={resumeError} />
                         ) : null}
 
-                        {/* Zone 1 — progress: reuse the sibling "Học thẻ" tab's stats block (shares
-                    its SWR keys, so this adds no extra fetch) instead of a bespoke readout — thầy
-                    2026-07-09 reversed the earlier split ("QuizProgressStrip", 1 turn prior): "ý là
-                    cái Tiến bộ học nhanh => Tiến bộ và tái sử dụng component Tiến bộ ở tab học"
-                    (rename back to plain "Tiến bộ" + share the ONE component again). */}
+                        {/* Zone 1 — progress: reuse the sibling "Study Cards" tab's stats block (shares
+                    its SWR keys, so this adds no extra fetch) instead of a bespoke readout — teacher
+                    2026-07-09 reversed the earlier split ("QuizProgressStrip", 1 turn prior): "meaning:
+                    the 'Quick-quiz Progress' => just 'Progress', and reuse the same 'Progress' component from the study tab"
+                    (rename back to plain "Progress" + share the ONE component again). */}
                         <FlashcardStatsStrip />
 
                         {/* Zone 2 — config: mode + level, its own labeled card so it reads as a
                     distinct block from the progress zone above (was one dense card before). */}
                         <LabeledCard label={t("flashcard.quiz.configLabel")} contentClassName="flex flex-col gap-3">
                             {/* session name — optional, time-based fallback (see `sessionDisplayName`);
-                                lets a learner tell runs apart in "Lịch sử"/resume without forcing a name. */}
+                                lets a learner tell runs apart in "History"/resume without forcing a name. */}
                             <div className="flex flex-col gap-2">
                                 <Label>{t("common.sessionNameLabel")}</Label>
                                 <TextField variant="secondary" className="w-full">
@@ -899,9 +899,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             </div>
 
                             {/* Scope — same 2 options/wording as `FlashcardReviewModeModal`
-                                ("Ôn tất cả" / "Chỉ thẻ cần ôn"), reused verbatim rather than
-                                duplicated copy (thầy 2026-07-13: "cấu hình luyện thêm ôn tất
-                                cả và chỉ thẻ cần ôn"). Disabled + auto-reset to "all" when
+                                ("Review all" / "Only cards due for review"), reused verbatim rather than
+                                duplicated copy (teacher 2026-07-13: "add review-all and
+                                only-cards-due to the practice config"). Disabled + auto-reset to "all" when
                                 nothing is due, same guard as the modal's `dueDisabled`. */}
                             <div className="flex flex-col gap-2">
                                 <Label>{t("flashcard.quiz.scopeLabel")}</Label>
@@ -952,7 +952,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     `isPending` while `startSession` draws + persists the run — the button stays
                     ON this screen and pending until either the destination page takes over
                     (success) or `startError` surfaces (failure); no more instant jump to a
-                    separate building-skeleton screen (thầy, 2026-07-09). */}
+                    separate building-skeleton screen (teacher, 2026-07-09). */}
                         <Button
                             variant={resumeData ? "secondary" : "primary"}
                             size="lg"
@@ -983,7 +983,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     if (phase === "recap") {
         return (
             // KEEP the same `WorkSessionHeader` chrome the just-finished ACTIVE
-            // phase used (2026-07-12, corrected: thầy wanted the loading state
+            // phase used (2026-07-12, corrected: the teacher wanted the loading state
             // to render like the active session's header, not swap to
             // `PageHeader` early). Segment bar reads full "done"
             // (`current === total` → every segment `success`), no `rightSlot`
@@ -1037,11 +1037,11 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // shared header: WorkSessionHeader (course identity + step counter +
     // progress segments, combo chip in the right slot) — same shell as the
     // mock-interview's work-surface header. Level/tag chips moved OUT of this
-    // header into the question card's own body via `belowFront`/inline (thầy
-    // 2026-07-13: "chip của hỏi nhanh bỏ dưới câu hỏi theo rules ôn tập" —
+    // header into the question card's own body via `belowFront`/inline (teacher
+    // 2026-07-13: "put the quick-quiz chip below the question per the review rules" —
     // matching the same move already done for `FlashcardReviewer`/`DueReview`,
     // per-card meta belongs to the card body, not the fixed session chrome —
-    // `components/card.md` Đính chính 2026-07-13).
+    // `components/card.md` Correction 2026-07-13).
     const header = (
         <>
             <WorkSessionHeader
@@ -1189,19 +1189,20 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
                 <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                        {/* question — plain Card shell (bo góc + shadow-surface), CÙNG kiểu với
+                        {/* question — plain Card shell (rounded corners + shadow-surface), SAME style as
                     FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was
-                    reverted the same day (thầy: "ý là bỏ cái kiểu bg hồng với border...
-                    render plain Card như bth thôi") — 1 Card duy nhất xuyên suốt feature,
-                    không mỗi màn 1 "ngôn ngữ" riêng. Tách RIÊNG khỏi phần điền cloze bên
-                    dưới (thầy 2026-07-11: "tách phần điền và câu hỏi ra làm 2 labeled card
-                    khác nhau") — đây là 2 bounded object khác BẢN CHẤT (nội dung đọc TĨNH
-                    vs bài tập điền TƯƠNG TÁC), khác với rule "1 item + thuộc tính riêng của
-                    nó ở chung 1 card" ([[concepts/card]] — case đó là 1 item + metadata CỦA
-                    CHÍNH nó, không phải nội dung + 1 bài tập riêng dựa trên nội dung đó). */}
+                    reverted the same day (teacher: "meaning: drop that pink bg + border
+                    look... just render a plain Card like usual") — ONE single Card throughout the
+                    feature, not each screen with its own "visual language". Split SEPARATELY from
+                    the cloze-fill section below (teacher 2026-07-11: "split the fill-in part and
+                    the question into 2 different labeled cards") — these are 2 bounded objects
+                    different in NATURE (STATIC reading content vs INTERACTIVE fill-in exercise),
+                    different from the rule "1 item + its own properties share 1 card"
+                    ([[concepts/card]] — that case is 1 item + metadata OF ITSELF, not content +
+                    a separate exercise based on that content). */}
                         {/* question card + its level/tag chips as a `gap-3` group — chips
-                            ride OUTSIDE/BELOW the card (thầy: "nằm ngoài card cách card
-                            gap-3 ấy"), not inside its content — mirrors `FlipCard`'s own
+                            ride OUTSIDE/BELOW the card (teacher: "sits outside the card,
+                            gap-3 away from the card"), not inside its content — mirrors `FlipCard`'s own
                             internal `belowFront` structure (question + chips = gap-3,
                             that whole group ↔ next card = the outer gap-6). */}
                         <div className="flex flex-col gap-3">
@@ -1333,8 +1334,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     the shared `layoutId` above, so leaving a disabled ghost behind would
                     read as 2 copies of the same chip. loose on the page (no card wrapper)
                     — it's a bank of CHIPS to pick from, not a content surface; the tinted
-                    question block above is the only card here (thầy 2026-07-09: "ngân
-                    hàng từ để trong card làm gì? bỏ ra ngoài card"). */}
+                    question block above is the only card here (teacher 2026-07-09: "why put
+                    the word bank inside a card? take it out of the card"). */}
                         {!checked ? (
                             <div className="flex flex-col gap-6">
                                 <div className="flex flex-col gap-3">

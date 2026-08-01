@@ -4,8 +4,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * BLOCK — `SubmissionScoreCard`: the #1 signal after the attempt selector on a
- * graded-result page — score hero (tinted pass/fail), verdict chip + "cần thêm
- * X điểm" sub-line, optional short feedback, optional submission link, and an
+ * graded-result page — score hero (tinted pass/fail), verdict chip + "needs N
+ * more points" sub-line, optional short feedback, optional submission link, and an
  * optional model-byline row (who graded it, its tier, when).
  *
  * SIBLING OF `SubmissionResultHeader`, NOT A COPY. The header answers "where am
@@ -50,7 +50,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const ScoreCard: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SubmissionScoreCard"
                 tier="block"
@@ -63,31 +63,31 @@ export const ScoreCard: Story = {
                         name: "isPassing = true",
                         why: "The attempt cleared the pass bar, so the hero number and the verdict chip both tint success together — one signal, not two. A full set of grading metadata rides along: short feedback, a link back to the raw submission, and the model that produced the grade.",
                         code: `<SubmissionScoreCard
-    label="Kết quả chấm điểm"
+    label="Grading result"
     score={82}
     maxScore={100}
     isPassing
     passScore={70}
-    shortFeedback="Xử lý transaction đúng, còn thiếu index cho truy vấn theo ngày."
+    shortFeedback="Transaction handling is correct; still missing an index for the date-based query."
     submissionUrl="/submissions/8841"
     gradedByModel="claude-sonnet-4-5"
     modelCategory="frontier"
-    timeAgo="5 phút trước"
+    timeAgo="5 minutes ago"
 />`,
                         render: (
                             <SubmissionScoreCard
                                 anatPart="SubmissionScoreCard"
                                 showAnatomy
-                                label="Kết quả chấm điểm"
+                                label="Grading result"
                                 score={82}
                                 maxScore={100}
                                 isPassing
                                 passScore={70}
-                                shortFeedback="Xử lý transaction đúng, còn thiếu index cho truy vấn theo ngày."
+                                shortFeedback="Transaction handling is correct; still missing an index for the date-based query."
                                 submissionUrl="/submissions/8841"
                                 gradedByModel="claude-sonnet-4-5"
                                 modelCategory="frontier"
-                                timeAgo="5 phút trước"
+                                timeAgo="5 minutes ago"
                             />
                         ),
                     },
@@ -95,66 +95,66 @@ export const ScoreCard: Story = {
                         name: "isPassing = false",
                         why: "The attempt fell short, so the same two signals tint danger together instead, and the sub-line does its own subtraction (passScore − score) to say exactly how far off it was — the block computes this itself rather than taking a formatted string from the caller.",
                         code: `<SubmissionScoreCard
-    label="Kết quả chấm điểm"
+    label="Grading result"
     score={58}
     maxScore={100}
     isPassing={false}
     passScore={70}
-    shortFeedback="Chưa xử lý được race condition khi hai request ghi cùng lúc."
+    shortFeedback="Race condition when two requests write at the same time isn't handled yet."
     submissionUrl="/submissions/8842"
     gradedByModel="claude-sonnet-4-5"
     modelCategory="frontier"
-    timeAgo="12 phút trước"
+    timeAgo="12 minutes ago"
 />`,
                         render: (
                             <SubmissionScoreCard
-                                label="Kết quả chấm điểm"
+                                label="Grading result"
                                 score={58}
                                 maxScore={100}
                                 isPassing={false}
                                 passScore={70}
-                                shortFeedback="Chưa xử lý được race condition khi hai request ghi cùng lúc."
+                                shortFeedback="Race condition when two requests write at the same time isn't handled yet."
                                 submissionUrl="/submissions/8842"
                                 gradedByModel="claude-sonnet-4-5"
                                 modelCategory="frontier"
-                                timeAgo="12 phút trước"
+                                timeAgo="12 minutes ago"
                             />
                         ),
                     },
                     {
-                        name: "submissionUrl có giá trị",
+                        name: "submissionUrl set",
                         why: "The caller has a URL to the raw submission, so the link row draws — with its own label, since a caller reviewing a code challenge and one reviewing a written answer want different wording for the same link.",
                         code: `<SubmissionScoreCard
-    label="Kết quả chấm điểm"
+    label="Grading result"
     score={91}
     maxScore={100}
     isPassing
     submissionUrl="/submissions/9010"
-    submissionLabel="Xem bài nộp đầy đủ"
+    submissionLabel="View full submission"
 />`,
                         render: (
                             <SubmissionScoreCard
-                                label="Kết quả chấm điểm"
+                                label="Grading result"
                                 score={91}
                                 maxScore={100}
                                 isPassing
                                 submissionUrl="/submissions/9010"
-                                submissionLabel="Xem bài nộp đầy đủ"
+                                submissionLabel="View full submission"
                             />
                         ),
                     },
                     {
-                        name: "submissionUrl không có giá trị",
+                        name: "submissionUrl unset",
                         why: "Same attempt, minus a link to review — the row is not drawn disabled or empty, it simply is not there. A card with nothing to link to should not offer a dead link.",
                         code: `<SubmissionScoreCard
-    label="Kết quả chấm điểm"
+    label="Grading result"
     score={91}
     maxScore={100}
     isPassing
 />`,
                         render: (
                             <SubmissionScoreCard
-                                label="Kết quả chấm điểm"
+                                label="Grading result"
                                 score={91}
                                 maxScore={100}
                                 isPassing
@@ -162,45 +162,45 @@ export const ScoreCard: Story = {
                         ),
                     },
                     {
-                        name: "shortFeedback có giá trị",
+                        name: "shortFeedback set",
                         why: "A borderline failing attempt with one line of grader feedback — enough context to tell the learner what to fix next, without a submission link or a model byline pulling focus away from it.",
                         code: `<SubmissionScoreCard
-    label="Kết quả chấm điểm"
+    label="Grading result"
     score={45}
     maxScore={100}
     isPassing={false}
     passScore={60}
-    shortFeedback="Thiếu test cho nhánh lỗi khi input rỗng."
+    shortFeedback="Missing a test for the error branch when the input is empty."
 />`,
                         render: (
                             <SubmissionScoreCard
-                                label="Kết quả chấm điểm"
+                                label="Grading result"
                                 score={45}
                                 maxScore={100}
                                 isPassing={false}
                                 passScore={60}
-                                shortFeedback="Thiếu test cho nhánh lỗi khi input rỗng."
+                                shortFeedback="Missing a test for the error branch when the input is empty."
                             />
                         ),
                     },
                     {
-                        name: "gradedByModel không có giá trị",
+                        name: "gradedByModel unset",
                         why: "An auto-tested challenge with no served model recorded — the byline row (model name, tier chip, and relative time all together) drops entirely rather than showing a tier chip and a timestamp with nothing to attribute them to.",
                         code: `<SubmissionScoreCard
-    label="Kết quả chấm điểm"
+    label="Grading result"
     score={100}
     maxScore={100}
     isPassing
-    shortFeedback="Toàn bộ test case pass, không có cảnh báo lint."
+    shortFeedback="All test cases pass, no lint warnings."
     submissionUrl="/submissions/9021"
 />`,
                         render: (
                             <SubmissionScoreCard
-                                label="Kết quả chấm điểm"
+                                label="Grading result"
                                 score={100}
                                 maxScore={100}
                                 isPassing
-                                shortFeedback="Toàn bộ test case pass, không có cảnh báo lint."
+                                shortFeedback="All test cases pass, no lint warnings."
                                 submissionUrl="/submissions/9021"
                             />
                         ),

@@ -33,7 +33,7 @@ const STEPPER_PARTS: Array<AnatomyNode> = [
 /** Horizontal, mid-flow: done = check, current = accent ring, upcoming = muted. */
 export const HorizontalMidFlow: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Stepper"
                 tier="composite"
@@ -56,7 +56,7 @@ export const HorizontalMidFlow: Story = {
 /** Vertical stack (narrow shells / long lists); `onStepPress` makes done steps clickable. */
 export const Vertical: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Stepper"
                 tier="composite"
@@ -86,7 +86,7 @@ export const Vertical: Story = {
 /** All complete: `currentIndex === steps.length` → every step checked, all connectors success. */
 export const AllComplete: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Stepper"
                 tier="composite"

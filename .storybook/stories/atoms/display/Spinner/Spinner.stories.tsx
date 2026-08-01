@@ -3,14 +3,15 @@ import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Spinner`: bọc thẳng HeroUI Spinner, chỉ ép `size`/`tone` (§4).
+ * ATOM — `Spinner`: wraps HeroUI Spinner directly, only forcing `size`/`tone` (§4).
  *
- * ⭐ Atom LÁ — không compose atom NÀO CỦA TA có story riêng, nên không có dep
- * tầng atom. Nhưng `data-anat-part="Spinner"` đang gắn trên chính `HeroSpinner` —
- * MỘT IMPORT `@heroui/react` render trực tiếp, nên vẫn vào cây với `tier: "heroui"`
- * (không `storyId`, thư viện không có story của ta để nhảy tới) — §heroui, thầy
- * chốt 2026-07-27/28. Bản trước bỏ hẳn `annotate` vì lẫn hai luật khác nhau: "dep
- * không storyId thì thôi" (đúng, cho atom CỦA TA) áp nhầm sang cả node heroui.
+ * ⭐ LEAF atom — it composes NO atom OF OUR OWN with its own story, so it has no
+ * atom-tier dep. But `data-anat-part="Spinner"` is attached to `HeroSpinner` itself —
+ * ONE `@heroui/react` IMPORT rendered directly, so it still enters the tree with
+ * `tier: "heroui"` (no `storyId`, the library has no story of ours to jump to) —
+ * §heroui, teacher's call 2026-07-27/28. The previous version dropped `annotate`
+ * entirely, conflating two different rules: "no storyId ⇒ skip the dep" (true for
+ * OUR OWN atoms) was wrongly applied to the heroui node too.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Spinner": {
@@ -29,10 +30,10 @@ export default meta
 
 type Story = StoryObj<typeof Spinner>
 
-/** Leaf trần — spinner md, tone accent; `label` là tên a11y (không hiện chữ). */
+/** Bare leaf — spinner md, tone accent; `label` is the a11y name (not shown as text). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Spinner"
                 tier="atom"
@@ -52,10 +53,10 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `size` — sm · md · lg · xl, atom tự ép kích thước (§4). */
+/** Leaf prop `size` — sm · md · lg · xl, the atom forces the size itself (§4). */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Spinner"
                 tier="atom"
@@ -93,10 +94,10 @@ export const Sizes: Story = {
     ),
 }
 
-/** Leaf prop `tone` — accent · success · warning · danger · current (đọc màu chữ container). */
+/** Leaf prop `tone` — accent · success · warning · danger · current (reads the container's text colour). */
 export const Tones: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Spinner"
                 tier="atom"
@@ -133,7 +134,7 @@ export const Tones: Story = {
                         why: "The ring inherits whatever text colour surrounds it instead of picking one of its own, shown here against a foreground-coloured wrapper. This is the step reached for when the spinner sits inside a coloured button and must match the button's own label colour.",
                         code: "<Spinner tone=\"current\" />",
                         render: (
-                            <span className="text-foreground inline-flex">
+                            <span data-tier="fixture" className="text-foreground inline-flex">
                                 <Spinner tone="current" showAnatomy />
                             </span>
                         ),

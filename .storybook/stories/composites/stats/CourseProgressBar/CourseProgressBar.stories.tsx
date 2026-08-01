@@ -18,7 +18,7 @@ type Story = StoryObj<typeof CourseProgressBar>
 /** Multiple dimensions at wildly different scales — each lane fills to its OWN ratio. */
 export const MultiDimension: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-96">
                 <CourseProgressBar
                     ariaLabel="Fullstack course progress by dimension"
@@ -36,7 +36,7 @@ export const MultiDimension: Story = {
 /** `hideLegend` — used when the parent block already renders its own legend. */
 export const HideLegend: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-96">
                 <CourseProgressBar
                     hideLegend
@@ -55,7 +55,7 @@ export const HideLegend: Story = {
 /** A dimension with `total === 0` (not yet unlocked) disappears — no empty lane to misread. */
 export const DimensionNotApplicable: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-96">
                 <CourseProgressBar
                     ariaLabel="Progress for a course without milestones yet"
@@ -73,7 +73,7 @@ export const DimensionNotApplicable: Story = {
 /** LEAF — the caller flips `isSkeleton`; a flat track shimmer stands in for the equal-width lanes, plus 3 legend-label shimmer chips when `!hideLegend` (they drop out entirely when it's true, the same shape difference the real `HideLegend` leaf shows). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseProgressBar"
                 tier="composite"

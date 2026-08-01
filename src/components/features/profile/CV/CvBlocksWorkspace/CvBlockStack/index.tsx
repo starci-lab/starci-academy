@@ -35,7 +35,7 @@ export interface CvBlockStackProps extends WithClassNames<undefined> {
     /** Append a new block of this type. */
     onAddBlock: (type: CvBlockType) => void
     /**
-     * "✨ AI viết giúp" for ONE block/item — omit to render every block WITHOUT
+     * "✨ AI writes it for you" for ONE block/item — omit to render every block WITHOUT
      * the AI affordance (e.g. while the mutation isn't wired yet). Resolves to
      * the rewritten item's `fields` (or the block's own single fields set for
      * `summary`, `itemId` undefined).
@@ -46,7 +46,7 @@ export interface CvBlockStackProps extends WithClassNames<undefined> {
 /**
  * The left-column form — a vertical stack of blocks, each rendered by its own
  * per-block editor (`CV_BLOCK_EDITOR_REGISTRY`, keyed by `block.type`), plus a
- * "+ Thêm block" picker at the bottom for the block types not yet in the
+ * "+ Add block" picker at the bottom for the block types not yet in the
  * document. Every block gets a shared title/remove header row; the editor
  * itself only renders the block's fields.
  *

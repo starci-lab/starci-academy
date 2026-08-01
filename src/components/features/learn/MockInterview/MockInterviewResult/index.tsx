@@ -37,7 +37,7 @@ export interface MockInterviewResultProps extends WithClassNames<undefined> {
  * is answered by being on THIS route, never re-derived from `?phase=` client
  * state (2026-07-13, mirrors `flashcards().quiz(sessionId).result()`'s own
  * 2026-07-12 fix for the same class of F5-shows-stale-state bug). No `onRetry`
- * — this is a read-only revisit; "Phỏng vấn lại" goes back to setup instead of
+ * — this is a read-only revisit; "Interview again" goes back to setup instead of
  * silently redrawing a session out from under a URL someone might have shared.
  *
  * @param props - {@link MockInterviewResultProps}

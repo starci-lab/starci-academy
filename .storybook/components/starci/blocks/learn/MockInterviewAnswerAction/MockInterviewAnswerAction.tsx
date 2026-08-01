@@ -77,14 +77,14 @@ const MockInterviewAnswerAction = ({
     <Button
         variant="primary"
         size="lg"
-        label={isLastQuestion ? "Trả lời & kết thúc" : "Trả lời & tiếp tục"}
+        label={isLastQuestion ? "Answer & finish" : "Answer & continue"}
         suffixIcon={ArrowRightIcon}
         iconSlide
         onPress={onSubmit}
         isDisabled={isDisabled}
         isPending={isPending}
         classNames={["self-center"]}
-        anatPart={anatPart ?? (showAnatomy ? "Button" : undefined)}
+        showAnatomy={showAnatomy}
     />
 )
 

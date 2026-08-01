@@ -42,7 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — a lesson is still waiting: eyebrow + title + button all render. */
 export const ResumeAvailable: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleContinueBand"
                 tier="block"
@@ -53,9 +53,9 @@ export const ResumeAvailable: Story = {
                 states={[
                     {
                         name: "lessonsRead = 4/12, challengesDone = 1/5",
-                        why: "Early into the module: the eyebrow reads \"Học tiếp\", the next unread lesson's title sits under it, and the button is live. The meter and the sentence below both read off the same numbers, so a learner never sees the bar and the sentence disagree.",
+                        why: "Early into the module: the eyebrow reads \"Keep learning\", the next unread lesson's title sits under it, and the button is live. The meter and the sentence below both read off the same numbers, so a learner never sees the bar and the sentence disagree.",
                         code: `<ModuleContinueBand
-    resumeLessonTitle="Viết Dockerfile tối ưu"
+    resumeLessonTitle="Writing an optimized Dockerfile"
     lessonsRead={4}
     lessonsTotal={12}
     challengesDone={1}
@@ -66,7 +66,7 @@ export const ResumeAvailable: Story = {
                             <ModuleContinueBand
                                 anatPart="ModuleContinueBand"
                                 showAnatomy
-                                resumeLessonTitle="Viết Dockerfile tối ưu"
+                                resumeLessonTitle="Writing an optimized Dockerfile"
                                 lessonsRead={4}
                                 lessonsTotal={12}
                                 challengesDone={1}
@@ -79,7 +79,7 @@ export const ResumeAvailable: Story = {
                         name: "lessonsRead = 11/12, challengesDone = 5/5",
                         why: "Near the end of the module: only one lesson is left to resume, so the meter is nearly full while the challenges half of the sentence already reads complete — the two counters do not have to finish together.",
                         code: `<ModuleContinueBand
-    resumeLessonTitle="Ghi chú nhanh về BuildKit"
+    resumeLessonTitle="Quick notes on BuildKit"
     lessonsRead={11}
     lessonsTotal={12}
     challengesDone={5}
@@ -88,7 +88,7 @@ export const ResumeAvailable: Story = {
 />`,
                         render: (
                             <ModuleContinueBand
-                                resumeLessonTitle="Ghi chú nhanh về BuildKit"
+                                resumeLessonTitle="Quick notes on BuildKit"
                                 lessonsRead={11}
                                 lessonsTotal={12}
                                 challengesDone={5}
@@ -106,7 +106,7 @@ export const ResumeAvailable: Story = {
 /** LEAF — every lesson read: title + button drop out together, only the eyebrow changes shape. */
 export const AllDone: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleContinueBand"
                 tier="block"
@@ -144,7 +144,7 @@ export const AllDone: Story = {
 /** LEAF — the caller flips `isSkeleton`, so every composed part swaps to its own mirror. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleContinueBand"
                 tier="block"

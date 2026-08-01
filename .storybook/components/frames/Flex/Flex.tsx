@@ -1,7 +1,8 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, PADDING_CLASS, type LayoutAlign, type LayoutJustify, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
+import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, paddingClassNames, type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
+import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -63,10 +64,10 @@ export interface FlexBaseProps {
     inline?: boolean
     /** Main axis. Defaults to `row`, the browser default, so the prop reads as an override. */
     direction?: FlexDirection
-    /** Space between children, pinned to the 10 scale. Required so nobody leaves it to chance. */
-    gap: SeamScale
+    /** Space between children, on the house gap scale. Required so nobody leaves it to chance. */
+    gap: Responsive<AllowedGap>
     /**
-     * Space INSIDE the box, pinned to the same scale as the gap.
+     * Space INSIDE the box, on the house padding scale.
      *
      * Added 2026-07-27 for the same reason the gap is typed. Padding was a rule that lived only
      * in prose: no frame offered it, so anyone who needed inner space wrote `p-5` by hand and
@@ -77,33 +78,65 @@ export interface FlexBaseProps {
      * Leaving it out renders no padding class at all, which keeps a plain layout box free of
      * inner space and matches how the frame behaved before.
      */
-    padding?: InsetScale
+    padding?: Responsive<PaddingValue>
     /** Cross axis alignment. `stretch` on a column, `center` on a row, matching the old Stack defaults. */
     align?: LayoutAlign
     /** Main axis distribution. Left out means the browser default, which is `start`. */
     justify?: LayoutJustify
     /**
-     * Let the row run onto a second line. Meaningless on a column, and the render below ignores
-     * it there rather than emitting a class that does nothing.
+     * Container step the row switches from wrapped to single-line at — FRAME-10: a shape
+     * change names its width, as a prop, never a bare boolean. Below `at` the row wraps onto a
+     * second line; at `at` and above it stays single-line. Meaningless on a column (which
+     * already grows without bound), and the render below ignores it there rather than emitting
+     * a class that does nothing. Left out (`undefined`) means the row never wraps at all, the
+     * same behaviour the old `wrap={false}` default had.
      */
-    wrap?: boolean
+    at?: ResponsiveRowSwitch
+    /**
+     * `true` → a left guide border + matching indent (`pl-3`, `@app-sm:pl-6`), for a box that
+     * is ONE LEVEL DEEPER than its caller. This is `Stack`'s `nested` chrome — Flex is the tier
+     * that actually renders the DOM, and FRAME-5 grants a frame the chrome it draws itself, so
+     * the classes live here rather than arriving as a free-form string. `Stack` forwards the
+     * boolean the same way it forwards `gap`/`padding`/`align`/`justify`.
+     */
+    nested?: boolean
     /** The content being laid out. */
     body?: ReactNode
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /** Name this box in a BlockAnatomy panel. */
     anatPart?: string
+    /**
+     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the
+     * element that carries the gap, so the rendered-tree test can assert the seam is the step
+     * the pattern names. A frame does not KNOW its pattern — the caller does, exactly like
+     * `anatPart` — so it is passed in.
+     */
+    pattern?: string
 }
 
 /** Direction to its literal class. Tailwind never emits an interpolated `flex-${x}`. */
 const DIRECTION_CLASS: Record<FlexDirection, string> = {
     row: "flex-row",
     col: "flex-col",
+}
+
+/** {@link FlexBaseProps.nested} chrome. Centralized so the classes live in exactly one place. */
+const NESTED_CLASS = "border-l border-default pl-3 @app-sm:pl-6"
+
+/**
+ * {@link ResponsiveRowSwitch} step → the class that takes the row OUT of `flex-wrap` from that
+ * step up. Written out per step for the same reason every other breakpoint table in this tier
+ * is: Tailwind never emits an interpolated `@app-${step}:flex-nowrap`.
+ */
+const WRAP_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
+    sm: "@app-sm:flex-nowrap",
+    md: "@app-md:flex-nowrap",
+    lg: "@app-lg:flex-nowrap",
+    xl: "@app-xl:flex-nowrap",
 }
 
 /**
@@ -120,29 +153,34 @@ const FlexBase = ({
     padding,
     align,
     justify,
-    wrap = false,
+    at,
+    nested = false,
     body,
-    className,
     classNames,
     anatPart,
+    pattern,
 }: FlexBaseProps) => (
     // No self-name fallback: `Flex` is internal-only (see the export note below) and has
     // no story of its own, so a default badge here would only ever point nowhere (§11a.1 rule
     // on undeclared parts). A caller that needs THIS box badged as a node passes `anatPart`
     // explicitly, same contract as `Split`/`Cluster`/`SurfaceCard.*`.
     <Tag
+        data-tier="frame"
+        data-component="Flex"
         data-anat-part={anatPart}
+        data-principles={pattern}
         className={cn(
             inline ? "inline-flex" : "flex",
             DIRECTION_CLASS[direction],
-            GAP_CLASS[gap],
-            padding != null && PADDING_CLASS[padding],
+            ...gapClassNames(gap),
+            ...(padding != null ? paddingClassNames(padding) : []),
             align != null && ALIGN_CLASS[align],
             justify != null && JUSTIFY_CLASS[justify],
             // A column already grows without bound, so wrapping it would emit a class that can
             // never fire. Ignoring it here keeps the rendered class list honest.
-            wrap && direction === "row" && "flex-wrap",
-            className,
+            at != null && direction === "row" && "flex-wrap",
+            at != null && direction === "row" && WRAP_SWITCH_CLASS[at],
+            nested && NESTED_CLASS,
             classNames,
         )}
     >
@@ -162,3 +200,15 @@ const FlexBase = ({
  * one can is not a second option, it is the way the constraint gets bypassed.
  */
 export { FlexBase as Flex }
+
+/**
+ * Source-level tier marker — lets a gate read the tier without guessing from the folder path.
+ *
+ * ⚠️ Known collision, flagged rather than silently resolved: `StackV`/`StackH` render zero DOM
+ * of their own — every Stack instance IS this `Tag`, with no wrapper — so a rendered Stack's
+ * root carries `data-component="Flex"`, not `"StackV"`/`"StackH"`. The tier-marker rule says
+ * "hard-coded, not a prop, the component knows what it is", which has no mechanism for one
+ * frame built entirely atop another with no element of its own to mark. See `Stack.tsx`'s own
+ * `meta` export for the fuller note; surfaced here rather than guessed at.
+ */
+export const meta = { tier: "frame", name: "Flex" } as const

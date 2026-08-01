@@ -81,26 +81,26 @@ export interface RatingBarProps {
  */
 const ratingTileBody = (option: RatingOption, position: number, showAnatomy: boolean): ReactNode => (
     <StackV
-        gap="related"
+        gap={3}
         anatPart={showAnatomy ? "StackV" : undefined}
         body={
             <>
                 <StackH
-                    gap="related"
+                    gap={3}
                     align="center"
                     justify="between"
                     anatPart={showAnatomy ? "StackH" : undefined}
                     body={
                         <>
-                            <Typography size="sm" weight="medium" text={option.label} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="sm" weight="medium" text={option.label} showAnatomy={showAnatomy} />
                             {/* One chip per tile, and it goes to the KEY — that is the classifying
                                 mark. The interval below is a quiet fact, so it stays as text. */}
-                            <Chip tone="default" text={String(position + 1)} anatPart={showAnatomy ? "Chip" : undefined} />
+                            <Chip tone="default" text={String(position + 1)} showAnatomy={showAnatomy} />
                         </>
                     }
                 />
                 {option.hint != null ? (
-                    <Typography size="xs" color="muted" text={option.hint} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" color="muted" text={option.hint} showAnatomy={showAnatomy} />
                 ) : null}
             </>
         }
@@ -135,7 +135,7 @@ const RatingBar = ({
                 <SurfaceCardPressableGroup
                     ariaLabel={ariaLabel}
                     columns={{ base: 2, md: 4 }}
-                    gap="grouped"
+                    gap={4}
                     keyboardShortcut
                     items={items}
                     isSkeleton={isSkeleton}

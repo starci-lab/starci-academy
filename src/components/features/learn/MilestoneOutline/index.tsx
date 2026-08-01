@@ -72,7 +72,7 @@ const filterMilestones = (
 /**
  * Milestone navigation rail for the personal-project capstone — rendered through
  * the SAME shared {@link OutlineRail} block as the course content-map, so the two
- * rails look identical (progress header + "Về bài hiện tại" continue, search, and
+ * rails look identical (progress header + "Go to current lesson" continue, search, and
  * milestone → task rows). This is a thin data wrapper: owns the milestones/progress
  * SWR singletons, the Redux task selection + unlock logic, and the controlled
  * search/expand state; it maps milestones→groups and tasks→rows for the block.

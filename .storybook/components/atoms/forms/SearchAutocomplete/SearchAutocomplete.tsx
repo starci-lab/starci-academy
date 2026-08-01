@@ -69,15 +69,7 @@ export interface SearchAutocompleteProps {
     errorMessage?: ReactNode
     /** Adds a required `*` mark after the label. */
     isRequired?: boolean
-    /**
-     * Extra classes on the root ComboBox.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
     /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel to badge on-render. */
     showAnatomy?: boolean
@@ -107,7 +99,6 @@ const SearchAutocompleteBase = ({
     hint,
     errorMessage,
     isRequired,
-    className,
     classNames,
     showAnatomy,
 }: SearchAutocompleteProps) => {
@@ -135,15 +126,17 @@ const SearchAutocompleteBase = ({
             // field's resting shape; the popover has no resting shape.
             skeletonControl={
                 <HeroSkeleton
-                    className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm", className, classNames)}
+                    className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm", classNames)}
                     data-anat-part={showAnatomy ? "Skeleton" : undefined}
                 />
             }
         >
             <ComboBox
+                data-tier="atom"
+                data-component="SearchAutocomplete"
                 aria-label={fieldName(label, placeholder)}
                 isInvalid={invalid}
-                className={cn("w-full @app-sm:max-w-sm", className, classNames)}
+                className={cn("w-full @app-sm:max-w-sm", classNames)}
                 variant="secondary"
                 allowsEmptyCollection
                 items={items}
@@ -209,3 +202,5 @@ const SearchAutocompleteBase = ({
 
 /** `SearchAutocomplete.*` — suggest-as-you-type search field on HeroUI `ComboBox`. */
 export { SearchAutocompleteBase as SearchAutocomplete }
+
+export const meta = { tier: "atom", name: "SearchAutocomplete" } as const

@@ -7,7 +7,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * BLOCK — `FoundationCategorySearchBar`: the Foundations hub's search row —
- * a debounced autocomplete field plus a live "N chủ đề" count riding beside
+ * a debounced autocomplete field plus a live "N topics" count riding beside
  * it, one `StackH` seam apart. See the component file header for why this
  * earns its own layer over the bare `SearchAutocomplete` atom (domain
  * mapping + count wording, §14d.1).
@@ -42,7 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the one shape this block has: field + count. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationCategorySearchBar"
                 tier="block"
@@ -52,7 +52,7 @@ export const Default: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "count = 12, query rỗng",
+                        name: "count = 12, empty query",
                         why: "The resting shape of the row: an empty field and the full category count sitting beside it. This is what the Foundations hub shows before anyone types anything.",
                         code: `<FoundationCategorySearchBar
     query=""
@@ -74,7 +74,7 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "query = \"doc\", gợi ý đang khớp",
+                        name: "query = \"doc\", suggestions matching",
                         why: "The reader has typed a prefix and the backend's completion suggester answered with matches; the count on the right still reflects the last completed search, since it has not caught up to this keystroke yet.",
                         code: `<FoundationCategorySearchBar
     query="doc"
@@ -94,8 +94,8 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "count = 0 (tìm không ra)",
-                        why: "A real, newsworthy zero — the search genuinely matched nothing — so the block renders \"Chưa có chủ đề\" instead of hiding the count. Unlike a nav badge, silence here would read as the count still loading rather than as an honest empty result.",
+                        name: "count = 0 (no matches)",
+                        why: "A real, newsworthy zero — the search genuinely matched nothing — so the block renders \"No topics yet\" instead of hiding the count. Unlike a nav badge, silence here would read as the count still loading rather than as an honest empty result.",
                         code: `<FoundationCategorySearchBar
     query="xyz"
     onQueryChange={setQuery}
@@ -114,7 +114,7 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "count = undefined (chưa biết)",
+                        name: "count = undefined (not yet known)",
                         why: "The screen has not resolved a count yet — distinct from a real zero — so this block renders nothing on the right rather than guess. The caller passes `isSkeleton` instead for the loading mirror; a bare `undefined` here is for a screen that has no count to show at all.",
                         code: `<FoundationCategorySearchBar
     query=""

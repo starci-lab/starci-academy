@@ -18,7 +18,7 @@ import {
 export type ProfileSkillsTabProps = WithClassNames<undefined>
 
 /**
- * Skills tab ("Kỹ năng & Lập trình") of the public profile — a sibling of the
+ * Skills tab ("Skills & Coding") of the public profile — a sibling of the
  * Challenges tab. Delegates the whole tab to {@link ProfileCoding}, which leads
  * with the headline metric row, gathers the breakdowns into one "Stats" card, and
  * lists the solve history. Self-contained: it reads the username from the route,

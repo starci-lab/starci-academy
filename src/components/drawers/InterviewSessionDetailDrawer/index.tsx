@@ -56,7 +56,7 @@ const AttemptCard = ({ attempt, position }: { attempt: InterviewSessionAttemptIt
             <div className="text-foreground">
                 <MarkdownContent markdown={attempt.question} />
             </div>
-            {/* question meta — level chip (1 trục phân loại) + tags as plain text */}
+            {/* question meta — level chip (1 classification axis) + tags as plain text */}
             {attempt.level || attempt.tags.length > 0 ? (
                 <div className="flex flex-wrap items-center gap-2">
                     {attempt.level ? (

@@ -104,13 +104,14 @@ const ContentModal = ({
             header={isSkeleton ? (
                 <HeroSkeleton className="h-5 w-48 rounded" />
             ) : content?.title != null ? (
-                <MarkdownContent
-                    source={content.title}
-                    measure="compact"
-                    className="[&_p]:m-0 [&_p]:inline"
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "MarkdownContent (title)" : undefined}
-                />
+                <div className="[&_p]:m-0 [&_p]:inline">
+                    <MarkdownContent
+                        source={content.title}
+                        measure="compact"
+                        showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "MarkdownContent (title)" : undefined}
+                    />
+                </div>
             ) : null}
             showAnatomy={showAnatomy}
         >

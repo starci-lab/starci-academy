@@ -10,13 +10,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * free-text anatomy: `ComboBox.InputGroup` (Input + leading icon) plus
  * `ComboBox.Popover` (ListBox of suggestion rows / spinner / empty state).
  *
- * Atom lá: `ComboBox.InputGroup`/`ComboBox.Popover`/`Skeleton` là component
- * heroui THẬT (không phải khe nội bộ tự chế) — không component nào ở đây có
- * story CỦA TA để nhảy tới nên `annotate` không có `storyId`, nhưng vẫn cần tier
- * `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28; trước đây
- * tên bị rút gọn thành "InputGroup"/"Popover" — sửa lại đúng tên compound thật).
- * Tier sửa lại `atom` (trước là `primitive` — tên cũ của tầng khung §13, nay
- * tách frame/composite theo 2026-07-27 — sai vì đây là atom thật, title đã là
+ * Leaf atom: `ComboBox.InputGroup`/`ComboBox.Popover`/`Skeleton` are REAL heroui
+ * components (not hand-rolled internal slots) — none of them has ITS OWN story
+ * to jump to here, so `annotate` carries no `storyId`, but they still need the
+ * `heroui` tier so the two-law panel doesn't silently skip them (2026-07-28;
+ * their names used to be shortened to "InputGroup"/"Popover" — fixed back to
+ * the real compound name). Tier corrected to `atom` (it used to be `primitive`
+ * — the old name for the frame tier §13, now split into frame/composite as of
+ * 2026-07-27 — wrong here since this is a real atom, and the title is already
  * `Atoms/Forms/SearchAutocomplete`).
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
@@ -80,7 +81,7 @@ export const WithSuggestions: Story = {
             return CATALOG.filter((item) => item.label.toLowerCase().includes(query))
         }, [inputValue])
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <div className="max-w-sm">
                     <BlockAnatomy
                         name="SearchAutocomplete"
@@ -120,7 +121,7 @@ export const Loading: Story = {
     render: () => {
         const [inputValue, setInputValue] = useState("system")
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <div className="max-w-sm">
                     <BlockAnatomy
                         name="SearchAutocomplete"
@@ -158,7 +159,7 @@ export const Loading: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8 max-w-sm">
+        <div data-tier="fixture" className="p-8 max-w-sm">
             <BlockAnatomy
                 name="SearchAutocomplete"
                 tier="atom"
@@ -194,7 +195,7 @@ export const NoResults: Story = {
     render: () => {
         const [inputValue, setInputValue] = useState("no-results")
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <div className="max-w-sm">
                     <BlockAnatomy
                         name="SearchAutocomplete"

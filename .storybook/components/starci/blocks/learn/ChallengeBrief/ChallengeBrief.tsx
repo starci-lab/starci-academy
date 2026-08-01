@@ -49,9 +49,9 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  *     block composes the sentence).
  *
  * ⭐ HINT WAS THE THIRD SHAPE, until round-12 collapsed it into the first. It
- * used to be a bare `SurfaceCardAccordion` (no `label`, one item titled "Gợi ý"
+ * used to be a bare `SurfaceCardAccordion` (no `label`, one item titled "Hint"
  * with a lightbulb in `titleStart`), a faithful port of `src`'s un-labelled hint
- * accordion. Thầy chốt 2026-07-30: a labelled card like its four siblings, no
+ * accordion. The teacher finalized (2026-07-30): a labelled card like its four siblings, no
  * icon, content always visible — see the `hintItems` comment for the full why.
  *
  * ⚠️ SKELETON GOTCHA THAT SHAPED THIS FILE. `SurfaceCardList`'s `isSkeleton`
@@ -108,7 +108,7 @@ export interface ChallengeBriefRequirementItem {
 export interface ChallengeBriefStepItem {
     /** Stable React key, also the accordion item id. */
     key: string
-    /** Optional step headline; falls back to a plain "Bước N" when absent. */
+    /** Optional step headline; falls back to a plain "Step N" when absent. */
     title?: string
     /** Panel body, markdown. */
     body: string
@@ -158,13 +158,13 @@ const markdownBody = (body: string, showAnatomy: boolean): ReactNode => (
 const skeletonListRows = (count: number, keyPrefix: string): Array<SurfaceCardListItem> =>
     Array.from({ length: count }, (_unused, index) => ({
         key: `${keyPrefix}-${index}`,
-        content: <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
+        content: () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
     }))
 
 /** One expected-output row: a leading check plus the stripped output text. */
 const outputRow = (body: string, showAnatomy: boolean) => (
     <StackH
-        gap="tight"
+        gap={2}
         align="start"
         body={
             <>
@@ -174,7 +174,7 @@ const outputRow = (body: string, showAnatomy: boolean) => (
                     data-anat-part={showAnatomy ? "CheckCircleIcon" : undefined}
                     className="size-5 shrink-0 text-success-soft-foreground"
                 />
-                <Typography size="sm" text={stripMarkdown(body)} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" text={stripMarkdown(body)} showAnatomy={showAnatomy} />
             </>
         }
     />
@@ -206,27 +206,28 @@ const ChallengeBrief = ({
     const showOutputs = isSkeleton || (outputs?.length ?? 0) > 0
     const showHint = isSkeleton || trimmedHint.length > 0
 
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-3, thầy chốt): prerequisites/
-    // outputs render PLAIN TEXT, không qua markdown — đảo lại quyết định round-2 (từng khớp
-    // `src/ChallengeView` để giữ inline-code). Backend content-authoring schema
-    // (`.claude/docs/rules/fullstack/challenges.md` §3: "outputs/prerequisites chỉ lang+TEXT")
-    // đặt tên field khác hẳn requirements/steps (lang+title+BODY, cho phép markdown/callout
-    // `:::muted`) — "text" vs "body" là ranh giới CỐ Ý ở tầng content, không phải tuỳ tiện.
-    // `.storybook` là bản vẽ, được quyền dẫn trước `src` khi thầy chốt lại một quyết định.
-    // `stripMarkdown` chặn ở biên render: content vẫn có thể gõ backtick/bold theo thói quen,
-    // chữ hiện ra phải sạch hoàn toàn, không chỉ đổi cơ chế render mà còn ký tự literal.
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-3, teacher's final call): prerequisites/
+    // outputs render PLAIN TEXT, not through markdown — this reverses the round-2 decision (which
+    // once matched `src/ChallengeView` to keep inline-code). The backend content-authoring schema
+    // (`.claude/docs/rules/fullstack/challenges.md` §3: "outputs/prerequisites are lang+TEXT only")
+    // names its field quite differently from requirements/steps (lang+title+BODY, which allows
+    // markdown/callout `:::muted`) — "text" vs "body" is a DELIBERATE boundary at the content
+    // tier, not an arbitrary one. `.storybook` is the blueprint, and gets to lead `src` whenever
+    // the teacher finalizes a revised decision. `stripMarkdown` guards at the render boundary:
+    // content authors may still habitually type backtick/bold, but the rendered text must come
+    // out completely clean — not just a different render mechanism, but the literal characters too.
     const prerequisiteItems: Array<SurfaceCardListItem> = isSkeleton
         ? skeletonListRows(PREREQUISITE_SKELETON_ROWS, "prereq-skeleton")
         : (prerequisites ?? []).map((item) => ({
             key: item.key,
-            content: <Typography size="sm" text={stripMarkdown(item.body)} anatPart={showAnatomy ? "Typography" : undefined} />,
+            content: () => <Typography size="sm" text={stripMarkdown(item.body)} showAnatomy={showAnatomy} />,
         }))
 
     const outputItems: Array<SurfaceCardListItem> = isSkeleton
         ? skeletonListRows(OUTPUT_SKELETON_ROWS, "output-skeleton")
         : (outputs ?? []).map((item) => ({
             key: item.key,
-            content: outputRow(item.body, showAnatomy),
+            content: () => outputRow(item.body, showAnatomy),
         }))
 
     const requirementItems: Array<SurfaceCardAccordionItem> = (requirements ?? []).map((item) => ({
@@ -242,36 +243,39 @@ const ChallengeBrief = ({
         id: item.key,
         // The block owns this sentence (§14d.1) — the caller hands an optional headline
         // plus its position via array order, never a pre-numbered string.
-        title: `${index + 1}. ${item.title || `Bước ${index + 1}`}`,
+        title: `${index + 1}. ${item.title || `Step ${index + 1}`}`,
         body: markdownBody(item.body, showAnatomy),
     }))
 
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-12, thầy chốt: "gợi ý render dạng
-    // SurfaceCard with label, bỏ icon bóng đèn" rồi "sao lại là SurfaceCardList mà không render
-    // SurfaceCard và bỏ text vào thôi? nó phải list đâu?"): ĐỔI HẲN HÌNH, hai nhịp.
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-12, teacher's final call: "the hint should
+    // render as a SurfaceCard with a label, drop the lightbulb icon" then "why is this a
+    // SurfaceCardList instead of rendering a SurfaceCard and just putting the text in? it doesn't
+    // need to be a list"): SHAPE CHANGED ENTIRELY, in two passes.
     //
-    // Trước: `SurfaceCardAccordion` bare (không `label`), một item duy nhất mang title "Gợi ý" +
-    // icon đèn ở `titleStart` — port nguyên `src`'s un-labelled hint accordion.
-    // Nay: `SurfaceCard` TRẦN, `label="Gợi ý"`, nội dung là MỘT đoạn markdown làm `children`.
+    // Before: bare `SurfaceCardAccordion` (no `label`), a single item carrying the title "Hint" +
+    // a lightbulb icon in `titleStart` — a straight port of `src`'s un-labelled hint accordion.
+    // Now: a BARE `SurfaceCard`, `label="Hint"`, with content as ONE markdown paragraph as `children`.
     //
-    // Vì sao KHÔNG accordion: nếu giữ accordion mà thêm `label="Gợi ý"`, chữ "Gợi ý" hiện HAI
-    // LẦN (header của card + trigger của item duy nhất) — một item accordion buộc phải có title,
-    // không thể để rỗng. Nhãn ngoài đã nói rõ đây là gì, nên hành vi ẩn/hiện mất lý do tồn tại.
+    // Why NOT an accordion: keeping the accordion and adding `label="Hint"` would show the word
+    // "Hint" TWICE (the card's header + the sole item's trigger) — an accordion item is forced
+    // to carry a title, it can't be left blank. The outer label already states what this is, so
+    // the show/hide behaviour loses its reason to exist.
     //
-    // Vì sao KHÔNG `SurfaceCardList` (nhịp sửa thứ hai, thầy bắt): hint là MỘT đoạn văn, không
-    // phải danh sách — một `items` array độ dài luôn bằng 1 là dựng sai khái niệm ngay ở kiểu dữ
-    // liệu, kéo theo cả divider-giữa-hàng và `key` vô nghĩa. `SurfaceCard` trần nhận thẳng
-    // `children`, đúng số lượng nội dung thật.
+    // Why NOT `SurfaceCardList` (the second fix pass, caught by the teacher): a hint is ONE
+    // paragraph, not a list — an `items` array whose length is always 1 gets the data shape
+    // wrong from the start, dragging along a meaningless row-divider and `key`. A bare
+    // `SurfaceCard` takes `children` directly, matching the real amount of content.
     //
-    // Icon đèn bỏ theo lời thầy: `label` giờ là header card giống "Yêu cầu"/"Đầu ra mong đợi" —
-    // các nhãn cùng cấp mà một cái đeo icon là lệch nhịp, và bản thân chữ "Gợi ý" đã đủ nghĩa
-    // (icon §2a: chỉ ký hiệu quốc dân mới xứng một glyph, một nhãn văn xuôi thì không).
+    // The lightbulb icon was dropped per the teacher's direction: `label` is now a card header
+    // just like "Requirements"/"Expected outputs" — peer labels where only one carries an icon
+    // is an inconsistent rhythm, and the word "Hint" alone already carries enough meaning
+    // (icon §2a: only a universally recognised symbol earns its own glyph, not a plain-prose label).
 
     const sections = (
         <>
             {showPrerequisites ? (
                 <SurfaceCardList
-                    label="Điều kiện tiên quyết"
+                    label="Prerequisites"
                     items={prerequisiteItems}
                     isSkeleton={isSkeleton}
                     anatPart={showAnatomy ? "SurfaceCardList" : undefined}
@@ -280,7 +284,7 @@ const ChallengeBrief = ({
             ) : null}
             {showRequirements ? (
                 <SurfaceCardAccordion
-                    label="Yêu cầu"
+                    label="Requirements"
                     items={requirementItems}
                     allowsMultipleExpanded
                     isSkeleton={isSkeleton}
@@ -290,7 +294,7 @@ const ChallengeBrief = ({
             ) : null}
             {showSteps ? (
                 <SurfaceCardAccordion
-                    label="Các bước hướng dẫn"
+                    label="Guided steps"
                     items={stepItems}
                     allowsMultipleExpanded
                     isSkeleton={isSkeleton}
@@ -300,7 +304,7 @@ const ChallengeBrief = ({
             ) : null}
             {showOutputs ? (
                 <SurfaceCardList
-                    label="Đầu ra mong đợi"
+                    label="Expected outputs"
                     items={outputItems}
                     isSkeleton={isSkeleton}
                     anatPart={showAnatomy ? "SurfaceCardList" : undefined}
@@ -309,21 +313,22 @@ const ChallengeBrief = ({
             ) : null}
             {showHint ? (
                 <SurfaceCard
-                    label="Gợi ý"
+                    label="Hint"
                     isSkeleton={isSkeleton}
                     anatPart={showAnatomy ? "SurfaceCard" : undefined}
                     showAnatomy={showAnatomy}
-                >
-                    {isSkeleton
-                        ? <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                        : markdownBody(trimmedHint, showAnatomy)}
-                </SurfaceCard>
+                    body={() =>
+                        isSkeleton
+                            ? <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
+                            : markdownBody(trimmedHint, showAnatomy)
+                    }
+                />
             ) : null}
         </>
     )
 
     return (
-        <StackV gap="section" anatPart={anatPart} showAnatomy={showAnatomy} body={sections} />
+        <StackV gap={6} anatPart={anatPart} showAnatomy={showAnatomy} body={sections} />
     )
 }
 

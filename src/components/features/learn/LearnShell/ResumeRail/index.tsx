@@ -23,13 +23,13 @@ import {
 } from "../../shared/useCourseResume"
 
 /**
- * The persistent "Tiếp tục học" (resume) pill pinned at the TOP of the course-learn
+ * The persistent "Continue learning" (resume) pill pinned at the TOP of the course-learn
  * sidebar — visible on EVERY learn surface (not just the content home), so the
  * learner always has a one-click way back to the course spine (next unread lesson /
  * uncompleted challenge). Reads the shared {@link useCourseResume} pointer.
  *
  * Chrome: self-hides while the outline is loading or when there's nothing to resume
- * (all content done). Expanded → an accent-tinted pill (play + "Tiếp tục · n/m" +
+ * (all content done). Expanded → an accent-tinted pill (play + "Continue · n/m" +
  * target title). Collapsed rail → an icon-only play button (aria-label kept). Uses
  * the sanctioned tonal-active skin (`bg-accent-soft text-accent-soft-foreground`) to match the active
  * nav row. `"use client"` for the hooks.

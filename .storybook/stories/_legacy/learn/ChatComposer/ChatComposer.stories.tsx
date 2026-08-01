@@ -58,10 +58,10 @@ const modelPickerStandIn = (showAnatomy: boolean) => (
 
 // 4 retrieval skills (source `RETRIEVAL_SKILLS`, index.tsx:124-129).
 const SKILLS: Array<ChipButtonItem> = [
-    { id: "challenges", label: "Tìm challenges liên quan bài này", icon: <PuzzlePieceIcon aria-hidden focusable="false" /> },
-    { id: "flashcards", label: "Tìm flashcard liên quan bài này", icon: <CardsIcon aria-hidden focusable="false" /> },
-    { id: "lessons", label: "Tìm bài học liên quan", icon: <BookOpenIcon aria-hidden focusable="false" /> },
-    { id: "related", label: "Tìm nội dung liên quan bài này", icon: <SparkleIcon aria-hidden focusable="false" /> },
+    { id: "challenges", label: "Tìm challenges liên quan bài này", icon: PuzzlePieceIcon },
+    { id: "flashcards", label: "Tìm flashcard liên quan bài này", icon: CardsIcon },
+    { id: "lessons", label: "Tìm bài học liên quan", icon: BookOpenIcon },
+    { id: "related", label: "Tìm nội dung liên quan bài này", icon: SparkleIcon },
 ]
 
 // 3 selected-passage quick-asks (source `SELECTION_SUGGESTION_KEYS`, index.tsx:88).

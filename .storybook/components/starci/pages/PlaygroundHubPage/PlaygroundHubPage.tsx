@@ -89,8 +89,8 @@ const PlaygroundHubPage = ({
     return (
         <Container
             size="md"
-            padding="roomy"
-            body={<StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={hubSection} />}
+            padding={6}
+            body={<StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={hubSection} />}
         />
     )
 }

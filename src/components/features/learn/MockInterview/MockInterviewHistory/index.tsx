@@ -25,7 +25,7 @@ export interface MockInterviewHistoryProps extends WithClassNames<undefined> {
     courseId: string
     /** Course display id, for the scorecard result deep link. */
     courseDisplayId: string
-    /** Jumps the setup tab strip back to "Bắt đầu" (empty-state action). */
+    /** Jumps the setup tab strip back to "Start" (empty-state action). */
     onStartInterview?: () => void
 }
 
@@ -35,17 +35,17 @@ const PAGE_SIZE = 10
 /** The mode filter's fixed option order — "all" first, then the 2 top-level modes. */
 type HistoryModeFilter = "all" | "qna" | "design"
 
-/** Verdict → chip color (đạt / cận / chưa đạt) — mirrors {@link MockInterviewScorecard}'s convention. */
+/** Verdict → chip color (pass / borderline / fail) — mirrors {@link MockInterviewScorecard}'s convention. */
 const verdictColorOf = (verdict: string): "success" | "warning" | "danger" =>
     verdict === "pass" ? "success" : verdict === "borderline" ? "warning" : "danger"
 
 /**
  * The viewer's past mock-interview sessions for this course, newest first — the
- * setup screen's "Lịch sử" tab. Mirrors the WORKING Flashcard history exactly
- * (thầy 2026-07-17): fetch ALL modes then filter CLIENT-side (mode facet behind a
+ * setup screen's "History" tab. Mirrors the WORKING Flashcard history exactly
+ * (teacher, 2026-07-17): fetch ALL modes then filter CLIENT-side (mode facet behind a
  * funnel + search by prompt title), accumulate pages with a `previousCourseIdRef`
  * guard (only a real course change resets — NOT a mere remount), group runs by
- * TIME BUCKET (hôm nay / 7 ngày / 30 ngày / cũ hơn), and a "load more" button.
+ * TIME BUCKET (today / 7 days / 30 days / older), and a "load more" button.
  * Each row opens the read-only scorecard. Server-side `mode` paging was dropped —
  * it desynced `totalCount` from a cleared `items` (count said 12 while the list
  * read empty).
@@ -107,7 +107,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
         )
     }, [items, modeFilter, search])
 
-    // group filtered runs by time window (thầy 2026-07-17 "render lịch sử từng ngày")
+    // group filtered runs by time window (teacher, 2026-07-17 "render history day by day")
     const timeBuckets = useMemo(
         () => groupByTimeBucket(filteredItems, (item) => item.createdAt),
         [filteredItems],

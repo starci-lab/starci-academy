@@ -63,7 +63,7 @@ const parseFilter = (raw: string | null): CourseQuestionFilter =>
  * status, a filter/search toolbar and pagination. Vertical layout inside the
  * learn shell's centered reading column:
  *
- *   PageHeader → honest strip → composer ("hỏi chung khóa") → toolbar (filter tabs +
+ *   PageHeader → honest strip → composer ("ask course-wide") → toolbar (filter tabs +
  *   search + count) → list → pager
  *
  * The active filter is URL-synced (`?filter=`) so it is shareable + survives back/
@@ -149,7 +149,7 @@ export const CourseQa = () => {
     }, [displayId, locale, router])
 
     /**
-     * Posts a course-general question ("hỏi chung khóa" — `courseId` only, no
+     * Posts a course-general question ("ask course-wide" — `courseId` only, no
      * `contentId`) then revalidates the list so it shows up immediately.
      */
     const onSubmitQuestion = useCallback(async (body: string) => {
@@ -191,7 +191,7 @@ export const CourseQa = () => {
             />
 
             {isInvitationEmpty ? (
-                // Rỗng (0 câu) — invitation card that funnels into the course content.
+                // Empty (0 questions) — invitation card that funnels into the course content.
                 <Card>
                     <div className="flex flex-col items-center gap-4 py-6 text-center">
                         <ChatsCircleIcon aria-hidden className="size-8 text-muted" />
@@ -215,7 +215,7 @@ export const CourseQa = () => {
                 </Card>
             ) : (
                 <div className="flex flex-col gap-6">
-                    {/* B · "không học một mình" honest strip — real aggregates only
+                    {/* B · "not learning alone" honest strip — real aggregates only
                         (enrollment count from `course`, no manufactured presence/FOMO). */}
                     <div className="flex flex-col gap-1">
                         {enrollmentCount ? (
@@ -228,7 +228,7 @@ export const CourseQa = () => {
                         </Typography>
                     </div>
 
-                    {/* course-general composer ("hỏi chung khóa") — avatar-led
+                    {/* course-general composer ("ask course-wide") — avatar-led
                         collapse→expand pill that expands to a textarea on click */}
                     <CommentComposer
                         collapsible

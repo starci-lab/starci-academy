@@ -77,7 +77,7 @@ export interface PlaygroundRagWorkspaceProps extends WithClassNames<undefined> {
  * Machine-backed RAG workspace — the RIGHT pane of a `kind: "rag"`
  * {@link import("@/components/features/learn/Playground/PlaygroundRagSession").PlaygroundRagSession}.
  * A chat UX (import → ask → streamed answer bubbles → citations with a per-turn
- * "Tài liệu / Sơ đồ" source toggle) that runs over the Playground BYOM socket —
+ * "Docs / Diagram" source toggle) that runs over the Playground BYOM socket —
  * the learner's own local Ollama, relayed by the paired CLI agent. This is the
  * app's ONLY RAG surface (the old server-side marketing demo was removed).
  *

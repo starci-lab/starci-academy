@@ -35,10 +35,10 @@ export default meta
 type Story = StoryObj<typeof RatingBar>
 
 const OPTIONS = [
-    { grade: 0, label: "Quên", hint: "Gặp lại hôm nay" },
-    { grade: 1, label: "Khó", hint: "Gặp lại sau 1 ngày" },
-    { grade: 2, label: "Được", hint: "Gặp lại sau 4 ngày" },
-    { grade: 3, label: "Dễ", hint: "Gặp lại sau 10 ngày" },
+    { grade: 0, label: "Forgot", hint: "See it again today" },
+    { grade: 1, label: "Hard", hint: "See it again in 1 day" },
+    { grade: 2, label: "Good", hint: "See it again in 4 days" },
+    { grade: 3, label: "Easy", hint: "See it again in 10 days" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -52,7 +52,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the four grades, ready to tap. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="RatingBar"
                 tier="block"
@@ -66,7 +66,7 @@ export const Full: Story = {
                         why: "Four grades run weakest to strongest, each showing when the card would come back if it were chosen. Naming the consequence is what turns an opinion into a decision: the learner is not rating their feelings, they are choosing when to see this again.",
                         code: `<RatingBar
     options={options}
-    ariaLabel="Bạn nhớ tới đâu"
+    ariaLabel="How well did you remember it"
     onRate={rate}
 />`,
                         render: (
@@ -74,7 +74,7 @@ export const Full: Story = {
                                 anatPart="RatingBar"
                                 showAnatomy
                                 options={OPTIONS}
-                                ariaLabel="Bạn nhớ tới đâu"
+                                ariaLabel="How well did you remember it"
                                 onRate={() => {}}
                             />
                         ),
@@ -84,13 +84,13 @@ export const Full: Story = {
                         why: "Without an interval preview each tile is one line and the row gets shorter. This is the shape for a deck whose schedule has not been computed yet, and it is worth seeing that dropping the second line leaves the tiles even rather than ragged.",
                         code: `<RatingBar
     options={options.map(({ grade, label }) => ({ grade, label }))}
-    ariaLabel="Bạn nhớ tới đâu"
+    ariaLabel="How well did you remember it"
     onRate={rate}
 />`,
                         render: (
                             <RatingBar
                                 options={OPTIONS.map(({ grade, label }) => ({ grade, label }))}
-                                ariaLabel="Bạn nhớ tới đâu"
+                                ariaLabel="How well did you remember it"
                                 onRate={() => {}}
                             />
                         ),
@@ -100,14 +100,14 @@ export const Full: Story = {
                         why: "A grade is on its way to the server, so every tile stops accepting taps at once. Locking the whole row rather than the tile that was pressed is deliberate: a second grade for the same card is not a slower version of the first, it is a different answer.",
                         code: `<RatingBar
     options={options}
-    ariaLabel="Bạn nhớ tới đâu"
+    ariaLabel="How well did you remember it"
     isPending
     onRate={rate}
 />`,
                         render: (
                             <RatingBar
                                 options={OPTIONS}
-                                ariaLabel="Bạn nhớ tới đâu"
+                                ariaLabel="How well did you remember it"
                                 isPending
                                 onRate={() => {}}
                             />
@@ -122,7 +122,7 @@ export const Full: Story = {
 /** LEAF — the caller flips `isSkeleton`; the group mirrors its own tiles. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="RatingBar"
                 tier="block"
@@ -134,13 +134,13 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The group draws its own tile mirror while the schedule is being computed, keeping the same four boxes and the same column split. The composite that owns the tile box owns the shimmer too, so nothing shifts when the intervals arrive.",
-                        code: "<RatingBar options={options} ariaLabel=\"Bạn nhớ tới đâu\" isSkeleton onRate={rate} />",
+                        code: "<RatingBar options={options} ariaLabel=\"How well did you remember it\" isSkeleton onRate={rate} />",
                         render: (
                             <RatingBar
                                 anatPart="RatingBar"
                                 showAnatomy
                                 options={OPTIONS}
-                                ariaLabel="Bạn nhớ tới đâu"
+                                ariaLabel="How well did you remember it"
                                 isSkeleton
                                 onRate={() => {}}
                             />

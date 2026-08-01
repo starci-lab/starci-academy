@@ -14,7 +14,7 @@ export interface ChallengeCourseGroup {
  * Group solved challenges by `courseTitle` while preserving source order — the
  * first time a title is seen fixes that group's position. Rows with no course
  * (null `courseTitle`, e.g. V1-legacy) collapse into a single trailing group.
- * Shared by the Challenges tab and the Overview "Kỹ năng qua Challenge" snapshot
+ * Shared by the Challenges tab and the Overview "Skills via Challenge" snapshot
  * so both render the same course-grouped submission rows.
  *
  * @param items - solved-challenge rows to group.

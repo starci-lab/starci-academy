@@ -37,7 +37,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * its own).
  *
  * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels in the render
- * frame are written in ENGLISH; JSDoc/comments stay in Vietnamese.
+ * frame, as well as all JSDoc/comments, are written in ENGLISH.
  */
 const meta: Meta<typeof ChoiceSwitch> = {
     title: "Atoms/Forms/Choice/ChoiceSwitch",
@@ -68,7 +68,7 @@ export const Default: Story = {
                             why: "The track sits off and the label reads as a plain sibling beside it. Switch has no content slot of its own to own the label, so this bare pairing is the resting shape of the whole atom.",
                             code: "<ChoiceSwitch isSelected={value} onValueChange={setValue} label=\"Dark mode\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <ChoiceSwitch isSelected={value} onValueChange={setValue} label="Dark mode" showAnatomy />
                                 </div>
                             ),
@@ -77,7 +77,7 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -99,7 +99,7 @@ export const Selected: Story = {
                             why: "The thumb slides across and fills the track, while nothing else in the row moves. This is the shape isSelected = false above becomes once the caller flips the value it owns.",
                             code: "<ChoiceSwitch isSelected onValueChange={setValue} label=\"Dark mode\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <ChoiceSwitch isSelected={value} onValueChange={setValue} label="Dark mode" showAnatomy />
                                 </div>
                             ),
@@ -108,7 +108,7 @@ export const Selected: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -153,7 +153,7 @@ export const Sizes: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -175,7 +175,7 @@ export const WithHint: Story = {
                             why: "A description line grows below the row, routed through the internal FieldFrame scaffold so the atom stays a single call. The sentence stays visible whether the switch is on or off, because the side effect it names is true either way.",
                             code: "<ChoiceSwitch isSelected={value} onValueChange={setValue} label=\"Dark mode\" hint=\"Eases eye strain at night.\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <ChoiceSwitch
                                         isSelected={value}
                                         onValueChange={setValue}
@@ -190,7 +190,7 @@ export const WithHint: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
@@ -212,7 +212,7 @@ export const Required: Story = {
                             why: "A `*` mark rides on the same inline label as the track, since this control has no separate FieldFrame heading of its own to carry it. The mark flags a toggle the form will not accept left off, before the reader tries to move on.",
                             code: "<ChoiceSwitch isSelected={value} onValueChange={setValue} label=\"Enable two-factor authentication\" isRequired />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <ChoiceSwitch
                                         isSelected={value}
                                         onValueChange={setValue}
@@ -227,14 +227,14 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /** Leaf prop `isDisabled` — locks the track, dims the color. */
 export const Disabled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChoiceSwitch"
                 tier="atom"
@@ -247,7 +247,7 @@ export const Disabled: Story = {
                         why: "Both track and label dim together and press is blocked, forwarded straight to HeroUI's own disabled handling. The track stays visible rather than disappearing, so the reader still knows the option exists even though it is out of reach right now.",
                         code: "<ChoiceSwitch isDisabled isSelected onValueChange={setValue} label=\"Autosave\" />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <ChoiceSwitch isSelected onValueChange={() => {}} label="Autosave" isDisabled showAnatomy />
                             </div>
                         ),
@@ -276,7 +276,7 @@ export const Error: Story = {
                             why: "The track border turns invalid and a red line grows beneath it, stopping the eye at the exact row that needs attention. Setting errorMessage flips the control invalid on its own, so there is no separate isInvalid to remember alongside it.",
                             code: "<ChoiceSwitch isSelected={value} onValueChange={setValue} label=\"Security alerts\" errorMessage=\"Turn this on to get alerted.\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <ChoiceSwitch
                                         isSelected={value}
                                         onValueChange={setValue}
@@ -291,14 +291,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c), all THREE sizes (track pill + label bar). */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChoiceSwitch"
                 tier="atom"

@@ -48,11 +48,11 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ WHY A NEW CARD INSTEAD OF REUSING `ContinueCardHero`: different WHY,
  * per §14d. `ContinueCardHero` is for resuming something IN PROGRESS — it
- * optionally shows a progress bar and its CTA always reads "Tiếp tục". This
+ * optionally shows a progress bar and its CTA always reads "Continue". This
  * card fires exactly ONCE, at the moment a milestone task is marked passing,
  * to hand the learner forward to the NEXT one — there is no progress to show
  * (the just-finished task is done, the next one has not started), and the
- * CTA is a different, forward-only sentence ("Đi tới nhiệm vụ tiếp theo").
+ * CTA is a different, forward-only sentence ("Go to the next task").
  * Reaching for `ContinueCardHero` would have bought a progress-bar slot this
  * moment never uses and a CTA wording that means the wrong thing here.
  *
@@ -89,17 +89,17 @@ export interface PersonalProjectNextTask {
 }
 
 /** Section eyebrow the handoff card owns itself (§14d.1) — never handed in by the caller. */
-const NEXT_TASK_EYEBROW = "Mốc tiếp theo"
+const NEXT_TASK_EYEBROW = "Next milestone"
 /** CTA label the handoff card owns itself. */
-const NEXT_TASK_CTA_LABEL = "Đi tới nhiệm vụ tiếp theo"
+const NEXT_TASK_CTA_LABEL = "Go to the next task"
 /**
  * Link text for the capstone's submission link. Overrides `SubmissionScoreCard`'s
- * generic "Xem bài nộp" default: a capstone submission is always a GitHub repo
+ * generic "View submission" default: a capstone submission is always a GitHub repo
  * (unlike a challenge submission, which the sibling screen leaves generic), so this
  * block owns the more specific wording itself (§14d.1) rather than taking a label
  * string from the caller.
  */
-const GITHUB_LINK_LABEL = "Xem trên GitHub"
+const GITHUB_LINK_LABEL = "View on GitHub"
 
 /** Props for the next-task handoff card. Local to this file — see the file header. */
 interface MilestoneUpNextCardProps {
@@ -130,8 +130,8 @@ const MilestoneUpNextCard = ({
 }: MilestoneUpNextCardProps) => {
     const titleColumn = (
         <StackV
-            gap="flush"
-            className="min-w-0"
+            gap={1}
+            classNames={["min-w-0"]}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -140,7 +140,7 @@ const MilestoneUpNextCard = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={NEXT_TASK_EYEBROW}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     <Typography
                         size="base"
@@ -148,7 +148,7 @@ const MilestoneUpNextCard = ({
                         truncate
                         isSkeleton={isSkeleton}
                         text={task.title}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 </>
             }
@@ -156,37 +156,41 @@ const MilestoneUpNextCard = ({
     )
 
     return (
-        <SurfaceCard isHighlight isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-            <StackH
-                gap="grouped"
-                justify="between"
-                align="center"
-                wrap
-                anatPart={showAnatomy ? "StackH" : undefined}
-                body={
-                    <>
-                        {titleColumn}
-                        <Button
-                            isSkeleton={isSkeleton}
-                            variant="primary"
-                            size="sm"
-                            label={NEXT_TASK_CTA_LABEL}
-                            suffixIcon={ArrowRightIcon}
-                            iconSlide
-                            onPress={onGoToNextTask}
-                            classNames={["w-fit", "shrink-0"]}
-                            anatPart={showAnatomy ? "Button" : undefined}
-                        />
-                    </>
-                }
-            />
-        </SurfaceCard>
+        <SurfaceCard
+            isHighlight
+            isSkeleton={isSkeleton}
+            anatPart={showAnatomy ? "SurfaceCard" : undefined}
+            body={() => (
+                <StackH
+                    gap={4}
+                    justify="between"
+                    align="center"
+                    wrap
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <>
+                            {titleColumn}
+                            <Button
+                                isSkeleton={isSkeleton}
+                                variant="primary"
+                                size="sm"
+                                label={NEXT_TASK_CTA_LABEL}
+                                suffixIcon={ArrowRightIcon}
+                                iconSlide
+                                onPress={onGoToNextTask}
+                                classNames={["w-fit", "shrink-0"]}
+                            />
+                        </>
+                    }
+                />
+            )}
+        />
     )
 }
 
 /** Props for {@link PersonalProjectResultScreen}. */
 export interface PersonalProjectResultScreenProps {
-    /** Back-link label, e.g. "Quay lại nhiệm vụ". */
+    /** Back-link label, e.g. "Back to task". */
     backLabel: string
     /** Fired when the learner leaves the result page for the task solve page. */
     onBack: () => void
@@ -208,7 +212,7 @@ export interface PersonalProjectResultScreenProps {
     /** Fired when the reader presses "+N" — what it opens is a caller/screen decision (Rule 7). */
     onOverflowPress?: () => void
 
-    /** Section label above the score card, e.g. "Kết quả". */
+    /** Section label above the score card, e.g. "Result". */
     scoreLabel: string
     /** Points earned on the selected attempt. Ignored while no attempt is selected. */
     score?: number
@@ -232,7 +236,7 @@ export interface PersonalProjectResultScreenProps {
     /** Relative time since grading, already localized. */
     timeAgo?: string
 
-    /** Section label above the findings accordion, e.g. "Góp ý". */
+    /** Section label above the findings accordion, e.g. "Feedback". */
     findingsLabel: string
     /** The selected attempt's findings, in ANY order — the block re-sorts them. */
     findings: Array<SubmissionFinding>
@@ -308,7 +312,7 @@ const PersonalProjectResultScreen = ({
     // selected — see the file header.
     const scoreCluster = hasSelection ? (
         <StackV
-            gap="section"
+            gap={6}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -361,7 +365,7 @@ const PersonalProjectResultScreen = ({
 
     const screenBody = (
         <StackV
-            gap="section"
+            gap={6}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -391,7 +395,7 @@ const PersonalProjectResultScreen = ({
         />
     )
 
-    return <Container size="md" padding="roomy" body={screenBody} />
+    return <Container size="md" padding={6} body={screenBody} />
 }
 
 export { PersonalProjectResultScreen }

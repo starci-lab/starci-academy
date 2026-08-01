@@ -19,7 +19,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * every `div` here would be a shape it had no right to decide.
  *
  * SIX FUNCTIONS, in the order the reader meets them: what this board is · the
- * "không học một mình" honest readout · ask a new question · filter/search the
+ * "you're not learning alone" honest readout · ask a new question · filter/search the
  * board · the questions themselves, paged.
  *
  * ⭐ THE SCREEN OWNS EXACTLY ONE BRANCH, THE SAME WAY `ContentPage` OWNS ITS
@@ -98,19 +98,19 @@ export interface CourseQaViewer {
 }
 
 /** Fixed board-wide copy for the "nobody has ever asked anything" invitation — see file header. */
-const INVITE_TITLE = "Chưa có câu hỏi nào"
-const INVITE_HINT = "Xem qua nội dung khoá học rồi quay lại đặt câu hỏi đầu tiên nhé."
-const INVITE_CTA = "Xem nội dung khoá học"
+const INVITE_TITLE = "No questions yet"
+const INVITE_HINT = "Browse the course content, then come back to ask the first question."
+const INVITE_CTA = "Browse course content"
 
 /** Fixed accessible names — board-wide, never course-specific (see file header). */
-const FILTER_ARIA_LABEL = "Bộ lọc câu hỏi"
-const PAGER_ARIA_LABEL = "Điều hướng danh sách câu hỏi"
+const FILTER_ARIA_LABEL = "Question filter"
+const PAGER_ARIA_LABEL = "Question list navigation"
 
 /** Props for {@link CourseQaPage}. */
 export interface CourseQaPageProps {
     /** Breadcrumb trail as data. */
     breadcrumbItems?: Array<CourseQaHeaderCrumb>
-    /** Page title, e.g. "Hỏi đáp". */
+    /** Page title, e.g. "Q&A". */
     title: string
     /** One-sentence description of what this Q&A board is for. */
     description?: string
@@ -226,7 +226,7 @@ const CourseQaPage = ({
                 currentUser={composerUser}
                 value={draft}
                 onValueChange={setDraft}
-                placeholder="Đặt câu hỏi cho khoá học này…"
+                placeholder="Ask a question about this course…"
                 onSubmit={handleAskQuestion}
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
@@ -280,14 +280,14 @@ const CourseQaPage = ({
                     showAnatomy={showAnatomy}
                 />
             ) : (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={questionSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={questionSection} />
             )}
         </>
     )
 
-    const courseQaBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={courseQaSections} />
+    const courseQaBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={courseQaSections} />
 
-    return <Container size="md" padding="roomy" body={courseQaBody} />
+    return <Container size="md" padding={6} body={courseQaBody} />
 }
 
 export { CourseQaPage }

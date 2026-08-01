@@ -1,5 +1,4 @@
 import React from "react"
-import { Typography as HeroTypography, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
@@ -17,8 +16,6 @@ export type StatPairValueType = "h4" | "h5" | "body"
 interface StatPairOwnProps {
     /** Value (title) size — defaults to `h4`; use `body` (text-base) for a smaller title (long strings). */
     valueType?: StatPairValueType
-    /** Extra classes on the root element. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -39,19 +36,22 @@ interface StatPairOwnProps {
  */
 export type StatPairProps = StatPairOwnProps &
     (
-        | { isSkeleton: true; value?: React.ReactNode; label?: React.ReactNode }
+        | { isSkeleton: true; value?: string; label?: string }
         | {
             isSkeleton?: false
             /**
              * The headline statistic — typically a number or short formatted count
-             * (e.g. "1,204" or "12"). Rendered large and emphasized.
+             * (e.g. "1,204" or "12"). Rendered large and emphasized. `string`, not
+             * `ReactNode` — the composite wraps it in `Typography` itself, so it
+             * must be able to build it.
              */
-            value: React.ReactNode
+            value: string
             /**
              * The caption describing what the value measures (e.g. "Followers").
-             * Rendered small and muted beneath the value.
+             * Rendered small and muted beneath the value. `string` — see
+             * {@link StatPairProps.value}.
              */
-            label: React.ReactNode
+            label: string
         }
     )
 
@@ -63,52 +63,37 @@ export type StatPairProps = StatPairOwnProps &
  *
  * @param props - {@link StatPairProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "StatPair" } as const
+
+/** `StatPair`'s `valueType` mapped onto the `Typography` atom's own size axis. */
+const VALUE_SIZE: Record<StatPairValueType, "h4" | "h5" | "base"> = { h4: "h4", h5: "h5", body: "base" }
+
 export const StatPair = ({
     value,
     label,
     valueType = "h4",
     isSkeleton = false,
-    className,
     classNames,
     anatPart,
     showAnatomy,
 }: StatPairProps) => {
-    if (isSkeleton) {
-        return (
-            <StackV
-                gap="tight"
-                align="start"
-                anatPart={anatPart}
-                className={className}
-                classNames={classNames}
-                body={
-                    <>
-                        <HeroSkeleton className="h-5 w-14 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                        <HeroSkeleton className="h-3 w-16 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                    </>
-                }
-            />
-        )
-    }
     return (
         <StackV
-            gap="flush"
+            gap={1}
             align="start"
             anatPart={anatPart}
-            className={className}
             classNames={classNames}
             body={
                 <>
-                    <HeroTypography
-                        type={valueType}
+                    <Typography
+                        size={VALUE_SIZE[valueType]}
                         weight="semibold"
-                        data-anat-part={showAnatomy ? "HeroTypography" : undefined}
-                    >
-                        {value}
-                    </HeroTypography>
-                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                        <Typography size="xs" color="muted" text={label} />
-                    </span>
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                        text={value}
+                    />
+                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={label} />
                 </>
             }
         />

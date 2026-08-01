@@ -44,9 +44,9 @@ import type { ReactionType } from "@/modules/api/graphql/queries/types/discussio
 export type FeedTabsProps = WithClassNames<undefined>
 
 /**
- * Explore feed (ContentBody-style TabsCard pattern). CARD 1 = "Nổi bật tuần này"
+ * Explore feed (ContentBody-style TabsCard pattern). CARD 1 = "Trending this week"
  * platform-wide trending discovery (both scopes, self-hiding). Below it, a double-tabs toolbar
- * floats OUTSIDE/above a card: left = audience SCOPE ("Khám phá / Đang theo dõi"),
+ * floats OUTSIDE/above a card: left = audience SCOPE ("Explore / Following"),
  * right = category FILTER (all/courses/achievements/people), one shared {@link TabsCard};
  * the card holds the activity stream they govern ({@link ActivityFeed}). Both axes are
  * `myFeed` params. `"use client"` for tab/filter state + SWR + route resolution.
@@ -130,7 +130,7 @@ export const FeedTabs = ({
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            {/* CARD 1 — "Nổi bật tuần này": platform-wide trending discovery (own query, NOT
+            {/* CARD 1 — "Trending this week": platform-wide trending discovery (own query, NOT
                 scope-dependent) → shown on both scopes; self-hides when nothing trends. */}
             <TrendingContents />
 
@@ -159,8 +159,9 @@ export const FeedTabs = ({
                         onSelectionChange: (key) => setCategory(key as MyFeedCategory),
                     }}
                 />
-                {/* feed sống TRỰC TIẾP trong zone — KHÔNG bọc Card ngoài (mỗi ngày đã là
-                    labeled-list-card; Card ngoài → card lồng card trong zone lớn) */}
+                {/* the feed lives DIRECTLY in the zone — do NOT wrap it in an outer Card (each
+                    day is already a labeled-list-card; an outer Card would nest card-in-card
+                    inside the big zone) */}
                 <AsyncContent
                     isLoading={isLoading && items.length === 0}
                     skeleton={<FeedTabsSkeleton />}

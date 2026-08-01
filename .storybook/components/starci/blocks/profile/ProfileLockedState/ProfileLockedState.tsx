@@ -1,7 +1,7 @@
 import React from "react"
 import { LockIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/profile/ProfileHero/ProfileHero"
@@ -41,7 +41,7 @@ import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/
  * is, by definition, never its owner and this block's own prop list (per
  * spec) carries no follow/hire wiring of its own, so those all fall to
  * `ProfileHero`'s own defaults (`isSelf=false`, `following=false`, no
- * handlers). The primary action still renders ("Theo dõi") but presses do
+ * handlers). The primary action still renders ("Follow") but presses do
  * nothing absent a handler — the same "declared optional, caller may not
  * have one yet" contract `ProfileHero` itself defines, not a bug this block
  * introduces. If a locked profile should also support following, that is a
@@ -92,27 +92,27 @@ const ProfileLockedState = ({
                 showAnatomy={showAnatomy}
             />
             <SurfaceCard
-                padding="airy"
+                padding={6}
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "SurfaceCard" : undefined}
-            >
-                <FeedbackEmpty
-                    icon={LockIcon}
-                    title="Hồ sơ này đang ở chế độ riêng tư"
-                    description="Chủ hồ sơ đã ẩn hoạt động công khai — bạn vẫn có thể khám phá các khoá học khác."
-                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-                >
-                    <Button
-                        label="Xem khoá học"
-                        variant="primary"
-                        onPress={onGoCourses}
-                        anatPart={showAnatomy ? "Button" : undefined}
-                    />
-                </FeedbackEmpty>
-            </SurfaceCard>
+                body={() => (
+                    <EmptyState
+                        icon={LockIcon}
+                        title="This profile is set to private"
+                        description="The profile owner has hidden their public activity — you can still explore other courses."
+                        anatPart={showAnatomy ? "EmptyState" : undefined}
+                    >
+                        <Button
+                            label="Browse courses"
+                            variant="primary"
+                            onPress={onGoCourses}
+                        />
+                    </EmptyState>
+                )}
+            />
         </>
     )
-    return <StackV gap="section" padding="roomy" className={className} anatPart={anatPart} body={lockedBody} />
+    return <StackV gap={6} padding={6} className={className} anatPart={anatPart} body={lockedBody} />
 }
 
 export { ProfileLockedState }

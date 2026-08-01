@@ -42,7 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the two ways to work a deck. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardModeSwitch"
                 tier="block"
@@ -55,7 +55,7 @@ export const Full: Story = {
                         name: "mode = study",
                         why: "The learner is working through the deck card by card, so the study tab holds the indicator. This is where the pane opens, because reading the cards comes before being tested on them.",
                         code: `<FlashcardModeSwitch
-    ariaLabel="Chế độ thẻ ghi nhớ"
+    ariaLabel="Flashcard mode"
     mode="study"
     onModeChange={goMode}
 />`,
@@ -63,7 +63,7 @@ export const Full: Story = {
                             <FlashcardModeSwitch
                                 anatPart="FlashcardModeSwitch"
                                 showAnatomy
-                                ariaLabel="Chế độ thẻ ghi nhớ"
+                                ariaLabel="Flashcard mode"
                                 mode="study"
                                 onModeChange={() => {}}
                             />
@@ -73,13 +73,13 @@ export const Full: Story = {
                         name: "mode = quiz",
                         why: "The indicator has moved to the drill tab and nothing else about the row changes. Selection is the only thing this block tracks, so it is worth seeing that moving it disturbs no width around it.",
                         code: `<FlashcardModeSwitch
-    ariaLabel="Chế độ thẻ ghi nhớ"
+    ariaLabel="Flashcard mode"
     mode="quiz"
     onModeChange={goMode}
 />`,
                         render: (
                             <FlashcardModeSwitch
-                                ariaLabel="Chế độ thẻ ghi nhớ"
+                                ariaLabel="Flashcard mode"
                                 mode="quiz"
                                 onModeChange={() => {}}
                             />

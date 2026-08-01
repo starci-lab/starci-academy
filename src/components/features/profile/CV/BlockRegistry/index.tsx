@@ -2,9 +2,9 @@ import { CvBlockType } from "@/modules/types/enums/cv-block-type"
 import type { CvBlockTypeMeta } from "../types"
 
 /**
- * The 7 canonical block types (`CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md`, "BẢNG
- * CHỐT") — the single source for their default title / repeatability /
- * AI-affordance metadata. The "+ Thêm block" picker + the (not yet built)
+ * The 7 canonical block types (`CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md`, "FINAL
+ * TABLE") — the single source for their default title / repeatability /
+ * AI-affordance metadata. The "+ Add block" picker + the (not yet built)
  * block-type → editor-component resolver both read this map instead of
  * branching on `CvBlockType` ad hoc.
  *
@@ -12,7 +12,7 @@ import type { CvBlockTypeMeta } from "../types"
  * kept on `block.items[0]` for a uniform `CvBlock` shape across every type).
  * Every other type is repeatable (N items) and may appear at most once as a
  * BLOCK but hold many items (e.g. many `experience` entries inside the one
- * "Kinh nghiệm" block) — "singleton" here means "at most one BLOCK of this
+ * "Experience" block) — "singleton" here means "at most one BLOCK of this
  * type in the document", not "at most one item".
  */
 export const CV_BLOCK_TYPE_REGISTRY: Record<CvBlockType, CvBlockTypeMeta> = {
@@ -95,7 +95,7 @@ export const CV_BLOCK_TYPE_REGISTRY: Record<CvBlockType, CvBlockTypeMeta> = {
     },
 }
 
-/** Ordered list of every canonical block type — drives the "+ Thêm block" menu order. */
+/** Ordered list of every canonical block type — drives the "+ Add block" menu order. */
 export const CV_BLOCK_TYPE_ORDER: Array<CvBlockType> = [
     CvBlockType.Personal,
     CvBlockType.Summary,

@@ -6,7 +6,7 @@ import { Breadcrumbs, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 
-/** Collapse the full trail into a single "Trở lại" once the path is this deep. */
+/** Collapse the full trail into a single "Back" once the path is this deep. */
 const LONG_TRAIL_MIN = 4
 
 /** One crumb in a {@link ResponsiveBreadcrumb} trail. */
@@ -28,7 +28,7 @@ export interface ResponsiveBreadcrumbProps extends WithClassNames<undefined> {
 /**
  * Breadcrumb for a `PageHeader` `breadcrumb` slot. Shows the full
  * `Home › … › Current` trail on desktop when short; collapses to a single
- * {@link BackLink} ("Trở lại") on mobile, or whenever the trail is long
+ * {@link BackLink} ("Back") on mobile, or whenever the trail is long
  * (`>= {@link LONG_TRAIL_MIN}` crumbs) — a long trail wraps and eats vertical
  * space, and deep ancestors are already reachable from top nav. The back
  * target is the deepest clickable ancestor (last item with `onPress`). Pure
@@ -61,7 +61,7 @@ export const ResponsiveBreadcrumb = ({
                 ))}
             </Breadcrumbs>
 
-            {/* mobile, or long trail on any width: single "Trở lại" */}
+            {/* mobile, or long trail on any width: single "Back" */}
             {parent?.onPress ? (
                 <BackLink
                     onPress={parent.onPress}

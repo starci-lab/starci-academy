@@ -35,9 +35,9 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * their own function — they never appear independent of browsing, so there is
  * no fourth block here.
  *
- * TWO SEAMS, TWO OWNERS (§10a). The outer `StackV gap="section"` separates the
+ * TWO SEAMS, TWO OWNERS (§10a). The outer `StackV gap={6}` separates the
  * TWO regions of the page — identity, and the "search & browse" cluster. The
- * inner `StackV gap="grouped"` is its own separate owner for that cluster —
+ * inner `StackV gap={4}` is its own separate owner for that cluster —
  * the company deep-link row sits one `grouped` seam above the roster it does
  * NOT filter, mirroring the same seam `FoundationsGridPage` draws between
  * its search row and its list.
@@ -157,13 +157,13 @@ const HeadhuntingsPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={directorySection} />
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={directorySection} />
         </>
     )
 
-    const headhuntingsBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={headhuntingsSections} />
+    const headhuntingsBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={headhuntingsSections} />
 
-    return <Container size="md" padding="roomy" body={headhuntingsBody} />
+    return <Container size="md" padding={6} body={headhuntingsBody} />
 }
 
 export { HeadhuntingsPage }

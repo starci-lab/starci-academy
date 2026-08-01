@@ -13,8 +13,8 @@ import { ReactionButton, type ReactionType, type ReactionCount } from "@sb-compo
  * reply/edit/delete actions, and its recursively-rendered replies. Ported
  * verbatim from real `src`'s `CommentItem`.
  *
- * ⭐⭐ THIS IS THE MASSIVE GAP THE EARLIER `ContentDiscussion` NEVER HAD (thầy:
- * "chế nhiều quá"). The first cut was a flat two-line list — no replies, no
+ * ⭐⭐ THIS IS THE MASSIVE GAP THE EARLIER `ContentDiscussion` NEVER HAD (teacher:
+ * "over-engineered it"). The first cut was a flat two-line list — no replies, no
  * per-comment reactions, no edit/delete, no founder badge, no load-more. This
  * block owns everything real `CommentItem` owns: nested replies (capped visual
  * indent via a left guide border), a reaction control (`ReactionButton` — the
@@ -43,11 +43,11 @@ export interface ContentCommentNode {
     /** Stable id — also what reply/edit/delete/react target. */
     id: string
     author: ContentCommentAuthor
-    /** Already-formatted relative time, e.g. "2 giờ trước". */
+    /** Already-formatted relative time, e.g. "2 hours ago". */
     createdTimeAgo: string
     /** `true` → a founder badge rides beside the author name. */
     isFounderAuthor?: boolean
-    /** `true` → the body was edited after posting; shows a quiet "(đã sửa)" marker. */
+    /** `true` → the body was edited after posting; shows a quiet "(edited)" marker. */
     isEdited?: boolean
     /** `true` → the body is replaced with a "removed" placeholder; no actions render. */
     isDeleted?: boolean
@@ -71,6 +71,35 @@ export interface ContentCommentThreadCallbacks {
     onLoadReplies: (parentId: string) => void
 }
 
+/** Props for the module-scope {@link CommentByline} helper. */
+interface CommentBylineProps {
+    username: string
+    isFounderAuthor?: boolean
+    createdTimeAgo: string
+    isEdited?: boolean
+    showAnatomy: boolean
+}
+
+/**
+ * `IdentityContentRow.byline` — a component reference (COMPOSITE-8), not a
+ * built element. Kept at MODULE scope (not defined inline inside
+ * `ContentCommentThread`'s body) and fed only read-only per-comment fields as
+ * props, so passing a fresh wrapping arrow each render never risks remounting
+ * anything stateful — there is no state in this leaf to lose.
+ */
+const CommentByline = ({ username, isFounderAuthor, createdTimeAgo, isEdited, showAnatomy }: CommentBylineProps) => (
+    <>
+        <Typography size="sm" weight="medium" text={username} showAnatomy={showAnatomy} />
+        {isFounderAuthor ? (
+            <SealCheckIcon weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+        ) : null}
+        <Typography size="xs" color="muted" text={createdTimeAgo} showAnatomy={showAnatomy} />
+        {isEdited ? (
+            <Typography size="xs" color="muted" text="(edited)" showAnatomy={showAnatomy} />
+        ) : null}
+    </>
+)
+
 /** Props for {@link ContentCommentThread}. */
 export interface ContentCommentThreadProps extends ContentCommentThreadCallbacks {
     /** The comment to render. */
@@ -79,7 +108,7 @@ export interface ContentCommentThreadProps extends ContentCommentThreadCallbacks
     currentUserId: string | null
     /**
      * Current viewer identity for the reply composer's own avatar (Facebook-style
-     * nested reply, thầy 2026-07-29) — `null`/omitted → reply composer renders with
+     * nested reply, teacher 2026-07-29) — `null`/omitted → reply composer renders with
      * no avatar, same as before. Real `CommentComposer` never shows one at all; this
      * is a deliberate divergence, not a `src` port.
      */
@@ -128,19 +157,6 @@ const ContentCommentThread = ({
         }
     }
 
-    const authorLine = (
-        <>
-            <Typography size="sm" weight="medium" text={comment.author.username} anatPart={showAnatomy ? "Typography" : undefined} />
-            {comment.isFounderAuthor ? (
-                <SealCheckIcon weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-            ) : null}
-            <Typography size="xs" color="muted" text={comment.createdTimeAgo} anatPart={showAnatomy ? "Typography" : undefined} />
-            {comment.isEdited ? (
-                <Typography size="xs" color="muted" text="(đã sửa)" anatPart={showAnatomy ? "Typography" : undefined} />
-            ) : null}
-        </>
-    )
-
     // action row: reaction + reply + owner edit/delete. `isButton`, NOT `isLink` — real
     // src's own action links carry no underline at all, only a resting→hover COLOR
     // shift, which isLink's underline treatment would misrepresent.
@@ -159,9 +175,9 @@ const ContentCommentThread = ({
                 color="muted"
                 isButton
                 hoverColor="default"
-                text="Trả lời"
+                text="Reply"
                 onPress={() => setReplying((prev) => !prev)}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             {isOwner ? (
                 <>
@@ -171,9 +187,9 @@ const ContentCommentThread = ({
                         color="muted"
                         isButton
                         hoverColor="default"
-                        text="Sửa"
+                        text="Edit"
                         onPress={() => setEditing(true)}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     <Typography
                         size="xs"
@@ -181,9 +197,9 @@ const ContentCommentThread = ({
                         color="muted"
                         isButton
                         hoverColor="danger"
-                        text="Xóa"
+                        text="Delete"
                         onPress={() => onDelete(comment.id)}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 </>
             ) : null}
@@ -194,12 +210,12 @@ const ContentCommentThread = ({
         <>
             {/* body, edit form, or deleted placeholder */}
             {comment.isDeleted ? (
-                <Typography size="sm" color="muted" isItalic text="[Bình luận đã bị xóa]" anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" color="muted" isItalic text="[Comment removed]" showAnatomy={showAnatomy} />
             ) : editing ? (
                 <ContentCommentComposer
                     initialValue={comment.body}
-                    submitLabel="Lưu"
-                    ariaLabel="Sửa bình luận"
+                    submitLabel="Save"
+                    ariaLabel="Edit comment"
                     onCancel={() => setEditing(false)}
                     onSubmit={(body) => {
                         onEdit(comment.id, body)
@@ -208,35 +224,35 @@ const ContentCommentThread = ({
                     showAnatomy={showAnatomy}
                 />
             ) : (
-                <Typography size="sm" preserveWhitespace text={comment.body} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" preserveWhitespace text={comment.body} showAnatomy={showAnatomy} />
             )}
 
             {!comment.isDeleted && !editing ? (
-                <StackH gap="grouped" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined} body={actionRow} />
+                <StackH gap={4} wrap align="center" anatPart={showAnatomy ? "StackH" : undefined} body={actionRow} />
             ) : null}
         </>
     )
 
     const threadBody = (
         <>
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={bodyAndActions} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={bodyAndActions} />
 
             {/* reply composer — `ThreadConnector` draws the Facebook-style curved
-                guide from this comment down into the reply's own avatar (thầy
+                guide from this comment down into the reply's own avatar (teacher
                 2026-07-29); `currentUser` is what gives the composer an avatar to
                 connect TO in the first place (see its own file header). */}
             {replying ? (
                 <StackH
-                    gap="tight"
+                    gap={2}
                     align="start"
                     anatPart={showAnatomy ? "StackH" : undefined}
                     body={
                         <>
                             <ThreadConnector />
                             <ContentCommentComposer
-                                placeholder="Viết câu trả lời..."
-                                submitLabel="Trả lời"
-                                ariaLabel="Viết câu trả lời"
+                                placeholder="Write a reply..."
+                                submitLabel="Reply"
+                                ariaLabel="Write a reply"
                                 currentUser={currentUser}
                                 className="min-w-0 flex-1"
                                 onCancel={() => setReplying(false)}
@@ -261,15 +277,15 @@ const ContentCommentThread = ({
                     color="accent"
                     isLink
                     underlineOnHover
-                    text={expanded ? "Ẩn câu trả lời" : `Xem ${comment.replyCount} câu trả lời`}
+                    text={expanded ? "Hide replies" : `View ${comment.replyCount} replies`}
                     onPress={toggleReplies}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
 
             {expanded && replies.length > 0 ? (
                 <StackV
-                    gap="grouped"
+                    gap={4}
                     anatPart={showAnatomy ? "StackV" : undefined}
                     body={replies.map((reply) => (
                         <ContentCommentThread
@@ -293,8 +309,8 @@ const ContentCommentThread = ({
     )
 
     return (
-        // `IdentityContentRow` (composite, thầy 2026-07-29 "gom màu đen thành block
-        // riêng") owns the avatar+byline+column shape — both its seams are `tight`
+        // `IdentityContentRow` (composite, teacher 2026-07-29 "group the black color
+        // into its own block") owns the avatar+byline+column shape — both its seams are `tight`
         // ON PURPOSE, a denser standalone treatment, NOT a `src`-fidelity port
         // (see the composite's own file header). `nested` still draws the reply
         // indent guide via the same `Stack` frame prop as before.
@@ -306,17 +322,37 @@ const ContentCommentThread = ({
             nested={depth > 0}
             anatPart={anatPart}
             showAnatomy={showAnatomy}
-            byline={
-                <StackH gap="tight" wrap align="center" anatPart={showAnatomy ? "StackH" : undefined} body={authorLine} />
-            }
-        >
-            {/* `grouped` — separates [body+actions, tight together] from whatever
-                comes after a reply composer/toggle/subtree, thầy 2026-07-29 "màu cam
-                vẫn gap-3": the seam right before a reply composer appears needs more
-                room than the tight identity block above it (also where the
-                Facebook-style connector line will run). */}
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={threadBody} />
-        </IdentityContentRow>
+            byline={() => (
+                <StackH
+                    gap={2}
+                    wrap
+                    align="center"
+                    anatPart={showAnatomy ? "StackH" : undefined}
+                    body={
+                        <CommentByline
+                            username={comment.author.username}
+                            isFounderAuthor={comment.isFounderAuthor}
+                            createdTimeAgo={comment.createdTimeAgo}
+                            isEdited={comment.isEdited}
+                            showAnatomy={showAnatomy}
+                        />
+                    }
+                />
+            )}
+            // `body` is the former `children` slot (COMPOSITE-8) — a component
+            // reference, not a built node. `threadBody` (StackV wrapping
+            // bodyAndActions + reply composer + replies subtree) is already
+            // computed above per the current render's state, so the wrapper here
+            // only needs to hand it back.
+            body={() => (
+                /* `grouped` — separates [body+actions, tight together] from whatever
+                    comes after a reply composer/toggle/subtree, teacher 2026-07-29 "orange
+                    still gap-3": the seam right before a reply composer appears needs more
+                    room than the tight identity block above it (also where the
+                    Facebook-style connector line will run). */
+                <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={threadBody} />
+            )}
+        />
     )
 }
 

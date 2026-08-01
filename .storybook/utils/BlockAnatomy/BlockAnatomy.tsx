@@ -403,14 +403,17 @@ const BlockAnatomyDerived = ({
         let raf = 0
         const scan = () => {
             setIsDark(Boolean(host.closest(".dark")) || document.documentElement.classList.contains("dark"))
-            const els = Array.from(host.querySelectorAll<HTMLElement>("[data-anat-part]"))
+            // PHA A (re-point): cây leo `data-component` — danh tính LUÔN-BẬT do frame tự
+            // phát, thay `data-anat-part` (nhét tay + gated `showAnatomy`). `annotate` giờ
+            // key theo tên component. Scaffold cũ còn nguyên tới khi Pha B bulk-xoá.
+            const els = Array.from(host.querySelectorAll<HTMLElement>("[data-component]"))
             const order: Array<string> = []
             els.forEach((el) => {
-                const nm = el.getAttribute("data-anat-part") ?? ""
+                const nm = el.getAttribute("data-component") ?? ""
                 // ⭐ `annotate` là DANH SÁCH TRẮNG (§11a, thầy chốt 2026-07-26) — VÀ từ
                 // 2026-07-26 (lần 2) còn lọc thêm: chỉ nhận part có `storyId` THẬT.
                 //
-                // DOM phát ra cả RUỘT của component con (`Feedback.Callout` phát
+                // DOM phát ra cả RUỘT của component con (`Callout` phát
                 // `Icon`/`Content`/`Title`/`Description`/`Action`). Vẽ chúng ở đây là
                 // ĐÀO VÀO cái đã có story riêng — kể hai lần, và đẻ ra node không bấm
                 // được vì chúng là KHE chứ không phải component.
@@ -435,7 +438,7 @@ const BlockAnatomyDerived = ({
             // là một node riêng, và TÊN quay về đúng vai của nó: nhãn để tra chú giải, không phải
             // định danh.
             const nodeEls = els.filter((el) => {
-                const nm = el.getAttribute("data-anat-part") ?? ""
+                const nm = el.getAttribute("data-component") ?? ""
                 // `heroui` vào cây mà KHÔNG cần `storyId`: nó là component của thư viện, không có
                 // story của ta để bấm sang. Giấu nó đi là để cây nói dối bằng cách bỏ sót.
                 const meta = annotate[nm]
@@ -455,7 +458,7 @@ const BlockAnatomyDerived = ({
                 parentElOf.set(el, parent)
             })
             const toNode = (el: HTMLElement): AnatomyNode => {
-                const nm = el.getAttribute("data-anat-part") ?? ""
+                const nm = el.getAttribute("data-component") ?? ""
                 const meta = annotate[nm]
                 const kids = nodeEls.filter((child) => parentElOf.get(child) === el)
                 return {
@@ -566,7 +569,7 @@ const BlockAnatomyDerived = ({
     }
 
     return (
-        <div ref={hostRef} className="flex flex-col gap-6">
+        <div ref={hostRef} data-tier="fixture" className="flex flex-col gap-6">
             {/* HÌNH của state đang chọn — CHỈ state này được mount, nên cây deps panel suy ra
                 thuộc đúng nó. Trước 2026-07-27 mọi state xếp chung trong `children` nên cây
                 trộn lẫn và không đúng với state nào cả. */}

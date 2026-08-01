@@ -1,6 +1,5 @@
 import React from "react"
 import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
@@ -84,25 +83,14 @@ const PlaygroundSetupHeader = ({
         <div data-anat-part={anatPart}>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
-                breadcrumb={
+                isSkeleton={isSkeleton}
+                breadcrumb={() => (
                     <div className="w-fit" data-anat-part={showAnatomy ? "LinkBack" : undefined}>
                         <LinkBack label={breadcrumbLabel} onPress={onBack} />
                     </div>
-                }
-                title={
-                    isSkeleton ? (
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                    )
-                }
-                description={
-                    isSkeleton ? (
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        description
-                    )
-                }
+                )}
+                title={title}
+                description={description}
             />
         </div>
     )

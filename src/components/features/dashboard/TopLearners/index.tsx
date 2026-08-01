@@ -45,12 +45,12 @@ const TOP_N = 5
 export type TopLearnersProps = WithClassNames<undefined>
 
 /**
- * Dashboard "Top học viên" card — maps the global leaderboard into the shared
+ * Dashboard "Top Learners" card — maps the global leaderboard into the shared
  * {@link LeaderboardListCard} (standing header with a rank-driven medal/cup badge over
- * a medal-ranked list). Renders IDENTICALLY to the weekly "League tuần"
+ * a medal-ranked list). Renders IDENTICALLY to the weekly "League"
  * {@link import("../LeagueCard/LeagueCardContent").LeagueCardContent}; only the trailing
  * slot differs — here a quiet {@link FollowButton} per stranger row. Owns the follow
- * mutation; the shared card stays presentational (thầy 2026-07-17 "2 mục y chang").
+ * mutation; the shared card stays presentational (teacher 2026-07-17: "two identical items").
  * @param props - optional root class name (placement only)
  */
 export const TopLearners = ({

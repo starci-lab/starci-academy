@@ -33,7 +33,7 @@ type Story = StoryObj<typeof PlaygroundConnectSheet>
 const DEVICE: PlaygroundDeviceSpec = {
     platform: "Windows",
     arch: "x64",
-    hostname: "HOC-VIEN-01",
+    hostname: "STUDENT-PC-01",
     cpuCores: 12,
     cpuModel: "Intel Core i7-13700H",
     totalMemBytes: 34_359_738_368,
@@ -44,10 +44,10 @@ const DEVICE: PlaygroundDeviceSpec = {
 }
 
 const AGENT_LOG: Array<PlaygroundAgentLogLine> = [
-    { level: "info", line: "Agent khởi động, đang dò cổng 41230…" },
-    { level: "success", line: "Bắt tay với playground server thành công." },
-    { level: "info", line: "Đồng bộ workspace container…" },
-    { level: "warn", line: "Độ trễ 210ms, cao hơn ngưỡng bình thường." },
+    { level: "info", line: "Agent starting up, probing port 41230…" },
+    { level: "success", line: "Handshake with the playground server succeeded." },
+    { level: "info", line: "Syncing workspace container…" },
+    { level: "warn", line: "Latency 210ms, higher than the usual threshold." },
 ]
 
 // Plain `Omit` over a DISCRIMINATED UNION collapses the branches (only keys common to
@@ -75,7 +75,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the docked sheet: one peek+body chrome, three DATA states. */
 export const Sheet: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundConnectSheet"
                 tier="block"
@@ -110,7 +110,7 @@ export const Sheet: Story = {
                     },
                     {
                         name: "connection = \"waiting\" (first time)",
-                        why: "No device has reported yet, so the peek chip switches to the warning \"đang chờ\" wording and the body — once opened — shows only the not-connected hint, not an empty ribbon pretending to have data. This is what a learner sees the first time they open the lab, before the agent has ever paired.",
+                        why: "No device has reported yet, so the peek chip switches to the warning \"waiting\" wording and the body — once opened — shows only the not-connected hint, not an empty ribbon pretending to have data. This is what a learner sees the first time they open the lab, before the agent has ever paired.",
                         code: `<PlaygroundConnectSheet
     connection="waiting"
     agentLog={[]}
@@ -128,7 +128,7 @@ export const Sheet: Story = {
                     },
                     {
                         name: "connection = \"dropped\" (per `everConnected`, was connected before)",
-                        why: "The pairing was live and then fell over, so the chip's wording says \"mất kết nối\" instead of \"đang chờ\" — a different sentence for a learner who had it working a moment ago — but the body renders the SAME not-connected hint as the waiting state above (stale specs are worse than none). `connection=\"dropped\"` already implies a prior connection, so no separate `everConnected` flag has to travel alongside it.",
+                        why: "The pairing was live and then fell over, so the chip's wording says \"connection lost\" instead of \"waiting\" — a different sentence for a learner who had it working a moment ago — but the body renders the SAME not-connected hint as the waiting state above (stale specs are worse than none). `connection=\"dropped\"` already implies a prior connection, so no separate `everConnected` flag has to travel alongside it.",
                         code: `<PlaygroundConnectSheet
     connection="dropped"
     device={device}
@@ -155,7 +155,7 @@ export const Sheet: Story = {
 /** LEAF — the caller flips `isSkeleton`; the pairing state itself hasn't resolved yet on first mount, so the sheet has nothing real to render for `connection`/`device`/`agentLog` yet. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundConnectSheet"
                 tier="block"

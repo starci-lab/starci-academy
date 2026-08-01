@@ -37,18 +37,18 @@ const COMMENTS: Array<ContentCommentNode> = [
     {
         id: "c1",
         author: { id: "u1", username: "Minh Anh" },
-        createdTimeAgo: "2 giờ trước",
-        body: "Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from. Ai vướng giống em thì soi lại dòng cuối.",
+        createdTimeAgo: "2 hours ago",
+        body: "I followed the multi-stage steps and the image is still 800MB — turns out I forgot COPY --from. If you're stuck on the same thing, check your last line.",
         replyCount: 1,
         myReaction: null,
         reactionCounts: [{ type: "like", count: 4 }],
     },
     {
         id: "c2",
-        author: { id: "u2", username: "Tuấn" },
-        createdTimeAgo: "hôm qua",
+        author: { id: "u2", username: "Tuan" },
+        createdTimeAgo: "yesterday",
         isFounderAuthor: true,
-        body: "Cache bị vỡ mỗi lần sửa code là do COPY . . đứng trước npm ci. Đảo hai dòng là xong.",
+        body: "The cache breaking on every code change is because COPY . . sits before npm ci. Swap the two lines and you're done.",
         replyCount: 0,
         myReaction: "love",
         reactionCounts: [{ type: "love", count: 2 }],
@@ -59,9 +59,9 @@ const REPLIES: Record<string, ReadonlyArray<ContentCommentNode>> = {
     c1: [
         {
             id: "r1",
-            author: { id: "u2", username: "Tuấn" },
-            createdTimeAgo: "1 giờ trước",
-            body: "Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất.",
+            author: { id: "u2", username: "Tuan" },
+            createdTimeAgo: "1 hour ago",
+            body: "Yep, missing COPY --from is the most common cause.",
             replyCount: 0,
             myReaction: null,
         },
@@ -82,13 +82,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ContentCommentComposer": { tier: "block", role: "the avatar-led, collapsible top-level composer", storyId: "starci-blocks-learn-contentcommentcomposer-contentcommentcomposer--collapsed-pill" },
     "ContentCommentThread": { tier: "block", role: "one threaded comment — author, reaction, actions, and its own recursive replies", storyId: "starci-blocks-learn-contentcommentthread-contentcommentthread--default" },
     "Button": { tier: "atom", role: "the \"load more comments\" action, only when a further page remains", storyId: "atoms-buttons-button-button--default" },
-    "FeedbackEmpty": { tier: "composite", role: "the centred block carrying either the invitation to write first or the failed-to-load message", storyId: "composites-feedback-feedback-feedbackempty--title-only" },
+    "EmptyState": { tier: "composite", role: "the centred block carrying either the invitation to write first or the failed-to-load message", storyId: "composites-feedback-emptystate-emptystate--title-only" },
 }
 
 /** LEAF — a lesson with a thread on it. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentDiscussion"
                 tier="block"
@@ -99,11 +99,11 @@ export const Full: Story = {
                 states={[
                     {
                         name: "comments.length = 2, one has a loaded reply",
-                        why: "The label reads \"Thảo luận · 2\", and the archive line honestly counts 1/2 questions answered from what's currently loaded — not a fabricated aggregate. The composer leads as a collapsed pill; the thread follows.",
+                        why: "The label reads \"Discussion · 2\", and the archive line honestly counts 1/2 questions answered from what's currently loaded — not a fabricated aggregate. The composer leads as a collapsed pill; the thread follows.",
                         code: `<ContentDiscussion
-    label="Thảo luận"
+    label="Discussion"
     currentUserId="viewer-1"
-    currentUser={{ username: "Bạn" }}
+    currentUser={{ username: "You" }}
     comments={comments}
     total={2}
     repliesByParent={repliesByParent}
@@ -114,9 +114,9 @@ export const Full: Story = {
                             <ContentDiscussion
                                 anatPart="ContentDiscussion"
                                 showAnatomy
-                                label="Thảo luận"
+                                label="Discussion"
                                 currentUserId="viewer-1"
-                                currentUser={{ username: "Bạn" }}
+                                currentUser={{ username: "You" }}
                                 comments={COMMENTS}
                                 total={2}
                                 repliesByParent={REPLIES}
@@ -127,13 +127,13 @@ export const Full: Story = {
                     },
                     {
                         name: "hasMore = true, isLoadingMore = false",
-                        why: "More top-level pages remain, so a \"Xem thêm bình luận\" action sits under the loaded comments — the same load-more shape `LeaderboardBoard`'s own pager precedent uses elsewhere in this system.",
-                        code: "<ContentDiscussion label=\"Thảo luận\" ... hasMore onLoadMore={loadMore} />",
+                        why: "More top-level pages remain, so a \"Show more comments\" action sits under the loaded comments — the same load-more shape `LeaderboardBoard`'s own pager precedent uses elsewhere in this system.",
+                        code: "<ContentDiscussion label=\"Discussion\" ... hasMore onLoadMore={loadMore} />",
                         render: (
                             <ContentDiscussion
-                                label="Thảo luận"
+                                label="Discussion"
                                 currentUserId="viewer-1"
-                                currentUser={{ username: "Bạn" }}
+                                currentUser={{ username: "You" }}
                                 comments={COMMENTS}
                                 total={5}
                                 repliesByParent={REPLIES}
@@ -153,7 +153,7 @@ export const Full: Story = {
 /** LEAF — nobody has written yet ⇒ the list is replaced by an INVITATION. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentDiscussion"
                 tier="block"
@@ -165,12 +165,12 @@ export const Empty: Story = {
                     {
                         name: "comments = [], total = 0",
                         why: "The thread is empty, so the block says the reader would be the first — no archive line either, since 0/0 would read as a broken fraction rather than an honest fact. Opposite call from ContentRelatedList, which hides itself when empty.",
-                        code: "<ContentDiscussion label=\"Thảo luận\" comments={[]} total={0} repliesByParent={{}} onSubmitComment={post} ... />",
+                        code: "<ContentDiscussion label=\"Discussion\" comments={[]} total={0} repliesByParent={{}} onSubmitComment={post} ... />",
                         render: (
                             <ContentDiscussion
                                 anatPart="ContentDiscussion"
                                 showAnatomy
-                                label="Thảo luận"
+                                label="Discussion"
                                 currentUserId={null}
                                 comments={[]}
                                 total={0}
@@ -189,7 +189,7 @@ export const Empty: Story = {
 /** LEAF — the thread failed to load ⇒ the message replaces the LIST, never the composer. */
 export const Error: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentDiscussion"
                 tier="block"
@@ -201,18 +201,18 @@ export const Error: Story = {
                     {
                         name: "errorMessage set",
                         why: "The comments could not be fetched, so the message takes their place and the composer stays exactly where it was — a failed read never removes the ability to write.",
-                        code: "<ContentDiscussion label=\"Thảo luận\" comments={[]} total={0} errorMessage=\"Không tải được bình luận\" ... />",
+                        code: "<ContentDiscussion label=\"Discussion\" comments={[]} total={0} errorMessage=\"Couldn't load comments\" ... />",
                         render: (
                             <ContentDiscussion
                                 anatPart="ContentDiscussion"
                                 showAnatomy
-                                label="Thảo luận"
+                                label="Discussion"
                                 currentUserId={null}
                                 comments={[]}
                                 total={0}
                                 repliesByParent={{}}
                                 onSubmitComment={() => {}}
-                                errorMessage="Không tải được bình luận"
+                                errorMessage="Couldn't load comments"
                                 {...NOOP_CALLBACKS}
                             />
                         ),
@@ -226,7 +226,7 @@ export const Error: Story = {
 /** LEAF — the caller flips `isSkeleton`; two placeholder threads mirror, the composer stays real. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentDiscussion"
                 tier="block"
@@ -238,14 +238,14 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "Two placeholder threads mirror the shape of a short list while the first page fetches, and the composer above them stays fully real — it is known before any request finishes. Matches every sibling block's own isSkeleton contract in this design system.",
-                        code: "<ContentDiscussion label=\"Thảo luận\" isSkeleton comments={[]} total={0} ... />",
+                        code: "<ContentDiscussion label=\"Discussion\" isSkeleton comments={[]} total={0} ... />",
                         render: (
                             <ContentDiscussion
                                 anatPart="ContentDiscussion"
                                 showAnatomy
-                                label="Thảo luận"
+                                label="Discussion"
                                 currentUserId="viewer-1"
-                                currentUser={{ username: "Bạn" }}
+                                currentUser={{ username: "You" }}
                                 comments={[]}
                                 total={0}
                                 repliesByParent={{}}

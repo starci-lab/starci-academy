@@ -44,9 +44,10 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
         },
     )
 
-    // eager resolve-or-start right from the CTA (thầy 2026-07-11: "bấm vô học
-    // thì isPending ở cái nút học, ôn 55 thẻ cũng isPending, tạo xong session
-    // xong là router push vào trang tương tự với học nhanh") — the button stays
+    // eager resolve-or-start right from the CTA (per the teacher's note, 2026-07-11:
+    // "pressing the learn button should show isPending right on that button, reviewing
+    // 55 cards is also isPending, and once the session is created it routes into the
+    // same page as quick-learn") — the button stays
     // ON this screen, pending, until a real sessionId comes back; no more
     // instant navigation to the bare `?session=due` shim + full-page skeleton.
     const { start: startDueReview, starting } = useStartFlashcardDueReviewSession(courseId)
@@ -61,9 +62,9 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
         }
     }
 
-    // resumable cross-deck "Đến hạn hôm nay" run — mirrors QuizSession's own
-    // "Zone 0" resume card. Renders like the mock-interview resume card (thầy
-    // 2026-07-17 "render y như Phỏng vấn thử"): a progress meter (`value`), NO
+    // resumable cross-deck "Due today" run — mirrors QuizSession's own
+    // "Zone 0" resume card. Renders like the mock-interview resume card (per the
+    // teacher's note, 2026-07-17: "render exactly like Mock Interview"): a progress meter (`value`), NO
     // clock watermark — the `card {current}/{total}` progress carries "in progress".
     const resumeSwr = useQueryMyInProgressFlashcardDueReviewSessionSwr(courseId)
     const resumeData = resumeSwr.data
@@ -73,9 +74,9 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
     const newCount = data?.newCount ?? 0
 
     return (
-        // resume card (Ôn tập dở dang) vs the due-today block below are 2
+        // resume card (Resume review) vs the due-today block below are 2
         // DIFFERENT-function sections (resume vs start-a-new-batch) — `gap-6`
-        // per `foundations/gap.md` ("giữa 2 khối khác chức năng"), not `gap-3`
+        // per `foundations/gap.md` ("between 2 blocks of different function"), not `gap-3`
         // (same-block/same-function items).
         <div className="flex flex-col gap-6">
             {resumeData && displayId ? (
@@ -116,17 +117,17 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
                 >
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex flex-col gap-0">
-                            {/* PRIMARY stat of this block — `color="default"` (thầy 2026-07-12:
-                                "text-foreground, chỉ muted ở text secondary") — only the
+                            {/* PRIMARY stat of this block — `color="default"` (per the teacher's
+                                note, 2026-07-12: "text-foreground; only mute the secondary text") — only the
                                 breakdown line below is secondary/muted. */}
                             <Typography type="body-sm">
                                 {t("flashcard.due.count", { count: dueCount })}
                             </Typography>
                             {/* breaks down the (possibly confusing) total into its 2 parts — only
                                 when it's actually a mix, so a pure-overdue or pure-new queue doesn't
-                                show a redundant "X + 0" (thầy 2026-07-09: "cái log 25 thẻ còn lại là
-                                ở đâu ra" — dueCount = overdue reviews + today's capped new batch,
-                                see DAILY_NEW_LIMIT in flashcard-review.service.ts). */}
+                                show a redundant "X + 0" (per the teacher's note, 2026-07-09: "where does
+                                that remaining 25-card count come from" — dueCount = overdue reviews + today's
+                                capped new batch, see DAILY_NEW_LIMIT in flashcard-review.service.ts). */}
                             {dueReviewCount > 0 && newCount > 0 ? (
                                 <Typography type="body-xs" color="muted">
                                     {t("flashcard.due.countBreakdown", { overdue: dueReviewCount, newCapped: newCount })}

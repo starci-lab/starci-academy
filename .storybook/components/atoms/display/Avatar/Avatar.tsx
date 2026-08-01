@@ -13,3 +13,6 @@ import { AvatarBase } from "./AvatarBase"
 export { AvatarBase as Avatar }
 
 export type { AvatarBaseProps, AvatarFallback, AvatarColor, AvatarRing, AvatarSize, AvatarStatus, IconComponent, IconWeight } from "./AvatarBase"
+
+/** Tier meta for `Avatar` — `AvatarBase.tsx` also exports its own. */
+export const meta = { tier: "atom", name: "Avatar" } as const

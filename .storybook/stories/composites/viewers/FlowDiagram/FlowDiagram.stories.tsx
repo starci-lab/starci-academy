@@ -37,7 +37,7 @@ const ARCHITECTURE_EDGES: Array<Edge> = [
 /** A general architecture/flow diagram using the built-in card node — branches + descriptions. */
 export const Architecture: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <FlowDiagram nodes={ARCHITECTURE_NODES} edges={ARCHITECTURE_EDGES} anatPart="FlowDiagram" showAnatomy />
         </div>
     ),
@@ -46,7 +46,7 @@ export const Architecture: Story = {
 /** A simple linear chain of steps (a process, a user journey) — no branches, no custom node type. */
 export const LinearSequence: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <FlowDiagram
                 nodes={[
                     { id: "enroll", type: FLOW_DIAGRAM_CARD_NODE_TYPE, position: { x: 0, y: 0 }, data: { label: "Enroll in course" } },
@@ -74,7 +74,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the caller flips `isSkeleton`; no `ReactFlow`/`ReactFlowProvider` is mounted at all, since per-node shimmer would require knowing the node/edge shape before the diagram data has arrived, which isn't known. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlowDiagram"
                 tier="composite"

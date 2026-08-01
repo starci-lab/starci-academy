@@ -104,8 +104,8 @@ const INITIAL_ZOOM = 0.8
 
 /**
  * Frames the map ONCE per mount: the course root pinned near the LEFT edge, vertically centred, at
- * a readable zoom — so it opens the same way on every mount / F5 / re-mount (thầy 2026-07-18: "render
- * cận cái khóa · tên khóa sát trái · đủ nhỏ để render nhiều, đủ to để đọc"). Not `fitView` (which
+ * a readable zoom — so it opens the same way on every mount / F5 / re-mount (teacher 2026-07-18: "render
+ * close to the course · course name flush left · small enough to render many, big enough to read"). Not `fitView` (which
  * centres the whole tree's bbox → an empty middle). Must live INSIDE the flow.
  */
 const InitialFrame = ({
@@ -251,7 +251,7 @@ export const ConceptMap = ({
             id: edge.id,
             source: edge.source,
             target: edge.target,
-            // bezier curves ("nét tròn") read smoother than orthogonal steps.
+            // bezier curves ("rounded line") read smoother than orthogonal steps.
             type: "default",
         })),
         [data],

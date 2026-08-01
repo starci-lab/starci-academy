@@ -34,7 +34,7 @@ export interface MindMapRailItem {
 }
 
 /** Tier VERDICT — the shared inset PILL band (card.md §3i) per row, signalling how common
- * the keyword is (thầy 2026-07-18). Popularity → semantic tone: common = success, mid =
+ * the keyword is (teacher, 2026-07-18). Popularity → semantic tone: common = success, mid =
  * warning, rare = danger. */
 const VERDICT_BY_POP: Record<string, VerdictBandVariant> = {
     high: "success",

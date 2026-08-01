@@ -45,8 +45,8 @@ export interface EntityResultRowProps extends WithClassNames<undefined> {
  * underlines the TITLE (never a background fill), and the row carries
  * `cursor-pointer` ([[hover-style-matches-clickable-nature]] mode-1 +
  * [[interactive-needs-hover]]). The AFFORDANCE is the title itself — plain
- * `text-foreground` with a hover-underline, NO accent + NO trailing arrow (thầy
- * 2026-07-18: "link foreground only, không có arrow" — reversing the same-day
+ * `text-foreground` with a hover-underline, NO accent + NO trailing arrow (teacher
+ * 2026-07-18: "link foreground only, no arrow" — reversing the same-day
  * accent-title+arrow). Layout: optional kind chip / breadcrumb, then the
  * foreground title, then an optional snippet — all stacked left, no right column.
  */
@@ -78,8 +78,8 @@ export const EntityResultRow = ({
                 </Typography>
             ) : null}
             {/* affordance = the TITLE itself: FOREGROUND text + hover-underline ONLY — no
-                accent, no arrow (thầy 2026-07-18: "link foreground only, không có arrow" —
-                đảo quyết định accent-title+arrow cùng ngày). Nav link → hover underlines the
+                accent, no arrow (teacher 2026-07-18: "link foreground only, no arrow" —
+                reversing the same-day accent-title+arrow decision). Nav link → hover underlines the
                 title (hover-style §mode-1 + interactive-needs-hover). */}
             <Typography
                 type="body-sm"

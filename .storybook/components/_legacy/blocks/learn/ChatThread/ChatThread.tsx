@@ -10,6 +10,7 @@ import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { ChipButtonList } from "@sb-components/composites/buttons/ChipButtonList/ChipButtonList"
 import { InlineIconLabel } from "@sb-components/composites/text/InlineIconLabel/InlineIconLabel"
 import type { SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
+import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK: the AI-chat message THREAD (the scrolling
@@ -60,10 +61,10 @@ export interface ChatThreadMessage {
 
 /** An empty-thread suggestion chip. */
 export interface ChatThreadSuggestion {
-    /** Chip label. */
-    label: ReactNode
-    /** Optional leading icon (a retrieval-skill glyph). */
-    icon?: ReactNode
+    /** Chip label — a plain string (COMPOSITE-8: `ChipButtonItem.label` is `string`, not `ReactNode`). */
+    label: string
+    /** Optional leading icon (a retrieval-skill glyph) — a component reference, not a built element. */
+    icon?: IconComponent
     /** Press handler. */
     onPress?: () => void
 }

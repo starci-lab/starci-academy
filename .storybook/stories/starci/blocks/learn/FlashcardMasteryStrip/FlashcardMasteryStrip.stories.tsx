@@ -34,7 +34,7 @@ export default meta
 type Story = StoryObj<typeof FlashcardMasteryStrip>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCard": { tier: "composite", role: "the labelled card face — draws the \"Thành thạo\" label and, when the block hands one over, the streak chip pinned to its right", storyId: "composites-cards-surfacecard-surfacecard--default" },
+    "SurfaceCard": { tier: "composite", role: "the labelled card face — draws the \"Mastery\" label and, when the block hands one over, the streak chip pinned to its right", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "Chip": { tier: "atom", role: "the streak chip, present only once the block has a streak to report", storyId: "atoms-chips-chip-chip--default" },
     "Typography": { tier: "atom", role: "one of the block's own text lines — the mastered/total count, or the trailing percentage, real or its shimmer mirror", storyId: "atoms-text-typography-typography--plain" },
     "StackV": { tier: "frame", role: "the vertical track holding the stat row above the segment bar, owning the seam between them", storyId: "frames-stack-stackv--default" },
@@ -45,7 +45,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — a streak in progress ⇒ `SurfaceCard`'s `action` slot carries the streak chip. */
 export const StreakPresent: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardMasteryStrip"
                 tier="block"
@@ -89,7 +89,7 @@ export const StreakPresent: Story = {
 /** LEAF — no streak to report ⇒ the strip **loses** the `Chip` node entirely. */
 export const NoStreak: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardMasteryStrip"
                 tier="block"
@@ -100,7 +100,7 @@ export const NoStreak: Story = {
                 states={[
                     {
                         name: "streak = undefined",
-                        why: "The caller has nothing to report for today's habit, so the block leaves `SurfaceCard`'s `action` slot empty rather than drawing a chip for a streak of zero. An empty slot reads as \"nothing here\"; a chip reading \"0 ngày\" would read as a broken streak worth apologising for.",
+                        why: "The caller has nothing to report for today's habit, so the block leaves `SurfaceCard`'s `action` slot empty rather than drawing a chip for a streak of zero. An empty slot reads as \"nothing here\"; a chip reading \"0 days\" would read as a broken streak worth apologising for.",
                         code: `<FlashcardMasteryStrip
     mastered={18}
     total={40}
@@ -131,7 +131,7 @@ export const NoStreak: Story = {
 /** LEAF — enough history ⇒ `SegmentBar`'s caption carries a real retention number. */
 export const RetentionCaption: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardMasteryStrip"
                 tier="block"
@@ -173,7 +173,7 @@ export const RetentionCaption: Story = {
 /** LEAF — zero lifetime reviews ⇒ the caption becomes a first-review nudge, never a 0% stat. */
 export const FirstReviewHint: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FlashcardMasteryStrip"
                 tier="block"

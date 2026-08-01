@@ -14,7 +14,10 @@ const config: StorybookConfig = {
     // The pre-2026-07-21 stories were
     // archived OUT of Storybook to `../.storybook-legacy/` (not loaded — kept only
     // for reference while the rewrite lands).
-    stories: ["./stories/**/*.stories.@(ts|tsx)"],
+    // `_legacy` holds pre-2026-07-21 dead stories that still import components since removed
+    // (the flattened `Feedback` namespace, the retired `PricePoint` atom, …). They are excluded
+    // everywhere else (every gate skips `_legacy`); excluding them here keeps the preview building.
+    stories: ["./stories/**/*.stories.@(ts|tsx)", "!./stories/_legacy/**"],
     addons: ["@storybook/addon-a11y", "@storybook/addon-docs"],
     framework: { name: "@storybook/nextjs", options: {} },
     staticDirs: ["../public"],

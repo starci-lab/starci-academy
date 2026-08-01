@@ -35,7 +35,7 @@ type Story = StoryObj<typeof EnrollGate>
 const PRICE = {
     discountedVnd: 1_990_000,
     originalVnd: 2_990_000,
-    breakdown: { phase: 2_490_000, phaseLabel: "Sớm", loyaltyPercent: 20, loyaltyNote: "đã học 2 khoá" },
+    breakdown: { phase: 2_490_000, phaseLabel: "Early bird", loyaltyPercent: 20, loyaltyNote: "completed 2 courses" },
     currentPhase: PricingPhase.EarlyBird,
     seatsRemaining: 12,
     nextPhasePriceVnd: 2_490_000,
@@ -46,7 +46,7 @@ const PRICE = {
 // `preview` documents. Not itself a design-system component, so it carries no
 // `data-anat-part` of its own (nothing for the anatomy panel to link to).
 const MockPreview = () => (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-3">
+    <div data-tier="fixture" className="mx-auto flex w-full max-w-3xl flex-col gap-3">
         <div className="rounded-3xl bg-surface p-6 shadow-surface">
             <div className="h-5 w-2/3 rounded bg-default" />
             <div className="mt-3 h-3 w-1/3 rounded bg-default" />
@@ -71,7 +71,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — no `preview` ⇒ the card renders centered alone on the canvas. */
 export const Standalone: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="EnrollGate"
                 tier="block"
@@ -83,8 +83,8 @@ export const Standalone: Story = {
                         name: "preview = undefined",
                         why: "With no teaser to show, the gate is just the conversion card, centered in whatever region replaces the locked surface. This is the shape every gate starts from before a screen decides it also has a preview worth showing.",
                         code: `<EnrollGate
-    title="Mở khoá Dự án cá nhân"
-    description="Ghi danh để làm capstone thật, chấm điểm bằng AI."
+    title="Unlock the Personal Project"
+    description="Enroll to build a real capstone, graded by AI."
     price={price}
     onEnroll={() => {}}
 />`,
@@ -92,8 +92,8 @@ export const Standalone: Story = {
                             <EnrollGate
                                 anatPart="EnrollGate"
                                 showAnatomy
-                                title="Mở khoá Dự án cá nhân"
-                                description="Ghi danh để làm capstone thật, chấm điểm bằng AI."
+                                title="Unlock the Personal Project"
+                                description="Enroll to build a real capstone, graded by AI."
                                 price={PRICE}
                                 onEnroll={() => {}}
                             />
@@ -108,7 +108,7 @@ export const Standalone: Story = {
 /** LEAF — `preview` given ⇒ **gains** a whole faded-teaser layer the card floats over. */
 export const WithPreview: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="EnrollGate"
                 tier="block"
@@ -120,8 +120,8 @@ export const WithPreview: Story = {
                         name: "preview = <MockPreview />",
                         why: "The real surface's own shape shows through, faded, with the card floating over its tail. A trial learner sees what enrolling actually unlocks instead of guessing from copy alone — the Medium-style upgrade this prop exists for.",
                         code: `<EnrollGate
-    title="Mở khoá Dự án cá nhân"
-    description="Ghi danh để làm capstone thật, chấm điểm bằng AI."
+    title="Unlock the Personal Project"
+    description="Enroll to build a real capstone, graded by AI."
     preview={<PersonalProjectGatePreview />}
     price={price}
     onEnroll={() => {}}
@@ -130,8 +130,8 @@ export const WithPreview: Story = {
                             <EnrollGate
                                 anatPart="EnrollGate"
                                 showAnatomy
-                                title="Mở khoá Dự án cá nhân"
-                                description="Ghi danh để làm capstone thật, chấm điểm bằng AI."
+                                title="Unlock the Personal Project"
+                                description="Enroll to build a real capstone, graded by AI."
                                 preview={<MockPreview />}
                                 price={PRICE}
                                 onEnroll={() => {}}
@@ -147,7 +147,7 @@ export const WithPreview: Story = {
 /** LEAF — `price.currentPhase` omitted ⇒ **loses** the whole `PhaseScarcityNote` node. */
 export const NoScarcity: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="EnrollGate"
                 tier="block"
@@ -159,8 +159,8 @@ export const NoScarcity: Story = {
                         name: "price.currentPhase = undefined",
                         why: "An unlimited phase has no real seat cap to report, so the scarcity line does not render an empty or fabricated claim — it simply is not there, and the card ends at the price.",
                         code: `<EnrollGate
-    title="Mở khoá Dự án cá nhân"
-    description="Ghi danh để làm capstone thật, chấm điểm bằng AI."
+    title="Unlock the Personal Project"
+    description="Enroll to build a real capstone, graded by AI."
     price={{ discountedVnd: 1990000, originalVnd: 2990000 }}
     onEnroll={() => {}}
 />`,
@@ -168,8 +168,8 @@ export const NoScarcity: Story = {
                             <EnrollGate
                                 anatPart="EnrollGate"
                                 showAnatomy
-                                title="Mở khoá Dự án cá nhân"
-                                description="Ghi danh để làm capstone thật, chấm điểm bằng AI."
+                                title="Unlock the Personal Project"
+                                description="Enroll to build a real capstone, graded by AI."
                                 price={{ discountedVnd: 1_990_000, originalVnd: 2_990_000 }}
                                 onEnroll={() => {}}
                             />
@@ -184,7 +184,7 @@ export const NoScarcity: Story = {
 /** LEAF — the caller flips `isSkeleton`, so the price region falls to its shimmer branch. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="EnrollGate"
                 tier="block"
@@ -196,8 +196,8 @@ export const Loading: Story = {
                         name: "isSkeleton = true",
                         why: "The lock, headline, description and CTA are already known before any price request, so they stay real; only the price region — the one thing that genuinely depends on a network round-trip — falls to AsyncContent's shimmer branch.",
                         code: `<EnrollGate
-    title="Mở khoá Dự án cá nhân"
-    description="Ghi danh để làm capstone thật, chấm điểm bằng AI."
+    title="Unlock the Personal Project"
+    description="Enroll to build a real capstone, graded by AI."
     onEnroll={() => {}}
     isSkeleton
 />`,
@@ -205,8 +205,8 @@ export const Loading: Story = {
                             <EnrollGate
                                 anatPart="EnrollGate"
                                 showAnatomy
-                                title="Mở khoá Dự án cá nhân"
-                                description="Ghi danh để làm capstone thật, chấm điểm bằng AI."
+                                title="Unlock the Personal Project"
+                                description="Enroll to build a real capstone, graded by AI."
                                 onEnroll={() => {}}
                                 isSkeleton
                             />

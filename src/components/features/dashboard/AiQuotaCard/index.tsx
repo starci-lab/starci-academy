@@ -92,9 +92,9 @@ export const AiQuotaCard = ({
                     <Skeleton className="h-8 w-24 rounded-xl" />
                 </div>
             )}
-            // signed out / fetch failed / not yet loaded → self-hide (widget phụ,
-            // không có generic error copy dùng chung để tránh thêm i18n key mới
-            // cho 1 card phụ)
+            // signed out / fetch failed / not yet loaded → self-hide (a secondary
+            // widget — no shared generic error copy, to avoid adding a new i18n
+            // key just for one minor card)
             isEmpty={!data}
             error={error}
         >

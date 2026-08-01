@@ -26,7 +26,7 @@ export interface PickFromStarciSelectProps extends WithClassNames<undefined> {
 }
 
 /**
- * "Pick từ StarCi" combobox — a REAL `Select` (not a fake div), listing the
+ * "Pick from StarCi" combobox — a REAL `Select` (not a fake div), listing the
  * signed-in user's passed capstones (`myPickableCvAchievements`, verified by
  * construction). Picking one is a one-shot action (adds a new `project` item
  * tagged `source: "verified"`) — the picker itself holds no persistent

@@ -151,7 +151,7 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
                 title={t("landing.outcome.title")}
             />
             <div className="grid grid-cols-1 gap-x-12 gap-y-20 @app-lg:grid-cols-2 @app-lg:items-center">
-                {/* Trái — hai journey + CTA tách */}
+                {/* Left — two journeys + separate CTAs */}
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-6">
                         <JourneyRow
@@ -181,7 +181,7 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
                     </div>
                 </div>
 
-                {/* Phải — tấm thẻ ứng viên mẫu (static) */}
+                {/* Right — sample candidate card (static) */}
                 <SampleCandidateCard />
             </div>
         </section>

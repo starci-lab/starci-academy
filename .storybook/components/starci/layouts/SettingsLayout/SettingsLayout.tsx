@@ -42,7 +42,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * frame that could express this — is internal-only to `components/frames/`
  * (see its own file header), so `StackV` + override is the public road.
  *
- * ⭐ `gap="flush"` IS DELIBERATE, NOT AN OMISSION. The seam between the nav
+ * ⭐ `gap={1}` IS DELIBERATE, NOT AN OMISSION. The seam between the nav
  * and the content column is drawn by `SettingsSidebarNav`'s own border/divider
  * (mirroring the real `CollapsibleSidebar`'s `border-r`), not by empty space
  * this frame adds on top of it — two owners for one seam is exactly what
@@ -51,7 +51,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * CONTENT COLUMN = `Container` DEFAULTS. `size="md"` is `max-w-app-md`
  * (48rem, the same measure `max-w-3xl` names, see `Container`'s own file
- * header) and `padding="roomy"` is `p-6` — exactly the "p-6/max-w-3xl" the
+ * header) and `padding={6}` is `p-6` — exactly the "p-6/max-w-3xl" the
  * spec calls for, with no hand-written class needed. `classNames={["min-w-0",
  * "flex-1"]}` is placement (letting the column claim the row's remaining width
  * once the nav's own fixed rail has taken its share) — not a seam, so it
@@ -77,7 +77,7 @@ export interface SettingsLayoutProps {
     activeHref: string
     /** Fired with the href the reader picked in the nav. */
     onNavigate: (href: string) => void
-    /** Sidebar heading, e.g. "Cài đặt". */
+    /** Sidebar heading, e.g. "Settings". */
     title: string
     /** Localized label for the collapse control. */
     collapseLabel: string
@@ -125,7 +125,7 @@ const SettingsLayout = ({
             <Container
                 anatPart={showAnatomy ? "Container" : undefined}
                 size="md"
-                padding="roomy"
+                padding={6}
                 classNames={["min-w-0", "flex-1"]}
                 body={children}
             />
@@ -135,7 +135,7 @@ const SettingsLayout = ({
     return (
         <div data-anat-part={anatPart}>
             <StackV
-                gap="flush"
+                gap={1}
                 className="@app-md:flex-row @app-md:items-start"
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={navAndContent}

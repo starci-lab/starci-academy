@@ -47,8 +47,6 @@ export interface AvatarGroupProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -64,6 +62,9 @@ const GROUP_RING = "rounded-full ring-2 ring-background"
  *
  * @param props - {@link AvatarGroupProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "AvatarGroup" } as const
+
 export const AvatarGroup = ({
     items,
     max = 5,
@@ -71,14 +72,17 @@ export const AvatarGroup = ({
     size = "sm",
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: AvatarGroupProps) => {
     const visible = items.slice(0, max)
     const extra = Math.max((total ?? items.length) - visible.length, 0)
 
     return (
-        <div className={cn("flex -space-x-2", className, classNames)}>
+        <div
+            className={cn("flex -space-x-2", classNames)}
+            data-tier="composite"
+            data-component="AvatarGroup"
+        >
             {visible.map((item) => (
                 // One badge per member: names each avatar as one opaque part
                 // instead of exposing Avatar's own Image/Fallback parts.
@@ -106,6 +110,11 @@ export const AvatarGroup = ({
                 ) : (
                     // "+N" is a COUNT, not a person — rendered here rather than through
                     // Avatar, whose initials fallback would clip "+12" to "+1".
+                    // ATOM GAP (COMPOSITE-3): the house `Avatar` atom's fallback slices
+                    // `name` to 2 chars for initials (`AvatarBase.tsx`: `.slice(0, 2)`) —
+                    // there is no house atom shaped "avatar-ring holding an arbitrary
+                    // short string", so the vendor `Avatar`/`AvatarFallback` stays here on
+                    // purpose rather than truncating a 2-digit+ overflow count to garbage.
                     <HeroAvatar size={size} className={GROUP_RING} data-anat-part={showAnatomy ? "HeroAvatar" : undefined}>
                         <HeroAvatarFallback>+{extra}</HeroAvatarFallback>
                     </HeroAvatar>

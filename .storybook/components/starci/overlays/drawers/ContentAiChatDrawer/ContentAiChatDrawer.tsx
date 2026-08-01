@@ -4,7 +4,7 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -66,22 +66,22 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * task's brief is the open-state scaffold + header only, so the body is a
  * clearly-marked placeholder instead of a fake box standing in for a working
  * feature: `SurfaceCard` (a bounded face inside the drawer sheet) wrapping
- * `FeedbackEmpty` (icon + honest title/description) — the EXACT pairing
+ * `EmptyState` (icon + honest title/description) — the EXACT pairing
  * `LessonVideoModal`'s `PlayerGap` already established for "the shell around
  * this is real, the runtime inside it isn't yet".
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Fixed accessible name for the mode switch — see the file header on why this is not a prop. */
-const MODE_SWITCH_ARIA_LABEL = "Chuyển chế độ hiển thị AI chat"
+const MODE_SWITCH_ARIA_LABEL = "Switch AI chat display mode"
 
 /** Fixed fallback drawer title — see the file header on why this is not a caller prop. */
-const FALLBACK_TITLE = "Hỏi StarCi AI"
+const FALLBACK_TITLE = "Ask StarCi AI"
 
 /** Scope-cut gap copy — see the file header's "SCOPE-CUT GAP" note. */
-const BODY_GAP_TITLE = "Khung hội thoại AI"
+const BODY_GAP_TITLE = "AI conversation frame"
 const BODY_GAP_DESCRIPTION =
-    "Bộ khung này chưa dựng ChatThread/ChatComposer thật — phần hội thoại sẽ ghép đúng vào slot này ở lượt build sau."
+    "This frame hasn't wired up a real ChatThread/ChatComposer yet — the conversation will slot in here on a later build pass."
 
 /** Which way the AI chat panel is presented right now. */
 export type ContentAiChatDrawerMode = "rail" | "drawer"
@@ -93,7 +93,7 @@ const MODE_ITEMS: Array<ButtonRadioGroupItem<ContentAiChatDrawerMode>> = [
         content: (
             <>
                 <SidebarSimpleIcon aria-hidden focusable="false" className="size-4" />
-                <span className="sr-only">Chế độ rail</span>
+                <span className="sr-only">Rail mode</span>
             </>
         ),
     },
@@ -102,7 +102,7 @@ const MODE_ITEMS: Array<ButtonRadioGroupItem<ContentAiChatDrawerMode>> = [
         content: (
             <>
                 <SquareHalfIcon aria-hidden focusable="false" className="size-4" />
-                <span className="sr-only">Chế độ drawer</span>
+                <span className="sr-only">Drawer mode</span>
             </>
         ),
     },
@@ -174,7 +174,7 @@ const ContentAiChatDrawer = ({
 
     const header: ReactNode = (
         <StackH
-            gap="related"
+            gap={3}
             justify="between"
             className="pr-8"
             anatPart={showAnatomy ? "StackH" : undefined}
@@ -191,14 +191,18 @@ const ContentAiChatDrawer = ({
                 header={header}
                 showAnatomy={showAnatomy}
             >
-                <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                    <FeedbackEmpty
-                        icon={ChatsCircleIcon}
-                        title={BODY_GAP_TITLE}
-                        description={BODY_GAP_DESCRIPTION}
-                        anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-                    />
-                </SurfaceCard>
+                <SurfaceCard
+                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                    showAnatomy={showAnatomy}
+                    body={() => (
+                        <EmptyState
+                            icon={ChatsCircleIcon}
+                            title={BODY_GAP_TITLE}
+                            description={BODY_GAP_DESCRIPTION}
+                            anatPart={showAnatomy ? "EmptyState" : undefined}
+                        />
+                    )}
+                />
             </DrawerShell>
         </div>
     )

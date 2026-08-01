@@ -8,6 +8,10 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * frame. What it produces: with/without a leading signal chip, joining `items` segments
  * with a middot, and truncating when the container is narrow. The full list row
  * (leading/title/trailing) belongs to `ListRow` — NOT repeated here.
+ *
+ * 2026-07-31 (COMPOSITE-8 fix): `chip` now takes a COMPONENT reference instead
+ * of a built node, and `items` now takes plain `string` segments instead of
+ * `ReactNode` — the frame wraps each segment in `Typography` itself.
  */
 const meta: Meta<typeof ListMeta> = {
     title: "Composites/Lists/List/ListMeta",
@@ -33,10 +37,13 @@ const META_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "Meta", tier: "composite", role: "muted text segments joined by a middot" },
 ]
 
+/** Signal chip component (COMPOSITE-8): `ListMeta` calls this itself for the `chip` slot. */
+const CountdownChip = () => <Chip tone="warning" text="2 minutes left" />
+
 /** Leading warning `Chip` (the one signal) + dot-joined muted meta segments. */
 export const WithChip: Story = {
     render: () => (
-        <div className="w-96 p-8">
+        <div data-tier="fixture" className="w-96 p-8">
             <BlockAnatomy
                 name="ListMeta"
                 tier="composite"
@@ -48,12 +55,12 @@ export const WithChip: Story = {
                         name: "chip set, items = 2 segments",
                         why: "The leading warning chip sits ahead of the dot-joined text segments, giving the row one prominent signal plus quiet context after it. A deadline warning needs to stand out from the rest of the meta line, not blend into it.",
                         code: `<ListMeta
-  chip={<Chip tone="warning" text="2 phút còn lại" />}
+  chip={CountdownChip}
   items={["Question 7 / 8", "Middle"]}
 />`,
                         render: (
                             <ListMeta
-                                chip={<Chip tone="warning" text="2 phút còn lại" />}
+                                chip={CountdownChip}
                                 items={["Question 7 / 8", "Middle"]}
                                 showAnatomy
                             />
@@ -68,7 +75,7 @@ export const WithChip: Story = {
 /** No chip — a plain muted dot-joined meta line. */
 export const MetaOnly: Story = {
     render: () => (
-        <div className="w-96 p-8">
+        <div data-tier="fixture" className="w-96 p-8">
             <BlockAnatomy
                 name="ListMeta"
                 tier="composite"
@@ -92,7 +99,7 @@ export const MetaOnly: Story = {
 /** Narrow container — the muted meta line truncates instead of wrapping/overflowing. */
 export const Overflow: Story = {
     render: () => (
-        <div className="w-64 p-8">
+        <div data-tier="fixture" className="w-64 p-8">
             <BlockAnatomy
                 name="ListMeta"
                 tier="composite"

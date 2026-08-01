@@ -15,7 +15,7 @@ import { useCookiePreferencesOverlayState } from "@/hooks/zustand/overlay/hooks"
  *
  * Reads the committed consent from {@link useCookieConsentStore}; renders only while `decided === false`
  * (hidden during pre-hydration `null` and once decided `true`). Buttons keep parity (Accept / Reject are
- * equal-size real buttons — GDPR/PDPD: reject must be as easy as accept); "Tùy chỉnh" opens the granular
+ * equal-size real buttons — GDPR/PDPD: reject must be as easy as accept); "Customize" opens the granular
  * preferences modal. Mounted once globally in `InnerLayout`. `"use client"` for the store + i18n.
  */
 export const CookieConsentBanner = () => {

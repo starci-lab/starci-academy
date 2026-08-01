@@ -55,7 +55,7 @@ export interface SchedulePickerProps extends WithClassNames<undefined> {
      * calendar. Use it to forbid booking in the past (e.g. `today(getLocalTimeZone())`).
      */
     minDate?: DateValue
-    /** Heading rendered above the time-slot grid. Defaults to "Chọn khung giờ". */
+    /** Heading rendered above the time-slot grid. Defaults to "Choose a time slot". */
     slotsLabel?: string
 }
 
@@ -100,19 +100,19 @@ export const SchedulePicker = ({
     selectedSlotId,
     onSlotChange,
     minDate,
-    slotsLabel = "Chọn khung giờ",
+    slotsLabel = "Choose a time slot",
     className,
 }: SchedulePickerProps) => {
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             {/* DATE half — canonical HeroUI DatePicker + DateField + Calendar popover */}
             <DatePicker
-                aria-label="Chọn ngày phỏng vấn"
+                aria-label="Choose an interview date"
                 minValue={minDate}
                 value={dateValue}
                 onChange={onDateChange}
             >
-                <Label>Chọn ngày</Label>
+                <Label>Choose a date</Label>
                 <DateField.Group fullWidth variant="secondary">
                     <DateField.Input>
                         {(segment) => <DateField.Segment segment={segment} />}
@@ -124,7 +124,7 @@ export const SchedulePicker = ({
                     </DateField.Suffix>
                 </DateField.Group>
                 <DatePicker.Popover>
-                    <Calendar aria-label="Lịch chọn ngày phỏng vấn">
+                    <Calendar aria-label="Calendar for choosing an interview date">
                         <Calendar.Header>
                             <Calendar.YearPickerTrigger>
                                 <Calendar.YearPickerTriggerHeading />

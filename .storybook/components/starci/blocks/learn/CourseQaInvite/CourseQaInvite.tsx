@@ -2,7 +2,7 @@ import React from "react"
 import { ArrowRightIcon, QuestionIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -27,12 +27,12 @@ import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedb
  * remedy — they are not one component with a prop switch.
  *
  * COMPOSE: `SurfaceCard` gives it a face consistent with the other Q&A/course
- * surfaces; `FeedbackEmpty` is the centered icon/title/description/action stack
+ * surfaces; `EmptyState` is the centered icon/title/description/action stack
  * every other empty spot in this codebase already uses (do not hand-roll a
  * second one); `Button` is the one CTA, built by this block so the caller never
  * has to hold the atom.
  *
- * ⚠️ JUDGEMENT CALL — `isSkeleton` does NOT shimmer through `FeedbackEmpty`
+ * ⚠️ JUDGEMENT CALL — `isSkeleton` does NOT shimmer through `EmptyState`
  * (that composite has no shimmer variant of its own yet — see its file header).
  * `title`/`hint` are caller-supplied, ALREADY-RESOLVED copy — same reasoning as
  * `ContentPaywall`'s headline: known before any request, so shimmering them
@@ -46,11 +46,11 @@ import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedb
 
 /** Props for {@link CourseQaInvite}. */
 export interface CourseQaInviteProps {
-    /** Headline saying the tab has no questions at all, localized by the caller — e.g. "Chưa có câu hỏi nào". */
+    /** Headline saying the tab has no questions at all, localized by the caller — e.g. "No questions yet". */
     title: string
     /** Supporting sentence nudging the learner toward asking the first one. */
     hint: string
-    /** Label of the single call to action, localized by the caller — e.g. "Xem nội dung khoá học". */
+    /** Label of the single call to action, localized by the caller — e.g. "View course content". */
     ctaLabel: string
     /** Fired when the learner takes the one way forward (back into the course content). */
     onGoToContent: () => void
@@ -81,25 +81,28 @@ const CourseQaInvite = ({
     anatPart,
 }: CourseQaInviteProps) => (
     <div data-anat-part={anatPart}>
-        <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-            <FeedbackEmpty
-                icon={QuestionIcon}
-                title={title}
-                description={hint}
-                action={
-                    <Button
-                        isSkeleton={isSkeleton}
-                        label={ctaLabel}
-                        variant="primary"
-                        suffixIcon={ArrowRightIcon}
-                        iconSlide
-                        onPress={onGoToContent}
-                        anatPart={showAnatomy ? "Button" : undefined}
-                    />
-                }
-                anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-            />
-        </SurfaceCard>
+        <SurfaceCard
+            anatPart={showAnatomy ? "SurfaceCard" : undefined}
+            body={() => (
+                <EmptyState
+                    icon={QuestionIcon}
+                    title={title}
+                    description={hint}
+                    action={
+                        <Button
+                            isSkeleton={isSkeleton}
+                            label={ctaLabel}
+                            variant="primary"
+                            suffixIcon={ArrowRightIcon}
+                            iconSlide
+                            onPress={onGoToContent}
+                            showAnatomy={showAnatomy}
+                        />
+                    }
+                    anatPart={showAnatomy ? "EmptyState" : undefined}
+                />
+            )}
+        />
     </div>
 )
 

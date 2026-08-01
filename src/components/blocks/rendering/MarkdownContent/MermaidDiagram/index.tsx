@@ -17,7 +17,7 @@ export interface MermaidDiagramProps extends WithClassNames<undefined> {
     loadingLabel: string
     /** Translated accessible label for the click-to-zoom trigger. */
     expandLabel: string
-    /** Figure caption paragraph that follows the diagram (e.g. "Hình 1: ..."), if any. */
+    /** Figure caption paragraph that follows the diagram (e.g. "Figure 1: ..."), if any. */
     caption?: string
     /** Translated generic caption shown when the diagram has no authored caption. */
     fallbackLabel: string
@@ -81,7 +81,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                             <MagnifyingGlassPlusIcon className="size-5" />
                         </span>
                     </button>
-                    {/* Authored caption ("Hình N: …") as a real figcaption — the source paragraph
+                    {/* Authored caption ("Figure N: …") as a real figcaption — the source paragraph
                         is stripped upstream so it isn't shown twice. Generic fallback stays modal-only. */}
                     {caption ? (
                         <figcaption className="mt-2 text-center text-sm italic text-muted">
@@ -93,7 +93,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                             <Modal.Container size="full">
                                 <Modal.Dialog>
                                     <Modal.CloseTrigger />
-                                    <Modal.Body className="p-4">
+                                    <Modal.Body data-principles="card-padding" className="p-4">
                                         {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
                                         <figure className="flex h-full flex-col items-center justify-center gap-2">
                                             <div className="flex w-full flex-1 items-center justify-center overflow-auto">

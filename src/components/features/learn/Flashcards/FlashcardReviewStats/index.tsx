@@ -26,7 +26,7 @@ const retentionColorOf = (percent: number): "success" | "warning" | "danger" =>
 
 /** Props for {@link FlashcardReviewStats}. */
 export interface FlashcardReviewStatsProps extends WithClassNames<undefined> {
-    /** Course whose aggregate "Học thẻ" review stats to show. */
+    /** Course whose aggregate "Study Cards" review stats to show. */
     courseId: string
     /** Jumps the overview tab strip back to the study overview (empty-state action). */
     onStartReview?: () => void
@@ -41,8 +41,8 @@ const RETENTION_MIN_REVIEWS = 5
 const RETENTION_TARGET = 85
 
 /**
- * "Học thẻ" aggregate stats — the study overview's "Thống kê" tab, insight-first
- * (verdict → evidence → action, `stats-canonical-fold` — rút gọn về 1 hero + 1
+ * "Study Cards" aggregate stats — the study overview's "Statistics" tab, insight-first
+ * (verdict → evidence → action, `stats-canonical-fold` — condensed to 1 hero + 1
  * zone): (1) memory-health hero (mature/young split vs target), (2) full
  * weak-topic map worst-first. Gated behind the same lifetime-review floor so a
  * near-empty history doesn't read as broken.
@@ -75,7 +75,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
     // Loading while EITHER source is still in flight — the old `&& !a.data && !b.data`
     // form went false as soon as the FIRST resolved, which now matters: the empty-state
     // floor reads the course-scoped `stats`, so a resolved-lifetime/pending-stats tick
-    // would briefly render "chưa có dữ liệu" over a course that actually has reviews.
+    // would briefly render "no data yet" over a course that actually has reviews.
     const isLoading = (statsSwr.isLoading && !statsSwr.data) || (lifetimeSwr.isLoading && !lifetimeSwr.data)
     const stats = statsSwr.data
     // COURSE-SCOPED floor + headline (2026-07-17 fix). This tab is course-scoped, but
@@ -100,7 +100,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
         pathConfig().locale(locale).course(displayId).learn().flashcards().review(deckId).build(),
     )
 
-    // Trung bình chung + "TB giấu chủ đề X" — computed over the FULL worst-first
+    // Overall average + "the average conceals topic X" — computed over the FULL worst-first
     // list (not just the single `weakReviewTag` head) so the caption's average
     // actually reflects every tag rendered above it.
     const weakTagAvg = weakTags.length > 0
@@ -115,7 +115,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                 // verdict · sub · meter · 2-up split · CTA), ZONE 2 label + weak-topic
                 // SurfaceListCard with a drill CTA + avg caption OUTSIDE the card.
                 <div className="flex flex-col gap-6">
-                    {/* ZONE 1 — "Sức khoẻ trí nhớ" hero */}
+                    {/* ZONE 1 — "Memory health" hero */}
                     <section className="flex flex-col gap-3">
                         <Skeleton className="h-[14px] w-40 rounded" />
                         <SectionCard>
@@ -139,7 +139,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                         </SectionCard>
                     </section>
 
-                    {/* ZONE 2 — "Điểm yếu theo chủ đề": label + list, then CTA + caption below the card */}
+                    {/* ZONE 2 — "Weak points by topic": label + list, then CTA + caption below the card */}
                     <div className="flex flex-col">
                         <section className="flex flex-col gap-3">
                             <Skeleton className="h-[14px] w-40 rounded" />
@@ -179,12 +179,12 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                 />
             ) : (
                 <div className={cn("flex flex-col gap-6", className)}>
-                    {/* ZONE 1 — "Sức khoẻ trí nhớ" hero (◎ vs target). Retention band
+                    {/* ZONE 1 — "Memory health" hero (◎ vs target). Retention band
                         drives the card's color; the mature/young split shows WHY (cramming
                         new cards vs actually forgetting old ones) — the whole point of
-                        replacing the old bare "Tỷ lệ nhớ" number. Verdict sentence/caption
+                        replacing the old bare "Retention rate" number. Verdict sentence/caption
                         are chosen BY BAND (2026-07-17 fix — the workflow originally shipped
-                        only the "quá tải"/overload copy, so a healthy learner at ≥75% would
+                        only the "overloaded" copy, so a healthy learner at ≥75% would
                         read "you're overloaded" next to a green number): danger→overload,
                         warning→leaking, success→healthy. */}
                     {(() => {
@@ -199,7 +199,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                             : band === "warning"
                                 ? "flashcard.review.verdictLeakingCaption"
                                 : "flashcard.review.verdictHealthyCaption"
-                        // "Giảm thẻ mới" only fits the overloaded case; other bands drill the weakest deck.
+                        // "Reduce new cards" only fits the overloaded case; other bands drill the weakest deck.
                         const ctaKey = band === "danger" ? "flashcard.review.reduceNewCardsCta" : "flashcard.review.reviewWeakestCta"
                         return (
                             <LabeledCard label={t("flashcard.review.memoryHealthLabel")} frameless>
@@ -250,7 +250,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                         )
                     })()}
 
-                    {/* ZONE 2 — "Điểm yếu theo chủ đề" (▽ split by tag, → drill CTA).
+                    {/* ZONE 2 — "Weak points by topic" (▽ split by tag, → drill CTA).
                         FULL worst-first list (not just the single weakest tag). */}
                     {weakTags.length > 0 ? (
                         // card's main content is a LIST → it's a labeled list-surface-card
@@ -291,7 +291,7 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
                         </div>
                     ) : null}
 
-                    {/* ZONE 3 — passive RAG "Gợi ý học": weak tags → course-wide content
+                    {/* ZONE 3 — passive RAG "Study suggestions": weak tags → course-wide content
                         search (self-hiding when there's nothing weak / no match). Mirrors
                         `FlashcardSessionStats`'s own end-of-session study payoff. Needs the
                         slug for result deep links, so it waits on `displayId`. */}

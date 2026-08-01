@@ -1,0 +1,122 @@
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { Button } from "@/components/atoms/buttons/Button"
+import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
+import { ResponsiveCluster, type ResponsiveClusterItem } from "@/components/frames/ResponsiveCluster"
+import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
+
+/**
+ * `ActionBar` — the `primary` · `secondary` · `dismiss` row that ends a form, a
+ * modal, a drawer. THREE DIFFERENT ROLES, never N of the same kind — that is
+ * the whole reason this is not `ButtonGroup`: a filter row is N elements of
+ * one kind (`items`), Submit / Save draft / Cancel is three named slots.
+ *
+ * The slot decides the variant, never the caller: `primary` → `"primary"`,
+ * `secondary` → `"secondary"`, `dismiss` → `"ghost"`. Built on `ResponsiveCluster`,
+ * the same frame `ButtonGroup` renders through — a full-width column below the
+ * named container step in `at`, a packed row from it up, one fixed internal
+ * gap (step `3`) on both sides.
+ */
+
+/** One action slot of an {@link ActionBar} — `primary`, `secondary`, or `dismiss`. */
+export interface ActionBarSlot {
+    /** Button text. The slot's variant is fixed by its role — never passed here. */
+    label: string
+    onPress?: () => void
+    /** Leading glyph — same scale/weight rule as `Button`'s own `prefixIcon`. */
+    prefixIcon?: IconComponent
+    /** `true` disables this one action only. */
+    isDisabled?: boolean
+    /** `true` marks this one action busy: spinner + locked press, scoped to it alone. */
+    isPending?: boolean
+}
+
+/** The three roles a slot can render as — fixed by position, never a caller choice. */
+type ActionBarVariant = "primary" | "secondary" | "ghost"
+
+/** Props for {@link ActionBar}. */
+export interface ActionBarProps {
+    /**
+     * The row's one emphasized action. Required — every action row has exactly
+     * one. Renders `variant="primary"`.
+     */
+    primary: ActionBarSlot
+    /**
+     * A second, lower-emphasis action beside `primary` (e.g. "Save draft").
+     * Renders `variant="secondary"`.
+     */
+    secondary?: ActionBarSlot
+    /**
+     * The row's exit action (e.g. "Cancel"). Renders `variant="ghost"` — never
+     * emphasized, so it never competes with `primary`.
+     */
+    dismiss?: ActionBarSlot
+    /** `true` renders every present slot as a skeleton button, mirroring the same roles. */
+    isSkeleton?: boolean
+    /**
+     * Container step this row leaves the full-width column for the packed row
+     * at. Default `md` — action labels ("Save draft", "Submit for review") run
+     * longer than `ButtonGroup`'s filter pills, so the row waits for more room
+     * before packing than `ButtonGroup`'s own default (`sm`) does.
+     */
+    at?: ResponsiveRowSwitch
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
+}
+
+export const meta = { tier: "composite", name: "ActionBar" } as const
+
+/** A slot → its rendered `Button`, or `null` when the slot was not passed. */
+const renderSlot = (
+    key: string,
+    slot: ActionBarSlot | undefined,
+    variant: ActionBarVariant,
+    isSkeleton: boolean,
+): ResponsiveClusterItem | null => {
+    if (!slot) return null
+    return {
+        key,
+        content: (
+            <Button
+                label={slot.label}
+                prefixIcon={slot.prefixIcon}
+                variant={variant}
+                onPress={slot.onPress}
+                isDisabled={slot.isDisabled}
+                isPending={slot.isPending}
+                isSkeleton={isSkeleton}
+            />
+        ),
+    }
+}
+
+/**
+ * The `primary` · `secondary` · `dismiss` row.
+ *
+ * @param props - {@link ActionBarProps}
+ */
+export const ActionBar = ({
+    primary,
+    secondary,
+    dismiss,
+    isSkeleton = false,
+    at = "md",
+    classNames,
+}: ActionBarProps) => {
+    const items = [
+        renderSlot("dismiss", dismiss, "ghost", isSkeleton),
+        renderSlot("secondary", secondary, "secondary", isSkeleton),
+        renderSlot("primary", primary, "primary", isSkeleton),
+    ].filter((item): item is ResponsiveClusterItem => item != null)
+
+    return (
+        <ResponsiveCluster
+            data-tier="composite"
+            data-component="ActionBar"
+            at={at}
+            gap={3}
+            justify="end"
+            classNames={classNames}
+            items={items}
+        />
+    )
+}

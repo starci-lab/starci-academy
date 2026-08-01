@@ -13,10 +13,10 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * BLOCK — `SubmissionAttemptSelector`: which GRADED ATTEMPT the reader is looking
- * at. A flex-wrap row of attempt buttons — verdict + "Lần N" + score — plus an
+ * at. A flex-wrap row of attempt buttons — verdict + "Attempt N" + score — plus an
  * optional "+N" trigger for whatever else holds the rest of the history.
  *
- * WHY A BLOCK: turning `{ attemptNumber, score, isPassing }` into "Lần 3 · 82"
+ * WHY A BLOCK: turning `{ attemptNumber, score, isPassing }` into "Attempt 3 · 82"
  * with a pass/fail glyph is DOMAIN wording (§14d.1) — the caller hands over
  * attempt data, never a pre-built label or icon. That composition, plus the
  * few-vs-many decision (does an overflow trigger even belong on this row), is
@@ -64,7 +64,7 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 export interface SubmissionAttempt {
     /** Stable id — the value reported to {@link SubmissionAttemptSelectorProps.onSelect}. */
     id: string
-    /** 1-based order the attempt was made in — the block turns this into "Lần N". */
+    /** 1-based order the attempt was made in — the block turns this into "Attempt N". */
     attemptNumber: number
     /** `null` → not graded yet (or ungraded by design); shown without a score. */
     score: number | null
@@ -112,8 +112,8 @@ export interface SubmissionAttemptSelectorProps {
     anatPart?: string
 }
 
-const EMPTY_LABEL_DEFAULT = "Chưa có lần làm nào để chọn"
-const ERROR_TITLE = "Không tải được danh sách lần làm"
+const EMPTY_LABEL_DEFAULT = "No attempts to choose from yet"
+const ERROR_TITLE = "Couldn't load the attempt list"
 
 /** No attempt id is ever the empty string, so `""` safely reads as "none selected". */
 const NONE_SELECTED = ""
@@ -121,13 +121,13 @@ const NONE_SELECTED = ""
 /** How many skeleton pills mirror the strip while `attempts` hasn't landed yet. */
 const SKELETON_ITEM_COUNT = 3
 
-/** Turns one attempt into its `Chip` — the verdict glyph, "Lần N", and its score. */
+/** Turns one attempt into its `Chip` — the verdict glyph, "Attempt N", and its score. */
 const attemptChip = (attempt: SubmissionAttempt, showAnatomy: boolean) => (
     <Chip
         icon={attempt.isPassing ? CheckCircleIcon : XCircleIcon}
         tone={attempt.isPassing ? "success" : "danger"}
-        text={attempt.score != null ? `Lần ${attempt.attemptNumber} · ${attempt.score}` : `Lần ${attempt.attemptNumber}`}
-        anatPart={showAnatomy ? "Chip" : undefined}
+        text={attempt.score != null ? `Attempt ${attempt.attemptNumber} · ${attempt.score}` : `Attempt ${attempt.attemptNumber}`}
+        showAnatomy={showAnatomy}
     />
 )
 
@@ -140,11 +140,11 @@ interface AttemptRowSkeletonProps {
 /** Mirrors the real strip's footprint while attempts are loading — pill-for-pill, no data. */
 const AttemptRowSkeleton = ({ showAnatomy }: AttemptRowSkeletonProps) => (
     <Cluster
-        gap="related"
+        gap={3}
         anatPart={showAnatomy ? "Cluster" : undefined}
         items={Array.from({ length: SKELETON_ITEM_COUNT }, (_, index) => ({
             key: `skeleton-${index}`,
-            content: <Button isSkeleton size="sm" anatPart={showAnatomy ? "Button" : undefined} />,
+            content: <Button isSkeleton size="sm" showAnatomy={showAnatomy} />,
         }))}
     />
 )
@@ -221,7 +221,7 @@ const SubmissionAttemptSelector = ({
                                     size="sm"
                                     label={overflowLabel ?? `+${overflowCount}`}
                                     onPress={onOverflowPress}
-                                    anatPart={showAnatomy ? "Button" : undefined}
+                                    showAnatomy={showAnatomy}
                                 />
                             ) : undefined
                         }

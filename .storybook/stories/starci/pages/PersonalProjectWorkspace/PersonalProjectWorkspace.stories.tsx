@@ -35,7 +35,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — `view="dashboard"`: the capstone landing overview. */
 export const Dashboard: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectWorkspace"
                 tier="screen"
@@ -48,11 +48,11 @@ export const Dashboard: Story = {
                         why: "The route carries no `taskId` (`/personal-project`), so the workspace mounts the capstone overview: next task, completion meter, and the current milestone's keep-going grid — the same body `PersonalProjectDashboard`'s own story shows, reached here through the route switch instead of directly.",
                         code: `<PersonalProjectWorkspace
     view="dashboard"
-    title="Dự án cá nhân"
-    githubStatus={{ isConnected: true, label: "hocvien/task-api · main" }}
-    currentTask={{ sortIndex: 3, title: "Thêm test cho route DELETE" }}
+    title="Personal project"
+    githubStatus={{ isConnected: true, label: "student/task-api · main" }}
+    currentTask={{ sortIndex: 3, title: "Add tests for the DELETE route" }}
     onContinue={goToTask}
-    milestoneLabel="Backend cơ bản"
+    milestoneLabel="Backend fundamentals"
     tasks={tasks}
     onSelectTask={goToTask}
     stats={{ done: 2, total: 6, attempts: 5, avgLabel: "18/20" }}
@@ -61,18 +61,18 @@ export const Dashboard: Story = {
                             <PersonalProjectWorkspace
                                 showAnatomy
                                 view="dashboard"
-                                breadcrumbItems={[{ key: "courses", label: "Khoá học" }, { key: "course", label: "Backend Mastery" }]}
-                                title="Dự án cá nhân"
-                                description="Nộp một dự án thật thay vì làm bài tập rời rạc."
-                                githubStatus={{ isConnected: true, label: "hocvien/task-api · main" }}
-                                currentTask={{ sortIndex: 3, title: "Thêm test cho route DELETE" }}
+                                breadcrumbItems={[{ key: "courses", label: "Courses" }, { key: "course", label: "Backend Mastery" }]}
+                                title="Personal project"
+                                description="Submit a real project instead of doing scattered exercises."
+                                githubStatus={{ isConnected: true, label: "student/task-api · main" }}
+                                currentTask={{ sortIndex: 3, title: "Add tests for the DELETE route" }}
                                 onContinue={() => {}}
-                                milestoneLabel="Backend cơ bản"
+                                milestoneLabel="Backend fundamentals"
                                 tasks={[
-                                    { id: "t1", sortIndex: 1, title: "Dựng API CRUD cho Task", subtitleState: "done" },
-                                    { id: "t2", sortIndex: 2, title: "Thêm phân trang", subtitleState: "done" },
-                                    { id: "t3", sortIndex: 3, title: "Thêm test cho route DELETE", subtitleState: "active" },
-                                    { id: "t4", sortIndex: 4, title: "Triển khai lên staging", subtitleState: "todo" },
+                                    { id: "t1", sortIndex: 1, title: "Build a CRUD API for Task", subtitleState: "done" },
+                                    { id: "t2", sortIndex: 2, title: "Add pagination", subtitleState: "done" },
+                                    { id: "t3", sortIndex: 3, title: "Add tests for the DELETE route", subtitleState: "active" },
+                                    { id: "t4", sortIndex: 4, title: "Deploy to staging", subtitleState: "todo" },
                                 ]}
                                 onSelectTask={() => {}}
                                 stats={{ done: 2, total: 6, attempts: 5, avgLabel: "18/20" }}
@@ -88,7 +88,7 @@ export const Dashboard: Story = {
 /** LEAF — `view="task"`: the read-left/act-right task split. */
 export const Task: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectWorkspace"
                 tier="screen"
@@ -101,23 +101,23 @@ export const Task: Story = {
                         why: "The route carries a `taskId` and does not end in `/result` (`/personal-project/tasks/[taskId]`), so the workspace mounts the task's own read/act split — the same body `PersonalProjectTaskPage`'s own story shows, reached here through the route switch instead of directly.",
                         code: `<PersonalProjectWorkspace
     view="task"
-    task={{ title: "Thêm test cho route DELETE", description: "…" }}
+    task={{ title: "Add tests for the DELETE route", description: "…" }}
     brief={{ body: "…" }}
     relatedItems={related}
-    relatedLabel="Có thể bạn muốn đọc"
+    relatedLabel="You might also want to read"
     submissionPanelProps={panelProps}
 />`,
                         render: (
                             <PersonalProjectWorkspace
                                 showAnatomy
                                 view="task"
-                                breadcrumbItems={[{ key: "courses", label: "Khoá học" }, { key: "milestone", label: "Backend cơ bản" }]}
-                                task={{ title: "Thêm test cho route DELETE", description: "Viết integration test cho route xoá task, bao gồm cả trường hợp id không tồn tại." }}
-                                brief={{ body: "Thêm test bao phủ route `DELETE /tasks/:id`, kể cả khi `id` không tồn tại (kỳ vọng 404)." }}
-                                relatedItems={[{ key: "r1", title: "Viết integration test với Supertest", href: "#" }]}
-                                relatedLabel="Có thể bạn muốn đọc"
+                                breadcrumbItems={[{ key: "courses", label: "Courses" }, { key: "milestone", label: "Backend fundamentals" }]}
+                                task={{ title: "Add tests for the DELETE route", description: "Write an integration test for the task-delete route, including the case where the id doesn't exist." }}
+                                brief={{ body: "Add test coverage for the `DELETE /tasks/:id` route, including when `id` doesn't exist (expect 404)." }}
+                                relatedItems={[{ key: "r1", title: "Writing integration tests with Supertest", href: "#" }]}
+                                relatedLabel="You might also want to read"
                                 submissionPanelProps={{
-                                    repoUrl: "https://github.com/hocvien/task-api",
+                                    repoUrl: "https://github.com/student/task-api",
                                     onRepoUrlChange: () => {},
                                     settingsLangLabel: "TypeScript",
                                     settingsBranch: "main",
@@ -126,7 +126,7 @@ export const Task: Story = {
                                     hasAttempts: true,
                                     onOpenFeedbackDetails: () => {},
                                     onOpenAttempts: () => {},
-                                    result: { score: 18, maxScore: 20, isPassing: true, shortFeedback: "Đã bao phủ hầu hết trường hợp, còn thiếu case xoá hai lần liên tiếp." },
+                                    result: { score: 18, maxScore: 20, isPassing: true, shortFeedback: "Covers most cases, still missing the double-delete case." },
                                 }}
                             />
                         ),
@@ -140,7 +140,7 @@ export const Task: Story = {
 /** LEAF — `view="result"`: the graded-attempt verdict. */
 export const Result: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectWorkspace"
                 tier="screen"
@@ -153,44 +153,44 @@ export const Result: Story = {
                         why: "The route ends in `/result` (`/personal-project/tasks/[taskId]/result`), so the workspace mounts the graded verdict — the same body `PersonalProjectResultScreen`'s own story shows, reached here through the route switch instead of directly.",
                         code: `<PersonalProjectWorkspace
     view="result"
-    title="Thêm test cho route DELETE"
+    title="Add tests for the DELETE route"
     attempts={attempts}
     selectedAttemptId="a2"
     onSelectAttempt={selectAttempt}
-    scoreLabel="Kết quả"
+    scoreLabel="Result"
     isPassing
-    findingsLabel="Góp ý"
+    findingsLabel="Feedback"
     findings={findings}
     relatedItems={related}
-    relatedLabel="Có thể bạn muốn đọc"
-    nextTask={{ title: "Triển khai lên staging" }}
+    relatedLabel="You might also want to read"
+    nextTask={{ title: "Deploy to staging" }}
 />`,
                         render: (
                             <PersonalProjectWorkspace
                                 showAnatomy
                                 view="result"
-                                backLabel="Quay lại nhiệm vụ"
+                                backLabel="Back to task"
                                 onBack={() => {}}
-                                title="Thêm test cho route DELETE"
-                                description="Viết integration test cho route xoá task."
+                                title="Add tests for the DELETE route"
+                                description="Write an integration test for the task-delete route."
                                 attempts={[
                                     { id: "a1", attemptNumber: 1, score: 12, isPassing: false },
                                     { id: "a2", attemptNumber: 2, score: 18, isPassing: true },
                                 ]}
                                 selectedAttemptId="a2"
                                 onSelectAttempt={() => {}}
-                                attemptsAriaLabel="Các lượt nộp"
-                                scoreLabel="Kết quả"
+                                attemptsAriaLabel="Submission attempts"
+                                scoreLabel="Result"
                                 score={18}
                                 maxScore={20}
                                 isPassing
-                                shortFeedback="Đã bao phủ hầu hết trường hợp."
-                                submissionUrl="https://github.com/hocvien/task-api"
-                                findingsLabel="Góp ý"
+                                shortFeedback="Covers most cases."
+                                submissionUrl="https://github.com/student/task-api"
+                                findingsLabel="Feedback"
                                 findings={[]}
                                 relatedItems={[]}
-                                relatedLabel="Có thể bạn muốn đọc"
-                                nextTask={{ title: "Triển khai lên staging" }}
+                                relatedLabel="You might also want to read"
+                                nextTask={{ title: "Deploy to staging" }}
                                 onGoToNextTask={() => {}}
                             />
                         ),

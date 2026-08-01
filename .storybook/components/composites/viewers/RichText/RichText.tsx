@@ -1,7 +1,8 @@
 "use client"
 
 import React, { type ReactNode } from "react"
-import { Typography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { TypographySize as AtomTypographySize } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
@@ -13,23 +14,50 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Typography scale token (mirrors HeroUI `Typography` `type`). */
-type TypographySize = React.ComponentProps<typeof Typography>["type"]
-/** Typography color token (mirrors HeroUI `Typography` `color`). */
-type TypographyColor = React.ComponentProps<typeof Typography>["color"]
+/**
+ * Typography scale token — kept as the VENDOR HeroUI `Typography`'s own `type`
+ * vocabulary (`typography.styles.d.ts`: `body`/`body-sm`/`body-xs`/`h1`…`h6`/
+ * `code`) so existing callers (`SurfaceCard`, this component's own stories)
+ * don't have to change. Spelled out here rather than derived from the vendor
+ * via `typeof` so this file never imports it at all — only the internal
+ * rendering (below) maps this onto the house `Typography` ATOM's `size` scale
+ * (a composite may not import the vendor to show content — COMPOSITE-3).
+ */
+type TypographySize = "body" | "body-sm" | "body-xs" | "code" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+/** Typography color token (mirrors HeroUI `Typography` `color`: `default`/`muted`). */
+type TypographyColor = "default" | "muted"
+
+/**
+ * Maps {@link TypographySize} (the vendor's `type` vocabulary this composite's
+ * public API keeps) onto the house `Typography` atom's `size` scale.
+ *
+ * ATOM GAP: the atom has no `h6` — nothing in this design system currently asks
+ * for a 6th heading level, so `h6` folds to the atom's smallest heading (`h5`)
+ * rather than inventing a new atom size for an unused case.
+ */
+const SIZE_MAP: Record<NonNullable<TypographySize>, AtomTypographySize> = {
+    body: "base",
+    "body-sm": "sm",
+    "body-xs": "xs",
+    code: "code",
+    h1: "h1",
+    h2: "h2",
+    h3: "h3",
+    h4: "h4",
+    h5: "h5",
+    h6: "h5",
+}
 
 interface RichTextOwnProps {
     /** Typography scale; defaults to `"body-sm"`. */
     size?: TypographySize
     /** Typography color; defaults to the Typography default (omit for inherited). */
     color?: TypographyColor
-    /** Extra classes on the wrapping Typography. */
-    className?: string
     /** Where this sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
-    /** `true` → tag the internal skeleton bar with `data-anat-part="Skeleton"`. */
+    /** `true` → tag the internal `Typography` atom's own parts for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
 
@@ -148,40 +176,46 @@ const renderInline = (text: string): ReactNode => {
  * (descriptions, captions, hints) where `MarkdownContent` (full react-markdown +
  * remark plugins, block elements) is overkill. NOT for `title`/headline fields —
  * a title identifies a block and stays plain (at most `` `backtick` `` code via
- * `Typography.parseInlineCode`), it never carries bold/italic/link (thầy chốt
- * 2026-07-29, markdown-tier-rules.html).
+ * `Typography.parseInlineCode`), it never carries bold/italic/link (teacher's
+ * final call, 2026-07-29, `markdown-tier-rules.html`).
  *
  * Renders ONLY a small inline subset (`code` · **bold** · _italic_ · `[link](url)` ·
- * line breaks) inside one HeroUI `Typography`, so it carries the house type scale via
- * `size` and merges `className`. Presentational, no data/i18n.
+ * line breaks) inside one house `Typography` ATOM, so it carries the house size
+ * scale (mapped from this composite's own vendor-shaped `size` vocabulary via
+ * {@link SIZE_MAP}) and the atom's own shimmer when `isSkeleton`. Presentational,
+ * no data/i18n.
  * @param props - {@link RichTextProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "RichText" } as const
+
 export const RichText = ({
     text,
     size = "body-sm",
     color,
     isSkeleton = false,
-    className,
     classNames,
     anatPart,
     showAnatomy = false,
 }: RichTextProps) => {
-    if (isSkeleton) {
-        return (
-            <HeroSkeleton
-                className={cn("h-4 w-full rounded", className, classNames)}
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
-            />
-        )
-    }
+    // One render path (COMPOSITE-10): the atom decides its own shimmer shape via
+    // `isSkeleton`; this composite only decides size/color and — since it has no
+    // frame of its own — a thin `<span>` carrying its OWN root anatomy tag (the
+    // atom's `showAnatomy` tags its own internal parts separately).
     return (
-        <Typography
-            type={size}
-            color={color}
-            className={cn(className, classNames)}
+        <span
             data-anat-part={anatPart ?? (showAnatomy ? "RichText" : undefined)}
+            data-tier="composite"
+            data-component="RichText"
         >
-            {renderInline(text ?? "")}
-        </Typography>
+            <Typography
+                size={SIZE_MAP[size]}
+                color={color}
+                isSkeleton={isSkeleton}
+                showAnatomy={showAnatomy}
+                classNames={classNames}
+                text={renderInline(text ?? "")}
+            />
+        </span>
     )
 }

@@ -30,13 +30,13 @@ const ASKER = { id: "u1", displayName: "Minh Anh", avatarUrl: undefined }
 const PARTICIPANTS = [
     { id: "u2", displayName: "Quang" },
     { id: "u3", displayName: "Linh" },
-    { id: "u4", displayName: "Bảo" },
+    { id: "u4", displayName: "Bao" },
 ]
 
 /** LEAF — has replies: reply count reads as a fact, avatar group shows who joined in. */
 export const HasReplies: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QaConversationHeader"
                 tier="block"
@@ -69,7 +69,7 @@ export const HasReplies: Story = {
 /** LEAF — zero replies: the count line becomes a "be first" nudge, avatar group does not render. */
 export const NoRepliesYet: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QaConversationHeader"
                 tier="block"

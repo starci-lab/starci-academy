@@ -17,7 +17,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `AiQuotaHistoryPanel`: the body of the "Lịch sử" tab inside
+ * BLOCK — `AiQuotaHistoryPanel`: the body of the "History" tab inside
  * `AiQuotaModal` — a 7-day credit-usage bar chart plus a scrollable list of
  * recent AI charges (model · what it was for · when · credit delta).
  *
@@ -37,8 +37,8 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *    (`learn`), nor identity (`profile`) — it is the AI-credit-usage domain on
  *    its own, and forcing it into a neighbour group would misfile it just to
  *    avoid a new folder.
- * 2. **Chart caption says "7 ngày", not the source's "14 ngày".** `vi.json`'s
- *    `aiQuota.history.chartTitle` reads "…(14 ngày gần nhất)", but the source
+ * 2. **Chart caption says "7 days", not the source's "14 days".** `vi.json`'s
+ *    `aiQuota.history.chartTitle` reads "…(last 14 days)", but the source
  *    hook that feeds it only ever builds SEVEN day-buckets (`for (let offset =
  *    7 - 1; …)`) — the "14" was already stale copy sitting above a 7-bar
  *    chart. This block (and the task spec) commit to the real bucket count,
@@ -70,18 +70,18 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** What an AI charge was for — the block owns the Vietnamese label per surface. */
+/** What an AI charge was for — the block owns the display label per surface. */
 export type AiQuotaHistorySurface = "grade" | "interview" | "chatbot"
 
 /** {@link AiQuotaHistorySurface} → its display label. The block's own vocabulary (§14d.1). */
 const PURPOSE_LABEL: Record<AiQuotaHistorySurface, string> = {
-    grade: "Chấm challenge",
-    interview: "Chấm phỏng vấn",
-    chatbot: "Hỏi bài AI",
+    grade: "Challenge grading",
+    interview: "Interview grading",
+    chatbot: "AI chat",
 }
 
 /** Fallback row title when a charge carries no specific model name. */
-const AUTO_MODEL_LABEL = "Model tự động (miễn phí)"
+const AUTO_MODEL_LABEL = "Automatic model (free)"
 
 /** Unit suffix on every credit-delta chip. */
 const CREDITS_UNIT = "credit"
@@ -135,15 +135,15 @@ const toListItem = (item: AiQuotaHistoryChargeItem, showAnatomy: boolean): Surfa
     key: item.key,
     title: item.model ?? AUTO_MODEL_LABEL,
     subtitle: `${PURPOSE_LABEL[item.surface]} · ${dayjs(item.occurredAt).format("HH:mm DD/MM")}`,
-    meta: <Chip tone={deltaTone(item.credits)} text={`${item.credits} ${CREDITS_UNIT}`} anatPart={showAnatomy ? "Chip" : undefined} />,
+    meta: () => <Chip tone={deltaTone(item.credits)} text={`${item.credits} ${CREDITS_UNIT}`} showAnatomy={showAnatomy} />,
 })
 
 /** Placeholder rows for the loading mirror — same row shape, shimmer chip in the meta slot. */
 const skeletonItems = (showAnatomy: boolean): Array<SurfaceCardListItem> => Array.from({ length: SKELETON_ROW_COUNT }, (_, index) => ({
     key: `skeleton-${index}`,
     title: "Model",
-    subtitle: "Mục đích · Thời gian",
-    meta: <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />,
+    subtitle: "Purpose · Time",
+    meta: () => <Chip isSkeleton showAnatomy={showAnatomy} />,
 }))
 
 /**
@@ -162,45 +162,50 @@ export const AiQuotaHistoryPanel = ({
     const isEmpty = !isLoading && (items?.length ?? 0) === 0
 
     const chart = (
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
             <>
-                <Typography size="sm" weight="medium" text="Credit tiêu mỗi ngày (7 ngày gần nhất)" anatPart={showAnatomy ? "Typography" : undefined} />
-                <SurfaceCard variant="nested" padding="cozy" anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                    <div className="h-44 w-full text-accent-soft-foreground">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={chartPoints} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
-                                <CartesianGrid
-                                    strokeDasharray="3 3"
-                                    stroke="currentColor"
-                                    className="text-divider"
-                                    vertical={false}
-                                />
-                                <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={0} tickLine={false} axisLine={false} />
-                                <YAxis allowDecimals={false} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={28} />
-                                <Tooltip
-                                    cursor={{ fill: "currentColor", opacity: 0.08 }}
-                                    formatter={(value) => [`${value} ${CREDITS_UNIT}`, ""]}
-                                />
-                                <Bar dataKey="credits" fill="currentColor" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                </SurfaceCard>
+                <Typography size="sm" weight="medium" text="Credits used per day (last 7 days)" showAnatomy={showAnatomy} />
+                <SurfaceCard
+                    variant="nested"
+                    padding={4}
+                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                    body={() => (
+                        <div className="h-44 w-full text-accent-soft-foreground">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={chartPoints} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
+                                    <CartesianGrid
+                                        strokeDasharray="3 3"
+                                        stroke="currentColor"
+                                        className="text-divider"
+                                        vertical={false}
+                                    />
+                                    <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={0} tickLine={false} axisLine={false} />
+                                    <YAxis allowDecimals={false} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={28} />
+                                    <Tooltip
+                                        cursor={{ fill: "currentColor", opacity: 0.08 }}
+                                        formatter={(value) => [`${value} ${CREDITS_UNIT}`, ""]}
+                                    />
+                                    <Bar dataKey="credits" fill="currentColor" radius={[4, 4, 0, 0]} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
+                    )}
+                />
             </>
         } />
     )
 
     const chargesList = (
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
             <>
-                <Typography size="sm" weight="medium" text="Lịch sử dùng AI" anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" weight="medium" text="AI usage history" showAnatomy={showAnatomy} />
                 <div className="max-h-64 overflow-y-auto">
                     <AsyncContent
                         isLoading={isLoading}
                         skeleton={<SurfaceCardList variant="nested" items={skeletonItems(showAnatomy)} isSkeleton anatPart={showAnatomy ? "SurfaceCardList" : undefined} />}
                         isEmpty={isEmpty}
                         emptyContent={{
-                            title: "Chưa có lượt dùng AI nào.",
+                            title: "No AI usage yet.",
                             anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
                             showAnatomy,
                         }}
@@ -214,7 +219,7 @@ export const AiQuotaHistoryPanel = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" className={className} anatPart={showAnatomy ? "StackV" : undefined} body={<>{chart}{chargesList}</>} />
+            <StackV gap={6} className={className} anatPart={showAnatomy ? "StackV" : undefined} body={<>{chart}{chargesList}</>} />
         </div>
     )
 }

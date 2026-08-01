@@ -4,15 +4,15 @@ import { SelectSingle } from "@sb-components/atoms/forms/Select/Select"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `SelectSingle`: dropdown chọn MỘT, bọc thẳng HeroUI `Select`.
+ * ATOM — `SelectSingle`: a SINGLE-pick dropdown, wraps HeroUI `Select` directly.
  *
- * Atom lá: control TRẦN là HeroUI `Select.Trigger`/`Select.Value`/`Select.Popover`,
- * khung nhãn/mô tả/lỗi là `FieldFrame` NỘI BỘ (không có story riêng). Không
- * component nào ở đây có story riêng để nhảy tới ⇒ `annotate` không có `storyId`
- * — nhưng bốn part heroui thật (`Select.Trigger`/`Select.Value`/`Label`/`Skeleton`)
- * vẫn cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
+ * Leaf atom: the BARE control is HeroUI `Select.Trigger`/`Select.Value`/`Select.Popover`,
+ * the label/description/error frame is the INTERNAL `FieldFrame` (no story of its own).
+ * No component here has its own story to jump to ⇒ `annotate` carries no `storyId`
+ * — but the four real heroui parts (`Select.Trigger`/`Select.Value`/`Label`/`Skeleton`)
+ * still need the `heroui` tier so the two-rule panel doesn't silently drop them (2026-07-28).
  *
- * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
+ * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Select.Trigger": { tier: "heroui", role: "dropdown trigger button" },
@@ -31,7 +31,7 @@ const OPTIONS = [
     { value: "do", label: "DevOps Mastery" },
 ]
 
-/** Leaf TRẦN — không label: value rỗng, hiện placeholder. FieldFrame render thẳng trigger. */
+/** BARE leaf — no label: value empty, placeholder shows. FieldFrame renders the trigger directly. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -48,7 +48,7 @@ export const Default: Story = {
                             why: "The trigger shows only the muted placeholder text and FieldFrame renders no label or description around it. This is the bare control, so a caller checking the raw trigger shape does not have to scroll past a heading first.",
                             code: "<SelectSingle value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Choose a course\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectSingle
                                         value={value}
                                         onValueChange={setValue}
@@ -64,11 +64,11 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `label`/`hint` — nhãn + mô tả (FieldFrame Label/Description). */
+/** Leaf prop `label`/`hint` — label + description (FieldFrame Label/Description). */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
@@ -85,7 +85,7 @@ export const WithLabel: Story = {
                             why: "FieldFrame adds a label line above the trigger and a hint line below it, on top of the same bare trigger from Default. Both come from the same internal frame, so a caller reaches for label and hint together rather than composing two separate wrappers.",
                             code: "<SelectSingle label=\"Course\" hint=\"Pick the track you want to follow.\" ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectSingle
                                         value={value}
                                         onValueChange={setValue}
@@ -102,11 +102,11 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isRequired` — nhãn + dấu `*` bắt buộc. */
+/** Leaf prop `isRequired` — label + a required `*` mark. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -123,7 +123,7 @@ export const Required: Story = {
                             why: "A red asterisk is appended right after the label text, with nothing else in the composition changing. The mark tells the reader this field cannot be left blank before they ever open the popover.",
                             code: "<SelectSingle label=\"Course\" isRequired ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectSingle
                                         value={value}
                                         onValueChange={setValue}
@@ -140,18 +140,19 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /**
- * Leaf prop `value` — trigger đổi hình theo chỗ đứng của dữ liệu: rỗng thì hiện
- * `placeholder` mờ, có giá trị thì hiện nhãn option đã chọn.
+ * Leaf prop `value` — the trigger's shape follows where the data stands: empty
+ * shows the muted `placeholder`, a value shows the picked option's own label.
  *
- * ⚠️ Đổi tên 2026-07-26: leaf này từng tên `Labeled` và kèm cả `label` — nhưng `label`
- * đã có nhà ở leaf `WithLabel`, nên hai leaf cùng khoe một prop (§12g: mỗi prop MỘT
- * leaf). Bỏ `label` khỏi đây, trả leaf về đúng prop nó sở hữu là `value`.
- * `isDisabled` cũng đã tách sang leaf `Disabled` cùng ngày, cùng lý do.
+ * ⚠️ Renamed 2026-07-26: this leaf used to be called `Labeled` and carried `label`
+ * too — but `label` already had a home in the `WithLabel` leaf, so two leaves were
+ * showing off the same prop (§12g: one prop, one leaf). Dropped `label` from here,
+ * returning the leaf to the prop it actually owns, `value`. `isDisabled` was also
+ * split off into its own `Disabled` leaf the same day, for the same reason.
  */
 export const Value: Story = {
     render: () => {
@@ -170,7 +171,7 @@ export const Value: Story = {
                             why: "The trigger falls back to the muted placeholder text, using the exact same DOM as the picked state below. An empty value has to read as visibly unset, not as a stray blank box.",
                             code: "<SelectSingle value={null} onValueChange={setV} options={OPTIONS} placeholder=\"Choose a course\" ariaLabel=\"Course\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectSingle value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose a course" ariaLabel="Course" showAnatomy />
                                 </div>
                             ),
@@ -180,7 +181,7 @@ export const Value: Story = {
                             why: "The trigger swaps in the matching option's own label, System Design Mastery, in the same node the placeholder just occupied. The trigger is controlled, so it can never drift from whatever value the caller holds in state.",
                             code: "<SelectSingle value=\"sd\" onValueChange={setV} options={OPTIONS} placeholder=\"Choose a course\" ariaLabel=\"Course\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectSingle value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Choose a course" ariaLabel="Course" />
                                 </div>
                             ),
@@ -189,14 +190,14 @@ export const Value: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isDisabled` — nhãn nhạt màu + trigger khoá, chặn popover mở. */
+/** Leaf prop `isDisabled` — label dims + trigger locks, blocking the popover from opening. */
 export const Disabled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectSingle"
                 tier="atom"
@@ -208,7 +209,7 @@ export const Disabled: Story = {
                         why: "The label and the trigger box both dim together and the popover no longer opens on click. Disabling has to read at a glance across the whole field, not just on the box the pointer happens to hover.",
                         code: "<SelectSingle label=\"Course\" value=\"fs\" isDisabled ... />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectSingle
                                     value="fs"
                                     onValueChange={() => {}}
@@ -228,13 +229,14 @@ export const Disabled: Story = {
 }
 
 /**
- * Leaf prop `isInvalid` — CHỈ đổi viền sang đỏ, không có dòng lỗi. Khác
- * `errorMessage` (leaf dưới): `errorMessage` set thì viền đỏ CỘNG dòng lỗi;
- * `isInvalid` đứng một mình thì chỉ viền, vì FieldFrame không tự sinh chữ.
+ * Leaf prop `isInvalid` — ONLY switches the border to red, no error line. Different
+ * from `errorMessage` (leaf below): setting `errorMessage` gives a red border PLUS
+ * an error line; `isInvalid` alone gives only the border, since FieldFrame never
+ * invents text of its own.
  */
 export const Invalid: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectSingle"
                 tier="atom"
@@ -246,7 +248,7 @@ export const Invalid: Story = {
                         why: "Only the trigger's border switches to the danger colour, with no error line underneath it. FieldFrame never invents error text on its own, so isInvalid alone marks the field wrong without saying why.",
                         code: "<SelectSingle label=\"Course\" isInvalid ... />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectSingle
                                     value={null}
                                     onValueChange={() => {}}
@@ -265,7 +267,7 @@ export const Invalid: Story = {
     ),
 }
 
-/** Leaf prop `errorMessage` — nhãn + dòng lỗi đỏ + viền lỗi. */
+/** Leaf prop `errorMessage` — label + a red error line + invalid border. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -282,7 +284,7 @@ export const Error: Story = {
                             why: "The label stays, the trigger border turns to the danger colour, and a red line with the message text appears beneath it. Passing errorMessage is enough on its own to flip the field invalid, there is no separate flag to remember alongside it.",
                             code: "<SelectSingle label=\"Course\" errorMessage=\"Please choose a course.\" ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectSingle
                                         value={value}
                                         onValueChange={setValue}
@@ -299,14 +301,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isSkeleton` — nhãn skeleton trên trigger-box skeleton (mirror đúng cột). */
+/** Leaf prop `isSkeleton` — skeleton label above the trigger-box skeleton (mirrors the right column). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectSingle"
                 tier="atom"
@@ -318,7 +320,7 @@ export const Skeleton: Story = {
                         why: "Both the label and the trigger box swap for shimmer bars sized to the space the real label and trigger will occupy. The atom draws its own resting shape so the field never jumps once the real options are ready.",
                         code: "<SelectSingle label=\"Course\" isSkeleton />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectSingle value={null} onValueChange={() => {}} options={OPTIONS} label="Course" isSkeleton showAnatomy />
                             </div>
                         ),

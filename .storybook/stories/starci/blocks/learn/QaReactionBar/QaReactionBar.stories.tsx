@@ -49,7 +49,7 @@ const Controlled = ({ initialCount, initialReaction }: ControlledProps) => {
 /** LEAF — the toggle's two data conditions: not-yet-reacted vs already-reacted. */
 export const Default: Story = {
     render: () => (
-        <div className="flex flex-col gap-4 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-4 p-8">
             <BlockAnatomy
                 name="QaReactionBar"
                 tier="block"

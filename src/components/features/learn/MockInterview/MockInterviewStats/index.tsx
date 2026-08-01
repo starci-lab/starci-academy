@@ -24,7 +24,7 @@ export interface MockInterviewStatsProps extends WithClassNames<undefined> {
     courseId: string
     /** Course display id, for the weakest-phase/kind CTA's deep link. */
     courseDisplayId: string
-    /** Jumps the setup tab strip back to "Bắt đầu" (empty-state action, and also the readiness hero's "practice more" CTA when not yet at {@link PASS_BAR}). */
+    /** Jumps the setup tab strip back to "Start" (empty-state action, and also the readiness hero's "practice more" CTA when not yet at {@link PASS_BAR}). */
     onStartInterview?: () => void
 }
 
@@ -51,9 +51,9 @@ const readinessBandOf = (avgScore: number): VerdictHeroBand =>
     avgScore >= PASS_BAR ? "success" : avgScore >= PASS_BAR * READINESS_WARNING_RATIO ? "warning" : "danger"
 
 /**
- * Mock-interview aggregate stats — the setup screen's "Thống kê" tab, rút gọn
+ * Mock-interview aggregate stats — the setup screen's "Stats" tab, condensed
  * per `stats-canonical-fold` (1 hero + 1 zone): a readiness hero (vs
- * {@link PASS_BAR}, "còn ~N phiên" projected from the recent trend delta) +
+ * {@link PASS_BAR}, "~N sessions to go" projected from the recent trend delta) +
  * the per-phase breakdown. Gated behind a minimum-attempts floor
  * (server-enforced via `insufficientData`) so a near-empty history never
  * reads as a broken dashboard of fabricated percentages.
@@ -177,7 +177,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                     {/* ZONE 1 — readiness hero: verdict (vs PASS_BAR, projected from the
                         recent trend delta) → evidence (trend sub-line) → action (practice
                         more). Replaces the old bare "avg/100 + meter" SectionCard — a number
-                        alone is exactly the "xàm" pattern this redesign removes. */}
+                        alone is exactly the "pointless" pattern this redesign removes. */}
                     <LabeledCard
                         label={t("mockInterview.statsReadinessLabel")}
                         frameless
@@ -233,7 +233,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                         </LabeledCard>
                     ) : null}
 
-                    {/* ZONE 3 — passive RAG "Gợi ý học": the weakest phases (by avg score) →
+                    {/* ZONE 3 — passive RAG "Study suggestions": the weakest phases (by avg score) →
                         course-wide content search, keyed off their human phase labels
                         (self-hiding when empty / no match). Same study payoff the flashcard
                         stats surfaces carry. */}

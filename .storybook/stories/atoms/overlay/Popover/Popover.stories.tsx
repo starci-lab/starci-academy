@@ -4,36 +4,38 @@ import { Popover } from "@sb-components/atoms/overlay/Popover/Popover"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Popover`: atom click-panel DUY NHẤT, bọc thẳng HeroUI `Popover` +
- * một `Button` làm trigger pressable (react-aria `DialogTrigger` bắt buộc trigger
- * pressable). Không có atom con nào tách ra story riêng — `heading`/`triggerIcon`/
- * `triggerVariant`/`placement`/`showArrow` đều là LEAF prop-driven của chính
- * `Popover` (§12g — audit 2026-07-26 bổ sung 3 leaf cuối, trước đó bị thiếu).
+ * ATOM — `Popover`: the ONE click-panel atom, wraps HeroUI `Popover` directly +
+ * a `Button` as its pressable trigger (react-aria's `DialogTrigger` requires a
+ * pressable trigger). No child atom splits off into its own story — `heading`/
+ * `triggerIcon`/`triggerVariant`/`placement`/`showArrow` are all prop-driven LEAVES
+ * of `Popover` itself (§12g — the 2026-07-26 audit added the last 3 leaves, missing before then).
  *
- * 🌿 `annotate` (2026-07-28): mọi import HeroUI mà `Popover.tsx` render thẳng đều
- * khai `tier: "heroui"` — tầng `heroui` KHÔNG cần `storyId`. Tên node đúng bằng tên
- * import THẬT (`Button` cho trigger; `Popover.Content`/`Popover.Arrow`/
- * `Popover.Heading` — dot-access thật trên compound `HeroPopover` — cho panel), không
- * phải vai nó đóng (KHÔNG còn gọi trigger là `"Trigger"` hay panel là `"Content"` trơn).
+ * 🌿 `annotate` (2026-07-28): every HeroUI import that `Popover.tsx` renders directly
+ * declares `tier: "heroui"` — the `heroui` tier needs NO `storyId`. Node names match
+ * the REAL import name (`Button` for the trigger; `Popover.Content`/`Popover.Arrow`/
+ * `Popover.Heading` — real dot-access on the `HeroPopover` compound — for the panel),
+ * not the role it plays (no longer calling the trigger `"Trigger"` or the panel a bare `"Content"`).
  *
- * ⚠️ Vẫn còn GIỚI HẠN PORTAL: `Popover.Content` (và `Popover.Arrow`/`Popover.Heading`
- * lồng trong nó) render ra `document.body`, NGOÀI render-box mà {@link BlockAnatomy}
- * quét, nên dù đã khai `annotate` chúng vẫn KHÔNG hiện trong cây Structure — khai
- * đúng tên vẫn cần, chỉ là honesty của DATA, không phải lời hứa sẽ THẤY được. Chỉ
- * `Button` (trigger, không portal) thực sự lên cây.
+ * ⚠️ Still a PORTAL LIMIT: `Popover.Content` (and the `Popover.Arrow`/`Popover.Heading`
+ * nested inside it) render into `document.body`, OUTSIDE the render-box that
+ * {@link BlockAnatomy} scans, so even with `annotate` declared they still do NOT
+ * show up in the Structure tree — declaring the right name is still worth doing, it's
+ * just DATA honesty, not a promise they'll be VISIBLE. Only `Button` (the trigger,
+ * no portal) actually lands in the tree.
  *
- * 🧭 Leaf `Placement`/`ShowArrow` mở panel qua PORTAL nên phải `defaultOpen` mới THẤY
- * hình (đóng = không có gì để soi). Cả hai xếp các popover THEO CỘT DỌC, mỗi hàng chừa
- * một dải trống cao — panel bung lên/xuống/trái/phải không đè lên hàng kế bên. Leaf
- * `TriggerVariant` thì ngược lại: khác biệt nằm ở NÚT (đóng), không cần mở panel.
+ * 🧭 The `Placement`/`ShowArrow` leaves open the panel through a PORTAL, so they need
+ * `defaultOpen` to be SEEN at all (closed = nothing to inspect). Both lay their popovers
+ * out in a VERTICAL COLUMN, each row leaving a tall empty band — so the panel can open
+ * up/down/left/right without overlapping the next row. The `TriggerVariant` leaf is the
+ * opposite: the difference lives in the BUTTON (closed), no need to open the panel.
  *
- * ✍️ Chữ hiện ra UI (`triggerLabel`, `content`, `reason`/`why`) viết TIẾNG ANH
- * (thầy chốt 2026-07-26) — kể cả nội dung demo, không riêng phần chú giải panel.
+ * ✍️ Text that shows up in the UI (`triggerLabel`, `content`, `reason`/`why`) is written
+ * in ENGLISH (teacher's call, 2026-07-26) — including demo content, not just the panel's own annotation.
  */
 
 /**
- * Mọi import `@heroui/react` mà `Popover` render thẳng. Dùng CHUNG cho mọi leaf
- * trong file — cây thật vẫn phụ thuộc leaf đang mở render gì.
+ * Every `@heroui/react` import that `Popover` renders directly. Used SHARED across every leaf
+ * in this file — the real tree still depends on which leaf currently renders what.
  */
 const POPOVER_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button": { tier: "heroui", role: "Pressable trigger (react-aria DialogTrigger requires a pressable trigger)." },
@@ -53,10 +55,10 @@ export default meta
 
 type Story = StoryObj<typeof Popover>
 
-/** Leaf TRẦN — trigger button + panel mở sẵn, không heading. */
+/** BARE leaf — trigger button + panel already open, no heading. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Popover"
                 tier="atom"
@@ -69,7 +71,7 @@ export const Default: Story = {
                         why: "The trigger button and its panel render with no heading line above the body text. `defaultOpen` pins the panel open here only so it can be seen; `placement` defaults to bottom and the trigger label goes through `triggerLabel` since the atom takes no `children`.",
                         code: "<Popover triggerLabel=\"Details\" content={<p>…</p>} placement=\"bottom\" />",
                         render: (
-                            <div className="flex justify-center py-16">
+                            <div data-tier="fixture" className="flex justify-center py-16">
                                 <Popover
                                     triggerLabel="Streak details"
                                     content="Last session was 2 days ago. Keep the streak alive by studying every day."
@@ -86,10 +88,10 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `heading` — thêm dòng tiêu đề đậm phía trên thân. */
+/** Leaf prop `heading` — adds a bold heading line above the body. */
 export const WithHeading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Popover"
                 tier="atom"
@@ -101,7 +103,7 @@ export const WithHeading: Story = {
                         why: "A bold line (Popover.Heading) renders above the body text, inside the same panel. This is for a panel that needs a short title of its own instead of leading straight with the body copy.",
                         code: "<Popover triggerLabel=\"Details\" heading=\"12-day streak\" content={<p>…</p>} />",
                         render: (
-                            <div className="flex justify-center py-16">
+                            <div data-tier="fixture" className="flex justify-center py-16">
                                 <Popover
                                     triggerLabel="Streak details"
                                     heading="12-day streak"
@@ -119,10 +121,10 @@ export const WithHeading: Story = {
     ),
 }
 
-/** Leaf prop `triggerIcon` — nhãn nút kèm glyph dẫn đầu. */
+/** Leaf prop `triggerIcon` — the trigger's label grows a leading glyph. */
 export const WithTriggerIcon: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Popover"
                 tier="atom"
@@ -134,7 +136,7 @@ export const WithTriggerIcon: Story = {
                         why: "A leading glyph renders on the trigger button before its label. `triggerIcon` takes a Phosphor COMPONENT (§5.0) so the atom itself pins it to `size-3.5`, the trigger's own text size, plus the fixed stroke weight from §5.0a — callers never choose the weight themselves.",
                         code: "<Popover triggerLabel=\"How scoring works\" triggerIcon={InfoIcon} content={<p>…</p>} />",
                         render: (
-                            <div className="flex justify-center py-16">
+                            <div data-tier="fixture" className="flex justify-center py-16">
                                 <Popover
                                     triggerLabel="How scoring works"
                                     triggerIcon={InfoIcon}
@@ -153,13 +155,13 @@ export const WithTriggerIcon: Story = {
 }
 
 /**
- * Leaf prop `triggerVariant` — ĐỦ 4 giá trị, mỗi giá trị là MỘT state. Khác biệt nằm
- * HOÀN TOÀN ở nút trigger, panel không đổi hình theo variant, nên mọi state giữ panel
- * ĐÓNG.
+ * Leaf prop `triggerVariant` — ALL 4 values, each value is ONE state. The difference
+ * lives ENTIRELY in the trigger button, the panel never changes shape by variant, so
+ * every state keeps the panel CLOSED.
  */
 export const TriggerVariant: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Popover"
                 tier="atom"
@@ -172,7 +174,7 @@ export const TriggerVariant: Story = {
                         why: "The trigger button renders with primary chrome, the loudest weight available. This is for a popover that behaves like a genuine call to action, not a quiet filter or a secondary control.",
                         code: "<Popover triggerVariant=\"primary\" triggerLabel=\"Primary\" content=\"...\" />",
                         render: (
-                            <div className="flex flex-wrap items-center gap-3">
+                            <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
                                 <Popover triggerVariant="primary" triggerLabel="Primary" content="Additional detail appears here when this trigger opens." showAnatomy />
                             </div>
                         ),
@@ -182,7 +184,7 @@ export const TriggerVariant: Story = {
                         why: "The trigger button renders with secondary chrome, a step down from primary. This is the everyday weight for a popover trigger that isn't the main action on the page.",
                         code: "<Popover triggerVariant=\"secondary\" triggerLabel=\"Secondary\" content=\"...\" />",
                         render: (
-                            <div className="flex flex-wrap items-center gap-3">
+                            <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
                                 <Popover triggerVariant="secondary" triggerLabel="Secondary" content="Additional detail appears here when this trigger opens." showAnatomy />
                             </div>
                         ),
@@ -192,7 +194,7 @@ export const TriggerVariant: Story = {
                         why: "The trigger button renders with tertiary chrome, quieter still than secondary. This is for a popover trigger that should read as a minor, optional affordance next to louder controls.",
                         code: "<Popover triggerVariant=\"tertiary\" triggerLabel=\"Tertiary\" content=\"...\" />",
                         render: (
-                            <div className="flex flex-wrap items-center gap-3">
+                            <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
                                 <Popover triggerVariant="tertiary" triggerLabel="Tertiary" content="Additional detail appears here when this trigger opens." showAnatomy />
                             </div>
                         ),
@@ -202,7 +204,7 @@ export const TriggerVariant: Story = {
                         why: "The trigger button renders with ghost chrome, the quietest weight of the four. This is for a popover tucked inside a toolbar or a dense row, where the trigger shouldn't draw the eye until it's pressed.",
                         code: "<Popover triggerVariant=\"ghost\" triggerLabel=\"Ghost\" content=\"...\" />",
                         render: (
-                            <div className="flex flex-wrap items-center gap-3">
+                            <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
                                 <Popover triggerVariant="ghost" triggerLabel="Ghost" content="Additional detail appears here when this trigger opens." showAnatomy />
                             </div>
                         ),
@@ -214,16 +216,17 @@ export const TriggerVariant: Story = {
 }
 
 /**
- * Leaf prop `placement` — ĐỦ 8 hướng đặt panel quanh trigger, mỗi hướng là MỘT state.
+ * Leaf prop `placement` — ALL 8 directions to place the panel around the trigger, each
+ * direction is ONE state.
  *
- * `Popover.Content` render qua PORTAL ra ngoài render-box, đóng thì không có gì để soi
- * → mỗi popover bắt buộc `defaultOpen`. Mỗi state chừa một dải trống cao quanh trigger
- * (`min-h-[16rem]`, 256px, bằng đúng bề ngang panel `w-64`) để panel dù bung hướng nào
- * cũng không chạm mép khung.
+ * `Popover.Content` renders through a PORTAL outside the render-box, so closed means
+ * nothing to inspect → every popover requires `defaultOpen`. Each state leaves a tall
+ * empty band around the trigger (`min-h-[16rem]`, 256px, exactly matching the panel's
+ * own `w-64` width) so the panel, whichever direction it opens toward, never touches the frame's edge.
  */
 export const Placement: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Popover"
                 tier="atom"
@@ -236,7 +239,7 @@ export const Placement: Story = {
                         why: "The panel opens directly above the trigger, arrow pointing down. This is for a trigger that sits near the bottom of the screen, where there's no room for the panel to open downward.",
                         code: "<Popover placement=\"top\" ... />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Top" content="The panel repositions to the space around the trigger." placement="top" defaultOpen showAnatomy />
                             </div>
                         ),
@@ -246,7 +249,7 @@ export const Placement: Story = {
                         why: "The panel opens above the trigger, its left edge aligned with the trigger's left edge. This is for a trigger near the top-right of a narrow area, where a centred panel would overflow past the left edge.",
                         code: "<Popover placement=\"top start\" ... />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Top start" content="The panel repositions to the space around the trigger." placement="top start" defaultOpen showAnatomy />
                             </div>
                         ),
@@ -256,7 +259,7 @@ export const Placement: Story = {
                         why: "The panel opens above the trigger, its right edge aligned with the trigger's right edge. This is for a trigger near the top-left of a narrow area, where a centred panel would overflow past the right edge.",
                         code: "<Popover placement=\"top end\" ... />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Top end" content="The panel repositions to the space around the trigger." placement="top end" defaultOpen showAnatomy />
                             </div>
                         ),
@@ -266,7 +269,7 @@ export const Placement: Story = {
                         why: "The panel opens directly below the trigger, arrow pointing up. This is the everyday direction, used whenever the trigger has open space beneath it.",
                         code: "<Popover placement=\"bottom\" ... />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Bottom" content="The panel repositions to the space around the trigger." placement="bottom" defaultOpen showAnatomy />
                             </div>
                         ),
@@ -276,7 +279,7 @@ export const Placement: Story = {
                         why: "The panel opens below the trigger, its left edge aligned with the trigger's left edge. This is for a trigger near the bottom-right of a narrow area, where a centred panel would overflow past the left edge.",
                         code: "<Popover placement=\"bottom start\" ... />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Bottom start" content="The panel repositions to the space around the trigger." placement="bottom start" defaultOpen showAnatomy />
                             </div>
                         ),
@@ -286,7 +289,7 @@ export const Placement: Story = {
                         why: "The panel opens below the trigger, its right edge aligned with the trigger's right edge. This is for a trigger near the bottom-left of a narrow area, where a centred panel would overflow past the right edge.",
                         code: "<Popover placement=\"bottom end\" ... />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Bottom end" content="The panel repositions to the space around the trigger." placement="bottom end" defaultOpen showAnatomy />
                             </div>
                         ),
@@ -296,7 +299,7 @@ export const Placement: Story = {
                         why: "The panel opens to the left of the trigger, arrow pointing right. This is for a trigger that sits near the right edge of the screen, where the panel would otherwise run off the viewport.",
                         code: "<Popover placement=\"left\" ... />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Left" content="The panel repositions to the space around the trigger." placement="left" defaultOpen showAnatomy />
                             </div>
                         ),
@@ -306,7 +309,7 @@ export const Placement: Story = {
                         why: "The panel opens to the right of the trigger, arrow pointing left. This is for a trigger that sits near the left edge of the screen, such as a rail or a sidebar item.",
                         code: "<Popover placement=\"right\" ... />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Right" content="The panel repositions to the space around the trigger." placement="right" defaultOpen showAnatomy />
                             </div>
                         ),
@@ -318,12 +321,12 @@ export const Placement: Story = {
 }
 
 /**
- * Leaf prop `showArrow` — atom mặc định `true` (mọi leaf khác trong file này đã có sẵn
- * mũi tên), nên leaf này khai đúng HAI state: có mũi tên và không.
+ * Leaf prop `showArrow` — the atom defaults to `true` (every other leaf in this file
+ * already carries the arrow), so this leaf declares exactly TWO states: arrow shown and not.
  */
 export const ShowArrow: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Popover"
                 tier="atom"
@@ -336,7 +339,7 @@ export const ShowArrow: Story = {
                         why: "A small arrow renders on the panel's edge, pointing back at the trigger. This is the default, kept on whenever the panel doesn't sit flush against the trigger it belongs to.",
                         code: "<Popover showArrow content=\"...\" />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Arrow shown" content="The arrow points back to the trigger that opened this panel." showArrow defaultOpen showAnatomy />
                             </div>
                         ),
@@ -346,7 +349,7 @@ export const ShowArrow: Story = {
                         why: "The arrow is dropped entirely, leaving the panel edge plain. This is only for a panel that already sits flush against its trigger, where the connection between the two is obvious without an arrow.",
                         code: "<Popover showArrow={false} content=\"...\" />",
                         render: (
-                            <div className="flex min-h-[16rem] items-center justify-center">
+                            <div data-tier="fixture" className="flex min-h-[16rem] items-center justify-center">
                                 <Popover triggerLabel="Arrow hidden" content="The arrow points back to the trigger that opened this panel." showArrow={false} defaultOpen showAnatomy />
                             </div>
                         ),

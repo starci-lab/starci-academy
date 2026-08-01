@@ -28,7 +28,7 @@ export interface QaConversationHeaderProps extends WithClassNames<undefined> {
     isFounderAsker?: boolean
     /** Distinct people who have answered — shown as an overlapping avatar group. */
     participants: ReadonlyArray<AvatarGroupUser>
-    /** Total answers (top-level + replies) — the "N trả lời" line. */
+    /** Total answers (top-level + replies) — the "N replies" line. */
     replyCount: number
     /** Collapse the conversation back to its inbox row. */
     onCollapse: () => void

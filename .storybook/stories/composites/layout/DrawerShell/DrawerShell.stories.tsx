@@ -5,7 +5,7 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `DrawerShell` — the panel scaffold khung:
+ * `DrawerShell` — the panel scaffold frame:
  * `Drawer > Backdrop > Content > Dialog > CloseTrigger + Header? + Body + Footer?`.
  * Sibling of `ModalShell` — same named slots (`header`/`body`/`footer`,
  * `children` = body shorthand), differing only where the HeroUI primitive
@@ -65,7 +65,7 @@ const ControlledDrawer = ({
 } & Omit<React.ComponentProps<typeof DrawerShell>, "isOpen" | "onOpenChange" | "children">) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
-        <div className="flex flex-col gap-3">
+        <div data-tier="fixture" className="flex flex-col gap-3">
             <div className="flex flex-col gap-2">
                 <Label>{label}</Label>
                 <Typography type="body-sm" color="muted">{hint}</Typography>
@@ -99,11 +99,11 @@ const ControlledDrawer = ({
 /** Right-edge panel: `title` + `description` + `footer` — all three regions are slots. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ControlledDrawer
                 label="Title + description + footer, placement = right (default)"
                 trigger="Open drawer"
-                hint="Cả 3 vùng đều là slot, y hệt ModalShell. Nút CTA truyền TRẦN vào `footer`."
+                hint="All 3 regions are slots, same as ModalShell. The CTA button passes BARE into `footer`."
                 title="Submission attempts"
                 description="Every attempt you've made on this challenge, most recent first."
                 leaf="Default"
@@ -118,11 +118,11 @@ export const Default: Story = {
   footer={<Button variant="secondary">Close</Button>}
 />`}
                 body={(
-                    <Typography type="body-sm" color="muted">
+                    <Typography data-tier="fixture" type="body-sm" color="muted">
                         Attempt #4 — 87/100 · Attempt #3 — 62/100 · Attempt #2 — 40/100 · Attempt #1 — 10/100
                     </Typography>
                 )}
-                footer={<Button variant="secondary" size="sm">Close</Button>}
+                footer={<Button data-tier="fixture" variant="secondary" size="sm">Close</Button>}
             />
         </div>
     ),
@@ -131,15 +131,15 @@ export const Default: Story = {
 /** Custom header: a caller-built node, same `pr-8` room-for-close-button rule as ModalShell. */
 export const CustomHeader: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <ControlledDrawer
                 label="Custom header"
                 trigger="Open drawer with custom header"
-                hint="header là node tự dựng, phải tự chừa chỗ cho nút đóng — nên có pr-8."
+                hint="header is a caller-built node, so it must leave its own room for the close button — hence `pr-8`."
                 header={
-                    <div className="flex flex-col gap-1 pr-8">
+                    <div data-tier="fixture" className="flex flex-col gap-1 pr-8">
                         <Typography type="body" weight="bold">AI chat</Typography>
-                        <Typography type="body-xs" color="muted">Về bài học này</Typography>
+                        <Typography type="body-xs" color="muted">About this lesson</Typography>
                     </div>
                 }
                 leaf="CustomHeader"
@@ -151,7 +151,7 @@ export const CustomHeader: Story = {
 </DrawerShell>`}
             >
                 <Typography type="body-sm" color="muted">
-                    Hỏi AI về bài học đang đọc.
+                    Ask AI about the lesson you're currently reading.
                 </Typography>
             </ControlledDrawer>
         </div>

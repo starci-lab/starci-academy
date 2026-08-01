@@ -45,7 +45,7 @@ const PROVIDER_LABELS: Record<string, string> = {
  * Human label for what a charge row was for. `surface` distinguishes an
  * interview-grading / chatbot charge from a challenge-grading one — rows
  * predating the `surface` column (or from a surface not yet passing it
- * through) fall back to the "Chấm challenge" label.
+ * through) fall back to the "Grade challenge" label.
  */
 const purposeLabel = (
     item: QueryMyCreditUsageHistoryItem,

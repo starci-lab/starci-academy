@@ -32,8 +32,6 @@ export interface LogoProps {
      * utility — `h-8`/`h-10` are not in {@link AllowedClassName}.
      */
     size?: LogoSize
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -54,16 +52,18 @@ export interface LogoProps {
  * ratio — such callers add `self-start` themselves.
  *
  * @param props.size - which host bar this sits in; picks the root height.
- * @param props.className - additional sizing / placement utilities for the root svg.
+ * @param props.classNames - additional positioning utilities for the root svg.
  */
-const LogoBase = ({ size = "navbar", className, classNames }: LogoProps) => {
+const LogoBase = ({ size = "navbar", classNames }: LogoProps) => {
     return (
         <svg
+            data-tier="atom"
+            data-component="Logo"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
             width="512"
             height="512"
-            className={cn(sizeClassName[size], "shrink-0", className, classNames)}
+            className={cn(sizeClassName[size], "shrink-0", classNames)}
             role="img"
             aria-label="StarCi Academy"
         >
@@ -88,3 +88,5 @@ const LogoBase = ({ size = "navbar", className, classNames }: LogoProps) => {
 
 /** `Logo.*` — StarCi brand-mark namespace. */
 export { LogoBase as Logo }
+
+export const meta = { tier: "atom", name: "Logo" } as const

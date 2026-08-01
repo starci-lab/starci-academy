@@ -22,12 +22,12 @@ export interface PlaygroundHeaderProps {
  * The chrome for the Session work surface: a back-link out to the exercise's
  * Setup page + the step counter/progress.
  *
- * `Thoát` returns to Setup (`[slug]`, the exercise overview — device specs +
+ * `Exit` returns to Setup (`[slug]`, the exercise overview — device specs +
  * readiness), NOT the hub list — the learner just came from there, and it's
- * the single entry back into this exercise. (Đính chính 2026-07-20: this
- * header used to also carry a `Chuẩn bị · Lab` route switch, but Setup never
+ * the single entry back into this exercise. (Correction 2026-07-20: this
+ * header used to also carry a `Prepare · Lab` route switch, but Setup never
  * rendered it — the switch was dead on one leg — so it's gone; Setup is
- * reached only via `Thoát`.)
+ * reached only via `Exit`.)
  *
  * @param props - See {@link PlaygroundHeaderProps}.
  */

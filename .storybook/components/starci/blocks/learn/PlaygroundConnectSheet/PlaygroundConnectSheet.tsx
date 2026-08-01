@@ -58,7 +58,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * inconsistently).
  *
  * ⭐ DEVICE SPECS + LOG ONLY RENDER WHILE `connection === "connected"` AND
- * `device` IS PRESENT. A stale spec card under a "mất kết nối" chip would claim
+ * `device` IS PRESENT. A stale spec card under a "disconnected" chip would claim
  * live data that is not live; the not-connected hint is what the learner
  * should act on instead.
  *
@@ -151,9 +151,9 @@ const STATUS_DOT_CLASS: Record<PlaygroundConnectionState, string> = {
 
 /** The block owns this vocabulary — the caller only ever hands over the enum. */
 const STATUS_LABEL: Record<PlaygroundConnectionState, string> = {
-    connected: "Đã kết nối",
-    waiting: "Đang chờ kết nối",
-    dropped: "Mất kết nối",
+    connected: "Connected",
+    waiting: "Waiting to connect",
+    dropped: "Disconnected",
 }
 
 const LOG_COLOR: Record<PlaygroundAgentLogLevel, TypographyColor> = {
@@ -165,7 +165,7 @@ const LOG_COLOR: Record<PlaygroundAgentLogLevel, TypographyColor> = {
 
 /** Same hint for both not-connected states — see file header on `waiting` vs `dropped`. */
 const NOT_CONNECTED_HINT =
-    "Bật agent trên máy của bạn rồi bấm Kết nối lại. Thông số máy và nhật ký sẽ hiện ở đây ngay khi kết nối xong."
+    "Turn on the agent on your machine, then press Reconnect. Your device specs and log will show up here as soon as the connection is back."
 
 /** `1 234 567 890` → `"1.1 GB"` / `"48 MB"` — the block owns this wording, not a shared util (one call site). */
 const formatBytes = (bytes: number): string => {
@@ -178,11 +178,11 @@ const formatBytes = (bytes: number): string => {
 const buildDeviceItems = (device: PlaygroundDeviceSpec): Array<StatRibbonItem> => {
     const items: Array<StatRibbonItem> = [
         { key: "host", value: device.hostname, label: `${device.platform} · ${device.arch}` },
-        { key: "cpu", value: `${device.cpuCores} nhân`, label: device.cpuModel },
+        { key: "cpu", value: `${device.cpuCores} cores`, label: device.cpuModel },
         {
             key: "ram",
             value: `${formatBytes(device.freeMemBytes)} / ${formatBytes(device.totalMemBytes)}`,
-            label: "RAM còn trống / tổng",
+            label: "RAM free / total",
         },
     ]
     if (device.gpu != null) {
@@ -221,10 +221,10 @@ const PlaygroundConnectSheet = ({
         return (
             <div data-anat-part={anatPart} className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
                 <StackH
-                    gap="grouped"
+                    gap={4}
                     align="center"
                     justify="between"
-                    padding="cozy"
+                    padding={4}
                     anatPart={showAnatomy ? "StackH" : undefined}
                     body={
                         <>
@@ -245,7 +245,7 @@ const PlaygroundConnectSheet = ({
 
     const statusGroup = (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -255,7 +255,6 @@ const PlaygroundConnectSheet = ({
                         dotClassName={STATUS_DOT_CLASS[safeConnection]}
                         text={STATUS_LABEL[safeConnection]}
                         showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Chip" : undefined}
                     />
                     {isConnected && latencyMs != null ? (
                         <Typography
@@ -263,7 +262,7 @@ const PlaygroundConnectSheet = ({
                             color="muted"
                             tabularNums
                             text={`${latencyMs} ms`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -273,27 +272,25 @@ const PlaygroundConnectSheet = ({
 
     const actionsGroup = (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     <Button
-                        label="Kết nối lại"
+                        label="Reconnect"
                         variant="secondary"
                         size="sm"
                         prefixIcon={ArrowClockwiseIcon}
                         onPress={onReconnect}
-                        anatPart={showAnatomy ? "Button" : undefined}
                     />
                     <Button
                         isIconOnly
                         size="sm"
                         variant="ghost"
                         prefixIcon={open ? CaretUpIcon : CaretDownIcon}
-                        ariaLabel={open ? "Thu gọn bảng kết nối" : "Mở rộng bảng kết nối"}
+                        ariaLabel={open ? "Collapse connection panel" : "Expand connection panel"}
                         onPress={() => onOpenChange(!open)}
-                        anatPart={showAnatomy ? "Button" : undefined}
                     />
                 </>
             }
@@ -309,7 +306,7 @@ const PlaygroundConnectSheet = ({
             color={LOG_COLOR[entry.level]}
             tabularNums={false}
             text={entry.line}
-            anatPart={showAnatomy ? "Typography" : undefined}
+            showAnatomy={showAnatomy}
         />
     )
 
@@ -318,20 +315,20 @@ const PlaygroundConnectSheet = ({
             <div data-anat-part={showAnatomy ? "StatRibbon" : undefined}>
                 <StatRibbon items={buildDeviceItems(device)} valueType="body" bordered showAnatomy={showAnatomy} />
             </div>
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={(agentLog ?? []).map(renderLogLine)} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={(agentLog ?? []).map(renderLogLine)} />
         </>
     ) : (
-        <Typography size="sm" color="muted" text={NOT_CONNECTED_HINT} anatPart={showAnatomy ? "Typography" : undefined} />
+        <Typography size="sm" color="muted" text={NOT_CONNECTED_HINT} showAnatomy={showAnatomy} />
     )
 
     return (
         <div data-anat-part={anatPart} className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
             {/* PEEK — always visible: status + reconnect, plus the toggle that opens the body. */}
             <StackH
-                gap="grouped"
+                gap={4}
                 align="center"
                 justify="between"
-                padding="cozy"
+                padding={4}
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
                     <>
@@ -343,7 +340,7 @@ const PlaygroundConnectSheet = ({
             {/* BODY — mounted only while open, matching a real bottom-sheet's collapsed state. */}
             {open ? (
                 <div className="border-t border-default">
-                    <StackV gap="grouped" padding="cozy" anatPart={showAnatomy ? "StackV" : undefined} body={sheetBody} />
+                    <StackV gap={4} padding={4} anatPart={showAnatomy ? "StackV" : undefined} body={sheetBody} />
                 </div>
             ) : null}
         </div>

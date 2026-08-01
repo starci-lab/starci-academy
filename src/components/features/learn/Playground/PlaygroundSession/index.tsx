@@ -94,7 +94,7 @@ const resourceStatusColor = (status: string): "success" | "default" => {
  * 2-pane archetype.
  *
  * There is deliberately NO in-browser terminal: the learner runs commands in
- * their own, and "Kiểm tra lại" asks the paired agent to re-snapshot
+ * their own, and "Re-check" asks the paired agent to re-snapshot
  * resources on demand (`verify:now`) so the step can confirm what actually
  * happened on their machine.
  *

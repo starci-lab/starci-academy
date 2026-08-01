@@ -51,7 +51,7 @@ export const FacebookReactionSelector = ({ active, onSelect, className }: Facebo
                             active === reaction.type ? "bg-accent-soft" : undefined,
                         )}
                     >
-                        {/* reaction name floats above on hover, à la Facebook */}
+                        {/* reaction name floats above on hover, in the style of Facebook */}
                         <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 scale-90 whitespace-nowrap rounded-full bg-foreground px-2 py-0 text-[10px] font-medium text-background opacity-0 transition-all duration-150 group-hover/fbreact:scale-100 group-hover/fbreact:opacity-100">
                             {label}
                         </span>

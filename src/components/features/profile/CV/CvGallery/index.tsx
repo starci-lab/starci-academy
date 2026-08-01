@@ -82,7 +82,7 @@ const CvGalleryCard = ({
             footer={(
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
-                        {/* "Công khai" toggle — flags this as the ONE public CV
+                        {/* "Public" toggle — flags this as the ONE public CV
                             (single-public-per-user, BE-enforced). Label is a
                             sibling (not inside Switch.Content) to dodge the
                             react-aria slot requirement. */}

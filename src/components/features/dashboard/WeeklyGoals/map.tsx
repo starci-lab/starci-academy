@@ -35,7 +35,7 @@ export const KPI_ORDER: Array<KpiKey> = [
 /**
  * Sensible default weekly targets used when the learner hasn't set a custom goal
  * yet — so each meter tracks this week's activity out of the box (the bar fills as
- * you study). The learner can still override any of these via the "Sửa" editor.
+ * you study). The learner can still override any of these via the "Edit" editor.
  */
 export const DEFAULT_KPI_TARGETS: Record<KpiKey, number> = {
     lessons: 5,

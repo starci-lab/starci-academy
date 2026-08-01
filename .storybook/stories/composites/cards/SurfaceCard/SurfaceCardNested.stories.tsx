@@ -30,16 +30,18 @@ const meta: Meta<typeof SurfaceCardNested> = {
 }
 export default meta
 type Story = StoryObj<typeof SurfaceCardNested>
+/** `content` slot fixture for {@link relatedItems}'s "normalization" section — a component reference (COMPOSITE-8), not a built node. */
+const NormalizationContent = () => (
+    <Typography data-tier="fixture" type="body-sm" color="muted">
+        Normalization splits data into multiple tables to reduce redundancy and update anomalies.
+    </Typography>
+)
 const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
     {
         key: "normalization",
         eyebrow: "Relational databases",
         title: "Data normalization and normal forms",
-        content: (
-            <Typography type="body-sm" color="muted">
-                Normalization splits data into multiple tables to reduce redundancy and update anomalies.
-            </Typography>
-        ),
+        content: NormalizationContent,
         anatPart: "Section",
     },
     {
@@ -49,6 +51,20 @@ const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
         anatPart: "Section",
     },
 ]
+/** `icon` slot fixture for {@link WithIconMeta} — a component reference (COMPOSITE-8), not a built node. */
+const RelatedIcon = () => <FolderOpenIcon data-tier="fixture" />
+/** `meta` slot fixture for {@link WithIconMeta}. */
+const RelatedMeta = () => <Typography data-tier="fixture" type="body-xs" color="muted">2 items</Typography>
+/** `footer` slot fixture for {@link WithFooter}. */
+const ViewAllFooter = () => <Button data-tier="fixture" size="sm" variant="tertiary">View all</Button>
+/** `body` slot fixture for {@link FreeBody}. */
+const NotesBody = () => (
+    <div className="p-3">
+        <Typography type="body-sm">
+            Normalize to 3NF first, only denormalize once you&apos;ve measured a real read bottleneck.
+        </Typography>
+    </div>
+)
 /**
  * Default — `variant="surface"` (default): the card sits DIRECTLY on `bg-background`
  * so it owns its own background + shadow. Body is built from `items` (a REPEATING
@@ -56,7 +72,7 @@ const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardNested"
                 tier="composite"
@@ -95,7 +111,7 @@ export const Default: Story = {
  */
 export const Variant: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardNested"
                 tier="composite"
@@ -111,7 +127,7 @@ export const Variant: Story = {
     items={items}
 />`,
                         render: (
-                            <div className="max-w-md">
+                            <div data-tier="fixture" className="max-w-md">
                                 <SurfaceCardNested title="Related lessons" variant="surface" items={relatedItems} showAnatomy />
                             </div>
                         ),
@@ -125,7 +141,7 @@ export const Variant: Story = {
     items={items}
 />`,
                         render: (
-                            <div className="flex max-w-md flex-col overflow-hidden rounded-2xl border border-default bg-surface">
+                            <div data-tier="fixture" className="flex max-w-md flex-col overflow-hidden rounded-2xl border border-default bg-surface">
                                 <div className="flex flex-col gap-2 p-3">
                                     <div className="max-w-[85%] rounded-2xl bg-surface-secondary px-3 py-2">
                                         <Typography type="body-sm">
@@ -153,7 +169,7 @@ export const Variant: Story = {
  */
 export const InteractiveSections: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardNested"
                 tier="composite"
@@ -190,7 +206,7 @@ export const InteractiveSections: Story = {
 /** `icon` + `meta` — the header bar's remaining two slots: an eyebrow icon on the left, meta pinned on the right. */
 export const WithIconMeta: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardNested"
                 tier="composite"
@@ -202,16 +218,16 @@ export const WithIconMeta: Story = {
                         name: "icon and meta set",
                         why: "The header bar gains a leading eyebrow icon before the title and a meta node pinned to the right edge that never shrinks. Both come in bare from the caller — the frame pins their size-4 dimension and muted colour itself, per §4/§5, so the caller never has to restate those choices.",
                         code: `<SurfaceCardNested
-    icon={<FolderOpenIcon />}
+    icon={RelatedIcon}
     title="Related lessons"
-    meta={<Typography type="body-xs" color="muted">2 items</Typography>}
+    meta={RelatedMeta}
     items={[…]}
 />`,
                         render: (
                             <SurfaceCardNested
-                                icon={<FolderOpenIcon />}
+                                icon={RelatedIcon}
                                 title="Related lessons"
-                                meta={<Typography type="body-xs" color="muted">2 items</Typography>}
+                                meta={RelatedMeta}
                                 items={relatedItems}
                                 showAnatomy
                             />
@@ -225,7 +241,7 @@ export const WithIconMeta: Story = {
 /** `footer` — a closing bar sitting INSIDE the frame (separated by `border-t`), unlike `.Base`'s `description`, which sits outside. */
 export const WithFooter: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardNested"
                 tier="composite"
@@ -239,13 +255,13 @@ export const WithFooter: Story = {
                         code: `<SurfaceCardNested
     title="Related lessons"
     items={[…]}
-    footer={<Button size="sm" variant="tertiary">View all</Button>}
+    footer={ViewAllFooter}
 />`,
                         render: (
                             <SurfaceCardNested
                                 title="Related lessons"
                                 items={relatedItems}
-                                footer={<Button size="sm" variant="tertiary">View all</Button>}
+                                footer={ViewAllFooter}
                                 showAnatomy
                             />
                         ),
@@ -258,7 +274,7 @@ export const WithFooter: Story = {
 /** No `header`/`title`/`icon`/`meta` → the header bar does NOT render: only the frame + section column are left. */
 export const Headerless: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardNested"
                 tier="composite"
@@ -279,34 +295,22 @@ export const Headerless: Story = {
         </div>
     ),
 }
-/** `children` — the WRAPPER frame still accepts free-form content when the Body is NOT a repeating list (`items` wins if both are given). */
+/** `body` — the WRAPPER frame still accepts free-form content when the Body is NOT a repeating list (`items` wins if both are given). */
 export const FreeBody: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardNested"
                 tier="composite"
                 leaf="FreeBody"
                 renderClassName="max-w-md"
-                reason="`items` wins when both are given — `children` only takes over the Body when there is no repeating list to divide into sections."
+                reason="`items` wins when both are given — `body` only takes over when there is no repeating list to divide into sections."
                 states={[
                     {
-                        name: "children set, items unset",
-                        why: "The body renders whatever free-form node the caller passes as `children`, instead of mapping `items` into a divided row of sections. No `Section` node appears in this tree because there is nothing repeating here to divide.",
-                        code: `<SurfaceCardNested title="Notes">
-    <div className="p-3">
-        <Typography type="body-sm">…</Typography>
-    </div>
-</SurfaceCardNested>`,
-                        render: (
-                            <SurfaceCardNested title="Notes" showAnatomy>
-                                <div className="p-3">
-                                    <Typography type="body-sm">
-                                        Normalize to 3NF first, only denormalize once you&apos;ve measured a real read bottleneck.
-                                    </Typography>
-                                </div>
-                            </SurfaceCardNested>
-                        ),
+                        name: "body set, items unset",
+                        why: "The body renders whatever free-form component the caller hands to `body`, instead of mapping `items` into a divided row of sections. No `Section` node appears in this tree because there is nothing repeating here to divide.",
+                        code: `<SurfaceCardNested title="Notes" body={NotesBody} />`,
+                        render: <SurfaceCardNested title="Notes" showAnatomy body={NotesBody} />,
                     },
                 ]}
             />
@@ -325,7 +329,7 @@ export const FreeBody: Story = {
  */
 export const Radius: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardNested"
                 tier="composite"
@@ -341,7 +345,7 @@ export const Radius: Story = {
     items={items}
 />`,
                         render: (
-                            <div className="max-w-md">
+                            <div data-tier="fixture" className="max-w-md">
                                 <SurfaceCardNested title="Related lessons" radius="3xl" items={relatedItems} showAnatomy />
                             </div>
                         ),
@@ -356,7 +360,7 @@ export const Radius: Story = {
     items={items}
 />`,
                         render: (
-                            <div className="max-w-sm rounded-2xl bg-surface p-3 shadow-surface">
+                            <div data-tier="fixture" className="max-w-sm rounded-2xl bg-surface p-3 shadow-surface">
                                 <SurfaceCardNested title="Related lessons" radius="xl" variant="nested" items={relatedItems} showAnatomy />
                             </div>
                         ),

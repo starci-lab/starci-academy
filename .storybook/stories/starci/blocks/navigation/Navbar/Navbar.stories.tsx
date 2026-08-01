@@ -47,9 +47,9 @@ type Story = StoryObj<typeof Navbar>
 
 /** Shared desktop-route fixture — reused across every state so the pills read identically. */
 const NAV_ITEMS: Array<NavLinkItem> = [
-    { id: "home", label: "Trang chủ", isActive: true, onPress: () => {} },
-    { id: "courses", label: "Khoá học", isActive: false, onPress: () => {} },
-    { id: "contact", label: "Liên hệ", isActive: false, onPress: () => {} },
+    { id: "home", label: "Home", isActive: true, onPress: () => {} },
+    { id: "courses", label: "Courses", isActive: false, onPress: () => {} },
+    { id: "contact", label: "Contact", isActive: false, onPress: () => {} },
 ]
 
 /** Shared locale fixture. */
@@ -62,9 +62,9 @@ const LANGUAGES: Array<NavbarLanguageOption> = [
 const NOTIFICATIONS_WITH_DATA: NavbarNotificationsData = {
     unreadCount: 2,
     items: [
-        { id: "n1", title: "Bài nộp đã được chấm", subtitle: "Module 3 · Container hoá", timeLabel: "5 phút trước", isRead: false },
-        { id: "n2", title: "Nhắc lịch ôn flashcard", subtitle: "12 thẻ đến hạn hôm nay", timeLabel: "2 giờ trước", isRead: false },
-        { id: "n3", title: "Khoá học có bài giảng mới", subtitle: "DevOps Mastery", timeLabel: "1 ngày trước", isRead: true },
+        { id: "n1", title: "Your submission was graded", subtitle: "Module 3 · Containerization", timeLabel: "5 minutes ago", isRead: false },
+        { id: "n2", title: "Flashcard review reminder", subtitle: "12 cards due today", timeLabel: "2 hours ago", isRead: false },
+        { id: "n3", title: "New lesson added to your course", subtitle: "DevOps Mastery", timeLabel: "1 day ago", isRead: true },
     ],
     isLoading: false,
     error: null,
@@ -92,11 +92,11 @@ const ACCOUNT_AUTHED: NavbarAccountData = {
     user: { username: "tranminhanh", email: "tranminhanh@gmail.com", avatarUrl: undefined },
     isLoading: false,
     menuItems: [
-        { id: "dashboard", label: "Bảng điều khiển", icon: SquaresFourIcon, onPress: () => {} },
-        { id: "profile", label: "Hồ sơ", icon: UserIcon, onPress: () => {} },
+        { id: "dashboard", label: "Dashboard", icon: SquaresFourIcon, onPress: () => {} },
+        { id: "profile", label: "Profile", icon: UserIcon, onPress: () => {} },
         { id: "cv", label: "CV", icon: FileTextIcon, onPress: () => {} },
-        { id: "settings", label: "Cài đặt", icon: GearIcon, onPress: () => {} },
-        { id: "logout", label: "Đăng xuất", icon: SignOutIcon, isDanger: true, onPress: () => {} },
+        { id: "settings", label: "Settings", icon: GearIcon, onPress: () => {} },
+        { id: "logout", label: "Sign out", icon: SignOutIcon, isDanger: true, onPress: () => {} },
     ],
 }
 
@@ -105,8 +105,8 @@ const ACCOUNT_GUEST: NavbarAccountData = {
     isAuthed: false,
     isLoading: false,
     menuItems: [
-        { id: "sign-in", label: "Đăng nhập", icon: SignInIcon, onPress: () => {} },
-        { id: "sign-up", label: "Đăng ký", icon: UserPlusIcon, onPress: () => {} },
+        { id: "sign-in", label: "Sign in", icon: SignInIcon, onPress: () => {} },
+        { id: "sign-up", label: "Sign up", icon: UserPlusIcon, onPress: () => {} },
     ],
 }
 
@@ -149,7 +149,7 @@ export const Desktop: Story = {
                         <Navbar
                             onLogoPress={() => {}}
                             navItems={NAV_ITEMS}
-                            searchPlaceholder="Tìm bài học, khoá học…"
+                            searchPlaceholder="Search lessons, courses…"
                             shortcutLabel="Ctrl K"
                             onSearchPress={() => {}}
                             languages={LANGUAGES}
@@ -180,7 +180,7 @@ export const Desktop: Story = {
                         <Navbar
                             onLogoPress={() => {}}
                             navItems={NAV_ITEMS}
-                            searchPlaceholder="Tìm bài học, khoá học…"
+                            searchPlaceholder="Search lessons, courses…"
                             shortcutLabel="Ctrl K"
                             onSearchPress={() => {}}
                             languages={LANGUAGES}
@@ -210,7 +210,7 @@ export const Desktop: Story = {
                         <Navbar
                             onLogoPress={() => {}}
                             navItems={NAV_ITEMS}
-                            searchPlaceholder="Tìm bài học, khoá học…"
+                            searchPlaceholder="Search lessons, courses…"
                             shortcutLabel="Ctrl K"
                             onSearchPress={() => {}}
                             languages={LANGUAGES}
@@ -250,7 +250,7 @@ export const Mobile: Story = {
                         <Navbar
                             onLogoPress={() => {}}
                             navItems={NAV_ITEMS}
-                            searchPlaceholder="Tìm bài học, khoá học…"
+                            searchPlaceholder="Search lessons, courses…"
                             shortcutLabel="Ctrl K"
                             onSearchPress={() => {}}
                             languages={LANGUAGES}
@@ -275,7 +275,7 @@ export const Mobile: Story = {
                         <Navbar
                             onLogoPress={() => {}}
                             navItems={NAV_ITEMS}
-                            searchPlaceholder="Tìm bài học, khoá học…"
+                            searchPlaceholder="Search lessons, courses…"
                             shortcutLabel="Ctrl K"
                             onSearchPress={() => {}}
                             languages={LANGUAGES}

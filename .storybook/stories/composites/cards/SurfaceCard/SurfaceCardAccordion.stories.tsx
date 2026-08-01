@@ -3,12 +3,12 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Chip } from "@heroui/react"
 import { FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceCardAccordion, type SurfaceCardAccordionItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
-// `FeedbackEmpty` takes the icon as a COMPONENT ref and forces `size-8` itself
+// `EmptyState` takes the icon as a COMPONENT ref and forces `size-8` itself
 // (§4/§5) — phosphor's `weight="duotone"` can no longer ride along, so it's wrapped
 // into a component to KEEP the artwork as-is.
-const FolderOpenDuotone = (props: SVGProps<SVGSVGElement>) => <FolderOpenIcon {...props} weight="duotone" />
+const FolderOpenDuotone = (props: SVGProps<SVGSVGElement>) => <FolderOpenIcon data-tier="fixture" {...props} weight="duotone" />
 /**
  * FRAME (Layouts) — a bounded `bg-surface` frame wrapping COLLAPSIBLE sections, the
  * separator running full-bleed to the card edge: same skin as `SurfaceCardList`,
@@ -46,7 +46,7 @@ type Story = StoryObj<typeof SurfaceCardAccordion>
  * avatar+title+desc row.
  */
 const panel = () => (
-    <div className="flex flex-row items-center gap-3">
+    <div data-tier="fixture" className="flex flex-row items-center gap-3">
         <Avatar className="size-10 shrink-0">
             <AvatarFallback>SC</AvatarFallback>
         </Avatar>
@@ -59,12 +59,12 @@ const panel = () => (
     </div>
 )
 const items: ReadonlyArray<SurfaceCardAccordionItem> = [
-    { id: "rest", title: "REST semantics", subtitle: "3 resources", body: panel() },
-    { id: "input", title: "Input contract", subtitle: "2 resources", body: panel() },
-    { id: "error", title: "Error handling", subtitle: "4 resources", body: panel() },
+    { id: "rest", title: "REST semantics", subtitle: "3 resources", body: panel },
+    { id: "input", title: "Input contract", subtitle: "2 resources", body: panel },
+    { id: "error", title: "Error handling", subtitle: "4 resources", body: panel },
 ]
 /**
- * `FeedbackEmpty` is a REAL DEP of the `Empty` leaf (its own story, clickable) —
+ * `EmptyState` is a REAL DEP of the `Empty` leaf (its own story, clickable) —
  * matches the icon+title+description shape (NO action) rendering at this leaf ⇒
  * points to the right `Description` leaf over there. Every other part of the frame
  * (`Surface`/`Header`) has NO story of its own, so NONE are declared — the old
@@ -76,29 +76,28 @@ const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     storyId: "composites-feedback-feedback-feedbackempty--description",
 }
 /**
- * ⭐ 2026-07-27 — `Accordion.Item` renders straight from `@heroui/react` (this frame
- * builds each trigger row on HeroUI's own `Accordion.Item`, no port of ours in
- * between). It carries `data-anat-part="Accordion.Item"` directly, so it needs the
- * `heroui` tier here to show up at all — a `heroui` node needs no `storyId` (there is
- * no story of ours to jump to), the tier alone is what keeps the panel from hiding it.
- * Previously named `"Row"`, a role label that hid which real component was rendering.
- * Applies to every leaf below that mounts REAL (non-skeleton) items; `Loading` mounts
- * `AccordionFrameSkeleton` instead, a plain mimic `<div>`, not this component.
+ * ⭐ Rendering is delegated to the house `Accordion` atom (COMPOSITE-3) — this frame
+ * composes each trigger's content (leading node + title + subtitle + trailing node)
+ * as DATA handed to the atom's `items`, and the atom owns expand/collapse plus its
+ * own collapsed-row mirror while loading (COMPOSITE-10). The atom is a REAL DEP with
+ * its own story, so it carries `storyId` here and shows up as a clickable node —
+ * unlike a bare `heroui` node, which would need no `storyId` at all.
  */
-const ACCORDION_ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Accordion.Item": {
-        tier: "heroui",
-        role: "one collapsible trigger + panel row, rendered directly from HeroUI's Accordion.Item.",
+const ACCORDION_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "DisclosureGroup": {
+        tier: "atom",
+        role: "the collapsible sections — SurfaceCardAccordion composes each trigger's content and hands it, as data, to the house Accordion atom, which owns expand/collapse and the loading mirror.",
+        storyId: "atoms-navigation-accordion-accordion--default",
     },
 }
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardAccordion"
                 tier="composite"
                 leaf="Default"
-                annotate={ACCORDION_ITEM_ANNOTATE}
+                annotate={ACCORDION_ANNOTATE}
                 reason="No `label`/`description` (bare) renders the Surface wrapping the Rows directly, with no Header above it."
                 states={[
                     {
@@ -120,12 +119,12 @@ export const Default: Story = {
 }
 export const WithLabel: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardAccordion"
                 tier="composite"
                 leaf="WithLabel"
-                annotate={ACCORDION_ITEM_ANNOTATE}
+                annotate={ACCORDION_ANNOTATE}
                 states={[
                     {
                         name: "label = \"Resources\"",
@@ -154,12 +153,12 @@ export const WithLabel: Story = {
  */
 export const Variants: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardAccordion"
                 tier="composite"
                 leaf="Prop `variant`"
-                annotate={ACCORDION_ITEM_ANNOTATE}
+                annotate={ACCORDION_ANNOTATE}
                 reason="`variant` is one of three independent axes shared with SurfaceCard/.List/.CrossList: it answers whether this frame sits directly on the page background or nested inside another surface, never both at once (§1a)."
                 states={[
                     {
@@ -181,7 +180,7 @@ export const Variants: Story = {
                         why: "The shadow disappears and a border takes its place, since a shadow reads as nearly invisible once this frame is already sitting inside a parent surface such as a panel, modal, or drawer. Everything else about the accordion's composition stays the same as the surface state.",
                         code: "<SurfaceCardAccordion label=\"Resources\" variant=\"nested\" items={[…]} />",
                         render: (
-                            <div className="rounded-3xl bg-surface p-3 shadow-surface">
+                            <div data-tier="fixture" className="rounded-3xl bg-surface p-3 shadow-surface">
                                 <SurfaceCardAccordion
                                     label="Resources"
                                     variant="nested"
@@ -201,14 +200,18 @@ export const Variants: Story = {
  * status chip / score right inside the collapsed trigger. The title truncates
  * itself to make room; `titleEnd` keeps its full width.
  */
+/** `titleEnd` slot fixtures for {@link WithTitleEnd} — component references (COMPOSITE-8), not built nodes. */
+const DoneBadge = () => <Chip data-tier="fixture" size="sm" variant="soft" color="success"><Chip.Label>Done</Chip.Label></Chip>
+const InProgressBadge = () => <Chip data-tier="fixture" size="sm" variant="soft" color="warning"><Chip.Label>In progress</Chip.Label></Chip>
+const NotStartedBadge = () => <Chip data-tier="fixture" size="sm" variant="soft" color="default"><Chip.Label>Not started</Chip.Label></Chip>
 export const WithTitleEnd: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardAccordion"
                 tier="composite"
                 leaf="WithTitleEnd"
-                annotate={ACCORDION_ITEM_ANNOTATE}
+                annotate={ACCORDION_ANNOTATE}
                 states={[
                     {
                         name: "items[].titleEnd set (status Chip)",
@@ -225,9 +228,9 @@ export const WithTitleEnd: Story = {
                                 label="Milestones"
                                 defaultExpandedKeys={new Set(["m2"])}
                                 items={[
-                                    { id: "m1", title: "1/1. Project kickoff", titleEnd: <Chip size="sm" variant="soft" color="success"><Chip.Label>Done</Chip.Label></Chip>, body: panel() },
-                                    { id: "m2", title: "2/2. Build the API", titleEnd: <Chip size="sm" variant="soft" color="warning"><Chip.Label>In progress</Chip.Label></Chip>, body: panel() },
-                                    { id: "m3", title: "3/3. Deploy", titleEnd: <Chip size="sm" variant="soft" color="default"><Chip.Label>Not started</Chip.Label></Chip>, body: panel() },
+                                    { id: "m1", title: "1/1. Project kickoff", titleEnd: DoneBadge, body: panel },
+                                    { id: "m2", title: "2/2. Build the API", titleEnd: InProgressBadge, body: panel },
+                                    { id: "m3", title: "3/3. Deploy", titleEnd: NotStartedBadge, body: panel },
                                 ]}
                             />
                         ),
@@ -240,12 +243,12 @@ export const WithTitleEnd: Story = {
 /** `allowsMultipleExpanded` — multiple sections open at once (default is single-open, see leaf Default). */
 export const MultipleExpand: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardAccordion"
                 tier="composite"
                 leaf="MultipleExpand"
-                annotate={ACCORDION_ITEM_ANNOTATE}
+                annotate={ACCORDION_ANNOTATE}
                 states={[
                     {
                         name: "allowsMultipleExpanded = true",
@@ -268,12 +271,12 @@ export const MultipleExpand: Story = {
 /** All collapsed: an empty `defaultExpandedKeys` — every section starts collapsed on mount. */
 export const NoneExpand: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardAccordion"
                 tier="composite"
                 leaf="NoneExpand"
-                annotate={ACCORDION_ITEM_ANNOTATE}
+                annotate={ACCORDION_ANNOTATE}
                 states={[
                     {
                         name: "defaultExpandedKeys = new Set()",
@@ -290,37 +293,39 @@ export const NoneExpand: Story = {
         </div>
     ),
 }
-/** Empty: an empty `items` → {@link FeedbackEmpty} fills the surface (instead of a blank card). */
+/** `emptyState` slot fixture for {@link Empty} — a component reference (COMPOSITE-8), not a built node. */
+const ResourcesEmptyState = () => (
+    <EmptyState
+        icon={FolderOpenDuotone}
+        title="No resources yet"
+        description="Docs for this topic will show up here."
+        anatPart="EmptyState"
+    />
+)
+/** Empty: an empty `items` → {@link EmptyState} fills the surface (instead of a blank card). */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardAccordion"
                 tier="composite"
                 leaf="Empty"
-                annotate={{ "FeedbackEmpty": PART_FEEDBACK_EMPTY }}
+                annotate={{ "EmptyState": PART_FEEDBACK_EMPTY }}
                 states={[
                     {
                         name: "items = []",
-                        why: "`FeedbackEmpty` fills the surface with an icon, a title, and a description instead of leaving a blank card. No Row or Header renders since there is nothing to list.",
+                        why: "`EmptyState` fills the surface with an icon, a title, and a description instead of leaving a blank card. No Row or Header renders since there is nothing to list.",
                         code: `<SurfaceCardAccordion
   label="Resources"
   items={[]}
-  emptyState={<FeedbackEmpty icon={FolderOpenDuotone} title="No resources yet" … />}
+  emptyState={ResourcesEmptyState}
 />`,
                         render: (
                             <SurfaceCardAccordion
                                 showAnatomy
                                 label="Resources"
                                 items={[]}
-                                emptyState={
-                                    <FeedbackEmpty
-                                        icon={FolderOpenDuotone}
-                                        title="No resources yet"
-                                        description="Docs for this topic will show up here."
-                                        anatPart="FeedbackEmpty"
-                                    />
-                                }
+                                emptyState={ResourcesEmptyState}
                             />
                         ),
                     },
@@ -329,10 +334,10 @@ export const Empty: Story = {
         </div>
     ),
 }
-/** Loading: `isSkeleton` draws its own `Skeleton.Accordion` mirror (keeping the surface shell) — no separate Skeleton built. */
+/** Loading: `isSkeleton` forwards straight into the house `Accordion` atom, which draws its own collapsed-row mirror — this composite never builds a separate Skeleton. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardAccordion"
                 tier="composite"
@@ -340,7 +345,7 @@ export const Loading: Story = {
                 states={[
                     {
                         name: "isSkeleton = true",
-                        why: "The entire Surface and Row region swaps for a single `Skeleton.Accordion` mirror node, while the Header above stays unchanged and still shows the real label. No separate Skeleton component was built for this leaf, the accordion draws its own resting shape.",
+                        why: "The Accordion atom self-renders its own collapsed-row mirror instead of the real Rows, while the Header above stays unchanged and still shows the real label. This composite never builds a second skeleton tree of its own (COMPOSITE-10) — it only forwards the flag into the atom that owns the shape.",
                         code: `<SurfaceCardAccordion
   label="Resources"
   items={[…]}

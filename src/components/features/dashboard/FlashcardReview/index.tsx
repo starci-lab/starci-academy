@@ -43,7 +43,7 @@ export const FlashcardReview = ({
     const router = useRouter()
     const { data, error, isLoading } = useQueryMyDueFlashcardsSwr()
 
-    // widget PHỤ, không nhãn: nothing due, still loading (no cache), or fetch failed → self-hide
+    // SECONDARY widget, no label: nothing due, still loading (no cache), or fetch failed → self-hide
     // (folded into `isEmpty` since AsyncContent's error branch needs an explicit errorContent).
     return (
         <AsyncContent

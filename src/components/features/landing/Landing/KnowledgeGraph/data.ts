@@ -72,8 +72,8 @@ export const KNOWLEDGE_NODES: ReadonlyArray<ConceptNodeDatum> = [
     { id: "grafana", label: "Grafana", track: "devops" },
 ]
 
-/** One interconnection. `cross: true` = links two different tracks (the "lồng ghép"
- * story — knowledge from one track feeds another). */
+/** One interconnection. `cross: true` = links two different tracks (the "interwoven
+ * knowledge" story — knowledge from one track feeds another). */
 export interface ConceptEdgeDatum {
     source: string
     target: string
@@ -109,7 +109,7 @@ export const KNOWLEDGE_EDGES: ReadonlyArray<ConceptEdgeDatum> = [
     { source: "rbac", target: "k8s" },
     { source: "terraform", target: "k8s" },
     { source: "falco", target: "k8s" },
-    // Cross-track ("kiến thức lồng ghép")
+    // Cross-track ("interwoven knowledge")
     { source: "idempotency", target: "webhooks", cross: true },
     { source: "idempotency", target: "payment", cross: true },
     { source: "cdc", target: "typeorm", cross: true },
@@ -117,7 +117,7 @@ export const KNOWLEDGE_EDGES: ReadonlyArray<ConceptEdgeDatum> = [
     { source: "prometheus", target: "tracing", cross: true },
     { source: "oauth", target: "rbac", cross: true },
     { source: "rollouts", target: "tracing", cross: true },
-    // mở rộng — thêm thuật ngữ + liên kết (builds-on + cross-track)
+    // expansion — added terms + links (builds-on + cross-track)
     { source: "sharding", target: "consistentHashing" },
     { source: "saga", target: "circuitBreaker" },
     { source: "kafka", target: "eventSourcing" },
@@ -138,7 +138,7 @@ export const KNOWLEDGE_EDGES: ReadonlyArray<ConceptEdgeDatum> = [
     { source: "serviceMesh", target: "tracing", cross: true },
 ]
 
-/** Degree (số kết nối) mỗi node — drive kích thước bubble: hub to, lá nhỏ. */
+/** Degree (connection count) per node — drives bubble size: hub big, leaf small. */
 export const NODE_DEGREE: Record<string, number> = (() => {
     const degree: Record<string, number> = {}
     for (const node of KNOWLEDGE_NODES) {
@@ -151,6 +151,7 @@ export const NODE_DEGREE: Record<string, number> = (() => {
     return degree
 })()
 
-/** Bán kính bubble (px) theo degree — slope nhẹ để khung CONTAINED (nửa cột) đỡ chật:
- * leaf (deg 1) ≈ 20px → hub (deg 8) ≈ 48px (trước 18+deg*6 cho hub ~66px, quá to). */
+/** Bubble radius (px) by degree — gentle slope so the CONTAINED frame (half column)
+ * doesn't feel cramped: leaf (deg 1) ≈ 20px → hub (deg 8) ≈ 48px (previously
+ * 18+deg*6 gave hub ~66px, too big). */
 export const bubbleRadius = (degree: number): number => 16 + degree * 4

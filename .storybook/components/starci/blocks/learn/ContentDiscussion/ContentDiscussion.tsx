@@ -2,7 +2,7 @@ import React from "react"
 import { ChatsCircleIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import { ContentCommentComposer, type ContentCommentComposerViewer } from "@sb-components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer"
 import { ContentCommentThread, type ContentCommentNode, type ContentCommentThreadCallbacks } from "@sb-components/starci/blocks/learn/ContentCommentThread/ContentCommentThread"
@@ -12,7 +12,7 @@ import { ContentCommentThread, type ContentCommentNode, type ContentCommentThrea
  * BLOCK — `ContentDiscussion`: talk about this lesson — label + honest archive
  * line, an avatar-led collapsible composer, and the threaded comment list.
  *
- * ⭐⭐ REBUILT 2026-07-28 (thầy: "chế nhiều quá"). The first cut was a flat
+ * ⭐⭐ REBUILT 2026-07-28 (teacher: "over-engineered this"). The first cut was a flat
  * two-line comment list inside a `SurfaceCard` — missing threaded replies,
  * per-comment reactions, edit/delete, a founder badge, and pagination
  * entirely, PLUS a structural mistake real `src` explicitly documents against:
@@ -39,8 +39,8 @@ import { ContentCommentThread, type ContentCommentNode, type ContentCommentThrea
  * list to load first.
  *
  * ⭐ LOADING = `isSkeleton`, ONE prop, matching EVERY sibling block in this
- * system (thầy 2026-07-28: "cái nào cũng có skeleton hết, tin code chứ không
- * tin concepts" — real `Discussion` happens to show a bare `Spinner` for this
+ * system (teacher 2026-07-28: "everything has a skeleton, trust the code not
+ * the concepts" — real `Discussion` happens to show a bare `Spinner` for this
  * one case, but copying that one-off choice would make this the ONLY block
  * in the whole design system without a self-mirroring skeleton, breaking
  * consistency with `ContentReaction`/`ContentRelatedList`/every other block
@@ -50,7 +50,7 @@ import { ContentCommentThread, type ContentCommentNode, type ContentCommentThrea
 
 /** Props for {@link ContentDiscussion}. */
 export interface ContentDiscussionProps extends ContentCommentThreadCallbacks {
-    /** Section label, localized by the caller — e.g. "Thảo luận" (the block appends "· {total}"). */
+    /** Section label, localized by the caller — e.g. "Discussion" (the block appends "· {total}"). */
     label: string
     /** Current viewer id — drives owner-only edit/delete down the whole tree; null when signed out. */
     currentUserId: string | null
@@ -121,15 +121,15 @@ const ContentDiscussion = ({
     // tradeoff real `Discussion` documents for its own archive line
     const answeredCount = comments.filter((comment) => comment.replyCount > 0).length
 
-    // no icon here — §5a.2 (thầy 2026-07-29): a chat-bubble icon needs an ASSOCIATION
+    // no icon here — §5a.2 (teacher 2026-07-29): a chat-bubble icon needs an ASSOCIATION
     // step to read as "discussion" (not a universal symbol like ✓/🔒), and the label
     // text already carries the full fact on its own.
     const labelLines = (
         <>
             {isSkeleton ? (
-                <Typography weight="medium" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography weight="medium" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
             ) : (
-                <Typography weight="medium" text={`${label} · ${total}`} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography weight="medium" text={`${label} · ${total}`} showAnatomy={showAnatomy} />
             )}
             {isSkeleton || total > 0 ? (
                 <Typography
@@ -137,8 +137,8 @@ const ContentDiscussion = ({
                     color="muted"
                     isSkeleton={isSkeleton}
                     classNames={isSkeleton ? ["w-2/3"] : undefined}
-                    text={`${answeredCount}/${total} câu hỏi đã được trả lời, tích luỹ theo thời gian`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`${answeredCount}/${total} questions answered, accumulated over time`}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -146,12 +146,12 @@ const ContentDiscussion = ({
 
     const discussionHeader = (
         <>
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={labelLines} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={labelLines} />
             <ContentCommentComposer
                 onSubmit={onSubmitComment}
                 currentUser={currentUser}
                 collapsible
-                ariaLabel="Viết bình luận"
+                ariaLabel="Write a comment"
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "ContentCommentComposer" : undefined}
             />
@@ -181,10 +181,9 @@ const ContentDiscussion = ({
                     variant="ghost"
                     size="sm"
                     classNames={["self-center"]}
-                    label={isLoadingMore ? "Đang tải…" : "Xem thêm bình luận"}
+                    label={isLoadingMore ? "Loading…" : "Show more comments"}
                     isDisabled={isLoadingMore}
                     onPress={onLoadMore}
-                    anatPart={showAnatomy ? "Button" : undefined}
                 />
             ) : null}
         </>
@@ -192,35 +191,36 @@ const ContentDiscussion = ({
 
     const discussionBody = (
         <>
-            {/* 3 seam ở đây khớp đúng real-src `Discussion/index.tsx:98-114` (thầy 2026-07-29,
-                "cảm giác hơi chật" — bản cũ lỏng hơn 1 bậc ở cả 3 chỗ): [label+archive]↔composer
-                = grouped (gap-3) · [icon+label]↔archive-line = tight (gap-1) · icon↔label = related (gap-2). */}
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={discussionHeader} />
+            {/* These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly (teacher
+                2026-07-29, "feels a bit cramped" — the old version was one step looser in all
+                3 spots): [label+archive]↔composer = grouped (gap-3) · [icon+label]↔archive-line
+                = tight (gap-1) · icon↔label = related (gap-2). */}
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={discussionHeader} />
 
             {errorMessage != null ? (
-                <FeedbackEmpty
+                <EmptyState
                     icon={WarningCircleIcon}
                     title={errorMessage}
-                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+                    anatPart={showAnatomy ? "EmptyState" : undefined}
                 />
             ) : !isSkeleton && comments.length === 0 ? (
                 // Nobody has written yet. This is an INVITATION, so it is drawn —
                 // hiding the section would hide the invitation with it.
-                <FeedbackEmpty
+                <EmptyState
                     icon={ChatsCircleIcon}
-                    title="Chưa có thảo luận"
-                    description="Đặt câu hỏi đầu tiên về bài này"
-                    anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
+                    title="No discussion yet"
+                    description="Ask the first question about this lesson"
+                    anatPart={showAnatomy ? "EmptyState" : undefined}
                 />
             ) : (
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={commentList} />
+                <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={commentList} />
             )}
         </>
     )
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={discussionBody} />
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={discussionBody} />
         </div>
     )
 }

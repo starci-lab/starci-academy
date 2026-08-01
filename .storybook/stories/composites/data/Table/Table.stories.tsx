@@ -5,17 +5,18 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE (§12f/§13) — `Table` là KHUNG bảng: nó SỞ HỮU cấu hình cột
- * (`columns`: canh lề + bề rộng), việc dựng hàng từ `items`, và ba trạng thái KHUNG
- * của một danh sách: RỖNG (`emptyContent`) · ĐANG TẢI (`isSkeleton`) · HÀNG BẤM ĐƯỢC
- * (`onRowPress`). Đó đúng là bộ state phải render đủ ở đây (§11g).
+ * ⚠️ STATE SCOPE (§12f/§13) — `Table` is a table FRAME: it OWNS the column
+ * configuration (`columns`: alignment + width), building rows from `items`, and
+ * the three FRAME states of a list: EMPTY (`emptyContent`) · LOADING (`isSkeleton`)
+ * · PRESSABLE ROWS (`onRowPress`). That is exactly the state set that must render
+ * in full here (§11g).
  *
- * KHÔNG có state nào ở đây thuộc về nội dung: khung không format tiền/ngày/trạng thái
- * — mọi ô là `ReactNode` consumer truyền vào (dưới đây là `Chip`, một atom).
- * State của chính `Chip` sống ở story `Chip`, không lặp lại ở đây.
+ * No state here belongs to content: the frame does not format money/dates/status
+ * — every cell is a `ReactNode` the consumer passes in (below, a `Chip` atom).
+ * `Chip`'s own state lives in the `Chip` story, not repeated here.
  *
- * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a). Chữ hiện ra panel
- * (`why`/`reason`/`role`) viết TIẾNG ANH theo luật B; JSDoc/comment giữ nguyên tiếng Việt.
+ * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a). Panel-facing
+ * text (`why`/`reason`/`role`) is written in English per rule B.
  */
 const meta: Meta<typeof Table> = {
     title: "Composites/Data/Table/Table",
@@ -28,18 +29,18 @@ export default meta
 
 type Story = StoryObj<typeof Table>
 
-/** Cấu hình cột dùng chung — đây là DỮ LIỆU, không phải JSX con (§13b). */
+/** Shared column configuration — this is DATA, not a JSX child (§13b). */
 const COLUMNS = [
-    { key: "name", header: "Học viên" },
-    { key: "status", header: "Trạng thái" },
-    { key: "lessons", header: "Bài đã học" },
+    { key: "name", header: "Student" },
+    { key: "status", header: "Status" },
+    { key: "lessons", header: "Lessons completed" },
 ] as const
 
-/** Ô = node ĐÃ format (chuỗi, hoặc atom như `Chip`) — khung không tự sinh. */
+/** A cell = an already-formatted node (a string, or an atom like `Chip`) — the frame doesn't generate one itself. */
 const ITEMS = [
-    { key: "an", name: "Nguyễn Văn An", status: <Chip tone="success" text="Đang học" />, lessons: "12/40" },
-    { key: "binh", name: "Trần Thanh Bình", status: <Chip tone="warning" text="Tạm dừng" />, lessons: "31/40" },
-    { key: "chi", name: "Lê Ngọc Chi", status: <Chip text="Chưa bắt đầu" />, lessons: "0/40" },
+    { key: "an", name: "Alex Nguyen", status: <Chip tone="success" text="In progress" />, lessons: "12/40" },
+    { key: "binh", name: "Jordan Tran", status: <Chip tone="warning" text="Paused" />, lessons: "31/40" },
+    { key: "chi", name: "Chi Le", status: <Chip text="Not started" />, lessons: "0/40" },
 ]
 
 /**
@@ -47,18 +48,19 @@ const ITEMS = [
  * `parts` tree, {@link BlockAnatomyProps.parts}, to `annotate`; structure is always
  * derived from DOM, this table is only WHY + tier + storyId per name, §11a.1).
  *
- * Cây DOM thật là HeroUI `Table` NGUYÊN CON: `Table` (root) → `Table.ScrollContainer` →
- * `Table.Content` → `Table.Header` (chứa N `Table.Column`) + `Table.Body` (chứa N
- * `Table.Row`). Tất cả các node này là component CỦA HEROUI, không phải của ta ⇒ tier
- * `heroui`, KHÔNG có `storyId` (không có story riêng để trỏ sang) — panel vẫn nhận vì
- * `tier: "heroui"` một mình đã đủ điều kiện vào cây (khác `parts` cũ: định dạng mảng
- * không có đường nhận diện `tier` mà không kèm `storyId`, nên bị coi là orphan cho tới
- * khi chuyển sang `annotate`).
+ * The real DOM tree is the HeroUI `Table` compound AS-IS: `Table` (root) →
+ * `Table.ScrollContainer` → `Table.Content` → `Table.Header` (holds N `Table.Column`)
+ * + `Table.Body` (holds N `Table.Row`). Every one of these nodes is HeroUI's OWN
+ * component, not ours ⇒ tier `heroui`, with NO `storyId` (no story of our own to
+ * point to) — the panel still accepts it because `tier: "heroui"` alone is enough
+ * to qualify for the tree (unlike the old `parts` shape, which had no way to carry
+ * a `tier` without a `storyId`, so it read as an orphan until the move to `annotate`).
  *
- * Ô (`Table.Cell`) không badge riêng vì nó chỉ là chỗ đổ node của consumer (§11a: badge
- * con TRỰC TIẾP) — cùng lý do `emptyContent` bên dưới (renderEmptyState) cũng không
- * badge nữa: cả hai là khe của caller (§11a.1 LOẠI 3), component đã bỏ hẳn
- * `data-anat-part="Empty"` (2026-07-28).
+ * The cell (`Table.Cell`) is not badged on its own because it is only a slot the
+ * consumer drops a node into (§11a: badge the DIRECT child) — the same reason
+ * `emptyContent` below (`renderEmptyState`) is also not badged: both are caller
+ * slots (§11a.1 TYPE 3), and the component dropped `data-anat-part="Empty"`
+ * entirely (2026-07-28).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Table": { tier: "heroui", role: "HeroUI's own table root — canvas, variant skin." },
@@ -75,10 +77,10 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 
-/** Default — `columns` + `items` là DỮ LIỆU; khung tự dựng header/hàng/ô. */
+/** Default — `columns` + `items` are DATA; the frame builds its own header/rows/cells. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Table"
                 tier="composite"
@@ -90,18 +92,18 @@ export const Default: Story = {
                         name: "items = 3 students, columns = 3",
                         why: "The frame builds a three-column header from columns and three rows from items, dropping each caller-formatted cell, including a Chip status badge, straight into place. Both columns and items arrive as data rather than JSX children, so their counts can never come apart.",
                         code: `<Table
-    ariaLabel="Danh sách học viên"
+    ariaLabel="Student list"
     columns={[
-        { key: "name", header: "Học viên" },
-        { key: "status", header: "Trạng thái" },
-        { key: "lessons", header: "Bài đã học" },
+        { key: "name", header: "Student" },
+        { key: "status", header: "Status" },
+        { key: "lessons", header: "Lessons completed" },
     ]}
     items={[
-        { key: "an", name: "Nguyễn Văn An", status: <Chip tone="success" text="Đang học" />, lessons: "12/40" },
+        { key: "an", name: "Alex Nguyen", status: <Chip tone="success" text="In progress" />, lessons: "12/40" },
         …
     ]}
 />`,
-                        render: <Table showAnatomy ariaLabel="Danh sách học viên" columns={COLUMNS} items={ITEMS} />,
+                        render: <Table showAnatomy ariaLabel="Student list" columns={COLUMNS} items={ITEMS} />,
                     },
                 ]}
             />
@@ -109,10 +111,10 @@ export const Default: Story = {
     ),
 }
 
-/** Alignment — `align`/`width` là cấu hình CỘT: khung áp cho CẢ header lẫn mọi ô. */
+/** Alignment — `align`/`width` are COLUMN configuration: the frame applies them to BOTH the header and every cell. */
 export const Alignment: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Table"
                 tier="composite"
@@ -124,18 +126,18 @@ export const Alignment: Story = {
                         name: "columns[2].align = \"end\", columns[1].width and columns[2].width set",
                         why: "The lessons column pins its numbers to the right edge while status gets a fixed width, and both rules apply to the header and every row cell alike. Right-aligning a number column makes the digits easier to compare down the list than a left-aligned one would.",
                         code: `columns={[
-    { key: "name", header: "Học viên" },
-    { key: "status", header: "Trạng thái", width: "160px" },
-    { key: "lessons", header: "Bài đã học", align: "end", width: "120px" },
+    { key: "name", header: "Student" },
+    { key: "status", header: "Status", width: "160px" },
+    { key: "lessons", header: "Lessons completed", align: "end", width: "120px" },
 ]}`,
                         render: (
                             <Table
                                 showAnatomy
-                                ariaLabel="Danh sách học viên theo cột canh phải"
+                                ariaLabel="Student list with right-aligned column"
                                 columns={[
-                                    { key: "name", header: "Học viên" },
-                                    { key: "status", header: "Trạng thái", width: "160px" },
-                                    { key: "lessons", header: "Bài đã học", align: "end", width: "120px" },
+                                    { key: "name", header: "Student" },
+                                    { key: "status", header: "Status", width: "160px" },
+                                    { key: "lessons", header: "Lessons completed", align: "end", width: "120px" },
                                 ]}
                                 items={ITEMS}
                             />
@@ -147,10 +149,13 @@ export const Alignment: Story = {
     ),
 }
 
-/** Empty — `items` rỗng: header ở lại, thân bảng render `emptyContent`. */
+/** Empty state renderer — a COMPONENT reference (COMPOSITE-8), not a built node: the frame calls it and can forward `isSkeleton`. */
+const EmptyStudents = () => <Typography size="sm" color="muted" text="No students yet." />
+
+/** Empty — `items` is empty: the header stays, the body renders `emptyContent`. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Table"
                 tier="composite"
@@ -160,19 +165,21 @@ export const Empty: Story = {
                     {
                         name: "items = []",
                         why: "The header stays because columns is configuration, unrelated to how many rows exist, while the body drops every Row and renders emptyContent spread across the full width instead. An empty state has to read as intentional, not as a blank frame the reader has to guess about.",
-                        code: `<Table
-    ariaLabel="Danh sách học viên"
+                        code: `const EmptyStudents = () => <Typography size="sm" color="muted" text="No students yet." />
+
+<Table
+    ariaLabel="Student list"
     columns={COLUMNS}
     items={[]}
-    emptyContent={<Typography size="sm" color="muted" text="Chưa có học viên nào." />}
+    emptyContent={EmptyStudents}
 />`,
                         render: (
                             <Table
                                 showAnatomy
-                                ariaLabel="Danh sách học viên"
+                                ariaLabel="Student list"
                                 columns={COLUMNS}
                                 items={[]}
-                                emptyContent={<Typography size="sm" color="muted" text="Chưa có học viên nào." />}
+                                emptyContent={EmptyStudents}
                             />
                         ),
                     },
@@ -182,10 +189,10 @@ export const Empty: Story = {
     ),
 }
 
-/** Loading — `isSkeleton` mirror N hàng TRONG khung thật (§8), header giữ nguyên. */
+/** Loading — `isSkeleton` mirrors N rows INSIDE the real frame (§8), header stays put. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Table"
                 tier="composite"
@@ -197,7 +204,7 @@ export const Loading: Story = {
                         why: "The real header stays put while the body mirrors items.length rows of shimmer bars, three here because items still holds three entries even though isSkeleton is on. Mirroring the real row count keeps the table's footprint from jumping the moment the real data lands.",
                         code: `<Table
     isSkeleton
-    ariaLabel="Đang tải danh sách học viên"
+    ariaLabel="Loading student list"
     columns={COLUMNS}
     items={ITEMS}
 />`,
@@ -205,7 +212,7 @@ export const Loading: Story = {
                             <Table
                                 showAnatomy
                                 isSkeleton
-                                ariaLabel="Đang tải danh sách học viên"
+                                ariaLabel="Loading student list"
                                 columns={COLUMNS}
                                 items={ITEMS}
                             />
@@ -217,10 +224,10 @@ export const Loading: Story = {
     ),
 }
 
-/** Pressable — có `onRowPress` thì mỗi hàng thành press target (hover + bàn phím). */
+/** Pressable — with `onRowPress` set, every row becomes a press target (hover + keyboard). */
 export const Pressable: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Table"
                 tier="composite"
@@ -232,7 +239,7 @@ export const Pressable: Story = {
                         name: "onRowPress set",
                         why: "Every row becomes a press target that hands item.key to onRowPress when clicked or activated from the keyboard, on the exact same header and cell composition as Default. Making the whole row pressable, not just one cell, is what lets a learner open a student's detail from anywhere in the row.",
                         code: `<Table
-    ariaLabel="Danh sách học viên"
+    ariaLabel="Student list"
     columns={COLUMNS}
     items={ITEMS}
     onRowPress={(key) => console.log(key)}
@@ -240,7 +247,7 @@ export const Pressable: Story = {
                         render: (
                             <Table
                                 showAnatomy
-                                ariaLabel="Danh sách học viên bấm được"
+                                ariaLabel="Clickable student list"
                                 columns={COLUMNS}
                                 items={ITEMS}
                                 onRowPress={() => {}}

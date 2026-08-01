@@ -58,7 +58,7 @@ export interface CourseBriefBaseProps {
      * fields; the block joins them itself into a muted strip separated by `·`.
      */
     moduleCount?: number
-    /** Total learning hours (rounded) — the block adds `~` and the "giờ học" word itself. */
+    /** Total learning hours (rounded) — the block adds `~` and the "hours" word itself. */
     hours?: number
     /** Number of enrolled learners — the block formats the thousands separator itself. */
     learnerCount?: number
@@ -103,9 +103,9 @@ const CourseBriefBase = ({
     // Meta strip joined by the BLOCK from NUMBERS — units, separators, thousands
     // grouping are all presentation; the caller doesn't touch this (§14d.1).
     const metaParts = [
-        moduleCount != null ? `${moduleCount} chương` : null,
-        hours != null ? `~${hours} giờ học` : null,
-        learnerCount != null ? `${learnerCount.toLocaleString("vi-VN")} học viên` : null,
+        moduleCount != null ? `${moduleCount} modules` : null,
+        hours != null ? `~${hours} hours` : null,
+        learnerCount != null ? `${learnerCount.toLocaleString("vi-VN")} learners` : null,
     ].filter(Boolean)
 
     return (
@@ -132,7 +132,7 @@ const CourseBriefBase = ({
                         // boundary) — call the `Typography` atom directly with the EXACT
                         // size/weight `PageHeader` itself uses for `title` (size="h3"
                         // weight="bold"), then feed the result into the slot.
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="h3" weight="bold" isSkeleton showAnatomy={showAnatomy} />
                     ) : (
                         <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
                     )
@@ -145,17 +145,17 @@ const CourseBriefBase = ({
                         // description empty) — it's the most common line in the cluster; keeping
                         // the layout stable (§8) matters more than saving one shimmer line for
                         // the rare case with no description.
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" color="muted" isSkeleton showAnatomy={showAnatomy} />
                     ) : (
                         description
                     )
                 }
                 meta={
                     isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} showAnatomy={showAnatomy} />
                     ) : metaParts.length > 0 ? (
                         <span>
-                            <Typography size="xs" color="muted" text={metaParts.join(" · ")} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="xs" color="muted" text={metaParts.join(" · ")} showAnatomy={showAnatomy} />
                         </span>
                     ) : undefined
                 }

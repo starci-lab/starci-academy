@@ -32,14 +32,14 @@ type Story = StoryObj<typeof CourseQaInvite>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the face the invitation sits on, consistent with the other Q&A/course surfaces around it", storyId: "composites-cards-surfacecard-surfacecard--default" },
-    "FeedbackEmpty": { tier: "composite", role: "the centered icon/title/description/action stack — the same shape every other empty spot in this codebase uses", storyId: "composites-feedback-feedback-feedbackempty--action" },
+    "EmptyState": { tier: "composite", role: "the centered icon/title/description/action stack — the same shape every other empty spot in this codebase uses", storyId: "composites-feedback-emptystate-emptystate--action" },
     "Button": { tier: "atom", role: "the single call to action, owning its own accent skin, the arrow that slides on hover, and its own shimmer while its destination is still resolving", storyId: "atoms-buttons-button-button--default" },
 }
 
 /** LEAF — the Q&A tab has never had a single question. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaInvite"
                 tier="block"
@@ -52,18 +52,18 @@ export const Default: Story = {
                         name: "isSkeleton = false",
                         why: "The tab is confirmed truly empty — no filter, no search, nobody has ever asked — so the invitation says so plainly and offers the one sensible next step: go back into the content the questions would be about. There is exactly one button, because a reader who just learned nobody has asked yet does not also need a choice.",
                         code: `<CourseQaInvite
-    title="Chưa có câu hỏi nào"
-    hint="Đọc lại nội dung bài học rồi đặt câu hỏi đầu tiên — bạn sẽ là người mở đầu."
-    ctaLabel="Xem nội dung khoá học"
+    title="No questions yet"
+    hint="Review the lesson content, then ask the first question — you'll be the one to break the ice."
+    ctaLabel="View course content"
     onGoToContent={goToContent}
 />`,
                         render: (
                             <CourseQaInvite
                                 anatPart="CourseQaInvite"
                                 showAnatomy
-                                title="Chưa có câu hỏi nào"
-                                hint="Đọc lại nội dung bài học rồi đặt câu hỏi đầu tiên — bạn sẽ là người mở đầu."
-                                ctaLabel="Xem nội dung khoá học"
+                                title="No questions yet"
+                                hint="Review the lesson content, then ask the first question — you'll be the one to break the ice."
+                                ctaLabel="View course content"
                                 onGoToContent={() => {}}
                             />
                         ),
@@ -72,17 +72,17 @@ export const Default: Story = {
                         name: "isSkeleton = true",
                         why: "The headline and hint stay fully real — they are caller-supplied copy known before any request, same reasoning as `ContentPaywall`'s headline. Only the button mirrors itself, because its destination (which course/content id to route into) is the one thing here that can still be mid-flight.",
                         code: `<CourseQaInvite
-    title="Chưa có câu hỏi nào"
-    hint="Đọc lại nội dung bài học rồi đặt câu hỏi đầu tiên — bạn sẽ là người mở đầu."
-    ctaLabel="Xem nội dung khoá học"
+    title="No questions yet"
+    hint="Review the lesson content, then ask the first question — you'll be the one to break the ice."
+    ctaLabel="View course content"
     onGoToContent={goToContent}
     isSkeleton
 />`,
                         render: (
                             <CourseQaInvite
-                                title="Chưa có câu hỏi nào"
-                                hint="Đọc lại nội dung bài học rồi đặt câu hỏi đầu tiên — bạn sẽ là người mở đầu."
-                                ctaLabel="Xem nội dung khoá học"
+                                title="No questions yet"
+                                hint="Review the lesson content, then ask the first question — you'll be the one to break the ice."
+                                ctaLabel="View course content"
                                 onGoToContent={() => {}}
                                 isSkeleton
                             />

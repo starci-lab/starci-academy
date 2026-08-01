@@ -10,13 +10,13 @@ export type VoiceHeroAnswerMode = "voice" | "text" | "both"
 
 /** Resolved (i18n'd) labels for {@link VoiceHero}. */
 export interface VoiceHeroLabels {
-    /** Prompt under the idle mic ("Nhấn để trả lời"). */
+    /** Prompt under the idle mic ("Press to answer"). */
     pushToTalk: string
-    /** Prompt while listening ("Đang nghe…"). */
+    /** Prompt while listening ("Listening…"). */
     listening: string
-    /** Link to switch from voice to typing ("gõ thay"). */
+    /** Link to switch from voice to typing ("type instead"). */
     typeInstead: string
-    /** Link to switch from typing back to voice ("dùng giọng"). */
+    /** Link to switch from typing back to voice ("use voice"). */
     useVoice: string
     /** TextArea placeholder. */
     placeholder: string
@@ -36,7 +36,7 @@ export interface VoiceHeroProps extends WithClassNames<undefined> {
     onValueChange: (value: string) => void
     /** Start/stop the mic. */
     onToggleListen: () => void
-    /** Which input affordances to show (from setup's "Cách trả lời"). */
+    /** Which input affordances to show (from setup's "How to answer"). */
     answerMode: VoiceHeroAnswerMode
     /** Resolved labels. */
     labels: VoiceHeroLabels
@@ -45,7 +45,7 @@ export interface VoiceHeroProps extends WithClassNames<undefined> {
 /**
  * The VOICE-FIRST answer composer for the interview room — a big circular
  * push-to-talk mic as the hero (wired to the parent's speech-to-text), with the
- * live transcript building below it and a quiet "gõ thay" fallback to a text
+ * live transcript building below it and a quiet "type instead" fallback to a text
  * box. Speaking is the signature act of an interview, so the mic leads; typing
  * is the secondary affordance (and the automatic one when the browser has no
  * speech recognition, or when setup picked text-only).
@@ -68,7 +68,7 @@ export const VoiceHero = ({
     const canToggle = answerMode === "both" && sttSupported
     const [showText, setShowText] = useState(textForced)
 
-    // typing box — used when forced (unsupported / text-only) or toggled to via "gõ thay"
+    // typing box — used when forced (unsupported / text-only) or toggled to via "type instead"
     if (textForced || showText) {
         return (
             <div className={cn("flex flex-col gap-2", className)}>

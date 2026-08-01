@@ -83,6 +83,13 @@ export interface RailShellProps {
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this khung so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
+    /**
+     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
+     * A frame does not KNOW its pattern — the caller does, exactly like `anatPart` — so it is passed in.
+     */
+    pattern?: string
 }
 
 /**
@@ -126,9 +133,13 @@ const RailShell = ({
     isRailSticky = false,
     classNames,
     anatPart,
+    pattern,
 }: RailShellProps) => (
     <div
+        data-tier="frame"
+        data-component="RailShell"
         data-anat-part={anatPart}
+        data-principles={pattern}
         className={cn("flex flex-col gap-6", SHELL_SWITCH_CLASS[at], classNames)}
     >
         {/* `rail`/`body` are CALLER SLOTS — whatever sits inside belongs to whoever passed
@@ -150,3 +161,6 @@ const RailShell = ({
 )
 
 export { RailShell }
+
+/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+export const meta = { tier: "frame", name: "RailShell" } as const

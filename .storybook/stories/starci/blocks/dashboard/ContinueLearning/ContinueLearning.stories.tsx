@@ -3,7 +3,7 @@ import { ContinueLearning, type ContinueLearningItem } from "@sb-components/star
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContinueLearning` (dashboard): the "Tiếp tục học" content slot on
+ * BLOCK — `ContinueLearning` (dashboard): the "Continue learning" content slot on
  * the dashboard — up to 3 resume targets (lessons lead, at most one
  * in-progress challenge as a nudge), or an onboarding CTA when there is
  * nothing to resume. See the component's own file header for the full
@@ -29,26 +29,26 @@ export default meta
 type Story = StoryObj<typeof ContinueLearning>
 
 const THREE_ITEMS: Array<ContinueLearningItem> = [
-    { id: "lesson-docker-compose", title: "Docker Compose: mạng & volume", kind: "lesson" },
-    { id: "lesson-k8s-scheduling", title: "K8s Scheduling nâng cao", kind: "lesson" },
-    { id: "challenge-dockerfile-optimize", title: "Tối ưu Dockerfile production", kind: "challenge" },
+    { id: "lesson-docker-compose", title: "Docker Compose: networking & volumes", kind: "lesson" },
+    { id: "lesson-k8s-scheduling", title: "Advanced K8s scheduling", kind: "lesson" },
+    { id: "challenge-dockerfile-optimize", title: "Optimize a production Dockerfile", kind: "challenge" },
 ]
 
 const ONE_ITEM: Array<ContinueLearningItem> = [
-    { id: "lesson-docker-compose", title: "Docker Compose: mạng & volume", kind: "lesson" },
+    { id: "lesson-docker-compose", title: "Docker Compose: networking & volumes", kind: "lesson" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Grid": { tier: "frame", role: "the reflowing tile track — 1 column narrow, 2 from @app-sm, 3 from @app-lg, same steps the real dashboard grid uses", storyId: "frames-grid-grid--default" },
     "ContinueCardItem": { tier: "block", role: "one resume tile — design tier, already built for exactly this shape (\"ONE of N continue cards in a list/grid\"); this block only supplies the kind-word subtitle", storyId: "starci-blocks-learn-continuecard-continuecarditem--content" },
     "AsyncContentEmpty": { tier: "composite", role: "replaces the whole track with one message + one button when there is nothing to resume; wording forks on hasCourses, never the shape", storyId: "composites-async-asynccontent-asynccontent--empty" },
-    "Button": { tier: "atom", role: "the onboarding CTA (\"Xem khoá học\"), shared by both empty wordings", storyId: "atoms-buttons-button-button--default" },
+    "Button": { tier: "atom", role: "the onboarding CTA (\"Browse courses\"), shared by both empty wordings", storyId: "atoms-buttons-button-button--default" },
 }
 
 /** LEAF 1 — 1–3 resume tiles inside a responsive `Grid`. */
 export const Content: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContinueLearning"
                 tier="block"
@@ -102,7 +102,7 @@ export const Content: Story = {
 /** LEAF 2 — the track becomes the onboarding message; wording forks on `hasCourses`. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContinueLearning"
                 tier="block"
@@ -150,7 +150,7 @@ export const Empty: Story = {
 /** LEAF 3 — `items` still empty and `isLoading`; a guessed 3-tile grid mirrors the shape. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContinueLearning"
                 tier="block"

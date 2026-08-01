@@ -4,13 +4,15 @@ import { SelectCombobox } from "@sb-components/atoms/forms/Select/Select"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `SelectCombobox`: autocomplete gõ-lọc chọn MỘT, bọc thẳng HeroUI `ComboBox`.
+ * ATOM — `SelectCombobox`: a type-to-filter single-select autocomplete, wrapping
+ * HeroUI `ComboBox` directly.
  *
- * Atom lá: field gõ + caret là HeroUI `Input`/`ComboBox.Trigger`, khung nhãn/mô
- * tả/lỗi là `FieldFrame` NỘI BỘ (không có story riêng). Không component nào ở
- * đây có story riêng để nhảy tới ⇒ `annotate` không có `storyId` — nhưng bốn
- * part heroui thật (`Input`/`ComboBox.Trigger`/`Label`/`Skeleton`) vẫn cần tier
- * `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
+ * Leaf atoms: the typed field + caret is HeroUI `Input`/`ComboBox.Trigger`, the
+ * label/description/error frame is the INTERNAL `FieldFrame` (no story of its
+ * own). No component here has its own story to jump to ⇒ `annotate` has no
+ * `storyId` — but the four real heroui parts (`Input`/`ComboBox.Trigger`/
+ * `Label`/`Skeleton`) still need `tier: "heroui"` so the two-law panel doesn't
+ * silently miss them (2026-07-28).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Input": { tier: "heroui", role: "typed filter text field" },
@@ -31,7 +33,7 @@ const OPTIONS = [
     { value: "hp", label: "Hai Phong" },
 ]
 
-/** Leaf TRẦN — không label: ô trống, gõ để lọc gợi ý. */
+/** Bare leaf — no label: an empty box, type to filter suggestions. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -48,7 +50,7 @@ export const Default: Story = {
                             why: "The field renders an empty box carrying only the `placeholder` text. Typing runs react-aria's own option filter, so a bare combobox is ready to search the moment it mounts, with no label above it.",
                             code: "<SelectCombobox value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Search city or province\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectCombobox
                                         value={value}
                                         onValueChange={setValue}
@@ -64,11 +66,11 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `label`/`hint` — nhãn + mô tả (FieldFrame Label/Description). */
+/** Leaf props `label`/`hint` — label + description (FieldFrame Label/Description). */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
@@ -85,7 +87,7 @@ export const WithLabel: Story = {
                             why: "FieldFrame grows a Label above the box and a Description line below it. This is for a field the caller wants to name and explain on its own, instead of leaving the meaning to a surrounding form section.",
                             code: "<SelectCombobox label=\"City/Province\" hint=\"Type to filter fast.\" ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectCombobox
                                         value={value}
                                         onValueChange={setValue}
@@ -102,11 +104,11 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isRequired` — nhãn + dấu `*` bắt buộc. */
+/** Leaf prop `isRequired` — label plus the required `*` mark. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -123,7 +125,7 @@ export const Required: Story = {
                             why: "A `*` is appended right after the Label text, no other node changes. This tells the viewer the field cannot be submitted empty before they even try.",
                             code: "<SelectCombobox label=\"City/Province\" isRequired ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectCombobox
                                         value={value}
                                         onValueChange={setValue}
@@ -140,17 +142,18 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /**
- * Leaf prop `value` — ô trống thì hiện `placeholder` mờ, chọn xong thì ô mang nhãn
- * option đã chọn.
+ * Leaf prop `value` — an empty box shows the muted `placeholder`; once a
+ * selection is made the box carries the chosen option's label.
  *
- * ⚠️ Đổi tên 2026-07-26 (từ `Labeled`): leaf này từng kèm cả `label`, mà `label` đã có
- * nhà ở leaf `WithLabel` ⇒ hai leaf cùng khoe một prop, trái §12g. Bỏ `label`, trả leaf
- * về đúng prop nó sở hữu. `isDisabled` cũng đã tách sang leaf `Disabled` cùng ngày.
+ * ⚠️ Renamed 2026-07-26 (from `Labeled`): this leaf used to also carry `label`,
+ * but `label` already had a home in the `WithLabel` leaf ⇒ two leaves showing off
+ * the same prop, against §12g. Dropped `label`, returning the leaf to just the
+ * prop it owns. `isDisabled` was also split out into the `Disabled` leaf the same day.
  */
 export const Value: Story = {
     render: () => {
@@ -169,7 +172,7 @@ export const Value: Story = {
                             why: "The box falls back to the muted `placeholder` text, same DOM shape as a filled box. This is the resting state before the learner has picked anything yet.",
                             code: "<SelectCombobox value={null} ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectCombobox value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" showAnatomy />
                                 </div>
                             ),
@@ -179,7 +182,7 @@ export const Value: Story = {
                             why: "The box swaps the placeholder for the matching option's own label text, same DOM shape as the empty box. This is what the field shows once a real selection has landed.",
                             code: "<SelectCombobox value=\"dn\" ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectCombobox value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" showAnatomy />
                                 </div>
                             ),
@@ -188,14 +191,14 @@ export const Value: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isDisabled` — nhãn nhạt màu + input khoá, chặn popover mở. */
+/** Leaf prop `isDisabled` — dimmed label + locked input, blocks the popover from opening. */
 export const Disabled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectCombobox"
                 tier="atom"
@@ -207,7 +210,7 @@ export const Disabled: Story = {
                         why: "The Label and the input box both dim together, and typing plus opening the popover are both blocked. This is for a field the caller has decided the learner cannot touch right now, without removing it from view.",
                         code: "<SelectCombobox label=\"City/Province\" value=\"hn\" isDisabled ... />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectCombobox
                                     value="hn"
                                     onValueChange={() => {}}
@@ -227,13 +230,14 @@ export const Disabled: Story = {
 }
 
 /**
- * Leaf prop `isInvalid` — CHỈ đổi viền sang đỏ, không có dòng lỗi. Khác
- * `errorMessage` (leaf dưới): `errorMessage` set thì viền đỏ CỘNG dòng lỗi;
- * `isInvalid` đứng một mình thì chỉ viền, vì FieldFrame không tự sinh chữ.
+ * Leaf prop `isInvalid` — ONLY turns the border red, no error line. Different
+ * from `errorMessage` (leaf below): setting `errorMessage` gives a red border
+ * PLUS an error line; `isInvalid` alone gives only the border, since FieldFrame
+ * never invents its own error text.
  */
 export const Invalid: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectCombobox"
                 tier="atom"
@@ -245,7 +249,7 @@ export const Invalid: Story = {
                         why: "Only the input border switches to the danger tone; no error line appears under it, because FieldFrame never invents error text on its own. Pass `errorMessage` alongside it when the red line should show too.",
                         code: "<SelectCombobox label=\"City/Province\" isInvalid ... />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectCombobox
                                     value={null}
                                     onValueChange={() => {}}
@@ -264,7 +268,7 @@ export const Invalid: Story = {
     ),
 }
 
-/** Leaf prop `errorMessage` — nhãn + dòng lỗi đỏ + viền lỗi. */
+/** Leaf prop `errorMessage` — label + red error line + invalid border. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -281,7 +285,7 @@ export const Error: Story = {
                             why: "The Label, a red message line, and an invalid border all appear together, added by `errorMessage` alone. This is the full validation-failed shape, giving the learner both the visual cue and the reason in one line.",
                             code: "<SelectCombobox label=\"City/Province\" errorMessage=\"Choose a valid city or province.\" ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectCombobox
                                         value={value}
                                         onValueChange={setValue}
@@ -298,14 +302,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isSkeleton` — nhãn skeleton trên trigger-box skeleton (mirror đúng cột). */
+/** Leaf prop `isSkeleton` — a skeleton label above a skeleton trigger box (mirrors the exact column). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectCombobox"
                 tier="atom"
@@ -317,7 +321,7 @@ export const Skeleton: Story = {
                         why: "A label-shaped bar and a trigger-box-shaped bar both swap in for the real field. This mirrors the exact column the real label and box will occupy, so the row doesn't shift once the field is ready.",
                         code: "<SelectCombobox label=\"City/Province\" isSkeleton />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectCombobox value={null} onValueChange={() => {}} options={OPTIONS} label="City/Province" isSkeleton showAnatomy />
                             </div>
                         ),

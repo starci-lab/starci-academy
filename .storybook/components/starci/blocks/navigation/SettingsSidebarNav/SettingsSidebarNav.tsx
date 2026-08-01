@@ -133,17 +133,17 @@ export interface SettingsNavGroup {
 
 /** Destination → label. The block's own wording (§14d.1), never handed in by the caller. */
 const DESTINATION_LABEL: Record<SettingsDestinationKey, string> = {
-    editProfile: "Chỉnh sửa hồ sơ",
-    appearance: "Giao diện",
-    security: "Bảo mật",
-    sessions: "Phiên đăng nhập",
-    courseHistory: "Lịch sử học tập",
-    aiSettings: "Cài đặt AI",
-    aiSubscription: "Gói AI",
-    aiUsage: "Mức dùng AI",
-    bookmarks: "Đã lưu",
-    membership: "Gói học viên",
-    installments: "Trả góp",
+    editProfile: "Edit profile",
+    appearance: "Appearance",
+    security: "Security",
+    sessions: "Login sessions",
+    courseHistory: "Learning history",
+    aiSettings: "AI settings",
+    aiSubscription: "AI plan",
+    aiUsage: "AI usage",
+    bookmarks: "Saved",
+    membership: "Membership plan",
+    installments: "Installments",
 }
 
 /** Destination → icon. Same glyphs `src`'s `nav.tsx` maps, so porting this table reads as ONE control. */
@@ -193,7 +193,7 @@ const DesktopNavRow = ({ item, isActive, onNavigate, showAnatomy }: DesktopNavRo
                     weight={isActive ? "medium" : undefined}
                     text={DESTINATION_LABEL[item.key]}
                     truncate
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -210,7 +210,7 @@ const DesktopNavRow = ({ item, isActive, onNavigate, showAnatomy }: DesktopNavRo
                 isActive ? "bg-accent-soft text-accent-soft-foreground" : "text-foreground hover:bg-default/40",
             )}
         >
-            <StackH gap="tight" align="center" justify={collapsed ? "center" : "start"} anatPart={showAnatomy ? "StackH" : undefined} body={rowContent} />
+            <StackH gap={2} align="center" justify={collapsed ? "center" : "start"} anatPart={showAnatomy ? "StackH" : undefined} body={rowContent} />
         </button>
     )
 }
@@ -281,10 +281,10 @@ const SettingsSidebarNav = ({
                             {/* Divider above every group but the first — the inlined
                                 `SidebarNavGroup` gap (see file header). Spacing between it
                                 and its neighbours is owned by `CollapsibleSidebar`'s own
-                                `StackV gap="grouped"`, not a margin on this Divider. */}
-                            {index > 0 ? <Divider anatPart={showAnatomy ? "Divider" : undefined} /> : null}
+                                `StackV gap={4}`, not a margin on this Divider. */}
+                            {index > 0 ? <Divider showAnatomy={showAnatomy} /> : null}
                             <StackV
-                                gap="flush"
+                                gap={1}
                                 anatPart={showAnatomy ? "StackV" : undefined}
                                 body={group.items.map((item) => (
                                     <DesktopNavRow
@@ -305,7 +305,7 @@ const SettingsSidebarNav = ({
                 scroll strip, not the rail's row shape. Visible only below @app-md. */}
             <nav aria-label={mobileNavAriaLabel ?? title} className="sticky top-16 z-30 @app-md:hidden">
                 <StackH
-                    gap="related"
+                    gap={3}
                     className="overflow-x-auto border-b border-default bg-background/80 px-3 py-2 backdrop-blur-xl"
                     anatPart={showAnatomy ? "StackH" : undefined}
                     body={flatItems.map((item) => {
@@ -314,7 +314,7 @@ const SettingsSidebarNav = ({
                         const pillContent = (
                             <>
                                 <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
-                                <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap showAnatomy={showAnatomy} />
                             </>
                         )
                         return (
@@ -328,7 +328,7 @@ const SettingsSidebarNav = ({
                                     isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
                                 )}
                             >
-                                <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={pillContent} />
+                                <StackH gap={2} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={pillContent} />
                             </button>
                         )
                     })}

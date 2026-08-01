@@ -34,16 +34,16 @@ type Story = StoryObj<typeof InnerLayout>
 
 /** Shared desktop-route fixture, same shape `Navbar`'s own story uses. */
 const NAV_ITEMS: Array<NavLinkItem> = [
-    { id: "home", label: "Trang chủ", isActive: true, onPress: () => {} },
-    { id: "courses", label: "Khoá học", isActive: false, onPress: () => {} },
-    { id: "contact", label: "Liên hệ", isActive: false, onPress: () => {} },
+    { id: "home", label: "Home", isActive: true, onPress: () => {} },
+    { id: "courses", label: "Courses", isActive: false, onPress: () => {} },
+    { id: "contact", label: "Contact", isActive: false, onPress: () => {} },
 ]
 
 const NOTIFICATIONS: NavbarNotificationsData = {
     unreadCount: 2,
     items: [
-        { id: "n1", title: "Bài nộp đã được chấm", subtitle: "Module 3 · Container hoá", timeLabel: "5 phút trước", isRead: false },
-        { id: "n2", title: "Nhắc lịch ôn flashcard", subtitle: "12 thẻ đến hạn hôm nay", timeLabel: "2 giờ trước", isRead: false },
+        { id: "n1", title: "Your submission has been graded", subtitle: "Module 3 · Containerization", timeLabel: "5 minutes ago", isRead: false },
+        { id: "n2", title: "Flashcard review reminder", subtitle: "12 cards due today", timeLabel: "2 hours ago", isRead: false },
     ],
     isLoading: false,
     error: null,
@@ -55,22 +55,22 @@ const NOTIFICATIONS: NavbarNotificationsData = {
 
 const ACCOUNT: NavbarAccountData = {
     isAuthed: true,
-    user: { username: "tranminhanh", email: "tranminhanh@gmail.com", avatarUrl: undefined },
+    user: { username: "noahmitchell", email: "noahmitchell@gmail.com", avatarUrl: undefined },
     isLoading: false,
     menuItems: [
-        { id: "dashboard", label: "Bảng điều khiển", onPress: () => {} },
-        { id: "logout", label: "Đăng xuất", isDanger: true, onPress: () => {} },
+        { id: "dashboard", label: "Dashboard", onPress: () => {} },
+        { id: "logout", label: "Log out", isDanger: true, onPress: () => {} },
     ],
 }
 
 const EXPLORE_LINKS: Array<FooterLinkItem> = [
-    { id: "courses", label: "Khóa học", onPress: () => {} },
+    { id: "courses", label: "Courses", onPress: () => {} },
     { id: "blog", label: "Blog", onPress: () => {} },
-    { id: "community", label: "Cộng đồng", onPress: () => {} },
+    { id: "community", label: "Community", onPress: () => {} },
 ]
 
 const SUPPORT_LINKS: Array<FooterLinkItem> = [
-    { id: "contact", label: "Liên hệ", onPress: () => {} },
+    { id: "contact", label: "Contact", onPress: () => {} },
 ]
 
 const SOCIALS: Array<FooterSocialLink> = [
@@ -87,21 +87,21 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 
 /** Props for {@link RoutedPage}. */
 interface RoutedPageProps {
-    /** What this demo route calls itself, e.g. "Nội dung bài học". */
+    /** What this demo route calls itself, e.g. "Lesson content". */
     label: string
 }
 
 /** A stand-in for whatever `page.tsx` mounts inside `children` — this shell never learns what it is. */
 const RoutedPage = ({ label }: RoutedPageProps) => (
-    <div className="rounded-2xl border border-dashed border-default p-6 text-sm text-muted">
-        {label} — route con, không thuộc layout này.
+    <div data-tier="fixture" className="rounded-2xl border border-dashed border-default p-6 text-sm text-muted">
+        {label} — a child route, not part of this layout.
     </div>
 )
 
 /** LEAF — a `/learn` route: in-app chrome, no marketing footer. */
 export const NoFooter: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InnerLayout"
                 tier="screen"
@@ -116,7 +116,7 @@ export const NoFooter: Story = {
     showFooter={false}
     navItems={navItems}
     onLogoPress={goHome}
-    searchPlaceholder="Tìm bài học, khoá học…"
+    searchPlaceholder="Search lessons, courses…"
     shortcutLabel="Ctrl K"
     onSearchPress={openSearch}
     languages={languages}
@@ -139,17 +139,17 @@ export const NoFooter: Story = {
     <LearnContentPage />
 </InnerLayout>`,
                         render: (
-                            <div style={{ height: "32rem" }} className="overflow-y-auto rounded-2xl border border-default">
+                            <div data-tier="fixture" style={{ height: "32rem" }} className="overflow-y-auto rounded-2xl border border-default">
                                 <InnerLayout
                                     anatPart="InnerLayout"
                                     showAnatomy
                                     showFooter={false}
                                     navItems={NAV_ITEMS}
                                     onLogoPress={() => {}}
-                                    searchPlaceholder="Tìm bài học, khoá học…"
+                                    searchPlaceholder="Search lessons, courses…"
                                     shortcutLabel="Ctrl K"
                                     onSearchPress={() => {}}
-                                    languages={[{ code: "vi", label: "Tiếng Việt" }, { code: "en", label: "English" }]}
+                                    languages={[{ code: "vi", label: "Vietnamese" }, { code: "en", label: "English" }]}
                                     activeLocale="vi"
                                     onLocaleChange={() => {}}
                                     isDarkMode={false}
@@ -167,7 +167,7 @@ export const NoFooter: Story = {
                                     onPrivacyPress={() => {}}
                                 >
                                     <div className="p-6">
-                                        <RoutedPage label="Nội dung bài học" />
+                                        <RoutedPage label="Lesson content" />
                                     </div>
                                 </InnerLayout>
                             </div>
@@ -182,7 +182,7 @@ export const NoFooter: Story = {
 /** LEAF — a marketing route: the Footer is a whole extra composed node. */
 export const WithFooter: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InnerLayout"
                 tier="screen"
@@ -205,17 +205,17 @@ export const WithFooter: Story = {
     <LandingScreen />
 </InnerLayout>`,
                         render: (
-                            <div style={{ height: "40rem" }} className="overflow-y-auto rounded-2xl border border-default">
+                            <div data-tier="fixture" style={{ height: "40rem" }} className="overflow-y-auto rounded-2xl border border-default">
                                 <InnerLayout
                                     anatPart="InnerLayout"
                                     showAnatomy
                                     showFooter
                                     navItems={NAV_ITEMS}
                                     onLogoPress={() => {}}
-                                    searchPlaceholder="Tìm bài học, khoá học…"
+                                    searchPlaceholder="Search lessons, courses…"
                                     shortcutLabel="Ctrl K"
                                     onSearchPress={() => {}}
-                                    languages={[{ code: "vi", label: "Tiếng Việt" }, { code: "en", label: "English" }]}
+                                    languages={[{ code: "vi", label: "Vietnamese" }, { code: "en", label: "English" }]}
                                     activeLocale="vi"
                                     onLocaleChange={() => {}}
                                     isDarkMode={false}
@@ -233,7 +233,7 @@ export const WithFooter: Story = {
                                     onPrivacyPress={() => {}}
                                 >
                                     <div className="p-6">
-                                        <RoutedPage label="Trang chủ" />
+                                        <RoutedPage label="Home" />
                                     </div>
                                 </InnerLayout>
                             </div>

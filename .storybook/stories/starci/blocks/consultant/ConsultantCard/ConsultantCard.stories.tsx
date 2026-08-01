@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * be shown (`ConsultantDirectoryGrid`'s tiles today, a profile overlay
  * tomorrow).
  *
- * BUILT ON `SurfaceCard.Pressable` (composite navigation khung), NOT a
+ * BUILT ON `SurfaceCard.Pressable` (composite navigation frame), NOT a
  * hand-rolled `<button>` around bare `Image`/`Typography` atoms — the exact
  * regression this run exists to correct (see `ContentModeNav`'s file header).
  *
@@ -46,17 +46,17 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 
 const FULL_CONSULTANT = {
     id: "consultant-1",
-    fullName: "Nguyễn Thu Hà",
-    jobTitle: "Chuyên viên tuyển dụng Backend",
-    companyTitle: "TechCorp Việt Nam",
-    description: "5 năm tuyển dụng kỹ sư backend cho các công ty product. Từng phỏng vấn hơn 300 ứng viên.",
+    fullName: "Hannah Nguyen",
+    jobTitle: "Backend Recruiting Specialist",
+    companyTitle: "TechCorp Vietnam",
+    description: "5 years recruiting backend engineers for product companies. Has interviewed over 300 candidates.",
     avatarUrl: PHOTO_SRC,
 }
 
 /** LEAF — full set: photo → name+role → company → blurb. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ConsultantCard"
                 tier="block"
@@ -71,10 +71,10 @@ export const Default: Story = {
                         code: `<ConsultantCard
     consultant={{
         id: "consultant-1",
-        fullName: "Nguyễn Thu Hà",
-        jobTitle: "Chuyên viên tuyển dụng Backend",
-        companyTitle: "TechCorp Việt Nam",
-        description: "5 năm tuyển dụng kỹ sư backend cho các công ty product. Từng phỏng vấn hơn 300 ứng viên.",
+        fullName: "Hannah Nguyen",
+        jobTitle: "Backend Recruiting Specialist",
+        companyTitle: "TechCorp Vietnam",
+        description: "5 years recruiting backend engineers for product companies. Has interviewed over 300 candidates.",
         avatarUrl: photoUrl,
     }}
     onOpen={(id) => openProfile(id)}
@@ -113,7 +113,7 @@ export const Default: Story = {
 /** LEAF — the consultant carries no role/company/blurb ⇒ **loses** all three text rows. */
 export const Minimal: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ConsultantCard"
                 tier="block"
@@ -128,7 +128,7 @@ export const Minimal: Story = {
                         code: `<ConsultantCard
     consultant={{
         id: "consultant-2",
-        fullName: "Trần Minh Khôi",
+        fullName: "Kevin Tran",
         avatarUrl: photoUrl,
     }}
     onOpen={(id) => openProfile(id)}
@@ -139,7 +139,7 @@ export const Minimal: Story = {
                                 showAnatomy
                                 consultant={{
                                     id: "consultant-2",
-                                    fullName: "Trần Minh Khôi",
+                                    fullName: "Kevin Tran",
                                     avatarUrl: PHOTO_SRC,
                                 }}
                                 onOpen={() => {}}

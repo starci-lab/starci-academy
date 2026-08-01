@@ -49,15 +49,7 @@ interface LinkSeeMoreOwnProps {
      * Defaults to `"w-1/4"`, matching short labels like "See more".
      */
     skeletonWidth?: SkeletonWidth
-    /**
-     * Extra classes on the link.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
 
@@ -71,12 +63,11 @@ export type LinkSeeMoreProps = LinkSeeMoreOwnProps &
         | { isSkeleton?: false; label: ReactNode }
     )
 
-/** Shared look — semibold accent text with `gap-2` to the arrow, matching {@link LinkBack}. */
-const baseClassName = (size: LinkSeeMoreSize, className?: string, classNames?: Array<AllowedClassName>) =>
+/** Shared look — semibold accent text with `gap-1` (icon-text) to the arrow, matching {@link LinkBack}. */
+const baseClassName = (size: LinkSeeMoreSize, classNames?: Array<AllowedClassName>) =>
     cn(
-        "inline-flex w-fit shrink-0 items-center gap-2 font-semibold text-accent-soft-foreground no-underline",
+        "inline-flex w-fit shrink-0 items-center gap-1 font-semibold text-accent-soft-foreground no-underline",
         TEXT_CLASS[size],
-        className,
         classNames,
     )
 
@@ -131,19 +122,16 @@ export const LinkSeeMore = ({
     size = "sm",
     isSkeleton = false,
     skeletonWidth,
-    className,
     classNames,
 }: LinkSeeMoreProps) => {
     if (isSkeleton) {
-        // Same `inline-flex items-center gap-2` row as the real render; arrow
+        // Same `inline-flex items-center gap-1` (icon-text) row as the real render; arrow
         // box matches `ARROW_CLASS[size]` and the label bar rides
         // `SKEL_TEXT_BAR[size]` so the row's height never moves once the real
         // label lands. `decorative`/`href`/`onPress` don't affect this shape —
         // they only change what happens on press.
         return (
-            <span
-                className={cn("inline-flex w-fit shrink-0 items-center gap-2", className, classNames)}
-            >
+            <span data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" className={cn("inline-flex w-fit shrink-0 items-center gap-1", classNames)}>
                 <HeroSkeleton
                     className={cn(SKEL_TEXT_BAR[size], skeletonWidth ?? "w-1/4")}
                 />
@@ -176,30 +164,38 @@ export const LinkSeeMore = ({
 
     if (decorative) {
         // Parent supplies `group` (e.g. ContinueCard wrapper) — hover fires from
-        // anywhere on that surface, not a hover zone of this span alone.
+        // anywhere on that surface, not a hover zone of this span alone. Untagged:
+        // this is a plain `<span>`, not the HeroUI `Link`, so "Link" would be inaccurate here.
         return (
-            <span className={baseClassName(size, className, classNames)}>
+            <span data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" className={baseClassName(size, classNames)}>
                 {text}
                 {arrow}
             </span>
         )
     }
 
-    const interactiveClassName = cn(baseClassName(size, className, classNames), "group cursor-pointer")
+    const interactiveClassName = cn(baseClassName(size, classNames), "group cursor-pointer")
 
     if (href) {
+        // Untagged for the same reason as the `decorative` branch above: a plain
+        // `<a>`, not the HeroUI `Link`.
         return (
-            <a href={href} className={interactiveClassName}>
+            <a data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" href={href} className={interactiveClassName}>
                 {text}
                 {arrow}
             </a>
         )
     }
 
+    // The only branch that actually renders the HeroUI `Link` component (no
+    // `href`, no `decorative`), so it's the only one that can accurately claim
+    // the "Link" tag.
     return (
-        <HeroUILink onPress={onPress} className={interactiveClassName}>
+        <HeroUILink data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" onPress={onPress} className={interactiveClassName}>
             {text}
             {arrow}
         </HeroUILink>
     )
 }
+
+export const meta = { tier: "atom", name: "LinkSeeMore" } as const

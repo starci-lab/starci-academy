@@ -102,7 +102,7 @@ export const PublicProfile = ({
     // "my own profile" = the route's username IS the signed-in viewer — match by
     // USERNAME (the route is username-keyed; viewer.id vs the projected profile id
     // can live in different namespaces and falsely read as a visitor). id kept as a
-    // fallback. (thầy 2026-07-18: "username = current me thì coi như trang mình".)
+    // fallback. (reviewer, 2026-07-18: "if the username is mine, treat it as my own page".)
     const isSelf = !!viewer && !!user
         && ((!!viewer.username && viewer.username === user.username) || viewer.id === user.id)
     // the CV tab shows for visitors only when the user has a PUBLIC CV (the owner

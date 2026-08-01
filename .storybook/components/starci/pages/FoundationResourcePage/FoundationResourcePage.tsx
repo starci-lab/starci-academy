@@ -72,7 +72,7 @@ export interface FoundationResourcePageProps {
     description?: string
     /** Resource kind — drives both the header's chip and which body shape renders. */
     kind: FoundationKind
-    /** `true` → the header shows the editorial "Nên xem" pill. */
+    /** `true` → the header shows the editorial "Recommended" pill. */
     isRecommended?: boolean
     /** Topic tags on the resource. */
     tags?: Array<FoundationHeaderTag>
@@ -176,14 +176,14 @@ const FoundationResourcePage = ({
             {isEmpty ? (
                 <FoundationResourceEmpty anatPart="FoundationResourceEmpty" showAnatomy={showAnatomy} />
             ) : (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={resourceSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={resourceSection} />
             )}
         </>
     )
 
-    const resourceBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={resourceSections} />
+    const resourceBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={resourceSections} />
 
-    return <Container size="md" padding="roomy" body={resourceBody} />
+    return <Container size="md" padding={6} body={resourceBody} />
 }
 
 export { FoundationResourcePage }

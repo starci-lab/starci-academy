@@ -17,9 +17,9 @@ export interface SkeletonTableProps extends WithClassNames<undefined> {
  * (`h-[14px]` centered `my-[5px]`) in each header column + body cell.
  */
 export const SkeletonTable = ({ rows = 3, cols = 3, className }: SkeletonTableProps) => (
-    <Table variant="primary" aria-label="Đang tải bảng" className={className}>
+    <Table variant="primary" aria-label="Loading table" className={className}>
         <Table.ScrollContainer>
-            <Table.Content aria-label="Đang tải bảng">
+            <Table.Content aria-label="Loading table">
                 <Table.Header>
                     {Array.from({ length: cols }).map((_, colIndex) => (
                         <Table.Column key={colIndex} id={`col-${colIndex}`} isRowHeader={colIndex === 0}>

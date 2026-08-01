@@ -14,9 +14,9 @@ import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
  * individual style flags.
  *
  * - `"item"` — one of N resume cards in a grid/list. The card is a static frame;
- *   the CTA is a real {@link SeeMoreLink} ("Tiếp tục →") on its own row — hover
- *   and click live on that link only (same as LabeledCard "Xem thêm"). It carries
- *   NO leading icon (a compact CTA tile reads off its title + "Tiếp tục →"; a
+ *   the CTA is a real {@link SeeMoreLink} ("Continue →") on its own row — hover
+ *   and click live on that link only (same as LabeledCard "See more"). It carries
+ *   NO leading icon (a compact CTA tile reads off its title + "Continue →"; a
  *   decorative badge is just clutter) and no accent ring (N accented cards means
  *   none of them stands out).
  * - `"hero"` — the single standout "you left this in progress" card on a
@@ -60,10 +60,10 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
     /** Maximum value representing 100 % completion. Defaults to `100`. */
     max?: number
     /**
-     * Optional call-to-action label (e.g. "Tiếp tục"). Rendered — on its OWN
+     * Optional call-to-action label (e.g. "Continue"). Rendered — on its OWN
      * row below the title/subtitle — as a real {@link SeeMoreLink} for
      * `variant="item"` (press + hover on the link only, same as LabeledCard
-     * "Xem thêm"), and as a chip button for `variant="hero"`.
+     * "See more"), and as a chip button for `variant="hero"`.
      */
     ctaLabel?: React.ReactNode
     /**
@@ -184,7 +184,7 @@ export const ContinueCard = ({
         </SectionCard>
     )
 
-    // `hero` = the ONE "tiếp tục phiên đang dở" standout on its surface — the
+    // `hero` = the ONE "resume the in-progress session" standout on its surface — the
     // canonical `HighlightCard` case (`card.md` §3j). `item` stays a static frame
     // (N of them together — a highlighted card would just fight the others for
     // attention, same reasoning `withVerdict` never applied to `item` either).

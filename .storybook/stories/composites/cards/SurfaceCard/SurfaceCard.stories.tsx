@@ -8,16 +8,19 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `SurfaceCard` is the general
  * WRAPPER FRAME of the card family — it OWNS the header section (`SurfaceCardHeader`:
- * label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer` slot set
- * (+ `children` = body shorthand), the `description` outside the card, and TWO
- * independent frame axes `variant`/`padding`.
+ * label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer` slot set,
+ * the `description` outside the card, and TWO independent frame axes `variant`/`padding`.
+ *
+ * COMPOSITE-8: each slot is a COMPONENT reference the frame calls itself (never an
+ * already-built node), so `isSkeleton` can reach inside it. `ProfileRow` below is
+ * handed to `body` as a reference (`body={ProfileRow}`), not called ahead of time.
  *
  * Because the HEADER and SLOTS are this wrapper frame's own property, ALL their state
  * lives here; `.List`/`.Accordion` (which also take `SurfaceLabelProps`) keep only ONE
  * `WithLabel` leaf to prove the header can turn on, NOT the whole set repeated.
  *
  * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `bordered?: boolean` → `variant?: SurfaceCardVariant`
- * (`"surface" | "nested"`), `flushContent?: boolean` → `padding?: InsetScale`. The two
+ * (`"surface" | "nested"`), `flushContent?: boolean` → `padding?: PaddingValue`. The two
  * old single-value leaves (`Bordered`, `FlushContent`) merged into two leaves named
  * AFTER THE PROP (`Variant`, `Padding`), each leaf rendering the full union side by
  * side instead of just the value that differs from the default.
@@ -40,9 +43,9 @@ type Story = StoryObj<typeof SurfaceCard>
  * `onSeeMore` is passed (the caller only supplies a handler + text), so it's a
  * component the frame rebuilds, and it's clickable through to its story.
  *
- * `action` is NOT one: that's a node the caller supplies, the frame doesn't own
- * what's inside it. The content in `children` (ProfileRow) is the same — it
- * belongs to the caller, not a frame part.
+ * `action` is a component reference the caller supplies; the frame calls it with
+ * `isSkeleton` but doesn't own what's inside it. `body` (`ProfileRow`) is the
+ * same — it belongs to the caller, not a frame part.
  *
  * ⚠️ The key must match EXACTLY the `data-anat-part` string that
  * `surface-card-header.tsx` emits.
@@ -63,9 +66,9 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * for this caption), so the "Description" node it wraps gets a real
  * `storyId` to jump to.
  *
- * AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): was `Typography`
- * trần — description là tầng "richtext nhỏ", đổi sang `RichText`. Xem
- * `.artifacts/feedback/2026-07-29-challengepage-graded/round-1.md`.
+ * AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): was a bare
+ * `Typography` — description is a "small richtext" tier, changed to `RichText`.
+ * See `.artifacts/feedback/2026-07-29-challengepage-graded/round-1.md`.
  */
 const DESCRIPTION_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "RichText": {
@@ -82,8 +85,9 @@ const DESCRIPTION_ANNOTATE: Record<string, AnatomyAnnotation> = {
  *
  * ⭐ Because it goes through atoms, `isSkeleton` just FLOWS ON DOWN into those
  * three atoms — no `ProfileRowSkeleton` copy to keep in sync anymore (§12c).
- * This is exactly the caller's job when a frame takes `children`: the frame
- * doesn't know the content, so whoever builds the content passes the flag on.
+ * This is exactly why `body` takes a COMPONENT reference (COMPOSITE-8): the frame
+ * calls `ProfileRow` itself with `isSkeleton`, and `ProfileRow` passes it on to
+ * the atoms it composes.
  *
  * NOTE: `SurfaceCard` draws its own surface frame (`rounded-3xl bg-surface`
  * + shadow/border, §1a), so there's NO extra `Card` wrapper here — avoiding
@@ -96,32 +100,30 @@ interface ProfileRowProps {
 }
 
 const ProfileRow = ({ isSkeleton = false }: ProfileRowProps) => (
-    <div className="flex items-center gap-3">
-        <Avatar name="StarCi Academy" size="md" isSkeleton={isSkeleton} className="shrink-0" />
+    <div data-tier="fixture" className="flex items-center gap-3">
+        <Avatar name="StarCi Academy" size="md" isSkeleton={isSkeleton} classNames={["shrink-0"]} />
         <div className="flex min-w-0 grow flex-col">
-            <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} className={isSkeleton ? "w-1/3" : undefined} text="StarCi Academy" />
-            <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} className={isSkeleton ? "w-2/3" : undefined} text="Learn fullstack, system design, and DevOps on an interview-prep track." />
+            <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/3"] : undefined} text="StarCi Academy" />
+            <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-2/3"] : undefined} text="Learn fullstack, system design, and DevOps on an interview-prep track." />
         </div>
     </div>
 )
 
-/** Default — `children` is the shorthand for `body`: a WRAPPER frame takes any content. */
+/** Default — `body` is a component reference: a WRAPPER frame calls it itself and takes any content. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
                 leaf="Default"
-                reason="The general bg-surface frame of the SurfaceCard namespace, with an OPTIONAL header section baked in. It is a WRAPPER frame, so `children` stays open as the shorthand for `body`; with no `header`/`footer` passed, the DOM is exactly one surface div around the content."
+                reason="The general bg-surface frame of the SurfaceCard namespace, with an OPTIONAL header section baked in. `body` is a component reference the frame calls itself; with no `header`/`footer` passed, the DOM is exactly one surface div around the content."
                 states={[
                     {
                         name: "no label, header, or footer passed",
                         why: "The header section drops out entirely and the surface div wraps only the content. This is the bare shape a caller reaches for when the surrounding page already carries its own heading.",
-                        code: `<SurfaceCard>
-  <ProfileRow />
-</SurfaceCard>`,
-                        render: <SurfaceCard showAnatomy><ProfileRow /></SurfaceCard>,
+                        code: `<SurfaceCard body={ProfileRow} />`,
+                        render: <SurfaceCard showAnatomy body={ProfileRow} />,
                     },
                 ]}
             />
@@ -129,10 +131,15 @@ export const Default: Story = {
     ),
 }
 
+/** Header slot fixture for {@link Slots} — a component reference (COMPOSITE-8), not a built node. */
+const ProfileHeader = () => <Typography size="sm" weight="medium" text="Profile" />
+/** Footer slot fixture for {@link Slots}. */
+const ProfileFooter = () => <Button size="sm" variant="secondary" label="View profile" onPress={() => {}} />
+
 /** NAMED slots — `header`/`body`/`footer` are the main path for the frame tier (Layouts). */
 export const Slots: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -140,18 +147,18 @@ export const Slots: Story = {
                 states={[
                     {
                         name: "header, body, and footer all passed",
-                        why: "The frame builds a `flex flex-col gap-3` column carrying all three named slots instead of the single `children` body. `body` wins over `children` when both are passed, so a caller that needs an explicit footer reaches for the named slots.",
+                        why: "The frame builds a `flex flex-col gap-3` column carrying all three named slots, each a component reference the frame calls itself with `isSkeleton` (COMPOSITE-8) — a caller that needs an explicit footer reaches for the named slots.",
                         code: `<SurfaceCard
-  header={<Typography size="sm" weight="medium" text="Profile" />}
-  body={<ProfileRow />}
-  footer={<Button size="sm" variant="secondary" label="View profile" onPress={() => {}} />}
+  header={ProfileHeader}
+  body={ProfileRow}
+  footer={ProfileFooter}
 />`,
                         render: (
                             <SurfaceCard
                                 showAnatomy
-                                header={<Typography size="sm" weight="medium" text="Profile" />}
-                                body={<ProfileRow />}
-                                footer={<Button size="sm" variant="secondary" label="View profile" onPress={() => {}} />}
+                                header={ProfileHeader}
+                                body={ProfileRow}
+                                footer={ProfileFooter}
                             />
                         ),
                     },
@@ -163,7 +170,7 @@ export const Slots: Story = {
 
 export const WithLabel: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -172,10 +179,8 @@ export const WithLabel: Story = {
                     {
                         name: "label passed",
                         why: "`label` turns on SurfaceCardHeader above the surface frame, gap-3 between the two. This is how a card earns its own heading without the caller hand-rolling a title row.",
-                        code: `<SurfaceCard label="My courses">
-  <ProfileRow />
-</SurfaceCard>`,
-                        render: <SurfaceCard label="My courses" showAnatomy><ProfileRow /></SurfaceCard>,
+                        code: `<SurfaceCard label="My courses" body={ProfileRow} />`,
+                        render: <SurfaceCard label="My courses" showAnatomy body={ProfileRow} />,
                     },
                 ]}
             />
@@ -185,7 +190,7 @@ export const WithLabel: Story = {
 
 export const SeeMore: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -194,11 +199,9 @@ export const SeeMore: Story = {
                 states={[
                     {
                         name: "onSeeMore passed",
-                        why: "SurfaceCardHeader renders a `LinkSeeMore` in place of `labelEnd`, still inside the same single header node. The frame builds that atom itself rather than taking it from the caller, so it shows up under Deps; `action` would not, because that node always comes from the caller.",
-                        code: `<SurfaceCard label="Featured courses" onSeeMore={() => {}}>
-  <ProfileRow />
-</SurfaceCard>`,
-                        render: <SurfaceCard label="Featured courses" onSeeMore={() => {}} showAnatomy><ProfileRow /></SurfaceCard>,
+                        why: "SurfaceCardHeader renders a `LinkSeeMore` in place of `labelEnd`, still inside the same single header node. The frame builds that atom itself rather than taking it from the caller, so it shows up under Deps; `action` would not, because that component is supplied by the caller.",
+                        code: `<SurfaceCard label="Featured courses" onSeeMore={() => {}} body={ProfileRow} />`,
+                        render: <SurfaceCard label="Featured courses" onSeeMore={() => {}} showAnatomy body={ProfileRow} />,
                     },
                 ]}
             />
@@ -208,7 +211,7 @@ export const SeeMore: Story = {
 
 export const LabelEnd: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -217,10 +220,8 @@ export const LabelEnd: Story = {
                     {
                         name: "labelEnd passed",
                         why: "`labelEnd` renders a muted tag to the right of the label, in the same header node. This is for a unit or a count that belongs next to the label, not an action a viewer could press.",
-                        code: `<SurfaceCard label="Remaining tuition" labelEnd="VND">
-  <ProfileRow />
-</SurfaceCard>`,
-                        render: <SurfaceCard label="Remaining tuition" labelEnd="VND" showAnatomy><ProfileRow /></SurfaceCard>,
+                        code: `<SurfaceCard label="Remaining tuition" labelEnd="VND" body={ProfileRow} />`,
+                        render: <SurfaceCard label="Remaining tuition" labelEnd="VND" showAnatomy body={ProfileRow} />,
                     },
                 ]}
             />
@@ -228,9 +229,12 @@ export const LabelEnd: Story = {
     ),
 }
 
+/** `action` slot fixture for {@link WithAction} — a component reference (COMPOSITE-8), not a built node. */
+const ManageAction = () => <Button variant="secondary" size="sm" label="Manage" onPress={() => {}} />
+
 export const WithAction: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -241,18 +245,16 @@ export const WithAction: Story = {
                         why: "`action` wins over `onSeeMore` and `labelEnd`, filling the same right-hand slot of SurfaceCardHeader. This is for a card that needs a real control next to its label, such as a button that manages a setting shown below.",
                         code: `<SurfaceCard
   label="Payment method"
-  action={<Button variant="secondary" size="sm" label="Manage" onPress={() => {}} />}
->
-  <ProfileRow />
-</SurfaceCard>`,
+  action={ManageAction}
+  body={ProfileRow}
+/>`,
                         render: (
                             <SurfaceCard
                                 label="Payment method"
-                                action={<Button variant="secondary" size="sm" label="Manage" onPress={() => {}} />}
+                                action={ManageAction}
                                 showAnatomy
-                            >
-                                <ProfileRow />
-                            </SurfaceCard>
+                                body={ProfileRow}
+                            />
                         ),
                     },
                 ]}
@@ -263,7 +265,7 @@ export const WithAction: Story = {
 
 export const SubtleLabel: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             {/* subtleLabel = a MINOR header (eyebrow) over a block, sitting UNDER a
                 primary section Label — e.g. time-buckets under "Practice log". */}
             <div className="flex flex-col gap-3">
@@ -276,15 +278,13 @@ export const SubtleLabel: Story = {
                         {
                             name: "subtleLabel = true",
                             why: "The label switches from a bold Label to a muted text-xs eyebrow, with the gap under it tightening from 3 to 2 — still the same single header node. This is for a card sitting under a primary section label, where a second bold heading would compete with it.",
-                            code: `<SurfaceCard label="Today" subtleLabel>
-  <ProfileRow />
-</SurfaceCard>`,
-                            render: <SurfaceCard label="Today" subtleLabel showAnatomy><ProfileRow /></SurfaceCard>,
+                            code: `<SurfaceCard label="Today" subtleLabel body={ProfileRow} />`,
+                            render: <SurfaceCard label="Today" subtleLabel showAnatomy body={ProfileRow} />,
                         },
                     ]}
                 />
-                <SurfaceCard label="Yesterday" subtleLabel><ProfileRow /></SurfaceCard>
-                <SurfaceCard label="Last week" subtleLabel><ProfileRow /></SurfaceCard>
+                <SurfaceCard label="Yesterday" subtleLabel body={ProfileRow} />
+                <SurfaceCard label="Last week" subtleLabel body={ProfileRow} />
             </div>
         </div>
     ),
@@ -292,7 +292,7 @@ export const SubtleLabel: Story = {
 
 export const Description: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -305,17 +305,15 @@ export const Description: Story = {
                         code: `<SurfaceCard
   label="Weekly quest"
   description="Complete all three to earn the reward."
->
-  <ProfileRow />
-</SurfaceCard>`,
+  body={ProfileRow}
+/>`,
                         render: (
                             <SurfaceCard
                                 label="Weekly quest"
                                 description="Complete all three to earn the reward."
                                 showAnatomy
-                            >
-                                <ProfileRow />
-                            </SurfaceCard>
+                                body={ProfileRow}
+                            />
                         ),
                     },
                 ]}
@@ -341,11 +339,9 @@ export const Description: Story = {
  */
 export const Variant: Story = {
     render: () => (
-        <div className="flex flex-wrap items-start gap-6 p-8">
+        <div data-tier="fixture" className="flex flex-wrap items-start gap-6 p-8">
             <div className="w-72">
-                <SurfaceCard label="Questions" variant="surface">
-                    <ProfileRow />
-                </SurfaceCard>
+                <SurfaceCard label="Questions" variant="surface" body={ProfileRow} />
             </div>
             <div className="w-72 rounded-3xl bg-surface p-3 shadow-surface">
                 <BlockAnatomy
@@ -356,13 +352,9 @@ export const Variant: Story = {
                         {
                             name: "variant = \"nested\"",
                             why: "Content switches from a shadow to a border (surface-in-surface, §1a), because a shadow stacked on a parent surface's own shadow is nearly invisible. The card at the left shows the default `variant=\"surface\"` for comparison — same composition, only the edge treatment differs.",
-                            code: `<SurfaceCard label="Questions" variant="nested">
-  <ProfileRow />
-</SurfaceCard>`,
+                            code: `<SurfaceCard label="Questions" variant="nested" body={ProfileRow} />`,
                             render: (
-                                <SurfaceCard label="Questions" variant="nested" showAnatomy>
-                                    <ProfileRow />
-                                </SurfaceCard>
+                                <SurfaceCard label="Questions" variant="nested" showAnatomy body={ProfileRow} />
                             ),
                         },
                     ]}
@@ -373,28 +365,34 @@ export const Variant: Story = {
 }
 
 /**
- * `padding` — the second INDEPENDENT axis, the §10c scale. Default `3` is the
- * standard inset around the content; `padding="flush"` drops the inset (still keeps
- * `overflow-hidden`) so a child can OWN its own edge (a cover image, a
+ * `padding` — the second INDEPENDENT axis, the `AllowedPadding` step scale. Default
+ * step `4` is the standard inset around the content; `padding={1}` drops the inset
+ * (still keeps `overflow-hidden`) so a child can OWN its own edge (a cover image, a
  * full-bleed table) flush to the border. Merged from two old single-value
- * leaves (`Default` implying `3`, `FlushContent`) into ONE `Padding` leaf
+ * leaves (`Default` implying step `4`, `FlushContent`) into ONE `Padding` leaf
  * rendering both side by side.
  *
  * 2026-07-26 (teacher): changed from `flushContent?: boolean`
- * (`flushContent=true` → `padding="flush"`). An axis INDEPENDENT of `variant` — a
- * `nested` card AND `padding="flush"` is a real combination (an edge-to-edge image
+ * (`flushContent=true` → `padding={1}`). An axis INDEPENDENT of `variant` — a
+ * `nested` card AND `padding={1}` is a real combination (an edge-to-edge image
  * inside a nested card); merging them would kill that combination.
  *
- * Same shape as `Variant`: only `padding="flush"` sits inside `BlockAnatomy`, the
- * `padding="cozy"` card at the left is a plain reference sibling.
+ * Same shape as `Variant`: only `padding={1}` sits inside `BlockAnatomy`, the
+ * `padding={4}` card at the left is a plain reference sibling.
  */
+/** `body` fixture for {@link Padding} — a bleed-edge cover image above the row, owning its own inset. */
+const BleedEdgeBody = () => (
+    <>
+        <div className="h-28 w-full bg-accent-soft" aria-hidden />
+        <div className="p-3"><ProfileRow /></div>
+    </>
+)
+
 export const Padding: Story = {
     render: () => (
-        <div className="flex flex-wrap items-start gap-6 p-8">
+        <div data-tier="fixture" className="flex flex-wrap items-start gap-6 p-8">
             <div className="w-72">
-                <SurfaceCard label="Featured course" padding="cozy">
-                    <ProfileRow />
-                </SurfaceCard>
+                <SurfaceCard label="Featured course" padding={4} body={ProfileRow} />
             </div>
             <div className="w-72">
                 <BlockAnatomy
@@ -403,17 +401,11 @@ export const Padding: Story = {
                     leaf="Padding"
                     states={[
                         {
-                            name: "padding = flush",
-                            why: "The card drops its `p-3` inset and turns on `overflow-hidden`, so a child now owns its own padding and its edges follow the frame's own corners. The card at the left shows the default cozy inset for comparison, the standard card interior.",
-                            code: `<SurfaceCard label="Featured course" padding="flush">
-  <div className="h-28 bg-accent-soft" />
-  <div className="p-3"><ProfileRow /></div>
-</SurfaceCard>`,
+                            name: "padding = 1",
+                            why: "The card drops its `p-3` inset and turns on `overflow-hidden`, so a child now owns its own padding and its edges follow the frame's own corners. The card at the left shows the default step `4` inset for comparison, the standard card interior.",
+                            code: `<SurfaceCard label="Featured course" padding={1} body={BleedEdgeBody} />`,
                             render: (
-                                <SurfaceCard label="Featured course" padding="flush" showAnatomy>
-                                    <div className="h-28 w-full bg-accent-soft" aria-hidden />
-                                    <div className="p-3"><ProfileRow /></div>
-                                </SurfaceCard>
+                                <SurfaceCard label="Featured course" padding={1} showAnatomy body={BleedEdgeBody} />
                             ),
                         },
                     ]}
@@ -428,21 +420,19 @@ export const Padding: Story = {
  * following the same mould as `Variant`/`Padding` (a leaf named AFTER THE PROP,
  * not after a scenario).
  *
- * ⭐ The flag only reaches what the FRAME OWNS: `label` on the header and
- * `description` below the card. `children` belongs to the caller, so the caller
- * forwards the flag down — here that's `ProfileRow`, which is built from three
- * atoms so the flag flows straight to `Avatar` + two `Typography`. No
- * second skeleton tree to keep in sync (§12c).
+ * ⭐ The flag reaches what the FRAME OWNS directly (`label` on the header,
+ * `description` below the card) AND every slot it renders — `body` is a
+ * component reference (COMPOSITE-8), so the frame calls `ProfileRow` itself
+ * WITH `isSkeleton`, and `ProfileRow` forwards it straight to `Avatar` + two
+ * `Typography`. No second skeleton tree to keep in sync (§12c).
  *
  * Only the skeleton card sits inside `BlockAnatomy`; the plain card at the left
  * is a reference sibling, so this leaf carries exactly one state.
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="grid gap-6 p-8 md:grid-cols-2">
-            <SurfaceCard label="My courses" description="Three left to finish this month.">
-                <ProfileRow />
-            </SurfaceCard>
+        <div data-tier="fixture" className="grid gap-6 p-8 md:grid-cols-2">
+            <SurfaceCard label="My courses" description="Three left to finish this month." body={ProfileRow} />
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -450,19 +440,16 @@ export const Skeleton: Story = {
                 states={[
                     {
                         name: "isSkeleton = true",
-                        why: "Every line keeps its real box, the label at `sm`, the caption at `xs`, and the row's own two lines, so nothing shifts once the data lands (§8). The frame owns the label and the caption bars; `ProfileRow` owns its own two bars because the flag is forwarded down as a prop.",
-                        code: `<SurfaceCard isSkeleton label="My courses" description={…}>
-  <ProfileRow isSkeleton />
-</SurfaceCard>`,
+                        why: "Every line keeps its real box, the label at `sm`, the caption at `xs`, and the row's own two lines, so nothing shifts once the data lands (§8). The frame owns the label and the caption bars, and calls `body` with `isSkeleton` so the row shimmers its own two bars too.",
+                        code: `<SurfaceCard isSkeleton label="My courses" description={…} body={ProfileRow} />`,
                         render: (
                             <SurfaceCard
                                 isSkeleton
                                 showAnatomy
                                 label="My courses"
                                 description="Three left to finish this month."
-                            >
-                                <ProfileRow isSkeleton />
-                            </SurfaceCard>
+                                body={ProfileRow}
+                            />
                         ),
                     },
                 ]}
@@ -472,8 +459,8 @@ export const Skeleton: Story = {
 }
 
 /**
- * ⭐ PRESSABLE STATES (thầy 2026-07-29, "sao còn .Pressable, thành isPressable là
- * prop hết rồi mà?") — `onPress`/`href` fold the WHOLE card into a `<button>`/`<a>`
+ * ⭐ PRESSABLE STATES (instructor, 2026-07-29, "why still have .Pressable, when
+ * it's already become isPressable as a prop?") — `onPress`/`href` fold the WHOLE card into a `<button>`/`<a>`
  * with ripple + `active:scale-[0.97]` feedback, no hover effect at rest. Was a
  * separate component/story, `SurfaceCard.Pressable`, before this merge — same
  * card, same fixture, one fewer name to import. `isSelected`/`isDisabled`/
@@ -482,7 +469,7 @@ export const Skeleton: Story = {
  */
 export const Pressable: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -492,13 +479,9 @@ export const Pressable: Story = {
                     {
                         name: "onPress set, no actions/href",
                         why: "The card mounts as a single `<button>` where the whole tile is the press target, and `ProfileRow`'s own text becomes its accessible label — the plain navigation-tile shape for when the entire card leads to one action.",
-                        code: `<SurfaceCard onPress={() => {}}>
-  <ProfileRow />
-</SurfaceCard>`,
+                        code: `<SurfaceCard onPress={() => {}} body={ProfileRow} />`,
                         render: (
-                            <SurfaceCard onPress={() => {}} showAnatomy>
-                                <ProfileRow />
-                            </SurfaceCard>
+                            <SurfaceCard onPress={() => {}} showAnatomy body={ProfileRow} />
                         ),
                     },
                 ]}
@@ -510,7 +493,7 @@ export const Pressable: Story = {
 /** `href` — the whole card is ONE a11y link (navigates on click) instead of a button. */
 export const PressableAsLink: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -520,13 +503,9 @@ export const PressableAsLink: Story = {
                     {
                         name: "href set instead of onPress",
                         why: "The card mounts an `<a>` in place of the `<button>`, keeping the exact same single Content shape as `Pressable`. A caller that only has a destination URL, not a click handler, needs the card to behave as a real navigation link.",
-                        code: `<SurfaceCard href="#">
-  <ProfileRow />
-</SurfaceCard>`,
+                        code: `<SurfaceCard href="#" body={ProfileRow} />`,
                         render: (
-                            <SurfaceCard href="#" showAnatomy>
-                                <ProfileRow />
-                            </SurfaceCard>
+                            <SurfaceCard href="#" showAnatomy body={ProfileRow} />
                         ),
                     },
                 ]}
@@ -543,7 +522,7 @@ export const PressableAsLink: Story = {
  */
 export const PressableWithActions: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -561,9 +540,8 @@ export const PressableWithActions: Story = {
       <Button size="sm" variant="ghost" label="Continue" onPress={() => {}} />
     </>
   }
->
-  <ProfileRow />
-</SurfaceCard>`,
+  body={ProfileRow}
+/>`,
                         render: (
                             <SurfaceCard
                                 onPress={() => {}}
@@ -572,9 +550,8 @@ export const PressableWithActions: Story = {
                                 actions={(
                                     <Button size="sm" variant="ghost" label="Continue" onPress={() => {}} />
                                 )}
-                            >
-                                <ProfileRow />
-                            </SurfaceCard>
+                                body={ProfileRow}
+                            />
                         ),
                     },
                 ]}
@@ -586,7 +563,7 @@ export const PressableWithActions: Story = {
 /** `isSelected` — a SELECTED tile in a selection grid: an accent ring around the card. */
 export const PressableSelected: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -596,13 +573,9 @@ export const PressableSelected: Story = {
                     {
                         name: "isSelected = true",
                         why: "The card keeps the exact same Content node as `Pressable` and only gains a `ring-2 ring-accent` outline plus `aria-pressed`/`aria-current` — a selection grid needs a way to show which tile is chosen without changing what the tile contains.",
-                        code: `<SurfaceCard isSelected onPress={() => {}}>
-  <ProfileRow />
-</SurfaceCard>`,
+                        code: `<SurfaceCard isSelected onPress={() => {}} body={ProfileRow} />`,
                         render: (
-                            <SurfaceCard isSelected onPress={() => {}} showAnatomy>
-                                <ProfileRow />
-                            </SurfaceCard>
+                            <SurfaceCard isSelected onPress={() => {}} showAnatomy body={ProfileRow} />
                         ),
                     },
                 ]}
@@ -614,7 +587,7 @@ export const PressableSelected: Story = {
 /** `isDisabled` — a pressable option that's temporarily unavailable: dims + disables interaction, STILL shown. */
 export const PressableDisabled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -624,13 +597,9 @@ export const PressableDisabled: Story = {
                     {
                         name: "isDisabled = true (onPress set)",
                         why: "Nothing mounts or unmounts — the same Content node renders, just dimmed, and the ripple/press-scale feedback stops firing. The option has to stay visible so the reader still knows it exists, even though it can't be chosen right now.",
-                        code: `<SurfaceCard isDisabled onPress={() => {}}>
-  <ProfileRow />
-</SurfaceCard>`,
+                        code: `<SurfaceCard isDisabled onPress={() => {}} body={ProfileRow} />`,
                         render: (
-                            <SurfaceCard isDisabled onPress={() => {}} showAnatomy>
-                                <ProfileRow />
-                            </SurfaceCard>
+                            <SurfaceCard isDisabled onPress={() => {}} showAnatomy body={ProfileRow} />
                         ),
                     },
                 ]}
@@ -640,16 +609,14 @@ export const PressableDisabled: Story = {
 }
 
 /**
- * Loading, PRESSABLE shape — `isSkeleton` (with `onPress`/`href` also set) draws a
- * FIXED generic mirror (icon block + 2 text lines) INSTEAD of `children`, unlike
- * the plain `Skeleton` leaf above where the frame only shimmers what it owns and
- * `children` flows its own `isSkeleton` through. The two mean different things by
- * design (§ file header note in `SurfaceCard.tsx`) — a pressable tile's shape
- * isn't known yet when loading starts, a plain card's content usually is.
+ * Loading, PRESSABLE shape — `isSkeleton` (with `onPress`/`href` also set) NEVER
+ * renders pressable while loading: `isPressable` derives to `false`, so the card
+ * falls to the plain (non-interactive) branch and calls `body` with `isSkeleton`,
+ * same as the plain `Skeleton` leaf above — nothing underneath can be pressed yet.
  */
 export const PressableLoading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCard"
                 tier="composite"
@@ -658,12 +625,10 @@ export const PressableLoading: Story = {
                 states={[
                     {
                         name: "isSkeleton = true, onPress set",
-                        why: "The entire Content node is replaced by a fixed shimmer mirror — an icon-shaped tile plus two text bars — instead of whatever `children` would eventually hold. The mirror doesn't depend on the real content's shape, so a caller can flip the flag on before it even knows what will load.",
-                        code: "<SurfaceCard isSkeleton onPress={() => {}} />",
+                        why: "The card renders as a plain (non-interactive) div — `isPressable` is forced `false` while loading — and calls `body` with `isSkeleton`, so `ProfileRow` shimmers its own two bars. Nothing underneath can be pressed yet, so the ripple/press-scale shell doesn't mount either.",
+                        code: "<SurfaceCard isSkeleton onPress={() => {}} body={ProfileRow} />",
                         render: (
-                            <SurfaceCard isSkeleton onPress={() => {}} showAnatomy>
-                                <ProfileRow />
-                            </SurfaceCard>
+                            <SurfaceCard isSkeleton onPress={() => {}} showAnatomy body={ProfileRow} />
                         ),
                     },
                 ]}

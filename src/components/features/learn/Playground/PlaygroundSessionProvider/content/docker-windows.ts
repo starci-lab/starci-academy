@@ -3,8 +3,8 @@ import type { LocalizedGuide } from "./types"
 /**
  * Windows Docker install guide (Setup: engine step) — the WSL2 prerequisite,
  * Chocolatey route including installing Chocolatey itself, winget / the plain
- * .exe installer, and a verify step. Mọi tín hiệu KIỂM ĐƯỢC BẰNG LỆNH
- * (`wsl -l -v`, `docker info`) — không mô tả GUI (icon khay hệ thống).
+ * .exe installer, and a verify step. Every signal is CHECKABLE BY COMMAND
+ * (`wsl -l -v`, `docker info`) — no GUI descriptions (system-tray icon).
  */
 export const DOCKER_WINDOWS_GUIDE: LocalizedGuide = {
     vi: `

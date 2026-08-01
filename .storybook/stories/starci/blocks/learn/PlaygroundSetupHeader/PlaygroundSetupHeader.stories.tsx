@@ -44,7 +44,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the only shape this block has: back link + title + description, no meta cluster. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundSetupHeader"
                 tier="block"
@@ -60,7 +60,7 @@ export const Default: Story = {
     breadcrumbLabel="Playground"
     onBack={() => router.push("/playground")}
     title="Debug a leaking Node.js service"
-    description="Bạn sẽ soát một service Express đang phình bộ nhớ và tìm ra chỗ rò."
+    description="You'll audit an Express service that's leaking memory and track down where it's leaking."
 />`,
                         render: (
                             <PlaygroundSetupHeader
@@ -69,7 +69,7 @@ export const Default: Story = {
                                 breadcrumbLabel="Playground"
                                 onBack={() => {}}
                                 title="Debug a leaking Node.js service"
-                                description="Bạn sẽ soát một service Express đang phình bộ nhớ và tìm ra chỗ rò."
+                                description="You'll audit an Express service that's leaking memory and track down where it's leaking."
                             />
                         ),
                     },

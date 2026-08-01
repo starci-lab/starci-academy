@@ -3,8 +3,8 @@ import type { LocalizedGuide } from "./types"
 /**
  * Linux Docker install guide (Setup: engine step) — the official convenience script
  * + the distro-package route, the post-install "run without sudo" group step,
- * and a verify step. Mọi tín hiệu KIỂM ĐƯỢC BẰNG LỆNH (`systemctl is-active`,
- * `docker info`, `id -nG`) — không mô tả GUI.
+ * and a verify step. Every signal is CHECKABLE VIA A COMMAND (`systemctl is-active`,
+ * `docker info`, `id -nG`) — never a GUI description.
  */
 export const DOCKER_LINUX_GUIDE: LocalizedGuide = {
     vi: `

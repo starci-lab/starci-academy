@@ -1,6 +1,6 @@
 import React from "react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
@@ -11,8 +11,8 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
  * (both the resource page and the grid), leaderboard — the wording and shape
  * live HERE, not on any one screen.
  *
- * ⭐ CONSOLIDATED FROM THREE BLOCKS INTO ONE (thầy 2026-07-29, "ok làm đi" —
- * gộp `TrialEnrollNudge`/`FoundationTrialEnrollBanner`/`TrialEnrollBanner`).
+ * ⭐ CONSOLIDATED FROM THREE BLOCKS INTO ONE (teacher 2026-07-29, "ok, go ahead" —
+ * merging `TrialEnrollNudge`/`FoundationTrialEnrollBanner`/`TrialEnrollBanner`).
  * All three were independent ports of the SAME real `src` component
  * (`components/features/learn/shared/TrialEnrollHook`) — a Foundations audit
  * caught them shipping three different invented Vietnamese strings for the
@@ -26,7 +26,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
  *     line; the OLD version of THIS block argued "one sentence only" — wrong,
  *     real `TrialEnrollHook`'s `Callout` always renders both `hookTitle` AND
  *     `hookDesc`.
- *   - CTA composed as an explicit `Button` CHILD, not `FeedbackCallout`'s
+ *   - CTA composed as an explicit `Button` CHILD, not `Callout`'s
  *     `actionLabel`/`onAction` shorthand — kept from the removed
  *     `TrialEnrollNudge`. That shorthand builds its button internally with NO
  *     `data-anat-part` (`Feedback.tsx:157`), invisible to a BlockAnatomy deps
@@ -89,7 +89,7 @@ const TrialEnrollBanner = ({
     anatPart,
 }: TrialEnrollBannerProps) => {
     if (isSkeleton) {
-        // `FeedbackCallout` has no `isSkeleton` of its own (§12c gap, same one
+        // `Callout` has no `isSkeleton` of its own (§12c gap, same one
         // `CourseTeamGate` already documents) — its `title`/`description` slots
         // render inside `<p>` (`Alert.Title`/`Alert.Description`), which cannot
         // legally contain the `<div>` a hand-built `Typography isSkeleton` bar
@@ -102,7 +102,7 @@ const TrialEnrollBanner = ({
                 <Alert
                     isSkeleton
                     status="accent"
-                    anatPart={showAnatomy ? "Alert" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             </div>
         )
@@ -115,22 +115,22 @@ const TrialEnrollBanner = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <FeedbackCallout
+            <Callout
                 status="accent"
-                title="Bạn đang học thử"
-                description="Mở khóa để học trọn khóa + dựng bằng chứng đi làm cho hồ sơ nhà tuyển dụng thấy."
-                anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                title="You're on a trial"
+                description="Unlock the full course and build proof of work employers can see on your profile."
+                anatPart={showAnatomy ? "Callout" : undefined}
             >
                 <Button
-                    label="Mở khóa học"
+                    label="Unlock the course"
                     variant="primary"
                     size="sm"
                     suffixIcon={ArrowRightIcon}
                     iconSlide
                     onPress={onEnroll}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
-            </FeedbackCallout>
+            </Callout>
         </div>
     )
 }

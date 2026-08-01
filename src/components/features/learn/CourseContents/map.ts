@@ -65,7 +65,7 @@ const ATTEMPTED_STATUSES: ReadonlyArray<string> = ["inProgress", "failed", "comp
 export const isAttempted = (status: string): boolean => ATTEMPTED_STATUSES.includes(status)
 
 /**
- * Resolve the in-app route the "Tiếp tục" (resume) action should open for the
+ * Resolve the in-app route the "Continue" (resume) action should open for the
  * viewer's {@link MyCourseOutlineCurrentTask}. Walks the module/lesson/challenge
  * tree to recover the owning ids so a deep link can be built:
  * - `lesson` → the lesson content route.

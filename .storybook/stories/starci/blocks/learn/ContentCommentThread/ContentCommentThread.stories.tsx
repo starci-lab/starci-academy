@@ -34,14 +34,14 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ThreadConnector": { tier: "atom", role: "the Facebook-style curved guide linking this comment down into the reply composer's own avatar", storyId: "atoms-display-threadconnector-threadconnector--default" },
 }
 
-const AUTHOR = { id: "u1", username: "Minh Anh" }
+const AUTHOR = { id: "u1", username: "Anna Pham" }
 const OWNER_ID = "viewer-1"
 
 const BASE_COMMENT: ContentCommentNode = {
     id: "c1",
     author: AUTHOR,
-    createdTimeAgo: "2 giờ trước",
-    body: "Chỗ multi-stage em làm theo mà image vẫn 800MB, hoá ra quên COPY --from.",
+    createdTimeAgo: "2 hours ago",
+    body: "I followed the multi-stage steps but the image was still 800MB — turned out I forgot COPY --from.",
     replyCount: 0,
     myReaction: null,
     reactionCounts: [{ type: "like", count: 3 }],
@@ -68,7 +68,7 @@ const ClickPreview = ({ clickText, ...props }: ContentCommentThreadProps & { cli
         buttons.find((button) => button.textContent === clickText)?.click()
     }, [clickText])
     return (
-        <div ref={containerRef}>
+        <div data-tier="fixture" ref={containerRef}>
             <ContentCommentThread {...props} />
         </div>
     )
@@ -77,7 +77,7 @@ const ClickPreview = ({ clickText, ...props }: ContentCommentThreadProps & { cli
 /** LEAF — a non-owner viewing: reaction + reply only, no edit/delete. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentThread"
                 tier="block"
@@ -111,7 +111,7 @@ export const Default: Story = {
 /** LEAF — the author viewing their own comment ⇒ **gains** edit/delete. */
 export const OwnerActions: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentThread"
                 tier="block"
@@ -122,7 +122,7 @@ export const OwnerActions: Story = {
                 states={[
                     {
                         name: "currentUserId === comment.author.id",
-                        why: "The viewer IS this comment's author, so \"Sửa\"/\"Xóa\" join \"Trả lời\" in the action row — two real nodes the non-owner leaf never mounts at all.",
+                        why: "The viewer IS this comment's author, so \"Edit\"/\"Delete\" join \"Reply\" in the action row — two real nodes the non-owner leaf never mounts at all.",
                         code: "<ContentCommentThread comment={comment} currentUserId=\"u1\" depth={0} repliesByParent={{}} onReply={reply} onEdit={edit} onDelete={del} onReactComment={react} onLoadReplies={load} />",
                         render: (
                             <ContentCommentThread
@@ -145,7 +145,7 @@ export const OwnerActions: Story = {
 /** LEAF — editing: the body swaps for an inline composer seeded with the current text. */
 export const Editing: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentThread"
                 tier="block"
@@ -155,14 +155,14 @@ export const Editing: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "pressed \"Sửa\"",
-                        why: "The plain body text is replaced by ContentCommentComposer, seeded with the current body and relabeled \"Lưu\" — the same composer real src reuses for new comments, replies, AND edits.",
-                        code: "// reader pressed \"Sửa\" — internal state, no controlled prop",
+                        name: "pressed \"Edit\"",
+                        why: "The plain body text is replaced by ContentCommentComposer, seeded with the current body and relabeled \"Save\" — the same composer real src reuses for new comments, replies, AND edits.",
+                        code: "// reader pressed \"Edit\" — internal state, no controlled prop",
                         render: (
                             <ClickPreview
                                 anatPart="ContentCommentThread"
                                 showAnatomy
-                                clickText="Sửa"
+                                clickText="Edit"
                                 comment={BASE_COMMENT}
                                 currentUserId={AUTHOR.id}
                                 depth={0}
@@ -177,10 +177,10 @@ export const Editing: Story = {
     ),
 }
 
-/** LEAF — replying: `currentUser` gives the reply composer its own avatar, joined by `ThreadConnector`'s curved guide (thầy 2026-07-29, Facebook-style nested reply). */
+/** LEAF — replying: `currentUser` gives the reply composer its own avatar, joined by `ThreadConnector`'s curved guide (teacher, 2026-07-29, Facebook-style nested reply). */
 export const Replying: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentThread"
                 tier="block"
@@ -190,17 +190,17 @@ export const Replying: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "pressed \"Trả lời\", currentUser set",
+                        name: "pressed \"Reply\", currentUser set",
                         why: "The reply composer mounts beside a curved `ThreadConnector` line down from this comment — a deliberate divergence from real `src` (`CommentComposer` never shows an avatar for a reply at all), added so a reply visually reads as branching off THIS comment rather than a bare form floating below it.",
-                        code: "// reader pressed \"Trả lời\" — internal state, no controlled prop\n<ContentCommentThread comment={comment} currentUserId=\"someone-else\" currentUser={{ username: \"Bạn\" }} depth={0} repliesByParent={{}} ... />",
+                        code: "// reader pressed \"Reply\" — internal state, no controlled prop\n<ContentCommentThread comment={comment} currentUserId=\"someone-else\" currentUser={{ username: \"You\" }} depth={0} repliesByParent={{}} ... />",
                         render: (
                             <ClickPreview
                                 anatPart="ContentCommentThread"
                                 showAnatomy
-                                clickText="Trả lời"
+                                clickText="Reply"
                                 comment={BASE_COMMENT}
                                 currentUserId="someone-else"
-                                currentUser={{ username: "Bạn" }}
+                                currentUser={{ username: "You" }}
                                 depth={0}
                                 repliesByParent={{}}
                                 {...NOOP_CALLBACKS}
@@ -216,7 +216,7 @@ export const Replying: Story = {
 /** LEAF — deleted: a quiet placeholder replaces the body, and no actions render at all. */
 export const Deleted: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentThread"
                 tier="block"
@@ -250,7 +250,7 @@ export const Deleted: Story = {
 /** LEAF — replies expanded: the recursive subtree renders, indented with a guide border. */
 export const ExpandedWithReplies: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentThread"
                 tier="block"
@@ -260,14 +260,14 @@ export const ExpandedWithReplies: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "pressed \"Xem 1 câu trả lời\" — reply already loaded",
-                        why: "A reply is just another ContentCommentThread one depth deeper, indented with a left guide border — recursion, not a separate component. Founder badge and \"(đã sửa)\" both show on the reply to prove they aren't top-level-only.",
+                        name: "pressed \"View 1 reply\" — reply already loaded",
+                        why: "A reply is just another ContentCommentThread one depth deeper, indented with a left guide border — recursion, not a separate component. Founder badge and \"(edited)\" both show on the reply to prove they aren't top-level-only.",
                         code: "// reader pressed the view-replies link — internal state, no controlled prop",
                         render: (
                             <ClickPreview
                                 anatPart="ContentCommentThread"
                                 showAnatomy
-                                clickText="Xem 1 câu trả lời"
+                                clickText="View 1 reply"
                                 comment={{ ...BASE_COMMENT, replyCount: 1 }}
                                 currentUserId="someone-else"
                                 depth={0}
@@ -275,11 +275,11 @@ export const ExpandedWithReplies: Story = {
                                     c1: [
                                         {
                                             id: "r1",
-                                            author: { id: "u2", username: "Quang" },
-                                            createdTimeAgo: "40 phút trước",
+                                            author: { id: "u2", username: "Ethan Vu" },
+                                            createdTimeAgo: "40 minutes ago",
                                             isFounderAuthor: true,
                                             isEdited: true,
-                                            body: "Đúng rồi, thiếu COPY --from là nguyên nhân phổ biến nhất.",
+                                            body: "That's right, missing COPY --from is the most common cause.",
                                             replyCount: 0,
                                             myReaction: null,
                                         },

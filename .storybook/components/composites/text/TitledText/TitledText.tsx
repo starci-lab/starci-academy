@@ -1,5 +1,4 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -83,12 +82,12 @@ const SIZE_CONFIG: Record<TitledTextSize, SizeConfig> = {
 
 /** Props for the {@link TitledText} composite. */
 export interface TitledTextProps {
-    /** Primary line (title / name / label / stat value). */
-    title: ReactNode
+    /** Primary line (title / name / label / stat value), rendered through `Typography`. */
+    title: string
     /** Optional secondary line beneath the title (subtitle / role / description / stat label). */
-    subtitle?: ReactNode
+    subtitle?: string
     /** Optional third muted line (only meaningful for `size="stat"`, e.g. a delta hint). */
-    hint?: ReactNode
+    hint?: string
     /** Text-stack scale. Defaults to `"row"`. */
     size?: TitledTextSize
     /** Override the title weight (per-size default otherwise). */
@@ -109,11 +108,8 @@ export interface TitledTextProps {
      * its children makes the panel lie about what it actually builds.
      */
     showAnatomy?: boolean
-    /** Extra classes on the root (e.g. `flex-1` for row layouts). */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -126,6 +122,9 @@ export interface TitledTextProps {
  *
  * @param props - {@link TitledTextProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "TitledText" } as const
+
 export const TitledText = ({
     title,
     subtitle,
@@ -136,7 +135,6 @@ export const TitledText = ({
     isSkeleton = false,
     anatPart,
     showAnatomy = false,
-    className,
     classNames,
 }: TitledTextProps) => {
     const cfg = SIZE_CONFIG[size]
@@ -144,40 +142,48 @@ export const TitledText = ({
     const part = (name: string) => (showAnatomy ? name : undefined)
     const rootClassNames: Array<AllowedClassName> = ["min-w-0", ...(classNames ?? [])]
 
-    if (isSkeleton) {
-        return (
-            <StackV
-                gap="flush"
-                classNames={rootClassNames}
-                className={className}
-                anatPart={anatPart}
-                body={
-                    <>
-                        {/* §12c: whoever owns the shape owns the skeleton — each line draws its own bar with its own atom. */}
-                        <Typography size={cfg.titleSize} isSkeleton classNames={[cfg.skeleton.title]} anatPart={part("Title")} />
-                        {subtitle ? <Typography size={cfg.subSize} isSkeleton classNames={[cfg.skeleton.sub]} anatPart={part("Subtitle")} /> : null}
-                        {hint ? <Typography size="xs" isSkeleton classNames={[cfg.skeleton.hint]} anatPart={part("Hint")} /> : null}
-                    </>
-                }
-            />
-        )
-    }
-
+    // COMPOSITE-10: ONE render path — same `StackV`, same `gap`, in both states.
+    // Text always goes through the `Typography` ATOM; `isSkeleton` just flows
+    // straight into it so each line draws its own bar, sized to its own value
+    // (§12c) — no second, hand-built skeleton tree to keep in sync with this one.
     return (
         <StackV
-            gap="flush"
+            gap={1}
             classNames={rootClassNames}
-            className={className}
             anatPart={anatPart}
             body={
                 <>
-                    {/* Text goes through the `Typography` ATOM (same `size` axis as the skeleton branch above), not raw HeroUI. */}
-                    <Typography size={cfg.titleSize} weight={weight ?? cfg.titleWeight} truncate={truncate} text={title} anatPart={part("Title")} />
+                    <Typography
+                        size={cfg.titleSize}
+                        weight={isSkeleton ? undefined : (weight ?? cfg.titleWeight)}
+                        truncate={isSkeleton ? undefined : truncate}
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? [cfg.skeleton.title] : undefined}
+                        text={title}
+                        showAnatomy={showAnatomy}
+                    />
                     {subtitle ? (
-                        <Typography size={cfg.subSize} color={cfg.subColor} weight={cfg.subWeight} truncate={truncate} text={subtitle} anatPart={part("Subtitle")} />
+                        <Typography
+                            size={cfg.subSize}
+                            color={isSkeleton ? undefined : cfg.subColor}
+                            weight={isSkeleton ? undefined : cfg.subWeight}
+                            truncate={isSkeleton ? undefined : truncate}
+                            isSkeleton={isSkeleton}
+                            classNames={isSkeleton ? [cfg.skeleton.sub] : undefined}
+                            text={subtitle}
+                            showAnatomy={showAnatomy}
+                        />
                     ) : null}
                     {hint ? (
-                        <Typography size="xs" color="muted" truncate={truncate} text={hint} anatPart={part("Hint")} />
+                        <Typography
+                            size="xs"
+                            color={isSkeleton ? undefined : "muted"}
+                            truncate={isSkeleton ? undefined : truncate}
+                            isSkeleton={isSkeleton}
+                            classNames={isSkeleton ? [cfg.skeleton.hint] : undefined}
+                            text={hint}
+                            showAnatomy={showAnatomy}
+                        />
                     ) : null}
                 </>
             }

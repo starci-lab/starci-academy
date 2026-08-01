@@ -18,7 +18,7 @@ type CourseItem = NonNullable<ReturnType<typeof useQueryUserCoursesSwr>["data"]>
 export interface CourseRowProps {
     /** One profile course-progress item. */
     item: CourseItem
-    /** Only the profile OWNER sees the "Học thử" trial chip. */
+    /** Only the profile OWNER sees the "Trial" chip. */
     isOwnProfile: boolean
 }
 

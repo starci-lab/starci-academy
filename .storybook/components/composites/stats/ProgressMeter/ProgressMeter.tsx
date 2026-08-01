@@ -1,11 +1,11 @@
 import React from "react"
-import { ProgressBar, cn, Skeleton as HeroSkeleton } from "@heroui/react"
-import type { ReactNode } from "react"
+import { ProgressBar, cn } from "@heroui/react"
 import { ProgressMeterTargetMark } from "./TargetMark"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/ProgressMeter`. Authored in Storybook (not `src`);
@@ -19,9 +19,11 @@ interface ProgressMeterOwnProps {
     max?: number
     /**
      * Optional descriptive label rendered on the left of the top row. Pass a
-     * translated string — the block never calls `useTranslations` itself.
+     * translated string — the block never calls `useTranslations` itself. `string`,
+     * not `ReactNode`: the composite wraps it in `Typography` itself, and a
+     * pre-built node could not be told it is loading.
      */
-    label?: ReactNode
+    label?: string
     /** When `true`, renders the rounded completion percentage on the right of the top row. */
     showValue?: boolean
     /**
@@ -31,10 +33,23 @@ interface ProgressMeterOwnProps {
     color?: "accent" | "success" | "warning" | "danger"
     /** Optional TARGET mark on the track — a thin tick at `target/max` (e.g. an "85% goal" line). */
     target?: number
-    /** Optional label rendered above the target tick (e.g. `"85%"`). Only shown when {@link ProgressMeterProps.target} is set. */
-    targetLabel?: ReactNode
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
+    /** Optional label rendered above the target tick (e.g. `"85%"`). Only shown when {@link ProgressMeterProps.target} is set. `string` — see {@link ProgressMeterOwnProps.label}. */
+    targetLabel?: string
+    /**
+     * Optional left-aligned COMPONENT slot for a custom row above the track,
+     * additive to (and independent of) the `label`/`showValue` row: pass this
+     * when the row needs more than plain text (e.g. an icon plus a custom-
+     * formatted unit). A COMPONENT reference, not a built node (COMPOSITE-8) —
+     * the meter calls it itself and forwards `isSkeleton`, so it can shimmer in
+     * place. Omitted (default), no such row renders and existing callers —
+     * including ones already using `label`/`showValue` — are unaffected.
+     */
+    leading?: ComponentTypeWithSkeleton
+    /**
+     * Right-aligned partner to {@link ProgressMeterOwnProps.leading}. Either
+     * may be passed alone; the row renders whichever side(s) are set.
+     */
+    trailing?: ComponentTypeWithSkeleton
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -59,10 +74,16 @@ export type ProgressMeterProps = ProgressMeterOwnProps &
 /**
  * ProgressMeter renders a labelled, accessible progress bar: an optional top row
  * (label + rounded percentage) above a HeroUI {@link ProgressBar}, with an
- * optional target/goal marker overlaid on the track.
+ * optional target/goal marker overlaid on the track. A second, independent row
+ * — {@link ProgressMeterOwnProps.leading}/{@link ProgressMeterOwnProps.trailing} —
+ * can render just above the track for callers that need components instead of
+ * plain text.
  *
  * @param props - {@link ProgressMeterProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ProgressMeter" } as const
+
 export const ProgressMeter = ({
     value,
     max = 100,
@@ -71,40 +92,18 @@ export const ProgressMeter = ({
     color = "accent",
     target,
     targetLabel,
+    leading: Leading,
+    trailing: Trailing,
     isSkeleton = false,
-    className,
     classNames,
     showAnatomy = false,
     anatPart,
 }: ProgressMeterProps) => {
-    if (isSkeleton) {
-        return (
-            <StackV
-                gap="related"
-                anatPart={anatPart}
-                className={className}
-                classNames={classNames}
-                body={
-                    <>
-                        {/* Top row (label/value) — same atom the real top row renders */}
-                        <Typography size="xs" isSkeleton />
-                        {/*
-                         * Track — kept hand-drawn. The real track below sets `h-1` directly
-                         * on the vendor `ProgressBar.Track`; the local `Progress.ProgressBar`
-                         * atom (`@sb-components/atoms/display/Progress/Progress`) does not
-                         * expose its Track's height for override, so it cannot reproduce this
-                         * compact track without widening the atom.
-                         */}
-                        <HeroSkeleton className="h-1 w-full rounded-full" />
-                    </>
-                }
-            />
-        )
-    }
     const safeMax = max > 0 ? max : 1
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
-    // already guaranteed by the early return at `isSkeleton` — the `?? 0` only satisfies
-    // narrowing across the destructure, it never actually fires.
+    // guaranteed by the type at every real call site — the `?? 0` only satisfies narrowing
+    // across the destructure, and is never seen while `isSkeleton` (the row it feeds stays
+    // unshown or goes through `Typography`'s own shimmer instead).
     const percent = Math.round(((value ?? 0) / safeMax) * 100)
     const hasTopRow = label !== undefined || showValue
     // target tick position, clamped into the track (0..100%)
@@ -113,13 +112,39 @@ export const ProgressMeter = ({
         : Math.min(Math.max((target / safeMax) * 100, 0), 100)
     const topRow = hasTopRow ? (
         <StackH
-            gap="related"
+            gap={3}
             justify="between"
             body={
                 <>
-                    <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} text={label} />
+                    <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />
                     {showValue ? (
-                        <Typography size="xs" color="muted" classNames={["shrink-0"]} text={<>{percent}%</>} />
+                        <Typography size="xs" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={<>{percent}%</>} />
+                    ) : null}
+                </>
+            }
+        />
+    ) : null
+    // Additive row, independent of `topRow` above: a component-based
+    // leading/trailing pair for callers that need more than plain text (an
+    // icon, a chip, a custom-formatted unit). Either side may be passed alone;
+    // omitted entirely, `slotRow` is `null` and nothing changes for existing
+    // callers.
+    const hasSlotRow = Leading !== undefined || Trailing !== undefined
+    const slotRow = hasSlotRow ? (
+        <StackH
+            gap={3}
+            justify="between"
+            body={
+                <>
+                    {Leading ? (
+                        <div className="min-w-0">
+                            <Leading isSkeleton={isSkeleton} />
+                        </div>
+                    ) : <span />}
+                    {Trailing ? (
+                        <div className="shrink-0">
+                            <Trailing isSkeleton={isSkeleton} />
+                        </div>
                     ) : null}
                 </>
             }
@@ -149,17 +174,28 @@ export const ProgressMeter = ({
                 )}
             >
                 <div className="w-full">
-                    <ProgressBar
-                        aria-label={typeof label === "string" ? label : "Progress"}
-                        value={value}
-                        maxValue={safeMax}
-                        color={color}
-                        size="sm"
-                    >
-                        <ProgressBar.Track className="h-1">
-                            <ProgressBar.Fill />
-                        </ProgressBar.Track>
-                    </ProgressBar>
+                    {/* ATOM GAP: the `Progress.ProgressBar` atom does not expose its Track's
+                        height for override, and this meter's compact `h-1` track (vs the
+                        atom's own preset sizes) can only be reproduced with the vendor
+                        `ProgressBar` directly. Kept as the REAL element in both states — the
+                        skeleton no longer imports a vendor `Skeleton`, it swaps the same
+                        track slot for a neutral flat fill instead (no hand-drawn
+                        `animate-pulse` shimmer, COMPOSITE-10). */}
+                    {isSkeleton ? (
+                        <div className="h-1 w-full rounded-full bg-default" />
+                    ) : (
+                        <ProgressBar
+                            aria-label={label ?? "Progress"}
+                            value={value}
+                            maxValue={safeMax}
+                            color={color}
+                            size="sm"
+                        >
+                            <ProgressBar.Track className="h-1">
+                                <ProgressBar.Fill />
+                            </ProgressBar.Track>
+                        </ProgressBar>
+                    )}
                 </div>
                 {targetPercent === null ? null : (
                     <ProgressMeterTargetMark percent={targetPercent} label={targetLabel} />
@@ -169,14 +205,14 @@ export const ProgressMeter = ({
     )
     return (
         <StackV
-            gap="related"
-            className={cn(showAnatomy && "relative", className)}
+            gap={3}
             classNames={classNames}
             anatPart={anatPart}
             body={
                 <>
                     {showAnatomy ? <AnatomyOverlay label="ProgressMeter" tier="composite" href="/?path=/docs/primitives-stats-progressmeter--docs" /> : null}
                     {topRow}
+                    {slotRow}
                     {trackSection}
                 </>
             }

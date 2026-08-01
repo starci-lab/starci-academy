@@ -31,10 +31,10 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * category's RESOURCES.
  *
  * TWO SEAMS, TWO OWNERS (§10a):
- *   • The outer `StackV gap="page"` separates the screen's three REGIONS —
+ *   • The outer `StackV gap={7}` separates the screen's three REGIONS —
  *     identity, the trial nudge, and the browse cluster — each a distinct
  *     feature of the page, not rows of one surface.
- *   • The inner `StackV gap="section"` is its own separate owner for the
+ *   • The inner `StackV gap={6}` is its own separate owner for the
  *     "browse cluster" (search row above the resource list), matching the
  *     source layout's own `gap-6` between that row and the list it filters.
  *
@@ -181,13 +181,13 @@ const FoundationsCategoryPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={resourcesSection} />
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={resourcesSection} />
         </>
     )
 
-    const categoryBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={categorySections} />
+    const categoryBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={categorySections} />
 
-    return <Container size="md" padding="roomy" body={categoryBody} />
+    return <Container size="md" padding={6} body={categoryBody} />
 }
 
 export { FoundationsCategoryPage }

@@ -28,31 +28,31 @@ type Story = StoryObj<typeof PlaygroundSetupSteps>
 
 const DOCKER_GUIDES: Record<PlaygroundSetupOs, string> = {
     mac: [
-        "Cài Docker Desktop qua Homebrew:",
+        "Install Docker Desktop via Homebrew:",
         "",
         "```bash",
         "brew install --cask docker",
         "```",
         "",
-        "Mở ứng dụng Docker Desktop một lần để khởi động daemon nền.",
+        "Open the Docker Desktop app once to start the background daemon.",
     ].join("\n"),
     win: [
-        "Cài bằng winget:",
+        "Install with winget:",
         "",
         "```powershell",
         "winget install Docker.DockerDesktop",
         "```",
         "",
-        "Khởi động lại máy nếu được yêu cầu bật WSL2.",
+        "Restart your machine if prompted to enable WSL2.",
     ].join("\n"),
     linux: [
-        "Cài bằng script chính thức:",
+        "Install with the official script:",
         "",
         "```bash",
         "curl -fsSL https://get.docker.com | sh",
         "```",
         "",
-        "Thêm user hiện tại vào group `docker` rồi đăng nhập lại:",
+        "Add the current user to the `docker` group, then log back in:",
         "",
         "```bash",
         "sudo usermod -aG docker $USER",
@@ -62,27 +62,27 @@ const DOCKER_GUIDES: Record<PlaygroundSetupOs, string> = {
 
 const OLLAMA_GUIDES: Record<PlaygroundSetupOs, string> = {
     mac: [
-        "Cài qua Homebrew:",
+        "Install via Homebrew:",
         "",
         "```bash",
         "brew install ollama",
         "```",
         "",
-        "Khởi động dịch vụ:",
+        "Start the service:",
         "",
         "```bash",
         "ollama serve",
         "```",
     ].join("\n"),
     win: [
-        "Cài bằng winget:",
+        "Install with winget:",
         "",
         "```powershell",
         "winget install Ollama.Ollama",
         "```",
     ].join("\n"),
     linux: [
-        "Cài bằng script chính thức:",
+        "Install with the official script:",
         "",
         "```bash",
         "curl -fsSL https://ollama.com/install.sh | sh",
@@ -100,14 +100,14 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "MarkdownContent": { tier: "composite", role: "a runnable command (fenced ```bash) or the selected OS's install guide, both through the same viewer", storyId: "composites-viewers-markdowncontent--compact" },
     "TabsExtended": { tier: "atom", role: "the OS switcher choosing which install guide renders underneath — a single group, not Toolbar's two-group nav", storyId: "atoms-navigation-tabs-tabsextended--default" },
     "Button": { tier: "atom", role: "a step's re-check action, or the pairing step's rotate-code action", storyId: "atoms-buttons-button-button--default" },
-    "FeedbackCallout": { tier: "composite", role: "an informational aside once data confirms it — engine detail, models already installed, or device not yet known", storyId: "composites-feedback-feedback-feedbackcallout--default" },
+    "Callout": { tier: "composite", role: "an informational aside once data confirms it — engine detail, models already installed, or device not yet known", storyId: "composites-feedback-callout-callout--default" },
     "Typography": { tier: "atom", role: "a step's why-it-matters line, its pairing-code countdown, or a model row's label", storyId: "atoms-text-typography-typography--plain" },
 }
 
 /** LEAF — infra flavor: 2 steps (pair, install). */
 export const Infra: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundSetupSteps"
                 tier="block"
@@ -117,8 +117,8 @@ export const Infra: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "chưa ghép nối, chưa cài engine",
-                        why: "The starting point: nothing is done yet. Both steps show a \"Chưa xong\" chip, the pairing code is still fresh (has a countdown), and the install step defaults to the macOS guide.",
+                        name: "not paired yet, engine not installed",
+                        why: "The starting point: nothing is done yet. Both steps show a \"Not done\" chip, the pairing code is still fresh (has a countdown), and the install step defaults to the macOS guide.",
                         code: `<PlaygroundSetupSteps
     flavor="infra"
     engineName="Docker Desktop"
@@ -147,8 +147,8 @@ export const Infra: Story = {
                         ),
                     },
                     {
-                        name: "đã ghép nối, mã cũ đã hết hạn, đang cài engine",
-                        why: "The agent is now paired (chip flips to \"Sẵn sàng\"), so pressing \"Làm mã mới\" would gate through the confirm dialog instead of firing immediately. The old code has also expired, switching the countdown line to a danger prompt. The install step is still pending.",
+                        name: "paired, old code expired, engine installing",
+                        why: "The agent is now paired (chip flips to \"Ready\"), so pressing \"Get a new code\" would gate through the confirm dialog instead of firing immediately. The old code has also expired, switching the countdown line to a danger prompt. The install step is still pending.",
                         code: `<PlaygroundSetupSteps
     flavor="infra"
     engineName="Docker Desktop"
@@ -175,7 +175,7 @@ export const Infra: Story = {
                         ),
                     },
                     {
-                        name: "cả hai bước đã sẵn sàng",
+                        name: "both steps ready",
                         why: "Both steps read ready. The install step now also shows a success callout with the detected engine detail — only possible once `engineReady` is true, never guessed ahead of it.",
                         code: `<PlaygroundSetupSteps
     flavor="infra"
@@ -184,7 +184,7 @@ export const Infra: Story = {
     pairCommand={pairCommand}
     agentReady
     engineReady
-    engineDetail="Docker Desktop 4.31 · phát hiện tại /usr/local/bin/docker"
+    engineDetail="Docker Desktop 4.31 · detected at /usr/local/bin/docker"
     onVerify={onVerify}
 />`,
                         render: (
@@ -195,7 +195,7 @@ export const Infra: Story = {
                                 pairCommand={PAIR_COMMAND}
                                 agentReady
                                 engineReady
-                                engineDetail="Docker Desktop 4.31 · phát hiện tại /usr/local/bin/docker"
+                                engineDetail="Docker Desktop 4.31 · detected at /usr/local/bin/docker"
                                 onVerify={() => {}}
                             />
                         ),
@@ -224,7 +224,7 @@ export const Infra: Story = {
 /** LEAF — ollama flavor: 3 steps (pair, install, pull models). */
 export const Ollama: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundSetupSteps"
                 tier="block"
@@ -234,7 +234,7 @@ export const Ollama: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "mới bắt đầu — chưa ghép nối, chưa biết cấu hình máy",
+                        name: "just starting — not paired yet, machine spec unknown",
                         why: "Nothing is done yet AND the device isn't known: the third step shows the device-unknown callout instead of a model recommendation, since there is nothing to recommend without a VRAM reading yet.",
                         code: `<PlaygroundSetupSteps
     flavor="ollama"
@@ -266,7 +266,7 @@ export const Ollama: Story = {
                         ),
                     },
                     {
-                        name: "engine xong, đang tải model theo VRAM",
+                        name: "engine ready, pulling models based on VRAM",
                         why: "Agent and engine are both ready, the device is now known, and a generation model has been recommended for this machine's VRAM. Neither model is pulled yet, so the third step shows the two runnable `ollama pull` commands — one for the recommended generation model, one for the fixed embedding model this block always offers.",
                         code: `<PlaygroundSetupSteps
     flavor="ollama"
@@ -296,7 +296,7 @@ export const Ollama: Story = {
                         ),
                     },
                     {
-                        name: "đã sẵn sàng toàn bộ",
+                        name: "everything ready",
                         why: "All three steps read ready, including both models — the third step now shows the models-already-installed callout instead of the pull commands.",
                         code: `<PlaygroundSetupSteps
     flavor="ollama"

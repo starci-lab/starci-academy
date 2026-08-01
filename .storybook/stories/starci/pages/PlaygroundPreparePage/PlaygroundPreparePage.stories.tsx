@@ -42,27 +42,27 @@ type Story = StoryObj<typeof PlaygroundPreparePage>
 
 const OLLAMA_GUIDES: Record<PlaygroundSetupOs, string> = {
     mac: [
-        "Cài qua Homebrew:",
+        "Install via Homebrew:",
         "",
         "```bash",
         "brew install ollama",
         "```",
         "",
-        "Khởi động dịch vụ:",
+        "Start the service:",
         "",
         "```bash",
         "ollama serve",
         "```",
     ].join("\n"),
     win: [
-        "Cài bằng winget:",
+        "Install via winget:",
         "",
         "```powershell",
         "winget install Ollama.Ollama",
         "```",
     ].join("\n"),
     linux: [
-        "Cài bằng script chính thức:",
+        "Install via the official script:",
         "",
         "```bash",
         "curl -fsSL https://ollama.com/install.sh | sh",
@@ -90,32 +90,32 @@ const MIXED_ITEMS: Array<PlaygroundReadinessChecklistItem> = [
         key: "agent",
         kind: "agent",
         label: "StarCi Agent",
-        readyDescription: "Agent đã bắt tay với phiên này.",
-        pendingDescription: "Chạy lệnh ghép nối để agent kết nối.",
+        readyDescription: "The agent has paired with this session.",
+        pendingDescription: "Run the pairing command to connect the agent.",
         ready: true,
     },
     {
         key: "engine",
         kind: "engine",
         label: "Ollama",
-        readyDescription: "Đang chạy · v0.3.6",
-        pendingDescription: "Chưa cài Ollama.",
+        readyDescription: "Running · v0.3.6",
+        pendingDescription: "Ollama isn't installed yet.",
         ready: true,
     },
     {
         key: "genModel",
         kind: "genModel",
-        label: "Mô hình sinh (generation)",
-        readyDescription: "Đã tải qwen2.5:7b.",
-        pendingDescription: "Chưa tải mô hình sinh cho phiên này.",
+        label: "Generation model",
+        readyDescription: "qwen2.5:7b downloaded.",
+        pendingDescription: "The generation model for this session hasn't been downloaded yet.",
         ready: false,
     },
     {
         key: "embedModel",
         kind: "embedModel",
-        label: "Mô hình embedding",
-        readyDescription: "Đã tải bge-m3.",
-        pendingDescription: "Chưa tải mô hình embedding cho phiên này.",
+        label: "Embedding model",
+        readyDescription: "bge-m3 downloaded.",
+        pendingDescription: "The embedding model for this session hasn't been downloaded yet.",
         ready: false,
     },
 ]
@@ -125,8 +125,8 @@ const ALL_READY_ITEMS: Array<PlaygroundReadinessChecklistItem> = MIXED_ITEMS.map
 const BASE = {
     breadcrumbLabel: "Playground",
     onBack: () => {},
-    title: "Debug một Pod đang CrashLoop",
-    description: "Ghép nối máy của bạn, cài Ollama, rồi vào phòng lab để chẩn đoán một Pod thật.",
+    title: "Debug a CrashLooping Pod",
+    description: "Pair your machine, install Ollama, then enter the lab to diagnose a real Pod.",
     onEnter: () => {},
     flavor: "ollama" as const,
     engineName: "Ollama",
@@ -142,7 +142,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frames owning every seam on this screen — between the identity header and the body, and between each block inside the body", storyId: "frames-stack-stackv--default" },
     "PlaygroundSetupHeader": { tier: "block", role: "what exercise is this and how to leave it — a back link to the Playground hub, title, one-line intro", storyId: "starci-blocks-learn-playgroundsetupheader-playgroundsetupheader--default" },
     "PlaygroundEnterBanner": { tier: "block", role: "the one primary decision — enter the room, reachable only once every checklist item is ready", storyId: "starci-blocks-learn-playgroundenterbanner-playgroundenterbanner--default" },
-    "PlaygroundDeviceSnapshot": { tier: "block", role: "\"Máy của bạn\" — the paired agent's hardware report as a 4-cell ribbon; a conditional leaf, only rendered once a snapshot exists", storyId: "starci-blocks-learn-playgrounddevicesnapshot-playgrounddevicesnapshot--default" },
+    "PlaygroundDeviceSnapshot": { tier: "block", role: "\"Your machine\" — the paired agent's hardware report as a 4-cell ribbon; a conditional leaf, only rendered once a snapshot exists", storyId: "starci-blocks-learn-playgrounddevicesnapshot-playgrounddevicesnapshot--default" },
     "PlaygroundSetupSteps": { tier: "block", role: "the ordered setup work itself — pair, install, and (ollama only) pull models, each with its own status/command/re-check", storyId: "starci-blocks-learn-playgroundsetupsteps-playgroundsetupsteps--ollama" },
     "PlaygroundReadinessChecklist": { tier: "block", role: "a glance-back list of every prerequisite this screen also derives the enter banner and setup steps' readiness from", storyId: "starci-blocks-learn-playgroundreadinesschecklist-playgroundreadinesschecklist--default" },
 }
@@ -150,7 +150,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the screen's everyday shape: identity, decision, device, steps, checklist. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundPreparePage"
                 tier="screen"
@@ -160,9 +160,9 @@ export const Default: Story = {
                 states={[
                     {
                         name: "mid-setup — agent + engine ready, models still pending",
-                        why: "The realistic mid-setup shot: the learner has already paired their machine and installed Ollama (both read \"Sẵn sàng\" everywhere they appear — the enter banner, the setup steps, and the checklist all agree because they are derived from the same one list), but neither model is pulled yet, so the enter CTA stays disabled with a \"Còn 2 bước\" status line.",
+                        why: "The realistic mid-setup shot: the learner has already paired their machine and installed Ollama (both read \"Ready\" everywhere they appear — the enter banner, the setup steps, and the checklist all agree because they are derived from the same one list), but neither model is pulled yet, so the enter CTA stays disabled with a \"2 steps left\" status line.",
                         code: `<PlaygroundPreparePage
-    title="Debug một Pod đang CrashLoop"
+    title="Debug a CrashLooping Pod"
     checklistItems={items}
     deviceInfo={device}
     flavor="ollama"
@@ -182,8 +182,8 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "toàn bộ đã sẵn sàng",
-                        why: "Every checklist item reads ready. The enter banner flips to its success line and its CTA becomes pressable, the setup steps' status chips all read \"Sẵn sàng\", and the pull-models step shows its models-already-installed callout instead of commands — four blocks agreeing off one array.",
+                        name: "everything is ready",
+                        why: "Every checklist item reads ready. The enter banner flips to its success line and its CTA becomes pressable, the setup steps' status chips all read \"Ready\", and the pull-models step shows its models-already-installed callout instead of commands — four blocks agreeing off one array.",
                         code: `<PlaygroundPreparePage
     {...props}
     checklistItems={allReadyItems}
@@ -198,7 +198,7 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "chưa có snapshot máy",
+                        name: "no device snapshot yet",
                         why: "Right after opening the screen, before the paired agent has reported a hardware snapshot: `PlaygroundDeviceSnapshot` is a conditional leaf, so it is simply absent rather than rendered empty, and the setup steps' pull-models step reads `deviceKnown = false` (derived from the same missing `deviceInfo`), showing its device-unknown callout instead of a model recommendation.",
                         code: `<PlaygroundPreparePage
     {...props}
@@ -220,7 +220,7 @@ export const Default: Story = {
 /** LEAF — an INFRA-flavor exercise ⇒ two setup steps, no model checklist rows. */
 export const InfraFlavor: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundPreparePage"
                 tier="screen"
@@ -259,7 +259,7 @@ export const InfraFlavor: Story = {
 /** LEAF — the exercise id resolved to nothing ⇒ the ENTIRE screen is replaced. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundPreparePage"
                 tier="screen"
@@ -285,7 +285,7 @@ export const Empty: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block that can mirror itself does. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundPreparePage"
                 tier="screen"

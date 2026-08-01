@@ -54,22 +54,14 @@ export interface SelectOption {
 
 /** Props for the {@link TriggerSkeleton} mirror — a trigger-box skeleton owned by the atom. */
 interface TriggerSkeletonProps {
-    /**
-     * Placement class only.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
     /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
     showAnatomy?: boolean
 }
 
-const TriggerSkeleton = ({ className, classNames, showAnatomy }: TriggerSkeletonProps) => (
-    <HeroSkeleton className={cn("h-9 w-full rounded-xl", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+const TriggerSkeleton = ({ classNames, showAnatomy }: TriggerSkeletonProps) => (
+    <HeroSkeleton className={cn("h-9 w-full rounded-xl", classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
 )
 
 /** Shared props across the members. */
@@ -88,14 +80,7 @@ interface BaseSelectProps extends FrameProps {
     isSkeleton?: boolean
     /** `true` tags `data-anat-part` for a BlockAnatomy panel to badge. */
     showAnatomy?: boolean
-    /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }
 
@@ -114,7 +99,6 @@ const SelectSingle = ({
     ariaLabel,
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -137,9 +121,11 @@ const SelectSingle = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<TriggerSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroSelect.Root<SelectOption, "single">
+                data-tier="atom"
+                data-component="SelectSingle"
                 aria-label={fieldName(label, ariaLabel ?? placeholder)}
                 isInvalid={invalid}
                 isDisabled={isDisabled}
@@ -147,7 +133,7 @@ const SelectSingle = ({
                 selectedKey={value}
                 onSelectionChange={(key) => onValueChange(String(key))}
                 fullWidth
-                className={cn(className, classNames)}
+                className={cn(classNames)}
             >
                 {/* data-anat-part uses the real HeroUI component names (`Select.Trigger`/
                     `Select.Value`), not generic slot words. */}
@@ -196,7 +182,6 @@ const SelectMulti = ({
     ariaLabel,
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -224,9 +209,11 @@ const SelectMulti = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<TriggerSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroSelect.Root<SelectOption, "multiple">
+                data-tier="atom"
+                data-component="SelectMulti"
                 selectionMode="multiple"
                 aria-label={fieldName(label, ariaLabel ?? placeholder)}
                 isInvalid={invalid}
@@ -235,7 +222,7 @@ const SelectMulti = ({
                 value={value}
                 onChange={(keys) => onValueChange(keys.map(String))}
                 fullWidth
-                className={cn(className, classNames)}
+                className={cn(classNames)}
             >
                 {/* data-anat-part uses the real HeroUI component name (`Select.Trigger`). The
                     summary `<span>` below stays untagged — it's a plain hand-rolled text slot,
@@ -281,7 +268,6 @@ const SelectCombobox = ({
     ariaLabel,
     isSkeleton,
     showAnatomy,
-    className,
     classNames,
     label,
     hint,
@@ -303,9 +289,11 @@ const SelectCombobox = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             showAnatomy={showAnatomy}
-            skeletonControl={<TriggerSkeleton className={className} classNames={classNames} showAnatomy={showAnatomy} />}
+            skeletonControl={<TriggerSkeleton classNames={classNames} showAnatomy={showAnatomy} />}
         >
             <HeroComboBox
+                data-tier="atom"
+                data-component="SelectCombobox"
                 aria-label={fieldName(label, ariaLabel ?? placeholder)}
                 variant="secondary"
                 fullWidth
@@ -319,7 +307,7 @@ const SelectCombobox = ({
                         onValueChange(String(key))
                     }
                 }}
-                className={cn("w-full", className, classNames)}
+                className={cn("w-full", classNames)}
             >
                 <HeroComboBox.InputGroup className="relative">
                     {/* data-anat-part uses the real HeroUI component names (`Input`/
@@ -354,3 +342,9 @@ const SelectCombobox = ({
  * Multi wrap HeroUI `Select`, Combobox wraps HeroUI `ComboBox`.
  */
 export { SelectSingle, SelectMulti, SelectCombobox }
+
+export const meta = [
+    { tier: "atom", name: "SelectSingle" },
+    { tier: "atom", name: "SelectMulti" },
+    { tier: "atom", name: "SelectCombobox" },
+] as const

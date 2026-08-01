@@ -26,15 +26,15 @@ export default meta
 type Story = StoryObj<typeof Footer>
 
 const EXPLORE_LINKS: Array<FooterLinkItem> = [
-    { id: "courses", label: "Khóa học", onPress: () => {} },
+    { id: "courses", label: "Courses", onPress: () => {} },
     { id: "blog", label: "Blog", onPress: () => {} },
     { id: "talents", label: "Talents", onPress: () => {} },
-    { id: "jobs", label: "Việc làm IT", onPress: () => {} },
-    { id: "community", label: "Cộng đồng", onPress: () => {} },
+    { id: "jobs", label: "IT Jobs", onPress: () => {} },
+    { id: "community", label: "Community", onPress: () => {} },
 ]
 
 const SUPPORT_LINKS: Array<FooterLinkItem> = [
-    { id: "contact", label: "Liên hệ", onPress: () => {} },
+    { id: "contact", label: "Contact", onPress: () => {} },
     { id: "email", label: "cuongnvtse160875@gmail.com", onPress: () => {} },
 ]
 

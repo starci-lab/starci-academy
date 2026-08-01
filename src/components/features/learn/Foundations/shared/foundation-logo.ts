@@ -5,8 +5,8 @@
  * SVG instead (files live in `/public/foundations/*.svg`).
  *
  * Keyed by the topic's NORMALISED title (locale-resolved title with the
- * "Nền tảng" / "Foundation" prefix, the `.js` suffix and whitespace stripped),
- * so it matches whether the API returns "Nền tảng Node.js", "Node.js", etc.
+ * localized "Foundation" prefix (Vietnamese or English), the `.js` suffix and whitespace stripped),
+ * so it matches whether the API returns the localized "Foundation Node.js", plain "Node.js", etc.
  */
 const FOUNDATION_LOGOS: Record<string, string> = {
     docker: "/foundations/docker.svg",
@@ -21,13 +21,13 @@ const FOUNDATION_LOGOS: Record<string, string> = {
 /**
  * Reduce a foundation title to its bare brand key so it lines up with
  * {@link FOUNDATION_LOGOS} regardless of locale prefix or `.js` suffix.
- * @param title - Locale-resolved category title (e.g. "Nền tảng Node.js").
+ * @param title - Locale-resolved category title (e.g. "Foundation Node.js").
  * @returns Lower-cased brand key (e.g. "node", "springboot", "go").
  */
 const normaliseTitle = (title: string): string =>
     title
         .toLowerCase()
-        .replace(/nền tảng|foundation/g, "")
+        .replace(/nền tảng|foundation/g, "") // vn-ok: matches the VI category prefix the API returns
         .replace(/\.js/g, "")
         .replace(/\s+/g, "")
         .trim()

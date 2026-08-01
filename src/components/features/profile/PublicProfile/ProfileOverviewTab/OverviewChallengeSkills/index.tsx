@@ -29,11 +29,11 @@ export interface OverviewChallengeSkillsProps extends WithClassNames<undefined> 
 }
 
 /**
- * Overview snapshot — skills proven by graded CHALLENGES, mirroring the "Kỹ năng
- * qua Luyện tập" card: a passed-count headline, the 4-tone DIFFICULTY
+ * Overview snapshot — skills proven by graded CHALLENGES, mirroring the "Skills
+ * via Practice" card: a passed-count headline, the 4-tone DIFFICULTY
  * {@link SegmentBar}, then a language {@link SegmentBar} (brand legend, same as the
- * Challenges tab). A teaser only — the full submission list lives behind "Xem
- * thêm" in the Challenges tab. Owns its own `LabeledCard`, with `frameless`
+ * Challenges tab). A teaser only — the full submission list lives behind "See
+ * more" in the Challenges tab. Owns its own `LabeledCard`, with `frameless`
  * computed HERE (not hardcoded) so the loaded snapshot (self-framed as a
  * `SurfaceListCard`) skips the outer `Card` — but the skeleton/empty/error
  * states, which have no bounded surface of their own, still get one. The fetch

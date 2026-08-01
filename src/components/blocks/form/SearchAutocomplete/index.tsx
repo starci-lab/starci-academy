@@ -42,14 +42,14 @@ export interface SearchAutocompleteProps extends WithClassNames<undefined> {
     onInputChange: (value: string) => void
     /** Fired with the chosen suggestion's id when a row is selected. */
     onSelect: (id: string) => void
-    /** Placeholder for the empty field. Defaults to "Tìm khoá học, chủ đề...". */
+    /** Placeholder for the empty field. Defaults to "Search courses, topics...". */
     placeholder?: string
     /**
      * When true, a spinner replaces the suggestion list — use it while the parent
      * is fetching results for the current query.
      */
     isLoading?: boolean
-    /** Message shown when there are no suggestions. Defaults to "Không có gợi ý nào". */
+    /** Message shown when there are no suggestions. Defaults to "No suggestions". */
     emptyLabel?: string
 }
 
@@ -88,9 +88,9 @@ export const SearchAutocomplete = ({
     inputValue,
     onInputChange,
     onSelect,
-    placeholder = "Tìm khoá học, chủ đề...",
+    placeholder = "Search courses, topics...",
     isLoading = false,
-    emptyLabel = "Không có gợi ý nào",
+    emptyLabel = "No suggestions",
     className,
 }: SearchAutocompleteProps) => {
     // ComboBox reports the picked key; forward its id to the parent (ignore null,
@@ -132,7 +132,7 @@ export const SearchAutocomplete = ({
                             <div className="flex items-center justify-center gap-2 px-3 py-6">
                                 <Spinner size="sm" />
                                 <Typography type="body-sm" color="muted">
-                                    Đang tìm...
+                                    Searching...
                                 </Typography>
                             </div>
                         ) : (

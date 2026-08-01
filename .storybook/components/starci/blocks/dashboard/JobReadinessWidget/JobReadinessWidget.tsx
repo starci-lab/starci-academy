@@ -12,7 +12,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `JobReadinessWidget`: "Độ sẵn sàng của tôi" — the growth-loop
+ * BLOCK — `JobReadinessWidget`: "My readiness" — the growth-loop
  * self-widget: the viewer's strongest purchased-course track (depth score +
  * band), the course-independent foundation percentile, its capstone/interview/CV
  * pillar bars (each only when attempted), and a single "do the next real thing"
@@ -47,7 +47,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * an `onPress`, or omitted once every pillar has a score.
  *
  * ⭐ THE FOUNDATION LINE IS BLOCK WORDING (same convention as `LeaderboardBoard`'s
- * "Hạng #N"): `codingPercentile` is a typed `0..100` number, the Vietnamese
+ * "Rank #N"): `codingPercentile` is a typed `0..100` number, the
  * sentence around it is built HERE.
  *
  * ⭐ TWO COMPOSITES HAVE NO `isSkeleton` OF THEIR OWN — `ProgressMeter` (same
@@ -61,7 +61,7 @@ export type JobReadinessBand = "needsWork" | "building" | "jobReady"
 
 /** The single "do the next real thing" CTA, fully pre-built by the caller (label + route). */
 export interface JobReadinessNextAction {
-    /** Already-worded CTA label (e.g. "Hoàn thành dự án cuối khoá"). */
+    /** Already-worded CTA label (e.g. "Finish the capstone project"). */
     label: string
     /** Fired on press — the caller already resolved the target route. */
     onPress: () => void
@@ -109,9 +109,9 @@ export interface JobReadinessWidgetProps {
 
 /** Band → soft chip presentation. */
 const BAND_MAP: Record<JobReadinessBand, EnumChipEntry> = {
-    needsWork: { color: "default", label: "Cần cải thiện" },
-    building: { color: "warning", label: "Đang tiến bộ" },
-    jobReady: { color: "success", label: "Sẵn sàng" },
+    needsWork: { color: "default", label: "Needs work" },
+    building: { color: "warning", label: "Improving" },
+    jobReady: { color: "success", label: "Ready" },
 }
 
 /** One pillar's meter, or its skeleton mirror — omitted entirely (not zero-filled) when the pillar has no score. */
@@ -121,11 +121,11 @@ const pillarMeter = (label: string, score: number | null, isSkeleton: boolean, s
     }
     return isSkeleton ? (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
-                    <Typography size="xs" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" color="muted" isSkeleton showAnatomy={showAnatomy} />
                     <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 </>
             }
@@ -153,14 +153,14 @@ const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentPr
     const trackSummary = (
         <>
             <StackH
-                gap="grouped"
+                gap={4}
                 wrap
                 align="center"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
                     <>
                         <StatPair
-                            value={isSkeleton ? undefined : (track.depthScore ?? 0)}
+                            value={isSkeleton ? undefined : String(track.depthScore ?? 0)}
                             label={isSkeleton ? undefined : track.courseTitle}
                             isSkeleton={isSkeleton}
                             anatPart={showAnatomy ? "StatPair" : undefined}
@@ -173,12 +173,12 @@ const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentPr
                 <Typography
                     size="xs"
                     color="muted"
-                    text={`Vượt qua ${codingPercentile}% học viên về coding`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`Ahead of ${codingPercentile}% of learners on coding`}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
-            {pillarMeter("Dự án cuối khoá", track.capstoneScore, isSkeleton, showAnatomy)}
-            {pillarMeter("Phỏng vấn thử", track.interviewScore, isSkeleton, showAnatomy)}
+            {pillarMeter("Capstone project", track.capstoneScore, isSkeleton, showAnatomy)}
+            {pillarMeter("Mock interview", track.interviewScore, isSkeleton, showAnatomy)}
             {pillarMeter("CV", track.cvScore, isSkeleton, showAnatomy)}
             {isSkeleton ? (
                 <Button isSkeleton classNames={["self-start"]} />
@@ -188,12 +188,12 @@ const Content = ({ codingPercentile, track, isSkeleton, showAnatomy }: ContentPr
                     classNames={["self-start"]}
                     label={track.nextAction.label}
                     onPress={track.nextAction.onPress}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
     )
-    return <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={trackSummary} />
+    return <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={trackSummary} />
 }
 
 /** Fixed-shape placeholder rendered while {@link JobReadinessWidgetProps.isLoading} — no real track exists yet. */
@@ -207,7 +207,7 @@ const LOADING_TRACK: JobReadinessTrack = {
 }
 
 /**
- * "Độ sẵn sàng của tôi" — the self job-readiness widget. See the file header
+ * "My readiness" — the self job-readiness widget. See the file header
  * for the full contract.
  *
  * @param props - {@link JobReadinessWidgetProps}
@@ -224,38 +224,39 @@ const JobReadinessWidget = ({
     anatPart,
 }: JobReadinessWidgetProps) => (
     <SurfaceCard
-        label="Độ sẵn sàng của tôi"
+        label="My readiness"
         anatPart={anatPart}
         showAnatomy={showAnatomy}
-    >
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={<Content track={LOADING_TRACK} isSkeleton showAnatomy={showAnatomy} />}
-            isEmpty={isEmpty}
-            emptyContent={{
-                title: "Chưa có tín hiệu sẵn sàng",
-                description: "Mua một khoá học rồi hoàn thành dự án cuối khoá, phỏng vấn thử hoặc chấm CV để xem độ sẵn sàng của bạn.",
-                icon: ChartLineUpIcon,
-            }}
-            error={error}
-            errorContent={{
-                title: "Không tải được độ sẵn sàng",
-                description: "Thử lại để xem tín hiệu mới nhất.",
-                onRetry,
-                retryLabel: "Thử lại",
-            }}
-            showAnatomy={showAnatomy}
-        >
-            {track ? (
-                <Content
-                    codingPercentile={codingPercentile}
-                    track={track}
-                    isSkeleton={isSkeleton}
-                    showAnatomy={showAnatomy}
-                />
-            ) : null}
-        </AsyncContent>
-    </SurfaceCard>
+        body={() => (
+            <AsyncContent
+                isLoading={isLoading}
+                skeleton={<Content track={LOADING_TRACK} isSkeleton showAnatomy={showAnatomy} />}
+                isEmpty={isEmpty}
+                emptyContent={{
+                    title: "No readiness signal yet",
+                    description: "Buy a course, then complete the capstone project, a mock interview, or a CV review to see your readiness.",
+                    icon: ChartLineUpIcon,
+                }}
+                error={error}
+                errorContent={{
+                    title: "Couldn't load readiness",
+                    description: "Retry to see the latest signal.",
+                    onRetry,
+                    retryLabel: "Retry",
+                }}
+                showAnatomy={showAnatomy}
+            >
+                {track ? (
+                    <Content
+                        codingPercentile={codingPercentile}
+                        track={track}
+                        isSkeleton={isSkeleton}
+                        showAnatomy={showAnatomy}
+                    />
+                ) : null}
+            </AsyncContent>
+        )}
+    />
 )
 
 export { JobReadinessWidget }

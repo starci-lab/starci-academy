@@ -4,7 +4,7 @@ import { ChartBarIcon, ChartLineIcon, ClockCounterClockwiseIcon } from "@phospho
 import { Tabs, type TabItem } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { StatGridCard, type StatGridCardItem } from "@sb-components/composites/stats/StatGridCard/StatGridCard"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -66,8 +66,8 @@ type StatIcon = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "
  * and a caller that could pass it would own wording that belongs here.
  */
 const VIEW_LABEL: Record<QuizProgressView, string> = {
-    stats: "Thống kê",
-    history: "Lịch sử",
+    stats: "Stats",
+    history: "History",
 }
 
 const VIEW_ICON: Record<QuizProgressView, StatIcon> = {
@@ -81,9 +81,9 @@ export interface QuizProgressStat {
     key: string
     /** Optional leading glyph, a COMPONENT reference — the block owns its size/tone. */
     icon?: StatIcon
-    /** What the number is, e.g. "Độ chính xác". */
+    /** What the number is, e.g. "Accuracy". */
     label: string
-    /** The number itself, already formatted by the caller, e.g. "82%", "7 ngày". */
+    /** The number itself, already formatted by the caller, e.g. "82%", "7 days". */
     value: string
 }
 
@@ -93,9 +93,9 @@ export interface QuizProgressSession {
     key: string
     /** What the run was called when it was started. */
     name: string
-    /** Already-formatted relative/absolute date from the caller, e.g. "2 ngày trước". */
+    /** Already-formatted relative/absolute date from the caller, e.g. "2 days ago". */
     dateLabel: string
-    /** Already-formatted result from the caller, e.g. "8/10 đúng". */
+    /** Already-formatted result from the caller, e.g. "8/10 correct". */
     scoreLabel: string
     /** Fired when the learner opens this run. Omit for a run that can't be reopened. */
     onPress?: () => void
@@ -103,7 +103,7 @@ export interface QuizProgressSession {
 
 /** Props for {@link QuizProgressPanel}. */
 export interface QuizProgressPanelProps {
-    /** Section label above the card, localized by the caller — e.g. "Đã luyện thế nào". */
+    /** Section label above the card, localized by the caller — e.g. "How you've been practicing". */
     label: string
     /** Which view is showing now. */
     view: QuizProgressView
@@ -145,22 +145,22 @@ const statCell = (stat: QuizProgressStat, isSkeleton: boolean, showAnatomy: bool
         key: stat.key,
         content: (
             <StackV
-                gap="tight"
+                gap={2}
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
                     <>
                         <StackH
-                            gap="tight"
+                            gap={2}
                             align="center"
                             anatPart={showAnatomy ? "StackH" : undefined}
                             body={
                                 <>
                                     {Icon ? <Icon aria-hidden focusable="false" className="size-4 text-muted" /> : null}
-                                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={stat.label} anatPart={showAnatomy ? "Typography" : undefined} />
+                                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={stat.label} showAnatomy={showAnatomy} />
                                 </>
                             }
                         />
-                        <Typography size="lg" weight="semibold" isSkeleton={isSkeleton} text={stat.value} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="lg" weight="semibold" isSkeleton={isSkeleton} text={stat.value} showAnatomy={showAnatomy} />
                     </>
                 }
             />
@@ -235,18 +235,22 @@ const QuizProgressPanel = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard label={label} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                {isEmpty ? (
-                    <FeedbackEmpty
-                        icon={ChartLineIcon}
-                        title="Chưa có phiên luyện nào"
-                        description="Dựng một phiên ở khung bên cạnh — phiên đầu tiên sẽ hiện thống kê và lịch sử ở đây."
-                        anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-                    />
-                ) : (
-                    <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={panelBody} />
-                )}
-            </SurfaceCard>
+            <SurfaceCard
+                label={label}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                body={() =>
+                    isEmpty ? (
+                        <EmptyState
+                            icon={ChartLineIcon}
+                            title="No practice sessions yet"
+                            description="Start a session in the panel beside this one — your first run will show its stats and history here."
+                            anatPart={showAnatomy ? "EmptyState" : undefined}
+                        />
+                    ) : (
+                        <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={panelBody} />
+                    )
+                }
+            />
         </div>
     )
 }

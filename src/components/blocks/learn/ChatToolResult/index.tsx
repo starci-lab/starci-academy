@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 export interface ChatToolResultProps extends WithClassNames<undefined> {
     /** The matched sources to render as pickable rows. */
     items: Array<SearchCourseContentItem>
-    /** Header label (e.g. "Flashcard", "Bài liên quan") — translated by the caller. */
+    /** Header label (e.g. "Flashcard", "Related lesson") — translated by the caller. */
     label: React.ReactNode
     /** Header eyebrow icon (phosphor) — signals the result kind at a glance. */
     icon?: React.ReactNode

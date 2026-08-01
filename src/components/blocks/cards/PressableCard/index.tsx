@@ -46,8 +46,8 @@ export interface PressableCardProps extends WithClassNames<undefined> {
      * card but has no visible text of its own, so it must carry an `aria-label`).
      * Optional otherwise — without `actions` the children ARE the card's
      * accessible name, so pass this only when they carry no readable text (an
-     * icon-only tile). Keep it descriptive of the destination/action ("Mở lộ
-     * trình Fullstack Mastery"), never generic ("bấm vào đây").
+     * icon-only tile). Keep it descriptive of the destination/action ("Open the
+     * Fullstack Mastery track"), never generic ("click here").
      */
     label?: string
 }
@@ -84,7 +84,7 @@ export const PressableCard = ({
     // Shared card surface + disabled dim, identical across both render paths so
     // a card reads the same with or without actions. `shadow-surface` is a
     // top-level bounded card (card.md §0 elevation convention) — it must read as
-    // one at rest, not only once the pointer arrives (thầy: "render dạng card").
+    // one at rest, not only once the pointer arrives (teacher: "render it as a card").
     // One hover treatment only (tint) — no lift variant, no press-scale.
     const surface = cn(
         "rounded-3xl bg-surface px-4 py-3 text-left shadow-surface transition-colors hover:bg-surface-secondary",
@@ -140,7 +140,7 @@ export const PressableCard = ({
                   AND `relative z-10`, so they paint/hit-test ABOVE the stretched
                   overlay and remain independently pressable.
                 */}
-                <div className="relative z-10 flex shrink-0 items-center gap-2">
+                <div data-principles="flex-action" className="relative z-10 flex shrink-0 items-center gap-2">
                     {actions}
                 </div>
             </div>

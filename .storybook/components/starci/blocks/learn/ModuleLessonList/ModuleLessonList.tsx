@@ -16,7 +16,7 @@ import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/bl
  *
  * SIBLING OF `KeepGoingPath`, NOT A DUPLICATE. `KeepGoingPath` shows the top of
  * the CONTINUE queue for the current chapter and owns its own heading sentence
- * ("Tiếp tục · Chương N …"); this block shows the WHOLE module's lesson table of
+ * ("Continue · Chapter N …"); this block shows the WHOLE module's lesson table of
  * contents with no heading of its own (the screen/section around it supplies
  * that), and it never trims the list down to "what's next".
  *
@@ -42,7 +42,7 @@ import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/bl
  * resume marker answers "where do I go next", which outranks "have I seen this
  * before" for deciding the leading icon.
  *
- * THE BLOCK OWNS THE SUBTITLE SENTENCE ("N phút đọc · M thử thách", §14d.1) — the
+ * THE BLOCK OWNS THE SUBTITLE SENTENCE ("N min read · M challenges", §14d.1) — the
  * caller hands over the two numbers, never a formatted string.
  *
  * ⛔ A PREMIUM ROW IS NOT DISABLED. Exactly the bug `ContentModeNav`'s header
@@ -162,7 +162,7 @@ const ModuleLessonList = ({
             title: lesson.title,
             // The subtitle sentence is assembled HERE — the caller hands over two
             // numbers, never a pre-formatted string (§14d.1).
-            subtitle: `${lesson.minutesRead} phút đọc · ${lesson.challengeCount} thử thách`,
+            subtitle: `${lesson.minutesRead} min read · ${lesson.challengeCount} challenges`,
             // Placeholder rows never become press targets — nothing underneath can act
             // yet, and a clickable shimmer row would be a false affordance.
             onPress: usingPlaceholders ? undefined : () => onSelectLesson(lesson.id),

@@ -12,8 +12,9 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * file header for why).
  *
  * ⭐ REBUILT to match real `src/components/drawers/SubmissionResultHistoryDrawer`
- * (2026-07-29, thầy: "có trang này mà"). A row IS the select action — tapping
- * it both picks that attempt and closes the drawer, same gesture as real `src`.
+ * (2026-07-29, teacher: "there's already a page for this"). A row IS the select
+ * action — tapping it both picks that attempt and closes the drawer, same
+ * gesture as real `src`.
  * Pagination is owned INSIDE this block (the full attempt list in, sliced 6-at-
  * a-time), not a caller-controlled `currentPage`/`totalPages` pair.
  */
@@ -30,7 +31,7 @@ export default meta
 
 type Story = StoryObj<typeof SubmissionAttemptsDrawer>
 
-// DOM thật (content branch, multi-page): DrawerShell(title includes count) >
+// Real DOM (content branch, multi-page): DrawerShell(title includes count) >
 // StackV(list + pager) > SurfaceCardList > row(StackV(row) > StackH(attempt line)
 // > Typography(attempt line) + Chip + Typography(timeago)? , StackH(byline)?
 // > InlineIconLabel + EnumChip?) + nav[Pagination] > Pagination.
@@ -42,10 +43,10 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV (row)": { tier: "frame", role: "tight seam between the attempt line and the model byline, inside one row", storyId: "frames-stack-stackv--default" },
     "StackH (attempt line)": { tier: "frame", role: "the row's first line — attempt number, verdict chip, time-ago pinned right", storyId: "frames-stack-stackh--default" },
     "StackH (byline)": { tier: "frame", role: "the row's second line — which model graded it + its cost/quality tier, when known", storyId: "frames-stack-stackh--default" },
-    "Typography (attempt line)": { tier: "atom", role: "\"Lần N\"", storyId: "atoms-text-typography-typography--overview" },
+    "Typography (attempt line)": { tier: "atom", role: "\"Attempt N\"", storyId: "atoms-text-typography-typography--overview" },
     "Typography (timeago)": { tier: "atom", role: "already-humanized relative time, when present", storyId: "atoms-text-typography-typography--colors" },
     "Chip": { tier: "atom", role: "the score chip — verdict icon + tone + text, or an ungraded chip when `score` is null", storyId: "atoms-chips-chip-chip--tones" },
-    "InlineIconLabel": { tier: "composite", role: "\"Đã chấm bởi <model>\", same recipe `SubmissionScoreCard` uses for its own byline", storyId: "composites-texts-inlineiconlabel--count" },
+    "InlineIconLabel": { tier: "composite", role: "\"Graded by <model>\", same recipe `SubmissionScoreCard` uses for its own byline", storyId: "composites-texts-inlineiconlabel--count" },
     "EnumChip": { tier: "composite", role: "the model's cost/quality tier — same `MODEL_CATEGORY_MAP` `SubmissionScoreCard` owns, reused not re-declared", storyId: "composites-chips-enumchip--gallery" },
     "Pagination": { tier: "atom", role: "the page nav — only reachable once the content branch is showing, and only past 6 attempts", storyId: "atoms-navigation-pagination-pagination--default" },
     "AsyncContentEmpty": { tier: "composite", role: "the no-attempts-yet message", storyId: "composites-async-asynccontent-asynccontentempty--basic" },
@@ -54,17 +55,17 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 
 // 7 attempts ⇒ past `HISTORY_PAGE_SIZE` (6) ⇒ the pager mounts on page 1.
 const MULTI_PAGE_ATTEMPTS: Array<SubmissionAttemptRecord> = [
-    { id: "attempt-7", attemptNumber: 7, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 phút trước", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
-    { id: "attempt-6", attemptNumber: 6, score: 60, maxScore: 100, isPassing: false, processedTimeAgo: "2 giờ trước", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
-    { id: "attempt-5", attemptNumber: 5, score: 82, maxScore: 100, isPassing: true, processedTimeAgo: "1 ngày trước" },
-    { id: "attempt-4", attemptNumber: 4, score: 45, maxScore: 100, isPassing: false, processedTimeAgo: "2 ngày trước" },
+    { id: "attempt-7", attemptNumber: 7, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "attempt-6", attemptNumber: 6, score: 60, maxScore: 100, isPassing: false, processedTimeAgo: "2 hours ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "attempt-5", attemptNumber: 5, score: 82, maxScore: 100, isPassing: true, processedTimeAgo: "1 day ago" },
+    { id: "attempt-4", attemptNumber: 4, score: 45, maxScore: 100, isPassing: false, processedTimeAgo: "2 days ago" },
     { id: "attempt-3", attemptNumber: 3, score: null, maxScore: null, isPassing: false },
-    { id: "attempt-2", attemptNumber: 2, score: 30, maxScore: 100, isPassing: false, processedTimeAgo: "5 ngày trước" },
-    { id: "attempt-1", attemptNumber: 1, score: 10, maxScore: 100, isPassing: false, processedTimeAgo: "6 ngày trước" },
+    { id: "attempt-2", attemptNumber: 2, score: 30, maxScore: 100, isPassing: false, processedTimeAgo: "5 days ago" },
+    { id: "attempt-1", attemptNumber: 1, score: 10, maxScore: 100, isPassing: false, processedTimeAgo: "6 days ago" },
 ]
 
 const SINGLE_PAGE_ATTEMPTS: Array<SubmissionAttemptRecord> = [
-    { id: "attempt-1", attemptNumber: 1, score: 96, maxScore: 100, isPassing: true, processedTimeAgo: "5 phút trước", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "attempt-1", attemptNumber: 1, score: 96, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
 ]
 
 /** Shared controlled wrapper — the trigger reopens the drawer after it closes. */
@@ -72,12 +73,12 @@ const ControlledSubmissionAttemptsDrawer = () => {
     const [isOpen, setIsOpen] = useState(true)
     const [selectedId, setSelectedId] = useState("attempt-7")
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
-                label="Xem lịch sử nộp bài"
+                label="View submission history"
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <BlockAnatomy
@@ -95,7 +96,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
   isOpen={isOpen}
   onOpenChange={setIsOpen}
   attempts={[
-    { id: "attempt-7", attemptNumber: 7, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 phút trước", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "attempt-7", attemptNumber: 7, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
     // …6 more, newest first
   ]}
   selectedAttemptId="attempt-7"
@@ -118,7 +119,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
                         code: `<SubmissionAttemptsDrawer
   isOpen={isOpen}
   onOpenChange={setIsOpen}
-  attempts={[{ id: "attempt-1", attemptNumber: 1, score: 96, maxScore: 100, isPassing: true, processedTimeAgo: "5 phút trước", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" }]}
+  attempts={[{ id: "attempt-1", attemptNumber: 1, score: 96, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" }]}
   selectedAttemptId="attempt-1"
   onSelect={pickAttempt}
 />`,
@@ -182,7 +183,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
   onSelect={pickAttempt}
   error={fetchError}
   onRetry={refetch}
-  retryLabel="Thử lại"
+  retryLabel="Retry"
 />`,
                         render: (
                             <SubmissionAttemptsDrawer
@@ -192,7 +193,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
                                 onSelect={() => {}}
                                 error={new Error("network")}
                                 onRetry={() => {}}
-                                retryLabel="Thử lại"
+                                retryLabel="Retry"
                             />
                         ),
                     },

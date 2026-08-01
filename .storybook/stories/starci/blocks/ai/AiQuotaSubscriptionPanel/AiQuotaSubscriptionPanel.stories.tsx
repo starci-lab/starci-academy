@@ -4,7 +4,7 @@ import type { AiQuotaLaneData } from "@sb-components/starci/blocks/ai/AiQuotaLan
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `AiQuotaSubscriptionPanel`: body of the "Gói" tab inside
+ * BLOCK — `AiQuotaSubscriptionPanel`: body of the "Plan" tab inside
  * `AiQuotaModal` — ported from `src`'s `SubscriptionTab`.
  *
  * ⭐ BLOCK REUSES BLOCK — the Premium branch is this plan's `AiQuotaLane`
@@ -36,14 +36,14 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 const PRO_LANE: AiQuotaLaneData = {
-    window5h: { used: 6, limit: 40, resetLabel: "Reset lúc 19:20 hôm nay" },
-    windowWeek: { used: 140, limit: 500, resetLabel: "Reset lúc 00:00 Thứ Hai" },
+    window5h: { used: 6, limit: 40, resetLabel: "Resets at 7:20 PM today" },
+    windowWeek: { used: 140, limit: 500, resetLabel: "Resets Monday at midnight" },
 }
 
 /** LEAF — no paid tier: a muted sentence + one CTA, inside a bordered inset card. */
 export const NoTierCta: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AiQuotaSubscriptionPanel"
                 tier="block"
@@ -78,7 +78,7 @@ export const NoTierCta: Story = {
 /** LEAF — a paid tier: the reused `AiQuotaLane` + a caption naming which tier. */
 export const ActiveLane: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AiQuotaSubscriptionPanel"
                 tier="block"
@@ -93,8 +93,8 @@ export const ActiveLane: Story = {
     tier="pro"
     premiumLane={{
         data: {
-            window5h: { used: 6, limit: 40, resetLabel: "Reset lúc 19:20 hôm nay" },
-            windowWeek: { used: 140, limit: 500, resetLabel: "Reset lúc 00:00 Thứ Hai" },
+            window5h: { used: 6, limit: 40, resetLabel: "Resets at 7:20 PM today" },
+            windowWeek: { used: 140, limit: 500, resetLabel: "Resets Monday at midnight" },
         },
         isLoading: false,
     }}
@@ -135,7 +135,7 @@ export const ActiveLane: Story = {
 /** LEAF — the caller flips `isSkeleton`; the panel delegates its shimmer to `AiQuotaLane`'s own loading state rather than drawing a parallel skeleton tree. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AiQuotaSubscriptionPanel"
                 tier="block"

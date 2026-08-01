@@ -41,28 +41,28 @@ const QUESTIONS: Array<CourseQaQuestionItem> = [
     {
         id: "q1",
         author: { id: "u1", displayName: "Minh Anh", avatarUrl: "https://i.pravatar.cc/64?img=5" },
-        createdTimeAgo: "2 giờ trước",
+        createdTimeAgo: "2 hours ago",
         isPinned: true,
-        preview: "Em cấu hình healthcheck cho container Postgres mãi không đúng, mọi người xem giúp em file compose với ạ. Container cứ bị đánh dấu unhealthy dù log không báo lỗi gì.",
-        scope: { kind: "lesson", lessonTitle: "Docker Compose nâng cao" },
+        preview: "I can't get the healthcheck configured right for my Postgres container, could someone take a look at my compose file? The container keeps getting marked unhealthy even though the logs show no errors.",
+        scope: { kind: "lesson", lessonTitle: "Advanced Docker Compose" },
         replyCount: 3,
         answeredByFounder: true,
     },
     {
         id: "q2",
-        author: { id: "u2", displayName: "Quốc Bảo" },
-        createdTimeAgo: "5 giờ trước",
+        author: { id: "u2", displayName: "Quoc Bao" },
+        createdTimeAgo: "5 hours ago",
         isFounderAuthor: false,
-        preview: "Khoá học có phần nào nói về multi-stage build tối ưu size image không ạ? Em tìm trong mục lục chưa thấy.",
+        preview: "Does the course cover multi-stage builds for shrinking image size? I haven't found it in the table of contents yet.",
         scope: { kind: "general" },
         replyCount: 0,
     },
     {
         id: "q3",
-        author: { id: "self", displayName: "Bạn", avatarUrl: "https://i.pravatar.cc/64?img=12" },
-        createdTimeAgo: "1 ngày trước",
-        preview: "Sau khi push image lên registry riêng, pull về lại báo lỗi permission denied. Em đã login docker rồi mà vẫn vậy.",
-        scope: { kind: "lesson", lessonTitle: "Đẩy image lên Registry" },
+        author: { id: "self", displayName: "You", avatarUrl: "https://i.pravatar.cc/64?img=12" },
+        createdTimeAgo: "1 day ago",
+        preview: "After pushing an image to my own registry, pulling it back gives a permission denied error. I've already logged in to docker but it still happens.",
+        scope: { kind: "lesson", lessonTitle: "Pushing an Image to the Registry" },
         replyCount: 1,
         answeredByFounder: false,
     },
@@ -84,7 +84,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the list's own fetch is in flight; the region swaps for a fixed-count row mirror. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaQuestionList"
                 tier="block"
@@ -104,7 +104,7 @@ export const Loading: Story = {
     onPageChange={setPage}
     currentUserId={null}
     currentUser={null}
-    pagerAriaLabel="Điều hướng trang câu hỏi"
+    pagerAriaLabel="Question page navigation"
 />`,
                         render: (
                             <CourseQaQuestionList
@@ -117,7 +117,7 @@ export const Loading: Story = {
                                 onPageChange={() => {}}
                                 currentUserId={null}
                                 currentUser={null}
-                                pagerAriaLabel="Điều hướng trang câu hỏi"
+                                pagerAriaLabel="Question page navigation"
                             />
                         ),
                     },
@@ -130,7 +130,7 @@ export const Loading: Story = {
 /** LEAF — the fetch failed; outranks even a stale loading flag. */
 export const ErrorLeaf: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaQuestionList"
                 tier="block"
@@ -152,7 +152,7 @@ export const ErrorLeaf: Story = {
     onPageChange={setPage}
     currentUserId={null}
     currentUser={null}
-    pagerAriaLabel="Điều hướng trang câu hỏi"
+    pagerAriaLabel="Question page navigation"
 />`,
                         render: (
                             <CourseQaQuestionList
@@ -167,7 +167,7 @@ export const ErrorLeaf: Story = {
                                 onPageChange={() => {}}
                                 currentUserId={null}
                                 currentUser={null}
-                                pagerAriaLabel="Điều hướng trang câu hỏi"
+                                pagerAriaLabel="Question page navigation"
                             />
                         ),
                     },
@@ -180,7 +180,7 @@ export const ErrorLeaf: Story = {
 /** LEAF — loading finished, no error, but the current filter/search matched nothing. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaQuestionList"
                 tier="block"
@@ -201,7 +201,7 @@ export const Empty: Story = {
     onPageChange={setPage}
     currentUserId={null}
     currentUser={null}
-    pagerAriaLabel="Điều hướng trang câu hỏi"
+    pagerAriaLabel="Question page navigation"
 />`,
                         render: (
                             <CourseQaQuestionList
@@ -214,7 +214,7 @@ export const Empty: Story = {
                                 onPageChange={() => {}}
                                 currentUserId={null}
                                 currentUser={null}
-                                pagerAriaLabel="Điều hướng trang câu hỏi"
+                                pagerAriaLabel="Question page navigation"
                             />
                         ),
                     },
@@ -227,7 +227,7 @@ export const Empty: Story = {
 /** LEAF — a populated, paged page of questions. */
 export const Content: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseQaQuestionList"
                 tier="block"
@@ -247,7 +247,7 @@ export const Content: Story = {
     onPageChange={setPage}
     currentUserId="self"
     currentUser={{ username: "you" }}
-    pagerAriaLabel="Điều hướng trang câu hỏi"
+    pagerAriaLabel="Question page navigation"
 />`,
                         render: (
                             <CourseQaQuestionList
@@ -260,13 +260,13 @@ export const Content: Story = {
                                 onPageChange={() => {}}
                                 currentUserId="self"
                                 currentUser={{ username: "you" }}
-                                pagerAriaLabel="Điều hướng trang câu hỏi"
+                                pagerAriaLabel="Question page navigation"
                             />
                         ),
                     },
                     {
                         name: "totalPages = 4 (pager shown)",
-                        why: "More than one page of results, so the pager rides below the list — the third question is the viewer's OWN, and reads \"Bạn\" instead of their real name.",
+                        why: "More than one page of results, so the pager rides below the list — the third question is the viewer's OWN, and reads \"You\" instead of their real name.",
                         code: `<CourseQaQuestionList
     questions={questions}
     isLoading={false}
@@ -275,7 +275,7 @@ export const Content: Story = {
     onPageChange={setPage}
     currentUserId="self"
     currentUser={{ username: "you" }}
-    pagerAriaLabel="Điều hướng trang câu hỏi"
+    pagerAriaLabel="Question page navigation"
 />`,
                         render: (
                             <CourseQaQuestionList
@@ -286,7 +286,7 @@ export const Content: Story = {
                                 onPageChange={() => {}}
                                 currentUserId="self"
                                 currentUser={{ username: "you" }}
-                                pagerAriaLabel="Điều hướng trang câu hỏi"
+                                pagerAriaLabel="Question page navigation"
                             />
                         ),
                     },

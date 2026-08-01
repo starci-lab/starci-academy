@@ -7,7 +7,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `SurfaceCardPressableGroup` does NOT
  * create new meaning per cell — it only LAYS OUT + rebuilds a `SurfaceCard` tile
- * from `items` (thầy 2026-07-29: `.Pressable` folded into `SurfaceCard` itself,
+ * from `items` (instructor, 2026-07-29: `.Pressable` folded into `SurfaceCard` itself,
  * this group now renders that same composite per cell, not a separate sibling).
  * So the stories here ONLY render state that BELONGS TO THE GROUP: `items` mapping ·
  * `columns` (container query) · group-level `gap` · the `icon` slot whose size/colour
@@ -19,7 +19,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 2026-07-26 (teacher) — this member's own grid system (`SurfaceCardPressableGroupColumns`,
  * 7 tiers, HALF-SIZE container scale `@sm`/`@md`) was removed; `columns`/`gap` now use
- * the SHARED {@link GridColumns}/`InsetScale` from `Grid` (§13) — the FULL-SIZE
+ * the SHARED {@link GridColumns}/`AllowedGap` from `Grid` (§13) — the FULL-SIZE
  * scale `@app-sm`/`@app-md`/`@app-lg`. The anatomy panel also changed: the `parts`/
  * `AnatomyNode` prop (the old path, structure declared by hand) → `annotate` (only
  * annotates WHY, structure is inferred from the DOM), keeping only entries with a REAL
@@ -46,7 +46,7 @@ type Story = StoryObj<typeof SurfaceCardPressableGroup>
  * avatar goes INSIDE `content` (the `icon` slot is for plain icons only).
  */
 const profileTile = (initials: string, title: string, description: string) => (
-    <div className="flex flex-row items-center gap-3">
+    <div data-tier="fixture" className="flex flex-row items-center gap-3">
         <Avatar className="size-10 shrink-0">
             <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
@@ -66,10 +66,11 @@ const profileItems: Array<SurfaceCardPressableGroupItem> = MENTORS.map((m) => ({
     key: m.initials,
     onPress: () => {},
     label: m.title,
-    content: profileTile(m.initials, m.title, m.description),
+    // A component reference (COMPOSITE-8), not a built node — the group calls this itself.
+    content: () => profileTile(m.initials, m.title, m.description),
 }))
-/** Canvas padding only. Bề ngang của chủ thể đi qua `renderClassName` của từng leaf, không bọc ở đây. */
-const shell = (node: ReactNode) => <div className="p-8">{node}</div>
+/** Canvas padding only. Each leaf's own width goes through its own `renderClassName`, not wrapped here. */
+const shell = (node: ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
 /**
  * Live grid leaf: each cell is a REPEATED `SurfaceCard` (pressable — `onPress`/
  * `href` set) whose `content` the caller composes freely (a ProfileCard here). It
@@ -166,7 +167,7 @@ export const Columns: Story = {
     />
 </div>`,
                         render: (
-                            <div className="max-w-2xl">
+                            <div data-tier="fixture" className="max-w-2xl">
                                 <SurfaceCardPressableGroup
                                     ariaLabel="Mentors (wide container)"
                                     columns={{ base: 1, sm: 2, lg: 4 }}
@@ -187,7 +188,7 @@ export const Columns: Story = {
     />
 </div>`,
                         render: (
-                            <div className="max-w-xs">
+                            <div data-tier="fixture" className="max-w-xs">
                                 <SurfaceCardPressableGroup
                                     ariaLabel="Mentors (narrow container)"
                                     columns={{ base: 1, sm: 2, lg: 4 }}
@@ -215,19 +216,23 @@ export const Gap: Story = {
                     {
                         name: "peers in one set",
                         why: "The cells sit close enough to read as members of one set rather than separate cards, which works when each tile is already visually distinct on its own, as a short profile row with an avatar is. Pick this step from the relationship and not from how full the grid looks.",
-                        code: "<SurfaceCardPressableGroup gap=\"related\" ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
-                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (gap 2)" columns={{ base: 1, sm: 2 }} gap="related" items={profileItems.slice(0, 2)} showAnatomy />,
+                        code: "<SurfaceCardPressableGroup gap={3} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
+                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (gap step 3)" columns={{ base: 1, sm: 2 }} gap={3} items={profileItems.slice(0, 2)} showAnatomy />,
                     },
                     {
                         name: "rows inside one surface",
                         why: "Each cell stands as its own surface inside the group, which is the default because a pressable tile is a thing a reader acts on separately. The composition is identical to the state above, so the only difference a reader sees is the claim the seam makes.",
-                        code: "<SurfaceCardPressableGroup gap=\"grouped\" ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(2)} />  // default",
-                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (gap 3)" columns={{ base: 1, sm: 2 }} gap="grouped" items={profileItems.slice(2)} />,
+                        code: "<SurfaceCardPressableGroup gap={4} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(2)} />  // default",
+                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (gap step 4)" columns={{ base: 1, sm: 2 }} gap={4} items={profileItems.slice(2)} />,
                     },
                 ]}
             />,
         ),
 }
+/** `icon`/`content` slot fixtures for {@link WithIcon} — component references (COMPOSITE-8), not built nodes. */
+const FolderIcon = () => <FolderOpenIcon data-tier="fixture" />
+const DocsContent = () => <Typography data-tier="fixture" type="body-sm" weight="medium">Docs</Typography>
+const LabsContent = () => <Typography data-tier="fixture" type="body-sm" weight="medium">Labs</Typography>
 /** `item.icon` — a BARE icon slot: the group pins `size-5` + a muted colour in one place (§4/§5a), the call site never sets a class itself. */
 export const WithIcon: Story = {
     render: () =>
@@ -259,15 +264,15 @@ export const WithIcon: Story = {
                                 items={[
                                     {
                                         key: "docs",
-                                        icon: <FolderOpenIcon />,
-                                        content: <Typography type="body-sm" weight="medium">Docs</Typography>,
+                                        icon: FolderIcon,
+                                        content: DocsContent,
                                         onPress: () => {},
                                     },
                                     {
                                         key: "labs",
-                                        icon: <FolderOpenIcon />,
+                                        icon: FolderIcon,
                                         iconPosition: "trailing",
-                                        content: <Typography type="body-sm" weight="medium">Labs</Typography>,
+                                        content: LabsContent,
                                         onPress: () => {},
                                     },
                                 ]}
@@ -399,36 +404,43 @@ export const Verdict: Story = {
         ),
 }
 /**
- * `item.className` with a CONTAINER variant (`@app-sm:col-start-2`) — a single leftover
- * pager card pinned to the right column (the previous card is missing). Must use the
- * container variant at the SAME tier `Grid` uses for `columns` (`@app-sm`/`@app-md`/
- * `@app-lg`, NOT Tailwind's HALF-SIZE `@sm`/`@md`/`@lg`) so it kicks in AT THE RIGHT
- * MOMENT the grid reaches 2 columns. Narrow the window: it stays full-width while still
- * at 1 column.
- *
- * 2026-07-26 (teacher): changed from `@sm:col-start-2` → `@app-sm:col-start-2` —
- * `.PressableGroup` now builds its grid with `Grid` (the FULL-SIZE `@app-*`
- * container scale), so the column-pin variant must match the SAME scale, otherwise it
- * fires at the wrong tier compared to when the grid actually switches to 2 columns.
+ * A single leftover pager card, spanning the full row — `span={2}` (via
+ * `classNames: ["col-span-2"]`) is the only placement lever `Grid` exposes
+ * (§13z on `Grid.tsx`). A raw column-start class (the old `@app-sm:col-start-2`,
+ * reached through `item.className`) used to pin a lone card to the right column
+ * instead — that was the exact escape hatch that broke mobile in the old
+ * `GroupPressableCard` (the mentor's call, recorded in `Grid.tsx`), and it is
+ * doubly unavailable now: `Grid` never grew a start-position prop, and
+ * `SurfaceCardPressableGroupItem.className` is gone too (COMPOSITE-4 —
+ * `classNames: Array<AllowedClassName>`, a closed union with no column-start
+ * member). A lone card now spans the row instead of being pinned to one side of it.
  */
-export const PagerPinRight: Story = {
+/** `content` slot fixture for {@link PagerFullWidth} — a component reference (COMPOSITE-8), not a built node. */
+const NextContent = () => (
+    <div data-tier="fixture" className="flex items-center justify-between gap-3">
+        <Typography type="body-sm" weight="medium">Next content</Typography>
+        {/* Navigation caret: phosphor CaretRightIcon size-3 muted, does NOT slide (§5a/§5b). */}
+        <CaretRightIcon className="size-3 shrink-0 text-muted" aria-hidden focusable="false" />
+    </div>
+)
+export const PagerFullWidth: Story = {
     render: () =>
         shell(
             <BlockAnatomy
                 name="SurfaceCardPressableGroup"
                 tier="composite"
-                leaf="PagerPinRight"
+                leaf="PagerFullWidth"
                 annotate={ITEM_ANNOTATE}
                 renderClassName="max-w-md"
-                reason="The pin class must match the same container-query tier that columns itself uses, @app-sm rather than Tailwind's half-size @sm, otherwise the card would jump to the right column at a different moment than the grid actually reaches two columns."
+                reason="Grid's only placement lever is span (col-span-2, capped there on purpose) — a raw column-start class doesn't exist in the closed classNames union, so a lone leftover card spans the full row instead of pinning to one side of it."
                 states={[
                     {
-                        name: "items.length = 1, className = \"@app-sm:col-start-2\"",
-                        why: "The single next-content card sits in the right-hand column once the container reaches two columns, and stays full width below that, because it is the only item and carries the column-start class itself. This is still one repeated Item, so the same composition covers a full grid or a lone pager card.",
+                        name: "items.length = 1, classNames = [\"col-span-2\"]",
+                        why: "The single next-content card spans both grid tracks once the container reaches two columns, and stays full width below that too, because it is the only item and carries the span class itself. This is still one repeated Item, so the same composition covers a full grid or a lone pager card.",
                         code: `<SurfaceCardPressableGroup
     ariaLabel="Go to previous or next content"
     columns={{ base: 1, sm: 2 }}
-    items={[{ key: "next", href: "#", className: "@app-sm:col-start-2", content: <…/> }]}
+    items={[{ key: "next", href: "#", classNames: ["col-span-2"], content: <…/> }]}
 />`,
                         render: (
                             <SurfaceCardPressableGroup
@@ -438,14 +450,8 @@ export const PagerPinRight: Story = {
                                     {
                                         key: "next",
                                         href: "#",
-                                        className: "@app-sm:col-start-2",
-                                        content: (
-                                            <div className="flex items-center justify-between gap-3">
-                                                <Typography type="body-sm" weight="medium">Next content</Typography>
-                                                {/* Navigation caret: phosphor CaretRightIcon size-3 muted, does NOT slide (§5a/§5b). */}
-                                                <CaretRightIcon className="size-3 shrink-0 text-muted" aria-hidden focusable="false" />
-                                            </div>
-                                        ),
+                                        classNames: ["col-span-2"],
+                                        content: NextContent,
                                     },
                                 ]}
                                 showAnatomy

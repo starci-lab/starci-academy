@@ -33,7 +33,7 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 export type DailyQuestProps = WithClassNames<undefined>
 
 /**
- * "Nhiệm vụ hôm nay" content — today's daily-quest checklist (read content · pass
+ * "Today's quest" content — today's daily-quest checklist (read content · pass
  * challenge · review flashcards), each row showing today's progress, plus a claim
  * action that grants the reward once all tasks are done. Content only (the parent
  * {@link import("@/components/blocks").LabeledCard} frames it). Self-fetches the
@@ -136,9 +136,9 @@ export const DailyQuest = ({
                                     ) : (
                                         <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
                                     )}
-                                    // buộc icon+title cùng màu theo state (icon.md §6): done = success, todo = foreground (mặc định).
-                                    // Tô màu qua title NODE (span), KHÔNG `titleClassName` — lint `no-modal-title-classname` cấm prop đó
-                                    // toàn cục; row này không underline nên span-con an toàn (§6 carve-out).
+                                    // force icon+title to share color by state (icon.md §6): done = success, todo = foreground (default).
+                                    // Color it through the title NODE (span), NOT `titleClassName` — lint `no-modal-title-classname` bans that
+                                    // prop globally; this row has no underline so the child span is safe (§6 carve-out).
                                     title={done ? (
                                         <span className="text-success-soft-foreground">{t(`dashboard.dailyQuest.tasks.${task.key}`)}</span>
                                     ) : (

@@ -47,12 +47,12 @@ const STATUS_COLOR: Record<string, "success" | "warning" | "danger" | "muted"> =
 }
 
 /**
- * "Kế hoạch trả góp của tôi" — lists the viewer's non-completed installment
- * (trả góp) plans and lets them pay the current cycle.
+ * "My installment plans" — lists the viewer's non-completed installment
+ * plans and lets them pay the current cycle.
  *
  * Two render shapes share one list (mirrors `Sessions` — per-plan `Card` with a
  * row action, not a `SurfaceListCard` since each plan is its own bounded object):
- * `Fixed` (fixed monthly amount + `ProgressMeter` "đã trả N/M kỳ") and
+ * `Fixed` (fixed monthly amount + `ProgressMeter` "paid N/M installments") and
  * `FlexiblePool` (outstanding balance + an editable amount, floor-clamped to
  * this cycle's minimum). Paying opens the gateway checkout via the shared
  * `payNextInstallment` mutation, then revalidates the list. Mounted by

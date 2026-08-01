@@ -4,16 +4,16 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PlaygroundDeviceSnapshot`: "Máy của bạn" — the paired agent's raw
+ * BLOCK — `PlaygroundDeviceSnapshot`: "Your machine" — the paired agent's raw
  * `device:info` report, turned into the 4-cell stat ribbon a learner reads to
  * decide "is my machine good enough".
  *
  * REUSED ACROSS TWO SURFACES ON PURPOSE. The real screen (`PlaygroundPrepare`,
  * `src/components/features/learn/Playground/PlaygroundPrepare/index.tsx`) renders
- * this exact ribbon both in the setup step ("Máy của bạn") and again once the
+ * this exact ribbon both in the setup step ("Your machine") and again once the
  * learner reaches the Lab route — same component, not two hand-rolled panels —
  * so the two surfaces can never quietly disagree about what "8 GB free" means.
- * That is also why this block does NOT own the "Máy của bạn" title: the source
+ * That is also why this block does NOT own the "Your machine" title: the source
  * wraps it in a `LabeledList` whose label differs per surface context, so the
  * label stays the CALLER's job and this block stays just the ribbon.
  *
@@ -27,7 +27,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  *   • THE PLATFORM-NAME TABLE — `win32`/`darwin`/`linux` → "Windows"/"macOS"/
  *     "Linux", the vocabulary a learner recognises instead of Node's platform id.
  *   • VRAM PHRASING — "no GPU" / "GPU with no VRAM read" / "X GB VRAM · Y MB
- *     trống" are three different sentences built from three different states of
+ *     free" are three different sentences built from three different states of
  *     the same two optional fields, not one string with a blank filled in.
  * None of that is StatRibbon's to know, and a block that only forwarded
  * `deviceInfo` untouched would be a passthrough (gate: check-passthrough-block) —
@@ -109,12 +109,12 @@ const platformLabel = (platform: string): string =>
  */
 const vramDetail = (gpu: string | null, vramTotalMb?: number, vramFreeMb?: number): string =>
     vramTotalMb
-        ? `${Math.round(vramTotalMb / 1024)} GB VRAM${vramFreeMb != null ? ` · ${vramFreeMb} MB trống` : ""}`
-        : gpu ? "" : "không đọc được"
+        ? `${Math.round(vramTotalMb / 1024)} GB VRAM${vramFreeMb != null ? ` · ${vramFreeMb} MB free` : ""}`
+        : gpu ? "" : "couldn't read"
 
 /** Props for {@link DeviceStatLabel}. */
 interface DeviceStatLabelProps {
-    /** Fixed category word ("Hệ điều hành", "CPU"…) — real text even while `isSkeleton`. */
+    /** Fixed category word ("Operating system", "CPU"…) — real text even while `isSkeleton`. */
     caption: string
     /** Supporting detail line, computed from `deviceInfo`. */
     detail: string
@@ -131,7 +131,7 @@ const DeviceStatLabel = ({ caption, detail, isSkeleton, showAnatomy }: DeviceSta
     <span className="flex flex-col">
         <span>{caption}</span>
         {isSkeleton ? (
-            <Typography size="xs" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" isSkeleton showAnatomy={showAnatomy} />
         ) : (
             <span className="truncate">{detail}</span>
         )}
@@ -151,7 +151,7 @@ export interface PlaygroundDeviceSnapshotProps {
 }
 
 /**
- * "Máy của bạn": the paired agent's hardware report as a 4-cell stat ribbon
+ * "Your machine": the paired agent's hardware report as a 4-cell stat ribbon
  * (OS · CPU · RAM · GPU). See the file header for the unit math, the
  * platform-name table, and why this composes `StatRibbon` instead of a new
  * shape.
@@ -165,7 +165,7 @@ const PlaygroundDeviceSnapshot = ({
     anatPart,
 }: PlaygroundDeviceSnapshotProps) => {
     const skeletonValue = (
-        <Typography size="base" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+        <Typography size="base" isSkeleton showAnatomy={showAnatomy} />
     )
 
     const items: ReadonlyArray<StatRibbonItem> = [
@@ -174,7 +174,7 @@ const PlaygroundDeviceSnapshot = ({
             value: isSkeleton ? skeletonValue : platformLabel(deviceInfo.platform),
             label: (
                 <DeviceStatLabel
-                    caption="Hệ điều hành"
+                    caption="Operating system"
                     detail={`${deviceInfo.arch} · ${deviceInfo.hostname}`}
                     isSkeleton={isSkeleton}
                     showAnatomy={showAnatomy}
@@ -183,7 +183,7 @@ const PlaygroundDeviceSnapshot = ({
         },
         {
             key: "cpu",
-            value: isSkeleton ? skeletonValue : `${deviceInfo.cpuCores} nhân`,
+            value: isSkeleton ? skeletonValue : `${deviceInfo.cpuCores} cores`,
             label: (
                 <DeviceStatLabel
                     caption="CPU"
@@ -199,7 +199,7 @@ const PlaygroundDeviceSnapshot = ({
             label: (
                 <DeviceStatLabel
                     caption="RAM"
-                    detail={`${gbOf(deviceInfo.freeMemBytes)} GB trống`}
+                    detail={`${gbOf(deviceInfo.freeMemBytes)} GB free`}
                     isSkeleton={isSkeleton}
                     showAnatomy={showAnatomy}
                 />

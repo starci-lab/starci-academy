@@ -25,7 +25,7 @@ export interface QuotaBarProps extends WithClassNames<undefined> {
     unit?: string
     /** When true, append {@link QuotaBarProps.unit} after the counts. */
     showUnit?: boolean
-    /** Optional reset time shown under the bar (e.g. "Reset lúc 18:50 01/06"). */
+    /** Optional reset time shown under the bar (e.g. "Resets at 18:50 on 01/06"). */
     resetLabel?: string | null
 }
 

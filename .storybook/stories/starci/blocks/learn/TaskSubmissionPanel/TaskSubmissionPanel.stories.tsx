@@ -57,7 +57,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "a horizontal frame putting two peers on one baseline (a summary line and its gear, or the AI status and the evaluate button)", storyId: "frames-stack-stackh--default" },
     "InputText": { tier: "atom", role: "the bare repo-URL field this block owns the label/error text for", storyId: "atoms-forms-input-inputtext--default" },
     "InlineIconLabel": { tier: "composite", role: "an icon+text status unit — the autosave line, the language/branch summary, or the AI status line", storyId: "composites-texts-inlineiconlabel--overview" },
-    "Button": { tier: "atom", role: "the settings gear or the Chấm điểm action, real or its own skeleton mirror", storyId: "atoms-buttons-button-button--default" },
+    "Button": { tier: "atom", role: "the settings gear or the Evaluate action, real or its own skeleton mirror", storyId: "atoms-buttons-button-button--default" },
     "Typography": { tier: "atom", role: "the panel's own text — the result's hero score, its `/ maxScore`, its feedback line, or the no-evaluation-yet hint", storyId: "atoms-text-typography-typography--plain" },
     "Chip": { tier: "atom", role: "the AI model badge next to the last score, present only when the grade carried one", storyId: "atoms-chips-chip-chip--icon" },
     "SelectSingle": { tier: "atom", role: "the settings drawer's language dropdown", storyId: "atoms-forms-select-selectsingle--default" },
@@ -68,7 +68,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the steady state: repo field, settings summary, evaluate row, latest result — settings drawer closed. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TaskSubmissionPanel"
                 tier="block"
@@ -88,8 +88,8 @@ export const Default: Story = {
     isSettingsOpen={false}
     onSettingsOpenChange={setSettingsOpen}
     onEvaluate={evaluate}
-    aiStatusText="Đã chấm xong lần commit gần nhất"
-    latestResult={{ score: 82, maxScore: 100, shortFeedback: "Xử lý lỗi mạng còn thiếu ở lớp service.", aiBadge: "Sonnet" }}
+    aiStatusText="Graded the latest commit"
+    latestResult={{ score: 82, maxScore: 100, shortFeedback: "Missing network error handling at the service layer.", aiBadge: "Sonnet" }}
     settingsFormProps={settingsForm}
 />`,
                         render: (
@@ -103,11 +103,11 @@ export const Default: Story = {
                                 isSettingsOpen={false}
                                 onSettingsOpenChange={() => {}}
                                 onEvaluate={() => {}}
-                                aiStatusText="Đã chấm xong lần commit gần nhất"
+                                aiStatusText="Graded the latest commit"
                                 latestResult={{
                                     score: 82,
                                     maxScore: 100,
-                                    shortFeedback: "Xử lý lỗi mạng còn thiếu ở lớp service.",
+                                    shortFeedback: "Missing network error handling at the service layer.",
                                     aiBadge: "Sonnet",
                                 }}
                                 settingsFormProps={SETTINGS_FORM}
@@ -136,7 +136,7 @@ export const Default: Story = {
                         why: "A bad URL fails validation AND the autosave that just tried to persist it — the field itself shows its own invalid border via `urlError`, and the status row below turns danger-toned instead of dropping, so the learner sees both signals at once.",
                         code: `<TaskSubmissionPanel
     githubUrl="not-a-url"
-    urlError="URL phải bắt đầu bằng https://"
+    urlError="URL must start with https://"
     autosaveStatus="error"
     …
 />`,
@@ -144,7 +144,7 @@ export const Default: Story = {
                             <TaskSubmissionPanel
                                 githubUrl="not-a-url"
                                 onGithubUrlChange={() => {}}
-                                urlError="URL phải bắt đầu bằng https://"
+                                urlError="URL must start with https://"
                                 autosaveStatus="error"
                                 settingsSummary={SETTINGS_SUMMARY}
                                 isSettingsOpen={false}
@@ -157,7 +157,7 @@ export const Default: Story = {
                     {
                         name: "isEvaluating = true",
                         why: "The evaluate press is in flight — `Button`'s own `isPending` swaps its leading icon for a real `Spinner` and locks the press, the same busy contract every other button in this system uses, so no second spinner is hand-rolled here.",
-                        code: "<TaskSubmissionPanel isEvaluating aiStatusText=\"Đang phân tích commit mới nhất\" … />",
+                        code: "<TaskSubmissionPanel isEvaluating aiStatusText=\"Analyzing the latest commit\" … />",
                         render: (
                             <TaskSubmissionPanel
                                 githubUrl="https://github.com/hocvien/de-tai-tot-nghiep"
@@ -168,7 +168,7 @@ export const Default: Story = {
                                 onSettingsOpenChange={() => {}}
                                 onEvaluate={() => {}}
                                 isEvaluating
-                                aiStatusText="Đang phân tích commit mới nhất"
+                                aiStatusText="Analyzing the latest commit"
                                 settingsFormProps={SETTINGS_FORM}
                             />
                         ),
@@ -182,7 +182,7 @@ export const Default: Story = {
 /** LEAF — `latestResult` omitted ⇒ **loses** the whole score/badge subtree, replaced by one muted line. */
 export const NoResult: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TaskSubmissionPanel"
                 tier="block"
@@ -244,7 +244,7 @@ const SettingsOpenDemo = () => {
 /** LEAF — the settings drawer open ⇒ mounts the `GithubGradingSettings` form (language/branch/token) that does not exist in the DOM while closed. */
 export const SettingsOpen: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TaskSubmissionPanel"
                 tier="block"
@@ -268,7 +268,7 @@ export const SettingsOpen: Story = {
 /** LEAF — the caller flips `isSkeleton`, so every atom the panel composes swaps to its own mirror. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TaskSubmissionPanel"
                 tier="block"

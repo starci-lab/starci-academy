@@ -14,7 +14,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 📐 **ONE LEAF** (§14d.2): full-3-things · single-thing · bordered all use the
  * SAME `SurfaceCardList` tree ⇒ **STATE**, rendered inside one leaf's `states[]`
- * (thầy chốt bố cục C, 2026-07-27), not a separate story. `isSkeleton` alone gets
+ * (teacher's call on layout C, 2026-07-27), not a separate story. `isSkeleton` alone gets
  * its OWN LEAF (§12g.0a, teacher's call 2026-07-27) even though the DOM tree is
  * identical — the rule for this prop is an exception that overrides §14d.2.
  */
@@ -30,13 +30,13 @@ export default meta
 type Story = StoryObj<typeof LearnNudges>
 
 const NUDGES: Array<LearnNudge> = [
-    { id: "flashcards", kind: "flashcards", title: "Ôn 12 thẻ đến hạn hôm nay", onPress: () => {} },
-    { id: "mock-interview", kind: "interview", title: "Luyện phỏng vấn cho capstone", onPress: () => {} },
-    { id: "league", kind: "league", title: "Bạn đang hạng #42 tuần này", onPress: () => {} },
+    { id: "flashcards", kind: "flashcards", title: "Review 12 cards due today", onPress: () => {} },
+    { id: "mock-interview", kind: "interview", title: "Practice an interview for your capstone", onPress: () => {} },
+    { id: "league", kind: "league", title: "You're ranked #42 this week", onPress: () => {} },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    // A KHUNG is also a DEP (§11a.1) — this block already declares the khung it uses, kept as-is.
+    // A FRAME is also a DEP (§11a.1) — this block already declares the frame it uses, kept as-is.
     "SurfaceCardList": {
         storyId: "composites-cards-surfacecard-surfacecardlist--default",
         tier: "composite",
@@ -54,7 +54,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** The one and only leaf — full 3 kinds of work plus the single-thing case. The **pending** state lives in the `Skeleton` leaf below. */
 export const Nudges: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LearnNudges"
                 tier="block"
@@ -89,12 +89,12 @@ export const Nudges: Story = {
 
 /**
  * LEAF prop `isSkeleton` — tree IDENTICAL to the `Nudges` leaf (§12g.0a): same
- * `SurfaceCardList` khung, only the STATE changes (`items` not known yet), no
+ * `SurfaceCardList` frame, only the STATE changes (`items` not known yet), no
  * node added/removed (§11f) ⇒ reuses the `ANNOTATE` above, no separate part array.
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LearnNudges"
                 tier="block"

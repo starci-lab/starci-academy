@@ -3,7 +3,7 @@ import { DailyQuest, type DailyQuestData } from "@sb-components/starci/blocks/da
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `DailyQuest` (dashboard): "Nhiệm vụ hôm nay" — a fixed 3-task
+ * BLOCK — `DailyQuest` (dashboard): "Today's quests" — a fixed 3-task
  * checklist plus a claim action once every task clears its target. See the
  * component's own file header for the full matrix trail (`SurfaceCardCrossList`
  * for the checklist, `Split` for each row's title↔progress line) and why
@@ -75,7 +75,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF 1 — the checklist's own 3-row skeleton mirror. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="DailyQuest"
                 tier="block"
@@ -108,7 +108,7 @@ export const Loading: Story = {
 /** LEAF 2 — the fetch failed; outranks loading/empty. */
 export const ErrorLeaf: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="DailyQuest"
                 tier="block"
@@ -142,7 +142,7 @@ export const ErrorLeaf: Story = {
 /** LEAF 3 — the quest resolved to nothing for today. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="DailyQuest"
                 tier="block"
@@ -173,7 +173,7 @@ export const Empty: Story = {
 /** LEAF 4 — the checklist plus the three claim-state sub-leaves. */
 export const Content: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="DailyQuest"
                 tier="block"

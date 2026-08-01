@@ -3,7 +3,7 @@
  * self-contained LaTeX (`.tex`) document. It REPLACES `buildCvExportHtml`: the
  * full-LaTeX pivot compiles this `.tex` server-side with `tectonic` → PDF (for
  * both the live preview and the export), and the same string is what the
- * "Tải .tex" button downloads.
+ * "Download .tex" button downloads.
  *
  * The per-block field-reading logic is ported verbatim from `CvHtmlDocument`'s
  * renderers (that file stays in the repo as the SSOT for WHICH `item.fields`

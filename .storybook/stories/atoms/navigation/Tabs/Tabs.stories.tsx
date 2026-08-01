@@ -4,22 +4,26 @@ import { Tabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Tabs` bọc thẳng HeroUI `Tabs`. Các `data-anat-part` nó phát ra
- * (`Tabs.Tab`/`Tabs.Indicator`/`Badge.Anchor`/`Badge`/`Skeleton`) đều là sub-part
- * của compound HeroUI THẬT — 2026-07-27 (heroui tier thêm vào canon): mỗi cái vẫn
- * khai `tier: "heroui"` trong `ANNOTATE` bên dưới, tên khớp Y HỆT identifier import
- * (không cần `storyId`). Đổi tên từ `Tab`/`Badge`/`Indicator` (tên vai, không phải
- * tên component thật) sang tên dotted khớp compound. Span `Icon` bọc glyph Phosphor
- * caller-supplied KHÔNG được tag — không phải component thật của ta lẫn heroui.
+ * ATOM — `Tabs` wraps HeroUI `Tabs` directly. The `data-anat-part`s it emits
+ * (`Tabs.Tab`/`Tabs.Indicator`/`Badge.Anchor`/`Badge`/`Skeleton`) are all
+ * sub-parts of a REAL HeroUI compound — 2026-07-27 (heroui tier added to
+ * canon): each one still declares `tier: "heroui"` in `ANNOTATE` below, with
+ * its name matching the import identifier EXACTLY (no `storyId` needed).
+ * Renamed from `Tab`/`Badge`/`Indicator` (role names, not real component
+ * names) to dotted names matching the actual compound. The `Icon` span
+ * wrapping the caller-supplied Phosphor glyph is NOT tagged — it isn't a real
+ * component of ours or of heroui's.
  *
- * Leaf `Skeleton` đổi tên từ `Loading` (2026-07-27, thầy chốt: leaf mang TÊN
- * PROP — prop sinh ra leaf này là `isSkeleton`). §12g: leaf `isSkeleton` phải
- * render đủ mọi nấc CÓ HÌNH biết trước, và `variant` ("primary"/"secondary")
- * chính là trục đó — biết trước lúc gọi, không phụ thuộc data. Trước sửa
- * (2026-07-27) component bỏ qua `variant` trong nhánh `isSkeleton`, luôn ra
- * cùng một pill bất kể variant — bug thật cùng dạng neo `Button` skeleton
- * khoá cứng `w-24` cho mọi size (§12g). Đã sửa `TabsBase.tsx`: `secondary` giờ
- * ra shimmer nhãn+underline thay vì pill đặc.
+ * The `Skeleton` leaf was renamed from `Loading` (2026-07-27, teacher's call:
+ * a leaf carries the PROP NAME — the prop that produces this leaf is
+ * `isSkeleton`). §12g: the `isSkeleton` leaf must render every step that has a
+ * KNOWN VISIBLE SHAPE, and `variant` ("primary"/"secondary") is exactly that
+ * axis — known ahead of time at call, not data-dependent. Before the fix
+ * (2026-07-27) the component ignored `variant` in the `isSkeleton` branch,
+ * always producing the same pill regardless of variant — a real bug of the
+ * same shape as `Button`'s skeleton hard-locking `w-24` for every size (§12g).
+ * `TabsBase.tsx` has been fixed: `secondary` now produces a label+underline
+ * shimmer instead of a solid pill.
  */
 
 const meta: Meta<typeof Tabs> = {
@@ -48,14 +52,15 @@ const BASE_ITEMS = [
 ]
 
 /**
- * Default — tab chữ trơn. MỘT leaf render ĐỦ VARIANT + STATE (§14d.2): `primary`
- * (pill segmented) · `secondary` (underline in-page) · strip có một item
- * `isDisabled`. Cả ba CÙNG CÂY DOM (Tab × n + Indicator) — chỉ khác skin/cờ
- * per-item — nên KHÔNG tách thành leaf riêng.
+ * Default — plain-text tabs. ONE leaf renders ALL VARIANTS + STATES (§14d.2):
+ * `primary` (segmented pill) · `secondary` (in-page underline) · a strip with
+ * one `isDisabled` item. All three share the SAME DOM TREE (Tab × n +
+ * Indicator) — only the skin/per-item flag differs — so they are NOT split
+ * into separate leaves.
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Tabs"
                 tier="atom"
@@ -112,10 +117,10 @@ export const Default: Story = {
     ),
 }
 
-/** WithIcon — mỗi tab có `icon` truyền COMPONENT (phosphor `*Icon`, không JSX); atom ép size-4. */
+/** WithIcon — each tab's `icon` is passed as a COMPONENT reference (phosphor `*Icon`, not JSX); the atom forces size-4. */
 export const WithIcon: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Tabs"
                 tier="atom"
@@ -146,10 +151,10 @@ export const WithIcon: Story = {
     ),
 }
 
-/** WithBadge — `badge` nổi số chưa đọc trên nhãn (HeroUI Badge). */
+/** WithBadge — `badge` floats an unread count over the label (HeroUI Badge). */
 export const WithBadge: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Tabs"
                 tier="atom"
@@ -181,13 +186,14 @@ export const WithBadge: Story = {
 }
 
 /**
- * Skeleton — atom tự vẽ leaf skeleton; không dùng Skeleton.*. Render ĐỦ HAI HÌNH
- * (§12g): `primary` (pill đặc) · `secondary` (nhãn + underline mảnh) — khớp đúng
- * hình mà mỗi variant sẽ ra khi data về, không còn một pill dùng chung cho cả hai.
+ * Skeleton — the atom draws its own skeleton leaf; it does not use `Skeleton.*`.
+ * Renders BOTH SHAPES in full (§12g): `primary` (solid pill) · `secondary`
+ * (label + thin underline) — matching exactly the shape each variant will
+ * produce once data lands, instead of one shared pill for both.
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Tabs"
                 tier="atom"

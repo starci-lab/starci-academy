@@ -37,7 +37,7 @@ export interface ComposerProps extends WithClassNames<undefined> {
      * and Ctrl/Cmd+Enter is ignored (blocks double-submit).
      */
     isSubmitting?: boolean
-    /** Label for the primary Send button. Defaults to "Gửi". */
+    /** Label for the primary Send button. Defaults to "Send". */
     submitLabel?: string
     /**
      * Optional slot placed BEFORE the Send button — e.g. an attach icon-button. The
@@ -49,7 +49,7 @@ export interface ComposerProps extends WithClassNames<undefined> {
 /**
  * Composer is a controlled message-input row: an optional leading avatar, an
  * auto-growing {@link TextArea} (HeroUI compound field, `variant="secondary"` —
- * composer luôn nằm trên surface), and a trailing action
+ * the composer always sits on a surface), and a trailing action
  * cluster made of an optional attach slot plus a primary Send button. The Send
  * button is disabled whenever the trimmed draft is empty OR a submit is in flight;
  * Ctrl/Cmd+Enter submits under the same guard. The field grows with its content
@@ -66,7 +66,7 @@ export interface ComposerProps extends WithClassNames<undefined> {
  *   onChange={setDraft}
  *   onSubmit={send}
  *   avatarSrc={me.avatar}
- *   placeholder="Nhắn gì đó..."
+ *   placeholder="Say something..."
  * />
  * @see Story: .storybook/stories/blocks/feed/Composer/Composer.stories
  */
@@ -77,7 +77,7 @@ export const Composer = ({
     placeholder,
     avatarSrc,
     isSubmitting = false,
-    submitLabel = "Gửi",
+    submitLabel = "Send",
     attachSlot,
     className,
 }: ComposerProps) => {

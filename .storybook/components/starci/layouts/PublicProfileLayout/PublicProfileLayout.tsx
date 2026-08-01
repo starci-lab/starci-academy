@@ -74,13 +74,13 @@ import { ProfileLockedState } from "@sb-components/starci/blocks/profile/Profile
  * `SettingsLayout` already uses for the identical shape, rather than inventing a
  * second technique for one axis-switching row.
  *
- * ⭐ `gap="flush"` between `ProfileTabsBar` and the two-column body, mirroring
+ * ⭐ `gap={1}` between `ProfileTabsBar` and the two-column body, mirroring
  * `SettingsLayout`'s own "flush is deliberate" note: `ProfileTabsBar`'s own file
  * contract (ported from `src`) states it carries no border/sticky/bg of its own —
  * the real `Navbar` root draws the one seam. Adding a gap here on top of that
  * would be a second, competing seam for one boundary (§10a).
  *
- * `gap="page"` inside the two-column body: identity aside and the active tab's
+ * `gap={7}` inside the two-column body: identity aside and the active tab's
  * content are "separate FEATURES on one page, one block beside another" per the
  * §10c seam table — matches the real `gap-8` on that same row.
  *
@@ -165,11 +165,11 @@ export interface PublicProfileUser extends ProfileHeroUser {
 }
 
 /** Fixed copy for the not-found branch — see file header for why this is not a prop. */
-const NOT_FOUND_TITLE = "Không tìm thấy hồ sơ"
-const NOT_FOUND_DESCRIPTION = "Hồ sơ này không tồn tại, đã bị gỡ, hoặc đường dẫn không đúng."
+const NOT_FOUND_TITLE = "Profile not found"
+const NOT_FOUND_DESCRIPTION = "This profile does not exist, has been removed, or the link is wrong."
 
 /** Accessible name for the tab strip — layout-owned wording (§14d.1), `ProfileTabsBar` carries no i18n of its own. */
-const PROFILE_TABS_ARIA_LABEL = "Chuyên mục hồ sơ công khai"
+const PROFILE_TABS_ARIA_LABEL = "Public profile sections"
 
 /** Every public-profile destination, in display order — ported from the real `PROFILE_TABS`. */
 const PROFILE_TABS: ReadonlyArray<ProfileTab> = ["overview", "projects", "challenges", "skills", "cv", "activity"]
@@ -195,7 +195,7 @@ const resolveProfileTabs = (
         }
         return !isSectionHidden(tabId)
     })
-    // the "· ẩn" marker only makes sense for the OWNER's own view of a tab they hid from everyone else
+    // the "· hidden" marker only makes sense for the OWNER's own view of a tab they hid from everyone else
     const hiddenTabs = isSelf
         ? SECTION_TABS.filter((tabId) => user.sectionVisibility?.[tabId as keyof PublicProfileSectionVisibility] === false)
         : undefined
@@ -224,7 +224,7 @@ export interface PublicProfileLayoutProps {
     onToggleFollow: () => void
     /** Fired when the profile owner takes the "edit profile" action (relayed into {@link ProfileHero}'s `onEdit`). */
     onEditProfile: () => void
-    /** Fired when a recruiter presses "Thuê tôi" — only reachable when the computed `canHire` gate is on (relayed into {@link ProfileHero}'s `onHire`). See file header. */
+    /** Fired when a recruiter presses "Hire me" — only reachable when the computed `canHire` gate is on (relayed into {@link ProfileHero}'s `onHire`). See file header. */
     onHire: () => void
     /** Fired when the share action is pressed (relayed into {@link ProfileHero}'s `onShare`). See file header. */
     onShare: () => void
@@ -333,7 +333,7 @@ const PublicProfileLayout = ({
     // column-first, becomes a row from @app-md — same technique SettingsLayout uses for its own outer switch (see file header)
     const profileBody = (
         <StackV
-            gap="page"
+            gap={7}
             className="@app-md:flex-row @app-md:items-start"
             anatPart={showAnatomy ? "StackV" : undefined}
             body={asideAndPanel}
@@ -354,7 +354,7 @@ const PublicProfileLayout = ({
 
             <Container
                 size="xl"
-                padding="roomy"
+                padding={6}
                 anatPart={showAnatomy ? "Container" : undefined}
                 body={profileBody}
             />
@@ -364,7 +364,7 @@ const PublicProfileLayout = ({
     return (
         <div data-anat-part={anatPart}>
             <StackV
-                gap="flush"
+                gap={1}
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={tabsAndBody}
             />

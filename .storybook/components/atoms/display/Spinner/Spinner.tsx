@@ -1,4 +1,5 @@
 import { Spinner as HeroSpinner, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * @noSkeleton the spinner IS the loading indicator — a shimmer standing in for one is circular.
@@ -22,8 +23,11 @@ export interface SpinnerBaseProps {
     label?: string
     /** Tags the spinner with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** Placement within the parent. */
-    className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -31,14 +35,24 @@ export interface SpinnerBaseProps {
  *
  * @param props - {@link SpinnerBaseProps}
  */
-const SpinnerBase = ({ size = "md", tone = "accent", label = "Loading", showAnatomy = false, className }: SpinnerBaseProps) => (
+const SpinnerBase = ({
+    size = "md",
+    tone = "accent",
+    label = "Loading",
+    showAnatomy = false,
+    classNames,
+}: SpinnerBaseProps) => (
     <HeroSpinner
+        data-tier="atom"
+        data-component="Spinner"
         aria-label={label}
         size={size}
         color={tone}
-        className={cn(className)}
+        className={cn(classNames)}
         data-anat-part={showAnatomy ? "Spinner" : undefined}
     />
 )
 
 export { SpinnerBase as Spinner }
+
+export const meta = { tier: "atom", name: "Spinner" } as const

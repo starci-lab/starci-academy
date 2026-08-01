@@ -4,8 +4,8 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `AiQuotaLane`: one lane's pair of rolling-window quota bars — "5 giờ
- * tới" above "tuần này" — both counting usage against the same lane's cap.
+ * BLOCK — `AiQuotaLane`: one lane's pair of rolling-window quota bars — "next 5
+ * hours" above "this week" — both counting usage against the same lane's cap.
  *
  * WHY A BLOCK, AND A SHARED ONE: ported faithfully from `@/components/modals/
  * AiQuotaModal/QuotaLane` (plus its `QuotaBar` leaf). `src`'s `QuotaLane` is
@@ -16,7 +16,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * (§13 — a block never owns its own SWR/mutation), so the screen mounting each
  * tab is the one that picks the query, exactly like `src`'s `variant` prop did.
  *
- * ⭐ TWO CALLS OF THE SAME BLOCK, NOT A SECOND `QuotaBar` (thầy chốt
+ * ⭐ TWO CALLS OF THE SAME BLOCK, NOT A SECOND `QuotaBar` (mentor finalized
  * 2026-07-29): this file used to carry its OWN private `QuotaBar` leaf plus its
  * own `resolveFillTone`/`resolveFillPercent` — the exact same shape, and the
  * exact same 75%/90% ramp, that `blocks/ai/QuotaBar` already owns as a public
@@ -40,7 +40,7 @@ export interface AiQuotaWindow {
     used: number
     /** Cap for this window (`0` reads as "no allowance"). */
     limit: number
-    /** Reset line under the bar (e.g. `"Reset lúc 18:50 01/06"`). `null`/unset → no line. */
+    /** Reset line under the bar (e.g. `"Resets at 18:50 on 06/01"`). `null`/unset → no line. */
     resetLabel?: string | null
 }
 
@@ -76,10 +76,10 @@ const AiQuotaLane = ({ data, isLoading, showAnatomy = false, anatPart }: AiQuota
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} showAnatomy={showAnatomy} body={
                 <>
                     <QuotaBar
-                        label="Trong 5 giờ"
+                        label="Next 5 hours"
                         used={data?.window5h.used ?? 0}
                         limit={data?.window5h.limit ?? 0}
                         resetLabel={data?.window5h.resetLabel}
@@ -88,7 +88,7 @@ const AiQuotaLane = ({ data, isLoading, showAnatomy = false, anatPart }: AiQuota
                         anatPart={showAnatomy ? "QuotaBar" : undefined}
                     />
                     <QuotaBar
-                        label="Trong 7 ngày"
+                        label="This week"
                         used={data?.windowWeek.used ?? 0}
                         limit={data?.windowWeek.limit ?? 0}
                         resetLabel={data?.windowWeek.resetLabel}

@@ -32,7 +32,7 @@ const POLL_INTERVAL_MS = 9_000
  * it). Uses HeroUI `AlertDialog`, whose defaults (`isDismissable={false}`,
  * `isKeyboardDismissDisabled`) make it the app's first non-dismissable overlay
  * — no close button, no backdrop-click, no Escape. It clears itself the moment
- * a lightweight probe query succeeds; "Thử lại" re-probes immediately without
+ * a lightweight probe query succeeds; "Retry" re-probes immediately without
  * waiting for the next poll tick.
  *
  * A plain network error (offline/timeout/CORS) carries no HTTP status and never

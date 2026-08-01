@@ -21,8 +21,6 @@ interface StepBadgeOwnProps {
     state?: StepBadgeState
     /** Badge size. Defaults to `"sm"` (20px, matches the hand-rolled `size-5`). */
     size?: StepBadgeSize
-    /** Extra classes. @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -30,12 +28,6 @@ interface StepBadgeOwnProps {
     classNames?: Array<AllowedClassName>
     /** `true` → tag each part with `data-anat-part` so a `BlockAnatomy` panel can badge it. */
     showAnatomy?: boolean
-    /**
-     * `data-anat-part` name applied to the root badge. A wrapping component (e.g.
-     * `Stepper`) passes this down (e.g. `"StepBadge"`) so a deps tree built from
-     * the DOM can recognize this node.
-     */
-    anatPart?: string
 }
 
 /**
@@ -88,33 +80,32 @@ const StepBadgeBase = ({
     number,
     state = "active",
     size = "sm",
-    className,
     classNames,
     isSkeleton = false,
     showAnatomy = false,
-    anatPart,
 }: StepBadgeProps) => {
     if (isSkeleton) {
         // Checked before any visual branch — there's no `number` to center yet.
         return (
             <HeroSkeleton
-                className={cn("rounded-full", SKELETON_SIZE[size], className, classNames)}
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+                data-tier="atom"
+                data-component="StepBadge"
+                className={cn("rounded-full", SKELETON_SIZE[size], classNames)}
+                data-anat-part={showAnatomy ? "Skeleton" : undefined}
             />
         )
     }
-    // `Badge` (root span) and `Icon` (wraps the check glyph) are plain elements,
-    // not components of their own, and have no self-badge fallback — only
-    // `anatPart` passed from a parent names this root.
+    // The root span IS the StepBadge atom, so it hard-codes its own name.
     return (
         <span
             aria-hidden
-            data-anat-part={anatPart}
+            data-tier="atom"
+            data-component="StepBadge"
+            data-anat-part={showAnatomy ? "StepBadge" : undefined}
             className={cn(
                 "flex shrink-0 items-center justify-center rounded-full font-medium",
                 SIZE[size],
                 STATE[state],
-                className,
                 classNames,
             )}
         >
@@ -131,3 +122,5 @@ const StepBadgeBase = ({
 
 /** `StepBadge.*` — numbered step-badge namespace. */
 export { StepBadgeBase as StepBadge }
+
+export const meta = { tier: "atom", name: "StepBadge" } as const

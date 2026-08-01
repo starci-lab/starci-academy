@@ -35,10 +35,10 @@ export type ChallengeViewProps = WithClassNames<undefined> & {
  *  - CENTER (read, `max-w-3xl mx-auto`): a back link + the brief — title + score/difficulty/status
  *    chips, then prerequisites · requirements (with per-requirement points) · guided steps · expected
  *    outputs · hint. Clean reading sections (whitespace over the old border-per-section striping).
- *  - RIGHT (act, sticky `~360px` aside): a "Nộp bài" {@link LabeledCard} (the programming-language
+ *  - RIGHT (act, sticky `~360px` aside): a "Submit" {@link LabeledCard} (the programming-language
  *    selector — the grading setting that ALSO drives which language's brief shows — over the
  *    {@link ChallengeSubmissionPanel}: repo URL + grader + submit, with the structured AI feedback on
- *    each result) above a "Kết quả của bạn" card (the headline {@link Score}).
+ *    each result) above a "Your score" card (the headline {@link Score}).
  *
  * The course-tree rail stays (the learn shell). Grading criteria stay hidden (internal rubric).
  *

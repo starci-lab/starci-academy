@@ -12,7 +12,8 @@ import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/En
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { FeedbackCallout, FeedbackConfirm } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
+import { ConfirmDialog } from "@sb-components/composites/feedback/ConfirmDialog/ConfirmDialog"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
@@ -25,12 +26,12 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ REUSE CHECK DONE FIRST (this run exists to prevent skipping it). Two sibling
  * blocks already live in `blocks/learn/Playground*` and neither is this shape:
- *   - `PlaygroundReadinessChecklist` is the compact "Trạng thái máy" GLANCE — one
+ *   - `PlaygroundReadinessChecklist` is the compact "Machine status" GLANCE — one
  *     `SurfaceCardList` row per prerequisite (agent/engine/genModel/embedModel),
  *     ready/pending chip, nothing to DO from it. This block is the opposite job:
  *     it is what a learner opens to actually GET each prerequisite done — a
  *     command to run, an OS guide to read, a re-check button to press. Same
- *     domain, same "Sẵn sàng"/chip vocabulary reused for consistency, but a
+ *     domain, same "Ready"/chip vocabulary reused for consistency, but a
  *     genuinely different shape (rich per-step card vs. one bounded list).
  *   - `PlaygroundConnectSheet` is the ONGOING connection console — device specs
  *     + a live agent log, for AFTER pairing already happened at least once. This
@@ -87,15 +88,15 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  * is domain vocabulary this block owns (§14d.1), the same way `ContentModeNav`
  * owns `MODE_LABEL` or `PlaygroundReadinessChecklist` owns `KIND_ICON`.
  *
- * ⭐ ROTATING THE PAIRING CODE GATES THROUGH `FeedbackConfirm` ONLY WHEN AN AGENT
+ * ⭐ ROTATING THE PAIRING CODE GATES THROUGH `ConfirmDialog` ONLY WHEN AN AGENT
  * IS ALREADY ATTACHED (`agentReady`). Rotating while nothing is paired yet is
  * free — the old code was never in use — so it fires `onRefreshPairingCode`
  * straight away. Rotating while paired invalidates the code the connected agent
  * is currently holding, so it confirms first. `tone="default"`, not `"danger"`:
- * per this catalog's own rule ("ConfirmDialog danger chỉ delete/undo"),
+ * per this catalog's own rule ("ConfirmDialog danger is only for delete/undo"),
  * rotating a code is disruptive-but-recoverable, not a delete/undo action.
  *
- * ⚠️ NO `isSkeleton` ON `MarkdownContent`/`FeedbackCallout`/`FeedbackConfirm`
+ * ⚠️ NO `isSkeleton` ON `MarkdownContent`/`Callout`/`ConfirmDialog`
  * WHILE LOADING. The two callouts (models-already-installed, device-unknown)
  * assert something the block has not been told yet while `isSkeleton` is true,
  * so — same reasoning as `ChallengeBrief`'s un-checked output skeleton row —
@@ -122,7 +123,7 @@ export interface PlaygroundSetupStepsProps {
     pairCommand: string
     /** Seconds left before the current pairing code expires. `null` → no expiry countdown to show. */
     pairingCodeSecondsLeft?: number | null
-    /** `true` → the code has already expired; the countdown note switches to a "làm mã mới" prompt. */
+    /** `true` → the code has already expired; the countdown note switches to a "get a new code" prompt. */
     pairingCodeExpired?: boolean
     /** Requests a fresh pairing code. Omit to hide the rotate action entirely. */
     onRefreshPairingCode?: () => void
@@ -138,7 +139,7 @@ export interface PlaygroundSetupStepsProps {
     embedModelReady?: boolean
     /** Ollama only: the generation model chosen for this device's VRAM. Absent while the device isn't known yet. */
     recommendedGenModel?: string
-    /** Ollama only: `false` → the pull-models step shows a "chưa xác định cấu hình máy" callout instead of commands. Defaults `true`. */
+    /** Ollama only: `false` → the pull-models step shows a "device configuration not yet detected" callout instead of commands. Defaults `true`. */
     deviceKnown?: boolean
     /** Extra detail shown once the engine is ready (e.g. detected version/path). */
     engineDetail?: string
@@ -171,8 +172,8 @@ type StepStatus = "ready" | "pending"
 
 /** status → chip label/color — fixed Vietnamese copy this block owns (§14d.1), matching `PlaygroundReadinessChecklist`'s table. */
 const STEP_STATUS_MAP: Record<StepStatus, EnumChipEntry> = {
-    ready: { label: "Sẵn sàng", color: "success" },
-    pending: { label: "Chưa xong", color: "default" },
+    ready: { label: "Ready", color: "success" },
+    pending: { label: "Not done", color: "default" },
 }
 
 /** Wraps a shell command in a fenced ```bash block for `MarkdownContent`. */
@@ -195,8 +196,8 @@ const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
             <Typography size="xs" isSkeleton classNames={["w-1/4"]} />
         </div>
         <StackV
-            gap="related"
-            padding="cozy"
+            gap={3}
+            padding={4}
             body={Array.from({ length: lines }, (_unused, index) => (
                 <Typography key={index} size="xs" isSkeleton classNames={[index === lines - 1 ? "w-1/2" : "w-3/4"]} />
             ))}
@@ -209,7 +210,7 @@ const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
 const renderOsTabSkeleton = (key: PlaygroundSetupOs) => (
     <StackV
         key={key}
-        gap="tight"
+        gap={2}
         align="center"
         body={
             <>
@@ -222,7 +223,7 @@ const renderOsTabSkeleton = (key: PlaygroundSetupOs) => (
 
 /** Placeholder mirror of the OS tab row — label+underline bar per OS, matching `Tabs`'s own `secondary` skeleton shape. */
 const OsTabsSkeleton = () => (
-    <StackH gap="related" body={OS_ORDER.map(renderOsTabSkeleton)} />
+    <StackH gap={3} body={OS_ORDER.map(renderOsTabSkeleton)} />
 )
 
 /**
@@ -273,31 +274,31 @@ const PlaygroundSetupSteps = ({
     // Shared by every step (see PROPS doc on `onVerify`) — built once as functions, not a
     // single JSX element re-used across positions, so each step gets its own element instance.
     const renderVerifyButton = (): ReactNode => {
-        if (isSkeleton) return <Button isSkeleton size="sm" anatPart={showAnatomy ? "Button" : undefined} />
+        if (isSkeleton) return <Button isSkeleton size="sm" showAnatomy={showAnatomy} />
         if (!onVerify) return null
         return (
             <Button
-                label="Kiểm tra lại"
+                label="Check again"
                 variant="tertiary"
                 size="sm"
                 prefixIcon={ArrowClockwiseIcon}
                 onPress={onVerify}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
         )
     }
     const renderRotateButton = (): ReactNode => {
-        if (isSkeleton) return <Button isSkeleton size="sm" anatPart={showAnatomy ? "Button" : undefined} />
+        if (isSkeleton) return <Button isSkeleton size="sm" showAnatomy={showAnatomy} />
         if (!onRefreshPairingCode) return null
         return (
             <Button
-                label="Làm mã mới"
+                label="Get new code"
                 variant="tertiary"
                 size="sm"
                 prefixIcon={ArrowsClockwiseIcon}
                 onPress={handleRotateClick}
                 isPending={isRefreshingPairingCode}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
         )
     }
@@ -307,8 +308,8 @@ const PlaygroundSetupSteps = ({
             <Typography
                 size="xs"
                 color="danger"
-                text="Mã ghép nối đã hết hạn — làm mã mới để lấy mã khác."
-                anatPart={showAnatomy ? "Typography" : undefined}
+                text="The pairing code has expired — get a new code to continue."
+                showAnatomy={showAnatomy}
             />
         )
         : pairingCodeSecondsLeft != null
@@ -316,15 +317,15 @@ const PlaygroundSetupSteps = ({
                 <Typography
                     size="xs"
                     color="muted"
-                    text={`Mã còn hiệu lực ${pairingCodeSecondsLeft} giây`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`Code valid for ${pairingCodeSecondsLeft} more seconds`}
+                    showAnatomy={showAnatomy}
                 />
             )
             : null
 
     const pairStepBody: ReactNode = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -332,15 +333,15 @@ const PlaygroundSetupSteps = ({
                         size="sm"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        text="Agent cục bộ là cầu nối để Playground điều khiển máy bạn — thiếu bước này, mọi lệnh ở các bước sau đều không chạy được."
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text="The local agent is the bridge that lets Playground control your machine — skip this step and every command in the following steps fails to run."
+                        showAnatomy={showAnatomy}
                     />
                     {isSkeleton
                         ? <CommandSkeleton />
                         : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
                     {!isSkeleton ? pairingCodeNote : null}
                     <StackH
-                        gap="related"
+                        gap={3}
                         wrap
                         anatPart={showAnatomy ? "StackH" : undefined}
                         body={
@@ -368,7 +369,7 @@ const PlaygroundSetupSteps = ({
                 showAnatomy={showAnatomy}
             >
                 <Tabs.ListContainer>
-                    <Tabs.List aria-label="Chọn hệ điều hành">
+                    <Tabs.List aria-label="Choose operating system">
                         {OS_ORDER.map((key) => (
                             <Tabs.Tab key={key} id={key}>
                                 <span>{OS_LABEL[key]}</span>
@@ -389,7 +390,7 @@ const PlaygroundSetupSteps = ({
 
     const engineStepBody: ReactNode = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -397,23 +398,23 @@ const PlaygroundSetupSteps = ({
                         size="sm"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        text={`${engineLabel} là nơi mô hình thực sự chạy trên máy bạn — cài xong thì Playground mới xử lý được các tác vụ AI cục bộ.`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text={`${engineLabel} is where the model actually runs on your machine — once installed, Playground can handle local AI tasks.`}
+                        showAnatomy={showAnatomy}
                     />
                     {osTabsRow}
                     {isSkeleton
                         ? <CommandSkeleton lines={3} />
                         : <MarkdownContent source={osGuides[os]} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />}
                     {!isSkeleton && engineReady && engineDetail ? (
-                        <FeedbackCallout
+                        <Callout
                             status="success"
-                            title={`${engineLabel} đã sẵn sàng`}
+                            title={`${engineLabel} is ready`}
                             description={engineDetail}
                             showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                            anatPart={showAnatomy ? "Callout" : undefined}
                         />
                     ) : null}
-                    <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={renderVerifyButton()} />
+                    <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={renderVerifyButton()} />
                 </>
             }
         />
@@ -425,7 +426,7 @@ const PlaygroundSetupSteps = ({
 
     const genModelSection = genModelCommand != null ? (
         <StackV
-            gap="tight"
+            gap={2}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -433,7 +434,7 @@ const PlaygroundSetupSteps = ({
                         size="xs"
                         color="muted"
                         text={`Model sinh — ${recommendedGenModel}`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     <MarkdownContent source={genModelCommand} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
                 </>
@@ -443,7 +444,7 @@ const PlaygroundSetupSteps = ({
 
     const embedModelSection = (
         <StackV
-            gap="tight"
+            gap={2}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -451,7 +452,7 @@ const PlaygroundSetupSteps = ({
                         size="xs"
                         color="muted"
                         text={`Model embedding — ${EMBEDDING_MODEL_NAME}`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     <MarkdownContent source={embedModelCommand} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
                 </>
@@ -461,7 +462,7 @@ const PlaygroundSetupSteps = ({
 
     const modelsCommandsSection = (
         <StackV
-            gap="grouped"
+            gap={4}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -474,7 +475,7 @@ const PlaygroundSetupSteps = ({
 
     const modelsSkeletonCommands = (
         <StackV
-            gap="related"
+            gap={3}
             body={
                 <>
                     <CommandSkeleton />
@@ -486,7 +487,7 @@ const PlaygroundSetupSteps = ({
 
     const modelsStepBody: ReactNode = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -494,31 +495,31 @@ const PlaygroundSetupSteps = ({
                         size="sm"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        text="Model cần tải về máy trước khi dùng — đúng cỡ theo VRAM giúp máy chạy mượt, không treo hay tràn bộ nhớ."
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text="Models need to be pulled to your machine before use — the right size for your VRAM keeps things running smoothly, without freezing or running out of memory."
+                        showAnatomy={showAnatomy}
                     />
                     {isSkeleton ? (
                         modelsSkeletonCommands
                     ) : deviceKnown === false ? (
-                        <FeedbackCallout
+                        <Callout
                             status="warning"
-                            title="Chưa xác định được cấu hình máy"
-                            description="Cài xong engine rồi bấm Kiểm tra lại — Playground sẽ dò VRAM và gợi ý đúng cỡ model."
+                            title="Device configuration not detected yet"
+                            description="Finish installing the engine, then press Check again — Playground will detect your VRAM and suggest the right model size."
                             showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                            anatPart={showAnatomy ? "Callout" : undefined}
                         />
                     ) : modelsReady ? (
-                        <FeedbackCallout
+                        <Callout
                             status="success"
-                            title="Đã có đủ model"
-                            description="Model sinh văn bản và model embedding đều đã tải xong trên máy bạn."
+                            title="All models are ready"
+                            description="Both the text-generation model and the embedding model are already downloaded on your machine."
                             showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                            anatPart={showAnatomy ? "Callout" : undefined}
                         />
                     ) : (
                         modelsCommandsSection
                     )}
-                    <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={renderVerifyButton()} />
+                    <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={renderVerifyButton()} />
                 </>
             }
         />
@@ -529,11 +530,11 @@ const PlaygroundSetupSteps = ({
     const modelsStatus: StepStatus = modelsReady ? "ready" : "pending"
 
     const steps: Array<StepEntry> = [
-        { key: "pair", title: "1. Ghép nối agent cục bộ", status: agentStatus, body: pairStepBody },
-        { key: "engine", title: `2. Cài ${engineLabel}`, status: engineStatus, body: engineStepBody },
+        { key: "pair", title: "1. Pair local agent", status: agentStatus, body: pairStepBody },
+        { key: "engine", title: `2. Install ${engineLabel}`, status: engineStatus, body: engineStepBody },
     ]
     if (flavor === "ollama") {
-        steps.push({ key: "models", title: "3. Tải model theo cấu hình máy", status: modelsStatus, body: modelsStepBody })
+        steps.push({ key: "models", title: "3. Pull models for your device", status: modelsStatus, body: modelsStepBody })
     }
 
     // Depends on the loop variable, so it cannot be hoisted to a const above the
@@ -542,30 +543,29 @@ const PlaygroundSetupSteps = ({
         <SurfaceCard
             key={step.key}
             label={step.title}
-            action={
+            action={() => (
                 <EnumChip
                     value={step.status}
                     map={STEP_STATUS_MAP}
                     isSkeleton={isSkeleton}
                     anatPart={showAnatomy ? "EnumChip" : undefined}
                 />
-            }
+            )}
             isSkeleton={isSkeleton}
             anatPart={showAnatomy ? "SurfaceCard" : undefined}
             showAnatomy={showAnatomy}
-        >
-            {step.body}
-        </SurfaceCard>
+            body={() => step.body}
+        />
     )
 
     const rotateConfirm = onRefreshPairingCode ? (
-        <FeedbackConfirm
+        <ConfirmDialog
             isOpen={isRotateConfirmOpen}
             onOpenChange={setRotateConfirmOpen}
-            title="Làm mã mới trong khi agent đang kết nối?"
-            description="Agent hiện đang dùng mã cũ để giữ kết nối — làm mã mới sẽ ngắt phiên hiện tại cho tới khi bạn dán mã mới vào agent."
-            confirmLabel="Làm mã mới"
-            cancelLabel="Để sau"
+            title="Get a new code while the agent is connected?"
+            description="The agent is currently using the old code to hold its connection — getting a new code will break the current session until you paste the new code into the agent."
+            confirmLabel="Get new code"
+            cancelLabel="Not now"
             onConfirm={handleConfirmRotate}
             isConfirming={isRefreshingPairingCode}
             showAnatomy={showAnatomy}
@@ -574,7 +574,7 @@ const PlaygroundSetupSteps = ({
 
     return (
         <StackV
-            gap="grouped"
+            gap={4}
             anatPart={anatPart}
             showAnatomy={showAnatomy}
             body={

@@ -39,14 +39,14 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * the two are siblings, and the one that knows about read state, reading time
  * and learning outcomes is the lesson one.
  *
- * ⭐ MOBILE/TABLET-ONLY PRACTICE NUDGE — CSS, NOT A SEPARATE COMPONENT (thầy
+ * ⭐ MOBILE/TABLET-ONLY PRACTICE NUDGE — CSS, NOT A SEPARATE COMPONENT (teacher
  * 2026-07-28, corrected off an earlier namespace attempt). Right after
  * `ContentReaction`, `MilestoneUpNextCard` (reused: its shape is domain-generic
  * even though its name says "milestone") always MOUNTS when the lesson has
  * challenges, and hides itself above `@app-lg` via `className="@app-lg:hidden"`
  * — the exact mechanism `src`'s own `UpNextCard` uses at
- * `LessonReader/index.tsx:386-398`. On desktop the right rail's own "Luyện tập
- * bài này" already surfaces this, so the card would be a duplicate CTA there;
+ * `LessonReader/index.tsx:386-398`. On desktop the right rail's own "Practice this
+ * lesson" already surfaces this, so the card would be a duplicate CTA there;
  * CSS removes it from view rather than the screen needing a second component
  * tree to not-render it. One screen, one render — see this file's story for
  * how to actually SEE it (narrow the `@container` the render sits in).
@@ -55,10 +55,10 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * paints the light-streak highlight it needs at its ORIGINAL call site (the
  * one focal action on a milestone result screen) — real `src`'s `UpNextCard`
  * here is a PLAIN, unaccented card (its `SectionCard` never passes `accent`).
- * Caught by comparing this render against the live app (thầy, 2026-07-28):
+ * Caught by comparing this render against the live app (teacher, 2026-07-28):
  * reusing the block does not mean reusing every one of its callers' defaults.
  *
- * ⚠️ COPY VERIFIED AGAINST REAL i18n (thầy, 2026-07-28: "chế nhiều quá" — an
+ * ⚠️ COPY VERIFIED AGAINST REAL i18n (teacher, 2026-07-28: "too much invented copy" — an
  * earlier pass invented eyebrow/description/ctaLabel instead of reading them).
  * Real keys: `src/messages/vi.json:1581-1590` (`content.upNext.*`), consumed at
  * `LessonReader/index.tsx:390-395`. Only `title` had been copied correctly;
@@ -244,10 +244,10 @@ const ContentPage = ({
                 showAnatomy={showAnatomy}
             />
             {/* MOBILE/TABLET-ONLY, via CSS not a second component tree: on desktop
-            the right rail's own "Luyện tập bài này" already surfaces this, so
+            the right rail's own "Practice this lesson" already surfaces this, so
             `@app-lg:hidden` removes it from view above that width rather than
             the screen mounting two different trees. Mode/challenge gate mirrors
-            `src`'s `UpNextCard` exactly; `isHighlight` does NOT (thầy 2026-07-29,
+            `src`'s `UpNextCard` exactly; `isHighlight` does NOT (teacher 2026-07-29,
             deliberate — `src`'s own card is unaccented here, but this nudge is
             the one focal action a mobile reader sees after the reaction bar). */}
             {!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0 ? (
@@ -255,10 +255,10 @@ const ContentPage = ({
                     anatPart="MilestoneUpNextCard"
                     className="@app-lg:hidden"
                     isHighlight
-                    eyebrow="Tiếp theo · Luyện tập bài này"
-                    title={`Làm ${challengeCount} thử thách của bài này`}
-                    description="Áp dụng ngay điều vừa học. Thử thách được chấm tự động và tính vào tiến độ của bạn."
-                    ctaLabel="Làm thử thách"
+                    eyebrow="Up next · Practice this lesson"
+                    title={`Do this lesson's ${challengeCount} challenges`}
+                    description="Apply what you just learned. Challenges are graded automatically and count toward your progress."
+                    ctaLabel="Start challenges"
                     onPress={() => onModeChange("challenges")}
                     showAnatomy={showAnatomy}
                 />
@@ -329,7 +329,7 @@ const ContentPage = ({
                 things to do underneath would compete with it, so the whole footer waits
                 until the lesson is actually open. */}
             {!isLocked ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={lessonFooter} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={lessonFooter} />
             ) : null}
         </>
     )
@@ -349,16 +349,16 @@ const ContentPage = ({
                 showAnatomy={showAnatomy}
             />
             {/* ModeNav↔Article↔(reaction cluster) sit CLOSER together than the identity/outcomes
-                block above (thầy 2026-07-29, deliberate — a chosen tightening, not a copy of
+                block above (teacher 2026-07-29, deliberate — a chosen tightening, not a copy of
                 `src`'s uniform `gap-6`): they are all "reading this lesson", one continuous
                 surface, not separate regions. */}
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={readingSection} />
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={readingSection} />
         </>
     )
 
-    const contentBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={contentSections} />
+    const contentBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={contentSections} />
 
-    return <Container size="md" padding="roomy" body={contentBody} />
+    return <Container size="md" padding={6} body={contentBody} />
 }
 
 export { ContentPage }

@@ -28,7 +28,7 @@ export interface FooterNavLink {
 
 /** Props for {@link FooterNavColumn}. */
 export interface FooterNavColumnProps extends WithClassNames<undefined> {
-    /** Quiet column heading (e.g. "Khám phá", "Hỗ trợ"). */
+    /** Quiet column heading (e.g. "Explore", "Support"). */
     title: string
     /** Links stacked under the heading. */
     links: ReadonlyArray<FooterNavLink>

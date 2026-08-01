@@ -7,8 +7,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 /**
  * Props for the {@link ConfirmDialog} block.
  *
- * A controlled confirmation dialog for irreversible actions (huỷ ghi danh, xoá
- * bài nộp) built on HeroUI {@link AlertDialog}. Tier-3 presentational — the open
+ * A controlled confirmation dialog for irreversible actions (unenrolling, deleting
+ * a submission) built on HeroUI {@link AlertDialog}. Tier-3 presentational — the open
  * state and every callback arrive via props; the block owns no state or fetch.
  */
 export interface ConfirmDialogProps extends WithClassNames<undefined> {
@@ -25,21 +25,21 @@ export interface ConfirmDialogProps extends WithClassNames<undefined> {
     onOpenChange: (open: boolean) => void
     /**
      * Dialog heading — a short question or statement of what is about to happen
-     * ("Huỷ ghi danh khoá này?").
+     * ("Unenroll from this course?").
      */
     title: React.ReactNode
     /**
      * Optional supporting copy under the title — spell out the consequence so
-     * the choice is informed ("Tiến độ học của bạn sẽ bị xoá và không khôi phục
-     * được.").
+     * the choice is informed ("Your learning progress will be deleted and
+     * cannot be recovered.").
      */
     description?: React.ReactNode
     /**
-     * Label for the confirming action button. Default `"Xác nhận"`.
+     * Label for the confirming action button. Default `"Confirm"`.
      */
     confirmLabel?: string
     /**
-     * Label for the cancel / dismiss button. Default `"Huỷ"`.
+     * Label for the cancel / dismiss button. Default `"Cancel"`.
      */
     cancelLabel?: string
     /**
@@ -81,9 +81,9 @@ export interface ConfirmDialogProps extends WithClassNames<undefined> {
  *   isOpen={isOpen}
  *   onOpenChange={setOpen}
  *   tone="danger"
- *   title="Xoá bài nộp này?"
- *   description="Bài nộp sẽ bị xoá vĩnh viễn và không khôi phục được."
- *   confirmLabel="Xoá bài nộp"
+ *   title="Delete this submission?"
+ *   description="The submission will be permanently deleted and cannot be recovered."
+ *   confirmLabel="Delete submission"
  *   onConfirm={handleDelete}
  * />
  * @see Story: .storybook/stories/blocks/feedback/ConfirmDialog/ConfirmDialog.stories
@@ -93,8 +93,8 @@ export const ConfirmDialog = ({
     onOpenChange,
     title,
     description,
-    confirmLabel = "Xác nhận",
-    cancelLabel = "Huỷ",
+    confirmLabel = "Confirm",
+    cancelLabel = "Cancel",
     onConfirm,
     tone = "default",
     isConfirming,

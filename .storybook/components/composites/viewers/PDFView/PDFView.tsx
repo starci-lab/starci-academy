@@ -9,8 +9,9 @@ import React, {
     useState,
 } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -36,6 +37,9 @@ const PAGE_ASPECT_FALLBACK = 1.414
 /** Debounce window (ms) before reacting to container resize observations. */
 const RESIZE_DEBOUNCE_MS = 120
 
+/** How many placeholder pages the whole-file skeleton shows (no real page count yet). */
+const SKELETON_PAGE_COUNT = 2
+
 /** Props for {@link PdfViewportPage}. */
 interface PdfViewportPageProps {
     /** 1-based page index. */
@@ -46,8 +50,6 @@ interface PdfViewportPageProps {
     width: number
     /** When true, mount the canvas immediately (no IntersectionObserver). */
     eager: boolean
-    /** Extra classes on the page wrapper. */
-    className?: string
 }
 
 /**
@@ -63,7 +65,6 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
         scrollRootRef,
         width,
         eager,
-        className,
     } = props
     const wrapRef = useRef<HTMLDivElement | null>(null)
     const [showCanvas, setShowCanvas] = useState(eager)
@@ -110,7 +111,7 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
     return (
         <div
             ref={wrapRef}
-            className={cn("flex justify-center", className)}
+            className="flex justify-center"
         >
             {
                 showCanvas ? (
@@ -121,12 +122,16 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
                         renderAnnotationLayer={false}
                     />
                 ) : (
+                    // Not scrolled into view yet — a real bordered page-shaped frame (not a
+                    // drawn shimmer rectangle); the two lines inside are the only shimmer,
+                    // and `Typography` draws its own shape (COMPOSITE-10).
                     <div
-                        className="w-full max-w-full"
+                        className="flex w-full max-w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
                         style={{ minHeight: placeholderMinH }}
                         aria-hidden
                     >
-                        <HeroSkeleton className="size-full rounded-medium" />
+                        <Typography size="sm" color="muted" isSkeleton />
+                        <Typography size="xs" color="muted" isSkeleton />
                     </div>
                 )
             }
@@ -146,18 +151,16 @@ interface PDFViewOwnProps {
     /** Auto fit rendered PDF width to container width. */
     fitToContainer?: boolean
     /**
-     * `true` → shimmer the WHOLE viewer footprint, no `Document` mounted at
-     * all — the per-page `HeroSkeleton` mirror above only covers a page not
-     * yet scrolled into view, not "the file itself hasn't arrived yet".
+     * `true` → no `Document` mounted at all, the whole file hasn't arrived yet
+     * (distinct from the per-page placeholder `PdfViewportPage` already draws for
+     * a page that just hasn't scrolled into view).
      */
     isSkeleton?: boolean
-    /** Extra classes on the wrapper. */
-    className?: string
     /** Where this sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
-    /** `true` → tag the whole-file skeleton with `data-anat-part="Skeleton"`. */
+    /** `true` → tag the whole-file skeleton placeholder pages' `Typography` for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
 
@@ -185,6 +188,9 @@ export type PDFViewProps = PDFViewOwnProps &
  * observers and react-pdf canvas rendering.
  * @param props - {@link PDFViewProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "PDFView" } as const
+
 export const PDFView = ({
     src,
     title,
@@ -194,7 +200,6 @@ export const PDFView = ({
     allowVerticalScroll = false,
     fitToContainer = false,
     isSkeleton = false,
-    className,
     classNames,
     anatPart,
     showAnatomy = false,
@@ -263,18 +268,8 @@ export const PDFView = ({
 
     const pageCount = showAllPages ? numPages : Math.min(1, numPages)
 
-    // Checked AFTER every hook above has run (rules of hooks) — the whole file hasn't
-    // arrived yet, distinct from the per-page mirror `PdfViewportPage` already draws
-    // for a page that just hasn't scrolled into view.
-    if (isSkeleton) {
-        return (
-            <HeroSkeleton
-                className={cn(heightClassName, "w-full rounded-medium", className, classNames)}
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
-            />
-        )
-    }
-
+    // The frame stays real throughout (COMPOSITE-10) — same height/scroll footprint
+    // whether or not the file has arrived.
     return (
         <div
             ref={assignContainerRef}
@@ -282,12 +277,32 @@ export const PDFView = ({
                 heightClassName,
                 "overflow-x-auto bg-surface scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary",
                 allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden",
-                className,
                 classNames,
             )}
             data-anat-part={anatPart}
+            data-tier="composite"
+            data-component="PDFView"
         >
-            {file ? (
+            {isSkeleton ? (
+                // No real page count exists before the file arrives — the composite still
+                // decides WHICH parts shimmer and HOW MANY: a small stack of the SAME
+                // bordered page frame `PdfViewportPage` draws for a page not yet scrolled
+                // into view, each one handed `isSkeleton` `Typography` lines.
+                <StackV
+                    gap={4}
+                    body={Array.from({ length: SKELETON_PAGE_COUNT }, (_, index) => (
+                        <div
+                            key={index}
+                            className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
+                            style={{ minHeight: 320 }}
+                            aria-hidden
+                        >
+                            <Typography size="sm" color="muted" isSkeleton showAnatomy={showAnatomy} />
+                            <Typography size="xs" color="muted" isSkeleton showAnatomy={showAnatomy} />
+                        </div>
+                    ))}
+                />
+            ) : file ? (
                 <Document
                     key={src}
                     file={file}
@@ -297,7 +312,7 @@ export const PDFView = ({
                     onLoadSuccess={(pdf) => setNumPages(pdf.numPages)}
                 >
                     <StackV
-                        gap="grouped"
+                        gap={4}
                         body={Array.from({ length: pageCount }, (_, index) => {
                             const pageNumber = index + 1
                             const eager = !showAllPages || pageNumber <= 2

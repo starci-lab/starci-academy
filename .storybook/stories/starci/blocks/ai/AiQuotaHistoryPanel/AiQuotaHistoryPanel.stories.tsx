@@ -3,7 +3,7 @@ import { AiQuotaHistoryPanel, type AiQuotaHistoryChartPoint, type AiQuotaHistory
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `AiQuotaHistoryPanel`: the body of the "Lịch sử" tab inside
+ * BLOCK — `AiQuotaHistoryPanel`: the body of the "History" tab inside
  * `AiQuotaModal` — a 7-day usage bar chart plus a scrollable, bordered list of
  * recent AI charges. Ported from `src`'s `AiQuotaModal/HistoryTab` (see the
  * component's file header for the four judgement calls: new `ai/` group, the
@@ -59,7 +59,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the region once loading has finished: populated list, or the empty message (both are DATA, R0). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AiQuotaHistoryPanel"
                 tier="block"
@@ -112,7 +112,7 @@ export const Default: Story = {
 /** LEAF — the charges-list fetch is in flight; only that region swaps for a row-shaped mirror. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="AiQuotaHistoryPanel"
                 tier="block"

@@ -28,7 +28,7 @@ export interface GradeCreditCaptionProps extends WithClassNames<undefined> {
 }
 
 /**
- * The ONE shared "còn N/M credit tuần này" caption for every AI surface, sitting
+ * The ONE shared "N/M credits left this week" caption for every AI surface, sitting
  * directly under (or beside) the model picker. Bound to the PICKER — NOT the CTA
  * button — so it's correct regardless of the button's width. Shows the unified
  * weekly pool for BOTH lanes (Auto AND a pinned model both debit it). Renders a

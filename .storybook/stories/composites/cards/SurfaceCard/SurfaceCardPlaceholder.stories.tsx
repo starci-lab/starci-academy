@@ -17,7 +17,7 @@ import { SurfaceCardPlaceholder } from "@sb-components/composites/cards/SurfaceC
  * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `.Placeholder` is NOT on the list of members
  * that change `bordered`/`flushContent`/`compact` — `SurfaceCardPlaceholderProps` has none of
  * the props in those three axes (only `icon`/`label`/`onPress`/`isSelected`/`isDisabled`/
- * `isSkeleton`/`className`), so this story changes nothing in the prop codemod.
+ * `isSkeleton`/`classNames`), so this story changes nothing in the prop codemod.
  */
 const meta: Meta<typeof SurfaceCardPlaceholder> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardPlaceholder",
@@ -39,7 +39,7 @@ interface CellProps {
     children: ReactNode
 }
 const Cell = ({ children }: CellProps) => (
-    <div className="p-8">
+    <div data-tier="fixture" className="p-8">
         <div className="h-80 w-64">{children}</div>
     </div>
 )
@@ -51,11 +51,14 @@ export const Default: Story = {
         </Cell>
     ),
 }
-/** Custom icon — the caller swaps the leading glyph (e.g. file-plus for a document grid). The icon goes in BARE, the frame forces `size-8` itself (§4). */
+/** `icon` slot fixture for {@link CustomIcon} — a component reference (COMPOSITE-8), not a built node. */
+const FilePlusFixture = () => <FilePlusIcon data-tier="fixture" />
+
+/** Custom icon — the caller swaps the leading glyph (e.g. file-plus for a document grid). The frame forces `size-8` itself (§4). */
 export const CustomIcon: Story = {
     render: () => (
         <Cell>
-            <SurfaceCardPlaceholder icon={<FilePlusIcon />} label="Import from file" onPress={() => {}} />
+            <SurfaceCardPlaceholder icon={FilePlusFixture} label="Import from file" onPress={() => {}} />
         </Cell>
     ),
 }

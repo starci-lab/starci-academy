@@ -74,7 +74,7 @@ export const Task = ({
 
     const body = (
         // tier-2 header (title H3 + desc) stands alone; the brief renders itself as the
-        // "Hướng dẫn" LabeledCard (TaskBrief), so each section here is its own labeled block.
+        // "Guide" LabeledCard (TaskBrief), so each section here is its own labeled block.
         <div className={cn("flex flex-col gap-6", className)}>
             <div className="flex flex-col gap-2">
                 <Typography type="h3" weight="bold">{displayTask?.title}</Typography>

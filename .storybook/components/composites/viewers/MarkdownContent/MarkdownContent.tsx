@@ -25,10 +25,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * real HeroUI `Table` · `::::accordion`/`:::panel` → the CORRECT HeroUI
  * `Accordion` compound with surface chrome · `:::muted` + `:::chip` + image
  * captions + link routing + heading anchors. Still NOT ported: `arcSections`
- * (flashcard/mock-interview answer boxing), `plain` mode ("render thô"), the
- * ` ```mdx ` live-render fence, the ` ```layout ` fence — each is a viewer/runtime
- * of its own and half-porting one leaves a body that looks finished and renders
- * wrong, which every gate here would pass.
+ * (flashcard/mock-interview answer boxing), `plain` mode (raw render, no
+ * markdown processing), the ` ```mdx ` live-render fence, the ` ```layout ` fence
+ * — each is a viewer/runtime of its own and half-porting one leaves a body that
+ * looks finished and renders wrong, which every gate here would pass.
  *
  * ⚠️ THE CLASSES IN `map.tsx` ARE THE ONE PLACE HAND-WRITTEN SPACING IS CORRECT. A
  * viewer cannot reach for frames: it never sees its own children as nodes, only
@@ -39,6 +39,12 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * TWO MEASURES. `reading` is the lesson body: bigger type, generous rhythm.
  * `compact` is for markdown quoted inside another surface, such as a chat answer
  * or a card, where the document is a passenger rather than the page.
+ *
+ * COMPOSITE-4: only `classNames: Array<AllowedClassName>` is a public prop here.
+ * A caller that needs an arbitrary-selector reset (e.g. `[&_p]:m-0`) wraps this
+ * component in its own `<div>` carrying that class instead of handing this
+ * composite a free string — the selector reaches the same descendant `p`
+ * elements either way, one level higher.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -257,7 +263,7 @@ const holdBackIncompleteMermaidFence = (markdown: string): string => {
 
 /**
  * Scans markdown for mermaid blocks and pairs each with the caption paragraph that
- * immediately follows it (a line starting with "Hình"/"Figure"), keyed by trimmed source.
+ * immediately follows it (a figure-caption line, Vietnamese or English — see the regex below), keyed by trimmed source.
  * @param markdown - Raw markdown source.
  * @returns Caption text keyed by trimmed mermaid source.
  */
@@ -267,7 +273,7 @@ const extractMermaidCaptions = (markdown: string): Record<string, string> => {
     for (let match = MERMAID_CAPTION_REGEX.exec(markdown); match; match = MERMAID_CAPTION_REGEX.exec(markdown)) {
         const code = match[1].trim()
         const caption = match[2].trim().replace(/^\*+|\*+$/g, "").trim()
-        if (/^(Hình|Figure)\b/i.test(caption)) {
+        if (/^(Hình|Figure)\b/i.test(caption)) { // vn-ok: matches the VI figure word in lesson prose
             captions[code] = caption
         }
     }
@@ -275,7 +281,7 @@ const extractMermaidCaptions = (markdown: string): Record<string, string> => {
 }
 
 /**
- * Removes each mermaid figure-caption paragraph ("Hình N: …" / "Figure N: …") from the source
+ * Removes each mermaid figure-caption paragraph ("Figure N: …", either language) from the source
  * so it isn't rendered twice — the diagram now shows it as a real `<figcaption>`.
  * @param markdown - Raw markdown source.
  * @returns Markdown with figure-caption paragraphs stripped.
@@ -284,7 +290,7 @@ const stripMermaidCaptions = (markdown: string): string => {
     MERMAID_CAPTION_REGEX.lastIndex = 0
     return markdown.replace(MERMAID_CAPTION_REGEX, (match: string, _code: string, caption: string) => {
         const clean = caption.trim().replace(/^\*+|\*+$/g, "").trim()
-        if (/^(Hình|Figure)\b/i.test(clean)) {
+        if (/^(Hình|Figure)\b/i.test(clean)) { // vn-ok: matches the VI figure word in lesson prose
             return match.slice(0, match.lastIndexOf(caption))
         }
         return match
@@ -322,9 +328,7 @@ export interface MarkdownContentProps {
     source: string
     /** How much room the document gets. Defaults to `"reading"`. */
     measure?: MarkdownMeasure
-    /** Extra classes on the article wrapper. */
-    className?: string
-    /** Where the article wrapper sits inside its parent. */
+    /** Where the article wrapper sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /**
      * `true` → render a 2-line shimmer mirror instead of the real document
@@ -346,10 +350,12 @@ export interface MarkdownContentProps {
  *
  * @param props - {@link MarkdownContentProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "MarkdownContent" } as const
+
 const MarkdownContent = ({
     source,
     measure = "reading",
-    className,
     classNames,
     isSkeleton = false,
     showAnatomy = false,
@@ -377,8 +383,7 @@ const MarkdownContent = ({
     if (isSkeleton) {
         return (
             <StackV
-                gap="related"
-                className={className}
+                gap={3}
                 classNames={classNames}
                 anatPart={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
                 body={
@@ -395,7 +400,9 @@ const MarkdownContent = ({
         <article
             ref={rootRef}
             data-anat-part={anatPart ?? (showAnatomy ? "MarkdownContent" : undefined)}
-            className={cn("first:*:mt-0 last:*:mb-0", className, classNames)}
+            className={cn("first:*:mt-0 last:*:mb-0", classNames)}
+            data-tier="composite"
+            data-component="MarkdownContent"
         >
             <ReactMarkdown remarkPlugins={REMARK_PLUGINS} components={components as never}>
                 {renderedSource}

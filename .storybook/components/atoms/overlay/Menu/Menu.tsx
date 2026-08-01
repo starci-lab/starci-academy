@@ -100,35 +100,8 @@ export interface MenuBaseProps {
     showAnatomy?: boolean
     /** Render the leaf skeleton (rows of icon + label bars) instead of the real dropdown; the atom owns its own skeleton. */
     isSkeleton?: boolean
-    /**
-     * Extra classes on the trigger.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
-}
-
-/** Render one menu row (shared by flat + sectioned modes). */
-const renderItem = (item: MenuItemModel, showAnatomy: boolean) => {
-    const Icon = item.icon
-    return (
-        <HeroDropdownItem
-            key={item.key}
-            id={item.key}
-            textValue={item.label}
-            isDisabled={item.isDisabled}
-            data-anat-part={showAnatomy ? "DropdownItem" : undefined}
-        >
-            <span className="flex items-center gap-2">
-                {Icon ? <Icon className={cn(MENU_ICON_CLASS, "shrink-0")} weight={MENU_ICON_WEIGHT} aria-hidden /> : null}
-                <span>{item.label}</span>
-            </span>
-        </HeroDropdownItem>
-    )
 }
 
 /**
@@ -150,9 +123,33 @@ const MenuBase = ({
     onOpenChange,
     showAnatomy = false,
     isSkeleton = false,
-    className,
     classNames,
 }: MenuBaseProps) => {
+    /**
+     * Render one menu row (shared by flat + sectioned modes).
+     *
+     * Defined inside the component so it reads `showAnatomy` from scope. As a module-level helper
+     * it needed the switch as a second parameter, and a parameter that exists only to badge a part
+     * vanishes with the overlay — leaving the app's copy of this file holding a function of a
+     * different arity than the blueprint's. Closing over it keeps one signature true in both trees.
+     */
+    const renderItem = (item: MenuItemModel) => {
+        const Icon = item.icon
+        return (
+            <HeroDropdownItem
+                key={item.key}
+                id={item.key}
+                textValue={item.label}
+                isDisabled={item.isDisabled}
+                data-anat-part={showAnatomy ? "DropdownItem" : undefined}
+            >
+                <span className="flex items-center gap-2">
+                    {Icon ? <Icon className={cn(MENU_ICON_CLASS, "shrink-0")} weight={MENU_ICON_WEIGHT} aria-hidden /> : null}
+                    <span>{item.label}</span>
+                </span>
+            </HeroDropdownItem>
+        )
+    }
     if (isSkeleton) {
         // This atom draws its own skeleton with `HeroSkeleton` (no shared skeleton
         // component): container `p-1`, each row an icon `size-5 rounded-full`
@@ -165,7 +162,7 @@ const MenuBase = ({
             ? sections.reduce((total, section) => total + section.items.length, 0)
             : (items?.length ?? 4)
         return (
-            <div className={cn("flex w-full flex-col gap-1 p-1", className, classNames)}>
+            <div data-tier="atom" data-component="Menu" className={cn("flex w-full flex-col gap-1 p-1", classNames)}>
                 {Array.from({ length: rowCount || 4 }).map((_, index) => (
                     <div key={index} className="flex items-center gap-2 px-2 py-2">
                         <HeroSkeleton className="size-5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
@@ -176,8 +173,8 @@ const MenuBase = ({
         )
     }
     return (
-        <HeroDropdown isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroDropdownTrigger className={cn(className, classNames)} data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}>
+        <HeroDropdown data-tier="atom" data-component="Menu" isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
+            <HeroDropdownTrigger className={cn(classNames)} data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}>
                 <HeroButton variant={triggerVariant}>
                     {TriggerIcon ? (
                         // `!` needed: HeroUI's `.button svg` rule has higher specificity. This
@@ -207,10 +204,10 @@ const MenuBase = ({
                                         {section.title}
                                     </HeroMenuHeader>
                                 ) : null}
-                                {section.items.map((item) => renderItem(item, showAnatomy))}
+                                {section.items.map((item) => renderItem(item))}
                             </HeroDropdownSection>
                         ))
-                        : (items ?? []).map((item) => renderItem(item, showAnatomy))}
+                        : (items ?? []).map((item) => renderItem(item))}
                 </HeroDropdownMenu>
             </HeroDropdownPopover>
         </HeroDropdown>
@@ -219,3 +216,5 @@ const MenuBase = ({
 
 /** `Menu.*` — the action-menu atom namespace. Flat `items` or grouped `sections` are both leaf props. */
 export { MenuBase as Menu }
+
+export const meta = { tier: "atom", name: "Menu" } as const

@@ -36,15 +36,15 @@ export default meta
 type Story = StoryObj<typeof ContentHeader>
 
 const CRUMBS = [
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "modules", label: "Chương 2 · Container hoá" },
+    { key: "modules", label: "Chapter 2 · Containerization" },
 ]
 
 const OUTCOMES = [
-    { key: "layer", text: "Đọc được từng layer trong một image và biết layer nào đang phình" },
-    { key: "cache", text: "Sắp xếp Dockerfile để cache còn dùng lại được sau mỗi lần sửa code" },
-    { key: "multistage", text: "Dùng multi-stage build để bỏ toolchain ra khỏi image chạy thật" },
+    { key: "layer", text: "Read every layer in an image and spot which one is bloating it" },
+    { key: "cache", text: "Order a Dockerfile so the cache still works after every code change" },
+    { key: "multistage", text: "Use multi-stage builds to keep the toolchain out of the production image" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -60,7 +60,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full set: trail → title → description → meta row → outcomes card. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentHeader"
                 tier="block"
@@ -74,8 +74,8 @@ export const Full: Story = {
                         why: "The learner has finished this lesson, so the meta row opens with the read chip and the two quiet facts follow it. This is the shape a returning reader sees, and the chip is what tells them they are re-reading rather than starting.",
                         code: `<ContentHeader
     breadcrumbItems={crumbs}
-    title="Viết Dockerfile tối ưu"
-    description="Layer, cache và multi-stage build — ba thứ quyết định image nặng hay nhẹ."
+    title="Writing an optimized Dockerfile"
+    description="Layers, caching, and multi-stage builds — the three things that decide whether an image is heavy or light."
     isRead
     minutesRead={12}
     challengeCount={3}
@@ -86,8 +86,8 @@ export const Full: Story = {
                                 anatPart="ContentHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Viết Dockerfile tối ưu"
-                                description="Layer, cache và multi-stage build — ba thứ quyết định image nặng hay nhẹ."
+                                title="Writing an optimized Dockerfile"
+                                description="Layers, caching, and multi-stage builds — the three things that decide whether an image is heavy or light."
                                 isRead
                                 minutesRead={12}
                                 challengeCount={3}
@@ -100,8 +100,8 @@ export const Full: Story = {
                         why: "Nothing has been read yet, so the chip drops out and the meta row carries only reading time and challenge count. The row keeps its place and its seam, which is why an unread lesson does not look like a lesson missing information.",
                         code: `<ContentHeader
     breadcrumbItems={crumbs}
-    title="Viết Dockerfile tối ưu"
-    description="Layer, cache và multi-stage build — ba thứ quyết định image nặng hay nhẹ."
+    title="Writing an optimized Dockerfile"
+    description="Layers, caching, and multi-stage builds — the three things that decide whether an image is heavy or light."
     minutesRead={12}
     challengeCount={3}
     outcomes={outcomes}
@@ -109,8 +109,8 @@ export const Full: Story = {
                         render: (
                             <ContentHeader
                                 breadcrumbItems={CRUMBS}
-                                title="Viết Dockerfile tối ưu"
-                                description="Layer, cache và multi-stage build — ba thứ quyết định image nặng hay nhẹ."
+                                title="Writing an optimized Dockerfile"
+                                description="Layers, caching, and multi-stage builds — the three things that decide whether an image is heavy or light."
                                 minutesRead={12}
                                 challengeCount={3}
                                 outcomes={OUTCOMES}
@@ -126,7 +126,7 @@ export const Full: Story = {
 /** LEAF — the lesson states no outcomes ⇒ **loses** the whole `SurfaceCardList` node. */
 export const NoOutcomes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentHeader"
                 tier="block"
@@ -140,7 +140,7 @@ export const NoOutcomes: Story = {
                         why: "The outcomes card is not drawn at all, so the header ends at its meta row and the lesson body follows straight after. A lesson whose author never listed outcomes should say nothing there rather than show an empty card claiming a section exists.",
                         code: `<ContentHeader
     breadcrumbItems={crumbs}
-    title="Ghi chú nhanh về BuildKit"
+    title="Quick notes on BuildKit"
     minutesRead={4}
     challengeCount={0}
 />`,
@@ -149,7 +149,7 @@ export const NoOutcomes: Story = {
                                 anatPart="ContentHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Ghi chú nhanh về BuildKit"
+                                title="Quick notes on BuildKit"
                                 minutesRead={4}
                                 challengeCount={0}
                             />
@@ -164,7 +164,7 @@ export const NoOutcomes: Story = {
 /** LEAF — the caller flips `isSkeleton`, so every atom swaps to its own mirror. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentHeader"
                 tier="block"

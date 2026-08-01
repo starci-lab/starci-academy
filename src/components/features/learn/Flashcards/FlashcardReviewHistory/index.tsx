@@ -23,7 +23,7 @@ import { pathConfig } from "@/resources/path"
 
 /** Props for {@link FlashcardReviewHistory}. */
 export interface FlashcardReviewHistoryProps extends WithClassNames<undefined> {
-    /** Course whose "Học thẻ" review session history to list. */
+    /** Course whose "Study cards" review session history to list. */
     courseId: string
     /** Jumps the overview tab strip back to the study overview — wired from
      *  `Flashcards` so the empty state's action can start reviewing without
@@ -41,9 +41,9 @@ type GroupMode = "deck" | "time"
 const STRONG_COMPLETION_RATIO = 0.8
 
 /**
- * "Học thẻ" run history — the study overview's "Lịch sử" tab. A search + grouping
- * toolbar over the run log (thầy 2026-07-13 relayout: "không có thanh search gì hết
- * à" — history's job is finding + revisiting a past run). Search filters by deck
+ * "Study cards" run history — the study overview's "History" tab. A search + grouping
+ * toolbar over the run log (the teacher, 2026-07-13 relayout: "there's no search bar
+ * at all?" — history's job is finding + revisiting a past run). Search filters by deck
  * title; a `TabsCard` (primary) toggles grouping by deck (accordion) vs by time
  * bucket (today / past-7d / past-30d / older). Each run row carries a `ProgressMeter`
  * of `reviewedCount/cardCount` so "how well that run went" is scannable. Offset-
@@ -84,7 +84,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
     }, [historySwr.data, offset])
 
     // course changed → start the accumulator over. Guarded against firing on
-    // mere MOUNT (thầy 2026-07-13: "chuyển tab cái thì mất hết" — this tab is
+    // mere MOUNT (the teacher, 2026-07-13: "switch tabs and everything's gone" — this tab is
     // unmounted/remounted by the parent's tab switch; the previous unguarded
     // version fired on every remount too since `courseId` is "new" to a fresh
     // effect subscription, wiping the `items` this same render's data-effect
@@ -113,7 +113,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
         return items.filter((item) => item.deckTitle.toLowerCase().includes(needle))
     }, [items, query])
 
-    // group runs by deck (thầy 2026-07-13: "redesign lại, có thể theo deck") — the
+    // group runs by deck (the teacher, 2026-07-13: "redesign this — maybe group by deck") — the
     // same deck reviewed multiple times otherwise scatters across the flat
     // timeline. `items` is already `updatedAt DESC` and `Map` preserves first-seen
     // order, so a group's position = its MOST RECENT run — no re-sort needed.
@@ -231,7 +231,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
             ) : (
                 <div className={cn("flex flex-col gap-3", className)}>
                     {/* Toolbar: search decks (left) + run count and grouping toggle (right) —
-                        the history surface's find-a-run affordance (thầy 2026-07-13 relayout). */}
+                        the history surface's find-a-run affordance (the teacher, 2026-07-13 relayout). */}
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <TextField className="w-full @app-sm:max-w-xs">
                             <Input
@@ -246,7 +246,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                             <Typography type="body-sm" color="muted">
                                 {t("flashcard.review.historyDeckRunCount", { count: searchedItems.length })}
                             </Typography>
-                            {/* icon-only toggle (thầy 2026-07-13: "render dạng icon") —
+                            {/* icon-only toggle (the teacher, 2026-07-13: "render as icons") —
                                 mirrors `FlashcardDeckList`'s grid/line `TabsCard` (primary):
                                 icon carries the accessible name via `aria-label`. */}
                             <TabsCard
@@ -292,7 +292,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                         </Card>
                     ) : groupMode === "deck" ? (
                         // group=deck — NO `label` (the toolbar's group toggle is the heading);
-                        // "N lượt" rides in the header via `titleEnd`, panel = that deck's runs.
+                        // "N runs" rides in the header via `titleEnd`, panel = that deck's runs.
                         <LabeledAccordionCard
                             items={groupedByDeck.map((group) => ({
                                 id: group.deckId,
@@ -322,8 +322,8 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                         // group=time — each non-empty bucket is a `LabeledCard frameless`
                         // (time window = label OUTSIDE + run count via `labelEnd`; content is
                         // itself a `SurfaceListCard` → frameless avoids card-in-card). Titled
-                        // block → LabeledCard, KHÔNG Typography-label + card tay (thầy
-                        // 2026-07-13: "mấy cái này phải là Label Card"; `components/card.md` §2).
+                        // block → LabeledCard, NOT a Typography label + a hand-rolled card (the teacher,
+                        // 2026-07-13: "these all need to be Label Card"; `components/card.md` §2).
                         <div className="flex flex-col gap-3">
                             {timeBuckets.map((bucket) => (
                                 <LabeledCard

@@ -57,7 +57,7 @@ export interface ChallengeCardProps extends WithClassNames<undefined> {
 }
 
 /**
- * One challenge in the "Thử thách" tab — a single card (bounded object): puzzle
+ * One challenge in the "Challenges" tab — a single card (bounded object): puzzle
  * eyebrow + status chip → title → difficulty/score/hint chips → clamped description
  * → footer (attempts + best score on the left, status-driven primary action on the
  * right). The card is a static surface — only the footer button navigates.
@@ -103,7 +103,7 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
     return (
         // each challenge is its OWN distinct card (surface fill + border on a plain div so
         // the utilities aren't overridden by HeroUI Card's unlayered styles). The card itself
-        // is static (NOT clickable, no hover/cursor) — only the footer "Làm" button navigates.
+        // is static (NOT clickable, no hover/cursor) — only the footer "Do" button navigates.
         // Completed rows are de-emphasized.
         <div className={cn("rounded-3xl border border-default bg-surface p-4", status === "completed" && "opacity-80", className)}>
             <div className="flex flex-col gap-3">

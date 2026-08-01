@@ -4,9 +4,10 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ChallengeDeliverableList`: the "Nộp bài" card — one accordion row per
- * challenge requirement, its trigger a live status, its panel the submission
- * form plus, once graded, the verdict and the reasons behind it.
+ * BLOCK — `ChallengeDeliverableList`: the "Submit assignment" card — one
+ * accordion row per challenge requirement, its trigger a live status, its
+ * panel the submission form plus, once graded, the verdict and the reasons
+ * behind it.
  *
  * ⭐ REUSES `SurfaceCard.Accordion` instead of hand-rolling an accordion — see the
  * component file's header for the `src` drift this run exists to avoid.
@@ -34,10 +35,10 @@ type Story = StoryObj<typeof ChallengeDeliverableList>
 const BASE_ITEMS: Array<ChallengeDeliverableItem> = [
     {
         id: "api-design",
-        title: "Thiết kế API",
+        title: "Design the API",
         points: 30,
         status: "todo",
-        description: "Vẽ sơ đồ **resource** và liệt kê method/status code cho từng endpoint.",
+        description: "Sketch the **resource** diagram and list the method/status code for each endpoint.",
         url: "",
         onUrlChange: () => {},
         onSubmit: () => {},
@@ -45,21 +46,21 @@ const BASE_ITEMS: Array<ChallengeDeliverableItem> = [
     },
     {
         id: "readme",
-        title: "Viết README",
+        title: "Write the README",
         points: 10,
         status: "todo",
         url: "github.com/hocvien/api-design",
-        urlError: "URL phải bắt đầu bằng https://",
+        urlError: "URL must start with https://",
         onUrlChange: () => {},
         onSubmit: () => {},
         onViewHistory: () => {},
     },
     {
         id: "unit-test",
-        title: "Viết unit test",
+        title: "Write unit tests",
         points: 24,
         status: "failed",
-        description: "Phủ test cho các nhánh lỗi của endpoint tạo đơn hàng.",
+        description: "Cover the error branches of the order-creation endpoint.",
         url: "https://github.com/hocvien/api-design/pull/12",
         onUrlChange: () => {},
         onSubmit: () => {},
@@ -70,12 +71,12 @@ const BASE_ITEMS: Array<ChallengeDeliverableItem> = [
             requiredScore: 24,
             attemptNumber: 2,
             processedAt: "09:12 15/07",
-            shortFeedback: "Logic tạo đơn ổn, nhưng bộ test còn thiếu các nhánh lỗi quan trọng.",
+            shortFeedback: "Order-creation logic looks solid, but the test suite is still missing some important error branches.",
         },
     },
     {
         id: "deploy",
-        title: "Triển khai lên staging",
+        title: "Deploy to staging",
         points: 20,
         status: "done",
         url: "https://github.com/hocvien/api-design/actions/runs/933",
@@ -88,7 +89,7 @@ const BASE_ITEMS: Array<ChallengeDeliverableItem> = [
             requiredScore: 16,
             attemptNumber: 1,
             processedAt: "14:03 15/07",
-            shortFeedback: "Triển khai chạy ổn định, chỉ còn một điểm nhỏ cần lưu ý.",
+            shortFeedback: "Deployment ran smoothly, just one small thing worth noting.",
         },
     },
 ]
@@ -100,9 +101,10 @@ const PENDING_ITEMS: Array<ChallengeDeliverableItem> = BASE_ITEMS.map((item) =>
 )
 
 /**
- * AUDIT 2026-07-30 (round-15): ba state `.artifacts/domain/challenge-and-milestone.md` §3
- * liệt kê là PHẢI VẼ mà bản vẽ từng thiếu. Chấm bài chạy NỀN nên một hàng phải chịu được đủ
- * bốn ngả job; đây là hai ngả đáng nhìn nhất — đang chạy và thất bại.
+ * AUDIT 2026-07-30 (round-15): three states that `.artifacts/domain/challenge-and-milestone.md`
+ * §3 lists as MUST-DRAW were missing from the render. Grading runs in the
+ * BACKGROUND, so a row has to hold up under all four job branches; these are
+ * the two most worth seeing — in progress and failed.
  */
 const GRADING_ITEMS: Array<ChallengeDeliverableItem> = BASE_ITEMS.map((item) =>
     item.id === "api-design"
@@ -116,14 +118,14 @@ const JOB_FAILED_ITEMS: Array<ChallengeDeliverableItem> = BASE_ITEMS.map((item) 
             ...item,
             url: "https://github.com/hocvien/api-design/pull/1",
             jobStatus: "failed" as const,
-            // Chuỗi lỗi server THÔ, không dịch — đúng như `src` in ra (`activeJobError`).
+            // RAW server error string, not translated — matches exactly what `src` prints (`activeJobError`).
             jobError: "Repository not accessible: 404 Not Found (github.com/hocvien/api-design)",
         }
         : item,
 )
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCard": { tier: "composite", role: "the \"Nộp bài\" card face, carrying the section label and the settings-trigger action in its header", storyId: "composites-cards-surfacecard-surfacecard--with-action" },
+    "SurfaceCard": { tier: "composite", role: "the \"Submission\" card face, carrying the section label and the settings-trigger action in its header", storyId: "composites-cards-surfacecard-surfacecard--with-action" },
     "SurfaceCardAccordion": { tier: "composite", role: "one bounded surface of collapsible rows, taking each requirement's trigger + panel as data — the composite this run reuses instead of hand-rolling an accordion", storyId: "composites-cards-surfacecard-surfacecardaccordion--with-title-end" },
     "StackV": { tier: "frame", role: "the vertical frame separating a panel's description, field, actions and graded result", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal frame holding the action row, or a feedback item's severity chip beside its text", storyId: "frames-stack-stackh--default" },
@@ -134,8 +136,8 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": { tier: "atom", role: "the trigger's points-or-score line, the graded score/requirement sentence, `shortFeedback`, or one feedback item's message/location/suggestion — flat list inside the graded `Disclosure`, ground truth `src`'s `LastAttemptResult.tsx` (AUDIT 2026-07-30, feedback ChallengePage/Graded round-8)", storyId: "atoms-text-typography-typography--plain" },
     "ScoreValue": { tier: "composite", role: "the trigger's points-before-grading or earned/required-after-grading line, riding in `titleEnd`", storyId: "composites-texts-scorevalue--default" },
     "StatusIcon": { tier: "heroui", role: "the requirement's todo/done/failed mark, riding in `titleStart` — its own colour, independent of the title text" },
-    "Disclosure": { tier: "composite", role: "the \"Phản hồi gần nhất\" trigger — collapses `shortFeedback` + the itemized feedback list behind a click, since it's SECONDARY detail (AUDIT 2026-07-30, feedback ChallengePage/Graded round-10, thầy chốt)", storyId: "composites-layout-disclosure-disclosure--default" },
-    "FeedbackCallout": { tier: "composite", role: "the background grading job's status strip — warning while queued/processing, success once done, danger on failure with the raw server error as its body (AUDIT 2026-07-30, round-15)", storyId: "composites-feedback-feedback-feedbackcallout--with-body" },
+    "Disclosure": { tier: "composite", role: "the \"Latest feedback\" trigger — collapses `shortFeedback` + the itemized feedback list behind a click, since it's SECONDARY detail (AUDIT 2026-07-30, feedback ChallengePage/Graded round-10, teacher confirmed)", storyId: "composites-layout-disclosure-disclosure--default" },
+    "Callout": { tier: "composite", role: "the background grading job's status strip — warning while queued/processing, success once done, danger on failure with the raw server error as its body (AUDIT 2026-07-30, round-15)", storyId: "composites-feedback-callout-callout--with-body" },
 }
 
 const autosaveStates = (
@@ -156,7 +158,7 @@ const autosaveStates = (
 /** LEAF — the deliverables card. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeDeliverableList"
                 tier="block"
@@ -166,7 +168,7 @@ export const Full: Story = {
                 renderClassName="mx-auto max-w-3xl"
                 states={[
                     {
-                        name: "4 requirements: chưa nộp · URL sai · rớt có phản hồi · đạt",
+                        name: "4 requirements: not submitted · bad URL · failed with feedback · passed",
                         why: "One row shows the untouched state, one shows a URL validation error, one shows a failed grade with three feedback items across every severity, and one shows a pass with a single low-severity note. The first requirement still short of a pass — the failed one — opens by default rather than requirement #1, since that is the one the learner still owes.",
                         code: `<ChallengeDeliverableList
     items={items}
@@ -182,7 +184,7 @@ export const Full: Story = {
                         ),
                     },
                     {
-                        name: "isPending = true trên một yêu cầu",
+                        name: "isPending = true on one requirement",
                         why: "The requirement being submitted shows a busy submit button and a locked URL field, while its three siblings stay fully interactive. Grading one requirement never freezes the rest of the card, since each row's job is independent of the others.",
                         code: `<ChallengeDeliverableList
     items={items.map((item) => item.id === "api-design" ? { ...item, isPending: true } : item)}
@@ -212,7 +214,7 @@ export const Full: Story = {
                         ),
                     },
                     {
-                        name: "jobStatus = \"processing\" — AI đang chấm",
+                        name: "jobStatus = \"processing\" — AI is grading",
                         why: "Grading runs in the BACKGROUND: the submit mutation hands back a job id and the screen listens on a socket, so a row has to say where that job stands while nothing else about it has changed yet. The callout sits between the URL field and the action row — exactly where `src`'s `SubmissionRow` puts its own processing strip — and the row keeps `isPending` so the field stays locked underneath it.",
                         code: `<ChallengeDeliverableList
     items={items.map((item) => item.id === "api-design"
@@ -252,7 +254,7 @@ export const Full: Story = {
     onOpenGradingSettings={openSettings}
 />`,
                         render: (
-                            <StackV gap="section" body={autosaveStates} />
+                            <StackV gap={6} body={autosaveStates} />
                         ),
                     },
                 ]}

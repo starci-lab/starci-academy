@@ -1,9 +1,10 @@
 import type { LocalizedGuide } from "./types"
 
 /**
- * Windows Ollama install guide (RAG Setup: engine step). Chỉ lo CÀI + CHẠY Ollama —
- * tải model là bước RIÊNG ngay sau đó của Setup. Mọi tín hiệu KIỂM ĐƯỢC BẰNG LỆNH
- * (`ollama list`, HTTP :11434) — không mô tả GUI.
+ * Windows Ollama install guide (RAG Setup: engine step). Only concerned with
+ * INSTALLING + RUNNING Ollama — pulling the model is a SEPARATE step right after
+ * this one in Setup. Every signal is CHECKABLE VIA A COMMAND (`ollama list`,
+ * HTTP :11434) — never a GUI description.
  */
 export const RAG_WINDOWS_GUIDE: LocalizedGuide = {
     vi: `

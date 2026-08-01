@@ -51,8 +51,6 @@ export interface ImageBaseProps {
     isSkeleton?: boolean
     /** `true` → tags `data-anat-part` for the BlockAnatomy panel. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -64,7 +62,18 @@ export interface ImageBaseProps {
  * The framed image atom. See file header for the load/fallback contract.
  * @param props - {@link ImageBaseProps}
  */
-const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc, loading = "lazy", isSkeleton = false, showAnatomy = false, className, classNames }: ImageBaseProps) => {
+const ImageBase = ({
+    src,
+    alt,
+    ratio,
+    fit = "cover",
+    radius = "lg",
+    fallbackSrc,
+    loading = "lazy",
+    isSkeleton = false,
+    showAnatomy = false,
+    classNames,
+}: ImageBaseProps) => {
     // Internal load state; resets to "loading" whenever `src` changes.
     const [status, setStatus] = useState<"loading" | "loaded" | "error">(src ? "loading" : "error")
     useEffect(() => {
@@ -81,7 +90,6 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
         ratio != null && RATIO_CLS[ratio],
         RADIUS_CLS[radius],
         "w-full",
-        className,
         classNames,
     )
     const imgFit = fit === "cover" ? "object-cover" : "object-contain"
@@ -89,10 +97,13 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
     return (
         // `Frame` (this wrapper) and `Img` below are internal geometry of this
         // atom, not badged.
-        <div className={frameCls}>
+        <div data-tier="atom" data-component="Image" className={frameCls}>
             {showSkeleton ? (
                 // Renders a real HeroUI `Skeleton` — badged and declared `tier: "heroui"` in the story's `annotate`.
-                <HeroSkeleton className="absolute inset-0 size-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton
+                    className="absolute inset-0 size-full"
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                />
             ) : null}
 
             {showFallbackGlyph ? (
@@ -124,3 +135,5 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
  * fallback on error/empty. Used directly as `<Image …/>`.
  */
 export { ImageBase as Image }
+
+export const meta = { tier: "atom", name: "Image" } as const

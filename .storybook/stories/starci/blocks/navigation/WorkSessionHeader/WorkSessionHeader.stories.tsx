@@ -49,7 +49,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — a live run: both exits, a timer, and a tappable rail. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="WorkSessionHeader"
                 tier="block"
@@ -62,32 +62,32 @@ export const Full: Story = {
                         name: "current = 3, doneSteps = [1, 2]",
                         why: "The learner is on the third of ten steps with the first two graded, so two segments are filled and the third stands taller. The band carries both exits at once because leaving and finishing are different decisions, and the counter says where they are without them having to count the rail.",
                         code: `<WorkSessionHeader
-    backLabel="Thoát"
+    backLabel="Exit"
     onBack={leave}
-    title="Hỏi nhanh"
-    counter="Câu 3 / 10"
+    title="Quick Questions"
+    counter="Question 3 / 10"
     timeLeft="2:14"
     total={10}
     current={3}
     doneSteps={[1, 2]}
     onStepPress={goToStep}
-    finishLabel="Kết thúc"
+    finishLabel="Finish"
     onFinish={finish}
 />`,
                         render: (
                             <WorkSessionHeader
                                 anatPart="WorkSessionHeader"
                                 showAnatomy
-                                backLabel="Thoát"
+                                backLabel="Exit"
                                 onBack={() => {}}
-                                title="Hỏi nhanh"
-                                counter="Câu 3 / 10"
+                                title="Quick Questions"
+                                counter="Question 3 / 10"
                                 timeLeft="2:14"
                                 total={10}
                                 current={3}
                                 doneSteps={[1, 2]}
                                 onStepPress={() => {}}
-                                finishLabel="Kết thúc"
+                                finishLabel="Finish"
                                 onFinish={() => {}}
                             />
                         ),
@@ -96,26 +96,26 @@ export const Full: Story = {
                         name: "current = 1, doneSteps = []",
                         why: "The run has just started: nothing is graded and the first segment is the only one standing taller. This is the shape that shows the rail reads as progress even when there is none yet.",
                         code: `<WorkSessionHeader
-    backLabel="Thoát"
+    backLabel="Exit"
     onBack={leave}
-    title="Hỏi nhanh"
-    counter="Câu 1 / 10"
+    title="Quick Questions"
+    counter="Question 1 / 10"
     total={10}
     current={1}
     onStepPress={goToStep}
-    finishLabel="Kết thúc"
+    finishLabel="Finish"
     onFinish={finish}
 />`,
                         render: (
                             <WorkSessionHeader
-                                backLabel="Thoát"
+                                backLabel="Exit"
                                 onBack={() => {}}
-                                title="Hỏi nhanh"
-                                counter="Câu 1 / 10"
+                                title="Quick Questions"
+                                counter="Question 1 / 10"
                                 total={10}
                                 current={1}
                                 onStepPress={() => {}}
-                                finishLabel="Kết thúc"
+                                finishLabel="Finish"
                                 onFinish={() => {}}
                             />
                         ),
@@ -129,7 +129,7 @@ export const Full: Story = {
 /** LEAF — ⭐ the case that PROVES done and current are independent. */
 export const RevisitingGraded: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="WorkSessionHeader"
                 tier="block"
@@ -142,9 +142,9 @@ export const RevisitingGraded: Story = {
                         name: "current = 2, doneSteps = [1, 2, 3, 4]",
                         why: "The learner has gone back to a step they already answered, so segment two is both filled and taller at the same time. If fill were allowed to win, this is the exact moment the position signal would vanish and the rail would stop answering which step is open.",
                         code: `<WorkSessionHeader
-    backLabel="Thoát"
+    backLabel="Exit"
     onBack={leave}
-    counter="Câu 2 / 10"
+    counter="Question 2 / 10"
     total={10}
     current={2}
     doneSteps={[1, 2, 3, 4]}
@@ -154,9 +154,9 @@ export const RevisitingGraded: Story = {
                             <WorkSessionHeader
                                 anatPart="WorkSessionHeader"
                                 showAnatomy
-                                backLabel="Thoát"
+                                backLabel="Exit"
                                 onBack={() => {}}
-                                counter="Câu 2 / 10"
+                                counter="Question 2 / 10"
                                 total={10}
                                 current={2}
                                 doneSteps={[1, 2, 3, 4]}
@@ -173,7 +173,7 @@ export const RevisitingGraded: Story = {
 /** LEAF — a session with no early finish ⇒ **loses** the end-now control. */
 export const NoFinish: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="WorkSessionHeader"
                 tier="block"
@@ -186,10 +186,10 @@ export const NoFinish: Story = {
                         name: "onFinish = undefined",
                         why: "This kind of run cannot be ended early, so the control is not drawn and leaving is the only exit. Rendering it disabled would keep offering an action the session never allows.",
                         code: `<WorkSessionHeader
-    backLabel="Thoát"
+    backLabel="Exit"
     onBack={leave}
-    title="Ôn tập"
-    counter="Thẻ 4 / 12"
+    title="Review"
+    counter="Card 4 / 12"
     total={12}
     current={4}
     doneSteps={[1, 2, 3]}
@@ -198,10 +198,10 @@ export const NoFinish: Story = {
                             <WorkSessionHeader
                                 anatPart="WorkSessionHeader"
                                 showAnatomy
-                                backLabel="Thoát"
+                                backLabel="Exit"
                                 onBack={() => {}}
-                                title="Ôn tập"
-                                counter="Thẻ 4 / 12"
+                                title="Review"
+                                counter="Card 4 / 12"
                                 total={12}
                                 current={4}
                                 doneSteps={[1, 2, 3]}
@@ -217,7 +217,7 @@ export const NoFinish: Story = {
 /** LEAF — the caller flips `isSkeleton`; the session's own length/position isn't known before the run data arrives, so the band mirrors its own shape instead of borrowing an unrelated one. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="WorkSessionHeader"
                 tier="block"
@@ -229,8 +229,8 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "Before the session data arrives there is no counter, no total and no current step to draw, so the band mirrors its own shape — a back-link-width bar, a counter-width bar, and a flat rail bar with no segments — rather than showing a blank band or borrowing an unrelated skeleton shape.",
-                        code: "<WorkSessionHeader isSkeleton backLabel=\"Thoát\" onBack={() => {}} />",
-                        render: <WorkSessionHeader isSkeleton backLabel="Thoát" onBack={() => {}} anatPart="WorkSessionHeader" showAnatomy />,
+                        code: "<WorkSessionHeader isSkeleton backLabel=\"Exit\" onBack={() => {}} />",
+                        render: <WorkSessionHeader isSkeleton backLabel="Exit" onBack={() => {}} anatPart="WorkSessionHeader" showAnatomy />,
                     },
                 ]}
             />

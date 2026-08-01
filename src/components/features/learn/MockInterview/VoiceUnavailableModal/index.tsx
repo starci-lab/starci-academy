@@ -36,7 +36,7 @@ export const VoiceUnavailableModal = ({
     className,
 }: VoiceUnavailableModalProps) => {
     const t = useTranslations()
-    // tracks "the candidate just pressed Kiểm tra lại" so the found/not-found
+    // tracks "the candidate just pressed Recheck" so the found/not-found
     // hint only shows AFTER an explicit recheck, never on first open
     const [justChecked, setJustChecked] = useState(false)
 

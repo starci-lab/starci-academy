@@ -47,7 +47,7 @@ export const ErrorContent = ({
                     className="size-8 text-foreground"
                 />
             )}
-            <div className="flex flex-col gap-2">
+            <div data-principles="title-subtitle" className="flex flex-col gap-1">
                 <Typography type="body-sm" weight="medium" align="center">
                     {title}
                 </Typography>

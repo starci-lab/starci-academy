@@ -108,8 +108,8 @@ export const MindMapNodeDrawerView = ({
                                     {keyword ?? t("mindMap.drawer.title")}
                                 </Drawer.Heading>
                             </Drawer.Header>
-                            {/* authored explainer — "hiểu concept ngay trong drawer" (thầy 2026-07-18)
-                                trước khi RAG liệt kê nơi học sâu bên dưới. */}
+                            {/* authored explainer — "understand the concept right in the drawer"
+                                (teacher, 2026-07-18) before RAG lists where to dig deeper below. */}
                             {desc ? (
                                 <Typography type="body-sm" color="muted">
                                     {desc}

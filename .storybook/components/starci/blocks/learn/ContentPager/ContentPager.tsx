@@ -25,10 +25,10 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * a viewport one, because the split is decided by the slot this block sits in.
  *
  * CONTRACT: the caller hands over the two neighbours as DATA (`title` + `href`).
- * The words "Nội dung trước" / "Nội dung tiếp" belong to the block (§14d.1) — a
+ * The words "Previous content" / "Next content" belong to the block (§14d.1) — a
  * caller that passed them would own the wording, and two callers would drift.
  * Matches real `src`'s own `t("content.pager.prevLesson"/"nextLesson")` exactly
- * (verified 2026-07-28 against a prior pass that had invented "Bài trước/sau").
+ * (verified 2026-07-28 against a prior pass that had invented "Previous/Next lesson").
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -87,13 +87,13 @@ const ContentPager = ({
     if (previous) {
         const previousLabel = (
             <>
-                <Typography size="xs" color="muted" text="Nội dung trước" anatPart={showAnatomy ? "Typography" : undefined} />
-                <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" text="Previous content" showAnatomy={showAnatomy} />
+                <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} showAnatomy={showAnatomy} />
             </>
         )
         const previousCard = (
             <StackH
-                gap="grouped"
+                gap={4}
                 align="center"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
@@ -103,10 +103,10 @@ const ContentPager = ({
                             — so size tracks line-height, not font-size. Title is `text-sm` ⇒ `size-5`,
                             matching the sibling `ITEM_ICON_CLS` convention this same file's parent
                             (`SurfaceCard.tsx`) already forces for icons in this exact tile shape
-                            (was flat `size-4`, thầy chốt 2026-07-29). Weight omitted → Phosphor
+                            (was flat `size-4`, teacher confirmed 2026-07-29). Weight omitted → Phosphor
                             default `regular`, correct at `size-5` (§3.2, was `bold`). */}
                         <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                        <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={previousLabel} />
+                        <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={previousLabel} />
                     </>
                 }
             />
@@ -120,19 +120,19 @@ const ContentPager = ({
     if (next) {
         const nextLabel = (
             <>
-                <Typography size="xs" color="muted" align="end" text="Nội dung tiếp" anatPart={showAnatomy ? "Typography" : undefined} />
-                <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" align="end" text="Next content" showAnatomy={showAnatomy} />
+                <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} showAnatomy={showAnatomy} />
             </>
         )
         const nextCard = (
             <StackH
-                gap="grouped"
+                gap={4}
                 align="center"
                 justify="end"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
                     <>
-                        <StackV gap="flush" align="end" anatPart={showAnatomy ? "StackV" : undefined} body={nextLabel} />
+                        <StackV gap={1} align="end" anatPart={showAnatomy ? "StackV" : undefined} body={nextLabel} />
                         {/* Same DIV position/size reasoning as the mirrored left caret above. */}
                         <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                     </>
@@ -142,12 +142,14 @@ const ContentPager = ({
         items.push({
             key: "next",
             href: next.href,
-            // Pin right only where the grid REALLY has two columns. Scoped on the
-            // container (`@sm`), not the viewport: an unqualified `col-start-2` would
-            // also apply at the one-column step and force an implicit second column
-            // that content-sizes down to a sliver, dragging this card up beside the
-            // other one.
-            className: "@sm:col-start-2",
+            // `SurfaceCardPressableGroupItem.className` was removed entirely
+            // (COMPOSITE-4) and the closed `AllowedClassName` union has no
+            // container-conditional column-start member to reproduce "pin the lone
+            // pager card to the right column" with. Until that union grows one (or
+            // `Grid` grows a start-position prop), `col-span-2` (full-width lone
+            // card) is the nearest supported fallback — same as the `PagerFullWidth`
+            // leaf in `SurfaceCardPressableGroup.stories.tsx`.
+            classNames: ["col-span-2"],
             content: nextCard,
         })
     }
@@ -161,7 +163,7 @@ const ContentPager = ({
                 <SurfaceCardPressableGroup
                     ariaLabel={ariaLabel}
                     columns={{ base: 1, sm: 2 }}
-                    gap="grouped"
+                    gap={4}
                     items={items}
                     isSkeleton={isSkeleton}
                 />

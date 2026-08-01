@@ -3,26 +3,29 @@ import { Accordion } from "@sb-components/atoms/navigation/Accordion/Accordion"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Accordion` bọc thẳng HeroUI `DisclosureGroup` + `Disclosure`, không
- * compose atom nào của HỆ có story riêng. NHƯNG (2026-07-27, heroui tier thêm vào
- * canon): mọi sub-part đó vẫn là import THẬT từ `@heroui/react`, nên mỗi node vẫn
- * khai `tier: "heroui"` trong `ANNOTATE` bên dưới — tên khớp Y HỆT identifier import
- * (`DisclosureGroup`/`Disclosure`/`Disclosure.Trigger`/`Disclosure.Indicator`/
- * `Disclosure.Content`/`Skeleton`), KHÔNG cần `storyId` vì không có story CỦA TA để
- * nhảy sang. Trước 2026-07-27 các node này bị BỎ SÓT hoàn toàn (annotate rỗng) —
- * cây "nói dối bằng cách bỏ sót" dù compound HeroUI vẫn render thật.
+ * ATOM — `Accordion` wraps HeroUI `DisclosureGroup` + `Disclosure` directly; it
+ * doesn't compose any atom OF OURS with its own story. BUT (2026-07-27, the heroui
+ * tier added to canon): every one of those sub-parts is still a REAL import from
+ * `@heroui/react`, so each node still declares `tier: "heroui"` in `ANNOTATE` below —
+ * the name matches the import identifier EXACTLY (`DisclosureGroup`/`Disclosure`/
+ * `Disclosure.Trigger`/`Disclosure.Indicator`/`Disclosure.Content`/`Skeleton`), with
+ * NO `storyId` since there is no story OF OURS to jump to. Before 2026-07-27 these
+ * nodes were dropped ENTIRELY (empty annotate) — the tree "lied by omission" even
+ * though the HeroUI compound was still rendering for real.
  *
- * Bộ leaf = `Default` (trần, prop `items`) + `Single`/`Multiple` (prop `allowsMultiple`,
- * mỗi ô dùng `defaultExpandedKeys` để MỞ SẴN panel — vì `allowsMultiple` chỉ đổi HÀNH VI
- * lúc tương tác, không dựng state thì hai ô mount y hệt nhau) + `Skeleton` (prop
- * `isSkeleton`). Leaf `DefaultOpen` cũ đã GỘP vào `Single` — cùng cơ chế
- * `defaultExpandedKeys` mở một panel, tách riêng sẽ ra hai ô trùng hình (2026-07-26).
+ * The leaf set = `Default` (bare, prop `items`) + `Single`/`Multiple` (prop
+ * `allowsMultiple`, each cell uses `defaultExpandedKeys` to open a panel UP FRONT —
+ * since `allowsMultiple` only changes BEHAVIOR on interaction, without seeding state
+ * the two cells would mount looking identical) + `Skeleton` (prop `isSkeleton`). The
+ * old `DefaultOpen` leaf has been MERGED into `Single` — same `defaultExpandedKeys`
+ * mechanism opening one panel; splitting it out would just produce two cells with
+ * the same shape (2026-07-26).
  *
- * `Skeleton` đổi tên từ `Loading` (2026-07-27, thầy chốt: leaf mang TÊN PROP, không
- * mang tên tình huống — prop sinh ra leaf này là `isSkeleton`). Atom không có trục
- * size/variant nào khác cho skeleton bám vào (chỉ `items`/`allowsMultiple`, không
- * đổi hình lúc `isSkeleton`) nên MỘT cách render là đủ theo §12g — không có nấc nào
- * bị bỏ sót.
+ * `Skeleton` was renamed from `Loading` (2026-07-27, teacher's ruling: a leaf carries
+ * the PROP'S name, not the name of the situation — the prop that produces this leaf
+ * is `isSkeleton`). The atom has no other size/variant axis for the skeleton to hang
+ * off of (only `items`/`allowsMultiple`, neither changes shape under `isSkeleton`), so
+ * ONE rendering is enough per §12g — no rung was left out.
  */
 
 const meta: Meta<typeof Accordion> = {
@@ -51,10 +54,10 @@ const FAQ_ITEMS = [
     { key: "access", title: "How long do I have access?", content: "Lifetime, pay once and revisit whenever you want." },
 ]
 
-/** Leaf TRẦN — chỉ `items`, mọi panel đóng. Là leaf của prop `items` (§12g.2: content prop → Default chính là leaf của nó). */
+/** The BARE leaf — only `items`, every panel closed. This is the leaf for prop `items` (§12g.2: a content prop → Default IS its leaf). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Accordion"
                 tier="atom"
@@ -75,13 +78,14 @@ export const Default: Story = {
 }
 
 /**
- * Single — `allowsMultiple=false` (mặc định): mở panel này thì panel khác tự đóng.
- * `allowsMultiple` chỉ lộ ra khi TƯƠNG TÁC, nên leaf này dùng `defaultExpandedKeys` để
- * mở sẵn MỘT panel — vừa cho thấy hình khác `Default`, vừa là cặp đối chứng với `Multiple`.
+ * Single — `allowsMultiple=false` (the default): opening this panel closes any other
+ * panel automatically. `allowsMultiple` only shows itself on INTERACTION, so this leaf
+ * uses `defaultExpandedKeys` to open ONE panel up front — both to show a shape different
+ * from `Default`, and to pair as a contrast against `Multiple`.
  */
 export const Single: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Accordion"
                 tier="atom"
@@ -102,12 +106,13 @@ export const Single: Story = {
 }
 
 /**
- * Multiple — `allowsMultiple` bật: nhiều panel mở độc lập cùng lúc. `defaultExpandedKeys`
- * mở sẵn HAI panel để hình này thật sự khác `Single` (một panel) ngay lúc mount.
+ * Multiple — `allowsMultiple` turned on: several panels open independently at once.
+ * `defaultExpandedKeys` opens TWO panels up front so this shape is genuinely different
+ * from `Single` (one panel) right at mount.
  */
 export const Multiple: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Accordion"
                 tier="atom"
@@ -126,10 +131,10 @@ export const Multiple: Story = {
     ),
 }
 
-/** Skeleton — atom tự vẽ leaf skeleton (hàng trigger đóng); không dùng Skeleton.*. */
+/** Skeleton — the atom draws its own skeleton leaf (closed trigger rows); it doesn't use `Skeleton.*`. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Accordion"
                 tier="atom"

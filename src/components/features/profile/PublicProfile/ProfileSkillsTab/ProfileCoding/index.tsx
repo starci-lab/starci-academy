@@ -72,7 +72,7 @@ type DifficultyFilterValue = "all" | string
 type LanguageFilterValue = "all" | string
 
 /**
- * Coding tab ("Kỹ năng & Lập trình") — the profile owner's coding-practice proof
+ * Coding tab ("Skills & Coding") — the profile owner's coding-practice proof
  * of work, built as a sibling of the Challenges tab: a headline metric row
  * (solved · points · acceptance · rank · top-percentile placeholder), a single
  * "Stats" {@link LabeledCard} that gathers the three breakdowns (by difficulty /
@@ -104,7 +104,7 @@ export const ProfileCoding = ({
     // coding standing — global rank + percentile by solved count (null when unranked)
     const standingSwr = useQueryUserCodingRankSwr(userId)
     // per-source XP breakdown — codingXp is the coding-only XP (ledger sum),
-    // NOT the global users.points balance the legacy "Điểm code" metric read
+    // NOT the global users.points balance the legacy "Code score" metric read
     const xpSwr = useQueryUserXpSwr(userId)
     const history = historySwr.data
     const skills = skillsSwr.data
@@ -114,7 +114,7 @@ export const ProfileCoding = ({
     // null data (no coding activity yet) → treat every metric as zero
     const solved = data?.solvedProblemIds.length ?? 0
 
-    // headline metric row (count · XP · Top đầu · Hạng), mirroring the Challenges tab.
+    // headline metric row (count · XP · top percentile · rank), mirroring the Challenges tab.
     // percentile + rank hide when unranked (no solved problems).
     const stats: Array<{ key: string; value: React.ReactNode }> = [
         { key: "solved", value: solved },

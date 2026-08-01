@@ -48,7 +48,7 @@ const SURFACES: Array<AiCeilSurface> = [
 ]
 
 /**
- * AI settings page — set the model CEILING ("trần") the Auto router may climb to,
+ * AI settings page — set the model CEILING (the "cap") the Auto router may climb to,
  * for cost control. BYOK was removed from the main flow; grading + the lesson
  * tutor run only on the StarCi System pool (the system auto-picks a model by
  * task difficulty + the user's plan). Here the user sets a *lower* ceiling: a

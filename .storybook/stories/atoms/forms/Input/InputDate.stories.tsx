@@ -9,11 +9,11 @@ export default meta
 type Story = StoryObj
 
 /**
- * `InputDate` KHÔNG compose atom nào có story riêng — DOM phát heroui
- * `DateField.Group` (bọc thẳng `DatePicker`/`Calendar`) cộng `Label`/`Skeleton`
- * của `FieldFrame` nội bộ. Không có `storyId` nào để trỏ, nhưng ba part heroui
- * này vẫn cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng
- * (2026-07-28; đọc `.storybook/components/atoms/forms/Input/Input.tsx`, `InputDate`).
+ * `InputDate` composes NO atom with its own story — the DOM emits heroui's
+ * `DateField.Group` (wrapping `DatePicker`/`Calendar` directly) plus the internal
+ * `FieldFrame`'s own `Label`/`Skeleton`. There's no `storyId` to point at, but these
+ * three heroui parts still need the `heroui` tier so the two-rule panel doesn't
+ * silently drop them (2026-07-28; see `.storybook/components/atoms/forms/Input/Input.tsx`, `InputDate`).
  *
  * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
  * `states` entry, since none of them stacks more than one rendering.
@@ -24,7 +24,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
-/** Leaf TRẦN — chưa có label/hint/error, chỉ segments ngày + trigger lịch. */
+/** BARE leaf — no label/hint/error yet, just the date segments + calendar trigger. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -47,11 +47,11 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf props `label` + `hint` — nhãn trên, mô tả dưới nhãn. */
+/** Leaf props `label` + `hint` — label above, description below the label. */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
@@ -74,11 +74,11 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isRequired` — dấu `*` sau nhãn. */
+/** Leaf prop `isRequired` — a `*` mark after the label. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -101,11 +101,11 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `value` filled — ngày thật (`parseDate`) thay vì `null`. */
+/** Leaf prop `value` filled — a real date (`parseDate`) instead of `null`. */
 export const Filled: Story = {
     render: () => {
         const Demo = () => {
@@ -128,11 +128,11 @@ export const Filled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isDisabled` — khoá segments + trigger lịch, nhãn nhạt. */
+/** Leaf prop `isDisabled` — locks the segments + calendar trigger, label dims. */
 export const Disabled: Story = {
     render: () => {
         const Demo = () => {
@@ -155,11 +155,11 @@ export const Disabled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `errorMessage` — cùng `label` → dòng đỏ + viền lỗi. */
+/** Leaf prop `errorMessage` — alongside `label` → a red line + invalid border. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -182,14 +182,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isSkeleton` — nhãn mirror trên field-box skeleton. */
+/** Leaf prop `isSkeleton` — label mirrors above the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InputDate"
                 tier="atom"

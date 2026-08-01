@@ -25,7 +25,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ STATIC CHROME IS HARDCODED, DOMAIN LISTS STAY TYPED PROPS — same split
  * `Navbar`'s own header documents. The tagline, the two column TITLES
- * ("Khám phá" / "Hỗ trợ"), and the "made by" + copyright line are fixed
+ * ("Explore" / "Support"), and the "made by" + copyright line are fixed
  * marketing copy this block owns outright (matches the PriceTag/ContentPaywall
  * precedent for inlined-vs-prop copy) — they never vary per caller, so a prop
  * for them would just be a fancier way to always pass the same string. The
@@ -83,15 +83,15 @@ export interface FooterSocialLink {
 
 /** Props for {@link Footer}. */
 export interface FooterProps {
-    /** The "Khám phá" column's rows (courses/blog/talents/jobs/community in the real app). */
+    /** The "Explore" column's rows (courses/blog/talents/jobs/community in the real app). */
     exploreLinks: Array<FooterLinkItem>
-    /** The "Hỗ trợ" column's rows (contact/email in the real app). */
+    /** The "Support" column's rows (contact/email in the real app). */
     supportLinks: Array<FooterLinkItem>
     /** Founder social links (Facebook/LinkedIn/GitHub in the real app). */
     socials: Array<FooterSocialLink>
-    /** Fired when the bottom-bar "Điều khoản" stub is pressed. */
+    /** Fired when the bottom-bar "Terms" stub is pressed. */
     onTermsPress: () => void
-    /** Fired when the bottom-bar "Bảo mật" stub is pressed. */
+    /** Fired when the bottom-bar "Privacy" stub is pressed. */
     onPrivacyPress: () => void
     /** Extra class on the root `<footer>` (placement only). */
     className?: string
@@ -127,12 +127,12 @@ const FooterLinkColumn = ({ title, links, showAnatomy }: FooterLinkColumnProps) 
 
     const column = (
         <>
-            <Typography size="sm" weight="bold" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={rows} />
+            <Typography size="sm" weight="bold" text={title} showAnatomy={showAnatomy} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={rows} />
         </>
     )
 
-    return <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={column} />
+    return <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={column} />
 }
 
 /**
@@ -167,7 +167,7 @@ const Footer = ({
     const brandMark = (
         <>
             <Logo size="footer" />
-            <StackV gap="flush" className="hidden @app-md:flex" anatPart={showAnatomy ? "StackV" : undefined} body={wordmark} />
+            <StackV gap={1} className="hidden @app-md:flex" anatPart={showAnatomy ? "StackV" : undefined} body={wordmark} />
         </>
     )
 
@@ -188,29 +188,29 @@ const Footer = ({
 
     const brandColumn = (
         <>
-            <StackH gap="flush" classNames={["w-fit", "self-start"]} anatPart={showAnatomy ? "StackH" : undefined} body={brandMark} />
+            <StackH gap={1} classNames={["w-fit", "self-start"]} anatPart={showAnatomy ? "StackH" : undefined} body={brandMark} />
             <Typography
                 size="sm"
                 color="muted"
-                text="Học bằng cách tự tay dựng hệ thống thật, đủ trình cho mọi vòng phỏng vấn kỹ thuật."
-                anatPart={showAnatomy ? "Typography" : undefined}
+                text="Learn by building real systems with your own hands — ready for any technical interview."
+                showAnatomy={showAnatomy}
             />
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={socialLinks} />
+            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={socialLinks} />
         </>
     )
 
     const linkColumns = (
         <>
-            <FooterLinkColumn title="Khám phá" links={exploreLinks} showAnatomy={showAnatomy} />
-            <FooterLinkColumn title="Hỗ trợ" links={supportLinks} showAnatomy={showAnatomy} />
+            <FooterLinkColumn title="Explore" links={exploreLinks} showAnatomy={showAnatomy} />
+            <FooterLinkColumn title="Support" links={supportLinks} showAnatomy={showAnatomy} />
         </>
     )
 
     // top region: brand + tagline + socials (left) · two link columns (right)
     const topRegion = (
         <>
-            <StackV gap="grouped" className="max-w-sm" anatPart={showAnatomy ? "StackV" : undefined} body={brandColumn} />
-            <StackH gap="page" wrap anatPart={showAnatomy ? "StackH" : undefined} body={linkColumns} />
+            <StackV gap={4} className="max-w-sm" anatPart={showAnatomy ? "StackV" : undefined} body={brandColumn} />
+            <StackH gap={7} wrap anatPart={showAnatomy ? "StackH" : undefined} body={linkColumns} />
         </>
     )
 
@@ -221,14 +221,14 @@ const Footer = ({
                 className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
                 data-anat-part={showAnatomy ? "Link" : undefined}
             >
-                Điều khoản
+                Terms
             </HeroUILink>
             <HeroUILink
                 onPress={onPrivacyPress}
                 className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
                 data-anat-part={showAnatomy ? "Link" : undefined}
             >
-                Bảo mật
+                Privacy
             </HeroUILink>
         </>
     )
@@ -239,27 +239,25 @@ const Footer = ({
             <Typography
                 size="xs"
                 color="muted"
-                text={`© ${year} StarCi Academy · Được phát triển bởi Nguyễn Văn Tự Cường`}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                text={`© ${year} StarCi Academy · Built by Nguyễn Văn Tự Cường`} // vn-ok: the author's real name
+                showAnatomy={showAnatomy}
             />
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={legalLinks} />
+            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={legalLinks} />
         </>
     )
 
     const sections = (
         <>
             <StackH
-                gap="page"
+                gap={7}
                 justify="between"
-                wrap
                 className="flex-col @app-md:flex-row"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={topRegion}
             />
             <StackH
-                gap="related"
+                gap={3}
                 justify="between"
-                wrap
                 className="flex-col items-start @app-sm:flex-row @app-sm:items-center"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={bottomBar}
@@ -268,12 +266,12 @@ const Footer = ({
     )
 
     const footerBody = (
-        <StackV gap="section" divider showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={sections} />
+        <StackV gap={6} divider showAnatomy={showAnatomy} anatPart={showAnatomy ? "StackV" : undefined} body={sections} />
     )
 
     return (
         <footer data-anat-part={anatPart} className={cn("border-t border-default bg-surface", className)}>
-            <Container size="xl" padding="roomy" anatPart={showAnatomy ? "Container" : undefined} body={footerBody} />
+            <Container size="xl" padding={6} anatPart={showAnatomy ? "Container" : undefined} body={footerBody} />
         </footer>
     )
 }

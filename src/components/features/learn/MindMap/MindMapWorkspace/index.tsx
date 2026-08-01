@@ -33,7 +33,7 @@ export type MindMapWorkspaceProps = WithClassNames<undefined>
  * Search + tier filter drive BOTH panes: the rail lists the matching keywords (a local, instant
  * fuzzy filter — no RAG needed, the tree is already loaded), the canvas hides non-matches. Selecting
  * a keyword — clicking a canvas node OR a rail row — recentres the map on it and opens its drawer.
- * An unauthored course shows the authored-map-only empty state + funnel to "Học phần".
+ * An unauthored course shows the authored-map-only empty state + funnel to "Course Modules".
  *
  * @param props - optional className for the root element.
  */

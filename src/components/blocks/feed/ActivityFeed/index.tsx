@@ -73,7 +73,7 @@ interface FeedRow {
 interface DayGroup {
     /** Stable key (start-of-day ms). */
     key: string
-    /** Header label ("Hôm nay" / "Hôm qua" / a formatted date). */
+    /** Header label ("Today" / "Yesterday" / a formatted date). */
     label: string
     /** Rows in this day, newest first. */
     rows: Array<FeedRow>
@@ -112,7 +112,7 @@ export interface ActivityFeedProps extends WithClassNames<undefined> {
  * The shared Facebook-style activity feed renderer: each row is an
  * {@link ActivityAvatar} (avatar + activity-type icon badge) beside a sentence
  * (actor + action + target, both clickable when routable) and a relative timestamp,
- * grouped under relative day headers (Hôm nay / Hôm qua / date). Consecutive
+ * grouped under relative day headers (Today / Yesterday / date). Consecutive
  * milestone passes roll up into one line; a null target falls back to a generic-noun
  * phrase — never blank (see `starci-feed.md`). Props-only: the owning FEATURE fetches
  * the items + supplies the route resolver, so the dashboard Explore feed and the

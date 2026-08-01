@@ -7,7 +7,7 @@ import { InlineIconLabel } from "@sb-components/composites/text/InlineIconLabel/
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -42,7 +42,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * a runtime with its own state machine; porting it is a separate piece of work,
  * not a detail of this dialog. `PlayerGap` below REUSES that exact precedent
  * rather than inventing a new one: `SurfaceCard` (`aspect-video` card face) +
- * `FeedbackEmpty` (icon + honest title/description) — both real composites with
+ * `EmptyState` (icon + honest title/description) — both real composites with
  * their own stories, so the gap is a first-class, traceable node in the anatomy
  * tree instead of a bare hand-rolled `<div>` that looks like a player and lies
  * on first render.
@@ -62,7 +62,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * the source's `text-sm text-muted`. `VideoHostPlatform.Other` has NO key under
  * `videoHostPlatform.*` in `src/messages/vi.json` (only youtube/googleDrive/
  * vimeo/cloudflareStream exist) — a real content gap upstream, not something to
- * silently fake here. Judgement call: fall back to the app's generic "Khác"
+ * silently fake here. Judgement call: fall back to the app's generic "Other"
  * (used the same way elsewhere in `vi.json`) rather than throw, since this is a
  * passive label, not a `EnumChip` map that must fail loudly on an unhandled key.
  *
@@ -151,17 +151,17 @@ const KIND_MAP: Record<LessonVideoKind, EnumChipEntry> = {
     [LessonVideoKind.RawStream]: {
         color: "warning",
         label: "Raw Stream",
-        tooltip: "Luồng video gốc chưa qua chỉnh sửa. Nội dung đầy đủ nhưng có thể còn thô, lỗi nhỏ hoặc chưa tối ưu trải nghiệm.",
+        tooltip: "The original, unedited stream recording. Full content, but may still be rough, have minor glitches, or not be optimized for viewing.",
     },
     [LessonVideoKind.EditedStream]: {
         color: "warning",
         label: "Edited Stream",
-        tooltip: "Luồng video đã được chỉnh sửa. Nội dung được cắt gọn, rõ ràng và dễ theo dõi hơn.",
+        tooltip: "The stream recording after editing. Content is trimmed, clearer, and easier to follow.",
     },
     [LessonVideoKind.PremiumRecord]: {
         color: "warning",
         label: "Premium Record",
-        tooltip: "Phiên bản chất lượng cao nhất. Nội dung được đầu tư kỹ lưỡng về hình ảnh, âm thanh và trải nghiệm học tập.",
+        tooltip: "The highest-quality version. Carefully produced visuals, audio, and learning experience.",
     },
 }
 
@@ -172,7 +172,7 @@ const HOST_PLATFORM_LABEL: Record<VideoHostPlatform, string> = {
     [VideoHostPlatform.Vimeo]: "Vimeo",
     [VideoHostPlatform.CloudflareStream]: "Cloudflare Stream",
     // No key exists upstream for `other` — see file header.
-    [VideoHostPlatform.Other]: "Khác",
+    [VideoHostPlatform.Other]: "Other",
 }
 
 /** `durationMs` → `HH:mm`, zero-padded (mirrors the source's `dayjs.duration(...).format("HH:mm")`). */
@@ -184,9 +184,9 @@ const formatDuration = (durationMs: number): string => {
 }
 
 /** Block-owned vocabulary for the player gap — see the file header's scope-cut note. */
-const PLAYER_GAP_TITLE = "Trình phát video chưa dựng ở khung này"
+const PLAYER_GAP_TITLE = "No video player built into this framework yet"
 const PLAYER_GAP_DESCRIPTION =
-    "Bộ khung này chưa có primitive phát video nào — phần thẻ xung quanh đã sẵn sàng để cắm trình phát thật (YouTube / MPEG-DASH / video chuẩn) vào sau."
+    "This framework has no video-player primitive yet — the surrounding card is ready to plug in a real player (YouTube / MPEG-DASH / standard video) later."
 
 /** Props for the internal {@link PlayerGap} placeholder. */
 interface PlayerGapProps {
@@ -197,7 +197,7 @@ interface PlayerGapProps {
  * Clearly-marked placeholder standing in for the real video player (YouTube /
  * MPEG-DASH / standard `<video>`, chosen per {@link VideoHostPlatform}) — an
  * out-of-scope runtime, not ported here. See file header, "PLAYER ENGINE OUT
- * OF SCOPE": reuses the exact `SurfaceCard` + `FeedbackEmpty` pairing
+ * OF SCOPE": reuses the exact `SurfaceCard` + `EmptyState` pairing
  * `FoundationResourceBody` already established for this same situation,
  * rather than a new hand-rolled box.
  */
@@ -206,14 +206,15 @@ const PlayerGap = ({ showAnatomy = false }: PlayerGapProps) => (
         contentClassName="aspect-video"
         anatPart={showAnatomy ? "SurfaceCard" : undefined}
         showAnatomy={showAnatomy}
-    >
-        <FeedbackEmpty
-            icon={PlayIcon}
-            title={PLAYER_GAP_TITLE}
-            description={PLAYER_GAP_DESCRIPTION}
-            anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-        />
-    </SurfaceCard>
+        body={() => (
+            <EmptyState
+                icon={PlayIcon}
+                title={PLAYER_GAP_TITLE}
+                description={PLAYER_GAP_DESCRIPTION}
+                anatPart={showAnatomy ? "EmptyState" : undefined}
+            />
+        )}
+    />
 )
 
 /**
@@ -235,14 +236,14 @@ const LessonVideoModal = ({
         <>
             <PlayerGap showAnatomy={showAnatomy} />
             {isLoading ? (
-                <Typography size="sm" isSkeleton classNames={["w-3/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" isSkeleton classNames={["w-3/4"]} showAnatomy={showAnatomy} />
             ) : (
                 <Typography
                     size="sm"
                     isLink
                     href={video?.url ?? ""}
                     text={video?.url ?? ""}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             )}
         </>
@@ -272,7 +273,7 @@ const LessonVideoModal = ({
     const metaAndPlayer = (
         <>
             <Cluster
-                gap="related"
+                gap={3}
                 justify="center"
                 anatPart={showAnatomy ? "Cluster" : undefined}
                 items={[
@@ -291,7 +292,7 @@ const LessonVideoModal = ({
                         key: "duration",
                         content: (
                             <InlineIconLabel
-                                icon={<ClockIcon />}
+                                icon={ClockIcon}
                                 tone="default"
                                 size="sm"
                                 isSkeleton={isLoading}
@@ -309,20 +310,20 @@ const LessonVideoModal = ({
                                 color="muted"
                                 isSkeleton
                                 classNames={["w-1/3"]}
-                                anatPart={showAnatomy ? "Typography" : undefined}
+                                showAnatomy={showAnatomy}
                             />
                         ) : (
                             <Typography
                                 size="sm"
                                 color="muted"
                                 text={HOST_PLATFORM_LABEL[video?.hostPlatform ?? VideoHostPlatform.Youtube]}
-                                anatPart={showAnatomy ? "Typography" : undefined}
+                                showAnatomy={showAnatomy}
                             />
                         ),
                     },
                 ]}
             />
-            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={playerAndLink} />
+            <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={playerAndLink} />
             {!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? (
                 // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
                 // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
@@ -332,7 +333,7 @@ const LessonVideoModal = ({
                 // code. Left at the composite's default tone rather than shipping a
                 // className that silently does nothing — a real, marked gap, not this
                 // port's to close (`MarkdownContent` is composite tier, out of scope here).
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={descriptionAndCaption} />
+                <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={descriptionAndCaption} />
             ) : null}
         </>
     )
@@ -350,14 +351,14 @@ const LessonVideoModal = ({
                     // feeds the result into the slot, same idiom as `ContentHeader`'s `PageHeader`
                     // title skeleton.
                     isLoading ? (
-                        <Typography weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography weight="bold" isSkeleton showAnatomy={showAnatomy} />
                     ) : (
                         video?.title ?? ""
                     )
                 }
                 showAnatomy={showAnatomy}
             >
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={metaAndPlayer} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={metaAndPlayer} />
             </ModalShell>
         </div>
     )

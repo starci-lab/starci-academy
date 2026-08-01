@@ -37,13 +37,13 @@ export default meta
 
 type Story = StoryObj<typeof ContentArticle>
 
-const BODY = `## Vì sao image phình
+const BODY = `## Why images balloon
 
-Mỗi lệnh trong \`Dockerfile\` đẻ ra một **layer**, và layer thì cộng dồn — xoá file ở layer
-sau không lấy lại chỗ đã chiếm ở layer trước.
+Every instruction in a \`Dockerfile\` spawns a **layer**, and layers accumulate — deleting a
+file in a later layer doesn't reclaim the space it took up in an earlier one.
 
-- \`COPY . .\` trước \`npm ci\` làm cache vỡ mỗi lần sửa code
-- toolchain nằm lại trong image chạy thật
+- \`COPY . .\` before \`npm ci\` breaks the cache on every code change
+- the toolchain stays behind in the runtime image
 
 \`\`\`dockerfile
 FROM node:22-alpine AS build
@@ -52,26 +52,26 @@ COPY package*.json ./
 RUN npm ci
 \`\`\`
 
-> Đọc kỹ thứ tự lệnh trước khi tối ưu bất cứ thứ gì khác.
+> Read the instruction order carefully before optimizing anything else.
 
-Phần dưới đi vào multi-stage build và cách ghim tag cho production.`
+The next part covers multi-stage builds and how to pin tags for production.`
 
 const OFFER = {
-    title: "Phần còn lại dành cho học viên",
-    description: "Mở khoá toàn bộ bài học, thử thách và sandbox của khoá này.",
+    title: "The rest is for enrolled students",
+    description: "Unlock every lesson, challenge, and sandbox in this course.",
     discountedPriceVnd: 1290000,
     originalPriceVnd: 1990000,
     currentPhase: PricingPhase.Pioneer,
     seatsRemaining: 12,
     nextPhasePriceVnd: 1590000,
-    ctaLabel: "Mở khoá khoá học",
+    ctaLabel: "Unlock the course",
     onPurchase: () => {},
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the reading card the lesson sits on, owning the paper surface and the padding around everything inside it", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "StackV": { tier: "frame", role: "the vertical frame separating the hint, the body and the offer, owning the seams between them", storyId: "frames-stack-stackv--default" },
-    "FeedbackCallout": { tier: "composite", role: "the one-time tip that a passage can be selected to ask AI, drawn as a flat strip so it leads the body without competing with it", storyId: "composites-feedback-feedback-feedbackcallout--default" },
+    "Callout": { tier: "composite", role: "the one-time tip that a passage can be selected to ask AI, drawn as a flat strip so it leads the body without competing with it", storyId: "composites-feedback-callout-callout--default" },
     "MarkdownContent": { tier: "composite", role: "the viewer that repeats the authored lesson; the block hands it the document and never inspects what is in it", storyId: "composites-viewers-markdowncontent--reading" },
     "ContentPaywall": { tier: "block", role: "the offer under the faded tail, reused unchanged so pricing reads the same here as on the course page", storyId: "starci-blocks-learn-contentpaywall-contentpaywall--full" },
 }
@@ -79,7 +79,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — an open lesson: the reader can read all of it. */
 export const Open: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentArticle"
                 tier="block"
@@ -93,14 +93,14 @@ export const Open: Story = {
                         why: "The lesson renders in full with the one-time selection tip leading it. The tip is placed above the body rather than beside a paragraph, because the feature it teaches cannot be discovered until a passage is already selected.",
                         code: `<ContentArticle
     body={lesson.body}
-    hintText="Bôi đen một đoạn để hỏi AI về đúng chỗ đó."
+    hintText="Highlight a passage to ask AI about that exact spot."
 />`,
                         render: (
                             <ContentArticle
                                 anatPart="ContentArticle"
                                 showAnatomy
                                 body={BODY}
-                                hintText="Bôi đen một đoạn để hỏi AI về đúng chỗ đó."
+                                hintText="Highlight a passage to ask AI about that exact spot."
                             />
                         ),
                     },
@@ -119,7 +119,7 @@ export const Open: Story = {
 /** LEAF — a locked lesson ⇒ **gains** the fade and the offer, **loses** the hint. */
 export const Locked: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentArticle"
                 tier="block"
@@ -155,7 +155,7 @@ export const Locked: Story = {
 /** LEAF — the caller flips `isSkeleton`; the card mirrors its own body. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentArticle"
                 tier="block"

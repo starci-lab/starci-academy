@@ -180,7 +180,7 @@ const isMutedLabelNode = (node: { data?: { hName?: unknown } }): boolean => node
 /**
  * True for the actual authoring idiom found in the card catalog: ONE paragraph
  * that OPENS with a `**bold**` span and keeps going as prose on the same line/block
- * (`**Giải pháp** — NestJS cung cấp ba hook...`) — label and body live in the SAME
+ * (`**Solution** — NestJS provides three hooks...`) — label and body live in the SAME
  * mdast paragraph node. Two places this shape shows up: as a bare top-level
  * paragraph, OR (the actual catalog convention) as the sole child of a `:::muted`
  * directive — see {@link isSelfContainedLeadBoldMuted}.
@@ -194,7 +194,7 @@ const isLeadBoldParagraph = (node: { type?: string, children?: Array<{ type?: st
 
 /**
  * True when a `:::muted` directive's ENTIRE content is one {@link isLeadBoldParagraph}
- * — the real catalog shape (`:::muted\n**Giải pháp** — NestJS cung cấp...\n:::`),
+ * — the real catalog shape (`:::muted\n**Solution** — NestJS provides...\n:::`),
  * where the directive is a pointless extra wrapper around an already-self-contained
  * section. {@link groupArcSections} unwraps it (tags the inner paragraph directly)
  * instead of double-wrapping, which is what caused the infinite recursion this fixes
@@ -351,7 +351,7 @@ const holdBackIncompleteMermaidFence = (markdown: string): string => {
 
 /**
  * Scans markdown for mermaid blocks and pairs each with the caption paragraph that
- * immediately follows it (a line starting with "Hình"/"Figure"), keyed by trimmed source.
+ * immediately follows it (a figure-caption line, Vietnamese or English — see the regex below), keyed by trimmed source.
  * @param markdown - Raw markdown source.
  * @returns Caption text keyed by trimmed mermaid source.
  */
@@ -364,7 +364,7 @@ const extractMermaidCaptions = (markdown: string): Record<string, string> => {
         // Strip surrounding italic markers authors wrap captions in (*...*).
         const caption = match[2].trim().replace(/^\*+|\*+$/g, "").trim()
         // Only adopt lines that read as figure captions, not following prose.
-        if (/^(Hình|Figure)\b/i.test(caption)) {
+        if (/^(Hình|Figure)\b/i.test(caption)) { // vn-ok: matches the VI figure word in lesson prose
             captions[code] = caption
         }
     }
@@ -372,7 +372,7 @@ const extractMermaidCaptions = (markdown: string): Record<string, string> => {
 }
 
 /**
- * Removes each mermaid figure-caption paragraph ("Hình N: …" / "Figure N: …") from the source
+ * Removes each mermaid figure-caption paragraph ("Figure N: …", either language) from the source
  * so it isn't rendered twice — the diagram now shows it as a real `<figcaption>` (see
  * {@link extractMermaidCaptions} + MermaidDiagram). Non-caption paragraphs after a fence are left intact.
  * @param markdown - Raw markdown source.
@@ -382,7 +382,7 @@ const stripMermaidCaptions = (markdown: string): string => {
     MERMAID_CAPTION_REGEX.lastIndex = 0
     return markdown.replace(MERMAID_CAPTION_REGEX, (match: string, _code: string, caption: string) => {
         const clean = caption.trim().replace(/^\*+|\*+$/g, "").trim()
-        if (/^(Hình|Figure)\b/i.test(clean)) {
+        if (/^(Hình|Figure)\b/i.test(clean)) { // vn-ok: matches the VI figure word in lesson prose
             // keep the fence + the blank line(s) after it, drop only the caption text
             return match.slice(0, match.lastIndexOf(caption))
         }
@@ -404,7 +404,7 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
      * Boxes each Interview Arc label (`:::muted` / standalone-bold paragraph) together
      * with its following body into one collapsible `arcsection` — see `map.tsx`.
      * Opt-in (default off) so lesson/challenge content using the same `:::muted`
-     * shape for unrelated callouts (e.g. "Đầu vào"/"Đầu ra") is unaffected. Only the
+     * shape for unrelated callouts (e.g. "Input"/"Output") is unaffected. Only the
      * flashcard/mock-interview answer (FlipCard back face) turns this on.
      */
     arcSections?: boolean
@@ -412,7 +412,7 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
      * Plain-text mode: render authored content with INLINE markdown decoration
      * stripped to raw text (inline code, bold, italic, links) while keeping block
      * structure + `:::muted` arc labels + cloze. Opt-in for flashcard + mock-interview
-     * surfaces (thầy 2026-07-17 "render thô"); lesson/challenge content keeps full markdown.
+     * surfaces (teacher's note, 2026-07-17, "render plain"); lesson/challenge content keeps full markdown.
      */
     plain?: boolean
     /**

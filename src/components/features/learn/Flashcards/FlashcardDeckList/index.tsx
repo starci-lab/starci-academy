@@ -81,14 +81,14 @@ export const FlashcardDeckList = ({
     // read the owning course id from the store — no prop drilling needed
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const displayId = useAppSelector((state) => state.course.displayId)
-    // eager resolve-or-start (thầy 2026-07-11: "bấm vô học thì isPending ở cái
-    // nút học ... tạo xong session xong là router push vào trang tương tự với
-    // học nhanh") — only meaningful in the study ("Học thẻ") context; a
+    // eager resolve-or-start (teacher 2026-07-11: "pressing Study should show
+    // isPending on the study button itself ... once the session is created,
+    // router push into the same page as quick study") — only meaningful in the study ("Study cards") context; a
     // hypothetical future reuse with `showProgress={false}` (picking a deck for
     // something OTHER than a review session) falls back to `onSelectDeck`.
     const { start: startReview, startingDeckId } = useStartFlashcardReviewSession(courseId)
-    // deck whose review-mode modal is open (thầy 2026-07-13: "Học" mở modal chọn
-    // full/quên trước khi vào), null = closed. Held as the whole deck so the modal
+    // deck whose review-mode modal is open (teacher 2026-07-13: "Study" opens a modal to choose
+    // full/forgotten-only before entering), null = closed. Held as the whole deck so the modal
     // reads its title + total + dueCount without a re-fetch.
     const [modeDeck, setModeDeck] = useState<FlashcardDeckEntity | null>(null)
     // live search query filtering decks by title/description
@@ -160,7 +160,7 @@ export const FlashcardDeckList = ({
                 {t("flashcard.deck.due", { count: deck.dueCount })}
             </Chip>
         ) : null
-    /** "Học" pressed → open the mode modal (study context), or fall straight
+    /** "Study" pressed → open the mode modal (study context), or fall straight
      *  through to `onSelectDeck` for a non-study reuse (`showProgress={false}`). */
     const onPressStart = useCallback(
         (deck: FlashcardDeckEntity) => {
@@ -174,7 +174,7 @@ export const FlashcardDeckList = ({
     )
     /** Chosen a mode in the modal → resolve-or-start with that scope, then
      *  `router.push` into the live session (mirrors the old eager idiom, now
-     *  gated behind the modal's "Bắt đầu"). */
+     *  gated behind the modal's "Start"). */
     const onStartWithMode = useCallback(
         async (mode: FlashcardReviewMode) => {
             if (!modeDeck || !displayId) {
@@ -191,7 +191,7 @@ export const FlashcardDeckList = ({
         },
         [modeDeck, displayId, startReview, router, locale],
     )
-    /** The "Học" CTA — the only action on a deck (card itself is not pressable). */
+    /** The "Study" CTA — the only action on a deck (card itself is not pressable). */
     const cta = (deck: FlashcardDeckEntity) => (
         <Button
             size="sm"

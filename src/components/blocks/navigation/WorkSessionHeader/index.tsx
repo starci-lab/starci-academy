@@ -16,14 +16,14 @@ export interface WorkSessionHeaderIdentity {
 
 /** Props for the {@link WorkSessionHeader} block. */
 export interface WorkSessionHeaderProps extends WithClassNames<undefined> {
-    /** Label for the leading {@link BackLink} ("Rời phỏng vấn" / "Thoát"…). */
+    /** Label for the leading {@link BackLink} ("Leave interview" / "Exit"…). */
     backLabel: string
     /** Fired when the back link is pressed — the caller owns the routing/confirm-modal. */
     onBack: () => void
     /**
      * Optional bold label right after the back link, BEFORE the identity chip —
-     * disambiguates which WORK MODE this session is (e.g. "Hỏi nhanh" vs "Học
-     * thẻ") when a caller shares this shell across several modes with an
+     * disambiguates which WORK MODE this session is (e.g. "Quick Quiz" vs
+     * "Flashcard Study") when a caller shares this shell across several modes with an
      * otherwise-identical header row. NEVER hidden on mobile (short, and more
      * essential for orientation than `identity`, which already hides at that
      * breakpoint). Omit for a single-mode caller (e.g. Mock Interview) — no
@@ -33,8 +33,8 @@ export interface WorkSessionHeaderProps extends WithClassNames<undefined> {
     /** Optional identity chip (avatar + name) between the back link and the counter. */
     identity?: WorkSessionHeaderIdentity
     /**
-     * Step counter text ("Câu 3/6", "2/4 · Thiết kế"…). Hidden below `sm:`
-     * (chốt 2026-07-12, joins `identity`/`meta`) — the progress-segment bar at
+     * Step counter text ("Question 3/6", "2/4 · Design"…). Hidden below `sm:`
+     * (locked in 2026-07-12, joins `identity`/`meta`) — the progress-segment bar at
      * the band's bottom edge already conveys position/total visually on every
      * viewport; the text label is a desktop nicety, not load-bearing on mobile.
      */
@@ -53,35 +53,35 @@ export interface WorkSessionHeaderProps extends WithClassNames<undefined> {
      * Optional set of COMPLETED step positions (0-indexed) — each listed
      * segment reads `success` (green) regardless of order, so a card graded
      * out of sequence (jump ahead, grade, jump back) still shows green
-     * (2026-07-12, thầy: free-nav "chưa tới vẫn click được, cả trước và sau").
-     * When OMITTED the bar falls back to the old linear model (`position <
-     * current` = done) for callers that haven't adopted per-step tracking.
+     * (2026-07-12, instructor: free-nav "even steps not yet reached can be
+     * clicked, both before and after"). When OMITTED the bar falls back to
+     * the old linear model (`position < current` = done) for callers that haven't adopted per-step tracking.
      */
     doneSet?: ReadonlyArray<number>
     /**
      * Optional — makes EVERY segment clickable to jump straight to that step
-     * (2026-07-12: free navigation, "cả trước và sau, chưa tới vẫn click
-     * được" — the old `position <= current` gate is gone). The thin 4px bar is
+     * (2026-07-12: free navigation, "both before and after, even steps not
+     * yet reached can be clicked" — the old `position <= current` gate is gone). The thin 4px bar is
      * wrapped in a taller transparent hit-zone so it's actually tappable (the
-     * old bare 4px target was the real reason "bấm hồng không đổi"). Omit for a
+     * old bare 4px target was the real reason "tapping the pink segment did nothing"). Omit for a
      * read-only bar.
      */
     onSegmentClick?: (position: number) => void
     /**
-     * Optional — renders a "Kết thúc" completion button pinned to the header's
+     * Optional — renders a "Finish" completion button pinned to the header's
      * right edge (after {@link rightSlot}). Ends the session NOW (grade what's
-     * done → results), distinct from the back-link's "Thoát" (leave, keep the
+     * done → results), distinct from the back-link's "Exit" (leave, keep the
      * session resumable). `secondary` tone — a completion, not the primary
      * in-session action. Omit for a session that only finishes by reaching the
      * last step.
      */
     onFinish?: () => void
-    /** Label for the {@link onFinish} button (e.g. "Kết thúc"). Required to render it. */
+    /** Label for the {@link onFinish} button (e.g. "Finish"). Required to render it. */
     finishLabel?: React.ReactNode
     /**
      * Optional small chips right after the counter (level/topic tags…) — part of
-     * the ONE header row, not a separate line below it (thầy 2026-07-11: "bỏ mấy
-     * cái tag lên cái thanh navbar phụ"). Hidden below `sm:` (mirrors `identity`
+     * the ONE header row, not a separate line below it (instructor 2026-07-11:
+     * "put those tags up on the secondary nav bar"). Hidden below `sm:` (mirrors `identity`
      * — 2026-07-12, the least-essential piece, dropped at the SAME breakpoint
      * `identity` already uses) so the common case fits without scrolling; the
      * row is ALSO wrapped in a `ScrollShadow` as a fallback underneath that for
@@ -104,7 +104,7 @@ export interface WorkSessionHeaderProps extends WithClassNames<undefined> {
  * gets a pink `accent` ring when it `=== current` (viewed), regardless of its
  * fill, so "which step am I on" never disappears just because that step is
  * already graded. With {@link onSegmentClick} every segment jumps to that step
- * (free nav); with {@link onFinish} a "Kết thúc" button ends the session. Extracted
+ * (free nav); with {@link onFinish} a "Finish" button ends the session. Extracted
  * from `MockInterviewSession`'s own `renderWorkHeader` so the flashcard sessions
  * can share the exact same shell.
  * @param props - {@link WorkSessionHeaderProps}
@@ -184,8 +184,8 @@ export const WorkSessionHeader = ({
                 {meta ? <span className="hidden shrink-0 items-center gap-2 @app-sm:flex">{meta}</span> : null}
                 <span className="flex-1" />
                 {rightSlot ? <span className="shrink-0">{rightSlot}</span> : null}
-                {/* "Kết thúc" — end the session NOW (→ results), distinct from the
-                    back-link's "Thoát" (leave, keep it resumable). ALWAYS visible
+                {/* "Finish" — end the session NOW (→ results), distinct from the
+                    back-link's "Exit" (leave, keep it resumable). ALWAYS visible
                     (a completion action, not hidden on mobile like `meta`). */}
                 {onFinish && finishLabel ? (
                     <Button variant="secondary" size="sm" className="shrink-0" onPress={onFinish}>
@@ -195,20 +195,21 @@ export const WorkSessionHeader = ({
             </ScrollShadow>
             {/* progress meter = bottom edge, full width (goal-gradient). When
                 `onSegmentClick` is given EVERY segment is clickable — jump to any
-                step, "cả trước và sau, chưa tới vẫn click được" (2026-07-12). The
+                step, "both before and after, even steps not yet reached can be
+                clicked" (2026-07-12). The
                 thin bar sits inside a taller transparent hit-zone (`py-2`) so
-                it's actually tappable — the bare 4px target was why "bấm hồng
-                không đổi". FILL (`doneSet` → success/green, else default/gray) and
-                CURRENT are 2 INDEPENDENT signals (2026-07-12 fix, thầy: "cái màu
-                xanh mà click vào là màu hồng" — before, `current` fell back to
+                it's actually tappable — the bare 4px target was why "tapping the
+                pink segment did nothing". FILL (`doneSet` → success/green, else default/gray) and
+                CURRENT are 2 INDEPENDENT signals (2026-07-12 fix, instructor: "the
+                green color you click on turns pink" — before, `current` fell back to
                 the done color whenever the viewed step was already graded, so
                 "which step am I on" disappeared the moment you revisited a
                 graded card). success keeps meaning "graded" (matches the
                 mastery bar elsewhere, [[elements/color]]); accent keeps meaning
                 "viewing" ([[accent-system]]) — neither overrides the other. 2
                 earlier tries added a SEPARATE decoration (a ring around the bar,
-                then a dot above it) — thầy rejected both as "phèn" ("cái này
-                nhìn phèn lắm"), wanting the plain bar shape kept with NO added
+                then a dot above it) — instructor rejected both as "tacky" ("this
+                looks really tacky"), wanting the plain bar shape kept with NO added
                 element. Final: `current` is just a TALLER bar (`h-1.5` vs `h-1`)
                 — no new shape, no extra color, the SAME rectangle just reads
                 more prominent (mirrors how a waveform/equalizer highlights the

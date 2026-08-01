@@ -3,13 +3,15 @@ import { FloppyDiskIcon, XIcon } from "@phosphor-icons/react"
 import { FormActions } from "@sb-components/composites/form/Form/Form"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * COMPOSITE (composite tier §13) — `FormActions`: hàng nút cuối form. Là khung DANH
- * SÁCH LẶP nên BẮT BUỘC nhận `items` dữ liệu, CẤM children (§13b) — và nó
- * COMPOSE atom `ButtonGroup` chứ KHÔNG tự vẽ nút (§13c).
+ * COMPOSITE (composite tier §13) — `FormActions`: the form's closing button
+ * row. A REPEATED-LIST shell, so it REQUIRES `items` data, children FORBIDDEN
+ * (§13b) — and it COMPOSES the atom `ButtonGroup` rather than hand-drawing a
+ * button (§13c).
  *
- * ⚠️ PHẠM VI STATE (§12f): state do CHÍNH khung đẻ ra là CĂN NGANG (`align`) và
- * DÍNH ĐÁY (`sticky`). Vai trò/hành vi từng nút (`variant`/`isDisabled`/`icon`)
- * là state của `Atoms/Buttons/Button` — khung chỉ chuyển tiếp qua `items`.
+ * ⚠️ STATE SCOPE (§12f): the state the shell ITSELF produces is HORIZONTAL
+ * ALIGNMENT (`align`) and BOTTOM-STICKING (`sticky`). Each button's own
+ * role/behaviour (`variant`/`isDisabled`/`icon`) is `Atoms/Buttons/Button`'s
+ * state — the shell only forwards it through `items`.
  */
 const meta: Meta<typeof FormActions> = {
     title: "Composites/Form/Form/FormActions",
@@ -22,10 +24,12 @@ const meta: Meta<typeof FormActions> = {
 export default meta
 type Story = StoryObj<typeof FormActions>
 /**
- * Con TRỰC TIẾP duy nhất = atom `ButtonGroup` (khung chỉ căn ngang + chrome dính đáy).
- * `ButtonGroup` tự tag MỖI nút con là `Button` (không tự tag chính nó — nó không
- * mọc thêm một node "Group" nào trong DOM), nên node THẬT xuất hiện ở đây là `Button`,
- * lặp một lần cho mỗi item trong `items` (§11a.1 gom theo phần tử, không theo tên).
+ * The one DIRECT child is the atom `ButtonGroup` (the shell only owns
+ * horizontal alignment + bottom-sticking chrome). `ButtonGroup` tags EACH of
+ * its child buttons as `Button` itself (it does not tag itself — it grows no
+ * extra "Group" node in the DOM), so the REAL node showing up here is
+ * `Button`, repeated once per item in `items` (§11a.1 — grouped by element,
+ * not by name).
  */
 const PARTS: Array<AnatomyNode> = [
     {
@@ -35,21 +39,22 @@ const PARTS: Array<AnatomyNode> = [
         storyId: "atoms-buttons-button-button--variants",
     },
 ]
-/** Cặp nút chuẩn của một form: huỷ (secondary) + lưu (primary). */
+/** A form's standard button pair: cancel (secondary) + save (primary). */
 const SAVE_ITEMS = [
-    { key: "cancel", label: "Huỷ", variant: "secondary" as const, icon: XIcon },
-    { key: "save", label: "Lưu thay đổi", icon: FloppyDiskIcon },
+    { key: "cancel", label: "Cancel", variant: "secondary" as const, icon: XIcon },
+    { key: "save", label: "Save changes", icon: FloppyDiskIcon },
 ]
 /**
- * Default — `align`: mép neo của hàng nút. GỘP MỘT LEAF (§14d.2) vì cả ba giá trị
- * cho ra ĐÚNG một cây DOM (ButtonGroup + 2 nút), chỉ đổi lớp `justify-*` — khác
- * lớp thì là STATE, không phải leaf. Ba giá trị của `align` giờ là ba phần tử của
- * `states[]` thay vì ba bản render xếp tay bằng `AlignSample` (đã xoá, chỉ để xếp
- * state tay).
+ * Default — `align`: the button row's anchor edge. MERGED INTO ONE LEAF
+ * (§14d.2) because all three values produce the EXACT same DOM tree
+ * (ButtonGroup + 2 buttons), only the `justify-*` class changes — a class
+ * difference is STATE, not a leaf. The three `align` values are now three
+ * entries of `states[]` instead of three hand-laid renders via `AlignSample`
+ * (removed — it only existed to lay out state by hand).
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FormActions"
                 tier="composite"
@@ -60,12 +65,12 @@ export const Default: Story = {
                 states={[
                     {
                         name: "align = \"end\" (default)",
-                        why: "The button cluster sits flush against the row's end edge, with `Huỷ` and `Lưu thay đổi` reading toward that edge. This is the resting alignment most forms want, so a caller who never sets `align` still lands a CTA where the eye expects to find it.",
+                        why: "The button cluster sits flush against the row's end edge, with `Cancel` and `Save changes` reading toward that edge. This is the resting alignment most forms want, so a caller who never sets `align` still lands a CTA where the eye expects to find it.",
                         code: `<FormActions
     align="end"
     items={[
-        { key: "cancel", label: "Huỷ", variant: "secondary", prefixIcon: XIcon },
-        { key: "save", label: "Lưu thay đổi", prefixIcon: FloppyDiskIcon },
+        { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
+        { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
                         render: <FormActions showAnatomy align="end" items={SAVE_ITEMS} />,
@@ -76,20 +81,20 @@ export const Default: Story = {
                         code: `<FormActions
     align="start"
     items={[
-        { key: "cancel", label: "Huỷ", variant: "secondary", prefixIcon: XIcon },
-        { key: "save", label: "Lưu thay đổi", prefixIcon: FloppyDiskIcon },
+        { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
+        { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
                         render: <FormActions showAnatomy align="start" items={SAVE_ITEMS} />,
                     },
                     {
                         name: "align = \"between\"",
-                        why: "The frame stretches the button row to the full width of its container, pushing `Huỷ` to the start edge and `Lưu thay đổi` to the end edge. Spreading the two mismatched actions across both edges reads as an escape route on one side and the committing action on the other, and only the frame can claim the full width the split needs.",
+                        why: "The frame stretches the button row to the full width of its container, pushing `Cancel` to the start edge and `Save changes` to the end edge. Spreading the two mismatched actions across both edges reads as an escape route on one side and the committing action on the other, and only the frame can claim the full width the split needs.",
                         code: `<FormActions
     align="between"
     items={[
-        { key: "cancel", label: "Huỷ", variant: "secondary", prefixIcon: XIcon },
-        { key: "save", label: "Lưu thay đổi", prefixIcon: FloppyDiskIcon },
+        { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
+        { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
                         render: <FormActions showAnatomy align="between" items={SAVE_ITEMS} />,
@@ -100,17 +105,18 @@ export const Default: Story = {
     ),
 }
 /**
- * Pending — nút chính đang chạy.
+ * Pending — the primary button is running.
  *
- * ⚠️ GHI CHÚ §12f: `isPending` KHÔNG do khung này đẻ ra — nó chỉ chuyển tiếp qua
- * `items` xuống `Button` (state đã có "nhà" ở `Atoms/Buttons/Button`).
- * Giữ story theo yêu cầu spec nhóm 5 để thấy hàng nút lúc submit; nếu áp §12f
- * nghiêm (neo: `ButtonGroup` đã bị bắt xoá `Pending`) thì XOÁ story này và xem
- * trạng thái submit ở `Form` → `Submitting`.
+ * ⚠️ NOTE §12f: `isPending` is NOT produced by this shell — it only forwards
+ * through `items` down to `Button` (the state already has a "home" at
+ * `Atoms/Buttons/Button`). Kept per group-5's spec request, to show the button
+ * row at submit time; if §12f is applied strictly (precedent: `ButtonGroup`
+ * had its own `Pending` story removed) then DELETE this story and look at the
+ * submit state on `Form` → `Submitting` instead.
  */
 export const Pending: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FormActions"
                 tier="composite"
@@ -123,16 +129,16 @@ export const Pending: Story = {
                         why: "The save button swaps its label for a spinner and stops accepting presses, while the cancel button next to it stays exactly as it was. This frame never draws the spinner itself, the flag only flows through `items` into `Button`, which already owns its own pending shape.",
                         code: `<FormActions
     items={[
-        { key: "cancel", label: "Huỷ", variant: "secondary" },
-        { key: "save", label: "Đang lưu", isPending: true },
+        { key: "cancel", label: "Cancel", variant: "secondary" },
+        { key: "save", label: "Saving", isPending: true },
     ]}
 />`,
                         render: (
                             <FormActions
                                 showAnatomy
                                 items={[
-                                    { key: "cancel", label: "Huỷ", variant: "secondary" },
-                                    { key: "save", label: "Đang lưu", isPending: true },
+                                    { key: "cancel", label: "Cancel", variant: "secondary" },
+                                    { key: "save", label: "Saving", isPending: true },
                                 ]}
                             />
                         ),
@@ -143,12 +149,13 @@ export const Pending: Story = {
     ),
 }
 /**
- * Sticky — form dài trong khung cuộn: hàng nút DÍNH đáy với vạch ngăn + nền đặc,
- * để CTA luôn với tới được. Đặt trong một khung cuộn thật thì mới đọc ra ý nghĩa.
+ * Sticky — a long form inside a scrolling shell: the button row STICKS to the
+ * bottom with a divider + solid background, so the CTA stays reachable. Only
+ * reads correctly placed inside a real scrolling container.
  */
 export const Sticky: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FormActions"
                 tier="composite"
@@ -157,15 +164,15 @@ export const Sticky: Story = {
                 states={[
                     {
                         name: "sticky",
-                        why: "The button row grows a top border and an opaque background, then pins itself to the bottom edge of the scrolling container instead of scrolling away with the fields above it. A long form loses its call to action once the user scrolls past it, so docking the row keeps `Lưu thay đổi` reachable at every scroll position.",
+                        why: "The button row grows a top border and an opaque background, then pins itself to the bottom edge of the scrolling container instead of scrolling away with the fields above it. A long form loses its call to action once the user scrolls past it, so docking the row keeps `Save changes` reachable at every scroll position.",
                         code: `<div className="h-64 overflow-y-auto">
     <Form actions={<FormActions sticky items={[…]} />}>…</Form>
 </div>`,
                         render: (
-                            <div className="h-64 w-96 overflow-y-auto rounded-3xl border border-default px-3">
+                            <div data-tier="fixture" className="h-64 w-96 overflow-y-auto rounded-3xl border border-default px-3">
                                 <div className="flex flex-col gap-3 py-3">
-                                    {["Họ và tên", "Email", "Số điện thoại", "Công ty", "Chức danh", "Ghi chú"].map((row) => (
-                                        <div key={row} className="h-16 rounded-xl bg-default" aria-hidden />
+                                    {["Full name", "Email", "Phone number", "Company", "Job title", "Note"].map((row) => (
+                                        <div data-tier="fixture" key={row} className="h-16 rounded-xl bg-default" aria-hidden />
                                     ))}
                                 </div>
                                 <FormActions showAnatomy sticky items={SAVE_ITEMS} />

@@ -62,9 +62,9 @@ const DIM_COLOR: Record<string, string> = {
  * milestones), a client search over the active tab, and a two-tab toggle — both
  * tabs render an accordion-card off the SAME `myCourseOutline` payload:
  *
- *   - "Nội dung" (Contents, default): the {@link CourseOutline} module → lesson →
+ *   - "Contents" (default): the {@link CourseOutline} module → lesson →
  *     challenge tree with read flags.
- *   - "Dự án cá nhân" (Personal Project): the {@link CourseMilestoneOutline}
+ *   - "Personal Project": the {@link CourseMilestoneOutline}
  *     milestone → task tree with a roll-up completion status per milestone.
  *
  * Reads the selected course globalId from `?course=` (decoded to the raw id for

@@ -27,7 +27,7 @@ export type RewardsPageProps = WithClassNames<undefined>
 
 /**
  * The Coin shop: the viewer's spendable Coin balance in the header, a
- * "Cửa hàng" tab (redeemable catalog) and a "Ví của tôi" tab (minted vouchers +
+ * "Store" tab (redeemable catalog) and a "My wallet" tab (minted vouchers +
  * redemption history). Tabs are local state — this page is not deep-linked
  * into from elsewhere, so URL state isn't needed. See `fe/features/rewards.md`
  * (canon) for the shell/CTA/state rationale.

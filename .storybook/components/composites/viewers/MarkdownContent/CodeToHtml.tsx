@@ -19,9 +19,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  */
 
 /**
- * Proper display casing for common fence languages (thầy 2026-07-29: "typescript => map
- * qua TypeScript" — a blanket `text-transform: uppercase` reads `TYPESCRIPT`/`DOCKERFILE`
- * for everything, which is wrong for names that are properly MIXED-case, not all-caps).
+ * Proper display casing for common fence languages (teacher's call 2026-07-29: map
+ * `typescript` to `TypeScript` — a blanket `text-transform: uppercase` reads
+ * `TYPESCRIPT`/`DOCKERFILE` for everything, which is wrong for names that are properly
+ * MIXED-case, not all-caps).
  * A language missing from this table falls back to the raw fence identifier as authored
  * (see {@link languageLabel}) rather than guessing a casing rule for it.
  */
@@ -70,9 +71,15 @@ export interface CodeToHtmlProps {
     theme: string
     /** `true` → tag the copy control so a BlockAnatomy panel can link to its own story. */
     showAnatomy?: boolean
-    /** Extra classes on the root element. */
-    className?: string
-    /** Where the root element sits inside its parent. */
+    /**
+     * Where the root element sits inside its parent, from the closed positioning
+     * union. The block-rhythm margin between fences (`"my-4"`/`"my-3"`) has no
+     * slot here on purpose — margins are excluded from `AllowedClassName` by
+     * design (see `_allowed-class-name.ts` and `principles/margin.md`: it is the
+     * seam between two things, not a component's own prop). `map.tsx` owns that
+     * margin by wrapping this component's output in a plain `<div>` instead of
+     * forwarding a free string in.
+     */
     classNames?: Array<AllowedClassName>
 }
 
@@ -87,7 +94,7 @@ export interface CodeToHtmlProps {
  * (Shiki/WASM is heavy); off-screen blocks show raw code (`<pre>`) until scrolled into view.
  * @param props - {@link CodeToHtmlProps}
  */
-export const CodeToHtml = ({ code, language, theme, showAnatomy = false, className, classNames }: CodeToHtmlProps) => {
+export const CodeToHtml = ({ code, language, theme, showAnatomy = false, classNames }: CodeToHtmlProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     /** Whether the block has entered (near) the viewport yet — only then do we highlight. */
     const [isVisible, setIsVisible] = useState(false)
@@ -144,14 +151,13 @@ export const CodeToHtml = ({ code, language, theme, showAnatomy = false, classNa
                 // the correct look on a reading surface/card — this composite always renders on
                 // one, so (unlike `src`) there is no `elevated` variant to opt into here.
                 "w-full max-w-full overflow-hidden rounded-3xl border border-default bg-background",
-                className,
                 classNames,
             )}
         >
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}
             <div className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs text-muted">{languageLabel(language)}</span>
-                <SnippetIcon copyString={code} anatPart={showAnatomy ? "SnippetIcon" : undefined} />
+                <SnippetIcon copyString={code} showAnatomy={showAnatomy} />
             </div>
             {html ? (
                 <div

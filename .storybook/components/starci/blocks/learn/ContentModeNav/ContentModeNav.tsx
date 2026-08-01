@@ -43,9 +43,9 @@ export type ContentMode = "content" | "sandbox" | "challenges" | "aiLab"
  * reading experience, and a caller that could pass it would own the wording.
  */
 const MODE_LABEL: Record<ContentMode, string> = {
-    content: "Nội dung",
+    content: "Content",
     sandbox: "Sandbox",
-    challenges: "Thử thách",
+    challenges: "Challenges",
     aiLab: "AI Lab",
 }
 
@@ -187,7 +187,7 @@ const ContentModeNav = ({
                     rightTabsNeutral
                     // A set-once preference, not a second navigation choice — folds behind a
                     // compact icon-only dropdown below `@app-sm` instead of crowding the reading
-                    // column with 4 inline tabs (thầy 2026-07-29, reversing the 2026-07-29
+                    // column with 4 inline tabs (instructor's call, 2026-07-29, reversing the 2026-07-29
                     // "keep every language reachable in one tap" call from earlier the same day).
                     collapseRightOnMobile
                     showAnatomy={showAnatomy}

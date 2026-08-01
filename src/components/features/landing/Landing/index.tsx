@@ -103,7 +103,7 @@ export const Landing = ({ className }: LandingProps) => {
     }
     const onLogin = () => router.push(pathConfig().locale(locale).authentication().build())
 
-    // Back-to-top FAB — hiện sau khi cuộn qua màn đầu (scrollY > 600), click cuộn mượt về đầu.
+    // Back-to-top FAB — shows after scrolling past the first screen (scrollY > 600), click smooth-scrolls back to the top.
     const [showTop, setShowTop] = React.useState(false)
     React.useEffect(() => {
         const onScroll = () => setShowTop(window.scrollY > 600)
@@ -112,16 +112,17 @@ export const Landing = ({ className }: LandingProps) => {
         return () => window.removeEventListener("scroll", onScroll)
     }, [])
 
-    // HERO only fills the first fold (min-height = viewport − navbar, dvh chống nhảy thanh
-    // URL mobile, căn giữa dọc). Các beat khác co theo content (bỏ min-h) → hết "nửa màn
-    // trống" + nhịp đều bằng root gap.
+    // HERO only fills the first fold (min-height = viewport − navbar, dvh prevents the mobile
+    // URL bar from causing jumps, vertically centered). Other beats shrink to their content
+    // (no min-h) → no more "half-empty screen", and rhythm is even via the root gap.
     const screen = "flex min-h-[calc(100dvh-4rem)] flex-col justify-center"
 
     return (
         <div className={className}>
-            {/* Section-to-section rhythm: gap-16→20 (64–80px) between beats. Chỉ HERO là
-                min-h-screen; các beat khác co theo content → gap nhỏ này là khoảng trắng THẬT,
-                đủ tách section mà section ngắn (stats, learn-loop) không bị trôi giữa nửa màn trống. */}
+            {/* Section-to-section rhythm: gap-16→20 (64–80px) between beats. ONLY the HERO is
+                min-h-screen; other beats shrink to their content → this small gap is REAL
+                whitespace, enough to separate sections without a short section (stats,
+                learn-loop) drifting in the middle of a half-empty screen. */}
             <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 @app-sm:px-6 @app-md:gap-20 @app-md:pb-20 @app-md:pt-10 @app-lg:px-8">
                 {/* 1 — Hero */}
                 <div className={screen}>
@@ -153,9 +154,9 @@ export const Landing = ({ className }: LandingProps) => {
                     />
                 </div>
 
-                {/* 2 — Live proof strip + header "minh bạch": đóng khung số liệu THẬT (early,
-                    nhỏ) thành tín hiệu trung thực thay vì brag. Header → strip = gap-16 (đồng
-                    bộ các section); spacing giữa beat do root gap lo. */}
+                {/* 2 — Live proof strip + "transparent" header: frames REAL numbers (early,
+                    small) as an honest signal instead of bragging. Header → strip = gap-16
+                    (synced with other sections); spacing between beats is handled by the root gap. */}
                 <div id="stats" className="flex scroll-mt-24 flex-col gap-16">
                     <SectionHeading
                         anchorId="stats"
@@ -166,14 +167,16 @@ export const Landing = ({ className }: LandingProps) => {
                     <StatStrip />
                 </div>
 
-                {/* 3 — Vòng học 4 bước (read → grade → capstone → rank): scroll-pinned
-                    scrollytelling (ghim section, cuộn → bước active + visual phải đổi;
-                    cuộn hết → nhả). Tự rơi về layout tĩnh trên mobile / reduced-motion. */}
+                {/* 3 — 4-step learn loop (read → grade → capstone → rank): scroll-pinned
+                    scrollytelling (section pins, scroll → active step + visual must change;
+                    scroll finishes → releases). Falls back to a static layout on
+                    mobile / reduced-motion. */}
                 <LearnLoopScroll />
 
-                {/* 3 — Lộ trình: 3 track tiêu biểu. Mỗi card = identity (icon/module/tag/title/desc)
-                    + tier path (foundation → application) + "Vào khóa" → course thật. Gộp từ 2
-                    section cũ (Courses + Roadmap) vì track = course → tránh render lặp cùng 3 track. */}
+                {/* 3 — Roadmap: 3 flagship tracks. Each card = identity (icon/module/tag/title/desc)
+                    + tier path (foundation → application) + "Enter course" → the real course. Merged
+                    from 2 old sections (Courses + Roadmap) since track = course → avoids rendering
+                    the same 3 tracks twice. */}
                 <section id="courses" className="flex scroll-mt-24 flex-col gap-12">
                     <SectionHeading
                         anchorId="courses"
@@ -181,9 +184,10 @@ export const Landing = ({ className }: LandingProps) => {
                         title={t("landing.courses.title")}
                         intro={t("landing.courses.intro")}
                     />
-                    {/* "Ba lộ trình · một tư duy": mỗi track = 1 card tự gói (identity + path 4
-                        tier DỌC foundation→application + "Vào khóa" → course thật). 3 card cạnh
-                        nhau để đọc + so; cấu trúc 4 tier đồng nhất = "một tư duy". */}
+                    {/* "Three roadmaps · one mindset": each track = 1 self-contained card (identity +
+                        a VERTICAL 4-tier path foundation→application + "Enter course" → the real
+                        course). 3 cards side by side to read + compare; the same 4-tier structure
+                        = "one mindset". */}
                     <div className="grid grid-cols-1 gap-6 @app-md:grid-cols-3">
                         {LANDING_COURSE_TRACKS.map((key) => (
                             <TrackCard
@@ -200,11 +204,12 @@ export const Landing = ({ className }: LandingProps) => {
                     </div>
                 </section>
 
-                {/* Bản đồ năng lực — SPLIT: copy "flex trình" (trái) + knowledge graph contained
-                    (phải). Graph KHÔNG còn full-bleed (hết "tràn lan") nhưng giữ wow tương tác. */}
+                {/* Skill map — SPLIT: "flex your skills" copy (left) + knowledge graph contained
+                    (right). The graph is NO LONGER full-bleed (no more "sprawling everywhere") but
+                    keeps the interactive wow factor. */}
                 <section id="treasure" className="scroll-mt-24">
                     <div className="grid grid-cols-1 items-center gap-10 @app-lg:grid-cols-[0.85fr_1.15fr] @app-lg:gap-12">
-                        {/* TRÁI — copy flex: heading + stat editorial + dòng lồng ghép + CTA */}
+                        {/* LEFT — flex copy: heading + editorial stat + interconnection line + CTA */}
                         <div className="flex flex-col gap-6">
                             <SectionHeading
                                 anchorId="treasure"
@@ -213,7 +218,7 @@ export const Landing = ({ className }: LandingProps) => {
                                 title={t("landing.treasure.title")}
                                 intro={t("landing.treasure.intro")}
                             />
-                            {/* editorial stat: số to + label nhỏ + divider (grounded: số node + số track) */}
+                            {/* editorial stat: big number + small label + divider (grounded: node count + track count) */}
                             <div className="flex items-center gap-6">
                                 <div className="flex flex-col">
                                     <span className="text-3xl font-medium tracking-tight text-foreground @app-sm:text-4xl">
@@ -233,7 +238,7 @@ export const Landing = ({ className }: LandingProps) => {
                                     </Typography>
                                 </div>
                             </div>
-                            {/* giữ ý "lồng ghép" bằng 1 dòng (thay edge animation phải đọc được) */}
+                            {/* keeps the "interconnected" idea via 1 line (in place of an edge animation that must read as such) */}
                             <Typography type="body-sm" color="muted">
                                 {t("landing.treasure.interconnect")}
                             </Typography>
@@ -242,9 +247,10 @@ export const Landing = ({ className }: LandingProps) => {
                                 <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                             </Button>
                         </div>
-                        {/* PHẢI — knowledge graph contained: ~38 khái niệm THẬT (node) liên kết
-                            builds-on + cross-track (d3-force live, kéo/zoom). Node màu theo track,
-                            click → khóa chứa nó. "Kiến thức lồng ghép" (vibe Qdrant, @xyflow). */}
+                        {/* RIGHT — knowledge graph contained: ~38 REAL concepts (nodes) linked by
+                            builds-on + cross-track relations (d3-force live, drag/zoom). Node colour
+                            follows its track, click → the course containing it. "Interconnected
+                            knowledge" (Qdrant vibe, @xyflow). */}
                         <KnowledgeGraph />
                     </div>
                 </section>
@@ -354,7 +360,7 @@ export const Landing = ({ className }: LandingProps) => {
                 </section>
             </div>
 
-            {/* Back-to-top FAB — float góc phải-dưới (primary accent), hiện sau khi cuộn qua màn đầu */}
+            {/* Back-to-top FAB — floats bottom-right (primary accent), shows after scrolling past the first screen */}
             {showTop ? (
                 <Button
                     isIconOnly

@@ -1,14 +1,15 @@
 import type { ReactNode } from "react"
 import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `FieldFrame` — the label / hint / control / error scaffold every form atom
  * composes so the atom itself is the full field.
  *
  * Self-contained in the atom layer: HeroUI only, no importing from `blocks/`.
- * Owns the vertical rhythm (`flex flex-col`, gap set by `gap` — default
- * `"tight"` = `gap-1`): label on top, hint below the label, control, error
- * line last — and mirrors the exact shape when `isSkeleton`.
+ * Owns the vertical rhythm (`flex flex-col`, a fixed `gap-3` — the label rule,
+ * see `FIELD_SEAM`): label on top, hint below the label, control, error line
+ * last — and mirrors the exact shape when `isSkeleton`.
  *
  * "Bare" mode: when there is no label/hint/errorMessage/required (and not
  * skeleton), FieldFrame renders `children` directly with zero wrapper, so the
@@ -28,15 +29,6 @@ export interface FieldFrameProps {
     hint?: ReactNode
     /** Error line below the control (`text-sm text-danger`) — set → field invalid. */
     errorMessage?: ReactNode
-    /**
-     * Vertical rhythm between label/hint/control/error. Default `"tight"`
-     * (`gap-1`) treats the four parts as one field, not separate regions.
-     * `"related"` (`gap-2`) loosens that for a field that needs to breathe
-     * more. Mirrors the frame tier's `SeamScale` naming but is redeclared
-     * locally rather than imported, since an atom can't import from outside
-     * its own layer.
-     */
-    gap?: "tight" | "related"
     /** Adds a `*` mark (text-danger) after the label. */
     isRequired?: boolean
     /** Dims the label (locking the control itself is the atom's job). */
@@ -54,8 +46,8 @@ export interface FieldFrameProps {
     children?: ReactNode
     /** The control's `id` so the label's `htmlFor` points correctly — the atom passes the same id down to the control. */
     id?: string
-    /** Class for outside the column. */
-    className?: string
+    /** Where this sits inside its parent (the outer column). Everything about appearance is a prop of its own. */
+    classNames?: Array<AllowedClassName>
     /** Storybook: badges Label/Description/Control/Error for BlockAnatomy. */
     showAnatomy?: boolean
 }
@@ -70,11 +62,14 @@ export interface FieldFrameProps {
 export const fieldName = (label: ReactNode, fallback?: string): string | undefined =>
     typeof label === "string" ? label : fallback
 
-/** {@link FieldFrameProps.gap} step → literal class (kept local — see the prop's JSDoc). */
-const GAP_CLASS: Record<"tight" | "related", string> = {
-    tight: "gap-1",
-    related: "gap-2",
-}
+/**
+ * The seam between a label and the control it names is step 4 (`gap-3`, 12px) — a label names its
+ * subject across a change of register, and `principles/gap.md`'s label rule sits that boundary at
+ * step 4. It is fixed, not a prop: the old `tight`/`related` choice let one field breathe at a
+ * different rhythm than the next for no reason a reader could name, which is the ambiguity the
+ * numeric scale exists to end. Every field in the system now stacks at the same seam.
+ */
+const FIELD_SEAM = "gap-3"
 
 /** Label + `*` mark when required. */
 const withRequired = (label: ReactNode, isRequired?: boolean) =>
@@ -94,14 +89,13 @@ const FieldFrameBase = ({
     label,
     hint,
     errorMessage,
-    gap = "tight",
     isRequired,
     isDisabled,
     isSkeleton,
     skeletonControl,
     children,
     id,
-    className,
+    classNames,
     showAnatomy = false,
 }: FieldFrameProps) => {
     const hasFrame = label != null || hint != null || errorMessage != null
@@ -113,7 +107,7 @@ const FieldFrameBase = ({
             return <>{skeletonControl}</>
         }
         return (
-            <div className={cn("flex flex-col", GAP_CLASS[gap], className)}>
+            <div data-tier="atom" data-component="FieldFrame" data-principles="label-field" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
                 {label != null ? (
                     // data-anat-part uses the real HeroUI component name (`Skeleton`, in its
                     // label-bar look), not the slot word "Label" it stands in for.
@@ -131,7 +125,7 @@ const FieldFrameBase = ({
 
     // ── Full field ─────────────────────────────────────────────────────────────
     return (
-        <div className={cn("flex flex-col", GAP_CLASS[gap], className)}>
+        <div data-tier="atom" data-component="FieldFrame" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
             {label != null ? (
                 <Label htmlFor={id} isDisabled={isDisabled} className="text-sm font-medium" data-anat-part={showAnatomy ? "Label" : undefined}>
                     {withRequired(label, isRequired)}
@@ -157,3 +151,5 @@ const FieldFrameBase = ({
 
 /** `FieldFrame.*` — label/hint/control/error scaffold namespace. */
 export { FieldFrameBase as FieldFrame }
+
+export const meta = { tier: "atom", name: "FieldFrame" } as const

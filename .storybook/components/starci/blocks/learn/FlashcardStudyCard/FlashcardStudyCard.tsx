@@ -22,7 +22,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * The one genuinely new bit is the locked-premium message, because no existing
  * composite draws a lock notice sized for a single card face — see the note on
  * that leaf below for why it stays hand-rolled instead of reaching for
- * `FeedbackEmpty` (that composite fills a whole pane; this is one paragraph
+ * `EmptyState` (that composite fills a whole pane; this is one paragraph
  * inside a card that still has a question and nav controls around it).
  *
  * ⭐ ONE CHIP PER META ROW (`starci-fe/no-adjacent-chip`, L3). `levelLabel` gets
@@ -131,14 +131,14 @@ const FlashcardStudyCard = ({
 
     const metaRow = hasMeta ? (
         <StackH
-            gap="related"
+            gap={3}
             wrap
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     {levelLabel != null ? (
-                        <Chip tone="default" text={levelLabel} anatPart={showAnatomy ? "Chip" : undefined} />
+                        <Chip tone="default" text={levelLabel} showAnatomy={showAnatomy} />
                     ) : null}
                     {tagItems.length > 0 ? (
                         <ChipGroup
@@ -154,35 +154,35 @@ const FlashcardStudyCard = ({
 
     // The one hand-rolled part of this block (see file header): no existing
     // composite draws a lock message sized for ONE card face that still has a
-    // question and nav controls around it — `FeedbackEmpty` fills a whole
+    // question and nav controls around it — `EmptyState` fills a whole
     // pane, which is the wrong weight here.
     const lockNotice = (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
                     <StackH
-                        gap="related"
+                        gap={3}
                         align="center"
                         anatPart={showAnatomy ? "StackH" : undefined}
                         body={
                             <>
                                 <LockIcon aria-hidden focusable="false" weight="bold" className="size-5 shrink-0 text-muted" />
                                 <StackV
-                                    gap="flush"
+                                    gap={1}
                                     anatPart={showAnatomy ? "StackV" : undefined}
                                     body={
                                         <>
-                                            <Typography size="sm" weight="medium" text="Đáp án bị khoá" anatPart={showAnatomy ? "Typography" : undefined} />
-                                            <Typography size="xs" color="muted" text="Nâng cấp Premium để xem đáp án và lời giải của thẻ này" anatPart={showAnatomy ? "Typography" : undefined} />
+                                            <Typography size="sm" weight="medium" text="Answer locked" showAnatomy={showAnatomy} />
+                                            <Typography size="xs" color="muted" text="Upgrade to Premium to see this card's answer and explanation" showAnatomy={showAnatomy} />
                                         </>
                                     }
                                 />
                             </>
                         }
                     />
-                    <Button label="Mở khoá thẻ này" variant="primary" onPress={onUnlock} anatPart={showAnatomy ? "Button" : undefined} />
+                    <Button label="Unlock this card" variant="primary" onPress={onUnlock} showAnatomy={showAnatomy} />
                 </>
             }
         />
@@ -190,16 +190,16 @@ const FlashcardStudyCard = ({
 
     const answerBody = (
         <StackV
-            gap="section"
+            gap={6}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
                     <StackV
-                        gap="related"
+                        gap={3}
                         anatPart={showAnatomy ? "StackV" : undefined}
                         body={
                             <>
-                                <Typography size="xs" color="muted" text="Đáp án" anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="xs" color="muted" text="Answer" showAnatomy={showAnatomy} />
                                 <MarkdownContent
                                     source={answer ?? ""}
                                     measure="compact"
@@ -210,11 +210,11 @@ const FlashcardStudyCard = ({
                     />
                     {explanation != null ? (
                         <StackV
-                            gap="related"
+                            gap={3}
                             anatPart={showAnatomy ? "StackV" : undefined}
                             body={
                                 <>
-                                    <Typography size="xs" color="muted" text="Giải thích" anatPart={showAnatomy ? "Typography" : undefined} />
+                                    <Typography size="xs" color="muted" text="Explanation" showAnatomy={showAnatomy} />
                                     <MarkdownContent
                                         source={explanation}
                                         measure="compact"
@@ -229,7 +229,7 @@ const FlashcardStudyCard = ({
                     <RatingBar
                         options={ratingOptions}
                         onRate={onRate}
-                        ariaLabel="Chọn mức độ nhớ"
+                        ariaLabel="Choose recall level"
                         isPending={isRatingPending}
                         anatPart={showAnatomy ? "RatingBar" : undefined}
                         showAnatomy={showAnatomy}
@@ -242,7 +242,7 @@ const FlashcardStudyCard = ({
     // Prev/next live beside reveal but never gate on it — see file header.
     const navRow = (
         <StackH
-            gap="related"
+            gap={3}
             justify="between"
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
@@ -251,23 +251,23 @@ const FlashcardStudyCard = ({
                     <Button
                         isIconOnly
                         prefixIcon={CaretLeftIcon}
-                        ariaLabel="Thẻ trước"
+                        ariaLabel="Previous card"
                         variant="tertiary"
                         isDisabled={isFirst}
                         onPress={onPrev}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     {!revealed ? (
-                        <Button label="Xem đáp án" variant="primary" onPress={onReveal} anatPart={showAnatomy ? "Button" : undefined} />
+                        <Button label="Show answer" variant="primary" onPress={onReveal} showAnatomy={showAnatomy} />
                     ) : null}
                     <Button
                         isIconOnly
                         prefixIcon={CaretRightIcon}
-                        ariaLabel="Thẻ sau"
+                        ariaLabel="Next card"
                         variant="tertiary"
                         isDisabled={isLast}
                         onPress={onNext}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 </>
             }
@@ -289,9 +289,11 @@ const FlashcardStudyCard = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={cardBody} />
-            </SurfaceCard>
+            <SurfaceCard
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={cardBody} />}
+            />
         </div>
     )
 }

@@ -16,7 +16,7 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 
 /** Props for {@link EnrollGate}. */
 export interface EnrollGateProps extends WithClassNames<undefined> {
-    /** Title — e.g. "Mở khoá Dự án cá nhân" (the surface name folded in by the caller). */
+    /** Title — e.g. "Unlock Personal project" (the surface name folded in by the caller). */
     title: string
     /** One-line reason the surface needs enrollment. */
     description: string

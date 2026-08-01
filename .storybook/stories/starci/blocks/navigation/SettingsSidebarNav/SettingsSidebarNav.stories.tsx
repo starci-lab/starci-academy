@@ -77,7 +77,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the desktop collapsible rail, visible once the demo container clears `@app-md` (48rem). */
 export const DesktopRail: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SettingsSidebarNav"
                 tier="block"
@@ -93,9 +93,9 @@ export const DesktopRail: Story = {
     groups={groups}
     activeHref="/profile/security"
     onNavigate={router.push}
-    title="Cài đặt"
-    collapseLabel="Thu gọn"
-    expandLabel="Mở rộng"
+    title="Settings"
+    collapseLabel="Collapse"
+    expandLabel="Expand"
     storageKey="starci.settings.sidebar.collapsed"
 />`,
                         render: (
@@ -105,9 +105,9 @@ export const DesktopRail: Story = {
                                 groups={GROUPS}
                                 activeHref="/profile/security"
                                 onNavigate={() => {}}
-                                title="Cài đặt"
-                                collapseLabel="Thu gọn"
-                                expandLabel="Mở rộng"
+                                title="Settings"
+                                collapseLabel="Collapse"
+                                expandLabel="Expand"
                                 storageKey="storybook.settings.sidebar.collapsed.a"
                             />
                         ),
@@ -119,9 +119,9 @@ export const DesktopRail: Story = {
     groups={groups}
     activeHref="/profile/bookmarks"
     onNavigate={router.push}
-    title="Cài đặt"
-    collapseLabel="Thu gọn"
-    expandLabel="Mở rộng"
+    title="Settings"
+    collapseLabel="Collapse"
+    expandLabel="Expand"
     storageKey="starci.settings.sidebar.collapsed"
 />`,
                         render: (
@@ -129,9 +129,9 @@ export const DesktopRail: Story = {
                                 groups={GROUPS}
                                 activeHref="/profile/bookmarks"
                                 onNavigate={() => {}}
-                                title="Cài đặt"
-                                collapseLabel="Thu gọn"
-                                expandLabel="Mở rộng"
+                                title="Settings"
+                                collapseLabel="Collapse"
+                                expandLabel="Expand"
                                 storageKey="storybook.settings.sidebar.collapsed.b"
                             />
                         ),
@@ -145,7 +145,7 @@ export const DesktopRail: Story = {
 /** LEAF — the mobile pill bar, forced on by a demo container narrower than `@app-md` (48rem). */
 export const MobilePillBar: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SettingsSidebarNav"
                 tier="block"
@@ -161,11 +161,11 @@ export const MobilePillBar: Story = {
     groups={groups}
     activeHref="/profile/ai-settings"
     onNavigate={router.push}
-    title="Cài đặt"
-    collapseLabel="Thu gọn"
-    expandLabel="Mở rộng"
+    title="Settings"
+    collapseLabel="Collapse"
+    expandLabel="Expand"
     storageKey="starci.settings.sidebar.collapsed"
-    mobileNavAriaLabel="Điều hướng cài đặt"
+    mobileNavAriaLabel="Settings navigation"
 />`,
                         render: (
                             <SettingsSidebarNav
@@ -174,11 +174,11 @@ export const MobilePillBar: Story = {
                                 groups={GROUPS}
                                 activeHref="/profile/ai-settings"
                                 onNavigate={() => {}}
-                                title="Cài đặt"
-                                collapseLabel="Thu gọn"
-                                expandLabel="Mở rộng"
+                                title="Settings"
+                                collapseLabel="Collapse"
+                                expandLabel="Expand"
                                 storageKey="storybook.settings.sidebar.collapsed.c"
-                                mobileNavAriaLabel="Điều hướng cài đặt"
+                                mobileNavAriaLabel="Settings navigation"
                             />
                         ),
                     },
@@ -189,9 +189,9 @@ export const MobilePillBar: Story = {
     groups={groups}
     activeHref="/profile/installments"
     onNavigate={router.push}
-    title="Cài đặt"
-    collapseLabel="Thu gọn"
-    expandLabel="Mở rộng"
+    title="Settings"
+    collapseLabel="Collapse"
+    expandLabel="Expand"
     storageKey="starci.settings.sidebar.collapsed"
 />`,
                         render: (
@@ -199,9 +199,9 @@ export const MobilePillBar: Story = {
                                 groups={GROUPS}
                                 activeHref="/profile/installments"
                                 onNavigate={() => {}}
-                                title="Cài đặt"
-                                collapseLabel="Thu gọn"
-                                expandLabel="Mở rộng"
+                                title="Settings"
+                                collapseLabel="Collapse"
+                                expandLabel="Expand"
                                 storageKey="storybook.settings.sidebar.collapsed.d"
                             />
                         ),

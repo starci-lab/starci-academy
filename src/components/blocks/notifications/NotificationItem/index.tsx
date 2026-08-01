@@ -8,9 +8,9 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
  * leading icon tile (never a `bg-<status>/10` overlay — soft tokens only), so a
  * notification kind can read at a glance:
  * - `default` — neutral system / informational message
- * - `success` — a positive outcome (bài nộp đã chấm đạt, chứng chỉ đã cấp)
- * - `warning` — an at-risk nudge (nhắc duy trì streak, sắp trễ hạn)
- * - `accent` — a brand / opportunity event (khoá học mới mở, có người trả lời)
+ * - `success` — a positive outcome (a submission graded as passing, a certificate issued)
+ * - `warning` — an at-risk nudge (a streak-maintenance reminder, an approaching deadline)
+ * - `accent` — a brand / opportunity event (a new course opening, someone replied)
  */
 export type NotificationTone = "default" | "success" | "warning" | "accent"
 
@@ -29,7 +29,7 @@ export interface NotificationItemProps extends WithClassNames<undefined> {
     body?: ReactNode
     /**
      * PREFORMATTED relative time string shown muted at the row's foot (e.g.
-     * "2 giờ trước"). The block never calls `new Date()` — the caller supplies
+     * "2 hours ago"). The block never calls `new Date()` — the caller supplies
      * an already-formatted, localized label.
      */
     timeLabel: ReactNode
@@ -90,9 +90,9 @@ const TONE_TILE: Record<NotificationTone, string> = {
  * <NotificationItem
  *   icon={<CheckCircleIcon />}
  *   tone="success"
- *   title="Bài nộp của bạn đã được chấm điểm"
- *   body="Thử thách API Gateway — đạt 92/100"
- *   timeLabel="2 giờ trước"
+ *   title="Your submission has been graded"
+ *   body="API Gateway challenge — scored 92/100"
+ *   timeLabel="2 hours ago"
  *   isUnread
  *   onPress={() => {}}
  * />

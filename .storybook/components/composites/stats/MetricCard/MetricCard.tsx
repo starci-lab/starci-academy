@@ -18,16 +18,16 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  */
 const SectionCard = ({
     children,
-    className,
+    classNames,
     anatPart,
 }: {
     children: React.ReactNode
-    className?: string
+    classNames?: Array<AllowedClassName>
     anatPart?: string
 }) => (
-    <Card className={cn(className)} data-anat-part={anatPart}>
+    <Card className={cn(classNames)} data-anat-part={anatPart} data-tier="composite" data-component="MetricCard">
         <CardContent>
-            <StackV gap="grouped" body={children} />
+            <StackV gap={4} body={children} />
         </CardContent>
     </Card>
 )
@@ -41,10 +41,10 @@ interface MetricCardOwnProps {
     /**
      * Optional supplementary note below the label. The QUIET footnote: rendered
      * SMALL and MUTED (`body-xs`) — deliberately less prominent than the label.
+     * `string`, not `ReactNode` — the composite wraps it in `Typography` itself,
+     * so it must be able to build it.
      */
-    hint?: React.ReactNode
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
+    hint?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -65,16 +65,21 @@ interface MetricCardOwnProps {
  */
 export type MetricCardProps = MetricCardOwnProps &
     (
-        | { isSkeleton: true; value?: React.ReactNode; label?: React.ReactNode }
+        | { isSkeleton: true; value?: string; label?: string }
         | {
             isSkeleton?: false
-            /** The primary metric value to highlight (e.g. "1,204", "98%"). Rendered large and emphasized. */
-            value: React.ReactNode
+            /**
+             * The primary metric value to highlight (e.g. "1,204", "98%"). Rendered
+             * large and emphasized. `string`, not `ReactNode` — the composite wraps
+             * it in `Typography` itself, so it must be able to build it.
+             */
+            value: string
             /**
              * Short description of what the value measures. The PROMINENT line: rendered
-             * `body-sm` in the default foreground tone, right below the value.
+             * `body-sm` in the default foreground tone, right below the value. `string` —
+             * see {@link MetricCardProps.value}.
              */
-            label: React.ReactNode
+            label: string
         }
     )
 
@@ -86,43 +91,38 @@ export type MetricCardProps = MetricCardOwnProps &
  *
  * @param props - {@link MetricCardProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "MetricCard" } as const
+
 export const MetricCard = ({
     value,
     label,
     hint,
     isSkeleton = false,
-    className,
     classNames,
     anatPart,
     showAnatomy = false,
 }: MetricCardProps) => {
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
-        <SectionCard className={cn(className, classNames)} anatPart={anatPart}>
+        <SectionCard classNames={classNames} anatPart={anatPart}>
             <StackV
-                gap="related"
+                gap={3}
                 body={
-                    isSkeleton ? (
-                        <>
-                            {/* Value/label/hint slots, shimmered by the same atom each renders when real */}
-                            <Typography size="h4" isSkeleton showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="sm" isSkeleton showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
-                            <Typography size="xs" color="muted" isSkeleton showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
-                        </>
-                    ) : (
-                        <>
-                            {/* Primary metric value — large and visually prominent */}
-                            <Typography size="h4" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={value} />
+                    <>
+                        {/* Primary metric value — large and visually prominent */}
+                        <Typography size="h4" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={value} />
 
-                            {/* Descriptive label — body-sm foreground, the prominent line */}
-                            <Typography size="sm" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={label} />
+                        {/* Descriptive label — body-sm foreground, the prominent line */}
+                        <Typography size="sm" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={label} />
 
-                            {/* Optional hint — small + muted footnote, DISTINCT from the label */}
-                            {hint ? (
-                                <Typography size="xs" color="muted" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} text={hint} />
-                            ) : null}
-                        </>
-                    )
+                        {/* Optional hint — small + muted footnote, DISTINCT from the label.
+                            While loading there is no `hint` to test yet, so the composite still
+                            decides to shimmer a third line (the count is its call, not the atom's). */}
+                        {hint !== undefined || isSkeleton ? (
+                            <Typography size="xs" color="muted" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={hint} />
+                        ) : null}
+                    </>
                 }
             />
         </SectionCard>

@@ -43,7 +43,7 @@ interface RouteContentProps {
 }
 
 const RouteContent = ({ label }: RouteContentProps) => (
-    <div className="flex flex-col gap-3">
+    <div data-tier="fixture" className="flex flex-col gap-3">
         <div className="h-6 w-1/3 rounded bg-default" />
         <div className="h-4 w-2/3 rounded bg-default" />
         <div className="h-40 rounded-2xl bg-surface shadow-surface" />
@@ -53,17 +53,17 @@ const RouteContent = ({ label }: RouteContentProps) => (
 
 const OWNER_USER: PublicProfileUser = {
     id: "u_baophamgia",
-    fullName: "Phạm Gia Bảo",
+    fullName: "Pham Gia Bao",
     handle: "baophamgia",
-    roleTitle: "Kỹ sư Backend cấp cao",
-    bio: "8 năm xây hệ thống backend quy mô lớn. Thích viết về Kubernetes và kiến trúc sự kiện.",
-    location: "Đà Nẵng, Việt Nam",
+    roleTitle: "Senior Backend Engineer",
+    bio: "8 years building large-scale backend systems. Enjoys writing about Kubernetes and event-driven architecture.",
+    location: "Da Nang, Vietnam",
     workMode: "hybrid",
     rank: 2,
     followersCount: 1240,
     badges: [
-        { id: "badge-1", label: "Người cố vấn hàng đầu" },
-        { id: "badge-2", label: "Đã xác minh" },
+        { id: "badge-1", label: "Top mentor" },
+        { id: "badge-2", label: "Verified" },
     ],
     joinedAt: "2022-03-14T00:00:00.000Z",
     social: {
@@ -77,11 +77,11 @@ const OWNER_USER: PublicProfileUser = {
 
 const LOCKED_USER: PublicProfileUser = {
     id: "u_locked",
-    fullName: "Minh Trần",
+    fullName: "Minh Tran",
     handle: "minh.tran",
     roleTitle: "Backend Engineer",
-    bio: "Học DevOps Mastery, đang làm capstone container hoá.",
-    location: "Đà Nẵng, Việt Nam",
+    bio: "Studying DevOps Mastery, working on the containerization capstone.",
+    location: "Da Nang, Vietnam",
     followersCount: 8,
     joinedAt: "2025-03-01T00:00:00.000Z",
     profileLocked: true,
@@ -168,7 +168,7 @@ export const NotFound: Story = {
             states={[
                 {
                     name: "isLoading = false, user = null",
-                    why: "The read has SETTLED (no longer loading, no longer validating) and resolved to nothing — deleted, never existed, or a failed fetch that stopped retrying. This layout owns the fixed \"Không tìm thấy hồ sơ\" copy itself (see file header); the caller only wires `onGoHome`.",
+                    why: "The read has SETTLED (no longer loading, no longer validating) and resolved to nothing — deleted, never existed, or a failed fetch that stopped retrying. This layout owns the fixed \"Profile not found\" copy itself (see file header); the caller only wires `onGoHome`.",
                     code: `<PublicProfileLayout
     isLoading={false}
     user={null}
@@ -286,7 +286,7 @@ export const Content: Story = {
             states={[
                 {
                     name: "owner view — skills tab hidden from visitors",
-                    why: "The signed-in viewer IS this profile (`isSelf`), so every tab shows — including \"Skills\", which the owner switched off for everyone else, marked \"· ẩn\" so they remember it's private. `visibleTabs`/`hiddenTabs` are computed HERE from `sectionVisibility` (see file header), never passed in raw.",
+                    why: "The signed-in viewer IS this profile (`isSelf`), so every tab shows — including \"Skills\", which the owner switched off for everyone else, marked \"· hidden\" so they remember it's private. `visibleTabs`/`hiddenTabs` are computed HERE from `sectionVisibility` (see file header), never passed in raw.",
                     code: `<PublicProfileLayout
     isLoading={false}
     user={ownerUser}
@@ -330,7 +330,7 @@ export const Content: Story = {
                 },
                 {
                     name: "visitor view, recruiter — canHire",
-                    why: "A signed-out-of-ownership visitor: the \"Skills\" tab the owner hid never reaches `visibleTabs` at all (no marker, it simply is not one of the keys). This same person also opted into hiring (`openToWork`) and exposed a GitHub link, so this layout's own `canHire` computation flips `ProfileHero`'s primary CTA to \"Thuê tôi\" instead of follow — a DATA fork inside this leaf, not a new tree shape.",
+                    why: "A signed-out-of-ownership visitor: the \"Skills\" tab the owner hid never reaches `visibleTabs` at all (no marker, it simply is not one of the keys). This same person also opted into hiring (`openToWork`) and exposed a GitHub link, so this layout's own `canHire` computation flips `ProfileHero`'s primary CTA to \"Hire me\" instead of follow — a DATA fork inside this leaf, not a new tree shape.",
                     code: `<PublicProfileLayout
     isLoading={false}
     user={ownerUser}

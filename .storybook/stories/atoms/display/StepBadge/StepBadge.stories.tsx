@@ -3,43 +3,48 @@ import { StepBadge } from "@sb-components/atoms/display/StepBadge/StepBadge"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `StepBadge`: viên tròn đánh số DUY NHẤT cho các luồng nhiều bước.
+ * ATOM — `StepBadge`: the system's ONE numbered circle for multi-step flows.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — luật của TẦNG ATOM). Mỗi prop có hình một leaf,
- * leaf đó render ĐỦ mọi giá trị prop ấy sinh ra: `state` · `size` · `isSkeleton`.
- * Prop không sinh hình (`className`) KHÔNG có leaf. `number` không có leaf riêng —
- * nó là nội dung tự do (giống `text` của `Chip`), không phải một union hữu hạn.
+ * 📐 **1 PROP = 1 LEAF** (§12g — the ATOM-TIER rule). Every prop that has a
+ * shape gets its own leaf, and that leaf renders EVERY value that prop can
+ * produce: `state` · `size` · `isSkeleton`. A prop with no shape (`className`)
+ * gets no leaf. `number` gets no leaf of its own — it's free-form content
+ * (like `Chip`'s `text`), not a finite union.
  *
- * ⭐ 2026-07-26: atom vừa thêm `showAnatomy`/`anatPart` (nhóm E) — gắn
- * `data-anat-part` lên root thật (`"Badge"`), root skeleton (`"Skeleton"`), và
- * bọc icon check khi `state="done"` (`"Icon"`). Ô đầu mỗi leaf dưới đây bật
- * `showAnatomy` để tab Deps của `BlockAnatomy` badge được — leaf `States` bật ở
- * ô `done` (không phải ô đầu tiên theo thứ tự khai) để cùng lúc lộ cả `Badge`
- * lẫn `Icon` trong một cây.
+ * ⭐ 2026-07-26: the atom just added `showAnatomy`/`anatPart` (group E) —
+ * tagging `data-anat-part` onto the real root (`"Badge"`), the skeleton root
+ * (`"Skeleton"`), and the check-icon wrapper when `state="done"` (`"Icon"`).
+ * The first cell of every leaf below turns on `showAnatomy` so the `BlockAnatomy`
+ * Deps tab has something to badge — the `States` leaf turns it on at the
+ * `done` cell (not the first cell in declaration order) so both `Badge` and
+ * `Icon` surface together in one tree.
  *
- * ⚠️ 2026-07-28 (naming pass): `Badge` (root span) và `Icon` (wraps the passed
+ * ⚠️ 2026-07-28 (naming pass): `Badge` (root span) and `Icon` (wraps the passed
  * `CheckIcon` glyph) are PLAIN elements, not fixed importable components — kept
  * in the DOM for future use but given NO name in `annotate`, so neither becomes
- * a fake node (§ luật 1). Only `Skeleton` is a real, direct HeroUI import —
+ * a fake node (§ rule 1). Only `Skeleton` is a real, direct HeroUI import —
  * `tier: "heroui"`, no `storyId`.
  *
- * ⭐ Vớt state từ hai story CŨ (pre-canon, §12g cấm tách leaf theo GIÁ TRỊ):
- * `.storybook/stories/atoms/display/StepBadge/StepBadge.stories.tsx` bản
- * trước (7 story `Default/Active/Done/Muted/SizeMd/Sequence/Skeleton`) và
- * `.storybook/stories/atoms/identity/StepBadge/StepBadge.stories.tsx` (cùng 7
- * story, đặt sai category — KHÔNG xoá, chỉ vớt). Đối chiếu: `Active`/`Done`/
- * `Muted` → đã có trong union `state` của leaf `States`; `SizeMd` → đã có trong
- * union `size` của leaf `Sizes`; `Sequence` (3 badge liền hàng done→active→muted)
- * → cùng nội dung leaf `States` đã render (khác mỗi cách trình bày, không phải
- * giá trị mới); `Skeleton` → đã có, và bản mới còn render CẢ HAI size (bản cũ
- * chỉ có `sm`) nên bao trọn. Không có state nào của bản cũ bị rơi.
+ * ⭐ Recovered states from two OLD stories (pre-canon, §12g bans splitting a
+ * leaf by VALUE): the earlier version of
+ * `.storybook/stories/atoms/display/StepBadge/StepBadge.stories.tsx` (7 stories:
+ * `Default/Active/Done/Muted/SizeMd/Sequence/Skeleton`) and
+ * `.storybook/stories/atoms/identity/StepBadge/StepBadge.stories.tsx` (the same
+ * 7 stories, filed under the wrong category — NOT deleted, only recovered).
+ * Cross-check: `Active`/`Done`/`Muted` → already covered by the `state` union
+ * of the `States` leaf; `SizeMd` → already covered by the `size` union of the
+ * `Sizes` leaf; `Sequence` (3 badges in a row, done→active→muted) → the same
+ * content the `States` leaf already renders (only the presentation differs,
+ * not the value); `Skeleton` → already covered, and the new version renders
+ * BOTH sizes (the old one only had `sm`), so it's a superset. No state from
+ * the old version was dropped.
  *
  * 2026-07-27: migrated to the `states` API (§8) — the demo grids for `state` ·
  * `size` · `isSkeleton` are now `states[]` entries instead of one row of stacked
  * badges under a single `code`/`note`.
  */
 
-/** Hướng dẫn hiện đầu trang autodocs. Chữ trên UI viết TIẾNG ANH. */
+/** Guidance shown at the top of the autodocs page. The on-screen text is written in ENGLISH. */
 const STEP_BADGE_DOC = `
 ## State, not colour
 
@@ -80,10 +85,10 @@ export default meta
 
 type Story = StoryObj<typeof StepBadge>
 
-/** Leaf TRẦN — chưa bật prop nào, để thấy hình mặc định (`state="active"`, `size="sm"`). */
+/** BARE leaf — no prop turned on yet, to show the default shape (`state="active"`, `size="sm"`). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StepBadge"
                 tier="atom"
@@ -103,10 +108,10 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `state` — VỊ TRÍ trong luồng, render ĐỦ union. */
+/** Leaf prop `state` — POSITION within the flow, renders the FULL union. */
 export const States: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StepBadge"
                 tier="atom"
@@ -138,10 +143,10 @@ export const States: Story = {
     ),
 }
 
-/** Leaf prop `size` — render ĐỦ union. */
+/** Leaf prop `size` — renders the FULL union. */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StepBadge"
                 tier="atom"
@@ -174,7 +179,7 @@ export const Sizes: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StepBadge"
                 tier="atom"

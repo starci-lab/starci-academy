@@ -68,7 +68,7 @@ const CHIP_SKELETON_DEP: Record<string, AnatomyAnnotation> = {
 /** BARE leaf — no prop turned on, to see the default look (`tone="default"`, no glyph, no ×). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Chip"
                 tier="atom"
@@ -90,7 +90,7 @@ export const Default: Story = {
 /** Leaf prop `tone` — 5 MEANINGS, render the FULL union. */
 export const Tones: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Chip"
                 tier="atom"
@@ -136,7 +136,7 @@ export const Tones: Story = {
 /** Leaf prop `icon` — the LEADING glyph, takes a COMPONENT, not JSX. */
 export const Icon: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Chip"
                 tier="atom"
@@ -183,7 +183,7 @@ export const Icon: Story = {
  */
 export const Dot: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Chip"
                 tier="atom"
@@ -198,7 +198,7 @@ export const Dot: Story = {
 <Chip dotClassName="text-warning" text="Degraded" />
 <Chip dotClassName="text-danger" text="Down" />`,
                         render: (
-                            <div className="flex flex-wrap items-center gap-3">
+                            <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
                                 <Chip dotClassName="text-success" text="Running" showAnatomy />
                                 <Chip dotClassName="text-warning" text="Degraded" />
                                 <Chip dotClassName="text-danger" text="Down" />
@@ -225,7 +225,7 @@ export const Dot: Story = {
 /** Leaf prop `onRemove` — pass a handler and the chip grows a × at the tail. */
 export const Removable: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Chip"
                 tier="atom"
@@ -245,7 +245,7 @@ export const Removable: Story = {
                         code: `<Chip text="React" onRemove={dropFilter} removeLabel="Remove the React filter" />
 <Chip tone="accent" text="TypeScript" onRemove={dropFilter} removeLabel="Remove the TypeScript filter" />`,
                         render: (
-                            <div className="flex flex-wrap items-center gap-3">
+                            <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
                                 <Chip text="React" onRemove={() => {}} removeLabel="Remove the React filter" showAnatomy />
                                 <Chip
                                     tone="accent"
@@ -271,7 +271,7 @@ export const Removable: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Chip"
                 tier="atom"

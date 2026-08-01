@@ -6,7 +6,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentAiSelectionAsk`: the "Hỏi AI về đoạn này" pill that appears
+ * BLOCK — `ContentAiSelectionAsk`: the "Ask AI about this passage" pill that appears
  * next to a text selection inside lesson content.
  *
  * ⭐ SCOPE CUT (§B3, per task instruction): tracking WHICH text is selected and
@@ -23,7 +23,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * WHY THIS EARNS A LAYER OVER A BARE `Button` (§10 check-passthrough-block): it
  * is not a passthrough — it fixes the pill at a VIEWPORT point (the one part of
  * this widget that is genuinely its job), picks the "ask AI" wording + glyph so
- * every call site asks the same way, and layers the optional "Mới" chip badge
+ * every call site asks the same way, and layers the optional "New" chip badge
  * on top without the caller having to know a second leaf exists.
  *
  * `position: fixed` (not `absolute`): the anchor is a VIEWPORT point (matches
@@ -51,7 +51,7 @@ export interface ContentAiSelectionAskProps {
     onOpen: () => void
     /** Where to plant the pill, in viewport coordinates. */
     anchor: ContentAiSelectionAskAnchor
-    /** `true` → carries a "Mới" chip, for the first releases while readers learn the feature exists. */
+    /** `true` → carries a "New" chip, for the first releases while readers learn the feature exists. */
     isNew?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
@@ -82,25 +82,24 @@ const ContentAiSelectionAsk = ({
         data-anat-part={anatPart}
     >
         <StackH
-            gap="tight"
+            gap={2}
             align="center"
             body={
                 <>
                     <Button
-                        label="Hỏi AI"
+                        label="Ask AI"
                         variant="primary"
                         size="sm"
                         prefixIcon={SparkleIcon}
                         onPress={onOpen}
                         isElevated
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     {isNew ? (
                         <Chip
-                            text="Mới"
+                            text="New"
                             tone="accent"
                             showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Chip" : undefined}
                         />
                     ) : null}
                 </>

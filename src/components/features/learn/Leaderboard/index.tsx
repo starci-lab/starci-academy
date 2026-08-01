@@ -75,7 +75,7 @@ export const Leaderboard = ({ className }: LeaderboardProps) => {
     }
 
     // dashboard-style board: viewer's own standing + a medal-ranked list (top-3 wear
-    // place medals), mirroring the dashboard "Top học viên" card, per category.
+    // place medals), mirroring the dashboard "Top Learners" card, per category.
     const viewerId = viewer?.id
     const isMine = (userId: string) => Boolean(viewerId) && userId === viewerId
     const viewerRow = rankedEntries.find((ranked) => isMine(ranked.entry.userId))

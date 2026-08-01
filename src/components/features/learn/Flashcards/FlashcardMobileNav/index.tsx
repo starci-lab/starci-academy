@@ -17,8 +17,8 @@ export type FlashcardMobileNavProps = WithClassNames<undefined>
  * bar (mobile) stay in sync. Rendered `@app-lg:hidden` above the work pane.
  *
  * The horizontal deck-chip picker this bar used to ALSO surface (a mobile
- * form of the rail's deck list) was removed (thầy 2026-07-09: "xoá cái này
- * trong mobile") — `FlashcardDeckList` already gives the overview a proper
+ * form of the rail's deck list) was removed (teacher, 2026-07-09: "remove this
+ * on mobile") — `FlashcardDeckList` already gives the overview a proper
  * deck picker, so the chip row was a redundant second way to jump decks.
  * @param props - {@link FlashcardMobileNavProps}
  */

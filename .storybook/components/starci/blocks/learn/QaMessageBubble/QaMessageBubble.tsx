@@ -87,20 +87,20 @@ const MessageRow = ({
     interactive: { canAccept: boolean, onAcceptAnswer: (accepted: boolean) => void, onReact: (type: QaReactionType | null) => void } | null
 }) => {
     const isMine = currentUserId != null && currentUserId === answer.author.id
-    const displayName = isMine ? "Bạn" : answer.author.displayName
+    const displayName = isMine ? "You" : answer.author.displayName
 
     const authorRow = (
         <StackH
-            gap="tight"
+            gap={2}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" showAnatomy={showAnatomy} />
-                    <Typography size="xs" weight="medium" text={displayName} anatPart={showAnatomy ? "Typography" : undefined} />
-                    <Typography size="xs" color="muted" text={answer.createdTimeAgo} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" weight="medium" text={displayName} showAnatomy={showAnatomy} />
+                    <Typography size="xs" color="muted" text={answer.createdTimeAgo} showAnatomy={showAnatomy} />
                     {answer.isAcceptedAnswer ? (
-                        <Chip tone="success" text="Câu trả lời được chọn" anatPart={showAnatomy ? "Chip" : undefined} />
+                        <Chip tone="success" text="Accepted answer" showAnatomy={showAnatomy} />
                     ) : null}
                 </>
             }
@@ -109,7 +109,7 @@ const MessageRow = ({
 
     const reactionRow = interactive ? (
         <StackH
-            gap="related"
+            gap={3}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -125,9 +125,9 @@ const MessageRow = ({
                             variant={answer.isAcceptedAnswer ? "secondary" : "ghost"}
                             size="sm"
                             prefixIcon={CheckCircleIcon}
-                            label={answer.isAcceptedAnswer ? "Bỏ chọn" : "Chọn làm câu trả lời đúng"}
+                            label={answer.isAcceptedAnswer ? "Unaccept" : "Mark as the correct answer"}
                             onPress={() => interactive.onAcceptAnswer(!answer.isAcceptedAnswer)}
-                            anatPart={showAnatomy ? "Button" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -140,7 +140,9 @@ const MessageRow = ({
             {authorRow}
 
             <QaChatBubble role={isMine ? "user" : "assistant"} anatPart={showAnatomy ? "QaChatBubble" : undefined}>
-                <MarkdownContent source={answer.body} measure="compact" className="[&_p]:m-0" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                <div className="[&_p]:m-0">
+                    <MarkdownContent source={answer.body} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+                </div>
             </QaChatBubble>
 
             {reactionRow}
@@ -149,7 +151,7 @@ const MessageRow = ({
 
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
-            <StackV gap="tight" className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} anatPart={showAnatomy ? "StackV" : undefined} body={bubbleBody} />
+            <StackV gap={2} className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} anatPart={showAnatomy ? "StackV" : undefined} body={bubbleBody} />
         </div>
     )
 }
@@ -173,7 +175,7 @@ const QaMessageBubble = ({
         const skeletonBody = (
             <>
                 <StackH
-                    gap="tight"
+                    gap={2}
                     align="center"
                     anatPart={showAnatomy ? "StackH" : undefined}
                     body={
@@ -189,7 +191,7 @@ const QaMessageBubble = ({
         )
         return (
             <div data-anat-part={anatPart}>
-                <StackV gap="tight" className="max-w-[92%]" anatPart={showAnatomy ? "StackV" : undefined} body={skeletonBody} />
+                <StackV gap={2} className="max-w-[92%]" anatPart={showAnatomy ? "StackV" : undefined} body={skeletonBody} />
             </div>
         )
     }
@@ -218,7 +220,7 @@ const QaMessageBubble = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={threadBody} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={threadBody} />
         </div>
     )
 }

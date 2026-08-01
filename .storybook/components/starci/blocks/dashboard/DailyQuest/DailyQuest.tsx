@@ -12,7 +12,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `DailyQuest` (dashboard): "Nhiệm vụ hôm nay" content — a fixed
+ * BLOCK — `DailyQuest` (dashboard): "Today's Quests" content — a fixed
  * 3-task checklist (read content · pass a challenge · review flashcards),
  * each row showing today's progress, plus a claim action once every task is
  * done. Content only — the PAGE frames it with a label; this block never
@@ -107,23 +107,23 @@ export interface DailyQuestProps {
 
 /** Row title per task key — the block's own wording (§14d.1). */
 const TASK_LABEL: Record<DailyQuestTaskKey, string> = {
-    readContent: "Đọc nội dung bài học",
-    passChallenge: "Vượt qua một thử thách",
-    reviewFlashcards: "Ôn tập flashcard",
+    readContent: "Read a lesson",
+    passChallenge: "Pass a challenge",
+    reviewFlashcards: "Review flashcards",
 }
 
 /** One row's body: title (leading) ↔ current/target (trailing) — two peers on one line. */
 const rowBody = (task: DailyQuestTask, showAnatomy: boolean) => (
     <Split
-        gap="related"
-        start={<Typography size="sm" text={TASK_LABEL[task.key]} anatPart={showAnatomy ? "Typography" : undefined} />}
-        end={<Typography size="xs" color="muted" text={`${task.current}/${task.target}`} anatPart={showAnatomy ? "Typography" : undefined} />}
+        gap={3}
+        start={<Typography size="sm" text={TASK_LABEL[task.key]} showAnatomy={showAnatomy} />}
+        end={<Typography size="xs" color="muted" text={`${task.current}/${task.target}`} showAnatomy={showAnatomy} />}
         anatPart={showAnatomy ? "Split" : undefined}
     />
 )
 
 /**
- * The dashboard's "Nhiệm vụ hôm nay" content. See the file header for the
+ * The dashboard's "Today's Quests" content. See the file header for the
  * full leaf/state contract.
  *
  * @param props - {@link DailyQuestProps}
@@ -150,26 +150,25 @@ const DailyQuest = ({
         quest.claimed ? (
             <Chip
                 tone="success"
-                text="Đã nhận thưởng"
-                anatPart={showAnatomy ? "Chip" : undefined}
+                text="Reward claimed"
+                showAnatomy={showAnatomy}
             />
         ) : quest.allDone ? (
             <Button
                 variant="primary"
                 size="sm"
-                label={`Nhận ${quest.reward} xu`}
+                label={`Claim ${quest.reward} coins`}
                 isPending={isClaiming}
                 onPress={onClaim}
                 classNames={["w-fit"]}
                 showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "Button" : undefined}
             />
         ) : (
             <Typography
                 size="xs"
                 color="muted"
-                text={`Hoàn thành cả 3 nhiệm vụ để nhận ${quest.reward} xu.`}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                text={`Complete all 3 quests to claim ${quest.reward} coins.`}
+                showAnatomy={showAnatomy}
             />
         )
     ) : null
@@ -181,23 +180,23 @@ const DailyQuest = ({
                 skeleton={<SurfaceCardCrossList items={[]} isSkeleton skeletonRows={3} showAnatomy={showAnatomy} />}
                 isEmpty={quest === null && !isLoading && !error}
                 emptyContent={{
-                    title: "Chưa có nhiệm vụ nào cho hôm nay.",
+                    title: "No quests for today yet.",
                     onRetry,
-                    retryLabel: "Thử lại",
+                    retryLabel: "Retry",
                     anatPart: showAnatomy ? "AsyncContentEmpty" : undefined,
                     showAnatomy,
                 }}
                 error={quest === null ? error : undefined}
                 errorContent={{
-                    title: "Không tải được nhiệm vụ hôm nay.",
+                    title: "Couldn't load today's quests.",
                     onRetry,
-                    retryLabel: "Thử lại",
+                    retryLabel: "Retry",
                     anatPart: showAnatomy ? "AsyncContentError" : undefined,
                     showAnatomy,
                 }}
                 showAnatomy={showAnatomy}
             >
-                <StackV gap="grouped" body={
+                <StackV gap={4} body={
                     <>
                         <SurfaceCardCrossList items={items} showAnatomy={showAnatomy} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} />
                         {claimSlot}

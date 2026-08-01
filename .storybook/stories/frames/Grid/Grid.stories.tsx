@@ -31,13 +31,11 @@ const cellItems = (labels: ReadonlyArray<string>) =>
     labels.map((label) => ({
         key: label,
         content: (
-            <SurfaceCard>
-                <Typography size="sm" text={label} />
-            </SurfaceCard>
+            <SurfaceCard body={() => <Typography size="sm" text={label} />} />
         ),
     }))
 
-const MODULES = ["Nhập môn", "Container", "Orchestration", "CI/CD", "Quan trắc", "Bảo mật"]
+const MODULES = ["Introduction", "Containers", "Orchestration", "CI/CD", "Monitoring", "Security"]
 
 /**
  * `@app-*` measures the NEAREST CONTAINER, not the viewport — to demo a breakpoint
@@ -55,7 +53,7 @@ interface FrameProps {
 }
 
 const Frame = ({ width, label, children }: FrameProps) => (
-    <div className="flex flex-col gap-2">
+    <div data-tier="fixture" className="flex flex-col gap-2">
         <Typography size="xs" text={label} color="muted" />
         <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>
             {children}
@@ -63,25 +61,28 @@ const Frame = ({ width, label, children }: FrameProps) => (
     </div>
 )
 
-/** The six VALID steps of §10 — `gap` is a literal union so there's no seventh step. */
+/** The eight VALID steps of `AllowedGap` — `gap` is a literal union so there's no ninth step. */
 /**
- * The six seam steps, each paired with the RELATIONSHIP that earns it. The state name says
- * the relationship rather than the number, because a reader choosing a gap is answering
- * "what are these two things to each other", not "which number looks right".
+ * 2026-08-01 (wave-3 numeric-scale migration): the old six-word union is gone with no
+ * deprecated stage, so the state name now leads with the STEP NUMBER — the number is the
+ * whole vocabulary a reader has. The sentence from `gap.md` rides along so a wrong step is
+ * still checkable against something other than taste.
  */
 const SCALE = [
-    { gap: "flush", relation: "one unit of meaning" },
-    { gap: "tight", relation: "a mark attached to its label" },
-    { gap: "related", relation: "peers in one set" },
-    { gap: "grouped", relation: "rows stacked in one surface" },
-    { gap: "section", relation: "regions of one thing" },
-    { gap: "page", relation: "separate features on a page" },
+    { gap: 1, relation: "must touch — one thing is part of the other, not beside it" },
+    { gap: 2, relation: "a joint, not a seam — a mark attached to its label" },
+    { gap: 3, relation: "the house default — peers in one set" },
+    { gap: 4, relation: "between groups inside one surface — rows stacked in one card" },
+    { gap: 5, relation: "open, no sentence yet — 56 app call sites, unread" },
+    { gap: 6, relation: "between sections of a page — regions of one thing" },
+    { gap: 7, relation: "page bands — separate features sharing only the page" },
+    { gap: 8, relation: "marketing air — full-width bands on a page that sells" },
 ] as const
 
 /** Default — a card grid: 1 column narrow → 2 columns from `@app-sm` → 3 columns from `@app-md`. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Grid"
                 tier="frame"
@@ -92,13 +93,13 @@ export const Default: Story = {
                         name: "columns = { base: 1, sm: 2, md: 3 }, container = 768px",
                         why: "Six module cards lay out in three columns across two rows inside a 768px container, which is past the `@app-md` breakpoint. The same `columns` prop would collapse to fewer columns in a narrower container, the Columns leaf below shows those steps explicitly.",
                         code: `<Grid
-  gap="grouped"
+  gap={4}
   columns={{ base: 1, sm: 2, md: 3 }}
   items={modules.map((m) => ({ key: m, content: <ModuleCard name={m} /> }))}
 />`,
                         render: (
                             <Frame width="48rem" label="container 768px — @app-md breakpoint → 3 columns">
-                                <Grid showAnatomy gap="grouped" columns={{ base: 1, sm: 2, md: 3 }} items={cellItems(MODULES)} />
+                                <Grid showAnatomy gap={4} columns={{ base: 1, sm: 2, md: 3 }} items={cellItems(MODULES)} />
                             </Frame>
                         ),
                     },
@@ -121,7 +122,7 @@ export const Span: Story = {
             span: index === 0 ? (2 as const) : undefined,
         }))
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <BlockAnatomy
                     name="Grid"
                     tier="frame"
@@ -131,7 +132,7 @@ export const Span: Story = {
                             name: "items[0].span = 2, rest span = undefined",
                             why: "The first cell stretches across two columns of the three-column grid while the remaining cells keep their default single-column width. A spanned cell always renders inside a real wrapper carrying `col-span-2`, even when `showAnatomy` is off.",
                             code: `<Grid
-  gap="grouped"
+  gap={4}
   columns={{ base: 1, sm: 2, md: 3 }}
   items={[
     { key: "hero", span: 2, content: <HeroCard /> },
@@ -141,7 +142,7 @@ export const Span: Story = {
 />`,
                             render: (
                                 <Frame width="48rem" label="container 768px — @app-md → 3 columns, first cell spans 2">
-                                    <Grid showAnatomy gap="grouped" columns={{ base: 1, sm: 2, md: 3 }} items={items} />
+                                    <Grid showAnatomy gap={4} columns={{ base: 1, sm: 2, md: 3 }} items={items} />
                                 </Frame>
                             ),
                         },
@@ -160,7 +161,7 @@ export const Span: Story = {
  */
 export const Columns: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Grid"
                 tier="frame"
@@ -171,43 +172,43 @@ export const Columns: Story = {
                         name: "container = 320px (below @app-sm)",
                         why: "The grid falls back to its `base` step and stacks every card in a single column. This is the narrowest container width the demo exercises, below every breakpoint the `columns` prop names.",
                         code: `<Grid
-  gap="grouped"
+  gap={4}
   columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
   items={…}
 />`,
                         render: (
                             <Frame width="20rem" label="container 320px — below @app-sm → base = 1 column">
-                                <Grid showAnatomy gap="grouped" columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
+                                <Grid showAnatomy gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                             </Frame>
                         ),
                     },
                     {
                         name: "container = 640px (@app-sm)",
                         why: "Once the container crosses the `@app-sm` breakpoint the same cards reflow into two columns. The `columns` prop passed to the grid never changed, only the surrounding container's width did.",
-                        code: "<Grid gap=\"grouped\" columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={…} />",
+                        code: "<Grid gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={…} />",
                         render: (
                             <Frame width="40rem" label="container 640px — @app-sm → 2 columns">
-                                <Grid gap="grouped" columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
+                                <Grid gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                             </Frame>
                         ),
                     },
                     {
                         name: "container = 768px (@app-md)",
                         why: "Crossing `@app-md` steps the grid up to three columns, one more than the sm step. Each breakpoint inherits the one before it, so this state only differs from the sm state by container width.",
-                        code: "<Grid gap=\"grouped\" columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={…} />",
+                        code: "<Grid gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={…} />",
                         render: (
                             <Frame width="48rem" label="container 768px — @app-md → 3 columns">
-                                <Grid gap="grouped" columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
+                                <Grid gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                             </Frame>
                         ),
                     },
                     {
                         name: "container = 1024px (@app-lg)",
                         why: "Crossing `@app-lg` steps the grid to its widest column count named by the `columns` prop. This is the last breakpoint the type allows, so the grid stays at four columns for any container wider than this.",
-                        code: "<Grid gap=\"grouped\" columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={…} />",
+                        code: "<Grid gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={…} />",
                         render: (
                             <Frame width="64rem" label="container 1024px — @app-lg → 4 columns">
-                                <Grid gap="grouped" columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
+                                <Grid gap={4} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                             </Frame>
                         ),
                     },
@@ -218,31 +219,34 @@ export const Columns: Story = {
 }
 
 /**
- * Gaps — `gap` accepts EXACTLY the six `SeamScale` words (§10c) and is REQUIRED, so a number
- * like `gap={4}` is a COMPILE ERROR. The step applies to BOTH axes, which is why the state
- * names below say the RELATIONSHIP: one seam is claiming the same thing about the row above a
- * cell and the cell beside it, and a word makes that claim readable where a number hides it.
+ * Gaps — `gap` accepts EXACTLY the eight `AllowedGap` steps and is REQUIRED, so an off-scale
+ * value like `gap={4.5}` is a COMPILE ERROR. The step applies to BOTH axes, which is why the
+ * state names below lead with the NUMBER — the old words are gone with no deprecated stage,
+ * so the number is the whole vocabulary a reader has; the relationship sentence rides along
+ * as the check against taste the word used to provide.
  */
 export const Gaps: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Grid"
                 tier="frame"
                 leaf="Gaps"
-                reason="A regular card grid sits at `grouped(3)`; `section(6)` is for grids of large REGIONS (§10b), not for a plain card grid."
+                reason="A regular card grid sits at step `4` (between groups inside one surface); step `6` (between sections of a page) is for grids of large REGIONS, not for a plain card grid."
                 states={SCALE.map((step, index) => ({
-                    name: step.relation,
+                    name: `${step.gap} — ${step.relation}`,
                     why: index === 0
-                        ? `Cell borders touch with no seam at all, which is what ${"`flush`"} means. Reach for it only when the two things are ONE unit of meaning, because anything else reads as a single continuous block.`
-                        : `The seam widens to ${"`" + step.gap + "`"}, the step that fits ${step.relation}. The cells and their content never change across the scale, only the space between them does, so the choice is about the RELATIONSHIP and never about how it looks.`,
+                        ? "Cell borders touch with no seam at all, which is what step `1` means. Reach for it only when the two things are ONE unit of meaning, because anything else reads as a single continuous block."
+                        : step.gap === 5
+                            ? "`gap.md` records this rung as chosen by 56 app call sites but not yet read, so it carries no sentence to check a card grid against. Shown here for completeness — the cells and their content don't change, only the space between them does, but nobody has said yet what that space should mean at this step."
+                            : `The seam widens to step ${"`" + step.gap + "`"}, the rung that fits ${step.relation.split(" — ")[0]}. The cells and their content never change across the scale, only the space between them does, so the choice is about the RELATIONSHIP and never about how it looks.`,
                     code: `<Grid
-  gap="${step.gap}"
+  gap={${step.gap}}
   columns={{ base: 2 }}
   items={…}
 />`,
                     render: (
-                        <Frame width="32rem" label={step.relation}>
+                        <Frame width="32rem" label={`step ${step.gap} — ${step.relation}`}>
                             <Grid
                                 showAnatomy={index === 0}
                                 gap={step.gap}

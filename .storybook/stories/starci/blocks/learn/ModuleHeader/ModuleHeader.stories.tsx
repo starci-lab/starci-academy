@@ -37,9 +37,9 @@ export default meta
 type Story = StoryObj<typeof ModuleHeader>
 
 const CRUMBS = [
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "module", label: "Container hoá" },
+    { key: "module", label: "Containerization" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -54,7 +54,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full set: trail → title → description → meta row (tier chip + up to three counts). */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleHeader"
                 tier="block"
@@ -68,8 +68,8 @@ export const Full: Story = {
                         why: "An advanced module carrying its full figures draws the tier chip first, then all three counts in order — lessons, minutes, challenges. This is the shape a learner sees once a module's outline and estimates have fully resolved.",
                         code: `<ModuleHeader
     breadcrumbItems={crumbs}
-    title="Container hoá ứng dụng"
-    description="Đóng gói, tối ưu image, và vận hành container ở production."
+    title="Containerizing applications"
+    description="Packaging, optimizing images, and running containers in production."
     tier={CourseContentTier.Advanced}
     lessonCount={12}
     minutesTotal={145}
@@ -80,8 +80,8 @@ export const Full: Story = {
                                 anatPart="ModuleHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Container hoá ứng dụng"
-                                description="Đóng gói, tối ưu image, và vận hành container ở production."
+                                title="Containerizing applications"
+                                description="Packaging, optimizing images, and running containers in production."
                                 tier={CourseContentTier.Advanced}
                                 lessonCount={12}
                                 minutesTotal={145}
@@ -94,8 +94,8 @@ export const Full: Story = {
                         why: "A legacy module with no stored tier drops the classifying chip entirely, and a module with no challenges yet drops that one count — a zero is not news, so it does not get a pill claiming something is there. Lessons and minutes still carry the row.",
                         code: `<ModuleHeader
     breadcrumbItems={crumbs}
-    title="Container hoá ứng dụng"
-    description="Đóng gói, tối ưu image, và vận hành container ở production."
+    title="Containerizing applications"
+    description="Packaging, optimizing images, and running containers in production."
     lessonCount={8}
     minutesTotal={64}
     challengeCount={0}
@@ -103,8 +103,8 @@ export const Full: Story = {
                         render: (
                             <ModuleHeader
                                 breadcrumbItems={CRUMBS}
-                                title="Container hoá ứng dụng"
-                                description="Đóng gói, tối ưu image, và vận hành container ở production."
+                                title="Containerizing applications"
+                                description="Packaging, optimizing images, and running containers in production."
                                 lessonCount={8}
                                 minutesTotal={64}
                                 challengeCount={0}
@@ -120,7 +120,7 @@ export const Full: Story = {
 /** LEAF — a brand-new module ⇒ **loses** the whole meta row and the description together. */
 export const NoMeta: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleHeader"
                 tier="block"
@@ -132,13 +132,13 @@ export const NoMeta: Story = {
                     {
                         name: "description, tier, lessonCount, minutesTotal, challengeCount = undefined",
                         why: "Both the meta row and the description drop out, shrinking the cluster down to just the trail and the module name. A module whose outline has not been authored yet has no tier, no counts, and no summary to report, so the block shows only what it actually knows rather than an empty row.",
-                        code: "<ModuleHeader breadcrumbItems={crumbs} title=\"Container hoá ứng dụng\" />",
+                        code: "<ModuleHeader breadcrumbItems={crumbs} title=\"Containerizing applications\" />",
                         render: (
                             <ModuleHeader
                                 anatPart="ModuleHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Container hoá ứng dụng"
+                                title="Containerizing applications"
                             />
                         ),
                     },
@@ -155,7 +155,7 @@ export const NoMeta: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleHeader"
                 tier="block"

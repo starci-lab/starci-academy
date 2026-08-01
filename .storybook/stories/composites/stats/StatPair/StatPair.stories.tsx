@@ -41,7 +41,7 @@ const STAT_PARTS: Array<AnatomyNode> = [
 
 export const Single: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StatPair"
                 tier="composite"
@@ -63,7 +63,7 @@ export const Single: Story = {
 
 export const Row: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StatPair"
                 tier="composite"
@@ -76,10 +76,10 @@ export const Row: Story = {
                         code: "<Card className=\"flex divide-x divide-default\">\n  {stats.map((stat) => <StatPair key={stat.label} value={stat.value} label={stat.label} />)}\n</Card>",
                         render: (
                             // Parent owns the card + full-height vertical dividers; StatPair is frameless.
-                            <Card variant="default" className="w-fit">
+                            <Card data-tier="fixture" variant="default" className="w-fit">
                                 <div className="flex items-stretch divide-x divide-default">
                                     {STATS.map((stat) => (
-                                        <div key={stat.label} className="px-6 first:pl-0 last:pr-0">
+                                        <div data-tier="fixture" key={stat.label} className="px-6 first:pl-0 last:pr-0">
                                             <StatPair anatPart="StatPair" showAnatomy value={stat.value} label={stat.label} />
                                         </div>
                                     ))}
@@ -95,7 +95,7 @@ export const Row: Story = {
 
 export const Grid: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StatPair"
                 tier="composite"
@@ -108,7 +108,7 @@ export const Grid: Story = {
                         code: "<Card className=\"grid grid-cols-2 gap-x-8 gap-y-6\">\n  {stats.map((stat) => <StatPair key={stat.label} value={stat.value} label={stat.label} />)}\n</Card>",
                         render: (
                             // Narrow width (sidebar/widget): the same stats fall into a 2-col grid.
-                            <Card variant="default" className="w-[420px]">
+                            <Card data-tier="fixture" variant="default" className="w-[420px]">
                                 <div className="grid grid-cols-2 gap-x-8 gap-y-6">
                                     {STATS.map((stat) => (
                                         <StatPair key={stat.label} anatPart="StatPair" showAnatomy value={stat.value} label={stat.label} />
@@ -136,7 +136,7 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
 /** LEAF — the caller flips `isSkeleton`; the pair draws its own 2-bar shimmer mirror instead of a caller faking it with an unrelated atom (§12g.0a). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StatPair"
                 tier="composite"

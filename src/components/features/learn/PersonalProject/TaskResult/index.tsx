@@ -136,9 +136,9 @@ const FindingAccordionItem = ({
 /**
  * Personal-project task result page (quality-gate report) — mirrors the challenge
  * `SubmissionResult`. PageHeader (back to the task + task title) → attempt selector
- * (`FlexWrapButtonRadio` + history drawer) → two {@link LabeledCard}s: "Kết quả"
+ * (`FlexWrapButtonRadio` + history drawer) → two {@link LabeledCard}s: "Result"
  * (score hero + verdict from `attempt.passed` + the AI model that graded it) and
- * "Góp ý" (findings accordion). Reads `?attempt=` (defaults newest); the selected
+ * "Feedback" (findings accordion). Reads `?attempt=` (defaults newest); the selected
  * attempt drives the feedbacks query via redux `selectedAttemptId`.
  *
  * @param props - optional root className (placement only).
@@ -308,7 +308,7 @@ export const PersonalProjectTaskResult = ({
                     </div>
                 </AsyncContent>
 
-                {/* selected attempt detail — two labeled cards: "Kết quả" + "Góp ý" */}
+                {/* selected attempt detail — two labeled cards: "Result" + "Feedback" */}
                 {selectedAttempt ? (
                     <div className="flex flex-col gap-6">
                         <LabeledCard label={t("personalProjectResult.resultLabel")} contentClassName="flex flex-col gap-3">

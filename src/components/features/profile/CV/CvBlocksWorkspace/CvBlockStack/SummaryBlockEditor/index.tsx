@@ -17,7 +17,7 @@ export interface SummaryBlockEditorProps extends WithClassNames<undefined>, CvBl
 
 /**
  * Summary/objective paragraph editor — singleton, non-repeatable, holds its
- * one `text` field on `block.items[0]`. Has the "✨ AI viết giúp" affordance
+ * one `text` field on `block.items[0]`. Has the "✨ AI write for me" affordance
  * (`onAiRewrite`, no `itemId` — the whole block's single fields set).
  *
  * @param props - {@link SummaryBlockEditorProps}

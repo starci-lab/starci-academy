@@ -1,4 +1,13 @@
 import React from "react"
+// ATOM GAP — `Accordion` and `Table` (compound children: `.Item`/`.Heading`/`.Trigger`/`.Panel`/
+// `.Body`/`.Column`/`.Cell`) come straight from the vendor because no house atom wraps either
+// compound. `atoms/navigation/Accordion` wraps a DIFFERENT vendor primitive (`Disclosure`/
+// `DisclosureGroup`) behind a data-driven `items` array — it cannot take this viewer's panels,
+// which react-markdown dispatches to `accordionblock`/`accordionpanel` one node at a time, never
+// as one upfront array a composite could pass through `items`. `composites/data/Table` is a
+// separate, config-driven composite (`columns`/`items` data, `children` forbidden by its own
+// contract) — a GFM table arrives as an already-rendered `thead`/`tbody` children tree, which
+// cannot be reduced back into that shape without re-parsing the table by hand.
 import { Accordion, Table as HeroTable, cn } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -30,8 +39,11 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * body that looks finished and renders wrong.
  *
  * Vertical rhythm is owned by the single wrapper in `MarkdownContent.tsx` (compact
- * measure) or by each block's own asymmetric margin (reading measure, §13z — a
- * viewer never sees its children as nodes, so there is no seam for a frame to own).
+ * measure) or, in reading measure, by a plain `<div className={blockMy}>` wrapped
+ * around each block-level renderer's own output right here — margin is a seam
+ * between two blocks (`principles/margin.md`), so it is written at the one place
+ * that sees both, not passed as a `className` prop into the block's own component
+ * (COMPOSITE-4: `CodeToHtml` / `MermaidDiagram` / `MarkdownTable` take no `className`).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -40,11 +52,11 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * other composite in this design system — the copy is a hardcoded constant
  * instead of a `useTranslations()` call. Values mirror `src/messages/vi.json`'s
  * `markdown.*` keys so a reader comparing the two sees the same words. */
-const TABLE_ARIA_LABEL = "Bảng nội dung"
-const MERMAID_LOADING_LABEL = "Đang vẽ sơ đồ..."
-const MERMAID_EXPAND_LABEL = "Phóng to sơ đồ"
-const MERMAID_FALLBACK_LABEL = "Hình"
-const HEADING_ANCHOR_LABEL = "Liên kết tới mục này"
+const TABLE_ARIA_LABEL = "Content table"
+const MERMAID_LOADING_LABEL = "Drawing diagram..."
+const MERMAID_EXPAND_LABEL = "Expand diagram"
+const MERMAID_FALLBACK_LABEL = "Figure"
+const HEADING_ANCHOR_LABEL = "Link to this section"
 
 /** Anything the parser hands back with only children — most of the grammar. */
 export interface MarkdownNodeProps {
@@ -121,7 +133,7 @@ const getNodeText = (node: React.ReactNode): string => {
 
 /**
  * Slugify heading text into a URL-safe anchor id (diacritics stripped, Vietnamese
- * `đ`→`d`, non-alphanumerics collapsed to single hyphens). Deterministic so the
+ * Vietnamese d-with-stroke folded to `d`, non-alphanumerics collapsed to single hyphens). Deterministic so the
  * rendered heading id and any "on this page" outline reading it from the DOM agree.
  * @param text - The raw heading text.
  * @returns The anchor slug.
@@ -130,7 +142,7 @@ const slugify = (text: string): string =>
     text
         .normalize("NFKD")
         .replace(/[̀-ͯ]/g, "")
-        .replace(/[đĐ]/g, "d")
+        .replace(/[đĐ]/g, "d") // vn-ok: slug transliteration of the VI letter
         .toLowerCase()
         .trim()
         .replace(/[^a-z0-9]+/g, "-")
@@ -266,9 +278,13 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
             )
         ),
         // GFM table → real HeroUI `Table` compound (see the file header on `MarkdownTableParts.tsx`
-        // for why this is NOT the config-driven `composites/data/Table`).
+        // for why this is NOT the config-driven `composites/data/Table`). The block-rhythm margin
+        // (COMPOSITE-4: `MarkdownTable` takes no `className`) is owned here, by the plain wrapping
+        // `<div>` — margin is a seam between two blocks, not a prop of either one.
         table: ({ children }: MarkdownNodeProps) => (
-            <MarkdownTable ariaLabel={TABLE_ARIA_LABEL} className={blockMy}>{children}</MarkdownTable>
+            <div className={blockMy}>
+                <MarkdownTable ariaLabel={TABLE_ARIA_LABEL}>{children}</MarkdownTable>
+            </div>
         ),
         thead: MarkdownTableHead,
         tbody: MarkdownTableBody,
@@ -292,27 +308,31 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
             const child = React.Children.only(children) as React.ReactElement<MarkdownCodeProps>
             const lang = /language-(\w+)/.exec(child.props.className ?? "")?.[1] ?? "text"
             const code = String(child.props.children ?? "").replace(/\n$/, "")
+            // Block-rhythm margin (COMPOSITE-4: neither viewer takes `className`) owned by the
+            // plain wrapping `<div>` — margin is a seam between two blocks, not either one's prop.
             if (lang.toLowerCase() === "mermaid") {
                 return (
-                    <MermaidDiagram
-                        code={code}
-                        theme={isDark ? "dark" : "default"}
-                        loadingLabel={MERMAID_LOADING_LABEL}
-                        expandLabel={MERMAID_EXPAND_LABEL}
-                        caption={mermaidCaptions[code.trim()]}
-                        fallbackLabel={MERMAID_FALLBACK_LABEL}
-                        className={blockMy}
-                    />
+                    <div className={blockMy}>
+                        <MermaidDiagram
+                            code={code}
+                            theme={isDark ? "dark" : "default"}
+                            loadingLabel={MERMAID_LOADING_LABEL}
+                            expandLabel={MERMAID_EXPAND_LABEL}
+                            caption={mermaidCaptions[code.trim()]}
+                            fallbackLabel={MERMAID_FALLBACK_LABEL}
+                        />
+                    </div>
                 )
             }
             return (
-                <CodeToHtml
-                    code={code}
-                    language={lang}
-                    theme={isDark ? "material-theme-darker" : "material-theme-lighter"}
-                    showAnatomy={showAnatomy}
-                    className={blockMy}
-                />
+                <div className={blockMy}>
+                    <CodeToHtml
+                        code={code}
+                        language={lang}
+                        theme={isDark ? "material-theme-darker" : "material-theme-lighter"}
+                        showAnatomy={showAnatomy}
+                    />
+                </div>
             )
         },
         // Custom `:::muted` directive tags (see `remarkMuted` in `MarkdownContent.tsx`): small,
@@ -329,10 +349,11 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
             <StackH
                 as="span"
                 wrap
-                gap="related"
+                gap={3}
+                pattern="chip-row"
                 className="my-2"
                 body={String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
-                    <Chip key={index} tone="default" text={keyword} anatPart={showAnatomy ? "Chip" : undefined} />
+                    <Chip key={index} tone="default" text={keyword} />
                 ))}
             />
         ),
@@ -360,7 +381,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions, showA
                 <Accordion.Heading>
                     <Accordion.Trigger>
                         <StackH
-                            gap="grouped"
+                            gap={4}
                             justify="between"
                             classNames={["w-full"]}
                             className="text-start"

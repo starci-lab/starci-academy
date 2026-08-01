@@ -29,15 +29,15 @@ export default meta
 type Story = StoryObj<typeof MindMapFullscreenButton>
 
 const ARIA_LABELS_EXPAND = {
-    zoomIn: "Phóng to",
-    zoomOut: "Thu nhỏ",
-    toggleFullscreen: "Toàn màn hình",
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+    toggleFullscreen: "Fullscreen",
 }
 
 const ARIA_LABELS_COLLAPSE = {
-    zoomIn: "Phóng to",
-    zoomOut: "Thu nhỏ",
-    toggleFullscreen: "Thoát toàn màn hình",
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+    toggleFullscreen: "Exit fullscreen",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -48,7 +48,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the three-button rail. `isFullscreen` toggles the third button's glyph + label. */
 export const Default: Story = {
     render: () => (
-        <div className="relative h-64 rounded-2xl bg-default-100 p-8">
+        <div data-tier="fixture" className="relative h-64 rounded-2xl bg-default-100 p-8">
             <BlockAnatomy
                 name="MindMapFullscreenButton"
                 tier="block"
@@ -65,7 +65,7 @@ export const Default: Story = {
     onZoomOut={handleZoomOut}
     onToggleFullscreen={handleToggleFullscreen}
     isFullscreen={false}
-    ariaLabels={{ zoomIn: "Phóng to", zoomOut: "Thu nhỏ", toggleFullscreen: "Toàn màn hình" }}
+    ariaLabels={{ zoomIn: "Zoom in", zoomOut: "Zoom out", toggleFullscreen: "Fullscreen" }}
 />`,
                         render: (
                             <MindMapFullscreenButton
@@ -87,7 +87,7 @@ export const Default: Story = {
     onZoomOut={handleZoomOut}
     onToggleFullscreen={handleToggleFullscreen}
     isFullscreen={true}
-    ariaLabels={{ zoomIn: "Phóng to", zoomOut: "Thu nhỏ", toggleFullscreen: "Thoát toàn màn hình" }}
+    ariaLabels={{ zoomIn: "Zoom in", zoomOut: "Zoom out", toggleFullscreen: "Exit fullscreen" }}
 />`,
                         render: (
                             <MindMapFullscreenButton

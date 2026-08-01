@@ -44,7 +44,7 @@ export interface FoundationResourceEmptyProps {
 const FoundationResourceEmpty = ({ showAnatomy = false, anatPart }: FoundationResourceEmptyProps) => (
     <AsyncContentEmpty
         anatPart={anatPart ?? (showAnatomy ? "AsyncContentEmpty" : undefined)}
-        title="Danh mục này chưa có tài liệu."
+        title="This category doesn't have any resources yet."
     />
 )
 

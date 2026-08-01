@@ -102,22 +102,22 @@ const LOCKED_LEADING = { Icon: LockIcon, className: "size-5 text-warning-soft-fo
  *
  * 2026-07-27 (teacher: "pass the module, not the module title — at block tier you stop
  * passing generic strings"): the prop used to be `moduleTitle: string` and every caller
- * shipped `"Chương 2 · Container hoá"`. That string carried TWO decisions the caller had
- * no business making — the word "Chương" and the `·` separator — while the block only
- * bolted "Tiếp tục ·" on the front, so one heading was assembled in two places.
+ * shipped `"Chapter 2 · Containerization"`. That string carried TWO decisions the caller had
+ * no business making — the word "Chapter" and the `·` separator — while the block only
+ * bolted "Continue ·" on the front, so one heading was assembled in two places.
  *
- * A `string` prop cannot be checked: nothing stops a caller sending `"chương 2-"` or a
+ * A `string` prop cannot be checked: nothing stops a caller sending `"chapter 2-"` or a
  * completely different sentence. Two named fields make the wrong shape UNTYPEABLE.
  *
  * Declared as a NAMED, EXPORTED interface rather than inline `{ index: number; name:
- * string }` (teacher, 2026-07-27: "typesafe đàng hoàng"): an inline shape has no name to
+ * string }` (teacher, 2026-07-27: "properly typesafe"): an inline shape has no name to
  * import, so a caller building this object has nothing to type it against and every
  * call-site re-describes it by hand.
  */
 export interface ModuleLike {
     /** 1-based position of the module inside the course. */
     index: number
-    /** Module name WITHOUT any prefix — the block adds "Chương"/"Tiếp tục" itself. */
+    /** Module name WITHOUT any prefix — the block adds "Chapter"/"Continue" itself. */
     name: string
 }
 /** Props for {@link KeepGoingPath}. */
@@ -175,9 +175,9 @@ const KeepGoingPathBase = ({
     return (
         <SurfaceCardList
             // The heading sentence is assembled by the BLOCK — the caller only hands over the module name.
-            // EVERY word of the heading is decided HERE — "Tiếp tục", "Chương", the `·`.
+            // EVERY word of the heading is decided HERE — "Continue", "Chapter", the `·`.
             // The caller only supplies the number and the name.
-            label={`Tiếp tục · Chương ${module.index} · ${module.name}`}
+            label={`Continue · Chapter ${module.index} · ${module.name}`}
             anatPart={anatPart ?? (showAnatomy ? "SurfaceCardList" : undefined)}
             isSkeleton={isSkeleton}
             items={rows.map((content) => {
@@ -193,14 +193,14 @@ const KeepGoingPathBase = ({
                         <HeroSkeleton className="size-5 shrink-0 rounded-full" />
                     ) : (
                         <Icon
-                            aria-label={content.locked ? "Nội dung trả phí" : undefined}
+                            aria-label={content.locked ? "Paid content" : undefined}
                             aria-hidden={content.locked ? undefined : true}
                             focusable="false"
                             className={className}
                         />
                     ),
                     title: content.title,
-                    subtitle: `${content.minutes} phút đọc`,
+                    subtitle: `${content.minutes} min read`,
                     onPress: content.onPress,
                     // Meta now holds EXACTLY ONE thing: difficulty. The shape is owned by
                     // DESIGN — the block doesn't reshape the chip (§14d.1). The flag flows

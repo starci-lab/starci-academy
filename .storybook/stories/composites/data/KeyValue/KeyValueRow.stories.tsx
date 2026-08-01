@@ -16,6 +16,10 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  *
  * The frame does NOT format: the `value` below is a string ALREADY formatted
  * (`"1.200.000 ₫"`), not a number for the frame to convert units on its own.
+ *
+ * ⭐ ADDED 2026-08-01 (additive): `copyable` grows a one-tap `SnippetIcon` copy
+ * affordance beside the value. Default `false` — every leaf above the
+ * `Copyable` one renders with no `copyable` passed and is unaffected.
  */
 const meta: Meta<typeof KeyValueRow> = {
     title: "Composites/Data/KeyValue/KeyValueRow",
@@ -46,11 +50,15 @@ const EMPHASIS_PARTS: Array<AnatomyNode> = [
 const SKELETON_PARTS: Array<AnatomyNode> = [
     { name: "Skeleton", tier: "heroui", role: "raw HeroUI `Skeleton` bars the row draws itself: a label bar (+ a second bar when `hint` is set) on the left, one value bar on the right" },
 ]
+const COPYABLE_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "atom", role: "label (Sm muted) and value (Sm medium + tabular-nums)", storyId: "atoms-text-typography-typography--colors" },
+    { name: "SnippetIcon", tier: "atom", role: "one-tap copy affordance next to the value, added ADDITIVELY 2026-08-01 via `copyable`", storyId: "atoms-display-snippeticon-snippeticon--default" },
+]
 
 /** Default — muted label left, medium value right; `justify-between` holds both edges. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeyValueRow"
                 tier="composite"
@@ -61,10 +69,10 @@ export const Default: Story = {
                     {
                         name: "no hint, emphasis = false (bare pair)",
                         why: "The row renders exactly two `Typography` nodes, a muted `Label` and a medium `Value`, held apart by `justify-between`. A plain spec line — a fee, a quantity — never needs anything heavier than that.",
-                        code: "<KeyValueRow label=\"Học phí\" value=\"1.200.000 ₫\" />",
+                        code: "<KeyValueRow label=\"Tuition\" value=\"$49.00\" />",
                         render: (
-                            <div className="max-w-sm">
-                                <KeyValueRow showAnatomy label="Học phí" value="1.200.000 ₫" />
+                            <div data-tier="fixture" className="max-w-sm">
+                                <KeyValueRow showAnatomy label="Tuition" value="$49.00" />
                             </div>
                         ),
                     },
@@ -77,7 +85,7 @@ export const Default: Story = {
 /** WithHint — `hint` is a secondary line UNDER the label (condition/unit), tight gap-1 cluster. Migrated to `states` 2026-07-27. */
 export const WithHint: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeyValueRow"
                 tier="composite"
@@ -88,13 +96,13 @@ export const WithHint: Story = {
                         name: "hint set",
                         why: "A third `Hint` node appears in a tight `gap-1` stack directly under `Label`, while `Value` still anchors `items-start` at the right edge. The hint explains a condition or unit the label alone can't carry, like the date a discount stops applying.",
                         code: `<KeyValueRow
-  label="Giảm giá"
-  hint="Áp dụng đến 31/12"
-  value="-200.000 ₫"
+  label="Discount"
+  hint="Valid through 12/31"
+  value="-$8.00"
 />`,
                         render: (
-                            <div className="max-w-sm">
-                                <KeyValueRow showAnatomy label="Giảm giá" hint="Áp dụng đến 31/12" value="-200.000 ₫" />
+                            <div data-tier="fixture" className="max-w-sm">
+                                <KeyValueRow showAnatomy label="Discount" hint="Valid through 12/31" value="-$8.00" />
                             </div>
                         ),
                     },
@@ -107,7 +115,7 @@ export const WithHint: Story = {
 /** Emphasis — the EMPHASIS tier for the total row: label steps up to foreground medium, value to base bold. Migrated to `states` 2026-07-27. */
 export const Emphasis: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeyValueRow"
                 tier="composite"
@@ -117,10 +125,50 @@ export const Emphasis: Story = {
                     {
                         name: "emphasis = true",
                         why: "The same two nodes render, but `Label` steps up to foreground medium and `Value` steps up to base bold — no new node mounts. A total row needs to visually outrank the line items above it without turning into a different composition, and the number itself still comes from the consumer, never computed here.",
-                        code: "<KeyValueRow emphasis label=\"Tổng cộng\" value=\"1.000.000 ₫\" />",
+                        code: "<KeyValueRow emphasis label=\"Total\" value=\"$41.00\" />",
                         render: (
-                            <div className="max-w-sm">
-                                <KeyValueRow showAnatomy emphasis label="Tổng cộng" value="1.000.000 ₫" />
+                            <div data-tier="fixture" className="max-w-sm">
+                                <KeyValueRow showAnatomy emphasis label="Total" value="$41.00" />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/**
+ * Leaf prop `copyable` — ADDED 2026-08-01, additive: default `false`, so an
+ * existing row with no `copyable` renders exactly as every leaf above it. Only
+ * when `true` does a `SnippetIcon` copy affordance mount beside the value.
+ */
+export const Copyable: Story = {
+    render: () => (
+        <div data-tier="fixture" className="p-8">
+            <BlockAnatomy
+                name="KeyValueRow"
+                tier="composite"
+                leaf="Prop `copyable`"
+                parts={COPYABLE_PARTS}
+                states={[
+                    {
+                        name: "copyable = false (default)",
+                        why: "The value column renders exactly the same two `Typography` nodes as the `Default` leaf — no icon mounts, no gap grows. An ordinary spec line has nothing worth a one-tap copy.",
+                        code: "<KeyValueRow label=\"Order code\" value=\"ORD-48213\" />",
+                        render: (
+                            <div data-tier="fixture" className="max-w-sm">
+                                <KeyValueRow showAnatomy label="Order code" value="ORD-48213" />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "copyable = true",
+                        why: "A `SnippetIcon` mounts beside the value, gap-2 apart (§10 flex-action), copying the row's own `value` string on click. A value the reader is likely to paste elsewhere — an order code, an API key, a wallet address — gets a one-tap way out instead of a manual select-and-copy.",
+                        code: "<KeyValueRow label=\"Order code\" value=\"ORD-48213\" copyable />",
+                        render: (
+                            <div data-tier="fixture" className="max-w-sm">
+                                <KeyValueRow showAnatomy label="Order code" value="ORD-48213" copyable />
                             </div>
                         ),
                     },
@@ -133,7 +181,7 @@ export const Emphasis: Story = {
 /** LEAF — the caller flips `isSkeleton`; the row draws its own shimmer (label bar + optional hint bar + value bar) instead of a caller faking it with an unrelated atom (§12g.0a). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeyValueRow"
                 tier="composite"
@@ -143,10 +191,10 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The row mirrors its own loaded shape: a label bar (plus a second, shorter bar when `hint` is set) sits left, a value bar sits right, held apart by the same `justify-between` the loaded row uses — so a column of skeleton rows already sits at the loaded rows' rhythm.",
-                        code: "<KeyValueRow isSkeleton hint=\"Áp dụng đến 31/12\" />",
+                        code: "<KeyValueRow isSkeleton hint=\"Valid through 12/31\" />",
                         render: (
-                            <div className="max-w-sm">
-                                <KeyValueRow isSkeleton hint="Áp dụng đến 31/12" anatPart="KeyValueRow" showAnatomy />
+                            <div data-tier="fixture" className="max-w-sm">
+                                <KeyValueRow isSkeleton hint="Valid through 12/31" anatPart="KeyValueRow" showAnatomy />
                             </div>
                         ),
                     },

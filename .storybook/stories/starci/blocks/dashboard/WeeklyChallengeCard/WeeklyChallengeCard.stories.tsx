@@ -3,7 +3,7 @@ import { WeeklyChallengeCard, type WeeklyChallengeData } from "@sb-components/st
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `WeeklyChallengeCard`: "Thử thách tuần" — the featured challenge of
+ * BLOCK — `WeeklyChallengeCard`: "Weekly Challenge" — the featured challenge of
  * the week. See the component's own file header for the full contract; this
  * file only adds the states.
  *
@@ -25,15 +25,15 @@ export default meta
 type Story = StoryObj<typeof WeeklyChallengeCard>
 
 const LEADERBOARD = [
-    { key: "hoang.tran", username: "hoang.tran", passedAtLabel: "5 phút trước" },
-    { key: "minh.le", username: "minh.le", passedAtLabel: "38 phút trước" },
-    { key: "thao.dang", username: "thao.dang", passedAtLabel: "2 giờ trước" },
+    { key: "hoang.tran", username: "hoang.tran", passedAtLabel: "5 minutes ago" },
+    { key: "minh.le", username: "minh.le", passedAtLabel: "38 minutes ago" },
+    { key: "thao.dang", username: "thao.dang", passedAtLabel: "2 hours ago" },
 ]
 
 const DATA_NOT_PASSED: WeeklyChallengeData = {
-    title: "Xây một rate limiter phân tán",
+    title: "Build a distributed rate limiter",
     onOpenChallenge: () => {},
-    endsInLabel: "còn 2 ngày 6 giờ",
+    endsInLabel: "2 days 6 hours left",
     viewerPassed: false,
     claimed: false,
     coinReward: null,
@@ -56,20 +56,20 @@ const DATA_CLAIMED: WeeklyChallengeData = {
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Thử thách tuần\" label above the title, status row and leaderboard — this label never unmounts across loading/empty/content", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
+    "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Weekly Challenge\" label above the title, status row and leaderboard — this label never unmounts across loading/empty/content", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical frame stacking the title, status row, passed-count line and leaderboard", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the status row, splitting the countdown from the viewer's pass/claim status", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the challenge title (a link when routable), the countdown, a \"Làm ngay\" prompt, the passed-count line, or a finisher's relative-time trailing text", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the challenge title (a link when routable), the countdown, a \"Start now\" prompt, the passed-count line, or a finisher's relative-time trailing text", storyId: "atoms-text-typography-typography--plain" },
     "Chip": { tier: "atom", role: "the \"already claimed\" status pill, or its skeleton mirror", storyId: "atoms-chips-chip-chip--default" },
     "Button": { tier: "atom", role: "the claim-reward action once the viewer has passed but not yet claimed", storyId: "atoms-buttons-button-button--default" },
     "SurfaceCardList": { tier: "composite", role: "the bounded, nested finisher list — takes each row as free-form `UserCell` content via its `content` escape hatch", storyId: "composites-cards-surfacecard-surfacecardlist--free-form" },
-    "UserCell": { tier: "atom", role: "one finisher's identity + relative-time trailing text, unchanged from `LeaderboardBoard`'s own row shape", storyId: "atoms-display-usercell-usercell--default" },
+    "UserCell": { tier: "composite", role: "one finisher's identity + relative-time trailing text, unchanged from `LeaderboardBoard`'s own row shape", storyId: "composites-lists-usercell-usercell--default" },
 }
 
 /** LEAF — the weekly-challenge card: async lifecycle, title/status/leaderboard, all as states of one shape. */
 export const Content: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="WeeklyChallengeCard"
                 tier="block"
@@ -80,20 +80,20 @@ export const Content: Story = {
                 states={[
                     {
                         name: "content, viewer has not passed yet",
-                        why: "The everyday shape for most viewers: a countdown on the left, a \"Làm ngay\" prompt on the right (the same resolved route the title itself links to), and the recent-finisher list below. The passed count and leaderboard render regardless of the viewer's own status — they are facts about the event, not about the viewer.",
+                        why: "The everyday shape for most viewers: a countdown on the left, a \"Start now\" prompt on the right (the same resolved route the title itself links to), and the recent-finisher list below. The passed count and leaderboard render regardless of the viewer's own status — they are facts about the event, not about the viewer.",
                         code: `<WeeklyChallengeCard
     isLoading={false}
     isEmpty={false}
     onRetry={refetch}
     data={{
-        title: "Xây một rate limiter phân tán",
+        title: "Build a distributed rate limiter",
         onOpenChallenge: () => router.push(challengeHref),
-        endsInLabel: "còn 2 ngày 6 giờ",
+        endsInLabel: "2 days 6 hours left",
         viewerPassed: false,
         claimed: false,
         coinReward: null,
         passedCount: 128,
-        leaderboard: [{ key: "hoang.tran", username: "hoang.tran", passedAtLabel: "5 phút trước" }, …],
+        leaderboard: [{ key: "hoang.tran", username: "hoang.tran", passedAtLabel: "5 minutes ago" }, …],
     }}
 />`,
                         render: (
@@ -109,7 +109,7 @@ export const Content: Story = {
                     },
                     {
                         name: "content, passed and reward claimable",
-                        why: "Once the viewer passes, the status slot swaps from the \"Làm ngay\" prompt to a claim button reading the real coin amount — `isClaiming` (unset here) would spin and disable it mid-mutation.",
+                        why: "Once the viewer passes, the status slot swaps from the \"Start now\" prompt to a claim button reading the real coin amount — `isClaiming` (unset here) would spin and disable it mid-mutation.",
                         code: `<WeeklyChallengeCard
     isLoading={false}
     isEmpty={false}
@@ -140,7 +140,7 @@ export const Content: Story = {
                     },
                     {
                         name: "content, no finishers yet",
-                        why: "Early in the week the challenge is live but nobody has passed yet — the leaderboard list is OMITTED entirely (never an empty bordered box), while the title, countdown and \"0 người đã vượt qua\" line still render in full.",
+                        why: "Early in the week the challenge is live but nobody has passed yet — the leaderboard list is OMITTED entirely (never an empty bordered box), while the title, countdown and \"0 people have passed\" line still render in full.",
                         code: "<WeeklyChallengeCard isLoading={false} isEmpty={false} onRetry={refetch} data={{ ...challenge, passedCount: 0, leaderboard: [] }} />",
                         render: (
                             <WeeklyChallengeCard
@@ -165,7 +165,7 @@ export const Content: Story = {
                     },
                     {
                         name: "isEmpty = true",
-                        why: "No challenge event is currently active — `weeklyChallenge` resolves `null`, a real shape, not a loading/error condition — so `AsyncContent` falls to its empty branch while the \"Thử thách tuần\" label stays up, keeping the dashboard slot from disappearing entirely between events.",
+                        why: "No challenge event is currently active — `weeklyChallenge` resolves `null`, a real shape, not a loading/error condition — so `AsyncContent` falls to its empty branch while the \"Weekly Challenge\" label stays up, keeping the dashboard slot from disappearing entirely between events.",
                         code: "<WeeklyChallengeCard isLoading={false} isEmpty onRetry={refetch} />",
                         render: (
                             <WeeklyChallengeCard

@@ -33,5 +33,5 @@ export interface AnatomyOverlayProps {
 
 /** Marker vô hình đánh dấu part cho cây anatomy. */
 export const AnatomyOverlay = ({ label }: AnatomyOverlayProps) => (
-    <span aria-hidden data-anat-part={label} data-anat-marker="" className="pointer-events-none absolute inset-0" />
+    <span aria-hidden data-component={label} className="pointer-events-none absolute inset-0" />
 )

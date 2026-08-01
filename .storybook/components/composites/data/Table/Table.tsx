@@ -2,112 +2,120 @@ import type { ReactNode } from "react"
 import { Table as HeroTable, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `Table.*`: KHUNG bảng dữ liệu, bọc HeroUI `Table`.
+ * COMPOSITE TIER (§13) — `Table.*`: data-table frame, wrapping the HeroUI `Table`.
  *
- * | Member | Hình thái | Kênh nội dung |
+ * | Member | Shape | Content channel |
  * |---|---|---|
- * | `.Base` | 1 bảng cột–hàng | **`columns` + `items` DỮ LIỆU — CẤM children** |
+ * | `.Base` | 1 column–row table | **`columns` + `items` DATA — children FORBIDDEN** |
  *
- * KHUNG API LAW (§13b):
- *   • Bảng là DANH SÁCH LẶP (N hàng cùng kiểu) ⇒ **BẮT BUỘC `items`**, `children`
- *     bị CẤM. Cấu hình cột đi bằng `columns` (không phải JSX `<Column>` con).
- *   • Khung KHÔNG mang nội dung domain: nó KHÔNG format tiền/ngày/trạng thái —
- *     consumer truyền `ReactNode` đã format vào ô (`items[i][column.key]`).
- *   • Khung KHÔNG đẻ chức năng: không sort/filter/paginate/select nội tại. Ô
- *     tương tác (nút, chip) là node consumer truyền vào.
+ * FRAME API LAW (§13b):
+ *   • A table is a REPEATED LIST (N rows of the same kind) ⇒ `items` is
+ *     **REQUIRED**, `children` is FORBIDDEN. Column configuration goes through
+ *     `columns` (not a JSX `<Column>` child).
+ *   • The frame carries NO domain content: it does NOT format money/dates/status —
+ *     the consumer passes an already-formatted `ReactNode` into each cell
+ *     (`items[i][column.key]`).
+ *   • The frame does NOT grow functionality: no internal sort/filter/paginate/select.
+ *     An interactive cell (button, chip) is a node the consumer passes in.
  *
- * COMPOSE (§13c): dùng THẲNG HeroUI `Table` compound (alias `HeroTable`) —
+ * COMPOSE (§13c): uses the HeroUI `Table` compound DIRECTLY (alias `HeroTable`) —
  * `Table.ScrollContainer` → `Table.Content` → `Header/Column` + `Body/Row/Cell`;
- * skeleton mirror dùng `Skeleton.Typography` (scaffold structural, §12c).
+ * the skeleton mirror uses `Typography.isSkeleton` bars (structural scaffold, §12c).
  *
- * ⚠️ ALIGNMENT qua SPAN BỌC, không qua class trên `<th>/<td>`: CSS HeroUI
- * (`.table__column { text-align: left }`) là un-layered nên THẮNG utility Tailwind
- * v4 (nằm trong `@layer utilities`). Khai báo `text-align` trên chính con (span)
- * luôn thắng giá trị KẾ THỪA → không cần `!important`.
+ * ⚠️ ALIGNMENT via a WRAPPING SPAN, not a class on `<th>/<td>`: HeroUI's own CSS
+ * (`.table__column { text-align: left }`) is un-layered, so it WINS over Tailwind
+ * v4 utilities (which live inside `@layer utilities`). Declaring `text-align` on
+ * the child itself (the span) always wins over an INHERITED value → no `!important` needed.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Cạnh canh nội dung trong một cột (đầu dòng đọc, hoặc mép phải cho số/hành động). */
+/** Which edge a column's content aligns to (reading start, or the right edge for numbers/actions). */
 export type TableAlign = "start" | "end"
 
-/** Khai báo MỘT cột — cấu hình dữ liệu, không phải JSX con. */
+/** Declares ONE column — data configuration, not a JSX child. */
 export interface TableColumnSpec {
-    /** Khoá cột: vừa là React key, vừa là khoá đọc ô trong mỗi `item`. */
+    /** Column key: both the React key and the key used to read the cell in each `item`. */
     key: string
-    /** Tiêu đề cột (node đã format — khung không tự sinh chữ). */
+    /** Column header (an already-formatted node — the frame does not generate text itself). */
     header: ReactNode
-    /** Canh nội dung cột (áp cho CẢ header và ô). Default `start`. */
+    /** Content alignment for the column (applies to BOTH the header and every cell). Default `start`. */
     align?: TableAlign
-    /** Bề rộng CSS cố định cho cột (`"96px"`, `"20%"`). Bỏ trống = tự co theo nội dung. */
+    /** Fixed CSS width for the column (`"96px"`, `"20%"`). Omit to size to content. */
     width?: string
 }
 
 /**
- * MỘT hàng: `key` (React key + id hàng) + một node cho MỖI `column.key`.
- * Node đã format sẵn — khung không biết gì về domain.
+ * ONE row: `key` (React key + row id) plus one node for EVERY `column.key`.
+ * Already-formatted nodes — the frame knows nothing about the domain.
  */
 export type TableRowItem = Record<string, ReactNode> & { key: string }
 
 /** Props for {@link Table}. */
 export interface TableBaseProps {
-    /** Cấu hình cột, theo thứ tự đọc. Cột đầu = row-header (a11y). */
+    /** Column configuration, in reading order. The first column is the row-header (a11y). */
     columns: ReadonlyArray<TableColumnSpec>
-    /** Các hàng. BẮT BUỘC — danh sách lặp = dữ liệu, không bao giờ children (§13b). */
+    /** The rows. REQUIRED — a repeated list is data, never children (§13b). */
     items: ReadonlyArray<TableRowItem>
     /**
-     * Tên gọi của bảng cho screen-reader. BẮT BUỘC: react-aria `Table` không có
-     * nhãn ngầm — thiếu thì cả bảng đọc lên vô danh (tsc/eslint KHÔNG bắt).
+     * The table's name for screen readers. REQUIRED: react-aria's `Table` has no
+     * implicit label — omitting it reads the whole table as nameless (tsc/eslint do NOT catch this).
      */
     ariaLabel: string
-    /** Node hiển thị TRONG thân bảng khi `items` rỗng — để "rỗng" đọc ra chủ ý. */
-    emptyContent?: ReactNode
     /**
-     * `true` → giữ NGUYÊN khung + header thật, thay mỗi ô bằng thanh skeleton
-     * (§8 giữ container thật). Số hàng mirror = `items.length`, rỗng thì 3.
+     * Rendered INSIDE the table body when `items` is empty — so "empty" reads as
+     * intentional. Takes a COMPONENT reference (COMPOSITE-8): the frame calls it,
+     * forwarding `isSkeleton`, rather than receiving an already-built node it cannot shimmer.
+     */
+    emptyContent?: ComponentTypeWithSkeleton
+    /**
+     * `true` → keeps the REAL frame + header, replaces every cell with a skeleton
+     * bar instead (§8 keeps the container real). Mirror row count = `items.length`,
+     * or `3` when empty.
      */
     isSkeleton?: boolean
-    /** Có handler → mỗi hàng thành press target (react-aria row action), nhận `item.key`. */
+    /** A handler set → every row becomes a press target (react-aria row action), receiving `item.key`. */
     onRowPress?: (key: string) => void
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
+    /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
     showAnatomy?: boolean
 }
 
-/** Số hàng mirror mặc định khi chưa có dữ liệu nào để đếm. */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Table" } as const
+
+/** Default mirror row count when there is no data yet to count. */
 const SKELETON_ROWS_FALLBACK = 3
 
-/** Canh nội dung — đặt trên SPAN con (thắng kế thừa), xem ghi chú đầu file. */
+/** Content alignment — set on the CHILD span (wins over inheritance), see the file header note. */
 const ALIGN_CLS: Record<TableAlign, string> = {
     start: "text-start",
     end: "text-end",
 }
 
-/** Bọc nội dung một ô/header để khung SỞ HỮU canh lề (§4), không rơi vào call-site. */
-/** Props for the local {@link CellBox} — one table cell's alignment wrapper. */
-interface CellBoxProps {
+/** Wraps one cell/header's content so the FRAME owns alignment (§4), instead of it leaking to the call site. */
+/** Params for the local {@link CellBox} — one table cell's alignment wrapper (internal, not a public slot). */
+interface CellBoxArgs {
     /** Horizontal alignment of the cell content. */
     align?: TableAlign
     /** Cell content. */
     children: ReactNode
 }
 
-const CellBox = ({ align, children }: CellBoxProps) => (
+const CellBox = ({ align, children }: CellBoxArgs) => (
     <span className={cn("block", ALIGN_CLS[align ?? "start"])}>{children}</span>
 )
 
 /**
- * Khung bảng: một cấu hình `columns` + một mảng `items`, khung tự dựng
- * header/hàng/ô. Rỗng → `emptyContent`; đang tải → mirror skeleton cùng khung;
- * có `onRowPress` → hàng thành press target (a11y do react-aria lo).
+ * Table frame: a `columns` configuration + an `items` array, the frame builds its
+ * own header/rows/cells. Empty → `emptyContent`; loading → mirrors the skeleton
+ * within the same frame; `onRowPress` set → rows become press targets (a11y handled by react-aria).
  *
  * @param props - {@link TableBaseProps}
  */
@@ -115,15 +123,14 @@ const TableBase = ({
     columns,
     items,
     ariaLabel,
-    emptyContent,
+    emptyContent: EmptyContent,
     isSkeleton = false,
     onRowPress,
-    className,
     classNames,
     showAnatomy = false,
 }: TableBaseProps) => {
-    // Header là CẤU HÌNH (biết trước cả khi có dữ liệu) → skeleton giữ header THẬT,
-    // chỉ ô mới thành thanh; khung/độ rộng cột không nhảy khi dữ liệu về (§8).
+    // The header is CONFIGURATION (known before any data arrives) → the skeleton keeps
+    // the REAL header, only cells become bars; the frame/column widths never jump once data lands (§8).
     const header = (
         <HeroTable.Header data-anat-part={showAnatomy ? "Table.Header" : undefined}>
             {columns.map((column, index) => (
@@ -146,10 +153,11 @@ const TableBase = ({
                 <HeroTable.Row key={rowIndex} id={`skeleton-${rowIndex}`} data-anat-part={showAnatomy ? "Table.Row" : undefined}>
                     {columns.map((column) => (
                         <HeroTable.Cell key={column.key}>
-                            {/* Thanh cao 14px < line-height 20px của ô thật → bọc trong hộp
-                                `h-5` để hàng mirror CAO ĐÚNG bằng hàng thật (§8, không nhảy
-                                layout). Căn bằng chiều cao + `items-center`, KHÔNG bằng margin (§10a).
-                                Tag NGOÀI atom (atom không nhận rest props) — cùng lý do như CellBox. */}
+                            {/* The bar is 14px tall < the real cell's 20px line-height → wrap it in an
+                                `h-5` box so the mirror row is the EXACT height of a real row (§8, no
+                                layout jump). Balance the height with `items-center`, NOT with margin
+                                (§10a). The tag sits OUTSIDE the atom (the atom takes no rest props) —
+                                same reason as `CellBox`. */}
                             <span className="flex h-5 items-center" data-anat-part={showAnatomy ? "Typography" : undefined}>
                                 <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
                             </span>
@@ -162,13 +170,13 @@ const TableBase = ({
         <HeroTable.Body
             data-anat-part={showAnatomy ? "Table.Body" : undefined}
             renderEmptyState={
-                emptyContent != null
+                EmptyContent != null
                     ? () => (
-                        // No `data-anat-part` here: `emptyContent` is an arbitrary node the CALLER
-                        // supplies, so there is no ONE fixed component for a panel link to point to
-                        // (§11a.1 LOẠI 3 — caller slot, stop badging).
+                        // No `data-anat-part` here: `emptyContent` is the CALLER's own component,
+                        // so there is no ONE fixed component for a panel link to point to
+                        // (§11a.1 TYPE 3 — caller slot, stop badging).
                         <div className="p-8 text-center">
-                            {emptyContent}
+                            <EmptyContent isSkeleton={isSkeleton} />
                         </div>
                     )
                     : undefined
@@ -192,7 +200,13 @@ const TableBase = ({
     )
 
     return (
-        <HeroTable variant="primary" className={cn(className, classNames)} data-anat-part={showAnatomy ? "Table" : undefined}>
+        <HeroTable
+            variant="primary"
+            className={cn(classNames)}
+            data-anat-part={showAnatomy ? "Table" : undefined}
+            data-tier="composite"
+            data-component="Table"
+        >
             <HeroTable.ScrollContainer data-anat-part={showAnatomy ? "Table.ScrollContainer" : undefined}>
                 <HeroTable.Content aria-label={ariaLabel} data-anat-part={showAnatomy ? "Table.Content" : undefined}>
                     {header}
@@ -204,7 +218,7 @@ const TableBase = ({
 }
 
 /**
- * `Table.*` — khung bảng dữ liệu (tầng COMPOSITE §13). `Base` là hình thái duy nhất;
- * biến thể (canh lề, bề rộng, rỗng, tải, hàng bấm được) là PROP của nó (§6b).
+ * `Table.*` — data-table frame (COMPOSITE tier §13). `Base` is the only shape;
+ * variants (alignment, width, empty, loading, pressable rows) are PROPS on it (§6b).
  */
 export { TableBase as Table }

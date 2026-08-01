@@ -54,7 +54,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LinkBack"
                 tier="atom"
@@ -80,7 +80,7 @@ export const Default: Story = {
  */
 export const TargetSet: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LinkBack"
                 tier="atom"
@@ -106,7 +106,7 @@ export const TargetSet: Story = {
  */
 export const LabelSet: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LinkBack"
                 tier="atom"

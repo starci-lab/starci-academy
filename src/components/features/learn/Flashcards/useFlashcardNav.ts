@@ -6,9 +6,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
  * The two top-level flashcard modes, each its own route slug. Named "quiz" (not
  * "interview") on purpose — this is a DIFFERENT feature from the separate AI
  * Mock Interview (`learn/mock-interview`); reusing "interview" here read as the
- * same feature and caused real confusion (thầy: "đừng gọi là interview... kẻo
- * nhầm với interview"). Matches the BE naming already in place
- * (`FlashcardQuizSessionEntity`/`completeFlashcardQuizSession`).
+ * same feature and caused real confusion (teacher: "don't call it interview...
+ * it'll get mixed up with the interview feature"). Matches the BE naming already
+ * in place (`FlashcardQuizSessionEntity`/`completeFlashcardQuizSession`).
  */
 export type FlashcardMode = "study" | "quiz"
 
@@ -21,10 +21,10 @@ const MODE_SLUG: Record<FlashcardMode, string> = {
 /**
  * URL-backed navigation for the flashcards surface. The MODE is a route segment
  * (`…/flashcards/review` | `…/flashcards/quiz`) so each mode is its own page
- * with a readable English slug. Both "Học thẻ" session kinds — a single deck or
+ * with a readable English slug. Both "Study cards" session kinds — a single deck or
  * the cross-deck due queue — now share ONE live shape,
- * `…/flashcards/review/sessions/<sessionId>` (thầy 2026-07-11: "bỏ deck đi, only
- * session thôi" — no more `decks/<id>` route segment, superseding the
+ * `…/flashcards/review/sessions/<sessionId>` (teacher, 2026-07-11: "drop the deck,
+ * just go with session" — no more `decks/<id>` route segment, superseding the
  * 2026-07-09 "deck rides its own segment" decision). `deckId` travels as a
  * query hint (`?deckId=`) instead: on the bare shim (`review?deckId=<id>`) it
  * says WHICH deck to start/resume; on the live sessioned URL it's a HINT so a

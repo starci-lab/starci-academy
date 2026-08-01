@@ -13,32 +13,32 @@ import type { FlashcardReviewMode } from "@/modules/api/graphql/mutations/types/
 export interface FlashcardReviewModeModalProps extends WithClassNames<undefined> {
     /** Open when true. */
     isOpen: boolean
-    /** Close handler (backdrop / Escape / Huỷ). */
+    /** Close handler (backdrop / Escape / Cancel). */
     onClose: () => void
-    /** Deck title shown in the header (which bộ thẻ is being started). */
+    /** Deck title shown in the header (which deck is being started). */
     deckTitle: string
-    /** Total cards in the deck — the "Ôn tất cả" badge count. */
+    /** Total cards in the deck — the "Review all" badge count. */
     totalCount: number
-    /** Cards currently due in the deck — the "Chỉ thẻ cần ôn" badge count. */
+    /** Cards currently due in the deck — the "Only cards due" badge count. */
     dueCount: number
-    /** Fires with the chosen mode when "Bắt đầu" is pressed. */
+    /** Fires with the chosen mode when "Start" is pressed. */
     onStart: (mode: FlashcardReviewMode) => void
-    /** True while the session persists (drives the "Bắt đầu" spinner). */
+    /** True while the session persists (drives the "Start" spinner). */
     isPending: boolean
 }
 
 /**
- * The deck-review MODE picker (thầy 2026-07-13 "modal chọn mode, full hoặc
- * quên"). Opened by `FlashcardDeckList`'s "Học" CTA before a session starts.
- * SELECT-then-CONFIRM (thầy 2026-07-13 lượt 3 — reverted the direct-press
- * lượt 2): rows only mark a choice; a separate "Bắt đầu" button below confirms
- * and actually starts (spinner there until the session persists). "Ôn tất cả"
- * runs the whole deck; "Chỉ thẻ cần ôn" runs only the cards past due / never
+ * The deck-review MODE picker (instructor 2026-07-13 "mode-picker modal, full or
+ * forgotten"). Opened by `FlashcardDeckList`'s "Study" CTA before a session starts.
+ * SELECT-then-CONFIRM (instructor 2026-07-13 round 3 — reverted the direct-press
+ * round 2): rows only mark a choice; a separate "Start" button below confirms
+ * and actually starts (spinner there until the session persists). "Review all"
+ * runs the whole deck; "Only cards due" runs only the cards past due / never
  * learned (the deck's `dueCount`), and dims + auto-resets the picker back to
  * "full" when nothing is due. These are SELECT rows (they pick a mode, they do
  * not navigate) → an UNSELECTED row hovers to the block's NATIVE `bg-default`
  * fill (mode 3, `principles/hover-style-matches-clickable-nature`); a hovered
- * row must NOT reuse the selected row's `bg-accent-soft` (thầy 2026-07-18: an
+ * row must NOT reuse the selected row's `bg-accent-soft` (instructor 2026-07-18: an
  * accent-soft hover reads identical to the picked row above — the clash makes a
  * hovered row look selected; reverts the 2026-07-17 accent-soft "preview"). The
  * SELECTED row keeps `hover:bg-accent-soft` so it does not flicker to bg-default
@@ -47,11 +47,11 @@ export interface FlashcardReviewModeModalProps extends WithClassNames<undefined>
  * inside the modal surface, so it needs a real border rather than the
  * (invisible-in-dark) `shadow-surface` top-level default (`components/card.md`
  * §"surface-in-surface / nested").
- * Selected-row signal (thầy 2026-07-13 lượt 4, dropped the `CheckCircleIcon`
- * tried in lượt 3): the row itself tints `bg-accent-soft` via `SurfaceListCardRow`'s
- * `selected` prop, and — thầy 2026-07-17 — BOTH the leading icon and the title
+ * Selected-row signal (instructor 2026-07-13 round 4, dropped the `CheckCircleIcon`
+ * tried in round 3): the row itself tints `bg-accent-soft` via `SurfaceListCardRow`'s
+ * `selected` prop, and — instructor 2026-07-17 — BOTH the leading icon and the title
  * turn `text-accent-soft-foreground` when selected (they stay the SAME colour,
- * `components/icon.md` §6 "icon cùng màu chữ cạnh nó"). The title colour rides a
+ * `components/icon.md` §6 "icon shares color with the text next to it"). The title colour rides a
  * `<span>` node rather than `titleClassName` (that escape hatch is lint-forbidden,
  * `no-modal-title-classname`); un-selected rows keep `text-foreground`.
  * @param props - {@link FlashcardReviewModeModalProps}

@@ -38,7 +38,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the header frame that lines up the back link, title, description and meta row, owning the type scale for all four", storyId: "composites-layout-page-pageheader--full" },
     "LinkBack": { tier: "atom", role: "the single back affordance to the owning lesson, or its skeleton mirror while loading", storyId: "atoms-navigation-link-linkback--default" },
     "Typography": { tier: "atom", role: "one of the block's own text lines — the title, or the quiet score fact — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
-    "RichText": { tier: "composite", role: "the one-sentence summary, richtext-nhỏ tier not a bare Typography (AUDIT 2026-07-30, feedback ChallengePage/Graded round-1), and its own skeleton bar", storyId: "composites-viewers-richtext--plain-text" },
+    "RichText": { tier: "composite", role: "the one-sentence summary, small-richtext tier not a bare Typography (AUDIT 2026-07-30, feedback ChallengePage/Graded round-1), and its own skeleton bar", storyId: "composites-viewers-richtext--plain-text" },
     "StackH": { tier: "frame", role: "the horizontal frame holding the meta row, so the score text and both chips sit on one baseline with one seam", storyId: "frames-stack-stackh--default" },
     "EnumChip": { tier: "composite", role: "an enum-to-soft-chip delegate — difficulty always, status only once the learner has an attempt", storyId: "composites-chips-enumchip--overview" },
 }
@@ -46,7 +46,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — `ChallengeHeader`: back link → title → description → meta row (score · difficulty · status). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeHeader"
                 tier="block"
@@ -60,8 +60,8 @@ export const Default: Story = {
                         why: "The learner has already passed this challenge, so the meta row carries all three facts: the score the challenge is worth, the fixed difficulty tier, and the attempt's own pass chip. This is the shape a returning solver sees when they come back to review a challenge they already cleared.",
                         code: `<ChallengeHeader
     onBackPress={goBack}
-    title="Cân bằng cây nhị phân tìm kiếm"
-    description="Viết hàm kiểm tra một BST có cân bằng chiều cao hay không."
+    title="Balance a binary search tree"
+    description="Write a function that checks whether a BST is height-balanced."
     scoreValue={100}
     difficulty="hard"
     status="completed"
@@ -71,8 +71,8 @@ export const Default: Story = {
                                 anatPart="ChallengeHeader"
                                 showAnatomy
                                 onBackPress={() => {}}
-                                title="Cân bằng cây nhị phân tìm kiếm"
-                                description="Viết hàm kiểm tra một BST có cân bằng chiều cao hay không."
+                                title="Balance a binary search tree"
+                                description="Write a function that checks whether a BST is height-balanced."
                                 scoreValue={100}
                                 difficulty="hard"
                                 status="completed"
@@ -84,8 +84,8 @@ export const Default: Story = {
                         why: "The chip swaps to the danger tone in place, without disturbing the score or difficulty beside it — status is the one fact in this row that can flip on a retry, and the row keeps its shape while it does.",
                         code: `<ChallengeHeader
     onBackPress={goBack}
-    title="Cân bằng cây nhị phân tìm kiếm"
-    description="Viết hàm kiểm tra một BST có cân bằng chiều cao hay không."
+    title="Balance a binary search tree"
+    description="Write a function that checks whether a BST is height-balanced."
     scoreValue={100}
     difficulty="hard"
     status="failed"
@@ -93,8 +93,8 @@ export const Default: Story = {
                         render: (
                             <ChallengeHeader
                                 onBackPress={() => {}}
-                                title="Cân bằng cây nhị phân tìm kiếm"
-                                description="Viết hàm kiểm tra một BST có cân bằng chiều cao hay không."
+                                title="Balance a binary search tree"
+                                description="Write a function that checks whether a BST is height-balanced."
                                 scoreValue={100}
                                 difficulty="hard"
                                 status="failed"
@@ -106,16 +106,16 @@ export const Default: Story = {
                         why: "The learner has never attempted this challenge, so there is no outcome to show yet — the status chip is simply not drawn, and difficulty carries the meta row alone. This is the first-visit shape, not an empty or a \"not started\" chip nobody asked for.",
                         code: `<ChallengeHeader
     onBackPress={goBack}
-    title="Duyệt đồ thị theo chiều rộng"
-    description="Cài đặt BFS trên đồ thị không trọng số, trả về khoảng cách ngắn nhất tới mỗi đỉnh."
+    title="Breadth-first graph traversal"
+    description="Implement BFS on an unweighted graph, returning the shortest distance to every vertex."
     scoreValue={80}
     difficulty="medium"
 />`,
                         render: (
                             <ChallengeHeader
                                 onBackPress={() => {}}
-                                title="Duyệt đồ thị theo chiều rộng"
-                                description="Cài đặt BFS trên đồ thị không trọng số, trả về khoảng cách ngắn nhất tới mỗi đỉnh."
+                                title="Breadth-first graph traversal"
+                                description="Implement BFS on an unweighted graph, returning the shortest distance to every vertex."
                                 scoreValue={80}
                                 difficulty="medium"
                             />

@@ -21,7 +21,7 @@ import { ComponentStatus } from "@/modules/api/graphql/queries/enums"
  *   - `systemHealthStatus` → a traffic-light card per infrastructure component.
  *   - `aiKeyHealth` → masked AI key chips grouped per model.
  *
- * An overall banner ("N/M thành phần khỏe", green/red) sits on top.
+ * An overall banner ("N/M components healthy", green/red) sits on top.
  */
 export const SystemStatus = () => {
     const t = useTranslations("status")

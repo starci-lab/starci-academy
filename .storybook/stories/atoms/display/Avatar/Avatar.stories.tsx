@@ -86,7 +86,7 @@ const NAME = "Mai Chi"
 /** BARE leaf — no prop turned on yet, to show the default shape. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Avatar"
                 tier="atom"
@@ -113,7 +113,7 @@ export const Default: Story = {
  */
 export const Source: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Avatar"
                 tier="atom"
@@ -163,7 +163,7 @@ export const Source: Story = {
  */
 export const Fallback: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Avatar"
                 tier="atom"
@@ -202,7 +202,7 @@ export const Fallback: Story = {
  */
 export const Status: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Avatar"
                 tier="atom"
@@ -294,7 +294,7 @@ export const Status: Story = {
  */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Avatar"
                 tier="atom"
@@ -333,7 +333,7 @@ export const Sizes: Story = {
  */
 export const Colors: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Avatar"
                 tier="atom"
@@ -420,7 +420,7 @@ export const Colors: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Avatar"
                 tier="atom"

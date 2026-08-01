@@ -18,15 +18,15 @@ export interface TrackTier {
 export interface TrackCardProps {
     /** Leading icon (bare phosphor icon — tile sizes it). */
     icon: ReactNode
-    /** Track title, e.g. "Fullstack thực chiến". */
+    /** Track title, e.g. "Real-World Fullstack". */
     title: string
-    /** Meta line, e.g. "23 module · 20 hệ thống". */
+    /** Meta line, e.g. "23 modules · 20 systems". */
     meta: string
     /** Accent token driving dot / line / icon-tile / CTA colour. */
     color: TrackColor
     /** The 4 tiers, foundation → application (rendered as a vertical path). */
     tiers: ReadonlyArray<TrackTier>
-    /** CTA label, e.g. "Vào khóa". */
+    /** CTA label, e.g. "Go to course". */
     viewLabel: string
     /** CTA handler → navigate to the course. */
     onView: () => void
@@ -44,9 +44,9 @@ const TILE: Record<TrackColor, string> = {
 const CTA: Record<TrackColor, string> = { accent: "text-accent-soft-foreground", success: "text-success-soft-foreground", warning: "text-warning-soft-foreground" }
 
 /**
- * A learning-track card for the landing "Lộ trình" section: identity header
+ * A learning-track card for the landing "Roadmap" section: identity header
  * (icon tile + title + meta) over a vertical 4-tier path (foundation →
- * application, each rung = coloured dot + tier eyebrow + topic) with a "Vào khóa"
+ * application, each rung = coloured dot + tier eyebrow + topic) with a "Go to course"
  * CTA pinned to the bottom. Self-contained bounded object — render 3 side-by-side
  * (`@app-md:grid-cols-3 gap-6`) so the tracks read + compare without a shared-axis
  * matrix. Colour comes from one semantic token via {@link TrackColor}.

@@ -14,10 +14,14 @@ import { ResponsiveRow } from "@sb-components/frames/ResponsiveRow/ResponsiveRow
 export interface StatRibbonItem {
     /** Stable key for the React list. */
     key: string
-    /** Headline statistic (number / short count), rendered large. */
-    value: React.ReactNode
-    /** Caption describing the value, rendered small + muted. */
-    label: React.ReactNode
+    /**
+     * Headline statistic (number / short count), rendered large. `string`, not
+     * `ReactNode` — forwarded straight into {@link StatPair}'s `value`, which
+     * wraps it in `Typography` itself.
+     */
+    value: string
+    /** Caption describing the value, rendered small + muted. `string` — see {@link StatRibbonItem.value}. */
+    label: string
 }
 
 /** Props {@link StatRibbon} carries regardless of loading state. */
@@ -33,8 +37,6 @@ interface StatRibbonOwnProps {
     bordered?: boolean
     /** Cell count to shimmer while `isSkeleton` (no real `items` yet). Defaults to `3`. */
     skeletonCount?: number
-    /** Extra classes on the root element. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -63,13 +65,15 @@ export type StatRibbonProps = StatRibbonOwnProps &
  *
  * @param props - {@link StatRibbonProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "StatRibbon" } as const
+
 export const StatRibbon = ({
     items,
     valueType,
     bordered = false,
     isSkeleton = false,
     skeletonCount = 3,
-    className,
     classNames,
     showAnatomy = false,
 }: StatRibbonProps) => {
@@ -79,7 +83,9 @@ export const StatRibbon = ({
     return (
         <Card
             variant="default"
-            className={cn(bordered && "!border !border-solid !border-default !shadow-none", className, classNames)}
+            className={cn(bordered && "!border !border-solid !border-default !shadow-none", classNames)}
+            data-tier="composite"
+            data-component="StatRibbon"
         >
             {/* Desktop: bleed the row to the card's inner edges (`@app-sm:-m-3` cancels the
                 globals `.card { p-3 !important }`) so the per-cell `border-l` reaches the
@@ -89,7 +95,7 @@ export const StatRibbon = ({
             <ResponsiveRow
                 columns={2}
                 at="sm"
-                gap="grouped"
+                gap={4}
                 className="@app-sm:-m-3"
                 items={cells.map((item, index) => ({
                     key: item.key,

@@ -38,9 +38,9 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * the domain condition (`!isPassing`) for when there is nothing WORTH surfacing
  * even if there were related items to show.
  *
- * ⭐ THE FULL-HISTORY DRAWER IS MOUNTED HERE (corrected 2026-07-29 — thầy: "có
- * trang này mà" — the previous claim that `SubmissionResultHistoryDrawer` had
- * no real counterpart was FALSE, it lives at `src/components/drawers/
+ * ⭐ THE FULL-HISTORY DRAWER IS MOUNTED HERE (corrected 2026-07-29 — the
+ * teacher pointed out: "that page does exist" — the previous claim that
+ * `SubmissionResultHistoryDrawer` had no real counterpart was FALSE, it lives at `src/components/drawers/
  * SubmissionResultHistoryDrawer`). `SubmissionAttemptSelector`'s "+N" trigger
  * still only REPORTS `onOverflowPress` (Rule 7 — a block never decides what its
  * own overflow opens), but the SCREEN now owns rendering the drawer itself,
@@ -56,7 +56,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /** Props for {@link ChallengeResultPage}. */
 export interface ChallengeResultPageProps {
-    /** Back-link label, e.g. "Quay lại bài giải". */
+    /** Back-link label, e.g. "Back to submission". */
     backLabel: string
     /** Fired when the learner leaves the result page for the challenge solve page. */
     onBack: () => void
@@ -90,7 +90,7 @@ export interface ChallengeResultPageProps {
     /** Label of the attempt row's retry button. */
     retryAttemptsLabel?: string
 
-    /** Section label above the score card, e.g. "Kết quả". */
+    /** Section label above the score card, e.g. "Result". */
     scoreLabel: string
     /** Points earned on the selected attempt. Ignored while no attempt is selected. */
     score?: number
@@ -98,7 +98,7 @@ export interface ChallengeResultPageProps {
     maxScore?: number
     /** Whether the selected attempt cleared the pass bar — also gates the related-reading nudge. */
     isPassing?: boolean
-    /** The pass bar, in points — feeds the score card's "cần thêm N điểm" sub-line. */
+    /** The pass bar, in points — feeds the score card's "need N more points" sub-line. */
     passScore?: number
     /** A short line of grader feedback for the selected attempt. */
     shortFeedback?: string
@@ -115,7 +115,7 @@ export interface ChallengeResultPageProps {
     /** Relative time since grading, already localized. */
     timeAgo?: string
 
-    /** Section label above the findings accordion, e.g. "Góp ý". */
+    /** Section label above the findings accordion, e.g. "Feedback". */
     findingsLabel: string
     /** The selected attempt's findings, in ANY order — the block re-sorts them. */
     findings: Array<SubmissionFinding>
@@ -284,7 +284,7 @@ const ChallengeResultPage = ({
                 showAnatomy={showAnatomy}
             />
             {hasSelection ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={scoreSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={scoreSection} />
             ) : null}
         </>
     )
@@ -300,15 +300,15 @@ const ChallengeResultPage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={attemptsSection} />
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={attemptsSection} />
         </>
     )
 
-    const resultBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={pageSections} />
+    const resultBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={pageSections} />
 
     return (
         <>
-            <Container size="xl" padding="roomy" body={resultBody} />
+            <Container size="xl" padding={6} body={resultBody} />
             <SubmissionAttemptsDrawer
                 anatPart={showAnatomy ? "SubmissionAttemptsDrawer" : undefined}
                 isOpen={isHistoryOpen}

@@ -30,18 +30,18 @@ const STATUS_COLOR: Record<string, "accent" | "warning" | "default" | "danger"> 
     expired: "danger",
 }
 
-/** Format a voucher's discount as a short label, e.g. "-10%" / "-50.000đ". */
+/** Format a voucher's discount as a short label, e.g. "-10%" / "-50,000 VND". */
 const discountLabel = (voucher: QueryMyVoucherData): string => (
     voucher.discountType === "percent"
         ? `-${voucher.value}%`
-        : `-${voucher.value.toLocaleString("vi-VN")}đ`
+        : `-${voucher.value.toLocaleString("vi-VN")}đ` // vn-ok: VND currency suffix
 )
 
 /** Props for {@link MyVouchers}. */
 export type MyVouchersProps = WithClassNames<undefined>
 
 /**
- * The Coin shop's "Ví của tôi" tab: the viewer's minted vouchers (code, scope,
+ * The Coin shop's "My wallet" tab: the viewer's minted vouchers (code, scope,
  * status, expiry) plus the redemption history. Self-fetches both — the
  * `myRewardWallet` key is shared with the header/catalog, so a redeem
  * elsewhere refreshes this list without a manual prop.

@@ -6,7 +6,7 @@ import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/En
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PlaygroundReadinessChecklist`: the consolidated "Trạng thái máy" list
+ * BLOCK — `PlaygroundReadinessChecklist`: the consolidated "Machine status" list
  * — every playground prerequisite (the local agent, the Docker engine, the
  * generation model, the embedding model) at a glance, one row each.
  *
@@ -30,7 +30,7 @@ import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/En
  * Both prior versions took `readyLabel`/`pendingLabel` as caller-supplied
  * strings — a copy-holding pattern that predates this catalog's "a block owns
  * its own vocabulary" rule. Ready/pending is a closed two-value enum with fixed
- * Vietnamese copy ("Sẵn sàng" / "Đang chờ"), so it belongs in this block's own
+ * fixed copy ("Ready" / "Pending"), so it belongs in this block's own
  * `READINESS_CHIP_MAP`, exactly like `ContentModeNav`'s `MODE_LABEL` or
  * `FoundationResourceList`'s `KIND_CHIP_MAP` own their tables. A caller building
  * a NEW checklist screen never invents its own status wording by hand.
@@ -43,8 +43,8 @@ import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/En
  * icon with a check, independent of kind — matching the ported source exactly.
  *
  * 📐 TWO LEAVES: `Default` (N rows, real content) and `Prop \`isSkeleton\`` —
- * per `2-leaf-states.md` §1, `isSkeleton` is a leaf AT EVERY TIER ("chủ của
- * hình là chủ của skeleton", §12c): the component draws its own rest shape, so
+ * per `2-leaf-states.md` §1, `isSkeleton` is a leaf AT EVERY TIER ("whoever owns
+ * the shape owns the skeleton", §12c): the component draws its own rest shape, so
  * that is a shape change, not a data change, even though no node grows or
  * disappears. The flag is threaded into every atom THIS block itself composes
  * per row (`IconTile`, `EnumChip`) — mirroring `LeaderboardBoard`'s row builder
@@ -102,8 +102,8 @@ type ReadinessStatus = "ready" | "pending"
 
 /** status → chip label/color — fixed Vietnamese copy this block owns (§14d.1). */
 const READINESS_CHIP_MAP: Record<ReadinessStatus, EnumChipEntry> = {
-    ready: { label: "Sẵn sàng", color: "success" },
-    pending: { label: "Đang chờ", color: "default" },
+    ready: { label: "Ready", color: "success" },
+    pending: { label: "Pending", color: "default" },
 }
 
 /** Builds one row's fixed `SurfaceCardList` shape from a checklist item. */
@@ -124,7 +124,6 @@ const checklistRow = (
                 size="sm"
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "IconTile" : undefined}
             />
         ),
         title: item.label,
@@ -141,7 +140,7 @@ const checklistRow = (
 }
 
 /**
- * The "Trạng thái máy" list itself. See the file header for the reuse contract,
+ * The "Machine status" list itself. See the file header for the reuse contract,
  * why this block now owns its own wording where the ported source did not, and
  * the single-leaf/one-state-axis read of `isSkeleton`.
  *

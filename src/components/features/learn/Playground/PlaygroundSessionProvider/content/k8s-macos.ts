@@ -1,10 +1,11 @@
 import type { LocalizedGuide } from "./types"
 
 /**
- * macOS minikube + kubectl install guide (Setup: engine step). minikube cần MỘT
- * driver để chạy cluster (docker/hyperkit/virtualbox…) — playground chốt
- * `--driver=docker` vì học viên vừa qua playground Docker nên đã có sẵn.
- * Mọi tín hiệu KIỂM ĐƯỢC BẰNG LỆNH — không mô tả GUI.
+ * macOS minikube + kubectl install guide (Setup: engine step). minikube needs ONE
+ * driver to run the cluster (docker/hyperkit/virtualbox…) — this playground commits
+ * to `--driver=docker` since the learner just came from the Docker playground and
+ * already has it installed.
+ * Every signal is VERIFIABLE BY COMMAND — no GUI description.
  */
 export const K8S_MACOS_GUIDE: LocalizedGuide = {
     vi: `

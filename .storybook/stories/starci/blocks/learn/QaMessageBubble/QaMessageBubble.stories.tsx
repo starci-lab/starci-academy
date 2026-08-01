@@ -34,9 +34,9 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 
 const BASE_ANSWER: QaMessageBubbleAnswer = {
     id: "a1",
-    body: "Bạn kiểm tra lại biến môi trường DATABASE_URL nhé, mình gặp y hệt lỗi này tuần trước.",
+    body: "Double-check your DATABASE_URL environment variable — I ran into this exact same error last week.",
     author: { id: "u2", displayName: "Quang" },
-    createdTimeAgo: "1 giờ trước",
+    createdTimeAgo: "1 hour ago",
     reactionCount: 2,
     myReaction: null,
 }
@@ -44,7 +44,7 @@ const BASE_ANSWER: QaMessageBubbleAnswer = {
 /** LEAF — a plain top-level answer, viewer is NOT the asker so no accept toggle renders. */
 export const PlainAnswer: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QaMessageBubble"
                 tier="block"
@@ -77,7 +77,7 @@ export const PlainAnswer: Story = {
 /** LEAF — asker viewing: the accept toggle appears; accepted state swaps its label and adds the badge. */
 export const AskerCanAccept: Story = {
     render: () => (
-        <div className="flex flex-col gap-4 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-4 p-8">
             <BlockAnatomy
                 name="QaMessageBubble"
                 tier="block"
@@ -111,9 +111,9 @@ export const AskerCanAccept: Story = {
                                     replies: [
                                         {
                                             id: "r1",
-                                            body: "Cảm ơn bạn, đúng là do biến môi trường thật!",
-                                            author: { id: "u3", displayName: "Bảo" },
-                                            createdTimeAgo: "40 phút trước",
+                                            body: "Thanks, it really was the environment variable!",
+                                            author: { id: "u3", displayName: "Bao" },
+                                            createdTimeAgo: "40 minutes ago",
                                             reactionCount: 0,
                                             myReaction: null,
                                         },
@@ -135,7 +135,7 @@ export const AskerCanAccept: Story = {
 /** LEAF — the caller flips `isSkeleton`; an avatar + two author-line bars + one bubble-shaped bar stand in for an answer that hasn't loaded yet — `answer` isn't required in this branch of the union (§12g.0a). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QaMessageBubble"
                 tier="block"

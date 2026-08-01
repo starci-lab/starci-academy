@@ -25,7 +25,7 @@ export interface ResumeItem {
 /** Max number of resume cards shown in the hero. */
 export const RESUME_LIMIT = 3
 
-/** Most challenges allowed among the resume cards — "Tiếp tục học" is content-first
+/** Most challenges allowed among the resume cards — "Continue learning" is content-first
  * (resume the lessons you're reading); an in-progress challenge is only a single
  * nudge, never the whole slot. */
 export const MAX_RESUME_CHALLENGES = 1

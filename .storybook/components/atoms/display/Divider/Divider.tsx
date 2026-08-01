@@ -49,16 +49,8 @@ export interface DividerBaseProps {
      * two pieces of text rather than a track spanning a container.
      */
     shape?: DividerShape
-    /**
-     * Anatomy tag for this component itself, so a parent can badge it as one
-     * node. Without it, a parent would have to pass `showAnatomy` down instead,
-     * which exposes the child's own internals as siblings.
-     */
-    anatPart?: string
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -77,8 +69,6 @@ const DividerBase = ({
     label,
     shape = "rule",
     showAnatomy = false,
-    anatPart,
-    className,
     classNames,
 }: DividerBaseProps) => {
     // An inline mark: a glyph on the surrounding text's baseline, not a Separator
@@ -88,8 +78,10 @@ const DividerBase = ({
         return (
             <span
                 aria-hidden
-                data-anat-part={anatPart ?? (showAnatomy ? "Separator" : undefined)}
-                className={cn("text-current select-none", className, classNames)}
+                data-tier="atom"
+                data-component="Divider"
+                data-anat-part={showAnatomy ? "Divider" : undefined}
+                className={cn("text-current select-none", classNames)}
             >
                 ·
             </span>
@@ -98,18 +90,42 @@ const DividerBase = ({
     // A labelled divider (horizontal only): a rule on each side of centered text.
     if (label !== undefined && orientation === "horizontal") {
         return (
-            <div data-anat-part={anatPart} className={cn("flex w-full items-center gap-3", className, classNames)}>
-                <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Separator" : undefined} />
+            <div
+                data-tier="atom"
+                data-component="Divider"
+                className={cn("flex w-full items-center gap-3", classNames)}
+                data-anat-part={showAnatomy ? "Divider" : undefined}
+            >
+                <HeroSeparator
+                    orientation="horizontal"
+                    variant={variant}
+                    className="flex-1"
+                    data-anat-part={showAnatomy ? "Separator" : undefined}
+                />
                 {/* Caller slot — `label` is free-form content the caller passed in,
                     not part of Divider's own anatomy, so this span stays unbadged. */}
                 <span className="text-muted shrink-0 text-xs">
                     {label}
                 </span>
-                <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Separator" : undefined} />
+                <HeroSeparator
+                    orientation="horizontal"
+                    variant={variant}
+                    className="flex-1"
+                    data-anat-part={showAnatomy ? "Separator" : undefined}
+                />
             </div>
         )
     }
-    return <HeroSeparator orientation={orientation} variant={variant} className={cn(className, classNames)} data-anat-part={anatPart ?? (showAnatomy ? "Separator" : undefined)} />
+    return (
+        <HeroSeparator
+            data-tier="atom"
+            data-component="Divider"
+            orientation={orientation}
+            variant={variant}
+            className={cn(classNames)}
+            data-anat-part={showAnatomy ? "Divider" : undefined}
+        />
+    )
 }
 
 /**
@@ -117,3 +133,5 @@ const DividerBase = ({
  * constrained divider; orientation / label are LEAVES of it (prop-driven).
  */
 export { DividerBase as Divider }
+
+export const meta = { tier: "atom", name: "Divider" } as const

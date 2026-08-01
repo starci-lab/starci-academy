@@ -37,7 +37,7 @@ const VIEWER = { username: "Minh Anh" }
 /** LEAF — collapsed pill (top-level, collapsible). */
 export const CollapsedPill: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentComposer"
                 tier="block"
@@ -49,14 +49,14 @@ export const CollapsedPill: Story = {
                     {
                         name: "collapsible = true, expanded = false (initial)",
                         why: "The top-level composer starts as a slim avatar + placeholder pill so it never dominates the discussion zone with an empty grey box. Clicking it expands to the full field.",
-                        code: "<ContentCommentComposer collapsible currentUser={viewer} ariaLabel=\"Viết bình luận\" onSubmit={post} />",
+                        code: "<ContentCommentComposer collapsible currentUser={viewer} ariaLabel=\"Write a comment\" onSubmit={post} />",
                         render: (
                             <ContentCommentComposer
                                 anatPart="ContentCommentComposer"
                                 showAnatomy
                                 collapsible
                                 currentUser={VIEWER}
-                                ariaLabel="Viết bình luận"
+                                ariaLabel="Write a comment"
                                 onSubmit={() => {}}
                             />
                         ),
@@ -70,7 +70,7 @@ export const CollapsedPill: Story = {
 /** LEAF — expanded, avatar-led (the top-level composer once opened). */
 export const ExpandedWithAvatar: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentComposer"
                 tier="block"
@@ -82,14 +82,14 @@ export const ExpandedWithAvatar: Story = {
                     {
                         name: "currentUser set, draft empty",
                         why: "The field, submit, and a cancel action (collapsible always offers one) sit beside the viewer's avatar. Submit stays disabled until the draft is non-empty.",
-                        code: "<ContentCommentComposer collapsible currentUser={viewer} ariaLabel=\"Viết bình luận\" onSubmit={post} />",
+                        code: "<ContentCommentComposer collapsible currentUser={viewer} ariaLabel=\"Write a comment\" onSubmit={post} />",
                         render: (
                             <ContentCommentComposer
                                 anatPart="ContentCommentComposer"
                                 showAnatomy
                                 collapsible
                                 currentUser={VIEWER}
-                                ariaLabel="Viết bình luận"
+                                ariaLabel="Write a comment"
                                 onSubmit={() => {}}
                             />
                         ),
@@ -97,13 +97,13 @@ export const ExpandedWithAvatar: Story = {
                     {
                         name: "isPending = true",
                         why: "A post is in flight — submit shows its busy affordance and both actions disable, so a double click can't fire a second request.",
-                        code: "<ContentCommentComposer collapsible currentUser={viewer} isPending ariaLabel=\"Viết bình luận\" onSubmit={post} />",
+                        code: "<ContentCommentComposer collapsible currentUser={viewer} isPending ariaLabel=\"Write a comment\" onSubmit={post} />",
                         render: (
                             <ContentCommentComposer
                                 collapsible
                                 currentUser={VIEWER}
                                 isPending
-                                ariaLabel="Viết bình luận"
+                                ariaLabel="Write a comment"
                                 onSubmit={() => {}}
                             />
                         ),
@@ -117,7 +117,7 @@ export const ExpandedWithAvatar: Story = {
 /** LEAF — reply/edit shape: no avatar, no collapse, always expanded. */
 export const ReplyOrEdit: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentCommentComposer"
                 tier="block"
@@ -127,31 +127,31 @@ export const ReplyOrEdit: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "reply: onCancel set, submitLabel = 'Trả lời'",
+                        name: "reply: onCancel set, submitLabel = 'Reply'",
                         why: "A reply composer omits currentUser entirely (real src never passes it for this call) and always renders expanded — no pill to collapse back into. The cancel button appears because onCancel is set, not because of collapsible.",
-                        code: "<ContentCommentComposer placeholder=\"Viết câu trả lời...\" submitLabel=\"Trả lời\" onCancel={close} ariaLabel=\"Viết câu trả lời\" onSubmit={reply} />",
+                        code: "<ContentCommentComposer placeholder=\"Write your reply...\" submitLabel=\"Reply\" onCancel={close} ariaLabel=\"Write a reply\" onSubmit={reply} />",
                         render: (
                             <ContentCommentComposer
                                 anatPart="ContentCommentComposer"
                                 showAnatomy
-                                placeholder="Viết câu trả lời..."
-                                submitLabel="Trả lời"
+                                placeholder="Write your reply..."
+                                submitLabel="Reply"
                                 onCancel={() => {}}
-                                ariaLabel="Viết câu trả lời"
+                                ariaLabel="Write a reply"
                                 onSubmit={() => {}}
                             />
                         ),
                     },
                     {
-                        name: "edit: initialValue set, submitLabel = 'Lưu'",
+                        name: "edit: initialValue set, submitLabel = 'Save'",
                         why: "Editing seeds the field from the comment's current body and relabels submit — same shape as reply, just pre-filled.",
-                        code: "<ContentCommentComposer initialValue={comment.body} submitLabel=\"Lưu\" onCancel={close} ariaLabel=\"Sửa bình luận\" onSubmit={save} />",
+                        code: "<ContentCommentComposer initialValue={comment.body} submitLabel=\"Save\" onCancel={close} ariaLabel=\"Edit comment\" onSubmit={save} />",
                         render: (
                             <ContentCommentComposer
-                                initialValue="Chỗ multi-stage em làm theo mà image vẫn 800MB."
-                                submitLabel="Lưu"
+                                initialValue="I followed the multi-stage steps but the image is still 800MB."
+                                submitLabel="Save"
                                 onCancel={() => {}}
-                                ariaLabel="Sửa bình luận"
+                                ariaLabel="Edit comment"
                                 onSubmit={() => {}}
                             />
                         ),

@@ -31,7 +31,7 @@ export interface LanguageDonutItem {
 export interface LanguageDonutProps extends WithClassNames<undefined> {
     /** Language buckets to plot. */
     items: Array<LanguageDonutItem>
-    /** Centre big-number unit label (e.g. "solved" / "bài"). */
+    /** Centre big-number unit label (e.g. "solved" / "problems"). */
     unitLabel: string
     /** Accessible description of the donut. */
     ariaLabel: string

@@ -5,7 +5,6 @@ import type { ComponentType, ReactNode, SVGProps } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { ImageIcon } from "@phosphor-icons/react"
 import { useDropzone } from "react-dropzone"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
@@ -59,13 +58,8 @@ export interface ImageDropzoneProps {
      * line on.
      */
     isSkeleton?: boolean
-    /**
-     * When `true`, each composed part emits `data-anat-part="<name>"` so a
-     * BlockAnatomy panel can badge it on-render. Off by default (production).
-     */
+    /** When `true`, each composed part emits `data-anat-part` so a BlockAnatomy panel can badge it. Off by default. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -89,7 +83,6 @@ const ImageDropzoneBase = ({
     icon: Icon,
     isDragActive: isDragActiveProp,
     isSkeleton = false,
-    className,
     classNames,
     showAnatomy = false,
 }: ImageDropzoneProps) => {
@@ -111,13 +104,15 @@ const ImageDropzoneBase = ({
         // Same frame as the live box below (border-dashed + rounded-2xl + px-6 py-8 +
         // flex-col items-center gap-2) minus the interactive bits — nothing here is
         // clickable. Icon becomes a circular dot at the icon's own size-8 footprint;
-        // `label`/`hint` delegate to `Typography isSkeleton` so this box is never
-        // taller or shorter than the live one that follows it.
+        // `label`/`hint` become bars matching the live text's own line-box (see the
+        // `SKEL_H` comments beside each), so this box is never taller or shorter than
+        // the live one that follows it.
         return (
             <div
+                data-tier="atom"
+                data-component="ImageDropzone"
                 className={cn(
                     "flex flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center",
-                    className,
                     classNames,
                 )}
             >
@@ -125,9 +120,17 @@ const ImageDropzoneBase = ({
                     className="size-8 rounded-full"
                     data-anat-part={showAnatomy ? "Skeleton" : undefined}
                 />
-                <Typography size="sm" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                {/* Same bar `Typography size="sm" isSkeleton` would draw — SKEL_H.sm = h-[14px]. */}
+                <HeroSkeleton
+                    className="inline-block h-[14px] w-1/2 rounded"
+                    data-anat-part={showAnatomy ? "Label" : undefined}
+                />
                 {hint ? (
-                    <Typography size="xs" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    // Same bar `Typography size="xs" isSkeleton` would draw — SKEL_H.xs = h-3.
+                    <HeroSkeleton
+                        className="inline-block h-3 w-1/3 rounded"
+                        data-anat-part={showAnatomy ? "Hint" : undefined}
+                    />
                 ) : null}
             </div>
         )
@@ -136,10 +139,11 @@ const ImageDropzoneBase = ({
     return (
         <div
             {...getRootProps()}
+            data-tier="atom"
+            data-component="ImageDropzone"
             className={cn(
                 "flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center transition-colors hover:border-accent",
                 isDragActive && "border-solid border-accent bg-accent-soft",
-                className,
                 classNames,
             )}
         >
@@ -151,26 +155,24 @@ const ImageDropzoneBase = ({
                 {/* size-8 is above the size-5 threshold, so no `weight` is passed — the glyph stays regular. */}
                 {Icon ? <Icon /> : <ImageIcon focusable="false" />}
             </span>
-            {/* `anatPart` pinned explicitly — the REAL component rendered here is `Typography`
-                itself; left unset it would fall back to Typography's own generic default
-                name ("Text"), which describes a slot, not the component's real identity. */}
-            <Typography size="sm"
-                text={label}
-                weight="medium"
-                align="center"
-                color={isDragActive ? "accent-soft" : "default"}
-                showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "Typography" : undefined}
-            />
+            {/* Raw text — same classes `Typography size="sm" weight="medium" align="center"` would emit. */}
+            <span
+                className={cn(
+                    "text-sm font-medium text-center",
+                    isDragActive ? "text-accent-soft-foreground" : "text-foreground",
+                )}
+                data-anat-part={showAnatomy ? "Label" : undefined}
+            >
+                {label}
+            </span>
             {hint ? (
-                <Typography
-                    size="xs"
-                    text={hint}
-                    color="muted"
-                    align="center"
-                    showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Typography" : undefined}
-                />
+                // Raw text — same classes `Typography size="xs" color="muted" align="center"` would emit.
+                <span
+                    className="text-xs font-normal text-muted text-center"
+                    data-anat-part={showAnatomy ? "Hint" : undefined}
+                >
+                    {hint}
+                </span>
             ) : null}
         </div>
     )
@@ -178,3 +180,5 @@ const ImageDropzoneBase = ({
 
 /** `ImageDropzone.*` — single-image dropzone namespace. */
 export { ImageDropzoneBase as ImageDropzone }
+
+export const meta = { tier: "atom", name: "ImageDropzone" } as const

@@ -64,11 +64,11 @@ export type NotificationCenterProps = WithClassNames<undefined>
 /** Page size for the notification center's pager (bigger than the bell's popover page). */
 const PAGE_SIZE = 20
 
-/** The "Tất cả" tab has no `type` filter — a dedicated key distinct from any real
+/** The "All" tab has no `type` filter — a dedicated key distinct from any real
  *  {@link NotificationType} so it round-trips through the tab strip cleanly. */
 const ALL_TAB = "all"
 
-/** One filter tab: 1:1 with a real {@link NotificationType} (plus the "Tất cả"
+/** One filter tab: 1:1 with a real {@link NotificationType} (plus the "All"
  *  catch-all) — every type stays reachable, nothing is silently grouped away. */
 type TabKey = typeof ALL_TAB | NotificationType
 
@@ -87,7 +87,7 @@ const TYPE_ICONS: Record<NotificationType, ReactNode> = {
 }
 
 /**
- * "Trung tâm thông báo" — the full notification feed the bell's "Xem tất cả"
+ * "Notification Center" — the full notification feed the bell's "View all"
  * deep-links into. Same query/mutations/deep-link resolution as
  * `NotificationBell` (`components/features/navbar/Navbar/NotificationBell`),
  * just with type filter tabs + a bigger offset-paginated page instead of the
@@ -309,24 +309,24 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
                     }}
                 >
                     {items.length === 0 ? (
-                        // `EmptyState` intentionally omits its own frame — bọc `<Card>` cho
-                        // khớp hình với list card khi có data (`components/card.md` §2).
+                        // `EmptyState` intentionally omits its own frame — wrap it in `<Card>` to
+                        // match the shape of the list card when there is data (`components/card.md` §2).
                         <Card>
                             <CardContent>
                                 <EmptyState
                                     icon={<BellIcon aria-hidden focusable="false" />}
                                     title={tab === ALL_TAB ? t("notifications.empty") : t("notifications.emptyFiltered")}
                                     action={tab === ALL_TAB ? (
-                                        // Platform-empty thật (chưa từng có thông báo nào) — CTA phải là
-                                        // lời mời funnel primary, không phải secondary quiet (canon §Conversion).
+                                        // Genuinely platform-empty (never had any notification) — the CTA must be
+                                        // a primary funnel invitation, not a quiet secondary one (canon §Conversion).
                                         <Button size="sm" variant="primary" onPress={goToCourses} className="gap-2">
                                             {t("notifications.emptyCta")}
                                             <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                                         </Button>
                                     ) : (
-                                        // Filtered-empty (tab có filter nhưng rỗng) — CTA phải quay lại
-                                        // xem đủ (xoá filter), không đẩy ra ngoài trang khóa học (canon
-                                        // §State-matrix: 2 lý do rỗng khác nhau → 2 CTA khác nghĩa).
+                                        // Filtered-empty (a filtered tab that's empty) — the CTA must go back to
+                                        // viewing everything (clear the filter), not push out to the course page
+                                        // (canon §State-matrix: 2 different reasons for empty → 2 CTAs with different meaning).
                                         <Button size="sm" variant="secondary" onPress={() => onSelectTab(ALL_TAB)}>
                                             {t("notifications.clearFilters")}
                                         </Button>

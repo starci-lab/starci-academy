@@ -217,13 +217,13 @@ export const Kpi = ({
                     const item = itemByKey.get(key)
                     const current = item?.current ?? 0
                     // effective target = the learner's custom goal, or a sensible default
-                    // (mirrors the dashboard card — meter always runs, never rỗng chờ config)
+                    // (mirrors the dashboard card — meter always runs, never sits empty waiting for config)
                     const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
                     return (
                         <SurfaceListCardItem key={key} className="flex flex-col gap-3">
                             <div className="flex items-center justify-between gap-3">
                                 <div className="flex items-center gap-2">
-                                    {/* icon leading cùng màu với label cạnh nó (icon.md §6) */}
+                                    {/* icon leading, same color as the label beside it (icon.md §6) */}
                                     <Icon className="size-5 shrink-0 text-foreground" />
                                     <span className="text-sm font-medium text-foreground">
                                         {t(`dashboard.kpi.labels.${labelKey}`)}

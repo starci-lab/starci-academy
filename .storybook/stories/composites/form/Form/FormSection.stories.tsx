@@ -4,15 +4,15 @@ import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import { FormSection } from "@sb-components/composites/form/Form/Form"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * KHUNG (composite tier §13) — `FormSection`: nhóm field CÓ TIÊU ĐỀ. Một khối
- * header (tiêu đề + mô tả tuỳ chọn, `gap-1` tight vì là một CẶP) rồi tới cột
- * field theo nhịp `gap` (§10c).
+ * SHELL (composite tier §13) — `FormSection`: a TITLED group of fields. A
+ * header block (title + optional description, tight `gap-1` because they're a
+ * PAIR) followed by the field column, at the `gap` rhythm (§10c).
  *
- * ⚠️ PHẠM VI STATE (§12f): khung này chỉ đẻ ra HAI hình — có `description` và
- * không. Nhãn/hint/lỗi/required của từng field là state của atom
- * (`Atoms/Forms/Input/*`, §12e) — khung KHÔNG đụng tới, nên KHÔNG có story
- * `Error`/`Required` ở đây. Field `errorMessage` xuất hiện trong fixture chỉ để
- * cho thấy khung để yên cho atom tự lo dòng lỗi.
+ * ⚠️ STATE SCOPE (§12f): this shell only produces TWO shapes — with
+ * `description` and without. A field's label/hint/error/required is the
+ * atom's state (`Atoms/Forms/Input/*`, §12e) — the shell doesn't touch it, so
+ * there is NO `Error`/`Required` story here. The `errorMessage` field in the
+ * fixture only shows that the shell leaves the error line to the atom.
  */
 const meta: Meta<typeof FormSection> = {
     title: "Composites/Form/Form/FormSection",
@@ -25,13 +25,13 @@ const meta: Meta<typeof FormSection> = {
 export default meta
 type Story = StoryObj<typeof FormSection>
 /**
- * Chỉ khai `Typography` — component THẬT duy nhất của khung này có story
- * riêng để trỏ sang. Khung KHÔNG badge `Header`/`Body` nữa (2026-07-28, §11a.1
- * LOẠI 2/3): `Header` chỉ là div gom title+description mà chính hai
- * `Typography` bên dưới đã nói hết, còn `Body` bọc field TUỲ Ý caller đưa
- * vào — cả hai không có MỘT component cố định để trỏ sang, nên component đã bỏ
- * hẳn hai badge này; `Typography` nổi lên thành node gốc thay vì con của
- * `Header`.
+ * Only `Typography` is declared — the one REAL component this shell has its
+ * own story to point to. The shell no longer badges `Header`/`Body`
+ * (2026-07-28, §11a.1 CASE 2/3): `Header` is just a div gathering
+ * title+description that the two `Typography` nodes below already say in
+ * full, and `Body` wraps whatever field the caller passes in — neither has
+ * ONE fixed component to point to, so the component dropped both badges;
+ * `Typography` surfaces as a top-level node instead of a child of `Header`.
  */
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     {
@@ -49,7 +49,7 @@ const WITH_DESCRIPTION_PARTS: Array<AnatomyNode> = [
         storyId: "atoms-text-typography-typography--colors",
     },
 ]
-/** Fixture field thật — atom tự mang label/hint/errorMessage/isRequired (§12e). */
+/** A real fixture field — the atom carries its own label/hint/errorMessage/isRequired (§12e). */
 const BillingFields = () => {
     const [company, setCompany] = useState("StarCi Academy")
     const [taxCode, setTaxCode] = useState("")
@@ -66,7 +66,7 @@ const BillingFields = () => {
         </>
     )
 }
-/** Default — chỉ tiêu đề: nhóm field không cần giải thích thêm. */
+/** Default — title only: the field group needs no further explanation. */
 export const Default: Story = {
     render: () => {
         const Demo = () => (
@@ -85,7 +85,7 @@ export const Default: Story = {
   <InputText label="Tax code" errorMessage="A tax code must be 10 or 13 digits." value={taxCode} onValueChange={setTaxCode} />
 </FormSection>`,
                         render: (
-                            <div className="w-96">
+                            <div data-tier="fixture" className="w-96">
                                 <FormSection showAnatomy title="Billing details">
                                     <BillingFields />
                                 </FormSection>
@@ -95,10 +95,10 @@ export const Default: Story = {
                 ]}
             />
         )
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
-/** WithDescription — thêm dòng mô tả muted dưới tiêu đề (ngữ cảnh cho cả nhóm). */
+/** WithDescription — adds a muted description line under the title (context for the whole group). */
 export const WithDescription: Story = {
     render: () => {
         const Demo = () => (
@@ -117,7 +117,7 @@ export const WithDescription: Story = {
   …
 </FormSection>`,
                         render: (
-                            <div className="w-96">
+                            <div data-tier="fixture" className="w-96">
                                 <FormSection
                                     showAnatomy
                                     title="Billing details"
@@ -132,6 +132,6 @@ export const WithDescription: Story = {
                 parts={WITH_DESCRIPTION_PARTS}
             />
         )
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }

@@ -15,7 +15,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 📐 **ONE LEAF** (§11f + §14d.2): every variant below shares the SAME DOM tree
  * (`SurfaceCardList` → rows), differing only in content ⇒ they're all
- * **STATE**, rendered inside one leaf's `states[]` (thầy chốt bố cục C,
+ * **STATE**, rendered inside one leaf's `states[]` (teacher's call on layout C,
  * 2026-07-27). Previously `AllRead`/`AllDifficulties`/`Bordered` were split into
  * separate stories — wrong, since none of them add or remove a node.
  */
@@ -31,10 +31,10 @@ export default meta
 type Story = StoryObj<typeof KeepGoingPath>
 
 const MIXED: Array<KeepGoingContent> = [
-    { id: "l1", title: "Docker là gì", minutes: 6, state: "done", difficulty: "beginner", onPress: () => {} },
-    { id: "l2", title: "Viết Dockerfile tối ưu", minutes: 12, state: "active", difficulty: "intermediate", onPress: () => {} },
+    { id: "l1", title: "What is Docker", minutes: 6, state: "done", difficulty: "beginner", onPress: () => {} },
+    { id: "l2", title: "Writing an optimized Dockerfile", minutes: 12, state: "active", difficulty: "intermediate", onPress: () => {} },
     { id: "l3", title: "Multi-stage build", minutes: 9, state: "todo", difficulty: "advanced", locked: true, onPress: () => {} },
-    { id: "l4", title: "Tự viết Operator", minutes: 22, state: "todo", difficulty: "insane", locked: true, onPress: () => {} },
+    { id: "l4", title: "Writing your own Operator", minutes: 22, state: "todo", difficulty: "insane", locked: true, onPress: () => {} },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -62,7 +62,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const Path: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeepGoingPath"
                 tier="block"
@@ -75,14 +75,14 @@ export const Path: Story = {
                         name: "contents mixes done/active/todo across all 4 difficulty steps, one locked",
                         why: "Every row-level variant renders inside the same `SurfaceCardList` frame at once: three lesson states, all four difficulty steps, and a locked lesson at the bottom. One mixed data set is enough to show every shape a row can take, since none of these differences add or remove a node from the tree.",
                         code: `<KeepGoingPath
-    module={{ index: 2, name: "Container hoá" }}
+    module={{ index: 2, name: "Containerization" }}
     contents={contents}
 />`,
                         render: (
                             <KeepGoingPath
                                 anatPart="SurfaceCardList"
                                 showAnatomy
-                                module={{ index: 2, name: "Container hoá" }}
+                                module={{ index: 2, name: "Containerization" }}
                                 contents={MIXED}
                             />
                         ),
@@ -102,7 +102,7 @@ export const Path: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="KeepGoingPath"
                 tier="block"
@@ -114,13 +114,13 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton, contents = []",
                         why: "The same `SurfaceCardList` frame renders three shimmer rows instead of real lesson rows. Three is this pass's convention for a repeated list's resting row count, chosen so the frame keeps its height instead of collapsing while the real contents are still loading.",
-                        code: "<KeepGoingPath isSkeleton module={{ index: 2, name: \"Container hoá\" }} contents={[]} />",
+                        code: "<KeepGoingPath isSkeleton module={{ index: 2, name: \"Containerization\" }} contents={[]} />",
                         render: (
                             <KeepGoingPath
                                 anatPart="SurfaceCardList"
                                 showAnatomy
                                 isSkeleton
-                                module={{ index: 2, name: "Container hoá" }}
+                                module={{ index: 2, name: "Containerization" }}
                                 contents={[]}
                             />
                         ),

@@ -4,7 +4,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * BLOCK — `SubmissionAttemptSelector`: which GRADED ATTEMPT the reader is
- * looking at — a flex-wrap row of attempt buttons (verdict + "Lần N" + score)
+ * looking at — a flex-wrap row of attempt buttons (verdict + "Attempt N" + score)
  * plus an optional "+N" trigger for whatever holds the rest of the history.
  *
  * REUSE, NOT A NEW ROW: the SELECT chrome is `ButtonRadioGroup` (role="group",
@@ -43,7 +43,7 @@ const MANY_ATTEMPTS: Array<SubmissionAttempt> = [
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Chip": { tier: "atom", role: "the verdict glyph, `Lần N` and its score for ONE attempt — riding inside the select button rather than owning the press itself", storyId: "atoms-chips-chip-chip--default" },
+    "Chip": { tier: "atom", role: "the verdict glyph, `Attempt N` and its score for ONE attempt — riding inside the select button rather than owning the press itself", storyId: "atoms-chips-chip-chip--default" },
     "Button": { tier: "atom", role: "either one attempt's select button (wrapping its `Chip`) or the trailing `+N` overflow trigger — both plain `Button`, told apart only by what they wrap", storyId: "atoms-buttons-button-button--default" },
     "Cluster": { tier: "frame", role: "the skeleton mirror's wrapping row, holding the same gap the real `ButtonRadioGroup` uses internally", storyId: "frames-cluster-cluster--default" },
     "AsyncContentEmpty": { tier: "composite", role: "the no-attempts message, replacing the strip entirely", storyId: "composites-async-asynccontent-asynccontentempty--basic" },
@@ -53,7 +53,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the chip strip: loading → empty → error → few attempts → many attempts. */
 export const AttemptRow: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SubmissionAttemptSelector"
                 tier="block"
@@ -67,7 +67,7 @@ export const AttemptRow: Story = {
                         why: "The strip's own fetch is in flight, so it draws its skeleton mirror — pill-for-pill, no data — rather than collapsing to nothing. The same branch fires whether it's this widget's own loading flag or a parent forcing an all-skeleton first paint.",
                         code: `<SubmissionAttemptSelector
     attempts={[]}
-    ariaLabel="Chọn lần làm"
+    ariaLabel="Select attempt"
     isLoading
     onSelect={select}
 />`,
@@ -76,7 +76,7 @@ export const AttemptRow: Story = {
                                 anatPart="SubmissionAttemptSelector"
                                 showAnatomy
                                 attempts={[]}
-                                ariaLabel="Chọn lần làm"
+                                ariaLabel="Select attempt"
                                 isLoading
                                 onSelect={() => {}}
                             />
@@ -87,14 +87,14 @@ export const AttemptRow: Story = {
                         why: "No attempt exists yet, so the strip is replaced by a single message rather than an empty row that reads as broken chrome. This is the shape before the reader has submitted anything at all.",
                         code: `<SubmissionAttemptSelector
     attempts={[]}
-    ariaLabel="Chọn lần làm"
+    ariaLabel="Select attempt"
     isEmpty
     onSelect={select}
 />`,
                         render: (
                             <SubmissionAttemptSelector
                                 attempts={[]}
-                                ariaLabel="Chọn lần làm"
+                                ariaLabel="Select attempt"
                                 isEmpty
                                 onSelect={() => {}}
                             />
@@ -105,19 +105,19 @@ export const AttemptRow: Story = {
                         why: "The fetch failed, which outranks every other branch (per `AsyncContent`'s own priority order) — the reader sees why nothing is listed and a way to try again, right where the strip would have been.",
                         code: `<SubmissionAttemptSelector
     attempts={[]}
-    ariaLabel="Chọn lần làm"
+    ariaLabel="Select attempt"
     error={fetchError}
     onRetry={retry}
-    retryLabel="Thử lại"
+    retryLabel="Try again"
     onSelect={select}
 />`,
                         render: (
                             <SubmissionAttemptSelector
                                 attempts={[]}
-                                ariaLabel="Chọn lần làm"
+                                ariaLabel="Select attempt"
                                 error={new Error("network")}
                                 onRetry={() => {}}
-                                retryLabel="Thử lại"
+                                retryLabel="Try again"
                                 onSelect={() => {}}
                             />
                         ),
@@ -128,14 +128,14 @@ export const AttemptRow: Story = {
                         code: `<SubmissionAttemptSelector
     attempts={attempts}
     selectedId="attempt-2"
-    ariaLabel="Chọn lần làm"
+    ariaLabel="Select attempt"
     onSelect={select}
 />`,
                         render: (
                             <SubmissionAttemptSelector
                                 attempts={FEW_ATTEMPTS}
                                 selectedId="attempt-2"
-                                ariaLabel="Chọn lần làm"
+                                ariaLabel="Select attempt"
                                 onSelect={() => {}}
                             />
                         ),
@@ -146,7 +146,7 @@ export const AttemptRow: Story = {
                         code: `<SubmissionAttemptSelector
     attempts={attempts}
     selectedId="attempt-3"
-    ariaLabel="Chọn lần làm"
+    ariaLabel="Select attempt"
     overflowCount={4}
     onOverflowPress={openHistory}
     onSelect={select}
@@ -155,7 +155,7 @@ export const AttemptRow: Story = {
                             <SubmissionAttemptSelector
                                 attempts={MANY_ATTEMPTS}
                                 selectedId="attempt-3"
-                                ariaLabel="Chọn lần làm"
+                                ariaLabel="Select attempt"
                                 overflowCount={4}
                                 onOverflowPress={() => {}}
                                 onSelect={() => {}}

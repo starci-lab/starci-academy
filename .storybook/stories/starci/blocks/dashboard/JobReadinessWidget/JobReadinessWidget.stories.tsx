@@ -3,7 +3,7 @@ import { JobReadinessWidget, type JobReadinessTrack } from "@sb-components/starc
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `JobReadinessWidget`: "Độ sẵn sàng của tôi" — the self job-readiness
+ * BLOCK — `JobReadinessWidget`: "My Job Readiness" — the self job-readiness
  * summary for the viewer's strongest purchased-course track. See the
  * component's own file header for the full contract; this file only adds the
  * states.
@@ -40,7 +40,7 @@ const TRACK_MISSING_CV: JobReadinessTrack = {
     capstoneScore: 55,
     interviewScore: 48,
     cvScore: null,
-    nextAction: { label: "Chấm điểm CV của bạn", onPress: () => {} },
+    nextAction: { label: "Score your CV", onPress: () => {} },
 }
 
 const TRACK_JOB_READY: JobReadinessTrack = {
@@ -53,13 +53,13 @@ const TRACK_JOB_READY: JobReadinessTrack = {
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Độ sẵn sàng của tôi\" label above the headline, chip and pillar bars", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
+    "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"My Job Readiness\" label above the headline, chip and pillar bars", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical frame stacking the headline row above the foundation line and each pillar meter", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the headline row, holding the depth-score stat pair beside the band chip", storyId: "frames-stack-stackh--default" },
     "StatPair": { tier: "composite", role: "the headline depth score with the course title as its caption", storyId: "composites-stats-statpair--single" },
     "EnumChip": { tier: "composite", role: "the readiness band, mapped from the closed needsWork/building/jobReady set to a soft chip tone", storyId: "composites-chips-enumchip--gallery" },
     "Typography": { tier: "atom", role: "the foundation-percentile line, or a pillar's skeleton label", storyId: "atoms-text-typography-typography--plain" },
-    "ProgressMeter": { tier: "composite", role: "one pillar's bar (capstone / phỏng vấn thử / CV), omitted entirely when that pillar has no score yet", storyId: "composites-stats-progressmeter--label-and-value" },
+    "ProgressMeter": { tier: "composite", role: "one pillar's bar (capstone / mock interview / CV), omitted entirely when that pillar has no score yet", storyId: "composites-stats-progressmeter--label-and-value" },
     "Button": { tier: "atom", role: "the single next-step CTA, fully pre-built by the caller (label + onPress) and omitted once every pillar has a score", storyId: "atoms-buttons-button-button--default" },
     "Skeleton": { tier: "heroui", role: "the loading mirror standing in for a pillar's meter — `ProgressMeter` has no `isSkeleton` shape of its own yet, so this block substitutes a bar-shaped shimmer matching the real track's height" },
 }
@@ -67,7 +67,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the readiness widget: async lifecycle, headline, foundation line and pillar bars, all as states of one shape. */
 export const Content: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="JobReadinessWidget"
                 tier="block"
@@ -120,7 +120,7 @@ export const Content: Story = {
         capstoneScore: 55,
         interviewScore: 48,
         cvScore: null,
-        nextAction: { label: "Chấm điểm CV của bạn", onPress: () => router.push(cvHref) },
+        nextAction: { label: "Score your CV", onPress: () => router.push(cvHref) },
     }}
 />`,
                         render: (

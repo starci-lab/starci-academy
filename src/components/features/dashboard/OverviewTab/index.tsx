@@ -50,8 +50,8 @@ export type OverviewTabProps = WithClassNames<undefined>
 
 /**
  * Dashboard "Overview" tab — the cockpit, every section framed by a `LabeledCard`
- * (label outside + card, mirroring the profile page): "Tiếp tục học" (next action),
- * "Đà học" (streak), "Mục tiêu tuần" (weekly goals), "Độ sẵn sàng của tôi" (own
+ * (label outside + card, mirroring the profile page): "Continue learning" (next action),
+ * "Streak" (streak), "Weekly goals" (weekly goals), "My readiness" (own
  * job-readiness + a CTA at the missing pillar), the weekly-challenge event, then
  * the contribution heatmap. Each child self-fetches + owns its states.
  * @param props - optional root class name (placement only)

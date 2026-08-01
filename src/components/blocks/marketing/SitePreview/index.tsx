@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { CheckCircleIcon, StarIcon } from "@phosphor-icons/react"
 
-/** Một khoá trong list preview (minh hoạ marketing, không phải data thật). */
+/** One course in the preview list (marketing illustration, not real data). */
 interface PreviewCourse {
     initial: string
     name: string
@@ -13,9 +13,9 @@ interface PreviewCourse {
 }
 
 const COURSES: ReadonlyArray<PreviewCourse> = [
-    { initial: "FS", name: "Fullstack Mastery", level: "Trung cấp", rating: "4.9", price: "1.290k", tone: "accent" },
-    { initial: "SD", name: "System Design", level: "Nâng cao", rating: "5.0", price: "1.490k", tone: "success" },
-    { initial: "DO", name: "DevOps Mastery", level: "Nâng cao", rating: "4.8", price: "1.390k", tone: "warning" },
+    { initial: "FS", name: "Fullstack Mastery", level: "Intermediate", rating: "4.9", price: "1.290k", tone: "accent" },
+    { initial: "SD", name: "System Design", level: "Advanced", rating: "5.0", price: "1.490k", tone: "success" },
+    { initial: "DO", name: "DevOps Mastery", level: "Advanced", rating: "4.8", price: "1.390k", tone: "warning" },
 ]
 
 const TONE_TILE: Record<PreviewCourse["tone"], string> = {
@@ -24,7 +24,7 @@ const TONE_TILE: Record<PreviewCourse["tone"], string> = {
     warning: "bg-warning-soft text-warning-soft-foreground",
 }
 
-/** 1 dòng filter có ô tick (checked = accent). */
+/** One filter row with a tick box (checked = accent). */
 const FilterRow = ({ label, on }: { label: string; on?: boolean }) => (
     <span className="flex items-center gap-2 text-muted">
         <span
@@ -40,10 +40,10 @@ const FilterRow = ({ label, on }: { label: string; on?: boolean }) => (
 )
 
 /**
- * Preview 1 trang web (kiểu catalog tìm khoá học) — header nav + sidebar bộ lọc + list
- * khoá có rating/giá. Token-aware (`bg-surface`/`border-default`/`text-foreground`…) nên
- * đọc tốt cả light/dark. Lấp đầy chiều cao cha (dùng trong `ShowcaseMockup aspect="video"`).
- * Nội dung là minh hoạ marketing, không phải data thật.
+ * A one-page website preview (course-catalog style) — header nav + filter sidebar + course
+ * list with rating/price. Token-aware (`bg-surface`/`border-default`/`text-foreground`…) so it
+ * reads well in both light and dark. Fills the parent's height (used in `ShowcaseMockup aspect="video"`).
+ * The content is a marketing illustration, not real data.
  */
 export const SitePreview = () => (
     <div className="flex h-full flex-col bg-surface text-foreground">
@@ -55,27 +55,27 @@ export const SitePreview = () => (
                     StarCi
                 </span>
                 <span className="hidden items-center gap-3 text-xs text-muted @app-sm:flex">
-                    <span className="text-foreground">Khóa học</span>
-                    <span>Lộ trình</span>
-                    <span>Bảng giá</span>
+                    <span className="text-foreground">Courses</span>
+                    <span>Roadmap</span>
+                    <span>Pricing</span>
                 </span>
             </div>
-            <span className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">Đăng ký</span>
+            <span className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">Sign up</span>
         </div>
 
-        {/* body: sidebar filter + list khoá */}
+        {/* body: filter sidebar + course list */}
         <div className="flex min-h-0 flex-1">
             <div className="hidden w-1/3 max-w-[180px] shrink-0 flex-col gap-3 border-r border-default p-3 text-xs @app-sm:flex">
                 <div className="flex flex-col gap-2">
-                    <span className="font-medium text-muted">Chủ đề</span>
+                    <span className="font-medium text-muted">Topic</span>
                     <FilterRow label="Fullstack" on />
                     <FilterRow label="System Design" />
                     <FilterRow label="DevOps" />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <span className="font-medium text-muted">Hình thức</span>
-                    <FilterRow label="Tự học" on />
-                    <FilterRow label="Có mentor" />
+                    <span className="font-medium text-muted">Format</span>
+                    <FilterRow label="Self-paced" on />
+                    <FilterRow label="With mentor" />
                 </div>
             </div>
 
@@ -100,7 +100,7 @@ export const SitePreview = () => (
                         </div>
                         <div className="shrink-0 text-right">
                             <span className="block text-sm font-semibold text-accent-soft-foreground">{course.price}</span>
-                            <span className="block text-[10px] text-muted">/ khóa</span>
+                            <span className="block text-[10px] text-muted">/ course</span>
                         </div>
                     </div>
                 ))}

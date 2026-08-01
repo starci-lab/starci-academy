@@ -19,7 +19,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * documents the same reasoning for why two highlighted cards would cancel
  * each other's emphasis.
  *
- * ⭐ `isHighlight` IS NOW CALLER-CONTROLLED (thầy 2026-07-28, default `true` —
+ * ⭐ `isHighlight` IS NOW CALLER-CONTROLLED (teacher 2026-07-28, default `true` —
  * every existing call site is unchanged). Reused a second time for
  * `ContentPage`'s mobile/tablet practice nudge, which is an inline aside in a
  * scrolling reading page, not the one focal moment of its own screen — `src`'s
@@ -44,7 +44,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /** Props for {@link MilestoneUpNextCard}. */
 export interface MilestoneUpNextCardProps {
-    /** Small label above the title, e.g. "Nhiệm vụ tiếp theo". */
+    /** Small label above the title, e.g. "Next task". */
     eyebrow: string
     /** `true` → a check glyph sits beside the eyebrow, marking the attempt just passed. */
     showCheck?: boolean
@@ -52,7 +52,7 @@ export interface MilestoneUpNextCardProps {
     title: string
     /** One line describing what the next task asks for. */
     description: string
-    /** CTA label, e.g. "Bắt đầu nhiệm vụ 3". */
+    /** CTA label, e.g. "Start task 3". */
     ctaLabel: string
     /** Press the CTA. */
     onPress?: () => void
@@ -92,57 +92,58 @@ const MilestoneUpNextCard = ({
         isSkeleton={isSkeleton}
         anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
         contentClassName={className}
-    >
-        <StackV
-            gap="grouped"
-            anatPart={showAnatomy ? "StackV" : undefined}
-            body={
-                <>
-                    {/* thầy 2026-07-29: back INSIDE the card face (not `SurfaceCard.label`,
-                        which sits OUTSIDE/above it) — a plain atom call, not raw CSS, so no
-                        shape-tier violation either way; this is a visual placement call. */}
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        prefixIcon={showCheck ? CheckCircleIcon : undefined}
-                        isSkeleton={isSkeleton}
-                        text={eyebrow}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                    {/* thầy 2026-07-29: real `UpNextCard` leaves `type` unset on its title
-                        Typography, which defaults to HeroUI's `type="body"` = `text-base`
-                        (verify `typography.css` `.typography--body`) — `size="lg"` here was
-                        oversized. `weight="semibold"` (src) folds to `"medium"` at body
-                        scale per §9b, not `"bold"`. */}
-                    <Typography
-                        size="base"
-                        weight="medium"
-                        isSkeleton={isSkeleton}
-                        text={title}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                    <Typography
-                        size="sm"
-                        color="muted"
-                        isSkeleton={isSkeleton}
-                        text={description}
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                    />
-                    <Button
-                        isSkeleton={isSkeleton}
-                        variant="primary"
-                        size="sm"
-                        label={ctaLabel}
-                        suffixIcon={ArrowRightIcon}
-                        iconSlide
-                        onPress={onPress}
-                        classNames={["w-fit", "shrink-0"]}
-                        anatPart={showAnatomy ? "Button" : undefined}
-                    />
-                </>
-            }
-        />
-    </SurfaceCard>
+        body={() => (
+            <StackV
+                gap={4}
+                anatPart={showAnatomy ? "StackV" : undefined}
+                body={
+                    <>
+                        {/* teacher 2026-07-29: back INSIDE the card face (not `SurfaceCard.label`,
+                            which sits OUTSIDE/above it) — a plain atom call, not raw CSS, so no
+                            shape-tier violation either way; this is a visual placement call. */}
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            prefixIcon={showCheck ? CheckCircleIcon : undefined}
+                            isSkeleton={isSkeleton}
+                            text={eyebrow}
+                            showAnatomy={showAnatomy}
+                        />
+                        {/* teacher 2026-07-29: real `UpNextCard` leaves `type` unset on its title
+                            Typography, which defaults to HeroUI's `type="body"` = `text-base`
+                            (verify `typography.css` `.typography--body`) — `size="lg"` here was
+                            oversized. `weight="semibold"` (src) folds to `"medium"` at body
+                            scale per §9b, not `"bold"`. */}
+                        <Typography
+                            size="base"
+                            weight="medium"
+                            isSkeleton={isSkeleton}
+                            text={title}
+                            showAnatomy={showAnatomy}
+                        />
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text={description}
+                            showAnatomy={showAnatomy}
+                        />
+                        <Button
+                            isSkeleton={isSkeleton}
+                            variant="primary"
+                            size="sm"
+                            label={ctaLabel}
+                            suffixIcon={ArrowRightIcon}
+                            iconSlide
+                            onPress={onPress}
+                            classNames={["w-fit", "shrink-0"]}
+                            showAnatomy={showAnatomy}
+                        />
+                    </>
+                }
+            />
+        )}
+    />
 )
 
 export { MilestoneUpNextCard }

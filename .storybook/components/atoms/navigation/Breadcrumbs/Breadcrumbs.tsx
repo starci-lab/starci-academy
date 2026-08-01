@@ -70,11 +70,8 @@ export interface BreadcrumbsBaseProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -95,7 +92,6 @@ const BreadcrumbsBase = ({
     backLabel = "Back",
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: BreadcrumbsBaseProps) => {
     if (isSkeleton) {
@@ -109,17 +105,15 @@ const BreadcrumbsBase = ({
         const collapseAlways = canCollapse && isLongTrail
         const collapseMobile = canCollapse && collapseOnMobile && !collapseAlways
 
-        // Only the HeroSkeleton bars get data-anat-part — the wrapping div isn't
-        // a real component, tagging it would be a made-up name.
         const trailBars = (
-            <div className={cn("flex items-center gap-2", className, classNames)}>
+            <div data-tier="atom" data-component="Breadcrumbs" className={cn("flex items-center gap-2", classNames)}>
                 <HeroSkeleton className="h-4 w-1/4 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 <HeroSkeleton className="h-4 w-1/2 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             </div>
         )
         const backBar = (
-            <div className={cn("flex w-fit items-center gap-2", className, classNames)}>
+            <div data-tier="atom" data-component="Breadcrumbs" data-principles="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
                 <HeroSkeleton className="size-3.5 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             </div>
@@ -155,8 +149,10 @@ const BreadcrumbsBase = ({
 
     const trail = (
         <HeroBreadcrumbs
+            data-tier="atom"
+            data-component="Breadcrumbs"
             data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}
-            className={cn(collapseMobile && "hidden @app-sm:flex", className, classNames)}
+            className={cn(collapseMobile && "hidden @app-sm:flex", classNames)}
         >
             {rendered.map((entry) =>
                 entry === ELLIPSIS_KEY ? (
@@ -187,12 +183,14 @@ const BreadcrumbsBase = ({
               `transition-transform` won't animate it.
             */}
             <HeroLink
+                data-tier="atom"
+                data-component="Breadcrumbs"
                 data-anat-part={showAnatomy ? "Link" : undefined}
+                data-principles="icon-text"
                 onPress={parent?.onPress}
                 className={cn(
-                    "group text-muted hover:text-foreground flex w-fit cursor-pointer items-center gap-2 text-sm no-underline transition-colors",
+                    "group text-muted hover:text-foreground flex w-fit cursor-pointer items-center gap-1 text-sm no-underline transition-colors",
                     collapseMobile && "@app-sm:hidden",
-                    className,
                     classNames,
                 )}
             >
@@ -216,3 +214,5 @@ const BreadcrumbsBase = ({
  * collapse (`collapseOnMobile` / `collapseFrom`) are LEAVES of it, prop-driven.
  */
 export { BreadcrumbsBase as Breadcrumbs }
+
+export const meta = { tier: "atom", name: "Breadcrumbs" } as const

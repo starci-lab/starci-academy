@@ -27,7 +27,7 @@ export interface HighlightChipProps extends WithClassNames<undefined> {
      */
     value: ReactNode
     /**
-     * The supporting label rendered after the value (e.g. "Module", "Giờ học").
+     * The supporting label rendered after the value (e.g. "Module", "Study hours").
      */
     label: ReactNode
 }
@@ -46,8 +46,8 @@ const toneToColor: Record<HighlightChipTone, "default" | "success" | "warning" |
 
 /**
  * Stat / meta chip with a highlighted value: a soft-tinted pill rendering an
- * optional leading icon, a bold `value`, then a `label` — e.g. "24 Module",
- * "276 Bài thực hành". Pure and props-only (tone drives the color). Used in the
+ * optional leading icon, a bold `value`, then a `label` — e.g. "24 Modules",
+ * "276 Practice exercises". Pure and props-only (tone drives the color). Used in the
  * `PageHeader` meta row to show a course's figures.
  * @see Story: .storybook/stories/blocks/chips/HighlightChip/HighlightChip.stories
  */

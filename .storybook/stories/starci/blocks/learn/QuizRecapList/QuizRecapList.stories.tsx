@@ -32,25 +32,25 @@ export default meta
 type Story = StoryObj<typeof QuizRecapList>
 
 const RATING_OPTIONS = [
-    { grade: 0, label: "Quên", hint: "Gặp lại hôm nay" },
-    { grade: 1, label: "Khó", hint: "Gặp lại sau 1 ngày" },
-    { grade: 2, label: "Được", hint: "Gặp lại sau 4 ngày" },
-    { grade: 3, label: "Dễ", hint: "Gặp lại sau 10 ngày" },
+    { grade: 0, label: "Forgot", hint: "See it again today" },
+    { grade: 1, label: "Hard", hint: "See it again in 1 day" },
+    { grade: 2, label: "Good", hint: "See it again in 4 days" },
+    { grade: 3, label: "Easy", hint: "See it again in 10 days" },
 ]
 
 const CARDS = [
     {
         key: "layer",
-        question: "Vì sao xoá file ở layer sau không làm image nhẹ đi?",
-        expectedAnswer: "Layer **cộng dồn**: layer sau chỉ ghi đè, chỗ đã chiếm ở layer trước vẫn nằm trong image.",
-        givenAnswer: "Vì layer trước vẫn còn file đó, xoá ở sau chỉ là ghi đè thôi.",
+        question: "Why doesn't deleting a file in a later layer shrink the image?",
+        expectedAnswer: "Layers are **additive**: a later layer only overwrites, the space already claimed in an earlier layer still stays in the image.",
+        givenAnswer: "Because the earlier layer still has the file — deleting it later is just an overwrite.",
         wasCorrect: true,
     },
     {
         key: "cache",
-        question: "Đặt `COPY . .` trước `npm ci` thì hỏng chuyện gì?",
-        expectedAnswer: "Mọi thay đổi code làm **vỡ cache** của bước cài phụ thuộc, nên lần build nào cũng cài lại từ đầu.",
-        givenAnswer: "Em nghĩ là image nặng hơn.",
+        question: "What breaks if you put `COPY . .` before `npm ci`?",
+        expectedAnswer: "Any code change **busts the cache** of the dependency-install step, so every build reinstalls from scratch.",
+        givenAnswer: "I think it makes the image heavier.",
         wasCorrect: false,
     },
 ]
@@ -69,7 +69,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the recap of a finished run. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizRecapList"
                 tier="block"
@@ -84,7 +84,7 @@ export const Full: Story = {
                         code: `<QuizRecapList
     cards={cards}
     ratingOptions={ratingOptions}
-    ratingAriaLabel="Bạn nhớ tới đâu"
+    ratingAriaLabel="How well do you remember this"
     onRate={rate}
 />`,
                         render: (
@@ -93,25 +93,25 @@ export const Full: Story = {
                                 showAnatomy
                                 cards={CARDS}
                                 ratingOptions={RATING_OPTIONS}
-                                ratingAriaLabel="Bạn nhớ tới đâu"
+                                ratingAriaLabel="How well do you remember this"
                                 onRate={() => {}}
                             />
                         ),
                     },
                     {
-                        name: "correct answer rated `Khó`",
+                        name: "correct answer rated `Hard`",
                         why: "The run marked this card correct and the learner still rated it hard, so it comes back tomorrow. This is the whole reason the recap exists as a separate step: the system can only see whether an answer matched, while the learner knows whether they actually remembered it or guessed.",
                         code: `<QuizRecapList
     cards={[{ ...cards[0], rating: 1 }]}
     ratingOptions={ratingOptions}
-    ratingAriaLabel="Bạn nhớ tới đâu"
+    ratingAriaLabel="How well do you remember this"
     onRate={rate}
 />`,
                         render: (
                             <QuizRecapList
                                 cards={[{ ...CARDS[0], rating: 1 }]}
                                 ratingOptions={RATING_OPTIONS}
-                                ratingAriaLabel="Bạn nhớ tới đâu"
+                                ratingAriaLabel="How well do you remember this"
                                 onRate={() => {}}
                             />
                         ),
@@ -122,14 +122,14 @@ export const Full: Story = {
                         code: `<QuizRecapList
     cards={cards.map((card, index) => ({ ...card, rating: index }))}
     ratingOptions={ratingOptions}
-    ratingAriaLabel="Bạn nhớ tới đâu"
+    ratingAriaLabel="How well do you remember this"
     onRate={rate}
 />`,
                         render: (
                             <QuizRecapList
                                 cards={CARDS.map((card, index) => ({ ...card, rating: index }))}
                                 ratingOptions={RATING_OPTIONS}
-                                ratingAriaLabel="Bạn nhớ tới đâu"
+                                ratingAriaLabel="How well do you remember this"
                                 onRate={() => {}}
                             />
                         ),
@@ -143,7 +143,7 @@ export const Full: Story = {
 /** LEAF — the caller flips `isSkeleton`; the counter line and `skeletonCount` cards shimmer because there is no real recap to show yet. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizRecapList"
                 tier="block"
@@ -157,7 +157,7 @@ export const Skeleton: Story = {
                         why: "The counter line and three `SurfaceCard` rows shimmer in place of the real recap, each card mirroring its eventual shape as a verdict-chip bar over two text bars — so the layout does not jump once real `cards` land.",
                         code: `<QuizRecapList
     ratingOptions={ratingOptions}
-    ratingAriaLabel="Bạn nhớ tới đâu"
+    ratingAriaLabel="How well do you remember this"
     onRate={rate}
     isSkeleton
 />`,
@@ -166,7 +166,7 @@ export const Skeleton: Story = {
                                 anatPart="QuizRecapList"
                                 showAnatomy
                                 ratingOptions={RATING_OPTIONS}
-                                ratingAriaLabel="Bạn nhớ tới đâu"
+                                ratingAriaLabel="How well do you remember this"
                                 onRate={() => {}}
                                 isSkeleton
                             />

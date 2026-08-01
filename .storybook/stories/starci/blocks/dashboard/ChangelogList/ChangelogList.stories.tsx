@@ -3,7 +3,7 @@ import { ChangelogList, type ChangelogListEntry } from "@sb-components/starci/bl
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ChangelogList`: the dashboard right-rail "Có gì mới" list — dated
+ * BLOCK — `ChangelogList`: the dashboard right-rail "What's new" list — dated
  * rows (optional category, a title that opens the entry when it has a
  * destination, an optional one-line body).
  *
@@ -38,22 +38,22 @@ type Story = StoryObj<typeof ChangelogList>
 const ENTRIES: Array<ChangelogListEntry> = [
     {
         id: "ai-review-v2",
-        title: "Chấm bài AI phiên bản mới, nhanh hơn 2 lần",
-        body: "Rút gọn thời gian chờ chấm bài code từ khoảng 40 giây xuống dưới 20 giây.",
+        title: "New AI grading version, 2x faster",
+        body: "Cuts code-grading wait time from about 40 seconds down to under 20 seconds.",
         category: "feature",
         publishedAt: "2026-07-24T03:00:00.000Z",
         linkUrl: "https://starci.example/changelog/ai-review-v2",
     },
     {
         id: "streak-timezone-fix",
-        title: "Sửa lỗi streak bị reset sai múi giờ",
-        body: "Streak giờ tính theo múi giờ của bạn thay vì UTC.",
+        title: "Fixed streak resetting in the wrong timezone",
+        body: "Streaks are now calculated in your own timezone instead of UTC.",
         category: "fix",
         publishedAt: "2026-07-20T03:00:00.000Z",
     },
     {
         id: "maintenance-window",
-        title: "Bảo trì hệ thống 02:00 - 03:00 ngày 15/07",
+        title: "System maintenance 02:00 - 03:00 on July 15",
         category: "announcement",
         publishedAt: "2026-07-14T03:00:00.000Z",
     },
@@ -67,7 +67,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the region once loading has finished and nothing errored: silently hidden (empty) or a populated list. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChangelogList"
                 tier="block"
@@ -116,7 +116,7 @@ export const Default: Story = {
 /** LEAF — the caller's own fetch is in flight; the region swaps for a row-shaped mirror. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChangelogList"
                 tier="block"
@@ -150,7 +150,7 @@ export const Loading: Story = {
 /** LEAF — the fetch failed; the region swaps for a message, outranking loading/empty. */
 export const Error: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChangelogList"
                 tier="block"
@@ -161,7 +161,7 @@ export const Error: Story = {
                 states={[
                     {
                         name: "error set, onRetry set",
-                        why: "The fetch failed, which `AsyncContent` ranks above even a stale loading flag or an empty list — the reader sees why nothing is listed. `onRetry` is set here, so a \"Thử lại\" button rides the message.",
+                        why: "The fetch failed, which `AsyncContent` ranks above even a stale loading flag or an empty list — the reader sees why nothing is listed. `onRetry` is set here, so a \"Try again\" button rides the message.",
                         code: `<ChangelogList
     entries={[]}
     isLoading={false}

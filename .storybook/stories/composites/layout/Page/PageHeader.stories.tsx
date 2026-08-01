@@ -6,6 +6,9 @@ import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-util
 /**
  * `PageHeader` — the breadcrumb/title/description/actions/meta frame of a route.
  * NOT a generic wrapper: it takes no `children`, only its own semantic slots.
+ *
+ * COMPOSITE-8: `breadcrumb`/`actions`/`meta` take a COMPONENT reference, not a
+ * built node — the frame calls it itself so it can forward `isSkeleton`.
  */
 const meta: Meta<typeof PageHeader> = {
     title: "Composites/Layout/Page/PageHeader",
@@ -27,10 +30,10 @@ const TITLE_DESCRIPTION_PARTS: Array<AnatomyNode> = [
 ]
 
 // Full set leaf: breadcrumb row + actions slot + a meta chip/stat strip below. Breadcrumb/Actions/Meta
-// are arbitrary caller-supplied slots (ReactNode) — this leaf's own demo happens to fill them with a
-// HeroUI Breadcrumbs/Button/Chip, but the frame itself never fixes what renders there. PageHeader
-// never claims them as its own anatomy (§11a caller-slot rule), so only the two Typography.Base
-// nodes it actually BUILDS itself carry a badge.
+// are arbitrary caller-supplied COMPONENT REFERENCES (COMPOSITE-8) — this leaf's own demo happens to
+// fill them with a HeroUI Breadcrumbs/Button/Chip, but the frame itself never fixes what renders
+// there. PageHeader never claims them as its own anatomy (§11a caller-slot rule), so only the two
+// Typography.Base nodes it actually BUILDS itself carry a badge.
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "atom", role: "primary title, an H3 heading", storyId: "atoms-text-typography-typography--plain" },
     { name: "Typography", tier: "atom", role: "supporting line under the title, muted", storyId: "atoms-text-typography-typography--plain" },
@@ -40,10 +43,29 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the header itself: while `isSkeleton` it renders a title bar, a description bar, and two pill meta-chip bars in place of real content", storyId: "composites-layout-page-pageheader--skeleton" },
 }
 
+/** `Full` story fixtures — component references passed into `breadcrumb`/`actions`/`meta` (COMPOSITE-8). */
+// TODO: swap for ResponsiveBreadcrumb local when ported.
+const FullBreadcrumb = () => (
+    <Breadcrumbs data-tier="fixture">
+        <Breadcrumbs.Item href="#">Courses</Breadcrumbs.Item>
+        <Breadcrumbs.Item>Fullstack Mastery</Breadcrumbs.Item>
+    </Breadcrumbs>
+)
+const FullActions = () => (
+    <Button data-tier="fixture" variant="secondary" size="sm" onPress={() => {}}>Edit course</Button>
+)
+const FullMeta = () => (
+    <div data-tier="fixture" className="flex flex-wrap items-center gap-2">
+        {/* status chip leading (far left); stat strip = dot-separated TEXT */}
+        <Chip size="sm" variant="soft" color="success"><Chip.Label>Open</Chip.Label></Chip>
+        <Typography type="body-xs" color="muted">24 Modules · 87 Lessons · 32 hours</Typography>
+    </div>
+)
+
 /** Minimal set: a title + one description line — a page entered straight from a menu, no breadcrumb. */
 export const Minimal: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-3xl">
                 <BlockAnatomy
                     name="PageHeader"
@@ -73,7 +95,7 @@ export const Minimal: Story = {
 /** Full set: breadcrumb + title + description + actions + meta strip — a page deep in the hierarchy. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-3xl">
                 <BlockAnatomy
                     name="PageHeader"
@@ -86,31 +108,19 @@ export const Full: Story = {
                             name: "all five slots passed",
                             why: "All five slots turn on at once: the breadcrumb row above the title, the actions control at the right, and the meta chip/stat strip below. This is for a page deep in the site hierarchy, where the breadcrumb tells the learner how they got there and the meta strip surfaces a quick summary.",
                             code: `<PageHeader
-  breadcrumb={<Breadcrumbs><Breadcrumbs.Item href="#">Courses</Breadcrumbs.Item><Breadcrumbs.Item>Fullstack Mastery</Breadcrumbs.Item></Breadcrumbs>}
+  breadcrumb={CourseBreadcrumb}
   title="Fullstack Mastery"
   description="A path from the fundamentals to shipping a real product, graded by AI."
-  actions={<Button variant="secondary" size="sm">Edit course</Button>}
-  meta={<Typography type="body-xs" color="muted">24 Modules · 87 Lessons · 32 hours</Typography>}
+  actions={EditCourseAction}
+  meta={CourseMeta}
 />`,
                             render: (
                                 <PageHeader
-                                    breadcrumb={
-                                        // TODO: swap for ResponsiveBreadcrumb local when ported.
-                                        <Breadcrumbs>
-                                            <Breadcrumbs.Item href="#">Courses</Breadcrumbs.Item>
-                                            <Breadcrumbs.Item>Fullstack Mastery</Breadcrumbs.Item>
-                                        </Breadcrumbs>
-                                    }
+                                    breadcrumb={FullBreadcrumb}
                                     title="Fullstack Mastery"
                                     description="A path from the fundamentals to shipping a real product, graded by AI."
-                                    actions={<Button variant="secondary" size="sm" onPress={() => {}}>Edit course</Button>}
-                                    meta={
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            {/* status chip leading (far left); stat strip = dot-separated TEXT */}
-                                            <Chip size="sm" variant="soft" color="success"><Chip.Label>Open</Chip.Label></Chip>
-                                            <Typography type="body-xs" color="muted">24 Modules · 87 Lessons · 32 hours</Typography>
-                                        </div>
-                                    }
+                                    actions={FullActions}
+                                    meta={FullMeta}
                                     showAnatomy
                                 />
                             ),
@@ -125,7 +135,7 @@ export const Full: Story = {
 /** Long description clamps to 2 lines — the narrow frame below is intentional, to expose the clamp point. */
 export const DescriptionClamped: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-sm">
                 <BlockAnatomy
                     name="PageHeader"
@@ -155,7 +165,7 @@ export const DescriptionClamped: Story = {
 /** `size="page"` (default) — the title renders at H3, for the OWN title of a whole route. */
 export const SizePage: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PageHeader"
                 tier="composite"
@@ -168,8 +178,8 @@ export const SizePage: Story = {
                         code: "<PageHeader title=\"Set up your machine\" description=\"Before entering the playground, install the CLI and connect the StarCi Agent.\" />",
                         render: (
                             <PageHeader
-                                title="Chuẩn bị máy"
-                                description="Trước khi vào playground, cài công cụ dòng lệnh rồi nối StarCi Agent."
+                                title="Set up your machine"
+                                description="Before entering the playground, install the CLI and connect the StarCi Agent."
                                 showAnatomy
                             />
                         ),
@@ -183,7 +193,7 @@ export const SizePage: Story = {
 /** `size="compact"` — body-scale bold, for a header labelling a PANE/PHASE inside an existing page shell. */
 export const SizeCompact: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PageHeader"
                 tier="composite"
@@ -197,8 +207,8 @@ export const SizeCompact: Story = {
                         render: (
                             <PageHeader
                                 size="compact"
-                                title="Chuẩn bị máy"
-                                description="Trước khi vào playground, cài công cụ dòng lệnh rồi nối StarCi Agent."
+                                title="Set up your machine"
+                                description="Before entering the playground, install the CLI and connect the StarCi Agent."
                                 showAnatomy
                             />
                         ),
@@ -212,7 +222,7 @@ export const SizeCompact: Story = {
 /** LEAF — the caller flips `isSkeleton`; the real shape (breadcrumb/description/meta presence) isn't known before the route's data arrives, so the shimmer assumes the full header shape. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PageHeader"
                 tier="composite"

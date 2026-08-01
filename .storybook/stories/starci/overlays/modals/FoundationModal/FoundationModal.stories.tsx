@@ -37,7 +37,7 @@ export default meta
 
 type Story = StoryObj<typeof FoundationModal>
 
-// DOM thật (size="full"): Modal.CloseTrigger + Modal.Header > Typography(title)
+// Real DOM (size="full"): Modal.CloseTrigger + Modal.Header > Typography(title)
 // + Modal.Body > FoundationResourceBody (one-level door — its own kind switch
 // lives in its own story, see storyId below).
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -47,19 +47,20 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "FoundationResourceBody": { tier: "block", role: "renders the actual resource by `kind` — document article, video gap, or link button; its own three-way switch lives one level down in its own story", storyId: "starci-blocks-learn-foundationresourcebody-foundationresourcebody--document" },
 }
 
-const DOCUMENT_BODY = `## 12-Factor App là gì
+const DOCUMENT_BODY = `## What is a 12-Factor App
 
-Mười hai nguyên tắc để viết dịch vụ chạy tốt trên cloud — config tách khỏi code,
-process không giữ state, log ghi ra stdout thay vì tự quản file.
+Twelve principles for writing services that run well on the cloud — config
+separated from code, processes that hold no state, logs written to stdout
+instead of managing files yourself.
 
-- Config qua biến môi trường, không hard-code theo từng môi trường
-- Build → Release → Run tách rời, không sửa code ở bước run
+- Config through environment variables, never hard-coded per environment
+- Build → Release → Run kept separate, no code changes at the run step
 
 \`\`\`bash
 docker run -e DATABASE_URL=$DB_URL app:release-42
 \`\`\`
 
-> Đọc gốc tại 12factor.net trước khi áp cho service của bạn.`
+> Read the original at 12factor.net before applying it to your own service.`
 
 /** Controlled wrapper — the trigger reopens the modal after it closes. */
 const ControlledFoundationModal = ({
@@ -70,12 +71,12 @@ const ControlledFoundationModal = ({
 } & Omit<FoundationModalProps, "isOpen" | "onOpenChange">) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <FoundationModal
@@ -130,13 +131,13 @@ export const Default: Story = {
                     code: `<FoundationModal
     isOpen={isOpen}
     onOpenChange={setIsOpen}
-    title="Giới thiệu Docker"
+    title="Introduction to Docker"
     kind="video"
 />`,
                     render: (
                         <ControlledFoundationModal
                             triggerLabel="Open video resource"
-                            title="Giới thiệu Docker"
+                            title="Introduction to Docker"
                             kind="video"
                         />
                     ),
@@ -147,18 +148,18 @@ export const Default: Story = {
                     code: `<FoundationModal
     isOpen={isOpen}
     onOpenChange={setIsOpen}
-    title="Tài liệu chính thức Docker"
+    title="Official Docker documentation"
     kind="external_link"
-    linkTitle="Mở tài liệu"
+    linkTitle="Open documentation"
     linkUrl="https://docs.docker.com"
     onOpenLink={(url) => window.open(url, "_blank", "noopener,noreferrer")}
 />`,
                     render: (
                         <ControlledFoundationModal
                             triggerLabel="Open link resource"
-                            title="Tài liệu chính thức Docker"
+                            title="Official Docker documentation"
                             kind="external_link"
-                            linkTitle="Mở tài liệu"
+                            linkTitle="Open documentation"
                             linkUrl="https://docs.docker.com"
                             onOpenLink={() => {}}
                         />

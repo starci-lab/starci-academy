@@ -6,7 +6,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * BLOCK — `ContentReaction`: say how the lesson landed. A Facebook-style
  * six-emotion picker on the left, the quiet view count on the right.
  *
- * ⭐⭐ REBUILT 2026-07-28 (thầy: "chế nhiều quá" — the first cut was a single
+ * ⭐⭐ REBUILT 2026-07-28 (teacher: "over-engineered it" — the first cut was a single
  * boolean like/unlike toggle; real `src`'s `ReactionBar` is a six-emotion
  * picker reused for both the content reaction and every comment). See the
  * component's own file header for the full port + why the animated 6-button
@@ -49,7 +49,7 @@ const COUNTS = [
 /** LEAF — the reaction row under a lesson. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentReaction"
                 tier="block"
@@ -78,7 +78,7 @@ export const Full: Story = {
                     },
                     {
                         name: "myReaction = 'love'",
-                        why: "The reader picked \"Yêu thích\" — the trigger swaps its emoji and label to that pick and switches to its secondary (on) skin. Picking the same emotion again removes it.",
+                        why: "The reader picked \"Love\" — the trigger swaps its emoji and label to that pick and switches to its secondary (on) skin. Picking the same emotion again removes it.",
                         code: "<ContentReaction myReaction=\"love\" counts={[...]} viewCount={2481} onReact={react} />",
                         render: (
                             <ContentReaction
@@ -119,7 +119,7 @@ export const Full: Story = {
 /** LEAF — the caller flips `isSkeleton`, so both slots mirror their own shape. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentReaction"
                 tier="block"

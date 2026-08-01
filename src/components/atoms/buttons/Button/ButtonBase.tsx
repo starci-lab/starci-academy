@@ -6,6 +6,7 @@ import {
     HERO_VARIANT,
     ICON_CLS,
     ICON_WEIGHT,
+    LABEL_SIZE,
     SKELETON_H,
     SKELETON_SQUARE,
     SKELETON_W,
@@ -67,11 +68,8 @@ interface ButtonBaseOwnProps {
     isDisabled?: boolean
     /** `true` marks the button busy: a spinner replaces the leading glyph and the press handler locks. */
     isPending?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -104,17 +102,17 @@ export const ButtonBase = ({
     isDisabled = false,
     isPending = false,
     isSkeleton = false,
-    className,
     classNames,
 }: ButtonBaseProps) => {
     if (isSkeleton) {
         // Square when icon-only, pill when labeled.
         return (
             <HeroSkeleton
+                data-tier="atom"
+                data-component="Button"
                 className={cn(
                     "rounded-full",
                     isIconOnly ? SKELETON_SQUARE[size] : cn(SKELETON_W[size], SKELETON_H[size]),
-                    className,
                     classNames,
                 )}
             />
@@ -142,6 +140,8 @@ export const ButtonBase = ({
 
     return (
         <HeroUIButton
+            data-tier="atom"
+            data-component="Button"
             isIconOnly={isIconOnly}
             variant={HERO_VARIANT[variant]}
             size={size}
@@ -149,10 +149,28 @@ export const ButtonBase = ({
             onPress={onPress}
             isPending={isPending}
             isDisabled={isDisabled || isPending}
-            className={cn("group", VARIANT_CLS[variant], isElevated && "shadow-lg", align && ALIGN_CLS[align], className, classNames)}
+            className={cn("group", VARIANT_CLS[variant], isElevated && "shadow-lg", align && ALIGN_CLS[align], classNames)}
         >
             {leading}
-            {isIconOnly ? null : <span>{label}</span>}
+            {isIconOnly ? null : (
+                // Raw `<span>` — ATOM-3 forbids an atom from importing another house
+                // atom (`Typography`), so the label cannot go through it. `truncate`
+                // clips the label at an ellipsis; `min-w-0` is required on the
+                // label's own flex-row slot: flex items default to `min-width: auto`,
+                // which floors them at their content's natural width and blocks
+                // `text-overflow: ellipsis` from ever firing.
+                //
+                // Size/weight/color are spelled out explicitly rather than left to
+                // inherit from `.button`: `LABEL_SIZE[size]` mirrors `button.css`'s
+                // own rule (`.button` is `text-sm`, `.button--lg` overrides to
+                // `text-base`); `font-medium` mirrors `.button`'s base weight;
+                // `text-[var(--button-fg)]` reads the same per-variant CSS custom
+                // property `.button--<variant>` sets (see `button.css` in
+                // `@heroui/styles`) that the label inherited for free before this
+                // ever went through Typography — so every variant (not just
+                // `secondary`) gets its real foreground back.
+                <span className={cn(LABEL_SIZE[size], "font-medium truncate min-w-0 text-[var(--button-fg)]")}>{label}</span>
+            )}
             {!isIconOnly && SuffixIcon ? (
                 // Trailing glyph — advances right on hover when iconSlide is set.
                 <span
@@ -169,3 +187,5 @@ export const ButtonBase = ({
         </HeroUIButton>
     )
 }
+
+export const meta = { tier: "atom", name: "Button" } as const

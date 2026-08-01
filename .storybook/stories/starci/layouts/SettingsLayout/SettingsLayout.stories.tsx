@@ -60,7 +60,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the only shape this shell has: nav rail beside a centered content column. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SettingsLayout"
                 tier="screen"
@@ -76,9 +76,9 @@ export const Default: Story = {
     groups={groups}
     activeHref="/profile/edit"
     onNavigate={goTo}
-    title="Cài đặt"
-    collapseLabel="Thu gọn menu"
-    expandLabel="Mở rộng menu"
+    title="Settings"
+    collapseLabel="Collapse menu"
+    expandLabel="Expand menu"
     storageKey="starci.settings.sidebar.collapsed"
 >
     <EditProfilePage />
@@ -90,13 +90,13 @@ export const Default: Story = {
                                 groups={GROUPS}
                                 activeHref="/profile/edit"
                                 onNavigate={() => {}}
-                                title="Cài đặt"
-                                collapseLabel="Thu gọn menu"
-                                expandLabel="Mở rộng menu"
+                                title="Settings"
+                                collapseLabel="Collapse menu"
+                                expandLabel="Expand menu"
                                 storageKey="starci.settings.sidebar.collapsed"
                             >
                                 <div className="rounded-2xl border border-dashed border-default p-6 text-sm text-muted">
-                                    Nội dung trang "Chỉnh sửa hồ sơ" — route con, không thuộc layout này.
+                                    "Edit profile" page content — a child route, not owned by this layout.
                                 </div>
                             </SettingsLayout>
                         ),
@@ -108,9 +108,9 @@ export const Default: Story = {
     groups={groups}
     activeHref="/profile/membership"
     onNavigate={goTo}
-    title="Cài đặt"
-    collapseLabel="Thu gọn menu"
-    expandLabel="Mở rộng menu"
+    title="Settings"
+    collapseLabel="Collapse menu"
+    expandLabel="Expand menu"
     storageKey="starci.settings.sidebar.collapsed"
 >
     <MembershipPage />
@@ -120,13 +120,13 @@ export const Default: Story = {
                                 groups={GROUPS}
                                 activeHref="/profile/membership"
                                 onNavigate={() => {}}
-                                title="Cài đặt"
-                                collapseLabel="Thu gọn menu"
-                                expandLabel="Mở rộng menu"
+                                title="Settings"
+                                collapseLabel="Collapse menu"
+                                expandLabel="Expand menu"
                                 storageKey="starci.settings.sidebar.collapsed"
                             >
                                 <div className="rounded-2xl border border-dashed border-default p-6 text-sm text-muted">
-                                    Nội dung trang "Gói thành viên" — route con, không thuộc layout này.
+                                    "Membership plan" page content — a child route, not owned by this layout.
                                 </div>
                             </SettingsLayout>
                         ),

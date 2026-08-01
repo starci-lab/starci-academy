@@ -83,7 +83,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * assumed-contract surface as small as the task's own PROPS line asks for.
  *
  * 📐 LEAVES BY STRUCTURE: `Collapsed` (inbox row) | `Expanded` (conversation).
- * Within `Expanded`, zero answers is a STATE ("hãy là người đầu tiên"), not a
+ * Within `Expanded`, zero answers is a STATE ("be the first"), not a
  * third leaf — rules/2 §8's 0/1-3/many, same call `ContentDiscussion` already
  * makes for an empty comment list.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -115,7 +115,7 @@ export interface QaThreadAnswer {
     body: string
     /** Who wrote this answer. */
     author: QaQuestionThreadAuthor
-    /** Already-formatted relative time, e.g. "2 giờ trước" — no i18n layer at this tier. */
+    /** Already-formatted relative time, e.g. "2 hours ago" — no i18n layer at this tier. */
     createdTimeAgo: string
     /** `true` → this is the asker's chosen answer; only ever true on a DIRECT (top-level) answer. */
     isAcceptedAnswer?: boolean
@@ -133,7 +133,7 @@ export interface QaQuestionThreadQuestion {
     id: string
     /** Who asked it. */
     author: QaQuestionThreadAuthor
-    /** Already-formatted relative time, e.g. "2 giờ trước". */
+    /** Already-formatted relative time, e.g. "2 hours ago". */
     createdTimeAgo: string
     /** `true` → a pin glyph rides beside the asker's name (founder moderation). */
     isPinned?: boolean
@@ -141,7 +141,7 @@ export interface QaQuestionThreadQuestion {
     isFounderAuthor?: boolean
     /** Question body, as authored markdown. */
     body: string
-    /** Which lesson (or "chung khoá") this question belongs to. */
+    /** Which lesson (or "course-wide") this question belongs to. */
     scope: QaQuestionThreadScope
     /** Total answers (top-level + replies) — the SSOT count, independent of how many `answers` are loaded below. */
     replyCount: number
@@ -185,14 +185,14 @@ export interface QaQuestionThreadProps {
 
 /** The block's own scope → label vocabulary (§14d.1) — never handed in pre-formatted. */
 const scopeLabel = (scope: QaQuestionThreadScope): string =>
-    scope.kind === "lesson" ? `Bài: ${scope.lessonTitle}` : "Chung"
+    scope.kind === "lesson" ? `Lesson: ${scope.lessonTitle}` : "General"
 
 /** The block's own status → label vocabulary (§14d.1). */
 const statusLabel = (replyCount: number, answeredByFounder?: boolean): string => {
     if (replyCount <= 0) {
-        return "Chưa trả lời"
+        return "Unanswered"
     }
-    return answeredByFounder ? "Người hướng dẫn đã trả lời" : "Đã trả lời"
+    return answeredByFounder ? "Instructor answered" : "Answered"
 }
 
 /** Options controlling which chips {@link buildQuestionChips} builds. */
@@ -219,20 +219,20 @@ const buildQuestionChips = (question: QaQuestionThreadQuestion, options: QaQuest
 
     if (isSkeleton) {
         return [
-            { key: "scope", content: <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} /> },
-            { key: "status", content: <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} /> },
+            { key: "scope", content: <Chip isSkeleton showAnatomy={showAnatomy} /> },
+            { key: "status", content: <Chip isSkeleton showAnatomy={showAnatomy} /> },
         ]
     }
 
     const items: Array<ClusterItem> = [
-        { key: "scope", content: <Chip tone="default" text={scopeLabel(question.scope)} anatPart={showAnatomy ? "Chip" : undefined} /> },
+        { key: "scope", content: <Chip tone="default" text={scopeLabel(question.scope)} showAnatomy={showAnatomy} /> },
         {
             key: "status",
             content: (
                 <Chip
                     tone={question.replyCount > 0 ? "success" : "default"}
                     text={statusLabel(question.replyCount, question.answeredByFounder)}
-                    anatPart={showAnatomy ? "Chip" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ),
         },
@@ -245,8 +245,8 @@ const buildQuestionChips = (question: QaQuestionThreadQuestion, options: QaQuest
                 <Typography
                     size="xs"
                     color="muted"
-                    text={`${question.replyCount} phản hồi`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`${question.replyCount} replies`}
+                    showAnatomy={showAnatomy}
                 />
             ),
         })
@@ -295,7 +295,7 @@ const QaQuestionThread = ({
     const [draft, setDraft] = useState("")
 
     const isMineQuestion = currentUserId != null && currentUserId === question.author.id
-    const askerDisplayName = isMineQuestion ? "Bạn" : question.author.displayName
+    const askerDisplayName = isMineQuestion ? "You" : question.author.displayName
 
     // Distinct answerers → the "who joined in" avatar group in the header.
     const participants = useMemo<Array<QaQuestionThreadAuthor>>(() => {
@@ -338,7 +338,7 @@ const QaQuestionThread = ({
             id: `local-${answers.length}-${Date.now()}`,
             body: draft.trim(),
             author: { id: currentUserId, displayName: currentUser.username, avatarUrl: currentUser.avatar },
-            createdTimeAgo: "Vừa xong",
+            createdTimeAgo: "Just now",
             reactionCount: 0,
             myReaction: null,
         }
@@ -351,23 +351,23 @@ const QaQuestionThread = ({
     if (!isExpanded) {
         const askerNameRow = (
             <StackH
-                gap="related"
+                gap={3}
                 wrap
                 align="center"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
                     isSkeleton ? (
-                        <Typography size="xs" weight="medium" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" weight="medium" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
                     ) : (
                         <>
                             {question.isPinned ? (
                                 <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                             ) : null}
-                            <Typography size="xs" weight="medium" text={askerDisplayName} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="xs" weight="medium" text={askerDisplayName} showAnatomy={showAnatomy} />
                             {question.isFounderAuthor ? (
                                 <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                             ) : null}
-                            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} anatPart={showAnatomy ? "Typography" : undefined} />
+                            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} showAnatomy={showAnatomy} />
                         </>
                     )
                 }
@@ -376,35 +376,36 @@ const QaQuestionThread = ({
 
         const questionPreview = isSkeleton ? (
             <StackV
-                gap="tight"
+                gap={2}
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
                     <>
-                        <Typography size="sm" isSkeleton classNames={["w-full"]} anatPart={showAnatomy ? "Typography" : undefined} />
-                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-full"]} showAnatomy={showAnatomy} />
+                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} showAnatomy={showAnatomy} />
                     </>
                 }
             />
         ) : (
-            <MarkdownContent
-                source={question.body}
-                measure="compact"
-                className="[&_p]:m-0 [&_p]:line-clamp-2"
-                anatPart={showAnatomy ? "MarkdownContent" : undefined}
-            />
+            <div className="[&_p]:m-0 [&_p]:line-clamp-2">
+                <MarkdownContent
+                    source={question.body}
+                    measure="compact"
+                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                />
+            </div>
         )
 
         const previewColumn = (
             <StackV
-                gap="tight"
-                className="min-w-0 flex-1"
+                gap={2}
+                classNames={["min-w-0", "flex-1"]}
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
                     <>
                         {askerNameRow}
                         {questionPreview}
                         <Cluster
-                            gap="related"
+                            gap={3}
                             items={buildQuestionChips(question, { isSkeleton, showAnatomy, includeReplyCount: true })}
                             anatPart={showAnatomy ? "Cluster" : undefined}
                         />
@@ -415,7 +416,7 @@ const QaQuestionThread = ({
 
         const collapsedRow = (
             <StackH
-                gap="grouped"
+                gap={4}
                 align="start"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
@@ -451,9 +452,8 @@ const QaQuestionThread = ({
                         onPress={() => setIsExpanded(true)}
                         isDisabled={isSkeleton}
                         showAnatomy={showAnatomy}
-                    >
-                        {collapsedRow}
-                    </SurfaceCard>
+                        body={() => collapsedRow}
+                    />
                 </div>
             </div>
         )
@@ -462,20 +462,20 @@ const QaQuestionThread = ({
     // ── LEAF — Expanded: the full conversation ─────────────────────────────────
     const questionMetaRow = (
         <StackH
-            gap="related"
+            gap={3}
             wrap
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
-                    <Typography size="xs" weight="medium" text={askerDisplayName} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" weight="medium" text={askerDisplayName} showAnatomy={showAnatomy} />
                     {question.isFounderAuthor ? (
                         <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                     ) : null}
                     {question.isPinned ? (
                         <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                     ) : null}
-                    <Typography size="xs" color="muted" text={question.createdTimeAgo} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="xs" color="muted" text={question.createdTimeAgo} showAnatomy={showAnatomy} />
                 </>
             }
         />
@@ -483,14 +483,14 @@ const QaQuestionThread = ({
 
     const questionFooterRow = (
         <StackH
-            gap="related"
+            gap={3}
             wrap
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     <Cluster
-                        gap="related"
+                        gap={3}
                         items={buildQuestionChips(question, { isSkeleton: false, showAnatomy, includeReplyCount: false })}
                         anatPart={showAnatomy ? "Cluster" : undefined}
                     />
@@ -509,7 +509,7 @@ const QaQuestionThread = ({
     const questionBubble = (
         <div className={cn("flex w-full", isMineQuestion ? "justify-end" : "justify-start")}>
             <StackV
-                gap="tight"
+                gap={2}
                 className={cn("min-w-0 max-w-[92%]", isMineQuestion && "items-end")}
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
@@ -517,12 +517,13 @@ const QaQuestionThread = ({
                         {questionMetaRow}
 
                         <QaChatBubble role={isMineQuestion ? "user" : "assistant"}>
-                            <MarkdownContent
-                                source={question.body}
-                                measure="compact"
-                                className="[&_p]:m-0"
-                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                            />
+                            <div className="[&_p]:m-0">
+                                <MarkdownContent
+                                    source={question.body}
+                                    measure="compact"
+                                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                                />
+                            </div>
                         </QaChatBubble>
 
                         {questionFooterRow}
@@ -537,8 +538,8 @@ const QaQuestionThread = ({
         <Typography
             size="sm"
             color="muted"
-            text="Chưa có câu trả lời nào — hãy là người đầu tiên."
-            anatPart={showAnatomy ? "Typography" : undefined}
+            text="No answers yet — be the first."
+            showAnatomy={showAnatomy}
         />
     ) : (
         answers.map((answer) => (
@@ -556,7 +557,7 @@ const QaQuestionThread = ({
 
     const conversationBody = (
         <StackV
-            gap="grouped"
+            gap={4}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -569,7 +570,7 @@ const QaQuestionThread = ({
 
     const threadPanel = (
         <StackV
-            gap="section"
+            gap={6}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -595,8 +596,8 @@ const QaQuestionThread = ({
                         value={draft}
                         onValueChange={setDraft}
                         onSubmit={onSubmitAnswer}
-                        placeholder="Viết câu trả lời của bạn…"
-                        submitLabel="Gửi"
+                        placeholder="Write your answer…"
+                        submitLabel="Send"
                         showAnatomy={showAnatomy}
                         anatPart={showAnatomy ? "CourseQaComposer" : undefined}
                     />
@@ -607,9 +608,7 @@ const QaQuestionThread = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                {threadPanel}
-            </SurfaceCard>
+            <SurfaceCard anatPart={showAnatomy ? "SurfaceCard" : undefined} body={() => threadPanel} />
         </div>
     )
 }

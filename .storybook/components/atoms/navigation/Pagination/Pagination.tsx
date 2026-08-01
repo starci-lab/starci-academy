@@ -38,8 +38,6 @@ export interface PaginationBaseProps {
     isSkeleton?: boolean
     /** When on, emit `data-anat-part` on this control's own sub-parts (`Pagination.Previous` · `Pagination.Link` · `Pagination.Ellipsis` · `Pagination.Next`). */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -86,7 +84,6 @@ const PaginationBase = ({
     siblings = 1,
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: PaginationBaseProps) => {
     const slots = useMemo(() => buildSlots(currentPage, totalPages, siblings), [currentPage, totalPages, siblings])
@@ -101,16 +98,20 @@ const PaginationBase = ({
         // data-anat-part — the wrapping div isn't a real component, tagging it
         // would be a made-up name.
         return (
-            <div className={cn("flex items-center justify-center gap-1", className, classNames)}>
+            <div data-tier="atom" data-component="Pagination" className={cn("flex items-center justify-center gap-1", classNames)}>
                 {Array.from({ length: 5 }, (_, index) => (
-                    <HeroSkeleton key={index} className="size-9 rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                    <HeroSkeleton
+                        key={index}
+                        className="size-9 rounded-xl"
+                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                    />
                 ))}
             </div>
         )
     }
 
     return (
-        <div className={cn("flex justify-center", className, classNames)}>
+        <div data-tier="atom" data-component="Pagination" className={cn("flex justify-center", classNames)}>
             <HeroPagination aria-label="Pagination" size="sm">
                 <HeroPagination.Content className="flex flex-wrap justify-center gap-1">
                     <HeroPagination.Item>
@@ -126,7 +127,9 @@ const PaginationBase = ({
                     {slots.map((slot, index) =>
                         slot === "ellipsis" ? (
                             <HeroPagination.Item key={`ellipsis-${index}`}>
-                                <HeroPagination.Ellipsis data-anat-part={showAnatomy ? "Pagination.Ellipsis" : undefined} />
+                                <HeroPagination.Ellipsis
+                                data-anat-part={showAnatomy ? "Pagination.Ellipsis" : undefined}
+                            />
                             </HeroPagination.Item>
                         ) : (
                             <PaginationLink
@@ -175,7 +178,11 @@ const PaginationLink = ({ pageNumber, isActive, onPageChange, showAnatomy }: Pag
     const onPress = useCallback(() => onPageChange(pageNumber), [pageNumber, onPageChange])
     return (
         <HeroPagination.Item>
-            <HeroPagination.Link data-anat-part={showAnatomy ? "Pagination.Link" : undefined} isActive={isActive} onPress={onPress}>
+            <HeroPagination.Link
+                data-anat-part={showAnatomy ? "Pagination.Link" : undefined}
+                isActive={isActive}
+                onPress={onPress}
+            >
                 {pageNumber}
             </HeroPagination.Link>
         </HeroPagination.Item>
@@ -187,3 +194,5 @@ const PaginationLink = ({ pageNumber, isActive, onPageChange, showAnatomy }: Pag
  * constrained pager (windowing / ellipsis are LEAVES of it, prop-driven).
  */
 export { PaginationBase as Pagination }
+
+export const meta = { tier: "atom", name: "Pagination" } as const

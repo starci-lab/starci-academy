@@ -5,7 +5,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link NestedCard}. */
 export interface NestedCardProps extends WithClassNames<undefined> {
-    /** Header title (quiet eyebrow label, e.g. "Bài liên quan"). */
+    /** Header title (quiet eyebrow label, e.g. "Related lessons"). */
     title: ReactNode
     /** Optional leading icon (phosphor) before the title, signalling the group kind. */
     icon?: ReactNode

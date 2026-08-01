@@ -8,17 +8,17 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link BackLink} block. */
 export interface BackLinkProps extends WithClassNames<undefined> {
-    /** Full label override; omit to compose from `target` / the generic "Trở lại". */
+    /** Full label override; omit to compose from `target` / the generic "Back". */
     label?: string
-    /** Destination name appended to the generic label — "Trở lại {target}" (e.g. "Trở lại preview"). */
+    /** Destination name appended to the generic label — "Back to {target}" (e.g. "Back to preview"). */
     target?: string
     /** Fired when the link is pressed — the caller owns the routing. */
     onPress: () => void
 }
 
 /**
- * The single back affordance of a leaf / sub-view page ("← Trở lại",
- * "← Quay lại thử thách"…), rendered top-left — typically into `PageHeader`'s
+ * The single back affordance of a leaf / sub-view page ("← Back",
+ * "← Back to challenge"…), rendered top-left — typically into `PageHeader`'s
  * `breadcrumb` slot. A quiet text link (muted), NOT a pill/button. Hover =
  * the arrow slides left + the label underlines (go-there affordance); the
  * block owns the look so every back link reads the same.

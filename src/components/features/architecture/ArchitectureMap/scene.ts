@@ -34,13 +34,13 @@ export const boardFromNodes = (nodes: ArchitectureNode[], cell: number, margin =
 /**
  * Fixed topology (integer grid cells) for the ATLAS — one flat tier, no pods, no
  * "Core API" hub. Every element snaps to exactly ONE cell (1 node = 1 tile,
- * never overlapping — the pod scenes' fractional coords were the "xấu rối"),
+ * never overlapping — the pod scenes' fractional coords were the "messy" part),
  * laid out in three spatial bands read top→bottom:
  *
- *  - **Ứng dụng** (rows -5,-4): the ~10 feature modules the Core API splits into
+ *  - **Applications** (rows -5,-4): the ~10 feature modules the Core API splits into
  *    (C4 Container→Component) — {@link import("../modules").ARCHITECTURE_MODULES}.
- *  - **Hạ tầng** (rows -2..0): the 12 own infra components (live dot).
- *  - **Dịch vụ ngoài** (col 7): the 5 external SaaS deps (live dot).
+ *  - **Infrastructure** (rows -2..0): the 12 own infra components (live dot).
+ *  - **External services** (col 7): the 5 external SaaS deps (live dot).
  *
  * Only infra/external cells carry a live `tone`/`status`; module cells are
  * always neutral (no health probe exists for them — honesty).
@@ -49,7 +49,7 @@ const NODE_CELLS: Record<string, [number, number]> = {
     // entry
     client: [0, -7],
     gateway: [0, -6],
-    // Ứng dụng — feature modules (2 rows × 5)
+    // Applications — feature modules (2 rows × 5)
     auth: [-4, -5],
     learning: [-2, -5],
     coding: [0, -5],
@@ -60,7 +60,7 @@ const NODE_CELLS: Record<string, [number, number]> = {
     notify: [0, -4],
     ranking: [2, -4],
     media: [4, -4],
-    // Hạ tầng — own infra (3 rows × 4)
+    // Infrastructure — own infra (3 rows × 4)
     postgres: [-3, -2],
     redis: [-1, -2],
     kafka: [1, -2],
@@ -73,7 +73,7 @@ const NODE_CELLS: Record<string, [number, number]> = {
     ollama: [-1, 0],
     mail: [1, 0],
     aiBalancer: [3, 0],
-    // Dịch vụ ngoài — external SaaS, set apart on the far-right column
+    // External services — external SaaS, set apart on the far-right column
     github: [7, -3],
     stripe: [7, -2],
     paypal: [7, -1],

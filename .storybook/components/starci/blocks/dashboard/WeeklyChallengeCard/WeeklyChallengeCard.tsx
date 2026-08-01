@@ -3,13 +3,13 @@ import { AsyncContent } from "@sb-components/composites/async/AsyncContent/Async
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { UserCell } from "@sb-components/atoms/display/UserCell/UserCell"
+import { UserCell } from "@sb-components/composites/lists/UserCell/UserCell"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `WeeklyChallengeCard`: "Thử thách tuần" — the featured challenge of
+ * BLOCK — `WeeklyChallengeCard`: "Weekly Challenge" — the featured challenge of
  * the week: a routable title, a countdown, the viewer's pass/claim status,
  * the total pass count, and a short leaderboard of recent finishers.
  *
@@ -36,7 +36,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * dashboard-only hook (`useResolveRouteNavigation` against an opaque
  * `globalId`) — that resolve-and-navigate round trip is screen wiring, not
  * generic block knowledge, so `onOpenChallenge` arrives pre-resolved and
- * covers BOTH the title link and the "Làm ngay" prompt (the exact same
+ * covers BOTH the title link and the "Do it now" prompt (the exact same
  * destination in `src`, just two entry points into it). Omitted → both render
  * as plain, non-interactive text (mirrors `EntityToken`'s own `!routable`
  * fallback).
@@ -48,8 +48,8 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * instead of raw ISO timestamps for this block to parse.
  *
  * ⭐ THE PASSED-COUNT AND REWARD LINES ARE BLOCK WORDING (same convention as
- * `LeaderboardBoard`'s "Hạng #N"): `passedCount`/`coinReward` are typed
- * numbers, and the Vietnamese sentence/button label around them is built HERE.
+ * `LeaderboardBoard`'s "Rank #N"): `passedCount`/`coinReward` are typed
+ * numbers, and the sentence/button label around them is built HERE.
  *
  * ⭐ AN ADDED ERROR BRANCH, NOT IN `src`. `src`'s own `AsyncContent` call never
  * passes `error`/`errorContent` — the SWR `error` sits unused. That reads as a
@@ -67,7 +67,7 @@ export interface WeeklyChallengeLeaderboardEntry {
     username: string
     /** Uploaded avatar URL, or `null`/omitted — a generated default is shown instead. */
     avatar?: string | null
-    /** Already-worded "x ago" label (e.g. "5 phút trước"). */
+    /** Already-worded "x ago" label (e.g. "5 minutes ago"). */
     passedAtLabel: string
 }
 
@@ -75,9 +75,9 @@ export interface WeeklyChallengeLeaderboardEntry {
 export interface WeeklyChallengeData {
     /** Title of the featured challenge. */
     title: string
-    /** Fired from the title AND the "Làm ngay" prompt — the caller already resolved the route. Omit when not routable. */
+    /** Fired from the title AND the "Try it now" prompt — the caller already resolved the route. Omit when not routable. */
     onOpenChallenge?: () => void
-    /** Already-worded countdown to the event's close (e.g. "còn 2 ngày 6 giờ"). Omit while unknown. */
+    /** Already-worded countdown to the event's close (e.g. "2 days 6 hours left"). Omit while unknown. */
     endsInLabel?: string
     /** Whether the viewer has already passed the challenge this week. */
     viewerPassed: boolean
@@ -124,7 +124,7 @@ const titleText = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy: 
             isSkeleton={isSkeleton}
             onPress={data.onOpenChallenge}
             text={data.title}
-            anatPart={showAnatomy ? "Typography" : undefined}
+            showAnatomy={showAnatomy}
         />
     ) : (
         <Typography
@@ -132,14 +132,14 @@ const titleText = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy: 
             weight="bold"
             isSkeleton={isSkeleton}
             text={data.title}
-            anatPart={showAnatomy ? "Typography" : undefined}
+            showAnatomy={showAnatomy}
         />
     )
 
 /** Right side of the status row: claimed chip, a pending claim button, or a "try now" prompt. */
 const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy: boolean) => {
     if (isSkeleton) {
-        return <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+        return <Chip isSkeleton />
     }
     if (!data.viewerPassed) {
         return data.onOpenChallenge ? (
@@ -147,14 +147,14 @@ const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy:
                 size="xs"
                 isLink
                 onPress={data.onOpenChallenge}
-                text="Làm ngay"
-                anatPart={showAnatomy ? "Typography" : undefined}
+                text="Try it now"
+                showAnatomy={showAnatomy}
             />
         ) : null
     }
     if (data.claimed) {
         return (
-            <Chip tone="success" text="Đã hoàn thành" anatPart={showAnatomy ? "Chip" : undefined} />
+            <Chip tone="success" text="Completed" />
         )
     }
     return (
@@ -163,8 +163,7 @@ const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean, showAnatomy:
             size="sm"
             isPending={data.isClaiming}
             onPress={data.onClaim}
-            label={`Nhận ${data.coinReward ?? 0} xu`}
-            anatPart={showAnatomy ? "Button" : undefined}
+            label={`Claim ${data.coinReward ?? 0} coins`}
         />
     )
 }
@@ -177,13 +176,13 @@ const finisherItem = (entry: WeeklyChallengeLeaderboardEntry, isSkeleton: boolea
             <UserCell
                 username={entry.username}
                 avatar={entry.avatar}
-                trailing={(
+                trailing={({ isSkeleton: slotSkeleton }: { isSkeleton?: boolean }) => (
                     <Typography
                         size="xs"
                         color="muted"
-                        isSkeleton={isSkeleton}
-                        text={isSkeleton ? undefined : entry.passedAtLabel}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        isSkeleton={slotSkeleton}
+                        text={slotSkeleton ? undefined : entry.passedAtLabel}
+                        showAnatomy={showAnatomy}
                     />
                 )}
                 isSkeleton={isSkeleton}
@@ -212,7 +211,7 @@ interface ContentProps {
 
 const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => {
     const statusRow = (
-        <StackH gap="grouped" justify="between" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={(
+        <StackH gap={4} justify="between" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={(
             <>
                 {data.endsInLabel != null || isSkeleton ? (
                     <Typography
@@ -220,7 +219,7 @@ const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => {
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : data.endsInLabel}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 ) : <span />}
                 {statusSlot(data, isSkeleton, showAnatomy)}
@@ -229,7 +228,7 @@ const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => {
     )
 
     return (
-        <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={(
+        <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={(
             <>
                 {titleText(data, isSkeleton, showAnatomy)}
                 {statusRow}
@@ -237,8 +236,8 @@ const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => {
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    text={isSkeleton ? undefined : `${data.passedCount} người đã vượt qua`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={isSkeleton ? undefined : `${data.passedCount} people have passed`}
+                    showAnatomy={showAnatomy}
                 />
                 {data.leaderboard.length > 0 ? (
                     <div data-anat-part={showAnatomy ? "SurfaceCardList" : undefined}>
@@ -255,7 +254,7 @@ const Content = ({ data, isSkeleton, showAnatomy }: ContentProps) => {
 }
 
 /**
- * "Thử thách tuần" — the featured weekly-challenge card. See the file header
+ * "Weekly Challenge" — the featured weekly-challenge card. See the file header
  * for the full contract.
  *
  * @param props - {@link WeeklyChallengeCardProps}
@@ -271,32 +270,33 @@ const WeeklyChallengeCard = ({
     anatPart,
 }: WeeklyChallengeCardProps) => (
     <SurfaceCard
-        label="Thử thách tuần"
+        label="Weekly Challenge"
         anatPart={anatPart}
         showAnatomy={showAnatomy}
-    >
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={<Content data={LOADING_DATA} isSkeleton showAnatomy={showAnatomy} />}
-            isEmpty={isEmpty}
-            emptyContent={{
-                title: "Chưa có thử thách nào đang diễn ra",
-                description: "Quay lại vào đầu tuần sau để xem thử thách mới.",
-            }}
-            error={error}
-            errorContent={{
-                title: "Không tải được thử thách tuần",
-                description: "Thử lại để xem thông tin mới nhất.",
-                onRetry,
-                retryLabel: "Thử lại",
-            }}
-            showAnatomy={showAnatomy}
-        >
-            {data ? (
-                <Content data={data} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
-            ) : null}
-        </AsyncContent>
-    </SurfaceCard>
+        body={() => (
+            <AsyncContent
+                isLoading={isLoading}
+                skeleton={<Content data={LOADING_DATA} isSkeleton showAnatomy={showAnatomy} />}
+                isEmpty={isEmpty}
+                emptyContent={{
+                    title: "No challenge is currently active",
+                    description: "Check back next week for a new challenge.",
+                }}
+                error={error}
+                errorContent={{
+                    title: "Couldn't load the weekly challenge",
+                    description: "Try again for the latest info.",
+                    onRetry,
+                    retryLabel: "Retry",
+                }}
+                showAnatomy={showAnatomy}
+            >
+                {data ? (
+                    <Content data={data} isSkeleton={isSkeleton} showAnatomy={showAnatomy} />
+                ) : null}
+            </AsyncContent>
+        )}
+    />
 )
 
 export { WeeklyChallengeCard }

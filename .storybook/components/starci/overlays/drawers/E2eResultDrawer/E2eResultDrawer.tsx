@@ -62,7 +62,7 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 export interface E2eFlow {
     /** Stable id, also used as the accordion item key. */
     id: string
-    /** Flow title, e.g. "Đăng ký học viên mới". */
+    /** Flow title, e.g. "Register a new student". */
     title: string
     /** Which stack this flow ran against, e.g. `"typescript"`. Absent → grouped under the unspecified bucket. */
     lang?: string
@@ -98,7 +98,7 @@ export type E2eResultDrawerProps = E2eResultDrawerOwnProps &
     )
 
 /** Fixed, block-owned title — ported 1:1 from `content.e2e.title` (vi.json). */
-const DRAWER_TITLE = "Kiểm thử end-to-end (Playwright)"
+const DRAWER_TITLE = "End-to-end testing (Playwright)"
 
 /** Bucket for a flow with no recorded `lang` — mirrors the real `E2eBody` (`lang ?? "agnostic"`). */
 const UNSPECIFIED_LANG = "agnostic"
@@ -146,7 +146,7 @@ const E2eResultDrawer = ({
         return (
             <div data-anat-part={anatPart}>
                 <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} showAnatomy={showAnatomy}>
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV (root)" : undefined} body={skeletonRows} />
+                    <StackV gap={4} anatPart={showAnatomy ? "StackV (root)" : undefined} body={skeletonRows} />
                 </DrawerShell>
             </div>
         )
@@ -171,14 +171,12 @@ const E2eResultDrawer = ({
                     tone={isPass ? "success" : "danger"}
                     text={isPass ? "pass" : "fail"}
                     showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Chip" : undefined}
                 />
                 <Typography
                     text={flow.title}
                     size="sm"
                     weight="medium"
                     showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Typography (flow title)" : undefined}
                 />
             </>
         )
@@ -186,7 +184,7 @@ const E2eResultDrawer = ({
             key: flow.id,
             title: (
                 <StackH
-                    gap="tight"
+                    gap={2}
                     showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "StackH (flow title)" : undefined}
                     body={chipAndTitle}
@@ -206,11 +204,10 @@ const E2eResultDrawer = ({
     const countFilterAndAccordion = (
         <>
             <Typography
-                text={`${passed}/${visible.length} luồng pass, log thật ghi lại từ lần chạy E2E trên backend và UI thật.`}
+                text={`${passed}/${visible.length} flows passed — real logs recorded from an actual E2E run against the backend and UI.`}
                 size="sm"
                 color="muted"
                 showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "Typography (count)" : undefined}
             />
             {hasLangFilter ? (
                 <div data-anat-part={showAnatomy ? "Tabs" : undefined}>
@@ -218,7 +215,7 @@ const E2eResultDrawer = ({
                         items={langs.map((lang) => ({ key: lang, label: langLabel(lang) }))}
                         selectedKey={activeLang}
                         onSelectionChange={setActiveLang}
-                        ariaLabel="Ngôn ngữ E2E"
+                        ariaLabel="E2E language"
                         variant="secondary"
                         showAnatomy={showAnatomy}
                     />
@@ -241,7 +238,7 @@ const E2eResultDrawer = ({
                 showAnatomy={showAnatomy}
             >
                 <StackV
-                    gap="grouped"
+                    gap={4}
                     showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "StackV (root)" : undefined}
                     body={countFilterAndAccordion}

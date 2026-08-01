@@ -14,7 +14,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `SubmissionFindingsList`: "Góp ý" — the quality-gate findings for one
+ * BLOCK — `SubmissionFindingsList`: "Feedback" — the quality-gate findings for one
  * graded attempt, one finding per accordion row.
  *
  * REUSE, NOT A NEW ACCORDION (the exact mistake this task exists to avoid — see
@@ -51,7 +51,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *      `AsyncContent`). The reason is structural, not stylistic: a chip strip has
  *      no bounded frame of its own to protect, so swapping it for `AsyncContent`'s
  *      centered message on every non-content branch costs nothing. An accordion
- *      CARD does have a frame worth protecting — the "Góp ý" section should read
+ *      CARD does have a frame worth protecting — the "Feedback" section should read
  *      as the same bounded surface whether it is shimmering, empty, erroring, or
  *      full, never as a card that vanishes and a loose message appearing in its
  *      place. `SurfaceCard.Accordion` already built exactly that bounded
@@ -108,7 +108,7 @@ export interface SubmissionFinding {
     /**
      * Short summary shown (clamped to one line) in the accordion trigger — plain
      * text, at most `` `code` `` spans (never bold/italic/link: a trigger title
-     * is tier 1, thầy chốt 2026-07-29, markdown-tier-rules.html). Full markdown
+     * is tier 1, per the teacher's final call 2026-07-29, markdown-tier-rules.html). Full markdown
      * belongs in `detail`/`suggestion`, which render in the panel body instead.
      */
     message: string
@@ -133,7 +133,7 @@ export interface SubmissionFindingsListProps {
      * `blob/HEAD` deep-link. Omit → `location` still shows, as plain text.
      */
     repositoryUrl?: string
-    /** Section label rendered above the card (e.g. `"Góp ý"`). */
+    /** Section label rendered above the card (e.g. `"Feedback"`). */
     label: string
     /** `true` → this list's own fetch is in flight; the card falls to its self-mirror. */
     isLoading?: boolean
@@ -155,8 +155,8 @@ export interface SubmissionFindingsListProps {
     anatPart?: string
 }
 
-const EMPTY_LABEL_DEFAULT = "Chưa có góp ý nào"
-const ERROR_TITLE = "Không tải được góp ý"
+const EMPTY_LABEL_DEFAULT = "No feedback yet"
+const ERROR_TITLE = "Could not load feedback"
 
 /**
  * High → low, then by each finding's own authored order. Ported from
@@ -200,8 +200,8 @@ const findingLocationChip = (finding: SubmissionFinding, showAnatomy: boolean): 
         <Chip
             tone="default"
             text={finding.location}
-            className="max-w-40 shrink-0"
-            anatPart={showAnatomy ? "Chip" : undefined}
+            classNames={["shrink-0"]}
+            showAnatomy={showAnatomy}
         />
     ) : undefined
 
@@ -214,7 +214,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
     const locationHref = finding.location ? buildLocationHref(finding.location, repositoryUrl) : undefined
     const locationRow = finding.location ? (
         <StackH
-            gap="tight"
+            gap={2}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -230,10 +230,10 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                             target="_blank"
                             rel="noopener noreferrer"
                             text={finding.location}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : (
-                        <Typography size="xs" color="muted" text={finding.location} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" text={finding.location} showAnatomy={showAnatomy} />
                     )}
                 </>
             }
@@ -241,35 +241,37 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
     ) : null
     const suggestionRow = finding.suggestion ? (
         <StackH
-            gap="tight"
+            gap={2}
             align="start"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     <LightbulbIcon aria-hidden focusable="false" weight="bold" className="size-3.5 shrink-0 text-muted" />
-                    <MarkdownContent
-                        source={finding.suggestion}
-                        measure="compact"
-                        className="min-w-0 flex-1 text-muted [&_p]:m-0"
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                    />
+                    <div className="min-w-0 flex-1 text-muted [&_p]:m-0">
+                        <MarkdownContent
+                            source={finding.suggestion}
+                            measure="compact"
+                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                        />
+                    </div>
                 </>
             }
         />
     ) : null
     return (
         <StackV
-            gap="related"
+            gap={3}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
                     {finding.detail ? (
-                        <MarkdownContent
-                            source={finding.detail}
-                            measure="compact"
-                            className="text-muted [&_p]:m-0"
-                            anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                        />
+                        <div className="text-muted [&_p]:m-0">
+                            <MarkdownContent
+                                source={finding.detail}
+                                measure="compact"
+                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                            />
+                        </div>
                     ) : null}
                     {locationRow}
                     {suggestionRow}
@@ -280,7 +282,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
 }
 
 /**
- * The "Góp ý" findings card. See the file header for what this block owns
+ * The "Feedback" findings card. See the file header for what this block owns
  * (severity vocabulary, sort order, the repo-URL→file-link builder) and why
  * loading/empty/error all stay bounded inside the one `SurfaceCard.Accordion`
  * frame instead of swapping it out for `AsyncContent`'s own switch.
@@ -320,20 +322,25 @@ const SubmissionFindingsList = ({
 
     // Both branches render BOUNDED inside `SurfaceCard.Accordion`'s own `emptyState`
     // slot (see file header, judgement call 2–3) instead of swapping the whole card
-    // for `AsyncContent`'s unbounded message.
-    const emptyState = error ? (
+    // for `AsyncContent`'s unbounded message. `emptyState` is now a component
+    // reference (COMPOSITE-4), so each branch is wrapped as a zero-arg component.
+    const ErrorEmptyState = () => (
         <AsyncContentError
             title={ERROR_TITLE}
             onRetry={onRetry}
             retryLabel={retryLabel}
             anatPart={showAnatomy ? "AsyncContentError" : undefined}
         />
-    ) : resolvedEmpty ? (
+    )
+
+    const PlainEmptyState = () => (
         <AsyncContentEmpty
             title={emptyLabel ?? EMPTY_LABEL_DEFAULT}
             anatPart={showAnatomy ? "AsyncContentEmpty" : undefined}
         />
-    ) : undefined
+    )
+
+    const emptyState = error ? ErrorEmptyState : resolvedEmpty ? PlainEmptyState : undefined
 
     return (
         <div data-anat-part={anatPart}>

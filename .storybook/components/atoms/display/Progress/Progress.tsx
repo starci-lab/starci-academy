@@ -47,8 +47,6 @@ interface ProgressTrackProps {
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -69,24 +67,36 @@ const ProgressBar = ({
     ariaLabel = "Progress",
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-2 w-full rounded-full", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+        return (
+            <HeroSkeleton
+                data-tier="atom"
+                data-component="ProgressBar"
+                className={cn("h-2 w-full rounded-full", classNames)}
+                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+            />
+        )
     }
     return (
         <HeroProgressBar
+            data-tier="atom"
+            data-component="ProgressBar"
             aria-label={ariaLabel}
             value={value}
             maxValue={max}
             isIndeterminate={isIndeterminate}
             color={color}
             size={size}
-            className={cn("w-full", className, classNames)}
+            className={cn("w-full", classNames)}
         >
-            <HeroProgressBar.Track data-anat-part={showAnatomy ? "ProgressBar.Track" : undefined}>
-                <HeroProgressBar.Fill data-anat-part={showAnatomy ? "ProgressBar.Fill" : undefined} />
+            <HeroProgressBar.Track
+                data-anat-part={showAnatomy ? "ProgressBar.Track" : undefined}
+            >
+                <HeroProgressBar.Fill
+                    data-anat-part={showAnatomy ? "ProgressBar.Fill" : undefined}
+                />
             </HeroProgressBar.Track>
         </HeroProgressBar>
     )
@@ -102,25 +112,37 @@ const ProgressCircle = ({
     ariaLabel = "Progress",
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("rounded-full", CIRCLE_BOX[size], className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+        return (
+            <HeroSkeleton
+                data-tier="atom"
+                data-component="ProgressCircle"
+                className={cn("rounded-full", CIRCLE_BOX[size], classNames)}
+                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+            />
+        )
     }
     return (
         <HeroProgressCircle
+            data-tier="atom"
+            data-component="ProgressCircle"
             aria-label={ariaLabel}
             value={value}
             maxValue={max}
             isIndeterminate={isIndeterminate}
             color={color}
             size={size}
-            className={cn(className, classNames)}
+            className={cn(classNames)}
         >
-            <HeroProgressCircle.Track data-anat-part={showAnatomy ? "ProgressCircle.Track" : undefined}>
+            <HeroProgressCircle.Track
+                data-anat-part={showAnatomy ? "ProgressCircle.Track" : undefined}
+            >
                 <HeroProgressCircle.TrackCircle />
-                <HeroProgressCircle.FillCircle data-anat-part={showAnatomy ? "ProgressCircle.FillCircle" : undefined} />
+                <HeroProgressCircle.FillCircle
+                    data-anat-part={showAnatomy ? "ProgressCircle.FillCircle" : undefined}
+                />
             </HeroProgressCircle.Track>
         </HeroProgressCircle>
     )
@@ -138,8 +160,6 @@ interface MeterOwnProps {
     ariaLabel?: string
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -166,16 +186,35 @@ const Meter = ({
     ariaLabel = "Meter",
     isSkeleton = false,
     showAnatomy = false,
-    className,
     classNames,
 }: MeterProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-2 w-full rounded-full", className, classNames)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+        return (
+            <HeroSkeleton
+                data-tier="atom"
+                data-component="ProgressGauge"
+                className={cn("h-2 w-full rounded-full", classNames)}
+                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+            />
+        )
     }
     return (
-        <HeroMeter aria-label={ariaLabel} value={value} maxValue={max} color={color} size={size} className={cn("w-full", className, classNames)}>
-            <HeroMeter.Track data-anat-part={showAnatomy ? "Meter.Track" : undefined}>
-                <HeroMeter.Fill data-anat-part={showAnatomy ? "Meter.Fill" : undefined} />
+        <HeroMeter
+            data-tier="atom"
+            data-component="ProgressGauge"
+            aria-label={ariaLabel}
+            value={value}
+            maxValue={max}
+            color={color}
+            size={size}
+            className={cn("w-full", classNames)}
+        >
+            <HeroMeter.Track
+                data-anat-part={showAnatomy ? "Meter.Track" : undefined}
+            >
+                <HeroMeter.Fill
+                    data-anat-part={showAnatomy ? "Meter.Fill" : undefined}
+                />
             </HeroMeter.Track>
         </HeroMeter>
     )
@@ -188,3 +227,9 @@ const Meter = ({
  * is the name of a separate composite block component.
  */
 export { ProgressBar, ProgressCircle, Meter as ProgressGauge }
+
+export const meta = [
+    { tier: "atom", name: "ProgressBar" },
+    { tier: "atom", name: "ProgressCircle" },
+    { tier: "atom", name: "ProgressGauge" },
+] as const

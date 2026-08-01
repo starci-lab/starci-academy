@@ -25,7 +25,7 @@ export interface MetricCardProps extends WithClassNames<undefined> {
     /**
      * Optional supplementary note below the label. The QUIET footnote: rendered
      * SMALL and MUTED (`body-xs`) — deliberately less prominent than the label so
-     * the two lines never read as the same thing (thầy 2026-07-16).
+     * the two lines never read as the same thing (teacher 2026-07-16).
      */
     hint?: React.ReactNode
 }

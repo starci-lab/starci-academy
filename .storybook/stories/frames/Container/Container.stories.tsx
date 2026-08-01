@@ -29,7 +29,7 @@ interface TileProps {
 
 /** A sample tile — just to see the column edge and count, carries no domain content (§13). */
 const Tile = ({ label }: TileProps) => (
-    <div className="rounded-xl border border-default bg-surface p-3 text-sm text-foreground">{label}</div>
+    <div data-tier="fixture" className="rounded-xl border border-default bg-surface p-3 text-sm text-foreground">{label}</div>
 )
 
 /** Props for the demo bleed band. */
@@ -40,7 +40,7 @@ interface BleedProps {
 
 /** A ruled background band, to see the column centered inside a wider parent area. */
 const Bleed = ({ children }: BleedProps) => (
-    <div className="w-full bg-default/40 py-4">{children}</div>
+    <div data-tier="fixture" className="w-full bg-default/40 py-4">{children}</div>
 )
 
 const meta: Meta<typeof Container> = {
@@ -57,7 +57,7 @@ type Story = StoryObj<typeof Container>
 /** Bare leaf — default `md` column, padding `6`, `body` only. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Container"
                 tier="frame"
@@ -83,7 +83,7 @@ export const Default: Story = {
 /** Leaf prop `size` — FULL 5 steps, each pointing straight at a `--container-app-*` token. Migrated to `states` 2026-07-27. */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Container"
                 tier="frame"
@@ -96,7 +96,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"sm\" body={<Tile label='size=\"sm\" · 40rem' />} />",
                         render: (
                             <Bleed>
-                                <Container size="sm" padding="cozy" body={<Tile label='size="sm" · 40rem' />} />
+                                <Container size="sm" padding={4} body={<Tile label='size="sm" · 40rem' />} />
                             </Bleed>
                         ),
                     },
@@ -106,7 +106,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"md\" body={<Tile label='size=\"md\" · 48rem — default' />} />",
                         render: (
                             <Bleed>
-                                <Container size="md" padding="cozy" body={<Tile label='size="md" · 48rem — default' />} />
+                                <Container size="md" padding={4} body={<Tile label='size="md" · 48rem — default' />} />
                             </Bleed>
                         ),
                     },
@@ -116,7 +116,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"lg\" body={<Tile label='size=\"lg\" · 64rem' />} />",
                         render: (
                             <Bleed>
-                                <Container size="lg" padding="cozy" body={<Tile label='size="lg" · 64rem' />} />
+                                <Container size="lg" padding={4} body={<Tile label='size="lg" · 64rem' />} />
                             </Bleed>
                         ),
                     },
@@ -126,7 +126,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"xl\" body={<Tile label='size=\"xl\" · 80rem' />} />",
                         render: (
                             <Bleed>
-                                <Container size="xl" padding="cozy" body={<Tile label='size="xl" · 80rem' />} />
+                                <Container size="xl" padding={4} body={<Tile label='size="xl" · 80rem' />} />
                             </Bleed>
                         ),
                     },
@@ -136,7 +136,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"full\" body={<Tile label='size=\"full\" · no cap' />} />",
                         render: (
                             <Bleed>
-                                <Container size="full" padding="cozy" body={<Tile label='size="full" · no cap' />} />
+                                <Container size="full" padding={4} body={<Tile label='size="full" · no cap' />} />
                             </Bleed>
                         ),
                     },
@@ -146,52 +146,80 @@ export const Sizes: Story = {
     ),
 }
 
-/** Leaf prop `padding` — the §10c scale, default `6` (the web column). Migrated to `states` 2026-07-27. */
+/**
+ * Leaf prop `padding` — the `AllowedPadding` scale, default step `6` (the web column).
+ * 2026-08-01 (wave-3 numeric-scale migration): the old five-word union (`flush`…`airy`) is
+ * gone with no deprecated stage, replaced by SIX numbered steps — one more than before,
+ * because the count behind `padding.md` found real evidence for `p-2` (step `3`) that an
+ * earlier, narrower count had missed. The old `airy` (`p-8`) did NOT earn a step; every call
+ * site written as `padding="airy"` folds down to step `6` (`p-6`) in this change, a real
+ * (not cosmetic) size difference — see the step-`6` state below for the finding.
+ */
 export const Padding: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Container"
                 tier="frame"
                 leaf="Prop `padding`"
                 states={[
                     {
-                        name: "padding = 0",
-                        why: "The tile sits flush against the column's own edge, with no inset at all. Drop to 0 when a child already owns the edge itself, like a full-bleed cover image or a table that scrolls sideways.",
-                        code: "<Container padding=\"flush\" body={<Tile label=\"padding flush\" />} />",
+                        name: "padding = 1",
+                        why: "The tile sits flush against the column's own edge, with no inset at all. Reach for step `1` when a child already owns the edge itself, like a full-bleed cover image or a table that scrolls sideways.",
+                        code: "<Container padding={1} body={<Tile label=\"padding step 1\" />} />",
                         render: (
                             <Bleed>
-                                <Container padding="flush" body={<Tile label="padding flush" />} />
+                                <Container padding={1} body={<Tile label="padding step 1" />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "padding = 2",
+                        why: "The tightest inset that still reads as chrome at all — an icon button's halo, a dot's hit area. A page measure never needs this step; it is shown so the tight end of the ladder stays recognisable.",
+                        code: "<Container padding={2} body={<Tile label=\"padding step 2\" />} />",
+                        render: (
+                            <Bleed>
+                                <Container padding={2} body={<Tile label="padding step 2" />} />
                             </Bleed>
                         ),
                     },
                     {
                         name: "padding = 3",
-                        why: "A moderate inset separates the tile from the column edge. This step suits a card-like region that still wants some breathing room without the full page gutter.",
-                        code: "<Container padding=\"cozy\" body={<Tile label=\"padding cozy\" />} />",
+                        why: "Compact chrome: a chip, a collapsed sidebar row, a dense list row. This step earned its place late — an earlier count that only read the `padding` prop and not the `p-2` class missed the 34 real call sites already sitting here.",
+                        code: "<Container padding={3} body={<Tile label=\"padding step 3\" />} />",
                         render: (
                             <Bleed>
-                                <Container padding="cozy" body={<Tile label="padding cozy" />} />
+                                <Container padding={3} body={<Tile label="padding step 3" />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "padding = 4",
+                        why: "The interior of a card — the house rule. This step suits a card-like region that still wants some breathing room without the full page gutter.",
+                        code: "<Container padding={4} body={<Tile label=\"padding step 4\" />} />",
+                        render: (
+                            <Bleed>
+                                <Container padding={4} body={<Tile label="padding step 4" />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "padding = 5",
+                        why: "A card that carries a heading and a body, or a surface a form sits inside — one step roomier than the plain card interior.",
+                        code: "<Container padding={5} body={<Tile label=\"padding step 5\" />} />",
+                        render: (
+                            <Bleed>
+                                <Container padding={5} body={<Tile label="padding step 5" />} />
                             </Bleed>
                         ),
                     },
                     {
                         name: "padding = 6 (default)",
-                        why: "The default page gutter applies, the widest inset most pages ever need. This is what every page gets automatically without passing the prop at all.",
-                        code: "<Container body={<Tile label=\"padding roomy — default\" />} />",
+                        why: "A page measure or a container — the outermost surface before the viewport, and the widest inset the scale offers. This is what every page gets automatically without passing the prop at all, and it is also where the old `airy` (`p-8`) call sites now land: `p-8` never earned its own step, so every one of them folds down to this rung, a real (not cosmetic) size change worth flagging rather than silently absorbing.",
+                        code: "<Container body={<Tile label=\"padding step 6 — default\" />} />",
                         render: (
                             <Bleed>
-                                <Container body={<Tile label="padding roomy — default" />} />
-                            </Bleed>
-                        ),
-                    },
-                    {
-                        name: "padding = 8",
-                        why: "An even wider inset applies, shortening the readable line further inside the same column cap. Content that wants extra breathing room on top of the size cap reaches for this step.",
-                        code: "<Container padding=\"airy\" body={<Tile label=\"padding airy\" />} />",
-                        render: (
-                            <Bleed>
-                                <Container padding="airy" body={<Tile label="padding airy" />} />
+                                <Container body={<Tile label="padding step 6 — default" />} />
                             </Bleed>
                         ),
                     },
@@ -207,7 +235,7 @@ export const Padding: Story = {
  */
 export const PageRegions: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Container"
                 tier="frame"
@@ -218,7 +246,7 @@ export const PageRegions: Story = {
                         why: "The measure renders its single region raw and adds no node of its own, so the nested stack is what decides the seam between the three tiles. Keeping the rhythm in one place is what stops a page from having two owners for the same gap, which is exactly how the old `gap` prop came to be written in code and measured as 0px on screen.",
                         code: `<Container
   body={
-    <StackV gap="page" body={<>
+    <StackV gap={7} body={<>
       <PageHeader title="Courses" />
       <CourseList />
       <Pagination />
@@ -229,7 +257,7 @@ export const PageRegions: Story = {
                             <Bleed>
                                 <Container
                                     body={
-                                        <StackV gap="page" body={<>
+                                        <StackV gap={7} body={<>
                                             <Tile label="Header" />
                                             <Tile label="Body" />
                                             <Tile label="Footer" />
@@ -274,7 +302,7 @@ export const ContainerQuery: Story = {
         }))
         const columns = { base: 1, sm: 2, md: 2, lg: 4 } as const
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <BlockAnatomy
                     name="Container"
                     tier="frame"
@@ -287,15 +315,15 @@ export const ContainerQuery: Story = {
                             why: "The grid inside settles at 2 columns because the column only reaches the `@app-md` step — `@app-lg` never fires inside 48rem. Asking this same grid for `lg: 4` here is asking for a breakpoint that never arrives, not a bug — the page is just too narrow for four.",
                             code: `const columns = { base: 1, sm: 2, md: 2, lg: 4 }
 
-<Container size="md" body={<Grid columns={columns} gap="grouped" items={cells} />} />`,
+<Container size="md" body={<Grid columns={columns} gap={4} items={cells} />} />`,
                             render: (
                                 <Bleed>
                                     <Container
                                         size="md"
-                                        padding="cozy"
+                                        padding={4}
                                         body={
-                                            <span className="block" data-anat-part="Grid">
-                                                <Grid columns={columns} gap="grouped" items={cells} />
+                                            <span data-tier="fixture" className="block" data-anat-part="Grid">
+                                                <Grid columns={columns} gap={4} items={cells} />
                                             </span>
                                         }
                                     />
@@ -307,15 +335,15 @@ export const ContainerQuery: Story = {
                             why: "The identical grid with the identical `columns` prop settles at 4 columns instead, because this wider column reaches the `@app-lg` step. Same grid, same props — the only thing that changed is which container it's measuring against.",
                             code: `const columns = { base: 1, sm: 2, md: 2, lg: 4 }
 
-<Container size="xl" body={<Grid columns={columns} gap="grouped" items={cells} />} />`,
+<Container size="xl" body={<Grid columns={columns} gap={4} items={cells} />} />`,
                             render: (
                                 <Bleed>
                                     <Container
                                         size="xl"
-                                        padding="cozy"
+                                        padding={4}
                                         body={
-                                            <span className="block" data-anat-part="Grid">
-                                                <Grid columns={columns} gap="grouped" items={cells} />
+                                            <span data-tier="fixture" className="block" data-anat-part="Grid">
+                                                <Grid columns={columns} gap={4} items={cells} />
                                             </span>
                                         }
                                     />

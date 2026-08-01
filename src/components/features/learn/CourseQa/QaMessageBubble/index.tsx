@@ -25,7 +25,7 @@ export interface QaMessageBubbleProps extends CommentItemCallbacks, WithClassNam
     repliesByParent: Record<string, Array<CommentNode>>
     /**
      * When this bubble is a flattened reply-to-reply, the display name of the author it
-     * answers — shown as a small `↳ trả lời {name}` tag so threading survives without indent.
+     * answers — shown as a small `↳ replying to {name}` tag so threading survives without indent.
      */
     replyToName?: string | null
     /**
@@ -49,7 +49,7 @@ export interface QaMessageBubbleProps extends CommentItemCallbacks, WithClassNam
  * Behaviour mirrors the per-lesson {@link import("@/components/features/community/Discussion/CommentItem").CommentItem}
  * — 6-emotion {@link ReactionBar}, reply/edit/delete, and lazily-loaded nested replies —
  * so an answer keeps every interaction it had as a forum row. Nested replies are
- * FLATTENED (rendered as sibling bubbles carrying a `↳ trả lời {name}` tag) instead of
+ * FLATTENED (rendered as sibling bubbles carrying a `↳ replying to {name}` tag) instead of
  * indented, so deep threads never squeeze the bubbles narrower.
  *
  * @param props - {@link QaMessageBubbleProps}

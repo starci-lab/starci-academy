@@ -36,7 +36,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 export type ContinueLearningProps = WithClassNames<undefined>
 
 /**
- * "Tiếp tục học" content — the single most important next-action slot: a capped
+ * "Continue learning" content — the single most important next-action slot: a capped
  * set of resume cards, CONTENT-FIRST (recently-read lessons lead, mixed with at
  * most one in-progress challenge as a nudge). When the viewer has joined no course it shows an
  * onboarding CTA instead of an empty void. Content only (the parent

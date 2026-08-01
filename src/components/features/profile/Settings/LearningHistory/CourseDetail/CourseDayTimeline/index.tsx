@@ -63,7 +63,7 @@ const EVENT_TONE = {
 interface DayGroup {
     /** Stable key (start-of-day ms as string). */
     key: string
-    /** Header label ("Hôm nay" / "Hôm qua" / a formatted date). */
+    /** Header label ("Today" / "Yesterday" / a formatted date). */
     label: string
     /** Events in this day, newest first. */
     items: Array<CourseLearningHistoryItemData>
@@ -74,9 +74,9 @@ const startOfDayMs = (date: Date): number =>
     new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
 
 /**
- * "Theo ngày" view — the viewer's per-course learning journal: every
+ * "By day" view — the viewer's per-course learning journal: every
  * `lessonRead` / `challengePassed` / `milestonePassed` event, newest first,
- * grouped under relative day headers (Hôm nay / Hôm qua / localized date). Each
+ * grouped under relative day headers (Today / Yesterday / localized date). Each
  * row is an entity-icon tile + the label + a module/type subtitle + an optional
  * {@link DifficultyChip} + a relative timestamp. Drives its own cursor-paginated
  * SWR (load more) and filters by the shared search query, client-side. Every

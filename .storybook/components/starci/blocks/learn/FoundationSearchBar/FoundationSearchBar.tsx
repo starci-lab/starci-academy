@@ -21,7 +21,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * the field.
  *
  * OWNS THE COUNT'S WORDING (§14d.1) — the caller hands over a bare
- * `resultCount` number, never a formatted string like "12 tài nguyên"; this
+ * `resultCount` number, never a formatted string like "12 resources"; this
  * block is the one place that turns that number into copy, including the
  * newsworthy-zero case ("no matches" is real information, unlike a nav
  * badge's zero, which is why it is not hidden here).
@@ -56,7 +56,7 @@ export interface FoundationSearchBarProps {
     suggestions: Array<FoundationSearchSuggestion>
     /** Fired with the chosen suggestion's id. */
     onSelectSuggestion: (id: string) => void
-    /** Placeholder for the empty field. Defaults to "Tìm kiếm...". */
+    /** Placeholder for the empty field. Defaults to "Search...". */
     placeholder?: string
     /**
      * How many results the current query matched. `undefined` means the count
@@ -78,8 +78,8 @@ export interface FoundationSearchBarProps {
     anatPart?: string
 }
 
-/** Vietnamese count wording — this block's own vocabulary, never handed in by the caller. */
-const resultCountLabel = (count: number): string => (count === 0 ? "Chưa có tài liệu" : `${count} tài liệu`)
+/** Count wording — this block's own vocabulary, never handed in by the caller. */
+const resultCountLabel = (count: number): string => (count === 0 ? "No documents yet" : `${count} documents`)
 
 /**
  * The search row: typeahead field left, live match count right. See the file
@@ -93,7 +93,7 @@ const FoundationSearchBar = ({
     onQueryChange,
     suggestions,
     onSelectSuggestion,
-    placeholder = "Tìm tài liệu...",
+    placeholder = "Search documents...",
     resultCount,
     isCountLoading = false,
     isSkeleton = false,
@@ -110,7 +110,7 @@ const FoundationSearchBar = ({
     return (
         <div data-anat-part={anatPart}>
             <StackH
-                gap="related"
+                gap={3}
                 justify="between"
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "StackH" : undefined}
@@ -132,7 +132,6 @@ const FoundationSearchBar = ({
                                 isSkeleton
                                 classNames={["shrink-0"]}
                                 showAnatomy={showAnatomy}
-                                anatPart={showAnatomy ? "Typography" : undefined}
                             />
                         ) : resultCount !== undefined ? (
                             <Typography
@@ -142,7 +141,6 @@ const FoundationSearchBar = ({
                                 text={resultCountLabel(resultCount)}
                                 classNames={["shrink-0"]}
                                 showAnatomy={showAnatomy}
-                                anatPart={showAnatomy ? "Typography" : undefined}
                             />
                         ) : null}
                     </>

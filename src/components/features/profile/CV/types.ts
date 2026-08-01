@@ -3,8 +3,8 @@
  *
  * The backend persists `blocks`/`style` as opaque JSONB — THIS file is the
  * single source of truth for their shape on the frontend (per
- * `CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md`, "CHỐT AI + PERSISTENCE": *"FE sở
- * hữu schema block (TS types); BE lưu JSONB + validate nhẹ"*). Every block
+ * `CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md`, "FINALIZED AI + PERSISTENCE": *"FE owns
+ * the block schema (TS types); BE stores JSONB + does light validation"*). Every block
  * editor component, the live preview, and the LaTeX/PDF mapping all import
  * from here — do not redeclare a parallel shape elsewhere
  * (`concepts/single-source-render`).
@@ -56,8 +56,8 @@ export interface CvBlock {
     /** Which kind of block this is — selects the editor component + PDF partial. */
     type: CvBlockType
     /**
-     * Caller-facing title for this block (e.g. "Kinh nghiệm làm việc"). Editable
-     * for repeatable custom blocks the learner adds via "+ Thêm block"; the 7
+     * Caller-facing title for this block (e.g. "Work Experience"). Editable
+     * for repeatable custom blocks the learner adds via "+ Add block"; the 7
      * canonical block types ship a sensible i18n default the learner can still
      * override.
      */
@@ -123,7 +123,7 @@ export interface CvDocument {
      * `renderCvBlocks` compile (the FE never sends it via `updateCvBlocks`).
      */
     texSource: string | null
-    /** Whether this CV is the user's ONE public résumé (single-public-per-user). */
+    /** Whether this CV is the user's ONE public resume (single-public-per-user). */
     isPublic: boolean
     /** ISO 8601 creation timestamp. */
     createdAt: string
@@ -164,7 +164,7 @@ export const DEFAULT_CV_STYLE: CvStyle = {
  *   "×" on the block's own header, distinct from per-item remove which the
  *   editor handles internally via `onChange`).
  * - `onAiRewrite(itemId, instruction?)` — optional; only blocks with an
- *   "✨ AI viết giúp" affordance (`summary`, `experience`, `project`) wire
+ *   "✨ AI writes it for you" affordance (`summary`, `experience`, `project`) wire
  *   this. Resolves to the rewritten `CvBlockItem["fields"]` for that one item
  *   (or the whole block's single fields set for `summary`) — the editor is
  *   responsible for its OWN spinner/retry-in-place UI while the call is in
@@ -186,7 +186,7 @@ export interface CvBlockEditorProps {
 
 /**
  * Registry mapping a {@link CvBlockType} to metadata needed to render its row
- * in the "+ Thêm block" picker and (once built) resolve its editor component.
+ * in the "+ Add block" picker and (once built) resolve its editor component.
  * Lives in `BlockRegistry/index.ts` (sibling of this file) — add a new block
  * TYPE by adding one entry there, not by branching all over the workspace.
  */
@@ -199,6 +199,6 @@ export interface CvBlockTypeMeta {
     repeatable: boolean
     /** Whether this block type may only appear once in a document (e.g. `personal`, `summary`). */
     singleton: boolean
-    /** Whether this block type has an "✨ AI viết giúp" affordance. */
+    /** Whether this block type has an "✨ AI writes it for you" affordance. */
     aiAssisted: boolean
 }

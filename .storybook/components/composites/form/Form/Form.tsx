@@ -2,89 +2,100 @@ import type { FormEvent, ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { ButtonGroup, type ButtonGroupItem } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
+import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `Form.*`, the ONE form composite namespace
- * (§13, thầy chốt 2026-07-25 — tên tầng đổi từ `layout` sang `composite` khi
- * tách tầng 2026-07-27: `Form` sở hữu vai nội dung qua `Section`/`Actions`,
- * không slot-trơ như 7 frame).
+ * (§13, teacher confirmed 2026-07-25 — tier name changed from `layout` to
+ * `composite` at the tier split 2026-07-27: `Form` owns a content role via
+ * `Section`/`Actions`, it is not a bare slot like the 7 frames are).
  *
- * Sau khi atom form TỰ MANG `label`/`hint`/`errorMessage`/`isRequired` (§12e —
- * tầng `Field.*` đã bị XOÁ theo §13c), khung form không còn gì để "mặc áo" cho
- * field nữa. Việc còn lại của nó là DUY NHẤT BỐ CỤC: dựng `<form>` thật, gom
- * field thành nhóm có tiêu đề, và xếp hàng nút cuối.
+ * Once a form atom carries its OWN `label`/`hint`/`errorMessage`/`isRequired`
+ * (§12e — the `Field.*` tier was DELETED per §13c), the form shell has nothing
+ * left to "dress" for a field. Its remaining job is LAYOUT ONLY: build a real
+ * `<form>`, group fields under a heading, and lay out the closing button row.
  *
- * | Member | Khung | Kênh nội dung |
+ * | Member | Shell | Content channel |
  * |---|---|---|
- * | `.Base`    | vỏ `<form>` + cột nội dung + hàng nút | slot `body` (+`children`) · `actions` |
- * | `.Section` | nhóm field có tiêu đề                 | `title`/`description` + slot `body` (+`children`) |
- * | `.Actions` | hàng nút cuối form                     | **`items` — CẤM children** |
+ * | `.Base`    | `<form>` shell + content column + button row | slot `body` (+`children`) · `actions` |
+ * | `.Section` | a titled group of fields                     | `title`/`description` + slot `body` (+`children`) |
+ * | `.Actions` | the closing button row                        | **`items` — children FORBIDDEN** |
  *
- * KHUNG API LAW (§13b):
- * - `.Base` / `.Section` là khung BỌC → slot CÓ TÊN (`body`) là đường chính,
- *   `children` giữ lại như shorthand của `body`.
- * - `.Actions` là DANH SÁCH LẶP (N nút cùng kiểu) → BẮT BUỘC `items` dữ liệu,
- *   CẤM children — y hệt `ButtonGroup items` (§12b).
- * - Namespace only — KHÔNG export component trần (§13a).
+ * SHELL API LAW (§13b):
+ * - `.Base` / `.Section` are WRAPPING shells → the named slot (`body`) is the
+ *   main path, `children` stays as a shorthand for `body`.
+ * - `.Actions` is a REPEATED LIST (N buttons of the same kind) → `items` DATA
+ *   is REQUIRED, children FORBIDDEN — exactly like `ButtonGroup.items` (§12b).
+ * - Namespace only — does NOT export a bare component (§13a).
  *
- * KHUNG KHÔNG MANG CHỨC NĂNG (§13):
- * - ⛔ KHÔNG đẻ lại `label`/`hint`/`errorMessage`/`isRequired` — atom lo (§12e).
- * - ⛔ KHÔNG validation, KHÔNG state field, KHÔNG business rule — đó là tầng
- *   `block`. Khung chỉ biết "đang khoá hay không" (`isDisabled`) và "submit".
- * - ⛔ KHÔNG tự vẽ nút — `.Actions` COMPOSE atom `ButtonGroup` (§13c).
+ * THE SHELL CARRIES NO BEHAVIOUR (§13):
+ * - It must NOT re-declare `label`/`hint`/`errorMessage`/`isRequired` — the atom
+ *   owns those (§12e).
+ * - NO validation, NO field state, NO business rule — that belongs to the
+ *   `block` tier. The shell only knows "locked or not" (`isDisabled`) and "submit".
+ * - It must NOT hand-draw a button — `.Actions` COMPOSES the atom `ButtonGroup` (§13c).
  *
- * SPACING (§10c): mọi khoảng đi qua {@link SeamScale} — union literal `0·1·2·3·6·8`.
- * Khung ÉP thang bằng TYPE, không nhận số tuỳ ý; off-scale (`gap-4/5/…`) không
- * gọi được. Khoảng đến từ **gap của parent**, KHÔNG margin của con (§10a).
+ * SPACING (§10c): every gap goes through {@link AllowedGap} — a union literal
+ * `1..8`, a STEP in the scale, never a raw px number (`gap={3}` → `gap-2`, not
+ * `gap-3`). The shell FORCES the scale via the TYPE, it accepts no arbitrary
+ * number; off-scale values simply don't compile. Spacing comes from the
+ * **parent's gap**, NEVER a child's margin (§10a).
  * ─────────────────────────────────────────────────────────────────────────────
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Form" } as const
+
 // ─────────────────────────────────────────────────────────────────────────────
 // .Base — the `<form>` shell
 // ─────────────────────────────────────────────────────────────────────────────
 /** Props for {@link Form}. */
 export interface FormBaseProps {
     /**
-     * Submit handler. Khung tự `preventDefault()` rồi gọi hàm này, nên phím
-     * ENTER trong một field cũng submit (hành vi native của `<form>` — lý do
-     * khung render thẻ `<form>` THẬT thay vì một `<div>` xếp cột).
-     * Bỏ trống → form không submit (vẫn chặn reload trang).
+     * Submit handler. The shell calls `preventDefault()` itself and then invokes
+     * this callback, so pressing ENTER inside a field also submits (native
+     * `<form>` behaviour — the reason the shell renders a REAL `<form>` tag
+     * instead of a column of stacked `<div>`s).
+     * Omit → the form never submits (page reload is still blocked).
      */
     onSubmit?: () => void
-    /** Vùng nội dung chính (các `FormSection` / field). Thắng `children` khi truyền cả hai. */
+    /** Main content region (the `FormSection`s / fields). Wins over `children` when both are passed. */
     body?: ReactNode
-    /** Shorthand của {@link FormBaseProps.body} — khung BỌC nhận nội dung bất kỳ (§13b). */
+    /** Shorthand for {@link FormBaseProps.body} — a WRAPPING shell accepts arbitrary content (§13b). */
     children?: ReactNode
     /**
-     * Hàng nút cuối form — thường là một {@link FormActions}. Là slot CÓ TÊN
-     * (không phải node cuối của `body`) để khung biết đâu là "đáy" và giữ
-     * nhịp `gap` cho đúng seam.
+     * The closing button row — usually a {@link FormActions}. A NAMED slot
+     * (rather than the last node in `body`) so the shell knows where the
+     * "bottom" is and keeps the right `gap` seam.
      */
     actions?: ReactNode
     /**
-     * Nhịp dọc giữa các vùng con của form. Default `6` (= `section`, §10b:
-     * design ↔ design trong một block). Xuống `3` cho form ngắn trong modal.
+     * Vertical rhythm between the form's sub-regions. Default `{6}` (`gap-6`,
+     * §10b: design ↔ design within one block). Drop to `{4}` (`gap-3`) for a
+     * short form inside a modal.
      */
-    gap?: SeamScale
+    gap?: AllowedGap
     /**
-     * `true` → KHOÁ CẢ FORM (đang submit / chờ server). Dùng `<fieldset disabled>`
-     * native nên MỌI control con (kể cả nút trong `actions`) tắt theo — khung
-     * không phải thread `isDisabled` xuống từng field.
+     * `true` → LOCKS THE WHOLE FORM (submitting / waiting on the server). Uses
+     * a native `<fieldset disabled>` so EVERY child control (including the
+     * button inside `actions`) disables along with it — the shell never has to
+     * thread `isDisabled` down to each field.
      */
     isDisabled?: boolean
-    /** Extra classes trên thẻ `<form>`. */
-    className?: string
-    /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
+    /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
 /**
- * Vỏ `<form>` của tầng composite: một thẻ `<form>` thật (submit bằng ENTER, a11y),
- * một cột nội dung theo nhịp `gap`, và một slot `actions` ở đáy.
+ * The composite tier's `<form>` shell: a real `<form>` tag (ENTER submits, a11y),
+ * a content column following the `gap` rhythm, and an `actions` slot at the bottom.
  *
- * KHÔNG biết gì về field bên trong — không validation, không giá trị, không lỗi.
- * Cờ duy nhất nó sở hữu là `isDisabled` (đang khoá), thi hành bằng `<fieldset
- * disabled>` để native lo việc tắt mọi control con.
+ * KNOWS NOTHING about the fields inside — no validation, no value, no error.
+ * The one flag it owns is `isDisabled` (currently locked), implemented via a
+ * native `<fieldset disabled>` so the browser handles disabling every child
+ * control.
  *
  * @param props - {@link FormBaseProps}
  */
@@ -93,28 +104,36 @@ const Base = ({
     body,
     children,
     actions,
-    gap = "section",    isDisabled = false,
-    className,
+    gap = 6,
+    isDisabled = false,
+    classNames,
     showAnatomy = false,
 }: FormBaseProps) => {
     const main = body ?? children
     const submit = (event: FormEvent<HTMLFormElement>) => {
-        // Luôn chặn navigation mặc định của form, kể cả khi không có handler.
+        // Always block the form's default navigation, even when there's no handler.
         event.preventDefault()
         onSubmit?.()
     }
     return (
-        <form onSubmit={submit} noValidate className={className}>
+        <form
+            onSubmit={submit}
+            noValidate
+            className={cn(classNames)}
+            data-tier="composite"
+            data-component="Form"
+        >
             {/*
-                `<fieldset disabled>` = cách NATIVE khoá cả cụm: mọi <input>/<button>
-                con tắt theo, không cần khung thread cờ xuống từng field. `min-w-0`
-                vì fieldset mặc định `min-width: min-content` (sẽ phá truncate bên trong).
+                `<fieldset disabled>` = the NATIVE way to lock the whole cluster: every
+                child <input>/<button> disables along with it, no need for the shell to
+                thread a flag down to each field. `min-w-0` because a fieldset defaults
+                to `min-width: min-content` (which would break truncation inside).
             */}
             <fieldset disabled={isDisabled} className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
-                {/* No `data-anat-part` on `Body`/`Actions`: both wrap arbitrary caller-supplied
-                    nodes (fields, or usually a `FormActions` but never enforced), with no ONE
-                    fixed component a panel link could point to (§11a.1 LOẠI 3 — caller slot,
-                    stop badging). */}
+                {/* No `data-anat-part` on `Body`/`Actions`: both wrap an ARBITRARY node the
+                    caller supplies (any fields, or usually a `FormActions` but never enforced),
+                    with no ONE fixed component a panel link could point to (§11a.1 CASE 3 —
+                    caller slot, stop badging). */}
                 {main != null ? (
                     <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
                         {main}
@@ -130,31 +149,34 @@ const Base = ({
 // ─────────────────────────────────────────────────────────────────────────────
 /** Props for {@link FormSection}. */
 export interface FormSectionProps {
-    /** Tiêu đề nhóm — `Typography.Sm` medium (§9b: nhấn làm-việc, không phải heading trang). */
+    /** Group title — `Typography.Sm` medium (§9b: a working-context emphasis, not a page heading). */
     title: ReactNode
-    /** Dòng mô tả dưới tiêu đề — `Typography.Xs` muted (§9a). Bỏ trống → chỉ còn tiêu đề. */
+    /** Description line under the title — `Typography.Xs` muted (§9a). Omit → title only. */
     description?: ReactNode
-    /** Các field của nhóm. Thắng `children` khi truyền cả hai. */
+    /** The group's fields. Wins over `children` when both are passed. */
     body?: ReactNode
-    /** Shorthand của {@link FormSectionProps.body} — khung BỌC (§13b). */
+    /** Shorthand for {@link FormSectionProps.body} — a WRAPPING shell (§13b). */
     children?: ReactNode
     /**
-     * Nhịp dọc: dùng cho CẢ hai seam của section (header ↔ body, và field ↔ field).
-     * Default `3` (= `grouped`, §10b: hàng/khối xếp trong một khối). Một token,
-     * một chủ — đổi nhịp của nhóm ở ĐÚNG một chỗ.
+     * Vertical rhythm: used for BOTH of the section's seams (header ↔ body, and
+     * field ↔ field). Default `{4}` (`gap-3`, §10b: rows/blocks stacked within
+     * one block). One token, one owner — change the group's rhythm in exactly
+     * one place.
      */
-    gap?: SeamScale
-    /** Extra classes trên `<section>`. */
-    className?: string
-    /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
+    gap?: AllowedGap
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
+    /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
 /**
- * Nhóm field có tiêu đề: một khối `header` (tiêu đề + mô tả tuỳ chọn, `gap-1`
- * tight vì là một CẶP dính nhau — §10b) rồi tới cột field.
+ * A titled group of fields: a `header` block (title + optional description,
+ * tight `gap-1` because they're a PAIR that sticks together — §10b) followed
+ * by the field column.
  *
- * Chỉ bố cục + chữ qua atom `Typography.*` (§9c). Không đẻ nghĩa mới: tiêu đề ở
- * đây KHÔNG phải `label` của field (label thuộc atom, §12e).
+ * Layout + text only, through the `Typography.*` atom (§9c). It doesn't invent
+ * new meaning: the title here is NOT a field's `label` (that belongs to the
+ * atom, §12e).
  *
  * @param props - {@link FormSectionProps}
  */
@@ -163,20 +185,27 @@ const Section = ({
     description,
     body,
     children,
-    gap = "grouped",    className,
+    gap = 4,
+    classNames,
     showAnatomy = false,
 }: FormSectionProps) => {
     const main = body ?? children
     return (
-        <section className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], className)}>
-            {/* tight gap-1: title ↔ description là một CẶP, không phải hai vùng (§10b).
+        <section
+            className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], classNames)}
+            data-tier="composite"
+            data-component="FormSection"
+            data-principles="label-field"
+        >
+            {/* tight gap-1: title ↔ description is a PAIR, not two regions (§10b).
                 No `data-anat-part="Header"` wrapper: it never helps the reader past what the
-                `Typography` nodes inside already say on their own (§11a.1 LOẠI 2/3 — a
+                `Typography` nodes inside already say on their own (§11a.1 CASE 2/3 — a
                 badge with nowhere to link is worse than no badge; those two atoms keep their
                 own badge below and surface as top-level nodes instead). */}
             <StackV
-                gap="tight"
+                gap={2}
                 classNames={["min-w-0"]}
+                pattern="title-subtitle"
                 body={
                     <>
                         <span data-anat-part={showAnatomy ? "Typography" : undefined}>
@@ -191,7 +220,7 @@ const Section = ({
                 }
             />
             {/* No `data-anat-part="Body"` here either: `body`/`children` is arbitrary
-                caller-supplied field content (§11a.1 LOẠI 3 — caller slot). */}
+                caller-supplied field content (§11a.1 CASE 3 — caller slot). */}
             {main != null ? (
                 <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
                     {main}
@@ -203,41 +232,42 @@ const Section = ({
 // ─────────────────────────────────────────────────────────────────────────────
 // .Actions — the closing button row
 // ─────────────────────────────────────────────────────────────────────────────
-/** Căn hàng nút: `end` (mặc định — CTA nằm phải) · `start` · `between` (huỷ trái, CTA phải). */
+/** Button row alignment: `end` (default — the CTA sits on the right) · `start` · `between` (cancel left, CTA right). */
 export type FormActionsAlign = "start" | "end" | "between"
 /** Props for {@link FormActions}. */
 export interface FormActionsProps {
     /**
-     * Hàng nút mô tả bằng DỮ LIỆU (§13b: danh sách lặp ⇒ `items`, CẤM children).
-     * Cùng shape với `ButtonGroup` items — khung chuyển thẳng xuống atom, KHÔNG
-     * tự vẽ nút (§13c).
+     * The button row described as DATA (§13b: a repeated list ⇒ `items`,
+     * children FORBIDDEN). Same shape as `ButtonGroup` items — the shell passes
+     * it straight down to the atom, it does NOT hand-draw a button (§13c).
      */
     items: Array<ButtonGroupItem>
-    /** Căn hàng nút trong bề ngang form. Default `end`. */
+    /** Alignment of the button row across the form's width. Default `end`. */
     align?: FormActionsAlign
     /**
-     * `true` → hàng nút DÍNH đáy khung cuộn (`sticky bottom-0`) với vạch ngăn +
-     * nền, cho form dài trong modal/drawer. Chỉ là chrome khung, không đổi API nút.
+     * `true` → the button row STICKS to the bottom of the scroll container
+     * (`sticky bottom-0`) with a divider + background, for a long form inside a
+     * modal/drawer. Chrome only — it doesn't change the button API.
      */
     sticky?: boolean
-    /** Extra classes trên hàng nút. */
-    className?: string
-    /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
+    /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
-/** Căn ngang → class. `between` cần hàng nút CHIẾM HẾT bề ngang mới đẩy được hai mép. */
+/** Horizontal alignment → class. `between` needs the button row to OCCUPY the full width for the two edges to actually separate. */
 const ALIGN_CLASS: Record<FormActionsAlign, string> = {
     start: "justify-start",
     end: "justify-end",
     between: "justify-between",
 }
 /**
- * Hàng nút cuối form. COMPOSE atom `ButtonGroup` (§13c — khung không hand-roll
- * lại nút): khung chỉ thêm khái niệm khung thật là CĂN NGANG (`align`) và DÍNH
- * ĐÁY (`sticky`).
+ * The form's closing button row. COMPOSES the atom `ButtonGroup` (§13c — the
+ * shell does not hand-roll its own buttons): the shell only adds the two real
+ * shell concepts — horizontal ALIGNMENT (`align`) and BOTTOM-STICKING (`sticky`).
  *
- * Vai trò/hành vi từng nút (`variant`/`isPending`/`isDisabled`) vẫn thuộc atom —
- * khung chỉ chuyển tiếp qua `items`.
+ * Each button's role/behaviour (`variant`/`isPending`/`isDisabled`) still
+ * belongs to the atom — the shell only forwards it through `items`.
  *
  * @param props - {@link FormActionsProps}
  */
@@ -245,17 +275,19 @@ const Actions = ({
     items,
     align = "end",
     sticky = false,
-    className,
+    classNames,
     showAnatomy = false,
 }: FormActionsProps) => (
     <div
         className={cn(
             "flex",
             ALIGN_CLASS[align],
-            // Chrome của khung dính đáy: vạch ngăn + nền đặc để nội dung cuộn dưới không lộ.
+            // Sticky-shell chrome: divider + solid background so scrolled-under content doesn't show through.
             sticky && "sticky bottom-0 z-10 border-t border-default bg-background py-3",
-            className,
+            classNames,
         )}
+        data-tier="composite"
+        data-component="FormActions"
     >
         <ButtonGroup
             items={items}
@@ -268,10 +300,11 @@ const Actions = ({
     </div>
 )
 /**
- * `Form.*` — form composite namespace (§13). `Base` (vỏ `<form>` +
- * cột nội dung + slot nút) · `Section` (nhóm field có tiêu đề) · `Actions`
- * (hàng nút, `items` dữ liệu → atom `ButtonGroup`).
+ * `Form.*` — the form composite namespace (§13). `Base` (the `<form>` shell +
+ * content column + button slot) · `Section` (a titled group of fields) ·
+ * `Actions` (the button row, `items` data → atom `ButtonGroup`).
  *
- * Nhãn/mô tả/lỗi/bắt buộc của field KHÔNG ở đây — atom form tự mang (§12e).
+ * A field's label/hint/error/required does NOT live here — the form atom
+ * carries it itself (§12e).
  */
 export { Base as Form, Section as FormSection, Actions as FormActions }

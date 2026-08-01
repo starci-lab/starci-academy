@@ -49,8 +49,8 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * with its own story) ⇒ there are NO real deps, so `annotate` is NOT passed (teacher
  * confirmed 2026-07-26, second pass — kept as-is here).
  *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels are written
- * in ENGLISH; JSDoc/comments stay in Vietnamese.
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`), demo labels, and every
+ * JSDoc/comment in this file are written in ENGLISH.
  */
 const meta: Meta<typeof SurfaceCardSelectableGroup> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardSelectableGroup",
@@ -65,12 +65,12 @@ type Story = StoryObj<typeof SurfaceCardSelectableGroup>
 type PlanValue = "free" | "pro" | "team" | "enterprise"
 /** Pill used for the `badge` slot — neutral, not tied to a specific "discount" meaning. */
 const badgePill = (text: string) => (
-    <span className="rounded-full bg-accent-soft px-2 py-0 text-xs font-medium text-accent-soft-foreground">
+    <span data-tier="fixture" className="rounded-full bg-accent-soft px-2 py-0 text-xs font-medium text-accent-soft-foreground">
         {text}
     </span>
 )
 const StarIcon = () => (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg data-tier="fixture" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path
             d="M8 1.5l1.9 4.2 4.6.5-3.4 3.2.9 4.6L8 11.8l-4 2.2.9-4.6-3.4-3.2 4.6-.5L8 1.5z"
             stroke="currentColor"
@@ -87,10 +87,12 @@ const StarIcon = () => (
  * `enterprise` has `description` + `isDisabled` (dimmed, has to contact sales instead of
  * selecting directly).
  */
+/** `badge` slot fixture for {@link PLAN_ITEMS}'s "team" plan — a component reference (COMPOSITE-8), not a built node. */
+const MostPopularBadge = () => badgePill("Most popular")
 const PLAN_ITEMS: Array<SurfaceCardSelectableGroupItem<PlanValue>> = [
     { value: "free", label: "Free" },
-    { value: "pro", label: "Pro", description: "For solo developers shipping side projects", icon: <StarIcon /> },
-    { value: "team", label: "Team", description: "Shared workspaces and roles for a growing team", badge: badgePill("Most popular") },
+    { value: "pro", label: "Pro", description: "For solo developers shipping side projects", icon: StarIcon },
+    { value: "team", label: "Team", description: "Shared workspaces and roles for a growing team", badge: MostPopularBadge },
     { value: "enterprise", label: "Enterprise", description: "Custom limits, SSO, and a dedicated success manager", isDisabled: true },
 ]
 /** Owns the selection so the group is interactive (the block is fully controlled). */
@@ -111,7 +113,7 @@ const ControlledGroup = <T extends string>({
 }) => {
     const [value, setValue] = useState<T>(initialValue)
     return (
-        <div style={{ width }}>
+        <div data-tier="fixture" style={{ width }}>
             <SurfaceCardSelectableGroup items={items} value={value} onChange={setValue} ariaLabel={ariaLabel} columns={columns} showAnatomy={showAnatomy} />
         </div>
     )
@@ -123,7 +125,7 @@ const ControlledGroup = <T extends string>({
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardSelectableGroup"
                 tier="composite"
@@ -157,7 +159,7 @@ export const Default: Story = {
  */
 export const Columns: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardSelectableGroup"
                 tier="composite"

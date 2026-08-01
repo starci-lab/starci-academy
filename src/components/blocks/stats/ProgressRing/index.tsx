@@ -32,7 +32,7 @@ export interface ProgressRingProps extends WithClassNames<undefined> {
     label?: React.ReactNode
     /**
      * Optional caption rendered below the ring — small and muted (`body-xs`). Use it
-     * to name what the ring measures (e.g. `"Tiến độ khoá học"`).
+     * to name what the ring measures (e.g. `"Course progress"`).
      */
     caption?: React.ReactNode
     /**
@@ -62,10 +62,10 @@ export interface ProgressRingProps extends WithClassNames<undefined> {
  * @param props - {@link ProgressRingProps}
  *
  * @example
- * <ProgressRing value={68} caption="Tiến độ khoá học" />
+ * <ProgressRing value={68} caption="Course progress" />
  *
  * @example
- * <ProgressRing value={92} tone="success" size="lg" label="9/10" caption="Điểm bài kiểm tra" />
+ * <ProgressRing value={92} tone="success" size="lg" label="9/10" caption="Quiz score" />
  * @see Story: .storybook/stories/blocks/stats/ProgressRing/ProgressRing.stories
  */
 export const ProgressRing = ({

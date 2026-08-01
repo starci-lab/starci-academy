@@ -38,7 +38,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * THE BLOCK OWNS THE CATEGORY→ICON/LABEL TABLE (§14d.1), the same way `ModuleHeader` owns
  * its tier table: `items` carries only `key` + `xp` — TYPED DOMAIN DATA — never a
  * pre-built label or icon component. A caller that could pass those would be handing over
- * wording that belongs to this block. The XP number's wording ("{label} · {xp} điểm",
+ * wording that belongs to this block. The XP number's wording ("{label} · {xp} pts",
  * mirroring the app's `leaderboard.xp` copy) is likewise decided here, not assembled by
  * the caller and passed in as a string.
  *
@@ -54,9 +54,9 @@ export type LeaderboardCategoryKey = "total" | "challenge" | "reading" | "milest
 
 /** Label per category. The BLOCK owns this table — see file header. */
 const CATEGORY_LABEL: Record<LeaderboardCategoryKey, string> = {
-    total: "Tổng điểm",
+    total: "Total points",
     challenge: "Challenge",
-    reading: "Đọc bài",
+    reading: "Reading",
     milestone: "Milestone",
 }
 
@@ -72,7 +72,7 @@ const CATEGORY_ICON: Record<LeaderboardCategoryKey, TypographyIcon> = {
 export interface LeaderboardCategoryOption {
     /** Which category this entry is. */
     key: LeaderboardCategoryKey
-    /** Viewer's XP in this category — the number the block turns into "{xp} điểm". */
+    /** Viewer's XP in this category — the number the block turns into "{xp} pts". */
     xp: number
 }
 
@@ -133,8 +133,8 @@ const LeaderboardCategoryNav = ({
                         <Typography
                             size="sm"
                             prefixIcon={CATEGORY_ICON[item.key]}
-                            text={`${CATEGORY_LABEL[item.key]} · ${item.xp} điểm`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            text={`${CATEGORY_LABEL[item.key]} · ${item.xp} points`}
+                            showAnatomy={showAnatomy}
                         />
                     ),
                 }))}

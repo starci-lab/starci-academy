@@ -29,7 +29,7 @@ import { ConsultantCard, type ConsultantCardConsultant } from "@sb-components/st
  * line says — never how one card itself looks.
  *
  * WHAT THIS BLOCK OWNS (§14d.1 — domain wording the caller must not hand in):
- * the count line's wording ("N chuyên viên tư vấn"). The caller hands over a
+ * the count line's wording ("N consultants"). The caller hands over a
  * bare `count` number, never a pre-formatted string — same contract
  * `FoundationCategorySearchBar` and `ModuleHeader`-style meta rows use. The
  * EMPTY message itself (`emptyTitle`) stays a caller prop rather than an owned
@@ -66,7 +66,7 @@ import { ConsultantCard, type ConsultantCardConsultant } from "@sb-components/st
  *
  * ⭐ JUDGEMENT CALL — the count line lives INSIDE `AsyncContent`'s `content`
  * slot, beside the grid, not as permanent chrome above the whole switch. A
- * "0 chuyên viên tư vấn" line sitting on top of the empty message would say
+ * "0 consultants" line sitting on top of the empty message would say
  * the same thing twice in two different voices; the count is only worth
  * saying once real cards are on screen to be counted.
  *
@@ -122,7 +122,7 @@ const SKELETON_TILE_COUNT = 6
 const NOOP = () => {}
 
 /** The block's own wording for the count line (§14d.1) — the caller only ever hands over a bare number. */
-const countLabel = (count: number): string => `${count} chuyên viên tư vấn`
+const countLabel = (count: number): string => `${count} consultants`
 
 /**
  * The consultant directory's browse surface. See the file header for the full
@@ -181,20 +181,20 @@ const ConsultantDirectoryGrid = ({
                 isLoading={isLoading}
                 skeleton={
                     <div data-anat-part={showAnatomy ? "Grid" : undefined}>
-                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap="grouped" items={skeletonTiles} showAnatomy={showAnatomy} />
+                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} items={skeletonTiles} showAnatomy={showAnatomy} />
                     </div>
                 }
                 isEmpty={isEmpty}
                 emptyContent={emptyContent}
                 showAnatomy={showAnatomy}
                 content={
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+                    <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
                         <>
                             {count !== undefined ? (
-                                <Typography size="sm" color="muted" text={countLabel(count)} showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="sm" color="muted" text={countLabel(count)} showAnatomy={showAnatomy} />
                             ) : null}
                             <div data-anat-part={showAnatomy ? "Grid" : undefined}>
-                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap="grouped" items={tiles} showAnatomy={showAnatomy} />
+                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} items={tiles} showAnatomy={showAnatomy} />
                             </div>
                         </>
                     } />

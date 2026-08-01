@@ -9,8 +9,8 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * Ported from `@/components/blocks/identity/SnippetIcon`.
  *
- * The trigger has no `className` hook into its internal icons — only the root
- * takes `className`/`classNames`.
+ * The trigger has no `classNames` hook into its internal icons — only the root
+ * takes `classNames`.
  *
  * Renders a single fixed-size glyph (`w-5 h-5`, see `CopyIcon`/`CheckCircleIcon`
  * below), not text, so there is no `skeletonWidth` prop — nothing here scales
@@ -27,14 +27,6 @@ interface SnippetIconOwnProps {
     isCopied?: boolean
     /** `true` → tag each part with `data-anat-part` so a `BlockAnatomy` panel can badge it. */
     showAnatomy?: boolean
-    /**
-     * `data-anat-part` name applied to the root trigger. A wrapping component
-     * passes this down so a deps tree can recognize "this is a SnippetIcon" and
-     * link to its story.
-     */
-    anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -74,8 +66,6 @@ const SnippetIconBase = ({
     isCopied,
     isSkeleton = false,
     showAnatomy = false,
-    anatPart,
-    className,
     classNames,
 }: SnippetIconProps) => {
     const [copiedState, setCopiedState] = useState(false)
@@ -100,22 +90,24 @@ const SnippetIconBase = ({
         // in this atom set (`Menu`'s row icon, `StepBadge`'s check).
         return (
             <HeroSkeleton
-                className={cn("w-5 h-5 shrink-0 rounded-full", className, classNames)}
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+                data-tier="atom"
+                data-component="SnippetIcon"
+                className={cn("w-5 h-5 shrink-0 rounded-full", classNames)}
+                data-anat-part={showAnatomy ? "Skeleton" : undefined}
             />
         )
     }
 
     return (
-        // The root (trigger) is a plain element with no reusable name/story of its
-        // own — only `anatPart` from a parent names it as one opaque node, with no
-        // self-badge fallback. `Icon` does get a self-badge: it has its own leaf/
-        // story in this file (`Copied`) showing the copy↔check swap.
+        // The root IS the SnippetIcon atom, so it hard-codes its own name.
+        // `Icon` is the inner glyph swap and gets its own self-badge below.
         <motion.div
+            data-tier="atom"
+            data-component="SnippetIcon"
             onClick={handleCopy}
-            className={cn("cursor-pointer", className, classNames)}
+            className={cn("cursor-pointer", classNames)}
             whileTap={{ scale: 0.9 }}
-            data-anat-part={anatPart}
+            data-anat-part={showAnatomy ? "SnippetIcon" : undefined}
         >
             <AnimatePresence mode="wait">
                 {copied ? (
@@ -148,3 +140,5 @@ const SnippetIconBase = ({
 
 /** `SnippetIcon.*` — one-tap copy affordance namespace. */
 export { SnippetIconBase as SnippetIcon }
+
+export const meta = { tier: "atom", name: "SnippetIcon" } as const

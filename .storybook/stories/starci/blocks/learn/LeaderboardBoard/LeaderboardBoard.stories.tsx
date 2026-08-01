@@ -22,7 +22,7 @@ export default meta
 
 type Story = StoryObj<typeof LeaderboardBoard>
 
-const STANDING = { rank: 42, primaryLabel: "1.240 XP tuần này", secondaryLabel: "Top 15% toàn khoá" }
+const STANDING = { rank: 42, primaryLabel: "1,240 XP this week", secondaryLabel: "Top 15% of the course" }
 
 // No entry here is ever the viewer — the two states below place the viewer at
 // rank 4 and rank 42, and neither belongs on the top-3 dais.
@@ -46,7 +46,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the standing card — a bare surface face wrapping the viewer's own rank and stat lines", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "IconTile": { tier: "atom", role: "the trophy badge on the standing card, giving the viewer's rank an identity mark", storyId: "atoms-display-icontile-icontile--default" },
     "Avatar": { tier: "atom", role: "a podium finisher's face — the same fallback chain (upload → generated → initials → icon) as everywhere else a person renders", storyId: "atoms-display-avatar-avatar--default" },
-    "UserCell": { tier: "atom", role: "a ranked row's identity + accent — `isOwnRow` marks the viewer's own row without this block hand-rolling a second accent mechanism", storyId: "atoms-display-usercell-usercell--default" },
+    "UserCell": { tier: "composite", role: "a ranked row's identity + accent — `isOwnRow` marks the viewer's own row without this block hand-rolling a second accent mechanism", storyId: "composites-lists-usercell-usercell--default" },
     "Typography": { tier: "atom", role: "one of the block's own text lines — a rank number, a username, a score, or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
     "SurfaceCardList": { tier: "composite", role: "the bounded row list — takes the ranked rows plus the ellipsis + pinned self-row as data, via its free-form `content` escape hatch", storyId: "composites-cards-surfacecard-surfacecardlist--free-form" },
 }
@@ -54,7 +54,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the ranked board: async lifecycle, standing, podium and rows, all as states of one shape. */
 export const Board: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LeaderboardBoard"
                 tier="block"
@@ -70,13 +70,13 @@ export const Board: Story = {
     isLoading={false}
     isEmpty={false}
     onRetry={refetch}
-    standing={{ rank: 42, primaryLabel: "1.240 XP tuần này", secondaryLabel: "Top 15% toàn khoá" }}
+    standing={{ rank: 42, primaryLabel: "1,240 XP this week", secondaryLabel: "Top 15% of the course" }}
     podiumEntries={podium}
     rows={rows}
     selfRow={{ key: "self", rank: 42, username: "quynh.pham", valueLabel: "1.240 XP", isMe: true, profileHref: "/u/quynh.pham" }}
     hiddenBetweenCount={35}
     celebrateKey={1}
-    meLabel="Bạn"
+    meLabel="You"
 />`,
                         render: (
                             <LeaderboardBoard
@@ -91,7 +91,7 @@ export const Board: Story = {
                                 selfRow={SELF_ROW}
                                 hiddenBetweenCount={35}
                                 celebrateKey={1}
-                                meLabel="Bạn"
+                                meLabel="You"
                             />
                         ),
                     },
@@ -102,29 +102,29 @@ export const Board: Story = {
     isLoading={false}
     isEmpty={false}
     onRetry={refetch}
-    standing={{ rank: 4, primaryLabel: "3.120 XP tuần này" }}
+    standing={{ rank: 4, primaryLabel: "3,120 XP this week" }}
     podiumEntries={podium}
     rows={[{ key: "r4", rank: 4, username: "duc.nguyen", valueLabel: "3.120 XP", isMe: true }, ...]}
     celebrateKey={1}
-    meLabel="Bạn"
+    meLabel="You"
 />`,
                         render: (
                             <LeaderboardBoard
                                 isLoading={false}
                                 isEmpty={false}
                                 onRetry={() => {}}
-                                standing={{ rank: 4, primaryLabel: "3.120 XP tuần này" }}
+                                standing={{ rank: 4, primaryLabel: "3,120 XP this week" }}
                                 podiumEntries={PODIUM}
                                 rows={[{ ...ROWS[0], isMe: true }, ROWS[1], ROWS[2]]}
                                 celebrateKey={1}
-                                meLabel="Bạn"
+                                meLabel="You"
                             />
                         ),
                     },
                     {
                         name: "isLoading = true",
                         why: "Before any real board data lands, `AsyncContent` picks the loading branch and this block hands it a fixed-shape skeleton mirror — a placeholder standing card, three podium columns and five rows — so the page doesn't jump once the real counts land.",
-                        code: "<LeaderboardBoard isLoading isEmpty={false} onRetry={refetch} podiumEntries={[]} rows={[]} celebrateKey={0} meLabel=\"Bạn\" />",
+                        code: "<LeaderboardBoard isLoading isEmpty={false} onRetry={refetch} podiumEntries={[]} rows={[]} celebrateKey={0} meLabel=\"You\" />",
                         render: (
                             <LeaderboardBoard
                                 isLoading
@@ -133,14 +133,14 @@ export const Board: Story = {
                                 podiumEntries={[]}
                                 rows={[]}
                                 celebrateKey={0}
-                                meLabel="Bạn"
+                                meLabel="You"
                             />
                         ),
                     },
                     {
                         name: "isEmpty = true",
                         why: "Nobody has scored on this board yet, so `AsyncContent` falls to its empty branch instead of drawing a standing card, an empty dais and an empty list — three boxes with nothing in them would read as broken, not as intentionally empty.",
-                        code: "<LeaderboardBoard isLoading={false} isEmpty onRetry={refetch} podiumEntries={[]} rows={[]} celebrateKey={0} meLabel=\"Bạn\" />",
+                        code: "<LeaderboardBoard isLoading={false} isEmpty onRetry={refetch} podiumEntries={[]} rows={[]} celebrateKey={0} meLabel=\"You\" />",
                         render: (
                             <LeaderboardBoard
                                 isLoading={false}
@@ -149,14 +149,14 @@ export const Board: Story = {
                                 podiumEntries={[]}
                                 rows={[]}
                                 celebrateKey={0}
-                                meLabel="Bạn"
+                                meLabel="You"
                             />
                         ),
                     },
                     {
                         name: "error present",
                         why: "A failed fetch beats loading/empty/content in `AsyncContent`'s priority order, so a stale board never sits under a silent spinner. `onRetry` is the caller's own refetch — the block only supplies the wording and the button.",
-                        code: "<LeaderboardBoard isLoading={false} isEmpty={false} error={fetchError} onRetry={refetch} podiumEntries={[]} rows={[]} celebrateKey={0} meLabel=\"Bạn\" />",
+                        code: "<LeaderboardBoard isLoading={false} isEmpty={false} error={fetchError} onRetry={refetch} podiumEntries={[]} rows={[]} celebrateKey={0} meLabel=\"You\" />",
                         render: (
                             <LeaderboardBoard
                                 isLoading={false}
@@ -166,7 +166,7 @@ export const Board: Story = {
                                 podiumEntries={[]}
                                 rows={[]}
                                 celebrateKey={0}
-                                meLabel="Bạn"
+                                meLabel="You"
                             />
                         ),
                     },

@@ -29,8 +29,8 @@ export default meta
 type Story = StoryObj<typeof FoundationSearchBar>
 
 const SUGGESTIONS: Array<FoundationSearchSuggestion> = [
-    { id: "docker-101", label: "Docker cho người mới bắt đầu" },
-    { id: "docker-compose", label: "Docker Compose nâng cao" },
+    { id: "docker-101", label: "Docker for beginners" },
+    { id: "docker-compose", label: "Advanced Docker Compose" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -42,7 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the one shape this block has: field + count. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationSearchBar"
                 tier="block"
@@ -52,7 +52,7 @@ export const Default: Story = {
                 renderClassName="mx-auto max-w-2xl"
                 states={[
                     {
-                        name: "resultCount = 12, query rỗng",
+                        name: "resultCount = 12, empty query",
                         why: "The resting shape of the row: an empty field and the full match count sitting beside it. This is what the reader sees before typing anything.",
                         code: `<FoundationSearchBar
     query=""
@@ -74,12 +74,12 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "query = \"docker\", gợi ý đang khớp",
+                        name: "query = \"docker\", suggestions matching",
                         why: "The reader has typed a query and the typeahead read answered with matches; the count on the right still reflects the last completed search, since in `src` it comes from a separate SWR read than the suggestions do.",
                         code: `<FoundationSearchBar
     query="docker"
     onQueryChange={setQuery}
-    suggestions={[{ id: "docker-101", label: "Docker cho người mới bắt đầu" }, { id: "docker-compose", label: "Docker Compose nâng cao" }]}
+    suggestions={[{ id: "docker-101", label: "Docker for beginners" }, { id: "docker-compose", label: "Advanced Docker Compose" }]}
     onSelectSuggestion={onSelect}
     resultCount={12}
 />`,
@@ -94,7 +94,7 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "isCountLoading = true, gợi ý đã sẵn",
+                        name: "isCountLoading = true, suggestions already loaded",
                         why: "The count's own SWR read is still in flight while the typeahead has already answered — only the count text shimmers, the field and its dropdown stay fully interactive. This is the behaviour that makes this block a sibling of `FoundationCategorySearchBar` rather than the same block: the two reads there never fall out of sync.",
                         code: `<FoundationSearchBar
     query="docker"
@@ -114,8 +114,8 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "resultCount = 0 (tìm không ra)",
-                        why: "A real, newsworthy zero — the search genuinely matched nothing — so the block renders \"Không có kết quả phù hợp\" instead of hiding the count. Silence here would read as the count still loading rather than as an honest empty result.",
+                        name: "resultCount = 0 (no matches)",
+                        why: "A real, newsworthy zero — the search genuinely matched nothing — so the block renders its own honest zero-match wording instead of hiding the count. Silence here would read as the count still loading rather than as an honest empty result.",
                         code: `<FoundationSearchBar
     query="xyz123"
     onQueryChange={setQuery}
@@ -134,7 +134,7 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "resultCount = undefined (chưa biết)",
+                        name: "resultCount = undefined (unknown)",
                         why: "The screen has not resolved a count yet — distinct from a real zero — so this block renders nothing on the right rather than guess. The caller passes `isCountLoading` for the loading mirror instead; a bare `undefined` here is for a screen that has no count to show at all.",
                         code: `<FoundationSearchBar
     query=""

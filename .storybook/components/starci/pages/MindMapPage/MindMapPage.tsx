@@ -35,8 +35,8 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * ⚠️ CORRECTION 1 — `MindMapBackButton` IS NOT IN THIS SCREEN. It was never
  * built as a Storybook block this run (not in the "newly built" list, not in
  * "reused"), and `FloatingActionButton` — the one reused block offered as a
- * stand-in — does not fit it: that block's OWN story states outright "đừng
- * bọc trong element khác để định vị" (it hard-codes `fixed bottom-6 right-…`
+ * stand-in — does not fit it: that block's OWN story states outright "don't
+ * wrap it in another element to position it" (it hard-codes `fixed bottom-6 right-…`
  * and takes no repositioning prop), so wiring it in as a top-left back link
  * would either render in the wrong corner or, if forced there via `className`,
  * fight itself (tailwind-merge does not collapse `bottom-6`+`top-4`, both
@@ -167,12 +167,12 @@ const RAIL_DEFAULT_WIDTH = 320
 const RAIL_MIN_WIDTH = 264
 const RAIL_MAX_WIDTH = 520
 
-const CANVAS_GAP_TITLE = "Vùng bản đồ khái niệm"
-const CANVAS_GAP_DESCRIPTION = "Đồ thị ReactFlow thật (node, drawer, minimap) chưa dựng trong lần này — khối này là chỗ nó sẽ mount (§B3)."
-const CANVAS_GAP_LOADING_TITLE = "Đang tải bản đồ…"
+const CANVAS_GAP_TITLE = "Concept map region"
+const CANVAS_GAP_DESCRIPTION = "The real ReactFlow graph (nodes, drawer, minimap) isn't built this pass — this block is where it will mount (§B3)."
+const CANVAS_GAP_LOADING_TITLE = "Loading map…"
 
-const WORKSPACE_EMPTY_TITLE = "Khoá này chưa có bản đồ khái niệm"
-const WORKSPACE_EMPTY_DESCRIPTION = "Bản đồ được dựng tự động khi khoá có đủ module — quay lại sau nhé."
+const WORKSPACE_EMPTY_TITLE = "This course has no concept map yet"
+const WORKSPACE_EMPTY_DESCRIPTION = "The map is generated automatically once the course has enough modules — check back later."
 
 /** Props for the {@link MindMapCanvasGap} stand-in below. */
 interface MindMapCanvasGapProps {
@@ -186,7 +186,7 @@ interface MindMapCanvasGapProps {
  */
 const MindMapCanvasGap = ({ isLoading = false, showAnatomy = false }: MindMapCanvasGapProps) => (
     <StackV
-        gap="flush"
+        gap={1}
         align="center"
         justify="center"
         classNames={["h-full"]}
@@ -209,7 +209,7 @@ const MindMapCanvasGap = ({ isLoading = false, showAnatomy = false }: MindMapCan
  */
 const MindMapWorkspaceEmpty = () => (
     <StackV
-        gap="flush"
+        gap={1}
         align="center"
         justify="center"
         className="h-[calc(100dvh-4rem)]"
@@ -287,7 +287,7 @@ const MindMapPage = ({
     const canvasOverlays = (
         <>
             <StackV
-                gap="flush"
+                gap={1}
                 align="center"
                 className="absolute inset-x-0 top-4 z-10"
                 anatPart={showAnatomy ? "StackV" : undefined}
@@ -303,7 +303,7 @@ const MindMapPage = ({
                 }
             />
             <StackV
-                gap="flush"
+                gap={1}
                 className="absolute bottom-4 left-4 z-10"
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
@@ -316,7 +316,7 @@ const MindMapPage = ({
                 }
             />
             <StackV
-                gap="flush"
+                gap={1}
                 className="absolute bottom-4 right-4 z-10"
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
@@ -353,8 +353,8 @@ const MindMapPage = ({
             showAnatomy={showAnatomy}
         >
             <StackV
-                padding="roomy"
-                gap="flush"
+                padding={6}
+                gap={1}
                 className="overflow-y-auto"
                 classNames={["h-full"]}
                 anatPart={showAnatomy ? "StackV" : undefined}
@@ -370,7 +370,7 @@ const MindMapPage = ({
                 floating chrome that in the real app renders as the SAME engine's own Panel
                 children — see the file header's "OVERLAYS ARE FRAMES" note. */}
             <StackV
-                gap="flush"
+                gap={1}
                 className="relative"
                 classNames={["min-w-0", "flex-1"]}
                 anatPart={showAnatomy ? "StackV" : undefined}
@@ -379,7 +379,7 @@ const MindMapPage = ({
         </>
     )
 
-    return <StackH gap="flush" className="h-[calc(100dvh-4rem)]" anatPart={showAnatomy ? "StackH" : undefined} body={workspaceSections} />
+    return <StackH gap={1} className="h-[calc(100dvh-4rem)]" anatPart={showAnatomy ? "StackH" : undefined} body={workspaceSections} />
 }
 
 export { MindMapPage }

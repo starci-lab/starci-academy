@@ -50,7 +50,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *     same discipline `NavLinks`/`Navbar` already apply to their own
  *     navigation callbacks.
  *
- * `gap="flush"` IS DELIBERATE, NOT AN OMISSION. Navbar and Footer are
+ * `gap={1}` IS DELIBERATE, NOT AN OMISSION. Navbar and Footer are
  * expected to draw their OWN edge (`border-b` / `border-t`) — confirmed
  * against the real component's own borders on both blocks. A `section`-gap
  * here would show a blank strip before the sticky nav's border starts,
@@ -146,7 +146,7 @@ const InnerLayout = ({
     )
 
     return (
-        <StackV gap="flush" className={cn("min-h-dvh", className)} anatPart={anatPart} body={navMainFooter} />
+        <StackV gap={1} className={cn("min-h-dvh", className)} anatPart={anatPart} body={navMainFooter} />
     )
 }
 

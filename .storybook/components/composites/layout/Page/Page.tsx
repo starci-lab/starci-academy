@@ -1,8 +1,9 @@
 import React from "react"
-import type { ReactNode } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -31,8 +32,18 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * on 2026-07-26: the old frame had no `mx-auto`, no `max-w`, only right padding —
  * a half-baked version of the "content width" concept that `Container` already
  * does correctly (§13c: a duplicate frame gets deleted).
+ *
+ * COMPOSITE-8 — both `PageHeader` and `PageBottomBar` own an `isSkeleton` of
+ * their own, so every slot they render is a COMPONENT reference
+ * (`ComponentType<{ isSkeleton?: boolean }>`), never a pre-built node: the
+ * frame calls it itself so it can forward `isSkeleton` into it. Text the
+ * frame renders directly through `Typography` (`title`/`description`) is a
+ * plain `string` instead — the frame wraps it in the atom itself.
  * ─────────────────────────────────────────────────────────────────────────────
  */
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Page" } as const
 
 // ─────────────────────────────────────────────────────────────────────────────
 // .Header — the breadcrumb/title/description/actions/meta block (was `PageHeader`)
@@ -51,39 +62,42 @@ interface PageHeaderOwnProps {
     anatPart?: string
 
     /**
-     * Optional supporting description placed directly below the title. Rendered
-     * at `text-sm` in the muted tone. Omit when the title is self-explanatory.
+     * Optional supporting description placed directly below the title. The
+     * frame renders it through `Typography` itself (`text-sm`, muted tone) and
+     * forwards `isSkeleton`, so this is plain text (COMPOSITE-8), not a
+     * pre-built node. Omit when the title is self-explanatory.
      */
-    description?: ReactNode
+    description?: string
     /**
-     * Optional breadcrumb row rendered above the title row. Accepts any node —
-     * typically a `<Breadcrumbs>` HeroUI component or a plain anchor chain.
-     * Rendered at a smaller scale so it visually precedes the title hierarchy.
+     * Optional breadcrumb row rendered above the title row, as a COMPONENT
+     * reference (COMPOSITE-8) — the frame calls it itself. Typically a
+     * `<Breadcrumbs>` house atom or a `LinkBack`. Omitted entirely while
+     * loading (a route rarely needs it before data lands).
      */
-    breadcrumb?: ReactNode
+    breadcrumb?: ComponentTypeWithSkeleton
     /**
-     * Optional right-aligned slot for action controls (e.g. `<Button>` or a
-     * group of buttons). Rendered `shrink-0` so it never compresses the title
-     * column.
+     * Optional right-aligned slot for action controls, as a COMPONENT
+     * reference — the frame calls it and renders it `shrink-0` so it never
+     * compresses the title column. Omitted entirely while loading.
      */
-    actions?: ReactNode
+    actions?: ComponentTypeWithSkeleton
     /**
-     * Optional meta row placed BELOW the title/description — typically a row of
-     * stat/meta chips ("24 Modules · 87 Content items …"). Rendered `gap-3` from the
-     * title block. Omit when the header carries no stats.
+     * Optional meta row placed BELOW the title/description — typically a row
+     * of stat/meta chips ("24 Modules · 87 Content items …") — as a
+     * COMPONENT reference. Rendered `gap-3` from the title block. While
+     * loading, the frame draws its OWN 2-chip placeholder instead of calling
+     * this (COMPOSITE-10: the frame decides how many, not this slot). Omit
+     * when the header carries no stats.
      */
-    meta?: ReactNode
+    meta?: ComponentTypeWithSkeleton
     /**
      * Title scale. `"page"` (default) = `Typography.Heading` level 3 — a route's
      * OWN page title. `"compact"` = body-size bold, for a header that labels a
      * PANE/PHASE inside an existing page shell.
      */
     size?: "page" | "compact"
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /**
@@ -102,16 +116,16 @@ export type PageHeaderProps = PageHeaderOwnProps &
         | {
             isSkeleton: true
             /** Primary page or section title. See the live variant's doc for the full contract. */
-            title?: ReactNode
+            title?: string
         }
         | {
             isSkeleton?: false
             /**
              * Primary page or section title. Rendered at `text-xl font-medium` in the
-             * foreground tone. Accept a string or any inline React node (e.g. a
-             * title with an inline badge).
+             * foreground tone through `Typography` (COMPOSITE-8: the frame builds it
+             * itself, so this is plain text).
              */
-            title: ReactNode
+            title: string
         }
     )
 
@@ -129,79 +143,47 @@ export type PageHeaderProps = PageHeaderOwnProps &
 const Header = ({
     title,
     description,
-    breadcrumb,
-    actions,
-    meta,
+    breadcrumb: Breadcrumb,
+    actions: Actions,
+    meta: Meta,
     size = "page",
     isSkeleton = false,
-    className,
     classNames,
     showAnatomy,
     anatPart,
 }: PageHeaderProps) => {
-    if (isSkeleton) {
-        // Shape-agnostic mirror: the real shape (breadcrumb/description/meta presence)
-        // isn't known before the route's data arrives, so this assumes the full header.
-        // Shape-agnostic mirror: title-block bars stacked above a row of pill bars.
-        // Title/description mirror the exact atom the real branch renders at that spot
-        // (`Typography`), handed `isSkeleton` instead of a hand-drawn `HeroSkeleton` bar.
-        const skeletonHeader = (
-            <>
-                <StackV
-                    gap="related"
-                    classNames={["min-w-0"]}
-                    body={
-                        <>
-                            <Typography
-                                isSkeleton
-                                size={size === "compact" ? "base" : "h3"}
-                                className={size === "compact" ? "h-4 w-48 rounded" : "h-6 w-64 rounded"}
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            <Typography
-                                isSkeleton
-                                size="sm"
-                                className="h-4 w-80 max-w-full rounded"
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                        </>
-                    }
-                />
-                {/* No `items-*` in the old hand-rolled row → browser default was `stretch`,
-                    not `StackH`'s `center` default (both skeleton pills share one height so it
-                    reads the same, but `align="stretch"` keeps the DOM contract honest). */}
-                <StackH
-                    gap="related"
-                    align="stretch"
-                    body={
-                        <>
-                            <HeroSkeleton className="h-6 w-24 rounded-full" />
-                            <HeroSkeleton className="h-6 w-24 rounded-full" />
-                        </>
-                    }
-                />
-            </>
-        )
-        return <StackV gap="grouped" anatPart={anatPart} className={className} classNames={classNames} body={skeletonHeader} />
-    }
+    // ONE render path (§12c) — every part this frame would render anyway stays,
+    // each handed `isSkeleton`; the atoms draw their own shimmer. While loading, the
+    // real shape (breadcrumb/description/meta presence) isn't known yet, so the
+    // composite makes the same shape call the old hand-split branch made: assume a
+    // description line and a 2-chip meta row, skip breadcrumb/actions (a route
+    // rarely needs those before data lands).
+    const showDescription = isSkeleton || description != null
+    const showMeta = isSkeleton || Meta != null
+
     // Left column: stacked title and optional description
     const titleBlock = (
         <>
             {size === "compact" ? (
-                <Typography weight="bold" anatPart={showAnatomy ? "Typography" : undefined} text={title} />
+                <Typography weight="bold" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={title} />
             ) : (
-                <Typography size="h3" weight="bold" anatPart={showAnatomy ? "Typography" : undefined} text={title} />
+                <Typography size="h3" weight="bold" isSkeleton={isSkeleton} showAnatomy={showAnatomy} text={title} />
             )}
-            {description ? (
+            {showDescription ? (
                 // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
-                // — a viewport-width decision, so the wrapper owns it, not the atom.
-                <div className="line-clamp-2 @app-sm:line-clamp-none">
-                    <Typography size="sm"
-                        color="muted"
-                        anatPart={showAnatomy ? "Typography" : undefined}
-                        text={description}
-                    />
-                </div>
+                // — a viewport-width decision, so the wrapper owns it, not the atom. Skipped
+                // while loading: the shimmer bar has no overflow to clamp.
+                isSkeleton ? (
+                    <Typography size="sm" color="muted" isSkeleton showAnatomy={showAnatomy} />
+                ) : (
+                    <div className="line-clamp-2 @app-sm:line-clamp-none">
+                        <Typography size="sm"
+                            color="muted"
+                            showAnatomy={showAnatomy}
+                            text={description}
+                        />
+                    </div>
+                )
             ) : null}
         </>
     )
@@ -210,13 +192,14 @@ const Header = ({
         <StackH
             align="start"
             justify="between"
-            gap="grouped"
+            gap={4}
             body={
                 <>
-                    <StackV gap="related" classNames={["min-w-0"]} body={titleBlock} />
-                    {/* Right slot: shrink-0 prevents action buttons from being squeezed */}
-                    {actions ? (
-                        <div className="shrink-0">{actions}</div>
+                    <StackV gap={3} classNames={["min-w-0"]} body={titleBlock} />
+                    {/* Right slot: shrink-0 prevents action buttons from being squeezed.
+                        Omitted while loading — the shape of the action row isn't known yet. */}
+                    {!isSkeleton && Actions ? (
+                        <div className="shrink-0"><Actions isSkeleton={isSkeleton} /></div>
                     ) : null}
                 </>
             }
@@ -224,21 +207,36 @@ const Header = ({
     )
     const headerBody = (
         <>
-            {/* Breadcrumb row — rendered only when provided, sits above the main title row */}
-            {breadcrumb ? (
-                <div>{breadcrumb}</div>
+            {/* Breadcrumb row — rendered only when provided and loaded, sits above the main title row */}
+            {!isSkeleton && Breadcrumb ? (
+                <div><Breadcrumb isSkeleton={isSkeleton} /></div>
             ) : null}
             {titleRow}
-            {/* Meta row: stat/meta chips below the title block (gap="grouped" from outer) */}
-            {meta ? (
-                <div>{meta}</div>
+            {/* Meta row: stat/meta chips below the title block (gap={4} from outer). While
+                loading, 2 `Chip` placeholders stand in — the composite decides the count,
+                the atom draws its own pill shimmer (no hand-rolled bar). */}
+            {showMeta ? (
+                isSkeleton ? (
+                    <StackH
+                        gap={3}
+                        align="stretch"
+                        body={
+                            <>
+                                <Chip isSkeleton />
+                                <Chip isSkeleton />
+                            </>
+                        }
+                    />
+                ) : (
+                    <div>{Meta ? <Meta isSkeleton={isSkeleton} /> : null}</div>
+                )
             ) : null}
         </>
     )
     return (
-        // outer gap="grouped": breadcrumb ↔ title-block ↔ meta (different header tiers);
-        // title ↔ description stay a related gap="related" pair inside the title block.
-        <StackV gap="grouped" anatPart={anatPart} className={className} classNames={classNames} body={headerBody} />
+        // outer gap={4}: breadcrumb ↔ title-block ↔ meta (different header tiers);
+        // title ↔ description stay a related gap={3} pair inside the title block.
+        <StackV gap={4} anatPart={anatPart} classNames={classNames} body={headerBody} />
     )
 }
 
@@ -249,23 +247,28 @@ const Header = ({
 /** Props for {@link PageBottomBar}. */
 export interface PageBottomBarProps {
     /**
-     * Leading content of the bar — typically a price. Equivalent to `children`;
-     * wins over it when both are passed.
+     * Leading content of the bar — typically a price — as a COMPONENT
+     * reference (COMPOSITE-8): the frame calls it itself so it can forward
+     * `isSkeleton`. Equivalent to `children`; wins over it when both are passed.
      */
-    body?: ReactNode
+    body?: ComponentTypeWithSkeleton
     /**
-     * Trailing control(s) — the primary CTA. When BOTH `body` and `actions` are
-     * given the frame lays out the row itself (`justify-between`, `shrink-0` on
-     * the actions) so callers stop hand-rolling that flex row.
+     * Trailing control(s) — the primary CTA — as a COMPONENT reference. When
+     * BOTH `body` and `actions` are given the frame lays out the row itself
+     * (`justify-between`, `shrink-0` on the actions) so callers stop
+     * hand-rolling that flex row.
      */
-    actions?: ReactNode
-    /** Shorthand for {@link PageBottomBarProps.body}. */
-    children?: ReactNode
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
+    actions?: ComponentTypeWithSkeleton
+    /** Shorthand for {@link PageBottomBarProps.body} — same component-reference contract. */
+    children?: ComponentTypeWithSkeleton
+    /**
+     * `true` → forwarded into whichever of `body`/`actions` renders, so a bar
+     * whose price/CTA is not known yet (e.g. still loading enrollment status)
+     * can shimmer instead of showing stale content.
+     */
+    isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /**
@@ -292,34 +295,35 @@ const BottomBar = ({
     body,
     actions,
     children,
-    className,
+    isSkeleton = false,
     classNames,
-    showAnatomy = false,
 }: PageBottomBarProps) => {
-    const main = body ?? children
+    const Main = body ?? children
+    const Actions = actions
     const chrome = "fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-6 py-3"
 
     // Only ONE side supplied → render it raw: the caller's own width strategy
     // (`w-full` CTA, two `flex-1` buttons) must not be boxed by a shrink-0 wrapper.
-    if (main == null || actions == null) {
-        const only = main ?? actions
+    if (Main == null || Actions == null) {
+        const Only = Main ?? Actions
         return (
-            <div className={cn(chrome, className, classNames)}>
-                <div>{only}</div>
+            <div className={cn(chrome, classNames)} data-tier="composite" data-component="PageBottomBar">
+                <div>{Only ? <Only isSkeleton={isSkeleton} /> : null}</div>
             </div>
         )
     }
 
     return (
-        <div className={cn(chrome, className, classNames)}>
+        <div className={cn(chrome, classNames)} data-tier="composite" data-component="PageBottomBar">
             <StackH
                 align="center"
                 justify="between"
-                gap="grouped"
+                gap={4}
+                pattern="content-row"
                 body={
                     <>
-                        <div className="min-w-0">{main}</div>
-                        <div className="shrink-0">{actions}</div>
+                        <div className="min-w-0"><Main isSkeleton={isSkeleton} /></div>
+                        <div className="shrink-0"><Actions isSkeleton={isSkeleton} /></div>
                     </>
                 }
             />
@@ -328,7 +332,7 @@ const BottomBar = ({
 }
 
 /**
- * The page-chrome KHUNG namespace — the frames a ROUTE is built out of, one
+ * The page-chrome frame namespace — the frames a ROUTE is built out of, one
  * import, two members:
  *
  * | Member | Content channel |

@@ -23,7 +23,7 @@ export interface PodiumEntry {
     username: string | null
     /** Avatar URL (null → generated fallback). */
     avatar: string | null
-    /** Pre-formatted points label (e.g. "1420đ"). */
+    /** Pre-formatted points label (e.g. "1420 pts"). */
     pointsLabel: React.ReactNode
     /** True when this finisher is the viewer → ring-accent avatar + accent name + label. */
     isMe?: boolean
@@ -72,7 +72,7 @@ export const Podium = ({
                             <RankDeltaCaret delta={entry.rankDelta} />
                         ) : null}
                         <UserAvatar
-                            // the viewer's own avatar is ringed (accent-system §3 "của tôi"
+                            // the viewer's own avatar is ringed (accent-system §3 "mine"
                             // = ring + value accent, NOT a filled step)
                             className={cn(
                                 "shrink-0",
@@ -99,7 +99,7 @@ export const Podium = ({
                         </div>
                         {/* the dais step — champion raised, marked by a ring + accent
                             number (NOT an accent fill: accent-system §5 + the
-                            LeaderboardPodium ruling — the winner's bệ is not tinted) */}
+                            LeaderboardPodium ruling — the winner's platform is not tinted) */}
                         <div
                             className={cn(
                                 "flex w-20 items-center justify-center rounded-t-2xl font-bold",

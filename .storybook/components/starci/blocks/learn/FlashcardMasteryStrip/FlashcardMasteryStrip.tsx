@@ -91,10 +91,10 @@ const SKELETON_SEGMENTS: Array<SegmentBarSegment> = [
  */
 const masteryCaption = (totalReviewed: number, retention: number | undefined): string | undefined => {
     if (totalReviewed === 0) {
-        return "Ôn thẻ đầu tiên để bắt đầu đo tỉ lệ nhớ."
+        return "Review your first card to start measuring retention."
     }
     if (totalReviewed >= 5 && retention != null) {
-        return `Nhớ đúng ${retention}% qua ${totalReviewed} lượt ôn.`
+        return `${retention}% recall across ${totalReviewed} reviews.`
     }
     return undefined
 }
@@ -120,19 +120,19 @@ const FlashcardMasteryStrip = ({
     const hasStreak = streak != null
 
     const segments: Array<SegmentBarSegment> = [
-        { key: "mastered", label: "Thành thạo", value: mastered, color: "var(--success)" },
-        { key: "learning", label: "Đang học", value: learning, color: "var(--warning)" },
-        { key: "new", label: "Mới", value: newCount, color: "var(--muted)" },
+        { key: "mastered", label: "Mastered", value: mastered, color: "var(--success)" },
+        { key: "learning", label: "Learning", value: learning, color: "var(--warning)" },
+        { key: "new", label: "New", value: newCount, color: "var(--muted)" },
     ]
 
     const ariaLabel = isSkeleton
-        ? "Đang tải tiến độ ghi nhớ"
-        : `Tiến độ ghi nhớ: ${mastered} thành thạo, ${learning} đang học, ${newCount} mới, trên tổng ${total} thẻ`
+        ? "Loading retention progress"
+        : `Retention progress: ${mastered} mastered, ${learning} learning, ${newCount} new, out of ${total} cards`
 
     const masteryReadout = (
         <>
             <StackH
-                gap="tight"
+                gap={2}
                 align="baseline"
                 anatPart={showAnatomy ? "StackH" : undefined}
                 body={
@@ -142,14 +142,14 @@ const FlashcardMasteryStrip = ({
                             weight="bold"
                             isSkeleton={isSkeleton}
                             text={`${mastered}/${total}`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                         <Typography
                             size="sm"
                             color="muted"
                             isSkeleton={isSkeleton}
                             text={`${pct}%`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     </>
                 }
@@ -168,25 +168,24 @@ const FlashcardMasteryStrip = ({
     return (
         <div data-anat-part={anatPart}>
             <SurfaceCard
-                label="Thành thạo"
-                action={
+                label="Mastered"
+                action={() =>
                     isSkeleton ? (
-                        <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                        <Chip isSkeleton showAnatomy={showAnatomy} />
                     ) : hasStreak ? (
                         <Chip
                             tone="warning"
                             icon={FlameIcon}
-                            text={`${streak} ngày liên tiếp`}
-                            anatPart={showAnatomy ? "Chip" : undefined}
+                            text={`${streak}-day streak`}
+                            showAnatomy={showAnatomy}
                         />
                     ) : undefined
                 }
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "SurfaceCard" : undefined}
-            >
-                <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={masteryReadout} />
-            </SurfaceCard>
+                body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={masteryReadout} />}
+            />
         </div>
     )
 }

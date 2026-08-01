@@ -25,7 +25,7 @@ export interface FollowButtonProps extends WithClassNames<undefined> {
     /**
      * Quiet mode for dense surfaces (leaderboards) where MANY follow buttons sit
      * next to a single primary CTA: drops the solid-accent look so the page keeps
-     * exactly one primary (`accent-system` — 1 primary/màn). Default off (a lone
+     * exactly one primary (`accent-system` — 1 primary per screen). Default off (a lone
      * follow, e.g. a profile hero, stays primary).
      */
     quiet?: boolean

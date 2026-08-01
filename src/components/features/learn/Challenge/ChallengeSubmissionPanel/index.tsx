@@ -398,7 +398,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
             )}
             {/* deliverables as a nested card (one open at a time): each header shows the submission's
                 status + title + its points / earned score; the panel holds the form. Card-in-card →
-                border + INHERITED bg (transparent), NOT a second fill on the outer "Nộp bài" card. */}
+                border + INHERITED bg (transparent), NOT a second fill on the outer "Submit" card. */}
             <Accordion
                 variant="default"
                 className="overflow-hidden rounded-2xl border border-default bg-transparent"

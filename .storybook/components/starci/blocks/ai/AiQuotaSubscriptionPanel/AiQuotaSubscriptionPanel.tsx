@@ -8,7 +8,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `AiQuotaSubscriptionPanel`: body of the "Gói" (Subscription) tab
+ * BLOCK — `AiQuotaSubscriptionPanel`: body of the "Package" (Subscription) tab
  * inside `AiQuotaModal` — either a plain "no paid tier yet" CTA, or the
  * Premium `AiQuotaLane` plus a caption naming the active tier.
  *
@@ -121,37 +121,37 @@ const AiQuotaSubscriptionPanel = ({
             <div className={className} data-anat-part={anatPart}>
                 <SurfaceCard
                     variant="nested"
-                    padding="cozy"
+                    padding={4}
                     showAnatomy={showAnatomy}
                     anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                >
-                    <StackV gap="grouped" align="start" anatPart={showAnatomy ? "StackV" : undefined} body={
-                        <>
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                text="Bạn chưa có gói trả phí. Nâng cấp để mở khoá credit Premium và chấm bài bằng model cao cấp."
-                                anatPart={showAnatomy ? "Typography" : undefined}
-                            />
-                            <Button
-                                label="Đăng ký gói trả phí"
-                                variant="primary"
-                                size="lg"
-                                suffixIcon={ArrowRightIcon}
-                                iconSlide
-                                onPress={onSubscribe}
-                                anatPart={showAnatomy ? "Button" : undefined}
-                            />
-                        </>
-                    } />
-                </SurfaceCard>
+                    body={() => (
+                        <StackV gap={4} align="start" anatPart={showAnatomy ? "StackV" : undefined} body={
+                            <>
+                                <Typography
+                                    size="sm"
+                                    color="muted"
+                                    text="You don't have a paid plan yet. Upgrade to unlock Premium credit and get graded with premium models."
+                                    showAnatomy={showAnatomy}
+                                />
+                                <Button
+                                    label="Subscribe to a paid plan"
+                                    variant="primary"
+                                    size="lg"
+                                    suffixIcon={ArrowRightIcon}
+                                    iconSlide
+                                    onPress={onSubscribe}
+                                />
+                            </>
+                        } />
+                    )}
+                />
             </div>
         )
     }
 
     return (
         <div className={className} data-anat-part={anatPart}>
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={
                 <>
                     <AiQuotaLane
                         data={premiumLane?.data}
@@ -162,8 +162,8 @@ const AiQuotaSubscriptionPanel = ({
                     <Typography
                         size="sm"
                         color="muted"
-                        text={`Bạn đang dùng gói ${TIER_LABEL[tier]}.`}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        text={`You're on the ${TIER_LABEL[tier]} plan.`}
+                        showAnatomy={showAnatomy}
                     />
                 </>
             } />

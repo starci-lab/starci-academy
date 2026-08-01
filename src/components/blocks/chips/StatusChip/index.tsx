@@ -34,7 +34,7 @@ export interface StatusChipProps extends WithClassNames<undefined> {
      * `<button><XIcon/>` — and don't override its glyph either; same treatment as
      * `Callout`). When set, the leading {@link StatusChipProps.icon} is DROPPED — a
      * removable/filter chip carries EITHER a leading status icon OR a trailing
-     * cancel-X, never both (teacher: "có dấu X rồi thì prefix không có icon").
+     * cancel-X, never both (teacher: "once there's an X, there's no prefix icon").
      */
     onCancel?: () => void
     /**

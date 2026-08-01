@@ -42,11 +42,11 @@ import { SplitWorkspace } from "@sb-components/frames/SplitWorkspace/SplitWorksp
  * bottom: the read column and the act column answer different questions ("what
  * do I need to do" vs "how did it go / let me try"), so `ChallengeDeliverableList`
  * + `ChallengeScoreCard` sit in their own track beside the brief instead of
- * being appended under it. Composed with `SplitWorkspace` (§ layout khung,
+ * being appended under it. Composed with `SplitWorkspace` (§ layout frame,
  * 2026-07-29) — `min-w-0 flex-1` reading column beside a `shrink-0 w-[360px]`
  * sticky aside, STACKED (mobile/tablet) → `@app-xl:flex-row` (desktop) —
  * matching `src`'s own responsive axis exactly (was `StackH…wrap`, a fixed
- * horizontal axis that never actually stacked below desktop; thầy caught the
+ * horizontal axis that never actually stacked below desktop; the reviewer caught the
  * render forcing side-by-side even on mobile). `Container size="xl"` (not the
  * `md` a single-column screen like `ContentPage`/`CourseContents` uses) is
  * what actually buys the room: at `md` (48rem) the two columns would fight
@@ -187,12 +187,12 @@ const ChallengePage = ({
     const challengeBody = (
         <SplitWorkspace
             anatPart={showAnatomy ? "SplitWorkspace" : undefined}
-            main={<StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={readColumn} />}
-            aside={<StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={actColumn} />}
+            main={<StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={readColumn} />}
+            aside={<StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={actColumn} />}
         />
     )
 
-    return <Container size="xl" padding="roomy" body={challengeBody} />
+    return <Container size="xl" padding={6} body={challengeBody} />
 }
 
 export { ChallengePage }

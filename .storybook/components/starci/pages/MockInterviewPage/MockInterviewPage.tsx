@@ -77,7 +77,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * same pattern `MindMapContinueButton` already established for the course
  * mind-map's own single floating CTA).
  *
- * ⛔ NO `FeedbackConfirm` WIRED HERE, though the planner's tree asked for one
+ * ⛔ NO `ConfirmDialog` WIRED HERE, though the planner's tree asked for one
  * directly inside `live` (leave / finish-early). `FlashcardReviewPage`'s own
  * file header already burned down this exact question for its identical
  * session band: a screen may not import a composite directly, no block in
@@ -88,13 +88,13 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * confirm dialog — is a decision made ABOVE this component, not faked here.
  *
  * ⛔ NO `Disclosure` WIRED HERE EITHER. `MockInterviewSetup`'s own file header
- * already scopes the "Tùy chỉnh phiên" deep-config body (languages / kinds /
+ * already scopes the "Customize session" deep-config body (languages / kinds /
  * answer mode / AI model) out of this pass as a SECOND, deferred leaf — the
  * block that would hold that `Disclosure` was never built this run, so the
  * screen has nothing real to compose it around either.
  *
  * ⛔ NO DOCKED WORKSPACE PANE (whiteboard/code) IN `live`. The planner's tree
- * wanted a two-column split with `FeedbackEmpty` chrome on the right — but
+ * wanted a two-column split with `EmptyState` chrome on the right — but
  * that is a bare composite import too, and unlike `PlaygroundSessionPage`'s
  * two-pane workspace (which has real blocks, `PlaygroundResourcePanel` +
  * `PlaygroundConnectSheet`, to put in each pane) nothing in today's catalog
@@ -104,7 +104,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * `QuizPage`'s own `active` phase already uses for its session band + one
  * live block — not the full-bleed two-pane grid the real `src` screen draws.
  * The right-pane tool itself (and the 5-phase Design-mode script, and the
- * "Tùy chỉnh" config body) stay OUT OF THIS TREE ENTIRELY, exactly as scoped
+ * "Customize" config body) stay OUT OF THIS TREE ENTIRELY, exactly as scoped
  * in this run's own brief.
  *
  * ⛔ `isSkeleton` REACHES ONLY THE BLOCKS THAT CAN MIRROR THEMSELVES —
@@ -132,7 +132,7 @@ export interface MockInterviewPageProps {
     setupBackLabel: string
     /** Fired when the candidate leaves setup without starting a run. */
     onSetupBack: () => void
-    /** Setup screen title, e.g. "Phỏng vấn thử". */
+    /** Setup screen title, e.g. "Mock interview". */
     setupTitle: string
     /** One-line intro to the mock interview. */
     setupDescription?: string
@@ -178,7 +178,7 @@ export interface MockInterviewPageProps {
     onLiveBack: () => void
     /** Session title, e.g. the run's own name. */
     liveTitle?: string
-    /** Where the candidate is, already worded — e.g. "Câu 3 / 5". */
+    /** Where the candidate is, already worded — e.g. "Question 3 / 5". */
     liveCounter: string
     /** Time remaining, e.g. "42:10". Omitted → the run is untimed in the header (the real session's own 1h deadline still applies server-side). */
     liveTimeLeft?: string
@@ -200,7 +200,7 @@ export interface MockInterviewPageProps {
     interviewerPersona: InterviewerPresencePersona
     /** `true` while TTS audio is actively voicing the current question. */
     speaking: boolean
-    /** Status text shown while `speaking`, e.g. "Đang đọc câu hỏi". */
+    /** Status text shown while `speaking`, e.g. "Reading the question". */
     speakingLabel: string
     /** `true` → this session offers a TTS toggle at all. */
     ttsSupported?: boolean
@@ -246,11 +246,11 @@ export interface MockInterviewPageProps {
     isAnswerSubmitPending?: boolean
 
     // ── result: identity header ──
-    /** Back-link label, e.g. "Quay lại phỏng vấn thử". */
+    /** Back-link label, e.g. "Back to mock interview". */
     resultBackLabel: string
     /** Fired when the candidate leaves the debrief. */
     onResultBack: () => void
-    /** Debrief title, e.g. "Kết quả phỏng vấn". */
+    /** Debrief title, e.g. "Interview result". */
     resultTitle: string
     /** One-line description under the title. */
     resultDescription?: string
@@ -291,7 +291,7 @@ export interface MockInterviewPageProps {
 
 /**
  * The mock interview screen. See the file header for the phase model and the
- * three marked GAPs (confirm dialog, "Tùy chỉnh" config, docked workspace pane).
+ * three marked GAPs (confirm dialog, "Customize" config, docked workspace pane).
  *
  * @param props - {@link MockInterviewPageProps}
  */
@@ -489,22 +489,22 @@ const MockInterviewPage = ({
     const interviewPhases = (
         <>
             {phase === "setup" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={setupSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={setupSection} />
             ) : null}
 
             {phase === "live" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={liveSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={liveSection} />
             ) : null}
 
             {phase === "result" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={resultSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={resultSection} />
             ) : null}
         </>
     )
 
-    const interviewBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={interviewPhases} />
+    const interviewBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={interviewPhases} />
 
-    return <Container size="md" padding="roomy" body={interviewBody} />
+    return <Container size="md" padding={6} body={interviewBody} />
 }
 
 export { MockInterviewPage }

@@ -143,8 +143,6 @@ export interface AvatarBaseProps {
     color?: AvatarColor
     /** Render the leaf skeleton (a circle shimmer) instead of the avatar. */
     isSkeleton?: boolean
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -168,7 +166,6 @@ export const AvatarBase = ({
     size = "md",
     color = "default",
     isSkeleton = false,
-    className,
     classNames,
 }: AvatarBaseProps) => {
     const { box, dot, glyph, glyphWeight } = SIZE_MAP[size]
@@ -178,7 +175,11 @@ export const AvatarBase = ({
     // match pixel-for-pixel.
     if (isSkeleton) {
         return (
-            <span className={cn("relative inline-flex", ring ? cn(RING_FRAME, RING_TONE[ring]) : undefined, className, classNames)}>
+            <span
+                data-tier="atom"
+                data-component="Avatar"
+                className={cn("relative inline-flex", ring ? cn(RING_FRAME, RING_TONE[ring]) : undefined, classNames)}
+            >
                 <HeroSkeleton className={cn("rounded-full", box)} />
                 {status ? (
                     <span
@@ -222,7 +223,11 @@ export const AvatarBase = ({
         // Relative wrapper so the status dot can anchor to the bottom-right corner.
         // `classNames` applies here too, matching the skeleton branch above, so
         // caller positioning stays consistent across the loading/loaded transition.
-        <span className={cn("relative inline-flex", ring ? cn(RING_FRAME, RING_TONE[ring]) : undefined, className, classNames)}>
+        <span
+            data-tier="atom"
+            data-component="Avatar"
+            className={cn("relative inline-flex", ring ? cn(RING_FRAME, RING_TONE[ring]) : undefined, classNames)}
+        >
             <HeroAvatar size={size} color={color} className="rounded-full">
                 {imageSrc ? (
                     <HeroAvatarImage
@@ -250,3 +255,5 @@ export const AvatarBase = ({
         </span>
     )
 }
+
+export const meta = { tier: "atom", name: "Avatar" } as const

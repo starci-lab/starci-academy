@@ -43,7 +43,7 @@ const TOP_ROWS = 5
 export type WeeklyChallengeCardProps = WithClassNames<undefined>
 
 /**
- * "Thử thách tuần" section — the featured challenge of the week: title (routable),
+ * "This week's challenge" section — the featured challenge of the week: title (routable),
  * a live countdown, the viewer's pass status, total pass count, and a short
  * leaderboard of recent finishers. Owns its own `LabeledCard` frame (label outside)
  * and shows a standard empty state (frame stays) when no event is active.

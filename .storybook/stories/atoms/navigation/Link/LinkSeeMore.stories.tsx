@@ -59,7 +59,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** The BARE leaf — `decorative` not on, `size` left at default. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LinkSeeMore"
                 tier="atom"
@@ -85,7 +85,7 @@ export const Default: Story = {
  */
 export const Decorative: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LinkSeeMore"
                 tier="atom"
@@ -98,7 +98,7 @@ export const Decorative: Story = {
                         why: "The link drops its own `<a>`/`Link` tag and its hover fade now rides the parent's `group` state, so hovering anywhere on the bordered box below fades it in, not just the text itself. This lets a whole card act as the single press target while the link still visually reads as the affordance that closes it.",
                         code: "<div className=\"group cursor-pointer\">\n  <LinkSeeMore decorative label=\"Continue\" />\n</div>",
                         render: (
-                            <div className="group w-fit cursor-pointer rounded-lg border border-default p-3">
+                            <div data-tier="fixture" className="group w-fit cursor-pointer rounded-lg border border-default p-3">
                                 <LinkSeeMore decorative label="Continue" showAnatomy />
                             </div>
                         ),
@@ -112,7 +112,7 @@ export const Decorative: Story = {
 /** Leaf prop `size` — 2 steps, each its own state tab. */
 export const Size: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LinkSeeMore"
                 tier="atom"

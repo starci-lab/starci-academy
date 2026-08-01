@@ -49,13 +49,7 @@ interface ButtonRadioGroupBaseProps<T extends string> {
     /** `true` → tag this row's own HeroUI renders (`Button`/`ButtonGroup`/`ButtonGroup.Separator`) with `data-anat-part` so a BlockAnatomy panel can badge them. */
     showAnatomy?: boolean
     /**
-     * Extra classes on the row.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -89,6 +83,9 @@ export type ButtonRadioGroupProps<T extends string> =
     | ButtonRadioGroupSingleProps<T>
     | ButtonRadioGroupMultiProps<T>
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ButtonRadioGroup" } as const
+
 /**
  * A single-select toggle-button group laid out as a flex-wrap row (buttons wrap
  * to the next line, never scroll). Every option is a real HeroUI `<Button>`:
@@ -107,7 +104,7 @@ export type ButtonRadioGroupProps<T extends string> =
  * @param props - {@link ButtonRadioGroupProps}
  */
 export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<T>) => {
-    const { items, ariaLabel, trailing, itemAction, showAnatomy = false, className, classNames } = props
+    const { items, ariaLabel, trailing, itemAction, showAnatomy = false, classNames } = props
     // narrow the discriminated union once — selection state + the press handler are
     // the only things that differ between single- and multi-select.
     const isSelected = (candidate: T): boolean =>
@@ -120,7 +117,14 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
         }
     }
     return (
-        <div role="group" aria-label={ariaLabel} className={cn("flex flex-wrap items-center gap-2", className, classNames)}>
+        <div
+            role="group"
+            aria-label={ariaLabel}
+            className={cn("flex flex-wrap items-center gap-2", classNames)}
+            data-tier="composite"
+            data-component="ButtonRadioGroup"
+            data-principles="flex-action"
+        >
             {items.map((item) => {
                 const selected = isSelected(item.value)
                 if (!itemAction) {

@@ -18,7 +18,7 @@ import { SectionCard } from "@/components/blocks/cards/SectionCard"
  */
 export interface UpNextCardProps extends WithClassNames<undefined> {
     /**
-     * Small quiet eyebrow above the title (e.g. "Tiếp theo"). Rendered muted.
+     * Small quiet eyebrow above the title (e.g. "Next"). Rendered muted.
      * Pair with {@link showCheck} for the "you just finished ✓" micro-feedback.
      */
     eyebrow?: React.ReactNode
@@ -34,11 +34,11 @@ export interface UpNextCardProps extends WithClassNames<undefined> {
      * toward the outcome (e.g. moving the job-readiness band), not generically.
      */
     description?: React.ReactNode
-    /** Primary CTA label — descriptive + contextual ("Làm 2 thử thách của bài này"). */
+    /** Primary CTA label — descriptive + contextual ("Do 2 challenges from this lesson"). */
     ctaLabel: React.ReactNode
     /** Primary CTA press handler (caller wires router navigation). */
     onPress: () => void
-    /** Optional secondary, quieter action label (e.g. "Làm capstone chương"). */
+    /** Optional secondary, quieter action label (e.g. "Do the chapter capstone"). */
     secondaryLabel?: React.ReactNode
     /** Optional secondary press handler. */
     secondaryOnPress?: () => void
@@ -46,7 +46,7 @@ export interface UpNextCardProps extends WithClassNames<undefined> {
 
 /**
  * UpNextCard renders the single, prominent completion-handoff card for the course
- * learning loop. It stacks: an optional check + eyebrow ("Đã xong · Tiếp theo"),
+ * learning loop. It stacks: an optional check + eyebrow ("Done · Next"),
  * the next rung as a title, an optional outcome-framed description, then ONE
  * primary CTA (accent, `size="lg"`, trailing arrow — the one obvious next action)
  * and an optional quiet secondary link. Static card + button affordance (the card

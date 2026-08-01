@@ -16,7 +16,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *     disappearing is a structural change, so this earns its own leaf rather
  *     than folding into `Step` as a fifth state.
  *   • `Complete` — `step` is `undefined`: the pane is replaced end to end by
- *     `Feedback.Empty`, the largest structural change the block can make.
+ *     `EmptyState`, the largest structural change the block can make.
  */
 const meta: Meta<typeof PlaygroundStepGuide> = {
     title: "StarCi/Blocks/Learn/PlaygroundStepGuide/PlaygroundStepGuide",
@@ -36,18 +36,18 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "MarkdownContent": { tier: "composite", role: "the markdown viewer, composed twice: once for the step's prose body, once for the command wrapped in a fenced code block so it gets the same copy-button skin", storyId: "composites-viewers-markdowncontent--reading" },
     "Button": { tier: "atom", role: "the Verify action (or, in the completion leaf, the back-to-hub action)", storyId: "atoms-buttons-button-button--default" },
     "Spinner": { tier: "atom", role: "the manual busy indicator standing in for the button while a remote verify check is open-ended", storyId: "atoms-display-spinner-spinner--default" },
-    "FeedbackEmpty": { tier: "composite", role: "the completion placeholder replacing the whole pane once every step is done", storyId: "composites-feedback-feedback-feedbackempty--action" },
+    "EmptyState": { tier: "composite", role: "the completion placeholder replacing the whole pane once every step is done", storyId: "composites-feedback-emptystate-emptystate--action" },
     "Skeleton": { tier: "heroui", role: "the shimmer mirror standing in for the step title, body lines and verify button while `isSkeleton`" },
 }
 
-const STEP_BODY = `Cài đặt một container Postgres cục bộ để lưu dữ liệu cho bài tập.
+const STEP_BODY = `Set up a local Postgres container to hold data for this exercise.
 
-Chạy lệnh bên dưới trong terminal của bạn, đợi container báo \`healthy\` rồi bấm **Xác minh bước này**.`
+Run the command below in your own terminal, wait for the container to report \`healthy\`, then click **Verify this step**.`
 
 /** LEAF — a step with a command fence. `verifyState` moves through the action slot's four states. */
 export const Step: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundStepGuide"
                 tier="block"
@@ -70,7 +70,7 @@ export const Step: Story = {
                                 anatPart="PlaygroundStepGuide"
                                 showAnatomy
                                 step={{
-                                    title: "Bước 1 · Khởi động Postgres",
+                                    title: "Step 1 · Start Postgres",
                                     body: STEP_BODY,
                                     commandHint: "docker run --name pg-lab -e POSTGRES_PASSWORD=lab -p 5432:5432 -d postgres:16",
                                 }}
@@ -92,7 +92,7 @@ export const Step: Story = {
                         render: (
                             <PlaygroundStepGuide
                                 step={{
-                                    title: "Bước 1 · Khởi động Postgres",
+                                    title: "Step 1 · Start Postgres",
                                     body: STEP_BODY,
                                     commandHint: "docker run --name pg-lab -e POSTGRES_PASSWORD=lab -p 5432:5432 -d postgres:16",
                                 }}
@@ -114,7 +114,7 @@ export const Step: Story = {
                         render: (
                             <PlaygroundStepGuide
                                 step={{
-                                    title: "Bước 1 · Khởi động Postgres",
+                                    title: "Step 1 · Start Postgres",
                                     body: STEP_BODY,
                                     commandHint: "docker run --name pg-lab -e POSTGRES_PASSWORD=lab -p 5432:5432 -d postgres:16",
                                 }}
@@ -136,7 +136,7 @@ export const Step: Story = {
                         render: (
                             <PlaygroundStepGuide
                                 step={{
-                                    title: "Bước 1 · Khởi động Postgres",
+                                    title: "Step 1 · Start Postgres",
                                     body: STEP_BODY,
                                     commandHint: "docker run --name pg-lab -e POSTGRES_PASSWORD=lab -p 5432:5432 -d postgres:16",
                                 }}
@@ -155,7 +155,7 @@ export const Step: Story = {
 /** LEAF — a read-only explainer step: **loses** the whole command-fence `MarkdownContent` node. */
 export const StepNoCommand: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundStepGuide"
                 tier="block"
@@ -168,7 +168,7 @@ export const StepNoCommand: Story = {
                         name: "step.commandHint = undefined",
                         why: "This step only explains what is about to happen — nothing to run yet — so the command fence and its label are not drawn at all. A step with no command should not show an empty code block claiming one exists.",
                         code: `<PlaygroundStepGuide
-    step={{ title: "Bước 0 · Trước khi bắt đầu", body: intro }}
+    step={{ title: "Step 0 · Before you begin", body: intro }}
     verifyState="ready"
     onVerify={handleVerify}
     onLeaveComplete={handleLeaveComplete}
@@ -178,8 +178,8 @@ export const StepNoCommand: Story = {
                                 anatPart="PlaygroundStepGuide"
                                 showAnatomy
                                 step={{
-                                    title: "Bước 0 · Trước khi bắt đầu",
-                                    body: "Bài này giả định máy bạn đã cài Docker Desktop và agent playground đang chạy nền. Đọc xong thì bấm **Xác minh bước này** để qua bước tiếp theo — không có lệnh nào cần chạy ở đây.",
+                                    title: "Step 0 · Before you begin",
+                                    body: "This step assumes your machine already has Docker Desktop installed and the playground agent running in the background. Once you've read it, click **Verify this step** to move to the next one — there's no command to run here.",
                                 }}
                                 verifyState="ready"
                                 onVerify={() => {}}
@@ -193,10 +193,10 @@ export const StepNoCommand: Story = {
     ),
 }
 
-/** LEAF — every step is done: the whole pane is **replaced** by `Feedback.Empty`. */
+/** LEAF — every step is done: the whole pane is **replaced** by `EmptyState`. */
 export const Complete: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundStepGuide"
                 tier="block"
@@ -234,7 +234,7 @@ export const Complete: Story = {
 /** LEAF — the caller flips `isSkeleton`; a third, distinct state checked BEFORE the `step == null` completion branch. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundStepGuide"
                 tier="block"

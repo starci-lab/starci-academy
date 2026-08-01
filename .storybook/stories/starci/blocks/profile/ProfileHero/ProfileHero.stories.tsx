@@ -39,18 +39,18 @@ const PHOTO_SRC =
 
 const FULL_USER: ProfileHeroUser = {
     id: "user-1",
-    fullName: "Phạm Gia Bảo",
+    fullName: "Gia-Bao Pham",
     handle: "baophamgia",
-    roleTitle: "Kỹ sư Backend cấp cao",
-    bio: "8 năm xây hệ thống backend quy mô lớn. Thích viết về Kubernetes và kiến trúc sự kiện.",
-    location: "Đà Nẵng, Việt Nam",
+    roleTitle: "Senior Backend Engineer",
+    bio: "8 years building large-scale backend systems. Enjoys writing about Kubernetes and event-driven architecture.",
+    location: "Da Nang, Vietnam",
     workMode: "hybrid",
     avatarUrl: PHOTO_SRC,
     rank: 2,
     followersCount: 1240,
     badges: [
-        { id: "badge-1", label: "Người cố vấn hàng đầu" },
-        { id: "badge-2", label: "Đã xác minh" },
+        { id: "badge-1", label: "Top mentor" },
+        { id: "badge-2", label: "Verified" },
     ],
     joinedAt: "2022-03-14T00:00:00.000Z",
     social: {
@@ -62,7 +62,7 @@ const FULL_USER: ProfileHeroUser = {
 
 const MINIMAL_USER: ProfileHeroUser = {
     id: "user-2",
-    fullName: "Trần Ngọc Anh",
+    fullName: "Ngoc-Anh Tran",
     handle: "ngocanh",
     joinedAt: "2026-01-05T00:00:00.000Z",
 }
@@ -84,7 +84,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full set: rank-framed avatar → identity → bio → location/work-mode → stats → actions → meta list. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProfileHero"
                 tier="block"
@@ -95,7 +95,7 @@ export const Default: Story = {
                 states={[
                     {
                         name: "visitor, not following",
-                        why: "A visitor who does not yet follow this person sees the full identity, both stats, and a primary 'Theo dõi' CTA beside share.",
+                        why: "A visitor who does not yet follow this person sees the full identity, both stats, and a primary 'Follow' CTA beside share.",
                         code: `<ProfileHero
     user={fullUser}
     following={false}
@@ -115,7 +115,7 @@ export const Default: Story = {
                     },
                     {
                         name: "already following",
-                        why: "Once the viewer already follows this person, the SAME button slot flips to a quieter 'Đang theo dõi' state — content changes, the tree does not.",
+                        why: "Once the viewer already follows this person, the SAME button slot flips to a quieter 'Following' state — content changes, the tree does not.",
                         code: `<ProfileHero
     user={fullUser}
     following
@@ -133,7 +133,7 @@ export const Default: Story = {
                     },
                     {
                         name: "recruiter, canHire",
-                        why: "A recruiter-context viewer sees 'Thuê tôi' in the same CTA slot instead of follow — the three CTA modes are mutually exclusive, never stacked.",
+                        why: "A recruiter-context viewer sees 'Hire me' in the same CTA slot instead of follow — the three CTA modes are mutually exclusive, never stacked.",
                         code: `<ProfileHero
     user={fullUser}
     canHire
@@ -151,7 +151,7 @@ export const Default: Story = {
                     },
                     {
                         name: "isSelf",
-                        why: "The profile owner sees 'Chỉnh sửa hồ sơ' instead of follow/hire — editing your own profile is the one action that makes sense here.",
+                        why: "The profile owner sees 'Edit profile' instead of follow/hire — editing your own profile is the one action that makes sense here.",
                         code: `<ProfileHero
     user={fullUser}
     isSelf
@@ -190,7 +190,7 @@ export const Default: Story = {
 /** LEAF — a fresh account: no rank, role, bio, location, work-mode, badges or social links yet. */
 export const Minimal: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProfileHero"
                 tier="block"
@@ -205,7 +205,7 @@ export const Minimal: Story = {
                         code: `<ProfileHero
     user={{
         id: "user-2",
-        fullName: "Trần Ngọc Anh",
+        fullName: "Ngoc-Anh Tran",
         handle: "ngocanh",
         joinedAt: "2026-01-05T00:00:00.000Z",
     }}

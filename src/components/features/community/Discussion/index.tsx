@@ -53,7 +53,7 @@ export interface DiscussionProps extends WithClassNames<undefined> {
 }
 
 /**
- * Bottom-of-lesson discussion zone — FRAMELESS: a label ("Thảo luận · N") + an honest
+ * Bottom-of-lesson discussion zone — FRAMELESS: a label ("Discussion · N") + an honest
  * "archive line" (how many of this lesson's questions already have an answer — the
  * value compounds as more cohorts pass through) above an avatar-led composer and the
  * threaded comment list, sitting directly on the page canvas (no card) so it doesn't

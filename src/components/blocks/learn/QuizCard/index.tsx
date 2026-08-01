@@ -82,7 +82,7 @@ export interface QuizCardProps extends WithClassNames<undefined> {
      */
     onSubmit?: () => void
     /**
-     * Label for the submit/check button. Defaults to `"Kiểm tra đáp án"`. Ignored
+     * Label for the submit/check button. Defaults to `"Check answer"`. Ignored
      * when `onSubmit` is not provided or once `isSubmitted` is `true`.
      */
     submitLabel?: React.ReactNode
@@ -93,7 +93,7 @@ export interface QuizCardProps extends WithClassNames<undefined> {
     explanation?: React.ReactNode
     /**
      * Optional 1-based position of the question within its quiz. When set, a
-     * "Câu {n}" chip is shown above the question.
+     * "Question {n}" chip is shown above the question.
      */
     questionIndex?: number
 }
@@ -172,7 +172,7 @@ const ROW_BASE = "rounded-2xl px-4 py-3 transition-colors"
 
 /**
  * QuizCard is a self-framed, multiple-choice question block built on
- * {@link SectionCard}. It stacks an optional "Câu {n}" chip, the question, a set
+ * {@link SectionCard}. It stacks an optional "Question {n}" chip, the question, a set
  * of selectable option rows, an optional submit action, and a post-answer
  * explanation. `selectionMode` switches between HeroUI `RadioGroup` (single) and
  * `CheckboxGroup` (multiple) — both with proper group + option ARIA.
@@ -190,7 +190,7 @@ const ROW_BASE = "rounded-2xl px-4 py-3 transition-colors"
  * @example
  * <QuizCard
  *   questionIndex={1}
- *   question="HTTP status nào báo tài nguyên không tồn tại?"
+ *   question="Which HTTP status reports a resource that doesn't exist?"
  *   options={[
  *     { id: "a", label: "200 OK" },
  *     { id: "b", label: "404 Not Found", isCorrect: true },
@@ -209,7 +209,7 @@ export const QuizCard = ({
     onSelectionChange,
     isSubmitted = false,
     onSubmit,
-    submitLabel = "Kiểm tra đáp án",
+    submitLabel = "Check answer",
     explanation,
     questionIndex,
     className,
@@ -222,7 +222,7 @@ export const QuizCard = ({
                 {/* Question header: optional index chip + the prompt */}
                 <div className="flex flex-col gap-2">
                     {typeof questionIndex === "number" ? (
-                        <StatusChip tone="accent">{`Câu ${questionIndex}`}</StatusChip>
+                        <StatusChip tone="accent">{`Question ${questionIndex}`}</StatusChip>
                     ) : null}
                     <Typography type="body" weight="semibold">
                         {question}
@@ -234,7 +234,7 @@ export const QuizCard = ({
                     edited while staying visually un-dimmed (unlike isDisabled). */}
                 {selectionMode === "single" ? (
                     <RadioGroup
-                        aria-label="Các phương án trả lời"
+                        aria-label="Answer options"
                         value={selectedIds[0] ?? ""}
                         onChange={(value) => onSelectionChange(value ? [value] : [])}
                         isReadOnly={isSubmitted}
@@ -262,7 +262,7 @@ export const QuizCard = ({
                     </RadioGroup>
                 ) : (
                     <CheckboxGroup
-                        aria-label="Các phương án trả lời"
+                        aria-label="Answer options"
                         value={selectedIds}
                         onChange={onSelectionChange}
                         isReadOnly={isSubmitted}
@@ -307,7 +307,7 @@ export const QuizCard = ({
                 {isSubmitted && explanation ? (
                     <div className="flex flex-col gap-1 rounded-2xl bg-surface-secondary px-4 py-3">
                         <Typography type="body-sm" weight="semibold">
-                            Giải thích
+                            Explanation
                         </Typography>
                         <Typography type="body-sm" color="muted">
                             {explanation}

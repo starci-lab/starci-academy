@@ -87,7 +87,7 @@ const LearnNudgesBase = ({
         // The heading is OWNED by the BLOCK — the caller does NOT pass `heading`
         // (§14d.1, teacher's call 2026-07-26). This cluster always answers the
         // same one question, so the lead-in is a constant.
-        label="Việc nên làm hôm nay"
+        label="Things to do today"
         anatPart={anatPart ?? (showAnatomy ? "SurfaceCardList" : undefined)}
         items={
             isSkeleton
@@ -102,7 +102,7 @@ const LearnNudgesBase = ({
                             size="sm"
                             isSkeleton
                             classNames={["w-2/3"]}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ),
                 }))

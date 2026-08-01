@@ -12,13 +12,13 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * verbatim from real `src`'s `CommentComposer`.
  *
  * ⭐ `collapsible` — the TOP-LEVEL composer only. Starts as a slim avatar +
- * placeholder pill (à la YouTube/GitHub) and expands to the full field on
+ * placeholder pill (in the style of YouTube/GitHub) and expands to the full field on
  * click, so an empty grey box never dominates the discussion zone. Reply and
  * edit composers omit `collapsible` and render expanded immediately, with no
  * avatar (real `src`'s `CommentItem` never passes `currentUser` for those two
  * calls — the avatar-led row is a TOP-LEVEL-ONLY treatment).
  *
- * ⭐ `variant="primary"` ON PURPOSE (thầy 2026-07-28). Real `Discussion` is
+ * ⭐ `variant="primary"` ON PURPOSE (instructor 2026-07-28). Real `Discussion` is
  * explicitly FRAMELESS — no card wraps it, it sits directly on the page
  * canvas — so this field never sits "inside a card" the way a modal's fields
  * do (those use `variant="secondary"`, see `ModalShell` stories). A field on
@@ -75,8 +75,8 @@ export interface ContentCommentComposerProps {
  */
 const ContentCommentComposer = ({
     onSubmit,
-    placeholder = "Đặt câu hỏi hoặc chia sẻ…",
-    submitLabel = "Đăng",
+    placeholder = "Ask a question or share your thoughts…",
+    submitLabel = "Post",
     onCancel,
     initialValue,
     isPending = false,
@@ -115,7 +115,7 @@ const ContentCommentComposer = ({
     if (collapsible && !expanded) {
         return (
             <StackH
-                gap="grouped"
+                gap={4}
                 align="center"
                 anatPart={anatPart}
                 body={
@@ -144,16 +144,16 @@ const ContentCommentComposer = ({
                 onPress={handleSubmit}
                 isDisabled={!trimmed}
                 isPending={isPending}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
             {onCancel || collapsible ? (
                 <Button
-                    label="Hủy"
+                    label="Cancel"
                     variant="tertiary"
                     size="sm"
                     onPress={handleCancel}
                     isDisabled={isPending}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -170,7 +170,7 @@ const ContentCommentComposer = ({
                 variant="primary"
                 showAnatomy={showAnatomy}
             />
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={buttonRow} />
+            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={buttonRow} />
         </>
     )
 
@@ -179,12 +179,12 @@ const ContentCommentComposer = ({
             {currentUser ? (
                 <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" showAnatomy={showAnatomy} />
             ) : null}
-            <StackV gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "StackV" : undefined} body={fieldColumn} />
+            <StackV gap={3} classNames={["min-w-0", "flex-1"]} anatPart={showAnatomy ? "StackV" : undefined} body={fieldColumn} />
         </>
     )
 
     return (
-        <StackH gap="grouped" align="start" className={className} anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)} body={composerRow} />
+        <StackH gap={4} align="start" className={className} anatPart={anatPart ?? (showAnatomy ? "StackH" : undefined)} body={composerRow} />
     )
 }
 

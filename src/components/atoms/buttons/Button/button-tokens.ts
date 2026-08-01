@@ -110,3 +110,17 @@ export const SKELETON_SQUARE: Record<ButtonSize, string> = {
     md: "size-10 @app-md:size-9",
     lg: "size-11 @app-md:size-10",
 }
+
+/**
+ * The label is a raw `<span>` (ATOM-3: an atom cannot import another house atom,
+ * so it cannot go through `Typography`). This maps `ButtonSize` to the literal
+ * Tailwind size class that reproduces the font size `button.css` already
+ * assigns, so the two can't drift: the base `.button` rule is `text-sm` and only
+ * `.button--lg` overrides it to `text-base` — `sm`/`md` never diverge from the
+ * base, hence both map to `"text-sm"`.
+ */
+export const LABEL_SIZE: Record<ButtonSize, string> = {
+    sm: "text-sm",
+    md: "text-sm",
+    lg: "text-base",
+}

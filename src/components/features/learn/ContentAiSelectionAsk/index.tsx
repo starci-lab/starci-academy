@@ -75,12 +75,12 @@ const nearestHeading = (block: Element | null, region: Element): string | null =
 
 /** Build the hidden `<context>` grounding string from the selection + surroundings. */
 const buildSelectionContext = (text: string, paragraph: string, heading: string | null): string => {
-    const parts = [`Đoạn được chọn: «${text}»`]
+    const parts = [`Selected passage: «${text}»`]
     if (paragraph && paragraph !== text) {
-        parts.push(`Nằm trong đoạn: «${paragraph}»`)
+        parts.push(`Within paragraph: «${paragraph}»`)
     }
     if (heading) {
-        parts.push(`Thuộc mục: «${heading}»`)
+        parts.push(`Under section: «${heading}»`)
     }
     return parts.join(". ")
 }
@@ -104,7 +104,7 @@ export const ContentAiSelectionAsk = () => {
     const [mounted, setMounted] = useState(false)
     useEffect(() => setMounted(true), [])
 
-    // first-discovery flag: the button wears a "Mới" tag until the learner uses
+    // first-discovery flag: the button wears a "New" tag until the learner uses
     // it once (or dismisses the inline tip) — see hintStore / SelectionHintCallout
     const seen = useSelectionHintStore((state) => state.seen)
     const hydrate = useSelectionHintStore((state) => state.hydrate)

@@ -15,7 +15,7 @@ export default meta
 
 type Story = StoryObj<typeof StatRibbon>
 
-/** Cùng parts cho mọi leaf: N StatPair cells trong 1 Card — the real `StatPair` composite. */
+/** Same parts for every leaf: N StatPair cells inside one Card — the real `StatPair` composite. */
 const STAT_PARTS: Array<AnatomyNode> = [
     { name: "StatPair", tier: "composite", role: "one value+label cell, repeated ×N, with a full-height divider between cells on desktop", storyId: "composites-stats-statpair--single" },
 ]
@@ -23,7 +23,7 @@ const STAT_PARTS: Array<AnatomyNode> = [
 /** Full 4-stat strip: row with full-height dividers on wide screens, 2-col grid on mobile. */
 export const FourStats: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StatRibbon"
                 tier="composite"
@@ -36,7 +36,7 @@ export const FourStats: Story = {
                         why: "Four StatPair cells sit in a row with full-height dividers between them on wide screens, folding into a 2-column grid on mobile. This is the full shape used when the profile/hero panel has all four numbers to show at once.",
                         code: `<StatRibbon
   items={[
-    { key: "passed", value: 12, label: "Passed" },
+    { key: "passed", value: "12", label: "Passed" },
     { key: "xp", value: "1,204", label: "XP" },
     { key: "top", value: "8%", label: "Top" },
     { key: "rank", value: "#3", label: "Rank" },
@@ -45,7 +45,7 @@ export const FourStats: Story = {
                         render: (
                             <StatRibbon
                                 items={[
-                                    { key: "passed", value: 12, label: "Passed" },
+                                    { key: "passed", value: "12", label: "Passed" },
                                     { key: "xp", value: "1,204", label: "XP" },
                                     { key: "top", value: "8%", label: "Top" },
                                     { key: "rank", value: "#3", label: "Rank" },
@@ -63,7 +63,7 @@ export const FourStats: Story = {
 /** Reduced to 2 stats (no rank/percentile yet) — the layout still reads cleanly. */
 export const TwoStats: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StatRibbon"
                 tier="composite"
@@ -73,12 +73,12 @@ export const TwoStats: Story = {
                     {
                         name: "items has 2 entries",
                         why: "Only two StatPair cells render, with one divider between them; the frame doesn't stretch or pad to fill a phantom minimum count. This is for a learner whose rank and percentile haven't been computed yet, so the strip only carries what's actually known.",
-                        code: "<StatRibbon items={[{ key: \"passed\", value: 0, label: \"Passed\" }, { key: \"xp\", value: 0, label: \"XP\" }]} />",
+                        code: "<StatRibbon items={[{ key: \"passed\", value: \"0\", label: \"Passed\" }, { key: \"xp\", value: \"0\", label: \"XP\" }]} />",
                         render: (
                             <StatRibbon
                                 items={[
-                                    { key: "passed", value: 0, label: "Passed" },
-                                    { key: "xp", value: 0, label: "XP" },
+                                    { key: "passed", value: "0", label: "Passed" },
+                                    { key: "xp", value: "0", label: "XP" },
                                 ]}
                                 showAnatomy
                             />
@@ -93,7 +93,7 @@ export const TwoStats: Story = {
 /** `bordered` — nested on another surface, a border delineates it (the shadow is invisible there). */
 export const Bordered: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="rounded-3xl bg-surface p-4 shadow-surface">
                 <BlockAnatomy
                     name="StatRibbon"
@@ -107,7 +107,7 @@ export const Bordered: Story = {
                             code: `<StatRibbon
   bordered
   items={[
-    { key: "passed", value: 12, label: "Passed" },
+    { key: "passed", value: "12", label: "Passed" },
     { key: "xp", value: "1,204", label: "XP" },
     { key: "top", value: "8%", label: "Top" },
   ]}
@@ -116,7 +116,7 @@ export const Bordered: Story = {
                                 <StatRibbon
                                     bordered
                                     items={[
-                                        { key: "passed", value: 12, label: "Passed" },
+                                        { key: "passed", value: "12", label: "Passed" },
                                         { key: "xp", value: "1,204", label: "XP" },
                                         { key: "top", value: "8%", label: "Top" },
                                     ]}
@@ -134,7 +134,7 @@ export const Bordered: Story = {
 /** LEAF — the caller flips `isSkeleton`; each cell shimmers via `StatPair`'s OWN `isSkeleton`, not a parallel tree drawn here (§12g.0a). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="StatRibbon"
                 tier="composite"

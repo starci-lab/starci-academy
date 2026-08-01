@@ -30,10 +30,10 @@ export default meta
 type Story = StoryObj<typeof ModuleChallengeList>
 
 const MIXED: Array<ModuleChallengeItem> = [
-    { id: "c1", title: "Sửa Dockerfile bị lỗi cache", difficulty: "beginner", completed: true, lessonId: "l1" },
-    { id: "c2", title: "Viết multi-stage build cho service Node", difficulty: "intermediate", completed: true, lessonId: "l2" },
-    { id: "c3", title: "Giảm image xuống dưới 50MB", difficulty: "advanced", completed: false, lessonId: "l2" },
-    { id: "c4", title: "Tự viết health check cho container degrade", difficulty: "insane", completed: false, lessonId: "l3" },
+    { id: "c1", title: "Fix a Dockerfile with broken caching", difficulty: "beginner", completed: true, lessonId: "l1" },
+    { id: "c2", title: "Write a multi-stage build for a Node service", difficulty: "intermediate", completed: true, lessonId: "l2" },
+    { id: "c3", title: "Shrink the image below 50MB", difficulty: "advanced", completed: false, lessonId: "l2" },
+    { id: "c4", title: "Write your own health check for a degraded container", difficulty: "insane", completed: false, lessonId: "l3" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -57,7 +57,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const List: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleChallengeList"
                 tier="block"
@@ -68,7 +68,7 @@ export const List: Story = {
                 states={[
                     {
                         name: "challenges mix solved/unsolved across all 4 difficulty steps and 3 owning lessons",
-                        why: "Every row-level variant renders inside the same `SurfaceCardList` frame at once: solved rows carry the success-coloured icon and the 'Đã hoàn thành' subtitle, unsolved rows stay plain, and the difficulty chip cycles through all four steps. One mixed data set is enough, since none of these differences add or remove a node from the tree — a press always calls back with the challenge's OWNING LESSON id, never the challenge id.",
+                        why: "Every row-level variant renders inside the same `SurfaceCardList` frame at once: solved rows carry the success-coloured icon and the 'Completed' subtitle, unsolved rows stay plain, and the difficulty chip cycles through all four steps. One mixed data set is enough, since none of these differences add or remove a node from the tree — a press always calls back with the challenge's OWNING LESSON id, never the challenge id.",
                         code: `<ModuleChallengeList
     challenges={challenges}
     onSelectChallenge={(lessonId) => router.push(\`/lessons/\${lessonId}?tab=challenges\`)}
@@ -96,7 +96,7 @@ export const List: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ModuleChallengeList"
                 tier="block"

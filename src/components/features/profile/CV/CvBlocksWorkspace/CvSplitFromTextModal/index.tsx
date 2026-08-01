@@ -29,7 +29,7 @@ export interface CvSplitFromTextModalProps extends WithClassNames<undefined> {
 }
 
 /**
- * "Dán CV có sẵn" entry point — a modal with a raw-text textarea that calls
+ * "Paste an existing CV" entry point — a modal with a raw-text textarea that calls
  * `splitCvFromText` (AI ingest, not persisted) and hands the parsed blocks
  * back to the caller to load into the editor.
  *

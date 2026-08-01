@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Typography } from "@heroui/react"
 import { SurfaceCardCrossList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * KHUNG (Layouts) — a STATIC "brief" list of MARKED rows (✓ / ✗ / none) inside a
- * bounded `bg-surface` khung with a full-bleed divider: ONE list can mix both ✓
+ * FRAME (Layouts) — a STATIC "brief" list of MARKED rows (✓ / ✗ / none) inside a
+ * bounded `bg-surface` frame with a full-bleed divider: ONE list can mix both ✓
  * (included) and ✗ (not included). Read-only; for CLICKABLE rows use `SurfaceCardList`.
  *
  * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): this is a REPEATING list, so `items`
@@ -28,7 +27,8 @@ const meta: Meta<typeof SurfaceCardCrossList> = {
 }
 export default meta
 type Story = StoryObj<typeof SurfaceCardCrossList>
-const row = (text: string) => <Typography type="body-sm">{text}</Typography>
+/** `text` is a plain string (COMPOSITE-8) — the composite wraps it in `Typography` itself. Kept as a named helper so every leaf below reads the same as before. */
+const row = (text: string) => text
 /**
  * ANATOMY IS PER-LEAF: each story wraps its own render in its own BlockAnatomy.
  *
@@ -41,7 +41,7 @@ const row = (text: string) => <Typography type="body-sm">{text}</Typography>
  */
 export const Checks: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardCrossList"
                 tier="composite"
@@ -75,7 +75,7 @@ export const Checks: Story = {
 }
 export const Crosses: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardCrossList"
                 tier="composite"
@@ -105,7 +105,7 @@ export const Crosses: Story = {
 /** Why merged: ONE list mixing both an included row (✓) and a not-included row (✗). */
 export const Mixed: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardCrossList"
                 tier="composite"
@@ -140,7 +140,7 @@ export const Mixed: Story = {
 /** `mark="none"` — a plain row (e.g. a prerequisite, NOT an achievement, so no tick). */
 export const NoMark: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardCrossList"
                 tier="composite"
@@ -169,17 +169,17 @@ export const NoMark: Story = {
 }
 /**
  * `variant` — surface-in-surface (§1a). `"surface"` (default) when rendered DIRECTLY
- * on `bg-background`; `"nested"` (border instead of shadow) when this khung is
+ * on `bg-background`; `"nested"` (border instead of shadow) when this frame is
  * nested inside another surface (modal/drawer/panel).
  *
  * 2026-07-26 (teacher): merged from the old `Bordered` leaf (which only rendered
  * ONE value, `bordered=true`) into ONE `Variant` leaf rendering the full union side
  * by side — row composition doesn't change between the two values, only the outer
- * khung changes.
+ * frame changes.
  */
 export const Variant: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardCrossList"
                 tier="composite"
@@ -205,7 +205,7 @@ export const Variant: Story = {
                         why: "The list draws a border instead of a shadow, so it stays legible sitting inside another surface (a modal, a drawer, a panel) where a shadow would be invisible. Row composition doesn't change between the two variants, only the outer frame does.",
                         code: "<SurfaceCardCrossList variant=\"nested\" items={[…]} />",
                         render: (
-                            <div className="rounded-3xl bg-surface p-3 shadow-surface">
+                            <div data-tier="fixture" className="rounded-3xl bg-surface p-3 shadow-surface">
                                 <SurfaceCardCrossList
                                     variant="nested"
                                     showAnatomy
@@ -229,7 +229,7 @@ export const Variant: Story = {
  */
 export const DangerTone: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardCrossList"
                 tier="composite"
@@ -265,7 +265,7 @@ export const DangerTone: Story = {
  */
 export const MutedTone: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardCrossList"
                 tier="composite"
@@ -316,7 +316,7 @@ export const MutedTone: Story = {
 /** `isSkeleton` — `skeletonRows` mirror rows (round dot + text bar) while the list hasn't loaded yet. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SurfaceCardCrossList"
                 tier="composite"

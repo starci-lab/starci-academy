@@ -28,7 +28,7 @@ const PAPER_FRAME =
 /**
  * Public CV tab (`/profile/<username>/cv`) — the read-only, PDF-only view of the
  * ONE CV a user has flagged public. Anyone (signed in or not) can view it. When
- * the viewer IS the owner (`isSelf`), a "Chỉnh sửa CV" button links to the
+ * the viewer IS the owner (`isSelf`), an "Edit CV" button links to the
  * private editor gallery (`/profile/cv`). Branches:
  *
  *   - data + `pdfUrl`  → the compiled PDF embedded read-only in the paper frame
@@ -53,7 +53,7 @@ export const ProfilePublicCv = ({ className }: ProfilePublicCvProps) => {
     const cv = cvSwr.data
     const isLoading = cvSwr.isLoading && !cvSwr.data
 
-    // "Chỉnh sửa CV" → the owner's private editor gallery (always-own /profile/cv).
+    // "Edit CV" → the owner's private editor gallery (always-own /profile/cv).
     const editButton = isSelf ? (
         <Button
             variant="secondary"

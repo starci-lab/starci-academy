@@ -31,16 +31,16 @@ export default meta
 type Story = StoryObj<typeof PersonalProjectDashboard>
 
 const CRUMBS = [
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "personal-project", label: "Dự án cá nhân" },
+    { key: "personal-project", label: "Personal Project" },
 ]
 
 const TASKS = [
-    { id: "t1", sortIndex: 1, title: "Thiết kế schema hạ tầng", subtitleState: "done" as const },
-    { id: "t2", sortIndex: 2, title: "Viết Dockerfile multi-stage", subtitleState: "active" as const },
-    { id: "t3", sortIndex: 3, title: "Cấu hình CI build image", subtitleState: "todo" as const },
-    { id: "t4", sortIndex: 4, title: "Triển khai lên staging", subtitleState: "locked" as const },
+    { id: "t1", sortIndex: 1, title: "Design the infrastructure schema", subtitleState: "done" as const },
+    { id: "t2", sortIndex: 2, title: "Write a multi-stage Dockerfile", subtitleState: "active" as const },
+    { id: "t3", sortIndex: 3, title: "Configure the CI image build", subtitleState: "todo" as const },
+    { id: "t4", sortIndex: 4, title: "Deploy to staging", subtitleState: "locked" as const },
 ]
 
 const STATS = { done: 1, total: 4, attempts: 3, avgLabel: "18/20" }
@@ -53,14 +53,14 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ContinueCardHero": { tier: "block", role: "the one highlight card for the next task to work on, carrying the continue CTA", storyId: "starci-blocks-learn-continuecard-hero-progress--overview" },
     "ProgressMeter": { tier: "composite", role: "the capstone's own overall completion, kept separate from the hero's card so the two don't compete over what 'progress' means", storyId: "composites-stats-progressmeter--overview" },
     "Typography": { tier: "atom", role: "one of the block's own text lines — the all-done line or the stats sentence — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
-    "SurfaceCard": { tier: "composite", role: "the labeled card framing the keep-going grid, owning the 'Tiếp tục · <milestone>' heading row", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
+    "SurfaceCard": { tier: "composite", role: "the labeled card framing the keep-going grid, owning the 'Continue · <milestone>' heading row", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "ContinueCardItem": { tier: "block", role: "one task tile in the keep-going grid, its subtitle line picked from the task's own state", storyId: "starci-blocks-learn-continuecard-continuecarditem--content" },
 }
 
 /** LEAF — a next task exists: header → continue hero + progress → keep-going grid. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectDashboard"
                 tier="block"
@@ -74,12 +74,12 @@ export const Full: Story = {
                         why: "The learner already linked a repo, so the header's chip switches to its success tone and shows the already-formatted `owner/repo · branch` string — parsing that URL stays the caller's job, the block only reacts to the connected flag.",
                         code: `<PersonalProjectDashboard
     breadcrumbItems={crumbs}
-    title="Dự án cá nhân"
-    description="Xây một hệ thống triển khai hoàn chỉnh từ đầu đến cuối."
+    title="Personal Project"
+    description="Build a complete deployment system end to end."
     githubStatus={{ isConnected: true, label: "starci183/final-project · main" }}
-    currentTask={{ sortIndex: 2, title: "Viết Dockerfile multi-stage" }}
+    currentTask={{ sortIndex: 2, title: "Write a multi-stage Dockerfile" }}
     onContinue={onContinue}
-    milestoneLabel="Container hoá"
+    milestoneLabel="Containerization"
     tasks={tasks}
     onSelectTask={onSelectTask}
     stats={{ done: 1, total: 4, attempts: 3, avgLabel: "18/20" }}
@@ -89,12 +89,12 @@ export const Full: Story = {
                                 anatPart="PersonalProjectDashboard"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Dự án cá nhân"
-                                description="Xây một hệ thống triển khai hoàn chỉnh từ đầu đến cuối."
+                                title="Personal Project"
+                                description="Build a complete deployment system end to end."
                                 githubStatus={{ isConnected: true, label: "starci183/final-project · main" }}
-                                currentTask={{ sortIndex: 2, title: "Viết Dockerfile multi-stage" }}
+                                currentTask={{ sortIndex: 2, title: "Write a multi-stage Dockerfile" }}
                                 onContinue={() => {}}
-                                milestoneLabel="Container hoá"
+                                milestoneLabel="Containerization"
                                 tasks={TASKS}
                                 onSelectTask={() => {}}
                                 stats={STATS}
@@ -106,17 +106,17 @@ export const Full: Story = {
                         why: "No repo linked yet, so the chip drops to its neutral tone and shows the caller's own 'not connected' copy instead of a repo label. Nothing else in the tree changes shape.",
                         code: `<PersonalProjectDashboard
     ...
-    githubStatus={{ isConnected: false, label: "Chưa kết nối GitHub" }}
+    githubStatus={{ isConnected: false, label: "GitHub not connected" }}
 />`,
                         render: (
                             <PersonalProjectDashboard
                                 breadcrumbItems={CRUMBS}
-                                title="Dự án cá nhân"
-                                description="Xây một hệ thống triển khai hoàn chỉnh từ đầu đến cuối."
-                                githubStatus={{ isConnected: false, label: "Chưa kết nối GitHub" }}
-                                currentTask={{ sortIndex: 2, title: "Viết Dockerfile multi-stage" }}
+                                title="Personal Project"
+                                description="Build a complete deployment system end to end."
+                                githubStatus={{ isConnected: false, label: "GitHub not connected" }}
+                                currentTask={{ sortIndex: 2, title: "Write a multi-stage Dockerfile" }}
                                 onContinue={() => {}}
-                                milestoneLabel="Container hoá"
+                                milestoneLabel="Containerization"
                                 tasks={TASKS}
                                 onSelectTask={() => {}}
                                 stats={STATS}
@@ -132,7 +132,7 @@ export const Full: Story = {
 /** LEAF — every task is finished ⇒ **loses** the `ContinueCardHero` node entirely. */
 export const AllDone: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectDashboard"
                 tier="block"
@@ -154,11 +154,11 @@ export const AllDone: Story = {
                                 anatPart="PersonalProjectDashboard"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Dự án cá nhân"
-                                description="Xây một hệ thống triển khai hoàn chỉnh từ đầu đến cuối."
+                                title="Personal Project"
+                                description="Build a complete deployment system end to end."
                                 githubStatus={{ isConnected: true, label: "starci183/final-project · main" }}
                                 onContinue={() => {}}
-                                milestoneLabel="Container hoá"
+                                milestoneLabel="Containerization"
                                 tasks={TASKS.map((task) => ({ ...task, subtitleState: "done" as const }))}
                                 onSelectTask={() => {}}
                                 stats={{ done: 4, total: 4, attempts: 6, avgLabel: "19/20" }}
@@ -174,7 +174,7 @@ export const AllDone: Story = {
 /** LEAF — the milestone/progress fetch is running ⇒ `AsyncContent` falls to the shimmer mirror. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectDashboard"
                 tier="block"
@@ -195,8 +195,8 @@ export const Loading: Story = {
                                 anatPart="PersonalProjectDashboard"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Dự án cá nhân"
-                                description="Xây một hệ thống triển khai hoàn chỉnh từ đầu đến cuối."
+                                title="Personal Project"
+                                description="Build a complete deployment system end to end."
                                 githubStatus={{ isConnected: false, label: "" }}
                                 onContinue={() => {}}
                                 tasks={[]}
@@ -216,7 +216,7 @@ export const Loading: Story = {
 /** LEAF — the course has no capstone tasks configured at all ⇒ `AsyncContent`'s empty message. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectDashboard"
                 tier="block"
@@ -237,9 +237,9 @@ export const Empty: Story = {
                                 anatPart="PersonalProjectDashboard"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Dự án cá nhân"
-                                description="Xây một hệ thống triển khai hoàn chỉnh từ đầu đến cuối."
-                                githubStatus={{ isConnected: false, label: "Chưa kết nối GitHub" }}
+                                title="Personal Project"
+                                description="Build a complete deployment system end to end."
+                                githubStatus={{ isConnected: false, label: "GitHub not connected" }}
                                 onContinue={() => {}}
                                 tasks={[]}
                                 onSelectTask={() => {}}

@@ -72,7 +72,7 @@ const TONES: Array<ToneRow> = [
 /** Leaf prop `items` — the cluster builds the row from DATA; a long row gathers the overflow into `+N`. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChipGroup"
                 tier="composite"
@@ -115,7 +115,7 @@ export const Default: Story = {
 /** Leaf prop `maxVisible` — where the row gets CUT. */
 export const MaxVisible: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChipGroup"
                 tier="composite"
@@ -139,7 +139,7 @@ export const MaxVisible: Story = {
 /** Leaf prop `tone` — set at the CLUSTER LEVEL: a row of tokens must share one color (§12d). */
 export const Tones: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChipGroup"
                 tier="composite"
@@ -166,7 +166,7 @@ export const Tones: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChipGroup"
                 tier="composite"

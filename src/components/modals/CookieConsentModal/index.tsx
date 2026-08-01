@@ -13,7 +13,7 @@ import { useCookiePreferencesOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /**
- * Cookie preferences modal — the granular "Tùy chỉnh" panel: Necessary (locked on) + Analytics (toggle),
+ * Cookie preferences modal — the granular "Customize" panel: Necessary (locked on) + Analytics (toggle),
  * with Save / Reject / Accept all. Holds its OWN draft toggle (seeded from the committed
  * {@link useCookieConsentStore} value each time it opens); Save commits the choice. Mounted once in
  * `ModalContainer`, opened via {@link useCookiePreferencesOverlayState}.

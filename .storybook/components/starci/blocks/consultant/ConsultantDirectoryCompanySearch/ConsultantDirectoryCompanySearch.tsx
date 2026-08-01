@@ -94,8 +94,8 @@ const ConsultantDirectoryCompanySearch = ({
                     // Owned wording: this field jumps to ONE company, it does not filter
                     // the grid below it — the placeholder has to say so or a visitor will
                     // type a role/skill and get nothing back.
-                    placeholder="Tìm công ty tuyển dụng theo tên…"
-                    emptyLabel="Không tìm thấy công ty nào"
+                    placeholder="Search for a hiring company by name…"
+                    emptyLabel="No companies found"
                     showAnatomy={showAnatomy}
                 />
             </div>

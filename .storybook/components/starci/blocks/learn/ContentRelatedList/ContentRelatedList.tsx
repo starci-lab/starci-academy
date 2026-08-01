@@ -25,8 +25,8 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * already has one forward step (`ContentPager`); a second loud one would split
  * their attention between two exits.
  *
- * ⚠️ NO SNIPPET, ROW = breadcrumb → title → lock line (thầy 2026-07-28: "chế
- * nhiều quá" — a prior pass invented a `snippet` field this real row never
+ * ⚠️ NO SNIPPET, ROW = breadcrumb → title → lock line (teacher 2026-07-28:
+ * "over-engineered it" — a prior pass invented a `snippet` field this real row never
  * shows). Real `src`'s `RelatedContentList` calls `EntityResultRow` with
  * `showSnippet` left at its default `false` — the backend even strips the
  * snippet for locked rows, so there is nothing to read there anyway. What the
@@ -45,7 +45,7 @@ export interface ContentRelatedItem {
     key: string
     /** Lesson title. */
     title: string
-    /** Course trail this result belongs to, e.g. "Container hoá · Docker". Omitted → no line above the title. */
+    /** Course trail this result belongs to, e.g. "Containerization · Docker". Omitted → no line above the title. */
     breadcrumb?: string
     /** `true` → the viewer must enrol to open this result; a quiet lock line replaces any snippet. */
     isLocked?: boolean
@@ -62,10 +62,10 @@ export interface ContentRelatedListProps {
     items: Array<ContentRelatedItem>
     /**
      * Section label, localized by the caller (blocks carry no i18n) — e.g.
-     * "Có thể bạn muốn đọc".
+     * "You might also want to read".
      */
     label: string
-    /** Accessible text for the lock line, e.g. "Vào học để mở". */
+    /** Accessible text for the lock line, e.g. "Enroll to unlock". */
     enrollToOpenLabel?: string
     /**
      * `true` → the list draws its own row mirror. Kept even though the block
@@ -86,7 +86,7 @@ export interface ContentRelatedListProps {
 const relatedItemBody = (item: ContentRelatedItem, enrollToOpenLabel: string, showAnatomy: boolean) => (
     <>
         {item.breadcrumb ? (
-            <Typography size="xs" color="muted" truncate text={item.breadcrumb} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" color="muted" truncate text={item.breadcrumb} showAnatomy={showAnatomy} />
         ) : null}
         <Typography
             size="sm"
@@ -94,10 +94,10 @@ const relatedItemBody = (item: ContentRelatedItem, enrollToOpenLabel: string, sh
             truncate
             text={item.title}
             underlineOnGroupHover
-            anatPart={showAnatomy ? "Typography" : undefined}
+            showAnatomy={showAnatomy}
         />
         {item.isLocked ? (
-            <Typography size="xs" color="warning" prefixIcon={LockSimpleIcon} text={enrollToOpenLabel} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="xs" color="warning" prefixIcon={LockSimpleIcon} text={enrollToOpenLabel} showAnatomy={showAnatomy} />
         ) : null}
     </>
 )
@@ -110,7 +110,7 @@ const relatedItemBody = (item: ContentRelatedItem, enrollToOpenLabel: string, sh
 const ContentRelatedList = ({
     items,
     label,
-    enrollToOpenLabel = "Vào học để mở",
+    enrollToOpenLabel = "Enroll to unlock",
     isSkeleton = false,
     showAnatomy = false,
     anatPart,
@@ -128,7 +128,7 @@ const ContentRelatedList = ({
         // matches the real row's own affordance (no accent, no arrow).
         hover: "underline",
         content: (
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={relatedItemBody(item, enrollToOpenLabel, showAnatomy)} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={relatedItemBody(item, enrollToOpenLabel, showAnatomy)} />
         ),
     }))
 

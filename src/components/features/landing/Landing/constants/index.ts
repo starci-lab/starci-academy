@@ -1,4 +1,4 @@
-/** Vòng học 4 bước (read → grade → capstone → rank) — keys map to `landing.learnLoop.items.{key}.*`. */
+/** The 4-step learning loop (read → grade → capstone → rank) — keys map to `landing.learnLoop.items.{key}.*`. */
 export const LANDING_LOOP_STEPS = [
     "read",
     "grade",
@@ -64,17 +64,17 @@ export const LANDING_COURSE_TRACKS = [
     "devops",
 ] as const
 
-/** Mỗi track = 1 khóa THẬT. displayId/slug khóa để link "Vào khóa" → trang course detail
- * (`/courses/<slug>`). Grounded: slug khớp course thật trong DB. */
+/** Each track = 1 REAL course. The course's displayId/slug is used to link "Go to course" → the course detail
+ * page (`/courses/<slug>`). Grounded: the slug matches a real course in the DB. */
 export const LANDING_TRACK_COURSE_SLUG: Record<(typeof LANDING_COURSE_TRACKS)[number], string> = {
     fullstack: "fullstack-mastery",
     systemDesign: "system-design-mastery",
     devops: "devops-mastery",
 }
 
-/** 4 tier (FOUNDATION → INTERMEDIATE → ADVANCED → APPLICATION) cho mỗi lộ trình — hiển thị
- * dạng cột dọc trong section Roadmap. label = nhãn tầng sentence-case (đồng bộ design-system,
- * no-uppercase). topic = tóm tắt nội dung tiếng Anh kỹ thuật. */
+/** 4 tiers (FOUNDATION → INTERMEDIATE → ADVANCED → APPLICATION) per track — displayed
+ * as a vertical column in the Roadmap section. label = sentence-case tier label (matches
+ * the design-system convention, no-uppercase). topic = a summary of the technical English content. */
 export const LANDING_ROADMAP_TIERS: Record<
     (typeof LANDING_COURSE_TRACKS)[number],
     ReadonlyArray<{ label: string; topic: string }>
@@ -106,10 +106,10 @@ export const LANDING_ROADMAP_TIERS: Record<
  * proper nouns (not translated); labels come from `landing.outcome.card.*`.
  */
 export const LANDING_SAMPLE_CANDIDATE = {
-    name: "Thảo Vân",
+    name: "Vivian Tran",
     /** Profile slug (address-bar of the mockup). */
-    slug: "thao-van",
-    /** Avatar ảnh thật (lưu ở public/landing/thao-van.jpg). */
+    slug: "vivian-tran",
+    /** Real avatar photo (stored at public/landing/thao-van.jpg). */
     avatarUrl: "/landing/thao-van.jpg",
     skills: ["TypeScript", "Go", "System Design"],
     xp: 4820,

@@ -7,7 +7,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 /**
  * The model-category → dot color scale — the SINGLE source of truth for the category
  * tier ramp. A Tailwind palette ramp, not the 5 semantic tokens: cost/quality tier is
- * NOT a status, and 5 hạng would otherwise collide onto `danger` twice (premium ==
+ * NOT a status, and 5 tiers would otherwise collide onto `danger` twice (premium ==
  * frontier). Change the ramp here once.
  */
 export const AI_CATEGORY_COLOR: Record<AiModelCategory, string> = {

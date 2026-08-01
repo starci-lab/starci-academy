@@ -93,7 +93,7 @@ export const CodeToHtml = ({ code, language, theme, elevated = false, className 
             ref={containerRef}
             className={cn(
                 // BOTH variants = rounded-3xl (a code block is card-like → 3xl
-                // regardless of treatment, thầy 2026-07-18). Only bg/shadow differ:
+                // regardless of treatment, instructor's call, 2026-07-18). Only bg/shadow differ:
                 // raised card ON canvas (`bg-surface shadow`, NO border — shadow
                 // lifts, axis-1 §16/§32) vs recessed well ON a surface (`bg-background`
                 // inset + border, so it doesn't fill-on-fill the surface around it).

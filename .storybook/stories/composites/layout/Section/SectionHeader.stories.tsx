@@ -4,15 +4,18 @@ import { SectionHeader } from "@sb-components/composites/layout/Section/Section"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * `SectionHeader` — khung tiêu đề của MỘT VÙNG trong trang: `eyebrow` · `title` ·
- * `description` xếp cột trái, `action` ghim phải. KHÔNG children (mọi thứ là slot
- * có tên), KHÔNG chrome (không nền/viền/bo/padding) — nó ngồi thẳng trên nền trang.
+ * `SectionHeader` — the title frame of ONE region in a page: `eyebrow` ·
+ * `title` · `description` stack in the left column, `action` pins right. NO
+ * children (everything is a named slot), NO chrome (no background/border/
+ * radius/padding) — it sits directly on the page background.
  *
- * ⚠️ PHẠM VI STATE (§12f/§13): file này chỉ render state SINH RA TỪ CHÍNH nó — bật/tắt
- * từng slot + `level` (thang chữ). Nhịp dọc header ↔ body ↔ footer là tài sản của
- * `Section` (`gap`), nên KHÔNG lặp ở đây. Phân biệt tầng: `PageHeader` = chrome
- * của cả ROUTE (breadcrumb + H3 + meta, một cái/trang) · `SectionCard` (design) = thẻ
- * CÓ chrome · `SectionHeader` = tiêu đề vùng, nhiều cái/trang, co theo `level`.
+ * ⚠️ STATE SCOPE (§12f/§13): this file only renders states this component
+ * ITSELF produces — toggling each slot + `level` (the type scale). The
+ * vertical rhythm header ↔ body ↔ footer belongs to `Section` (`gap`), so it
+ * is NOT repeated here. Tier distinction: `PageHeader` = chrome for the whole
+ * ROUTE (breadcrumb + H3 + meta, one per page) · `SectionCard` (design) = a
+ * card WITH chrome · `SectionHeader` = a region's title, many per page,
+ * scaling with `level`.
  */
 const meta: Meta<typeof SectionHeader> = {
     title: "Composites/Layout/Section/SectionHeader",
@@ -25,8 +28,9 @@ const meta: Meta<typeof SectionHeader> = {
 export default meta
 type Story = StoryObj<typeof SectionHeader>
 /**
- * ANATOMY IS PER-LEAF: mỗi story khai đúng những part CHÍNH NÓ render. `Eyebrow`/
- * `Description`/`Action` chỉ tồn tại ở leaf thực sự truyền slot đó.
+ * ANATOMY IS PER-LEAF: each story declares only the parts IT ITSELF renders.
+ * `Eyebrow`/`Description`/`Action` only exist on the leaf that actually
+ * passes that slot.
  */
 const TITLE_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "atom", role: "the region's title, rendered at the size the level sets, always bold weight", storyId: "atoms-text-typography-typography--plain" },
@@ -50,10 +54,10 @@ const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--plain" },
     { name: "Typography", tier: "atom", role: "a muted supporting line", storyId: "atoms-text-typography-typography--plain" },
 ]
-/** Tối thiểu — chỉ `title`. Khung vẫn là hàng flex, chỉ có một cột chữ. */
+/** Minimal — only `title`. Still a flex row frame, just with one text column. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-2xl">
                 <BlockAnatomy
                     name="SectionHeader"
@@ -65,8 +69,8 @@ export const Default: Story = {
                         {
                             name: "only title passed",
                             why: "Just the title text renders, no eyebrow above it and no description or action beside it. This is the bare frame, the shape every other leaf below adds one slot on top of.",
-                            code: "<SectionHeader title=\"Khoá của tôi\" />",
-                            render: <SectionHeader title="Khoá của tôi" showAnatomy />,
+                            code: "<SectionHeader title=\"My courses\" />",
+                            render: <SectionHeader title="My courses" showAnatomy />,
                         },
                     ]}
                 />
@@ -74,10 +78,10 @@ export const Default: Story = {
         </div>
     ),
 }
-/** `eyebrow` — ngữ cảnh muted phía trên title (tên khoá/module), cùng cụm chữ `gap-1`. */
+/** `eyebrow` — a muted context line above the title (course/module name), in the same `gap-1` text cluster. */
 export const WithEyebrow: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-2xl">
                 <BlockAnatomy
                     name="SectionHeader"
@@ -88,8 +92,8 @@ export const WithEyebrow: Story = {
                         {
                             name: "eyebrow set",
                             why: "A muted kicker line grows above the title, one size smaller and in the same tight text cluster. The eyebrow names the course or module the region belongs to, so it stays context rather than climbing into a second title (§9a).",
-                            code: "<SectionHeader eyebrow=\"Fullstack Mastery\" title=\"Module 3 · Cơ sở dữ liệu\" />",
-                            render: <SectionHeader eyebrow="Fullstack Mastery" title="Module 3 · Cơ sở dữ liệu" showAnatomy />,
+                            code: "<SectionHeader eyebrow=\"Fullstack Mastery\" title=\"Module 3 · Databases\" />",
+                            render: <SectionHeader eyebrow="Fullstack Mastery" title="Module 3 · Databases" showAnatomy />,
                         },
                     ]}
                 />
@@ -97,10 +101,10 @@ export const WithEyebrow: Story = {
         </div>
     ),
 }
-/** `description` — một dòng bổ trợ muted dưới title. */
+/** `description` — one supporting muted line under the title. */
 export const WithDescription: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-2xl">
                 <BlockAnatomy
                     name="SectionHeader"
@@ -112,13 +116,13 @@ export const WithDescription: Story = {
                             name: "description set",
                             why: "A muted line grows below the title, tied to it with the same tight `gap-1` used inside a single text cluster rather than the looser rhythm between regions. Title and description read as one unit, not two separate stacked blocks.",
                             code: `<SectionHeader
-  title="Khoá của tôi"
-  description="Những khoá bạn đã ghi danh, sắp theo lần học gần nhất."
+  title="My courses"
+  description="The courses you're enrolled in, sorted by most recently studied."
 />`,
                             render: (
                                 <SectionHeader
-                                    title="Khoá của tôi"
-                                    description="Những khoá bạn đã ghi danh, sắp theo lần học gần nhất."
+                                    title="My courses"
+                                    description="The courses you're enrolled in, sorted by most recently studied."
                                     showAnatomy
                                 />
                             ),
@@ -129,10 +133,10 @@ export const WithDescription: Story = {
         </div>
     ),
 }
-/** `action` — slot phải nhận node `Button.*` (khung KHÔNG tự quyết hành động là gì). */
+/** `action` — the right slot takes a `Button.*` node (the frame does NOT decide what the action is). */
 export const WithAction: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-2xl">
                 <BlockAnatomy
                     name="SectionHeader"
@@ -144,13 +148,13 @@ export const WithAction: Story = {
                             name: "action set",
                             why: "A control slot grows on the right, pinned `shrink-0` so it never squeezes the text column. The header only reserves the slot and pins it there; the caller decides what the button actually does (§13).",
                             code: `<SectionHeader
-  title="Khoá của tôi"
-  action={<Button label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} />}
+  title="My courses"
+  action={<Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} />}
 />`,
                             render: (
                                 <SectionHeader
-                                    title="Khoá của tôi"
-                                    action={<Button label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
+                                    title="My courses"
+                                    action={<Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
                                     showAnatomy
                                 />
                             ),
@@ -161,10 +165,10 @@ export const WithAction: Story = {
         </div>
     ),
 }
-/** Đủ 4 slot cùng lúc — cột chữ 3 dòng bên trái, action canh TRÊN (`items-start`). */
+/** All 4 slots at once — a 3-line text column on the left, action anchored to the TOP (`items-start`). */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-2xl">
                 <BlockAnatomy
                     name="SectionHeader"
@@ -177,16 +181,16 @@ export const Full: Story = {
                             why: "All four slots render at once: eyebrow above the title, description below it, and the action pinned to the right, anchored to the TOP of the row (`items-start`). With a three-line text column on the left, the action must anchor at the top or it would drift down to the middle.",
                             code: `<SectionHeader
   eyebrow="Fullstack Mastery"
-  title="Bài tập đã nộp"
-  description="AI chấm trong vài phút; bạn có thể nộp lại tối đa 3 lần."
-  action={<Button label="Cấu hình" variant="secondary" size="sm" prefixIcon={GearIcon} />}
+  title="Submitted assignments"
+  description="AI grades within minutes; you can resubmit up to 3 times."
+  action={<Button label="Settings" variant="secondary" size="sm" prefixIcon={GearIcon} />}
 />`,
                             render: (
                                 <SectionHeader
                                     eyebrow="Fullstack Mastery"
-                                    title="Bài tập đã nộp"
-                                    description="AI chấm trong vài phút; bạn có thể nộp lại tối đa 3 lần."
-                                    action={<Button label="Cấu hình" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
+                                    title="Submitted assignments"
+                                    description="AI grades within minutes; you can resubmit up to 3 times."
+                                    action={<Button label="Settings" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
                                     showAnatomy
                                 />
                             ),
@@ -198,12 +202,12 @@ export const Full: Story = {
     ),
 }
 /**
- * `level` — MỘT nút xoay đổi thang chữ của CẢ header (title + description + eyebrow
- * đi cùng nhau), nên header không bao giờ trộn cỡ bằng tay.
+ * `level` — ONE dial that turns the type scale of the WHOLE header (title +
+ * description + eyebrow move together), so a header never mixes scales by hand.
  */
 export const Levels: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="max-w-2xl">
                 <BlockAnatomy
                     name="SectionHeader"
@@ -216,19 +220,19 @@ export const Levels: Story = {
                             name: "level = 1",
                             why: "Title renders at `lg` bold and description at `sm`, the largest band a page uses. The tree stays the same as every other level; only the type scale steps up.",
                             code: "<SectionHeader level={1} title=\"…\" description=\"…\" />",
-                            render: <SectionHeader level={1} title="Lộ trình học" description="level 1 — dải lớn nhất của trang." showAnatomy />,
+                            render: <SectionHeader level={1} title="Learning roadmap" description="level 1 — the biggest band of the page." showAnatomy />,
                         },
                         {
                             name: "level = 2 (default)",
                             why: "Title renders at `base` bold and description at `sm`, the scale used for a normal section on the page. This is the level a header takes when the caller passes none.",
                             code: "<SectionHeader level={2} title=\"…\" description=\"…\" />",
-                            render: <SectionHeader level={2} title="Module đang học" description="level 2 — vùng thường (mặc định)." />,
+                            render: <SectionHeader level={2} title="Current module" description="level 2 — a normal region (default)." />,
                         },
                         {
                             name: "level = 3",
                             why: "Title renders at `sm` medium and description drops to `xs`, the scale for a sub-section nested under another header. Weight drops from bold to medium too, so a level-3 header never competes with the header above it.",
                             code: "<SectionHeader level={3} title=\"…\" description=\"…\" />",
-                            render: <SectionHeader level={3} title="Bài trong module" description="level 3 — vùng con nằm dưới một header khác." />,
+                            render: <SectionHeader level={3} title="Lesson in module" description="level 3 — a sub-region nested under another header." />,
                         },
                     ]}
                 />

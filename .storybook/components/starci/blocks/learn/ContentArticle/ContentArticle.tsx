@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 import { ContentPaywall } from "@sb-components/starci/blocks/learn/ContentPaywall/ContentPaywall"
 import type { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
@@ -98,9 +98,9 @@ const ContentArticle = ({
     const lessonBody = (
         <>
             {hintText != null && !isLocked ? (
-                <FeedbackCallout
+                <Callout
                     title={hintText}
-                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                    anatPart={showAnatomy ? "Callout" : undefined}
                 />
             ) : null}
             <div className="relative">
@@ -138,9 +138,11 @@ const ContentArticle = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={lessonBody} />
-            </SurfaceCard>
+            <SurfaceCard
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                body={() => <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={lessonBody} />}
+            />
         </div>
     )
 }

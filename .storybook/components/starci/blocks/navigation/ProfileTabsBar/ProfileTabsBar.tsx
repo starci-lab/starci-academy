@@ -36,7 +36,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ `hiddenTabs` is NOT "tabs to remove" — those are already absent from
  * `visibleTabs` (a visitor never receives a withheld section's key at all, per
- * the real `visibleTabs` filter). `hiddenTabs` is the OWNER-ONLY "· ẩn" marker:
+ * the real `visibleTabs` filter). `hiddenTabs` is the OWNER-ONLY "· hidden" marker:
  * a subset of `visibleTabs` the owner sees annotated because they turned that
  * section off for everyone else. A caller viewing as a visitor simply never
  * passes a tab here (their withheld tabs already never reached `visibleTabs`).
@@ -76,12 +76,12 @@ export type ProfileTab = "overview" | "projects" | "challenges" | "skills" | "cv
 
 /** Tab → label. Block-owned wording (§14d.1), ported verbatim from `publicProfile.tabs.*`. */
 const TAB_LABEL: Record<ProfileTab, string> = {
-    overview: "Tổng quan",
-    projects: "Dự án",
-    challenges: "Thử thách",
-    skills: "Kỹ năng",
+    overview: "Overview",
+    projects: "Projects",
+    challenges: "Challenges",
+    skills: "Skills",
     cv: "CV",
-    activity: "Hoạt động",
+    activity: "Activity",
 }
 
 /** Tab → icon. Ported 1:1 from the real `TAB_ICONS` table. */
@@ -103,7 +103,7 @@ const TAB_ICON_CLASS = "size-3.5"
 const TAB_ICON_WEIGHT = "bold" as const
 
 /** The owner-only marker riding beside a hidden section tab's label. */
-const HIDDEN_MARKER = "· ẩn"
+const HIDDEN_MARKER = "· hidden"
 
 /** Props for {@link ProfileTabsBar}. */
 export interface ProfileTabsBarProps {
@@ -120,7 +120,7 @@ export interface ProfileTabsBarProps {
     onTabChange: (tab: ProfileTab) => void
     /**
      * Section tabs (a subset of {@link visibleTabs}) the OWNER has switched off
-     * for other visitors — rendered with a "· ẩn" marker beside the label so the
+     * for other visitors — rendered with a "· hidden" marker beside the label so the
      * owner can tell at a glance. Omit (or leave empty) for a visitor's own view.
      */
     hiddenTabs?: ReadonlyArray<ProfileTab>
@@ -168,7 +168,7 @@ const ProfileTabsBar = ({
                                     data-anat-part={showAnatomy ? "Tabs.Tab" : undefined}
                                 >
                                     <StackH
-                                        gap="tight"
+                                        gap={2}
                                         align="center"
                                         anatPart={showAnatomy ? "StackH" : undefined}
                                         body={(
@@ -177,11 +177,11 @@ const ProfileTabsBar = ({
                                                 {/* Icon-only below @app-md — label (and its marker) only
                                                     from a tablet-wide profile strip up. */}
                                                 <span className="hidden @app-md:inline">
-                                                    <Typography size="sm" text={TAB_LABEL[tabId]} anatPart={showAnatomy ? "Typography" : undefined} />
+                                                    <Typography size="sm" text={TAB_LABEL[tabId]} showAnatomy={showAnatomy} />
                                                     {isHidden ? (
                                                         <>
                                                             {" "}
-                                                            <Typography size="sm" color="muted" text={HIDDEN_MARKER} anatPart={showAnatomy ? "Typography" : undefined} />
+                                                            <Typography size="sm" color="muted" text={HIDDEN_MARKER} showAnatomy={showAnatomy} />
                                                         </>
                                                     ) : null}
                                                 </span>

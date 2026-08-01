@@ -2,7 +2,6 @@ import React from "react"
 import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { RichText } from "@sb-components/composites/viewers/RichText/RichText"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
@@ -29,7 +28,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * other, so both earn a chip. The lint rule itself only matches literal
  * `<Chip>` siblings; composing through two `<EnumChip>` elements does not
  * trip it, and the judgement call above is the actual reason it is safe to.
- * `scoreValue` stays quiet muted text (§14d.1: the block adds "điểm" itself)
+ * `scoreValue` stays quiet muted text (§14d.1: the block adds "points" itself)
  * because a raw number is not a classifying fact.
  *
  * BACK LINK, NOT BREADCRUMBS. `ContentHeader` shows a full trail because a
@@ -62,23 +61,23 @@ export type ChallengeStatus = "completed" | "failed" | "inProgress"
 
 /** Difficulty → chip presentation. The block owns this table (§14d.1: no caller-supplied color). */
 const DIFFICULTY_MAP: Record<ChallengeDifficulty, EnumChipEntry> = {
-    easy: { color: "success", label: "Dễ" },
-    medium: { color: "warning", label: "Trung bình" },
-    hard: { color: "danger", label: "Khó" },
+    easy: { color: "success", label: "Easy" },
+    medium: { color: "warning", label: "Medium" },
+    hard: { color: "danger", label: "Hard" },
 }
 
 /**
  * Attempt status → chip presentation.
  *
  * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): `failed` gets a
- * leading icon — a failed/not-passed verdict is a "quốc dân" symbol (cross),
+ * leading icon — a failed/not-passed verdict is a "universal" symbol (cross),
  * not decoration. `completed`/`inProgress` stay text-only; extend the day a
  * screen actually asks for their icon too, not preemptively.
  */
 const STATUS_MAP: Record<ChallengeStatus, EnumChipEntry> = {
-    completed: { color: "success", label: "Đạt" },
-    failed: { color: "danger", label: "Trượt", icon: "cross" },
-    inProgress: { color: "warning", label: "Đang làm" },
+    completed: { color: "success", label: "Passed" },
+    failed: { color: "danger", label: "Failed", icon: "cross" },
+    inProgress: { color: "warning", label: "In progress" },
 }
 
 /** Props for {@link ChallengeHeader}. */
@@ -93,7 +92,7 @@ export interface ChallengeHeaderProps {
     description?: string
     /**
      * Points this challenge is worth, in RAW NUMBER — the block adds the unit
-     * itself ("{n} điểm", §14d.1). Omit when no score is defined yet.
+     * itself ("{n} points", §14d.1). Omit when no score is defined yet.
      */
     scoreValue?: number
     /**
@@ -137,14 +136,16 @@ const ChallengeHeader = ({
     showAnatomy = false,
     anatPart,
 }: ChallengeHeaderProps) => {
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, thầy chốt trả lời
-    // điểm-1-còn-treo round-3: "đỏ dời qua bên trái, vàng dời qua sát đó, rồi gap
-    // đều 3 cái này" — rồi sửa lại thứ tự: "chip nằm bên trái, plain text bên
-    // phải"): bỏ `justify="between"` + StackH lồng hai tầng (từng đẩy score sang
-    // mép trái, status/difficulty sang mép phải) — gộp thành MỘT hàng, cùng
-    // `gap="related"`, đứng sát nhau bên trái, CHIP TRƯỚC (status, difficulty) rồi
-    // mới tới score dạng chữ thường. Vẫn gỡ `prefixIcon={TrophyIcon}` (round-2) và
-    // giữ thứ tự status trước difficulty (round-2).
+    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, teacher's final
+    // call on the still-open score-1 issue, round-3: "move the red one to the
+    // left, put the yellow one right next to it, then give these three an even
+    // gap" — then revised the order again: "chip on the left, plain text on
+    // the right"): dropped `justify="between"` + a two-tier nested StackH (which
+    // used to push score to the left edge and status/difficulty to the right
+    // edge) — merged into ONE row, all with the same `gap={3}`, sitting close
+    // together on the left, CHIPS FIRST (status, difficulty) then the score as
+    // plain text. Still dropped `prefixIcon={TrophyIcon}` (round-2) and kept the
+    // status-before-difficulty order (round-2).
     const metaRow = (
         <>
             {isSkeleton ? (
@@ -176,13 +177,13 @@ const ChallengeHeader = ({
                 />
             )}
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
             ) : scoreValue != null ? (
                 <Typography
                     size="xs"
                     color="muted"
-                    text={`${scoreValue} điểm`}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={`${scoreValue} points`}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -192,47 +193,26 @@ const ChallengeHeader = ({
         <div data-anat-part={anatPart}>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
-                breadcrumb={
+                isSkeleton={isSkeleton}
+                breadcrumb={() =>
                     isSkeleton ? (
-                        <Typography size="sm" isSkeleton classNames={["w-1/4"]} anatPart={showAnatomy ? "LinkBack" : undefined} />
+                        <Typography size="sm" isSkeleton classNames={["w-1/4"]} showAnatomy={showAnatomy} />
                     ) : (
                         <LinkBack
                             label={backLabel}
                             onPress={onBackPress}
-                            anatPart={showAnatomy ? "LinkBack" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     )
                 }
-                title={
-                    isSkeleton ? (
-                        // `PageHeader` has no `isSkeleton` of its own, so the block calls the
-                        // atom directly with the EXACT size/weight the frame uses for a title
-                        // and feeds the result into the slot.
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                    )
-                }
-                description={
-                    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): field
-                    // "one-sentence summary" là tầng "richtext nhỏ" — bọc RichText tại ĐÂY
-                    // (call-site của block), không sửa `Page.tsx` dùng chung, vì
-                    // `PageHeader.description` nhận `ReactNode` (nhiều consumer khác có thể
-                    // truyền JSX thật, không phải string). Một quyết định duy nhất ở đây là
-                    // "có hiện slot này không" (isSkeleton hoặc có description thật);
-                    // `isSkeleton` sau đó CHẢY THẲNG xuống làm prop của RichText (§12c),
-                    // không branching hai component khác nhau cho hai trạng thái.
-                    isSkeleton || description != null ? (
-                        <RichText
-                            isSkeleton={isSkeleton}
-                            text={description ?? ""}
-                            color="muted"
-                            anatPart={showAnatomy ? "RichText" : undefined}
-                        />
-                    ) : undefined
-                }
-                meta={
-                    <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
+                title={title}
+                // `PageHeader.description` is now a plain `string` (COMPOSITE-4), so this
+                // block no longer wraps it in `RichText` at the call site — the field is
+                // already typed/documented as a plain one-sentence summary, never markdown,
+                // and `PageHeader` now owns the muted styling + skeleton swap itself.
+                description={description}
+                meta={() =>
+                    <StackH gap={3} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
                 }
             />
         </div>

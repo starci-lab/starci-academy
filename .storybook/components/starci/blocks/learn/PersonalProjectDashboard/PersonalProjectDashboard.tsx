@@ -48,7 +48,7 @@ import { ContinueCardHero, ContinueCardItem } from "@sb-components/starci/blocks
  * mid-load independently of it (its data comes off the enrollment record, not
  * `milestoneTaskProgress`).
  *
- * THE BLOCK OWNS ITS OWN WORDING (§14d.1): "Nhiệm vụ tiếp theo", the "Tiếp tục ·"
+ * THE BLOCK OWNS ITS OWN WORDING (§14d.1): "Next task", the "Continue ·"
  * heading prefix, the stats sentence shape, and the per-`subtitleState` label
  * table are ALL assembled here — the caller only hands over numbers/entities/
  * enum members, never a formatted string. `githubStatus.label` is the one
@@ -127,7 +127,7 @@ export interface PersonalProjectStats {
 export interface PersonalProjectDashboardProps {
     /** Breadcrumb trail as DATA — the block builds `Breadcrumbs` itself. */
     breadcrumbItems?: Array<PersonalProjectDashboardCrumb>
-    /** Dashboard title, e.g. "Dự án cá nhân". */
+    /** Dashboard title, e.g. "Personal Project". */
     title: string
     /** One-line description under the title. */
     description?: string
@@ -137,7 +137,7 @@ export interface PersonalProjectDashboardProps {
     currentTask?: PersonalProjectCurrentTask
     /** Fired when the learner presses the continue hero's CTA. */
     onContinue: () => void
-    /** The current milestone's name — the block prefixes "Tiếp tục ·" onto it. */
+    /** The current milestone's name — the block prefixes "Continue ·" onto it. */
     milestoneLabel?: string
     /** The current milestone's tasks, in display order. */
     tasks: Array<PersonalProjectDashboardTask>
@@ -170,29 +170,29 @@ export interface PersonalProjectDashboardProps {
 }
 
 /** Block-owned constant — the one classifying fact of the continue hero's subtitle. */
-const NEXT_TASK_SUBTITLE = "Nhiệm vụ tiếp theo"
+const NEXT_TASK_SUBTITLE = "Next task"
 
 /** Block-owned constant — shown instead of the hero once every task is done. */
-const ALL_DONE_TEXT = "Bạn đã hoàn thành mọi nhiệm vụ của dự án cá nhân"
+const ALL_DONE_TEXT = "You've completed every task in your personal project"
 
 /** Block-owned constant — the completion meter's own label. */
-const PROGRESS_LABEL = "Tiến độ hoàn thành"
+const PROGRESS_LABEL = "Completion progress"
 
 /** Block-owned constant — the keep-going grid's heading prefix. */
-const KEEP_GOING_PREFIX = "Tiếp tục"
+const KEEP_GOING_PREFIX = "Continue"
 
 /** Block-owned wording per {@link PersonalProjectTaskSubtitleState} — the caller only sends the enum. */
 const TASK_SUBTITLE: Record<PersonalProjectTaskSubtitleState, string> = {
-    active: "Nhiệm vụ tiếp theo",
-    done: "Đã hoàn thành",
-    locked: "Đang khoá",
-    todo: "Chưa bắt đầu",
+    active: "Next task",
+    done: "Completed",
+    locked: "Locked",
+    todo: "Not started",
 }
 
 /** Block-owned empty-state copy — the course has no capstone tasks configured yet. */
 const EMPTY_STATE: AsyncContentEmptyProps = {
-    title: "Chưa có nhiệm vụ nào",
-    description: "Dự án cá nhân của khoá học này chưa được thiết lập mốc/nhiệm vụ.",
+    title: "No tasks yet",
+    description: "This course's personal project has no milestones/tasks set up yet.",
 }
 
 /** Placeholder shape guessed while loading (§12c) — mirrors `src`'s 4-row skeleton. */
@@ -209,7 +209,7 @@ const keepGoingLabel = (milestoneLabel: string | undefined) =>
 
 /** Assembles the block-owned stats sentence under the completion meter. */
 const statsLine = (stats: PersonalProjectStats) =>
-    `${stats.done}/${stats.total} nhiệm vụ đã hoàn thành · ${stats.attempts} lượt nộp bài · điểm trung bình ${stats.avgLabel}`
+    `${stats.done}/${stats.total} tasks completed · ${stats.attempts} submissions · average score ${stats.avgLabel}`
 
 /** Props for the internal {@link Body} — the two async leaves, real or their shimmer guess. */
 interface BodyProps {
@@ -240,7 +240,7 @@ const Body = ({
 }: BodyProps) => {
     const heroSection = (
         <StackV
-            gap="grouped"
+            gap={4}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -254,7 +254,7 @@ const Body = ({
                             anatPart={showAnatomy ? "ContinueCardHero" : undefined}
                         />
                     ) : (
-                        <Typography weight="semibold" text={ALL_DONE_TEXT} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography weight="semibold" text={ALL_DONE_TEXT} showAnatomy={showAnatomy} />
                     )}
                     <ProgressMeter
                         value={stats.done}
@@ -270,7 +270,7 @@ const Body = ({
                         isSkeleton={isSkeleton}
                         classNames={isSkeleton ? ["w-3/4"] : undefined}
                         text={statsLine(stats)}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 </>
             }
@@ -279,7 +279,7 @@ const Body = ({
 
     return (
         <StackV
-            gap="section"
+            gap={6}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -289,26 +289,27 @@ const Body = ({
                         isSkeleton={isSkeleton}
                         showAnatomy={showAnatomy}
                         anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    >
-                        <Grid
-                            columns={{ base: 1, sm: 2 }}
-                            gap="grouped"
-                            showAnatomy={showAnatomy}
-                            items={tasks.map((task) => ({
-                                key: task.id,
-                                content: (
-                                    <ContinueCardItem
-                                        title={`${task.sortIndex}. ${task.title}`}
-                                        subtitle={TASK_SUBTITLE[task.subtitleState]}
-                                        isSkeleton={isSkeleton}
-                                        onPress={() => onSelectTask(task.id)}
-                                        showAnatomy={showAnatomy}
-                                        anatPart={showAnatomy ? "ContinueCardItem" : undefined}
-                                    />
-                                ),
-                            }))}
-                        />
-                    </SurfaceCard>
+                        body={() => (
+                            <Grid
+                                columns={{ base: 1, sm: 2 }}
+                                gap={4}
+                                showAnatomy={showAnatomy}
+                                items={tasks.map((task) => ({
+                                    key: task.id,
+                                    content: (
+                                        <ContinueCardItem
+                                            title={`${task.sortIndex}. ${task.title}`}
+                                            subtitle={TASK_SUBTITLE[task.subtitleState]}
+                                            isSkeleton={isSkeleton}
+                                            onPress={() => onSelectTask(task.id)}
+                                            showAnatomy={showAnatomy}
+                                            anatPart={showAnatomy ? "ContinueCardItem" : undefined}
+                                        />
+                                    ),
+                                }))}
+                            />
+                        )}
+                    />
                 </>
             }
         />
@@ -346,7 +347,8 @@ const PersonalProjectDashboard = ({
     const header = (
         <PageHeader
             anatPart={showAnatomy ? "PageHeader" : undefined}
-            breadcrumb={
+            isSkeleton={isSkeleton}
+            breadcrumb={() =>
                 isSkeleton || crumbs.length ? (
                     <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
                         <Breadcrumbs collapseOnMobile items={crumbs} isSkeleton={isSkeleton} />
@@ -355,15 +357,14 @@ const PersonalProjectDashboard = ({
             }
             title={title}
             description={description}
-            meta={
+            meta={() =>
                 isSkeleton ? (
-                    <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                    <Chip isSkeleton />
                 ) : (
                     <Chip
                         tone={githubStatus.isConnected ? "success" : "default"}
                         icon={GithubLogoIcon}
                         text={githubStatus.label}
-                        anatPart={showAnatomy ? "Chip" : undefined}
                     />
                 )
             }
@@ -405,7 +406,7 @@ const PersonalProjectDashboard = ({
     return (
         <div data-anat-part={anatPart}>
             <StackV
-                gap="section"
+                gap={6}
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
                     <>

@@ -78,7 +78,7 @@ export interface TabsCardProps extends WithClassNames<undefined> {
      * chrome if it wants any, §1). `"primary"` = page-FEATURE tabs that switch
      * the ENTIRE panel content — full-width, evenly-stretched segmented pill
      * (HeroUI's own default Tabs look). Use `"primary"` for top-level section
-     * switches (e.g. Bắt đầu/Lịch sử/Thống kê), `"secondary"` for a content
+     * switches (e.g. Start/History/Statistics), `"secondary"` for a content
      * filter/language-switcher. Applies to BOTH groups (a toolbar is either
      * page-feature nav or in-page filter nav, not a mix).
      */

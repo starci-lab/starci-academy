@@ -39,11 +39,11 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * ⭐ TWO-PANE WORKSPACE, NOT A READING COLUMN. `ChallengePage` already solved
  * this exact problem for its own read-column/act-column split, and its file
  * header names the reason precisely: this design system has no dedicated
- * "flexible column + fixed aside" khung yet, so `StackH` holding two `StackV`
+ * "flexible column + fixed aside" frame yet, so `StackH` holding two `StackV`
  * children is the BEST-AVAILABLE substitute (`min-w-0 flex-1` for the guide,
  * `shrink-0 @app-xl:w-[24rem]` for the resource aside) — same idiom, same
  * documented limit, not a second one invented. This resolves the planner's own
- * "no existing khung fits" note: one already does, one call away.
+ * "no existing frame fits" note: one already does, one call away.
  * `divider` (a `StackH` prop, composing the `Divider` atom) draws the seam
  * between the two panes instead of a hand-rolled border class.
  *
@@ -75,7 +75,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * ⛔ NO `isSkeleton` PROP. None of the four composed blocks accepts one:
  * `WorkSessionHeader` and `PlaygroundStepGuide` never grew the prop,
  * `PlaygroundResourcePanel`'s file header states outright that it is "NEVER
- * SKELETONISED" (its own `Feedback.Empty` states already cover "nothing to
+ * SKELETONISED" (its own `EmptyState` states already cover "nothing to
  * shimmer yet"), and `PlaygroundConnectSheet` mirrors real socket state, not a
  * fetch. The route-level notes for this screen confirm the loading moment lives
  * OUTSIDE it entirely (`isLoading || !playground` → a full-screen spinner one
@@ -96,7 +96,7 @@ export interface PlaygroundSessionPageProps {
     onBack: () => void
     /** Session title, e.g. the exercise name. */
     title?: string
-    /** Where the learner is, already worded, e.g. "Bước 2 / 5". */
+    /** Where the learner is, already worded, e.g. "Step 2 / 5". */
     counter: string
     /** How many steps this run has. */
     total: number
@@ -185,8 +185,8 @@ const PlaygroundSessionPage = ({
 
     const guidePane = (
         <StackV
-            gap="flush"
-            padding="roomy"
+            gap={1}
+            padding={6}
             className="overflow-y-auto"
             classNames={["min-w-0", "flex-1"]}
             anatPart={showAnatomy ? "StackV" : undefined}
@@ -205,8 +205,8 @@ const PlaygroundSessionPage = ({
 
     const resourcePane = (
         <StackV
-            gap="flush"
-            padding="roomy"
+            gap={1}
+            padding={6}
             className="overflow-y-auto @app-xl:w-[24rem]"
             classNames={["w-full", "shrink-0"]}
             anatPart={showAnatomy ? "StackV" : undefined}
@@ -226,7 +226,7 @@ const PlaygroundSessionPage = ({
     const workspaceRegion = (
         <>
             <StackH
-                gap="section"
+                gap={6}
                 align="start"
                 divider
                 className="overflow-hidden"
@@ -240,7 +240,7 @@ const PlaygroundSessionPage = ({
                 }
             />
             <StackV
-                gap="flush"
+                gap={1}
                 className="absolute inset-x-0 bottom-0 z-10"
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
@@ -277,7 +277,7 @@ const PlaygroundSessionPage = ({
                 showAnatomy={showAnatomy}
             />
             <StackV
-                gap="flush"
+                gap={1}
                 className="relative"
                 classNames={["min-h-0", "flex-1"]}
                 anatPart={showAnatomy ? "StackV" : undefined}
@@ -286,7 +286,7 @@ const PlaygroundSessionPage = ({
         </>
     )
 
-    return <StackV gap="flush" className="h-[calc(100vh-4rem)]" anatPart={showAnatomy ? "StackV" : undefined} body={sessionSections} />
+    return <StackV gap={1} className="h-[calc(100vh-4rem)]" anatPart={showAnatomy ? "StackV" : undefined} body={sessionSections} />
 }
 
 export { PlaygroundSessionPage }

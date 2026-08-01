@@ -4,7 +4,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link SectionHeading} block. */
 export interface SectionHeadingProps extends WithClassNames<undefined> {
-    /** Small accent chip above the title (e.g. "Học thật"); omit to hide. */
+    /** Small accent chip above the title (e.g. "Real learning"); omit to hide. */
     eyebrow?: React.ReactNode
     /** Section title. */
     title: React.ReactNode

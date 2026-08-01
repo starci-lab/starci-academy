@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { Toolbar, type ToolbarTabGroup } from "@sb-components/composites/navigation/Toolbar/Toolbar"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
-import { type InsetScale } from "@sb-components/frames/_spacing"
+import { type AllowedPadding } from "@sb-components/frames/_spacing"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
@@ -11,8 +11,8 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * living inside a `SurfaceCard` face, instead of sitting bare on the page
  * canvas the way `ContentModeNav` does today.
  *
- * ⭐ COMPOSES, DOES NOT REINVENT (thầy 2026-07-29, "tạo thêm doubleTabsCard từ
- * Toolbar + Card"). `SurfaceCard.Base`'s own `header` slot is already
+ * ⭐ COMPOSES, DOES NOT REINVENT (teacher's ruling, 2026-07-29, "add a
+ * doubleTabsCard built from Toolbar + Card"). `SurfaceCard.Base`'s own `header` slot is already
  * documented for exactly this shape ("a title row, A TOOLBAR") — this
  * composite is that ONE combination, named, so every caller that needs "tabs
  * inside a card" reaches for the same shape instead of re-composing
@@ -49,10 +49,8 @@ export interface DoubleTabsCardProps {
     children?: ReactNode
     /** Card face: `"surface"` (default, shadow) or `"nested"` (border only). */
     cardVariant?: SurfaceCardVariant
-    /** Padding around the body, §10c scale. Default `3` (`SurfaceCard`'s own default). */
-    padding?: InsetScale
-    /** Extra classes on the card's outer section wrapper. */
-    className?: string
+    /** Padding around the body, §10c scale. Default `{4}` (`SurfaceCard`'s own default). */
+    padding?: AllowedPadding
     /** Layout utilities on the card's outer section wrapper, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
@@ -67,6 +65,9 @@ export interface DoubleTabsCardProps {
  *
  * @param props - {@link DoubleTabsCardProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "DoubleTabsCard" } as const
+
 const DoubleTabsCard = ({
     leftTabs,
     leftEnd,
@@ -78,7 +79,6 @@ const DoubleTabsCard = ({
     children,
     cardVariant,
     padding,
-    className,
     classNames,
     showAnatomy = false,
     anatPart,
@@ -86,11 +86,10 @@ const DoubleTabsCard = ({
     <SurfaceCard
         variant={cardVariant}
         padding={padding}
-        className={className}
         classNames={classNames}
         anatPart={anatPart}
         showAnatomy={showAnatomy}
-        header={
+        header={() => (
             <Toolbar
                 leftTabs={leftTabs}
                 leftEnd={leftEnd}
@@ -102,10 +101,9 @@ const DoubleTabsCard = ({
                 showAnatomy={showAnatomy}
                 anatPart={showAnatomy ? "Toolbar" : undefined}
             />
-        }
-    >
-        {children}
-    </SurfaceCard>
+        )}
+        body={() => children}
+    />
 )
 
 export { DoubleTabsCard }

@@ -10,7 +10,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * REUSE, NOT A NEW ACCORDION/LIST — no card frame, no collapsible row, no list
  * row of its own. `SurfaceCard.Accordion` is the same composite
  * `SubmissionFindingsList` builds its card from, `List.Row` is the same row
- * `ContentRelatedList`'s rows are built from, `Feedback.Empty` is the same
+ * `ContentRelatedList`'s rows are built from, `EmptyState` is the same
  * centred placeholder every other pre-content block uses.
  *
  * ⭐ WHY `Chip`, NOT `EnumChip`, FOR THE STATUS. Status is FREE-FORM CLI text
@@ -49,7 +49,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame separating the panel's header row from its body region", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal frame pinning the header's icon+label to the start and the total count to the end", storyId: "frames-stack-stackh--default" },
     "Typography": { tier: "atom", role: "the panel's header label (with its leading icon) or the total-count text beside it", storyId: "atoms-text-typography-typography--plain" },
-    "FeedbackEmpty": { tier: "composite", role: "the centred message filling the body region before pairing, and again after pairing while the first snapshot is still in flight", storyId: "composites-feedback-feedback-feedbackempty--icon-and-title" },
+    "EmptyState": { tier: "composite", role: "the centred message filling the body region before pairing, and again after pairing while the first snapshot is still in flight", storyId: "composites-feedback-emptystate-emptystate--icon-and-title" },
     "SurfaceCardAccordion": { tier: "composite", role: "the bounded card of collapsible kind-groups, each trigger row carrying its own resource count as `titleEnd`", storyId: "composites-cards-surfacecard-surfacecardaccordion--with-title-end" },
     "Chip": { tier: "atom", role: "a per-kind resource count in a trigger row, or a per-resource status pill toned by the block's own CLI-text heuristic", storyId: "atoms-chips-chip-chip--tones" },
     "ListRow": { tier: "composite", role: "one resource inside its kind group, carrying the resource's name and its toned status chip as trailing meta", storyId: "composites-lists-list-listrow--meta-trailing" },
@@ -58,7 +58,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the panel's one shape: header row over a body region, three data states. */
 export const Panel: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundResourcePanel"
                 tier="block"

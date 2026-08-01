@@ -30,7 +30,7 @@ export interface CompanySectionProps {
 }
 
 /**
- * "Công ty" section of the job-post form: an ES-backed company typeahead to pick
+ * "Company" section of the job-post form: an ES-backed company typeahead to pick
  * an EXISTING {@link import("@/modules/types/entities/headhunting-company").HeadhuntingCompanyEntity},
  * or — when nothing is picked — a fallback set of fields to register a brand-new
  * company inline. Exactly one of the two paths feeds `submitJobPosting` (enforced

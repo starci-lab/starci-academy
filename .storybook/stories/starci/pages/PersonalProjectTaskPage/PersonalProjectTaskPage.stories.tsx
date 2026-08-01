@@ -13,13 +13,13 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * settings-drawer trigger, evaluate/secondary actions, and the latest graded
  * result).
  *
- * ⭐ TWO COLUMNS, composed with `SplitWorkspace` (§ layout khung, 2026-07-29,
- * same khung `ChallengePage` now uses — real `src`'s `PersonalProjectWorkspace`
+ * ⭐ TWO COLUMNS, composed with `SplitWorkspace` (§ layout frame, 2026-07-29,
+ * the same frame `ChallengePage` now uses — real `src`'s `PersonalProjectWorkspace`
  * and `ChallengeView` share byte-for-byte identical split CSS): `min-w-0
  * flex-1` reading column beside a `shrink-0 w-[360px]` sticky aside, STACKED
  * (mobile/tablet) → `@app-xl:flex-row` (desktop only). Was `StackH…wrap`, a
- * FIXED horizontal axis that never actually stacked below desktop — same bug
- * thầy caught on `ChallengePage`, just not yet spotted here.
+ * FIXED horizontal axis that never actually stacked below desktop — the same
+ * bug the teacher caught on `ChallengePage`, just not yet spotted here.
  *
  * ⚠️ SCOPE OF THIS PASS: the grading-settings Drawer's content (language
  * picker, branch, private-repo token) is NOT built — `onOpenSettings` is a
@@ -38,15 +38,15 @@ export default meta
 type Story = StoryObj<typeof PersonalProjectTaskPage>
 
 const CRUMBS = [
-    { key: "courses", label: "Khoá học", onPress: () => {} },
+    { key: "courses", label: "Courses", onPress: () => {} },
     { key: "course", label: "DevOps Mastery", onPress: () => {} },
-    { key: "personal-project", label: "Dự án cá nhân", onPress: () => {} },
-    { key: "task", label: "Nhiệm vụ 3 — Dockerize service" },
+    { key: "personal-project", label: "Personal Project", onPress: () => {} },
+    { key: "task", label: "Task 3 — Dockerize service" },
 ]
 
 const RELATED_ITEMS = [
-    { key: "lesson-1", title: "Viết Dockerfile tối ưu", snippet: "Layer, cache và multi-stage build.", href: "#" },
-    { key: "lesson-2", title: "Biến môi trường & secrets trong container", href: "#" },
+    { key: "lesson-1", title: "Writing an optimized Dockerfile", snippet: "Layers, caching, and multi-stage builds.", href: "#" },
+    { key: "lesson-2", title: "Environment variables & secrets in containers", href: "#" },
 ]
 
 const BASE_SUBMISSION: PersonalProjectTaskSubmissionPanelProps = {
@@ -67,7 +67,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the task's own identity: breadcrumb trail, title, description — no meta row, a task carries no score/difficulty of its own", storyId: "composites-layout-page-pageheader--full" },
     "Breadcrumbs": { tier: "atom", role: "the trail the reading column builds from crumb data handed down by the screen", storyId: "atoms-navigation-breadcrumbs-breadcrumbs--default" },
     "Typography": { tier: "atom", role: "one of the screen's own text lines — the task title/description, a skeleton mirror, or an owned label like a hint heading", storyId: "atoms-text-typography-typography--plain" },
-    "FeedbackCallout": { tier: "composite", role: "the locked-preview warning banner shown while `isLocked` and the task is not yet unlocked for the learner", storyId: "composites-feedback-feedback-feedbackcallout--default" },
+    "Callout": { tier: "composite", role: "the locked-preview warning banner shown while `isLocked` and the task is not yet unlocked for the learner", storyId: "composites-feedback-callout-callout--default" },
     "SurfaceCard": { tier: "composite", role: "a labeled surface in the reading or act column — the authored brief, the legacy rubric wrapper, or the repo-submission card", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "MarkdownContent": { tier: "composite", role: "one authored markdown document — the brief itself, or a legacy criterion hint / implementation guide", storyId: "composites-viewers-markdowncontent--reading" },
     "SurfaceCardAccordion": { tier: "composite", role: "the legacy rubric or the legacy per-language implementation guides, each row collapsible", storyId: "composites-cards-surfacecard-surfacecardaccordion--default" },
@@ -82,7 +82,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — a fresh schema-v2 task: authored brief, no attempt submitted yet. */
 export const SchemaV2: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectTaskPage"
                 tier="screen"
@@ -95,10 +95,10 @@ export const SchemaV2: Story = {
                         why: "The task carries an authored brief, so the reading column shows it directly and the legacy rubric section stays hidden entirely. The act column's score card does not render at all — nothing has been graded yet, so there is nothing to show rather than a card claiming a result of zero.",
                         code: `<PersonalProjectTaskPage
     breadcrumbItems={crumbs}
-    task={{ title: "Nhiệm vụ 3 — Dockerize service", description: "…" }}
+    task={{ title: "Task 3 — Dockerize service", description: "…" }}
     brief={{ body: "…" }}
     relatedItems={relatedItems}
-    relatedLabel="Có thể bạn muốn đọc"
+    relatedLabel="You might want to read"
     submissionPanelProps={{ repoUrl: "", … }}
 />`,
                         render: (
@@ -106,14 +106,14 @@ export const SchemaV2: Story = {
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
                                 task={{
-                                    title: "Nhiệm vụ 3 — Dockerize service",
-                                    description: "Đóng gói service Task API thành image production-ready, chạy được bằng `docker run` không cần cài Node trên host.",
+                                    title: "Task 3 — Dockerize service",
+                                    description: "Package the Task API service into a production-ready image that runs with `docker run` without needing Node installed on the host.",
                                 }}
                                 brief={{
-                                    body: "## Yêu cầu\n\nViết `Dockerfile` multi-stage cho service hiện có.\n\n1. Stage build: cài dependency, compile TypeScript.\n2. Stage chạy: chỉ copy `dist/` + `node_modules` production, không mang theo toolchain.\n\n:::muted\nImage cuối phải dưới 200MB.\n:::",
+                                    body: "## Requirements\n\nWrite a multi-stage `Dockerfile` for the existing service.\n\n1. Build stage: install dependencies, compile TypeScript.\n2. Run stage: copy only the production `dist/` + `node_modules`, no toolchain along for the ride.\n\n:::muted\nThe final image must be under 200MB.\n:::",
                                 }}
                                 relatedItems={RELATED_ITEMS}
-                                relatedLabel="Có thể bạn muốn đọc"
+                                relatedLabel="You might want to read"
                                 submissionPanelProps={BASE_SUBMISSION}
                             />
                         ),
@@ -127,7 +127,7 @@ export const SchemaV2: Story = {
 /** LEAF — a graded schema-v2 attempt: passing score, model byline. */
 export const SchemaV2Graded: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectTaskPage"
                 tier="screen"
@@ -137,13 +137,13 @@ export const SchemaV2Graded: Story = {
                 states={[
                     {
                         name: "submissionPanelProps.result present, isPassing = true, hasAttempts = true",
-                        why: "Once a result exists the score card appears in the act column, the evaluate CTA relabels to \"Đánh giá lại\", and the two secondary actions (feedback details, attempts history) unlock — mirroring `src`'s `TaskActions`, which gates those same two buttons on whether any attempt exists yet.",
+                        why: "Once a result exists the score card appears in the act column, the evaluate CTA relabels to \"Re-evaluate\", and the two secondary actions (feedback details, attempts history) unlock — mirroring `src`'s `TaskActions`, which gates those same two buttons on whether any attempt exists yet.",
                         code: `<PersonalProjectTaskPage
     …
     submissionPanelProps={{
         repoUrl: "https://github.com/hocvien/task-api",
         hasAttempts: true,
-        result: { score: 17, maxScore: 20, isPassing: true, gradedByModel: "GPT-4.1 mini", modelCategory: "economy", timeAgo: "5 phút trước" },
+        result: { score: 17, maxScore: 20, isPassing: true, gradedByModel: "GPT-4.1 mini", modelCategory: "economy", timeAgo: "5 minutes ago" },
         …
     }}
 />`,
@@ -152,14 +152,14 @@ export const SchemaV2Graded: Story = {
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
                                 task={{
-                                    title: "Nhiệm vụ 3 — Dockerize service",
-                                    description: "Đóng gói service Task API thành image production-ready, chạy được bằng `docker run` không cần cài Node trên host.",
+                                    title: "Task 3 — Dockerize service",
+                                    description: "Package the Task API service into a production-ready image that runs with `docker run` without needing Node installed on the host.",
                                 }}
                                 brief={{
-                                    body: "## Yêu cầu\n\nViết `Dockerfile` multi-stage cho service hiện có.",
+                                    body: "## Requirements\n\nWrite a multi-stage `Dockerfile` for the existing service.",
                                 }}
                                 relatedItems={RELATED_ITEMS}
-                                relatedLabel="Có thể bạn muốn đọc"
+                                relatedLabel="You might want to read"
                                 submissionPanelProps={{
                                     ...BASE_SUBMISSION,
                                     repoUrl: "https://github.com/hocvien/task-api",
@@ -168,10 +168,10 @@ export const SchemaV2Graded: Story = {
                                         score: 17,
                                         maxScore: 20,
                                         isPassing: true,
-                                        shortFeedback: "Image gọn, multi-stage đúng cách. Thiếu `.dockerignore` nên context build hơi nặng.",
+                                        shortFeedback: "Clean image, multi-stage done right. Missing a `.dockerignore`, so the build context is a bit heavy.",
                                         gradedByModel: "GPT-4.1 mini",
                                         modelCategory: "economy",
-                                        timeAgo: "5 phút trước",
+                                        timeAgo: "5 minutes ago",
                                     },
                                 }}
                             />
@@ -186,7 +186,7 @@ export const SchemaV2Graded: Story = {
 /** LEAF — a schema-v1 (legacy) task: no authored brief, public criteria + implementation guides instead. */
 export const LegacySchema: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectTaskPage"
                 tier="screen"
@@ -196,11 +196,11 @@ export const LegacySchema: Story = {
                 states={[
                     {
                         name: "brief.body = \"\", legacyCriteria + legacyCodeImplementations present",
-                        why: "Old tasks authored before the brief schema carry no Markdown brief at all, so the \"Hướng dẫn\" card is not drawn — the legacy rubric card takes its place, one accordion for the public scoring criteria and a second for the per-language implementation guide, both nested inside ONE outer labeled surface rather than two title-less cards stacked (mirrors `src`'s own single `LabeledCard` wrapping both).",
+                        why: "Old tasks authored before the brief schema carry no Markdown brief at all, so the \"Instructions\" card is not drawn — the legacy rubric card takes its place, one accordion for the public scoring criteria and a second for the per-language implementation guide, both nested inside ONE outer labeled surface rather than two title-less cards stacked (mirrors `src`'s own single `LabeledCard` wrapping both).",
                         code: `<PersonalProjectTaskPage
     …
     brief={{ body: "" }}
-    legacyCriteria={[{ key: "c1", text: "API trả đúng mã trạng thái HTTP", score: 20, hint: "…" }]}
+    legacyCriteria={[{ key: "c1", text: "API returns the correct HTTP status code", score: 20, hint: "…" }]}
     legacyCodeImplementations={[{ key: "ts", lang: "TypeScript", guide: "…", example: "…" }]}
 />`,
                         render: (
@@ -208,24 +208,24 @@ export const LegacySchema: Story = {
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
                                 task={{
-                                    title: "Nhiệm vụ 1 — Dựng API CRUD cho Task",
-                                    description: "Xây REST API `/tasks` hỗ trợ tạo, đọc, sửa, xoá.",
+                                    title: "Task 1 — Build a CRUD API for Task",
+                                    description: "Build a REST API `/tasks` supporting create, read, update, delete.",
                                 }}
                                 brief={{ body: "" }}
                                 legacyCriteria={[
-                                    { key: "c1", text: "API trả đúng mã trạng thái HTTP cho từng route", score: 40, hint: "`201` khi tạo, `404` khi xoá id không tồn tại." },
-                                    { key: "c2", text: "Có test integration cho mỗi route", score: 30 },
+                                    { key: "c1", text: "API returns the correct HTTP status code for each route", score: 40, hint: "`201` when created, `404` when deleting a nonexistent id." },
+                                    { key: "c2", text: "Has an integration test for each route", score: 30 },
                                 ]}
                                 legacyCodeImplementations={[
                                     {
                                         key: "ts",
                                         lang: "TypeScript",
-                                        guide: "Dùng Express + TypeORM, entity `Task` với `title`/`done`/`createdAt`.",
+                                        guide: "Uses Express + TypeORM, a `Task` entity with `title`/`done`/`createdAt`.",
                                         example: "```ts\napp.post(\"/tasks\", async (req, res) => {\n  const task = await taskRepo.save(req.body)\n  res.status(201).json(task)\n})\n```",
                                     },
                                 ]}
                                 relatedItems={[]}
-                                relatedLabel="Có thể bạn muốn đọc"
+                                relatedLabel="You might want to read"
                                 submissionPanelProps={BASE_SUBMISSION}
                             />
                         ),
@@ -239,7 +239,7 @@ export const LegacySchema: Story = {
 /** LEAF — previewing a task ahead of the learner's own unlocked position. */
 export const Locked: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectTaskPage"
                 tier="screen"
@@ -256,13 +256,13 @@ export const Locked: Story = {
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
                                 task={{
-                                    title: "Nhiệm vụ 5 — Triển khai lên staging",
-                                    description: "Nhiệm vụ này mở khoá sau khi Nhiệm vụ 4 được chấm đạt.",
+                                    title: "Task 5 — Deploy to staging",
+                                    description: "This task unlocks once Task 4 is graded as passing.",
                                 }}
                                 isLocked
-                                brief={{ body: "## Xem trước\n\nNhiệm vụ này yêu cầu bạn triển khai service lên môi trường staging." }}
+                                brief={{ body: "## Preview\n\nThis task asks you to deploy the service to the staging environment." }}
                                 relatedItems={[]}
-                                relatedLabel="Có thể bạn muốn đọc"
+                                relatedLabel="You might want to read"
                                 submissionPanelProps={{ ...BASE_SUBMISSION, isEvaluateDisabled: true }}
                             />
                         ),
@@ -276,7 +276,7 @@ export const Locked: Story = {
 /** LEAF — the caller flips `isSkeleton`; every composed part mirrors itself. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PersonalProjectTaskPage"
                 tier="screen"
@@ -294,7 +294,7 @@ export const Skeleton: Story = {
                                 task={{ title: "" }}
                                 brief={{ body: "" }}
                                 relatedItems={[]}
-                                relatedLabel="Có thể bạn muốn đọc"
+                                relatedLabel="You might want to read"
                                 submissionPanelProps={BASE_SUBMISSION}
                                 isSkeleton
                             />

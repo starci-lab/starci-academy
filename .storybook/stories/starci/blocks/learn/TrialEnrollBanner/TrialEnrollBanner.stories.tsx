@@ -30,19 +30,19 @@ export default meta
 type Story = StoryObj<typeof TrialEnrollBanner>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "FeedbackCallout": {
+    "Callout": {
         tier: "composite",
         role: "the accent-tinted strip shape — icon-less frame holding the fixed title/description and the composed CTA child",
-        storyId: "composites-feedback-feedback-feedbackcallout--with-action",
+        storyId: "composites-feedback-callout-callout--with-action",
     },
     "Button": {
         tier: "atom",
-        role: "the CTA, composed as a real child (not FeedbackCallout's actionLabel shorthand) so it stays a badgeable node with its own slide-arrow affordance",
+        role: "the CTA, composed as a real child (not Callout's actionLabel shorthand) so it stays a badgeable node with its own slide-arrow affordance",
         storyId: "atoms-buttons-button-button--default",
     },
     "Alert": {
         tier: "atom",
-        role: "the skeleton branch calls this directly — FeedbackCallout has no isSkeleton of its own, and Alert already draws two safe shimmer bars in place of title/description",
+        role: "the skeleton branch calls this directly — Callout has no isSkeleton of its own, and Alert already draws two safe shimmer bars in place of title/description",
         storyId: "atoms-feedback-alert-alert--skeleton",
     },
 }
@@ -50,7 +50,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — trial learner, status resolved ⇒ shows the nudge. The only leaf with a node. */
 export const Banner: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TrialEnrollBanner"
                 tier="block"
@@ -61,7 +61,7 @@ export const Banner: Story = {
                 states={[
                     {
                         name: "isVisible = true",
-                        why: "Enrollment status has come back and the viewer is on a trial, so the strip renders as one accent-tinted line: the fixed nudge sentence, its supporting sentence, and a \"Mở khóa học\" CTA with a slide-arrow. This is the shape every free surface (foundations, leaderboard) shows a trial learner.",
+                        why: "Enrollment status has come back and the viewer is on a trial, so the strip renders as one accent-tinted line: the fixed nudge sentence, its supporting sentence, and an \"Unlock the course\" CTA with a slide-arrow. This is the shape every free surface (foundations, leaderboard) shows a trial learner.",
                         code: "<TrialEnrollBanner isVisible onEnroll={handleEnroll} />",
                         render: (
                             <TrialEnrollBanner
@@ -85,7 +85,7 @@ export const Banner: Story = {
  */
 export const Hidden: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TrialEnrollBanner"
                 tier="block"
@@ -112,7 +112,7 @@ export const Hidden: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="TrialEnrollBanner"
                 tier="block"

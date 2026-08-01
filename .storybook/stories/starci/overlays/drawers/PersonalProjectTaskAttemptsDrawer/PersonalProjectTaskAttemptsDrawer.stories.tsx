@@ -25,7 +25,7 @@ export default meta
 
 type Story = StoryObj<typeof PersonalProjectTaskAttemptsDrawer>
 
-// DOM thật (populated): Drawer.CloseTrigger + Drawer.Header (title) + Drawer.Body >
+// Real DOM (populated): Drawer.CloseTrigger + Drawer.Header (title) + Drawer.Body >
 // SurfaceCardList > one free-form row per attempt > StackV > StackH(attempt) >
 // Typography(attempt label) + Chip, then Typography(feedback) + InlineIconLabel.
 const ANNOTATE_POPULATED: Record<string, AnatomyAnnotation> = {
@@ -34,8 +34,8 @@ const ANNOTATE_POPULATED: Record<string, AnatomyAnnotation> = {
     "SurfaceCardList": { tier: "composite", role: "bounded list face holding one row per attempt", storyId: "composites-cards-surfacecard-surfacecardlist--free-form" },
     "StackV": { tier: "frame", role: "tight seam stacking a row's three lines", storyId: "frames-stack-stackv--default" },
     "StackH (attempt)": { tier: "frame", role: "attempt label and score chip share one line", storyId: "frames-stack-stackh--default" },
-    "Typography (attempt label)": { tier: "atom", role: "\"Lần N\"", storyId: "atoms-text-typography-typography--overview" },
-    "Chip": { tier: "atom", role: "sparkle + score, or \"Đang chấm\" while ungraded", storyId: "atoms-chips-chip-chip--icon" },
+    "Typography (attempt label)": { tier: "atom", role: "\"Attempt N\"", storyId: "atoms-text-typography-typography--overview" },
+    "Chip": { tier: "atom", role: "sparkle + score, or \"Grading\" while ungraded", storyId: "atoms-chips-chip-chip--icon" },
     "Typography (feedback)": { tier: "atom", role: "one short line of grader feedback", storyId: "atoms-text-typography-typography--overview" },
     "InlineIconLabel": { tier: "composite", role: "clock icon + when this attempt was processed", storyId: "composites-texts-inlineiconlabel--overview" },
 }
@@ -69,22 +69,22 @@ const ATTEMPTS: Array<PersonalProjectTaskAttempt> = [
         id: "attempt-3",
         attemptNumber: 3,
         score: 88,
-        shortFeedback: "Cấu trúc thư mục rõ ràng, đã xử lý tốt các trường hợp lỗi mạng.",
-        processedAtLabel: "5 phút trước",
+        shortFeedback: "Clean folder structure, and network error cases are handled well.",
+        processedAtLabel: "5 minutes ago",
     },
     {
         id: "attempt-2",
         attemptNumber: 2,
         score: 61,
-        shortFeedback: "Thiếu kiểm tra đầu vào ở API tạo đơn hàng — xem lại phần validate.",
-        processedAtLabel: "hôm qua",
+        shortFeedback: "Missing input validation on the create-order API — revisit the validation.",
+        processedAtLabel: "yesterday",
     },
     {
         id: "attempt-1",
         attemptNumber: 1,
         score: null,
         shortFeedback: null,
-        processedAtLabel: "3 ngày trước",
+        processedAtLabel: "3 days ago",
     },
 ]
 
@@ -117,12 +117,12 @@ const ControlledDrawer = ({
 }: ControlledDrawerProps) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
-                label="Xem lịch sử chấm AI"
+                label="View AI grading history"
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <BlockAnatomy
@@ -146,7 +146,7 @@ const ControlledDrawer = ({
                                 isEmpty={isEmpty}
                                 error={error}
                                 onRetry={() => {}}
-                                retryLabel="Thử lại"
+                                retryLabel="Retry"
                                 showAnatomy
                             />
                         ),
@@ -171,9 +171,9 @@ export const Default: Story = {
   isOpen={isOpen}
   onOpenChange={setIsOpen}
   attempts={[
-    { id: "attempt-3", attemptNumber: 3, score: 88, shortFeedback: "...", processedAtLabel: "5 phút trước" },
-    { id: "attempt-2", attemptNumber: 2, score: 61, shortFeedback: "...", processedAtLabel: "hôm qua" },
-    { id: "attempt-1", attemptNumber: 1, score: null, shortFeedback: null, processedAtLabel: "3 ngày trước" },
+    { id: "attempt-3", attemptNumber: 3, score: 88, shortFeedback: "...", processedAtLabel: "5 minutes ago" },
+    { id: "attempt-2", attemptNumber: 2, score: 61, shortFeedback: "...", processedAtLabel: "yesterday" },
+    { id: "attempt-1", attemptNumber: 1, score: null, shortFeedback: null, processedAtLabel: "3 days ago" },
   ]}
 />`}
         />
@@ -236,7 +236,7 @@ export const ErrorState: Story = {
   attempts={[]}
   error={fetchError}
   onRetry={refetch}
-  retryLabel="Thử lại"
+  retryLabel="Retry"
 />`}
         />
     ),

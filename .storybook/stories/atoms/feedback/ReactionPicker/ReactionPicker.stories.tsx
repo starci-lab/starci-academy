@@ -22,12 +22,12 @@ export default meta
 type Story = StoryObj<typeof ReactionPicker>
 
 const ITEMS = [
-    { key: "like", imgSrc: "/reactions/like.svg", label: "Thích" },
-    { key: "love", imgSrc: "/reactions/love.svg", label: "Yêu thích" },
+    { key: "like", imgSrc: "/reactions/like.svg", label: "Like" },
+    { key: "love", imgSrc: "/reactions/love.svg", label: "Love" },
     { key: "haha", imgSrc: "/reactions/haha.svg", label: "Haha" },
     { key: "wow", imgSrc: "/reactions/wow.svg", label: "Wow" },
-    { key: "sad", imgSrc: "/reactions/sad.svg", label: "Buồn" },
-    { key: "angry", imgSrc: "/reactions/angry.svg", label: "Phẫn nộ" },
+    { key: "sad", imgSrc: "/reactions/sad.svg", label: "Sad" },
+    { key: "angry", imgSrc: "/reactions/angry.svg", label: "Angry" },
 ]
 
 /** Props for the {@link Controlled} demo wrapper below. */
@@ -50,7 +50,7 @@ const Controlled = ({ initialActive }: ControlledProps) => {
 /** LEAF — the six-item row, at rest and with one active. Hover an item to see the float+scale. */
 export const Default: Story = {
     render: () => (
-        <div className="flex flex-col gap-6 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-6 p-8">
             <BlockAnatomy
                 name="ReactionPicker"
                 tier="atom"

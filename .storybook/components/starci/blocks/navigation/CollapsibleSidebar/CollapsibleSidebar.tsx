@@ -12,7 +12,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE (PREREQUISITE) — `CollapsibleSidebar`: content-agnostic vỏ that the
+ * COMPOSITE (PREREQUISITE) — `CollapsibleSidebar`: the content-agnostic shell that the
  * real `src` `LearnSidebar` (and any future left-nav sidebar) mounts into. Owns
  * ONLY the chrome — collapse/expand, the width animation, persisting the choice
  * to `localStorage`, and handing `collapsed` down via context — and knows NOTHING
@@ -22,7 +22,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⚠️ FOLDER JUDGMENT CALL: per the team's §5b architecture call (see
  * `.claude/fe/steps/11-overlays-layouts-brainstorm.md` §5b) this is genuinely
- * COMPOSITE tier — a vỏ dùng chung, không biết miền — and belongs under
+ * COMPOSITE tier — a shared, domain-blind shell — and belongs under
  * `components/composites/`. This run's write scope is restricted to
  * `components/starci/**`/`stories/starci/**` (STARCI app only), and
  * `components/composites/` is read-only reference for this agent. It is filed
@@ -36,7 +36,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *     of a bare HeroUI `ScrollShadow` — it already hides the scrollbar AND adds
  *     the Windows-safe pointer-pan fallback, exactly the "hidden scrollbar region
  *     usable on Windows" need a nav rail has. It does not itself lay out children
- *     in a column, so a `StackV` sits inside it for the `gap="grouped"` rhythm the
+ *     in a column, so a `StackV` sits inside it for the `gap={4}` rhythm the
  *     real component wrote by hand as `flex flex-col gap-3`.
  *   • `ButtonBase` (`isIconOnly`) for the toggle instead of raw HeroUI `Button`.
  *   • `Typography` (`size="h5"` `weight="bold"` `truncate`) for the title instead
@@ -103,7 +103,7 @@ export interface CollapsibleSidebarProps {
      * provider, so it can adapt to the rail (e.g. a resume pill → play icon).
      */
     topSlot?: ReactNode
-    /** The panel body — nav rows/groups; content-agnostic, this vỏ never inspects them. */
+    /** The panel body — nav rows/groups; content-agnostic, this shell never inspects them. */
     children: ReactNode
     /** `true` → tag each composed part with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
@@ -171,7 +171,6 @@ export const CollapsibleSidebar = ({
                             truncate
                             text={title}
                             showAnatomy={showAnatomy}
-                            anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     </motion.div>
                 ) : null}
@@ -184,7 +183,6 @@ export const CollapsibleSidebar = ({
                 prefixIcon={SidebarSimpleIcon}
                 onPress={toggle}
                 showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "ButtonBase" : undefined}
             />
         </>
     )
@@ -195,7 +193,7 @@ export const CollapsibleSidebar = ({
     // owner for the same seam).
     const panel = (
         <>
-            <StackH gap="related" justify={collapsed ? "center" : "between"} body={headerRow} />
+            <StackH gap={3} justify={collapsed ? "center" : "between"} body={headerRow} />
 
             {/* pinned top slot (e.g. resume pill) — above the scroll area, always
                 visible. min-w-0: a column-flex item defaults to content-width
@@ -209,7 +207,7 @@ export const CollapsibleSidebar = ({
             {/* body: the nav — ALWAYS rendered; row content decides its own icon-only
                 look off `useSidebarCollapsed`. `DragScrollArea` owns the overflow
                 (hidden scrollbar + Windows-safe pointer-pan); `StackV` gives the
-                column its `gap="grouped"` rhythm and default `align="stretch"` (rows
+                column its `gap={4}` rhythm and default `align="stretch"` (rows
                 fill the rail's width whether expanded or collapsed), since the scroll
                 frame itself lays out nothing. */}
             <nav
@@ -217,7 +215,7 @@ export const CollapsibleSidebar = ({
                 data-anat-part={showAnatomy ? "DragScrollArea" : undefined}
             >
                 <DragScrollArea size={40} className="flex-1">
-                    <StackV gap="grouped" body={children} />
+                    <StackV gap={4} body={children} />
                 </DragScrollArea>
             </nav>
         </>
@@ -240,7 +238,7 @@ export const CollapsibleSidebar = ({
                     className,
                 )}
             >
-                <StackV gap="section" classNames={["min-h-0", "flex-1"]} body={panel} />
+                <StackV gap={6} classNames={["min-h-0", "flex-1"]} body={panel} />
             </motion.aside>
         </SidebarCollapsedContext.Provider>
     )

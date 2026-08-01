@@ -18,7 +18,7 @@ import type {
 export interface StandingHeroProgress {
     /** Fill ratio, clamped to `0..1`. */
     ratio: number
-    /** Muted line above the meter (e.g. "Còn 40 điểm nữa để vào top thăng hạng"). */
+    /** Muted line above the meter (e.g. "40 more points to reach the promotion zone"). */
     label: React.ReactNode
 }
 
@@ -26,13 +26,13 @@ export interface StandingHeroProgress {
 export interface StandingHeroCardProps extends WithClassNames<undefined> {
     /** Leading badge/icon — a `LeagueTierBadge` (weekly) or a scope icon (global). */
     badge?: React.ReactNode
-    /** Primary standing line (e.g. "Hạng #1 · Bronze" / "Hạng #9 toàn nền tảng"). */
+    /** Primary standing line (e.g. "Rank #1 · Bronze" / "Rank #9 platform-wide"). */
     rankLabel: React.ReactNode
     /** Secondary meta under the rank — points · movement · reset countdown. */
     meta?: React.ReactNode
     /** Optional goal-gradient meter toward the next rank/tier. */
     progress?: StandingHeroProgress
-    /** CTA label — the north-star funnel to courses ("Làm challenge để leo hạng"). */
+    /** CTA label — the north-star funnel to courses ("Do challenges to climb the ranks"). */
     ctaLabel: React.ReactNode
     /** CTA press handler. */
     onCta: () => void

@@ -32,17 +32,17 @@ export default meta
 type Story = StoryObj<typeof PlaygroundHubPage>
 
 const EXERCISES = [
-    { id: "docker-image", title: "Build và tối ưu Docker image", stepCount: 6 },
-    { id: "compose-stack", title: "Ghép service bằng Docker Compose", stepCount: 5 },
-    { id: "k8s-deploy", title: "Deploy lên Kubernetes cluster", stepCount: 8 },
-    { id: "k8s-debug", title: "Debug một Pod đang CrashLoop", stepCount: 4 },
+    { id: "docker-image", title: "Build and optimize a Docker image", stepCount: 6 },
+    { id: "compose-stack", title: "Wire up services with Docker Compose", stepCount: 5 },
+    { id: "k8s-deploy", title: "Deploy to a Kubernetes cluster", stepCount: 8 },
+    { id: "k8s-debug", title: "Debug a Pod stuck in CrashLoop", stepCount: 4 },
 ]
 
 const BASE = {
     title: "Playground",
-    description: "Thực hành Docker, Kubernetes trực tiếp trên trình duyệt, không cần cài gì cả.",
+    description: "Practice Docker and Kubernetes right in your browser, nothing to install.",
     onSelectExercise: () => {},
-    exerciseGridAriaLabel: "Danh sách bài thực hành Playground",
+    exerciseGridAriaLabel: "Playground exercise list",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -54,7 +54,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the screen's one shape: hub header, exercise grid. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundHubPage"
                 tier="screen"
@@ -67,10 +67,10 @@ export const Default: Story = {
                         why: "The everyday shape: the hub identity sits above a full grid of the course's hands-on exercises, each tile ready to open. Every function of the screen is present, in the order the reader meets them.",
                         code: `<PlaygroundHubPage
     title="Playground"
-    description="Thực hành Docker, Kubernetes trực tiếp trên trình duyệt, không cần cài gì cả."
+    description="Practice Docker and Kubernetes right in your browser, nothing to install."
     exercises={exercises}
     onSelectExercise={handleSelect}
-    exerciseGridAriaLabel="Danh sách bài thực hành Playground"
+    exerciseGridAriaLabel="Playground exercise list"
 />`,
                         render: (
                             <PlaygroundHubPage
@@ -87,7 +87,7 @@ export const Default: Story = {
     title="Playground"
     exercises={[]}
     onSelectExercise={handleSelect}
-    exerciseGridAriaLabel="Danh sách bài thực hành Playground"
+    exerciseGridAriaLabel="Playground exercise list"
 />`,
                         render: (
                             <PlaygroundHubPage
@@ -105,7 +105,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block that can mirror itself does. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PlaygroundHubPage"
                 tier="screen"

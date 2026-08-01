@@ -1,8 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
-import { Tabs, cn } from "@heroui/react"
+// ATOM GAP — `Tabs.ListContainer`/`Tabs.List`/`Tabs.Tab`/`Tabs.Indicator` come straight from the
+// vendor because `TabsExtended` (the atom below) only wraps the ROOT `Tabs`; its own JSDoc
+// documents that "the children still use the `Tabs.*` compound parts" — there is no atom-tier
+// wrapper for the individual compound pieces themselves. Same established pattern as `Toolbar`.
+import { Tabs } from "@heroui/react"
 import { CodeIcon, SidebarIcon } from "@phosphor-icons/react"
+import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
@@ -20,33 +25,35 @@ export interface CodePreviewTabsProps {
     preview: React.ReactNode
     /** Source code panel (Shiki-highlighted). */
     code: React.ReactNode
-    /** Extra classes. */
-    className?: string
     /** Where this sits inside its parent. */
     classNames?: Array<AllowedClassName>
 }
 
 /**
- * Presentational **[ Preview | Code ]** tabs, self-contained (HeroUI `Tabs` + phosphor icons).
- * Preview is selected first so the learner sees the rendered result, then flips to the code.
- * Shared by `TabsBlock` (the `:::tab` directive's dual panes) so the tab shell stays identical
- * and depends on NO layout component.
+ * Presentational **[ Preview | Code ]** tabs, self-contained (the `TabsExtended`
+ * ATOM root + phosphor icons — the compound children still come from HeroUI's
+ * own `Tabs.*` namespace, which has no atom of its own beyond the root; see
+ * `Toolbar.tsx` for the same split). Preview is selected first so the learner
+ * sees the rendered result, then flips to the code. Shared by `TabsBlock` (the
+ * `:::tab` directive's dual panes) so the tab shell stays identical and
+ * depends on NO layout component.
  * @param props - {@link CodePreviewTabsProps}
  */
-export const CodePreviewTabs = ({ preview, code, className, classNames }: CodePreviewTabsProps) => {
+export const CodePreviewTabs = ({ preview, code, classNames }: CodePreviewTabsProps) => {
     const [tab, setTab] = useState<"preview" | "code">("preview")
     const panes = (
         <>
-            <Tabs
+            <TabsExtended
                 selectedKey={tab}
                 variant="secondary"
-                onSelectionChange={(key) => setTab(String(key) === "code" ? "code" : "preview")}
+                onSelectionChange={(key) => setTab(key === "code" ? "code" : "preview")}
             >
                 <Tabs.ListContainer className="w-fit">
                     <Tabs.List aria-label="Preview / Code" className="w-fit">
                         <Tabs.Tab
                             id="preview"
-                            className="data-[selected=true]:text-accent-soft-foreground"
+                            data-principles="icon-text"
+                            className="gap-1 data-[selected=true]:text-accent-soft-foreground"
                         >
                             <SidebarIcon />
                             Preview
@@ -54,7 +61,8 @@ export const CodePreviewTabs = ({ preview, code, className, classNames }: CodePr
                         </Tabs.Tab>
                         <Tabs.Tab
                             id="code"
-                            className="data-[selected=true]:text-accent-soft-foreground"
+                            data-principles="icon-text"
+                            className="gap-1 data-[selected=true]:text-accent-soft-foreground"
                         >
                             <CodeIcon />
                             Code
@@ -62,7 +70,7 @@ export const CodePreviewTabs = ({ preview, code, className, classNames }: CodePr
                         </Tabs.Tab>
                     </Tabs.List>
                 </Tabs.ListContainer>
-            </Tabs>
+            </TabsExtended>
             <div className={tab === "preview" ? "rounded-xl border border-divider p-3" : undefined}>
                 {tab === "preview" ? preview : code}
             </div>
@@ -70,8 +78,7 @@ export const CodePreviewTabs = ({ preview, code, className, classNames }: CodePr
     )
     return (
         <StackV
-            gap="related"
-            className={className ? cn("not-prose", className) : "not-prose"}
+            gap={3}
             classNames={classNames}
             body={panes}
         />

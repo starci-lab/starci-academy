@@ -24,7 +24,7 @@ export interface RatingBarProps extends WithClassNames<undefined> {
     onRate: (grade: number) => void
     /**
      * Accessible name for the grade group, localized by the caller (blocks carry
-     * no i18n) — e.g. "Chọn mức độ nhớ". Without it a screen reader hears four
+     * no i18n) — e.g. "Choose recall level". Without it a screen reader hears four
      * loose buttons with nothing tying them together.
      */
     ariaLabel: string
@@ -38,7 +38,7 @@ export interface RatingBarProps extends WithClassNames<undefined> {
  * difficulty level), not a status/alert, so it uses the difficulty HUE ramp
  * (rose→emerald), NOT the 4 semantic `variant` tokens (only 4 tiers; a semantic token
  * would double up or wrongly imply "this failed" for the weakest grade). Runs
- * weakest→strongest RECALL: grade 0 (Quên, hardest to recall) = rose, grade 3 (Dễ) = emerald.
+ * weakest→strongest RECALL: grade 0 (Again, hardest to recall) = rose, grade 3 (Easy) = emerald.
  */
 const GRADE_COLOR: Record<number, string> = {
     0: "rose-500",

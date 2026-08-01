@@ -1,0 +1,130 @@
+import { RadioGroup as HeroRadioGroup, cn } from "@heroui/react"
+import { ChoiceRadio, type InlineFrameProps } from "@sb-components/atoms/forms/Choice/Choice"
+import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+
+/**
+ * `ChoiceRadioGroup` — a mutually-exclusive pick-one row, built from `options` DATA.
+ *
+ * Moved out of `atoms/forms/Choice/Choice.tsx` (ATOM-8, 2026-07-31): it rebuilt one
+ * `ChoiceRadio` per entry, which is the composite signal (rendering another house
+ * atom once per item), not the atom one. `ChoiceRadio` itself stayed behind — it is
+ * still one radio row and still owns its own checked/skeleton state; this file only
+ * adds the group's layout, heading/hint/error frame, and row count.
+ *
+ * `HeroRadioGroup` is the one vendor import this file keeps. A bare HeroUI `Radio`
+ * has no selection/name context of its own — it reads that from the surrounding
+ * `RadioGroup`, so `ChoiceRadio` cannot act as a mutually-exclusive set without it
+ * (confirmed by `ChoiceRadio.stories.tsx`, which has to stand up a bare
+ * `HeroRadioGroup` itself just to run ONE row in isolation). No house atom wraps
+ * that context alone today, so this is the same documented exception
+ * `composites/buttons/ButtonRadioGroup` already takes with raw HeroUI `Button` —
+ * a composite reaching past the atom tier because the atom genuinely cannot
+ * express the vendor's grouping behaviour, not because the wrapper was skipped.
+ */
+
+/** One selectable option for {@link ChoiceRadioGroup}'s `options` shorthand. */
+export interface ChoiceRadioOption {
+    value: string
+    /** `string`, not `ReactNode` — a repeated item's text field, the same trap one level in (COMPOSITE-8). */
+    label: string
+    isDisabled?: boolean
+}
+
+/** Props for {@link ChoiceRadioGroup}. */
+export interface ChoiceRadioGroupProps extends InlineFrameProps {
+    /** Currently selected value (controlled). */
+    value: string
+    /** Fires with the newly selected option's value. */
+    onValueChange: (value: string) => void
+    /**
+     * List of options as data — the composite builds one {@link ChoiceRadio} per
+     * entry; there is no `children` prop for attaching JSX directly.
+     */
+    options: Array<ChoiceRadioOption>
+    /**
+     * Heading label ABOVE the group (maps to FieldFrame's `label`) — leave blank
+     * → `ariaLabel` only. `string`, not `ReactNode` — the composite must be able
+     * to build it (and reuse it verbatim as the group's accessible name).
+     */
+    groupLabel?: string
+    /** Accessible name for the group (used when there's no visible `groupLabel`). */
+    ariaLabel?: string
+    isDisabled?: boolean
+    isInvalid?: boolean
+    /** Render the control-shaped skeleton — stacked radio-row shimmers, one `ChoiceRadio` per row. */
+    isSkeleton?: boolean
+    /** Row count for the skeleton mirror (default = `options.length`). */
+    skeletonRows?: number
+    /** `true` → tag each option row (`ChoiceRadio`) and its internals for BlockAnatomy. */
+    showAnatomy?: boolean
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     */
+    classNames?: Array<AllowedClassName>
+}
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ChoiceRadioGroup" } as const
+
+/** `ChoiceRadioGroup` — mutually-exclusive single-select group (HeroUI RadioGroup + `ChoiceRadio` rows). */
+export const ChoiceRadioGroup = ({
+    value,
+    onValueChange,
+    options,
+    groupLabel,
+    ariaLabel = "Choice group",
+    isDisabled,
+    isInvalid,
+    isSkeleton,
+    skeletonRows,
+    showAnatomy,
+    classNames,
+    hint,
+    errorMessage,
+    isRequired,
+}: ChoiceRadioGroupProps) => {
+    const invalid = isInvalid || errorMessage != null
+    const rows = skeletonRows ?? options.length
+    return (
+        <FieldFrame
+            label={groupLabel}
+            hint={hint}
+            errorMessage={errorMessage}
+            isRequired={isRequired}
+            isDisabled={isDisabled}
+            isSkeleton={isSkeleton}
+            showAnatomy={showAnatomy}
+            skeletonControl={
+                // COMPOSITE-10: the composite only decides HOW MANY rows shimmer — each row
+                // draws its own shimmer via `ChoiceRadio`'s own `isSkeleton` branch, the same
+                // shape ButtonGroup/ChipGroup delegate to `Button`/`Chip` while loading.
+                <div data-principles="sibling-stack" className={cn("flex flex-col gap-2", classNames)}>
+                    {Array.from({ length: rows }, (_, index) => (
+                        <ChoiceRadio key={index} value={String(index)} label="" isSkeleton showAnatomy={showAnatomy} />
+                    ))}
+                </div>
+            }
+        >
+            <HeroRadioGroup
+                aria-label={groupLabel ?? ariaLabel}
+                value={value}
+                onChange={onValueChange}
+                isInvalid={invalid}
+                isDisabled={isDisabled}
+                data-principles="sibling-stack"
+                className={cn("flex flex-col gap-2", classNames)}
+            >
+                {options.map((option) => (
+                    // Deps tree is built from the DOM: `ChoiceRadio` takes no name-prop of its
+                    // own (ATOM-10 — an atom writes its own name, never a caller's), so the
+                    // composite badges the wrapper instead — the same technique `AvatarGroup`
+                    // uses to name each `Avatar` it rebuilds.
+                    <span key={option.value} data-anat-part={showAnatomy ? "ChoiceRadio" : undefined}>
+                        <ChoiceRadio value={option.value} label={option.label} isDisabled={option.isDisabled} showAnatomy={showAnatomy} />
+                    </span>
+                ))}
+            </HeroRadioGroup>
+        </FieldFrame>
+    )
+}

@@ -36,7 +36,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — eyebrow → title → description → CTA, with the pass-check and skeleton states. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MilestoneUpNextCard"
                 tier="block"
@@ -49,21 +49,21 @@ export const Default: Story = {
                         name: "showCheck = true",
                         why: "The attempt just handed off from was a PASS, so a check glyph sits beside the eyebrow — the one signal that this is a hand-off rather than a first attempt at the next task. The shape underneath is unchanged.",
                         code: `<MilestoneUpNextCard
-    eyebrow="Đã hoàn thành nhiệm vụ 2"
+    eyebrow="Task 2 completed"
     showCheck
-    title="Nhiệm vụ 3 · Triển khai lên staging"
-    description="Đóng gói dịch vụ thành image và triển khai lên môi trường staging có sẵn."
-    ctaLabel="Bắt đầu nhiệm vụ 3"
+    title="Task 3 · Deploy to staging"
+    description="Package the service into an image and deploy it to the ready-made staging environment."
+    ctaLabel="Start task 3"
 />`,
                         render: (
                             <MilestoneUpNextCard
                                 anatPart="MilestoneUpNextCard"
                                 showAnatomy
-                                eyebrow="Đã hoàn thành nhiệm vụ 2"
+                                eyebrow="Task 2 completed"
                                 showCheck
-                                title="Nhiệm vụ 3 · Triển khai lên staging"
-                                description="Đóng gói dịch vụ thành image và triển khai lên môi trường staging có sẵn."
-                                ctaLabel="Bắt đầu nhiệm vụ 3"
+                                title="Task 3 · Deploy to staging"
+                                description="Package the service into an image and deploy it to the ready-made staging environment."
+                                ctaLabel="Start task 3"
                                 onPress={() => {}}
                             />
                         ),
@@ -72,17 +72,17 @@ export const Default: Story = {
                         name: "showCheck = false",
                         why: "Some hand-offs (e.g. an admin unlocking the next task manually) carry no pass to mark, so the eyebrow reads plainly with no glyph. The row keeps its place either way.",
                         code: `<MilestoneUpNextCard
-    eyebrow="Nhiệm vụ tiếp theo"
-    title="Nhiệm vụ 3 · Triển khai lên staging"
-    description="Đóng gói dịch vụ thành image và triển khai lên môi trường staging có sẵn."
-    ctaLabel="Bắt đầu nhiệm vụ 3"
+    eyebrow="Next task"
+    title="Task 3 · Deploy to staging"
+    description="Package the service into an image and deploy it to the ready-made staging environment."
+    ctaLabel="Start task 3"
 />`,
                         render: (
                             <MilestoneUpNextCard
-                                eyebrow="Nhiệm vụ tiếp theo"
-                                title="Nhiệm vụ 3 · Triển khai lên staging"
-                                description="Đóng gói dịch vụ thành image và triển khai lên môi trường staging có sẵn."
-                                ctaLabel="Bắt đầu nhiệm vụ 3"
+                                eyebrow="Next task"
+                                title="Task 3 · Deploy to staging"
+                                description="Package the service into an image and deploy it to the ready-made staging environment."
+                                ctaLabel="Start task 3"
                                 onPress={() => {}}
                             />
                         ),
@@ -110,7 +110,7 @@ export const Default: Story = {
 /** LEAF — `isHighlight = false`: a plain card, no light streak. Reused shape, not a milestone fact. */
 export const Plain: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MilestoneUpNextCard"
                 tier="block"
@@ -123,20 +123,20 @@ export const Plain: Story = {
                         name: "isHighlight = false",
                         why: "Reused by ContentPage's mobile/tablet practice nudge, an inline aside in a scrolling reading page rather than the one focal moment of its own screen — the highlight streak would overstate it, so the caller turns it off. The eyebrow/title/description/CTA shape is otherwise identical to Default.",
                         code: `<MilestoneUpNextCard
-    eyebrow="Tiếp theo"
-    title="Làm 3 thử thách của bài này"
-    description="Luyện tập ngay để nhớ bài lâu hơn."
-    ctaLabel="Luyện tập ngay"
+    eyebrow="Up next"
+    title="Do 3 challenges from this lesson"
+    description="Practice now to remember the lesson longer."
+    ctaLabel="Practice now"
     isHighlight={false}
 />`,
                         render: (
                             <MilestoneUpNextCard
                                 anatPart="MilestoneUpNextCard"
                                 showAnatomy
-                                eyebrow="Tiếp theo"
-                                title="Làm 3 thử thách của bài này"
-                                description="Luyện tập ngay để nhớ bài lâu hơn."
-                                ctaLabel="Luyện tập ngay"
+                                eyebrow="Up next"
+                                title="Do 3 challenges from this lesson"
+                                description="Practice now to remember the lesson longer."
+                                ctaLabel="Practice now"
                                 isHighlight={false}
                                 onPress={() => {}}
                             />

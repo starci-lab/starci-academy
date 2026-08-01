@@ -32,7 +32,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the resource id resolved to nothing. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourceEmpty"
                 tier="block"

@@ -40,13 +40,13 @@ import {
 
 /** Props for {@link AmbientBackground}. */
 export interface AmbientBackgroundProps extends WithClassNames<undefined> {
-    /** Which ambient effect to render (user's Settings → "Giao diện" choice). Defaults to `None`. */
+    /** Which ambient effect to render (user's Settings → "Appearance" choice). Defaults to `None`. */
     effect?: BackgroundEffect
 }
 
 /**
  * App-wide ambient background — one of several decorative effects (Settings →
- * "Giao diện") sitting `fixed inset-0` behind everything (negative z-index,
+ * "Appearance") sitting `fixed inset-0` behind everything (negative z-index,
  * non-interactive) so it stays put while the page scrolls. Every effect tints
  * from the `--accent` token, so it tracks the user's chosen accent color
  * automatically; the caller hides this entirely on `/learn` (reading column

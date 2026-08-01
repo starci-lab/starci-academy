@@ -29,20 +29,11 @@ export interface DropzoneProps {
     /** When true, renders a skeleton mirroring the dashed drop box instead. */
     isSkeleton?: boolean
     /**
-     * Extra classes on the outer wrapper.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /**
-     * When true, the loading `Skeleton` emits a `data-anat-part` so the anatomy
-     * panel can anchor its badge. The drag box and the error line stay unbadged —
-     * they're plain hand-rolled `<div>`s, not a real component.
-     */
+    /** When true, the loading `Skeleton` emits a `data-anat-part` so the anatomy panel can anchor its badge. */
     showAnatomy?: boolean
 }
 
@@ -59,7 +50,6 @@ const DropzoneBase = ({
     onValueChange,
     onBlur,
     isSkeleton = false,
-    className,
     classNames,
     showAnatomy = false,
 }: DropzoneProps) => {
@@ -80,7 +70,7 @@ const DropzoneBase = ({
 
     if (isSkeleton) {
         return (
-            <div className={cn("flex flex-col gap-2", className, classNames)}>
+            <div data-tier="atom" data-component="Dropzone" className={cn("flex flex-col gap-2", classNames)}>
                 <HeroSkeleton
                     className="h-[68px] w-full rounded-3xl"
                     data-anat-part={showAnatomy ? "Skeleton" : undefined}
@@ -93,7 +83,7 @@ const DropzoneBase = ({
     // file name once one is selected. The error line's classes match FieldShell's
     // error line styling (text-sm text-danger-soft-foreground).
     return (
-        <div className={cn("flex flex-col gap-2", className, classNames)}>
+        <div data-tier="atom" data-component="Dropzone" className={cn("flex flex-col gap-2", classNames)}>
             <div
                 {...getRootProps()}
                 className={cn(
@@ -126,3 +116,5 @@ const DropzoneBase = ({
  * callable directly as `<Dropzone .../>`.
  */
 export { DropzoneBase as Dropzone }
+
+export const meta = { tier: "atom", name: "Dropzone" } as const

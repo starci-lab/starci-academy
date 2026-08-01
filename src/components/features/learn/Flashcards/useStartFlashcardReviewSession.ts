@@ -8,16 +8,16 @@ import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/ty
 import type { FlashcardReviewMode } from "@/modules/api/graphql/mutations/types/start-flashcard-review-session"
 
 /**
- * Start a FRESH deck "Học thẻ" review session EAGERLY, right from the CTA
- * that opens it (`FlashcardDeckList`'s "Học" button) — mirrors
+ * Start a FRESH deck "Study Cards" review session EAGERLY, right from the CTA
+ * that opens it (`FlashcardDeckList`'s "Study" button) — mirrors
  * `QuizSession`'s own `startSession`: the CTA goes `isPending` while the
  * session persists, and the caller only `router.push`es once a real
- * sessionId comes back (thầy 2026-07-11: "học là dùng router.push chứ không
- * phải redirect", "bấm vô học thì isPending ở cái nút học").
+ * sessionId comes back (teacher 2026-07-11: "studying uses router.push, not
+ * a redirect", "pressing the study button puts isPending on that button").
  *
  * ALWAYS calls `start` directly — no resumable-lookup-and-reuse here anymore
- * (thầy 2026-07-12: "nếu đang có session bỏ dở => override lại session đó
- * (xóa cũ tạo mới)", mirrors the identical fix on
+ * (teacher 2026-07-12: "if there's an abandoned session in progress, override
+ * it (delete the old one, create a new one)", mirrors the identical fix on
  * {@link import("./useStartFlashcardDueReviewSession").useStartFlashcardDueReviewSession}).
  * The `start` mutation already retires any prior `in_progress` draw for the
  * enrollment+deck before persisting the new one
@@ -43,7 +43,7 @@ export const useStartFlashcardReviewSession = (courseId: string | undefined) => 
             const ok = await runGraphQL(
                 async () => {
                     // `mode` picks the scope server-side: "due" persists only the
-                    // cards needing review (thầy 2026-07-13 mode modal); "full"
+                    // cards needing review (teacher 2026-07-13 mode modal); "full"
                     // (default) keeps the whole deck.
                     const result = await runStartSession.trigger({ request: { deckId, cardIds, mode }, headers })
                     const response = result.data?.startFlashcardReviewSession

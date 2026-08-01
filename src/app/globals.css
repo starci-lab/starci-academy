@@ -336,16 +336,17 @@ html {
 }
 
 /*
- * Modal gutter — HeroUI bakes `.modal__dialog { p-6 }` and `.alert-dialog__dialog
- * { p-6 }` (24px). Standardise BOTH to p-3 (12px) app-wide so a modal / confirm
- * dialog reads with the SAME outer gutter as a card (card = p-3, thầy 2026-07-18:
- * "modal padding ngoài p-3 như card"); the block owns the padding (no per-modal
- * `p-*` override on Modal.Body). The body's own `-m-[3px] p-[3px]` focus-ring
- * breathing is untouched.
+ * Modal / drawer gutter — HeroUI bakes `.modal__dialog { p-6 }` and `.alert-dialog__dialog
+ * { p-6 }` (24px). NEW CONFIG (thầy 2026-08-01): a modal and a drawer are surfaces that hold
+ * groups, exactly like a card, so all three pad at p-4 (16px) — the `card-padding` pattern. This
+ * overrides the earlier p-3 rule (2026-07-18, "modal padding ngoài p-3 như card"); the card moved
+ * to p-4, and the modal follows it so the outer gutter still matches a card. The body's own
+ * `-m-[3px] p-[3px]` focus-ring breathing is untouched.
  */
 .modal__dialog,
+.drawer__dialog,
 .alert-dialog__dialog {
-    padding: 0.75rem !important;
+    padding: 1rem !important;
 }
 /*
  * Full-bleed exception — the global search (cmd-k) palette IS the input; the
@@ -368,12 +369,15 @@ html {
 .card {
     border: none !important;
     /*
-     * Card padding = p-3 (override HeroUI's baked `.card { p-4 }`). House rule: EVERY
-     * card is p-3, not p-4. `!important` beats the unlayered HeroUI base. A card whose
-     * body is a divider-list goes FLUSH (its own flush variant sets p-0) so the dividers
-     * span edge-to-edge and each row owns its own p-3.
+     * Card padding = p-4 (16px). NEW CONFIG (thầy 2026-08-01): a card, modal or drawer is
+     * a surface that HOLDS GROUPS, so it pads at step 5 (p-4, 16px) to match the group-boundary
+     * gap that separates the groups inside it — the outer edge breathes at the same rhythm as its
+     * own contents (principles/gap.md, the nesting note; principles/padding.md `card-padding`).
+     * This overrides the earlier p-3 house rule (2026-07-18). HeroUI's own base is already p-4,
+     * so `!important` is kept only to beat any stray cascade. A card whose body is a divider-list
+     * still goes FLUSH via its own variant (p-0) so dividers span edge-to-edge.
      */
-    padding: calc(var(--spacing) * 3) !important;
+    padding: calc(var(--spacing) * 4) !important;
 }
 
 .card--transparent {

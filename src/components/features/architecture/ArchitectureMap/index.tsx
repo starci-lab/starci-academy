@@ -38,12 +38,12 @@ export interface ArchitectureMapProps extends WithClassNames<undefined> {
  * The live 3D architecture ATLAS — one flat isometric board, no pods, no drill.
  * Two eras via a single toggle:
  *
- *  - **Hiện tại** (default): the live atlas — all 17 infra/external components
+ *  - **Present** (default): the live atlas — all 17 infra/external components
  *    (live status dot) PLUS the 10 feature modules the Core API splits into
  *    (neutral, no dot — no health probe exists for them). Selecting a module
  *    brightens the infra it runs on ({@link buildLiveScene}); selecting infra
  *    highlights it. Everything on one grid, one tile per node.
- *  - **Tương lai**: the microservices roadmap (Coming soon — no live status).
+ *  - **Future**: the microservices roadmap (Coming soon — no live status).
  *
  * The `?node=` selection is shared with the rail + dissection panel. Every scene
  * builder is a pure data function fed i18n'd labels here.

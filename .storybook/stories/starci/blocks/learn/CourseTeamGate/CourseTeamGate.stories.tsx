@@ -16,7 +16,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * 📐 **TWO LEAVES** (§14d.2): "shown" and "hidden" differ in STRUCTURE (a node vs
  * empty). The two reasons for hiding (trial · already-in-team) produce the SAME
  * empty tree ⇒ they're STATES of the same leaf, now two `states[]` entries
- * (thầy chốt bố cục C, 2026-07-27) instead of two renders xếp tay trong `leafShell`.
+ * (teacher's call on layout C, 2026-07-27) instead of two renders hand-laid inside `leafShell`.
  */
 const meta: Meta<typeof CourseTeamGate> = {
     title: "StarCi/Blocks/Learn/CourseTeamGate/CourseTeamGate",
@@ -32,8 +32,8 @@ type Story = StoryObj<typeof CourseTeamGate>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // The FRAME is also a DEP (§11a.1) — this block already declared the frame it uses, kept as-is.
     "Alert": { tier: "atom", role: "the resting branch that reaches straight for the atom, since the callout frame has no `isSkeleton` shape of its own yet", storyId: "atoms-feedback-alert-alert--action" },
-    "FeedbackCallout": {
-        storyId: "composites-feedback-feedback-feedbackcallout--default",
+    "Callout": {
+        storyId: "composites-feedback-callout-callout--default",
         tier: "composite",
         role: "every bit of the shape comes from this frame, the block only supplies the content and the hide condition",
     },
@@ -42,7 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — PAID + not in the team yet ⇒ shows the warning. The only leaf with a node. */
 export const Warning: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseTeamGate"
                 tier="block"
@@ -53,11 +53,11 @@ export const Warning: Story = {
                 states={[
                     {
                         name: "isEnrolled = true, isInTeam = false",
-                        why: "The `FeedbackCallout` frame renders with a warning tone, prompting the viewer to join the team. A viewer who paid but never joined the GitHub team is missing part of what they bought, so the block keeps nudging until they act.",
+                        why: "The `Callout` frame renders with a warning tone, prompting the viewer to join the team. A viewer who paid but never joined the GitHub team is missing part of what they bought, so the block keeps nudging until they act.",
                         code: "<CourseTeamGate isEnrolled isInTeam={false} onJoin={handleJoin} />",
                         render: (
                             <CourseTeamGate
-                                anatPart="FeedbackCallout"
+                                anatPart="Callout"
                                 showAnatomy
                                 isEnrolled
                                 isInTeam={false}
@@ -79,7 +79,7 @@ export const Warning: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseTeamGate"
                 tier="block"
@@ -94,7 +94,7 @@ export const Skeleton: Story = {
                         code: "<CourseTeamGate isSkeleton isEnrolled={false} isInTeam={false} />",
                         render: (
                             // No `anatPart` override here (unlike the `Warning` leaf above): this
-                            // branch renders `Alert`, not `FeedbackCallout` — hardcoding the
+                            // branch renders `Alert`, not `Callout` — hardcoding the
                             // loaded leaf's name would tag the wrong component (caught while
                             // applying the naming rule, 2026-07-27). Letting `showAnatomy` pick the
                             // name lets the component's own ternary resolve to whichever of the two
@@ -119,7 +119,7 @@ export const Skeleton: Story = {
  */
 export const Hidden: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="CourseTeamGate"
                 tier="block"

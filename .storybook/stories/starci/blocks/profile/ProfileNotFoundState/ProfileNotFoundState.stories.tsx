@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * ⚠️ Deliberately NOT the `src` app's numeral-hero shell (`ErrorPageState`,
  * a big "404" above the title) — that shape has no other consumer anywhere in
- * this design system, so this block composes `FeedbackEmpty` in its plain
+ * this design system, so this block composes `EmptyState` in its plain
  * icon+title+description+action form instead of inventing a one-off numeral
  * frame. See the component file header for the full reasoning.
  *
@@ -29,14 +29,14 @@ export default meta
 type Story = StoryObj<typeof ProfileNotFoundState>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "FeedbackEmpty": { tier: "composite", role: "the centered icon/title/description/action stack — the same shape every other empty spot in this codebase uses", storyId: "composites-feedback-feedback-feedbackempty--action" },
+    "EmptyState": { tier: "composite", role: "the centered icon/title/description/action stack — the same shape every other empty spot in this codebase uses", storyId: "composites-feedback-emptystate-emptystate--action" },
     "Button": { tier: "atom", role: "the single way out, back to the home route — its label is owned by this block, not passed in by the caller", storyId: "atoms-buttons-button-button--default" },
 }
 
 /** LEAF — the requested profile could not be resolved. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProfileNotFoundState"
                 tier="block"
@@ -50,16 +50,16 @@ export const Default: Story = {
                         name: "title/description set, onGoHome wired",
                         why: "The headline and description come from the caller/i18n, already resolved copy about WHY this profile can't be shown. The CTA label itself is NOT a prop — 'back to the home route' is the one and only exit a 404 state ever offers, so the block owns that word itself rather than opening it up to the caller.",
                         code: `<ProfileNotFoundState
-    title="Không tìm thấy hồ sơ"
-    description="Hồ sơ này không tồn tại hoặc đã bị gỡ bỏ."
+    title="Profile not found"
+    description="This profile doesn't exist or has been removed."
     onGoHome={goHome}
 />`,
                         render: (
                             <ProfileNotFoundState
                                 anatPart="ProfileNotFoundState"
                                 showAnatomy
-                                title="Không tìm thấy hồ sơ"
-                                description="Hồ sơ này không tồn tại hoặc đã bị gỡ bỏ."
+                                title="Profile not found"
+                                description="This profile doesn't exist or has been removed."
                                 onGoHome={() => {}}
                             />
                         ),

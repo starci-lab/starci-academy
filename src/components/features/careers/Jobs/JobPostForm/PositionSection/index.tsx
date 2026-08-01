@@ -54,7 +54,7 @@ export interface PositionSectionProps {
 }
 
 /**
- * "Vị trí tuyển dụng" section of the job-post form — title, employment type,
+ * "Position" section of the job-post form — title, employment type,
  * work mode, location, salary range (blank + blank = negotiable), and the
  * markdown description / requirements.
  *

@@ -35,7 +35,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the submit action, mid-run vs. the run's last question, and its disabled/pending states. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MockInterviewAnswerAction"
                 tier="block"

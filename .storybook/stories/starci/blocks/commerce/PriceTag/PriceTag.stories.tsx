@@ -27,7 +27,7 @@ export default meta
 type Story = StoryObj<typeof PriceTag>
 
 /** Plain canvas for each leaf's anatomy panel. */
-const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+const shell = (node: React.ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
 
 // No saving: only the bold amount — PriceTag directly renders this Typography
 // itself (own `type`/`weight`), so it's a badged node even with no other parts.
@@ -370,10 +370,10 @@ export const BreakdownOpen: Story = {
         ),
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement)
-        // The lookup name must be the trigger's REAL ACCESSIBLE NAME — `aria-label="Chi tiết giá"`
+        // The lookup name must be the trigger's REAL ACCESSIBLE NAME — `aria-label="Price details"`
         // in `PriceTag`. "PriceDetail" was a made-up name that never matched: this play test
         // has been red all along, nobody just opened the Interactions tab to notice.
-        await userEvent.click(canvas.getByRole("button", { name: "Chi tiết giá" }))
+        await userEvent.click(canvas.getByRole("button", { name: "Price details" }))
         await waitFor(() => expect(screen.getByRole("dialog")).toBeInTheDocument())
     },
 }

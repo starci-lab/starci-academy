@@ -149,14 +149,14 @@ export const CourseCard = ({
     const viewLabel = isEnrolled ? t("course.continueLearning") : t("courses.viewCourse")
     // not enrolled → the feature-owned `action` slot (cart-add, hides itself for
     // free/enrolled courses per its own logic). Enrolled → that slot would render
-    // null anyway, so replace it with a secondary "Xem khóa học" button (view the
-    // marketing page) — teacher: "tiếp tục học ở card đã mua nên có 2 phần: tiếp
-    // tục học (primary) và xem khóa học (secondary)", don't just drop the second
-    // button once enrolled.
+    // null anyway, so replace it with a secondary "View course" button (view the
+    // marketing page) — teacher: "a card for an already-purchased course should have
+    // 2 parts: continue learning (primary) and view course (secondary)", don't just
+    // drop the second button once enrolled.
     const secondaryAction = isEnrolled ? (
         // no trailing arrow — arrow marks the ONE primary CTA per surface
-        // (button.md §2: "nút KHÔNG icon = sub-CTA"); keeping it here as well
-        // as on "Tiếp tục học" made both buttons read as equally weighted.
+        // (button.md §2: "a button WITHOUT an icon = sub-CTA"); keeping it here as
+        // well as on "Continue learning" made both buttons read as equally weighted.
         <Button
             variant="secondary"
             onPress={onViewDetail}

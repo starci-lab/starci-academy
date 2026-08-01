@@ -32,7 +32,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 export type StreakStripProps = WithClassNames<undefined>
 
 /**
- * "Đà học" content — the last-7-days streak strip + current/longest streak, and a
+ * "Learning streak" content — the last-7-days streak strip + current/longest streak, and a
  * daily-goal nudge when today is still idle. Content only (the parent
  * {@link import("@/components/blocks").LabeledCard} frames it). Self-fetches the
  * weekly-stats leaf query through {@link AsyncContent}.

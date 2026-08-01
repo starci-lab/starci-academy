@@ -56,7 +56,7 @@ const ATTRIBUTE_ORDER: ReadonlyArray<string> = [
 /** A phase below this fraction of its max is called out as "weak" (B4/B6) — mirrors the ~60% pass-bar convention used elsewhere in grading result pages. */
 const WEAK_PHASE_THRESHOLD = 0.6
 
-/** Verdict → semantic tone (đạt / cận / chưa đạt) — drives the verdict Alert status. */
+/** Verdict → semantic tone (pass / borderline / fail) — drives the verdict Alert status. */
 const verdictStatusOf = (verdict: MockInterviewGradeResult["verdict"]): "success" | "warning" | "danger" =>
     verdict === "pass" ? "success" : verdict === "borderline" ? "warning" : "danger"
 
@@ -88,7 +88,7 @@ const scoreColorOf = (score: number, max: number): "success" | "warning" | "dang
     return ratio < 0.5 ? "danger" : ratio < 0.75 ? "warning" : "success"
 }
 
-/** The 5 canonical design-kind phase keys — used to tell a `kind="design"` phase from a Q&A-kind server-labeled question ("Câu 1" …). */
+/** The 5 canonical design-kind phase keys — used to tell a `kind="design"` phase from a Q&A-kind server-labeled question ("Question 1" …). */
 const DESIGN_PHASE_KEYS: ReadonlyArray<MockInterviewPhaseKey> = [
     "requirements",
     "estimation",
@@ -100,7 +100,7 @@ const DESIGN_PHASE_KEYS: ReadonlyArray<MockInterviewPhaseKey> = [
 /**
  * Renders a `phaseScores[].phase` value for display. `kind="design"` sends one
  * of the 5 canonical phase keys (i18n-resolved); Q&A kinds instead send a
- * ready-to-render label like `"Câu 1"` straight from the server — rendered
+ * ready-to-render label like `"Question 1"` straight from the server — rendered
  * as-is, no i18n lookup (the scorecard never hardcodes 5 phase labels).
  */
 const phaseDisplayLabel = (phase: string, t: ReturnType<typeof useTranslations>): string =>
@@ -272,7 +272,7 @@ export const MockInterviewScorecard = ({
 
     // B6 — deep link routes to the matched content when we have BOTH a content id and
     // its owning module id (the route needs both segments); otherwise falls back to the
-    // course-contents home ("Học phần" landing) so the CTA never dead-ends even when
+    // course-contents home ("Course Contents" landing) so the CTA never dead-ends even when
     // nothing matched.
     const studyHref = (firstMatchedContentId && matchedContent?.module?.id)
         ? pathConfig().locale(locale).course(courseDisplayId).learn().module(matchedContent.module.id).content(firstMatchedContentId).build()
@@ -287,7 +287,7 @@ export const MockInterviewScorecard = ({
     const relatedContentQuery = [...grade.gaps, grade.followUpQuestion].filter(Boolean).join(" ")
 
     // design mode scores against the 5 canonical phases; qna scores are per-question
-    // ("Câu N") — drives whether the breakdown reads "từng phase" or "từng câu".
+    // ("Question N") — drives whether the breakdown reads "each phase" or "each question".
     const isDesignScore = grade.phaseScores.length > 0
         && grade.phaseScores.every((phaseScore) => (DESIGN_PHASE_KEYS as ReadonlyArray<string>).includes(phaseScore.phase))
 
@@ -336,8 +336,8 @@ export const MockInterviewScorecard = ({
                 same component + data the setup screen shows (single source). */}
             <MockInterviewTrackSnapshot courseId={courseId} />
 
-            {/* qna sends "Câu N" phases → "Điểm theo từng câu"; design sends the 5
-                canonical phase keys → "Điểm theo từng phase". */}
+            {/* qna sends "Question N" phases → "Score by question"; design sends the 5
+                canonical phase keys → "Score by phase". */}
             <LabeledCard label={isDesignScore ? t("mockInterview.perPhaseTitle") : t("mockInterview.perQuestionTitle")}>
                 <div className="flex flex-col gap-3">
                     {grade.phaseScores.map((phaseScore) => (
@@ -357,8 +357,8 @@ export const MockInterviewScorecard = ({
             </LabeledCard>
 
             {/* Per-question model-answer breakdown (the anti-ChatGPT surface) — one
-                ACCORDION item per Q&A question (2026-07-13, thầy: "đáp án dài lê thê,
-                render kiểu accordion"), collapsed by default so the question+score stay
+                ACCORDION item per Q&A question (2026-07-13, the teacher: "the answers run
+                on forever, render them as an accordion"), collapsed by default so the question+score stay
                 scannable without walls of text; comparing the candidate's own answer to
                 the seed model answer only once expanded. `variant="surface"` +
                 `border border-default` = standalone-page accordion skin ([[accordion]]
@@ -469,7 +469,7 @@ export const MockInterviewScorecard = ({
                 ) : null}
             </div>
 
-            {/* quiet, self-hiding "nên đọc lại" — a passive list below the primary CTA,
+            {/* quiet, self-hiding "worth re-reading" — a passive list below the primary CTA,
                 never a competing button. */}
             <RelatedContentList
                 courseId={courseId}

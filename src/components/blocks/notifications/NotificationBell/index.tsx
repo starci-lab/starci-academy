@@ -26,7 +26,7 @@ export interface NotificationBellProps extends WithClassNames<undefined> {
      */
     onMarkAllRead?: () => void
     /**
-     * Optional popover header title. Defaults to "Thông báo".
+     * Optional popover header title. Defaults to "Notifications".
      */
     title?: React.ReactNode
     /**
@@ -36,7 +36,7 @@ export interface NotificationBellProps extends WithClassNames<undefined> {
     emptyState?: React.ReactNode
     /**
      * Accessible label for the icon button (screen-reader name). Defaults to
-     * "Thông báo".
+     * "Notifications".
      */
     ariaLabel?: string
     /**
@@ -67,7 +67,7 @@ export interface NotificationBellProps extends WithClassNames<undefined> {
  * @example
  * <NotificationBell
  *   unreadCount={3}
- *   groups={[{ label: "Hôm nay", items: [...] }]}
+ *   groups={[{ label: "Today", items: [...] }]}
  *   onMarkAllRead={() => {}}
  * />
  * @see Story: .storybook/stories/blocks/notifications/NotificationBell/NotificationBell.stories
@@ -76,9 +76,9 @@ export const NotificationBell = ({
     unreadCount,
     groups,
     onMarkAllRead,
-    title = "Thông báo",
+    title = "Notifications",
     emptyState,
-    ariaLabel = "Thông báo",
+    ariaLabel = "Notifications",
     isOpen,
     onOpenChange,
     className,

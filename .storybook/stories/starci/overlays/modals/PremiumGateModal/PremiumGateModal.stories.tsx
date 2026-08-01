@@ -40,7 +40,7 @@ export default meta
 
 type Story = StoryObj<typeof PremiumGateModal>
 
-// DOM thật (size="md"): Modal.CloseTrigger + Modal.Header > Typography(title+description)
+// Real DOM (size="md"): Modal.CloseTrigger + Modal.Header > Typography(title+description)
 // + Modal.Body > StackV > (StackV > Cluster×3 unlock rows) + (StackV > PriceTagProminent +
 // PhaseScarcityNote, OR two skeleton Typography bars) + Modal.Footer > Button.
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -86,12 +86,12 @@ const ControlledPremiumGateModal = ({
 } & Omit<PremiumGateModalProps, "isOpen" | "onOpenChange">) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <PremiumGateModal

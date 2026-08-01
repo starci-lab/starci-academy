@@ -6,10 +6,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE: `Split` là KHUNG hàng TRÁI ↔ PHẢI. State nó sinh ra = quan hệ
- * giữa HAI PHÍA CÓ TÊN: seam `gap`, canh lề `align`. Không có `wrap`/`justify` —
- * `justify-between` là ĐỊNH NGHĨA của khung này, không phải tuỳ chọn; hàng nhiều-phần-tử
- * thì dùng `StackH`/`Cluster`.
+ * ⚠️ STATE SCOPE: `Split` is a LEFT ↔ RIGHT row FRAME. The state it produces is
+ * the relationship BETWEEN THE TWO NAMED SIDES: the seam `gap`, the cross-axis
+ * alignment `align`. No `wrap`/`justify` — `justify-between` is this frame's
+ * DEFINITION, not an option; a row with many items should use `StackH`/`Cluster`
+ * instead.
  */
 const meta: Meta<typeof Split> = {
     title: "Frames/Split/Split",
@@ -26,20 +27,20 @@ type Story = StoryObj<typeof Split>
 
 const lessonMeta = (
     <>
-        <Typography size="sm" text="Bài 4 — Consistent Hashing" weight="medium" />
-        <Typography size="xs" text="Còn 18 phút · 3 thử thách" color="muted" />
+        <Typography size="sm" text="Lesson 4 — Consistent Hashing" weight="medium" />
+        <Typography size="xs" text="18 minutes left · 3 challenges" color="muted" />
     </>
 )
 
 // No `Start`/`End` anatomy nodes (2026-07-28): the two sides are CALLER slots — whatever they
 // wrap belongs to whoever passed it in (`Typography`, `Button`, a `StackV`…), not to
-// this khung's own anatomy, and no component sits behind either name for a reader to click
+// this frame's own anatomy, and no component sits behind either name for a reader to click
 // through to. The `reason` prose below already explains the min-w-0/shrink-0 split in words.
 
-/** Default — nhãn bên trái, hành động bên phải: hàng đi 43 chỗ trong app. */
+/** Default — a label on the left, an action on the right: the row used at 43 spots across the app. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Split"
                 tier="frame"
@@ -48,18 +49,18 @@ export const Default: Story = {
                 states={[
                     {
                         name: "a name and the action on it",
-                        why: "Start carries a truncating label on the left and End carries a button pinned to the right, with a grouped seam between them because the two are separate things a reader treats separately. This is the shape used at roughly 43 call sites in the app for a row that pairs a name with its action.",
+                        why: "Start carries a truncating label on the left and End carries a button pinned to the right, with a `gap={4}` seam between them because the two are separate things a reader treats separately. This is the shape used at roughly 43 call sites in the app for a row that pairs a name with its action.",
                         code: `<Split
-  gap="grouped"
-  start={<Typography size="sm" text="Khoá System Design" weight="medium" />}
-  end={<Button label="Tiếp tục" size="sm" />}
+  gap={4}
+  start={<Typography size="sm" text="System Design course" weight="medium" />}
+  end={<Button label="Continue" size="sm" />}
 />`,
                         render: (
-                            <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
+                            <div data-tier="fixture" className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split
-                                    gap="grouped"
-                                    start={<Typography size="sm" text="Khoá System Design" weight="medium" truncate />}
-                                    end={<Button label="Tiếp tục" size="sm" />}
+                                    gap={4}
+                                    start={<Typography size="sm" text="System Design course" weight="medium" truncate />}
+                                    end={<Button label="Continue" size="sm" />}
                                 />
                             </div>
                         ),
@@ -71,12 +72,13 @@ export const Default: Story = {
 }
 
 /**
- * Align — canh theo trục NGANG-vuông-góc (chiều dọc của hàng), đọc được khi hai phía
- * KHÁC chiều cao. `stretch` kéo cả hai cao bằng hàng.
+ * Align — alignment on the CROSS axis (the row's vertical direction), legible
+ * whenever the two sides DIFFER in height. `stretch` pulls both to the row's
+ * full height.
  */
 export const Align: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Split"
                 tier="frame"
@@ -87,18 +89,18 @@ export const Align: Story = {
                         name: "align = \"center\" (default)",
                         why: "Start and End sit centred on the row's cross axis, the button lining up with the middle of the two-line text block beside it. This is the standard alignment for a split row, used whenever the two sides don't need special vertical treatment.",
                         code: `<Split
-  gap="grouped"
+  gap={4}
   align="center"
   start={…}
   end={…}
 />`,
                         render: (
-                            <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
+                            <div data-tier="fixture" className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split
-                                    gap="grouped"
+                                    gap={4}
                                     align="center"
-                                    start={<StackV gap="flush" body={lessonMeta} />}
-                                    end={<Button label="Học" size="sm" />}
+                                    start={<StackV gap={1} body={lessonMeta} />}
+                                    end={<Button label="Study" size="sm" />}
                                 />
                             </div>
                         ),
@@ -107,18 +109,18 @@ export const Align: Story = {
                         name: "align = \"start\"",
                         why: "Start and End both pin to the top of the row instead of centring. This is for a left side carrying a long block of text, where centring the button against a growing block would keep moving it around.",
                         code: `<Split
-  gap="grouped"
+  gap={4}
   align="start"
   start={…}
   end={…}
 />`,
                         render: (
-                            <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
+                            <div data-tier="fixture" className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split
-                                    gap="grouped"
+                                    gap={4}
                                     align="start"
-                                    start={<StackV gap="flush" body={lessonMeta} />}
-                                    end={<Button label="Học" size="sm" />}
+                                    start={<StackV gap={1} body={lessonMeta} />}
+                                    end={<Button label="Study" size="sm" />}
                                 />
                             </div>
                         ),
@@ -127,18 +129,18 @@ export const Align: Story = {
                         name: "align = \"end\"",
                         why: "Start and End both pin to the bottom of the row instead of centring. This is for a case where the trailing side should line up with the last line of a taller leading block, such as a footnote sitting under a paragraph.",
                         code: `<Split
-  gap="grouped"
+  gap={4}
   align="end"
   start={…}
   end={…}
 />`,
                         render: (
-                            <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
+                            <div data-tier="fixture" className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split
-                                    gap="grouped"
+                                    gap={4}
                                     align="end"
-                                    start={<StackV gap="flush" body={lessonMeta} />}
-                                    end={<Button label="Học" size="sm" />}
+                                    start={<StackV gap={1} body={lessonMeta} />}
+                                    end={<Button label="Study" size="sm" />}
                                 />
                             </div>
                         ),
@@ -147,18 +149,18 @@ export const Align: Story = {
                         name: "align = \"stretch\"",
                         why: "Both Start and End are pulled to the full height of the row instead of sizing to their own content. This is for when the End side is something like a full-height divider or button that should always match the tallest side.",
                         code: `<Split
-  gap="grouped"
+  gap={4}
   align="stretch"
   start={…}
   end={…}
 />`,
                         render: (
-                            <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
+                            <div data-tier="fixture" className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split
-                                    gap="grouped"
+                                    gap={4}
                                     align="stretch"
-                                    start={<StackV gap="flush" body={lessonMeta} />}
-                                    end={<Button label="Học" size="sm" />}
+                                    start={<StackV gap={1} body={lessonMeta} />}
+                                    end={<Button label="Study" size="sm" />}
                                 />
                             </div>
                         ),

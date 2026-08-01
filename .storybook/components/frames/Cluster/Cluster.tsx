@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, type LayoutAlign, type LayoutJustify, type SeamScale } from "@sb-components/frames/_spacing"
+import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -20,8 +20,8 @@ import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, type LayoutAlign, type LayoutJus
  * next to a badge next to a button); `Cluster` repeats ONE kind and always wraps.
  * The two are not interchangeable — pick by the §13b test, not by looks.
  *
- * §10: `gap` is a {@link InsetScale} union literal and REQUIRED — a chip row is
- * the canonical `related`(2) seam, but the khung refuses to guess it for you.
+ * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED — a chip row is
+ * the canonical step `3` seam (peers in one set), but the khung refuses to guess it for you.
  * §13: no domain content, no behaviour — the items' own components carry those.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -43,10 +43,12 @@ export interface ClusterBaseProps {
      */
     items: ReadonlyArray<ClusterItem>
     /**
-     * Seam between items on the §10 scale — REQUIRED, union literal only. Applies
-     * to BOTH axes (row gap and column gap), so wrapped lines breathe the same.
+     * Seam between items on the house gap scale (`gap.md`) — REQUIRED. Applies to BOTH axes
+     * (row gap and column gap), so wrapped lines breathe the same. `3` (`gap-2`) is the
+     * canonical step for a chip row — peers in one set — but the frame refuses to guess it
+     * for you. Responsive: `gap={{ base: 2, md: 3 }}` tightens the seam in a narrow container.
      */
-    gap: SeamScale
+    gap: Responsive<AllowedGap>
     /**
      * `true` puts a `·` BETWEEN items, N items get N-1 marks, mirroring `Stack`'s `divider`.
      *
@@ -74,15 +76,19 @@ export interface ClusterBaseProps {
      * `PageHeader`/`Divider`/`ChoiceSwitch`.
      */
     anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
     /** `true` → tag each item with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
+    /**
+     * The layout pattern this track's seam realises — a token from `test-runner/patterns.mjs`.
+     * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
+     * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
+     * `pattern` doc for the full contract.
+     */
+    pattern?: string
 }
 
 /**
@@ -98,26 +104,29 @@ const ClusterBase = ({
     align = "center",
     justify = "start",
     separator = false,
-    className,
     classNames,
     showAnatomy = false,
     anatPart,
+    pattern,
 }: ClusterBaseProps) => (
     <div
+        data-tier="frame"
+        data-component="Cluster"
         data-anat-part={anatPart}
+        data-principles={pattern}
         className={cn(
             "flex flex-wrap",
-            GAP_CLASS[gap],
+            ...gapClassNames(gap),
             ALIGN_CLASS[align],
             JUSTIFY_CLASS[justify],
-            className,
             classNames,
         )}
     >
         {items.map((item, index) => {
-            const body = showAnatomy
-                ? <div data-anat-part="Item">{item.content}</div>
-                : item.content
+            // The wrapper is unconditional; only the badge on it is not. Rendering it only when
+            // the overlay is on made the overlay change what it was measuring — the wrapper is a
+            // flex child, so turning inspection on moved the row it was meant to describe.
+            const body = <div data-anat-part={showAnatomy ? "Item" : undefined}>{item.content}</div>
             return (
                 <React.Fragment key={item.key}>
                     {/* The mark carries no margin of its own — the track's `gap` already
@@ -135,3 +144,6 @@ const ClusterBase = ({
  * bare component export (§13a).
  */
 export { ClusterBase as Cluster }
+
+/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+export const meta = { tier: "frame", name: "Cluster" } as const

@@ -5,19 +5,19 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * FRAME (khung) — `SplitWorkspace`: the READ-COLUMN + STICKY-ASIDE workspace
+ * FRAME — `SplitWorkspace`: the READ-COLUMN + STICKY-ASIDE workspace
  * shape — a brief/content column that grows, beside a fixed-width action column
  * that pins to the viewport once there's room for both side by side.
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): đổi nhãn tầng
- * "LAYOUT" → "FRAME" — file này nằm ở thư mục `frames/`, và `principles/
- * naming` §6 đã CHỐT (2026-07-29, đĩa làm trọng tài): `frame` = `frames/`,
- * `layout` = `<app>/layouts/`, hai tầng khác nhau. Cũng gỡ khai báo namespace
- * `.Base` giả bên dưới — file này export BARE thật (xác nhận qua mọi
- * call-site), không phải namespace.
+ * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): renamed the tier
+ * label "LAYOUT" → "FRAME" — this file lives in the `frames/` folder, and
+ * `principles/naming` §6 has RULED (2026-07-29, the filesystem as arbiter):
+ * `frame` = `frames/`, `layout` = `<app>/layouts/`, two different tiers. Also
+ * removed the fake `.Base` namespace declaration below — this file truly
+ * exports BARE (confirmed via every call site), not a namespace.
  *
- * ⭐ WHY THIS KHUNG EXISTS (thầy 2026-07-29, "desktop là phải render flex chứ
- * nhỉ?"). Real `src` has this EXACT shape TWICE, byte-for-byte identical CSS —
+ * ⭐ WHY THIS FRAME EXISTS (teacher, 2026-07-29: "shouldn't desktop render as
+ * flex?"). Real `src` has this EXACT shape TWICE, byte-for-byte identical CSS —
  * `ChallengeView/index.tsx:195` and `PersonalProjectWorkspace/index.tsx:61` —
  * and BOTH corresponding Storybook screens (`ChallengePage`, `PersonalProjectTaskPage`)
  * worked around its absence with `StackH gap="section" align="start" wrap`
@@ -32,11 +32,11 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
  *
  * `flex-col` (mobile/tablet) → `@app-xl:flex-row` (desktop, `src`'s own
  * breakpoint) is not a generic "responsive Stack" ask — it is THIS one named
- * shape, so it gets its own khung instead of a new prop bolted onto `Stack.*`
+ * shape, so it gets its own frame instead of a new prop bolted onto `Stack.*`
  * that would blur what "two axes" means there.
  *
  * ⭐ `at` NAMES THE BREAKPOINT (FRAME-10), EVERY OTHER NUMBER STAYS HARD-OWNED
- * (§6c: a layout khung owns its internal sizing). Both real `src` sources agree
+ * (§6c: a layout frame owns its internal sizing). Both real `src` sources agree
  * on `@app-xl` as the switch step, so `at` defaults to `xl` and an unmigrated
  * caller renders identically — but the step itself is now a
  * `ResponsiveRowSwitch` prop instead of a bare string in `cn(...)`, so it is
@@ -45,7 +45,7 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
  * shape to generalize for yet. Add a prop for one of those only when a THIRD
  * real consumer actually disagrees with it.
  *
- * KHUNG API LAW (§13b): two DISTINCT roles ⇒ two NAMED slots (`main`/`aside`),
+ * FRAME API LAW (§13b): two DISTINCT roles ⇒ two NAMED slots (`main`/`aside`),
  * not a single `children` — a workspace has no "one obvious slot" the way
  * `Container`/`Stack` do.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -67,8 +67,15 @@ export interface SplitWorkspaceProps {
     at?: ResponsiveRowSwitch
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names this khung so a BlockAnatomy panel can badge it on-render. */
+    /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
+    /**
+     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
+     * A frame does not KNOW its pattern — the caller does, exactly like `anatPart` — so it is passed in.
+     */
+    pattern?: string
 }
 
 /**
@@ -93,7 +100,7 @@ const ASIDE_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
 
 /**
  * The read-column + sticky-aside split. See the file header for why this is
- * its own khung and why `at` is its only sizing prop.
+ * its own frame and why `at` is its only sizing prop.
  *
  * @param props - {@link SplitWorkspaceProps}
  */
@@ -103,9 +110,13 @@ const SplitWorkspace = ({
     at = "xl",
     classNames,
     anatPart,
+    pattern,
 }: SplitWorkspaceProps) => (
     <div
+        data-tier="frame"
+        data-component="SplitWorkspace"
         data-anat-part={anatPart}
+        data-principles={pattern}
         className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
     >
         {/* `main`/`aside` are CALLER SLOTS — the node inside belongs to whoever passed it, not
@@ -122,3 +133,6 @@ const SplitWorkspace = ({
 )
 
 export { SplitWorkspace }
+
+/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+export const meta = { tier: "frame", name: "SplitWorkspace" } as const

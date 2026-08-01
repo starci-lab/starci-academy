@@ -6,7 +6,7 @@
 
 /** One bullet in a section list. */
 export interface LegalListItem {
-    /** Optional bold lead label rendered before {@link text} (e.g. "Thông tin tài khoản:"). */
+    /** Optional bold lead label rendered before {@link text} (e.g. "Account information:"). */
     label?: string
     /** The item body text (plain — no markdown). */
     text: string
@@ -14,7 +14,7 @@ export interface LegalListItem {
 
 /** One numbered section of a legal document. */
 export interface LegalSection {
-    /** Heading including its number, e.g. "1. Dữ liệu chúng tôi thu thập". */
+    /** Heading including its number, e.g. "1. Data we collect". */
     heading: string
     /** Body paragraphs (plain text). */
     paragraphs?: string[]

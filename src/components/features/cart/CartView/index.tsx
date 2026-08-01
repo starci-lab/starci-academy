@@ -110,7 +110,7 @@ export const CartView = () => {
     }, [preview])
 
     // cheapest installment cycle (lowest monthlyAmountVnd, usually the longest
-    // term) — surfaces that trả góp EXISTS before the buyer commits to checkout;
+    // term) — surfaces that installment plans EXIST before the buyer commits to checkout;
     // full term picker lives in PaymentModal once they proceed.
     const cheapestMonthlyVnd = preview?.installmentOptions.length
         ? Math.min(...preview.installmentOptions.map((option) => option.monthlyAmountVnd))

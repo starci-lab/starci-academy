@@ -27,8 +27,8 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
  * ⚠️ FILED UNDER `overlays/modals`, NOT `blocks/commerce` (a judgement call on
  * this run's own boilerplate, which suggested `blocks/<group>`). Rule 13 names
  * this an `overlay-modal` item, and `components/README.md`'s app-folder split
- * law is explicit: "`overlays/{modals,drawers}` = thứ mở ĐÈ lên màn, mount MỘT
- * LẦN ở gốc app, gọi được từ BẤT KỲ đâu qua store" — exactly this modal's
+ * law is explicit: "`overlays/{modals,drawers}` = things that open OVER the
+ * screen, mounted ONCE at the app root, callable from ANYWHERE via the store" — exactly this modal's
  * contract. `FoundationModal` was RELOCATED out of `blocks/learn` into
  * `overlays/modals` for this exact reason (see its own file header); building
  * a fresh overlay straight into `blocks/commerce` would repeat the mistake
@@ -52,7 +52,7 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
  * generic) and the "what unlocks" checklist come from FIXED local vocabulary
  * tables (`GATE_HEADER`, `GATE_UNLOCKS`) — the same i18n-key pattern as
  * `ContentModeNav`'s `MODE_LABEL`. `courseTitle` is DATA interpolated into a
- * fixed template (`Mở khoá "${courseTitle}"`), never a caller-supplied string
+ * fixed template (`Unlock "${courseTitle}"`), never a caller-supplied string
  * standing in for the whole sentence.
  *
  * 📐 ONE LEAF (matches `FoundationModal` precedent — no structural kind
@@ -143,16 +143,16 @@ interface GateHeaderCopy {
  * (§14d.1), same table shape as `ContentModeNav`'s `MODE_LABEL`.
  * `courseTitle` is DATA plugged into the `named` row's template — the
  * sentence itself never comes from the caller, mirroring
- * `PhaseScarcityNote`'s `Còn ${seatsRemaining} suất…` pattern.
+ * `PhaseScarcityNote`'s `${seatsRemaining} seats left…` pattern.
  */
 const GATE_HEADER: Record<GateHeaderVariant, GateHeaderCopy> = {
     named: {
-        title: (courseTitle) => `Mở khoá "${courseTitle}"`,
-        description: "Xem toàn bộ bài giảng, làm không giới hạn thử thách và nhận chứng chỉ hoàn thành khoá học.",
+        title: (courseTitle) => `Unlock "${courseTitle}"`,
+        description: "Watch every lecture, take unlimited challenges, and earn a certificate when you complete the course.",
     },
     generic: {
-        title: () => "Mở khoá toàn bộ khoá học",
-        description: "Xem toàn bộ bài giảng, làm không giới hạn thử thách và nhận chứng chỉ hoàn thành khoá học.",
+        title: () => "Unlock the full course",
+        description: "Watch every lecture, take unlimited challenges, and earn a certificate when you complete the course.",
     },
 }
 
@@ -170,9 +170,9 @@ interface GateUnlockItem {
  * list, the same way `ContentModeNav`'s modes come from its own table.
  */
 const GATE_UNLOCKS: ReadonlyArray<GateUnlockItem> = [
-    { key: "content", label: "Toàn bộ bài giảng và tài nguyên của khoá học" },
-    { key: "practice", label: "Làm không giới hạn thử thách, quiz và mock interview" },
-    { key: "certificate", label: "Chứng chỉ hoàn thành khi kết thúc khoá học" },
+    { key: "content", label: "All of the course's lectures and resources" },
+    { key: "practice", label: "Unlimited challenges, quizzes, and mock interviews" },
+    { key: "certificate", label: "A certificate of completion when you finish the course" },
 ]
 
 /**
@@ -205,7 +205,7 @@ const PremiumGateModal = ({
     const unlockItems = GATE_UNLOCKS.map((item) => (
         <Cluster
             key={item.key}
-            gap="related"
+            gap={3}
             align="center"
             anatPart={showAnatomy ? "Cluster" : undefined}
             items={[
@@ -229,7 +229,7 @@ const PremiumGateModal = ({
                         <Typography
                             size="sm"
                             text={item.label}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ),
                 },
@@ -239,8 +239,8 @@ const PremiumGateModal = ({
 
     const skeletonPrice = (
         <>
-            <Typography size="h4" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
-            <Typography size="xs" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="h4" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
+            <Typography size="xs" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
         </>
     )
 
@@ -248,16 +248,16 @@ const PremiumGateModal = ({
         <>
             {/* "What unlocks" — static chrome, never skeletonised: known before
                 any price data lands, exactly like `ContentModeNav`'s own row. */}
-            <StackV gap="related" body={unlockItems} />
+            <StackV gap={3} body={unlockItems} />
 
             {/* Price + scarcity — the ONLY region `isSkeleton` reaches, same
                 `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
                 `TrialConversionStrip` uses for its own price region. */}
             {isSkeleton && !price ? (
-                <StackV gap="grouped" body={skeletonPrice} />
+                <StackV gap={4} body={skeletonPrice} />
             ) : price?.discountedPriceVnd != null ? (
                 <StackV
-                    gap="grouped"
+                    gap={4}
                     body={
                         <>
                             <PriceTagProminent
@@ -293,13 +293,13 @@ const PremiumGateModal = ({
                         variant="primary"
                         size="lg"
                         classNames={["w-full"]}
-                        label="Mở khoá ngay"
+                        label="Unlock now"
                         onPress={onUpgrade}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 }
             >
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={gateBody} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={gateBody} />
             </ModalShell>
         </div>
     )

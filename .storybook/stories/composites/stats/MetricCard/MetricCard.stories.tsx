@@ -49,7 +49,7 @@ const NO_HINT_PARTS: Array<AnatomyNode> = [
 
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MetricCard"
                 tier="composite"
@@ -79,7 +79,7 @@ export const Default: Story = {
 
 export const WithHint: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MetricCard"
                 tier="composite"
@@ -109,7 +109,7 @@ export const WithHint: Story = {
 /** `hint` is the only optional slot — omit it when value + label already explain themselves. */
 export const WithoutHint: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MetricCard"
                 tier="composite"
@@ -136,7 +136,7 @@ const SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** Long label + hint — the text wraps cleanly inside the frame. */
 export const LongText: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MetricCard"
                 tier="composite"
@@ -166,7 +166,7 @@ export const LongText: Story = {
 /** LEAF — the caller flips `isSkeleton`; three stacked bars mirror the value/label/hint rhythm inside the same `SectionCard` frame while the metric loads. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MetricCard"
                 tier="composite"

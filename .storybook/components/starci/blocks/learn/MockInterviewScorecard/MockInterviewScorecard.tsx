@@ -5,7 +5,7 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { SurfaceCard, SurfaceCardCrossList, type SurfaceCardCrossListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackCallout, type FeedbackIcon } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout, type CalloutIcon } from "@sb-components/composites/feedback/Callout/Callout"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
@@ -50,13 +50,13 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * ("a new list is almost always wrong — reuse instead").
  *
  * ⭐ `Chip` TAGS THE WEAK AREA, NOT THE VERDICT. The verdict already has its own
- * signal (the callout's tone + icon) — a second chip repeating "Đạt"/"Chưa đạt"
+ * signal (the callout's tone + icon) — a second chip repeating "Pass"/"Fail"
  * beside it would be two chips arguing about the same fact, the trap
  * `SubmissionScoreCard`'s header warns about ("one tone, not two disagreeing
  * signals"). Here `Chip` names a DIFFERENT fact — which area the CTA is about
  * to send the learner back into — so it sits once, next to the primary CTA.
  *
- * ⭐ TWO COMPOSITES HAVE NO `isSkeleton` OF THEIR OWN — `FeedbackCallout` (a
+ * ⭐ TWO COMPOSITES HAVE NO `isSkeleton` OF THEIR OWN — `Callout` (a
  * message frame, not a data-bearing one) and `ProgressMeter` (same known gap
  * `ChallengeScoreCard`/`ModuleContinueBand` already document). Both fall back to
  * a bare `HeroSkeleton` sized to the box they would have drawn, in the SAME
@@ -94,7 +94,7 @@ export type MockInterviewVerdict = "pass" | "borderline" | "fail"
 export interface MockInterviewScoreRow {
     /** Stable React key. */
     key: string
-    /** Display label — a resolved phase name or a question ordinal ("Câu 1"), already localized/resolved by the caller. */
+    /** Display label — a resolved phase name or a question ordinal ("Question 1"), already localized/resolved by the caller. */
     label: string
     /** Points earned for this phase/question. */
     score: number
@@ -138,7 +138,7 @@ export interface MockInterviewScorecardProps {
     onRetry?: () => void
     /** The system/prompt this run interviewed on, shown as a header line when known. */
     promptTitle?: string
-    /** When this attempt was graded, already formatted/localized by the caller (e.g. "28 thg 7, 2026 · 14:32"). Omit for a live, just-finished session. */
+    /** When this attempt was graded, already formatted/localized by the caller (e.g. "Jul 28, 2026 · 14:32"). Omit for a live, just-finished session. */
     createdAt?: string
     /** `true` → every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
@@ -156,7 +156,7 @@ const VERDICT_STATUS: Record<MockInterviewVerdict, "success" | "warning" | "dang
 }
 
 /** Verdict → callout indicator icon. */
-const VERDICT_ICON: Record<MockInterviewVerdict, FeedbackIcon> = {
+const VERDICT_ICON: Record<MockInterviewVerdict, CalloutIcon> = {
     pass: CheckCircleIcon,
     borderline: WarningCircleIcon,
     fail: XCircleIcon,
@@ -164,9 +164,9 @@ const VERDICT_ICON: Record<MockInterviewVerdict, FeedbackIcon> = {
 
 /** Verdict → the block's own wording (§14d.1 — a caller passes the enum, never a formatted string). */
 const VERDICT_LABEL: Record<MockInterviewVerdict, string> = {
-    pass: "Đạt",
-    borderline: "Cận đạt",
-    fail: "Chưa đạt",
+    pass: "Pass",
+    borderline: "Borderline",
+    fail: "Fail",
 }
 
 /**
@@ -195,14 +195,14 @@ const ScoreRow = ({
     showAnatomy: boolean
 }) => (
     <StackH
-        gap="grouped"
+        gap={4}
         align="center"
         anatPart={showAnatomy ? "StackH" : undefined}
         body={
             <>
-                <Typography size="sm" truncate className="w-32" classNames={["shrink-0"]} text={label} anatPart={showAnatomy ? "Typography" : undefined} />
-                <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} className="flex-1" anatPart={showAnatomy ? "ProgressMeter" : undefined} showAnatomy={showAnatomy} />
-                <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" truncate classNames={["shrink-0"]} text={label} showAnatomy={showAnatomy} />
+                <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} anatPart={showAnatomy ? "ProgressMeter" : undefined} showAnatomy={showAnatomy} />
+                <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} showAnatomy={showAnatomy} />
             </>
         }
     />
@@ -211,7 +211,7 @@ const ScoreRow = ({
 /** Same shape as {@link ScoreRow}, shimmering — `ProgressMeter` has no `isSkeleton` of its own (see file header). */
 const ScoreRowSkeleton = () => (
     <StackH
-        gap="grouped"
+        gap={4}
         align="center"
         body={
             <>
@@ -259,35 +259,43 @@ const MockInterviewScorecard = ({
         key: `strength-${index}`,
         mark: "check",
         tone: "success",
-        text: <MarkdownContent source={strength} measure="compact" className="[&_p]:m-0" anatPart={showAnatomy ? "MarkdownContent" : undefined} />,
+        text: (
+            <div className="[&_p]:m-0">
+                <MarkdownContent source={strength} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+            </div>
+        ),
     }))
 
     const gapItems: Array<SurfaceCardCrossListItem> = gaps.map((gap, index) => ({
         key: `gap-${index}`,
         mark: "cross",
         tone: "danger",
-        text: <MarkdownContent source={gap} measure="compact" className="[&_p]:m-0" anatPart={showAnatomy ? "MarkdownContent" : undefined} />,
+        text: (
+            <div className="[&_p]:m-0">
+                <MarkdownContent source={gap} measure="compact" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
+            </div>
+        ),
     }))
 
-    const primaryCtaLabel = weakAreaLabel ? `Ôn lại: ${weakAreaLabel}` : "Ôn lại phần bạn còn yếu"
+    const primaryCtaLabel = weakAreaLabel ? `Review: ${weakAreaLabel}` : "Review your weak areas"
 
     const bylineRow = hasByline ? (
         <StackH
-            gap="grouped"
+            gap={4}
             justify="between"
             wrap
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
                     {isSkeleton ? (
-                        <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
                     ) : promptTitle != null ? (
-                        <Typography size="sm" weight="medium" text={promptTitle} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" weight="medium" text={promptTitle} showAnatomy={showAnatomy} />
                     ) : null}
                     {isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
                     ) : createdAt != null ? (
-                        <Typography size="xs" color="muted" text={createdAt} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" text={createdAt} showAnatomy={showAnatomy} />
                     ) : null}
                 </>
             }
@@ -320,27 +328,27 @@ const MockInterviewScorecard = ({
 
     const strengthsBody = (
         <>
-            <Typography size="sm" weight="medium" text="Điểm mạnh" anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" weight="medium" text="Strengths" showAnatomy={showAnatomy} />
             <SurfaceCardCrossList items={strengthItems} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} showAnatomy={showAnatomy} />
         </>
     )
 
     const gapsBody = (
         <>
-            <Typography size="sm" weight="medium" text="Cần cải thiện" anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" weight="medium" text="Areas to improve" showAnatomy={showAnatomy} />
             <SurfaceCardCrossList items={gapItems} isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCardCrossList" : undefined} showAnatomy={showAnatomy} />
         </>
     )
 
     const weakAreaRow = weakAreaLabel != null && !isSkeleton ? (
         <StackH
-            gap="tight"
+            gap={2}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 <>
-                    <Typography size="xs" color="muted" text="Yếu nhất:" anatPart={showAnatomy ? "Typography" : undefined} />
-                    <Chip tone="warning" text={weakAreaLabel} anatPart={showAnatomy ? "Chip" : undefined} />
+                    <Typography size="xs" color="muted" text="Weakest:" showAnatomy={showAnatomy} />
+                    <Chip tone="warning" text={weakAreaLabel} showAnatomy={showAnatomy} />
                 </>
             }
         />
@@ -348,7 +356,7 @@ const MockInterviewScorecard = ({
 
     const ctaButtonRow = (
         <StackH
-            gap="grouped"
+            gap={4}
             wrap
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
@@ -361,24 +369,24 @@ const MockInterviewScorecard = ({
                         suffixIcon={ArrowRightIcon}
                         iconSlide
                         onPress={onStudyWeakArea}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     <Button
                         isSkeleton={isSkeleton}
                         variant="secondary"
                         size="lg"
-                        label="Làm dự án cá nhân"
+                        label="Work on personal project"
                         onPress={onCapstone}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     {onRetry != null || isSkeleton ? (
                         <Button
                             isSkeleton={isSkeleton}
                             variant="ghost"
                             size="lg"
-                            label="Phỏng vấn lại"
+                            label="Retry interview"
                             onPress={onRetry}
-                            anatPart={showAnatomy ? "Button" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -397,61 +405,73 @@ const MockInterviewScorecard = ({
         <>
             {bylineRow}
 
-            {/* Verdict banner. `FeedbackCallout` has no `isSkeleton` of its own (a message
+            {/* Verdict banner. `Callout` has no `isSkeleton` of its own (a message
                 frame, not a data-bearing one) — a bare bar stands in, in the same slot. */}
             {isSkeleton ? (
                 <HeroSkeleton className="h-20 w-full rounded-2xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             ) : (
-                <FeedbackCallout
+                <Callout
                     status={VERDICT_STATUS[verdict]}
                     icon={VERDICT_ICON[verdict]}
                     title={`${overallScore}/100 · ${VERDICT_LABEL[verdict]}`}
-                    anatPart={showAnatomy ? "FeedbackCallout" : undefined}
+                    anatPart={showAnatomy ? "Callout" : undefined}
                 />
             )}
 
             {hasScoreRows ? (
-                <SurfaceCard label="Điểm theo từng phần" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={scoreBreakdownBody} />
-                </SurfaceCard>
+                <SurfaceCard
+                    label="Score by section"
+                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                    showAnatomy={showAnatomy}
+                    body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={scoreBreakdownBody} />}
+                />
             ) : null}
 
             {hasAttributeRows ? (
-                <SurfaceCard label="Điểm theo tiêu chí" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={attributeBreakdownBody} />
-                </SurfaceCard>
+                <SurfaceCard
+                    label="Score by criterion"
+                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                    showAnatomy={showAnatomy}
+                    body={() => <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={attributeBreakdownBody} />}
+                />
             ) : null}
 
             {hasStrengths ? (
-                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={strengthsBody} />
+                <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={strengthsBody} />
             ) : null}
 
             {hasGaps ? (
-                <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={gapsBody} />
+                <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={gapsBody} />
             ) : null}
 
             {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
                 "a question" (not a universal symbol like ✓/🔒), and the card's own
-                label="Câu hỏi tiếp theo" already carries the fact. */}
+                label="Follow-up question" already carries the fact. */}
             {hasFollowUp ? (
-                <SurfaceCard label="Câu hỏi tiếp theo" anatPart={showAnatomy ? "SurfaceCard" : undefined} showAnatomy={showAnatomy}>
-                    <MarkdownContent
-                        source={followUpQuestion ?? ""}
-                        measure="compact"
-                        isSkeleton={isSkeleton}
-                        className="italic [&_p]:m-0"
-                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                    />
-                </SurfaceCard>
+                <SurfaceCard
+                    label="Follow-up question"
+                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                    showAnatomy={showAnatomy}
+                    body={() => (
+                        <div className="italic [&_p]:m-0">
+                            <MarkdownContent
+                                source={followUpQuestion ?? ""}
+                                measure="compact"
+                                isSkeleton={isSkeleton}
+                                anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                            />
+                        </div>
+                    )}
+                />
             ) : null}
 
-            <StackV gap="related" anatPart={showAnatomy ? "StackV" : undefined} body={ctaSection} />
+            <StackV gap={3} anatPart={showAnatomy ? "StackV" : undefined} body={ctaSection} />
         </>
     )
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={scorecardBody} />
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={scorecardBody} />
         </div>
     )
 }

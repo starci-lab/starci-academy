@@ -125,7 +125,7 @@ const VoiceHero = ({
         return (
             <div data-anat-part={anatPart}>
                 <StackV
-                    gap="grouped"
+                    gap={4}
                     anatPart={showAnatomy ? "StackV" : undefined}
                     body={
                         <>
@@ -143,7 +143,7 @@ const VoiceHero = ({
                                     isLink
                                     text={labels.useVoice}
                                     onPress={() => setManualTyped(false)}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
+                                    showAnatomy={showAnatomy}
                                 />
                             ) : null}
                         </>
@@ -163,7 +163,7 @@ const VoiceHero = ({
     return (
         <div data-anat-part={anatPart}>
             <StackV
-                gap="grouped"
+                gap={4}
                 align="center"
                 anatPart={showAnatomy ? "StackV" : undefined}
                 body={
@@ -175,18 +175,18 @@ const VoiceHero = ({
                             prefixIcon={MicrophoneIcon}
                             ariaLabel={listening ? labels.listening : labels.pushToTalk}
                             onPress={onToggleListen}
-                            anatPart={showAnatomy ? "Button" : undefined}
+                            showAnatomy={showAnatomy}
                         />
-                        {/* src thật (`VoiceHero/index.tsx:136`): `<Typography
+                        {/* real `src` (`VoiceHero/index.tsx:136`): `<Typography
  color="default">`
-                            KHÔNG khai `type` ⇒ mặc định base (16px), không phải `lg`. */}
+                            declares NO `type` ⇒ defaults to base (16px), not `lg`. */}
                         <Typography
                             size="base"
                             align="center"
                             color={transcriptIsProvisional ? "muted" : "default"}
                             isItalic={transcriptIsProvisional}
                             text={transcriptText}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                         {canToggle ? (
                             <Typography
@@ -194,7 +194,7 @@ const VoiceHero = ({
                                 isLink
                                 text={labels.typeInstead}
                                 onPress={() => setManualTyped(true)}
-                                anatPart={showAnatomy ? "Typography" : undefined}
+                                showAnatomy={showAnatomy}
                             />
                         ) : null}
                     </>

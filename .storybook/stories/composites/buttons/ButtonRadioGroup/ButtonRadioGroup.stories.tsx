@@ -44,8 +44,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * matching the identifiers imported from `@heroui/react`. No `storyId` — there's
  * no story of ours to jump to for a library component.
  *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels
- * are written in ENGLISH; JSDoc/comments stay in Vietnamese.
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`), demo labels, and
+ * JSDoc/comments are all written in ENGLISH.
  */
 const meta: Meta<typeof ButtonRadioGroup> = {
     title: "Composites/Buttons/ButtonRadioGroup",
@@ -149,7 +149,7 @@ const ControlledMulti = <T extends string>(props: {
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button.RadioGroup"
                 tier="composite"
@@ -185,7 +185,7 @@ export const Default: Story = {
  */
 export const Multiple: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button.RadioGroup"
                 tier="composite"
@@ -216,7 +216,7 @@ export const Multiple: Story = {
  */
 export const Trailing: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button.RadioGroup"
                 tier="composite"
@@ -239,7 +239,7 @@ export const Trailing: Story = {
                                 items={DIFFICULTY_ITEMS}
                                 initialValue="easy"
                                 ariaLabel="Select difficulty"
-                                trailing={<Button size="sm" variant="ghost" data-anat-part="Button">+2</Button>}
+                                trailing={<Button data-tier="fixture" size="sm" variant="ghost" data-anat-part="Button">+2</Button>}
                             />
                         ),
                     },
@@ -254,7 +254,7 @@ export const Trailing: Story = {
  */
 export const ItemAction: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button.RadioGroup"
                 tier="composite"
@@ -285,10 +285,10 @@ export const ItemAction: Story = {
                                 initialValue="attempt-1"
                                 ariaLabel="Select attempt"
                                 itemAction={(item) => [
-                                    <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Delete ${item.value}`} data-anat-part="Button">
+                                    <Button data-tier="fixture" key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Delete ${item.value}`} data-anat-part="Button">
                                         <TrashIcon className="size-4" />
                                     </Button>,
-                                    <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={`More options for ${item.value}`} data-anat-part="Button">
+                                    <Button data-tier="fixture" key="more" size="sm" variant="tertiary" isIconOnly aria-label={`More options for ${item.value}`} data-anat-part="Button">
                                         <DotsThreeVerticalIcon className="size-4" />
                                     </Button>,
                                 ]}

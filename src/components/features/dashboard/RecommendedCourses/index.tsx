@@ -29,7 +29,7 @@ import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 export type RecommendedCoursesProps = WithClassNames<undefined>
 
 /**
- * "Khóa học cho bạn" — courses the viewer has NOT bought yet, each priced with
+ * "Courses for you" — courses the viewer has NOT bought yet, each priced with
  * their engagement-based loyalty discount (an exclusive offer for diligent / multi-
  * course learners; the discounted price is the price actually charged). One framed
  * `LabeledCard` with a flat row per course — the TITLE is the link into the course

@@ -1,7 +1,7 @@
 import React from "react"
 import { CaretRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { Image } from "@sb-components/atoms/media/Image/Image"
 import { Pagination } from "@sb-components/atoms/navigation/Pagination/Pagination"
 import { StackV } from "@sb-components/frames/Stack/Stack"
@@ -137,7 +137,7 @@ export interface FoundationCategoryListProps {
 }
 
 /** The library-itself-is-empty title — no search was involved, so no "try another word" hint applies. Ported verbatim from `foundations.emptyCategories`. */
-const LIBRARY_EMPTY_TITLE = "Chưa có chủ đề nền tảng nào."
+const LIBRARY_EMPTY_TITLE = "No Foundations topics yet."
 
 /** Placeholder rows for the guessed skeleton count (§12c) — never carry a press handler or a thumbnail. */
 const SKELETON_CATEGORIES: Array<FoundationCategoryListItem> = Array.from({ length: 3 }, (_unused, index) => ({
@@ -208,15 +208,17 @@ const FoundationCategoryList = ({
     // Which of the two empty reasons applies (see file header, judgement 2) —
     // never during the skeleton branch, where "empty" just means "not loaded yet".
     const hasQuery = (searchQuery?.trim().length ?? 0) > 0
-    const emptyState =
-        !isSkeleton && categories.length === 0 ? (
-            <FeedbackEmpty
-                icon={hasQuery ? MagnifyingGlassIcon : undefined}
-                title={hasQuery ? `Không có chủ đề nào khớp với "${searchQuery?.trim()}".` : LIBRARY_EMPTY_TITLE}
-                anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-                showAnatomy={showAnatomy}
-            />
-        ) : undefined
+    // `emptyState` is now a component reference (COMPOSITE-4); only rendered when
+    // not skeleton, so the component itself needs no `isSkeleton` branch of its own.
+    const EmptyState = () => (
+        <EmptyState
+            icon={hasQuery ? MagnifyingGlassIcon : undefined}
+            title={hasQuery ? `No topics match "${searchQuery?.trim()}".` : LIBRARY_EMPTY_TITLE}
+            anatPart={showAnatomy ? "EmptyState" : undefined}
+            showAnatomy={showAnatomy}
+        />
+    )
+    const emptyState = !isSkeleton && categories.length === 0 ? EmptyState : undefined
 
     // Nothing to page through during the first fetch or an empty result (see
     // file header, judgement on the pager).
@@ -224,7 +226,7 @@ const FoundationCategoryList = ({
 
     return (
         <StackV
-            gap="grouped"
+            gap={4}
             anatPart={anatPart}
             body={
                 <>

@@ -29,7 +29,7 @@ export interface PlaygroundCardProps extends WithClassNames<undefined> {
 
 /**
  * A hands-on Playground exercise summarised for the hub grid: icon tile +
- * title + step count + a "Vào playground" CTA. Modeled on
+ * title + step count + a "Enter playground" CTA. Modeled on
  * {@link import("@/components/blocks/cards/CourseCard").CourseCard}'s roomy
  * grid layout at a much smaller scope (no price/cover — just enough to pick
  * an exercise).

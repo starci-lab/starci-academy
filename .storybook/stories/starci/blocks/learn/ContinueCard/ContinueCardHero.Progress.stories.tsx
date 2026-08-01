@@ -3,22 +3,22 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ContinueCardHero } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { WarningIcon } from "@phosphor-icons/react"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-// `FeedbackEmpty` takes the icon as a COMPONENT ref and forces `size-8` itself
+// `EmptyState` takes the icon as a COMPONENT ref and forces `size-8` itself
 // (§4/§5) — phosphor's `weight="duotone"` can no longer ride along, so wrap it
 // into a component to KEEP the stroke style.
-const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...props} weight="duotone" />
+const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon data-tier="fixture" {...props} weight="duotone" />
 
 /**
  * DESIGN — the "resume an in-progress session" hero card with progress. Each state below
  * is its OWN leaf and carries its OWN BlockAnatomy axis (Diagram + Tree) reflecting
  * the parts THAT leaf composes — there is no separate consolidated "Anatomy" story.
  *
- * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a); `role` viết lại
- * TIẾNG ANH theo luật B (bỏ dấu — ↔ → làm dấu nối).
+ * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a); `role` rewritten
+ * in ENGLISH per rule B (diacritics dropped — ↔ becomes a plain dash).
  */
 const meta: Meta<typeof ContinueCardHero> = {
     title: "StarCi/Blocks/Learn/ContinueCard/Hero/Progress",
@@ -34,7 +34,7 @@ export default meta
 type Story = StoryObj<typeof ContinueCardHero>
 
 /** Plain canvas — every leaf wraps its render in its own BlockAnatomy panel. */
-const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+const shell = (node: React.ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
 
 // scenario base = the has-progress, not-urgent shape. States below interpolate by delta.
 // NOTE: the title Typography IS a composed node in the trees below — ContinueCard
@@ -104,7 +104,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// error leaf: connection dropped → `FeedbackEmpty` SITS INSIDE the frame, the Retry button lives in the `action` prop.
+// error leaf: connection dropped → `EmptyState` SITS INSIDE the frame, the Retry button lives in the `action` prop.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
@@ -113,7 +113,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         storyId: "composites-cards-surfacecard-surfacecard--default",
         children: [
             {
-                name: "FeedbackEmpty",
+                name: "EmptyState",
                 tier: "composite",
                 role: "The danger-tone message: icon, description, and a Retry button.",
                 state: "danger",
@@ -161,7 +161,7 @@ export const NotUrgent: Story = {
                 leaf="NotUrgent"
                 parts={CONTENT_PARTS}
                 renderClassName="w-96"
-                reason="Card for resuming an in-progress session. Each LEAF has a different composition: the loaded leaf bundles hero chrome with ProgressMeter, loading swaps to a Skeleton mirroring the exact footprint, and error falls back to FeedbackEmpty inside the frame. SurfaceCard acting as the shared frame is what keeps the frame from jumping whenever the state changes."
+                reason="Card for resuming an in-progress session. Each LEAF has a different composition: the loaded leaf bundles hero chrome with ProgressMeter, loading swaps to a Skeleton mirroring the exact footprint, and error falls back to EmptyState inside the frame. SurfaceCard acting as the shared frame is what keeps the frame from jumping whenever the state changes."
                 states={[
                     {
                         name: "urgent = false, value = 2, max = 8",
@@ -258,28 +258,33 @@ export const LoadError: Story = {
                 states={[
                     {
                         name: "network request failed",
-                        why: "Only FeedbackEmpty renders inside the SurfaceCard frame, replacing the title, meta, and progress bar entirely rather than sitting alongside them. This is not a smaller version of the loaded leaf, a dropped connection is a different branch of the card, not a missing piece of the has-progress shape.",
-                        code: `<SurfaceCard>
-    <FeedbackEmpty
-        tone="danger"
-        title="Connection lost"
-        description="The network seems to have dropped. Check your connection and try again."
-        action={<Button variant="secondary" label="Retry" />}
-    />
-</SurfaceCard>`,
+                        why: "Only EmptyState renders inside the SurfaceCard frame, replacing the title, meta, and progress bar entirely rather than sitting alongside them. This is not a smaller version of the loaded leaf, a dropped connection is a different branch of the card, not a missing piece of the has-progress shape.",
+                        code: `<SurfaceCard
+    body={() => (
+        <EmptyState
+            tone="danger"
+            title="Connection lost"
+            description="The network seems to have dropped. Check your connection and try again."
+            action={<Button variant="secondary" label="Retry" />}
+        />
+    )}
+/>`,
                         render: (
-                            <SurfaceCard anatPart="SurfaceCard">
-                                <FeedbackEmpty
-                                    anatPart="FeedbackEmpty"
-                                    tone="danger"
-                                    icon={WarningDuotone}
-                                    title="Connection lost"
-                                    description="The network seems to have dropped. Check your connection and try again."
-                                    action={
-                                        <Button variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
-                                    }
-                                />
-                            </SurfaceCard>
+                            <SurfaceCard
+                                anatPart="SurfaceCard"
+                                body={() => (
+                                    <EmptyState
+                                        anatPart="EmptyState"
+                                        tone="danger"
+                                        icon={WarningDuotone}
+                                        title="Connection lost"
+                                        description="The network seems to have dropped. Check your connection and try again."
+                                        action={
+                                            <Button variant="secondary" size="sm" label="Retry" onPress={() => {}} />
+                                        }
+                                    />
+                                )}
+                            />
                         ),
                     },
                 ]}

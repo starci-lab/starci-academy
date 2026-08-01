@@ -36,7 +36,7 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  *     its former `SurfaceCard.*` namespace (`storybook-no-namespace.md`), so the
  *     "labeled card" role that `LabeledCard` plays in the real app (itself never
  *     ported to Storybook) is just this same flat `SurfaceCard` with `label` —
- *     see `ChallengeDeliverableList`'s `label="Nộp bài"` call for the identical
+ *     see `ChallengeDeliverableList`'s `label="Submit"` call for the identical
  *     precedent.
  *
  * ⭐ JUDGEMENT CALL — the milestone-0 task rows are hand-composed (an icon +
@@ -47,7 +47,7 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  * content) this static teaser doesn't have and the domain doesn't supply here. A
  * plain bullet row is the honest shape for "titles only, nothing to click".
  *
- * THE BLOCK OWNS THE SECTION LABEL ("Nhiệm vụ mốc 0", §14d.1) — only the task
+ * THE BLOCK OWNS THE SECTION LABEL ("Milestone 0 Tasks", §14d.1) — only the task
  * TITLES are domain data; the caller never hands over a heading string for that
  * section.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -68,12 +68,12 @@ export interface ProgressMeterData {
     value: number
     /** The 100% mark. Defaults to `100` (`ProgressMeter`'s own default). */
     max?: number
-    /** Label rendered above the bar, e.g. "Tiến độ dự án cá nhân". */
+    /** Label rendered above the bar, e.g. "Personal project progress". */
     label?: string
 }
 
 /** Section label the block owns itself — see file header. */
-const TASK_LABEL = "Nhiệm vụ mốc 0"
+const TASK_LABEL = "Milestone 0 Tasks"
 
 /** Props for {@link PersonalProjectGatePreview}. */
 export interface PersonalProjectGatePreviewProps {
@@ -120,7 +120,7 @@ const PersonalProjectGatePreview = ({
     const renderTaskRow = (item: PersonalProjectGatePreviewTask, index: number) => (
         <StackH
             key={index}
-            gap="tight"
+            gap={2}
             align="center"
             showAnatomy={showAnatomy}
             anatPart={showAnatomy ? "StackH" : undefined}
@@ -132,7 +132,7 @@ const PersonalProjectGatePreview = ({
                         truncate
                         isSkeleton={isSkeleton}
                         text={item.title}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 </>
             }
@@ -141,7 +141,7 @@ const PersonalProjectGatePreview = ({
 
     const taskList = (
         <StackV
-            gap="grouped"
+            gap={4}
             showAnatomy={showAnatomy}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={items.map(renderTaskRow)}
@@ -150,7 +150,7 @@ const PersonalProjectGatePreview = ({
 
     return (
         <StackV
-            gap="section"
+            gap={6}
             className={className}
             anatPart={anatPart}
             showAnatomy={showAnatomy}
@@ -176,9 +176,8 @@ const PersonalProjectGatePreview = ({
                         isSkeleton={isSkeleton}
                         showAnatomy={showAnatomy}
                         anatPart={showAnatomy ? "SurfaceCard" : undefined}
-                    >
-                        {taskList}
-                    </SurfaceCard>
+                        body={() => taskList}
+                    />
                 </>
             }
         />

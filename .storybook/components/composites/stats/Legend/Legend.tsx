@@ -1,6 +1,5 @@
 import React from "react"
-import type { ReactNode } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
@@ -26,15 +25,19 @@ const resolveDotColor = (color: string): { className?: string; style?: React.CSS
 export interface LegendItem {
     /** Stable key. */
     key: string
-    /** Label shown next to the swatch. */
-    label: ReactNode
+    /**
+     * Label shown next to the swatch. `string`, not `ReactNode` — the composite
+     * wraps it in `Typography` itself, so it must be able to build it.
+     */
+    label: string
     /** Swatch colour — a Tailwind `bg-*` class OR a raw colour value (`var(--success)`, `#3178c6`). */
     color: string
     /**
      * Optional trailing value printed after the label in the SAME muted line
-     * (e.g. a `·� 12` count or a `40%` share). Omit for a bare label.
+     * (e.g. a "· 12" count or a "40%" share). Omit for a bare label. `string` —
+     * see {@link LegendItem.label}.
      */
-    suffix?: ReactNode
+    suffix?: string
 }
 
 /** Props {@link Legend} carries regardless of loading state. */
@@ -46,8 +49,6 @@ interface LegendOwnProps {
     direction?: "row" | "col"
     /** Entry count to shimmer while `isSkeleton`. Defaults to `3`. */
     skeletonCount?: number
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -78,12 +79,14 @@ export type LegendProps = LegendOwnProps &
  *
  * @param props - {@link LegendProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Legend" } as const
+
 export const Legend = ({
     items,
     direction = "row",
     isSkeleton = false,
     skeletonCount = 3,
-    className,
     classNames,
     anatPart,
     showAnatomy = false,
@@ -94,22 +97,30 @@ export const Legend = ({
                 direction === "col"
                     ? "flex flex-col gap-2"
                     : "flex flex-wrap gap-x-3 gap-y-2",
-                className,
                 classNames,
             )}
             data-anat-part={anatPart}
+            data-tier="composite"
+            data-component="Legend"
+            data-principles={direction === "col" ? "sibling-stack" : undefined}
         >
             {isSkeleton
                 ? Array.from({ length: skeletonCount }, (_unused, index) => (
                     <StackH
                         key={index}
-                        gap="related"
+                        gap={3}
                         body={
                             <>
-                                {/* No swatch/dot atom exists yet — a bare span is what the
-                                    real render below draws too, so this stays a hand-drawn
-                                    bar until that atom exists. */}
-                                <HeroSkeleton className="size-2.5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                                {/* ATOM GAP: no swatch/dot atom exists yet, so the dot stays a
+                                    real plain span in both states — a neutral flat fill (no
+                                    hand-drawn `animate-pulse`, COMPOSITE-10) instead of reaching
+                                    for a vendor Skeleton (the same span shape the loaded entry
+                                    below draws, just without a real color). */}
+                                <span
+                                    aria-hidden
+                                    className="size-2.5 shrink-0 rounded-full bg-default"
+                                    data-anat-part={showAnatomy ? "Dot" : undefined}
+                                />
                                 <Typography size="xs" isSkeleton showAnatomy={showAnatomy} />
                             </>
                         }
@@ -120,7 +131,7 @@ export const Legend = ({
                     return (
                         <StackH
                             key={item.key}
-                            gap="related"
+                            gap={3}
                             body={
                                 <>
                                     <span
@@ -128,7 +139,7 @@ export const Legend = ({
                                         style={dot.style}
                                         className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
                                     />
-                                    <Typography size="xs" color="muted" text={<>{item.label}{item.suffix}</>} />
+                                    <Typography size="xs" color="muted" text={`${item.label}${item.suffix ?? ""}`} />
                                 </>
                             }
                         />

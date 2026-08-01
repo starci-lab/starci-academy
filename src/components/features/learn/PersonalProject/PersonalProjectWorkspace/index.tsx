@@ -26,7 +26,7 @@ export type PersonalProjectWorkspaceProps = WithClassNames<undefined>
  * (swaps per task) and the persistent submission PANEL on the right (project-level —
  * repo/branch/lang + evaluate + result). Read on the left, act on the right. The
  * panel is **pinned** (`@app-xl:sticky top-24` — pins ~2rem below the navbar so the
- * "Github dự án" label keeps breathing room instead of jamming under it; `self-start`
+ * "Project GitHub" label keeps breathing room instead of jamming under it; `self-start`
  * so it doesn't stretch in the flex row; bounded `max-h` + internal scroll so a tall
  * panel stays fully visible) — it stays in view while the long brief scrolls.
  *

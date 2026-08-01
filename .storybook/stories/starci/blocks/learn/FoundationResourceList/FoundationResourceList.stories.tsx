@@ -37,7 +37,7 @@ const RESOURCES: Array<FoundationResourceItem> = [
     {
         id: "docker-cheatsheet",
         title: "Docker command cheatsheet",
-        description: "Mọi lệnh Docker hay dùng nhất, gom lại một trang để tra nhanh.",
+        description: "Every commonly used Docker command, gathered on one page for quick lookup.",
         thumbnailUrl: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=200",
         kind: "reference",
         isRecommended: true,
@@ -45,22 +45,22 @@ const RESOURCES: Array<FoundationResourceItem> = [
     },
     {
         id: "multistage-video",
-        title: "Multi-stage build trong 8 phút",
-        description: "Video ngắn giải thích vì sao stage build giữ compiler còn stage cuối thì không.",
+        title: "Multi-stage builds in 8 minutes",
+        description: "A short video explaining why the build stage keeps the compiler but the final stage doesn't.",
         kind: "video",
         onPress: () => {},
     },
     {
         id: "cache-article",
-        title: "Image layer và cache hoạt động ra sao",
-        description: "Mỗi lệnh trong Dockerfile đẻ một layer, thứ tự lệnh quyết định cache còn dùng được không.",
+        title: "How image layers and caching actually work",
+        description: "Every Dockerfile instruction spawns a layer, and instruction order decides whether the cache still hits.",
         thumbnailUrl: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=200",
         kind: "article",
         onPress: () => {},
     },
     {
         id: "registry-exercise",
-        title: "Đẩy image lên registry và ghim tag",
+        title: "Push an image to a registry and pin its tag",
         kind: "exercise",
         isRecommended: true,
         onPress: () => {},
@@ -71,7 +71,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardList": { tier: "composite", role: "the bounded row surface — dividers, row box, and its own row-for-row mirror while loading; the block only hands it resource rows as data", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
     "IconTile": { tier: "atom", role: "each row's leading thumbnail — already falls back from `src` to a `StackIcon` glyph on its own, so no separate thumbnail component exists", storyId: "atoms-display-icontile-icontile--default" },
     "EnumChip": { tier: "composite", role: "the kind chip, built from the block's own kind→label/color table", storyId: "composites-chips-enumchip--gallery" },
-    "Chip": { tier: "atom", role: "the plain 'Đề xuất' recommended chip, riding beside the kind chip", storyId: "atoms-chips-chip-chip--default" },
+    "Chip": { tier: "atom", role: "the plain 'Recommended' chip, riding beside the kind chip", storyId: "atoms-chips-chip-chip--default" },
     "Cluster": { tier: "frame", role: "the row's meta slot, holding the kind chip and the optional recommended chip", storyId: "frames-cluster-cluster--default" },
     "StackV": { tier: "frame", role: "stacks the row surface above the pager inside the content branch", storyId: "frames-stack-stackv--default" },
     "Pagination": { tier: "atom", role: "the page nav — only reachable once the content branch is showing, i.e. results exist", storyId: "atoms-navigation-pagination-pagination--default" },
@@ -82,7 +82,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the region once loading has finished and nothing errored: empty (with/without a search query) or a populated, paged list. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourceList"
                 tier="block"
@@ -106,7 +106,7 @@ export const Default: Story = {
                             <FoundationResourceList
                                 anatPart="FoundationResourceList"
                                 showAnatomy
-                                ariaLabel="Tài nguyên khoá học"
+                                ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading={false}
                                 currentPage={1}
@@ -128,7 +128,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <FoundationResourceList
-                                ariaLabel="Tài nguyên khoá học"
+                                ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading={false}
                                 searchQuery="terraform"
@@ -150,7 +150,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <FoundationResourceList
-                                ariaLabel="Tài nguyên khoá học"
+                                ariaLabel="Course resources"
                                 resources={RESOURCES}
                                 isLoading={false}
                                 currentPage={1}
@@ -168,7 +168,7 @@ export const Default: Story = {
 /** LEAF — the caller's own fetch is in flight; the region swaps for a row-shaped mirror. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourceList"
                 tier="block"
@@ -191,7 +191,7 @@ export const Loading: Story = {
                             <FoundationResourceList
                                 anatPart="FoundationResourceList"
                                 showAnatomy
-                                ariaLabel="Tài nguyên khoá học"
+                                ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading
                                 currentPage={1}
@@ -209,7 +209,7 @@ export const Loading: Story = {
 /** LEAF — the fetch failed; the region swaps for a message, outranking loading/empty. */
 export const Error: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourceList"
                 tier="block"
@@ -233,7 +233,7 @@ export const Error: Story = {
                             <FoundationResourceList
                                 anatPart="FoundationResourceList"
                                 showAnatomy
-                                ariaLabel="Tài nguyên khoá học"
+                                ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading={false}
                                 error={new globalThis.Error("network")}

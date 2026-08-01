@@ -13,7 +13,7 @@ import { type VerdictBand, verdictBandClassName } from "../verdict-band"
  * NEVER `router.replace` (a link click must not erase the entry it came from).
  * Protocol / external hrefs (`mailto:`, `tel:`, `http(s)://`, `#`) fall back to a
  * native `<a>` (Next `<Link>` is for in-app routes only). Ref feedback 2026-07-17
- * "bấm row = router.push chứ không phải router.replace, dù là link".
+ * "clicking a row = router.push, not router.replace, even if it's a link".
  */
 const RowAnchor = ({
     href,
@@ -49,7 +49,7 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
      * this list sits NESTED inside another surface (a modal/drawer body),
      * where `--surface-shadow` can render invisible against the parent surface
      * (dark mode) — nested cards need a border to delineate (`components/card.md`
-     * §"surface-in-surface / nested" — GIỮ border, KHÔNG convert to shadow).
+     * §"surface-in-surface / nested" — KEEP border, do NOT convert to shadow).
      * Defaults to `false` (existing top-level usages keep the shadow look).
      */
     bordered?: boolean
@@ -59,8 +59,8 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
  * Bounded SURFACE list card: one `bg-surface` container with a border + large
  * radius, holding {@link SurfaceListCardRow}s edge-to-edge (the `Accordion
  * variant="surface"` skin — NOT a real accordion). Each row owns the FULL-BLEED
- * separator + hover; the last row hides its separator automatically (thầy
- * 2026-07-14: "surface in surface cũng separator full width nhé" — full-bleed
+ * separator + hover; the last row hides its separator automatically (reviewer,
+ * 2026-07-14: "surface-in-surface gets a full-width separator too") — full-bleed
  * everywhere, no inset-vs-nested split).
  *
  * Use for a list of clickable items that should read as ONE card (foundation

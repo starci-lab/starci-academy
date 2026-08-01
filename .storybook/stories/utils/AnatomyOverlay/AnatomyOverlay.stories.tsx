@@ -35,7 +35,7 @@ interface BoxProps {
 }
 
 const Box = ({ label, tier, children }: BoxProps) => (
-    <div className="relative rounded-large bg-surface p-6 shadow-surface" data-anat>
+    <div data-tier="fixture" className="relative rounded-large bg-surface p-6 shadow-surface" data-anat>
         {children}
         <AnatomyOverlay label={label} tier={tier} />
     </div>
@@ -44,7 +44,7 @@ const Box = ({ label, tier, children }: BoxProps) => (
 /** TIERS — one tag colour per tier, drawn as absolute overlays (layout untouched). */
 export const Tiers: Story = {
     render: () => (
-        <div className="flex flex-wrap gap-8 p-12">
+        <div data-tier="fixture" className="flex flex-wrap gap-8 p-12">
             <Box label="Grid" tier="frame"><Typography type="body-sm">frame</Typography></Box>
             <Box label="EnumChip" tier="composite"><Typography type="body-sm">composite</Typography></Box>
             <Box label="DeckCard" tier="block"><Typography type="body-sm">design</Typography></Box>
@@ -60,7 +60,7 @@ export const Tiers: Story = {
  */
 export const Nested: Story = {
     render: () => (
-        <div className="p-12">
+        <div data-tier="fixture" className="p-12">
             <div className="relative rounded-large bg-surface p-10 shadow-surface" data-anat>
                 <div className="relative rounded-large bg-default/40 p-8" data-anat>
                     <Typography type="body-sm">inner content</Typography>

@@ -1,7 +1,6 @@
 import React from "react"
-import { ProgressCircle, Typography as HeroTypography, cn } from "@heroui/react"
+import { ProgressCircle, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { ProgressCircle as ProgressCircleAtom } from "@sb-components/atoms/display/Progress/Progress"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
@@ -13,13 +12,13 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 interface ProgressRingSizeStyle {
     /** Diameter class of the ring. */
     ring: string
-    /** Typography step of the centered label. */
-    label: "body-sm" | "body" | "h5"
+    /** `Typography` atom `size` for the centered label. */
+    label: "sm" | "base" | "h5"
 }
 /** Ring diameter + centered-label typography, keyed by the {@link ProgressRingProps.size} step. */
 const SIZE_MAP = {
-    sm: { ring: "size-16", label: "body-sm" },
-    md: { ring: "size-24", label: "body" },
+    sm: { ring: "size-16", label: "sm" },
+    md: { ring: "size-24", label: "base" },
     lg: { ring: "size-32", label: "h5" },
 } as const satisfies Record<"sm" | "md" | "lg", ProgressRingSizeStyle>
 /**
@@ -28,16 +27,21 @@ const SIZE_MAP = {
  * presentational — every piece of content arrives via props.
  */
 interface ProgressRingOwnProps {
-    /** Centered label rendered inside the ring. Defaults to the rounded percentage (e.g. `"68%"`). */
-    label?: React.ReactNode
-    /** Optional caption rendered below the ring — small and muted (`body-xs`). */
-    caption?: React.ReactNode
+    /**
+     * Centered label rendered inside the ring. Defaults to the rounded percentage
+     * (e.g. `"68%"`). `string`, not `ReactNode` — the composite wraps it in
+     * `Typography` itself, so it must be able to build it.
+     */
+    label?: string
+    /**
+     * Optional caption rendered below the ring — small and muted (`body-xs`).
+     * `string` — see {@link ProgressRingOwnProps.label}.
+     */
+    caption?: string
     /** Ring diameter. `"sm"` (64px), `"md"` (96px, default), `"lg"` (128px). */
     size?: "sm" | "md" | "lg"
     /** Fill tone. Defaults to `"accent"`; pass a semantic tone (success / warning / danger) when the VALUE carries meaning. */
     tone?: "accent" | "success" | "warning" | "danger"
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -67,6 +71,9 @@ export type ProgressRingProps = ProgressRingOwnProps &
  *
  * @param props - {@link ProgressRingProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ProgressRing" } as const
+
 export const ProgressRing = ({
     value,
     label,
@@ -74,69 +81,57 @@ export const ProgressRing = ({
     size = "md",
     tone = "accent",
     isSkeleton = false,
-    className,
     classNames,
     anatPart,
     showAnatomy = false,
 }: ProgressRingProps) => {
-    const { ring, label: labelType } = SIZE_MAP[size]
-    if (isSkeleton) {
-        return (
-            <StackV
-                gap="related"
-                align="center"
-                className={className}
-                classNames={classNames}
-                anatPart={anatPart}
-                body={
-                    <>
-                        {/*
-                         * The real ring below draws the vendor `ProgressCircle` compound
-                         * directly (plus a centered label overlay the atom doesn't support),
-                         * but a loading ring has no label to overlay yet — so the plain
-                         * shimmer circle the `Progress.ProgressCircle` atom already draws
-                         * for its own `isSkeleton` is the same shape, just sized to `ring`.
-                         */}
-                        <ProgressCircleAtom isSkeleton showAnatomy={showAnatomy} className={ring} />
-                        {caption !== undefined ? (
-                            <Typography size="xs" isSkeleton showAnatomy={showAnatomy} />
-                        ) : null}
-                    </>
-                }
-            />
-        )
-    }
+    const { ring, label: labelSize } = SIZE_MAP[size]
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
-    // already guaranteed by the early return at `isSkeleton` — the `?? 0` only satisfies
-    // narrowing across the destructure, it never actually fires.
+    // guaranteed by the type at every real call site — the `?? 0` only satisfies narrowing
+    // across the destructure, and is never seen while `isSkeleton`.
     const safeValue = Math.min(100, Math.max(0, value ?? 0))
     const resolvedLabel = label ?? `${Math.round(safeValue)}%`
-    const ariaLabel = typeof caption === "string" ? caption : `${Math.round(safeValue)}%`
-    const ringVisual = (
-        <>
-            {/* Relative container: the ring fills it, the label overlays its center */}
-            <div className={cn("relative inline-flex items-center justify-center", ring)}>
-                <ProgressCircle aria-label={ariaLabel} value={safeValue} color={tone}>
-                    {/* Inline size stretches the SVG to the wrapper so the overlay stays centered */}
-                    <ProgressCircle.Track style={{ width: "100%", height: "100%" }}>
-                        <ProgressCircle.TrackCircle />
-                        <ProgressCircle.FillCircle />
-                    </ProgressCircle.Track>
-                </ProgressCircle>
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <HeroTypography type={labelType} weight="semibold">
-                        {resolvedLabel}
-                    </HeroTypography>
-                </div>
-            </div>
-            {/* Optional caption — small + muted, distinct from the centered value */}
-            {caption ? (
-                <Typography size="xs" color="muted"
- align="center" text={caption} />
-            ) : null}
-        </>
-    )
+    const ariaLabel = caption ?? `${Math.round(safeValue)}%`
+
     return (
-        <StackV gap="related" align="center" className={className} classNames={classNames} anatPart={anatPart} body={ringVisual} />
+        <StackV
+            gap={3}
+            align="center"
+            classNames={classNames}
+            anatPart={anatPart}
+            body={
+                <>
+                    {/* Relative container: the ring fills it, the label overlays its center */}
+                    <div className={cn("relative inline-flex items-center justify-center", ring)}>
+                        {isSkeleton ? (
+                            // ATOM GAP: `Progress.ProgressCircle`'s own skeleton is fixed to
+                            // ITS diameters (10/14/20 for sm/md/lg), narrower than this ring's
+                            // scale (16/24/32) — reusing it would shrink the ring then jump to
+                            // full size the moment data lands, the exact thing a skeleton
+                            // exists to prevent. Kept a plain, correctly-sized real element
+                            // instead of a vendor `Skeleton` import.
+                            <div className="size-full rounded-full bg-default" data-anat-part={showAnatomy ? "Ring" : undefined} />
+                        ) : (
+                            <>
+                                <ProgressCircle aria-label={ariaLabel} value={safeValue} color={tone}>
+                                    {/* Inline size stretches the SVG to the wrapper so the overlay stays centered */}
+                                    <ProgressCircle.Track style={{ width: "100%", height: "100%" }}>
+                                        <ProgressCircle.TrackCircle />
+                                        <ProgressCircle.FillCircle />
+                                    </ProgressCircle.Track>
+                                </ProgressCircle>
+                                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                                    <Typography size={labelSize} weight="semibold" text={resolvedLabel} />
+                                </div>
+                            </>
+                        )}
+                    </div>
+                    {/* Optional caption — small + muted, distinct from the centered value */}
+                    {caption !== undefined ? (
+                        <Typography size="xs" color="muted" align="center" isSkeleton={isSkeleton} text={caption} />
+                    ) : null}
+                </>
+            }
+        />
     )
 }

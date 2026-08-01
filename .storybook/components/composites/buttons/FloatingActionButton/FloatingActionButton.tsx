@@ -1,9 +1,9 @@
 "use client"
 
 import { cn } from "@heroui/react"
-import type { ReactNode } from "react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `FloatingActionButton`. Authored in
@@ -18,17 +18,15 @@ export interface FloatingActionButtonProps {
     ariaLabel: string
     /**
      * The single icon (§13b: named slot, not `children` — this block wraps no
-     * caller content, it just carries one icon), centered and sized by the base
-     * `Button` (icon-size §5a) — pass a bare icon, no size class.
+     * caller content, it just carries one icon), passed as a COMPONENT reference
+     * (not built JSX) — this block calls it itself, centered and sized by the
+     * base `Button` (icon-size §5a).
      */
-    icon?: ReactNode
+    icon?: IconComponent
     /** `true` → skeleton mirror (round FAB box, same placement) while loading. */
     isSkeleton?: boolean
-    /** Extra classes on the button. */
-    className?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -41,12 +39,14 @@ export interface FloatingActionButtonProps {
  *
  * @param props - {@link FloatingActionButtonProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "FloatingActionButton" } as const
+
 export const FloatingActionButton = ({
     onPress,
     ariaLabel,
-    icon,
+    icon: Icon,
     isSkeleton = false,
-    className,
     classNames,
 }: FloatingActionButtonProps) => {
     return (
@@ -55,11 +55,10 @@ export const FloatingActionButton = ({
             variant="primary"
             ariaLabel={ariaLabel}
             onPress={onPress}
-            icon={icon}
+            icon={Icon ? <Icon /> : undefined}
             isSkeleton={isSkeleton}
             className={cn(
                 "fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40 shadow-lg",
-                className,
                 classNames,
             )}
         />

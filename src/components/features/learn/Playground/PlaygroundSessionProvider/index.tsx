@@ -97,7 +97,7 @@ export const usePlaygroundSessionContext = (): PlaygroundSessionContextValue => 
  * This is the whole reason Setup/Lab can be separate routes at all: the hook
  * used to live inside each page component, so routing between them unmounted
  * the socket and dropped `sessionId`/`pairingCode` — the learner would have had
- * to re-run `npx …` after pressing "Bắt đầu playground".
+ * to re-run `npx …` after pressing "Start playground".
  */
 export const PlaygroundSessionProvider = ({ children }: { children: React.ReactNode }) => {
     const t = useTranslations()
@@ -220,7 +220,7 @@ export const PlaygroundSessionProvider = ({ children }: { children: React.ReactN
     // a dead command, and gets an error with no explanation of WHY.
     const pairingExpiresAtMs = pairingCodeExpiresAt ? Date.parse(pairingCodeExpiresAt) : null
     // Once paired, the code has done its job: the session lives on regardless, so
-    // an expiry countdown would be noise (worse: it reads as "phiên sắp hết").
+    // an expiry countdown would be noise (worse: it reads as "session about to expire").
     const pairingCodeExpired = Boolean(
         pairingExpiresAtMs && !byomState.connected && nowMs >= pairingExpiresAtMs,
     )
@@ -260,10 +260,10 @@ export const PlaygroundSessionProvider = ({ children }: { children: React.ReactN
         id: "engine",
         icon: engineBrandIcon ?? <CircuitryIcon aria-hidden focusable="false" />,
         // name the actual engine before the probe answers ("Docker"), not a generic
-        // "công cụ trên máy" — the row is asking "đã cài Docker chưa".
+        // "tool on the machine" — the row is asking "is Docker installed yet".
         label: byomState.envReport?.label ?? engineName,
         readyDescription: byomState.envReport?.detail ?? t("playground.session.readyEngineReady"),
-        // Before the probe answers, state the BAR rather than just "chưa kiểm tra".
+        // Before the probe answers, state the BAR rather than just "not checked yet".
         // For RAG that bar is higher than "installed": the agent only reports ready
         // when Ollama is SERVING and both model roles are pulled, so the generic
         // fallback hid the real requirement (models alive, not merely downloaded).

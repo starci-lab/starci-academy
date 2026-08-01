@@ -33,7 +33,7 @@ type Story = StoryObj<typeof FoundationCategoryHeader>
 
 const CRUMBS = [
     { key: "foundations", label: "Foundations", onPress: () => {} },
-    { key: "category", label: "Lập trình căn bản" },
+    { key: "category", label: "Programming Basics" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -45,7 +45,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — trail → title → description. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationCategoryHeader"
                 tier="block"
@@ -59,16 +59,16 @@ export const Default: Story = {
                         why: "The reader arrived through the Foundations hub, so the trail sits above the title and a one-sentence description follows it. This is the shape every category page opens with once its data has loaded.",
                         code: `<FoundationCategoryHeader
     breadcrumbItems={crumbs}
-    title="Lập trình căn bản"
-    description="Biến, kiểu dữ liệu, vòng lặp — nền móng trước khi vào framework."
+    title="Programming Basics"
+    description="Variables, data types, loops — the groundwork before moving on to a framework."
 />`,
                         render: (
                             <FoundationCategoryHeader
                                 anatPart="FoundationCategoryHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Lập trình căn bản"
-                                description="Biến, kiểu dữ liệu, vòng lặp — nền móng trước khi vào framework."
+                                title="Programming Basics"
+                                description="Variables, data types, loops — the groundwork before moving on to a framework."
                             />
                         ),
                     },
@@ -77,12 +77,12 @@ export const Default: Story = {
                         why: "Not every category needs a summary sentence. `PageHeader` already drops the description row when it is not supplied, so the block passes that through rather than inventing filler text.",
                         code: `<FoundationCategoryHeader
     breadcrumbItems={crumbs}
-    title="Lập trình căn bản"
+    title="Programming Basics"
 />`,
                         render: (
                             <FoundationCategoryHeader
                                 breadcrumbItems={CRUMBS}
-                                title="Lập trình căn bản"
+                                title="Programming Basics"
                             />
                         ),
                     },
@@ -95,7 +95,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`, so every atom swaps to its own mirror. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationCategoryHeader"
                 tier="block"

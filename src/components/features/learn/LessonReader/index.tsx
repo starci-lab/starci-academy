@@ -378,10 +378,10 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                         </Card>
                         {/* completion handoff: after reading, the natural next rung is
                             this lesson's own challenges. MOBILE-ONLY (`@app-lg:hidden`): on
-                            desktop the right rail's "Luyện tập bài này" already surfaces
+                            desktop the right rail's "Practice this lesson" already surfaces
                             these challenges with a CTA, so a 2nd accent CTA here would be
                             a duplicate / accent-flood. Fired only on the Content tab when
-                            the lesson has challenges. No `showCheck`/"đã đọc xong" claim —
+                            the lesson has challenges. No `showCheck`/"already read" claim —
                             we don't verify read-completion here. */}
                         {selectedTabKey === ContentTab.Content
                             && (content?.challenges?.length ?? 0) > 0 ? (

@@ -25,7 +25,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * CONTRACT — the block receives DATA and does ALL the wording itself (§14d.1).
  * No `meta` string, no `heading`: the caller hands over numbers and the block
  * decides the units, the separator and the order. A caller that could pass
- * `meta="12 phút đọc · 3 thử thách"` would own the shape, and the block would
+ * `meta="12 min read · 3 challenges"` would own the shape, and the block would
  * stop owning its own appearance.
  *
  * ONE CHIP PER CLUSTER (`starci-fe/no-adjacent-chip`). The read state is the
@@ -117,33 +117,33 @@ const ContentHeader = ({
     const metaRow = (
         <>
             {isSkeleton ? (
-                <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />
+                <Chip isSkeleton showAnatomy={showAnatomy} />
             ) : isRead ? (
                 <Chip
                     tone="success"
                     icon={CheckCircleIcon}
-                    text="Đã đọc"
-                    anatPart={showAnatomy ? "Chip" : undefined}
+                    text="Read"
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} showAnatomy={showAnatomy} />
             ) : (
                 <>
                     {minutesRead != null ? (
                         <Typography
                             size="xs"
                             color="muted"
-                            text={`${minutesRead} phút đọc`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            text={`${minutesRead} min read`}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                     {challengeCount != null ? (
                         <Typography
                             size="xs"
                             color="muted"
-                            text={`${challengeCount} thử thách`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            text={`${challengeCount} challenges`}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -155,7 +155,8 @@ const ContentHeader = ({
         <>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
-                breadcrumb={
+                isSkeleton={isSkeleton}
+                breadcrumb={() =>
                     isSkeleton || breadcrumbItems?.length ? (
                         <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
                             <Breadcrumbs
@@ -167,31 +168,15 @@ const ContentHeader = ({
                         </div>
                     ) : undefined
                 }
-                title={
-                    isSkeleton ? (
-                        // `PageHeader` has no `isSkeleton` of its own, so the block calls the
-                        // atom directly with the EXACT size/weight the frame uses for a title
-                        // and feeds the result into the slot — still "the flag reaches the
-                        // atom", just from a different caller.
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                    )
-                }
-                description={
-                    isSkeleton ? (
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        description
-                    )
-                }
-                meta={
-                    <StackH gap="related" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
+                title={title}
+                description={description}
+                meta={() =>
+                    <StackH gap={3} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={metaRow} />
                 }
             />
             {hasOutcomes ? (
                 <SurfaceCardList
-                    label="Bạn sẽ học được gì"
+                    label="What you will learn"
                     isSkeleton={isSkeleton}
                     anatPart={showAnatomy ? "SurfaceCardList" : undefined}
                     items={(outcomes ?? []).map((outcome) => ({
@@ -207,7 +192,7 @@ const ContentHeader = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={headerBody} />
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={headerBody} />
         </div>
     )
 }

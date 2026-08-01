@@ -5,7 +5,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * BLOCK — `NavLinks`: the desktop primary-route row inside the site's top nav
- * (`Navbar`) — "Trang chủ / Khóa học / Cộng đồng / Liên hệ", one of them pinned
+ * (`Navbar`) — "Home / Courses / Community / Contact", one of them pinned
  * as the active route.
  *
  * Storybook-local port of `src/components/blocks/layout/shell/Navbar/NavLinks`
@@ -46,7 +46,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /** One route entry in the nav row — TYPED DOMAIN DATA, never a pre-formatted node. */
 export interface NavLinkItem {
-    /** Already-localized label, e.g. "Khóa học". */
+    /** Already-localized label, e.g. "Courses". */
     label: string
     /** Route path, also the stable React key (paths are unique by construction). */
     path: string
@@ -77,7 +77,7 @@ export interface NavLinksProps {
 const NavLinks = ({ items, onNavigate, className, showAnatomy = false, anatPart }: NavLinksProps) => (
     <div data-anat-part={anatPart}>
         <StackH
-            gap="related"
+            gap={3}
             justify="center"
             className={cn("hidden @app-md:flex", className)}
             anatPart={showAnatomy ? "StackH" : undefined}

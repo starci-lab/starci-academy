@@ -91,7 +91,7 @@ export interface EnrollGatePrice {
 
 /** Props for {@link EnrollGate}. */
 export interface EnrollGateProps {
-    /** Headline, localized by the caller — e.g. "Mở khoá Dự án cá nhân". */
+    /** Headline, localized by the caller — e.g. "Unlock Personal Project". */
     title: string
     /** One-line reason the surface needs enrollment. */
     description: string
@@ -178,24 +178,22 @@ const EnrollGateBase = ({
                 tone="accent"
                 size="sm"
                 showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "IconTile" : undefined}
             />
-            {/* src thật (`EnrollGate/index.tsx:67`): `type="h4" weight="bold"` — HEADING
-                thật (20px), không phải body `lg` (18px). */}
+            {/* the real src (`EnrollGate/index.tsx:67`): `type="h4" weight="bold"` — a real
+                HEADING (20px), not body `lg` (18px). */}
             <Typography
                 size="h4"
                 weight="bold"
                 align="center"
                 text={title}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             <Typography
                 size="sm"
                 color="muted"
                 align="center"
-                className="max-w-[400px]"
                 text={description}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
             <AsyncContent
                 isLoading={priceLoading}
@@ -208,18 +206,17 @@ const EnrollGateBase = ({
                 skeleton={<HeroSkeleton className="h-7 w-32 rounded-xl" />}
                 showAnatomy={showAnatomy}
             >
-                <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={priceGroup} />
+                <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={priceGroup} />
             </AsyncContent>
             <Button
-                label="Ghi danh ngay"
+                label="Enroll now"
                 variant="primary"
                 size="lg"
                 suffixIcon={ArrowRightIcon}
                 iconSlide
                 onPress={onEnroll}
-                className="max-w-[300px]"
                 classNames={["w-full"]}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
         </>
     )
@@ -228,21 +225,24 @@ const EnrollGateBase = ({
     // + one CTA. A real SurfaceCard so it "floats up" whether it sits alone on
     // the canvas or over the faded teaser.
     const card = (
-        <SurfaceCard
-            padding="airy"
-            className="mx-auto w-full max-w-[480px]"
-            anatPart={showAnatomy ? "SurfaceCard" : undefined}
-        >
-            <StackV gap="grouped" align="center" anatPart={showAnatomy ? "StackV" : undefined} body={offerBody} />
-        </SurfaceCard>
+        // `SurfaceCard.className` door was deleted (COMPOSITE-4) and `max-w-[480px]` is an
+        // arbitrary value outside the closed `AllowedClassName` union anyway — the
+        // mx-auto/max-w placement now lives on a plain wrapping `div` instead.
+        <div className="mx-auto w-full max-w-[480px]">
+            <SurfaceCard
+                padding={6}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                body={() => <StackV gap={4} align="center" anatPart={showAnatomy ? "StackV" : undefined} body={offerBody} />}
+            />
+        </div>
     )
 
     // no teaser → just the centered enroll card. `StackH` with a single child and
-    // `gap="flush"` (no seam to enforce with one item) is how the §10 scale still
+    // `gap={1}` (no seam to enforce with one item) is how the §10 scale still
     // governs the wrapper's padding instead of a hand-typed `p-*` value.
     if (preview == null) {
         return (
-            <StackH gap="flush" justify="center" padding="airy" className={className} anatPart={anatPart} body={card} />
+            <StackH gap={1} justify="center" padding={6} className={className} anatPart={anatPart} body={card} />
         )
     }
 
@@ -258,12 +258,12 @@ const EnrollGateBase = ({
                     since the teaser content is itself `bg-surface` cards. */}
                 <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
             </div>
-            {/* `padding="roomy"` (the frame's own §10c scale) replaces the hand-typed
+            {/* `padding={6}` (the frame's own §10c scale) replaces the hand-typed
                 `px-4 pb-6` the real component used — the ONE deviation from a byte-for-byte
                 port, since the scale is symmetric and has no asymmetric step. `-mt-32` stays
                 hand-written: it is the float-over-the-fade OVERLAP effect itself, not a seam
                 between siblings, the same idiom as `SurfaceCard.Pressable`'s highlight layer. */}
-            <StackH gap="flush" justify="center" padding="roomy" className="relative z-10 -mt-32" body={card} />
+            <StackH gap={1} justify="center" padding={6} className="relative z-10 -mt-32" body={card} />
         </div>
     )
 }

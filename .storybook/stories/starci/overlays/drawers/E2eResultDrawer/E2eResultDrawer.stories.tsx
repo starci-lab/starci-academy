@@ -25,7 +25,7 @@ export default meta
 
 type Story = StoryObj<typeof E2eResultDrawer>
 
-// DOM thật (single-stack flows): Drawer.CloseTrigger + Drawer.Header (title) +
+// Real DOM (single-stack flows): Drawer.CloseTrigger + Drawer.Header (title) +
 // Drawer.Body > StackV(root) > Typography(count) + Accordion > Disclosure per
 // flow > Disclosure.Trigger > StackH(flow title) > Chip + Typography, and
 // Disclosure.Content > MarkdownContent when a flow carries a proof.
@@ -50,64 +50,64 @@ const ANNOTATE_MULTI: Record<string, AnatomyAnnotation> = {
 const SINGLE_LANG_FLOWS: Array<E2eFlow> = [
     {
         id: "flow-enroll",
-        title: "Đăng ký học viên vào khoá học",
+        title: "Enroll a student into a course",
         status: "passed",
-        markdown: `## Đăng ký học viên
+        markdown: `## Enroll a student
 
-1. Đăng nhập bằng tài khoản học viên đã seed.
-2. Mở trang chi tiết khoá học, bấm **Đăng ký**.
-3. Xác nhận thanh toán (sandbox gateway).
+1. Log in with a seeded student account.
+2. Open the course detail page, click **Enroll**.
+3. Confirm payment (sandbox gateway).
 
 \`\`\`
 ✓ enrollment created, id=9f2a...
 ✓ redirected to /learn/course/9f2a...
 \`\`\`
 
-Kết luận: luồng đăng ký chạy đúng end-to-end trên backend + UI thật.`,
+Conclusion: the enrollment flow runs correctly end-to-end on the real backend + UI.`,
     },
     {
         id: "flow-submit",
-        title: "Nộp bài Thử thách và nhận điểm",
+        title: "Submit a Challenge and receive a score",
         status: "failed",
-        markdown: `## Nộp bài Thử thách
+        markdown: `## Submit a Challenge
 
-1. Mở một Thử thách đã có sẵn given code.
-2. Sửa file, bấm **Nộp bài**.
-3. Chờ job chấm điểm.
+1. Open an existing Challenge with given code.
+2. Edit the file, click **Submit**.
+3. Wait for the grading job.
 
 \`\`\`
 ✗ grading job timed out after 30s
 \`\`\`
 
-Kết luận: job chấm điểm không phản hồi trong thời gian chờ của lần chạy này.`,
+Conclusion: the grading job did not respond within this run's wait window.`,
     },
 ]
 
 const MULTI_LANG_FLOWS: Array<E2eFlow> = [
     {
         id: "flow-ws-ts",
-        title: "Kết nối WebSocket real-time",
+        title: "Connect over a real-time WebSocket",
         lang: "typescript",
         status: "passed",
-        markdown: "## TypeScript\n\nKết nối `ws://`, gửi/nhận message, đóng kết nối sạch. Toàn bộ bước pass.",
+        markdown: "## TypeScript\n\nConnects over `ws://`, sends/receives a message, closes the connection cleanly. Every step passes.",
     },
     {
         id: "flow-ws-go",
-        title: "Kết nối WebSocket real-time",
+        title: "Connect over a real-time WebSocket",
         lang: "go",
         status: "passed",
-        markdown: "## Go\n\nCùng luồng, chạy trên server Go. Pass.",
+        markdown: "## Go\n\nSame flow, run against the Go server. Passes.",
     },
     {
         id: "flow-ws-csharp",
-        title: "Kết nối WebSocket real-time",
+        title: "Connect over a real-time WebSocket",
         lang: "csharp",
         status: "failed",
-        markdown: "## C#\n\nKết nối rớt sau ~5s do handshake timeout.",
+        markdown: "## C#\n\nConnection drops after ~5s due to a handshake timeout.",
     },
     {
         id: "flow-upload-java",
-        title: "Tải file lên và xử lý bất đồng bộ",
+        title: "Upload a file and process it asynchronously",
         lang: "java",
         status: "passed",
     },
@@ -123,12 +123,12 @@ const ControlledE2eResultDrawer = ({ flows }: ControlledE2eResultDrawerProps) =>
     const [isOpen, setIsOpen] = useState(true)
     const isMulti = new Set(flows.map((flow) => flow.lang ?? "agnostic")).size > 1
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
-                label="Xem kết quả E2E"
+                label="View E2E result"
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <BlockAnatomy
@@ -146,8 +146,8 @@ const ControlledE2eResultDrawer = ({ flows }: ControlledE2eResultDrawerProps) =>
   isOpen={isOpen}
   onOpenChange={setIsOpen}
   flows={[
-    { id: "flow-enroll", title: "Đăng ký học viên vào khoá học", status: "passed", markdown: "..." },
-    { id: "flow-submit", title: "Nộp bài Thử thách và nhận điểm", status: "failed", markdown: "..." },
+    { id: "flow-enroll", title: "Enroll a student into a course", status: "passed", markdown: "..." },
+    { id: "flow-submit", title: "Submit a Challenge and receive a score", status: "failed", markdown: "..." },
   ]}
 />`,
                         render: (
@@ -166,10 +166,10 @@ const ControlledE2eResultDrawer = ({ flows }: ControlledE2eResultDrawerProps) =>
   isOpen={isOpen}
   onOpenChange={setIsOpen}
   flows={[
-    { id: "flow-ws-ts", title: "Kết nối WebSocket real-time", lang: "typescript", status: "passed", markdown: "..." },
-    { id: "flow-ws-go", title: "Kết nối WebSocket real-time", lang: "go", status: "passed", markdown: "..." },
-    { id: "flow-ws-csharp", title: "Kết nối WebSocket real-time", lang: "csharp", status: "failed", markdown: "..." },
-    { id: "flow-upload-java", title: "Tải file lên và xử lý bất đồng bộ", lang: "java", status: "passed" },
+    { id: "flow-ws-ts", title: "Connect over a real-time WebSocket", lang: "typescript", status: "passed", markdown: "..." },
+    { id: "flow-ws-go", title: "Connect over a real-time WebSocket", lang: "go", status: "passed", markdown: "..." },
+    { id: "flow-ws-csharp", title: "Connect over a real-time WebSocket", lang: "csharp", status: "failed", markdown: "..." },
+    { id: "flow-upload-java", title: "Upload a file and process it asynchronously", lang: "java", status: "passed" },
   ]}
 />`,
                         render: (
@@ -195,7 +195,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`; `flows` hasn't resolved yet so there's nothing real to filter or expand. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="E2eResultDrawer"
                 tier="block"

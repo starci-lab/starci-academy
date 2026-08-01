@@ -25,9 +25,9 @@ export interface SectionCardProps extends WithClassNames<undefined> {
     accent?: boolean
     /**
      * Verdict variant: a thick LEFT band (`border-l-4`) on top of the card's own
-     * border — the asymmetric-border shape for "card mang tín hiệu từ DATA"
+     * border — the asymmetric-border shape for "a card carrying a signal FROM DATA"
      * (`card.md` §3i). See {@link VerdictBand}. Left band ONLY reads as a DATA
-     * signal — never ad-hoc "vùng active" decoration (`card.md` §3g).
+     * signal — never ad-hoc "active region" decoration (`card.md` §3g).
      */
     withVerdict?: VerdictBand
     /** Extra classes merged onto the inner content wrapper. */
@@ -35,7 +35,7 @@ export interface SectionCardProps extends WithClassNames<undefined> {
 }
 
 /**
- * The canonical bordered "viền" card used across profile + dashboard. A thin
+ * The canonical bordered "framed" card used across profile + dashboard. A thin
  * wrapper over HeroUI {@link Card}/{@link CardContent} (globals already give it
  * the 3xl radius, p-3, no-shadow + border) that adds an optional header row
  * (icon + title on the left, action on the right) so every titled section looks

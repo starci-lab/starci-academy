@@ -62,7 +62,7 @@ import {
  */
 
 /** Real product copy (`headhuntings.modalTitle`) — the block owns this wording, not the caller. */
-const MODAL_TITLE = "Hồ sơ headhunter"
+const MODAL_TITLE = "Headhunter profile"
 
 /** Props for {@link HeadhunterModal}. */
 export interface HeadhunterModalProps {

@@ -113,14 +113,12 @@ const VariantChipDifficulty = ({
             isSkeleton
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             classNames={classNames}
-            anatPart={chipPart}
         />
     ) : (
         <Chip
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             text={capitalize(difficulty)}
             classNames={classNames}
-            anatPart={chipPart}
         />
     )
     // Part name goes on the span that WRAPS the chip itself — NOT through

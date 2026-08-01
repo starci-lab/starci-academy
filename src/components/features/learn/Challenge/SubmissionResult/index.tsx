@@ -133,8 +133,8 @@ const FindingAccordionItem = ({
  * Challenge-result page (quality-gate report). TIER-1/2 {@link PageHeader} (back-link
  * + requirement title); below it a single column: an attempt selector (a chip strip
  * for few attempts, a {@link Button} that opens the {@link SubmissionResultHistoryDrawer}
- * for many), then the selected attempt as two {@link LabeledCard}s — "Kết quả" (score
- * hero + verdict + the AI model that graded it) and "Góp ý" (findings as an accordion).
+ * for many), then the selected attempt as two {@link LabeledCard}s — "Result" (score
+ * hero + verdict + the AI model that graded it) and "Feedback" (findings as an accordion).
  * Reads `?submission=` (requirement) + `?attempt=` (defaults newest).
  *
  * @param props - optional root className (placement only).
@@ -219,7 +219,7 @@ export const SubmissionResult = ({
     // Verdict for a score against the requirement's pass threshold. Guard the
     // threshold/maxScore: while system config is still loading (passThreshold=0)
     // or a requirement has no max, `0 >= 0` would falsely mark every attempt as
-    // passed (the "Đạt 0/100" bug) — treat an unknown threshold as NOT passing.
+    // passed (the "Passed 0/100" bug) — treat an unknown threshold as NOT passing.
     const isPassing = (score: number | null) => passThreshold > 0 && maxScore > 0 && (score ?? 0) >= passThreshold * maxScore
     const scoreLabel = (score: number | null) => (maxScore > 0 ? `${score ?? 0}/${maxScore}` : `${score ?? 0}`)
     /** Minimum score needed to pass (for the verdict sub-line). */
@@ -302,7 +302,7 @@ export const SubmissionResult = ({
                     </div>
                 </AsyncContent>
 
-                {/* selected attempt detail — two labeled cards: "Kết quả" + "Góp ý" */}
+                {/* selected attempt detail — two labeled cards: "Result" + "Feedback" */}
                 {selectedAttempt ? (
                     <div className="flex flex-col gap-6">
                         <LabeledCard label={t("submissionResult.resultLabel")} contentClassName="flex flex-col gap-3">

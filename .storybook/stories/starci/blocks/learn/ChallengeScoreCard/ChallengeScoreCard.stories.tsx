@@ -3,7 +3,7 @@ import { ChallengeScoreCard } from "@sb-components/starci/blocks/learn/Challenge
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ChallengeScoreCard`: "Kết quả của bạn" — the aggregate earned/max
+ * BLOCK — `ChallengeScoreCard`: "Your result" — the aggregate earned/max
  * score for a finished challenge attempt, read against the pass line.
  *
  * SIBLING OF `ChallengeDeliverableList`, NOT PART OF IT. The deliverable list
@@ -32,10 +32,10 @@ export default meta
 type Story = StoryObj<typeof ChallengeScoreCard>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Kết quả của bạn\" label above it and the fixed pass-condition caption below it", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
+    "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Your result\" label above it and the fixed pass-condition caption below it", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical frame inside the card, stacking the score row above the meter", storyId: "frames-stack-stackv--default" },
-    "StackH": { tier: "frame", role: "the score row, holding the earned score and its \"/ max điểm\" unit on one baseline", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the earned score, or the muted \"/ max điểm\" riding beside it", storyId: "atoms-text-typography-typography--plain" },
+    "StackH": { tier: "frame", role: "the score row, holding the earned score and its \"/ max points\" unit on one baseline", storyId: "frames-stack-stackh--default" },
+    "Typography": { tier: "atom", role: "the earned score, or the muted \"/ max points\" riding beside it", storyId: "atoms-text-typography-typography--plain" },
     "ProgressMeter": { tier: "composite", role: "the score bar, marking the pass line via its own target tick", storyId: "composites-stats-progressmeter--target-below" },
     "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the meter — `ProgressMeter` has no `isSkeleton` shape of its own yet, so this block builds the shimmer bar directly, matching the real track's height" },
 }
@@ -43,7 +43,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the aggregate score card, real and loading. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeScoreCard"
                 tier="block"

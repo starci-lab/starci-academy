@@ -16,7 +16,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 export interface StepperStep {
     /** Stable identity for the step (used as the React key). */
     id: string
-    /** Short step label (e.g. `"Thông tin"`). */
+    /** Short step label (e.g. `"Information"`). */
     label: React.ReactNode
     /** Optional one-line description shown under the label. */
     description?: React.ReactNode
@@ -44,8 +44,6 @@ export interface StepperProps {
      * Current and upcoming steps stay inert.
      */
     onStepPress?: (index: number) => void
-    /** Extra classes on the track. */
-    className?: string
     /** Layout utilities on the track, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /**
@@ -97,12 +95,14 @@ const StepIndicator = ({
  *
  * @param props - {@link StepperProps}
  */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Stepper" } as const
+
 const StepperBase = ({
     steps,
     currentIndex,
     orientation = "horizontal",
     onStepPress,
-    className,
     classNames,
     showAnatomy,
 }: StepperProps) => {
@@ -117,9 +117,10 @@ const StepperBase = ({
             className={cn(
                 "flex",
                 isVertical ? "flex-col gap-3" : "items-start",
-                className,
                 classNames,
             )}
+            data-tier="composite"
+            data-component="Stepper"
         >
             {steps.map((step, index) => {
                 const state = stateOf(index)
@@ -174,10 +175,10 @@ const StepperBase = ({
                                     onClick={() => onStepPress(index)}
                                     className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                 >
-                                    <StackV gap="related" align="center" body={indicatorAndCopy} />
+                                    <StackV gap={3} align="center" body={indicatorAndCopy} />
                                 </button>
                             ) : (
-                                <StackV gap="related" align="center" body={indicatorAndCopy} />
+                                <StackV gap={3} align="center" body={indicatorAndCopy} />
                             )}
                         </React.Fragment>
                     )
@@ -231,11 +232,11 @@ const StepperBase = ({
                 return (
                     <StackH
                         key={step.id}
-                        gap="grouped"
+                        gap={4}
                         align="stretch"
                         body={
                             <>
-                                <StackV gap="tight" align="center" body={railAndConnector} />
+                                <StackV gap={2} align="center" body={railAndConnector} />
                                 {isClickable ? (
                                     <button
                                         type="button"
@@ -243,11 +244,11 @@ const StepperBase = ({
                                         // inset-exception: optical nudge lining the label up with the step dot, not a surface inset
                                         className="pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                     >
-                                        <StackV gap="flush" body={clickableCopy} />
+                                        <StackV gap={1} body={clickableCopy} />
                                     </button>
                                 ) : (
                                     // inset-exception: optical nudge lining the label up with the step dot
-                                    <StackV gap="flush" className="pt-1" body={staticCopy} />
+                                    <StackV gap={1} className="pt-1" body={staticCopy} />
                                 )}
                             </>
                         }
@@ -259,8 +260,8 @@ const StepperBase = ({
 }
 
 /**
- * `Stepper.*` — compound namespace (§13a: gom theo họ khung). Chỉ một hình
- * thái hiện có nên namespace có đúng một member, `Base`, giống cách
- * `Skeleton.*`/`Chip.*` đã làm khi họ chỉ có 1 khung.
+ * `Stepper.*` — compound namespace (§13a: group by frame family). Only one
+ * shape exists so far, so the namespace has exactly one member, `Base`, the
+ * same way `Skeleton.*`/`Chip.*` do while their family has only 1 frame.
  */
 export { StepperBase as Stepper }

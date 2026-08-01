@@ -38,7 +38,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** Value — a determinate ring (value/max). */
 export const Value: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressCircle"
                 tier="atom"
@@ -61,7 +61,7 @@ export const Value: Story = {
 /** Indeterminate — duration unknown, so the arc spins on its own (no value). */
 export const Indeterminate: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressCircle"
                 tier="atom"
@@ -83,7 +83,7 @@ export const Indeterminate: Story = {
 /** Loading — the atom draws its own skeleton shape (a circle); it does not use `Skeleton.*`. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressCircle"
                 tier="atom"
@@ -105,7 +105,7 @@ export const Loading: Story = {
 /** Leaf prop `color` — each tone gets its own state, one ring per state. */
 export const Colors: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressCircle"
                 tier="atom"
@@ -152,7 +152,7 @@ export const Colors: Story = {
 /** Leaf prop `size` — each diameter gets its own state, one ring per state. */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressCircle"
                 tier="atom"

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
-import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -14,18 +15,18 @@ import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Fee
  * out of scope here. This block is the pure PRESENTATIONAL half — plain props in,
  * one callback out.
  *
- * ⭐ JUDGMENT CALL — composed from `FeedbackCallout`, NOT a hand-rolled
+ * ⭐ JUDGMENT CALL — composed from `Callout`, NOT a hand-rolled
  * `Alert`+`Button` pair, even though the brief named those two as the compose-
- * from list. `FeedbackCallout` (`composites/feedback/Feedback`) is ALREADY
+ * from list. `Callout` (`composites/feedback/Callout`) is ALREADY
  * exactly "a status `Alert` + one CTA `Button` it builds and skins itself" —
  * building the pair by hand here would be the exact `ContentTabBar` mistake
  * flagged at the top of this run (rebuilding a worse copy of an existing
  * composite from bare atoms). The nearest sibling block, `CourseTeamGate`
  * (also "warning alert + one CTA, self-hidden by the caller/business logic"),
- * already reuses `FeedbackCallout` the same way — this follows that precedent.
+ * already reuses `Callout` the same way — this follows that precedent.
  *
  * ⭐ JUDGMENT CALL — TITLE IS OWNED, NOT A PROP. The real component's title
- * (`task.previewLockedAlertTitle` = "Hoàn thành bài trước trước") never varies
+ * (`task.previewLockedAlertTitle` = "Complete the previous task first") never varies
  * across calls, so it is chrome this block owns (§14d.1) — copied verbatim from
  * `vi.json` (rule #8: product copy matches `src`, this file does not "fix" the
  * doubled word). `message` stands in for the real `description` slot
@@ -48,10 +49,10 @@ import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Fee
  */
 
 /** Default CTA copy — matches `task.previewLockedGoToCurrentTaskButton` in `vi.json`. */
-const DEFAULT_CTA_LABEL = "Về bài hiện tại"
+const DEFAULT_CTA_LABEL = "Back to current task"
 
 /** Fixed title — matches `task.previewLockedAlertTitle` in `vi.json` (see header). */
-const TITLE = "Hoàn thành bài trước trước"
+const TITLE = "Complete the previous task first"
 
 /** Props for {@link TaskLockedAlert}. */
 export interface TaskLockedAlertProps {
@@ -68,8 +69,8 @@ export interface TaskLockedAlertProps {
      * where "the current task" is (mirrors the real `canGoToCurrentTask` gate).
      */
     onGoToCurrentTask?: () => void
-    /** Placement utilities only (e.g. `mb-4`) — NOT for restyling the alert. */
-    className?: string
+    /** Placement utilities only, from the closed positioning union — NOT for restyling the alert. */
+    classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /** When on, the composed part emits `data-anat-part` for a BlockAnatomy panel. */
@@ -86,19 +87,19 @@ const TaskLockedAlertBase = ({
     message,
     ctaLabel = DEFAULT_CTA_LABEL,
     onGoToCurrentTask,
-    className,
+    classNames,
     anatPart,
     showAnatomy = false,
 }: TaskLockedAlertProps) => (
-    <FeedbackCallout
+    <Callout
         status="warning"
         title={TITLE}
         description={message}
         actionLabel={onGoToCurrentTask ? ctaLabel : undefined}
         onAction={onGoToCurrentTask}
-        className={className}
+        classNames={classNames}
         showAnatomy={showAnatomy}
-        anatPart={anatPart ?? (showAnatomy ? "FeedbackCallout" : undefined)}
+        anatPart={anatPart ?? (showAnatomy ? "Callout" : undefined)}
     />
 )
 

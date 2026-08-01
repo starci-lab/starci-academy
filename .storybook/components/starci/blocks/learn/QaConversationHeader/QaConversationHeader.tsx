@@ -63,7 +63,7 @@ export interface QaConversationHeaderProps {
 
 /** The block's own count → label vocabulary (§14d.1) — never handed in pre-formatted. */
 const replyLabel = (replyCount: number): string =>
-    replyCount > 0 ? `${replyCount} người đã trả lời` : "Hãy là người đầu tiên trả lời"
+    replyCount > 0 ? `${replyCount} people have answered` : "Be the first to answer"
 
 /**
  * Collapse control + asker identity + who joined in + reply-count nudge, atop
@@ -87,15 +87,15 @@ const QaConversationHeader = ({
 }: QaConversationHeaderProps) => {
     const nameRow = (
         <StackH
-            gap="tight"
+            gap={2}
             align="center"
             anatPart={showAnatomy ? "StackH" : undefined}
             body={
                 isSkeleton ? (
-                    <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                    <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} showAnatomy={showAnatomy} />
                 ) : (
                     <>
-                        <Typography size="sm" weight="medium" text={asker.displayName} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="sm" weight="medium" text={asker.displayName} showAnatomy={showAnatomy} />
                         {isFounderAsker ? (
                             <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                         ) : null}
@@ -107,16 +107,16 @@ const QaConversationHeader = ({
 
     const identityColumn = (
         <StackV
-            gap="flush"
-            className="min-w-0 flex-1"
+            gap={1}
+            classNames={["min-w-0", "flex-1"]}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
                     {nameRow}
                     {isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} showAnatomy={showAnatomy} />
                     ) : (
-                        <Typography size="xs" color="muted" text={replyLabel(replyCount)} anatPart={showAnatomy ? "Typography" : undefined} />
+                        <Typography size="xs" color="muted" text={replyLabel(replyCount)} showAnatomy={showAnatomy} />
                     )}
                 </>
             }
@@ -130,10 +130,10 @@ const QaConversationHeader = ({
                 variant="ghost"
                 size="sm"
                 prefixIcon={ArrowLeftIcon}
-                ariaLabel="Thu gọn cuộc trò chuyện"
+                ariaLabel="Collapse conversation"
                 onPress={onCollapse}
                 isDisabled={isSkeleton}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
 
             <Avatar
@@ -160,10 +160,10 @@ const QaConversationHeader = ({
                 <Button
                     variant={isFollowing ? "secondary" : "primary"}
                     size="sm"
-                    label={isFollowing ? "Đang theo dõi" : "Theo dõi"}
+                    label={isFollowing ? "Following" : "Follow"}
                     onPress={onToggleFollow}
                     isDisabled={isSkeleton || isFollowPending}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -171,7 +171,7 @@ const QaConversationHeader = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={headerRow} />
+            <StackH gap={4} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={headerRow} />
         </div>
     )
 }

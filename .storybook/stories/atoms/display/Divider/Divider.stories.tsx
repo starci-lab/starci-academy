@@ -50,7 +50,7 @@ type Story = StoryObj<typeof Divider>
 /** Bare leaf — default orientation (horizontal), default variant, no label. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Divider"
                 tier="atom"
@@ -63,7 +63,7 @@ export const Default: Story = {
                         why: "A single horizontal rule renders at the default weight, with no label attached. This is the plain separator every other leaf on this page differs from by exactly one prop.",
                         code: "<Divider />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <Divider showAnatomy />
                             </div>
                         ),
@@ -77,7 +77,7 @@ export const Default: Story = {
 /** Leaf prop `orientation` — BOTH values: horizontal (default) and vertical. Migrated to `states` 2026-07-27. */
 export const Orientation: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Divider"
                 tier="atom"
@@ -89,7 +89,7 @@ export const Orientation: Story = {
                         why: "A single full-width rule renders on its own line. This is the default reading-flow separator, used to break up stacked sections in a column.",
                         code: "<Divider />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <Divider showAnatomy />
                             </div>
                         ),
@@ -99,7 +99,7 @@ export const Orientation: Story = {
                         why: "A standing rule renders between inline items instead of one horizontal line spanning the width. A vertical line needs a parent with a set height to show against, which is why it only makes sense between items sitting on the same row, like separating three lesson stages.",
                         code: "<Divider orientation=\"vertical\" />",
                         render: (
-                            <div className="flex h-16 items-center gap-4">
+                            <div data-tier="fixture" className="flex h-16 items-center gap-4">
                                 <span className="text-muted text-sm">Lesson</span>
                                 <Divider orientation="vertical" showAnatomy />
                                 <span className="text-muted text-sm">Exercise</span>
@@ -117,7 +117,7 @@ export const Orientation: Story = {
 /** Leaf prop `variant` — the FULL weight/tone union of the line. Migrated to `states` 2026-07-27. */
 export const Variants: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Divider"
                 tier="atom"
@@ -129,7 +129,7 @@ export const Variants: Story = {
                         why: "One horizontal rule renders at the default weight and tone. This is the everyday separator used between ordinary sections.",
                         code: "<Divider variant=\"default\" />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <Divider variant="default" showAnatomy />
                             </div>
                         ),
@@ -139,7 +139,7 @@ export const Variants: Story = {
                         why: "The same single rule renders, only its weight and tone step down one notch from default. A quieter seam is needed where a full-strength line would compete with more important content nearby.",
                         code: "<Divider variant=\"secondary\" />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <Divider variant="secondary" showAnatomy />
                             </div>
                         ),
@@ -149,7 +149,7 @@ export const Variants: Story = {
                         why: "The same single rule renders at the lightest weight and tone in the union. The faintest seam is for a boundary that should barely register, like inside a dense list.",
                         code: "<Divider variant=\"tertiary\" />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <Divider variant="tertiary" showAnatomy />
                             </div>
                         ),
@@ -163,7 +163,7 @@ export const Variants: Story = {
 /** Leaf prop `label` — horizontal only: rule · label · rule. Migrated to `states` 2026-07-27. */
 export const WithLabel: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Divider"
                 tier="atom"
@@ -175,7 +175,7 @@ export const WithLabel: Story = {
                         why: "Two `flex-1` rules render on either side of the centered label text instead of one continuous line. A labelled break — like an 'OR' divider on a sign-in form — needs the text itself to interrupt the line, not just sit beside it.",
                         code: "<Divider label=\"OR\" />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <Divider label="OR" showAnatomy />
                             </div>
                         ),

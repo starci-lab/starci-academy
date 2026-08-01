@@ -16,18 +16,11 @@ export interface CoverImageProps {
     /** `true` → shimmer the SAME frame (aspect-video/rounded-2xl footprint), no `<img>` mounted. */
     isSkeleton?: boolean
     /**
-     * Extra classes on the frame.
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
-    anatPart?: string
-    /** `true` → tag the skeleton box with `data-anat-part="Skeleton"`. */
+    /** `true` → tag the root with `data-anat-part="CoverImage"`. */
     showAnatomy?: boolean
 }
 
@@ -43,25 +36,26 @@ const CoverImageBase = ({
     src,
     alt,
     isSkeleton = false,
-    className,
     classNames,
-    anatPart,
     showAnatomy = false,
 }: CoverImageProps) => {
     if (isSkeleton) {
-        // No wrapper: the shimmer box is both the root (`anatPart`) and the
-        // leaf skeleton; `anatPart` takes precedence when set.
+        // No wrapper: the shimmer box is both the root and the leaf skeleton.
         return (
             <HeroSkeleton
-                className={cn("aspect-video w-full rounded-2xl", className, classNames)}
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+                data-tier="atom"
+                data-component="CoverImage"
+                className={cn("aspect-video w-full rounded-2xl", classNames)}
+                data-anat-part={showAnatomy ? "CoverImage" : undefined}
             />
         )
     }
     return (
         <div
-            className={cn("aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary", className, classNames)}
-            data-anat-part={anatPart}
+            data-tier="atom"
+            data-component="CoverImage"
+            className={cn("aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary", classNames)}
+            data-anat-part={showAnatomy ? "CoverImage" : undefined}
         >
             {src ? (
                 <img
@@ -77,3 +71,5 @@ const CoverImageBase = ({
 
 /** `CoverImage.*` — framed cover/thumbnail image. */
 export { CoverImageBase as CoverImage }
+
+export const meta = { tier: "atom", name: "CoverImage" } as const

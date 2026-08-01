@@ -33,28 +33,28 @@ export default meta
 
 type Story = StoryObj<typeof HeadhunterModal>
 
-// DOM thật (containerClassName="modal__container--narrow", scroll="inside"):
+// The real DOM (containerClassName="modal__container--narrow", scroll="inside"):
 // Modal.CloseTrigger + Modal.Header > Typography(title) + Modal.Body >
 // ConsultantProfileBody (its own contact-fork switch lives one level down in
 // its own story, see storyId below).
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Modal.CloseTrigger": { tier: "heroui", role: "the close button, upper-right" },
-    "Typography": { tier: "atom", role: "the modal's own generic title, hardcoded (`Hồ sơ headhunter`) — the block owns its wording, this is not per-consultant data", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the modal's own generic title, hardcoded (`Headhunter profile`) — the block owns its wording, this is not per-consultant data", storyId: "atoms-text-typography-typography--plain" },
     "Modal.Body": { tier: "heroui", role: "the body region — capped at 85vh with inner scroll, narrower container than the default modal size" },
     "ConsultantProfileBody": { tier: "block", role: "renders the actual profile — photo, identity, bio, and the contact-unlocked/locked fork; its own state switch lives one level down in its own story", storyId: "starci-blocks-consultant-consultantprofilebody-consultantprofilebody--default" },
 }
 
 /** One recruiting consultant, unlocked contact — the common happy path. */
 const UNLOCKED_CONSULTANT: ConsultantProfileBodyConsultant = {
-    fullName: "Nguyễn Thu Hà",
+    fullName: "Hannah Ngo",
     jobTitle: "Senior IT Recruiter",
     companyTitle: "TechTalent Partners",
     description:
-        "5 năm tuyển dụng backend/DevOps cho các công ty product tại Việt Nam. Ưu tiên ứng viên có dự án cá nhân rõ ràng.",
+        "5 years recruiting backend/DevOps engineers for product companies in Vietnam. Prefers candidates with a clear personal project.",
     avatarUrl: "https://i.pravatar.cc/240?img=47",
     contactUnlocked: true,
     contactLinks: [
-        { key: "email", label: "ha.nguyen@techtalent.example", href: "mailto:ha.nguyen@techtalent.example", icon: EnvelopeSimpleIcon },
+        { key: "email", label: "hannah.ngo@techtalent.example", href: "mailto:hannah.ngo@techtalent.example", icon: EnvelopeSimpleIcon },
         { key: "phone", label: "090 123 4567", href: "tel:0901234567", icon: PhoneIcon },
     ],
 }
@@ -75,12 +75,12 @@ const ControlledHeadhunterModal = ({
 } & Omit<HeadhunterModalProps, "isOpen" | "onOpenChange">) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
-        <div className="flex flex-col gap-3 p-8">
+        <div data-tier="fixture" className="flex flex-col gap-3 p-8">
             <Button
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                className="self-start"
+                classNames={["self-start"]}
                 onPress={() => setIsOpen(true)}
             />
             <HeadhunterModal

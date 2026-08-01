@@ -34,16 +34,16 @@ export default meta
 type Story = StoryObj<typeof QuizProgressPanel>
 
 const STATS = [
-    { key: "accuracy", icon: TargetIcon, label: "Độ chính xác", value: "82%" },
-    { key: "streak", icon: FlameIcon, label: "Chuỗi ngày", value: "7 ngày" },
-    { key: "total", icon: CardsIcon, label: "Tổng câu đã làm", value: "126" },
-    { key: "avgScore", icon: TrophyIcon, label: "Điểm trung bình", value: "7.4/10" },
+    { key: "accuracy", icon: TargetIcon, label: "Accuracy", value: "82%" },
+    { key: "streak", icon: FlameIcon, label: "Day streak", value: "7 days" },
+    { key: "total", icon: CardsIcon, label: "Total answered", value: "126" },
+    { key: "avgScore", icon: TrophyIcon, label: "Average score", value: "7.4/10" },
 ]
 
 const SESSIONS = [
-    { key: "run3", name: "Ôn Docker trước phỏng vấn", dateLabel: "Hôm qua", scoreLabel: "8/10 đúng", onPress: () => {} },
-    { key: "run2", name: "Drill nhanh CI/CD", dateLabel: "3 ngày trước", scoreLabel: "6/10 đúng", onPress: () => {} },
-    { key: "run1", name: "Ôn Kubernetes", dateLabel: "Tuần trước", scoreLabel: "9/10 đúng", onPress: () => {} },
+    { key: "run3", name: "Review Docker before the interview", dateLabel: "Yesterday", scoreLabel: "8/10 correct", onPress: () => {} },
+    { key: "run2", name: "Quick CI/CD drill", dateLabel: "3 days ago", scoreLabel: "6/10 correct", onPress: () => {} },
+    { key: "run1", name: "Review Kubernetes", dateLabel: "Last week", scoreLabel: "9/10 correct", onPress: () => {} },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -54,13 +54,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StatGridCard": { tier: "composite", role: "the lifetime-numbers grid; this block only feeds it icon+label+value cells, the grid/border/span structure is the composite's own", storyId: "composites-stats-statgridcard--even" },
     "SurfaceCardList": { tier: "composite", role: "the run history, one row per past session; the block maps a session straight onto the row's title/subtitle/metaText/onPress fields", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
     "Typography": { tier: "atom", role: "a stat cell's own label or value line, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
-    "FeedbackEmpty": { tier: "composite", role: "the single invitation the whole panel becomes when no session has ever run — it replaces the tab switch and both views at once", storyId: "composites-feedback-feedback-feedbackempty--icon-and-title" },
+    "EmptyState": { tier: "composite", role: "the single invitation the whole panel becomes when no session has ever run — it replaces the tab switch and both views at once", storyId: "composites-feedback-emptystate-emptystate--icon-and-title" },
 }
 
 /** LEAF — progress data has landed: the tab switch plus whichever view is selected. */
 export const Content: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizProgressPanel"
                 tier="block"
@@ -73,10 +73,10 @@ export const Content: Story = {
                         name: "view = \"stats\"",
                         why: "The lifetime numbers lead: accuracy, streak, total answered, average score, each fed to StatGridCard as one cell. This is the view a learner opens the panel to first — the running scoreboard before they decide whether to start another run.",
                         code: `<QuizProgressPanel
-    label="Đã luyện thế nào"
+    label="How you have been practicing"
     view="stats"
     onViewChange={setView}
-    viewAriaLabel="Chọn xem thống kê hay lịch sử"
+    viewAriaLabel="Choose to view stats or history"
     stats={stats}
     sessions={sessions}
 />`,
@@ -84,10 +84,10 @@ export const Content: Story = {
                             <QuizProgressPanel
                                 anatPart="QuizProgressPanel"
                                 showAnatomy
-                                label="Đã luyện thế nào"
+                                label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}
-                                viewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                viewAriaLabel="Choose to view stats or history"
                                 stats={STATS}
                                 sessions={SESSIONS}
                             />
@@ -97,19 +97,19 @@ export const Content: Story = {
                         name: "view = \"history\"",
                         why: "The same card, the same data, but now the past runs themselves — each a row with when it happened and how it went, tappable to reopen. Nothing about the panel's identity changes; only which half of the same progress it shows.",
                         code: `<QuizProgressPanel
-    label="Đã luyện thế nào"
+    label="How you have been practicing"
     view="history"
     onViewChange={setView}
-    viewAriaLabel="Chọn xem thống kê hay lịch sử"
+    viewAriaLabel="Choose to view stats or history"
     stats={stats}
     sessions={sessions}
 />`,
                         render: (
                             <QuizProgressPanel
-                                label="Đã luyện thế nào"
+                                label="How you have been practicing"
                                 view="history"
                                 onViewChange={() => {}}
-                                viewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                viewAriaLabel="Choose to view stats or history"
                                 stats={STATS}
                                 sessions={SESSIONS}
                             />
@@ -124,7 +124,7 @@ export const Content: Story = {
 /** LEAF — the caller flips `isSkeleton`, so the card mirrors its own eventual shape. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizProgressPanel"
                 tier="block"
@@ -136,15 +136,15 @@ export const Loading: Story = {
                     {
                         name: "isSkeleton = true, view = \"stats\"",
                         why: "The tab strip and the four stat cells all shimmer in the exact grid they will hold once numbers land — a fixed 4-cell shape known ahead of any real data, same reasoning as a comment thread's own skeleton rows.",
-                        code: "<QuizProgressPanel label=\"Đã luyện thế nào\" view=\"stats\" stats={[]} sessions={[]} isSkeleton />",
+                        code: "<QuizProgressPanel label=\"How you have been practicing\" view=\"stats\" stats={[]} sessions={[]} isSkeleton />",
                         render: (
                             <QuizProgressPanel
                                 anatPart="QuizProgressPanel"
                                 showAnatomy
-                                label="Đã luyện thế nào"
+                                label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}
-                                viewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                viewAriaLabel="Choose to view stats or history"
                                 stats={[]}
                                 sessions={[]}
                                 isSkeleton
@@ -154,13 +154,13 @@ export const Loading: Story = {
                     {
                         name: "isSkeleton = true, view = \"history\"",
                         why: "Switching tabs while still loading swaps which mirror is under the tab strip — three shimmering rows instead of the stat grid — because the row list owns its own skeleton shape independently of the grid's.",
-                        code: "<QuizProgressPanel label=\"Đã luyện thế nào\" view=\"history\" stats={[]} sessions={[]} isSkeleton />",
+                        code: "<QuizProgressPanel label=\"How you have been practicing\" view=\"history\" stats={[]} sessions={[]} isSkeleton />",
                         render: (
                             <QuizProgressPanel
-                                label="Đã luyện thế nào"
+                                label="How you have been practicing"
                                 view="history"
                                 onViewChange={() => {}}
-                                viewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                viewAriaLabel="Choose to view stats or history"
                                 stats={[]}
                                 sessions={[]}
                                 isSkeleton
@@ -176,7 +176,7 @@ export const Loading: Story = {
 /** LEAF — no run has ever happened, so the tab switch and both views disappear together. */
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizProgressPanel"
                 tier="block"
@@ -189,10 +189,10 @@ export const Empty: Story = {
                         name: "sessions = []",
                         why: "Nothing has ever been run, so there is nothing for either view to show — a scoreboard reading all zeros next to an empty history list would be two blank screens behind a switch. One invitation instead, pointing at the setup form beside this panel where the first run actually starts.",
                         code: `<QuizProgressPanel
-    label="Đã luyện thế nào"
+    label="How you have been practicing"
     view="stats"
     onViewChange={setView}
-    viewAriaLabel="Chọn xem thống kê hay lịch sử"
+    viewAriaLabel="Choose to view stats or history"
     stats={[]}
     sessions={[]}
 />`,
@@ -200,10 +200,10 @@ export const Empty: Story = {
                             <QuizProgressPanel
                                 anatPart="QuizProgressPanel"
                                 showAnatomy
-                                label="Đã luyện thế nào"
+                                label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}
-                                viewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                viewAriaLabel="Choose to view stats or history"
                                 stats={[]}
                                 sessions={[]}
                             />

@@ -43,7 +43,7 @@ interface WorkSessionHeaderOwnProps {
     backLabel: string
     /** Fired when the learner leaves without ending the run. */
     onBack: () => void
-    /** What the session is, e.g. "Hỏi nhanh". */
+    /** What the session is, e.g. "Quick quiz". */
     title?: string
     /** Optional time remaining, e.g. "2:14". Omitted → the session is untimed. */
     timeLeft?: string
@@ -71,7 +71,7 @@ export type WorkSessionHeaderProps = WorkSessionHeaderOwnProps &
         | { isSkeleton: true; counter?: string; total?: number; current?: number }
         | {
             isSkeleton?: false
-            /** Where the learner is, already worded by the caller, e.g. "Câu 3 / 10". */
+            /** Where the learner is, already worded by the caller, e.g. "Question 3 / 10". */
             counter: string
             /** How many steps the session has. Drives the rail's segment count. */
             total: number
@@ -111,7 +111,7 @@ const WorkSessionHeader = ({
         )
         return (
             <div data-anat-part={anatPart} className="border-b border-default bg-surface">
-                <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={skeletonRow} />
+                <StackH gap={4} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={skeletonRow} />
                 <div className="p-2">
                     <HeroSkeleton className="h-1 w-full rounded-full" />
                 </div>
@@ -122,20 +122,20 @@ const WorkSessionHeader = ({
 
     const headerRow = (
         <>
-            <LinkBack label={backLabel} onPress={onBack} anatPart={showAnatomy ? "LinkBack" : undefined} />
+            <LinkBack label={backLabel} onPress={onBack} />
             {title != null ? (
-                <Typography size="sm" weight="bold" text={title} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" weight="bold" text={title} showAnatomy={showAnatomy} />
             ) : null}
-            <Typography size="sm" color="muted" text={counter} anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" color="muted" text={counter} showAnatomy={showAnatomy} />
             {timeLeft != null ? (
-                <Typography size="sm" weight="medium" text={timeLeft} tabularNums anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="sm" weight="medium" text={timeLeft} tabularNums showAnatomy={showAnatomy} />
             ) : null}
             <span className="flex-1" />
             {onFinish != null && finishLabel != null ? (
-                // AUDIT 2026-07-30 (QuizPage feedback, B2b): "END IT NOW" (dòng 20) là hành
-                // động chấm dứt phiên giữa chừng — thầy chốt `danger-soft` thay vì `secondary`
-                // trung tính đang có trước đó.
-                <Button label={finishLabel} variant="danger-soft" size="sm" onPress={onFinish} anatPart={showAnatomy ? "Button" : undefined} />
+                // AUDIT 2026-07-30 (QuizPage feedback, B2b): "END IT NOW" (line 20) is an
+                // action that ends the session mid-way — the teacher finalized `danger-soft`
+                // instead of the neutral `secondary` it used to have.
+                <Button label={finishLabel} variant="danger-soft" size="sm" onPress={onFinish} />
             ) : null}
         </>
     )
@@ -175,10 +175,10 @@ const WorkSessionHeader = ({
 
     return (
         <div data-anat-part={anatPart} className="border-b border-default bg-surface">
-            <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={headerRow} />
+            <StackH gap={4} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={headerRow} />
             {/* The rail. Segments are laid out by a frame so the seam stays on scale; each
                 segment carries its own hit zone, because a 4px bar is not a touch target. */}
-            <StackH gap="tight" align="center" anatPart={showAnatomy ? "StackH" : undefined} body={railSegments} />
+            <StackH gap={2} align="center" anatPart={showAnatomy ? "StackH" : undefined} body={railSegments} />
         </div>
     )
 }

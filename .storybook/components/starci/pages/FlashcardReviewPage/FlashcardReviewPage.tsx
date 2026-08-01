@@ -31,7 +31,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * readout into the hero (which the block's own file header already rejected,
  * since a due count and a mastery percentage are different questions).
  *
- * ⭐ `session` IS ONE SHAPE FOR TWO STARTING POINTS. Pressing "Bắt đầu ôn tập" on
+ * ⭐ `session` IS ONE SHAPE FOR TWO STARTING POINTS. Pressing "Start review" on
  * the due hero, resuming a paused batch, or opening a deck from the deck list all
  * land on the identical `WorkSessionHeader` + `FlashcardStudyCard` pair — the
  * screen does not fork on `kind: "due" | "deck"` because nothing about the two
@@ -41,13 +41,13 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * ⭐ THE MODE SWITCH DISAPPEARS THE MOMENT A SESSION STARTS, same reasoning as
  * `QuizPage`'s `FlashcardModeSwitch` and its own file header's "it disappears
- * once a session starts" note: switching between "Học thẻ"/"Hỏi nhanh" mid-run
+ * once a session starts" note: switching between "Study cards"/"Quick quiz" mid-run
  * would abandon the run in progress, so the row is absent rather than disabled —
  * an absent control says the question is closed, a disabled one still invites
  * the tap.
  *
  * ⛔ NO CONFIRM DIALOG WIRED HERE, though the planner's tree asked for
- * `FeedbackConfirm` directly inside `session` (leave/end-early). §0's import
+ * `ConfirmDialog` directly inside `session` (leave/end-early). §0's import
  * boundary is exact — a screen calls blocks and frames, never a composite
  * directly — and `QuizPage`'s own file header already burned down the identical
  * question for its "ran out of questions" gap: the one documented exception
@@ -154,9 +154,9 @@ export interface FlashcardReviewPageProps {
     sessionBackLabel: string
     /** Fired when the learner leaves the session without ending it (see the file header's confirm-dialog gap). */
     onSessionBack: () => void
-    /** Session title, e.g. "Ôn tập hôm nay" or the deck's own name. */
+    /** Session title, e.g. "Today's review" or the deck's own name. */
     sessionTitle?: string
-    /** Where the learner is, already worded by the caller, e.g. "Thẻ 3 / 10". */
+    /** Where the learner is, already worded by the caller, e.g. "Card 3 / 10". */
     sessionCounter: string
     /** Optional time remaining. Omitted → the session is untimed (the common case for review). */
     sessionTimeLeft?: string
@@ -332,7 +332,7 @@ const FlashcardReviewPage = ({
                 ariaLabel={flashcardModeAriaLabel}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={overviewDeck} />
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={overviewDeck} />
         </>
     )
 
@@ -380,18 +380,18 @@ const FlashcardReviewPage = ({
     const reviewPhases = (
         <>
             {phase === "overview" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={overviewSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={overviewSection} />
             ) : null}
 
             {phase === "session" ? (
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={sessionSection} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={sessionSection} />
             ) : null}
         </>
     )
 
-    const reviewBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={reviewPhases} />
+    const reviewBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={reviewPhases} />
 
-    return <Container size="md" padding="roomy" body={reviewBody} />
+    return <Container size="md" padding={6} body={reviewBody} />
 }
 
 export { FlashcardReviewPage }

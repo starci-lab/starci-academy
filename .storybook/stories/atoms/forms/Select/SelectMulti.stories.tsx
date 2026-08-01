@@ -4,15 +4,15 @@ import { SelectMulti } from "@sb-components/atoms/forms/Select/Select"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `SelectMulti`: dropdown chọn NHIỀU, bọc thẳng HeroUI `Select`
+ * ATOM — `SelectMulti`: MULTI-select dropdown, wrapping HeroUI `Select` directly
  * (`selectionMode="multiple"`).
  *
- * Atom lá: trigger tóm tắt bằng CHỮ ("Đã chọn n" — string hard-code trong
- * `Select.tsx`, không phải `Chip`). Đã ĐỌC source để kiểm chứng: KHÔNG
- * compose `Chip` hay `Select.Value` cho giá trị đã chọn (chỉ một `<span>`
- * trần), nên KHÔNG có dep thật ⇒ `annotate` không có `storyId`. Nhưng
- * `Select.Trigger`/`Label`/`Skeleton` LÀ heroui thật vẫn cần tier `heroui` để
- * panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
+ * Leaf atom: the trigger summarizes with TEXT ("n selected" — a string hardcoded
+ * in `Select.tsx`, not a `Chip`). Verified by READING the source: it does NOT
+ * compose `Chip` or `Select.Value` for the picked values (just a bare `<span>`),
+ * so there's no real dep ⇒ `annotate` carries no `storyId`. But
+ * `Select.Trigger`/`Label`/`Skeleton` ARE real heroui and still need the `heroui`
+ * tier so the two-rule panel doesn't silently miss them (2026-07-28).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Select.Trigger": { tier: "heroui", role: "dropdown trigger button" },
@@ -31,7 +31,7 @@ const OPTIONS = [
     { value: "rs", label: "Rust" },
 ]
 
-/** Leaf TRẦN — không label: chưa chọn gì, hiện placeholder. */
+/** Bare leaf — no label: nothing picked yet, showing the placeholder. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -48,7 +48,7 @@ export const Default: Story = {
                             why: "The trigger shows the placeholder text and no label sits above it. This is the baseline shape every other leaf differs from by exactly one prop.",
                             code: "<SelectMulti value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Choose languages\" />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectMulti
                                         value={value}
                                         onValueChange={setValue}
@@ -64,11 +64,11 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `label`/`hint` — nhãn + mô tả (FieldFrame Label/Description). */
+/** Leaf for props `label`/`hint` — label + description (FieldFrame Label/Description). */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
@@ -85,7 +85,7 @@ export const WithLabel: Story = {
                             why: "A label heading and a description line grow above the trigger. The pair tells the reader what the field is for and adds a sentence of guidance before they open it.",
                             code: "<SelectMulti label=\"Language\" hint=\"Pick every language you use.\" ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectMulti
                                         value={value}
                                         onValueChange={setValue}
@@ -102,11 +102,11 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isRequired` — nhãn + dấu `*` bắt buộc. */
+/** Leaf for prop `isRequired` — label + the required `*` mark. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -123,7 +123,7 @@ export const Required: Story = {
                             why: "A `*` mark attaches after the label, nothing else about the trigger changes. The mark flags a field the form will reject as empty before the reader ever opens it.",
                             code: "<SelectMulti label=\"Language\" isRequired ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectMulti
                                         value={value}
                                         onValueChange={setValue}
@@ -140,17 +140,18 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
 /**
- * Leaf prop `value` — mảng rỗng thì trigger hiện `placeholder`; từ hai giá trị trở lên
- * thì gộp thành số đếm ("2 selected") thay vì kéo dài danh sách.
+ * Leaf for prop `value` — an empty array shows the trigger's `placeholder`; two or
+ * more values collapse into a count ("2 selected") instead of a growing list.
  *
- * ⚠️ Đổi tên 2026-07-26 (từ `Labeled`): leaf này từng kèm cả `label`, mà `label` đã có
- * nhà ở leaf `WithLabel` ⇒ hai leaf cùng khoe một prop, trái §12g. Bỏ `label`, trả leaf
- * về đúng prop nó sở hữu. `isDisabled` cũng đã tách sang leaf `Disabled` cùng ngày.
+ * ⚠️ Renamed 2026-07-26 (from `Labeled`): this leaf used to also carry `label`, but
+ * `label` already has a home in the `WithLabel` leaf ⇒ two leaves showing off the
+ * same prop, against §12g. Dropped `label`, returning the leaf to only the prop it
+ * owns. `isDisabled` was also split out into the `Disabled` leaf the same day.
  */
 export const Value: Story = {
     render: () => {
@@ -169,7 +170,7 @@ export const Value: Story = {
                             why: "The trigger falls back to the placeholder text. An empty array reads as nothing chosen yet, the same visual as before the reader ever opened the popover.",
                             code: "<SelectMulti value={[]} … />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectMulti value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose languages" ariaLabel="Language" showAnatomy />
                                 </div>
                             ),
@@ -179,7 +180,7 @@ export const Value: Story = {
                             why: "Two or more picks collapse into a count instead of listing every label. A growing list would push the trigger's width around as the reader keeps picking, so the atom holds the box steady.",
                             code: "<SelectMulti value={[\"ts\", \"go\"]} … />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectMulti value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Choose languages" ariaLabel="Language" />
                                 </div>
                             ),
@@ -188,14 +189,14 @@ export const Value: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isDisabled` — nhãn nhạt màu + trigger khoá, chặn popover mở. */
+/** Leaf for prop `isDisabled` — dimmed label + locked trigger, blocking the popover from opening. */
 export const Disabled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectMulti"
                 tier="atom"
@@ -207,7 +208,7 @@ export const Disabled: Story = {
                         why: "The label and the trigger box dim together and the popover no longer opens. The dimmed pair reads as one locked control instead of a label that looks live above a dead box.",
                         code: "<SelectMulti label=\"Language\" value={[\"js\"]} isDisabled ... />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectMulti
                                     value={["js"]}
                                     onValueChange={() => {}}
@@ -227,13 +228,14 @@ export const Disabled: Story = {
 }
 
 /**
- * Leaf prop `isInvalid` — CHỈ đổi viền sang đỏ, không có dòng lỗi. Khác
- * `errorMessage` (leaf dưới): `errorMessage` set thì viền đỏ CỘNG dòng lỗi;
- * `isInvalid` đứng một mình thì chỉ viền, vì FieldFrame không tự sinh chữ.
+ * Leaf for prop `isInvalid` — ONLY switches the border red, no error line. Differs
+ * from `errorMessage` (leaf below): setting `errorMessage` gives a red border PLUS
+ * an error line; `isInvalid` alone gives just the border, since FieldFrame never
+ * generates its own text.
  */
 export const Invalid: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectMulti"
                 tier="atom"
@@ -245,7 +247,7 @@ export const Invalid: Story = {
                         why: "Only the trigger border switches to danger, no error line grows under it. isInvalid alone is a bare visual flag; pass errorMessage as well when the red line should show too.",
                         code: "<SelectMulti label=\"Language\" isInvalid ... />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectMulti
                                     value={[]}
                                     onValueChange={() => {}}
@@ -264,7 +266,7 @@ export const Invalid: Story = {
     ),
 }
 
-/** Leaf prop `errorMessage` — nhãn + dòng lỗi đỏ + viền lỗi. */
+/** Leaf for prop `errorMessage` — label + red error line + invalid border. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -281,7 +283,7 @@ export const Error: Story = {
                             why: "The trigger border turns invalid and a red line grows below it, under the same label as any other leaf. Setting errorMessage flips the control invalid on its own, so there is no separate isInvalid to remember alongside it.",
                             code: "<SelectMulti label=\"Language\" errorMessage=\"Pick at least one language.\" ... />",
                             render: (
-                                <div className="w-72">
+                                <div data-tier="fixture" className="w-72">
                                     <SelectMulti
                                         value={value}
                                         onValueChange={setValue}
@@ -298,14 +300,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isSkeleton` — nhãn skeleton trên trigger-box skeleton (mirror đúng cột). */
+/** Leaf for prop `isSkeleton` — label skeleton above the trigger-box skeleton (mirrors the exact column). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SelectMulti"
                 tier="atom"
@@ -317,7 +319,7 @@ export const Skeleton: Story = {
                         why: "The label swaps for a bar skeleton and the trigger box swaps for a matching box skeleton. Whoever owns the shape owns its resting state, so the atom draws its own shimmer instead of waiting on a shared skeleton component.",
                         code: "<SelectMulti label=\"Language\" isSkeleton />",
                         render: (
-                            <div className="w-72">
+                            <div data-tier="fixture" className="w-72">
                                 <SelectMulti value={[]} onValueChange={() => {}} options={OPTIONS} label="Language" isSkeleton showAnatomy />
                             </div>
                         ),

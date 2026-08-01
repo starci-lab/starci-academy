@@ -46,7 +46,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full offer: lock, words, price, scarcity, one action. */
 export const Full: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentPaywall"
                 tier="block"
@@ -59,28 +59,28 @@ export const Full: Story = {
                         name: "originalPriceVnd set, seatsRemaining = 12",
                         why: "The lesson stops, and the offer arrives in one column: what is behind the lock, what it costs now against what it cost before, how many seats are left at this price, and one way forward. The scarcity line sits between the price and the button so it reads as a reason to act rather than as fine print after the decision.",
                         code: `<ContentPaywall
-    title="Phần còn lại dành cho học viên"
-    description="Mở khoá toàn bộ bài học, thử thách và sandbox của khoá này."
+    title="The rest of this lesson is for enrolled students"
+    description="Unlock every lesson, challenge, and sandbox in this course."
     discountedPriceVnd={1290000}
     originalPriceVnd={1990000}
     currentPhase={PricingPhase.Pioneer}
     seatsRemaining={12}
     nextPhasePriceVnd={1590000}
-    ctaLabel="Mở khoá khoá học"
+    ctaLabel="Unlock course"
     onPurchase={buy}
 />`,
                         render: (
                             <ContentPaywall
                                 anatPart="ContentPaywall"
                                 showAnatomy
-                                title="Phần còn lại dành cho học viên"
-                                description="Mở khoá toàn bộ bài học, thử thách và sandbox của khoá này."
+                                title="The rest of this lesson is for enrolled students"
+                                description="Unlock every lesson, challenge, and sandbox in this course."
                                 discountedPriceVnd={1290000}
                                 originalPriceVnd={1990000}
                                 currentPhase={PricingPhase.Pioneer}
                                 seatsRemaining={12}
                                 nextPhasePriceVnd={1590000}
-                                ctaLabel="Mở khoá khoá học"
+                                ctaLabel="Unlock course"
                                 onPurchase={() => {}}
                             />
                         ),
@@ -89,20 +89,20 @@ export const Full: Story = {
                         name: "originalPriceVnd = null",
                         why: "The course is at its standing price, so there is nothing to strike through and the price line carries one number. The offer keeps every other part, which is what stops a full-price course from looking like a worse deal than a discounted one.",
                         code: `<ContentPaywall
-    title="Phần còn lại dành cho học viên"
+    title="The rest of this lesson is for enrolled students"
     discountedPriceVnd={1290000}
     currentPhase={PricingPhase.Pioneer}
     seatsRemaining={12}
-    ctaLabel="Mở khoá khoá học"
+    ctaLabel="Unlock course"
     onPurchase={buy}
 />`,
                         render: (
                             <ContentPaywall
-                                title="Phần còn lại dành cho học viên"
+                                title="The rest of this lesson is for enrolled students"
                                 discountedPriceVnd={1290000}
                                 currentPhase={PricingPhase.Pioneer}
                                 seatsRemaining={12}
-                                ctaLabel="Mở khoá khoá học"
+                                ctaLabel="Unlock course"
                                 onPurchase={() => {}}
                             />
                         ),
@@ -116,7 +116,7 @@ export const Full: Story = {
 /** LEAF — no pricing phase ⇒ **loses** the `PhaseScarcityNote` node. */
 export const NoScarcity: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentPaywall"
                 tier="block"
@@ -129,20 +129,20 @@ export const NoScarcity: Story = {
                         name: "currentPhase = undefined",
                         why: "The course is not running phased pricing, so the scarcity line is not drawn and the button follows the price directly. Inventing urgency where there is none would be the block claiming something the course never said.",
                         code: `<ContentPaywall
-    title="Phần còn lại dành cho học viên"
+    title="The rest of this lesson is for enrolled students"
     discountedPriceVnd={1290000}
     originalPriceVnd={1990000}
-    ctaLabel="Mở khoá khoá học"
+    ctaLabel="Unlock course"
     onPurchase={buy}
 />`,
                         render: (
                             <ContentPaywall
                                 anatPart="ContentPaywall"
                                 showAnatomy
-                                title="Phần còn lại dành cho học viên"
+                                title="The rest of this lesson is for enrolled students"
                                 discountedPriceVnd={1290000}
                                 originalPriceVnd={1990000}
-                                ctaLabel="Mở khoá khoá học"
+                                ctaLabel="Unlock course"
                                 onPurchase={() => {}}
                             />
                         ),
@@ -156,7 +156,7 @@ export const NoScarcity: Story = {
 /** LEAF — the caller flips `isSkeleton`; only the PRICE mirrors, the offer stays legible. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ContentPaywall"
                 tier="block"
@@ -169,21 +169,21 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true",
                         why: "Only the price mirrors itself while the pricing request is in flight; the lock, the headline and the button stay fully real. They are known before any request, and shimmering them would hide an offer the reader could already read and act on.",
                         code: `<ContentPaywall
-    title="Phần còn lại dành cho học viên"
+    title="The rest of this lesson is for enrolled students"
     discountedPriceVnd={0}
     isSkeleton
-    ctaLabel="Mở khoá khoá học"
+    ctaLabel="Unlock course"
     onPurchase={buy}
 />`,
                         render: (
                             <ContentPaywall
                                 anatPart="ContentPaywall"
                                 showAnatomy
-                                title="Phần còn lại dành cho học viên"
-                                description="Mở khoá toàn bộ bài học, thử thách và sandbox của khoá này."
+                                title="The rest of this lesson is for enrolled students"
+                                description="Unlock every lesson, challenge, and sandbox in this course."
                                 discountedPriceVnd={0}
                                 isSkeleton
-                                ctaLabel="Mở khoá khoá học"
+                                ctaLabel="Unlock course"
                                 onPurchase={() => {}}
                             />
                         ),

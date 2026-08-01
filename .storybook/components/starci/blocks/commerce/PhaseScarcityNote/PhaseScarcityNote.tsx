@@ -30,9 +30,9 @@ export enum PricingPhase {
 
 /** Localised phase display name (inlined from `courseLanding.phase.*`, vi). */
 const PHASE_LABEL: Record<PricingPhase, string> = {
-    [PricingPhase.Pioneer]: "Tiên phong",
-    [PricingPhase.EarlyBird]: "Sớm",
-    [PricingPhase.Regular]: "Tiêu chuẩn",
+    [PricingPhase.Pioneer]: "Pioneer",
+    [PricingPhase.EarlyBird]: "Early Bird",
+    [PricingPhase.Regular]: "Standard",
 }
 
 /** Props {@link PhaseScarcityNote} carries regardless of loading state. */
@@ -117,7 +117,7 @@ const PhaseScarcityNoteBase = ({
         // the §10 scale BY TYPE: hand-written it's `gap-2` today, `gap-1.5`
         // tomorrow, nothing stops that.
         <Cluster
-            gap="related"
+            gap={3}
             align="center"
             // The `·` between the two clauses is drawn by the FRAME, not written as a text item.
             // A mark that separates a track's items belongs to the track, the same way a rule
@@ -156,8 +156,8 @@ const PhaseScarcityNoteBase = ({
                         <Typography
                             size="sm"
                             weight="medium"
-                            text={`Còn ${seatsRemaining} suất giá ${currentPhase != null ? PHASE_LABEL[currentPhase] : ""}`}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            text={`${seatsRemaining} seats left at the ${currentPhase != null ? PHASE_LABEL[currentPhase] : ""} price`}
+                            showAnatomy={showAnatomy}
                         />
                     ),
                 },
@@ -172,8 +172,8 @@ const PhaseScarcityNoteBase = ({
                             content: (
                                 <Typography
                                     size="sm"
-                                    text={`giá tăng lên ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ sau đó`}
-                                    anatPart={showAnatomy ? "Typography" : undefined}
+                                    text={`price rises to ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ after that`}
+                                    showAnatomy={showAnatomy}
                                 />
                             ),
                         },

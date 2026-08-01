@@ -4,7 +4,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseQaEngagementStrip`: the "không học một mình" honest aggregate
+ * BLOCK — `CourseQaEngagementStrip`: the "you are not learning alone" honest aggregate
  * sitting under `CourseQaHeader` on a course Q&A board — two muted lines,
  * enrolled learners and answered/total questions.
  *
@@ -12,7 +12,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * needs exactly this reassurance ("you are not alone here, and people actually
  * answer"), that the enrollment count is optional data the caller may not have
  * yet, or that an empty board (zero questions asked) must say something honest
- * instead of printing a hollow "0/0 đã được giải đáp". That vocabulary is
+ * instead of printing a hollow "0/0 answered". That vocabulary is
  * §14d.1's "a block owns its own wording" — the frame only tracks two lines,
  * the atom only draws muted text.
  *
@@ -22,12 +22,12 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * this one goes silent on the enrollment line rather than print a fake count).
  *   • `enrollmentCount` is OPTIONAL. When the caller has not resolved it yet
  *     (or the product deliberately withholds it), the line is DROPPED — never
- *     replaced with a placeholder like "một số học viên".
+ *     replaced with a placeholder like "a few learners".
  *   • `enrollmentCount = 0` is NOT the same as "unknown" — a real zero is still
  *     a real number and prints as-is (`!= null`, not truthiness).
- *   • Zero questions asked is not a lie to launder into "0/0 đã được giải đáp"
+ *   • Zero questions asked is not a lie to launder into "0/0 answered"
  *     (that phrasing implies unanswered abandonment); the second line swaps to
- *     an honest "chưa có câu hỏi nào" instead.
+ *     an honest "no questions yet" instead.
  *
  * 📐 LEAF BY STRUCTURE (§14d.2), matching the spec's single `Default` leaf:
  * every branch here (enrollment line present/absent, empty-board wording,
@@ -37,7 +37,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * `totalReviewed === 0` caption swap, which makes the identical judgement call
  * for the identical reason.
  *
- * ⭐ `gap="flush"` (§10c scale), not `"tight"`/`"related"`: the two lines read
+ * ⭐ `gap={1}` (§10c scale), not `"tight"`/`"related"`: the two lines read
  * as ONE aggregate statement about the board's health, the same relationship
  * the scale names as "a title and its subtitle" — not two peer facts that
  * could be reordered, and not two rows of an itemized surface.
@@ -74,9 +74,9 @@ export interface CourseQaEngagementStripProps {
  */
 const questionLine = (totalQuestions: number, answeredQuestions: number): string => {
     if (totalQuestions <= 0) {
-        return "Chưa có câu hỏi nào được đặt"
+        return "No questions asked yet"
     }
-    return `${answeredQuestions}/${totalQuestions} câu hỏi đã được giải đáp`
+    return `${answeredQuestions}/${totalQuestions} questions answered`
 }
 
 /**
@@ -102,8 +102,8 @@ const CourseQaEngagementStrip = ({
                     size="sm"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} học viên đã ghi danh khoá học này` : undefined}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} learners enrolled in this course` : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
             <Typography
@@ -111,14 +111,14 @@ const CourseQaEngagementStrip = ({
                 color="muted"
                 isSkeleton={isSkeleton}
                 text={isSkeleton ? undefined : questionLine(totalQuestions, answeredQuestions)}
-                anatPart={showAnatomy ? "Typography" : undefined}
+                showAnatomy={showAnatomy}
             />
         </>
     )
 
     return (
         <div data-anat-part={anatPart}>
-            <StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={lines} />
+            <StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={lines} />
         </div>
     )
 }

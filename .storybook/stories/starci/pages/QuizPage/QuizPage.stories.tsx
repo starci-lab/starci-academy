@@ -42,39 +42,39 @@ type Story = StoryObj<typeof QuizPage>
 // Reused verbatim from `QuizProgressPanel`'s own story so the two trees agree on
 // what "this learner's history" looks like.
 const PROGRESS_STATS = [
-    { key: "accuracy", icon: TargetIcon, label: "Độ chính xác", value: "82%" },
-    { key: "streak", icon: FlameIcon, label: "Chuỗi ngày", value: "7 ngày" },
-    { key: "total", icon: CardsIcon, label: "Tổng câu đã làm", value: "126" },
-    { key: "avgScore", icon: TrophyIcon, label: "Điểm trung bình", value: "7.4/10" },
+    { key: "accuracy", icon: TargetIcon, label: "Accuracy", value: "82%" },
+    { key: "streak", icon: FlameIcon, label: "Day streak", value: "7 days" },
+    { key: "total", icon: CardsIcon, label: "Total answered", value: "126" },
+    { key: "avgScore", icon: TrophyIcon, label: "Average score", value: "7.4/10" },
 ]
 
 const PROGRESS_SESSIONS = [
-    { key: "run3", name: "Ôn Docker trước phỏng vấn", dateLabel: "Hôm qua", scoreLabel: "8/10 đúng", onPress: () => {} },
-    { key: "run2", name: "Drill nhanh CI/CD", dateLabel: "3 ngày trước", scoreLabel: "6/10 đúng", onPress: () => {} },
-    { key: "run1", name: "Ôn Kubernetes", dateLabel: "Tuần trước", scoreLabel: "9/10 đúng", onPress: () => {} },
+    { key: "run3", name: "Docker review before interview", dateLabel: "Yesterday", scoreLabel: "8/10 correct", onPress: () => {} },
+    { key: "run2", name: "Quick CI/CD drill", dateLabel: "3 days ago", scoreLabel: "6/10 correct", onPress: () => {} },
+    { key: "run1", name: "Kubernetes review", dateLabel: "Last week", scoreLabel: "9/10 correct", onPress: () => {} },
 ]
 
 // Reused verbatim from `QuizRecapList`'s own story, same reasoning.
 const RECAP_RATING_OPTIONS = [
-    { grade: 0, label: "Quên", hint: "Gặp lại hôm nay" },
-    { grade: 1, label: "Khó", hint: "Gặp lại sau 1 ngày" },
-    { grade: 2, label: "Được", hint: "Gặp lại sau 4 ngày" },
-    { grade: 3, label: "Dễ", hint: "Gặp lại sau 10 ngày" },
+    { grade: 0, label: "Forgot", hint: "See it again today" },
+    { grade: 1, label: "Hard", hint: "See it again in 1 day" },
+    { grade: 2, label: "Good", hint: "See it again in 4 days" },
+    { grade: 3, label: "Easy", hint: "See it again in 10 days" },
 ]
 
 const RECAP_CARDS = [
     {
         key: "layer",
-        question: "Vì sao xoá file ở layer sau không làm image nhẹ đi?",
-        expectedAnswer: "Layer **cộng dồn**: layer sau chỉ ghi đè, chỗ đã chiếm ở layer trước vẫn nằm trong image.",
-        givenAnswer: "Vì layer trước vẫn còn file đó, xoá ở sau chỉ là ghi đè thôi.",
+        question: "Why doesn't deleting a file in a later layer shrink the image?",
+        expectedAnswer: "Layers are **additive**: a later layer only overwrites, the space already claimed in an earlier layer still stays in the image.",
+        givenAnswer: "Because the earlier layer still has the file — deleting it later is just an overwrite.",
         wasCorrect: true,
     },
     {
         key: "cache",
-        question: "Đặt `COPY . .` trước `npm ci` thì hỏng chuyện gì?",
-        expectedAnswer: "Mọi thay đổi code làm **vỡ cache** của bước cài phụ thuộc, nên lần build nào cũng cài lại từ đầu.",
-        givenAnswer: "Em nghĩ là image nặng hơn.",
+        question: "What breaks if you put `COPY . .` before `npm ci`?",
+        expectedAnswer: "Any code change **busts the cache** of the dependency-install step, so every build reinstalls from scratch.",
+        givenAnswer: "I think it makes the image heavier.",
         wasCorrect: false,
     },
 ]
@@ -93,7 +93,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — enrolled: the setup form and the progress panel side by side. */
 export const SetupEnrolled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizPage"
                 tier="screen"
@@ -108,9 +108,9 @@ export const SetupEnrolled: Story = {
     phase="setup"
     flashcardMode="quiz"
     onFlashcardModeChange={setMode}
-    flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+    flashcardModeAriaLabel="Flashcard mode"
     isEnrolled
-    setupLabel="Dựng phiên"
+    setupLabel="Set up session"
     setupName={name}
     onSetupNameChange={setName}
     setupLength="quick"
@@ -118,10 +118,10 @@ export const SetupEnrolled: Story = {
     setupLevel="middle"
     onSetupLevelChange={setLevel}
     onSetupStart={start}
-    progressLabel="Đã luyện thế nào"
+    progressLabel="How you've been doing"
     progressView="stats"
     onProgressViewChange={setView}
-    progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+    progressViewAriaLabel="Choose stats or history view"
     progressStats={stats}
     progressSessions={sessions}
     …
@@ -132,26 +132,26 @@ export const SetupEnrolled: Story = {
                                 phase="setup"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 isEnrolled
-                                enrollTitle="Ghi danh để luyện hỏi nhanh"
-                                enrollCtaLabel="Ghi danh ngay"
+                                enrollTitle="Enroll to practice quick quizzes"
+                                enrollCtaLabel="Enroll now"
                                 onEnroll={() => {}}
-                                setupLabel="Dựng phiên"
-                                setupName="Ôn Docker trước phỏng vấn"
+                                setupLabel="Set up session"
+                                setupName="Docker review before interview"
                                 onSetupNameChange={() => {}}
                                 setupLength="quick"
                                 onSetupLengthChange={() => {}}
                                 setupLevel="middle"
                                 onSetupLevelChange={() => {}}
                                 onSetupStart={() => {}}
-                                progressLabel="Đã luyện thế nào"
+                                progressLabel="How you've been doing"
                                 progressView="stats"
                                 onProgressViewChange={() => {}}
-                                progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                progressViewAriaLabel="Choose stats or history view"
                                 progressStats={PROGRESS_STATS}
                                 progressSessions={PROGRESS_SESSIONS}
-                                activeBackLabel="Thoát"
+                                activeBackLabel="Exit"
                                 onActiveBack={() => {}}
                                 activeCounter=""
                                 activeTotal={0}
@@ -160,10 +160,10 @@ export const SetupEnrolled: Story = {
                                 answer=""
                                 onAnswerChange={() => {}}
                                 onAnswerSubmit={() => {}}
-                                answerSubmitLabel="Chấm điểm"
-                                answerNextLabel="Câu tiếp theo"
+                                answerSubmitLabel="Grade"
+                                answerNextLabel="Next question"
                                 onAnswerNext={() => {}}
-                                recapBackLabel="Thoát"
+                                recapBackLabel="Exit"
                                 onRecapBack={() => {}}
                                 recapCounter=""
                                 recapTotal={0}
@@ -171,7 +171,7 @@ export const SetupEnrolled: Story = {
                                 recapCards={[]}
                                 recapRatingOptions={RECAP_RATING_OPTIONS}
                                 onRecapRate={() => {}}
-                                recapRatingAriaLabel="Bạn nhớ tới đâu"
+                                recapRatingAriaLabel="How well do you remember this"
                             />
                         ),
                     },
@@ -189,26 +189,26 @@ export const SetupEnrolled: Story = {
                                 phase="setup"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 isEnrolled
-                                enrollTitle="Ghi danh để luyện hỏi nhanh"
-                                enrollCtaLabel="Ghi danh ngay"
+                                enrollTitle="Enroll to practice quick quizzes"
+                                enrollCtaLabel="Enroll now"
                                 onEnroll={() => {}}
-                                setupLabel="Dựng phiên"
-                                setupName="Ôn Docker trước phỏng vấn"
+                                setupLabel="Set up session"
+                                setupName="Docker review before interview"
                                 onSetupNameChange={() => {}}
                                 setupLength="quick"
                                 onSetupLengthChange={() => {}}
                                 setupLevel="middle"
                                 onSetupLevelChange={() => {}}
                                 onSetupStart={() => {}}
-                                progressLabel="Đã luyện thế nào"
+                                progressLabel="How you've been doing"
                                 progressView="history"
                                 onProgressViewChange={() => {}}
-                                progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                progressViewAriaLabel="Choose stats or history view"
                                 progressStats={PROGRESS_STATS}
                                 progressSessions={PROGRESS_SESSIONS}
-                                activeBackLabel="Thoát"
+                                activeBackLabel="Exit"
                                 onActiveBack={() => {}}
                                 activeCounter=""
                                 activeTotal={0}
@@ -217,10 +217,10 @@ export const SetupEnrolled: Story = {
                                 answer=""
                                 onAnswerChange={() => {}}
                                 onAnswerSubmit={() => {}}
-                                answerSubmitLabel="Chấm điểm"
-                                answerNextLabel="Câu tiếp theo"
+                                answerSubmitLabel="Grade"
+                                answerNextLabel="Next question"
                                 onAnswerNext={() => {}}
-                                recapBackLabel="Thoát"
+                                recapBackLabel="Exit"
                                 onRecapBack={() => {}}
                                 recapCounter=""
                                 recapTotal={0}
@@ -228,7 +228,7 @@ export const SetupEnrolled: Story = {
                                 recapCards={[]}
                                 recapRatingOptions={RECAP_RATING_OPTIONS}
                                 onRecapRate={() => {}}
-                                recapRatingAriaLabel="Bạn nhớ tới đâu"
+                                recapRatingAriaLabel="How well do you remember this"
                             />
                         ),
                     },
@@ -241,7 +241,7 @@ export const SetupEnrolled: Story = {
 /** LEAF — trial, not enrolled ⇒ **loses** the setup form AND the progress panel, replaced by one gate. */
 export const SetupTrial: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizPage"
                 tier="screen"
@@ -255,9 +255,9 @@ export const SetupTrial: Story = {
                         code: `<QuizPage
     phase="setup"
     isEnrolled={false}
-    enrollTitle="Ghi danh để luyện hỏi nhanh"
-    enrollDescription="Trả lời câu hỏi tự luận và được chấm ngay — mở khi bạn ghi danh khoá học."
-    enrollCtaLabel="Ghi danh ngay"
+    enrollTitle="Enroll to practice quick quizzes"
+    enrollDescription="Answer free-response questions and get graded instantly — unlocked once you enroll in the course."
+    enrollCtaLabel="Enroll now"
     onEnroll={enroll}
     …
 />`,
@@ -267,13 +267,13 @@ export const SetupTrial: Story = {
                                 phase="setup"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 isEnrolled={false}
-                                enrollTitle="Ghi danh để luyện hỏi nhanh"
-                                enrollDescription="Trả lời câu hỏi tự luận và được chấm ngay — mở khi bạn ghi danh khoá học."
-                                enrollCtaLabel="Ghi danh ngay"
+                                enrollTitle="Enroll to practice quick quizzes"
+                                enrollDescription="Answer free-response questions and get graded instantly — unlocked once you enroll in the course."
+                                enrollCtaLabel="Enroll now"
                                 onEnroll={() => {}}
-                                setupLabel="Dựng phiên"
+                                setupLabel="Set up session"
                                 setupName=""
                                 onSetupNameChange={() => {}}
                                 setupLength="quick"
@@ -281,13 +281,13 @@ export const SetupTrial: Story = {
                                 setupLevel="middle"
                                 onSetupLevelChange={() => {}}
                                 onSetupStart={() => {}}
-                                progressLabel="Đã luyện thế nào"
+                                progressLabel="How you've been doing"
                                 progressView="stats"
                                 onProgressViewChange={() => {}}
-                                progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                progressViewAriaLabel="Choose stats or history view"
                                 progressStats={[]}
                                 progressSessions={[]}
-                                activeBackLabel="Thoát"
+                                activeBackLabel="Exit"
                                 onActiveBack={() => {}}
                                 activeCounter=""
                                 activeTotal={0}
@@ -296,10 +296,10 @@ export const SetupTrial: Story = {
                                 answer=""
                                 onAnswerChange={() => {}}
                                 onAnswerSubmit={() => {}}
-                                answerSubmitLabel="Chấm điểm"
-                                answerNextLabel="Câu tiếp theo"
+                                answerSubmitLabel="Grade"
+                                answerNextLabel="Next question"
                                 onAnswerNext={() => {}}
-                                recapBackLabel="Thoát"
+                                recapBackLabel="Exit"
                                 onRecapBack={() => {}}
                                 recapCounter=""
                                 recapTotal={0}
@@ -307,7 +307,7 @@ export const SetupTrial: Story = {
                                 recapCards={[]}
                                 recapRatingOptions={RECAP_RATING_OPTIONS}
                                 onRecapRate={() => {}}
-                                recapRatingAriaLabel="Bạn nhớ tới đâu"
+                                recapRatingAriaLabel="How well do you remember this"
                             />
                         ),
                     },
@@ -320,7 +320,7 @@ export const SetupTrial: Story = {
 /** LEAF — the caller flips `isSkeleton`; only the two blocks that can mirror themselves do. */
 export const SetupLoading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizPage"
                 tier="screen"
@@ -346,12 +346,12 @@ export const SetupLoading: Story = {
                                 phase="setup"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 isEnrolled
-                                enrollTitle="Ghi danh để luyện hỏi nhanh"
-                                enrollCtaLabel="Ghi danh ngay"
+                                enrollTitle="Enroll to practice quick quizzes"
+                                enrollCtaLabel="Enroll now"
                                 onEnroll={() => {}}
-                                setupLabel="Dựng phiên"
+                                setupLabel="Set up session"
                                 setupName=""
                                 onSetupNameChange={() => {}}
                                 setupLength="quick"
@@ -359,14 +359,14 @@ export const SetupLoading: Story = {
                                 setupLevel="middle"
                                 onSetupLevelChange={() => {}}
                                 onSetupStart={() => {}}
-                                progressLabel="Đã luyện thế nào"
+                                progressLabel="How you've been doing"
                                 progressView="stats"
                                 onProgressViewChange={() => {}}
-                                progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                progressViewAriaLabel="Choose stats or history view"
                                 progressStats={[]}
                                 progressSessions={[]}
                                 isSkeleton
-                                activeBackLabel="Thoát"
+                                activeBackLabel="Exit"
                                 onActiveBack={() => {}}
                                 activeCounter=""
                                 activeTotal={0}
@@ -375,10 +375,10 @@ export const SetupLoading: Story = {
                                 answer=""
                                 onAnswerChange={() => {}}
                                 onAnswerSubmit={() => {}}
-                                answerSubmitLabel="Chấm điểm"
-                                answerNextLabel="Câu tiếp theo"
+                                answerSubmitLabel="Grade"
+                                answerNextLabel="Next question"
                                 onAnswerNext={() => {}}
-                                recapBackLabel="Thoát"
+                                recapBackLabel="Exit"
                                 onRecapBack={() => {}}
                                 recapCounter=""
                                 recapTotal={0}
@@ -386,7 +386,7 @@ export const SetupLoading: Story = {
                                 recapCards={[]}
                                 recapRatingOptions={RECAP_RATING_OPTIONS}
                                 onRecapRate={() => {}}
-                                recapRatingAriaLabel="Bạn nhớ tới đâu"
+                                recapRatingAriaLabel="How well do you remember this"
                             />
                         ),
                     },
@@ -399,7 +399,7 @@ export const SetupLoading: Story = {
 /** LEAF — active: the session band plus one question, the mode switch gone. */
 export const Active: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizPage"
                 tier="screen"
@@ -408,27 +408,27 @@ export const Active: Story = {
                 annotate={ANNOTATE}
                 states={[
                     {
-                        name: "verdict = undefined (chưa chấm)",
+                        name: "verdict = undefined (not graded yet)",
                         why: "The learner is on question 3 of 5, still typing — FlashcardModeSwitch is entirely gone (switching mode mid-run would throw the answer away), and the session band's rail shows two graded steps with the third standing taller. This is the shape most of a run looks like.",
                         code: `<QuizPage
     phase="active"
-    activeBackLabel="Thoát"
+    activeBackLabel="Exit"
     onActiveBack={leave}
-    activeTitle="Hỏi nhanh"
-    activeCounter="Câu 3 / 5"
+    activeTitle="Quick quiz"
+    activeCounter="Question 3 / 5"
     activeTimeLeft="2:14"
     activeTotal={5}
     activeCurrent={3}
     activeDoneSteps={[1, 2]}
-    activeFinishLabel="Kết thúc"
+    activeFinishLabel="Finish"
     onActiveFinish={finish}
     question={question}
     questionLevelLabel="Middle"
     answer={answer}
     onAnswerChange={setAnswer}
     onAnswerSubmit={grade}
-    answerSubmitLabel="Chấm điểm"
-    answerNextLabel="Câu tiếp theo"
+    answerSubmitLabel="Grade"
+    answerNextLabel="Next question"
     onAnswerNext={next}
     …
 />`,
@@ -438,12 +438,12 @@ export const Active: Story = {
                                 phase="active"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 isEnrolled
-                                enrollTitle="Ghi danh để luyện hỏi nhanh"
-                                enrollCtaLabel="Ghi danh ngay"
+                                enrollTitle="Enroll to practice quick quizzes"
+                                enrollCtaLabel="Enroll now"
                                 onEnroll={() => {}}
-                                setupLabel="Dựng phiên"
+                                setupLabel="Set up session"
                                 setupName=""
                                 onSetupNameChange={() => {}}
                                 setupLength="quick"
@@ -451,32 +451,32 @@ export const Active: Story = {
                                 setupLevel="middle"
                                 onSetupLevelChange={() => {}}
                                 onSetupStart={() => {}}
-                                progressLabel="Đã luyện thế nào"
+                                progressLabel="How you've been doing"
                                 progressView="stats"
                                 onProgressViewChange={() => {}}
-                                progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                progressViewAriaLabel="Choose stats or history view"
                                 progressStats={[]}
                                 progressSessions={[]}
-                                activeBackLabel="Thoát"
+                                activeBackLabel="Exit"
                                 onActiveBack={() => {}}
-                                activeTitle="Hỏi nhanh"
-                                activeCounter="Câu 3 / 5"
+                                activeTitle="Quick quiz"
+                                activeCounter="Question 3 / 5"
                                 activeTimeLeft="2:14"
                                 activeTotal={5}
                                 activeCurrent={3}
                                 activeDoneSteps={[1, 2]}
                                 onActiveStepPress={() => {}}
-                                activeFinishLabel="Kết thúc"
+                                activeFinishLabel="Finish"
                                 onActiveFinish={() => {}}
-                                question="Vì sao đặt `COPY . .` trước `npm ci` lại làm hỏng cache của Dockerfile?"
+                                question="Why does putting `COPY . .` before `npm ci` break the Dockerfile's cache?"
                                 questionLevelLabel="Middle"
-                                answer="Em nghĩ là image nặng hơn."
+                                answer="I think it makes the image heavier."
                                 onAnswerChange={() => {}}
                                 onAnswerSubmit={() => {}}
-                                answerSubmitLabel="Chấm điểm"
-                                answerNextLabel="Câu tiếp theo"
+                                answerSubmitLabel="Grade"
+                                answerNextLabel="Next question"
                                 onAnswerNext={() => {}}
-                                recapBackLabel="Thoát"
+                                recapBackLabel="Exit"
                                 onRecapBack={() => {}}
                                 recapCounter=""
                                 recapTotal={0}
@@ -484,12 +484,12 @@ export const Active: Story = {
                                 recapCards={[]}
                                 recapRatingOptions={RECAP_RATING_OPTIONS}
                                 onRecapRate={() => {}}
-                                recapRatingAriaLabel="Bạn nhớ tới đâu"
+                                recapRatingAriaLabel="How well do you remember this"
                             />
                         ),
                     },
                     {
-                        name: "verdict = \"correct\" (đã chấm)",
+                        name: "verdict = \"correct\" (graded)",
                         why: "The same question, now graded: the answer field locks read-only rather than clearing (comparing what was typed with what was expected is the whole point, and clearing the field removes that at the exact moment it becomes useful), and the expected answer plus explanation appear below the verdict chip.",
                         code: `<QuizPage
     phase="active"
@@ -503,12 +503,12 @@ export const Active: Story = {
                                 phase="active"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 isEnrolled
-                                enrollTitle="Ghi danh để luyện hỏi nhanh"
-                                enrollCtaLabel="Ghi danh ngay"
+                                enrollTitle="Enroll to practice quick quizzes"
+                                enrollCtaLabel="Enroll now"
                                 onEnroll={() => {}}
-                                setupLabel="Dựng phiên"
+                                setupLabel="Set up session"
                                 setupName=""
                                 onSetupNameChange={() => {}}
                                 setupLength="quick"
@@ -516,35 +516,35 @@ export const Active: Story = {
                                 setupLevel="middle"
                                 onSetupLevelChange={() => {}}
                                 onSetupStart={() => {}}
-                                progressLabel="Đã luyện thế nào"
+                                progressLabel="How you've been doing"
                                 progressView="stats"
                                 onProgressViewChange={() => {}}
-                                progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                progressViewAriaLabel="Choose stats or history view"
                                 progressStats={[]}
                                 progressSessions={[]}
-                                activeBackLabel="Thoát"
+                                activeBackLabel="Exit"
                                 onActiveBack={() => {}}
-                                activeTitle="Hỏi nhanh"
-                                activeCounter="Câu 2 / 5"
+                                activeTitle="Quick quiz"
+                                activeCounter="Question 2 / 5"
                                 activeTimeLeft="1:48"
                                 activeTotal={5}
                                 activeCurrent={2}
                                 activeDoneSteps={[1, 2]}
                                 onActiveStepPress={() => {}}
-                                activeFinishLabel="Kết thúc"
+                                activeFinishLabel="Finish"
                                 onActiveFinish={() => {}}
-                                question="Đặt `COPY . .` trước `npm ci` thì hỏng chuyện gì?"
+                                question="What breaks if you put `COPY . .` before `npm ci`?"
                                 questionLevelLabel="Middle"
-                                answer="Vì layer trước vẫn còn file đó, xoá ở sau chỉ là ghi đè thôi."
+                                answer="Because the earlier layer still has the file — deleting it later is just an overwrite."
                                 onAnswerChange={() => {}}
                                 onAnswerSubmit={() => {}}
                                 verdict="correct"
-                                expectedAnswer="Mọi thay đổi code làm **vỡ cache** của bước cài phụ thuộc, nên lần build nào cũng cài lại từ đầu."
-                                explanation="COPY sớm khiến Docker coi bước cài phụ thuộc là đã đổi mỗi lần code đổi, nên nó luôn build lại từ bước đó."
-                                answerSubmitLabel="Chấm điểm"
-                                answerNextLabel="Câu tiếp theo"
+                                expectedAnswer="Any code change **busts the cache** of the dependency-install step, so every build reinstalls from scratch."
+                                explanation="Copying early makes Docker treat the dependency-install step as changed every time the code changes, so it always rebuilds from that step onward."
+                                answerSubmitLabel="Grade"
+                                answerNextLabel="Next question"
                                 onAnswerNext={() => {}}
-                                recapBackLabel="Thoát"
+                                recapBackLabel="Exit"
                                 onRecapBack={() => {}}
                                 recapCounter=""
                                 recapTotal={0}
@@ -552,7 +552,7 @@ export const Active: Story = {
                                 recapCards={[]}
                                 recapRatingOptions={RECAP_RATING_OPTIONS}
                                 onRecapRate={() => {}}
-                                recapRatingAriaLabel="Bạn nhớ tới đâu"
+                                recapRatingAriaLabel="How well do you remember this"
                             />
                         ),
                     },
@@ -565,7 +565,7 @@ export const Active: Story = {
 /** LEAF — recap: the session band plus every answered card, self-graded. */
 export const Recap: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="QuizPage"
                 tier="screen"
@@ -574,23 +574,23 @@ export const Recap: Story = {
                 annotate={ANNOTATE}
                 states={[
                     {
-                        name: "recapDoneSteps = [] (chưa tự chấm câu nào)",
+                        name: "recapDoneSteps = [] (no self-grading yet)",
                         why: "The run just ended, so the session band's rail carries no filled segments yet — it is now tracking the learner's OWN recall grade for each card, not the run's automatic verdict, which is why it resets even though every card was already answered.",
                         code: `<QuizPage
     phase="recap"
-    recapBackLabel="Thoát"
+    recapBackLabel="Exit"
     onRecapBack={leave}
-    recapTitle="Hỏi nhanh"
-    recapCounter="Xem lại 2 câu"
+    recapTitle="Quick quiz"
+    recapCounter="Review 2 questions"
     recapTotal={2}
     recapCurrent={2}
     recapDoneSteps={[]}
-    recapFinishLabel="Xong"
+    recapFinishLabel="Done"
     onRecapFinish={finish}
     recapCards={cards}
     recapRatingOptions={ratingOptions}
     onRecapRate={rate}
-    recapRatingAriaLabel="Bạn nhớ tới đâu"
+    recapRatingAriaLabel="How well do you remember this"
     …
 />`,
                         render: (
@@ -599,12 +599,12 @@ export const Recap: Story = {
                                 phase="recap"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 isEnrolled
-                                enrollTitle="Ghi danh để luyện hỏi nhanh"
-                                enrollCtaLabel="Ghi danh ngay"
+                                enrollTitle="Enroll to practice quick quizzes"
+                                enrollCtaLabel="Enroll now"
                                 onEnroll={() => {}}
-                                setupLabel="Dựng phiên"
+                                setupLabel="Set up session"
                                 setupName=""
                                 onSetupNameChange={() => {}}
                                 setupLength="quick"
@@ -612,13 +612,13 @@ export const Recap: Story = {
                                 setupLevel="middle"
                                 onSetupLevelChange={() => {}}
                                 onSetupStart={() => {}}
-                                progressLabel="Đã luyện thế nào"
+                                progressLabel="How you've been doing"
                                 progressView="stats"
                                 onProgressViewChange={() => {}}
-                                progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                progressViewAriaLabel="Choose stats or history view"
                                 progressStats={[]}
                                 progressSessions={[]}
-                                activeBackLabel="Thoát"
+                                activeBackLabel="Exit"
                                 onActiveBack={() => {}}
                                 activeCounter=""
                                 activeTotal={0}
@@ -627,27 +627,27 @@ export const Recap: Story = {
                                 answer=""
                                 onAnswerChange={() => {}}
                                 onAnswerSubmit={() => {}}
-                                answerSubmitLabel="Chấm điểm"
-                                answerNextLabel="Câu tiếp theo"
+                                answerSubmitLabel="Grade"
+                                answerNextLabel="Next question"
                                 onAnswerNext={() => {}}
-                                recapBackLabel="Thoát"
+                                recapBackLabel="Exit"
                                 onRecapBack={() => {}}
-                                recapTitle="Hỏi nhanh"
-                                recapCounter="Xem lại 2 câu"
+                                recapTitle="Quick quiz"
+                                recapCounter="Review 2 questions"
                                 recapTotal={2}
                                 recapCurrent={2}
                                 recapDoneSteps={[]}
-                                recapFinishLabel="Xong"
+                                recapFinishLabel="Done"
                                 onRecapFinish={() => {}}
                                 recapCards={RECAP_CARDS}
                                 recapRatingOptions={RECAP_RATING_OPTIONS}
                                 onRecapRate={() => {}}
-                                recapRatingAriaLabel="Bạn nhớ tới đâu"
+                                recapRatingAriaLabel="How well do you remember this"
                             />
                         ),
                     },
                     {
-                        name: "recapDoneSteps = [1, 2] (đã tự chấm hết)",
+                        name: "recapDoneSteps = [1, 2] (all self-graded)",
                         why: "Every card has been self-rated, so the rail is fully filled — the counter line inside QuizRecapList itself switches from what is left to what is done, and nothing in the list locks: someone reading back over a finished recap is allowed to change their mind about a card.",
                         code: `<QuizPage
     phase="recap"
@@ -660,12 +660,12 @@ export const Recap: Story = {
                                 phase="recap"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
-                                flashcardModeAriaLabel="Chế độ thẻ ghi nhớ"
+                                flashcardModeAriaLabel="Flashcard mode"
                                 isEnrolled
-                                enrollTitle="Ghi danh để luyện hỏi nhanh"
-                                enrollCtaLabel="Ghi danh ngay"
+                                enrollTitle="Enroll to practice quick quizzes"
+                                enrollCtaLabel="Enroll now"
                                 onEnroll={() => {}}
-                                setupLabel="Dựng phiên"
+                                setupLabel="Set up session"
                                 setupName=""
                                 onSetupNameChange={() => {}}
                                 setupLength="quick"
@@ -673,13 +673,13 @@ export const Recap: Story = {
                                 setupLevel="middle"
                                 onSetupLevelChange={() => {}}
                                 onSetupStart={() => {}}
-                                progressLabel="Đã luyện thế nào"
+                                progressLabel="How you've been doing"
                                 progressView="stats"
                                 onProgressViewChange={() => {}}
-                                progressViewAriaLabel="Chọn xem thống kê hay lịch sử"
+                                progressViewAriaLabel="Choose stats or history view"
                                 progressStats={[]}
                                 progressSessions={[]}
-                                activeBackLabel="Thoát"
+                                activeBackLabel="Exit"
                                 onActiveBack={() => {}}
                                 activeCounter=""
                                 activeTotal={0}
@@ -688,22 +688,22 @@ export const Recap: Story = {
                                 answer=""
                                 onAnswerChange={() => {}}
                                 onAnswerSubmit={() => {}}
-                                answerSubmitLabel="Chấm điểm"
-                                answerNextLabel="Câu tiếp theo"
+                                answerSubmitLabel="Grade"
+                                answerNextLabel="Next question"
                                 onAnswerNext={() => {}}
-                                recapBackLabel="Thoát"
+                                recapBackLabel="Exit"
                                 onRecapBack={() => {}}
-                                recapTitle="Hỏi nhanh"
-                                recapCounter="Đã tự chấm đủ 2 câu"
+                                recapTitle="Quick quiz"
+                                recapCounter="Self-graded all 2 questions"
                                 recapTotal={2}
                                 recapCurrent={2}
                                 recapDoneSteps={[1, 2]}
-                                recapFinishLabel="Xong"
+                                recapFinishLabel="Done"
                                 onRecapFinish={() => {}}
                                 recapCards={RECAP_CARDS.map((card, index) => ({ ...card, rating: index }))}
                                 recapRatingOptions={RECAP_RATING_OPTIONS}
                                 onRecapRate={() => {}}
-                                recapRatingAriaLabel="Bạn nhớ tới đâu"
+                                recapRatingAriaLabel="How well do you remember this"
                             />
                         ),
                     },

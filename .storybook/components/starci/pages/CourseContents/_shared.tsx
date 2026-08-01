@@ -57,7 +57,7 @@ export const PARTS: Array<AnatomyNode> = [
         storyId: "starci-blocks-learn-coursebrief-coursebrief--full",
     },
     // WARNING: the node name must match EXACTLY the `data-anat-part` the component emits:
-    // the DOM emits `CourseTeamGate`, not `FeedbackCallout` (that's the FRAME the block
+    // the DOM emits `CourseTeamGate`, not `Callout` (that's the FRAME the block
     // uses internally). Declaring the wrong name ⇒ the node never makes it into the
     // tree. The tier would be wrong too: `composite` while `storyId` points to a BLOCK.
     //

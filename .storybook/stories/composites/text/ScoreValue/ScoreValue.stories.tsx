@@ -3,7 +3,7 @@ import { ScoreValue } from "@sb-components/composites/text/ScoreValue/ScoreValue
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — "N điểm", the free-form point value a grading row is worth. Renders as
+ * COMPOSITE — "N points", the free-form point value a grading row is worth. Renders as
  * accent TEXT, never a `Chip` (§2a: a point count has no closed set of values, so it is
  * not a chip-shaped enum). See the component's own file header for the §2d neo this
  * composite exists to close — two blocks used to render the same info-type as two
@@ -22,7 +22,7 @@ type Story = StoryObj<typeof ScoreValue>
 /** LEAF — the only leaf: a live number, or its skeleton mirror. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ScoreValue"
                 tier="composite"

@@ -27,7 +27,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`hint`/`code`) is written in
  * ENGLISH; demo labels in the render frame are English too, so the Code tab matches
- * the picture word for word. JSDoc/comments stay in Vietnamese, and the § anchors
+ * the picture word for word. JSDoc/comments are ENGLISH too, and the § anchors
  * live only here.
  *
  * 🎨 Icons = Phosphor (§5.0). The atom forces both scale and `weight` off `size`
@@ -61,7 +61,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** Bare leaf — no prop turned on, showing the default look (`variant="primary"`, `size="md"`). */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -84,7 +84,7 @@ export const Default: Story = {
 /** Leaf for prop `variant` — 5 action MEANINGS, rendering the FULL union. */
 export const Variants: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -131,7 +131,7 @@ export const Variants: Story = {
 /** Leaf for prop `size` — 3 SCALE tiers, an axis independent of `variant` (§12d). */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -172,7 +172,7 @@ export const Sizes: Story = {
  */
 export const PrefixIcon: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -225,7 +225,7 @@ export const PrefixIcon: Story = {
 /** Leaf for prop `suffixIcon` — the TRAILING glyph. The `SuffixIcon` node sits AFTER `Label`. */
 export const SuffixIcon: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -250,7 +250,7 @@ export const SuffixIcon: Story = {
                         why: "The atom lays out both glyphs at once as icon, label, icon, one leading and one trailing. This is the shape for an action that both DOES something and continues onward in one press, such as saving before moving to the next step.",
                         code: "<Button prefixIcon={FloppyDiskIcon} label=\"Save and continue\" suffixIcon={ArrowRightIcon} />",
                         render: (
-                            <div className="flex items-center gap-3">
+                            <div data-tier="fixture" className="flex items-center gap-3">
                                 <Button prefixIcon={FloppyDiskIcon} label="Save and continue" suffixIcon={ArrowRightIcon} />
                             </div>
                         ),
@@ -264,7 +264,7 @@ export const SuffixIcon: Story = {
 /** Leaf for prop `iconSlide` (§5b) — the arrow SLIDES on hover. Hover to see it. */
 export const IconSlide: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -300,7 +300,7 @@ export const IconSlide: Story = {
  */
 export const IsIconOnly: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -359,7 +359,7 @@ export const IsIconOnly: Story = {
 /** Leaf for prop `isDisabled` — locks press, NO Spinner attached (unlike `isPending`). */
 export const Disabled: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -406,7 +406,7 @@ export const Disabled: Story = {
 /** Leaf for prop `isPending` — a Spinner REPLACES the leading glyph (never stack two signals in one spot). */
 export const Pending: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"
@@ -449,7 +449,7 @@ export const Pending: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Button"
                 tier="atom"

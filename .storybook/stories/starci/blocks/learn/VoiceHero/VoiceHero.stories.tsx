@@ -45,11 +45,11 @@ export default meta
 type Story = StoryObj<typeof VoiceHero>
 
 const LABELS = {
-    pushToTalk: "Nhấn để nói",
-    listening: "Đang nghe...",
-    typeInstead: "Gõ thay vì nói",
-    useVoice: "Chuyển sang nói",
-    placeholder: "Nhấn micro để bắt đầu trả lời",
+    pushToTalk: "Push to talk",
+    listening: "Listening...",
+    typeInstead: "Type instead",
+    useVoice: "Switch to voice",
+    placeholder: "Tap the mic to start answering",
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -62,7 +62,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — `MicHero`: the voice-first shape, circular mic + live transcript. */
 export const MicHero: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="VoiceHero"
                 tier="block"
@@ -72,8 +72,8 @@ export const MicHero: Story = {
                 renderClassName="mx-auto max-w-md"
                 states={[
                     {
-                        name: "listening = false, chưa nói gì",
-                        why: "Nothing has been said yet, so the transcript line falls back to the idle placeholder and reads muted — it is a hint, not an answer. Both input methods are offered here, so the quiet \"gõ thay vì nói\" link sits under the mic as the way out for anyone who would rather type.",
+                        name: "listening = false, nothing said yet",
+                        why: "Nothing has been said yet, so the transcript line falls back to the idle placeholder and reads muted — it is a hint, not an answer. Both input methods are offered here, so the quiet \"type instead\" link sits under the mic as the way out for anyone who would rather type.",
                         code: `<VoiceHero
     sttSupported
     listening={false}
@@ -100,12 +100,12 @@ export const MicHero: Story = {
                         ),
                     },
                     {
-                        name: "listening = true, transcript đang nhận diện dở",
+                        name: "listening = true, transcript still being recognized",
                         why: "The mic turns danger-red — the everyday \"recording\" signal — while speech is still being recognized. The interim fragment reads muted + italic to mark it provisional; it will straighten into plain text the moment it commits to `value`.",
                         code: `<VoiceHero
     sttSupported
     listening
-    interimTranscript="Em nghĩ là dùng cache-aside pattern để..."
+    interimTranscript="I think you'd use a cache-aside pattern to..."
     value=""
     onValueChange={setAnswer}
     onToggleListen={toggleMic}
@@ -116,7 +116,7 @@ export const MicHero: Story = {
                             <VoiceHero
                                 sttSupported
                                 listening
-                                interimTranscript="Em nghĩ là dùng cache-aside pattern để..."
+                                interimTranscript="I think you'd use a cache-aside pattern to..."
                                 value=""
                                 onValueChange={() => {}}
                                 onToggleListen={() => {}}
@@ -126,13 +126,13 @@ export const MicHero: Story = {
                         ),
                     },
                     {
-                        name: "answerMode = voice, đã có transcript trước đó",
+                        name: "answerMode = voice, transcript already recorded earlier",
                         why: "The caller asked for a voice-only answer, so the switch-away link is gone entirely — offering a silent escape hatch would undercut the point of asking. The last committed sentence stays on screen in plain (non-italic) text between recordings, exactly where the learner left it.",
                         code: `<VoiceHero
     sttSupported
     listening={false}
     interimTranscript=""
-    value="Dùng cache-aside pattern, đọc miss thì mới query DB rồi ghi lại cache."
+    value="Use a cache-aside pattern: query the DB on a cache miss, then write the result back to cache."
     onValueChange={setAnswer}
     onToggleListen={toggleMic}
     answerMode="voice"
@@ -143,7 +143,7 @@ export const MicHero: Story = {
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
-                                value="Dùng cache-aside pattern, đọc miss thì mới query DB rồi ghi lại cache."
+                                value="Use a cache-aside pattern: query the DB on a cache miss, then write the result back to cache."
                                 onValueChange={() => {}}
                                 onToggleListen={() => {}}
                                 answerMode="voice"
@@ -160,7 +160,7 @@ export const MicHero: Story = {
 /** LEAF — `TypedFallback`: the quiet typed shape, textarea + switch-back link. */
 export const TypedFallback: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="VoiceHero"
                 tier="block"
@@ -170,8 +170,8 @@ export const TypedFallback: Story = {
                 renderClassName="mx-auto max-w-md"
                 states={[
                     {
-                        name: "sttSupported = false, chưa gõ gì",
-                        why: "This browser cannot do speech-to-text at all, so `TypedFallback` is the ONLY shape offered — there is no \"chuyển sang nói\" link, because there is nothing to switch to. The field opens with the same placeholder wording MicHero would have shown, so the composer reads as one answer box regardless of which input method got picked.",
+                        name: "sttSupported = false, nothing typed yet",
+                        why: "This browser cannot do speech-to-text at all, so `TypedFallback` is the ONLY shape offered — there is no \"switch to voice\" link, because there is nothing to switch to. The field opens with the same placeholder wording MicHero would have shown, so the composer reads as one answer box regardless of which input method got picked.",
                         code: `<VoiceHero
     sttSupported={false}
     listening={false}
@@ -198,13 +198,13 @@ export const TypedFallback: Story = {
                         ),
                     },
                     {
-                        name: "answerMode = text, đã gõ chữ",
-                        why: "The caller asked for a typed answer outright — this lesson never offers a mic at all — so, same as the unsupported-browser state, there is no \"chuyển sang nói\" link. The field already carries earlier typing, which is the ordinary case for returning to a question mid-draft.",
+                        name: "answerMode = text, already typed",
+                        why: "The caller asked for a typed answer outright — this lesson never offers a mic at all — so, same as the unsupported-browser state, there is no \"switch to voice\" link. The field already carries earlier typing, which is the ordinary case for returning to a question mid-draft.",
                         code: `<VoiceHero
     sttSupported
     listening={false}
     interimTranscript=""
-    value="Dùng connection pooling để tránh mở kết nối mới mỗi request."
+    value="Use connection pooling to avoid opening a new connection on every request."
     onValueChange={setAnswer}
     onToggleListen={toggleMic}
     answerMode="text"
@@ -215,7 +215,7 @@ export const TypedFallback: Story = {
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
-                                value="Dùng connection pooling để tránh mở kết nối mới mỗi request."
+                                value="Use connection pooling to avoid opening a new connection on every request."
                                 onValueChange={() => {}}
                                 onToggleListen={() => {}}
                                 answerMode="text"

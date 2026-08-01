@@ -29,7 +29,7 @@ import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/Pro
  *
  * WHAT IT OWNS: the sentence. `lessonsRead`/`lessonsTotal`/`challengesDone`/
  * `challengesTotal` come in as plain numbers (§14d.1) — the block writes
- * "Đã đọc X/Y bài · Hoàn thành Z/W thử thách" itself, same wording precedent as
+ * "Read X/Y lessons · Completed Z/W challenges" itself, same wording precedent as
  * `ContinueLearningBase`. A caller handing over a pre-built string would have
  * re-opened the exact drift the sibling block was built to close.
  *
@@ -52,11 +52,11 @@ import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/Pro
  */
 
 /** Resume label — a block-owned wording constant (§14d.1), not a caller prop. */
-const RESUME_LABEL = "Tiếp tục học"
+const RESUME_LABEL = "Continue learning"
 /** Eyebrow shown while a lesson still waits to be resumed. */
-const EYEBROW_CONTINUE = "Học tiếp"
+const EYEBROW_CONTINUE = "Keep learning"
 /** Eyebrow shown once nothing is left to resume — the whole title/button row drops out with it. */
-const EYEBROW_ALL_DONE = "Bạn đã hoàn thành nội dung này"
+const EYEBROW_ALL_DONE = "You have finished this content"
 
 /** Props for {@link ModuleContinueBand}. */
 export interface ModuleContinueBandProps {
@@ -73,7 +73,7 @@ export interface ModuleContinueBandProps {
     challengesDone: number
     challengesTotal: number
     /**
-     * Press "Tiếp tục học". Optional: the button itself only renders when
+     * Press "Continue learning". Optional: the button itself only renders when
      * {@link ModuleContinueBandProps.resumeLessonTitle} is set (content-driven
      * omission), never withheld because this handler is missing.
      */
@@ -109,8 +109,8 @@ const ModuleContinueBand = ({
 
     const eyebrowAndTitle = (
         <StackV
-            gap="flush"
-            className="min-w-0"
+            gap={1}
+            classNames={["min-w-0"]}
             anatPart={showAnatomy ? "StackV" : undefined}
             body={
                 <>
@@ -119,7 +119,7 @@ const ModuleContinueBand = ({
                         color="muted"
                         isSkeleton={isSkeleton}
                         text={showResumeRow ? EYEBROW_CONTINUE : EYEBROW_ALL_DONE}
-                        anatPart={showAnatomy ? "Typography" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                     {showResumeRow ? (
                         <Typography
@@ -128,7 +128,7 @@ const ModuleContinueBand = ({
                             truncate
                             isSkeleton={isSkeleton}
                             text={resumeLessonTitle}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -138,7 +138,7 @@ const ModuleContinueBand = ({
 
     const headerRow = (
         <StackH
-            gap="grouped"
+            gap={4}
             justify="between"
             align="start"
             anatPart={showAnatomy ? "StackH" : undefined}
@@ -154,7 +154,7 @@ const ModuleContinueBand = ({
                             suffixIcon={ArrowRightIcon}
                             onPress={onResume}
                             classNames={["shrink-0"]}
-                            anatPart={showAnatomy ? "Button" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ) : null}
                 </>
@@ -170,7 +170,7 @@ const ModuleContinueBand = ({
         <ProgressMeter
             value={lessonsRead}
             max={lessonsTotal}
-            label="Hoàn thành"
+            label="Completed"
             showValue
             anatPart={showAnatomy ? "ProgressMeter" : undefined}
         />
@@ -181,14 +181,14 @@ const ModuleContinueBand = ({
             size="xs"
             color="muted"
             isSkeleton={isSkeleton}
-            text={`Đã đọc ${lessonsRead}/${lessonsTotal} bài · Hoàn thành ${challengesDone}/${challengesTotal} thử thách`}
-            anatPart={showAnatomy ? "Typography" : undefined}
+            text={`Read ${lessonsRead}/${lessonsTotal} lessons · Completed ${challengesDone}/${challengesTotal} challenges`}
+            showAnatomy={showAnatomy}
         />
     )
 
     return (
         <StackV
-            gap="grouped"
+            gap={4}
             anatPart={anatPart}
             body={
                 <>

@@ -1,15 +1,16 @@
 import React from "react"
-import type { ReactNode } from "react"
-import { Label, Switch, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { ComponentType, ReactNode } from "react"
+import { Label, Switch, cn } from "@heroui/react"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `List.*`, the ONE row/list KHUNG namespace
+ * STORYBOOK-LOCAL DESIGN SPEC — `List.*`, the ONE row/list FRAME namespace
  * (teacher's call 2026-07-25, canon §13). Four sibling frames that used to live as
  * four loose folders (`lists/ListRow` · `lists/LabeledList` · `lists/MetaRow` ·
  * `list/SettingToggleRow`) are now MEMBERS of one namespace — same tier, same
@@ -22,7 +23,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * | `.Meta` | 1 inline meta row | `chip` + **`items`** (meta segments) |
  * | `.ToggleRow` | 1 settings row with a switch | data props (`label`/`description`/`checked`) |
  *
- * KHUNG API LAW (§13b):
+ * FRAME API LAW (§13b):
  * - A REPEATING-LIST frame (`.Labeled`) MUST receive `items` data — children are FORBIDDEN.
  * - A single-ROW frame (`.Row` / `.Meta` / `.ToggleRow`) receives named data props, does NOT
  *   accept free-form children: the row is a FIXED shape (leading · text · meta/trailing),
@@ -31,8 +32,18 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  *
  * Each member's behaviour/skin is kept VERBATIM from the old folder; this is an API
  * refactor, not a visual refactor. Synced to `src` later.
+ *
+ * 2026-07-31: converted every slot the frame renders and is responsible for the
+ * loading state of from `ReactNode` to a COMPONENT reference or `string`
+ * (COMPOSITE-8) — `leading`/`meta`/`trailing`/`icon`/`action`/`emptyState`/`chip`
+ * now take a component the frame calls itself, and `title`/`subtitle`/`label`/
+ * `.Meta`'s `items` now take `string`, since the frame wraps them in its own
+ * atom. See callers in this same folder's stories for the updated call shape.
  * ─────────────────────────────────────────────────────────────────────────────
  */
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "List" } as const
 
 // ─────────────────────────────────────────────────────────────────────────────
 // .Row — the generic GitHub-style list row (was `lists/ListRow`)
@@ -41,30 +52,35 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /** Props for {@link ListRow}. */
 export interface ListRowProps {
     /**
-     * Optional leading node rendered before the text column, kept at its
-     * intrinsic size (icon or avatar). Does not shrink.
+     * Optional leading icon/avatar rendered before the text column, kept at its
+     * intrinsic size (does not shrink). A COMPONENT reference (COMPOSITE-8) —
+     * the row calls it itself, forwarding `isSkeleton`, instead of receiving an
+     * already-built node it cannot shimmer.
      */
-    leading?: ReactNode
+    leading?: ComponentTypeWithSkeleton
     /**
-     * Primary line of the row. Rendered as medium-weight foreground text and
+     * Primary line of the row. `string` — the row wraps it in `TitledText`
+     * itself (COMPOSITE-8), rendered as medium-weight foreground text and
      * truncated to a single line when it overflows.
      */
-    title: ReactNode
+    title: string
     /**
      * Optional secondary line shown beneath the title in muted, smaller text and
-     * truncated to a single line.
+     * truncated to a single line. `string` for the same reason as `title`.
      */
-    subtitle?: ReactNode
+    subtitle?: string
     /**
      * Optional right-aligned metadata (chips / counts / timestamps) rendered
-     * before the trailing node.
+     * before the trailing node. A COMPONENT reference (COMPOSITE-8); the row
+     * only shows it once loaded, so it takes no `isSkeleton`.
      */
-    meta?: ReactNode
+    meta?: ComponentType
     /**
-     * Optional far-right node, typically a chevron or inline action, rendered
-     * after the meta content.
+     * Optional far-right component, typically a chevron or inline action,
+     * rendered after the meta content. Same COMPONENT-reference contract as
+     * {@link ListRowProps.meta}.
      */
-    trailing?: ReactNode
+    trailing?: ComponentType
     /**
      * When true, adds a bottom border so consecutive same-type rows read as a
      * separated list. Omit on the final row of a group.
@@ -87,8 +103,6 @@ export interface ListRowProps {
      * live row. The consumer only flips the flag — same as `Button.isSkeleton`.
      */
     isSkeleton?: boolean
-    /** Extra classes merged onto the root element via `cn`. */
-    className?: string
     /** Layout utilities merged onto the root element, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /**
@@ -98,51 +112,6 @@ export interface ListRowProps {
      */
     showAnatomy?: boolean
 }
-
-/** Non-empty stand-in so `TitledText` counts the line and draws its bar. */
-const SKELETON_LINE = "—"
-
-/**
- * The row's skeleton mirror — SAME frame (`flex items-center gap-3 py-2`) and the
- * same two/three nodes as the live row, so a loading list holds the real shape.
- * Shared by {@link ListRow}'s own `isSkeleton` and by {@link ListLabeled}'s
- * loading state (which has no items yet to mirror).
- */
-const RowSkeleton = ({
-    hasLeading = false,
-    hasSubtitle = false,
-    className,
-    showAnatomy = false,
-}: {
-    hasLeading?: boolean
-    hasSubtitle?: boolean
-    className?: string
-    showAnatomy?: boolean
-}) => (
-    // `py-2` stays a raw class here: InsetScale only covers symmetric `p-*`, it has
-    // no vertical-only step, so this vertical rhythm can't move onto a frame prop yet.
-    <StackH
-        gap="grouped"
-        classNames={["min-w-0"]}
-        className={cn("py-2", className)}
-        body={
-            <>
-                {hasLeading ? (
-                    <HeroSkeleton className="size-5 shrink-0 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
-                ) : null}
-                {/* `TitledText` mirrors per LINE PRESENCE, so the placeholder text just has
-                    to be non-empty — it is never rendered while `isSkeleton` is on. */}
-                <TitledText
-                    title={SKELETON_LINE}
-                    subtitle={hasSubtitle ? SKELETON_LINE : undefined}
-                    isSkeleton
-                    className="flex-1"
-                    anatPart={showAnatomy ? "TitledText" : undefined}
-                />
-            </>
-        }
-    />
-)
 
 /**
  * Generic GitHub-style list row designed to live inside a card frame or any
@@ -154,59 +123,60 @@ const RowSkeleton = ({
  * @param props - {@link ListRowProps}
  */
 const Row = ({
-    leading,
+    leading: Leading,
     title,
     subtitle,
-    meta,
-    trailing,
+    meta: MetaSlot,
+    trailing: TrailingSlot,
     divider = false,
     onPress,
     href,
     isSkeleton = false,
-    className,
     classNames,
     showAnatomy = false,
 }: ListRowProps) => {
-    const isPressable = Boolean(onPress || href)
+    // Interactivity is a LOADED-state affordance only — a loading row is inert,
+    // same as the old separate `RowSkeleton` never wired a role/href/onClick.
+    const isPressable = !isSkeleton && Boolean(onPress || href)
 
     const baseClassName = cn(
         "flex min-w-0 items-center gap-3 py-2",
         divider && "border-b border-separator",
         isPressable &&
             "rounded-2xl transition-colors hover:bg-surface-secondary focus-visible:bg-surface-secondary focus-visible:outline-none",
-        className,
         classNames,
     )
 
-    if (isSkeleton) {
-        return (
-            <RowSkeleton
-                hasLeading={Boolean(leading)}
-                hasSubtitle={Boolean(subtitle)}
-                className={cn(divider && "border-b border-separator", className, classNames)}
-                showAnatomy={showAnatomy}
-            />
-        )
-    }
-
+    // One render path: `leading` is now a COMPONENT reference (COMPOSITE-8), so the
+    // row calls it itself and forwards `isSkeleton` — it decides how to shimmer, or
+    // whether to shimmer at all; `title`/`subtitle` shimmer through `TitledText`'s
+    // own `isSkeleton` (COMPOSITE-10 — the atom draws its own bar, this row only
+    // forwards the flag); `meta`/`trailing` are ALSO component references, but a
+    // loading row still omits them entirely rather than call them — that omission is
+    // this composite's own call (COMPOSITE-10: it decides WHICH parts show).
     const content = (
         <>
-            {leading ? (
+            {Leading ? (
                 <div className="shrink-0">
-                    {leading}
+                    <Leading isSkeleton={isSkeleton} />
                 </div>
             ) : null}
-            {/* title (body-sm medium) + muted subtitle = one TitledText, truncated */}
-            <TitledText title={title} subtitle={subtitle} truncate anatPart={showAnatomy ? "TitledText" : undefined} />
-            {meta || trailing ? (
+            <TitledText
+                title={title}
+                subtitle={subtitle}
+                isSkeleton={isSkeleton}
+                truncate
+                anatPart={showAnatomy ? "TitledText" : undefined}
+            />
+            {!isSkeleton && (MetaSlot || TrailingSlot) ? (
                 <StackH
-                    gap="related"
+                    gap={3}
                     classNames={["shrink-0"]}
                     className="ml-auto"
                     body={
                         <>
-                            {meta}
-                            {trailing}
+                            {MetaSlot ? <MetaSlot /> : null}
+                            {TrailingSlot ? <TrailingSlot /> : null}
                         </>
                     }
                 />
@@ -214,15 +184,15 @@ const Row = ({
         </>
     )
 
-    if (href) {
+    if (!isSkeleton && href) {
         return (
-            <a href={href} onClick={onPress} className={baseClassName}>
+            <a href={href} onClick={onPress} className={baseClassName} data-tier="composite" data-component="ListRow" data-principles="content-row">
                 {content}
             </a>
         )
     }
 
-    if (onPress) {
+    if (!isSkeleton && onPress) {
         return (
             <div
                 role="button"
@@ -235,13 +205,20 @@ const Row = ({
                     }
                 }}
                 className={cn(baseClassName, "cursor-pointer")}
+                data-tier="composite"
+                data-component="ListRow"
+                data-principles="content-row"
             >
                 {content}
             </div>
         )
     }
 
-    return <div className={baseClassName}>{content}</div>
+    return (
+        <div className={baseClassName} data-tier="composite" data-component="ListRow" data-principles="content-row">
+            {content}
+        </div>
+    )
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -260,10 +237,13 @@ export interface ListLabeledItem extends Omit<ListRowProps, "isSkeleton" | "show
 
 /** Props for {@link ListLabeled}. */
 export interface ListLabeledProps {
-    /** Section label (text) shown above the list. */
-    label: ReactNode
-    /** Optional leading icon before the label (e.g. a phosphor `*Icon`). */
-    icon?: ReactNode
+    /** Section label shown above the list. `string` — the frame wraps it in `Label` itself (COMPOSITE-8). */
+    label: string
+    /**
+     * Optional leading icon before the label (e.g. a phosphor `*Icon`). A
+     * COMPONENT reference (COMPOSITE-8), never a built element.
+     */
+    icon?: ComponentType
     /**
      * The rows, in reading order. REQUIRED — a REPEATING list is DATA, not
      * children (§13b). Empty → renders {@link ListLabeledProps.emptyState}.
@@ -271,14 +251,16 @@ export interface ListLabeledProps {
     items: ReadonlyArray<ListLabeledItem>
     /**
      * Optional footer action pinned below the list (e.g. a primary CTA button).
-     * Rendered as the third group, `gap-3` from the list.
+     * Rendered as the third group, `gap-3` from the list, only once loaded. A
+     * COMPONENT reference (COMPOSITE-8).
      */
-    action?: ReactNode
+    action?: ComponentType
     /**
      * Shown in the list slot when `items` is empty — so empty reads as
      * intentional. Omit and an empty list simply renders nothing under the label.
+     * A COMPONENT reference (COMPOSITE-8).
      */
-    emptyState?: ReactNode
+    emptyState?: ComponentType
     /**
      * `true` → render a skeleton mirror list ({@link ListLabeledProps.skeletonRows}
      * placeholder rows) instead of the live rows. The label header + `gap-2` list
@@ -287,8 +269,6 @@ export interface ListLabeledProps {
     isSkeleton?: boolean
     /** Placeholder row count while `isSkeleton`. Defaults to `3`. */
     skeletonRows?: number
-    /** Extra classes on the outer section. */
-    className?: string
     /** Layout utilities on the outer section, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
@@ -306,22 +286,25 @@ export interface ListLabeledProps {
  */
 const Labeled = ({
     label,
-    icon,
+    icon: Icon,
     items,
-    action,
-    emptyState,
+    action: Action,
+    emptyState: EmptyState,
     isSkeleton = false,
     skeletonRows = 3,
-    className,
     classNames,
     showAnatomy = false,
 }: ListLabeledProps) => {
+    // Skeleton placeholder rows go through the SAME `Row` the live list renders —
+    // no second hand-built row shape to keep in sync (COMPOSITE-10). `title`/
+    // `subtitle` are non-empty stand-ins: `TitledText` never renders them while
+    // `isSkeleton`, only uses their presence to decide the bar count.
     const rows = isSkeleton
         ? Array.from({ length: skeletonRows }, (_unused, index) => (
-            <RowSkeleton key={index} hasSubtitle showAnatomy={showAnatomy} />
+            <Row key={index} title="—" subtitle="—" isSkeleton showAnatomy={showAnatomy} />
         ))
         : items.length === 0
-            ? emptyState ?? null
+            ? (EmptyState ? <EmptyState /> : null)
             : items.map(({ key, ...item }) => <Row key={key} {...item} showAnatomy={showAnatomy} />)
 
     return (
@@ -329,22 +312,23 @@ const Labeled = ({
         // frame (§13z) — `Stack`'s `as` prop was added 2026-07-29 for exactly this case.
         <StackV
             as="section"
-            gap="grouped"
-            className={className}
+            gap={4}
             classNames={classNames}
             body={
                 <>
                     <StackH
-                        gap="related"
+                        gap={3}
                         body={
                             <>
-                                {icon}
+                                {Icon ? <Icon /> : null}
                                 <Label>{label}</Label>
                             </>
                         }
                     />
-                    <StackV gap="related" body={rows} />
-                    {action ? <div>{action}</div> : null}
+                    <StackV gap={3} body={rows} />
+                    {/* `isSkeleton`-gated: while loading there is no data behind the CTA yet,
+                        same reasoning as the `meta`/`trailing` omission on `Row` above. */}
+                    {!isSkeleton && Action ? <div><Action /></div> : null}
                 </>
             }
         />
@@ -359,17 +343,17 @@ const Labeled = ({
 export interface ListMetaProps {
     /**
      * Optional leading signal chip — the ONE prominent token in the row (e.g. a
-     * warning `Chip` for a deadline). Omit for a plain muted meta line.
+     * warning `Chip` for a deadline). Omit for a plain muted meta line. A
+     * COMPONENT reference (COMPOSITE-8), never a built element.
      */
-    chip?: ReactNode
+    chip?: ComponentType
     /**
      * Neutral secondary meta segments, rendered muted and joined by a middot `·`.
-     * REQUIRED — a REPEATING list is data (§13b). Each entry is one segment
-     * (e.g. `["Question 7 / 8", "Middle"]`).
+     * REQUIRED — a REPEATING list is data (§13b). Each entry is one segment's
+     * text (e.g. `["Question 7 / 8", "Middle"]`) — `string`, since the row wraps
+     * every segment in `Typography` itself (COMPOSITE-8).
      */
-    items: ReadonlyArray<ReactNode>
-    /** Extra classes on the row root. */
-    className?: string
+    items: ReadonlyArray<string>
     /** Layout utilities on the row root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
@@ -390,24 +374,24 @@ export interface ListMetaProps {
  *
  * @param props - {@link ListMetaProps}
  */
-const Meta = ({ chip, items, className, classNames, anatPart, showAnatomy = false }: ListMetaProps) => (
+const Meta = ({ chip: Chip, items, classNames, anatPart, showAnatomy = false }: ListMetaProps) => (
     <StackH
-        gap="related"
+        gap={3}
         classNames={["min-w-0", ...(classNames ?? [])]}
-        className={className}
         anatPart={anatPart}
         body={
             <>
-                {chip ? <span className="shrink-0">{chip}</span> : null}
+                {Chip ? <span className="shrink-0"><Chip /></span> : null}
                 {items.length > 0 ? (
                     <Typography size="xs"
                         text={(
                             <>
                                 {items.map((item, index) => (
                                     <React.Fragment key={index}>
-                                        {/* Khoảng thở của dấu `·` đến từ khoảng trắng của chính chuỗi,
-                                            KHÔNG từ `mx-1` gõ tay: margin của con là seam hai chủ (§10a),
-                                            và cổng `check-padding` bắt đúng chỗ này 2026-07-27. */}
+                                        {/* The breathing room around the `·` comes from the whitespace
+                                            IN the string itself, NOT a hand-typed `mx-1`: a child's own
+                                            margin is a two-owner seam (§10a), and the `check-padding`
+                                            gate catches exactly this spot (caught 2026-07-27). */}
                                         {index > 0 ? <span aria-hidden>{" · "}</span> : null}
                                         {item}
                                     </React.Fragment>
@@ -432,7 +416,7 @@ const Meta = ({ chip, items, className, classNames, anatPart, showAnatomy = fals
 /** Props for {@link ListToggleRow}. */
 export interface ListToggleRowProps {
     /**
-     * Row label — short, single line (e.g. "Khoá hồ sơ").
+     * Row label — short, single line (e.g. "Lock profile").
      */
     label: string
     /**
@@ -453,8 +437,6 @@ export interface ListToggleRowProps {
      * `aria-disabled` + opacity treatment on the gated section-visibility group.
      */
     isDisabled?: boolean
-    /** Extra classes on the row root. */
-    className?: string
     /** Layout utilities on the row root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /** `true` → render the skeleton mirror (label + desc bars, switch pill). Consumer just flips the flag. */
@@ -474,7 +456,8 @@ export interface ListToggleRowProps {
  * {@link ListToggleRowProps.onCheckedChange}.
  *
  * Grounded in the hand-roll toggle rows in `src/components/features/profile/
- * PrivacySettings` (the "Khoá hồ sơ" lock row + the per-section visibility rows).
+ * PrivacySettings` (the "lock profile" lock row + the per-section
+ * visibility rows).
  *
  * @param props - {@link ListToggleRowProps}
  */
@@ -484,75 +467,66 @@ const ToggleRow = ({
     checked,
     onCheckedChange,
     isDisabled = false,
-    className,
     classNames,
     isSkeleton = false,
     showAnatomy = false,
-}: ListToggleRowProps) => {
-    if (isSkeleton) {
-        return (
-            <StackH
-                gap="grouped"
-                className={className}
-                classNames={classNames}
-                body={
-                    <>
-                        {/* title↔description stack = TitledText (skeleton mirror delegated) */}
-                        <TitledText
-                            title={label}
-                            subtitle={description}
-                            isSkeleton
-                            className="flex-1"
-                            anatPart={showAnatomy ? "TitledText" : undefined}
-                        />
+}: ListToggleRowProps) => (
+    // One outer shape whether loading or not: same wrapper, same `TitledText` call
+    // (it forwards `isSkeleton` to its own atom — COMPOSITE-10). Only the trailing
+    // control itself still branches:
+    // ATOM GAP (COMPOSITE-3): the house `ChoiceSwitch` atom always couples the
+    // track to its OWN adjacent label (or none) — it has no "silent track, external
+    // aria-label" mode. This row already shows the label via `TitledText`, so
+    // reusing `ChoiceSwitch`'s label slot would print it twice; dropping it loses
+    // the switch's accessible name entirely. The vendor `Switch` stays for the
+    // REAL control on purpose; the SKELETON still mirrors through `ChoiceSwitch`
+    // (a plain shimmer pill has no label to duplicate).
+    <div className={cn(isDisabled && "opacity-50")}>
+        <StackH
+            gap={4}
+            classNames={classNames}
+            pattern="label-field"
+            body={
+                <>
+                    <TitledText
+                        title={label}
+                        subtitle={description}
+                        isSkeleton={isSkeleton}
+                        classNames={["flex-1"]}
+                        anatPart={showAnatomy ? "TitledText" : undefined}
+                    />
+                    {isSkeleton ? (
                         <ChoiceSwitch
                             isSkeleton
                             isSelected={false}
                             onValueChange={() => undefined}
                             classNames={["shrink-0"]}
-                            anatPart={showAnatomy ? "ChoiceSwitch" : undefined}
+                            showAnatomy={showAnatomy}
                         />
-                    </>
-                }
-            />
-        )
-    }
-    return (
-        <StackH
-            gap="grouped"
-            className={cn(isDisabled && "opacity-50", className)}
-            classNames={classNames}
-            body={
-                <>
-                    {/* label (body-sm medium) + muted description = one TitledText row */}
-                    <TitledText
-                        title={label}
-                        subtitle={description}
-                        className="flex-1"
-                        anatPart={showAnatomy ? "TitledText" : undefined}
-                    />
-                    <Switch
-                        className="shrink-0"
-                        isSelected={checked}
-                        isDisabled={isDisabled}
-                        onChange={onCheckedChange}
-                        aria-label={label}
-                        data-anat-part={showAnatomy ? "Switch" : undefined}
-                    >
-                        <Switch.Content>
-                            <Switch.Control>
-                                <Switch.Thumb />
-                            </Switch.Control>
-                        </Switch.Content>
-                    </Switch>
+                    ) : (
+                        <Switch
+                            className="shrink-0"
+                            isSelected={checked}
+                            isDisabled={isDisabled}
+                            onChange={onCheckedChange}
+                            aria-label={label}
+                            data-anat-part={showAnatomy ? "Switch" : undefined}
+                        >
+                            <Switch.Content>
+                                <Switch.Control>
+                                    <Switch.Thumb />
+                                </Switch.Control>
+                            </Switch.Content>
+                        </Switch>
+                    )}
                 </>
             }
         />
-    )
-}
+    </div>
+)
 
 /**
- * The row/list KHUNG namespace — every "row · list" frame in the design system,
+ * The row/list FRAME namespace — every "row · list" frame in the design system,
  * one import, four members:
  *
  * | Member | Content channel |

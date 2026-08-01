@@ -70,7 +70,7 @@ const QaReactionBar = ({
             data-anat-part={anatPart}
             onClick={() => onReact(hasReacted ? null : "like")}
             aria-pressed={hasReacted}
-            aria-label={hasReacted ? "Bỏ thích" : "Thích"}
+            aria-label={hasReacted ? "Unlike" : "Like"}
             className={cn(
                 // inset-exception: pill geometry, the same px-2 py-1 HeroUI ships in chip.css
                 "inline-flex items-center gap-1 rounded-full px-2 py-1 transition-colors hover:bg-default",
@@ -79,7 +79,7 @@ const QaReactionBar = ({
         >
             <HeartIcon weight={hasReacted ? "fill" : "regular"} aria-hidden focusable="false" className="size-3.5 shrink-0" />
             {count > 0 ? (
-                <Typography size="xs" text={String(count)} anatPart={showAnatomy ? "Typography" : undefined} />
+                <Typography size="xs" text={String(count)} showAnatomy={showAnatomy} />
             ) : null}
         </button>
     )

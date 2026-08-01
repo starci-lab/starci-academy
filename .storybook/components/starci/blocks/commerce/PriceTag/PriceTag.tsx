@@ -140,7 +140,6 @@ const PriceTagBase = ({
         savePercent > 0 ? (
             <Chip
                 tone="success"
-                anatPart={showAnatomy ? "Chip" : undefined}
                 text={`−${savePercent}%`}
             />
         ) : null
@@ -172,9 +171,9 @@ const PriceTagBase = ({
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped` (§10b), not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <StackV gap="grouped" className="p-3" body={(
+        <StackV gap={4} className="p-3" body={(
             <>
-                <Typography size="xs" color="muted" text="Chi tiết giá" />
+                <Typography size="xs" color="muted" text="Price breakdown" />
                 {/* No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
                     is the §10b `grouped` step). Passing one from here overrides the composite's
                     spacing from OUTSIDE, which §10 forbids — a composite owns its internal
@@ -184,39 +183,35 @@ const PriceTagBase = ({
                     items={[
                         {
                             key: "list",
-                            label: "Giá gốc",
+                            label: "List price",
                             value: formatPrice(original ?? discounted, currency),
                         },
                         ...(breakdown && original != null && original > breakdown.phase
                             ? [{
                                 key: "phase",
-                                label: breakdown.phaseLabel ? `Giai đoạn ${breakdown.phaseLabel}` : "Ưu đãi giai đoạn",
-                                value: (
-                                    <Typography
-                                        size="sm"
-                                        color="success-soft"
-                                        text={`−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`}
-                                    />
-                                ),
+                                label: breakdown.phaseLabel ? `${breakdown.phaseLabel} phase` : "Phase discount",
+                                // NOTE: `KeyValueListItem.value` is now a plain `string` — this row
+                                // loses the `color="success-soft"` (green) tint it used to carry via
+                                // its own `Typography`. `KeyValueRow` only renders `value` through the
+                                // emphasis/plain split, no per-row tone prop. Preserving the green
+                                // accent needs either accepting the loss (done here) or a future
+                                // `tone`/`accent` field on `KeyValueListItem` — left for whoever owns
+                                // PriceTag/KeyValue next, not decided in this pass.
+                                value: `−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`,
                             }]
                             : []),
                         ...(breakdown && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted
                             ? [{
                                 key: "loyalty",
-                                label: breakdown.loyaltyNote ? `Ưu đãi thành viên · ${breakdown.loyaltyNote}` : "Ưu đãi thành viên",
-                                value: (
-                                    <Typography
-                                        size="sm"
-                                        color="success-soft"
-                                        classNames={["shrink-0"]}
-                                        text={`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
-                                    />
-                                ),
+                                label: breakdown.loyaltyNote ? `Loyalty discount · ${breakdown.loyaltyNote}` : "Loyalty discount",
+                                // See the "phase" row's note above — same loss of the green tint,
+                                // same reason.
+                                value: `−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`,
                             }]
                             : []),
                         {
                             key: "total",
-                            label: "Bạn trả",
+                            label: "You pay",
                             value: formatPrice(discounted, currency),
                             // the TOTAL row: the frame handles the emphasis, replacing a hand-typed `border-t … pt-1`
                             emphasis: true,
@@ -233,7 +228,7 @@ const PriceTagBase = ({
     // fragment — merging them leaves the frame's `gap` with nowhere to apply.
     const priceRow = (
         <Cluster
-            gap="related"
+            gap={3}
             align="baseline"
             anatPart={showAnatomy ? "Cluster" : undefined}
             items={[
@@ -248,7 +243,7 @@ const PriceTagBase = ({
                             weight="bold"
                             isSkeleton={isSkeleton}
                             classNames={isSkeleton ? ["w-2/3"] : undefined}
-                            anatPart={showAnatomy ? "Typography" : undefined}
+                            showAnatomy={showAnatomy}
                             text={formatPrice(discounted, currency)}
                         />
                     ),
@@ -263,7 +258,7 @@ const PriceTagBase = ({
                                 isSkeleton={isSkeleton}
                                 isStruck
                                 classNames={isSkeleton ? ["w-1/3"] : undefined}
-                                anatPart={showAnatomy ? "Typography" : undefined}
+                                showAnatomy={showAnatomy}
                                 text={formatPrice(original, currency)}
                             />
                         ),
@@ -275,7 +270,7 @@ const PriceTagBase = ({
                 ...(isSkeleton
                     ? [{
                         key: "chip",
-                        content: <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />,
+                        content: <Chip isSkeleton />,
                     }]
                     : savePercent > 0
                         ? [{
@@ -283,7 +278,7 @@ const PriceTagBase = ({
                             content: (
                                 <Popover>
                                     <Popover.Trigger
-                                        aria-label="Chi tiết giá"
+                                        aria-label="Price breakdown"
                                         className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                                         data-anat-part={showAnatomy ? "Popover.Trigger" : undefined}
                                     >
@@ -309,8 +304,8 @@ const PriceTagBase = ({
             color="muted"
             isSkeleton={isSkeleton}
             classNames={isSkeleton ? ["w-1/2"] : undefined}
-            anatPart={showAnatomy ? "Typography" : undefined}
-            text={hasSaving ? `Tiết kiệm ${formatPrice(original - discounted, currency)}` : undefined}
+            showAnatomy={showAnatomy}
+            text={hasSaving ? `Save ${formatPrice(original - discounted, currency)}` : undefined}
         />
     ) : null
 
@@ -321,7 +316,7 @@ const PriceTagBase = ({
             // `grouped` (§10b): the price row and the saving line are two DIFFERENT vertical
             // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
             // inside a lower-tier component — the saving line read as if it were glued under the number.
-            gap="grouped"
+            gap={4}
             className={className}
             anatPart={anatPart ?? (showAnatomy ? "StackV" : undefined)}
             body={(

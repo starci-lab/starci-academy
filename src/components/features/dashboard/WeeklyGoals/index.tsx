@@ -29,7 +29,7 @@ import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/typ
 export type WeeklyGoalsProps = WithClassNames<undefined>
 
 /**
- * "Mục tiêu tuần" content — the composite weekly-goal summary + a per-metric
+ * "Weekly goals" content — the composite weekly-goal summary + a per-metric
  * breakdown (lessons / study-days / challenges / coding / flashcards) with a bar
  * when a target is set, plus a link to the editor. The single weekly-goals surface
  * (targets come from `weeklyKpiTargets` via `myKpis`). Content only (the parent

@@ -25,7 +25,7 @@ import { Logo } from "@sb-components/atoms/display/Logo/Logo"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Badge } from "@sb-components/atoms/display/Badge/Badge"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import { UserCell } from "@sb-components/atoms/display/UserCell/UserCell"
+import { UserCell } from "@sb-components/composites/lists/UserCell/UserCell"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button, type IconComponent } from "@sb-components/atoms/buttons/Button/Button"
 import { ButtonRadioGroup } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
@@ -130,7 +130,7 @@ export interface NavbarNotificationItem {
     title: string
     /** Optional secondary line. */
     subtitle?: string
-    /** Already-formatted relative time (e.g. "3 giờ trước") — locale math is app wiring. */
+    /** Already-formatted relative time (e.g. "3 hours ago") — locale math is app wiring. */
     timeLabel: string
     /** `false` renders the unread dot leading the row. */
     isRead: boolean
@@ -262,12 +262,12 @@ const NavbarLanguageMenu = ({ languages, activeLocale, onLocaleChange, showAnato
             isIconOnly
             variant="ghost"
             prefixIcon={TranslateIcon}
-            ariaLabel="Ngôn ngữ"
-            anatPart={showAnatomy ? "Button" : undefined}
+            ariaLabel="Language"
+            showAnatomy={showAnatomy}
         />
         <Dropdown.Popover data-anat-part={showAnatomy ? "Dropdown.Popover" : undefined}>
             <Dropdown.Menu
-                aria-label="Ngôn ngữ"
+                aria-label="Language"
                 selectionMode="single"
                 selectedKeys={new Set([activeLocale])}
                 onSelectionChange={(keys) => {
@@ -310,7 +310,7 @@ const NavbarThemeSwitch = ({ isDarkMode, onThemeToggle, showAnatomy }: NavbarThe
     <HeroSwitch
         isSelected={isDarkMode}
         onChange={onThemeToggle}
-        aria-label="Bật/tắt giao diện tối"
+        aria-label="Toggle dark mode"
         data-anat-part={showAnatomy ? "Switch" : undefined}
     >
         {({ isSelected }) => (
@@ -394,11 +394,11 @@ const Navbar = ({
                 <ButtonRadioGroup
                     items={navItems.map((item) => ({
                         value: item.id,
-                        content: <Typography size="sm" text={item.label} anatPart={showAnatomy ? "Typography" : undefined} />,
+                        content: <Typography size="sm" text={item.label} showAnatomy={showAnatomy} />,
                     }))}
                     value={activeNavId}
                     onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
-                    ariaLabel="Điều hướng chính"
+                    ariaLabel="Main navigation"
                 />
             </span>
         </>
@@ -425,11 +425,12 @@ const Navbar = ({
         <ListRow
             key={item.id}
             leading={!item.isRead ? (
-                <CircleIcon weight="fill" aria-hidden focusable="false" className="size-2 text-accent-soft-foreground" />
+                ({ isSkeleton }: { isSkeleton?: boolean }) =>
+                    isSkeleton ? null : <CircleIcon weight="fill" aria-hidden focusable="false" className="size-2 text-accent-soft-foreground" />
             ) : undefined}
             title={item.title}
             subtitle={item.subtitle}
-            meta={<Typography size="xs" color="muted" text={item.timeLabel} anatPart={showAnatomy ? "Typography" : undefined} />}
+            meta={() => <Typography size="xs" color="muted" text={item.timeLabel} showAnatomy={showAnatomy} />}
             onPress={() => notifications.onItemPress(item)}
             divider={index < notifications.items.length - 1}
             showAnatomy={showAnatomy}
@@ -438,16 +439,16 @@ const Navbar = ({
 
     const notificationHeader = (
         <>
-            <Typography size="sm" weight="bold" text="Thông báo" anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" weight="bold" text="Notifications" showAnatomy={showAnatomy} />
             {notifications.unreadCount > 0 ? (
                 <Button
                     isIconOnly
                     variant="ghost"
                     size="sm"
                     prefixIcon={ChecksIcon}
-                    ariaLabel="Đánh dấu tất cả đã đọc"
+                    ariaLabel="Mark all as read"
                     onPress={notifications.onMarkAllRead}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
         </>
@@ -456,28 +457,28 @@ const Navbar = ({
     // notification popover body: header row → async list → footer link
     const notificationPanel = (
         <>
-            <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={notificationHeader} />
+            <StackH gap={3} justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={notificationHeader} />
             <AsyncContent
                 isLoading={notifications.isLoading && notifications.items.length === 0}
-                skeleton={<StackV gap="flush" anatPart={showAnatomy ? "StackV" : undefined} body={notificationSkeletonRows} />}
+                skeleton={<StackV gap={1} anatPart={showAnatomy ? "StackV" : undefined} body={notificationSkeletonRows} />}
                 isEmpty={notifications.items.length === 0}
-                emptyContent={{ title: "Chưa có thông báo nào" }}
+                emptyContent={{ title: "No notifications yet" }}
                 error={notifications.error}
                 errorContent={{
                     title: notifications.error ?? "",
                     onRetry: notifications.onRetry,
-                    retryLabel: "Thử lại",
+                    retryLabel: "Try again",
                 }}
             >
-                <StackV gap="flush" className="max-h-[420px] overflow-y-auto" anatPart={showAnatomy ? "StackV" : undefined} body={notificationRows} />
+                <StackV gap={1} className="max-h-[420px] overflow-y-auto" anatPart={showAnatomy ? "StackV" : undefined} body={notificationRows} />
             </AsyncContent>
             <Button
                 variant="ghost"
                 size="sm"
                 classNames={["w-full"]}
-                label="Xem tất cả"
+                label="See all"
                 onPress={notifications.onSeeAll}
-                anatPart={showAnatomy ? "Button" : undefined}
+                showAnatomy={showAnatomy}
             />
         </>
     )
@@ -485,7 +486,7 @@ const Navbar = ({
     const guestAccountRow = (
         <>
             <Avatar icon={UserIcon} fallback="icon" />
-            <Typography size="sm" color="muted" text="Đăng nhập để lưu tiến trình học tập" anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" color="muted" text="Sign in to save your learning progress" showAnatomy={showAnatomy} />
         </>
     )
 
@@ -501,22 +502,30 @@ const Navbar = ({
                     handle={account.user.email}
                 />
             ) : (
-                <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={guestAccountRow} />
+                <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={guestAccountRow} />
             )}
         </AsyncContent>
+    )
+
+    // `InputButtonLike.suffix` is now a component reference (COMPOSITE-4/8), so the
+    // keyboard-shortcut hint is wrapped as a small local component closing over
+    // `shortcutLabel` instead of being built inline.
+    const ShortcutHint = () => (
+        <Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>
     )
 
     // actions cluster: search · language/theme · cart · notifications · account · mobile menu
     const barActions = (
         <>
             {/* desktop: full input-style search field; mobile: icon only */}
-            <InputButtonLike
-                placeholder={searchPlaceholder}
-                icon={<MagnifyingGlassIcon className="size-5 text-muted" />}
-                suffix={<Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>}
-                onPress={onSearchPress}
-                className="hidden w-[260px] @app-md:flex"
-            />
+            <span className="hidden w-[260px] @app-md:flex">
+                <InputButtonLike
+                    placeholder={searchPlaceholder}
+                    icon={MagnifyingGlassIcon}
+                    suffix={ShortcutHint}
+                    onPress={onSearchPress}
+                />
+            </span>
             {/* `@app-md:hidden` moved off the atom onto this wrapper — a breakpoint
                 show/hide is the surrounding frame's decision, not the atom's (ATOM-5). */}
             <span className="@app-md:hidden">
@@ -526,11 +535,11 @@ const Navbar = ({
                     prefixIcon={MagnifyingGlassIcon}
                     ariaLabel={searchPlaceholder}
                     onPress={onSearchPress}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             </span>
 
-            <StackH gap="related" className="hidden @app-md:flex" anatPart={showAnatomy ? "StackH" : undefined} body={quickControls} />
+            <StackH gap={3} className="hidden @app-md:flex" anatPart={showAnatomy ? "StackH" : undefined} body={quickControls} />
 
             {/* cart — always shown (guests included), count badge only when non-empty.
                 Raw HeroUI `Button` (not our atom, see file header): the atom's
@@ -540,7 +549,7 @@ const Navbar = ({
                 isIconOnly
                 variant="tertiary"
                 className="rounded-full"
-                aria-label="Giỏ hàng"
+                aria-label="Cart"
                 onPress={onCartPress}
                 data-anat-part={showAnatomy ? "Button" : undefined}
             >
@@ -559,7 +568,7 @@ const Navbar = ({
                         isIconOnly
                         variant="tertiary"
                         className="rounded-full"
-                        aria-label="Thông báo"
+                        aria-label="Notifications"
                         data-anat-part={showAnatomy ? "Button" : undefined}
                     >
                         <Badge color="danger" count={notifications.unreadCount}>
@@ -568,7 +577,7 @@ const Navbar = ({
                     </HeroButton>
                     <PopoverContent placement="bottom right" className="w-[360px]" data-anat-part={showAnatomy ? "PopoverContent" : undefined}>
                         {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
-                        <StackV gap="tight" className="px-2 py-1" anatPart={showAnatomy ? "StackV" : undefined} body={notificationPanel} />
+                        <StackV gap={2} className="px-2 py-1" anatPart={showAnatomy ? "StackV" : undefined} body={notificationPanel} />
                     </PopoverContent>
                 </Popover>
             ) : null}
@@ -581,7 +590,7 @@ const Navbar = ({
                     isIconOnly
                     variant="tertiary"
                     className="rounded-full"
-                    aria-label="Tài khoản"
+                    aria-label="Account"
                     data-anat-part={showAnatomy ? "Button" : undefined}
                 >
                     {account.isAuthed ? (
@@ -599,8 +608,8 @@ const Navbar = ({
                     <div className="p-3">
                         {accountMenuHeader}
                     </div>
-                    <Divider anatPart={showAnatomy ? "Divider" : undefined} />
-                    <Dropdown.Menu aria-label="Tài khoản" data-anat-part={showAnatomy ? "Dropdown.Menu" : undefined}>
+                    <Divider showAnatomy={showAnatomy} />
+                    <Dropdown.Menu aria-label="Account" data-anat-part={showAnatomy ? "Dropdown.Menu" : undefined}>
                         <Dropdown.Section data-anat-part={showAnatomy ? "Dropdown.Section" : undefined}>
                             {account.menuItems.map((item) => {
                                 const Icon = item.icon
@@ -630,9 +639,9 @@ const Navbar = ({
                     isIconOnly
                     variant="ghost"
                     prefixIcon={SidebarSimpleIcon}
-                    ariaLabel="Mở menu di động"
+                    ariaLabel="Open mobile menu"
                     onPress={() => onMobileDrawerOpenChange(true)}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             </span>
         </>
@@ -641,8 +650,8 @@ const Navbar = ({
     // primary row — fixed 4rem tall, matching the real bar's height contract
     const primaryRow = (
         <>
-            <StackH gap="section" anatPart={showAnatomy ? "StackH" : undefined} body={logoAndNavPills} />
-            <StackH gap="related" anatPart={showAnatomy ? "StackH" : undefined} body={barActions} />
+            <StackH gap={6} anatPart={showAnatomy ? "StackH" : undefined} body={logoAndNavPills} />
+            <StackH gap={3} anatPart={showAnatomy ? "StackH" : undefined} body={barActions} />
         </>
     )
 
@@ -657,13 +666,13 @@ const Navbar = ({
                 item.onPress()
                 onMobileDrawerOpenChange(false)
             }}
-            anatPart={showAnatomy ? "Button" : undefined}
+            showAnatomy={showAnatomy}
         />
     ))
 
     const languageRow = (
         <>
-            <Typography size="sm" text="Ngôn ngữ" anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" text="Language" showAnatomy={showAnatomy} />
             <NavbarLanguageMenu
                 languages={languages}
                 activeLocale={activeLocale}
@@ -675,7 +684,7 @@ const Navbar = ({
 
     const themeRow = (
         <>
-            <Typography size="sm" text="Giao diện" anatPart={showAnatomy ? "Typography" : undefined} />
+            <Typography size="sm" text="Theme" showAnatomy={showAnatomy} />
             <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} showAnatomy={showAnatomy} />
         </>
     )
@@ -683,16 +692,16 @@ const Navbar = ({
     // controls hidden from the mobile bar live here: language + theme
     const drawerControls = (
         <>
-            <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={languageRow} />
-            <StackH gap="related" justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={themeRow} />
+            <StackH gap={3} justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={languageRow} />
+            <StackH gap={3} justify="between" anatPart={showAnatomy ? "StackH" : undefined} body={themeRow} />
         </>
     )
 
     const drawerNav = (
         <>
-            <StackV gap="tight" anatPart={showAnatomy ? "StackV" : undefined} body={mobileNavRows} />
-            <Divider anatPart={showAnatomy ? "Divider" : undefined} />
-            <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined} body={drawerControls} />
+            <StackV gap={2} anatPart={showAnatomy ? "StackV" : undefined} body={mobileNavRows} />
+            <Divider showAnatomy={showAnatomy} />
+            <StackV gap={4} anatPart={showAnatomy ? "StackV" : undefined} body={drawerControls} />
         </>
     )
 
@@ -703,7 +712,7 @@ const Navbar = ({
         >
             {/* primary row — fixed 4rem tall, matching the real bar's height contract */}
             <StackH
-                gap="section"
+                gap={6}
                 justify="between"
                 className="h-16 min-h-16 px-3"
                 anatPart={showAnatomy ? "StackH" : undefined}
@@ -717,10 +726,10 @@ const Navbar = ({
                 isOpen={isMobileDrawerOpen}
                 onOpenChange={onMobileDrawerOpenChange}
                 placement="right"
-                title="Menu di động"
+                title="Mobile menu"
                 showAnatomy={showAnatomy}
             >
-                <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={drawerNav} />
+                <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={drawerNav} />
             </DrawerShell>
         </nav>
     )

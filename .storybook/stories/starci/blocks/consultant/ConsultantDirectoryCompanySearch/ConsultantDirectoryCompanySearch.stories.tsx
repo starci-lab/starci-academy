@@ -30,7 +30,7 @@ export default meta
 type Story = StoryObj<typeof ConsultantDirectoryCompanySearch>
 
 const SUGGESTIONS = [
-    { id: "shopee-vn", label: "Shopee Việt Nam" },
+    { id: "shopee-vn", label: "Shopee Vietnam" },
     { id: "tiki", label: "Tiki Corporation" },
     { id: "fpt-software", label: "FPT Software" },
 ]
@@ -42,7 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — full set: static field, typed query with matches, and the empty/loading data conditions inside the one popover shell. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ConsultantDirectoryCompanySearch"
                 tier="block"

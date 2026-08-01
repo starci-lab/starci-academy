@@ -10,11 +10,12 @@ export default meta
 type Story = StoryObj
 
 /**
- * `InputTime` KHÔNG compose atom nào có story riêng — DOM phát heroui
- * `TimeField.Group` (bọc thẳng `TimeField`) cộng `Label`/`Skeleton` của
- * `FieldFrame` nội bộ. Không có `storyId` nào để trỏ, nhưng ba part heroui này
- * vẫn cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng
- * (2026-07-28; đọc `.storybook/components/atoms/forms/Input/Input.tsx`, `InputTime`).
+ * `InputTime` does NOT compose any atom that has its own story — the DOM emits
+ * heroui's `TimeField.Group` (wrapping `TimeField` directly) plus the internal
+ * `FieldFrame`'s `Label`/`Skeleton`. There is no `storyId` to point at, but these
+ * three heroui parts still need tier `heroui` so the two-law panel doesn't silently
+ * skip them (2026-07-28; read `.storybook/components/atoms/forms/Input/Input.tsx`,
+ * `InputTime`).
  *
  * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
  * `states` entry, since none of them stacks more than one rendering.
@@ -25,7 +26,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
-/** Leaf TRẦN — chưa có label/hint/error, chỉ segments giờ:phút, chưa chọn. */
+/** BARE leaf — no label/hint/error yet, just hour:minute segments, nothing picked. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -48,11 +49,11 @@ export const Default: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf props `label` + `hint` — nhãn trên, mô tả dưới nhãn. */
+/** Leaf props `label` + `hint` — label above, description below the label. */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
@@ -75,11 +76,11 @@ export const WithLabel: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isRequired` — dấu `*` sau nhãn. */
+/** Leaf prop `isRequired` — a `*` mark after the label. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -102,11 +103,11 @@ export const Required: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `value` filled — 09:30 (`new Time(9, 30)`) thay vì `null`. */
+/** Leaf prop `value` filled — 09:30 (`new Time(9, 30)`) instead of `null`. */
 export const Filled: Story = {
     render: () => {
         const Demo = () => {
@@ -129,11 +130,11 @@ export const Filled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isDisabled` — khoá segments giờ/phút, nhãn nhạt. */
+/** Leaf prop `isDisabled` — locks the hour/minute segments, dims the label. */
 export const Disabled: Story = {
     render: () => {
         const Demo = () => {
@@ -156,11 +157,11 @@ export const Disabled: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `errorMessage` — cùng `label` → dòng đỏ + viền lỗi. */
+/** Leaf prop `errorMessage` — together with `label` → red line + error border. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -183,14 +184,14 @@ export const Error: Story = {
                 />
             )
         }
-        return <div className="p-8"><Demo /></div>
+        return <div data-tier="fixture" className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isSkeleton` — nhãn mirror trên field-box skeleton. */
+/** Leaf prop `isSkeleton` — label mirrored above the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="InputTime"
                 tier="atom"

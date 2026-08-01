@@ -11,7 +11,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * ONE LEAF (teacher, 2026-07-27). Every difference this line can show comes from BACKEND
  * DATA — the seat count, whether a next-phase price exists, whether the phase is capped —
- * so they are STATES stacked inside a single leaf. A leaf is earned by a trục the CALLER
+ * so they are STATES stacked inside a single leaf. A leaf is earned by an axis the CALLER
  * toggles, and the caller here always passes the same three props.
  */
 const meta: Meta<typeof PhaseScarcityNote> = {
@@ -46,20 +46,22 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * MỘT leaf, BỐN state — dùng API `states` (thầy chốt bố cục C, 2026-07-27).
+ * ONE leaf, FOUR states — using the `states` API (teacher finalized layout C, 2026-07-27).
  *
- * Bốn state đều do BACKEND DATA sinh ra: số suất · có/không giá tăng · phase có bị chặn suất
- * hay không. Vì vậy chúng là STATE của một leaf, không phải bốn leaf: leaf chỉ được đẻ ra bởi
- * một trục mà CALLER bật, còn ở đây caller luôn truyền đúng ba prop như nhau.
+ * All four states come from BACKEND DATA: the seat count, whether a next-phase price exists,
+ * whether the phase caps seats at all. So they are STATES of one leaf, not four leaves: a leaf
+ * is only earned by an axis the CALLER toggles, and here the caller always passes the same
+ * three props.
  *
- * Trước khi có `states`, bốn state này phải xếp tay trong `children` kèm nhãn tự chế — không
- * chỗ nào giải thích riêng từng state, không snippet riêng, và tệ nhất là cây deps suy từ DOM
- * của CẢ BỐN nên không đúng với state nào. Giờ mỗi state tự mang `why` + `code`, và chỉ state
- * đang chọn được mount nên cây deps thuộc đúng nó.
+ * Before `states` existed, these four had to be stacked by hand inside `children` with
+ * hand-rolled labels — nowhere explained each state individually, no snippet of its own, and
+ * worst of all the deps tree was inferred from the DOM of ALL FOUR at once, so it never matched
+ * any single state. Now each state carries its own `why` + `code`, and only the currently
+ * selected state gets mounted, so the deps tree belongs to exactly that one.
  */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PhaseScarcityNote"
                 tier="block"
@@ -144,7 +146,7 @@ export const Default: Story = {
 /** LEAF — the caller flips `isSkeleton`; a single-bar shimmer stands in for the line before the backend's price preview arrives (§12g.0a). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="PhaseScarcityNote"
                 tier="block"

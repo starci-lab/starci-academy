@@ -3,7 +3,7 @@ import { ArrowSquareOutIcon, VideoCameraIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -25,7 +25,7 @@ import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedb
  * real media engine this pass does not build. Faking it with a `<div>` that
  * "looks like a player" would pass every gate and lie on first render. Instead
  * this leaf draws the CHROME a video resource gets — the same card face the
- * other two kinds sit in — and an HONESTLY LABELED gap via `Feedback.Empty`
+ * other two kinds sit in — and an HONESTLY LABELED gap via `EmptyState`
  * instead of a stub. This is the exact mistake the file header of
  * `ContentModeNav` warns against, applied on purpose in the other direction: a
  * marked absence, not a silent one.
@@ -82,7 +82,7 @@ export interface FoundationResourceBodyProps {
      * `true` → the parts each leaf owns itself switch to shimmer, mirroring
      * `ContentArticle`'s precedent for this exact `SurfaceCard` + `MarkdownContent`
      * pairing. Only visibly changes the `external_link` leaf's `Button`, since
-     * neither `SurfaceCard` nor `Feedback.Empty` is given a `label`/`description`
+     * neither `SurfaceCard` nor `EmptyState` is given a `label`/`description`
      * of their own to shimmer here.
      */
     isSkeleton?: boolean
@@ -93,12 +93,12 @@ export interface FoundationResourceBodyProps {
 }
 
 /** Block-owned vocabulary for the video gap — see the file header's §B3 note. */
-const VIDEO_GAP_TITLE = "Video chưa dựng được ở khung này"
+const VIDEO_GAP_TITLE = "Video can't be built in this frame yet"
 const VIDEO_GAP_DESCRIPTION =
-    "Bộ khung này chưa có primitive phát video nào — phần thẻ xung quanh đã sẵn sàng để cắm trình phát thật vào sau."
+    "This frame has no video-playback primitive yet — the surrounding card is ready to plug in a real player later."
 
 /** Fallback CTA label when the caller has no per-resource title to give (rule 4: the block owns its own wording). */
-const DEFAULT_LINK_LABEL = "Mở liên kết"
+const DEFAULT_LINK_LABEL = "Open link"
 
 /**
  * Renders one foundation resource by its `kind`. See the file header for the
@@ -119,14 +119,18 @@ const FoundationResourceBody = ({
     if (kind === "video") {
         return (
             <div data-anat-part={anatPart}>
-                <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                    <FeedbackEmpty
-                        icon={VideoCameraIcon}
-                        title={VIDEO_GAP_TITLE}
-                        description={VIDEO_GAP_DESCRIPTION}
-                        anatPart={showAnatomy ? "FeedbackEmpty" : undefined}
-                    />
-                </SurfaceCard>
+                <SurfaceCard
+                    isSkeleton={isSkeleton}
+                    anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                    body={() => (
+                        <EmptyState
+                            icon={VideoCameraIcon}
+                            title={VIDEO_GAP_TITLE}
+                            description={VIDEO_GAP_DESCRIPTION}
+                            anatPart={showAnatomy ? "EmptyState" : undefined}
+                        />
+                    )}
+                />
             </div>
         )
     }
@@ -146,7 +150,7 @@ const FoundationResourceBody = ({
                     suffixIcon={ArrowSquareOutIcon}
                     isSkeleton={isSkeleton}
                     onPress={() => onOpenLink?.(destination)}
-                    anatPart={showAnatomy ? "Button" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             </div>
         )
@@ -156,13 +160,17 @@ const FoundationResourceBody = ({
     // in (matches `src`'s `Card`/`CardContent` wrapper for this kind).
     return (
         <div data-anat-part={anatPart}>
-            <SurfaceCard isSkeleton={isSkeleton} anatPart={showAnatomy ? "SurfaceCard" : undefined}>
-                <MarkdownContent
-                    source={markdownBody ?? ""}
-                    measure="reading"
-                    anatPart={showAnatomy ? "MarkdownContent" : undefined}
-                />
-            </SurfaceCard>
+            <SurfaceCard
+                isSkeleton={isSkeleton}
+                anatPart={showAnatomy ? "SurfaceCard" : undefined}
+                body={() => (
+                    <MarkdownContent
+                        source={markdownBody ?? ""}
+                        measure="reading"
+                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                    />
+                )}
+            />
         </div>
     )
 }

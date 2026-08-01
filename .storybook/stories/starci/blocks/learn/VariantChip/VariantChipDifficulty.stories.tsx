@@ -84,7 +84,7 @@ const SKELETON_STATES: Array<AnatomyState> = LEVELS.map((level) => ({
  */
 export const Levels: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="VariantChipDifficulty"
                 tier="block"

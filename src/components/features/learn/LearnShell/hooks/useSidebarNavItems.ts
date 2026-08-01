@@ -48,7 +48,7 @@ const DEVOPS_COURSE_DISPLAY_ID = "devops-mastery"
  * `displayId` of the AI & LLM Mastery course — the RAG Playground now lives
  * there too (moved from its old standalone public `/rag-playground` route so
  * all 3 accordion children share the same `learn/playground/<slug>` URL
- * shape; thầy chốt 2026-07-11), reachable cross-course same as Docker/K8s.
+ * shape; the teacher's final call, 2026-07-11), reachable cross-course same as Docker/K8s.
  */
 const AI_LLM_COURSE_DISPLAY_ID = "ai-llm-mastery"
 
@@ -92,10 +92,10 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
 
     // primary-key course id drives the status badges (due-card count, viewer rank)
     const courseId = useAppSelector((state) => state.course.id)
-    // due-flashcard count → badge on the "Ôn tập" row (only when > 0)
+    // due-flashcard count → badge on the "Review" row (only when > 0)
     const dueSwr = useQueryMyDueFlashcardsSwr(courseId ?? undefined)
     const dueCount = dueSwr.data?.dueCount ?? 0
-    // viewer's course rank → badge on the "Bảng xếp hạng" row (only when ranked)
+    // viewer's course rank → badge on the "Leaderboard" row (only when ranked)
     const leaderboardSwr = useLeaderboardSwr()
     const myRank = leaderboardSwr.data?.myRank?.rank ?? null
     // Playground accordion children (Docker/Kubernetes/RAG) — fixed URLs, so
@@ -117,14 +117,14 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
     const items = useMemo(
         (): Array<LearnNavItem> => {
             const rows: Array<LearnNavItem | null> = [
-            // ── Lộ trình (the mandatory spine: content → capstone) ──
+            // ── Path (the mandatory spine: content → capstone) ──
                 {
                     label: t("modules.title", { count: course?.modules?.length ?? 0 }),
                     value: "modules",
                     tab: SidebarTab.Modules,
                     icon: BracketsCurlyIcon,
                     group: "path",
-                    // route to the course-contents index (the docs-style "chỉ mục" landing);
+                    // route to the course-contents index (the docs-style "index" landing);
                     // selecting a lesson there drills into its module/content route.
                     url: pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
                 },
@@ -137,7 +137,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                     url: pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build(),
                     locked,
                 },
-                // ── Ôn & luyện (aids orbiting the spine) ──
+                // ── Review & practice (aids orbiting the spine) ──
                 {
                     label: t("flashcard.title"),
                     value: "flashcards",
@@ -194,7 +194,7 @@ export const useSidebarNavItems = (): UseSidebarNavItemsResult => {
                         },
                     ],
                 },
-                // ── Theo dõi (orientation + motivation) ──
+                // ── Track (orientation + motivation) ──
                 {
                     label: t("mindMap.title"),
                     value: "mind-map",

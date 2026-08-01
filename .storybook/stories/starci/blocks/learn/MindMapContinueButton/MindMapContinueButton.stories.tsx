@@ -36,7 +36,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — a lesson/challenge is still waiting: the resume pill renders. */
 export const ResumeAvailable: Story = {
     render: () => (
-        <div className="flex justify-center bg-default p-8">
+        <div data-tier="fixture" className="flex justify-center bg-default p-8">
             <BlockAnatomy
                 name="MindMapContinueButton"
                 tier="block"
@@ -45,21 +45,21 @@ export const ResumeAvailable: Story = {
                 annotate={ANNOTATE}
                 states={[
                     {
-                        name: "resumeHref = /courses/devops/learn/dockerfile-toi-uu",
+                        name: "resumeHref = /courses/devops/learn/optimizing-dockerfiles",
                         why: "`resumeHref` resolves to a real lesson, so the pill renders regardless of what `allContentDone` says — the href is the single source of truth for \"is there something to jump to\", exactly the precedence the real `src` component enforces.",
                         code: `<MindMapContinueButton
-    resumeHref="/courses/devops/learn/dockerfile-toi-uu"
+    resumeHref="/courses/devops/learn/optimizing-dockerfiles"
     allContentDone={false}
-    continueAriaLabel="Đi tới nội dung tiếp theo"
+    continueAriaLabel="Go to the next content"
     onResume={onResume}
 />`,
                         render: (
                             <MindMapContinueButton
                                 anatPart="MindMapContinueButton"
                                 showAnatomy
-                                resumeHref="/courses/devops/learn/dockerfile-toi-uu"
+                                resumeHref="/courses/devops/learn/optimizing-dockerfiles"
                                 allContentDone={false}
-                                continueAriaLabel="Đi tới nội dung tiếp theo"
+                                continueAriaLabel="Go to the next content"
                                 onResume={() => {}}
                             />
                         ),
@@ -73,7 +73,7 @@ export const ResumeAvailable: Story = {
 /** LEAF — nothing left to resume: the pressable pill drops out, a quiet note takes its place. */
 export const AllDone: Story = {
     render: () => (
-        <div className="flex justify-center bg-default p-8">
+        <div data-tier="fixture" className="flex justify-center bg-default p-8">
             <BlockAnatomy
                 name="MindMapContinueButton"
                 tier="block"
@@ -87,7 +87,7 @@ export const AllDone: Story = {
                         code: `<MindMapContinueButton
     resumeHref={null}
     allContentDone
-    continueAriaLabel="Đi tới nội dung tiếp theo"
+    continueAriaLabel="Go to the next content"
 />`,
                         render: (
                             <MindMapContinueButton
@@ -95,7 +95,7 @@ export const AllDone: Story = {
                                 showAnatomy
                                 resumeHref={null}
                                 allContentDone
-                                continueAriaLabel="Đi tới nội dung tiếp theo"
+                                continueAriaLabel="Go to the next content"
                             />
                         ),
                     },
@@ -108,7 +108,7 @@ export const AllDone: Story = {
 /** LEAF — the caller flips `isSkeleton`, swapping the whole node for the resume pill's mirror. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="flex justify-center bg-default p-8">
+        <div data-tier="fixture" className="flex justify-center bg-default p-8">
             <BlockAnatomy
                 name="MindMapContinueButton"
                 tier="block"
@@ -122,7 +122,7 @@ export const Skeleton: Story = {
                         code: `<MindMapContinueButton
     resumeHref={null}
     allContentDone={false}
-    continueAriaLabel="Đi tới nội dung tiếp theo"
+    continueAriaLabel="Go to the next content"
     isSkeleton
 />`,
                         render: (
@@ -131,7 +131,7 @@ export const Skeleton: Story = {
                                 showAnatomy
                                 resumeHref={null}
                                 allContentDone={false}
-                                continueAriaLabel="Đi tới nội dung tiếp theo"
+                                continueAriaLabel="Go to the next content"
                                 isSkeleton
                             />
                         ),

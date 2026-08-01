@@ -42,7 +42,7 @@ export interface FlashcardQuizResultLiveExtras {
 
 /** Props for {@link FlashcardQuizResult}. */
 export interface FlashcardQuizResultProps extends WithClassNames<undefined> {
-    /** The finished "Hỏi nhanh" session to recap. */
+    /** The finished "Quick quiz" session to recap. */
     sessionId: string
     /** Owning course id (uuid) — enrollment-guard header + RAG search scope. */
     courseId: string
@@ -73,7 +73,7 @@ const STATUS_DOT: Record<PerCardStatus, string> = {
 }
 
 /**
- * The URL-addressable RESULT surface for a finished "Hỏi nhanh" (quick-quiz) run —
+ * The URL-addressable RESULT surface for a finished "Quick quiz" run —
  * the completion screen AND the render for revisiting a finished session by URL.
  * Mirrors {@link import("../FlashcardSessionStats").FlashcardSessionStats}'s shell:
  * a centered `max-w-3xl` column of canonical blocks — HERO = three metric tiles
@@ -115,13 +115,13 @@ export const FlashcardQuizResult = ({
     )
 
     return (
-        // this screen is reached via the "Hỏi nhanh" LIVE session route
+        // this screen is reached via the "Quick quiz" LIVE session route
         // (`quiz/sessions/[sessionId]`), which stays `fullBleed` for the whole
         // session including this recap phase (the URL never changes active→
         // recap, unlike Mock Interview's `?phase=` mirror) — the shell's own
         // `p-6` never applies here, so this screen owns its page padding
-        // directly instead of relying on it (2026-07-12, thầy: "thiếu padding
-        // p-6"). `PageHeader` itself only owns header→content spacing (gap-10),
+        // directly instead of relying on it (2026-07-12, reviewer: "missing
+        // p-6 padding"). `PageHeader` itself only owns header→content spacing (gap-10),
         // never page-level padding.
         <div className={cn("flex flex-col gap-6 px-4 py-6 @app-sm:px-6", className)}>
             <PageHeader

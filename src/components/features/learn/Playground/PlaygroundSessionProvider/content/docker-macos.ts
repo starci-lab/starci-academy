@@ -4,10 +4,10 @@ import type { LocalizedGuide } from "./types"
  * macOS Docker install guide (Setup: engine step) — Homebrew route including
  * installing Homebrew itself, the plain .dmg installer, and a verify step.
  *
- * Mọi tín hiệu trong guide phải KIỂM ĐƯỢC BẰNG LỆNH (`uname -m`, `docker info`,
- * exit code) — không mô tả GUI ("icon con cá voi trên thanh menu") vì thứ đó
- * đổi theo phiên bản app và học viên không tự đối chiếu chắc chắn được. Xem
- * `.claude/fe/features/playground.md`.
+ * Every signal in the guide must be VERIFIABLE BY COMMAND (`uname -m`, `docker info`,
+ * exit code) — never describe the GUI (e.g. "the whale icon in the menu bar"),
+ * because that changes across app versions and learners can't reliably cross-check
+ * it themselves. See `.claude/fe/features/playground.md`.
  */
 export const DOCKER_MACOS_GUIDE: LocalizedGuide = {
     vi: `

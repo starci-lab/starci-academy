@@ -98,7 +98,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentType | null>(null)
     // chosen currency / region (drives summary price + gateway list)
     const [currency, setCurrency] = useState<PriceCurrency>("VND")
-    // installment (trả góp) term chosen — null = pay in full (unchanged default)
+    // installment plan term chosen — null = pay in full (unchanged default)
     const [installmentMonths, setInstallmentMonths] = useState<number | null>(null)
     // which panel is showing — always reopens on "summary" (reset alongside
     // installmentMonths below, on a fresh context)
@@ -212,7 +212,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         }
     }, [context, coursePriceSwr.data, checkoutPreview, aiTier, course?.title, t])
 
-    // installment (trả góp) terms for the active course flow (empty for AI/membership)
+    // installment plan terms for the active course flow (empty for AI/membership)
     const installmentOptions = isCourse
         ? (coursePriceSwr.data?.installmentOptions ?? [])
         : isCoursesCheckout
@@ -465,7 +465,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                         <Modal.Body className="mt-3!">
                             <div className="flex flex-col">
                                 {/* 2 panels (raw HeroUI Tabs, mirrors AiQuotaTabBar) instead of one
-                                    long stacked column: "Tóm tắt" (order + loyalty) and "Thanh toán"
+                                    long stacked column: "Summary" (order + loyalty) and "Payment"
                                     (installment/currency/gateways) — freely switchable, not a wizard. */}
                                 <Tabs
                                     selectedKey={selectedTab}
@@ -618,7 +618,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                 </div>
                                             )}
 
-                                            {/* single primary CTA on this panel — advances to "Thanh toán" */}
+                                            {/* single primary CTA on this panel — advances to "Payment" */}
                                             <Button
                                                 variant="primary"
                                                 size="lg"
@@ -633,21 +633,22 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
 
                                     {selectedTab === "payment" ? (
                                         <>
-                                            {/* installment (trả góp) — pick "pay in full" or a 3/6/12-month plan.
+                                            {/* installment plan — pick "pay in full" or a 3/6/12-month plan.
                                     VND-only (choosing a term forces the domestic gateways). Course
                                     flows only, and only when the BE offered terms (positive VND price). */}
                                             {installmentAvailable ? (
                                                 <div className="flex flex-col gap-3">
-                                                    {/* nhãn nhóm control (fe/components/label.md §1b) — KHÔNG
-                                                    Typography muted tay */}
+                                                    {/* group-label control (fe/components/label.md §1b) — do NOT
+                                                    hand-roll a muted Typography */}
                                                     <Label>{t("payment.installment.title")}</Label>
-                                                    {/* 1 SETTING gọn TẠI CHỖ — chọn xong chỉ toggle field state
-                                                    (hiện/ẩn 1 info row bên dưới), KHÔNG đổi cả panel/route →
-                                                    TabsCard primary (pill), không phải nested Tabs (test đúng theo
-                                                    segmented-control.md §Gotcha: "bấm xong có văng sang panel
-                                                    khác hẳn không? Không → TabsCard primary size sm"). size="sm" vì
-                                                    đây là lựa chọn PHỤ trong panel "Thanh toán" — không chiếm
-                                                    hết bề ngang như 1 tính-năng-cấp-trang. */}
+                                                    {/* ONE compact SETTING, IN PLACE — picking it just toggles field
+                                                    state (shows/hides one info row below), it does NOT change the
+                                                    whole panel/route → TabsCard primary (pill), not nested Tabs
+                                                    (tests correctly per segmented-control.md §Gotcha: "does pressing
+                                                    it fling you to a whole different panel? No → TabsCard primary
+                                                    size sm"). size="sm" because this is a SECONDARY choice within
+                                                    the "Payment" panel — it shouldn't take up the full width like a
+                                                    page-level feature. */}
                                                     <TabsCard
                                                         variant="primary"
                                                         size="sm"
@@ -656,7 +657,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                             ariaLabel: t("payment.installment.title"),
                                                             onSelectionChange: (key) => setInstallmentMonths(
                                                             // default straight to the 3-month term (shortest — least
-                                                            // markup) so switching to "Trả góp" doesn't force another
+                                                            // markup) so switching to "Installment" doesn't force another
                                                             // decision before showing a number; falls back to whatever
                                                             // the BE offered first if 3-month isn't available.
                                                                 String(key) === "installment"
@@ -671,8 +672,8 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                             ],
                                                         }}
                                                     />
-                                                    {/* single fixed term (3 tháng, thầy: "không cho extend thời
-                                                    gian") — nothing to CHOOSE among, so a static info row
+                                                    {/* single fixed term (3 months, teacher: "don't allow extending
+                                                    the duration") — nothing to CHOOSE among, so a static info row
                                                     replaces the old term picker (`FlexWrapButtonRadio`). */}
                                                     {installmentActive && selectedInstallment ? (
                                                         <div className="flex items-center justify-between gap-3 rounded-2xl border border-default bg-default px-3 py-2">

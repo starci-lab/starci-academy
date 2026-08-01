@@ -1,6 +1,5 @@
 import React from "react"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
@@ -51,7 +50,7 @@ export interface LeaderboardHeaderCrumb {
 export interface LeaderboardHeaderProps {
     /** Breadcrumb trail as DATA — the block builds `Breadcrumbs` itself. */
     breadcrumbItems: Array<LeaderboardHeaderCrumb>
-    /** Page title, e.g. "Bảng xếp hạng". */
+    /** Page title, e.g. "Leaderboard". */
     title: string
     /** One-sentence subtitle explaining what the ranking measures. */
     description?: string
@@ -86,7 +85,8 @@ const LeaderboardHeader = ({
         <div data-anat-part={anatPart}>
             <PageHeader
                 anatPart={showAnatomy ? "PageHeader" : undefined}
-                breadcrumb={
+                isSkeleton={isSkeleton}
+                breadcrumb={() =>
                     isSkeleton || breadcrumbItems.length ? (
                         <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
                             <Breadcrumbs
@@ -98,24 +98,8 @@ const LeaderboardHeader = ({
                         </div>
                     ) : undefined
                 }
-                title={
-                    isSkeleton ? (
-                        // `PageHeader` has no `isSkeleton` of its own, so the block calls the
-                        // atom directly with the EXACT size/weight the frame uses for a title
-                        // and feeds the result into the slot — the flag still reaches the
-                        // atom, just from a different caller (same idiom as `ContentHeader`).
-                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
-                    )
-                }
-                description={
-                    isSkeleton ? (
-                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
-                    ) : (
-                        description
-                    )
-                }
+                title={title}
+                description={description}
             />
         </div>
     )

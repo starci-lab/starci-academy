@@ -4,26 +4,29 @@ import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIco
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `SnippetIcon`: nút copy-một-chạm DUY NHẤT của hệ.
+ * ATOM — `SnippetIcon`: the system's ONE single-click copy affordance.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — luật tầng ATOM). Xét hết prop sau lượt sửa chặng 1:
- * `copyString` là BẮT BUỘC nhưng KHÔNG sinh hình khác nhau — mọi giá trị đều ra đúng
- * một glyph copy, chỉ khác nội dung được ghi vào clipboard, nên không có leaf riêng.
- * `className` là cửa hậu class, không leaf. Còn lại đúng MỘT prop có hình:
+ * 📐 **1 PROP = 1 LEAF** (§12g — the atom-tier rule). Going through every prop
+ * after the first fix pass: `copyString` is REQUIRED but produces NO visual
+ * difference — every value renders the same copy glyph, only the content written
+ * to the clipboard changes, so it gets no leaf of its own. `className` is the
+ * class back door, no leaf either. What's left is exactly ONE prop with a shape:
  *
- * - `isCopied` — ghim glyph ✓ từ bên ngoài (§12f). TRƯỚC lượt sửa này, hình ✓ chỉ
- *   sinh từ `useState`/`setTimeout` NỘI BỘ nên không story tĩnh nào ghim được — bản
- *   cũ phải lách bằng `play()` giả bấm chuột (xem file cũ, không port cách đó).
+ * - `isCopied` — pins the ✓ glyph from the outside (§12f). BEFORE this fix, the ✓
+ *   frame was only produced by INTERNAL `useState`/`setTimeout`, so no static story
+ *   could pin it — the old version had to fake it with `play()` simulating a click
+ *   (see the old file; don't port that approach).
  *
- * Vậy bộ leaf: `Default` (bare, idle) + `Copied` (prop `isCopied`, hai state cạnh
- * nhau). Atom giờ có `showAnatomy`/`anatPart` nên cả hai leaf đều badge được — trước
- * đây là atom DUY NHẤT trong hệ chưa có anatomy.
+ * So the leaf set is: `Default` (bare, idle) + `Copied` (prop `isCopied`, two states
+ * side by side). The atom now has `showAnatomy`/`anatPart` so both leaves can carry
+ * a badge — this used to be the ONE atom in the system without anatomy.
  *
- * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a). Leaf `Copied` từng
- * xếp HAI ví dụ (idle + ghim) cạnh nhau trong một khung; giờ tách thành hai state.
+ * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a). The `Copied` leaf
+ * used to stack TWO examples (idle + pinned) side by side in one frame; now split
+ * into two states.
  */
 
-/** Hướng dẫn hiện đầu trang autodocs. Chữ trên UI viết TIẾNG ANH. */
+/** Heading shown at the top of the autodocs page. UI copy is written in ENGLISH. */
 const SNIPPET_ICON_DOC = `
 ## One glyph, one job
 
@@ -74,10 +77,10 @@ export default meta
 
 type Story = StoryObj<typeof SnippetIcon>
 
-/** Leaf TRẦN — glyph copy lúc nghỉ, chưa bật `isCopied`. */
+/** Bare leaf — the copy glyph at rest, `isCopied` not yet turned on. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SnippetIcon"
                 tier="atom"
@@ -90,7 +93,7 @@ export const Default: Story = {
                         why: "A single copy glyph sits beside the command text, at rest, waiting for a click. copyString only changes what gets written to the clipboard, never the glyph itself, which is why the prop is required but earns no leaf of its own.",
                         code: "<SnippetIcon copyString=\"npm install @starciacademy/playground-agent\" />",
                         render: (
-                            <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
+                            <div data-tier="fixture" className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
                                 <Typography type="body-sm" className="font-mono">
                                     npm install @starciacademy/playground-agent
                                 </Typography>
@@ -107,10 +110,10 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `isCopied` — glyph ✓ ghim từ ngoài, cạnh glyph copy idle. */
+/** Leaf for prop `isCopied` — the ✓ glyph pinned from the outside, beside the idle copy glyph. */
 export const Copied: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="SnippetIcon"
                 tier="atom"
@@ -123,7 +126,7 @@ export const Copied: Story = {
                         why: "The glyph shows the plain copy icon, unchanged from the Default leaf. Left unset, the atom keeps managing the checkmark swap itself through internal state, exactly as it does everywhere else it is used.",
                         code: "<SnippetIcon copyString=\"npm install pkg\" />",
                         render: (
-                            <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
+                            <div data-tier="fixture" className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
                                 <Typography type="body-sm" className="font-mono">
                                     sk-live-51H8x2KJ9mQwErTyUiOp
                                 </Typography>
@@ -139,7 +142,7 @@ export const Copied: Story = {
                         why: "The glyph shows the checkmark instead of the copy icon, staying pinned to that frame regardless of whatever internal state the atom would otherwise be in. Pinning it this way is the only way a static page can display the confirmation frame that a real click only holds for 350ms.",
                         code: "<SnippetIcon copyString=\"npm install pkg\" isCopied />",
                         render: (
-                            <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
+                            <div data-tier="fixture" className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
                                 <Typography type="body-sm" className="font-mono">
                                     git clone https://github.com/StarCi-Academy/rag-from-scratch
                                 </Typography>

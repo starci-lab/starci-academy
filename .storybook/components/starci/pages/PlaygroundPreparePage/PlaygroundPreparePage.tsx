@@ -70,7 +70,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * are the same fact asked twice.
  *
  * ⭐ `PlaygroundDeviceSnapshot` IS A CONDITIONAL LEAF. The verified proposal was
- * correct on this point: the screen renders "Máy của bạn" only once the paired
+ * correct on this point: the screen renders "Your machine" only once the paired
  * agent has actually reported a snapshot — the same conditional-render precedent
  * `ContentPage`'s footer stack and `ModulePage`'s paywall already set,
  * not a new pattern.
@@ -105,7 +105,7 @@ export interface PlaygroundPreparePageProps {
     onEnter: () => void
 
     // ── device snapshot (conditional — see file header) ──
-    /** The paired machine's hardware/OS snapshot. Omitted → "Máy của bạn" is not rendered yet. */
+    /** The paired machine's hardware/OS snapshot. Omitted → "Your machine" is not rendered yet. */
     deviceInfo?: PlaygroundDeviceInfo
 
     // ── setup steps ──
@@ -157,13 +157,13 @@ const PlaygroundPreparePageEmpty = () => (
     <Container
         anatPart="Container"
         size="md"
-        padding="roomy"
+        padding={6}
         body={
             <AsyncContentEmpty
                 anatPart="AsyncContentEmpty"
                 icon={TerminalWindowIcon}
-                title="Không tìm thấy bài thực hành này"
-                description="Bài thực hành có thể đã bị gỡ hoặc đường dẫn không còn đúng — quay lại Playground để chọn bài khác."
+                title="Exercise not found"
+                description="This exercise may have been removed, or the link is no longer valid — go back to Playground to pick another one."
             />
         }
     />
@@ -265,13 +265,13 @@ const PlaygroundPreparePage = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={readinessSection} />
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={readinessSection} />
         </>
     )
 
-    const prepareBody = <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={prepareSections} />
+    const prepareBody = <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={prepareSections} />
 
-    return <Container size="md" padding="roomy" anatPart={showAnatomy ? "Container" : undefined} body={prepareBody} />
+    return <Container size="md" padding={6} anatPart={showAnatomy ? "Container" : undefined} body={prepareBody} />
 }
 
 export { PlaygroundPreparePage }

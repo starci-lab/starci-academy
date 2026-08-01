@@ -40,7 +40,7 @@ import { FloatingActionButton } from "@sb-components/composites/buttons/Floating
  */
 
 /** Fixed accessible name — see the file header on why this is not a prop. */
-const ARIA_LABEL = "Hỏi StarCi AI"
+const ARIA_LABEL = "Ask StarCi AI"
 
 /** Props for {@link ContentAiFab}. */
 export interface ContentAiFabProps {

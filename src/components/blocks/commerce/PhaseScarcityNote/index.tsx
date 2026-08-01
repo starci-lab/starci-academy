@@ -25,8 +25,8 @@ export interface PhaseScarcityNoteProps extends WithClassNames<undefined> {
 }
 
 /**
- * Honest pricing-phase scarcity line for a paywall: "Còn N suất giá {phase} · giá tăng
- * lên {X} sau đó". Sits as a SIBLING below `PriceTag` (PriceTag owns the discount;
+ * Honest pricing-phase scarcity line for a paywall: "N spots left at the {phase} price ·
+ * price rises to {X} after that". Sits as a SIBLING below `PriceTag` (PriceTag owns the discount;
  * scarcity is orthogonal urgency). Renders ONLY when the current phase has a real seat
  * cap (`seatsRemaining != null`) — an unlimited phase has no honest "rises-when" trigger
  * so nothing shows. EVERY number comes from the backend `coursePricePreview` (seat cap −

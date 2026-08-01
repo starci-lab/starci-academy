@@ -34,18 +34,18 @@ export default meta
 type Story = StoryObj<typeof ResizableRail>
 
 const TOPICS = [
-    "Tất cả",
-    "Mảng & Chuỗi",
-    "Danh sách liên kết",
-    "Ngăn xếp & Hàng đợi",
-    "Cây & BST",
-    "Đồ thị",
-    "Quy hoạch động",
-    "Tham lam",
-    "Băm & Tập hợp",
-    "Sắp xếp",
-    "Hai con trỏ",
-    "Cửa sổ trượt",
+    "All",
+    "Arrays & Strings",
+    "Linked Lists",
+    "Stacks & Queues",
+    "Trees & BST",
+    "Graphs",
+    "Dynamic Programming",
+    "Greedy",
+    "Hashing & Sets",
+    "Sorting",
+    "Two Pointers",
+    "Sliding Window",
 ]
 
 /** Props for the `PracticeTopicsBody` helper. */
@@ -57,7 +57,7 @@ interface PracticeTopicsBodyProps {
 /** Topic search + ListBox — the rail body, mirroring `PracticeRail` (problems mode) without the mode tabs. */
 const PracticeTopicsBody = ({ className }: PracticeTopicsBodyProps) => {
     const [query, setQuery] = useState("")
-    const [topic, setTopic] = useState("Tất cả")
+    const [topic, setTopic] = useState("All")
 
     const topics = useMemo(() => {
         const normalized = query.trim().toLowerCase()
@@ -68,14 +68,14 @@ const PracticeTopicsBody = ({ className }: PracticeTopicsBodyProps) => {
     }, [query])
 
     return (
-        <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
+        <div data-tier="fixture" className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
             <div className="flex flex-col gap-2">
-                <Label className="px-1 text-xs text-muted">Chủ đề</Label>
+                <Label className="px-1 text-xs text-muted">Topic</Label>
                 <TextField>
                     <Input
                         type="search"
-                        aria-label="Tìm chủ đề"
-                        placeholder="Tìm chủ đề"
+                        aria-label="Search topics"
+                        placeholder="Search topics"
                         value={query}
                         onChange={(event) => setQuery(event.target.value)}
                     />
@@ -88,11 +88,11 @@ const PracticeTopicsBody = ({ className }: PracticeTopicsBodyProps) => {
             >
                 {topics.length === 0 ? (
                     <Typography type="body-sm" color="muted" className="px-3 py-2">
-                        Không có chủ đề khớp "{query.trim()}"
+                        No topics match "{query.trim()}"
                     </Typography>
                 ) : (
                     <ListBox
-                        aria-label="Danh sách chủ đề"
+                        aria-label="Topic list"
                         selectionMode="single"
                         disallowEmptySelection
                         selectedKeys={[topic]}
@@ -105,7 +105,7 @@ const PracticeTopicsBody = ({ className }: PracticeTopicsBodyProps) => {
                         className="gap-1 p-0"
                     >
                         {topics.map((item) => (
-                            <ListBox.Item
+                            <ListBox.Item data-tier="fixture"
                                 key={item}
                                 id={item}
                                 textValue={item}
@@ -135,14 +135,14 @@ const PracticeShellDemo = ({
     defaultWidth?: number
     maxWidth?: number
 }) => (
-    <div className={`flex w-full items-start ${heightClassName}`}>
+    <div data-tier="fixture" className={`flex w-full items-start ${heightClassName}`}>
         <ResizableRail
             className="relative flex h-full shrink-0 flex-col self-stretch"
             storageKey={storageKey}
             defaultWidth={defaultWidth}
             minWidth={256}
             maxWidth={maxWidth}
-            ariaLabel="Kéo để đổi độ rộng danh sách chủ đề"
+            ariaLabel="Drag to resize the topic list"
         >
             <PracticeTopicsBody className="min-h-0 flex-1" />
         </ResizableRail>
@@ -150,8 +150,8 @@ const PracticeShellDemo = ({
         <div className="min-h-0 min-w-0 flex-1 overflow-y-auto p-6">
             <div className="mx-auto flex max-w-5xl flex-col gap-8">
                 <PageHeader
-                    title="Luyện tập coding"
-                    description="Chọn một chủ đề ở bên trái để bắt đầu luyện các bài tập tương ứng."
+                    title="Coding practice"
+                    description="Pick a topic on the left to start practicing its exercises."
                 />
             </div>
         </div>
@@ -166,7 +166,7 @@ const PracticeShellDemo = ({
 /** Default: search + topic ListBox rail beside a content pane. Drag the right-edge handle to resize. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ResizableRail"
                 tier="frame"
@@ -192,7 +192,7 @@ export const Default: Story = {
 /** Overflow branch: a taller topic list scrolls INSIDE the rail (ScrollShadow), never pushing the shell taller. */
 export const OverflowScrollsInRail: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ResizableRail"
                 tier="frame"
@@ -226,7 +226,7 @@ export const ShrinkingMaxWidth: Story = {
     render: () => {
         const [maxWidth, setMaxWidth] = useState(560)
         return (
-            <div className="p-8">
+            <div data-tier="fixture" className="p-8">
                 <BlockAnatomy
                     name="ResizableRail"
                     tier="frame"
@@ -238,7 +238,7 @@ export const ShrinkingMaxWidth: Story = {
                             why: "Dragging the rail out to its full width and then pressing the 360 button snaps the rail back to the new bound immediately, without waiting for another drag. The rail re-clamps itself the moment maxWidth narrows, so it can never sit at a width that is no longer legal.",
                             code: "<ResizableRail storageKey=\"practice.rail.bounds.width\" defaultWidth={300} minWidth={256} maxWidth={maxWidth} ariaLabel=\"Resize the topic list\"><TopicList /></ResizableRail>",
                             render: (
-                                <div className="flex flex-col gap-3">
+                                <div data-tier="fixture" className="flex flex-col gap-3">
                                     <div className="flex flex-col gap-2">
                                         <Label>Bounds that move under the rail</Label>
                                         <Typography type="body-sm" color="muted">

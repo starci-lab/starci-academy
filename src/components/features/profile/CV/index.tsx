@@ -32,9 +32,9 @@ type CvBreadcrumbItem = {
 export type CvProps = WithClassNames<undefined>
 
 /**
- * CV page — a USER-level (not course-scoped) résumé tool. Hosted at
+ * CV page — a USER-level (not course-scoped) resume tool. Hosted at
  * `/profile/cv` (the user owns many CVs across all courses). Profile-context
- * breadcrumb (Home › Hồ sơ › CV) wrapping the shared {@link CvBlocksWorkspace}
+ * breadcrumb (Home › Profile › CV) wrapping the shared {@link CvBlocksWorkspace}
  * block editor (also rendered, without a breadcrumb, as the public-profile "CV"
  * tab).
  *

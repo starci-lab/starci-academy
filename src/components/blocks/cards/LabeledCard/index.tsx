@@ -19,7 +19,7 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
      * label (semibold accent text + a caret that slides right on hover).
      */
     onSeeMore?: () => void
-    /** Text for the see-more link. Defaults to "Xem thêm" — pass `t(...)` to localise. */
+    /** Text for the see-more link. Defaults to "See more" — pass `t(...)` to localise. */
     seeMoreLabel?: ReactNode
     /**
      * Arbitrary right-aligned slot in the label row (e.g. an owner "Add / manage"
@@ -60,9 +60,9 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
     /**
      * Renders the label as a SUBTLE eyebrow (`text-xs text-muted`) with a tighter
      * `gap-2` to the content, instead of the default section `Label` + `gap-3`. For
-     * a minor/secondary header over a block — e.g. a time-bucket "Hôm nay" over a run
-     * list — where a full section label reads too heavy (thầy 2026-07-13: "nếu card
-     * cần label phụ thì label-gap-2"). `labelEnd` shrinks to `text-xs` to match.
+     * a minor/secondary header over a block — e.g. a time-bucket "Today" over a run
+     * list — where a full section label reads too heavy (teacher 2026-07-13: "if a card
+     * needs a secondary label, use label-gap-2"). `labelEnd` shrinks to `text-xs` to match.
      */
     subtleLabel?: boolean
     /**
@@ -89,7 +89,7 @@ export const LabeledCard = ({
     label,
     labelEnd,
     onSeeMore,
-    seeMoreLabel = "Xem thêm",
+    seeMoreLabel = "See more",
     action,
     children,
     description,
@@ -102,7 +102,10 @@ export const LabeledCard = ({
     bordered = false,
 }: LabeledCardProps) => {
     return (
-        <section className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}>
+        <section
+            data-principles={subtleLabel ? "sublabel-field" : "label-field"}
+            className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}
+        >
             <div className="flex items-center justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-2">
                     {subtleLabel ? (

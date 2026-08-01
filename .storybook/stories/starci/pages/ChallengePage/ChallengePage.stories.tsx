@@ -16,13 +16,13 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * grading settings, chrome trigger only; (5) the roll-up score against the
  * pass line.
  *
- * ⭐ TWO COLUMNS, composed with `SplitWorkspace` (§ layout khung, 2026-07-29):
+ * ⭐ TWO COLUMNS, composed with `SplitWorkspace` (§ frame layout, 2026-07-29):
  * `min-w-0 flex-1` reading column beside a `shrink-0 w-[360px]` sticky aside
  * — STACKED (mobile/tablet) → `@app-xl:flex-row` (desktop only), matching
  * real `src`'s `ChallengeView` exactly. Was `StackH…wrap`, a FIXED horizontal
- * axis that never actually stacked below desktop — thầy caught the render
- * forcing side-by-side even on mobile ("desktop là phải render flex chứ
- * nhỉ?"); see the `Responsive` leaf below for the 3-width proof. `Container
+ * axis that never actually stacked below desktop — the teacher caught the render
+ * forcing side-by-side even on mobile ("shouldn't desktop be the one that
+ * renders flex?"); see the `Responsive` leaf below for the 3-width proof. `Container
  * size="xl"` (not the `md` a single-column screen uses) is what buys the two
  * columns enough room to sit side by side without crowding each other.
  *
@@ -42,44 +42,44 @@ export default meta
 type Story = StoryObj<typeof ChallengePage>
 
 const PREREQUISITES = [
-    { key: "prereq-1", body: "Đã cài Node.js 20 trở lên" },
-    { key: "prereq-2", body: "Có tài khoản GitHub và biết tạo repo mới" },
+    { key: "prereq-1", body: "Node.js 20 or later installed" },
+    { key: "prereq-2", body: "A GitHub account, and you know how to create a new repo" },
 ]
 
 const REQUIREMENTS = [
     {
         key: "req-1",
-        title: "Dựng API CRUD cho Task",
+        title: "Build a CRUD API for Task",
         points: 40,
-        body: "Xây REST API `/tasks` hỗ trợ tạo, đọc, sửa, xoá — mỗi route trả đúng mã trạng thái HTTP.",
+        body: "Build a REST API `/tasks` supporting create, read, update, delete — each route returns the correct HTTP status code.",
     },
     {
         key: "req-2",
-        title: "Viết test cho từng route",
+        title: "Write tests for each route",
         points: 30,
-        body: "Ít nhất một test integration cho mỗi route, chạy được bằng `npm test`.",
+        body: "At least one integration test per route, runnable with `npm test`.",
     },
 ]
 
 const STEPS = [
-    { key: "step-1", title: "Khởi tạo dự án", body: "Chạy `npm init` rồi cài Express và TypeORM." },
-    { key: "step-2", body: "Định nghĩa entity `Task` với các trường `title`, `done`, `createdAt`." },
+    { key: "step-1", title: "Initialize the project", body: "Run `npm init`, then install Express and TypeORM." },
+    { key: "step-2", body: "Define the `Task` entity with fields `title`, `done`, `createdAt`." },
 ]
 
 const OUTPUTS = [
-    { key: "out-1", body: "`GET /tasks` trả về mảng JSON các task hiện có" },
-    { key: "out-2", body: "`POST /tasks` trả về task vừa tạo kèm `id`" },
+    { key: "out-1", body: "`GET /tasks` returns a JSON array of existing tasks" },
+    { key: "out-2", body: "`POST /tasks` returns the newly created task along with its `id`" },
 ]
 
-const HINT = "Nếu route trả 500 khi test, kiểm tra lại xem đã `await` migration trước khi server lắng nghe request chưa."
+const HINT = "If a route returns 500 during testing, check whether you `await`ed the migration before the server started listening for requests."
 
 const TODO_DELIVERABLES: Array<ChallengeDeliverableItem> = [
     {
         id: "api-design",
-        title: "Dựng API CRUD cho Task",
+        title: "Build a CRUD API for Task",
         points: 40,
         status: "todo",
-        description: "Vẽ sơ đồ **resource** và liệt kê method/status code cho từng endpoint.",
+        description: "Sketch the **resource** diagram and list the method/status code for each endpoint.",
         url: "",
         onUrlChange: () => {},
         onSubmit: () => {},
@@ -87,10 +87,10 @@ const TODO_DELIVERABLES: Array<ChallengeDeliverableItem> = [
     },
     {
         id: "unit-test",
-        title: "Viết test cho từng route",
+        title: "Write tests for each route",
         points: 30,
         status: "todo",
-        description: "Ít nhất một test integration cho mỗi route, chạy được bằng `npm test`.",
+        description: "At least one integration test per route, runnable with `npm test`.",
         url: "",
         onUrlChange: () => {},
         onSubmit: () => {},
@@ -101,11 +101,11 @@ const TODO_DELIVERABLES: Array<ChallengeDeliverableItem> = [
 const GRADED_DELIVERABLES: Array<ChallengeDeliverableItem> = [
     {
         id: "api-design",
-        title: "Dựng API CRUD cho Task",
+        title: "Build a CRUD API for Task",
         points: 40,
         status: "done",
-        description: "Vẽ sơ đồ **resource** và liệt kê method/status code cho từng endpoint.",
-        url: "https://github.com/hocvien/task-api",
+        description: "Sketch the **resource** diagram and list the method/status code for each endpoint.",
+        url: "https://github.com/learner/task-api",
         onUrlChange: () => {},
         onSubmit: () => {},
         onViewHistory: () => {},
@@ -114,17 +114,17 @@ const GRADED_DELIVERABLES: Array<ChallengeDeliverableItem> = [
             earnedScore: 40,
             requiredScore: 32,
             attemptNumber: 1,
-            processedAt: "17:24 23/06",
-            shortFeedback: "Đủ bốn route CRUD, mã trạng thái đúng chuẩn.",
+            processedAt: "5:24 PM Jun 23",
+            shortFeedback: "All four CRUD routes present, status codes match spec.",
         },
     },
     {
         id: "unit-test",
-        title: "Viết test cho từng route",
+        title: "Write tests for each route",
         points: 30,
         status: "failed",
-        description: "Ít nhất một test integration cho mỗi route, chạy được bằng `npm test`.",
-        url: "https://github.com/hocvien/task-api/pull/3",
+        description: "At least one integration test per route, runnable with `npm test`.",
+        url: "https://github.com/learner/task-api/pull/3",
         onUrlChange: () => {},
         onSubmit: () => {},
         onViewHistory: () => {},
@@ -133,8 +133,8 @@ const GRADED_DELIVERABLES: Array<ChallengeDeliverableItem> = [
             earnedScore: 12,
             requiredScore: 24,
             attemptNumber: 2,
-            processedAt: "18:44 23/06",
-            shortFeedback: "Bộ test chưa phủ nhánh id không tồn tại của route xoá.",
+            processedAt: "6:44 PM Jun 23",
+            shortFeedback: "The test suite doesn't cover the delete route's nonexistent-id branch.",
         },
     },
 ]
@@ -151,7 +151,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — a fresh challenge: no attempt yet, every deliverable still `todo`. */
 export const NotAttempted: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengePage"
                 tier="screen"
@@ -164,7 +164,7 @@ export const NotAttempted: Story = {
                         why: "The learner has never submitted anything for this challenge, so the header shows no status chip, every deliverable row sits at `todo` with an empty URL field, and the score card reads 0 against the pass line. Every one of the five functions is present — only the numbers say nothing has happened yet.",
                         code: `<ChallengePage
     onBackPress={goBack}
-    title="Xây REST API quản lý Task"
+    title="Build a Task management REST API"
     difficulty="medium"
     deliverables={deliverables}
     earnedScore={0}
@@ -176,8 +176,8 @@ export const NotAttempted: Story = {
                             <ChallengePage
                                 showAnatomy
                                 onBackPress={() => {}}
-                                title="Xây REST API quản lý Task"
-                                description="Dựng một REST API CRUD cho tài nguyên Task, có test và triển khai lên staging."
+                                title="Build a Task management REST API"
+                                description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
                                 scoreValue={70}
                                 difficulty="medium"
                                 prerequisites={PREREQUISITES}
@@ -202,7 +202,7 @@ export const NotAttempted: Story = {
 /** LEAF — a graded attempt: one requirement passed, one failed with feedback. */
 export const Graded: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengePage"
                 tier="screen"
@@ -225,8 +225,8 @@ export const Graded: Story = {
                             <ChallengePage
                                 showAnatomy
                                 onBackPress={() => {}}
-                                title="Xây REST API quản lý Task"
-                                description="Dựng một REST API CRUD cho tài nguyên Task, có test và triển khai lên staging."
+                                title="Build a Task management REST API"
+                                description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
                                 scoreValue={70}
                                 difficulty="medium"
                                 status="failed"
@@ -256,7 +256,7 @@ export const Graded: Story = {
  */
 export const Responsive: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengePage"
                 tier="screen"
@@ -272,11 +272,11 @@ export const Responsive: Story = {
     <ChallengePage {...props} />
 </div>`,
                         render: (
-                            <div className="@container" style={{ width: 375 }}>
+                            <div data-tier="fixture" className="@container" style={{ width: 375 }}>
                                 <ChallengePage
                                     onBackPress={() => {}}
-                                    title="Xây REST API quản lý Task"
-                                    description="Dựng một REST API CRUD cho tài nguyên Task, có test và triển khai lên staging."
+                                    title="Build a Task management REST API"
+                                    description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
                                     scoreValue={70}
                                     difficulty="medium"
                                     prerequisites={PREREQUISITES}
@@ -300,11 +300,11 @@ export const Responsive: Story = {
     <ChallengePage {...props} />
 </div>`,
                         render: (
-                            <div className="@container" style={{ width: 768 }}>
+                            <div data-tier="fixture" className="@container" style={{ width: 768 }}>
                                 <ChallengePage
                                     onBackPress={() => {}}
-                                    title="Xây REST API quản lý Task"
-                                    description="Dựng một REST API CRUD cho tài nguyên Task, có test và triển khai lên staging."
+                                    title="Build a Task management REST API"
+                                    description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
                                     scoreValue={70}
                                     difficulty="medium"
                                     prerequisites={PREREQUISITES}
@@ -328,11 +328,11 @@ export const Responsive: Story = {
     <ChallengePage {...props} />
 </div>`,
                         render: (
-                            <div className="@container" style={{ width: 1280 }}>
+                            <div data-tier="fixture" className="@container" style={{ width: 1280 }}>
                                 <ChallengePage
                                     onBackPress={() => {}}
-                                    title="Xây REST API quản lý Task"
-                                    description="Dựng một REST API CRUD cho tài nguyên Task, có test và triển khai lên staging."
+                                    title="Build a Task management REST API"
+                                    description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
                                     scoreValue={70}
                                     difficulty="medium"
                                     prerequisites={PREREQUISITES}
@@ -358,7 +358,7 @@ export const Responsive: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block mirrors itself. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengePage"
                 tier="screen"
@@ -374,8 +374,8 @@ export const Skeleton: Story = {
                             <ChallengePage
                                 showAnatomy
                                 onBackPress={() => {}}
-                                title="Xây REST API quản lý Task"
-                                description="Dựng một REST API CRUD cho tài nguyên Task, có test và triển khai lên staging."
+                                title="Build a Task management REST API"
+                                description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
                                 scoreValue={70}
                                 difficulty="medium"
                                 prerequisites={PREREQUISITES}

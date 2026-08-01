@@ -13,11 +13,11 @@ export type VerdictBandVariant = "accent" | "success" | "warning" | "danger"
 
 /**
  * Shared shape for the `withVerdict` left-band prop on {@link SectionCard}/
- * {@link SurfaceListCardItem}/{@link GroupPressableCard} (`card.md` §3i — "card
- * mang tín hiệu từ DATA"). Pass exactly ONE of `variant` (semantic token,
+ * {@link SurfaceListCardItem}/{@link GroupPressableCard} (`card.md` §3i — "a card
+ * carries a signal FROM DATA"). Pass exactly ONE of `variant` (semantic token,
  * literal-safe) or `color` (raw Tailwind palette color + shade, e.g.
- * `"amber-500"`). Left band ONLY reads as a DATA signal — never ad-hoc "vùng
- * active" decoration (`card.md` §3g).
+ * `"amber-500"`). Left band ONLY reads as a DATA signal — never ad-hoc "active
+ * region" decoration (`card.md` §3g).
  */
 export interface VerdictBand {
     /** Turn the left band on. */

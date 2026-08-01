@@ -32,8 +32,8 @@ export default meta
 type Story = StoryObj<typeof LeaderboardHeader>
 
 const CRUMBS = [
-    { key: "home", label: "Trang chủ", onPress: () => {} },
-    { key: "leaderboard", label: "Bảng xếp hạng" },
+    { key: "home", label: "Home", onPress: () => {} },
+    { key: "leaderboard", label: "Leaderboard" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -45,7 +45,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — the whole header: trail → title → optional subtitle. */
 export const Header: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="LeaderboardHeader"
                 tier="block"
@@ -59,16 +59,16 @@ export const Header: Story = {
                         why: "The full identity cluster: trail, title, and a one-sentence subtitle explaining what the ranking measures. This is what a reader sees the first time they open the leaderboard, before they know the rules of the ranking.",
                         code: `<LeaderboardHeader
     breadcrumbItems={crumbs}
-    title="Bảng xếp hạng"
-    description="Xếp hạng theo tổng điểm luyện tập trong tháng này"
+    title="Leaderboard"
+    description="Ranked by total practice points earned this month"
 />`,
                         render: (
                             <LeaderboardHeader
                                 anatPart="LeaderboardHeader"
                                 showAnatomy
                                 breadcrumbItems={CRUMBS}
-                                title="Bảng xếp hạng"
-                                description="Xếp hạng theo tổng điểm luyện tập trong tháng này"
+                                title="Leaderboard"
+                                description="Ranked by total practice points earned this month"
                             />
                         ),
                     },
@@ -77,12 +77,12 @@ export const Header: Story = {
                         why: "A returning reader who already knows what the leaderboard measures does not need the sentence repeated on every visit, so the caller may drop it — the title alone still reads as a complete page identity.",
                         code: `<LeaderboardHeader
     breadcrumbItems={crumbs}
-    title="Bảng xếp hạng"
+    title="Leaderboard"
 />`,
                         render: (
                             <LeaderboardHeader
                                 breadcrumbItems={CRUMBS}
-                                title="Bảng xếp hạng"
+                                title="Leaderboard"
                             />
                         ),
                     },

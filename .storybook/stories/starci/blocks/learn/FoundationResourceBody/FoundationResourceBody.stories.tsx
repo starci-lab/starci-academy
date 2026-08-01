@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * ⭐ VIDEO IS A SCOPE CUT, NOT A STUB (§B3). No video-playback primitive exists
  * in the inventory, so this leaf draws the card CHROME a video resource gets
- * and an honest `Feedback.Empty` gap instead of faking a player — see the
+ * and an honest `EmptyState` gap instead of faking a player — see the
  * component file header for the full reasoning.
  *
  * ⭐ `onOpenLink` is a DEVIATION from `src`, which calls `window.open` itself.
@@ -35,31 +35,32 @@ export default meta
 
 type Story = StoryObj<typeof FoundationResourceBody>
 
-const MARKDOWN_BODY = `## 12-Factor App là gì
+const MARKDOWN_BODY = `## What is the 12-Factor App
 
-Mười hai nguyên tắc để viết dịch vụ chạy tốt trên cloud — config tách khỏi code,
-process không giữ state, log ghi ra stdout thay vì tự quản file.
+Twelve principles for writing services that run well on the cloud — config kept
+separate from code, processes holding no state, logs written to stdout instead of
+managed as files.
 
-- Config qua biến môi trường, không hard-code theo từng môi trường
-- Build → Release → Run tách rời, không sửa code ở bước run
+- Configure through environment variables, don't hard-code per environment
+- Build → Release → Run stay separate, never edit code at the run step
 
 \`\`\`bash
 docker run -e DATABASE_URL=$DB_URL app:release-42
 \`\`\`
 
-> Đọc gốc tại 12factor.net trước khi áp cho service của bạn.`
+> Read the original at 12factor.net before applying it to your own service.`
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the card face a document or a video slot sits on, owning the paper surface and the padding around whatever the leaf puts inside it", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "MarkdownContent": { tier: "composite", role: "the viewer that repeats the authored resource body; the block hands it the markdown and never inspects what is in it", storyId: "composites-viewers-markdowncontent--reading" },
-    "FeedbackEmpty": { tier: "composite", role: "the honestly-labeled gap standing in for a video player this pass does not build — chrome without a stub", storyId: "composites-feedback-feedback-feedbackempty--icon-and-title" },
+    "EmptyState": { tier: "composite", role: "the honestly-labeled gap standing in for a video player this pass does not build — chrome without a stub", storyId: "composites-feedback-emptystate-emptystate--icon-and-title" },
     "Button": { tier: "atom", role: "the whole-card CTA for an external resource, handing the resolved URL up to `onOpenLink` on press", storyId: "atoms-buttons-button-button--default" },
 }
 
 /** LEAF — `kind = "document"`: a reading article in a paper card. */
 export const Document: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourceBody"
                 tier="block"
@@ -99,7 +100,7 @@ export const Document: Story = {
 /** LEAF — `kind = "video"`: card chrome + an honestly-labeled §B3 gap. */
 export const Video: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourceBody"
                 tier="block"
@@ -135,7 +136,7 @@ export const Video: Story = {
 /** LEAF — `kind = "external_link"`: a single "open" button, no card. */
 export const ExternalLink: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="FoundationResourceBody"
                 tier="block"
@@ -149,7 +150,7 @@ export const ExternalLink: Story = {
                         why: "The resource is just a pointer elsewhere, so the block draws one button and nothing more — no card face to fill with a single line of text. Pressing it hands the resolved URL to `onOpenLink`; the caller decides what \"open\" means (rule 7).",
                         code: `<FoundationResourceBody
     kind="external_link"
-    linkTitle="Tài liệu chính thức Docker"
+    linkTitle="Official Docker documentation"
     linkUrl="https://docs.docker.com"
     onOpenLink={(url) => window.open(url, "_blank", "noopener,noreferrer")}
 />`,
@@ -158,7 +159,7 @@ export const ExternalLink: Story = {
                                 anatPart="FoundationResourceBody"
                                 showAnatomy
                                 kind="external_link"
-                                linkTitle="Tài liệu chính thức Docker"
+                                linkTitle="Official Docker documentation"
                                 linkUrl="https://docs.docker.com"
                                 onOpenLink={() => {}}
                             />
@@ -179,8 +180,8 @@ export const ExternalLink: Story = {
                     {
                         name: "linkUrl missing",
                         why: "Matches `src`: a link resource with nothing to point at renders nothing at all, rather than a button that dangles with no destination — an invented \"broken link\" affordance nobody asked for.",
-                        code: "<FoundationResourceBody kind=\"external_link\" linkTitle=\"Tài liệu\" />",
-                        render: <FoundationResourceBody kind="external_link" linkTitle="Tài liệu" />,
+                        code: "<FoundationResourceBody kind=\"external_link\" linkTitle=\"Documentation\" />",
+                        render: <FoundationResourceBody kind="external_link" linkTitle="Documentation" />,
                     },
                 ]}
             />

@@ -46,8 +46,8 @@ const seedSectionVisibility = (
 /**
  * Privacy settings feature container.
  *
- * The profile-VISIBILITY controls — "Khoá hồ sơ" (lock) + the per-section
- * "Hiển thị hồ sơ" group — moved out of the edit-profile form into their own
+ * The profile-VISIBILITY controls — "Lock profile" (lock) + the per-section
+ * "Profile visibility" group — moved out of the edit-profile form into their own
  * settings page. Owns a small local form state seeded from the redux user; on save
  * it persists ONLY `{ profileLocked, sectionVisibility }` via `updateProfile` and
  * pushes the fresh user into redux. Mounted by `/profile/settings/privacy`.
@@ -148,7 +148,7 @@ export const ProfilePrivacySettings = () => {
                 </div>
 
                 {/* per-section visibility — one toggle row per gateable tab, mirroring
-                    the lock row above. "Khoá hồ sơ" OVERRIDES this whole group (it
+                    the lock row above. "Lock profile" OVERRIDES this whole group (it
                     already hides everything from visitors), so when the lock is on the
                     group is greyed + disabled. Overview + CV are never listed here
                     (Overview always shows; CV keeps its own public gate). */}

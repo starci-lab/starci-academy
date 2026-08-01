@@ -71,8 +71,8 @@ const WORK_MODE_LABEL_KEY = {
  * Identity column of the public profile — the BARE left sidebar (no card, per
  * `starci-concept.md`: identity is the static ground, content cards sit on the
  * right). Stacks the rank-framed avatar, name + `@handle`, the open-to-work
- * badge, a short bio, the action cluster (one primary CTA — recruiter "Liên hệ
- * tuyển dụng" / Follow / owner edit+settings), share, and a meta block
+ * badge, a short bio, the action cluster (one primary CTA — recruiter "Contact for
+ * hiring" / Follow / owner edit+settings), share, and a meta block
  * (followers · following · joined · github).
  *
  * Self-contained: resolves the target user from the route, reads the profile via
@@ -131,7 +131,7 @@ export const ProfileHero = ({
     }
     const joinedLabel = user?.createdAt
         ? t("profile.joined", {
-            // full month name per the time-rendering rule ("Tháng 6 2026"), not "thg 6"
+            // full month name per the time-rendering rule ("June 2026"), not the abbreviated "Jun"
             date: new Date(user.createdAt).toLocaleDateString(locale, {
                 month: "long",
                 year: "numeric",

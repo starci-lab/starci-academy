@@ -39,23 +39,23 @@ export default meta
 
 type Story = StoryObj<typeof MarkdownContent>
 
-const PROSE = `## Vì sao image phình
+const PROSE = `## Why the image keeps growing
 
-Mỗi lệnh trong \`Dockerfile\` đẻ ra một **layer**, và layer thì *cộng dồn* — xoá file ở
-layer sau không lấy lại chỗ đã chiếm ở layer trước.
+Every instruction in \`Dockerfile\` spawns a **layer**, and layers *accumulate* — deleting a
+file in a later layer doesn't reclaim the space it took up in an earlier one.
 
-- \`COPY . .\` trước \`npm ci\` làm cache vỡ mỗi lần sửa code
-- toolchain nằm lại trong image chạy thật
-- file tạm bị xoá ở lệnh sau vẫn còn nguyên trong layer trước
+- \`COPY . .\` before \`npm ci\` breaks the cache every time the code changes
+- the build toolchain lingers inside the real runtime image
+- a temp file removed in a later instruction still sits intact in the earlier layer
 
-> Đọc kỹ thứ tự lệnh trước khi tối ưu bất cứ thứ gì khác.
+> Read the instruction order carefully before optimizing anything else.
 
-### Đọc thêm
+### Further reading
 
-Xem thêm [tài liệu chính thức](https://docs.docker.com/build/cache/) hoặc quay lại
-[bài trước](/lessons/docker-basics).`
+See the [official docs](https://docs.docker.com/build/cache/) or go back to
+[the previous lesson](/lessons/docker-basics).`
 
-const CODE = `Sắp lại thứ tự để cache còn dùng được (tô màu cú pháp thật bằng Shiki):
+const CODE = `Reorder the instructions so the cache still holds (real Shiki syntax highlighting):
 
 \`\`\`dockerfile
 FROM node:22-alpine AS build
@@ -66,44 +66,44 @@ COPY . .
 RUN npm run build
 \`\`\`
 
-Chỉ \`package*.json\` đổi mới phải cài lại phụ thuộc.`
+Dependencies only need reinstalling when \`package*.json\` itself changes.`
 
-const MERMAID = `## Luồng build lại image
+const MERMAID = `## The image rebuild flow
 
 \`\`\`mermaid
 flowchart LR
-    A[Sửa code] --> B{package.json đổi?}
-    B -- Có --> C[Cài lại phụ thuộc]
-    B -- Không --> D[Dùng cache npm ci]
-    C --> E[Build lại toàn bộ]
+    A[Edit code] --> B{package.json changed?}
+    B -- Yes --> C[Reinstall dependencies]
+    B -- No --> D[Use the npm ci cache]
+    C --> E[Rebuild everything]
     D --> E
 \`\`\`
-Hình 1: Cache chỉ vỡ khi phần khai báo phụ thuộc thay đổi.`
+Figure 1: The cache only breaks when the dependency declaration changes.`
 
-const TABLE = `| Cách làm | Image | Thời gian build lại |
+const TABLE = `| Approach | Image | Rebuild time |
 |---|---|---|
-| COPY . . trước npm ci | 1.2 GB | 4 phút |
-| Tách lớp phụ thuộc | 1.2 GB | 40 giây |
-| Multi-stage | 40 MB | 45 giây |`
+| COPY . . before npm ci | 1.2 GB | 4 min |
+| Separate dependency layer | 1.2 GB | 40 sec |
+| Multi-stage | 40 MB | 45 sec |`
 
 const ACCORDION = `::::accordion
 
-:::panel{title="Vì sao không dùng \`latest\`?"}
-Tag \`latest\` trỏ đi chỗ khác sau mỗi lần push, nên hai lần deploy cùng một commit
-có thể chạy hai image khác nhau.
+:::panel{title="Why not use \`latest\`?"}
+The \`latest\` tag points somewhere new after every push, so two deploys of the same commit
+can end up running two different images.
 :::
 
-:::panel{title="Khi nào nên squash layer?"}
-Gần như không bao giờ. Squash phá cache và đổi lại rất ít dung lượng.
+:::panel{title="When should you squash layers?"}
+Almost never. Squashing breaks the cache and reclaims very little space in return.
 :::
 
 ::::`
 
 const MUTED_AND_CHIP = `:::muted
-Đầu vào
+Input
 :::
 
-Một \`Dockerfile\` cùng một \`.dockerignore\`.
+One \`Dockerfile\` plus one \`.dockerignore\`.
 
 :::chip
 Docker
@@ -115,13 +115,13 @@ const TABS = `::::tab
 
 :::preview
 \`\`\`mdx
-<Chip color="success">Đã build xong</Chip>
+<Chip color="success">Build complete</Chip>
 \`\`\`
 :::
 
 :::code
 \`\`\`tsx
-export const BuildBadge = () => <Chip color="success">Đã build xong</Chip>
+export const BuildBadge = () => <Chip color="success">Build complete</Chip>
 \`\`\`
 :::
 
@@ -137,7 +137,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — `reading`: the lesson body, bigger type and a generous rhythm. */
 export const Reading: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MarkdownContent"
                 tier="composite"
@@ -160,7 +160,7 @@ export const Reading: Story = {
                     },
                     {
                         name: "mermaid diagram",
-                        why: "A ` ```mermaid ` fence renders to a real SVG (cached per theme+source), click-to-zoom into a full-screen Modal, with the authored \"Hình N: …\" paragraph lifted into a real `<figcaption>` instead of being shown twice.",
+                        why: "A ` ```mermaid ` fence renders to a real SVG (cached per theme+source), click-to-zoom into a full-screen Modal, with the authored \"Figure N: …\" paragraph lifted into a real `<figcaption>` instead of being shown twice.",
                         code: "<MarkdownContent source={lessonWithDiagram} />",
                         render: <MarkdownContent source={MERMAID} />,
                     },
@@ -178,7 +178,7 @@ export const Reading: Story = {
                     },
                     {
                         name: "muted label + chip row",
-                        why: "`:::muted` renders a small muted eyebrow label (the \"Đầu vào\"/\"Đầu ra\" idiom lessons already use); `:::chip` turns a block of keyword lines into a wrapped row of real `Chip` atoms, one pill per line.",
+                        why: "`:::muted` renders a small muted eyebrow label (the \"Input\"/\"Output\" idiom lessons already use); `:::chip` turns a block of keyword lines into a wrapped row of real `Chip` atoms, one pill per line.",
                         code: "<MarkdownContent source={inputLabelWithChips} />",
                         render: <MarkdownContent showAnatomy anatPart="MarkdownContent" source={MUTED_AND_CHIP} />,
                     },
@@ -197,7 +197,7 @@ export const Reading: Story = {
 /** LEAF — `compact`: the document is a passenger inside another surface. */
 export const Compact: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MarkdownContent"
                 tier="composite"
@@ -221,7 +221,7 @@ export const Compact: Story = {
 /** LEAF — the caller flips `isSkeleton`; a 2-line shimmer mirror stands in for the document (§12c, added 2026-07-29 so callers stop faking it with an unrelated atom). */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="MarkdownContent"
                 tier="composite"

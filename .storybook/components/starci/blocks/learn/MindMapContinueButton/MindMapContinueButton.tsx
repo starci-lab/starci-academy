@@ -53,9 +53,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  */
 
 /** Label the block writes itself (§14d.1) — not opened to the caller. */
-const CONTINUE_LABEL = "Tiếp tục"
+const CONTINUE_LABEL = "Continue"
 /** Quiet confirmation once every lesson/challenge on the map has been read. */
-const ALL_DONE_LABEL = "Bạn đã hoàn thành mọi nội dung"
+const ALL_DONE_LABEL = "You've completed everything"
 
 /** Props for {@link MindMapContinueButton}. */
 export interface MindMapContinueButtonProps {
@@ -77,7 +77,7 @@ export interface MindMapContinueButtonProps {
     onResume?: () => void
     /**
      * Accessible name for the resume action, localized by the caller (blocks
-     * carry no i18n) — richer than the visible "Tiếp tục" label alone, since a
+     * carry no i18n) — richer than the visible "Continue" label alone, since a
      * screen reader hears it with no page context around it.
      */
     continueAriaLabel: string
@@ -110,7 +110,6 @@ const MindMapContinueButton = ({
                 isSkeleton
                 size="lg"
                 label={CONTINUE_LABEL}
-                anatPart={anatPart ?? (showAnatomy ? "Button" : undefined)}
             />
         )
     }
@@ -126,7 +125,6 @@ const MindMapContinueButton = ({
                 ariaLabel={continueAriaLabel}
                 onPress={onResume}
                 isElevated
-                anatPart={anatPart ?? (showAnatomy ? "Button" : undefined)}
             />
         )
     }
@@ -142,7 +140,7 @@ const MindMapContinueButton = ({
                     weight="semibold"
                     color="success"
                     text={ALL_DONE_LABEL}
-                    anatPart={showAnatomy ? "Typography" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             </div>
         )

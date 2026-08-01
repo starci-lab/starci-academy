@@ -24,7 +24,7 @@ export interface SettingsBreadcrumbProps {
 }
 
 /**
- * Shared settings/profile breadcrumb trail: `Home › Hồ sơ › Cài đặt › <current>`
+ * Shared settings/profile breadcrumb trail: `Home › Profile › Settings › <current>`
  * (the last crumb is read-only). DRY-replaces the hand-rolled trail every settings
  * page used to repeat, so every page under `/profile/settings/*` shows the same
  * tier-1 breadcrumb. Mirrors the trail the edit/security pages already build.

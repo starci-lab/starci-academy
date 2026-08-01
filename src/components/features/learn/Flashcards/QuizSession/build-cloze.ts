@@ -6,7 +6,7 @@
  * term list against the text: the marker IS the blank, exactly where it sits.
  * A marker's own term IS that card's "keywords" now too (see
  * {@link extractMarkerTerms}) — the separate `:::chip` list was retired
- * 2026-07-12 (thầy: "xóa từ khóa ăn điểm đi") once every card had ≥1 marker,
+ * 2026-07-12 (reviewer: "get rid of the free-points keyword") once every card had ≥1 marker,
  * so there was no longer a card left that needed it as a fallback source.
  * Distractors come from two
  * tiers: a marker's own curated near-synonyms when authored inline
@@ -49,7 +49,7 @@ export interface BuildClozeParams {
 /** Global cloze-marker matcher: `{{c1::term}}` or `{{c1::term::distractorA,distractorB}}`.
  *  Group 1 = the correct term. Group 2 (optional) = curated near-synonym
  *  distractors, comma-separated — an author-supplied confuser set for THIS
- *  blank specifically (thầy 2026-07-11: "docker" → "k8s, vps"), preferred over
+ *  blank specifically (reviewer, 2026-07-11: "docker" → "k8s, vps"), preferred over
  *  the generic sibling-card pool when present. */
 const MARKER = /\{\{c\d+::([\s\S]*?)(?:::([\s\S]*?))?\}\}/g
 
@@ -156,8 +156,8 @@ export const buildCloze = (
     let cursor = winStart
     // splits on lightweight inline markdown spans instead of leaving them as raw
     // `*`/`` ` `` characters, so the rendered cloze sentence matches the same
-    // emphasis the answer prose carries (thầy 2026-07-09: "text có markdown ở
-    // phần điền vào"). Checked in priority order per match position: code
+    // emphasis the answer prose carries (reviewer, 2026-07-09: "the blank text
+    // can have markdown too"). Checked in priority order per match position: code
     // (`` `x` ``) > bold (`**x**`) > italic (`*x*`) — `**` must be tried before
     // `*` or the italic branch would eat one asterisk of a bold pair.
     const inlineSpan = /`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*/g
@@ -165,7 +165,7 @@ export const buildCloze = (
     // sits INSIDE the backtick pair) — since markers are cut out into their own
     // fragment before this scanner sees the surrounding text, each side only
     // ever has an ORPHAN backtick, which used to fall through as a literal `
-    // character (thầy 2026-07-11 bug report). `openCode` carries "we're still
+    // character (reviewer, 2026-07-11 bug report). `openCode` carries "we're still
     // inside an unclosed code span" across fragment/marker boundaries so the
     // orphan backticks are consumed (never rendered) and both sides stay `code`.
     let openCode = false

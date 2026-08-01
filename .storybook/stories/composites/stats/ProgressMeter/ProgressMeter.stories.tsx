@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 const meta: Meta<typeof ProgressMeter> = {
     title: "Composites/Stats/ProgressMeter",
@@ -13,7 +15,7 @@ export default meta
 type Story = StoryObj<typeof ProgressMeter>
 export const BareBar: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={45} />
             </div>
@@ -22,7 +24,7 @@ export const BareBar: Story = {
 }
 export const Empty: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={0} label="Not started" showValue />
             </div>
@@ -31,7 +33,7 @@ export const Empty: Story = {
 }
 export const Half: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={50} label="Halfway" showValue />
             </div>
@@ -40,7 +42,7 @@ export const Half: Story = {
 }
 export const Complete: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={100} label="Done" showValue color="success" />
             </div>
@@ -49,7 +51,7 @@ export const Complete: Story = {
 }
 export const LabelOnly: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={62} label="Course progress" />
             </div>
@@ -58,7 +60,7 @@ export const LabelOnly: Story = {
 }
 export const LabelAndValue: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={78} label="Module completion" showValue />
             </div>
@@ -67,7 +69,7 @@ export const LabelAndValue: Story = {
 }
 export const ValueOnly: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={33} showValue />
             </div>
@@ -76,7 +78,7 @@ export const ValueOnly: Story = {
 }
 export const ToneAccent: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={45} label="Default" showValue color="accent" />
             </div>
@@ -85,7 +87,7 @@ export const ToneAccent: Story = {
 }
 export const ToneSuccess: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={100} label="Quiz" showValue color="success" />
             </div>
@@ -94,7 +96,7 @@ export const ToneSuccess: Story = {
 }
 export const ToneWarning: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={55} label="Time remaining" showValue color="warning" />
             </div>
@@ -103,7 +105,7 @@ export const ToneWarning: Story = {
 }
 export const ToneDanger: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={12} label="Current score" showValue color="danger" />
             </div>
@@ -113,7 +115,7 @@ export const ToneDanger: Story = {
 /** Fill still far from the 85% target — the accent notch pill overshoots the thin bar; `mt-5` reserves room for the floating "85%" label. */
 export const TargetBelow: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={39} color="danger" target={85} targetLabel="85%" />
             </div>
@@ -123,7 +125,7 @@ export const TargetBelow: Story = {
 /** Fill has passed the target marker — the value reads as success. */
 export const TargetReached: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={88} color="success" target={85} targetLabel="85%" />
             </div>
@@ -133,7 +135,7 @@ export const TargetReached: Story = {
 /** `target` without `targetLabel` → just the notch pill, no floating caption (no reserved top room). */
 export const TargetNoLabel: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={55} color="warning" target={70} />
             </div>
@@ -143,7 +145,7 @@ export const TargetNoLabel: Story = {
 /** Count unit other than % — `max` is an integer total (7/10 lessons) instead of a percentage. */
 export const CountUnit: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <div className="w-80">
                 <ProgressMeter value={7} max={10} label="7 / 10 lessons" showValue />
             </div>
@@ -155,10 +157,80 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ProgressMeter": { tier: "composite", role: "the meter itself — label row + track", storyId: "composites-stats-progressmeter--bare-bar" },
 }
 
+/** `leading` slot fixture (COMPOSITE-8): the meter calls this itself and forwards `isSkeleton`. */
+const SprintLabel = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Sprint 4" />
+)
+/** `trailing` slot fixture (COMPOSITE-8): the meter calls this itself and forwards `isSkeleton`. */
+const OnTrackChip = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+    <Chip tone="success" text="On track" isSkeleton={isSkeleton} />
+)
+
+const SLOT_ROW_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    ...ANNOTATE,
+    "Typography": { role: "the `leading` slot's own content — here a Sprint label, not part of ProgressMeter's fixed vocabulary", tier: "atom", storyId: "atoms-text-typography-typography--plain" },
+    "Chip": { role: "the `trailing` slot's own content — here a status chip, not part of ProgressMeter's fixed vocabulary", tier: "atom", storyId: "atoms-chips-chip-chip--default" },
+}
+
+/**
+ * Leaf props `leading`/`trailing` — ADDED 2026-08-01, additive: a second row,
+ * independent of `label`/`showValue`, for callers that need a COMPONENT
+ * instead of plain text above the track. Omitted (default), no such row
+ * renders and every other leaf on this page is unaffected.
+ */
+export const SlotRow: Story = {
+    render: () => (
+        <div data-tier="fixture" className="p-8">
+            <BlockAnatomy
+                name="ProgressMeter"
+                tier="composite"
+                leaf="Props `leading`/`trailing`"
+                annotate={SLOT_ROW_ANNOTATE}
+                renderClassName="w-80"
+                states={[
+                    {
+                        name: "leading = undefined, trailing = undefined (default)",
+                        why: "Only the `label`/`showValue` row (when set) and the track render — this leaf's row is entirely absent, exactly like every other leaf on this page.",
+                        code: "<ProgressMeter value={62} label=\"Sprint burndown\" showValue />",
+                        render: <ProgressMeter value={62} label="Sprint burndown" showValue anatPart="ProgressMeter" showAnatomy />,
+                    },
+                    {
+                        name: "leading = SprintLabel, trailing = OnTrackChip",
+                        why: "A second row mounts just above the track, independent of the `label`/`showValue` row above it — a left region and a right region, each a component the meter calls itself and forwards `isSkeleton` to. Useful when the row needs more than plain text: a status chip, an icon, a custom-formatted unit.",
+                        code: `const SprintLabel = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Sprint 4" />
+)
+const OnTrackChip = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+    <Chip tone="success" text="On track" isSkeleton={isSkeleton} />
+)
+
+<ProgressMeter
+    value={62}
+    label="Sprint burndown"
+    showValue
+    leading={SprintLabel}
+    trailing={OnTrackChip}
+/>`,
+                        render: (
+                            <ProgressMeter
+                                value={62}
+                                label="Sprint burndown"
+                                showValue
+                                leading={SprintLabel}
+                                trailing={OnTrackChip}
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
 /** LEAF — the caller flips `isSkeleton`; a two-bar shimmer (label width + full-width track) stands in for the real label row + `ProgressBar` while the ratio isn't known yet. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ProgressMeter"
                 tier="composite"

@@ -43,8 +43,9 @@ interface SimNode extends SimulationNodeDatum {
     track: TrackKey
 }
 
-/** Initial React Flow nodes — seed quanh ANCHOR theo track (3 màu 3 góc tam giác), rải trên
- * 1 ring nhỏ; force sau đó kéo mỗi track về góc của nó, vùng giữa các góc tự trộn lẫn. */
+/** Initial React Flow nodes — seeded around the ANCHOR per track (3 colors, 3 triangle
+ * corners), scattered over a small ring; the force then pulls each track back to its own
+ * corner, while the space between corners blends together naturally. */
 const buildInitialNodes = (): Node<ConceptNodeData>[] =>
     KNOWLEDGE_NODES.map((node, index) => {
         const cfg = TRACK_CONFIG[node.track]
@@ -61,7 +62,7 @@ const buildInitialNodes = (): Node<ConceptNodeData>[] =>
         }
     })
 
-/** Edges — TẤT CẢ là đường nối nhẹ (đặc, mảnh, mờ — như sharding↔cdc); KHÔNG dashed, KHÔNG accent. */
+/** Edges — ALL are light connecting lines (solid, thin, faint — like sharding↔cdc); NO dashed, NO accent. */
 const buildEdges = (): Edge[] =>
     KNOWLEDGE_EDGES.map((edge, index) => ({
         id: `e${index}`,
@@ -71,8 +72,9 @@ const buildEdges = (): Edge[] =>
         style: { stroke: "var(--border)", strokeWidth: 1, strokeOpacity: 0.22 },
     }))
 
-/** Per-node collide radius (px): bubble radius, but ≥ nửa bề rộng label (label căn GIỮA,
- * tràn ngang ra ngoài bubble) để label đỡ chồng hàng xóm. Pad giữ chòm bubble thoáng. */
+/** Per-node collide radius (px): bubble radius, but ≥ half the label's width (the label is
+ * CENTER-aligned and overflows past the bubble horizontally) so labels don't overlap their
+ * neighbors. The pad keeps the bubble cluster feeling airy. */
 const COLLIDE_RADIUS = new Map(
     KNOWLEDGE_NODES.map((node) => {
         const r = bubbleRadius(NODE_DEGREE[node.id] ?? 1)
@@ -148,8 +150,8 @@ const KnowledgeGraphFlow = () => {
         }))
         simulation.on("tick", writeBack)
 
-        // Camera: DÍ vào giữa cụm (zoom 1.2, center 0,0) → lõi 3 màu hội tụ chiếm khung, mép
-        // cắt bớt → kéo (pan) để khám phá = cảm giác bản đồ tự nhiên.
+        // Camera: pushed in close to the cluster's center (zoom 1.2, center 0,0) → the 3-color
+        // core converges to fill the frame, edges get cropped → drag (pan) to explore = a natural map feel.
         const centre = (duration: number) => void setCenter(0, 0, { zoom: 1.2, duration })
 
         const fits: ReturnType<typeof setTimeout>[] = []
@@ -237,7 +239,7 @@ const KnowledgeGraphFlow = () => {
             elementsSelectable={false}
             minZoom={1.2}
             maxZoom={1.2}
-            // zoom CỐ ĐỊNH; CHO PHÉP kéo (pan) khám phá — mép cụm cắt bớt = cảm giác tự nhiên
+            // FIXED zoom; ALLOW drag (pan) to explore — the cluster's edges get cropped = a natural feel
             zoomOnScroll={false}
             zoomOnPinch={false}
             zoomOnDoubleClick={false}
@@ -259,7 +261,7 @@ const KnowledgeGraphFlow = () => {
 export type KnowledgeGraphProps = WithClassNames<undefined>
 
 /**
- * "Kho tàng" rendered as a live KNOWLEDGE GRAPH: ~26 real curriculum concepts (nodes)
+ * "Treasure Trove" rendered as a live KNOWLEDGE GRAPH: ~26 real curriculum concepts (nodes)
  * interlinked by builds-on + cross-track edges, laid out by a d3-force simulation
  * (drag a node, zoom/pan). Each node is coloured by its flagship course track; clicking
  * one opens that course. Honours reduced-motion (settles to a static layout). Qdrant-

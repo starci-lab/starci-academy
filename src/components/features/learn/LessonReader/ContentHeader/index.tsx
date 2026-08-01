@@ -46,7 +46,7 @@ export const ContentHeader = () => {
     const description = content?.description
     const minutesRead = content?.minutesRead ?? 0
 
-    /** Tier-1 breadcrumb (Home › Courses › <course> › Học phần) — lives in the PageHeader
+    /** Tier-1 breadcrumb (Home › Courses › <course> › Module) — lives in the PageHeader
      *  breadcrumb slot so the whole header is one unit (moved out of the route layout). */
     const breadcrumbItems = useMemo<Array<ResponsiveBreadcrumbItem>>(() => [
         { key: "home", label: t("nav.home"), onPress: () => router.push(pathConfig().locale().build()) },

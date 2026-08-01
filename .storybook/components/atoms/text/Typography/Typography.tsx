@@ -280,16 +280,7 @@ interface TypographyOwnProps {
     /** `true` → tag each part with `data-anat-part` for BlockAnatomy. */
     showAnatomy?: boolean
     /**
-     * Optional `data-anat-part` name for the text node (wins over the default name
-     * `"Text"`) — for blocks that name their text slot themselves (`"Verdict"`,
-     * `"Original"`…).
-     */
-    anatPart?: string
-    /** @deprecated pass `classNames` instead — a free string cannot be constrained. */
-    className?: string
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
 }
@@ -333,8 +324,6 @@ const TypographyBase = ({
     tabularNums = false,
     isSkeleton = false,
     showAnatomy = false,
-    anatPart,
-    className,
     classNames,
     size = "base",
 }: TypographyProps) => {
@@ -343,8 +332,9 @@ const TypographyBase = ({
     // which one — "Text" would hide that a `Typography.Heading`/`Typography`/`Link` is
     // actually on screen. The plain body span isn't wrapping any named component, so it
     // keeps the generic "Text" default.
-    const partName = (fallback: string) => anatPart ?? (showAnatomy ? fallback : undefined)
-    const textPart = partName("Text")
+    // The name is written at each branch rather than through a helper. A helper here is invisible
+    // to every tool that strips the overlay by token — its own name says nothing about anatomy —
+    // so it survives into the app's copy as a call to something that no longer exists.
     const renderedText = parseInlineCode && typeof text === "string" ? renderInlineCode(text) : text
 
     // ── SKELETON branch — checked BEFORE any size branch, because heading/code also
@@ -353,8 +343,10 @@ const TypographyBase = ({
     if (isSkeleton) {
         return (
             <HeroSkeleton
-                className={cn("inline-block w-24 rounded", SKEL_H[size], className, classNames)}
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+                data-tier="atom"
+                data-component="Typography"
+                className={cn("inline-block w-1/2 rounded", SKEL_H[size], classNames)}
+                data-anat-part={showAnatomy ? "Skeleton" : undefined}
             />
         )
     }
@@ -363,6 +355,8 @@ const TypographyBase = ({
     if (size in HEADING_LEVEL) {
         return (
             <HeroTypography.Heading
+                data-tier="atom"
+                data-component="Typography"
                 level={HEADING_LEVEL[size]}
                 weight={weight}
                 className={cn(
@@ -373,10 +367,9 @@ const TypographyBase = ({
                     preserveWhitespace && PRESERVE_WHITESPACE_CLS,
                     isInline && INLINE_CLS,
                     underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
-                    className,
                     classNames,
                 )}
-                data-anat-part={partName("Typography.Heading")}
+                data-anat-part={showAnatomy ? "Typography.Heading" : undefined}
             >
                 {renderedText}
             </HeroTypography.Heading>
@@ -387,6 +380,8 @@ const TypographyBase = ({
     if (size === "code") {
         return (
             <HeroTypography
+                data-tier="atom"
+                data-component="Typography"
                 type="code"
                 className={cn(
                     COLOR_CLS[color ?? "default"],
@@ -396,10 +391,9 @@ const TypographyBase = ({
                     preserveWhitespace && PRESERVE_WHITESPACE_CLS,
                     isInline && INLINE_CLS,
                     underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
-                    className,
                     classNames,
                 )}
-                data-anat-part={partName("Typography")}
+                data-anat-part={showAnatomy ? "Typography" : undefined}
             >
                 {renderedText}
             </HeroTypography>
@@ -412,8 +406,10 @@ const TypographyBase = ({
         if (isSkeleton) {
             return (
                 <HeroSkeleton
-                    className={cn("inline-block w-24 rounded", SKEL_H[bodySize], className, classNames)}
-                    data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+                    data-tier="atom"
+                    data-component="Typography"
+                    className={cn("inline-block w-1/2 rounded", SKEL_H[bodySize], classNames)}
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
                 />
             )
         }
@@ -425,6 +421,8 @@ const TypographyBase = ({
         if (isLink) {
             return (
                 <HeroLink
+                    data-tier="atom"
+                    data-component="Typography"
                     href={href}
                     target={target}
                     rel={rel}
@@ -434,10 +432,9 @@ const TypographyBase = ({
                         color ? COLOR_CLS[color] : "text-accent",
                         "cursor-pointer",
                         underlineOnHover ? SELF_HOVER_UNDERLINE_CLS : "underline-offset-2 hover:underline",
-                        className,
                         classNames,
                     )}
-                    data-anat-part={partName("Link")}
+                    data-anat-part={showAnatomy ? "Link" : undefined}
                 >
                     {renderedText}
                 </HeroLink>
@@ -449,6 +446,8 @@ const TypographyBase = ({
         if (isButton) {
             return (
                 <button
+                    data-tier="atom"
+                    data-component="Typography"
                     type="button"
                     onClick={onPress}
                     className={cn(
@@ -459,10 +458,9 @@ const TypographyBase = ({
                         COLOR_CLS[color ?? "default"],
                         "cursor-pointer transition-colors",
                         hoverColor && HOVER_COLOR_CLS[hoverColor],
-                        className,
                         classNames,
                     )}
-                    data-anat-part={partName("Button")}
+                    data-anat-part={showAnatomy ? "Button" : undefined}
                 >
                     {renderedText}
                 </button>
@@ -494,34 +492,40 @@ const TypographyBase = ({
             preserveWhitespace && PRESERVE_WHITESPACE_CLS,
             isInline && INLINE_CLS,
             underlineOnGroupHover && GROUP_HOVER_UNDERLINE_CLS,
-            className,
             classNames,
         )
 
         if (hasIcons) {
-            const iconSpan = (Icon: TypographyIcon, part: string, slide: string) => (
+            // One discriminator, not two. `side` decides both the part name and which way the glyph
+            // slides, so the two can never be handed each other's value — and because it still earns
+            // its keep with the overlay stripped, the app's copy keeps the same signature.
+            const iconSpan = (Icon: TypographyIcon, side: "Prefix" | "Suffix") => (
                 // Atom owns the glyph scale — icon inherits currentColor (matches text tone).
                 <span
                     aria-hidden
-                    data-anat-part={showAnatomy ? part : undefined}
+                    data-anat-part={showAnatomy ? `${side}Icon` : undefined}
                     // Tailwind v4: `translate` is its OWN CSS property → the transition must target
                     // `translate` (not `transform`), otherwise hover will jump ([[tailwind-v4-scale-is-own-property]]).
-                    className={cn("inline-flex shrink-0", iconSlide && "transition-[translate] duration-200 ease-out", iconSlide && slide)}
+                    className={cn(
+                        "inline-flex shrink-0",
+                        iconSlide && "transition-[translate] duration-200 ease-out",
+                        iconSlide && (side === "Prefix" ? "group-hover:-translate-x-1" : "group-hover:translate-x-1"),
+                    )}
                 >
                     <Icon className={ICON_CLS[bodySize]} weight={ICON_WEIGHT[bodySize]} />
                 </span>
             )
             return (
                 // `group` so the child arrow can hear `group-hover` when iconSlide is on.
-                <span className={cn("inline-flex items-center gap-1", iconSlide && "group", baseCls)}>
-                    {Prefix ? iconSpan(Prefix, "PrefixIcon", "group-hover:-translate-x-1") : null}
-                    <span data-anat-part={textPart} className={cn("min-w-0", clampCls)}>{renderedText}</span>
-                    {Suffix ? iconSpan(Suffix, "SuffixIcon", "group-hover:translate-x-1") : null}
+                <span data-tier="atom" data-component="Typography" className={cn("inline-flex items-center gap-1", iconSlide && "group", baseCls)}>
+                    {Prefix ? iconSpan(Prefix, "Prefix") : null}
+                    <span data-anat-part={showAnatomy ? "Text" : undefined} className={cn("min-w-0", clampCls)}>{renderedText}</span>
+                    {Suffix ? iconSpan(Suffix, "Suffix") : null}
                 </span>
             )
         }
         return (
-            <span className={cn(baseCls, clampCls)} data-anat-part={textPart}>
+            <span data-tier="atom" data-component="Typography" className={cn(baseCls, clampCls)} data-anat-part={showAnatomy ? "Text" : undefined}>
                 {renderedText}
             </span>
         )
@@ -530,3 +534,5 @@ const TypographyBase = ({
 
 /** `Typography` — text atom: one component, one `size` prop spanning body, heading, and code scales. */
 export { TypographyBase as Typography }
+
+export const meta = { tier: "atom", name: "Typography" } as const

@@ -164,8 +164,8 @@ export const QuickActions = ({
                             </Chip>
                         ) : null}
                         {key === "review" && dueCount > 0 ? (
-                            // "đến hạn" = nudge tồn đọng → warning (amber), KHÔNG accent
-                            // (accent dành cho brand/CTA). Khớp convention DeckList/StudyRail/QuizSession.
+                            // "due" = a backlog nudge → warning (amber), NOT accent
+                            // (accent is reserved for brand/CTA). Matches the DeckList/StudyRail/QuizSession convention.
                             <Chip className="shrink-0" size="sm" variant="soft" color="warning">
                                 <Chip.Label>
                                     {t("dashboard.dueCount", { count: dueCount })}

@@ -168,7 +168,7 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
                     </React.Fragment>
                 ))}
 
-                {/* failure points — Chip (bg-danger-soft, đồng bộ chip toàn app) floated beside the
+                {/* failure points — Chip (bg-danger-soft, consistent with the app's chips) floated beside the
                     area they threaten, drifting gently */}
                 {FAILURES.map((failure, index) => (
                     <motion.div

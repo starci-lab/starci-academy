@@ -40,48 +40,48 @@ export default meta
 type Story = StoryObj<typeof ChallengeResultPage>
 
 const BASE = {
-    backLabel: "Quay lại bài giải",
+    backLabel: "Back to challenge",
     onBack: () => {},
-    title: "Triển khai API phân trang cho danh sách khoá học",
-    description: "Viết endpoint GET /courses hỗ trợ cursor pagination, kèm test cho trang đầu/cuối.",
+    title: "Implement a paginated API for the course list",
+    description: "Write a GET /courses endpoint supporting cursor pagination, with tests for the first/last page.",
     attempts: [
         { id: "a1", attemptNumber: 1, score: 54, isPassing: false },
         { id: "a2", attemptNumber: 2, score: 88, isPassing: true },
     ],
     selectedAttemptId: "a2",
     onSelectAttempt: () => {},
-    attemptsAriaLabel: "Các lần làm",
-    scoreLabel: "Kết quả",
+    attemptsAriaLabel: "Attempts",
+    scoreLabel: "Result",
     score: 88,
     maxScore: 100,
     passScore: 70,
-    shortFeedback: "Cursor pagination đúng hướng, còn thiếu test cho trang cuối.",
+    shortFeedback: "Cursor pagination is on the right track; still missing a test for the last page.",
     submissionUrl: "#submission",
     gradedByModel: "qwen2.5-coder-32b",
     modelCategory: "economy" as const,
-    timeAgo: "5 phút trước",
-    findingsLabel: "Góp ý",
+    timeAgo: "5 minutes ago",
+    findingsLabel: "Feedback",
     findings: [
         {
             id: "f1",
-            message: "Thiếu test cho trang cuối cùng của danh sách",
-            detail: "Cursor pagination cần test riêng cho trường hợp `hasNextPage` trả về `false`.",
-            suggestion: "Thêm test case với cursor trỏ tới bản ghi cuối.",
+            message: "Missing a test for the last page of the list",
+            detail: "Cursor pagination needs a dedicated test for the case where `hasNextPage` returns `false`.",
+            suggestion: "Add a test case with the cursor pointing at the last record.",
             location: "src/courses/courses.controller.spec.ts",
             severity: "medium" as const,
         },
         {
             id: "f2",
-            message: "Cursor không được encode, lộ id nội bộ",
+            message: "Cursor isn't encoded, exposing internal ids",
             location: "src/courses/courses.service.ts",
             severity: "high" as const,
             sortIndex: 1,
         },
     ],
     repositoryUrl: "https://github.com/starci-academy/challenge-submissions",
-    relatedLabel: "Có thể bạn muốn đọc lại",
+    relatedLabel: "You might want to revisit",
     relatedItems: [
-        { key: "cursor", title: "Cursor pagination hoạt động ra sao", snippet: "Vì sao offset pagination chậm dần khi bảng lớn.", href: "#cursor" },
+        { key: "cursor", title: "How cursor pagination works", snippet: "Why offset pagination gets slower as tables grow.", href: "#cursor" },
     ],
 }
 
@@ -98,7 +98,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /** LEAF — no attempt selected yet ⇒ the score/findings cluster is absent, not empty. */
 export const NoSelection: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeResultPage"
                 tier="screen"
@@ -124,7 +124,7 @@ export const NoSelection: Story = {
 /** LEAF — a PASSING attempt ⇒ score + findings, no related-reading nudge. */
 export const Passing: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeResultPage"
                 tier="screen"
@@ -150,7 +150,7 @@ export const Passing: Story = {
 /** LEAF — a FAILING attempt ⇒ score + findings + related-reading nudge. */
 export const Failing: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeResultPage"
                 tier="screen"
@@ -160,7 +160,7 @@ export const Failing: Story = {
                 states={[
                     {
                         name: "isPassing = false",
-                        why: "The selected attempt fell short of the pass bar: the score card reads red with a \"cần thêm N điểm\" line, and the related-reading nudge appears underneath the findings — the one moment a pointer to relevant material earns its place.",
+                        why: "The selected attempt fell short of the pass bar: the score card reads red with a \"needs N more points\" line, and the related-reading nudge appears underneath the findings — the one moment a pointer to relevant material earns its place.",
                         code: `<ChallengeResultPage
     {...props}
     isPassing={false}
@@ -177,7 +177,7 @@ export const Failing: Story = {
 /** LEAF — the caller flips `isSkeleton`; every block mirrors, including the still-absent cluster. */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeResultPage"
                 tier="screen"
@@ -200,14 +200,14 @@ export const Skeleton: Story = {
 // 8 attempts total — the row shows the newest 5 (real `src`'s own
 // `ATTEMPT_CHIPS_VISIBLE`), "+3" opens the drawer over the FULL 8.
 const HISTORY_ATTEMPTS: Array<SubmissionAttemptRecord> = [
-    { id: "a8", attemptNumber: 8, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 phút trước", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
-    { id: "a7", attemptNumber: 7, score: 61, maxScore: 100, isPassing: false, processedTimeAgo: "3 giờ trước" },
-    { id: "a6", attemptNumber: 6, score: 54, maxScore: 100, isPassing: false, processedTimeAgo: "1 ngày trước" },
-    { id: "a5", attemptNumber: 5, score: 40, maxScore: 100, isPassing: false, processedTimeAgo: "2 ngày trước" },
+    { id: "a8", attemptNumber: 8, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "a7", attemptNumber: 7, score: 61, maxScore: 100, isPassing: false, processedTimeAgo: "3 hours ago" },
+    { id: "a6", attemptNumber: 6, score: 54, maxScore: 100, isPassing: false, processedTimeAgo: "1 day ago" },
+    { id: "a5", attemptNumber: 5, score: 40, maxScore: 100, isPassing: false, processedTimeAgo: "2 days ago" },
     { id: "a4", attemptNumber: 4, score: null, maxScore: null, isPassing: false },
-    { id: "a3", attemptNumber: 3, score: 33, maxScore: 100, isPassing: false, processedTimeAgo: "4 ngày trước" },
-    { id: "a2", attemptNumber: 2, score: 20, maxScore: 100, isPassing: false, processedTimeAgo: "5 ngày trước" },
-    { id: "a1", attemptNumber: 1, score: 10, maxScore: 100, isPassing: false, processedTimeAgo: "6 ngày trước" },
+    { id: "a3", attemptNumber: 3, score: 33, maxScore: 100, isPassing: false, processedTimeAgo: "4 days ago" },
+    { id: "a2", attemptNumber: 2, score: 20, maxScore: 100, isPassing: false, processedTimeAgo: "5 days ago" },
+    { id: "a1", attemptNumber: 1, score: 10, maxScore: 100, isPassing: false, processedTimeAgo: "6 days ago" },
 ]
 
 /** Local controlled wrapper — the "+N" trigger opens the drawer, a row selection closes it. */
@@ -233,7 +233,7 @@ const WithHistoryExample = () => {
 /** LEAF ⭐ — 8 attempts overflow the selector row; "+N" opens the real history drawer. */
 export const WithHistory: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ChallengeResultPage"
                 tier="screen"

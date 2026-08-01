@@ -53,7 +53,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * shimmer without also discarding the ranking already on screen.
  *
  * ⭐ `categoryLabel` ARRIVES PRE-WORDED FROM THIS SCREEN'S OWN CALLER. It is
- * the bare category name `LeaderboardToolbar` builds its "Xếp hạng theo …"
+ * the bare category name `LeaderboardToolbar` builds its "Ranked by …"
  * sentence around (see that block's file header) — the same source of truth
  * the app page already used to build `categoryItems`, handed straight through
  * rather than this screen re-deriving or inventing a second copy of that
@@ -66,7 +66,7 @@ export interface LeaderboardPageProps {
     // ── header ──
     /** Breadcrumb trail as data. */
     breadcrumbItems: Array<LeaderboardHeaderCrumb>
-    /** Page title, e.g. "Bảng xếp hạng". */
+    /** Page title, e.g. "Leaderboard". */
     title: string
     /** One-sentence subtitle explaining what the ranking measures. */
     description?: string
@@ -90,7 +90,7 @@ export interface LeaderboardPageProps {
     categoryAriaLabel: string
 
     // ── toolbar ──
-    /** The bare category name, e.g. "XP tuần này" — pre-worded by this screen's own caller. */
+    /** The bare category name, e.g. "XP this week" — pre-worded by this screen's own caller. */
     categoryLabel: string
     /** When the board last refreshed. Omitted → nothing has loaded yet. */
     updatedAt?: Date
@@ -98,7 +98,7 @@ export interface LeaderboardPageProps {
     onRefresh: () => void
     /** `true` → a refresh is in flight. */
     isRefreshing?: boolean
-    /** Localized trigger word for the refresh button, e.g. "Làm mới". */
+    /** Localized trigger word for the refresh button, e.g. "Refresh". */
     refreshLabel: string
 
     // ── board ──
@@ -226,13 +226,13 @@ const LeaderboardPage = ({
                 onEnroll={onEnroll}
                 showAnatomy={showAnatomy}
             />
-            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined} body={boardSection} />
+            <StackV gap={6} anatPart={showAnatomy ? "StackV" : undefined} body={boardSection} />
         </>
     )
 
-    const leaderboardBody = <StackV gap="page" anatPart={showAnatomy ? "StackV" : undefined} body={leaderboardSections} />
+    const leaderboardBody = <StackV gap={7} anatPart={showAnatomy ? "StackV" : undefined} body={leaderboardSections} />
 
-    return <Container size="md" padding="roomy" body={leaderboardBody} />
+    return <Container size="md" padding={6} body={leaderboardBody} />
 }
 
 export { LeaderboardPage }

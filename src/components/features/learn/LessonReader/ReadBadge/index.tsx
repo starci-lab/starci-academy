@@ -17,7 +17,7 @@ export interface ReadBadgeProps extends WithClassNames<undefined> {
 }
 
 /**
- * Green "Đã đọc" badge driven by `state.content.isRead` from Redux.
+ * Green "Read" badge driven by `state.content.isRead` from Redux.
  * Returns `null` when the active content is not yet marked as read.
  */
 export const ReadBadge = ({ size, className }: ReadBadgeProps) => {

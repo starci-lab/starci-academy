@@ -89,7 +89,7 @@ const BROKEN_COVER = "/covers/does-not-exist.jpg"
 /** BARE leaf — no prop turned on yet: `tone="accent"`, `size="sm"`. */
 export const Default: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="IconTile"
                 tier="atom"
@@ -112,7 +112,7 @@ export const Default: Story = {
 /** Leaf prop `tone` — 5 MEANINGS, rendering the FULL union. The icon stays the same so tone is the only variable. */
 export const Tones: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="IconTile"
                 tier="atom"
@@ -159,7 +159,7 @@ export const Tones: Story = {
 /** Leaf prop `size` — 3 steps, rendering the FULL union. */
 export const Sizes: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="IconTile"
                 tier="atom"
@@ -198,7 +198,7 @@ export const Sizes: Story = {
  */
 export const CoverImage: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="IconTile"
                 tier="atom"
@@ -246,7 +246,7 @@ export const CoverImage: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="p-8">
+        <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="IconTile"
                 tier="atom"

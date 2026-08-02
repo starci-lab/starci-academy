@@ -49,8 +49,8 @@ import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/
  *
  * 📐 ONE LEAF. There is no state that changes this block's SHAPE — the hero is
  * always present, the notice is always the same three parts (icon, title,
- * description) plus one CTA. `showAnatomy` and the two data props
- * are the only inputs; different `user` values are DATA, not a different leaf.
+ * description) plus one CTA. The two data props are the only inputs; different
+ * `user` values are DATA, not a different leaf.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -75,10 +75,6 @@ const ProfileLockedState = ({
     onGoCourses,
     className,
 }: ProfileLockedStateProps) => {
-    // No `anatPart` here (yet, deliberately): `ProfileHero` has no story of its own at
-    // the time of writing, so `check-orphan-parts` treats a badge with no `storyId` to
-    // point to as worse than no badge at all — declare it here the moment that story
-    // lands, rather than pre-badging a link that goes nowhere.
     const lockedBody = (
         <>
             <ProfileHero

@@ -78,8 +78,6 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  * (a label+underline bar per OS, matching `Tabs`'s own `variant="secondary"`
  * skeleton shape) — using real `Typography isSkeleton` bars laid out with
  * `Stack.*`, never a second hand-built component pretending to BE the real one.
- * Neither mirror claims the real part's `data-anat-part` name: it is not that
- * component, so tagging it as one would be a broken link in the anatomy panel.
  *
  * ⭐ THE EMBEDDING MODEL NAME IS THIS BLOCK'S OWN CONSTANT, not a prop. Only the
  * GENERATION model varies by the learner's VRAM (`recommendedGenModel`, chosen

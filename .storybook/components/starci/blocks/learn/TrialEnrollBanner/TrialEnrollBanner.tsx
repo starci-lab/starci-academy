@@ -28,9 +28,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
  *     `hookDesc`.
  *   - CTA composed as an explicit `Button` CHILD, not `Callout`'s
  *     `actionLabel`/`onAction` shorthand — kept from the removed
- *     `TrialEnrollNudge`. That shorthand builds its button internally with NO
- *     `data-anat-part` (`Feedback.tsx:157`), invisible to a BlockAnatomy deps
- *     tree; a composed child stays a real, badgeable node.
+ *     `TrialEnrollNudge`.
  *   - `isSkeleton` — kept from the removed `FoundationTrialEnrollBanner`.
  *     Copy is fixed (nothing to shimmer about the WORDS), but the enrollment
  *     check feeding `isVisible` can still be in flight — this reserves the

@@ -54,11 +54,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  *   2. Filter open   — the popover panel is open, so the tier
  *      `ButtonRadioGroup` is now a real node in the tree. That is a genuine
  *      structural difference (a whole control appears), not a data condition
- *      of leaf 1. ⚠️ Same portal limit `Popover`'s own story documents: the
- *      panel (and this `ButtonRadioGroup` inside it) renders into
- *      `document.body`, outside the render box `BlockAnatomy` scans by DOM
- *      ancestry — `` is still emitted (the
- *      honest name for what's there), it just never reaches the Structure tab.
+ *      of leaf 1.
  *
  * ⭐ JUDGEMENT CALL — `defaultFilterOpen` (uncontrolled, optional) exists ONLY
  * to pin leaf 2's popover open for the story, mirroring `Popover`'s own

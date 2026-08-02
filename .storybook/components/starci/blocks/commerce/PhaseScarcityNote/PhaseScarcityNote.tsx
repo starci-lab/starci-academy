@@ -131,12 +131,6 @@ const PhaseScarcityNoteBase = ({
                             aria-hidden
                             focusable="false"
                             weight="bold"
-                            // Does NOT emit `data-anat-part`: this is a Phosphor glyph, not
-                            // a component of the system, so it has no story to jump to.
-                            // Emitting a part with no destination = a node permanently
-                            // stuck outside the tree (teacher's call 2026-07-27: "nothing
-                            // is allowed to stand outside the tree"). Can't badge it, so
-                            // don't badge it.
                             className="size-3.5 shrink-0"
                         />
                     ),

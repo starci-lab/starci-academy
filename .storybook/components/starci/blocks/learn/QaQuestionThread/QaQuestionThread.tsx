@@ -60,8 +60,8 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * mirror of `src`'s real `QaConversationHeader`/`ChatBubble`/legacy
  * `ReactionBar`/real `QaMessageBubble` (all read in full before writing this
  * file), simplified to the plain-data props this task's own PROPS line allows
- * (`question, currentUserId, currentUser, onAnswered?, isSkeleton?,
- * showAnatomy?, anatPart?` — no per-answer reply/edit/delete/follow callbacks,
+ * (`question, currentUserId, currentUser, onAnswered?, isSkeleton?` — no
+ * per-answer reply/edit/delete/follow callbacks,
  * since none of those are named in the task's PURPOSE text either). `tsc` will
  * report an unresolved module for each of the four until its sibling file
  * lands — that is a dependency this task explicitly assigns to a different

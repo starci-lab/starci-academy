@@ -43,8 +43,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * both violate that scope and risk a name/file collision with a sibling
  * agent's own pass. It is written here the same way `ContinueCard.tsx`
  * shares its internal `CardBody` between `.Hero`/`.Item` — a private
- * composition helper, not a node with its own anatomy badge (see its own
- * doc comment for why it takes no `anatPart` of its own).
+ * composition helper.
  *
  * ⭐ WHY A NEW CARD INSTEAD OF REUSING `ContinueCardHero`: different WHY,
  * per §14d. `ContinueCardHero` is for resuming something IN PROGRESS — it

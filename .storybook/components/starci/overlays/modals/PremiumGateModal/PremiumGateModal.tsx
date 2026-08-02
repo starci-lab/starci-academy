@@ -44,9 +44,7 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
  * COMPOSED FROM (verbatim, no rebuilding): `ModalShell` (dialog scaffold) ·
  * `PriceTagProminent` + `PhaseScarcityNote` (the same pricing pair
  * `TrialConversionStrip` uses, same `breakdown` shape) · `Button` · `Typography`
- * · `StackV`/`Cluster` frames · `CheckCircleIcon` (bare Phosphor glyph, no
- * `anatPart` — matches `PhaseScarcityNote`'s own-glyph convention: a glyph
- * with no story to jump to must not emit a badge that dead-ends the tree).
+ * · `StackV`/`Cluster` frames · `CheckCircleIcon` (bare Phosphor glyph).
  *
  * ⭐ THE BLOCK OWNS ITS WORDING (§14d.1). Both the header (named-course vs
  * generic) and the "what unlocks" checklist come from FIXED local vocabulary

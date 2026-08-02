@@ -175,17 +175,6 @@ export const Skeleton: Story = {
 }
 
 /** Pick size by context: `sm` dense lists, `md` default card, `lg` hero/checkout. */
-/*
- * ⭐ 2026-07-27: `Sizes` was ONE leaf holding two states named `PriceTagInline` and
- * `PriceTagProminent`. Those are not two values of a prop, they are two MEMBERS of the
- * namespace, so a caller types two different names to reach them. Two names is two doors, and
- * a door is a leaf (§11f: a leaf is a composition, a state is that composition under a
- * different DATA condition).
- *
- * Folded together they also lied about the API: the state tabs read as though a `size` prop
- * switched, and no such prop exists. And one of the two entry points was invisible to anyone
- * scanning the sidebar for what they can call.
- */
 export const Inline: Story = {
     render: () =>
         shell(

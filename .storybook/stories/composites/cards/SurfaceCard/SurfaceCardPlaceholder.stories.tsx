@@ -6,7 +6,7 @@ import { SurfaceCardPlaceholder } from "@sb-components/composites/cards/SurfaceC
  * `SurfaceCardPlaceholder` — the "add new" tile: a `rounded-3xl` card with a dashed border,
  * pressable, icon + label centered, muted. Press feedback is `active:scale` only, no hover-bg.
  * The only card member that takes no content. Props: `icon`, `label`, `onPress`, `isSelected`,
- * `isDisabled`, `isSkeleton`.
+ * `isDisabled`, `isSkeleton`. No `BlockAnatomy` map — the tile has no internal parts to inspect.
  */
 const meta: Meta<typeof SurfaceCardPlaceholder> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardPlaceholder",

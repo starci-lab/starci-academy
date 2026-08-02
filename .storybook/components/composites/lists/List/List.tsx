@@ -5,6 +5,7 @@ import { TitledText } from "@sb-components/composites/text/TitledText/TitledText
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { Box } from "@sb-components/frames/Box/Box"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
 
@@ -155,7 +156,7 @@ const Row = ({
 
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
-                <div className="ml-auto">
+                <Box principles={["push-end"]} className="ml-auto">
                     <StackH
                         gap={3}
                         isSkeleton={isSkeleton}
@@ -165,7 +166,7 @@ const Row = ({
                             ...(TrailingSlot ? [() => <TrailingSlot />] : []),
                         ]}
                     />
-                </div>
+                </Box>
             ) : null}
         </>
     )

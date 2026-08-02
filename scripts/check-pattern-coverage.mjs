@@ -79,9 +79,10 @@ for (const root of ROOTS) {
         // raw spacing on a plain element (div/span/…) in a composite/block/page — needs data-principles
         if (!inDesignSystem(rel)) continue
         src.split("\n").forEach((l, i) => {
+            if (/^\s*(\*|\/\/|\/\*)/.test(l)) return           // a comment line — not real code
             const cm = l.match(/className=(?:"|`)([^"`]*)(?:"|`)/)
             if (!cm || !SPACING.test(cm[1])) return
-            if (/data-principles/.test(l)) return             // already named on this line
+            if (/\b(data-)?principles[=\s]/.test(l)) return    // named (a `<Box principles>` or literal data-principles)
             holes.push({ rel, line: i + 1, name: "raw", raw: cm[1].match(SPACING)[0] })
         })
     }

@@ -52,8 +52,7 @@ export const CodePreviewTabs = ({ preview, code, classNames }: CodePreviewTabsPr
                     <Tabs.List aria-label="Preview / Code" className="w-fit">
                         <Tabs.Tab
                             id="preview"
-                            data-principles="icon-text"
-                            className="gap-1 data-[selected=true]:text-accent-soft-foreground"
+                            data-principles="icon-text" className="gap-1 data-[selected=true]:text-accent-soft-foreground"
                         >
                             <SidebarIcon />
                             Preview
@@ -61,8 +60,7 @@ export const CodePreviewTabs = ({ preview, code, classNames }: CodePreviewTabsPr
                         </Tabs.Tab>
                         <Tabs.Tab
                             id="code"
-                            data-principles="icon-text"
-                            className="gap-1 data-[selected=true]:text-accent-soft-foreground"
+                            data-principles="icon-text" className="gap-1 data-[selected=true]:text-accent-soft-foreground"
                         >
                             <CodeIcon />
                             Code

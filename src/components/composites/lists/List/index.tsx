@@ -5,6 +5,7 @@ import { TitledText } from "@/components/composites/text/TitledText"
 import { Typography } from "@/components/atoms/text/Typography"
 import { ChoiceSwitch } from "@/components/atoms/forms/Choice"
 import { StackH, StackV } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
@@ -159,7 +160,7 @@ const Row = ({
                 truncate
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
-                <div className="ml-auto">
+                <Box principles={["push-end"]} className="ml-auto">
                     <StackH
                         gap={3}
                         classNames={["shrink-0"]}
@@ -168,7 +169,7 @@ const Row = ({
                             ...(TrailingSlot ? [() => <TrailingSlot />] : []),
                         ]}
                     />
-                </div>
+                </Box>
             ) : null}
         </>
     )

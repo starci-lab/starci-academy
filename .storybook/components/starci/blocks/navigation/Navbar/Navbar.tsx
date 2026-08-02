@@ -545,9 +545,7 @@ const Navbar = ({
                     )}
                 </HeroButton>
                 <Dropdown.Popover placement="bottom right" className="w-[300px]">
-                    <div className="p-3">
-                        {accountMenuHeader}
-                    </div>
+                    <StackV gap={1} padding={4} principles={["cell-pad"]} body={() => accountMenuHeader} />
                     <Divider />
                     <Dropdown.Menu aria-label="Account">
                         <Dropdown.Section>

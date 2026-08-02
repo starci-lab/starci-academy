@@ -302,17 +302,23 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             {/* tab strip — full-bleed row under the navbar, same footprint as `ProfileTabsBar`.
                 `px-6 py-3` is a one-off placement wrapper (a full-width strip flush under a sticky
                 navbar, not a repeating list nor a generic card seam), same allowance `ContinueCard`
-                uses for its own content wrapper — both padding digits (6, 3) are on the §10c scale. */}
-            <div className="w-full px-6 py-3">
-                <Tabs
-                    items={TAB_ITEMS}
-                    selectedKey={TAB_ITEMS[0].key}
-                    onSelectionChange={() => {}}
-                    ariaLabel="Profile sections loading"
-                    variant="secondary"
-                    isSkeleton
-                />
-            </div>
+                uses for its own content wrapper — both padding digits (6, 3) are on the §10c scale.
+                Carried via `Container`'s own `padding` prop (house-scale {{ x: 6, y: 4 }} = `px-6 py-3`)
+                instead of a raw div — no `patterns.mjs` token names this asymmetric shape yet. */}
+            <Container
+                size="full"
+                padding={{ x: 6, y: 4 }}
+                body={() => (
+                    <Tabs
+                        items={TAB_ITEMS}
+                        selectedKey={TAB_ITEMS[0].key}
+                        onSelectionChange={() => {}}
+                        ariaLabel="Profile sections loading"
+                        variant="secondary"
+                        isSkeleton
+                    />
+                )}
+            />
 
             <Container size="lg" padding={6} body={() => overviewBody} />
         </div>

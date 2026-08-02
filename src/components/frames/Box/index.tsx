@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import type { CSSProperties, ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
 
@@ -19,15 +19,26 @@ export interface BoxProps {
     /** Raw appearance/mount classes — the reason `Box` exists over a frame. */
     className?: string
     /** The HTML element to render. */
-    as?: "div" | "span" | "section" | "figure" | "article" | "aside" | "header" | "footer"
+    as?: "div" | "span" | "section" | "figure" | "article" | "aside" | "header" | "footer" | "code"
+    /** Inline style — for a value that can't be a class (a computed pixel size). */
+    style?: CSSProperties
+    /** Native `aria-hidden`, forwarded straight to the rendered tag. */
+    "aria-hidden"?: boolean
     children?: ReactNode
 }
 
 /** Source-level tier metadata. */
 export const meta = { tier: "frame", name: "Box" } as const
 
-export const Box = ({ principles, className, as: Tag = "div", children }: BoxProps) => (
-    <Tag data-tier="frame" data-component="Box" data-principles={principlesAttr(principles)} className={cn(className)}>
+export const Box = ({ principles, className, as: Tag = "div", style, "aria-hidden": ariaHidden, children }: BoxProps) => (
+    <Tag
+        data-tier="frame"
+        data-component="Box"
+        data-principles={principlesAttr(principles)}
+        className={cn(className)}
+        style={style}
+        aria-hidden={ariaHidden}
+    >
         {children}
     </Tag>
 )

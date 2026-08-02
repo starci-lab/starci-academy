@@ -5,6 +5,7 @@ import { IconTile, type IconComponent, type IconTileTone } from "@sb-components/
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import { Box } from "@sb-components/frames/Box/Box"
 
 /**
  * `UserCell` — the system's one person row: avatar + name + optional `@handle`. Leaves: `size`,
@@ -105,9 +106,9 @@ const UserCellBase = ({
     // (COMPOSITE-8) — forwarding `isSkeleton` lets it shimmer in place instead
     // of vanishing during loading and jumping the row's width once data lands.
     const trailingSlot = Trailing ? (
-        <div className="ml-auto shrink-0">
+        <Box principles={["push-end"]} className="shrink-0">
             <Trailing isSkeleton={isSkeleton} />
-        </div>
+        </Box>
     ) : null
 
     if (isSkeleton) {

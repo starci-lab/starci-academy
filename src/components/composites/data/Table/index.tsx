@@ -3,6 +3,7 @@ import { Table as HeroTable, cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { Box } from "@/components/frames/Box"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -170,9 +171,9 @@ const TableBase = ({
             renderEmptyState={
                 EmptyContent != null
                     ? () => (
-                        <div className="p-8 text-center">
+                        <Box principles={["page-pad"]} className="text-center">
                             <EmptyContent isSkeleton={isSkeleton} />
-                        </div>
+                        </Box>
                     )
                     : undefined
             }

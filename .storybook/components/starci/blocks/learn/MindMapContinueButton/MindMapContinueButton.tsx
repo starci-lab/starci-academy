@@ -2,6 +2,7 @@ import React from "react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { Box } from "@sb-components/frames/Box/Box"
 
 /**
  * `MindMapContinueButton` — the single floating "what's next" action over the
@@ -84,18 +85,19 @@ const MindMapContinueButton = ({
 
     if (allContentDone) {
         return (
-            <div
-
-                className="rounded-full border border-default bg-surface px-3 py-2 shadow-lg"
+            // TODO(atom): skin-shape đậm (rounded-full + border + bg + shadow — pill nổi)
+            // nên thành atom/composite (Chip/Button/SurfaceCard) — frame không làm được,
+            // tạm bọc Box + principles.
+            <Box
+                principles={["control-pad"]} className="rounded-full border border-default bg-surface px-3 py-2 shadow-lg"
             >
                 <Typography
                     size="sm"
                     weight="semibold"
                     color="success"
                     text={ALL_DONE_LABEL}
-
                 />
-            </div>
+            </Box>
         )
     }
 

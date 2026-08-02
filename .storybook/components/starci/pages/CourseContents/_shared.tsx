@@ -1,6 +1,7 @@
 import React from "react"
 import { CourseContents } from "./CourseContents"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * Shared anatomy parts + a per-device·per-state leaf renderer for the
@@ -127,22 +128,27 @@ const leafCode = ({ width, isSkeleton, isEmpty, viewer }: Required<Pick<DeviceLe
  * layout inside its OWN `@container` at the device width, in the given state.
  */
 export const deviceLeaf = ({ width, isSkeleton = false, isEmpty = false, viewer = "trial", leaf, reason }: DeviceLeafArgs) => (
-    <div className="p-8">
-        <BlockAnatomy
-            name="CourseContents"
-            // `screen`, NOT `block`.
-            tier="screen"
-            leaf={leaf}
-            parts={PARTS}
-            reason={reason}
-            code={leafCode({ width, isSkeleton, isEmpty, viewer })}
-        >
-            <div
-                className="@container overflow-hidden rounded-none border border-dashed border-accent"
-                style={width ? { width, maxWidth: "100%" } : undefined}
+    <StackV
+        gap={1}
+        padding={6}
+        principles={["page-pad"]}
+        body={() => (
+            <BlockAnatomy
+                name="CourseContents"
+                // `screen`, NOT `block`.
+                tier="screen"
+                leaf={leaf}
+                parts={PARTS}
+                reason={reason}
+                code={leafCode({ width, isSkeleton, isEmpty, viewer })}
             >
-                <CourseContents viewer={viewer} isSkeleton={isSkeleton} isEmpty={isEmpty} />
-            </div>
-        </BlockAnatomy>
-    </div>
+                <div
+                    className="@container overflow-hidden rounded-none border border-dashed border-accent"
+                    style={width ? { width, maxWidth: "100%" } : undefined}
+                >
+                    <CourseContents viewer={viewer} isSkeleton={isSkeleton} isEmpty={isEmpty} />
+                </div>
+            </BlockAnatomy>
+        )}
+    />
 )

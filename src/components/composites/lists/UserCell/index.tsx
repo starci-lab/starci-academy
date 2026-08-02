@@ -5,6 +5,7 @@ import { IconTile, type IconComponent, type IconTileTone } from "@/components/at
 import { Typography } from "@/components/atoms/text/Typography"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { Box } from "@/components/frames/Box"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -112,9 +113,9 @@ const UserCellBase = ({
     // caller's component shimmer in place instead of vanishing during loading
     // and jumping the row's width once data lands.
     const trailingSlot = Trailing ? (
-        <div className="ml-auto shrink-0">
+        <Box principles={["push-end"]} className="shrink-0">
             <Trailing isSkeleton={isSkeleton} />
-        </div>
+        </Box>
     ) : null
 
     if (isSkeleton) {

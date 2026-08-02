@@ -94,6 +94,11 @@ export const InputTags = ({
                         />
                     </span>
                 ))}
+                {/* `px-1 py-0` is the native `<input>`'s own inline text-inset, not a layout
+                    div — `Box` can only wrap `div`/`span`/… (not stand in for a form
+                    control's own attributes), so this stays a bare `<input>`; nearest
+                    token by intent (a control holding short text), data-principles
+                    hand-set directly since there is no exact padding-xy shape for it. */}
                 <input
                     id={controlId}
                     aria-label={fieldName(label, ariaLabel)}
@@ -109,7 +114,7 @@ export const InputTags = ({
                             removeAt(value.length - 1)
                         }
                     }}
-                    className="min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none"
+                    data-principles="control-pad" className="min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none"
                 />
             </div>
         </FieldFrame>

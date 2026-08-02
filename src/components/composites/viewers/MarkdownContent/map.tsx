@@ -20,6 +20,7 @@ import {
     MarkdownTableColumn,
     MarkdownTableHead,
     MarkdownTableRow} from "@/components/composites/viewers/MarkdownContent/MarkdownTableParts"
+import { Box } from "@/components/frames/Box"
 import { StackH } from "@/components/frames/Stack"
 
 /**
@@ -292,9 +293,10 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions}: Mark
             }
             return (
                 // inset-exception: inline-code geometry, wider than tall by nature, not a surface inset
-                <code className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
+                // (same shape as `RichText`'s inline `<code>` — see `RichText.tsx`)
+                <Box as="code" principles={["control-pad"]} className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
                     {children}
-                </code>
+                </Box>
             )
         },
         // Fenced block dispatch: `mermaid` → diagram, everything else → Shiki.

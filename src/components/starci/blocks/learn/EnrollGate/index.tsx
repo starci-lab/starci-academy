@@ -7,6 +7,7 @@ import { IconTile } from "@/components/atoms/display/IconTile"
 import { Typography } from "@/components/atoms/text/Typography"
 import { AsyncContent } from "@/components/composites/async/AsyncContent"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { PhaseScarcityNote, type PricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
 import { PriceTagProminent, type PriceBreakdown } from "@/components/starci/blocks/commerce/PriceTag"
@@ -163,15 +164,18 @@ const EnrollGateBase = ({
     // the canvas or over the faded teaser.
     const card = (
         // `SurfaceCard.className` door was deleted (COMPOSITE-4) and `max-w-[480px]` is an
-        // arbitrary value outside the closed `AllowedClassName` union anyway — the
-        // mx-auto/max-w placement now lives on a plain wrapping `div` instead.
-        <div className="mx-auto w-full max-w-[480px]">
+        // arbitrary value outside the closed `AllowedClassName` union anyway — no frame's
+        // typed `classNames` can carry it. `Box` centres via `principles={["center-measure"]}`
+        // (the real `mx-auto`) and keeps the raw width class as its escape-hatch `className`.
+        // TODO(atom): `max-w-[480px]` still wants its own typed sizing step (or a matching
+        // `Container` size) so this card stops needing the escape hatch at all.
+        <Box principles={["center-measure"]} className="w-full max-w-[480px]">
             <SurfaceCard
                 padding={6}
 
                 body={() => <StackV gap={4} principles={["content-row"]} align="center" isSkeleton={isSkeleton} items={[() => offerBody]} />}
             />
-        </div>
+        </Box>
     )
 
     // no teaser → just the centered enroll card. `StackH` with a single child and

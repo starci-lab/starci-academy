@@ -3,7 +3,8 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { StackH } from "@sb-components/frames/Stack/Stack"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { principlesAttr } from "@sb-components/frames/_principles"
 
 /**
  * `WorkSessionHeader` — the band that signals "you are inside a session",
@@ -86,9 +87,9 @@ const WorkSessionHeader = ({
         return (
             <div className="border-b border-default bg-surface">
                 <StackH gap={4} principles={["content-row"]} align="center" isSkeleton={isSkeleton} items={[() => skeletonRow]} />
-                <div className="p-2">
-                    <HeroSkeleton className="h-1 w-full rounded-full" />
-                </div>
+                {/* `cell-pad` is the closest registered padding token to this wrapper's
+                    `p-2` — the frame's `padding={3}` keeps the exact 8px inset. */}
+                <StackV gap={1} principles={["cell-pad"]} padding={3} isSkeleton={isSkeleton} items={[() => <HeroSkeleton className="h-1 w-full rounded-full" />]} />
             </div>
         )
     }
@@ -131,18 +132,21 @@ const WorkSessionHeader = ({
                 )}
             />
         )
+        // `py-2` enlarges the tap target around the thin 4px bar; `control-pad` is the
+        // closest registered token (its own `py-2`) — this leaf carries no matching `px`
+        // since the segment already fills `flex-1` width.
         return onStepPress != null ? (
             <button
                 key={step}
                 type="button"
                 aria-label={`${counter} — ${step}`}
-                className="flex-1 py-2"
+                className="flex-1 py-2" data-principles={principlesAttr(["control-pad"])}
                 onClick={() => onStepPress(step)}
             >
                 {segment}
             </button>
         ) : (
-            <span key={step} className="flex-1 py-2">{segment}</span>
+            <span key={step} className="flex-1 py-2" data-principles={principlesAttr(["control-pad"])}>{segment}</span>
         )
     })
 

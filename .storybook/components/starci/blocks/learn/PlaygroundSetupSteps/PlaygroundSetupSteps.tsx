@@ -16,6 +16,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { ConfirmDialog } from "@sb-components/composites/feedback/ConfirmDialog/ConfirmDialog"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -115,9 +116,15 @@ interface CommandSkeletonProps {
  */
 const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
     <div className="overflow-hidden rounded-2xl border border-default bg-default/30">
-        <div className="flex items-center justify-between border-b border-default px-3 py-2">
-            <Typography size="xs" isSkeleton classNames={["w-1/4"]} />
-        </div>
+        <StackH
+            gap={1}
+            align="center"
+            justify="between"
+            padding={{ x: 4, y: 3 }}
+            principles={["control-pad"]}
+            body={() => <Typography size="xs" isSkeleton classNames={["w-1/4"]} />}
+        />
+        <Divider />
         <StackV
             gap={3}
             padding={4}

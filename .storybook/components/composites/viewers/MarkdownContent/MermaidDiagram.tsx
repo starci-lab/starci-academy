@@ -5,6 +5,7 @@ import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
 import mermaid from "mermaid"
 import useSWR from "swr"
 import { Modal, cn } from "@heroui/react"
+import { Box } from "@sb-components/frames/Box/Box"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
@@ -82,28 +83,34 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                 "mermaid" is the label, same as a code fence names its own language. The zoom
                 trigger is icon-only too, matching `SnippetIcon`'s copy button — always visible,
                 not a hover-only overlay. */}
-            <div className="flex items-center justify-between border-b border-default px-3 py-2">
+            <Box principles={["control-pad"]} className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs text-muted">mermaid</span>
                 {data ? (
                     <button type="button" aria-label={expandLabel} title={expandLabel} onClick={() => setOpen(true)} className="text-muted">
                         <MagnifyingGlassPlusIcon className="size-4" />
                     </button>
                 ) : null}
-            </div>
+            </Box>
             {data ? (
                 <>
                     {/* mermaid stamps an inline `style="max-width:Npx"` on the <svg> that
                         outranks our `max-w-full` class, so a wide diagram would otherwise push
                         the reading column past the viewport. Wrap it in an x-scroll box: it
-                        scales to fit when it can, and scrolls inside the figure when it can't. */}
+                        scales to fit when it can, and scrolls inside the figure when it can't.
+                        data-principles hand-set (not `Box`): `dangerouslySetInnerHTML` has no slot on `Box`'s prop surface. */}
                     <div
-                        className="overflow-x-auto p-3 [&_svg]:h-auto [&_svg]:!w-auto [&_svg]:!max-w-none"
+                        data-principles="cell-pad" className="overflow-x-auto p-3 [&_svg]:h-auto [&_svg]:!w-auto [&_svg]:!max-w-none"
                         dangerouslySetInnerHTML={{ __html: data }}
                     />
                     {/* Authored caption ("Figure N: …") as a real figcaption — the source paragraph
-                        is stripped upstream so it isn't shown twice. Generic fallback stays modal-only. */}
+                        is stripped upstream so it isn't shown twice. Generic fallback stays modal-only.
+                        px-3 pb-3 is a continuation inset (no top — it sits flush under the diagram
+                        above, not its own surface), not a symmetric `padding`/`padding-xy` shape in
+                        patterns.mjs; `figcaption` is also outside `Box`'s `as` union. Nearest token by
+                        intent (dense inner surface, same 12px measure as the diagram box above),
+                        data-principles hand-set directly. */}
                     {caption ? (
-                        <figcaption className="px-3 pb-3 text-center text-sm italic text-muted">
+                        <figcaption data-principles="cell-pad" className="px-3 pb-3 text-center text-sm italic text-muted">
                             {caption}
                         </figcaption>
                     ) : null}
@@ -116,7 +123,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                         scale (`AllowedPadding` steps `1..6`, see `scripts/check-padding.mjs`);
                                         `src`'s `p-4` is off that scale, so the full-screen preview gets the
                                         closest generous step instead. */}
-                                    <Modal.Body className="p-6">
+                                    <Modal.Body data-principles="page-pad" className="p-6">
                                         {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
                                         <StackV
                                             as="figure"
@@ -148,7 +155,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                     </Modal>
                 </>
             ) : (
-                <div className="p-3 text-sm text-muted">{loadingLabel}</div>
+                <Box principles={["cell-pad"]} className="p-3 text-sm text-muted">{loadingLabel}</Box>
             )}
         </figure>
     )

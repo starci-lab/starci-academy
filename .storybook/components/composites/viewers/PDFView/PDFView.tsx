@@ -12,6 +12,7 @@ import { Document, Page, pdfjs } from "react-pdf"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { Box } from "@sb-components/frames/Box/Box"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -117,14 +118,14 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
                     // Not scrolled into view yet — a real bordered page-shaped frame (not a
                     // drawn shimmer rectangle); the two lines inside are the only shimmer,
                     // and `Typography` draws its own shape (COMPOSITE-10).
-                    <div
-                        className="flex w-full max-w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
+                    <Box
+                        principles={["title-subtitle"]} className="flex w-full max-w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
                         style={{ minHeight: placeholderMinH }}
                         aria-hidden
                     >
                         <Typography size="sm" color="muted" isSkeleton />
                         <Typography size="xs" color="muted" isSkeleton />
-                    </div>
+                    </Box>
                 )
             }
         </div>
@@ -278,14 +279,14 @@ export const PDFView = ({
                     gap={4}
                     isSkeleton={isSkeleton}
                     items={Array.from({ length: SKELETON_PAGE_COUNT }, () => () => (
-                        <div
-                            className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
+                        <Box
+                            principles={["title-subtitle"]} className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
                             style={{ minHeight: 320 }}
                             aria-hidden
                         >
                             <Typography size="sm" color="muted" isSkeleton />
                             <Typography size="xs" color="muted" isSkeleton />
-                        </div>
+                        </Box>
                     ))}
                 />
             ) : file ? (

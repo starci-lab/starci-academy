@@ -14,6 +14,7 @@ import {
 import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { Box } from "@/components/frames/Box"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -131,18 +132,17 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: Flo
             data-component="FlowDiagram"
         >
             {isSkeleton ? (
-                <div className="flex h-full items-center justify-center gap-4 p-6">
+                <Box principles={["group-boundary", "page-pad"]} className="flex h-full items-center justify-center gap-4 p-6">
                     {Array.from({ length: SKELETON_NODE_COUNT }, (_, index) => (
-                        <div
+                        <Box
                             key={index}
-                            data-principles="title-subtitle"
-                            className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
+                            principles={["title-subtitle"]} className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
                         >
                             <Typography size="sm" weight="medium" isSkeleton />
                             <Typography size="xs" color="muted" isSkeleton />
-                        </div>
+                        </Box>
                     ))}
-                </div>
+                </Box>
             ) : (
                 <ReactFlowProvider>
                     <ReactFlow

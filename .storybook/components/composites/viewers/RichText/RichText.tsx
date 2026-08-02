@@ -4,6 +4,7 @@ import React, { type ReactNode } from "react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { TypographySize as AtomTypographySize } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { Box } from "@sb-components/frames/Box/Box"
 
 /** Empty `text` → renders nothing (Typography with no children), takes no unexpected space. */
 
@@ -84,9 +85,9 @@ const RULES: Array<InlineRule> = [
         re: /`([^`]+)`/,
         recurse: false,
         render: (match) => (
-            <code className="rounded-md bg-default px-2 py-0 font-mono text-[0.9em] text-accent-soft-foreground">
+            <Box as="code" principles={["control-pad"]} className="rounded-md bg-default px-2 py-0 font-mono text-[0.9em] text-accent-soft-foreground">
                 {match[1]}
-            </code>
+            </Box>
         ),
     },
     {

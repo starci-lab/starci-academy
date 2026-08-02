@@ -16,6 +16,7 @@ import { RichText } from "@sb-components/composites/viewers/RichText/RichText"
 import { PADDING_CLASS, type AllowedGap, type AllowedPadding } from "@sb-components/frames/_spacing"
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
+import { Box } from "@sb-components/frames/Box/Box"
 /**
  * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
  * (`SurfaceCardHeader`: label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer`
@@ -640,9 +641,9 @@ const Nested = ({
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {Footer ? (
-                <div className="border-t border-default px-3 py-2">
+                <Box principles={["control-pad"]} className="border-t border-default px-3 py-2">
                     <Footer isSkeleton={isSkeleton} />
-                </div>
+                </Box>
             ) : null}
         </div>
     )
@@ -1102,9 +1103,9 @@ const SelectableGroup = <T extends string>({
                                                 ) : null}
                                             </span>
                                             {item.badge ? (
-                                                <span className="ml-auto shrink-0">
+                                                <Box as="span" principles={["push-end"]} className="shrink-0">
                                                     <item.badge />
-                                                </span>
+                                                </Box>
                                             ) : null}
                                         </>
                                     )
@@ -1378,7 +1379,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 ]}
             />
             {metaSlot || trailingSlot || selected ? (
-                <div className="ml-auto">
+                <Box principles={["push-end"]}>
                     <StackH
                         gap={3}
                         classNames={["shrink-0"]}
@@ -1392,7 +1393,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                             )] : []),
                         ]}
                     />
-                </div>
+                </Box>
             ) : null}
         </>
     )
@@ -1471,7 +1472,7 @@ const List = ({
             ? <ListFreeRow key={item.key} item={item} />
             : <ListRow key={item.key} item={item} isSkeleton={isSkeleton} />
     ))
-    const inner = !isSkeleton && isEmpty && EmptyState != null ? <div className="p-8"><EmptyState /></div> : rows
+    const inner = !isSkeleton && isEmpty && EmptyState != null ? <Box principles={["page-pad"]}><EmptyState /></Box> : rows
     const bare = label == null && description == null
     const surface = (
         <div

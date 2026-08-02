@@ -156,8 +156,15 @@ const ReactionButton = ({
                         </span>
                     </HeroButton>
                 </HeroPopover.Trigger>
-                {/* inset-exception: pill geometry of the vendor popover body, the shape HeroUI ships */}
-                <HeroPopover.Content className="overflow-visible rounded-full px-2 py-1">
+                {/* TODO(atom): skin-shape đậm (rounded-full + px-2 py-1 pill) — frame không làm được,
+                    tạm bọc bằng data-principles hand-set. `className` sits on `HeroPopover.Content`
+                    itself (the vendor's OWN rendered surface, react-aria `Popover`), not a raw <div>
+                    we author, so `Box` can't wrap it (moving the shape down onto an inner wrapping
+                    Box would leave the real popover surface with its default non-pill radius showing
+                    behind it — a visible shape regression). `data-principles` on `Content` directly is
+                    type-safe (forwarded through `DOMAttributes`), so tagged in place instead. Needs a
+                    dedicated pill-popover atom/composite to own this shape. */}
+                <HeroPopover.Content data-principles="pill-pad" className="overflow-visible rounded-full px-2 py-1">
                     <ReactionPicker
                         items={REACTIONS.map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}
                         activeKey={myReaction}

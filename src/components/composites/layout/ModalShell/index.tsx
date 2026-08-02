@@ -14,8 +14,8 @@ import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
  *
  * FRAME API LAW (§13b): `.Base` is a WRAPPER frame → the named slots
  * `header`/`body`/`footer` are the main road. `footer` is a REAL slot now (rendered as HeroUI `Modal.Footer`)
- * — before this refactor every caller hand-rolled a
- * `<div className="flex justify-end gap-2">` CTA row INSIDE the body, which is
+ * — before this refactor every caller hand-rolled a wrapper div
+ * (`flex justify-end gap-2`) CTA row INSIDE the body, which is
  * exactly the "several things crammed into one place" the slot law exists to
  * stop. Nothing here repeats, so no `items` member. Namespace only — no bare
  * component export.

@@ -19,7 +19,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { useCourseResume } from "../../shared/useCourseResume"
+import { useCourseResume } from "@/components/features/learn/shared/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
 import { useLeaderboardSwr } from "@/components/features/learn/Leaderboard/useLeaderboardSwr"

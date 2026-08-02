@@ -14,14 +14,14 @@ import numeral from "numeral"
 import {
     useRouter,
 } from "next/navigation"
-import { useCourseTotals } from "../../course/CourseDetail/hooks/useCourseTotals"
+import { useCourseTotals } from "@/components/features/course/CourseDetail/hooks/useCourseTotals"
 import {
     pathConfig,
 } from "@/resources/path"
 import {
     toDifficulty,
 } from "./map"
-import { useCourseResume } from "../shared/useCourseResume"
+import { useCourseResume } from "@/components/features/learn/shared/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
 import { _CourseContents, type CourseContentsLesson } from "./component"
 import type { MyCourseOutlineModule } from "@/modules/api/graphql/queries/types/my-course-outline"

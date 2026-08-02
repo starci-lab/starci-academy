@@ -15,7 +15,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
- * `@/components/features/learn/CourseContents/TrialConversionStrip`, made
+ * `@/components/page/CourseContents/TrialConversionStrip`, made
  * TIER-3 PRESENTATIONAL: `src` reads `useQueryCoursePricePreviewSwr` (SWR) +
  * `usePaymentOverlayState` (zustand) itself; this port takes the same data as
  * PLAIN PROPS (`price`, `isSkeleton`, `onEnroll`) so it renders standalone

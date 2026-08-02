@@ -62,9 +62,9 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame stacking the (up to) five sections, owning the section-wide seam between them", storyId: "frames-stack-stackv--default" },
     "SurfaceCardList": { tier: "composite", role: "the prerequisites/outputs card — free-form rows so this block can lead an outputs row with a check and leave a prerequisites row bare", storyId: "composites-cards-surfacecard-surfacecardlist--free-form" },
     "SurfaceCardAccordion": { tier: "composite", role: "the requirements/steps card — collapsible rows, the requirements instance carrying a points chip on its trigger via `titleEnd`", storyId: "composites-cards-surfacecard-surfacecardaccordion--with-title-end" },
-    "SurfaceCard": { tier: "composite", role: "the hint card — a labelled face holding ONE markdown paragraph, no rows and no collapse (AUDIT 2026-07-30, feedback ChallengePage/Graded round-12)", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
+    "SurfaceCard": { tier: "composite", role: "the hint card — a labelled face holding ONE markdown paragraph, no rows and no collapse", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "MarkdownContent": { tier: "composite", role: "a requirement/step/hint panel body — the ONLY three sections that stay markdown", storyId: "composites-viewers-markdowncontent--compact" },
-    "Typography": { tier: "atom", role: "a prerequisite/output row — plain text, no markdown (AUDIT 2026-07-30, feedback ChallengePage/Graded round-3: backend content schema names this field \"text\", not \"body\" — a different tier from requirements/steps)", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "a prerequisite/output row — plain text, no markdown; the backend content schema names this field \"text\", not \"body\", a different tier from requirements/steps", storyId: "atoms-text-typography-typography--plain" },
     "ScoreValue": { tier: "composite", role: "a requirement's point value, riding on its accordion trigger via `titleEnd`", storyId: "composites-texts-scorevalue--default" },
     "CheckCircleIcon": { tier: "heroui", role: "the leading mark on an expected-output row — only drawn once the row is real, never on its shimmer" },
 }

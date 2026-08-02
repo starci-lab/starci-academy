@@ -95,7 +95,7 @@ export const Skeleton: Story = {
                 states={[
                     {
                         name: "isSkeleton, items = []",
-                        why: "The same `SurfaceCardList` frame renders shimmer rows in place of real nudges while `dueSwr`/`leaderboardSwr` are still resolving. Holding the frame's space during that wait is what stops the page from flashing once the real nudges land (source notes 2026-07-12).",
+                        why: "The same `SurfaceCardList` frame renders shimmer rows in place of real nudges while `dueSwr`/`leaderboardSwr` are still resolving. Holding the frame's space during that wait is what stops the page from flashing once the real nudges land.",
                         code: "<LearnNudges isSkeleton items={[]} />",
                         render: (
                             <LearnNudges

@@ -39,7 +39,7 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
 ]
 const COPYABLE_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "atom", role: "label (Sm muted) and value (Sm medium + tabular-nums)", storyId: "atoms-text-typography-typography--colors" },
-    { name: "SnippetIcon", tier: "atom", role: "one-tap copy affordance next to the value, added ADDITIVELY 2026-08-01 via `copyable`", storyId: "atoms-display-snippeticon-snippeticon--default" },
+    { name: "SnippetIcon", tier: "atom", role: "one-tap copy affordance next to the value, via `copyable`", storyId: "atoms-display-snippeticon-snippeticon--default" },
 ]
 
 /** Default — muted label left, medium value right; `justify-between` holds both edges. */

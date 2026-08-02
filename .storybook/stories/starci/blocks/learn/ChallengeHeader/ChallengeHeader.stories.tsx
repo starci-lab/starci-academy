@@ -25,7 +25,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the header frame that lines up the back link, title, description and meta row, owning the type scale for all four", storyId: "composites-layout-page-pageheader--full" },
     "LinkBack": { tier: "atom", role: "the single back affordance to the owning lesson, or its skeleton mirror while loading", storyId: "atoms-navigation-link-linkback--default" },
     "Typography": { tier: "atom", role: "one of the block's own text lines — the title, or the quiet score fact — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
-    "RichText": { tier: "composite", role: "the one-sentence summary, small-richtext tier not a bare Typography (AUDIT 2026-07-30, feedback ChallengePage/Graded round-1), and its own skeleton bar", storyId: "composites-viewers-richtext--plain-text" },
+    "RichText": { tier: "composite", role: "the one-sentence summary, small-richtext tier not a bare Typography, and its own skeleton bar", storyId: "composites-viewers-richtext--plain-text" },
     "StackH": { tier: "frame", role: "the horizontal frame holding the meta row, so the score text and both chips sit on one baseline with one seam", storyId: "frames-stack-stackh--default" },
     "EnumChip": { tier: "composite", role: "an enum-to-soft-chip delegate — difficulty always, status only once the learner has an attempt", storyId: "composites-chips-enumchip--overview" },
 }

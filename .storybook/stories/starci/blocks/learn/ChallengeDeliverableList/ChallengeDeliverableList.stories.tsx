@@ -121,11 +121,11 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button": { tier: "atom", role: "the settings trigger, or a panel's submit / view-history action", storyId: "atoms-buttons-button-button--default" },
     "MarkdownContent": { tier: "composite", role: "the requirement's own description, at the compact measure since it is a passenger inside the accordion rather than the page", storyId: "composites-viewers-markdowncontent--compact" },
     "EnumChip": { tier: "composite", role: "the pass/fail verdict chip", storyId: "composites-chips-enumchip--overview" },
-    "Typography": { tier: "atom", role: "the trigger's points-or-score line, the graded score/requirement sentence, `shortFeedback`, or one feedback item's message/location/suggestion — flat list inside the graded `Disclosure`, ground truth `src`'s `LastAttemptResult.tsx` (AUDIT 2026-07-30, feedback ChallengePage/Graded round-8)", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the trigger's points-or-score line, the graded score/requirement sentence, `shortFeedback`, or one feedback item's message/location/suggestion — flat list inside the graded `Disclosure`, ground truth `src`'s `LastAttemptResult.tsx`", storyId: "atoms-text-typography-typography--plain" },
     "ScoreValue": { tier: "composite", role: "the trigger's points-before-grading or earned/required-after-grading line, riding in `titleEnd`", storyId: "composites-texts-scorevalue--default" },
     "StatusIcon": { tier: "heroui", role: "the requirement's todo/done/failed mark, riding in `titleStart` — its own colour, independent of the title text" },
     "Disclosure": { tier: "composite", role: "the \"Latest feedback\" trigger — collapses `shortFeedback` + the itemized feedback list behind a click, since it's SECONDARY detail", storyId: "composites-layout-disclosure-disclosure--default" },
-    "Callout": { tier: "composite", role: "the background grading job's status strip — warning while queued/processing, success once done, danger on failure with the raw server error as its body (AUDIT 2026-07-30, round-15)", storyId: "composites-feedback-callout-callout--with-body" },
+    "Callout": { tier: "composite", role: "the background grading job's status strip — warning while queued/processing, success once done, danger on failure with the raw server error as its body", storyId: "composites-feedback-callout-callout--with-body" },
 }
 
 const autosaveStates = (

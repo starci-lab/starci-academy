@@ -473,7 +473,7 @@ const TaskSubmissionPanel = ({
             onOpenChange={onSettingsOpenChange}
             title="Grading settings"
             description="The language, branch and token StarCi uses to read and grade your repo."
-            footer={
+            footer={() => (
                 <Button
                     label="Save"
                     variant="primary"
@@ -481,9 +481,9 @@ const TaskSubmissionPanel = ({
                     isPending={settingsFormProps.isSaving}
 
                 />
-            }
+            )}
 
-            body={<GithubGradingSettingsBody form={settingsFormProps} />}
+            body={() => <GithubGradingSettingsBody form={settingsFormProps} />}
         />
     </div>
 )

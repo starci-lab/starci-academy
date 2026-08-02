@@ -1,5 +1,4 @@
 import React from "react"
-import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { ConfirmDialog } from "@sb-components/composites/feedback/ConfirmDialog/ConfirmDialog"
@@ -65,8 +64,8 @@ const Demo = ({
 }: {
     tone?: "default" | "danger"
     triggerLabel: string
-    title: ReactNode
-    description?: ReactNode
+    title: string
+    description?: string
     confirmLabel?: string
 }) => {
     const [isOpen, setOpen] = React.useState(false)

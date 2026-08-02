@@ -39,7 +39,7 @@ const ProfileNotFoundState = ({
             icon={UserCircleMinusIcon}
             title={title}
             description={description}
-            action={(
+            action={() => (
                 <Button
                     label="Back to home"
                     variant="primary"

@@ -150,13 +150,13 @@ const SubmissionAttemptSelector = ({
                 // A parent-forced skeleton and this row's own in-flight fetch share the
                 // one loading branch `AsyncContent` exposes (see file header).
                 isLoading={isLoading || isSkeleton}
-                skeleton={<AttemptRowSkeleton />}
+                skeleton={() => <AttemptRowSkeleton />}
                 isEmpty={isEmpty}
                 emptyContent={emptyContent}
                 error={error}
                 errorContent={errorContent}
 
-                content={
+                content={() => (
                     <ButtonRadioGroup
                         ariaLabel={ariaLabel}
                         value={selectedId ?? NONE_SELECTED}
@@ -175,7 +175,7 @@ const SubmissionAttemptSelector = ({
                             ) : undefined
                         }
                     />
-                }
+                )}
             />
         </div>
     )

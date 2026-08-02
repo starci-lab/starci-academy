@@ -224,9 +224,9 @@ export const LoadError: Story = {
                                             icon={WarningDuotone}
                                             title="Connection lost"
                                             description="The network seems to have dropped. Check your connection and try again."
-                                            action={
+                                            action={() => (
                                                 <Button variant="secondary" size="sm" label="Retry" onPress={() => {}} />
-                                            }
+                                            )}
                                         />
                                     )}
                                 />

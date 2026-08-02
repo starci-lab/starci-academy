@@ -97,7 +97,7 @@ const ContinueLearning = ({
         <div>
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
-                skeleton={<Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} />}
+                skeleton={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} />}
                 isEmpty={!isLoading && items.length === 0}
                 emptyContent={{
                     title: hasCourses
@@ -106,7 +106,7 @@ const ContinueLearning = ({
                     description: hasCourses
                         ? "Start a lesson so it shows up here under \"Continue learning\"."
                         : undefined,
-                    action: (
+                    action: () => (
                         <Button
                             variant="primary"
                             size="sm"
@@ -117,7 +117,7 @@ const ContinueLearning = ({
                     ),
 
                 }}
-                content={<Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} />}
+                content={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} />}
             />
         </div>
     )

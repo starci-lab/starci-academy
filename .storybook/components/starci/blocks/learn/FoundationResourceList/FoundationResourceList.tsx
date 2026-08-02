@@ -170,19 +170,19 @@ const FoundationResourceList = ({
         <div aria-label={ariaLabel} role={ariaLabel ? "region" : undefined}>
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={
+                skeleton={() => (
                     <SurfaceCardList
                         items={skeletonRows()}
                         isSkeleton
 
                     />
-                }
+                )}
                 isEmpty={resources.length === 0}
                 emptyContent={emptyContent}
                 error={error}
                 errorContent={errorContent}
 
-                content={
+                content={() => (
                     <StackV
                         gap={3}
 
@@ -200,7 +200,7 @@ const FoundationResourceList = ({
                             ),
                         ]}
                     />
-                }
+                )}
             />
         </div>
     )

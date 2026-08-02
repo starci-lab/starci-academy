@@ -1,7 +1,7 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -13,14 +13,20 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 export interface StatGridCardItem {
     /** Stable key. */
     key: string
-    /** Cell content — the block owns grid/border structure only, content is free-form. */
-    content: ReactNode
+    /**
+     * Cell content — the block owns grid/border structure only, content is free-form. A
+     * COMPONENT reference (COMPOSITE-8), never a built node: the card calls it itself and
+     * forwards {@link StatGridCardProps.isSkeleton}, so cells can shimmer in place.
+     */
+    content: ComponentTypeWithSkeleton
 }
 
 /** Props for the {@link StatGridCard} block. */
 export interface StatGridCardProps {
     /** Cells, in display order. */
     items: Array<StatGridCardItem>
+    /** `true` → render every cell's `content` in its skeleton state. Default `false`. */
+    isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -43,7 +49,7 @@ export interface StatGridCardProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "StatGridCard" } as const
 
-export const StatGridCard = ({ items, classNames}: StatGridCardProps) => {
+export const StatGridCard = ({ items, isSkeleton = false, classNames}: StatGridCardProps) => {
     const total = items.length
     const isOddTotal = total % 2 === 1
 
@@ -57,6 +63,7 @@ export const StatGridCard = ({ items, classNames}: StatGridCardProps) => {
                 const isLastOddSpan = isOddTotal && index === total - 1
                 const isRightCol = index % 2 === 1
                 const isLastRow = isLastOddSpan || index >= total - (isOddTotal ? 1 : 2)
+                const Content = item.content
                 return (
                     <div
                         key={item.key}
@@ -68,7 +75,7 @@ export const StatGridCard = ({ items, classNames}: StatGridCardProps) => {
                             !isLastRow && "border-b border-default",
                         )}
                     >
-                        {item.content}
+                        <Content isSkeleton={isSkeleton} />
                     </div>
                 )
             })}

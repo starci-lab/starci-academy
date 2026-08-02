@@ -1,10 +1,11 @@
-import type { FormEvent, ReactNode } from "react"
+import type { FormEvent } from "react"
 import { cn } from "@heroui/react"
 import { ButtonGroup, type ButtonGroupItem } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 /**
  * `Form.*` — the form composite namespace. Because each form atom carries its own
  * `label`/`hint`/`errorMessage`/`isRequired`, the shell's job is LAYOUT ONLY:
@@ -17,7 +18,9 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * | `.Section` | a titled group of fields | `title`/`description` + slot `body` |
  * | `.Actions` | the closing button row | `items` — children forbidden |
  *
- * `.Base`/`.Section` are wrapping shells (`body` is the main path); `.Actions` is a repeated list requiring `items` and composing the
+ * `.Base`/`.Section` are wrapping shells (`body` is the main path, a COMPONENT
+ * reference the shell calls itself so `isSkeleton` can reach inside it —
+ * COMPOSITE-8); `.Actions` is a repeated list requiring `items` and composing the
  * `ButtonGroup` atom. Namespace only — no bare component export.
  *
  * The shell carries no behaviour: no validation, field state, or business rule
@@ -41,14 +44,15 @@ export interface FormBaseProps {
      * Omit → the form never submits (page reload is still blocked).
      */
     onSubmit?: () => void
-    /** Main content region (the `FormSection`s / fields). */
-    body?: ReactNode
+    /** Main content region (the `FormSection`s / fields), as a COMPONENT reference (COMPOSITE-8) — the shell calls it itself so `isSkeleton` can reach inside it. */
+    body?: ComponentTypeWithSkeleton
     /**
      * The closing button row — usually a {@link FormActions}. A NAMED slot
      * (rather than the last node in `body`) so the shell knows where the
-     * "bottom" is and keeps the right `gap` seam.
+     * "bottom" is and keeps the right `gap` seam. A COMPONENT reference
+     * (COMPOSITE-8) — same contract as `body`.
      */
-    actions?: ReactNode
+    actions?: ComponentTypeWithSkeleton
     /**
      * Vertical rhythm between the form's sub-regions. Default `{6}` (`gap-6`,
      * §10b: design ↔ design within one block). Drop to `{4}` (`gap-3`) for a
@@ -62,6 +66,12 @@ export interface FormBaseProps {
      * thread `isDisabled` down to each field.
      */
     isDisabled?: boolean
+    /**
+     * `true` → forwarded into whichever of `body`/`actions` renders
+     * (COMPOSITE-8 — each is a component reference this shell calls itself, so
+     * the flag reaches inside every one of them).
+     */
+    isSkeleton?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
@@ -78,13 +88,13 @@ export interface FormBaseProps {
  */
 const Base = ({
     onSubmit,
-    body,
-    actions,
+    body: Body,
+    actions: Actions,
     gap = 6,
     isDisabled = false,
+    isSkeleton = false,
     classNames,
 }: FormBaseProps) => {
-    const main = body
     const submit = (event: FormEvent<HTMLFormElement>) => {
         // Always block the form's default navigation, even when there's no handler.
         event.preventDefault()
@@ -105,12 +115,12 @@ const Base = ({
                 to `min-width: min-content` (which would break truncation inside).
             */}
             <fieldset disabled={isDisabled} className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
-                {main != null ? (
+                {Body != null ? (
                     <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
-                        {main}
+                        <Body isSkeleton={isSkeleton} />
                     </div>
                 ) : null}
-                {actions != null ? <div>{actions}</div> : null}
+                {Actions != null ? <div><Actions isSkeleton={isSkeleton} /></div> : null}
             </fieldset>
         </form>
     )
@@ -120,12 +130,12 @@ const Base = ({
 // ─────────────────────────────────────────────────────────────────────────────
 /** Props for {@link FormSection}. */
 export interface FormSectionProps {
-    /** Group title — `Typography.Sm` medium (§9b: a working-context emphasis, not a page heading). */
-    title: ReactNode
-    /** Description line under the title — `Typography.Xs` muted (§9a). Omit → title only. */
-    description?: ReactNode
-    /** The group's fields. */
-    body?: ReactNode
+    /** Group title — `Typography.Sm` medium (§9b: a working-context emphasis, not a page heading). The shell wraps it in `Typography` itself (COMPOSITE-8). */
+    title: string
+    /** Description line under the title — `Typography.Xs` muted (§9a). Omit → title only. Same text contract as {@link FormSectionProps.title}. */
+    description?: string
+    /** The group's fields, as a COMPONENT reference (COMPOSITE-8) — the shell calls it itself so `isSkeleton` can reach inside it. */
+    body?: ComponentTypeWithSkeleton
     /**
      * Vertical rhythm: used for BOTH of the section's seams (header ↔ body, and
      * field ↔ field). Default `{4}` (`gap-3`, §10b: rows/blocks stacked within
@@ -133,6 +143,13 @@ export interface FormSectionProps {
      * one place.
      */
     gap?: AllowedGap
+    /**
+     * `true` → `title`/`description` switch to shimmer, and `body` (if any) is
+     * CALLED with `isSkeleton` too (COMPOSITE-8 — `body` is a component
+     * reference this shell calls itself, so the flag reaches inside it the same
+     * way it reaches the text lines).
+     */
+    isSkeleton?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
@@ -150,50 +167,49 @@ export interface FormSectionProps {
 const Section = ({
     title,
     description,
-    body,
+    body: Body,
     gap = 4,
+    isSkeleton = false,
     classNames,
-}: FormSectionProps) => {
-    const main = body
-    return (
-        <section
-            className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], classNames)}
-            data-tier="composite"
-            data-component="FormSection"
-            data-principles="label-field"
-        >
-            {/* tight gap-1: title ↔ description is a PAIR, not two regions (§10b).
-                No `` wrapper: it never helps the reader past what the
-                `Typography` nodes inside already say on their own (§11a.1 CASE 2/3 — a
-                badge with nowhere to link is worse than no badge; those two atoms keep their
-                own badge below and surface as top-level nodes instead). */}
-            <StackV
-                gap={2}
-                classNames={["min-w-0"]}
-                pattern="title-subtitle"
-                items={[
-                    () => (
-                        <span>
-                            <Typography size="sm" text={title} weight="medium" />
-                        </span>
-                    ),
-                    ...(description != null ? [() => (
-                        <span>
-                            <Typography size="xs" text={description} color="muted" />
-                        </span>
-                    )] : []),
-                ]}
-            />
-            {/* No `` here either: `body` is arbitrary
-                caller-supplied field content (§11a.1 CASE 3 — caller slot). */}
-            {main != null ? (
-                <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
-                    {main}
-                </div>
-            ) : null}
-        </section>
-    )
-}
+}: FormSectionProps) => (
+    <section
+        className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], classNames)}
+        data-tier="composite"
+        data-component="FormSection"
+        data-principles="label-field"
+    >
+        {/* tight gap-1: title ↔ description is a PAIR, not two regions (§10b).
+            No `` wrapper: it never helps the reader past what the
+            `Typography` nodes inside already say on their own (§11a.1 CASE 2/3 — a
+            badge with nowhere to link is worse than no badge; those two atoms keep their
+            own badge below and surface as top-level nodes instead). */}
+        <StackV
+            gap={2}
+            classNames={["min-w-0"]}
+            pattern="title-subtitle"
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <span>
+                        <Typography size="sm" text={title} weight="medium" isSkeleton={isSkeleton} />
+                    </span>
+                ),
+                ...(description != null ? [() => (
+                    <span>
+                        <Typography size="xs" text={description} color="muted" isSkeleton={isSkeleton} />
+                    </span>
+                )] : []),
+            ]}
+        />
+        {/* No `` here either: `body` is arbitrary
+            caller-supplied field content (§11a.1 CASE 3 — caller slot). */}
+        {Body != null ? (
+            <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
+                <Body isSkeleton={isSkeleton} />
+            </div>
+        ) : null}
+    </section>
+)
 // ─────────────────────────────────────────────────────────────────────────────
 // .Actions — the closing button row
 // ─────────────────────────────────────────────────────────────────────────────

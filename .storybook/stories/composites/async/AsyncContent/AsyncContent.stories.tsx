@@ -112,7 +112,7 @@ export const Content: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading={false} skeleton={<ProfileCardSkeleton />} content={<ProfileCard />} />
+                            <AsyncContent isLoading={false} skeleton={() => <ProfileCardSkeleton />} content={() => <ProfileCard />} />
                         ),
                     },
                 ]}
@@ -141,8 +141,8 @@ export const ContentSlot: Story = {
                         render: (
                             <AsyncContent
                                 isLoading={false}
-                                skeleton={<ProfileCardSkeleton />}
-                                content={<ProfileCard />}
+                                skeleton={() => <ProfileCardSkeleton />}
+                                content={() => <ProfileCard />}
                                
                             />
                         ),
@@ -169,7 +169,7 @@ export const Loading: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading skeleton={<ProfileCardSkeleton />} content={<ProfileCard />} />
+                            <AsyncContent isLoading skeleton={() => <ProfileCardSkeleton />} content={() => <ProfileCard />} />
                         ),
                     },
                 ]}
@@ -206,8 +206,8 @@ export const Empty: Story = {
                                     title: "No content yet",
                                     description: "Related lessons will show up here once there are any.",
                                 }}
-                                skeleton={<ProfileCardSkeleton />}
-                                content={<ProfileCard />}
+                                skeleton={() => <ProfileCardSkeleton />}
+                                content={() => <ProfileCard />}
                             />
                         ),
                     },
@@ -236,7 +236,7 @@ export const EmptySilent: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />} content={<ProfileCard />} />
+                            <AsyncContent isLoading={false} isEmpty skeleton={() => <ProfileCardSkeleton />} content={() => <ProfileCard />} />
                         ),
                     },
                 ]}
@@ -275,8 +275,8 @@ export const Error: Story = {
                                     onRetry: () => {},
                                     retryLabel: "Retry",
                                 }}
-                                skeleton={<ProfileCardSkeleton />}
-                                content={<ProfileCard />}
+                                skeleton={() => <ProfileCardSkeleton />}
+                                content={() => <ProfileCard />}
                             />
                         ),
                     },

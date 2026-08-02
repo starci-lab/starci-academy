@@ -330,7 +330,7 @@ export const _CourseContents = ({
         <div data-tier="page" data-component="CourseContents">
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={spine(true)}
+                skeleton={() => spine(true)}
                 isEmpty={isEmpty}
                 emptyContent={{ title: labels.emptyTitle }}
                 error={error}
@@ -339,7 +339,7 @@ export const _CourseContents = ({
                     onRetry: () => { onRetry?.() },
                     retryLabel: labels.retry,
                 }}
-                content={spine(false)}
+                content={() => spine(false)}
             />
         </div>
     )

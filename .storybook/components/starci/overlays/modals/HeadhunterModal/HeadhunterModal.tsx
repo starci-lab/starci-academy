@@ -64,7 +64,7 @@ const HeadhunterModal = ({
                 title={MODAL_TITLE}
                 containerClassName="modal__container--narrow"
                 scroll="inside"
-                body={consultant ? (
+                body={() => (consultant ? (
                     <ConsultantProfileBody
                         consultant={consultant}
                         onOpenCompany={onOpenCompany}
@@ -73,7 +73,7 @@ const HeadhunterModal = ({
 
 
                     />
-                ) : null}
+                ) : null)}
             />
         </div>
     )

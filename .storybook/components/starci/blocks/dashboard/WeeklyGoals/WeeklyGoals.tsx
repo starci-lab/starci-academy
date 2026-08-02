@@ -200,7 +200,7 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton }:
         : `${composite.percent}% complete (${composite.completed}/${composite.total} goals)${resetInLabel != null ? ` · ${resetInLabel}` : ""}`
     const gridItems: Array<StatGridCardItem> = items.map((item) => ({
         key: item.key,
-        content: goalCellContent(item, defaultTargets, isSkeleton),
+        content: () => goalCellContent(item, defaultTargets, isSkeleton),
     }))
     return (
         <StackV gap={4} isSkeleton={isSkeleton} items={[
@@ -243,7 +243,7 @@ const WeeklyGoals = ({
         body={() => (
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={(
+                skeleton={() => (
                     <Content
                         items={loadingItems(defaultTargets)}
                         composite={{ percent: 0, completed: 0, total: 6 }}
@@ -259,7 +259,7 @@ const WeeklyGoals = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-                content={data ? (
+                content={() => (data ? (
                     <Content
                         items={data.items}
                         composite={data.composite}
@@ -268,7 +268,7 @@ const WeeklyGoals = ({
                         isSkeleton={isSkeleton}
 
                     />
-                ) : null}
+                ) : null)}
             />
         )}
     />

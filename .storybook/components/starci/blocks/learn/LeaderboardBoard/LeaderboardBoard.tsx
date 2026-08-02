@@ -489,7 +489,7 @@ const LeaderboardBoard = ({
     <div>
         <AsyncContent
             isLoading={isLoading}
-            skeleton={
+            skeleton={() => (
                 <Board
                     standing={LOADING_STANDING}
                     podiumEntries={LOADING_PODIUM}
@@ -498,7 +498,7 @@ const LeaderboardBoard = ({
                     isSkeleton
 
                 />
-            }
+            )}
             isEmpty={isEmpty}
             emptyContent={{
                 title: "The leaderboard has no one yet",
@@ -511,7 +511,7 @@ const LeaderboardBoard = ({
                 onRetry,
                 retryLabel: "Try again",
             }}
-            content={(
+            content={() => (
                 <>
                     {/* Only the CONTENT branch celebrates — there is nothing worth confetting
                         over loading chrome, an empty board, or an error message. */}

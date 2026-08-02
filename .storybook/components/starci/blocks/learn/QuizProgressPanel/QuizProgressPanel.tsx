@@ -104,7 +104,7 @@ const statCell = (stat: QuizProgressStat, isSkeleton: boolean): StatGridCardItem
     const Icon = stat.icon
     return {
         key: stat.key,
-        content: (
+        content: () => (
             <StackV
                 gap={2}
                 isSkeleton={isSkeleton}

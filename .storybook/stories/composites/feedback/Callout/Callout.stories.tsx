@@ -165,7 +165,7 @@ export const WithBody: Story = {
                                 status="warning"
                                 title="Submission is missing 2 items"
                                 description="Add them, then resubmit for grading."
-                                body={(
+                                body={() => (
                                     <ul data-tier="fixture" className="list-disc space-y-1 pl-4">
                                         <li><Typography size="xs" text="A README describing how to run the project" color="muted" /></li>
                                         <li><Typography size="xs" text="A screenshot of the result" color="muted" /></li>

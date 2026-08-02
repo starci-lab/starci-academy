@@ -32,8 +32,11 @@ export type TableAlign = "start" | "end"
 export interface TableColumnSpec {
     /** Column key: both the React key and the key used to read the cell in each `item`. */
     key: string
-    /** Column header (an already-formatted node — the frame does not generate text itself). */
-    header: ReactNode
+    /**
+     * Column header text. `string`, not `ReactNode` (COMPOSITE-8): the frame renders it through
+     * the `Typography` atom itself rather than accepting an already-built node it cannot reopen.
+     */
+    header: string
     /** Content alignment for the column (applies to BOTH the header and every cell). Default `start`. */
     align?: TableAlign
     /** Fixed CSS width for the column (`"96px"`, `"20%"`). Omit to size to content. */
@@ -130,7 +133,9 @@ const TableBase = ({
                     style={column.width != null ? { width: column.width } : undefined}
 
                 >
-                    <CellBox align={column.align}>{column.header}</CellBox>
+                    <CellBox align={column.align}>
+                        <Typography size="sm" text={column.header} />
+                    </CellBox>
                 </HeroTable.Column>
             ))}
         </HeroTable.Header>

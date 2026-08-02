@@ -1,10 +1,10 @@
-import { isValidElement } from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography, type TypographySize } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * `Section.*` — the frame of a REGION inside a page: a titled band ("My courses",
@@ -17,11 +17,13 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * (route chrome, one per page); `SectionHeader` is a region header, many per page,
  * scaling down via `level`.
  *
- * `.Base` is a wrapper frame with named slots `header`/`body`/`footer`. `.Header` owns semantic slots
- * (`eyebrow`/`title`/`description`/`action`) and takes no `children`. Namespace
- * only — no bare component export. The vertical rhythm is a typed token
- * ({@link AllowedGap}); text goes through `Typography.*`; `action` takes a
- * `Button.*` node from the caller.
+ * `.Base` is a wrapper frame with named slots `header`/`body`/`footer`, each a
+ * COMPONENT reference the frame calls itself (COMPOSITE-8) so `isSkeleton` can
+ * reach inside it. `.Header` owns semantic slots (`eyebrow`/`title`/`description`/`action`)
+ * and takes no `children`. Namespace only — no bare component export. The vertical
+ * rhythm is a typed token ({@link AllowedGap}); `title`/`description`/`eyebrow` are
+ * plain text the frame wraps in `Typography.*` itself; `action` takes a
+ * `Button.*`-composing COMPONENT reference from the caller.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -58,20 +60,28 @@ const TITLE_WEIGHT: Record<SectionLevel, "bold" | "medium"> = {
 
 /** Props for {@link SectionHeader}. */
 export interface SectionHeaderProps {
-    /** The region's title. Plain text, or any inline node (e.g. a title + chip row). */
-    title: ReactNode
-    /** Supporting line under the title, muted. Omit when the title says it all. */
-    description?: ReactNode
-    /** Muted kicker ABOVE the title — context, not a second title (e.g. a course name). */
-    eyebrow?: ReactNode
+    /** The region's title. The frame wraps it in `Typography` itself (COMPOSITE-8). */
+    title: string
+    /** Supporting line under the title, muted. Omit when the title says it all. The frame wraps it in `Typography` itself (COMPOSITE-8). */
+    description?: string
+    /** Muted kicker ABOVE the title — context, not a second title (e.g. a course name). The frame wraps it in `Typography` itself (COMPOSITE-8). */
+    eyebrow?: string
     /**
-     * Right-aligned control slot — pass a `Button.*` atom node ("View all",
+     * Right-aligned control slot — a COMPONENT reference (COMPOSITE-8) the frame
+     * calls itself, usually rendering a `Button.*` atom node ("View all",
      * "Manage"). Rendered `shrink-0` so it never squeezes the title column. The
      * frame never decides WHAT the action does (that would be a feature, §13).
      */
-    action?: ReactNode
+    action?: ComponentTypeWithSkeleton
     /** Heading rank → the text scale of every line. Default `2`. */
     level?: SectionLevel
+    /**
+     * `true` → `title`/`description`/`eyebrow` switch to shimmer, and `action`
+     * (if any) is CALLED with `isSkeleton` too (COMPOSITE-8 — `action` is a
+     * component reference this frame calls itself, so the flag reaches inside
+     * it the same way it reaches the text lines).
+     */
+    isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -91,8 +101,9 @@ const Header = ({
     title,
     description,
     eyebrow,
-    action,
+    action: Action,
     level = 2,
+    isSkeleton = false,
     classNames,
 }: SectionHeaderProps) => {
     const titleSize = TITLE_SIZE[level]
@@ -104,15 +115,15 @@ const Header = ({
         <>
             {eyebrow != null ? (
                 <span className="min-w-0">
-                    <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate />
+                    <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate isSkeleton={isSkeleton} />
                 </span>
             ) : null}
             <span className="min-w-0">
-                <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} />
+                <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} isSkeleton={isSkeleton} />
             </span>
             {description != null ? (
                 <span className="min-w-0">
-                    <Typography size={descriptionSize} text={description} color="muted" />
+                    <Typography size={descriptionSize} text={description} color="muted" isSkeleton={isSkeleton} />
                 </span>
             ) : null}
         </>
@@ -124,11 +135,11 @@ const Header = ({
             justify="between"
             gap={4}
             classNames={classNames}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => <StackV gap={2} pattern="title-subtitle" classNames={["min-w-0"]} items={[() => titleBlock]} />,
-                ...(action != null ? [() => (
-                    <div className="shrink-0">{action}</div>
+                () => <StackV gap={2} pattern="title-subtitle" classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} />,
+                ...(Action != null ? [() => (
+                    <div className="shrink-0"><Action isSkeleton={isSkeleton} /></div>
                 )] : []),
             ]}
         />
@@ -141,23 +152,25 @@ const Header = ({
 
 /**
  * The `header` channel of {@link Section}: either the PROPS of
- * {@link SectionHeader} (the frame builds it — the main road) or a ready node
- * (an escape hatch for a header the section did not author, e.g. a toolbar row).
+ * {@link SectionHeader} (the frame builds it — the main road) or a COMPONENT
+ * reference (COMPOSITE-8, an escape hatch for a header the section did not
+ * author, e.g. a toolbar row) — the frame calls it itself so `isSkeleton` can
+ * reach inside it.
  */
-export type SectionHeaderSlot = SectionHeaderProps | ReactNode
+export type SectionHeaderSlot = SectionHeaderProps | ComponentTypeWithSkeleton
 
 /** Props for {@link Section}. */
 export interface SectionBaseProps {
     /**
      * Top region. Pass {@link SectionHeaderProps} (`{ title, description… }`) and
-     * the frame renders a {@link SectionHeader} itself; pass a node and it is
-     * rendered as-is.
+     * the frame renders a {@link SectionHeader} itself; pass a COMPONENT
+     * reference and the frame calls it itself, forwarding `isSkeleton`.
      */
     header?: SectionHeaderSlot
-    /** Main region. */
-    body?: ReactNode
-    /** Bottom region (a closing CTA row, a caption, a "see more" link). */
-    footer?: ReactNode
+    /** Main region, as a COMPONENT reference (COMPOSITE-8) — the frame calls it itself so `isSkeleton` can reach inside it. */
+    body?: ComponentTypeWithSkeleton
+    /** Bottom region (a closing CTA row, a caption, a "see more" link), as a COMPONENT reference (COMPOSITE-8) — same contract as `body`. */
+    footer?: ComponentTypeWithSkeleton
     /**
      * Vertical rhythm between header ↔ body ↔ footer, on the §10c scale ONLY.
      * Default `{6}` (`gap-6`) — the rhythm between regions of a page. Drop to
@@ -165,17 +178,20 @@ export interface SectionBaseProps {
      */
     gap?: AllowedGap
     /**
+     * `true` → forwarded into whichever of `header`/`body`/`footer` renders
+     * (COMPOSITE-8 — each is a component reference this frame calls itself, so
+     * the flag reaches inside every one of them).
+     */
+    isSkeleton?: boolean
+    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
 }
 
-/** A header slot is PROPS only when it is a plain object (not an element/array/string). */
+/** A header slot is PROPS only when it is a plain object (not a component reference). */
 const isHeaderProps = (header: SectionHeaderSlot): header is SectionHeaderProps =>
-    typeof header === "object"
-    && header !== null
-    && !isValidElement(header)
-    && !Array.isArray(header)
+    typeof header === "object" && header !== null
 
 /**
  * The region frame — a semantic `<section>` that stacks header / body / footer at
@@ -187,20 +203,24 @@ const isHeaderProps = (header: SectionHeaderSlot): header is SectionHeaderProps 
  */
 const Base = ({
     header,
-    body,
-    footer,
+    body: Body,
+    footer: Footer,
     gap = 6,
+    isSkeleton = false,
     classNames,
 }: SectionBaseProps) => {
-    const main = body
-    const headerNode = header == null
-        ? null
-        : isHeaderProps(header)
+    let headerNode: ReactNode = null
+    if (header != null) {
+        if (isHeaderProps(header)) {
             // props form → the frame builds ITS OWN SectionHeader (a fixed internal
             // choice, not arbitrary caller content) — badge that real component
             // directly rather than the generic wrapping div below.
-            ? <Header {...header} />
-            : header
+            headerNode = <Header {...header} isSkeleton={isSkeleton} />
+        } else {
+            const HeaderSlot = header
+            headerNode = <HeaderSlot isSkeleton={isSkeleton} />
+        }
+    }
     return (
         <section
             className={cn("flex flex-col", GAP_CLASS[gap], classNames)}
@@ -212,11 +232,11 @@ const Base = ({
             {headerNode != null ? (
                 <div>{headerNode}</div>
             ) : null}
-            {main != null ? (
-                <div>{main}</div>
+            {Body != null ? (
+                <div><Body isSkeleton={isSkeleton} /></div>
             ) : null}
-            {footer != null ? (
-                <div>{footer}</div>
+            {Footer != null ? (
+                <div><Footer isSkeleton={isSkeleton} /></div>
             ) : null}
         </section>
     )

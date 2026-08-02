@@ -150,13 +150,13 @@ export const AiQuotaHistoryPanel = ({
                 <div className="max-h-64 overflow-y-auto">
                     <AsyncContent
                         isLoading={isLoading}
-                        skeleton={<SurfaceCardList variant="nested" items={skeletonItems()} isSkeleton />}
+                        skeleton={() => <SurfaceCardList variant="nested" items={skeletonItems()} isSkeleton />}
                         isEmpty={isEmpty}
                         emptyContent={{
                             title: "No AI usage yet.",
 
                         }}
-                        content={<SurfaceCardList variant="nested" items={(items ?? []).map((item) => toListItem(item))} />}
+                        content={() => <SurfaceCardList variant="nested" items={(items ?? []).map((item) => toListItem(item))} />}
 
                     />
                 </div>

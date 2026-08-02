@@ -138,7 +138,7 @@ const DailyQuest = ({
         <div>
             <AsyncContent
                 isLoading={quest === null && isLoading}
-                skeleton={<SurfaceCardCrossList items={[]} isSkeleton skeletonRows={3} />}
+                skeleton={() => <SurfaceCardCrossList items={[]} isSkeleton skeletonRows={3} />}
                 isEmpty={quest === null && !isLoading && !error}
                 emptyContent={{
                     title: "No quests for today yet.",
@@ -153,7 +153,7 @@ const DailyQuest = ({
                     retryLabel: "Retry",
 
                 }}
-                content={<StackV gap={4} items={[
+                content={() => <StackV gap={4} items={[
                     () => <SurfaceCardCrossList items={items} />,
                     () => claimSlot,
                 ]} />}

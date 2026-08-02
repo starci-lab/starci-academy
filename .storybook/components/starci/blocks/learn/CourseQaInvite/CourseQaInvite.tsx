@@ -52,7 +52,7 @@ const CourseQaInvite = ({
                     icon={QuestionIcon}
                     title={title}
                     description={hint}
-                    action={
+                    action={() => (
                         <Button
                             isSkeleton={isSkeleton}
                             label={ctaLabel}
@@ -62,7 +62,7 @@ const CourseQaInvite = ({
                             onPress={onGoToContent}
 
                         />
-                    }
+                    )}
 
                 />
             )}

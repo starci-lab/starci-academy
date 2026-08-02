@@ -85,7 +85,7 @@ const ControlledDrawer = ({
                         why,
                         code,
                         render: (
-                            <DrawerShell isOpen={isOpen} onOpenChange={setIsOpen} {...rest} body={children} />
+                            <DrawerShell isOpen={isOpen} onOpenChange={setIsOpen} {...rest} body={() => children} />
                         ),
                     },
                 ]}
@@ -115,12 +115,12 @@ export const Default: Story = {
   body={<AttemptList items={attempts} />}
   footer={<Button variant="secondary">Close</Button>}
 />`}
-                body={(
+                body={() => (
                     <Typography data-tier="fixture" type="body-sm" color="muted">
                         Attempt #4 — 87/100 · Attempt #3 — 62/100 · Attempt #2 — 40/100 · Attempt #1 — 10/100
                     </Typography>
                 )}
-                footer={<Button data-tier="fixture" variant="secondary" size="sm">Close</Button>}
+                footer={() => <Button data-tier="fixture" variant="secondary" size="sm">Close</Button>}
             />
         </div>
     ),
@@ -134,12 +134,12 @@ export const CustomHeader: Story = {
                 label="Custom header"
                 trigger="Open drawer with custom header"
                 hint="header is a caller-built node, so it must leave its own room for the close button — hence `pr-8`."
-                header={
+                header={() => (
                     <div data-tier="fixture" className="flex flex-col gap-1 pr-8">
                         <Typography type="body" weight="bold">AI chat</Typography>
                         <Typography type="body-xs" color="muted">About this lesson</Typography>
                     </div>
-                }
+                )}
                 leaf="CustomHeader"
                 parts={CUSTOM_HEADER_PARTS}
                 stateName="header set (custom node), footer = undefined"

@@ -117,7 +117,7 @@ export const _FlashcardQuizStats = ({
                 bare %). Null only on a course with zero tag data — nothing honest to judge, so the
                 zone is skipped rather than faking a verdict. */
             ...(coveragePercent !== null ? [() => (
-                <Section header={{ title: labels.coverageZone, level: 3 }} body={
+                <Section header={{ title: labels.coverageZone, level: 3 }} body={() => (
                     <SurfaceCard
                         body={() => (
                             <StackV gap={3} items={[
@@ -144,16 +144,16 @@ export const _FlashcardQuizStats = ({
                             ]} />
                         )}
                     />
-                } />
+                )} />
             )] : []),
 
             /* ZONE 2 — "Weak topics": every attempted tag ranked worst-first, plus ONE honest
                 aggregate row for topics never attempted — no per-topic name exists for those
                 server-side, so the row states the real count instead of inventing identities. */
             ...(gapRows.length > 0 ? [() => (
-                <Section header={{ title: labels.gapZone, level: 3 }} body={
+                <Section header={{ title: labels.gapZone, level: 3 }} body={() => (
                     <SurfaceCardList variant="nested" items={gapRows} />
-                } />
+                )} />
             )] : []),
 
             /* ZONE 3 — passive RAG "Study suggestions": weakest-coverage tags → course-wide content
@@ -174,7 +174,7 @@ export const _FlashcardQuizStats = ({
     const skeleton = (
         <StackV gap={6} items={[
             () => (
-                <Section header={{ title: labels.coverageZone, level: 3 }} body={
+                <Section header={{ title: labels.coverageZone, level: 3 }} body={() => (
                     <SurfaceCard
                         body={() => (
                             <StackV gap={3} items={[
@@ -184,10 +184,10 @@ export const _FlashcardQuizStats = ({
                             ]} />
                         )}
                     />
-                } />
+                )} />
             ),
             () => (
-                <Section header={{ title: labels.gapZone, level: 3 }} body={
+                <Section header={{ title: labels.gapZone, level: 3 }} body={() => (
                     <SurfaceCardList
                         variant="nested"
                         isSkeleton
@@ -197,7 +197,7 @@ export const _FlashcardQuizStats = ({
                             meta: () => <Chip isSkeleton />,
                         }))}
                     />
-                } />
+                )} />
             ),
         ]} />
     )
@@ -206,7 +206,7 @@ export const _FlashcardQuizStats = ({
         <div data-principles="FlashcardQuizStats">
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={skeleton}
+                skeleton={() => skeleton}
                 error={error}
                 errorContent={{ title: labels.errorTitle, onRetry: () => { onRetry?.() }, retryLabel: labels.retry }}
                 isEmpty={isEmpty}
@@ -214,11 +214,11 @@ export const _FlashcardQuizStats = ({
                     icon: ChartLineUpIcon,
                     title: labels.emptyTitle,
                     description: labels.emptyDescription,
-                    action: onStartQuiz ? (
+                    action: onStartQuiz ? () => (
                         <Button label={labels.emptyAction} variant="secondary" size="sm" onPress={onStartQuiz} />
                     ) : undefined,
                 }}
-                content={loaded}
+                content={() => loaded}
             />
         </div>
     )

@@ -331,7 +331,7 @@ const PersonalProjectDashboard = ({
     const asyncBody = (
         <AsyncContent
             isLoading={isLoading}
-            skeleton={
+            skeleton={() => (
                 <Body
                     currentTask={{ sortIndex: 1, title: "" }}
                     onContinue={onContinue}
@@ -342,10 +342,10 @@ const PersonalProjectDashboard = ({
                     isSkeleton
 
                 />
-            }
+            )}
             isEmpty={isEmpty}
             emptyContent={EMPTY_STATE}
-            content={(
+            content={() => (
                 <Body
                     currentTask={currentTask}
                     onContinue={onContinue}

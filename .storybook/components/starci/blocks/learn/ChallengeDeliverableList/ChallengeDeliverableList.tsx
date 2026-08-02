@@ -407,7 +407,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
                     title={JOB_STATUS_CALLOUT[item.jobStatus].title}
                     description={JOB_STATUS_CALLOUT[item.jobStatus].description}
                     body={item.jobStatus === "failed" && item.jobError != null
-                        ? <Typography size="xs" color="danger" text={item.jobError} />
+                        ? () => <Typography size="xs" color="danger" text={item.jobError} />
                         : undefined}
 
 

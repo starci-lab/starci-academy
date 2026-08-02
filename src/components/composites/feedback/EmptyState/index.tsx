@@ -1,8 +1,9 @@
-import type { ComponentType, ReactNode, SVGProps } from "react"
+import type { ComponentType, SVGProps } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackV } from "@/components/frames/Stack"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -28,8 +29,8 @@ export const meta = { tier: "composite", name: "EmptyState" } as const
 /** Icon passed as a COMPONENT (phosphor), never JSX — the frame owns its scale (§4/§5). */
 export type EmptyStateIcon = ComponentType<SVGProps<SVGSVGElement>>
 
-/** Props for {@link EmptyState}. */
-export interface EmptyStateProps {
+/** Props SPECIFIC to {@link EmptyState} — EXCEPT the `title`/`isSkeleton` pair (see {@link EmptyStateProps}). */
+interface EmptyStateOwnProps {
     /**
      * Optional decorative icon as a COMPONENT (Phosphor) above the title — the frame
      * renders it `size-8` + toned. Ignored in `size="compact"`.
@@ -37,23 +38,30 @@ export interface EmptyStateProps {
     icon?: EmptyStateIcon
     /**
      * Optional large status numeral (e.g. `"404"`, `"500"`) above the icon/title.
-     * Intended for `size="page"`; ignored in `size="compact"`.
+     * Intended for `size="page"`; ignored in `size="compact"`. `string`, not
+     * `ReactNode` (COMPOSITE-8) — the frame wraps it in `Typography` itself.
      */
-    code?: ReactNode
-    /** Primary message describing why the area is empty (e.g. "No results"). */
-    title: ReactNode
-    /** Optional supporting text under the title. Ignored in `size="compact"`. */
-    description?: ReactNode
+    code?: string
     /**
-     * Optional free-form body under `description` (a hint list, an illustration).
-     * Ignored in `size="compact"`.
+     * Optional supporting text under the title. Ignored in `size="compact"`.
+     * `string`, not `ReactNode` (COMPOSITE-8) — the frame wraps it in `Typography`
+     * itself, so `isSkeleton` reaches the text it renders.
      */
-    body?: ReactNode
+    description?: string
     /**
-     * Optional call-to-action (typically a Button) below the body. Ignored in
-     * `size="compact"`. In `size="page"`, multiple actions are centered and wrap.
+     * Optional free-form body region under `description` (a hint list, an
+     * illustration). Ignored in `size="compact"`. A COMPONENT reference, not a
+     * built node (COMPOSITE-8) — the frame calls it itself with `isSkeleton`
+     * forwarded.
      */
-    action?: ReactNode
+    body?: ComponentTypeWithSkeleton
+    /**
+     * Optional call-to-action region below the body (typically a `Button`).
+     * Ignored in `size="compact"`. In `size="page"`, this can lay out multiple
+     * actions itself — centered and wrapped. A COMPONENT reference, not a built
+     * node (COMPOSITE-8) — the frame calls it itself with `isSkeleton` forwarded.
+     */
+    action?: ComponentTypeWithSkeleton
     /**
      * Icon tone. `"neutral"` (default) tints the icon `text-foreground`;
      * `"danger"` tints it `text-danger` for error placeholders. Only the icon
@@ -75,6 +83,18 @@ export interface EmptyStateProps {
 }
 
 /**
+ * `isSkeleton` is a co-located loading state — this frame renders its own
+ * skeleton bars (via `Typography`) rather than delegating to a `Skeleton.*`
+ * compound. `title` is optional only in the `isSkeleton: true` branch; the
+ * live branch still requires it. `string`, not `ReactNode` (COMPOSITE-8).
+ */
+export type EmptyStateProps = EmptyStateOwnProps &
+    (
+        | { isSkeleton: true; title?: string }
+        | { isSkeleton?: false; title: string }
+    )
+
+/**
  * Centered placeholder for lists, panels, sections, or whole routes with no content —
  * and for the "failed to load" variant of the same hole (`tone="danger"` + a retry `action`).
  * A vertical, centered stack: optional `code` → optional icon → title → optional
@@ -83,17 +103,29 @@ export interface EmptyStateProps {
  *
  * @param props - {@link EmptyStateProps}
  */
-export const EmptyState = ({
-    icon: Icon,
-    code,
-    title,
-    description,
-    body,
-    action,
-    tone = "neutral",
-    size = "default",
-    classNames,
-}: EmptyStateProps) => {
+export const EmptyState = (props: EmptyStateProps) => {
+    const {
+        icon: Icon,
+        code,
+        description,
+        body: Body,
+        action: Action,
+        tone = "neutral",
+        size = "default",
+        classNames,
+    } = props
+    const isSkeleton = props.isSkeleton ?? false
+    // Narrowed off the discriminant so `title` stays required in the live branch —
+    // destructuring it straight off `props` above would widen it to `string | undefined`
+    // and lose exactly that guarantee (same shape `Alert`/`Toast` already use).
+    const titleContent = props.isSkeleton
+        ? ({ isSkeleton: true, text: props.title } as const)
+        : ({ isSkeleton: false, text: props.title } as const)
+    // Same discriminant trick for the optional strings below — `isSkeleton` must stay the
+    // exact `true`/`false` literal, not the widened `boolean` this frame's own flag would
+    // give, because `Typography`'s prop type is the same kind of union.
+    const skeletonAttrs = isSkeleton ? ({ isSkeleton: true } as const) : ({ isSkeleton: false } as const)
+
     if (size === "compact") {
         // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
         // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
@@ -103,13 +135,12 @@ export const EmptyState = ({
                 data-tier="composite"
                 data-component="EmptyState"
             >
-                <Typography size="sm" text={title} color="muted" />
+                <Typography size="sm" color="muted" {...titleContent} />
             </span>
         )
     }
 
     const isPage = size === "page"
-    const main = body
 
     return (
         <div
@@ -124,7 +155,7 @@ export const EmptyState = ({
         >
             {code != null ? (
                 <div>
-                    <Typography size="h1" weight="bold" color="muted" text={code} />
+                    <Typography size="h1" weight="bold" color="muted" text={code} {...skeletonAttrs} />
                 </div>
             ) : null}
             {Icon ? (
@@ -135,16 +166,17 @@ export const EmptyState = ({
             {isPage ? (
                 <StackV
                     gap={3}
+                    isSkeleton={isSkeleton}
                     items={[
                         () => (
                             <div>
-                                <Typography size="h4" weight="semibold" align="center" text={title} />
+                                <Typography size="h4" weight="semibold" align="center" {...titleContent} />
                             </div>
                         ),
                         ...(description
                             ? [() => (
                                 <div>
-                                    <Typography size="sm" text={description} color="muted" />
+                                    <Typography size="sm" color="muted" text={description} {...skeletonAttrs} />
                                 </div>
                             )]
                             : []),
@@ -153,19 +185,19 @@ export const EmptyState = ({
             ) : (
                 <>
                     <div>
-                        <Typography text={title} weight="medium" />
+                        <Typography weight="medium" {...titleContent} />
                     </div>
                     {description ? (
                         <div>
-                            <Typography size="xs" text={description} color="muted" />
+                            <Typography size="xs" color="muted" text={description} {...skeletonAttrs} />
                         </div>
                     ) : null}
                 </>
             )}
-            {main != null ? <div>{main}</div> : null}
-            {action ? (
+            {Body ? <div><Body isSkeleton={isSkeleton} /></div> : null}
+            {Action ? (
                 <div className={isPage ? "flex flex-wrap items-center justify-center gap-3" : undefined}>
-                    {action}
+                    <Action isSkeleton={isSkeleton} />
                 </div>
             ) : null}
         </div>

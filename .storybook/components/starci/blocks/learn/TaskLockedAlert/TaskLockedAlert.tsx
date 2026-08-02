@@ -1,4 +1,3 @@
-import type { ReactNode } from "react"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
@@ -24,8 +23,10 @@ export interface TaskLockedAlertProps {
     /**
      * WHY this task's action is still locked — the domain-specific supporting
      * line under the fixed title (stands in for the real `description` slot).
+     * `string`, not `ReactNode` (COMPOSITE-8) — forwarded straight into
+     * `Callout`'s own `description` slot, which is text-only.
      */
-    message: ReactNode
+    message: string
     /** CTA label. Default matches the real app's copy. */
     ctaLabel?: string
     /**

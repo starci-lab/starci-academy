@@ -1,4 +1,3 @@
-import type { ReactNode } from "react"
 import { AlertDialog, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
@@ -26,13 +25,17 @@ export interface ConfirmDialogProps {
      * this handler once {@link ConfirmDialogProps.onConfirm} resolves.
      */
     onOpenChange: (open: boolean) => void
-    /** Dialog heading — a short question ("Unenroll from this course?"). The header slot. */
-    title: ReactNode
     /**
-     * Optional supporting copy under the title (the body slot) — spell out the
-     * consequence so the choice is informed.
+     * Dialog heading — a short question ("Unenroll from this course?"). The header
+     * slot's TEXT; the shell wraps it in `Typography` itself (COMPOSITE-8).
      */
-    description?: ReactNode
+    title: string
+    /**
+     * Optional supporting copy under the title (the body slot's TEXT) — spell out the
+     * consequence so the choice is informed. The shell wraps it in `Typography` itself
+     * (COMPOSITE-8).
+     */
+    description?: string
     /** Label for the confirming action button. Default `"Confirm"`. */
     confirmLabel?: string
     /** Label for the cancel / dismiss button. Default `"Cancel"`. */
@@ -53,6 +56,12 @@ export interface ConfirmDialogProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * `true` → `title`/`description` switch to shimmer (COMPOSITE-8 — both are TEXT
+     * this shell renders itself via `Typography`, so the flag reaches them directly,
+     * no component-reference slot to call).
+     */
+    isSkeleton?: boolean
 }
 
 /**
@@ -76,6 +85,7 @@ export const ConfirmDialog = ({
     tone = "default",
     isConfirming = false,
     classNames,
+    isSkeleton = false,
 }: ConfirmDialogProps) => {
     const isDanger = tone === "danger"
     return (
@@ -86,13 +96,18 @@ export const ConfirmDialog = ({
                     <AlertDialog.Dialog className={cn(classNames)}>
                         {/* No status icon — text-only; heading/body left, footer right. */}
                         <AlertDialog.Header>
-                            <AlertDialog.Heading>{title}</AlertDialog.Heading>
+                            <AlertDialog.Heading>
+                                {/* `alert-dialog__heading` already sets `text-base font-medium` —
+                                    match it explicitly so wrapping in `Typography` doesn't shift
+                                    the weight. */}
+                                <Typography text={title} weight="medium" isSkeleton={isSkeleton} />
+                            </AlertDialog.Heading>
                         </AlertDialog.Header>
                         {description != null ? (
                             <AlertDialog.Body>
                                 {/* Typography atom doesn't accept unknown props — tag the wrapper (§11a.1). */}
                                 <span>
-                                    <Typography size="sm" text={description} color="muted" />
+                                    <Typography size="sm" text={description} color="muted" isSkeleton={isSkeleton} />
                                 </span>
                             </AlertDialog.Body>
                         ) : null}
@@ -100,7 +115,6 @@ export const ConfirmDialog = ({
                             <ButtonGroup
                                 align="end"
                                 classNames={["w-full"]}
-
                                 items={[
                                     {
                                         key: "cancel",

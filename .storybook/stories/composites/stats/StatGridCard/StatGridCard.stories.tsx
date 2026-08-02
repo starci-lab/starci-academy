@@ -80,10 +80,10 @@ export const Even: Story = {
                                 <StatGridCard
                                    
                                     items={[
-                                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
-                                        { key: "studyDays", content: statCell(icon(FlameIcon), "Study days", 4, 5) },
-                                        { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
-                                        { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
+                                        { key: "lessons", content: () => statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
+                                        { key: "studyDays", content: () => statCell(icon(FlameIcon), "Study days", 4, 5) },
+                                        { key: "challenges", content: () => statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
+                                        { key: "coding", content: () => statCell(icon(CodeIcon), "Coding", 0, 3) },
                                     ]}
                                 />
                             ),
@@ -119,11 +119,11 @@ export const OddOverflow: Story = {
                                 <StatGridCard
                                    
                                     items={[
-                                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
-                                        { key: "studyDays", content: statCell(icon(FlameIcon), "Study days", 4, 5) },
-                                        { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
-                                        { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
-                                        { key: "flashcards", content: statCell(icon(CardsIcon), "Flashcard", 12, 20) },
+                                        { key: "lessons", content: () => statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
+                                        { key: "studyDays", content: () => statCell(icon(FlameIcon), "Study days", 4, 5) },
+                                        { key: "challenges", content: () => statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
+                                        { key: "coding", content: () => statCell(icon(CodeIcon), "Coding", 0, 3) },
+                                        { key: "flashcards", content: () => statCell(icon(CardsIcon), "Flashcard", 12, 20) },
                                     ]}
                                 />
                             ),
@@ -154,7 +154,7 @@ export const Single: Story = {
                                 <StatGridCard
                                    
                                     items={[
-                                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
+                                        { key: "lessons", content: () => statCell(icon(BookOpenIcon), "Lessons", 2, 5) },
                                     ]}
                                 />
                             ),

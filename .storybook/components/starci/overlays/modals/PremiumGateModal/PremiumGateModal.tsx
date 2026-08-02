@@ -232,7 +232,7 @@ const PremiumGateModal = ({
                 description={header.description}
                 size="md"
 
-                footer={
+                footer={() => (
                     <Button
                         variant="primary"
                         size="lg"
@@ -241,8 +241,8 @@ const PremiumGateModal = ({
                         onPress={onUpgrade}
 
                     />
-                }
-                body={<StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
+                )}
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
             />
         </div>
     )

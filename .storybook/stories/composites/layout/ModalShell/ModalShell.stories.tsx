@@ -100,7 +100,7 @@ const ControlledModal = ({
                         why,
                         code,
                         render: (
-                            <ModalShell isOpen={isOpen} onOpenChange={setIsOpen} {...rest} body={children} />
+                            <ModalShell isOpen={isOpen} onOpenChange={setIsOpen} {...rest} body={() => children} />
                         ),
                     },
                 ]}
@@ -237,12 +237,12 @@ export const Default: Story = {
   body={<Typography color="muted">Your submissions and grades will be removed too.</Typography>}
   footer={<Button variant="danger">Unenroll</Button>}
 />`}
-                body={(
+                body={() => (
                     <Typography data-tier="fixture" type="body-sm" color="muted">
                         Your submissions and grades for this course will be removed as well.
                     </Typography>
                 )}
-                footer={(
+                footer={() => (
                     <>
                         <Button data-tier="fixture" variant="secondary" size="sm">Close</Button>
                         <Button data-tier="fixture" variant="danger" size="sm">Unenroll</Button>
@@ -261,12 +261,12 @@ export const CustomHeader: Story = {
                 label="Custom header"
                 trigger="Open modal with custom header"
                 hint="the header is a caller-built node, so it must leave room for the close button ITSELF — hence pr-8."
-                header={
+                header={() => (
                     <div data-tier="fixture" className="flex flex-col gap-1 pr-8">
                         <Typography type="body" weight="bold">Invite students</Typography>
                         <Typography type="body-xs" color="muted">Fullstack Mastery course</Typography>
                     </div>
-                }
+                )}
                 leaf="CustomHeader"
                 parts={CUSTOM_HEADER_PARTS}
                 stateName="header set (custom node), footer = undefined"
@@ -361,7 +361,7 @@ export const PlainFormClusters: Story = {
 >
   <CheckList items={["The full learning path", "AI grading", "Course community"]} />
 </ModalShell>`}
-                footer={(
+                footer={() => (
                     <>
                         <Button data-tier="fixture" variant="tertiary" size="sm">Later</Button>
                         <Button data-tier="fixture" variant="primary" size="sm">Continue to payment</Button>

@@ -1,4 +1,5 @@
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 import { ResponsiveCluster, type ResponsiveClusterItem } from "@sb-components/frames/ResponsiveCluster/ResponsiveCluster"
@@ -75,6 +76,7 @@ export const ButtonGroup = ({
         gap={3}
         justify={align}
         classNames={classNames}
+        isSkeleton={isSkeleton}
         items={items.map((item): ResponsiveClusterItem => {
             const shared = {
                 variant: item.variant,
@@ -83,24 +85,30 @@ export const ButtonGroup = ({
                 isDisabled: item.isDisabled,
                 isPending: item.isPending,
             } as const
-            const content = () => {
-                if (item.label != null) {
-                    return <Button label={item.label} prefixIcon={item.prefixIcon} isSkeleton={isSkeleton} {...shared} />
+            const { label, prefixIcon, ariaLabel } = item
+            if (label != null) {
+                return {
+                    key: item.key,
+                    content: ({ isSkeleton }: SkeletonProps) => (
+                        <Button label={label} prefixIcon={prefixIcon} isSkeleton={isSkeleton} {...shared} />
+                    ),
                 }
-                if (item.prefixIcon != null) {
-                    return (
+            }
+            if (prefixIcon != null) {
+                return {
+                    key: item.key,
+                    content: ({ isSkeleton }: SkeletonProps) => (
                         <Button
                             isIconOnly
-                            prefixIcon={item.prefixIcon}
-                            ariaLabel={item.ariaLabel ?? ""}
+                            prefixIcon={prefixIcon}
+                            ariaLabel={ariaLabel ?? ""}
                             isSkeleton={isSkeleton}
                             {...shared}
                         />
-                    )
+                    ),
                 }
-                return null
             }
-            return { key: item.key, content }
+            return { key: item.key, content: () => null }
         })}
     />
 )

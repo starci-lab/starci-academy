@@ -116,15 +116,15 @@ const ConsultantDirectoryGrid = ({
         <div role="region" aria-label={ariaLabel}>
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={
+                skeleton={() => (
                     <div>
                         <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} items={skeletonTiles} />
                     </div>
-                }
+                )}
                 isEmpty={isEmpty}
                 emptyContent={emptyContent}
 
-                content={
+                content={() => (
                     <StackV gap={4} items={[
                         ...(count !== undefined ? [() => (
                             <Typography size="sm" color="muted" text={countLabel(count)} />
@@ -135,7 +135,7 @@ const ConsultantDirectoryGrid = ({
                             </div>
                         ),
                     ]} />
-                }
+                )}
             />
         </div>
     )

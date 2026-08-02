@@ -145,8 +145,8 @@ const EnrollGateBase = ({
             />
             <AsyncContent
                 isLoading={priceLoading}
-                skeleton={<HeroSkeleton className="h-7 w-32 rounded-xl" />}
-                content={<StackV gap={4} align="center" isSkeleton={isSkeleton} items={[() => priceGroup]} />}
+                skeleton={() => <HeroSkeleton className="h-7 w-32 rounded-xl" />}
+                content={() => <StackV gap={4} align="center" isSkeleton={isSkeleton} items={[() => priceGroup]} />}
             />
             <Button
                 label="Enroll now"

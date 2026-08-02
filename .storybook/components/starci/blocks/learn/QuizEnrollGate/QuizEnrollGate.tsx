@@ -38,13 +38,13 @@ const QuizEnrollGate = ({
             icon={LockIcon}
             title={title}
             description={description}
-            body={
+            body={() => (
                 <Button
                     label={ctaLabel}
                     variant="primary"
                     onPress={onEnroll}
                 />
-            }
+            )}
         />
     </div>
 )

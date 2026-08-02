@@ -452,7 +452,7 @@ const CoursesEmptyState = () => (
         icon={TrayDuotone}
         title="No courses yet"
         description="Enroll in a course to see it here."
-        action={<Button data-tier="fixture" variant="primary" size="sm">Explore courses</Button>}
+        action={() => <Button data-tier="fixture" variant="primary" size="sm">Explore courses</Button>}
 
     />
 )

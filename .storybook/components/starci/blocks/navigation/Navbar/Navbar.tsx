@@ -399,7 +399,7 @@ const Navbar = ({
             <StackH gap={3} justify="between" items={[() => notificationHeader]} />
             <AsyncContent
                 isLoading={notifications.isLoading && notifications.items.length === 0}
-                skeleton={<StackV gap={1} items={[() => notificationSkeletonRows]} />}
+                skeleton={() => <StackV gap={1} items={[() => notificationSkeletonRows]} />}
                 isEmpty={notifications.items.length === 0}
                 emptyContent={{ title: "No notifications yet" }}
                 error={notifications.error}
@@ -408,7 +408,7 @@ const Navbar = ({
                     onRetry: notifications.onRetry,
                     retryLabel: "Try again",
                 }}
-                content={<StackV gap={1} className="max-h-[420px] overflow-y-auto" items={[() => notificationRows]} />}
+                content={() => <StackV gap={1} className="max-h-[420px] overflow-y-auto" items={[() => notificationRows]} />}
             />
             <Button
                 variant="ghost"
@@ -431,8 +431,8 @@ const Navbar = ({
     const accountMenuHeader = (
         <AsyncContent
             isLoading={account.isLoading}
-            skeleton={<UserCell username="" isSkeleton />}
-            content={account.isAuthed && account.user ? (
+            skeleton={() => <UserCell username="" isSkeleton />}
+            content={() => (account.isAuthed && account.user ? (
                 <UserCell
                     username={account.user.username}
                     avatar={account.user.avatarUrl}
@@ -440,7 +440,7 @@ const Navbar = ({
                 />
             ) : (
                 <StackH gap={3} items={[() => guestAccountRow]} />
-            )}
+            ))}
         />
     )
 
@@ -665,7 +665,7 @@ const Navbar = ({
                 placement="right"
                 title="Mobile menu"
 
-                body={<StackV gap={6} items={[() => drawerNav]} />}
+                body={() => <StackV gap={6} items={[() => drawerNav]} />}
             />
         </nav>
     )

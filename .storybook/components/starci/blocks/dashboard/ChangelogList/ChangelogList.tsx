@@ -125,25 +125,22 @@ const ChangelogList = ({
         <div className={className}>
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={
+                skeleton={() => (
                     <SurfaceCardNested
                         title={TITLE}
                         items={skeletonItems()}
                         isSkeleton
-
                     />
-                }
+                )}
                 isEmpty={entries.length === 0}
                 error={error}
                 errorContent={errorContent}
-
-                content={
+                content={() => (
                     <SurfaceCardNested
                         title={TITLE}
                         items={entries.map(entryItem)}
-
                     />
-                }
+                )}
             />
         </div>
     )

@@ -69,7 +69,7 @@ const FoundationModal = ({
                 size="full"
                 containerClassName={isVideo ? "modal__container--narrow" : undefined}
                 scroll={isVideo ? undefined : "inside"}
-                body={
+                body={() => (
                     <FoundationResourceBody
                         kind={kind}
                         markdownBody={markdownBody}
@@ -80,7 +80,7 @@ const FoundationModal = ({
 
 
                     />
-                }
+                )}
             />
         </div>
     )

@@ -337,18 +337,18 @@ const CourseQaQuestionList = ({
                 // ★5 — an external override (`isSkeleton`) converges on the same Loading
                 // branch as the list's own fetch flag (`isLoading`).
                 isLoading={isSkeleton || isLoading}
-                skeleton={
+                skeleton={() => (
                     <SurfaceCardList
                         items={skeletonItems()}
 
                     />
-                }
+                )}
                 isEmpty={questions.length === 0}
                 emptyContent={emptyContent}
                 error={error}
                 errorContent={errorContent}
 
-                content={
+                content={() => (
                     <StackV
                         gap={4}
 
@@ -377,7 +377,7 @@ const CourseQaQuestionList = ({
                                 : []),
                         ]}
                     />
-                }
+                )}
             />
         </div>
     )

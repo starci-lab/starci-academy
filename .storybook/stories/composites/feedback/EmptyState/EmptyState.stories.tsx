@@ -156,11 +156,11 @@ export const Action: Story = {
 />`,
                         render: (
                             <EmptyState
-                               
+
                                 icon={PackageIcon}
                                 title="This list is empty"
                                 description="You haven't saved any items to this list yet."
-                                action={<Button label="Add an item" />}
+                                action={() => <Button label="Add an item" />}
                             />
                         ),
                     },
@@ -176,12 +176,12 @@ export const Action: Story = {
 />`,
                         render: (
                             <EmptyState
-                               
+
                                 tone="danger"
                                 icon={WarningCircleIcon}
                                 title="Couldn't load the data"
                                 description="Something went wrong. Please try again."
-                                action={<Button label="Retry" variant="danger" prefixIcon={ArrowCounterClockwiseIcon} />}
+                                action={() => <Button label="Retry" variant="danger" prefixIcon={ArrowCounterClockwiseIcon} />}
                             />
                         ),
                     },
@@ -213,17 +213,17 @@ export const WithBody: Story = {
 />`,
                         render: (
                             <EmptyState
-                               
+
                                 icon={MagnifyingGlassIcon}
                                 title="No results found"
                                 description="A few things that usually help:"
-                                body={(
+                                body={() => (
                                     <ul data-tier="fixture" className="list-disc space-y-1 pl-4 text-left">
                                         <li><Typography size="xs" text="Clear some active filters" color="muted" /></li>
                                         <li><Typography size="xs" text="Use a shorter search term" color="muted" /></li>
                                     </ul>
                                 )}
-                                action={<Button label="Clear filters" variant="secondary" size="sm" />}
+                                action={() => <Button label="Clear filters" variant="secondary" size="sm" />}
                             />
                         ),
                     },
@@ -260,12 +260,12 @@ export const FullPage: Story = {
 />`,
                     render: (
                         <EmptyState
-                           
+
                             size="page"
                             code="404"
                             title="Page not found"
                             description="The page you're looking for doesn't exist or has moved."
-                            action={<Button label="Go home" prefixIcon={HouseIcon} />}
+                            action={() => <Button label="Go home" prefixIcon={HouseIcon} />}
                         />
                     ),
                 },
@@ -289,7 +289,7 @@ export const FullPage: Story = {
                             code="500"
                             title="Something went wrong"
                             description="The server ran into a problem handling your request. Try again in a moment."
-                            action={(
+                            action={() => (
                                 <>
                                     <Button label="Retry" prefixIcon={ArrowCounterClockwiseIcon} />
                                     <Button label="Go home" variant="secondary" prefixIcon={HouseIcon} />

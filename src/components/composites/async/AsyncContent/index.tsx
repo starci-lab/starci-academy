@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import type { ReactNode, SVGProps } from "react"
+import type { SVGProps } from "react"
 import { TrayIcon, WarningIcon, type Icon as PhosphorIcon } from "@phosphor-icons/react"
 
 import { EmptyState, type EmptyStateIcon } from "@/components/composites/feedback/EmptyState"
@@ -11,6 +11,7 @@ import { EmptyState, type EmptyStateIcon } from "@/components/composites/feedbac
 // whole dead branch back into the screen (caught by the 2026-07-27 deep-scan).
 import { Button } from "@/components/atoms/buttons/Button"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -49,10 +50,10 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /** Shared props of the two MESSAGE frames `.Empty` / `.Error`. */
 interface MessageProps {
-    /** Main line (already translated). */
-    title: ReactNode
-    /** Secondary line under the title (already translated). Optional. */
-    description?: ReactNode
+    /** Main line (already translated). `string`, not `ReactNode` — the frame forwards it into `EmptyState`, which renders it (COMPOSITE-8). */
+    title: string
+    /** Secondary line under the title (already translated). Optional. `string` for the same reason as {@link MessageProps.title}. */
+    description?: string
     /**
      * Override the default glyph — takes a **COMPONENT REF** (`icon={TrayIcon}`), NOT
      * JSX. §14b: the caller (especially a SCREEN) must not hold a pre-built node. The
@@ -62,15 +63,16 @@ interface MessageProps {
      */
     icon?: PhosphorIcon
     /**
-     * General ACTION slot below the description — takes any node (a `Button`, a
-     * two-button cluster…). WINS over the `onRetry`/`retryLabel` shorthand when both
-     * are passed.
+     * General ACTION slot below the description — a COMPONENT reference (COMPOSITE-8),
+     * never a built node (a `Button`, a two-button cluster…): forwarded straight into
+     * `EmptyState`'s own `action` slot, which calls it and forwards `isSkeleton`. WINS
+     * over the `onRetry`/`retryLabel` shorthand when both are passed.
      */
-    action?: ReactNode
+    action?: ComponentTypeWithSkeleton
     /** Shorthand: retry handler — only renders a button when PAIRED with `retryLabel`. */
     onRetry?: () => void
-    /** Shorthand: the (already translated) label of the retry button — required for the button to appear. */
-    retryLabel?: ReactNode
+    /** Shorthand: the (already translated) label of the retry button — required for the button to appear. `string`, not `ReactNode` (COMPOSITE-8). */
+    retryLabel?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -90,15 +92,17 @@ const withDuotone = (Icon: PhosphorIcon): EmptyStateIcon => {
 }
 
 /**
- * Build the `action` slot's content: a free-form `action` node wins; otherwise
- * the `onRetry` + `retryLabel` pair is wrapped into a secondary size-sm `Button`.
+ * Resolve the `action` slot's COMPONENT: a free-form `action` component reference
+ * wins; otherwise the `onRetry` + `retryLabel` pair is wrapped into a component
+ * rendering a secondary size-sm `Button`. Returns a component reference (never a
+ * built node, COMPOSITE-8) — `EmptyState` calls it itself, forwarding `isSkeleton`.
  */
-const composeAction = ({ action, onRetry, retryLabel }: MessageProps): ReactNode => {
-    if (action != null) {
+const composeAction = ({ action, onRetry, retryLabel }: MessageProps): ComponentTypeWithSkeleton | undefined => {
+    if (action) {
         return action
     }
     if (onRetry && retryLabel) {
-        return (
+        return () => (
             <Button
                 variant="tertiary"
                 size="sm"
@@ -126,10 +130,12 @@ export interface AsyncContentBaseProps {
      */
     isLoading: boolean
     /**
-     * The LOADING branch slot: a skeleton mirroring the real layout (a
-     * `Skeleton.*` tree), so the box doesn't collapse/jump when it resolves.
+     * The LOADING branch slot: a COMPONENT reference (COMPOSITE-8), never a built
+     * node — a skeleton mirroring the real layout (a `Skeleton.*` tree), so the box
+     * doesn't collapse/jump when it resolves. The frame calls it itself, forwarding
+     * `isSkeleton={true}`.
      */
-    skeleton: ReactNode
+    skeleton: ComponentTypeWithSkeleton
     /** True (after loading finishes) → the frame falls to the empty branch. */
     isEmpty?: boolean
     /**
@@ -152,9 +158,10 @@ export interface AsyncContentBaseProps {
     errorContent?: AsyncContentErrorProps
     /**
      * The CONTENT branch slot — data has finished loading. The wrapper frame's
-     * main path.
+     * main path. A COMPONENT reference (COMPOSITE-8), never a built node — the
+     * frame calls it itself, forwarding `isSkeleton={false}`.
      */
-    content?: ReactNode
+    content?: ComponentTypeWithSkeleton
     /** Dev/spec: overlay an anatomy annotation around the branch currently rendering. */
 }
 
@@ -172,21 +179,21 @@ export interface AsyncContentBaseProps {
  */
 const Base = ({
     isLoading,
-    skeleton,
+    skeleton: Skeleton,
     isEmpty = false,
     emptyContent,
     error,
     errorContent,
-    content}: AsyncContentBaseProps) => {
+    content: Content}: AsyncContentBaseProps) => {
     let branch: React.ReactNode
     if (error && errorContent) {
         branch = <ErrorMessage {...errorContent} />
     } else if (isLoading) {
-        branch = skeleton
+        branch = <Skeleton isSkeleton />
     } else if (isEmpty) {
         branch = emptyContent ? <Empty {...emptyContent} /> : null
     } else {
-        branch = content
+        branch = Content ? <Content isSkeleton={false} /> : undefined
     }
     return <>{branch}</>
 }

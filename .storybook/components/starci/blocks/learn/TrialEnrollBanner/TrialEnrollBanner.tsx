@@ -79,7 +79,7 @@ const TrialEnrollBanner = ({
                 title="You're on a trial"
                 description="Unlock the full course and build proof of work employers can see on your profile."
 
-                body={
+                body={() => (
                     <Button
                         label="Unlock the course"
                         variant="primary"
@@ -89,7 +89,7 @@ const TrialEnrollBanner = ({
                         onPress={onEnroll}
 
                     />
-                }
+                )}
             />
         </div>
     )

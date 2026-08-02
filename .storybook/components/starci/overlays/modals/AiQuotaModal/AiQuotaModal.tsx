@@ -202,19 +202,19 @@ const AiQuotaModal = ({
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
-                header={header}
+                header={() => header}
                 size="lg"
                 scroll="inside"
                 className={className}
-                footer={
+                footer={() => (
                     <LinkSeeMore
                         label="View full usage"
                         onPress={onViewDetails}
                         size="sm"
 
                     />
-                }
-                body={<StackV gap={6} items={tabsAndPanel} />}
+                )}
+                body={() => <StackV gap={6} items={tabsAndPanel} />}
             />
         </div>
     )

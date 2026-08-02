@@ -1,9 +1,9 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { cn, Modal } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * `ModalShell.*` — the dialog-scaffold frame namespace.
@@ -15,6 +15,11 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  *
  * A tier-3 presentational frame: it owns no state of its own — the caller threads
  * open/close state plus header and body content via props.
+ *
+ * COMPOSITE-8: `title`/`description` are TEXT the frame renders itself (wrapped
+ * in `Typography` here, with `isSkeleton`); `header`/`body`/`footer` are CONTENT
+ * REGIONS — component references the frame mounts itself
+ * (`<Header isSkeleton={isSkeleton} />`), never already-built nodes.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -30,34 +35,36 @@ export interface ModalShellBaseProps {
      */
     onOpenChange: (open: boolean) => void
     /**
-     * Simple title string/node rendered as HeroUI {@link Typography}
-     * (`type="body"` `weight="bold"`). With optional {@link description}, both
-     * sit in one `pr-8` stack (room for the close button). Ignored when
-     * {@link header} is provided. Omit title/header to render no header at all.
+     * Simple title text, rendered by the frame itself as {@link Typography}
+     * (`weight="bold"`). With optional {@link description}, both sit in one
+     * `pr-8` stack (room for the close button). Ignored when {@link header} is
+     * provided. Omit title/header to render no header at all.
      */
-    title?: ReactNode
+    title?: string
     /**
-     * Explanatory copy under {@link title} (`Typography` `body-sm` muted). Part
-     * of the simple header path. Ignored when {@link header} is provided, or when
-     * {@link title} is omitted.
+     * Explanatory copy under {@link title}, rendered by the frame itself as
+     * {@link Typography} (`size="sm"` muted). Part of the simple header path.
+     * Ignored when {@link header} is provided, or when {@link title} is omitted.
      */
-    description?: ReactNode
+    description?: string
     /** Extra classes on the default title/description wrapper (only with {@link title}). */
     titleClassName?: string
     /**
      * Full custom header content — use instead of {@link title}/{@link description}
-     * for a non-standard header. Takes precedence over both.
+     * for a non-standard header. Takes precedence over both. A COMPONENT
+     * reference (COMPOSITE-8) the frame mounts itself, never an already-built
+     * node — so `isSkeleton` can reach inside it.
      */
-    header?: ReactNode
-    /** Body content of the modal. */
-    body?: ReactNode
+    header?: ComponentTypeWithSkeleton
+    /** Body content of the modal. A COMPONENT reference (COMPOSITE-8) the frame mounts itself. */
+    body?: ComponentTypeWithSkeleton
     /**
      * Bottom action row of the dialog (the CTA cluster). Rendered as HeroUI
      * `Modal.Footer`, which already lays it out `flex flex-row items-center
      * justify-end gap-2` — pass the buttons bare, do NOT re-wrap them in a
-     * flex row.
+     * flex row. A COMPONENT reference (COMPOSITE-8) the frame mounts itself.
      */
-    footer?: ReactNode
+    footer?: ComponentTypeWithSkeleton
     /** Size of the underlying `Modal.Container` (dialog width). */
     size?: React.ComponentProps<typeof Modal.Container>["size"]
     /**
@@ -79,10 +86,13 @@ export interface ModalShellBaseProps {
      */
     classNames?: Array<AllowedClassName>
     /**
-     * When `true`, each composed part (close trigger / header / body / footer)
-     * emits `` so a BlockAnatomy panel can badge it
-     * on-render. Off by default (production).
+     * `true` → the `title`/`description` text this frame owns switches to
+     * shimmer, AND every content-region slot it mounts (`header` / `body` /
+     * `footer`) is CALLED with `isSkeleton` too (COMPOSITE-8 — each is a
+     * component reference this frame calls itself, so the flag reaches inside
+     * it the same way it reaches the title/description text).
      */
+    isSkeleton?: boolean
 }
 
 /**
@@ -98,9 +108,9 @@ const Base = ({
     title,
     description,
     titleClassName,
-    header,
-    body,
-    footer,
+    header: Header,
+    body: Body,
+    footer: Footer,
     size,
     scroll,
     containerClassName,
@@ -108,9 +118,10 @@ const Base = ({
     bodyClassName,
     footerClassName,
     classNames,
+    isSkeleton = false,
 }: ModalShellBaseProps) => {
-    const hasHeader = header != null || title != null
-    const main = body
+    const hasHeader = Header != null || title != null
+    const main = Body ? <Body isSkeleton={isSkeleton} /> : null
     return (
         <Modal
             isOpen={isOpen}
@@ -132,8 +143,8 @@ const Base = ({
                         `gap-4` here + `mt-0!` on the child: ONE seam, ONE owner. */}
                     <Modal.Dialog className={cn("gap-3", dialogClassName, classNames)}>
                         <Modal.CloseTrigger />
-                        {header ? (
-                            <Modal.Header>{header}</Modal.Header>
+                        {Header ? (
+                            <Modal.Header><Header isSkeleton={isSkeleton} /></Modal.Header>
                         ) : title != null ? (
                             <Modal.Header>
                                 {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
@@ -143,18 +154,19 @@ const Base = ({
                                     <StackV
                                         gap={2}
                                         pattern="title-subtitle"
+                                        isSkeleton={isSkeleton}
                                         items={[
                                             () => (
                                                 <Typography
                                                     weight="bold"
-
+                                                    isSkeleton={isSkeleton}
                                                     text={title}
                                                 />
                                             ),
                                             ...(description != null ? [() => (
                                                 <Typography size="sm"
                                                     color="muted"
-
+                                                    isSkeleton={isSkeleton}
                                                     text={description}
                                                 />
                                             )] : []),
@@ -186,12 +198,12 @@ const Base = ({
                         {/* Same reason as above: HeroUI ships `mt-5` (20px) before the
                             footer, off the scale — the Dialog's own `gap-3` decides it now so
                             header→body and body→footer read as the SAME gap. */}
-                        {footer != null ? (
+                        {Footer != null ? (
                             <Modal.Footer
 
                                 className={cn("mt-0!", footerClassName)}
                             >
-                                {footer}
+                                <Footer isSkeleton={isSkeleton} />
                             </Modal.Footer>
                         ) : null}
                     </Modal.Dialog>

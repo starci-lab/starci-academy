@@ -194,7 +194,7 @@ const JobReadinessWidget = ({
         body={() => (
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={<Content track={LOADING_TRACK} isSkeleton />}
+                skeleton={() => <Content track={LOADING_TRACK} isSkeleton />}
                 isEmpty={isEmpty}
                 emptyContent={{
                     title: "No readiness signal yet",
@@ -208,14 +208,14 @@ const JobReadinessWidget = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-                content={track ? (
+                content={track ? () => (
                     <Content
                         codingPercentile={codingPercentile}
                         track={track}
                         isSkeleton={isSkeleton}
 
                     />
-                ) : null}
+                ) : undefined}
             />
         )}
     />

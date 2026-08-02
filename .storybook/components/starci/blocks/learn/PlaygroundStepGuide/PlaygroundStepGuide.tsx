@@ -101,13 +101,13 @@ const PlaygroundStepGuide = ({
                     tone="neutral"
                     title="All steps completed!"
                     description="You've made it through this playground path. Head back to the hub to pick the next exercise."
-                    body={
+                    body={() => (
                         <Button
                             label="Back to Playground hub"
                             variant="secondary"
                             onPress={onLeaveComplete}
                         />
-                    }
+                    )}
                 />
             </div>
         )

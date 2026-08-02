@@ -72,7 +72,7 @@ export const Default: Story = {
                         why: "Only the body region renders: a SurfaceCard profile row sits directly inside the frame with no header above it. The frame is a pure wrapper with nothing of its own to draw around the content.",
                         code: "<Section>\n  <SurfaceCard body={() => <ProfileRow />} />\n</Section>",
                         render: (
-                            <Section body={<CardBody />} />
+                            <Section body={() => <CardBody />} />
                         ),
                     },
                 ]}
@@ -110,9 +110,9 @@ export const HeaderProps: Story = {
                                 header={{
                                     title: "My courses",
                                     description: "Sorted by most recently studied.",
-                                    action: <Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />,
+                                    action: () => <Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />,
                                 }}
-                                body={<CardBody />}
+                                body={() => <CardBody />}
                             />
                         ),
                     },
@@ -143,10 +143,10 @@ export const Slots: Story = {
 />`,
                         render: (
                             <Section
-                               
-                                header={<SectionHeader level={3} title="Saved posts" />}
-                                body={<CardBody />}
-                                footer={<Typography size="xs" text="Updated 5 minutes ago" color="muted" />}
+
+                                header={() => <SectionHeader level={3} title="Saved posts" />}
+                                body={() => <CardBody />}
+                                footer={() => <Typography size="xs" text="Updated 5 minutes ago" color="muted" />}
                             />
                         ),
                     },
@@ -170,7 +170,7 @@ const GapSample = ({ gap, caption, }: GapSampleProps) => (
     <Section
         gap={gap}
         header={{ level: 3, title: `gap=${gap}`, description: caption }}
-        body={<CardBody />}
+        body={() => <CardBody />}
 
     />
 )

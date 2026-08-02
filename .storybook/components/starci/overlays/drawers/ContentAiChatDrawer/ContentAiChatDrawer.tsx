@@ -1,4 +1,3 @@
-import type { ReactNode } from "react"
 import { ChatsCircleIcon, SidebarSimpleIcon, SquareHalfIcon } from "@phosphor-icons/react"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
 import { ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
@@ -112,7 +111,7 @@ const ContentAiChatDrawer = ({
         )] : []),
     ]
 
-    const header: ReactNode = (
+    const header = () => (
         <StackH
             gap={3}
             justify="between"
@@ -129,7 +128,7 @@ const ContentAiChatDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 header={header}
-                body={
+                body={() => (
                     <SurfaceCard
 
 
@@ -142,7 +141,7 @@ const ContentAiChatDrawer = ({
                             />
                         )}
                     />
-                }
+                )}
             />
         </div>
     )

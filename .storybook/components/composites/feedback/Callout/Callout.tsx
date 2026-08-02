@@ -1,7 +1,8 @@
-import type { ComponentType, ReactNode, SVGProps } from "react"
+import type { ComponentType, SVGProps } from "react"
 import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * `Callout` — a tinted flat strip that lives INSIDE a surface
@@ -40,19 +41,23 @@ const CALLOUT_ACTION_CLASS: Record<CalloutStatus, string> = {
     info: "bg-info text-info-foreground",
 }
 
-/** Props for {@link Callout}. */
-export interface CalloutProps {
+/** Props SPECIFIC to {@link Callout} — EXCEPT the `title`/`isSkeleton` pair (see {@link CalloutProps}). */
+interface CalloutOwnProps {
     /** Semantic tone (drives tint + icon/title colour). Default `"default"`. */
     status?: CalloutStatus
-    /** Headline line (always shown) — the header slot of this frame. */
-    title: ReactNode
-    /** Optional supporting line under the title — the body TEXT slot. */
-    description?: ReactNode
     /**
-     * Optional free-form body under `description` (a short list, a meta row).
-     * 
+     * Optional supporting line under the title — the body TEXT slot. `string`,
+     * not `ReactNode` (COMPOSITE-8) — forwarded straight into `Alert`, which
+     * renders it (or a shimmer bar in its place) itself.
      */
-    body?: ReactNode
+    description?: string
+    /**
+     * Optional free-form body region under `description` (a short list, a meta
+     * row). A COMPONENT reference, not a built node (COMPOSITE-8) — the frame
+     * calls it itself with `isSkeleton` forwarded before handing the result to
+     * `Alert`'s own `body` slot.
+     */
+    body?: ComponentTypeWithSkeleton
     /** Optional custom indicator icon as a COMPONENT; omit for the status default. */
     icon?: CalloutIcon
     /**
@@ -74,6 +79,18 @@ export interface CalloutProps {
 }
 
 /**
+ * `isSkeleton` is a co-located loading state — forwarded straight into `Alert`,
+ * which owns drawing the shimmer bars. `title` is optional only in the
+ * `isSkeleton: true` branch; the live branch still requires it. `string`, not
+ * `ReactNode` (COMPOSITE-8) — the frame hands it to `Alert`'s own `title` slot.
+ */
+export type CalloutProps = CalloutOwnProps &
+    (
+        | { isSkeleton: true; title?: string }
+        | { isSkeleton?: false; title: string }
+    )
+
+/**
  * A tinted, flat note for use INSIDE a card / surface (surface-in-surface): a thin
  * `bg-<status>-soft` + `shadow-none` highlight strip, so it doesn't read as a
  * card-in-card.
@@ -86,33 +103,41 @@ export interface CalloutProps {
  *
  * @param props - {@link CalloutProps}
  */
-export const Callout = ({
-    status = "default",
-    title,
-    description,
-    body,
-    icon,
-    actionLabel,
-    onAction,
-    onClose,
-    closeAriaLabel,
-    classNames,
-}: CalloutProps) => (
-    <Alert
-        status={status}
-        tone="soft"
-        title={title}
-        description={description}
-        body={body}
-        icon={icon}
-        action={
-            actionLabel ? (
-                // The frame owns the CTA: builds the button + applies skin per status itself. Caller only supplies text.
-                <Button label={actionLabel} size="sm" onPress={onAction} className={CALLOUT_ACTION_CLASS[status]} />
-            ) : undefined
-        }
-        onClose={onClose}
-        closeAriaLabel={closeAriaLabel}
-        classNames={classNames}
-    />
-)
+export const Callout = (props: CalloutProps) => {
+    const {
+        status = "default",
+        description,
+        body: Body,
+        icon,
+        actionLabel,
+        onAction,
+        onClose,
+        closeAriaLabel,
+        classNames,
+    } = props
+    // Narrowed off the discriminant so `title` stays required in the live branch —
+    // destructuring it straight off `props` above would widen it to `string | undefined`
+    // and lose exactly that guarantee (same shape `Alert`/`Toast` already use).
+    const content = props.isSkeleton
+        ? ({ isSkeleton: true, title: props.title } as const)
+        : ({ isSkeleton: false, title: props.title } as const)
+    return (
+        <Alert
+            status={status}
+            tone="soft"
+            {...content}
+            description={description}
+            body={Body ? <Body isSkeleton={props.isSkeleton} /> : undefined}
+            icon={icon}
+            action={
+                actionLabel ? (
+                    // The frame owns the CTA: builds the button + applies skin per status itself. Caller only supplies text.
+                    <Button label={actionLabel} size="sm" onPress={onAction} className={CALLOUT_ACTION_CLASS[status]} />
+                ) : undefined
+            }
+            onClose={onClose}
+            closeAriaLabel={closeAriaLabel}
+            classNames={classNames}
+        />
+    )
+}

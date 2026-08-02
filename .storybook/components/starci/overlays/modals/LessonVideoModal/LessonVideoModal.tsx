@@ -261,18 +261,11 @@ const LessonVideoModal = ({
                 onOpenChange={onOpenChange}
                 size="lg"
                 scroll="inside"
-                title={
-                    // `ModalShell` has no `isSkeleton` of its own (composite tier, out of scope
-                    // here) — the block calls the atom directly with the title's real weight and
-                    // feeds the result into the slot, same idiom as `ContentHeader`'s `PageHeader`
-                    // title skeleton.
-                    isLoading ? (
-                        <Typography weight="bold" isSkeleton />
-                    ) : (
-                        video?.title ?? ""
-                    )
-                }
-                body={<StackV gap={6} isSkeleton={isLoading} items={metaAndPlayer} />}
+                // `ModalShell` now owns its own title skeleton (COMPOSITE-8's `isSkeleton`
+                // forwarding) — no more hand-built `Typography` stand-in for the title text.
+                isSkeleton={isLoading}
+                title={video?.title ?? ""}
+                body={() => <StackV gap={6} isSkeleton={isLoading} items={metaAndPlayer} />}
             />
         </div>
     )

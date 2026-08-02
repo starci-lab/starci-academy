@@ -65,7 +65,7 @@ const ContentModal = ({
             size="full"
             scroll="inside"
             bodyClassName="pb-6"
-            header={isSkeleton ? (
+            header={() => (isSkeleton ? (
                 <HeroSkeleton className="h-5 w-48 rounded" />
             ) : content?.title != null ? (
                 <div className="[&_p]:m-0 [&_p]:inline">
@@ -76,8 +76,8 @@ const ContentModal = ({
 
                     />
                 </div>
-            ) : null}
-            body={
+            ) : null)}
+            body={() => (
                 <ScrollShadow hideScrollBar>
                     {isSkeleton ? (
                         <MarkdownContent source="" isSkeleton />
@@ -90,7 +90,7 @@ const ContentModal = ({
                         />
                     )}
                 </ScrollShadow>
-            }
+            )}
         />
     </div>
 )

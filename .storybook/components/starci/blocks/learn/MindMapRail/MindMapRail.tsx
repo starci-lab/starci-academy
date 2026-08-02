@@ -205,11 +205,11 @@ const MindMapRail = ({
             <StackH gap={3} wrap isSkeleton={isSkeleton} items={[() => searchRow]} />
             <AsyncContent
                 isLoading={isLoading || isSkeleton}
-                skeleton={<SurfaceCardList items={skeletonRows()} isSkeleton />}
+                skeleton={() => <SurfaceCardList items={skeletonRows()} isSkeleton />}
                 isEmpty={items.length === 0}
                 emptyContent={emptyContent}
 
-                content={<SurfaceCardList items={rows} />}
+                content={() => <SurfaceCardList items={rows} />}
             />
         </>
     )

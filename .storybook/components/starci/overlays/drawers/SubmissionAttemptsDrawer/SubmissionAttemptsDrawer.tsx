@@ -260,31 +260,31 @@ const SubmissionAttemptsDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={`${DRAWER_TITLE} · ${attempts.length}`}
-                body={
+                body={() => (
                     <AsyncContent
                         isLoading={isLoading}
-                        skeleton={
+                        skeleton={() => (
                             <StackV
                                 gap={3}
 
                                 items={skeletonRows}
                             />
-                        }
+                        )}
                         isEmpty={isEmpty}
                         emptyContent={emptyContent}
                         error={error}
                         errorContent={errorContent}
 
-                        content={
+                        content={() => (
                             <StackV
                                 gap={4}
 
 
                                 items={listAndPager}
                             />
-                        }
+                        )}
                     />
-                }
+                )}
             />
         </div>
     )

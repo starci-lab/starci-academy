@@ -79,7 +79,7 @@ export const Default: Story = {
                                 <Form
 
                                     onSubmit={() => {}}
-                                    actions={(
+                                    actions={() => (
                                         <FormActions
                                             items={[
                                                 { key: "cancel", label: "Cancel", variant: "secondary" },
@@ -87,7 +87,7 @@ export const Default: Story = {
                                             ]}
                                         />
                                     )}
-                                    body={<FormSection title="Account" body={<AccountFields />} />}
+                                    body={() => <FormSection title="Account" body={() => <AccountFields />} />}
                                 />
                             </div>
                         ),
@@ -127,7 +127,7 @@ export const Submitting: Story = {
 
                                     isDisabled
                                     onSubmit={() => {}}
-                                    actions={(
+                                    actions={() => (
                                         <FormActions
                                             items={[
                                                 { key: "cancel", label: "Cancel", variant: "secondary" },
@@ -135,7 +135,7 @@ export const Submitting: Story = {
                                             ]}
                                         />
                                     )}
-                                    body={<FormSection title="Account" body={<AccountFields />} />}
+                                    body={() => <FormSection title="Account" body={() => <AccountFields />} />}
                                 />
                             </div>
                         ),
@@ -172,7 +172,7 @@ export const Disabled: Story = {
 
                                     isDisabled
                                     onSubmit={() => {}}
-                                    actions={(
+                                    actions={() => (
                                         <FormActions
                                             items={[
                                                 { key: "cancel", label: "Cancel", variant: "secondary" },
@@ -180,7 +180,7 @@ export const Disabled: Story = {
                                             ]}
                                         />
                                     )}
-                                    body={<FormSection title="Account" description="Only an administrator can edit this profile." body={<AccountFields />} />}
+                                    body={() => <FormSection title="Account" description="Only an administrator can edit this profile." body={() => <AccountFields />} />}
                                 />
                             </div>
                         ),

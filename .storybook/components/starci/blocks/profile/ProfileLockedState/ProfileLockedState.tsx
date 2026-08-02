@@ -52,13 +52,13 @@ const ProfileLockedState = ({
                         icon={LockIcon}
                         title="This profile is set to private"
                         description="The profile owner has hidden their public activity — you can still explore other courses."
-                        body={
+                        body={() => (
                             <Button
                                 label="Browse courses"
                                 variant="primary"
                                 onPress={onGoCourses}
                             />
-                        }
+                        )}
                     />
                 )}
             />

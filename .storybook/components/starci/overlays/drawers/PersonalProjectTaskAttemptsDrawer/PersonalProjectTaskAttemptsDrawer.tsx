@@ -210,32 +210,32 @@ const PersonalProjectTaskAttemptsDrawer = ({
                 placement={placement}
                 title={DRAWER_TITLE}
                 className={className}
-                body={
+                body={() => (
                     <AsyncContent
                         // A parent-forced skeleton and this drawer's own in-flight fetch share
                         // the one loading branch `AsyncContent` exposes (see file header).
                         isLoading={isLoading || isSkeleton}
-                        skeleton={
+                        skeleton={() => (
                             <SurfaceCardList
                                 items={skeletonItems}
 
 
                             />
-                        }
+                        )}
                         isEmpty={isEmpty}
                         emptyContent={emptyContent}
                         error={error}
                         errorContent={errorContent}
 
-                        content={
+                        content={() => (
                             <SurfaceCardList
                                 items={items}
 
 
                             />
-                        }
+                        )}
                     />
-                }
+                )}
             />
         </div>
     )

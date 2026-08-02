@@ -234,7 +234,7 @@ const WeeklyChallengeCard = ({
         body={() => (
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={<Content data={LOADING_DATA} isSkeleton />}
+                skeleton={() => <Content data={LOADING_DATA} isSkeleton />}
                 isEmpty={isEmpty}
                 emptyContent={{
                     title: "No challenge is currently active",
@@ -247,9 +247,9 @@ const WeeklyChallengeCard = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-                content={data ? (
+                content={() => (data ? (
                     <Content data={data} isSkeleton={isSkeleton} />
-                ) : null}
+                ) : null)}
             />
         )}
     />

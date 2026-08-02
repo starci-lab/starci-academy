@@ -1,9 +1,9 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { cn, Drawer } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -18,6 +18,11 @@ import { StackV } from "@/components/frames/Stack"
  * differs: `Modal.Container` takes `size` (dialog width, centered dialog);
  * `Drawer.Content` takes `placement` (which edge the panel slides from — a
  * drawer has no "size" in that sense, it is full-bleed along its edge).
+ *
+ * COMPOSITE-8: `title`/`description` are TEXT the frame renders itself (wrapped
+ * in `Typography` here, with `isSkeleton`); `header`/`body`/`footer` are CONTENT
+ * REGIONS — component references the frame mounts itself
+ * (`<Header isSkeleton={isSkeleton} />`), never already-built nodes.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -36,34 +41,36 @@ export interface DrawerShellBaseProps {
     /** Which edge the panel slides in from. @default "right" */
     placement?: "top" | "bottom" | "left" | "right"
     /**
-     * Simple title string/node rendered as HeroUI {@link Typography}
-     * (`type="body"` `weight="bold"`). With optional {@link description}, both
-     * sit in one `pr-8` stack (room for the close button). Ignored when
-     * {@link header} is provided. Omit title/header to render no header at all.
+     * Simple title text, rendered by the frame itself as {@link Typography}
+     * (`weight="bold"`). With optional {@link description}, both sit in one
+     * `pr-8` stack (room for the close button). Ignored when {@link header} is
+     * provided. Omit title/header to render no header at all.
      */
-    title?: ReactNode
+    title?: string
     /**
-     * Explanatory copy under {@link title} (`Typography` `body-sm` muted). Part
-     * of the simple header path. Ignored when {@link header} is provided, or when
-     * {@link title} is omitted.
+     * Explanatory copy under {@link title}, rendered by the frame itself as
+     * {@link Typography} (`size="sm"` muted). Part of the simple header path.
+     * Ignored when {@link header} is provided, or when {@link title} is omitted.
      */
-    description?: ReactNode
+    description?: string
     /** Extra classes on the default title/description wrapper (only with {@link title}). */
     titleClassName?: string
     /**
      * Full custom header content — use instead of {@link title}/{@link description}
-     * for a non-standard header. Takes precedence over both.
+     * for a non-standard header. Takes precedence over both. A COMPONENT
+     * reference (COMPOSITE-8) the frame mounts itself, never an already-built
+     * node — so `isSkeleton` can reach inside it.
      */
-    header?: ReactNode
-    /** Body content of the drawer. */
-    body?: ReactNode
+    header?: ComponentTypeWithSkeleton
+    /** Body content of the drawer. A COMPONENT reference (COMPOSITE-8) the frame mounts itself. */
+    body?: ComponentTypeWithSkeleton
     /**
      * Bottom action row of the panel (the CTA cluster). Rendered as HeroUI
      * `Drawer.Footer`, which already lays it out `flex flex-row items-center
      * justify-end gap-2` — pass the buttons bare, do NOT re-wrap them in a
-     * flex row.
+     * flex row. A COMPONENT reference (COMPOSITE-8) the frame mounts itself.
      */
-    footer?: ReactNode
+    footer?: ComponentTypeWithSkeleton
     /** Extra classes merged onto `Drawer.Content` (the sliding panel itself — width/height). */
     contentClassName?: string
     /** Extra classes merged onto `Drawer.Dialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
@@ -76,6 +83,14 @@ export interface DrawerShellBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * `true` → the `title`/`description` text this frame owns switches to
+     * shimmer, AND every content-region slot it mounts (`header` / `body` /
+     * `footer`) is CALLED with `isSkeleton` too (COMPOSITE-8 — each is a
+     * component reference this frame calls itself, so the flag reaches inside
+     * it the same way it reaches the title/description text).
+     */
+    isSkeleton?: boolean
 }
 
 /**
@@ -92,16 +107,18 @@ const Base = ({
     title,
     description,
     titleClassName,
-    header,
-    body,
-    footer,
+    header: Header,
+    body: Body,
+    footer: Footer,
     contentClassName,
     dialogClassName,
     bodyClassName,
     footerClassName,
-    classNames}: DrawerShellBaseProps) => {
-    const hasHeader = header != null || title != null
-    const main = body
+    classNames,
+    isSkeleton = false,
+}: DrawerShellBaseProps) => {
+    const hasHeader = Header != null || title != null
+    const main = Body ? <Body isSkeleton={isSkeleton} /> : null
     return (
         <Drawer
             isOpen={isOpen}
@@ -113,18 +130,20 @@ const Base = ({
                 <Drawer.Content className={contentClassName} placement={placement}>
                     <Drawer.Dialog className={cn("gap-3", dialogClassName, classNames)}>
                         <Drawer.CloseTrigger />
-                        {header ? (
-                            <Drawer.Header>{header}</Drawer.Header>
+                        {Header ? (
+                            <Drawer.Header><Header isSkeleton={isSkeleton} /></Drawer.Header>
                         ) : title != null ? (
                             <Drawer.Header>
                                 <StackV
                                     gap={2}
                                     pattern="title-subtitle"
                                     className={cn("pr-8", titleClassName)}
+                                    isSkeleton={isSkeleton}
                                     items={[
                                         () => (
                                             <Typography
                                                 weight="bold"
+                                                isSkeleton={isSkeleton}
                                                 text={title}
                                             />
                                         ),
@@ -132,6 +151,7 @@ const Base = ({
                                             ? [() => (
                                                 <Typography size="sm"
                                                     color="muted"
+                                                    isSkeleton={isSkeleton}
                                                     text={description}
                                                 />
                                             )]
@@ -151,11 +171,11 @@ const Base = ({
                         >
                             {main}
                         </Drawer.Body>
-                        {footer != null ? (
+                        {Footer != null ? (
                             <Drawer.Footer
                                 className={cn("mt-0!", footerClassName)}
                             >
-                                {footer}
+                                <Footer isSkeleton={isSkeleton} />
                             </Drawer.Footer>
                         ) : null}
                     </Drawer.Dialog>

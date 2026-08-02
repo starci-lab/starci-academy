@@ -141,15 +141,13 @@ const FoundationCategoryList = ({
     const hasQuery = (searchQuery?.trim().length ?? 0) > 0
     // `emptyState` is now a component reference (COMPOSITE-4); only rendered when
     // not skeleton, so the component itself needs no `isSkeleton` branch of its own.
-    const EmptyState = () => (
+    const NoCategoriesEmptyState = () => (
         <EmptyState
             icon={hasQuery ? MagnifyingGlassIcon : undefined}
             title={hasQuery ? `No topics match "${searchQuery?.trim()}".` : LIBRARY_EMPTY_TITLE}
-
-
         />
     )
-    const emptyState = !isSkeleton && categories.length === 0 ? EmptyState : undefined
+    const emptyState = !isSkeleton && categories.length === 0 ? NoCategoriesEmptyState : undefined
 
     // Nothing to page through during the first fetch or an empty result (see
     // file header, judgement on the pager).

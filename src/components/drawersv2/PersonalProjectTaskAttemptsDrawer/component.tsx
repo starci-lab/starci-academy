@@ -1,16 +1,16 @@
 import React from "react"
 import { ClockIcon, SparkleIcon } from "@phosphor-icons/react"
-import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { Chip, type ChipTone } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
 import {
     AsyncContent,
     type AsyncContentEmptyProps,
     type AsyncContentErrorProps,
-} from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { InlineIconLabel } from "@sb-components/composites/text/InlineIconLabel/InlineIconLabel"
-import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
-import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+} from "@/components/composites/async/AsyncContent"
+import { InlineIconLabel } from "@/components/composites/text/InlineIconLabel"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
+import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
  * `_PersonalProjectTaskAttemptsDrawer` — the AI-review history for one personal-

@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@/components/composites/_slot"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
-import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
-import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { TabsBase } from "@sb-components/atoms/navigation/Tabs/TabsBase"
-import { Accordion } from "@sb-components/atoms/navigation/Accordion/Accordion"
-import type { AccordionItem } from "@sb-components/atoms/navigation/Accordion/Accordion"
-import { ChipBase } from "@sb-components/atoms/chips/Chip/ChipBase"
-import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
+import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import { StackV, StackH } from "@/components/frames/Stack"
+import { Typography } from "@/components/atoms/text/Typography"
+import { TabsBase } from "@/components/atoms/navigation/Tabs/TabsBase"
+import { Accordion } from "@/components/atoms/navigation/Accordion"
+import type { AccordionItem } from "@/components/atoms/navigation/Accordion"
+import { ChipBase } from "@/components/atoms/chips/Chip/ChipBase"
+import { MarkdownContent } from "@/components/composites/viewers/MarkdownContent"
 
 /**
  * `_E2eResultDrawer` — the recorded Playwright E2E proof for the active lesson: a

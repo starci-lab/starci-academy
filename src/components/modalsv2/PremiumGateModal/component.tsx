@@ -1,16 +1,16 @@
 import React from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@/components/composites/_slot"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
 import {
     PhaseScarcityNote,
     PricingPhase,
-} from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
-import { PriceTagProminent, type PriceBreakdown } from "@sb-components/starci/blocks/commerce/PriceTag/PriceTag"
-import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { StackV } from "@sb-components/frames/Stack/Stack"
-import { Cluster } from "@sb-components/frames/Cluster/Cluster"
+} from "@/components/starci/blocks/commerce/PhaseScarcityNote"
+import { PriceTagProminent, type PriceBreakdown } from "@/components/starci/blocks/commerce/PriceTag"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
+import { Cluster } from "@/components/frames/Cluster"
 
 /**
  * `PremiumGateModal` — the dismissable, value-first buy/register prompt shown when a

@@ -1,10 +1,10 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import { SettingsSidebarNav, type SettingsNavGroup } from "@sb-components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
-import { Container } from "@sb-components/frames/Container/Container"
-import { StackV } from "@sb-components/frames/Stack/Stack"
+import { SettingsSidebarNav, type SettingsNavGroup } from "@/components/starci/blocks/navigation/SettingsSidebarNav"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { Container } from "@/components/frames/Container"
+import { StackV } from "@/components/frames/Stack"
 
 /**
  * `_SettingsLayout` — the chrome wrapping every route under `/profile/(settings)`

@@ -1,18 +1,18 @@
 import React from "react"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
-import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
-import { PriceTagProminent, type PriceBreakdown } from "@sb-components/starci/blocks/commerce/PriceTag/PriceTag"
+import { type SkeletonProps } from "@/components/composites/_slot"
+import { IconTile } from "@/components/atoms/display/IconTile"
+import { PriceTagProminent, type PriceBreakdown } from "@/components/starci/blocks/commerce/PriceTag"
 // The NON-legacy version (`designs/commerce/…`) — the `_legacy` version of the same
 // name still exists but is a dead end; screens are forbidden from touching `_legacy`
 // so every link in the chain has to move off it.
-import { PhaseScarcityNote, PricingPhase as SbPricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
-import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { PhaseScarcityNote, PricingPhase as SbPricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { TitledText } from "@/components/composites/text/TitledText"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { StackH, StackV } from "@/components/frames/Stack"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import type { QueryCoursePricePreviewData } from "@/modules/api/graphql/queries/types/course-price-preview"
 

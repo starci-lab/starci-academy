@@ -8,7 +8,7 @@ import { ChipBase } from "./ChipBase"
  *
  * `ChipGroup` used to live here too — it renders another atom (`Chip`) per item,
  * which makes it a composite, not a member of this namespace. It now lives at
- * `@sb-components/composites/chips/ChipGroup`.
+ * `@/components/composites/chips/ChipGroup`.
  */
 export { ChipBase as Chip }
 

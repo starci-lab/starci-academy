@@ -1,11 +1,11 @@
 import type { ComponentType } from "react"
-import { Container } from "@sb-components/frames/Container/Container"
-import { StackV } from "@sb-components/frames/Stack/Stack"
-import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/profile/ProfileHero/ProfileHero"
-import { ProfileTabsBar, type ProfileTab } from "@sb-components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar"
-import { ProfileLoadingState } from "@sb-components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState"
-import { ProfileNotFoundState } from "@sb-components/starci/blocks/profile/ProfileNotFoundState/ProfileNotFoundState"
-import { ProfileLockedState } from "@sb-components/starci/blocks/profile/ProfileLockedState/ProfileLockedState"
+import { Container } from "@/components/frames/Container"
+import { StackV } from "@/components/frames/Stack"
+import { ProfileHero, type ProfileHeroUser } from "@/components/starci/blocks/profile/ProfileHero"
+import { ProfileTabsBar, type ProfileTab } from "@/components/starci/blocks/navigation/ProfileTabsBar"
+import { ProfileLoadingState } from "@/components/starci/blocks/profile/ProfileLoadingState"
+import { ProfileNotFoundState } from "@/components/starci/blocks/profile/ProfileNotFoundState"
+import { ProfileLockedState } from "@/components/starci/blocks/profile/ProfileLockedState"
 
 /**
  * `_PublicProfileLayout` — the wrapper mounted once per `/profile/[username]/**`

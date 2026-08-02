@@ -17,7 +17,8 @@
         "check:stories": "node scripts/check-story-coverage.mjs",
     "check:story-ids": "node scripts/check-story-ids.mjs",
     "check:doc-parity": "node scripts/check-doc-parity.mjs",
-    "check:skeleton-prop": "node scripts/check-skeleton-prop.mjs"
+    "check:skeleton-prop": "node scripts/check-skeleton-prop.mjs",
+    "check:src-sb-import": "node scripts/check-src-sb-import.mjs"
     },
     "lint-staged": {
         "src/**/*.{ts,tsx}": "eslint"

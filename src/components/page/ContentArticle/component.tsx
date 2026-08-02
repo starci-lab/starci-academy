@@ -1,39 +1,39 @@
 import React from "react"
-import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { Container } from "@sb-components/frames/Container/Container"
-import { StackV } from "@sb-components/frames/Stack/Stack"
+import { AsyncContent } from "@/components/composites/async/AsyncContent"
+import { Container } from "@/components/frames/Container"
+import { StackV } from "@/components/frames/Stack"
 import {
     ContentHeader,
     type ContentHeaderCrumb,
     type ContentHeaderOutcome,
-} from "@sb-components/starci/blocks/learn/ContentHeader/ContentHeader"
+} from "@/components/starci/blocks/learn/ContentHeader"
 import {
     ContentModeNav,
     type ContentLanguage,
     type ContentMode,
     type ContentModeOption,
-} from "@sb-components/starci/blocks/learn/ContentModeNav/ContentModeNav"
+} from "@/components/starci/blocks/learn/ContentModeNav"
 import {
     ContentArticle as ArticleBlock,
     type ContentArticleOffer,
-} from "@sb-components/starci/blocks/learn/ContentArticle/ContentArticle"
+} from "@/components/starci/blocks/learn/ContentArticle"
 import {
     ContentReaction,
     type ReactionType as ContentReactionType,
     type ContentReactionCount,
-} from "@sb-components/starci/blocks/learn/ContentReaction/ContentReaction"
-import { MilestoneUpNextCard } from "@sb-components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard"
+} from "@/components/starci/blocks/learn/ContentReaction"
+import { MilestoneUpNextCard } from "@/components/starci/blocks/learn/MilestoneUpNextCard"
 import {
     ContentRelatedList,
     type ContentRelatedItem,
-} from "@sb-components/starci/blocks/learn/ContentRelatedList/ContentRelatedList"
-import { ContentDiscussion } from "@sb-components/starci/blocks/learn/ContentDiscussion/ContentDiscussion"
-import type { ContentCommentNode } from "@sb-components/starci/blocks/learn/ContentCommentThread/ContentCommentThread"
-import type { ContentCommentComposerViewer } from "@sb-components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer"
+} from "@/components/starci/blocks/learn/ContentRelatedList"
+import { ContentDiscussion } from "@/components/starci/blocks/learn/ContentDiscussion"
+import type { ContentCommentNode } from "@/components/starci/blocks/learn/ContentCommentThread"
+import type { ContentCommentComposerViewer } from "@/components/starci/blocks/learn/ContentCommentComposer"
 import {
     ContentPager,
     type ContentPagerNeighbour,
-} from "@sb-components/starci/blocks/learn/ContentPager/ContentPager"
+} from "@/components/starci/blocks/learn/ContentPager"
 
 // re-exported so the connected file (and anything downstream) can build data
 // against the SAME types the blueprint (`ContentPage`) and its blocks define,

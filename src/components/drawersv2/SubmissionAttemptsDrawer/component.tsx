@@ -1,19 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react"
-import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
+import { DrawerShell } from "@/components/composites/layout/DrawerShell"
 import {
     AsyncContent,
     type AsyncContentEmptyProps,
     type AsyncContentErrorProps,
-} from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import { EnumChip } from "@sb-components/composites/chips/EnumChip/EnumChip"
-import { InlineIconLabel } from "@sb-components/composites/text/InlineIconLabel/InlineIconLabel"
-import { MODEL_CATEGORY_MAP, type AiModelCategory } from "@sb-components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard"
-import { Pagination } from "@sb-components/atoms/navigation/Pagination/Pagination"
+} from "@/components/composites/async/AsyncContent"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { EnumChip } from "@/components/composites/chips/EnumChip"
+import { InlineIconLabel } from "@/components/composites/text/InlineIconLabel"
+import { MODEL_CATEGORY_MAP, type AiModelCategory } from "@/components/starci/blocks/learn/SubmissionScoreCard"
+import { Pagination } from "@/components/atoms/navigation/Pagination"
 
 /**
  * `_SubmissionAttemptsDrawer` — the full graded history of one challenge requirement:

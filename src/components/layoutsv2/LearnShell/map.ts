@@ -1,7 +1,7 @@
 import { PricingPhase as RealPricingPhase } from "@/modules/types/enums/pricing-phase"
 import type { QueryCoursePricePreviewData } from "@/modules/api/graphql/queries/types/course-price-preview"
-import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
-import type { EnrollGatePrice } from "@sb-components/starci/blocks/learn/EnrollGate/EnrollGate"
+import { PricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
+import type { EnrollGatePrice } from "@/components/starci/blocks/learn/EnrollGate"
 
 /** Real `PricingPhase` (camelCase `earlyBird`) → the storybook block's own enum (snake_case `early_bird`). */
 const PHASE_MAP: Record<RealPricingPhase, PricingPhase> = {

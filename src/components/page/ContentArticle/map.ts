@@ -1,4 +1,4 @@
-import { PricingPhase as SbPricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
+import { PricingPhase as SbPricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
 import { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import { ReactionType, type CommentNode, type ReactionCount } from "@/modules/api/graphql/queries/types/discussion"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
@@ -6,7 +6,7 @@ import type { ContentCommentNode, ContentReactionCount, ContentReactionType } fr
 
 /**
  * Real-data -> storybook-block conversions for `ContentArticle`. The blocks under
- * `@sb-components/starci/blocks/learn/*` define their own small vocabularies (a
+ * `@/components/starci/blocks/learn/*` define their own small vocabularies (a
  * `ReactionType` string union, a `PricingPhase` enum) that carry the SAME meaning as
  * this app's real GraphQL enums but are a different nominal type (and, for
  * `PricingPhase.EarlyBird`, a different string literal: `"earlyBird"` vs

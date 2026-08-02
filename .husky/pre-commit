@@ -19,3 +19,8 @@ node scripts/check-doc-parity.mjs
 # dang chay -> spinner) va `isLoading` (switch AsyncContent) la khai niem KHAC, khong bi
 # cam. Vi pham = feed khai niem non-skeleton vao `isSkeleton={...}`.
 node scripts/check-skeleton-prop.mjs
+
+# P2: file src/ KHONG import cay storybook (@sb-components/@sb-utils). Production dung
+# twin @/components/*; thieu twin thi tao (mirror file storybook, doi @sb-components/ ->
+# @/components/, collapse /X/X -> /X).
+node scripts/check-src-sb-import.mjs

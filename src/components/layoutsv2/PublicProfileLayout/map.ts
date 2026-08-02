@@ -1,4 +1,4 @@
-import type { ProfileWorkMode } from "@sb-components/starci/blocks/profile/ProfileHero/ProfileHero"
+import type { ProfileWorkMode } from "@/components/starci/blocks/profile/ProfileHero"
 import { WorkMode } from "@/modules/types/enums/work-mode"
 import type { UserEntity } from "@/modules/types/entities/user"
 import type { PublicProfileUser } from "./component"

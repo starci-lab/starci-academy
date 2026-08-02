@@ -1,22 +1,22 @@
 import React from "react"
 import { GithubLogoIcon } from "@phosphor-icons/react"
-import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { PageHeader } from "@sb-components/composites/layout/Page/Page"
-import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
-import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { Grid } from "@sb-components/frames/Grid/Grid"
-import { StackV } from "@sb-components/frames/Stack/Stack"
-import { ContinueCardHero, ContinueCardItem } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
+import { AsyncContent } from "@/components/composites/async/AsyncContent"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { PageHeader } from "@/components/composites/layout/Page"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Grid } from "@/components/frames/Grid"
+import { StackV } from "@/components/frames/Stack"
+import { ContinueCardHero, ContinueCardItem } from "@/components/starci/blocks/learn/ContinueCard"
 import type {
     PersonalProjectCurrentTask,
     PersonalProjectDashboardTask,
     PersonalProjectGithubStatus,
     PersonalProjectStats,
     PersonalProjectTaskSubtitleState,
-} from "@sb-components/starci/blocks/learn/PersonalProjectDashboard/PersonalProjectDashboard"
+} from "@/components/starci/blocks/learn/PersonalProjectDashboard"
 import { TaskBreadcrumb } from "@/components/features/learn/PersonalProject/TaskBreadcrumb"
 
 // Re-exported so the connected `index.tsx` (and any story) can build these values without

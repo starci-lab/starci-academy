@@ -10,7 +10,7 @@ import {
     useRouter,
 } from "next/navigation"
 import { getSettingsGroups } from "@/components/features/profile/Settings/nav"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { toBlockSettingsGroups } from "./map"
 import { _SettingsLayout } from "./component"
 

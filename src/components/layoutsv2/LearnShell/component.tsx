@@ -1,14 +1,14 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { ResizableRail } from "@sb-components/behaviors/ResizableRail/ResizableRail"
-import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
-import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import { EnrollGate, type EnrollGateProps } from "@sb-components/starci/blocks/learn/EnrollGate/EnrollGate"
-import { ContentAiFab } from "@sb-components/starci/blocks/learn/ContentAiFab/ContentAiFab"
+import { ResizableRail } from "@/components/behaviors/ResizableRail"
+import { Spinner } from "@/components/atoms/display/Spinner"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { EnrollGate, type EnrollGateProps } from "@/components/starci/blocks/learn/EnrollGate"
+import { ContentAiFab } from "@/components/starci/blocks/learn/ContentAiFab"
 import {
     ContentAiSelectionAsk,
     type ContentAiSelectionAskAnchor,
-} from "@sb-components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk"
+} from "@/components/starci/blocks/learn/ContentAiSelectionAsk"
 
 /**
  * `_LearnShell` — the wrapper mounted once per `/learn/**` scope. It owns the chrome

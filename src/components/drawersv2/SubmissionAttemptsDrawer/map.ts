@@ -1,5 +1,5 @@
 import { AiModelCategory as RealAiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
-import type { AiModelCategory as BlueprintAiModelCategory } from "@sb-components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard"
+import type { AiModelCategory as BlueprintAiModelCategory } from "@/components/starci/blocks/learn/SubmissionScoreCard"
 
 /**
  * Real `AiModelCategory` (a backend-mirroring TS `enum`) → the blueprint's plain

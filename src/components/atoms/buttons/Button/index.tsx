@@ -9,8 +9,8 @@ import { ButtonBase } from "./ButtonBase"
  *
  * `ButtonGroup` and `ButtonRadioGroup` used to live here too — both render another
  * atom per item, which makes them composites, not members of this namespace. They
- * now live at `@sb-components/composites/buttons/ButtonGroup` and
- * `@sb-components/composites/buttons/ButtonRadioGroup`.
+ * now live at `@/components/composites/buttons/ButtonGroup` and
+ * `@/components/composites/buttons/ButtonRadioGroup`.
  */
 export { ButtonBase as Button }
 

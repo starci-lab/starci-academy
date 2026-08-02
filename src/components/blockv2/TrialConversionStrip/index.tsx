@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import { PaymentFlow } from "@/modules/types/payment"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { _TrialConversionStrip } from "./component"
 
 /** Props for {@link TrialConversionStrip}. */

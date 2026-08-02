@@ -27,7 +27,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
  * this is an API refactor, not a visual one. Synced to `src` later. No
  * `@/components` imports (design-spec ports stay self-contained).
  *
- * HISTORY — `.Container` was moved to `Container` (`@sb-components/frames/Container/Container`)
+ * HISTORY — `.Container` was moved to `Container` (`@/components/frames/Container/Container`)
  * on 2026-07-26: the old frame had no `mx-auto`, no `max-w`, only right padding —
  * a half-baked version of the "content width" concept that `Container` already
  * does correctly (§13c: a duplicate frame gets deleted).
@@ -307,7 +307,7 @@ const BottomBar = ({
  * | `.Header` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
  * | `.BottomBar` | `body`/`actions` slots |
  *
- * `.Container` moved to `Container` (`@sb-components/frames/Container/Container`)
+ * `.Container` moved to `Container` (`@/components/frames/Container/Container`)
  * on 2026-07-26 — see the history note at the top of this file.
  */
 export { Header as PageHeader, BottomBar as PageBottomBar }

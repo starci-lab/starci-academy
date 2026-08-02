@@ -1,18 +1,18 @@
 import React from "react"
-import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
-import { Tabs, type TabItem } from "@sb-components/atoms/navigation/Tabs/Tabs"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { LinkSeeMore } from "@sb-components/atoms/navigation/Link/Link"
-import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import { AiQuotaLane, type AiQuotaLaneData } from "@sb-components/starci/blocks/ai/AiQuotaLane/AiQuotaLane"
-import { AiQuotaSubscriptionPanel } from "@sb-components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
+import { Tabs, type TabItem } from "@/components/atoms/navigation/Tabs"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { LinkSeeMore } from "@/components/atoms/navigation/Link"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { AiQuotaLane, type AiQuotaLaneData } from "@/components/starci/blocks/ai/AiQuotaLane"
+import { AiQuotaSubscriptionPanel } from "@/components/starci/blocks/ai/AiQuotaSubscriptionPanel"
 import {
     AiQuotaHistoryPanel,
     type AiQuotaHistoryChartPoint,
     type AiQuotaHistoryChargeItem,
-} from "@sb-components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+} from "@/components/starci/blocks/ai/AiQuotaHistoryPanel"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `AiQuotaModal` — the root overlay for "how much AI have I used": a dialog with the

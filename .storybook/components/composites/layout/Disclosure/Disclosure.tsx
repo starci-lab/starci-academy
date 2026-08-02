@@ -124,10 +124,10 @@ const Base = ({
                             isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
                         )}
                     >
-                        {/* TEXT position (icon §1c/§4.2): BARE beside the `text-sm` label, no box/control
+                        {/* TEXT position (icon): BARE beside the `text-sm` label, no box/control
                             of its own — trigger is `w-fit`, hugs content like running text. Size =
-                            font-size 1:1 of `text-sm` → `size-3.5` (was flat `size-4`, teacher's call
-                            2026-07-29). Weight stays `bold` — `size-3.5` < `size-5` (§3.2). */}
+                            font-size 1:1 of `text-sm` → `size-3.5`. Weight stays `bold` —
+                            `size-3.5` < `size-5`. */}
                         <CaretDownIcon
                             className={cn("size-3.5 shrink-0 transition-transform", open && !isSkeleton && "rotate-180")}
                             weight="bold"

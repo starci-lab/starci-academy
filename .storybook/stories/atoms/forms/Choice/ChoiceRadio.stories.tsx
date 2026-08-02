@@ -19,13 +19,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /**
  * ATOM — `ChoiceRadio`: ONE option row, label sits INLINE beside the dot (wraps HeroUI Radio).
  *
- * ⚠️ STATE SCOPE (confirmed by the mentor 2026-07-25): `ChoiceRadio` does NOT live
- * standalone — it must sit inside a radio-context. Helper text (`hint`) · error
- * (`errorMessage`) · required (`isRequired`) belong to the GROUP, so those states
- * live in the `ChoiceRadioGroup` story — NOT repeated here (§12f). This story only
- * keeps states that come FROM the option row itself.
+ * ⚠️ STATE SCOPE: `ChoiceRadio` does NOT live standalone — it must sit inside a
+ * radio-context. Helper text (`hint`) · error (`errorMessage`) · required
+ * (`isRequired`) belong to the GROUP, so those states live in the `ChoiceRadioGroup`
+ * story — NOT repeated here. This story only keeps states that come FROM the option
+ * row itself.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). The leaf set covers every prop with a VISUAL shape
+ * 📐 **1 PROP = 1 LEAF**. The leaf set covers every prop with a VISUAL shape
  * on this component: selected or not (`Default`/`Selected`, driven by the group's
  * `value` matching) · `isDisabled` (`Disabled`) · `isSkeleton` (`Loading`).
  * `value`/`label`/`className` get no leaf of their own (`value`/`label`
@@ -36,14 +36,9 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * scaffolding for the story to have a radio-context, NOT how it's used in the app.
  *
  * ⭐ DEPS: this atom wraps HeroUI Radio directly — it doesn't build on any other atom
- * with its own story, so it has NO `annotate` prop (§12g: "a leaf atom that wraps
- * HeroUI directly ⇒ deps is EMPTY"). `Control`/`Label` in the DOM are internal slots
+ * with its own story, so it has NO `annotate` prop (a leaf atom that wraps HeroUI
+ * directly ⇒ deps is EMPTY). `Control`/`Label` in the DOM are internal slots
  * of this option row itself.
- *
- * MIGRATED TO THE `states[]` API (mentor's call, 2026-07-27, canon §8): each leaf
- * here originally rendered just ONE variant, so each leaf now has EXACTLY one
- * `states` entry — only the container for `why`/`code`/`render` changed, not the
- * shape.
  *
  * ✍️ Text shown on the panel (`leaf`/`reason`/`why`/`code`), demo labels inside
  * the render frame, and all JSDoc/comments are written in ENGLISH.

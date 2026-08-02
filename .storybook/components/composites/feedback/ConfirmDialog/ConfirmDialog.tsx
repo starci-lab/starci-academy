@@ -84,7 +84,7 @@ export const ConfirmDialog = ({
             <AlertDialog.Backdrop>
                 <AlertDialog.Container size="sm">
                     <AlertDialog.Dialog className={cn(classNames)}>
-                        {/* No status icon — text-only; layout UNCHANGED (heading/body left, footer right) — teacher confirmed 2026-07-23. */}
+                        {/* No status icon — text-only; heading/body left, footer right. */}
                         <AlertDialog.Header>
                             <AlertDialog.Heading>{title}</AlertDialog.Heading>
                         </AlertDialog.Header>

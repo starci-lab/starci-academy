@@ -173,10 +173,9 @@ const SLOT_ROW_ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * Leaf props `leading`/`trailing` — ADDED 2026-08-01, additive: a second row,
- * independent of `label`/`showValue`, for callers that need a COMPONENT
- * instead of plain text above the track. Omitted (default), no such row
- * renders and every other leaf on this page is unaffected.
+ * Leaf props `leading`/`trailing` — a second row, independent of `label`/`showValue`,
+ * for callers that need a COMPONENT instead of plain text above the track. Omitted
+ * (default), no such row renders and every other leaf on this page is unaffected.
  */
 export const SlotRow: Story = {
     render: () => (

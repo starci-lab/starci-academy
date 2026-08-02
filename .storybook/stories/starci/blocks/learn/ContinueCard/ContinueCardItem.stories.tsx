@@ -34,15 +34,9 @@ type Story = StoryObj<typeof ContinueCardItem>
 /** Canvas padding only — the card's own width goes through `renderClassName`. */
 const frame = (node: React.ReactNode) => <div data-tier="fixture" className="p-8">{node}</div>
 
-// ⭐ 2026-07-27 (deep-scan from the `CourseContents` screen): this tree PREVIOUSLY described a
-// DEAD structure — `HighlightCard` (now the `isHighlight` prop on `SurfaceCard`) · `SectionCard`
-// (now `SurfaceCard`) · `Typography.Title`/`Typography.Subtitle` (now parts named `Title`/`Subtitle`).
-// None of those names are still emitted by the DOM, so the panel drew a tree that NEVER
-// matched what was actually rendering.
-//
 // `Chip` STILL sits under `ListMeta` even though `ListMeta` has its own story: the chip
 // is built by `ContinueCard` ITSELF and placed into the `chip` slot — a child of the PARENT, the
-// DOM just happens to nest it there (§11a.1). Conversely, `ListMeta`'s own insides are NOT
+// DOM just happens to nest it there. Conversely, `ListMeta`'s own insides are NOT
 // declared here.
 //
 // The real DOM: a FLAT `SurfaceCard` (the `.Item` version does NOT turn on `isHighlight` — it's
@@ -54,8 +48,7 @@ const ITEM_PARTS: Array<AnatomyNode> = [
         role: "FLAT card surface — holds the info plus the CTA row",
         storyId: "composites-cards-surfacecard-surfacecard--default",
         children: [
-            // ⭐ 2026-07-27: two `layouts`-tier frames are now PRESENT in the tree — before,
-            // this cluster was a hand-typed `<div className="flex …">` so the panel had nothing to point at.
+            // Two `layouts`-tier frames are PRESENT in the tree.
             {
                 name: "StackH",
                 tier: "frame",
@@ -102,12 +95,11 @@ const ERROR_PARTS: Array<AnatomyNode> = [
 ]
 
 /**
- * The `isSkeleton` leaf's own whitelist — hand-flattened from `ITEM_PARTS` (§11f: same
+ * The `isSkeleton` leaf's own whitelist — hand-flattened from `ITEM_PARTS` (same
  * composition, only DIFFERENT because `LinkSeeMore` has no `isSkeleton` shape of its own
  * yet, so `.Item` builds the CTA's shimmer bar directly with raw HeroUI `Skeleton`).
  *
- * ⚠️ 2026-07-28 (orphan-part gate, same fix as `ContinueCardHero.Progress`'s own
- * `SKELETON_ANNOTATE`): a `tier: "heroui"` entry only registers with
+ * A `tier: "heroui"` entry only registers with
  * `scripts/check-orphan-parts.mjs` — and only ADMITS into the panel's tree, per
  * `BlockAnatomy`'s own `storyId || tier === "heroui"` rule — as a flat `"Name": { … }`
  * record, not as a `{ name: "Skeleton", tier: "heroui" }` node nested inside the `parts`
@@ -123,7 +115,7 @@ const ITEM_SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the \"Continue →\" CTA — `LinkSeeMore` has no `isSkeleton` shape of its own yet, so `.Item` builds this shimmer bar directly, matching the label's text size" },
 }
 
-/** The loaded item card — one representative (grid is the consumer's concern). Migrated to `states` 2026-07-27. */
+/** The loaded item card — one representative (grid is the consumer's concern). */
 export const Content: Story = {
     render: () =>
         frame(
@@ -158,9 +150,8 @@ export const Content: Story = {
 
 /**
  * STATE isSkeleton — mirror shimmer via the component's OWN `isSkeleton` prop.
- * Same COMPOSITION as the loaded item leaf (§11f: state, not structure) — reuses
- * the same tree as `ITEM_PARTS`, no hand-rolled skeleton tree. Migrated to `states`
- * 2026-07-27.
+ * Same COMPOSITION as the loaded item leaf (state, not structure) — reuses
+ * the same tree as `ITEM_PARTS`, no hand-rolled skeleton tree.
  */
 export const Skeleton: Story = {
     render: () =>
@@ -198,7 +189,7 @@ export const Skeleton: Story = {
         ),
 }
 
-/** Network drop — error rendered INSIDE the card frame (not a blank card). Migrated to `states` 2026-07-27. */
+/** Network drop — error rendered INSIDE the card frame (not a blank card). */
 export const LoadError: Story = {
     render: () =>
         frame(

@@ -26,11 +26,10 @@ export default meta
 type Story = StoryObj<typeof FormSection>
 /**
  * Only `Typography` is declared — the one REAL component this shell has its
- * own story to point to. The shell no longer badges `Header`/`Body`
- * (2026-07-28, §11a.1 CASE 2/3): `Header` is just a div gathering
- * title+description that the two `Typography` nodes below already say in
- * full, and `Body` wraps whatever field the caller passes in — neither has
- * ONE fixed component to point to, so the component dropped both badges;
+ * own story to point to. The shell does not badge `Header`/`Body`:
+ * `Header` is just a div gathering title+description that the two
+ * `Typography` nodes below already say in full, and `Body` wraps whatever
+ * field the caller passes in — neither has ONE fixed component to point to.
  * `Typography` surfaces as a top-level node instead of a child of `Header`.
  */
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [

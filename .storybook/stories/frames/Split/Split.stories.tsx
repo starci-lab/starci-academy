@@ -32,7 +32,7 @@ const lessonMeta = (
     </>
 )
 
-// No `Start`/`End` anatomy nodes (2026-07-28): the two sides are CALLER slots — whatever they
+// No `Start`/`End` anatomy nodes: the two sides are CALLER slots — whatever they
 // wrap belongs to whoever passed it in (`Typography`, `Button`, a `StackV`…), not to
 // this frame's own anatomy, and no component sits behind either name for a reader to click
 // through to. The `reason` prose below already explains the min-w-0/shrink-0 split in words.

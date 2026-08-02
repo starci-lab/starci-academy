@@ -90,8 +90,7 @@ const PENDING_ITEMS: Array<ChallengeDeliverableItem> = BASE_ITEMS.map((item) =>
 )
 
 /**
- * AUDIT 2026-07-30 (round-15): three states that `.artifacts/domain/challenge-and-milestone.md`
- * §3 lists as MUST-DRAW were missing from the render. Grading runs in the
+ * Grading runs in the
  * BACKGROUND, so a row has to hold up under all four job branches; these are
  * the two most worth seeing — in progress and failed.
  */

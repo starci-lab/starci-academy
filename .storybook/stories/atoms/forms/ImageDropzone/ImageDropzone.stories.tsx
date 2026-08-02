@@ -14,26 +14,23 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /**
  * ATOM — `ImageDropzone`: the system's drop/pick zone for a SINGLE image.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — the ATOM-tier rule). Props that produce a shape:
+ * 📐 **1 PROP = 1 LEAF**. Props that produce a shape:
  * `hint` (format/size guidance line), `icon` (swaps the center glyph), and
  * `isDragActive` (pins the drag state from outside). `label` is always present,
  * already shown in `Default`. `onFile`, `className` don't produce
  * a shape, so they have no leaf.
  *
- * Fixed 2026-07-26 (part of the first atom-cleanup pass):
- *   • Leaf `Icon` changed its call site from `icon={<CameraIcon />}` (a node) to
- *     `icon={CameraIcon}` (a component) — the atom forces its own size (`size-8`),
- *     and since `size-8 ≥ size-5` (§5.0a) it does NOT pass `weight`, leaving the
- *     glyph at its default `regular` stroke (unlike Chip, whose `size-3` forces
- *     `bold`).
- *   • NEW leaf `DragActive` — previously the solid border + background tint + the
- *     icon/label color change while dragging a file over the box was INTERNAL
- *     state of `useDropzone`, with no leaf able to force it. The atom now accepts
- *     `isDragActive?: boolean` to pin it from outside (leaving it unset keeps the
- *     old behavior unchanged).
+ *   • Leaf `Icon` passes `icon={CameraIcon}` (a component, not a node) — the atom
+ *     forces its own size (`size-8`), and since `size-8 ≥ size-5` it does NOT
+ *     pass `weight`, leaving the glyph at its default `regular` stroke (unlike
+ *     Chip, whose `size-3` forces `bold`).
+ *   • Leaf `DragActive` — the atom accepts `isDragActive?: boolean` to pin the
+ *     solid border + background tint + icon/label color change (the drag-over
+ *     state) from outside; leaving it unset keeps the internal `useDropzone`
+ *     behavior.
  */
 
-/** Copy shown at the top of the autodocs page. On-screen text is written in ENGLISH (teacher finalized 2026-07-26). */
+/** Copy shown at the top of the autodocs page. On-screen text is written in ENGLISH. */
 const IMAGE_DROPZONE_DOC = `
 ## What it takes
 

@@ -63,10 +63,9 @@ const Frame = ({ width, label, children }: FrameProps) => (
 
 /** The eight VALID steps of `AllowedGap` — `gap` is a literal union so there's no ninth step. */
 /**
- * 2026-08-01 (wave-3 numeric-scale migration): the old six-word union is gone with no
- * deprecated stage, so the state name now leads with the STEP NUMBER — the number is the
- * whole vocabulary a reader has. The sentence from `gap.md` rides along so a wrong step is
- * still checkable against something other than taste.
+ * The state name leads with the STEP NUMBER — the number is the whole vocabulary a reader
+ * has. The sentence from `gap.md` rides along so a wrong step is still checkable against
+ * something other than taste.
  */
 const SCALE = [
     { gap: 1, relation: "must touch — one thing is part of the other, not beside it" },

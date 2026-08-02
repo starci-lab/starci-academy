@@ -43,10 +43,9 @@ const DIFFICULTY_MAP: Record<ChallengeDifficulty, EnumChipEntry> = {
 /**
  * Attempt status → chip presentation.
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): `failed` gets a
- * leading icon — a failed/not-passed verdict is a "universal" symbol (cross),
- * not decoration. `completed`/`inProgress` stay text-only; extend the day a
- * screen actually asks for their icon too, not preemptively.
+ * `failed` gets a leading icon — a failed/not-passed verdict is a "universal"
+ * symbol (cross), not decoration. `completed`/`inProgress` stay text-only; extend
+ * the day a screen actually asks for their icon too, not preemptively.
  */
 const STATUS_MAP: Record<ChallengeStatus, EnumChipEntry> = {
     completed: { color: "success", label: "Passed" },
@@ -104,16 +103,9 @@ const ChallengeHeader = ({
     status,
     isSkeleton = false,
 }: ChallengeHeaderProps) => {
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, teacher's final
-    // call on the still-open score-1 issue, round-3: "move the red one to the
-    // left, put the yellow one right next to it, then give these three an even
-    // gap" — then revised the order again: "chip on the left, plain text on
-    // the right"): dropped `justify="between"` + a two-tier nested StackH (which
-    // used to push score to the left edge and status/difficulty to the right
-    // edge) — merged into ONE row, all with the same `gap={3}`, sitting close
-    // together on the left, CHIPS FIRST (status, difficulty) then the score as
-    // plain text. Still dropped `prefixIcon={TrophyIcon}` (round-2) and kept the
-    // status-before-difficulty order (round-2).
+    // ONE row, all with the same `gap={3}`, sitting close together on the left:
+    // CHIPS FIRST (status, difficulty) then the score as plain text. No
+    // `prefixIcon={TrophyIcon}`, and status comes before difficulty.
     const metaRow = (
         <>
             {isSkeleton ? (

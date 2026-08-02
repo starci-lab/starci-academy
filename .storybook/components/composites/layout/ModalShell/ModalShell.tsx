@@ -127,12 +127,12 @@ const Base = ({
                     scroll={scroll}
                     size={size}
                 >
-                    {/* ⭐ The PARENT keeps the rhythm (teacher's call (a), 2026-07-27). The Dialog is
+                    {/* The PARENT keeps the rhythm. The Dialog is
                         ALREADY a flex, but with `rowGap: normal`, so the seam must be pushed by the
                         child itself via `mt-*!` — the `!` only overrides HeroUI's own CSS
                         (`.modal__header + .modal__body { mt-2 }`, `mt-5` before the footer), not to
                         compete with the parent.
-                        Now `gap-4` here + `mt-0!` on the child: ONE seam, ONE owner (§10a). */}
+                        `gap-4` here + `mt-0!` on the child: ONE seam, ONE owner. */}
                     <Modal.Dialog className={cn("gap-3", dialogClassName, classNames)}>
                         <Modal.CloseTrigger />
                         {header ? (

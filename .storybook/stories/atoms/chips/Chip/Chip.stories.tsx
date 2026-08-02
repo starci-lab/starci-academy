@@ -12,7 +12,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * Icon = Phosphor; the atom pins both the scale (`size-3`, matching the chip's text)
  * and the `weight`.
  */
-/** Guide shown at the top of the autodocs page. UI copy is written in ENGLISH (teacher's call, 2026-07-26). */
+/** Guide shown at the top of the autodocs page. UI copy is written in ENGLISH. */
 const CHIP_DOC = `
 ## Leading slot: icon, dot, or nothing
 A chip has one leading slot. Fill it only when the glyph says something the label cannot.
@@ -168,8 +168,7 @@ export const Icon: Story = {
  * glyph slot, differing only in how the colour is supplied (class token vs raw hex).
  * Splitting them into two leaves would just give two identical frames.
  *
- * Replaces the old `Chip.Dot` member (removed 2026-07-26): the dot isn't a different
- * chip shape.
+ * The dot isn't a different chip shape, so it is not a separate member.
  */
 export const Dot: Story = {
     render: () => (

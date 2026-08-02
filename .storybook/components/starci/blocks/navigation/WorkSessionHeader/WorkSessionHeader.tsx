@@ -105,9 +105,8 @@ const WorkSessionHeader = ({
             ) : null}
             <span className="flex-1" />
             {onFinish != null && finishLabel != null ? (
-                // AUDIT 2026-07-30 (QuizPage feedback, B2b): "END IT NOW" (line 20) is an
-                // action that ends the session mid-way — the teacher finalized `danger-soft`
-                // instead of the neutral `secondary` it used to have.
+                // "END IT NOW" (line 20) is an
+                // action that ends the session mid-way — uses `danger-soft`.
                 <Button label={finishLabel} variant="danger-soft" size="sm" onPress={onFinish} />
             ) : null}
         </>

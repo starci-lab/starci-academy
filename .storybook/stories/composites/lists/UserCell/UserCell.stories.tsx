@@ -75,21 +75,15 @@ type Story = StoryObj<typeof UserCell>
 /**
  * Shared DOM annotation table for every leaf.
  *
- * ⚠️ 2026-07-28 (naming pass): `UserCell` forwards `showAnatomy` straight
- * into the composed `Avatar` (no `anatPart` given to opaque it), so
- * `Avatar`'s OWN internal HeroUI nodes (`Avatar`/`AvatarImage`/
- * `AvatarFallback`) surface directly inside THIS tree — real names, `tier:
- * "heroui"`, no `storyId` (a library component has no story of ours to jump
- * to). The previous `Avatar` entry (`tier: "atom"`, `storyId` to Avatar's
- * own story) was itself mislabeled: that key was never matched by an opaque
- * "Avatar" wrapper (none exists here), only by AvatarBase's own inner
- * `Avatar` HeroUI node leaking through — so it needed `tier: "heroui"`, not
- * `"atom"`, and no `storyId`. Fixing the FORWARDING itself (passing `anatPart`
- * instead) is a structural change out of scope for a naming-only pass.
+ * `UserCell` forwards `showAnatomy` straight into the composed `Avatar`
+ * (no `anatPart` given to opaque it), so `Avatar`'s OWN internal HeroUI nodes
+ * (`Avatar`/`AvatarImage`/`AvatarFallback`) surface directly inside THIS tree
+ * — real names, `tier: "heroui"`, no `storyId` (a library component has no
+ * story of ours to jump to).
  *
- * `Name`/`Handle` renamed to `Typography` (the real component both
- * instances are, duplicate names allowed — the panel groups by DOM element).
- * `Skeleton` now covers all three shimmer bars (avatar circle + name + handle),
+ * `Name`/`Handle` are both `Typography` (the real component both instances
+ * are, duplicate names allowed — the panel groups by DOM element).
+ * `Skeleton` covers all three shimmer bars (avatar circle + name + handle),
  * since all three resolve to the same real HeroUI `Skeleton`. `Trailing` stays
  * OUT of `annotate` — it is a free slot the caller fills with ANY node, not a
  * fixed component with a real name.
@@ -118,7 +112,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 
-/** BARE leaf — no prop turned on: empty avatar (fallback), one name line, no handle/trailing. Migrated to `states` 2026-07-27. */
+/** BARE leaf — no prop turned on: empty avatar (fallback), one name line, no handle/trailing. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -141,7 +135,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `size` — TWO densities, rendering the FULL union. Migrated to `states` 2026-07-27. */
+/** Leaf prop `size` — TWO densities, rendering the FULL union. */
 export const Sizes: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -169,7 +163,7 @@ export const Sizes: Story = {
     ),
 }
 
-/** Leaf prop `handle` — a string grows a muted `@handle` line under the name. Migrated to `states` 2026-07-27. */
+/** Leaf prop `handle` — a string grows a muted `@handle` line under the name. */
 export const Handle: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -200,7 +194,7 @@ export const Handle: Story = {
 /** Trailing badge component (COMPOSITE-8): `UserCell` calls this itself and forwards `isSkeleton`. */
 const AdminBadge = () => <Chip tone="accent" text="Admin" />
 
-/** Leaf prop `trailing` — a free right-side slot, only grows when the caller names a component for it. Migrated to `states` 2026-07-27. */
+/** Leaf prop `trailing` — a free right-side slot, only grows when the caller names a component for it. */
 export const Trailing: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -245,10 +239,9 @@ export const Trailing: Story = {
 
 /**
  * Leaf prop `leadingIcon` — swaps the leading `Avatar` for a framed `IconTile`,
- * for rows led by a course/org/resource glyph rather than a person. ADDED
- * 2026-08-01, additive: omitted, every other leaf on this page renders `Avatar`
- * exactly as before — nothing about `username`/`handle`/`trailing`/`isOwnRow`
- * changes meaning.
+ * for rows led by a course/org/resource glyph rather than a person. When omitted,
+ * every other leaf on this page renders `Avatar` exactly as before — nothing about
+ * `username`/`handle`/`trailing`/`isOwnRow` changes meaning.
  */
 export const LeadingIcon: Story = {
     render: () => (
@@ -285,10 +278,8 @@ export const LeadingIcon: Story = {
 }
 
 /**
- * Leaf prop `isOwnRow` — NEW (phase 2, following the phase-1 codemod). Replaces
- * the now-deleted `nameClassName` back door: the caller no longer passes a raw
- * class string, it just flips a semantic flag and the atom itself switches
- * `Typography` to `color="accent"`. Migrated to `states` 2026-07-27.
+ * Leaf prop `isOwnRow` — the caller flips a semantic flag and the atom itself
+ * switches `Typography` to `color="accent"`.
  */
 export const OwnRow: Story = {
     render: () => (
@@ -318,15 +309,11 @@ export const OwnRow: Story = {
 }
 
 /**
- * Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c). Renders the FULL `size`
- * union (`sm`/`md`) to PROVE the phase-1 bug is fixed: the atom used to hard-code
- * the avatar shimmer at `size-9` regardless of `size`, so both rows came out
- * pixel-identical (an ATOM bug, not a story bug). Now `isSkeleton` delegates
- * straight to `Avatar isSkeleton size={size}`, so the circle changes with the
- * preset — and (phase 2, promotion) `Typography isSkeleton` covers both text
- * lines, replacing the bare HeroUI `Skeleton` used before (COMPOSITE-10).
- * Migrated to `states` 2026-07-27 — each size is its own state so the reader can
- * flip between the two and see the circle change.
+ * Leaf prop `isSkeleton` — shimmer CO-LOCATED. Renders the FULL `size` union
+ * (`sm`/`md`): `isSkeleton` delegates straight to `Avatar isSkeleton size={size}`,
+ * so the circle changes with the preset, and `Typography isSkeleton` covers both
+ * text lines. Each size is its own state so the reader can flip between the two and
+ * see the circle change.
  */
 export const Skeleton: Story = {
     render: () => (

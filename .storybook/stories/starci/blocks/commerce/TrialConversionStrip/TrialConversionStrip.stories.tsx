@@ -50,10 +50,7 @@ const SAMPLE_PRICE: TrialConversionStripPrice = {
 
 // Header cluster — IconTile + a two-line Typography pair — is SHARED by every leaf below
 // (only the price section + CTA differ), so it is one constant reused across the parts trees.
-// ⭐ 2026-07-27 (teacher: "layout is built from layouts components"): this block used to
-// draw its own surface (`rounded-3xl bg-surface p-5 shadow-surface`) + three hand-rolled
-// flex `div`s. It now goes through `SurfaceCard` ⊃ `StackV` ⊃ (`StackH` · `Split`) —
-// and the tree must SAY so, otherwise the reader still thinks this is a hand-rolled div.
+// This block goes through `SurfaceCard` ⊃ `StackV` ⊃ (`StackH` · `Split`).
 const SURFACE: AnatomyNode = {
     name: "SurfaceCard",
     tier: "composite",
@@ -137,10 +134,7 @@ const LOADING_PARTS: Array<AnatomyNode> = framed([
 // sibling below owning scarcity (orthogonal urgency, per PhaseScarcityNote's own doc).
 const LOADED_PARTS: Array<AnatomyNode> = framed([
     { name: "PriceTagProminent", tier: "block", role: "amount due + struck-through original price + savings chip", storyId: "starci-blocks-commerce-pricetag--with-discount" },
-    // 2026-07-27: `PhaseScarcityNote` now HAS `anatPart` so it can merge into ONE node.
-    // Before, it lacked that prop ⇒ the root emitted no `data-anat-part` ⇒ the amber
-    // text line vanished from the tree even though it still rendered, while its four
-    // internal spans leaked out as separate siblings.
+    // `PhaseScarcityNote` HAS `anatPart` so it can merge into ONE node.
     { name: "PhaseScarcityNote", tier: "block", role: "seats left in the current phase + the price it rises to", storyId: "starci-blocks-commerce-phasescarcitynote-phasescarcitynote--default" },
     { name: "Button", tier: "atom", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button--default" },
 ])
@@ -150,8 +144,7 @@ const LOADED_PARTS: Array<AnatomyNode> = framed([
  * depend on the price, so they render at once and the two shimmer bars stand exactly where
  * PriceTag + PhaseScarcityNote will land, which is what keeps the layout from jumping.
  *
- * Export renamed from `PriceLoading` (2026-07-27): a leaf is named after the TRUC it draws,
- * and the prop is `isSkeleton` at every tier.
+ * A leaf is named after the TRUC it draws, and the prop is `isSkeleton` at every tier.
  */
 export const Skeleton: Story = {
     render: () =>

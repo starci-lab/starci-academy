@@ -145,12 +145,6 @@ export const Required: Story = {
 /**
  * Leaf prop `value` — the trigger's shape follows where the data stands: empty
  * shows the muted `placeholder`, a value shows the picked option's own label.
- *
- * ⚠️ Renamed 2026-07-26: this leaf used to be called `Labeled` and carried `label`
- * too — but `label` already had a home in the `WithLabel` leaf, so two leaves were
- * showing off the same prop (§12g: one prop, one leaf). Dropped `label` from here,
- * returning the leaf to the prop it actually owns, `value`. `isDisabled` was also
- * split off into its own `Disabled` leaf the same day, for the same reason.
  */
 export const Value: Story = {
     render: () => {

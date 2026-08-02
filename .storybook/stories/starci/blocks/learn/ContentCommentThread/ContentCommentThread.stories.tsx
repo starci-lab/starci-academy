@@ -177,7 +177,7 @@ export const Editing: Story = {
     ),
 }
 
-/** LEAF — replying: `currentUser` gives the reply composer its own avatar, joined by `ThreadConnector`'s curved guide (teacher, 2026-07-29, Facebook-style nested reply). */
+/** LEAF — replying: `currentUser` gives the reply composer its own avatar, joined by `ThreadConnector`'s curved guide. */
 export const Replying: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

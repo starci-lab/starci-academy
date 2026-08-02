@@ -54,9 +54,7 @@ export const Default: Story = {
 
 /**
  * Leaf prop `placeholder` — ghost text only shows while the field is empty, so this
- * leaf must set `value=""`. Before 2026-07-26 `placeholder` was folded into the
- * `Default` leaf, whose field already held a password, so the ghost text NEVER showed,
- * a prop with a real shape that no leaf actually exposed (§12g).
+ * leaf must set `value=""`.
  */
 export const Placeholder: Story = {
     render: () => {

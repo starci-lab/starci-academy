@@ -19,18 +19,14 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * COMPOSITE — `ChoiceRadioGroup`: a pick-one group, built from `options` DATA (wraps
  * HeroUI RadioGroup + loops `ChoiceRadio` for each option).
  *
- * Moved out of `atoms/forms/Choice/Choice.tsx` 2026-07-31 (ATOM-8 — rebuilding one
- * `ChoiceRadio` per entry is the composite signal, not the atom one). Same shape,
- * same states; only the tree and the `annotate` wiring changed.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g). The full leaf set for props WITH a visual: picked
+ * 📐 **1 PROP = 1 LEAF**. The full leaf set for props WITH a visual: picked
  * or not (`Default`/`Selected`, driven by `value`) · `groupLabel` (`WithLabel`) ·
  * `hint` (`WithHint`) · `isRequired` (`Required`) · `isDisabled` (`Disabled`) ·
  * `errorMessage` (`Error`) · `isSkeleton` (`Loading`). `options`/`onValueChange`/
  * `ariaLabel`/`skeletonRows`/`classNames` get no leaf of their own.
  *
- * ⛔ DON'T repeat the state of EACH ROW (`ChoiceRadio`'s own Disabled/Loading —
- * §12f): locking a single option or skeleton-ing one lone row belongs in the
+ * ⛔ DON'T repeat the state of EACH ROW (`ChoiceRadio`'s own Disabled/Loading):
+ * locking a single option or skeleton-ing one lone row belongs in the
  * `ChoiceRadio` story.
  *
  * ✍️ Text shown on the panel (`leaf`/`reason`/`why`/`code`) and demo labels in the

@@ -153,16 +153,15 @@ const ChallengeBrief = ({
     const showOutputs = isSkeleton || (outputs?.length ?? 0) > 0
     const showHint = isSkeleton || trimmedHint.length > 0
 
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-3, teacher's final call): prerequisites/
-    // outputs render PLAIN TEXT, not through markdown — this reverses the round-2 decision (which
-    // once matched `src/ChallengeView` to keep inline-code). The backend content-authoring schema
-    // (`.claude/docs/rules/fullstack/challenges.md` §3: "outputs/prerequisites are lang+TEXT only")
-    // names its field quite differently from requirements/steps (lang+title+BODY, which allows
-    // markdown/callout `:::muted`) — "text" vs "body" is a DELIBERATE boundary at the content
-    // tier, not an arbitrary one. `.storybook` is the blueprint, and gets to lead `src` whenever
-    // the teacher finalizes a revised decision. `stripMarkdown` guards at the render boundary:
-    // content authors may still habitually type backtick/bold, but the rendered text must come
-    // out completely clean — not just a different render mechanism, but the literal characters too.
+    // prerequisites/outputs render PLAIN TEXT, not through markdown. The backend
+    // content-authoring schema (`.claude/docs/rules/fullstack/challenges.md`:
+    // outputs/prerequisites are lang+TEXT only) names its field quite differently
+    // from requirements/steps (lang+title+BODY, which allows markdown/callout
+    // `:::muted`) — "text" vs "body" is a DELIBERATE boundary at the content tier,
+    // not an arbitrary one. `stripMarkdown` guards at the render boundary: content
+    // authors may still habitually type backtick/bold, but the rendered text must
+    // come out completely clean — not just a different render mechanism, but the
+    // literal characters too.
     const prerequisiteItems: Array<SurfaceCardListItem> = isSkeleton
         ? skeletonListRows(PREREQUISITE_SKELETON_ROWS, "prereq-skeleton")
         : (prerequisites ?? []).map((item) => ({
@@ -194,29 +193,24 @@ const ChallengeBrief = ({
         body: markdownBody(item.body),
     }))
 
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-12, teacher's final call: "the hint should
-    // render as a SurfaceCard with a label, drop the lightbulb icon" then "why is this a
-    // SurfaceCardList instead of rendering a SurfaceCard and just putting the text in? it doesn't
-    // need to be a list"): SHAPE CHANGED ENTIRELY, in two passes.
+    // A BARE `SurfaceCard`, `label="Hint"`, with content as ONE markdown paragraph
+    // as `children`.
     //
-    // Before: bare `SurfaceCardAccordion` (no `label`), a single item carrying the title "Hint" +
-    // a lightbulb icon in `titleStart` — a straight port of `src`'s un-labelled hint accordion.
-    // Now: a BARE `SurfaceCard`, `label="Hint"`, with content as ONE markdown paragraph as `children`.
+    // Why NOT an accordion: adding `label="Hint"` to an accordion would show the
+    // word "Hint" TWICE (the card's header + the sole item's trigger) — an accordion
+    // item is forced to carry a title, it can't be left blank. The outer label
+    // already states what this is, so the show/hide behaviour loses its reason to
+    // exist.
     //
-    // Why NOT an accordion: keeping the accordion and adding `label="Hint"` would show the word
-    // "Hint" TWICE (the card's header + the sole item's trigger) — an accordion item is forced
-    // to carry a title, it can't be left blank. The outer label already states what this is, so
-    // the show/hide behaviour loses its reason to exist.
+    // Why NOT `SurfaceCardList`: a hint is ONE paragraph, not a list — an `items`
+    // array whose length is always 1 gets the data shape wrong from the start,
+    // dragging along a meaningless row-divider and `key`. A bare `SurfaceCard` takes
+    // `children` directly, matching the real amount of content.
     //
-    // Why NOT `SurfaceCardList` (the second fix pass, caught by the teacher): a hint is ONE
-    // paragraph, not a list — an `items` array whose length is always 1 gets the data shape
-    // wrong from the start, dragging along a meaningless row-divider and `key`. A bare
-    // `SurfaceCard` takes `children` directly, matching the real amount of content.
-    //
-    // The lightbulb icon was dropped per the teacher's direction: `label` is now a card header
-    // just like "Requirements"/"Expected outputs" — peer labels where only one carries an icon
-    // is an inconsistent rhythm, and the word "Hint" alone already carries enough meaning
-    // (icon §2a: only a universally recognised symbol earns its own glyph, not a plain-prose label).
+    // No lightbulb icon: `label` is a card header just like "Requirements"/"Expected
+    // outputs" — peer labels where only one carries an icon is an inconsistent
+    // rhythm, and the word "Hint" alone already carries enough meaning (only a
+    // universally recognised symbol earns its own glyph, not a plain-prose label).
 
     const sections = (
         <>

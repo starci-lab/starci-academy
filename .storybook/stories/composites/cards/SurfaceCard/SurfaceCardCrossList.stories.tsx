@@ -22,12 +22,10 @@ const row = (text: string) => text
 /**
  * ANATOMY IS PER-LEAF: each story wraps its own render in its own BlockAnatomy.
  *
- * 2026-07-26 (teacher): drop the `parts` prop entirely (the OLD road, `type
- * AnatomyNode`) — this khung's repeating `CrossListItem` leaf has no story of its
- * own, so it has no REAL `storyId`; under the panel's new whitelist rule (only
- * accepts entries with a clickable `storyId`), declaring `parts`/`annotate` here
- * would just create a "dep" that clicks nowhere. Drop the prop entirely instead of
- * declaring it empty.
+ * No `parts`/`annotate` here — this khung's repeating `CrossListItem` leaf has no
+ * story of its own, so it has no REAL `storyId`; under the panel's whitelist rule
+ * (only accepts entries with a clickable `storyId`), declaring them here would just
+ * create a "dep" that clicks nowhere.
  */
 export const Checks: Story = {
     render: () => (
@@ -158,14 +156,10 @@ export const NoMark: Story = {
     ),
 }
 /**
- * `variant` — surface-in-surface (§1a). `"surface"` (default) when rendered DIRECTLY
+ * `variant` — surface-in-surface. `"surface"` (default) when rendered DIRECTLY
  * on `bg-background`; `"nested"` (border instead of shadow) when this frame is
- * nested inside another surface (modal/drawer/panel).
- *
- * 2026-07-26 (teacher): merged from the old `Bordered` leaf (which only rendered
- * ONE value, `bordered=true`) into ONE `Variant` leaf rendering the full union side
- * by side — row composition doesn't change between the two values, only the outer
- * frame changes.
+ * nested inside another surface (modal/drawer/panel). Row composition doesn't
+ * change between the two values, only the outer frame changes.
  */
 export const Variant: Story = {
     render: () => (

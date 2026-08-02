@@ -292,7 +292,7 @@ const Labeled = ({
 
     return (
         // `as="section"` keeps the landmark tag while still routing the seam through the
-        // frame (§13z) — `Stack`'s `as` prop was added 2026-07-29 for exactly this case.
+        // frame — `Stack`'s `as` prop handles exactly this case.
         <StackV
             as="section"
             gap={4}
@@ -370,8 +370,8 @@ const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
                                     <React.Fragment key={index}>
                                         {/* The breathing room around the `·` comes from the whitespace
                                             IN the string itself, NOT a hand-typed `mx-1`: a child's own
-                                            margin is a two-owner seam (§10a), and the `check-padding`
-                                            gate catches exactly this spot (caught 2026-07-27). */}
+                                            margin is a two-owner seam, and the `check-padding`
+                                            gate catches exactly this spot. */}
                                         {index > 0 ? <span aria-hidden>{" · "}</span> : null}
                                         {item}
                                     </React.Fragment>

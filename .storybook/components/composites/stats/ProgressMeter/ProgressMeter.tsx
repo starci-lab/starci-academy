@@ -144,21 +144,19 @@ export const ProgressMeter = ({
             }
         />
     ) : null
-    // Two DIFFERENT jobs, so two boxes — a fix landed 2026-07-29 after the target pill
-    // measured 14px off the track's own midline (44 vs 58 on a 1280px viewport).
-    // One div was doing both: `pt-6` (24px, room for the floating label) and
-    // `flex h-5 items-center` (20px, the pill's reference frame) on the SAME element.
-    // Padding that exceeds the declared height forces the browser to grow the outer
-    // box to fit it (24px, not 20), and the two children then read TWO DIFFERENT
-    // origins on that grown box — the track (normal flow) starts AFTER the padding,
-    // at y=56, while the pill (`absolute top-1/2`) measures against the WHOLE padding
-    // box, landing at y=44. Nothing here was wrong on its own; stacking both jobs on
-    // one element is what broke the promise below.
-    // OUTER box owns the label's clearance only (`pt-6`, still the scale's first
-    // step that clears a `h-5`/20px obstacle — no exception, teacher 2026-07-27).
+    // Two DIFFERENT jobs, so two boxes. A single div doing both — `pt-6` (24px,
+    // room for the floating label) and `flex h-5 items-center` (20px, the pill's
+    // reference frame) on the SAME element — breaks: padding that exceeds the
+    // declared height forces the browser to grow the outer box to fit it (24px,
+    // not 20), and the two children then read TWO DIFFERENT origins on that grown
+    // box — the track (normal flow) starts AFTER the padding, at y=56, while the
+    // pill (`absolute top-1/2`) measures against the WHOLE padding box, landing at
+    // y=44.
+    // OUTER box owns the label's clearance only (`pt-6`, the scale's first step
+    // that clears a `h-5`/20px obstacle).
     // INNER box is `relative flex h-5 items-center` — the pill's containing block
     // AND the track's flex-center axis, both measured against the SAME 20px frame,
-    // so the `h-5` pill sits EXACTLY on the track midline again.
+    // so the `h-5` pill sits EXACTLY on the track midline.
     const trackSection = (
         <div className={cn(targetPercent !== null && targetLabel !== undefined && "pt-6")}>
             <div

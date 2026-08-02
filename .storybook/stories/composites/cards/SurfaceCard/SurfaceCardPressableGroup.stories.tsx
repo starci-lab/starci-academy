@@ -58,14 +58,8 @@ const shell = (node: ReactNode) => <div data-tier="fixture" className="p-8">{nod
  * HAS its own story (`SurfaceCard/Pressable`), so it declares `storyId` to jump
  * to it.
  *
- * 2026-07-27: the node's name changed from the role label `"Item"` to the real
- * component being rendered, `"SurfaceCard"` — same reasoning applies to
- * `"Grid"` → `"Grid"` below, the actual frame this wrapper builds.
- *
- * 2026-07-26 (teacher): switched from a hand-written `parts: Array<AnatomyNode>` array
- * to the `annotate: Record<string, AnatomyAnnotation>` table — the tree structure is
- * now inferred from the DOM (`data-anat-part` attached by the story itself below),
- * and the hand-declared part is now only the WHY.
+ * The tree structure is inferred from the DOM (`data-anat-part` attached by the
+ * story itself below), and the hand-declared part is only the WHY.
  */
 const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": {

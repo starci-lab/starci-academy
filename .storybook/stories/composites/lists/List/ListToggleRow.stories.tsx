@@ -27,7 +27,7 @@ type Story = StoryObj<typeof ListToggleRow>
  * description, one stacked node) and a trailing `Switch` — same two nodes across
  * every leaf, including `isSkeleton` (each swaps to its own mirror, same names).
  *
- * ⭐ 2026-07-27 — `Switch` renders straight from `@heroui/react` (no port of ours
+ * `Switch` renders straight from `@heroui/react` (no port of ours
  * wraps it), so it needs the `heroui` tier to show up in the tree at all: a `heroui`
  * node needs no `storyId`, the tier alone is what keeps the panel from hiding it.
  */

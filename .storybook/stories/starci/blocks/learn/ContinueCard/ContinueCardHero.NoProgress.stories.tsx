@@ -41,20 +41,14 @@ const noProgressBase = {
     onPress: () => {},
 }
 
-// ⭐ 2026-07-27 (deep-scan from the `CourseContents` screen): this tree USED TO describe
-// DEAD structure — `HighlightCard` (now the `isHighlight` prop on `SurfaceCard`) ·
-// `SectionCard` (now `SurfaceCard`) · `Typography.Title`/`Typography.Subtitle` (now parts
-// named `Title`/`Subtitle`). None of those names are emitted by the DOM anymore, so the
-// panel drew a tree that NEVER matched what was actually rendering.
-//
 // `Chip` STILL sits under `ListMeta` even though `ListMeta` has its own story: the
 // chip is built by `ContinueCard` ITSELF and placed into the `chip` slot — a child of the
-// PARENT, the DOM just happens to nest it in (§11a.1). Conversely, the INSIDE of
+// PARENT, the DOM just happens to nest it in. Conversely, the INSIDE of
 // `ListMeta` is NOT declared here.
 //
 // Real DOM: `SurfaceCard`(isHighlight) ⊃ Title · ListMeta(⊃ Chip) · Button.
 // NO `ProgressMeter` — its absence IS exactly the mark distinguishing this shape from the
-// Progress version (§11f).
+// Progress version.
 const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
@@ -62,9 +56,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
         role: "card surface, where `isHighlight` turns on the hero accent glow. The frame stays put across every state, so switching state never shifts the layout",
         storyId: "composites-cards-surfacecard-surfacecard--default",
         children: [
-            // ⭐ 2026-07-27: two frames from the `layouts` tier now APPEAR in the tree —
-            // before, this cluster was a hand-typed `<div className="flex …">`, so the
-            // panel had nothing to point at.
+            // Two frames from the `layouts` tier APPEAR in the tree.
             {
                 name: "StackH",
                 tier: "frame",

@@ -67,7 +67,7 @@ const MilestoneUpNextCard = ({
 
                 body={
                     <>
-                        {/* teacher 2026-07-29: back INSIDE the card face (not `SurfaceCard.label`,
+                        {/* Back INSIDE the card face (not `SurfaceCard.label`,
                             which sits OUTSIDE/above it) — a plain atom call, not raw CSS, so no
                             shape-tier violation either way; this is a visual placement call. */}
                         <Typography
@@ -78,11 +78,11 @@ const MilestoneUpNextCard = ({
                             text={eyebrow}
 
                         />
-                        {/* teacher 2026-07-29: real `UpNextCard` leaves `type` unset on its title
+                        {/* Real `UpNextCard` leaves `type` unset on its title
                             Typography, which defaults to HeroUI's `type="body"` = `text-base`
-                            (verify `typography.css` `.typography--body`) — `size="lg"` here was
-                            oversized. `weight="semibold"` (src) folds to `"medium"` at body
-                            scale per §9b, not `"bold"`. */}
+                            (verify `typography.css` `.typography--body`). `weight="semibold"`
+                            folds to `"medium"` at body
+                            scale, not `"bold"`. */}
                         <Typography
                             size="base"
                             weight="medium"

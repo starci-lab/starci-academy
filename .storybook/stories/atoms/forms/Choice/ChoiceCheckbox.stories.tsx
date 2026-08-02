@@ -19,28 +19,24 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * ATOM — `ChoiceCheckbox`: boolean tick box, label sits INLINE next to the box
  * (wraps HeroUI Checkbox).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — ATOM TIER law). Leaf set for props WITH their own
+ * 📐 **1 PROP = 1 LEAF** (ATOM TIER law). Leaf set for props WITH their own
  * shape: `isSelected` (`Default`/`Checked`) · `hint` (`WithHint`) · `isRequired`
  * (`Required`) · `isDisabled` (`Disabled`) · `errorMessage` (`Error`) · `isSkeleton`
  * (`Loading`). `label`/`onValueChange`/`className` don't produce a
  * shape of their own, so they get no leaf.
  *
  * ⭐ DEPS: this atom wraps HeroUI Checkbox directly — it doesn't build on top of
- * any other atom that has its own story, so it has NO `annotate` prop (§12g: "a
- * leaf atom that wraps HeroUI directly ⇒ deps is EMPTY, drop the prop entirely").
+ * any other atom that has its own story, so it has NO `annotate` prop (a
+ * leaf atom that wraps HeroUI directly ⇒ deps is EMPTY, drop the prop entirely).
  * `Control`/`Label` in the DOM are Checkbox's own internal slots; `Description`/
  * `Error` are slots of `FieldFrame` (an internal scaffold with no story of its
  * own) — none of them have a home to jump to.
  *
- * ⚠️ The States tab is REMOVED (teacher's call, 2026-07-26, second pass). Panel
- * keeps Deps · Code — this file has no Deps, so the panel is Code only.
+ * The panel keeps Deps · Code — this file has no Deps, so the panel is Code only.
  *
  * ✍️ Text shown in the panel (`leaf`/`reason`/`note`/`code`), the demo labels
  * inside the render frame, and this file's own JSDoc/comments are all written
  * in ENGLISH.
- *
- * MIGRATED TO `states` (2026-07-27): every leaf below has exactly one shape, so
- * each carries a single `states[]` entry.
  */
 const meta: Meta<typeof ChoiceCheckbox> = {
     title: "Atoms/Forms/Choice/ChoiceCheckbox",
@@ -53,7 +49,7 @@ export default meta
 
 type Story = StoryObj<typeof ChoiceCheckbox>
 
-/** Bare leaf — no prop turned on: unticked, no hint, no error. Migrated to `states` 2026-07-27. */
+/** Bare leaf — no prop turned on: unticked, no hint, no error. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -84,7 +80,7 @@ export const Default: Story = {
     },
 }
 
-/** Leaf prop `isSelected` — the shape when ticked (false = the Default leaf above). Migrated to `states` 2026-07-27. */
+/** Leaf prop `isSelected` — the shape when ticked (false = the Default leaf above). */
 export const Checked: Story = {
     render: () => {
         const Demo = () => {
@@ -114,7 +110,7 @@ export const Checked: Story = {
     },
 }
 
-/** Leaf prop `hint` — a secondary description line under the label, via the internal FieldFrame scaffold. Migrated to `states` 2026-07-27. */
+/** Leaf prop `hint` — a secondary description line under the label, via the internal FieldFrame scaffold. */
 export const WithHint: Story = {
     render: () => {
         const Demo = () => {
@@ -150,7 +146,7 @@ export const WithHint: Story = {
     },
 }
 
-/** Leaf prop `isRequired` — a `*` mark attached to the inline label. Migrated to `states` 2026-07-27. */
+/** Leaf prop `isRequired` — a `*` mark attached to the inline label. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -186,7 +182,7 @@ export const Required: Story = {
     },
 }
 
-/** Leaf prop `isDisabled` — locks the control, faded color. Migrated to `states` 2026-07-27. */
+/** Leaf prop `isDisabled` — locks the control, faded color. */
 export const Disabled: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -218,7 +214,7 @@ export const Disabled: Story = {
     ),
 }
 
-/** Leaf prop `errorMessage` — inline label + error border + red error line, via FieldFrame. Migrated to `states` 2026-07-27. */
+/** Leaf prop `errorMessage` — inline label + error border + red error line, via FieldFrame. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -254,7 +250,7 @@ export const Error: Story = {
     },
 }
 
-/** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c): square box + label bar. Migrated to `states` 2026-07-27. */
+/** Leaf prop `isSkeleton` — CO-LOCATED shimmer: square box + label bar. */
 export const Loading: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

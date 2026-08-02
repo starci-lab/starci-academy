@@ -55,7 +55,7 @@ export interface LeaderboardCategoryNavProps {
      * @deprecated pass `classNames` instead — a free string cannot be constrained.
      * Kept only for `LeaderboardPage`'s `@app-lg:hidden`: a responsive visibility
      * toggle, not a positioning class, so it falls outside `AllowedClassName`
-     * (ATOM-5 narrowing pass, 2026-07-31) and could not be converted.
+     * and could not be converted.
      */
     className?: string
     /** Extra classes on the row. Prefer this over `className`; the string form is going away. */

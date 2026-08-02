@@ -63,20 +63,17 @@ const MAX = 5 * 1024 * 1024
 /**
  * ATOM — `Dropzone`: the system's ONE AND ONLY drag-drop file box, hand-rolled
  * (deliberately NOT `FieldShell` — see the note in the component). It doesn't
- * compose any atom with its own story ⇒ LEAF ATOM, so it carries no `annotate`
- * (§12 — "a leaf atom wrapping HeroUI/hand-rolled directly drops the prop
- * entirely, never leaves it as `{}`"). `DropBox`/`ErrorMessage`/`Skeleton` are
- * just internal slots, not deps.
+ * compose any atom with its own story ⇒ LEAF ATOM, so it carries no `annotate`.
+ * `DropBox`/`ErrorMessage`/`Skeleton` are just internal slots, not deps.
  *
- * 📐 Leaf set per §12g — each leaf maps to ONE prop with visible shape: `file`
+ * 📐 Leaf set — each leaf maps to ONE prop with visible shape: `file`
  * (the box's content swaps from the hint to the file name), `errorMessage`
  * (red border + error line), `isSkeleton` (a mirror of the box before it's
  * ready). `hint` is always present, so it already lives on the bare leaf
  * (`Empty`) rather than getting its own leaf.
  *
- * Every leaf below carries EXACTLY one state in `states[]` (teacher's call on
- * layout C, 2026-07-27) — the atom tier still keeps 1 prop = 1 leaf, only the
- * render/why/code container changes.
+ * Every leaf below carries EXACTLY one state in `states[]` — the atom tier
+ * still keeps 1 prop = 1 leaf, only the render/why/code container changes.
  */
 
 /** Baseline: entering a form, the drop area shows the hint, no file picked yet. */

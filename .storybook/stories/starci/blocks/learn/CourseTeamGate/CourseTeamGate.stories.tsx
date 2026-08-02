@@ -86,8 +86,7 @@ export const Skeleton: Story = {
                         render: (
                             // No `anatPart` override here (unlike the `Warning` leaf above): this
                             // branch renders `Alert`, not `Callout` — hardcoding the
-                            // loaded leaf's name would tag the wrong component (caught while
-                            // applying the naming rule, 2026-07-27). Letting `showAnatomy` pick the
+                            // loaded leaf's name would tag the wrong component. Letting `showAnatomy` pick the
                             // name lets the component's own ternary resolve to whichever of the two
                             // it actually renders.
                             <CourseTeamGate

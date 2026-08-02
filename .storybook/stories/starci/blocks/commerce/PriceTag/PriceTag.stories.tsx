@@ -35,8 +35,7 @@ const TYPOGRAPHY_STORY = "atoms-text-typography-typography--plain"
 
 const AMOUNT: AnatomyNode = { name: "Typography", tier: "atom", role: "the amount to pay (bold), rendered alone when there is no discount to compare it against", storyId: TYPOGRAPHY_STORY }
 
-// ⭐ 2026-07-27 — the tree now reflects the real FRAME (teacher: "layout is built from
-// layouts components"): `StackV` (outer column) ⊃ `Cluster` (price row, baseline
+// The tree reflects the real FRAME: `StackV` (outer column) ⊃ `Cluster` (price row, baseline
 // aligned) ⊃ three elements, then the saving line is the column's second line.
 const STACK: AnatomyNode = { name: "StackV", tier: "frame", role: "the outer column that stacks the price row on top and the \"Save\" line beneath it", storyId: "frames-stack-stackv--default" }
 const CLUSTER = (items: Array<AnatomyNode>): AnatomyNode => ({
@@ -54,17 +53,12 @@ const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [
 
 /**
  * On-sale composition — amount + struck original + `−X%` chip → popover + saving line,
- * flattened by hand into the whitelist shape (§11a) INSTEAD OF a nested `parts` tree.
+ * flattened into the whitelist shape INSTEAD OF a nested `parts` tree.
  *
- * ⚠️ 2026-07-28 (orphan-part gate): the old nested `AnatomyNode` tree already carried
- * `Popover.Trigger`/`Popover.Content` at `tier: "heroui"`, but that SHAPE (a node inside
- * an array) is invisible to `scripts/check-orphan-parts.mjs` — the gate only recognises a
- * flat `"Name": { … }` record literal (the shape `annotate` already uses everywhere else
- * in this codebase, e.g. `Button`/`Avatar`/`Badge`). Flattened BY HAND here (not by
- * calling the tree's own flatten helper, which isn't exported) so the checker's regex can
- * actually see it — same first-occurrence-wins collapse the old `parts` tree already had
- * for the duplicate `Typography` name (original/saving-line drop to the amount's
- * role), so this is a rewrite of the SAME behaviour, not a new one.
+ * The whitelist shape is a flat `"Name": { … }` record literal — the one
+ * `scripts/check-orphan-parts.mjs` recognises (the shape `annotate` uses everywhere else,
+ * e.g. `Button`/`Avatar`/`Badge`). A first-occurrence-wins collapse handles the duplicate
+ * `Typography` name (original/saving-line drop to the amount's role).
  *
  * The "Popover" context wrapper itself is CUT from the tree — HeroUI's `PopoverRoot` is
  * just a context provider around react-aria's `DialogTrigger`, which renders NO DOM
@@ -81,10 +75,8 @@ const DISCOUNT_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": { tier: "atom", role: "the amount to pay (bold)", storyId: TYPOGRAPHY_STORY },
     "Popover.Trigger": { tier: "heroui", role: "the button that opens the popover (react-aria: role=button, aria-expanded/controls), the one interactive element in this cluster, wrapping the −X% chip" },
     "Chip": {
-        // Node name = the REAL name of the component (`Chip`), not a dead name:
-        // `StatusChip` was REMOVED on 2026-07-26 because it was just this chip with
-        // `tone` hardcoded. Tier is `atom` — the old badge showed "layout" because
-        // `primitive` was mis-declared.
+        // Node name = the REAL name of the component (`Chip`), not a dead name.
+        // Tier is `atom`.
         tier: "atom",
         role: "the \"−X%\" saving label (soft-success), just a label rather than a button itself",
         state: "success",
@@ -92,9 +84,7 @@ const DISCOUNT_ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
     "Popover.Content": { tier: "heroui", role: "the price-breakdown table" },
     "KeyValueList": {
-        // ⭐ 2026-07-27: the four "label ↔ value" rows used to be four hand-rolled
-        // `<div className="flex items-center justify-between gap-3">` plus a hand-drawn
-        // `border-t` for the total row. Now they go through the `KeyValueList`
+        // The four "label ↔ value" rows go through the `KeyValueList`
         // COMPOSITE — the "You pay" row uses `emphasis` so the EMPHASIS is decided by
         // the composite, the same across every price table.
         tier: "composite",

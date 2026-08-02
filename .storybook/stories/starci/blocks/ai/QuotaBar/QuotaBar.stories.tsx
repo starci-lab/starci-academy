@@ -7,13 +7,12 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * steps through a 3-tier ramp (accent ≤75% · warning >75% · danger >90%) as the
  * window fills up, with an optional reset-time caption underneath.
  *
- * Ported from `src`'s `components/modals/AiQuotaModal/QuotaBar` — two of these
- * stack inside `QuotaLane` (a 5-hour window, a 7-day window), which itself sits
- * inside the `AiQuotaModal` overlay (flagged elsewhere, not built this pass).
+ * Two of these stack inside `QuotaLane` (a 5-hour window, a 7-day window), which
+ * itself sits inside the `AiQuotaModal` overlay.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): the fill tone, the unit suffix, and the reset
- * caption are all DATA ⇒ states of one leaf. The caller flipping `isSkeleton`
- * is its own leaf, same convention as `RatingBar`/`PriceTag`.
+ * LEAF by STRUCTURE: the fill tone, the unit suffix, and the reset caption are all
+ * DATA ⇒ states of one leaf. The caller flipping `isSkeleton` is its own leaf, same
+ * convention as `RatingBar`/`PriceTag`.
  */
 const meta: Meta<typeof QuotaBar> = {
     title: "StarCi/Blocks/Ai/QuotaBar/QuotaBar",

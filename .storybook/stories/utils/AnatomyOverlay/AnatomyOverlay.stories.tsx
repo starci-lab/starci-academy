@@ -26,8 +26,7 @@ interface BoxProps {
     label: string
     /**
      * Tier colour of the overlay tag. Typed from {@link AnatomyTier} rather than a hand-listed
-     * union: the hand-listed one still said `primitive` after the tier split (2026-07-27) and
-     * only tsc caught it — a demo that hard-codes the tier names goes stale silently.
+     * union — a demo that hard-codes the tier names goes stale silently.
      */
     tier: AnatomyTier
     /** Content rendered inside the annotated box. */

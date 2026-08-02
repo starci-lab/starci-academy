@@ -65,11 +65,9 @@ export const Default: Story = {
 
 /**
  * Gaps — the REASON this frame exists: `gap` is REQUIRED and type-forced onto the eight-rung
- * `AllowedGap` scale, so a value like `gap={4.5}` or `gap={9}` is a COMPILE ERROR. 2026-08-01
- * (wave-3 numeric-scale migration): the old six-word union is gone with no deprecated stage,
- * and the number is now the whole vocabulary — every state below is titled by its step, with
- * the sentence from `gap.md` that earns it, so a wrong step is still checkable against
- * something other than taste.
+ * `AllowedGap` scale, so a value like `gap={4.5}` or `gap={9}` is a COMPILE ERROR. The number
+ * is the whole vocabulary — every state below is titled by its step, with the sentence from
+ * `gap.md` that earns it, so a wrong step is still checkable against something other than taste.
  */
 export const Gaps: Story = {
     render: () => (

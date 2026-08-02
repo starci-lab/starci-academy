@@ -31,9 +31,6 @@ type Story = StoryObj<typeof Alert>
  * covers both shimmer bars (title + description), same HeroUI import either way.
  * `Button` is the one node pointing to ANOTHER story of ours: the × button
  * is always built from it (the atom builds it itself, not a caller slot).
- *
- * ⚠️ 2026-07-28 (naming pass): renamed from role-words `Icon`/`Content`/`Title`/
- * `Description`/`Close` to the real component each node renders.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Alert.Indicator": {

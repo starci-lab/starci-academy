@@ -42,7 +42,7 @@ const COPYABLE_PARTS: Array<AnatomyNode> = [
     { name: "SnippetIcon", tier: "atom", role: "one-tap copy affordance next to the value, added ADDITIVELY 2026-08-01 via `copyable`", storyId: "atoms-display-snippeticon-snippeticon--default" },
 ]
 
-/** Default — muted label left, medium value right; `justify-between` holds both edges. Migrated to `states` 2026-07-27. */
+/** Default — muted label left, medium value right; `justify-between` holds both edges. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -69,7 +69,7 @@ export const Default: Story = {
     ),
 }
 
-/** WithHint — `hint` is a secondary line UNDER the label (condition/unit), tight gap-1 cluster. Migrated to `states` 2026-07-27. */
+/** WithHint — `hint` is a secondary line UNDER the label (condition/unit), tight gap-1 cluster. */
 export const WithHint: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -99,7 +99,7 @@ export const WithHint: Story = {
     ),
 }
 
-/** Emphasis — the EMPHASIS tier for the total row: label steps up to foreground medium, value to base bold. Migrated to `states` 2026-07-27. */
+/** Emphasis — the EMPHASIS tier for the total row: label steps up to foreground medium, value to base bold. */
 export const Emphasis: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -126,7 +126,7 @@ export const Emphasis: Story = {
 }
 
 /**
- * Leaf prop `copyable` — ADDED 2026-08-01, additive: default `false`, so an
+ * Leaf prop `copyable` — additive: default `false`, so an
  * existing row with no `copyable` renders exactly as every leaf above it. Only
  * when `true` does a `SnippetIcon` copy affordance mount beside the value.
  */

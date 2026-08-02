@@ -6,8 +6,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
 
 /**
  * DESIGN — a row of secondary "suggestion" chips OR a vertical ghost "menu" list,
- * both composing the base `Button`. Ported from 4 call-sites in `ContentAiChat`
- * that hand-rolled the same shape (leading bare icon + label, `justify-start
+ * both composing the base `Button` (leading bare icon + label, `justify-start
  * text-start`).
  *
  * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN

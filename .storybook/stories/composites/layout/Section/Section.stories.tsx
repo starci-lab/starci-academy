@@ -180,10 +180,8 @@ const GapSample = ({ gap, caption, }: GapSampleProps) => (
 
 /**
  * `gap`, the vertical rhythm between regions, forced onto the eight-rung `AllowedGap` scale
- * by a union literal. 2026-08-01 (wave-3 numeric-scale migration): the old six-word union is
- * gone with no deprecated stage, so every state below is titled by its step number — the
- * number is now the whole vocabulary a reader has — with the sentence from `gap.md` that
- * earns it riding along as the check against taste the word used to provide.
+ * by a union literal. Every state below is titled by its step number, with the sentence
+ * from `gap.md` that earns it riding along as the check against taste.
  */
 export const Gaps: Story = {
     render: () => (

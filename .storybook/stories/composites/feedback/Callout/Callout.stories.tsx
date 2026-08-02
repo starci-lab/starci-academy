@@ -183,8 +183,7 @@ export const WithBody: Story = {
 /**
  * `actionLabel`/`onAction` — a secondary CTA on the same row. The shell builds
  * the button ITSELF and applies its own skin per `status`; the caller only
- * supplies TEXT, never a `Button` (teacher confirmed 2026-07-25: a screen must
- * never hold an atom directly).
+ * supplies TEXT, never a `Button` (a screen must never hold an atom directly).
  */
 export const WithAction: Story = {
     render: () => (

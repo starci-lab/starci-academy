@@ -20,9 +20,8 @@ export default meta
 
 type Story = StoryObj<typeof AiQuotaLane>
 
-// Two calls of the SAME block, not a hand-drawn leaf of its own (teacher's call on 2026-07-29,
-// see AiQuotaLane's own file header) — the tree stops at `QuotaBar`'s real story instead
-// of listing the label row / bar / caption it used to hand-draw internally.
+// Two calls of the SAME block, not a hand-drawn leaf of its own — the tree stops at
+// `QuotaBar`'s real story instead of listing the label row / bar / caption internally.
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical track stacking the two QuotaBar blocks", storyId: "frames-stack-stackv--default" },
     "QuotaBar": { tier: "block", role: "one labelled rolling-window bar — the next-5-hours row or the this-week row, called twice with only the label/window swapped", storyId: "starci-blocks-ai-quotabar-quotabar--default" },

@@ -172,8 +172,7 @@ const renderInline = (text: string): ReactNode => {
  * (descriptions, captions, hints) where `MarkdownContent` (full react-markdown +
  * remark plugins, block elements) is overkill. NOT for `title`/headline fields —
  * a title identifies a block and stays plain (at most `` `backtick` `` code via
- * `Typography.parseInlineCode`), it never carries bold/italic/link (teacher's
- * final call, 2026-07-29, `markdown-tier-rules.html`).
+ * `Typography.parseInlineCode`), it never carries bold/italic/link.
  *
  * Renders ONLY a small inline subset (`code` · **bold** · _italic_ · `[link](url)` ·
  * line breaks) inside one house `Typography` ATOM, so it carries the house size

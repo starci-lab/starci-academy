@@ -17,7 +17,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
-/** BARE leaf — empty, type + Enter to add a tag. No token yet, so no Chip deps yet. Migrated to `states` 2026-07-27. */
+/** BARE leaf — empty, type + Enter to add a tag. No token yet, so no Chip deps yet. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -47,7 +47,7 @@ export const Default: Story = {
     },
 }
 
-/** Leaf for props `label` + `hint` — the label on top, description below the label. Migrated to `states` 2026-07-27. */
+/** Leaf for props `label` + `hint` — the label on top, description below the label. */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
@@ -77,7 +77,7 @@ export const WithLabel: Story = {
     },
 }
 
-/** Leaf for prop `isRequired` — a `*` mark after the label. Migrated to `states` 2026-07-27. */
+/** Leaf for prop `isRequired` — a `*` mark after the label. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -107,7 +107,7 @@ export const Required: Story = {
     },
 }
 
-/** Leaf for prop `value` filled — a few tokens, each one a `Chip` (a real dep). Migrated to `states` 2026-07-27. */
+/** Leaf for prop `value` filled — a few tokens, each one a `Chip` (a real dep). */
 export const Filled: Story = {
     render: () => {
         const Demo = () => {
@@ -137,7 +137,7 @@ export const Filled: Story = {
     },
 }
 
-/** Leaf for prop `isDisabled` — locks the box, dims the label; Chips still show but can't be removed. Migrated to `states` 2026-07-27. */
+/** Leaf for prop `isDisabled` — locks the box, dims the label; Chips still show but can't be removed. */
 export const Disabled: Story = {
     render: () => {
         const Demo = () => {
@@ -167,7 +167,7 @@ export const Disabled: Story = {
     },
 }
 
-/** Leaf for prop `errorMessage` — together with `label` → a red line + error border. Migrated to `states` 2026-07-27. */
+/** Leaf for prop `errorMessage` — together with `label` → a red line + error border. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -197,7 +197,7 @@ export const Error: Story = {
     },
 }
 
-/** Leaf for prop `isSkeleton` — the label mirrors onto the field-box skeleton. Migrated to `states` 2026-07-27. */
+/** Leaf for prop `isSkeleton` — the label mirrors onto the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

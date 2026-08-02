@@ -86,16 +86,11 @@ export const Default: Story = {
     ),
 }
 /**
- * `variant` — the first INDEPENDENT axis (§1a): `"surface"` (default) carries its
+ * `variant` — the first INDEPENDENT axis: `"surface"` (default) carries its
  * own background + shadow when sitting DIRECTLY on `bg-background`; `"nested"`
  * switches to a border when this surface sits INSIDE a parent surface that
  * ALREADY HAS a background (chat panel / bubble / modal / page card) — a shadow
- * is nearly invisible on that background. Merged from two old single-value
- * leaves (`Default` implying `surface`, `Bordered`) into ONE `Variant` leaf
- * rendering both side by side.
- *
- * 2026-07-26 (teacher): changed from `bordered?: boolean` (`bordered=true` →
- * `variant="nested"`).
+ * is nearly invisible on that background.
  */
 export const Variant: Story = {
     render: () => (
@@ -309,11 +304,7 @@ export const FreeBody: Story = {
  * `radius` — the second INDEPENDENT axis: `"3xl"` (default) is the standard for an
  * outer frame; `"xl"` drops the corner one tier for tight contexts (a chat
  * bubble), usually paired with `variant="nested"` (a radius concentric with the
- * parent bubble). Merged from two old single-value leaves (`Default` implying
- * `3xl`, `Compact`) into ONE `Radius` leaf rendering both side by side.
- *
- * 2026-07-26 (teacher): changed from `compact?: boolean` (`compact=true` →
- * `radius="xl"`).
+ * parent bubble).
  */
 export const Radius: Story = {
     render: () => (

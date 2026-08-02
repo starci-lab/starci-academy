@@ -47,17 +47,12 @@ const progressBase = {
 
 // The loaded "has-progress" shape — urgent/not-urgent SHARE this composition (only the chip TONE differs).
 //
-// ⭐ 2026-07-27 (deep-scan from the `CourseContents` screen): this tree used to describe a DEAD
-// structure — `HighlightCard` (now the `isHighlight` prop of `SurfaceCard`) ⊃ `SectionCard` (now
-// `SurfaceCard`) ⊃ `Typography.Title` (now a part named `Title`). None of those names are still
-// emitted by the DOM, so the panel drew a tree that NEVER matched what was actually rendering.
-//
-// The real DOM now: `SurfaceCard` (frame, `isHighlight` drives the hero glow) ⊃ Title ·
+// The real DOM: `SurfaceCard` (frame, `isHighlight` drives the hero glow) ⊃ Title ·
 // ListMeta(⊃ Chip) · ProgressMeter · Button.
 //
 // `Chip` STILL sits under `ListMeta` even though `ListMeta` has its own story: the chip is
 // built by `ContinueCard` ITSELF and dropped into the `chip` slot — it's a child of the parent,
-// the DOM just happens to nest it there (§11a.1). Conversely, `ListMeta`'s own insides are NOT
+// the DOM just happens to nest it there. Conversely, `ListMeta`'s own insides are NOT
 // declared here.
 const CONTENT_PARTS: Array<AnatomyNode> = [
     {
@@ -66,9 +61,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
         role: "The card surface; isHighlight turns on the hero accent glow, and the frame stays put across every state so switching state never shifts the layout.",
         storyId: "composites-cards-surfacecard-surfacecard--default",
         children: [
-            // ⭐ 2026-07-27: the two `layouts`-tier frames now SHOW UP in the tree — this
-            // cluster used to be a hand-rolled `<div className="flex …">`, so the panel
-            // had nothing to point at.
+            // The two `layouts`-tier frames SHOW UP in the tree.
             {
                 name: "StackH",
                 tier: "frame",
@@ -124,18 +117,17 @@ const ERROR_PARTS: Array<AnatomyNode> = [
 ]
 
 /**
- * The `isSkeleton` leaf's own whitelist — hand-flattened from `CONTENT_PARTS` (§11f: same
+ * The `isSkeleton` leaf's own whitelist — hand-flattened from `CONTENT_PARTS` (same
  * composition, only DIFFERENT because `ProgressMeter` has no `isSkeleton` shape of its own
  * yet, so `CardBody` builds the track's shimmer bar directly with raw HeroUI `Skeleton`).
  *
- * ⚠️ 2026-07-28 (orphan-part gate): a `tier: "heroui"` entry only registers with
+ * A `tier: "heroui"` entry only registers with
  * `scripts/check-orphan-parts.mjs` (and only ADMITS into the panel's tree, per
  * `BlockAnatomy`'s own `storyId || tier === "heroui"` rule) as a flat `"Name": { … }`
  * record — the exact shape `annotate` uses everywhere else in this codebase for a raw
  * HeroUI import. Nesting `{ name: "Skeleton", tier: "heroui" }` INSIDE the `parts` array
- * (as `CONTENT_PARTS` is written) renders fine at runtime, but the gate's regex can't see
- * it, so it stayed invisible in the tree with no error anywhere until the gate script
- * caught it. `parts={CONTENT_PARTS}` is switched to `annotate={SKELETON_ANNOTATE}` for
+ * renders fine at runtime, but the gate's regex can't see
+ * it, so it stays invisible in the tree with no error anywhere. `parts={CONTENT_PARTS}` is switched to `annotate={SKELETON_ANNOTATE}` for
  * JUST this one leaf — the two other leaves in this file (`NotUrgent`/`Urgent`) keep the
  * nested `parts` tree unchanged, since they never render the raw `Skeleton` bar.
  */

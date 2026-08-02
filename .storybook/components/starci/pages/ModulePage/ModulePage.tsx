@@ -103,10 +103,9 @@ export interface ModulePageProps {
 /**
  * Empty state — the module has no lessons yet.
  *
- * The frame and the content each carry THEIR OWN name (`CourseContents`'
- * precedent, 2026-07-27): the wrapping `Container` badges itself, the
- * `AsyncContentEmpty` inside badges itself too, so neither vanishes from the
- * anatomy tree wearing the other's name.
+ * The frame and the content each carry THEIR OWN name: the wrapping `Container`
+ * badges itself, the `AsyncContentEmpty` inside badges itself too, so neither
+ * vanishes from the anatomy tree wearing the other's name.
  */
 const ModulePageEmpty = () => (
     <Container

@@ -41,9 +41,8 @@ interface SeverityVisual {
 }
 
 /**
- * Severity → trigger icon + text tone + sort rank. Ported from `SubmissionResult`'s
- * `SEVERITY_VISUAL` table — this is the block's own domain vocabulary (§14d.1),
- * never something a caller hands in.
+ * Severity → trigger icon + text tone + sort rank. This is the block's own
+ * domain vocabulary, never something a caller hands in.
  */
 const SEVERITY_VISUAL: Record<SubmissionFeedbackSeverity, SeverityVisual> = {
     high: { icon: WarningCircleIcon, toneClassName: "text-danger", rank: 0 },
@@ -58,7 +57,7 @@ export interface SubmissionFinding {
     /**
      * Short summary shown (clamped to one line) in the accordion trigger — plain
      * text, at most `` `code` `` spans (never bold/italic/link: a trigger title
-     * is tier 1, per the teacher's final call 2026-07-29, markdown-tier-rules.html). Full markdown
+     * is tier 1). Full markdown
      * belongs in `detail`/`suggestion`, which render in the panel body instead.
      */
     message: string
@@ -105,9 +104,8 @@ const EMPTY_LABEL_DEFAULT = "No feedback yet"
 const ERROR_TITLE = "Could not load feedback"
 
 /**
- * High → low, then by each finding's own authored order. Ported from
- * `SubmissionResult`'s `sortedFeedbacks` memo — the block's own vocabulary, so a
- * caller never has to pre-sort what it hands in.
+ * High → low, then by each finding's own authored order. The block's own
+ * vocabulary, so a caller never has to pre-sort what it hands in.
  */
 const sortFindings = (findings: ReadonlyArray<SubmissionFinding>): Array<SubmissionFinding> =>
     [...findings].sort((a, b) => {

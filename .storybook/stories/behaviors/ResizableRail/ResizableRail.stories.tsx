@@ -156,10 +156,9 @@ const PracticeShellDemo = ({
     </div>
 )
 
-// No anatomy `parts` here (2026-07-28): the rail's body is a CALLER slot (`children`), not this
+// No anatomy `parts` here: the rail's body is a CALLER slot (`children`), not this
 // frame's own part, and the drag handle is internal geometry with no component/story of its own
-// to link a reader to — neither name is declared anywhere, so the badges only ever rendered into
-// the DOM invisibly. Both were dropped at the source in `ResizableRail.tsx`.
+// to link a reader to — neither name is declared anywhere.
 
 /** Default: search + topic ListBox rail beside a content pane. Drag the right-edge handle to resize. */
 export const Default: Story = {

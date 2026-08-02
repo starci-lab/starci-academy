@@ -47,7 +47,7 @@ type Story = StoryObj<typeof Logo>
  * leaf this atom has. The four states below are all the SAME shape,
  * differing only in height/background — proving the claim in the component
  * JSDoc: one fixed colour reads on both a light and a dark surface, with no
- * variant needed. Migrated to `states` 2026-07-27.
+ * variant needed.
  */
 export const Default: Story = {
     render: () => (

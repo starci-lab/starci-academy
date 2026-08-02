@@ -30,14 +30,13 @@ export default meta
 type Story = StoryObj<typeof Form>
 
 /**
- * The shell does NOT badge `Body`/`Actions` (2026-07-28, §11a.1 CASE 3): both
+ * The shell does NOT badge `Body`/`Actions`: both
  * wrap an ARBITRARY node the caller supplies (any field, or `actions` —
  * usually a `FormActions` but never enforced), so there is no ONE fixed
- * component for a panel link to point to — the component has dropped both
- * badges entirely. There is no part left that belongs to `Form` alone to
- * declare here; the REAL nodes that show up in the canvas below (e.g. the
- * `Typography` inside `FormSection`) already have a `storyId` declared in
- * `FormSection.stories.tsx`.
+ * component for a panel link to point to. There is no part left that belongs
+ * to `Form` alone to declare here; the REAL nodes that show up in the canvas
+ * below (e.g. the `Typography` inside `FormSection`) already have a `storyId`
+ * declared in `FormSection.stories.tsx`.
  */
 
 /** A real fixture field — the `Input.*` atom carries its OWN label/hint/required (§12e). */

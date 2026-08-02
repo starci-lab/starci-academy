@@ -29,10 +29,9 @@ export interface ToolbarTabItem {
     label: ReactNode
     /**
      * Set → shown INSTEAD of `label` below `@app-sm` (e.g. "TS" for "TypeScript"),
-     * `label` returns from `@app-sm` up — a deliberate call (teacher's ruling,
-     * 2026-07-29, "go by judgment, not by trusting the source"): a shortened tab beats collapsing the group
-     * behind `collapseRightOnMobile`'s dropdown when every option should stay
-     * reachable in one tap. Omit → unchanged (no compact swap).
+     * `label` returns from `@app-sm` up: a shortened tab beats collapsing the
+     * group behind `collapseRightOnMobile`'s dropdown when every option should
+     * stay reachable in one tap. Omit → unchanged (no compact swap).
      */
     compactLabel?: ReactNode
     /** Optional leading icon rendered before the label. */

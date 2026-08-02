@@ -29,12 +29,11 @@ interface PhaseScarcityNoteOwnProps {
     /** Extra classes on the root. */
     className?: string
     /**
-     * Anatomy tag for THIS line itself — lets the caller badge it as ONE node (§11a).
+     * Anatomy tag for THIS line itself — lets the caller badge it as ONE node.
      *
-     * ⭐ 2026-07-27: without this prop the root doesn't emit so
-     * when the caller (`TrialConversionStrip`) declares it as a dep, the node
-     * CAN'T enter the tree — the gold-colored line vanishes from the panel even
-     * though it still renders on screen. Worse: the four internal spans
+     * Without this prop the root doesn't emit, so when the caller (`TrialConversionStrip`)
+     * declares it as a dep, the node CAN'T enter the tree — the gold-colored line vanishes from
+     * the panel even though it still renders on screen. Worse: the four internal spans
      * (`WarningCircleIcon`/`SeatCountLine`/`Separator`/`PriceRiseClause`) leak
      * out as LOOSE siblings, reading like four sibling deps of the block.
      */
@@ -88,17 +87,14 @@ const PhaseScarcityNoteBase = ({
 
     return (
         // Color is set ON THE FRAME; text inside does NOT declare `color`, so it
-        // inherits `currentColor` — keeping the original's exact
-        // `warning-soft-foreground` tone.
+        // inherits `currentColor` — the exact `warning-soft-foreground` tone.
         //
-        // 2026-07-27 (teacher's call: "build layout out of frame components"):
-        // this used to be a hand-written `<div className="flex flex-wrap
-        // items-center gap-2">`. This row is ONE TRACK of N elements that wrap
-        // ⇒ exactly the definition of `Cluster`, and §13b requires repeated
-        // lists to go through `items` DATA (children are forbidden).
+        // This row is ONE TRACK of N elements that wrap ⇒ exactly the definition
+        // of `Cluster`, and repeated lists go through `items` DATA (children are
+        // forbidden).
         //
         // What's gained isn't "fewer classes" but that `gap` is now PINNED to
-        // the §10 scale BY TYPE: hand-written it's `gap-2` today, `gap-1.5`
+        // the scale BY TYPE: hand-written it's `gap-2` today, `gap-1.5`
         // tomorrow, nothing stops that.
         <Cluster
             gap={3}

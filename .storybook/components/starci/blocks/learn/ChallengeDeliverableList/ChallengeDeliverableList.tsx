@@ -38,15 +38,12 @@ export type ChallengeDeliverableVerdict = "pass" | "fail"
 /**
  * The last graded attempt's result for one requirement.
  *
- * ⭐ NO ITEMIZED FINDINGS HERE (teacher's call 2026-07-30, round-13: "here only
- * shortFeedback is enough"). This type used to carry
- * `feedback?: Array<ChallengeDeliverableFeedbackItem>` — message + severity +
- * location + suggestion per finding — and the panel rendered every one of them
- * inline. Measured against the real DB (`docker exec starci-postgres psql`): an
- * attempt can carry up to EIGHT findings × 3 text fields, so rendering them here
- * buried the submission form under two dozen lines. The itemized list belongs to
- * the dedicated result surface (`src`'s `SubmissionResult`, reachable from the
- * "View History" action right above); this panel keeps only the one-line summary.
+ * NO ITEMIZED FINDINGS HERE — only `shortFeedback`. An attempt can carry up to
+ * EIGHT findings × 3 text fields, so rendering them here would bury the
+ * submission form under two dozen lines. The itemized list belongs to the
+ * dedicated result surface (`src`'s `SubmissionResult`, reachable from the
+ * "View History" action right above); this panel keeps only the one-line
+ * summary.
  */
 export interface ChallengeDeliverableGrade {
     /** Pass/fail for this requirement's last attempt. */
@@ -58,8 +55,7 @@ export interface ChallengeDeliverableGrade {
     /**
      * Which numbered attempt this grade came from (1-based) — the learner may
      * have submitted more than once. GROUND TRUTH: backend
-     * `UserChallengeSubmissionAttemptEntity.attemptNumber` (AUDIT 2026-07-30,
-     * feedback ChallengePage/Graded round-11 — real field, not rendered yet).
+     * `UserChallengeSubmissionAttemptEntity.attemptNumber`.
      */
     attemptNumber?: number
     /**
@@ -72,11 +68,10 @@ export interface ChallengeDeliverableGrade {
     /**
      * One-line take on the WHOLE attempt — the ONLY feedback this panel shows
      * (see the type doc above on why the itemized findings live elsewhere).
-     * GROUND TRUTH: backend `UserChallengeSubmissionAttemptEntity.shortFeedback`
-     * (AUDIT 2026-07-30, round-9). Measured on 111 real attempt rows: this
-     * column is filled on ALL of them, never null — so in practice the panel
-     * always has something to reveal. Still optional in the type: a grading run
-     * that failed mid-way could leave it empty, and the panel must not break.
+     * GROUND TRUTH: backend `UserChallengeSubmissionAttemptEntity.shortFeedback`.
+     * In practice this column is filled on every attempt, but it stays optional
+     * in the type: a grading run that failed mid-way could leave it empty, and
+     * the panel must not break.
      */
     shortFeedback?: string
 }
@@ -89,11 +84,6 @@ export interface ChallengeDeliverableGrade {
  *
  * GROUND TRUTH: backend `JobStatus` (`src/modules/types/enums/job-status.ts`) —
  * all four members, spelled the same. Omit the prop when no job is in flight.
- * AUDIT 2026-07-30 (round-15): before this version the block only had `isPending`
- * (boolean), enough to lock the input field but UNABLE to express three of the
- * four branches — `.artifacts/domain/challenge-and-milestone.md` §3 lists both
- * "grading in progress" and "grading failed" as states that MUST BE DRAWN, and
- * the drawing was missing them.
  */
 export type ChallengeDeliverableJobStatus = "queued" | "processing" | "completed" | "failed"
 
@@ -169,13 +159,13 @@ export interface ChallengeDeliverableListProps {
 }
 
 /**
- * Status → the SAME icon-per-status mapping `SurfaceCard.CrossList` already owns
- * (teacher's call 2026-07-29): a "not decided yet / passed / failed" row is the same
- * shape as that composite's check/cross mark, missing only the neutral pending
- * case — extended there (`ListMark`/`MarkTone` gained `"pending"`/`"neutral"`)
- * rather than hand-rolled a second time here. `failed` passes `tone="danger"`
- * explicitly because `markIcon`'s own default for `cross` is `"muted"` (an
- * EXCLUDED row, not a FAILED one) — this block's `cross` always means failed.
+ * Status → the SAME icon-per-status mapping `SurfaceCard.CrossList` already owns:
+ * a "not decided yet / passed / failed" row is the same shape as that composite's
+ * check/cross mark, missing only the neutral pending case — extended there
+ * (`ListMark`/`MarkTone` gained `"pending"`/`"neutral"`) rather than hand-rolled a
+ * second time here. `failed` passes `tone="danger"` explicitly because `markIcon`'s
+ * own default for `cross` is `"muted"` (an EXCLUDED row, not a FAILED one) — this
+ * block's `cross` always means failed.
  */
 const STATUS_MARK: Record<ChallengeDeliverableStatus, ListMark> = {
     todo: "pending",
@@ -189,11 +179,10 @@ const STATUS_TONE: Record<ChallengeDeliverableStatus, MarkTone | undefined> = {
 }
 
 /**
- * Verdict wording — the block's own (§4: a caller passes `"pass" | "fail"`, never a string).
+ * Verdict wording — the block's own (a caller passes `"pass" | "fail"`, never a string).
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): `fail` gets a leading
- * icon (`EnumChipIcon`'s closed "check"/"cross" set, not a raw component — same
- * fix as `ChallengeHeader.STATUS_MAP.failed`). `pass` stays text-only for now.
+ * `fail` gets a leading icon (`EnumChipIcon`'s closed "check"/"cross" set, not a raw
+ * component — same as `ChallengeHeader.STATUS_MAP.failed`). `pass` stays text-only.
  */
 const VERDICT_MAP: Partial<Record<ChallengeDeliverableVerdict, EnumChipEntry>> = {
     pass: { color: "success", label: "Passed" },
@@ -265,19 +254,15 @@ const AUTOSAVE_LABEL: Record<ChallengeDeliverableAutosaveStatus, string> = {
  * Trailing trigger slot: points before an attempt, earned/required once
  * graded — never both.
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): removed
- * `color="muted"` from the graded branch — same reasoning as `ScoreValue.tsx`:
- * a number sitting right on an active `Accordion.Trigger` and carrying real
- * information ⇒ `default`, not `muted`. See `.artifacts/feedback/
- * 2026-07-29-challengepage-graded/round-1.md`.
+ * The graded branch is `default`, not `muted`: a number sitting right on an active
+ * `Accordion.Trigger` and carrying real information reads as `default` (same
+ * reasoning as `ScoreValue.tsx`).
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-7, "why don't these
- * 4 green ones share the same size"): added `weight="medium"` — without it
- * this branch falls back to the atom's default `font-normal`, while
- * `ScoreValue` (the branch below it, AND the same info-type "score" in
- * `ChallengeBrief`'s Requirements) is always `weight="medium"`. Same
- * `size="xs"` but a different weight reads as a different font size —
- * resynced so the same info-type shares one typeface treatment (§2d).
+ * `weight="medium"` is explicit — without it this branch falls back to the atom's
+ * default `font-normal`, while `ScoreValue` (the branch below it, AND the same
+ * info-type "score" in `ChallengeBrief`'s Requirements) is always `weight="medium"`.
+ * Same `size="xs"` but a different weight reads as a different font size — kept in
+ * sync so the same info-type shares one typeface treatment.
  */
 const scoreEnd = (item: ChallengeDeliverableItem) =>
     item.graded != null ? (
@@ -302,13 +287,12 @@ const triggerIcon = (item: ChallengeDeliverableItem) =>
 
 /** One requirement's panel: description → URL field → actions → the graded result once it exists. */
 const deliverableBody = (item: ChallengeDeliverableItem) => {
-    // AUDIT 2026-07-30 round-14 (teacher's call after a pushback): dropped `justify="end"` —
-    // everything else in the panel (description, URL field, verdict chip, "Latest feedback"
-    // trigger) hugs the left edge, only this button row drifted right so it read like it
-    // belonged to a different block. NOT using `flex-1`: the `src` anchor (`SubmissionRow`:
-    // primary `shrink-0` + secondary `min-w-0 flex-1`) makes the SECONDARY button wider than
-    // the PRIMARY one — inverted visual weight, teacher's call to drop it. Both buttons hug
-    // their own text, neither stretches.
+    // No `justify="end"` — everything else in the panel (description, URL field, verdict
+    // chip, "Latest feedback" trigger) hugs the left edge, so this button row hugs it too
+    // rather than drifting right and reading like a different block. NOT using `flex-1`:
+    // the `src` anchor (`SubmissionRow`: primary `shrink-0` + secondary `min-w-0 flex-1`)
+    // makes the SECONDARY button wider than the PRIMARY one — inverted visual weight. Both
+    // buttons hug their own text, neither stretches.
     const actions = (
         <>
             <Button
@@ -331,44 +315,34 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
     // Graded is a STATE of this same leaf (mirrors QuizQuestion's `verdict` toggle),
     // never a second component — see file header.
     //
-    // SHAPE SETTLED 2026-07-30 (feedback ChallengePage/Graded, rounds 8→13). Two lines
-    // only, and the trimming is the whole story:
+    // Two lines only:
     // · ONE meta row always shows — verdict Chip + "attempt #N · HH:mm dd/MM"
-    //   (`attemptNumber`/`processedAt`, a real field, confirmed living in Postgres via
-    //   `docker exec starci-postgres psql`).
+    //   (`attemptNumber`/`processedAt`, real fields).
     // · ONE `Disclosure` "Latest feedback" → opens onto `shortFeedback`, one sentence.
     //
-    // DROPPED on the way to this shape (recorded so nobody rebuilds them):
-    // · The sentence "Your latest attempt scored N/M. Minimum required: R." — N/M already
-    //   sits in the accordion row's own `titleEnd` right above (see `scoreEnd`) and the chip
-    //   already answers "passed or not"; that sentence restated the same fact across two
-    //   lines of text (round-13).
-    // · A per-line finding list (severity dot + message + location + suggestion) — measured
-    //   against the real DB: one attempt can carry up to EIGHT findings × 3 fields, so
-    //   building it here buried the submission form under two dozen lines. The detail
-    //   belongs to the dedicated result page (`src`'s `SubmissionResult`), reached from the
-    //   "View History" button right above (teacher's call: "here only shortFeedback is
-    //   enough").
-    // · A recursive accordion / colour-coded severity text + `|` separators (round 4-7) —
-    //   built before there was a real anchor for it.
+    // Not shown here: the full "scored N/M, minimum required R" sentence (N/M already
+    //   sits in the accordion row's own `titleEnd` right above — see `scoreEnd` — and the
+    //   chip already answers "passed or not"), and the per-line finding list (one attempt
+    //   can carry up to EIGHT findings × 3 fields, which would bury the submission form;
+    //   that detail belongs to the dedicated result page, `src`'s `SubmissionResult`,
+    //   reached from the "View History" button right above).
     //
     // `Disclosure` here is a PRESENTATION decision, not an invented field: the content
     // inside is still exactly one real field, just placed behind a click because it's
-    // secondary detail (teacher's call, round-10, held through round-13).
+    // secondary detail.
     const gradedSection = item.graded != null ? (
         <StackV
             gap={4}
 
             body={
                 <>
-                    {/* AUDIT 2026-07-30 round-13 (teacher: "the green section is too busy", settled
-                        on option B): ONE single meta row — verdict chip + "attempt #N · HH:mm dd/MM"
-                        — instead of three stacked layers like before. DROPPED entirely the sentence
-                        "Your latest attempt scored N/M. Minimum required: R.": the N/M figure already
-                        sits in the accordion row's own `titleEnd` right above (see `scoreEnd`), and
-                        the chip already answers "passed or not" — that sentence restated the same
-                        fact a second time across both lines. `earnedScore`/`requiredScore` are STILL
-                        real fields and still render, just in exactly ONE place. */}
+                    {/* ONE single meta row — verdict chip + "attempt #N · HH:mm dd/MM" — rather than
+                        three stacked layers. No "Your latest attempt scored N/M. Minimum required: R."
+                        sentence: the N/M figure already sits in the accordion row's own `titleEnd`
+                        right above (see `scoreEnd`), and the chip already answers "passed or not" —
+                        that sentence would restate the same fact a second time across both lines.
+                        `earnedScore`/`requiredScore` are real fields and render, just in exactly ONE
+                        place. */}
                     <StackH
                         gap={3}
                         align="center"
@@ -424,12 +398,11 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
 
             {/* Grading-status strip — BETWEEN the URL field and the button row, the exact spot
                 `src`'s `SubmissionRow` places `AIProcessingText` (lines 173-195: after
-                `TextField`, before `GradeModelDropdown`). AUDIT 2026-07-30 round-15: this state
-                is listed in `.artifacts/domain/challenge-and-milestone.md` §3 as MUST BE DRAWN
-                ("grading in progress" + "grading failed") and the drawing was missing them —
-                only `isPending` locked the input, unable to say which branch it was in.
-                `jobError` prints RAW (untranslated) because `src` also prints it raw: it's a
-                server error string, not a sentence meant for a reader. */}
+                `TextField`, before `GradeModelDropdown`). This surfaces the "grading in
+                progress" / "grading failed" states; `isPending` alone only locks the input
+                and can't say which branch it's in. `jobError` prints RAW (untranslated)
+                because `src` also prints it raw: it's a server error string, not a sentence
+                meant for a reader. */}
             {item.jobStatus != null ? (
                 <Callout
                     status={JOB_STATUS_CALLOUT[item.jobStatus].status}
@@ -475,13 +448,12 @@ const ChallengeDeliverableList = ({
         body: deliverableBody(item),
     }))
 
-    // ONE surface, not two (teacher's call 2026-07-29): the accordion IS the card's entire
-    // content — nothing else sits inside "Submit" beside it — so it draws its own
-    // top-level frame directly (`label`/`action` are its own header slots) instead of
-    // a `SurfaceCard` wrapping a `variant="nested"` child. Surface-in-surface is only
-    // for a part that stays SMALL relative to a parent holding other things too;
-    // nesting a border around content that already equals the whole parent just
-    // draws the same outline twice.
+    // ONE surface, not two: the accordion IS the card's entire content — nothing else
+    // sits inside "Submit" beside it — so it draws its own top-level frame directly
+    // (`label`/`action` are its own header slots) instead of a `SurfaceCard` wrapping a
+    // `variant="nested"` child. Surface-in-surface is only for a part that stays SMALL
+    // relative to a parent holding other things too; nesting a border around content
+    // that already equals the whole parent just draws the same outline twice.
     // The autosave line sits ABOVE the accordion, the exact spot `src`'s
     // `ChallengeSubmissionPanel` places it (lines 388-398: the panel wrapper's first
     // child, right before `<Accordion>`) — it's a fact of the WHOLE PANEL (one sync pass

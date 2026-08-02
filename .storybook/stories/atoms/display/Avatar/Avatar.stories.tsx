@@ -16,12 +16,11 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  */
 /**
  * Every part this atom renders is a DIRECT HeroUI import (no member of ours has its
- * own story to jump to) — all four get `tier: "heroui"`, no `storyId` (§ heroui rule,
- * 2026-07-28 naming pass). Renamed from role-words (`Image`/`Fallback`) to the REAL
- * exported names (`AvatarImage`/`AvatarFallback`); `Avatar`/`Skeleton` already matched.
+ * own story to jump to) — all four get `tier: "heroui"`, no `storyId`. The node names
+ * are the REAL exported names (`AvatarImage`/`AvatarFallback`/`Avatar`/`Skeleton`).
  *
  * `Status` is the ONE part with no HeroUI counterpart — a hand-drawn presence dot the
- * atom owns itself (§13z). It gets its own leaf/story right in this file (`Status`,
+ * atom owns itself. It gets its own leaf/story right in this file (`Status`,
  * every tone × size), so it links there instead of going undeclared or getting a
  * dishonest `tier: "heroui"` for something that isn't a library import.
  */

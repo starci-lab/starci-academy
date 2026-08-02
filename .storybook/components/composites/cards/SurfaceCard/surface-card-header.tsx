@@ -119,26 +119,21 @@ export const SurfaceCardHeader = ({
 export const surfaceSectionGap = (subtleLabel: boolean | undefined) => (subtleLabel ? "gap-2" : "gap-3")
 
 /**
- * Three frame variants of a `Surface*Card` face — AXIS 1/3 (teacher decided
- * 2026-07-26, see the top of SurfaceCard.tsx to read all three axes):
+ * Three frame variants of a `Surface*Card` face:
  * - `"surface"` (default) — `shadow-surface`, used when the parent is a bare
  *   `bg-background`.
  * - `"nested"` — a border REPLACES the shadow (`border border-default`, shadow
  *   dropped) — used when this face sits INSIDE another face (a `bg-surface`
  *   panel, a `bg-surface-secondary` bubble, a modal/page card): the shadow sinks
- *   into the parent face so the signal switches to a border instead (§1a).
+ *   into the parent face so the signal switches to a border instead.
  */
 export type SurfaceCardVariant = "surface" | "nested"
 
 /**
  * The shared `Surface*Card` frame class — `rounded-3xl bg-surface` + a BORDER XOR the
  * elevation SHADOW (`variant="nested"` = surface-in-surface: a border replaces the
- * shadow that renders invisible on a parent surface). Was copy-pasted verbatim in
- * SurfaceCard / SurfaceListCard / SurfaceAccordionCard / CrossListCard — now ONE
- * source. Callers add their own `overflow-hidden` / padding.
- *
- * 2026-07-26 (teacher): the parameter changed from `bordered?: boolean` to {@link SurfaceCardVariant}.
- * `bordered=true` ⇔ `variant="nested"`, `bordered=false` ⇔ `variant="surface"` (default).
+ * shadow that renders invisible on a parent surface). Callers add their own
+ * `overflow-hidden` / padding.
  */
 export const surfaceFrame = (variant: SurfaceCardVariant = "surface") =>
     cn("rounded-3xl bg-surface", variant === "nested" ? "border border-default" : "shadow-surface")

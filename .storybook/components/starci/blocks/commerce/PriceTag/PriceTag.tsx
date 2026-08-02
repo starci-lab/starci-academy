@@ -77,9 +77,6 @@ export interface PriceTagProps {
 
 /**
  * Role → amount font size.
- *
- * ⚠️ DROPPED the `lg` step (2026-07-26): neither `src` nor the design uses it —
- * it only lived in its own story — §14d.3 (*which screen in the app needs it?*).
  */
 const AMOUNT_TYPE: Record<PriceEmphasis, "base" | "h4"> = {
     inline: "base",
@@ -144,18 +141,13 @@ const PriceTagBase = ({
     // minimum list price → you pay. The phase-tier & loyalty rows only appear when a
     // full `breakdown` is supplied.
     const breakdownContent = hasSaving ? (
-        // ⭐ 2026-07-27 (teacher: "layouts are built from layout components"): this used
-        // to be FOUR hand-typed `<div className="flex items-center justify-between
-        // gap-3">`, all identical, plus a hand-drawn `border-t border-default pt-1` for
-        // the total row.
-        //
         // Those four rows are all ONE shape: label left ↔ value right, repeated ⇒
-        // exactly `KeyValueList` (§13b: a repeated list ⇒ `items` is DATA). The "you
+        // exactly `KeyValueList` (a repeated list ⇒ `items` is DATA). The "you
         // pay" row is the TOTAL row ⇒ `emphasis`, not a hand-drawn rule: the frame
         // already knows how to emphasise a total row, and that emphasis looks the same
         // across every price table in the system.
         //
-        // ⚠️ The frame does NOT format for you (§13): every money string coming in here
+        // ⚠️ The frame does NOT format for you: every money string coming in here
         // has already gone through `formatPrice`.
         // ⚠️ This column is NOT badged: the panel groups nodes BY NAME (`firstEl` keeps
         // only the first element of each name), so two `StackV`s with the same name
@@ -163,7 +155,7 @@ const PriceTagBase = ({
         // matters inside the popover is `KeyValueList` — that one is badged; the
         // wrapping column is just `p-3` padding.
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
-        // `grouped` (§10b), not `tight`. `tight` (1) is reserved for what sits INSIDE a
+        // `grouped`, not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
         <StackV gap={4} className="p-3" body={(
             <>
@@ -324,18 +316,15 @@ const PriceTagBase = ({
 }
 
 /**
- * `PriceTag.*` — namespace (§12a). Members are named by the ROLE a price plays
- * on a surface, not by font size (teacher's call 2026-07-26, §14d.1: a design
- * doesn't expose a shape axis to the caller).
+ * `PriceTag.*` — namespace. Members are named by the ROLE a price plays
+ * on a surface, not by font size: a design doesn't expose a shape axis to the caller.
  *
  * | Member | Used in | Price plays |
  * |---|---|---|
  * | `.Prominent` | `TrialConversionStrip` | the FOCAL POINT of a course-purchase CTA |
  * | `.Inline` | `CourseCard` | ONE LINE of info inside a card |
  *
- * These two cases differ in WHY, not in size for its own sake, so §14d says
- * SPLIT them. Before this it was `size?: "sm" | "md" | "lg"` — the caller
- * chose the shape, and nobody ever used the `lg` step.
+ * These two cases differ in WHY, not in size for its own sake, so they are SPLIT.
  */
 export const PriceTagProminent = (props: PriceTagProps) => <PriceTagBase {...props} emphasis="prominent" />
 export const PriceTagInline = (props: PriceTagProps) => <PriceTagBase {...props} emphasis="inline" />

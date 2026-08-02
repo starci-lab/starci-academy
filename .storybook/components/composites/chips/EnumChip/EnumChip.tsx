@@ -14,26 +14,21 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * HeroUI soft-chip colors usable by an {@link EnumChip}.
  *
- * Alias, not a redeclaration (per the teacher's final call, 2026-07-29): the exact same five
- * values `Chip`'s own `ChipTone` already carries — this used to need
- * `COLOR_TO_TONE` to translate `default → neutral` between two hand-typed
- * copies of the same vocabulary. Both sides being the same alias makes the
- * translation a no-op, so it is gone, not renamed.
+ * Alias, not a redeclaration: the exact same five values `Chip`'s own
+ * `ChipTone` already carries.
  *
- * Aliases `ChipTone` specifically (NOT `AlertStatus`, round-9, 2026-07-30):
- * `entry.color` flows straight into `Chip`'s `tone`, a vendor-constrained prop
- * — `ChipTone` is the one guaranteed to match it 1:1 (see `ChipTone`'s own
- * note on why it split from `AlertStatus` when `info` was added there).
+ * Aliases `ChipTone` specifically (NOT `AlertStatus`): `entry.color` flows
+ * straight into `Chip`'s `tone`, a vendor-constrained prop — `ChipTone` is the
+ * one guaranteed to match it 1:1.
  */
 export type EnumChipColor = ChipTone
 
 /**
  * The ONLY icons an {@link EnumChipEntry} can name — a CLOSED set, not an
- * arbitrary `IconComponent`. AUDIT 2026-07-30 (feedback ChallengePage/Graded
- * round-2, per the teacher's final call): a string selector like `ListMark`
+ * arbitrary `IconComponent`. A string selector like `ListMark`
  * (`SurfaceCard.tsx`'s own "check"/"cross"/"pending"/"none" vocabulary), NOT
  * a raw icon reference — narrowing to a curated set is the whole point of
- * "universal" symbols (§2a: check/cross, nothing caller-chosen). Extend this
+ * "universal" symbols (check/cross, nothing caller-chosen). Extend this
  * union the day a THIRD symbol earns the same bar, don't loosen the type.
  */
 export type EnumChipIcon = "check" | "cross"
@@ -55,7 +50,7 @@ export interface EnumChipEntry {
      * Optional leading icon — one of {@link EnumChipIcon}, not a component.
      * Omit for every existing map entry that never had one; only add where
      * the value itself is a "universal" symbol, e.g. a failed/not-passed
-     * verdict (AUDIT 2026-07-30, feedback ChallengePage/Graded round-2).
+     * verdict.
      */
     icon?: EnumChipIcon
 }
@@ -70,7 +65,7 @@ export interface EnumChipProps<E extends string> {
      * @deprecated pass `classNames` instead — a free string cannot be constrained.
      * Kept only for the two `_legacy` callers (`HostPlatformChip`, `EntityResultRow`)
      * that still pass a free-form string; `_legacy` is off-limits to edit, so this
-     * escape stays until those callers are retired (ATOM-5 narrowing pass, 2026-07-31).
+     * escape stays until those callers are retired.
      */
     className?: string
     /**
@@ -89,13 +84,8 @@ export interface EnumChipProps<E extends string> {
  * Domain badges (AI-model category, difficulty, video host …) shrink to just their map
  * table + this delegate. Deliberately does NOT force width.
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): gained `icon` per entry
- * (was "text-only, no leading icon"). Additive, per-value — most maps stay text-only;
+ * Each entry can carry an optional per-value `icon` — most maps stay text-only;
  * a value only gets an icon when it is a "universal" symbol (check/cross), not a habit.
- *
- * ⚠️ Changed 2026-07-26: this used to build on top of `StatusChip` — that component was
- * deleted because it was just `Chip` with `tone` hardcoded, adding no behavior of its own.
- * Now it calls the atom directly.
  *
  * @param props - {@link EnumChipProps}
  */
@@ -104,10 +94,9 @@ export const meta = { tier: "composite", name: "EnumChip" } as const
 
 export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton }: EnumChipProps<E>) => {
     if (isSkeleton) {
-        // No longer patching in `h-6` here: the atom's shimmer used to stand `h-7` tall,
-        // 4px off from the real chip box, so the call site had to paper over the shape.
-        // The atom was fixed (2026-07-26) — a call site having to patch the atom's shape
-        // is itself the sign the atom is wrong, not this spot.
+        // The atom's shimmer matches the real chip box, so no `h-6` patch is needed
+        // here — a call site having to patch the atom's shape is the sign the atom is
+        // wrong, not this spot.
         return <Chip isSkeleton className={className} classNames={classNames} />
     }
     const entry = map[value]

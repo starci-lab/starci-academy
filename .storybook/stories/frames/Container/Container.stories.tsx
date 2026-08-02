@@ -46,7 +46,7 @@ export default meta
 
 type Story = StoryObj<typeof Container>
 
-/** Bare leaf — default `md` column, padding `6`, `body` only. Migrated to `states` 2026-07-27. */
+/** Bare leaf — default `md` column, padding `6`, `body` only. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -72,7 +72,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `size` — FULL 5 steps, each pointing straight at a `--container-app-*` token. Migrated to `states` 2026-07-27. */
+/** Leaf prop `size` — FULL 5 steps, each pointing straight at a `--container-app-*` token. */
 export const Sizes: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -139,13 +139,8 @@ export const Sizes: Story = {
 }
 
 /**
- * Leaf prop `padding` — the `AllowedPadding` scale, default step `6` (the web column).
- * 2026-08-01 (wave-3 numeric-scale migration): the old five-word union (`flush`…`airy`) is
- * gone with no deprecated stage, replaced by SIX numbered steps — one more than before,
- * because the count behind `padding.md` found real evidence for `p-2` (step `3`) that an
- * earlier, narrower count had missed. The old `airy` (`p-8`) did NOT earn a step; every call
- * site written as `padding="airy"` folds down to step `6` (`p-6`) in this change, a real
- * (not cosmetic) size difference — see the step-`6` state below for the finding.
+ * Leaf prop `padding` — the `AllowedPadding` scale, default step `6` (the web column),
+ * SIX numbered steps.
  */
 export const Padding: Story = {
     render: () => (
@@ -223,7 +218,7 @@ export const Padding: Story = {
 
 /**
  * Leaf composition — a measure holds ONE region; rhythm comes from a `StackV` nested
- * inside it. Rewritten 2026-07-27 when `header`/`footer`/`gap` were removed.
+ * inside it.
  */
 export const PageRegions: Story = {
     render: () => (
@@ -279,12 +274,12 @@ const QUERY_ANNOTATE: Record<string, AnatomyAnnotation> = {
  *
  * Two columns, the SAME `Grid` with the SAME `columns`, end up with a different
  * column count: the `md` column sits at the `@app-md` step (2 columns), the `xl`
- * column reaches `@app-lg` (4 columns). Before opening the container, both listened
- * to the app column and would jump to 4 columns together even though the left one
+ * column reaches `@app-lg` (4 columns). Without the container open, both would
+ * listen to the app column and jump to 4 columns together even though the left one
  * is only 48rem wide.
  *
- * Migrated to `states` 2026-07-27: each column width is its own state so the reader
- * can flip between "2 columns" and "4 columns" and read the matching `why` for each.
+ * Each column width is its own state so the reader can flip between "2 columns" and
+ * "4 columns" and read the matching `why` for each.
  */
 export const ContainerQuery: Story = {
     render: () => {

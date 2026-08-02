@@ -19,9 +19,8 @@ interface WithClassNames<T> {
  * Semantic tone of the highlight chip — drives the soft tint
  * (`bg-<tone>/10 text-<tone>`). Neutral maps to the default color.
  *
- * Alias, not a redeclaration (instructor's final call, 2026-07-29): the atom {@link ChipTone}
- * already carries these exact five values in this exact order — a hand-typed
- * copy here was a second source of truth for the same vocabulary.
+ * Alias, not a redeclaration: the atom {@link ChipTone} already carries these
+ * exact five values in this exact order.
  */
 export type HighlightChipTone = ChipTone
 

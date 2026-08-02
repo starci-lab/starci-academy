@@ -26,11 +26,10 @@ export interface FlexBaseProps {
     /**
      * The HTML element to render. Defaults to `div`.
      *
-     * Added 2026-07-29. A frame owns the SHAPE of a box, never the MEANING of its tag, but this
-     * one rendered a hard `div` and so decided both. Measured that day, three call-sites could
-     * not migrate onto a frame for that reason alone: a list needed `section`, a diagram needed
-     * `figure`, and a markdown renderer needed `span` — the last one load-bearing, because that
-     * row of chips sits INSIDE a sentence and a block-level `div` cuts the sentence in three.
+     * A frame owns the SHAPE of a box, never the MEANING of its tag. Some call-sites need a
+     * real tag: a list needs `section`, a diagram needs `figure`, and a markdown renderer needs
+     * `span` — the last one load-bearing, because that row of chips sits INSIDE a sentence and a
+     * block-level `div` cuts the sentence in three.
      *
      * Screen readers are the other half: `figure` announces a captioned illustration and
      * `section` announces a jumpable region, while `div` announces nothing at all. Forcing every
@@ -48,10 +47,9 @@ export interface FlexBaseProps {
      * Render as `inline-flex` instead of `flex`, so the box hugs its content rather than taking
      * the whole line.
      *
-     * Added 2026-07-29 alongside `as`. These are two DIFFERENT kinds of box, not two spellings
-     * of one: measured on the same content, the block version came out 503px wide and the inline
-     * version 136px. `ProgressRing` sits beside running text and must hug — with only `flex` on
-     * offer it wrote the class by hand, twice.
+     * These are two DIFFERENT kinds of box, not two spellings of one: on the same content, the
+     * block version comes out much wider than the inline version. `ProgressRing` sits beside
+     * running text and must hug.
      */
     inline?: boolean
     /** Main axis. Defaults to `row`, the browser default, so the prop reads as an override. */
@@ -61,14 +59,11 @@ export interface FlexBaseProps {
     /**
      * Space INSIDE the box, on the house padding scale.
      *
-     * Added 2026-07-27 for the same reason the gap is typed. Padding was a rule that lived only
-     * in prose: no frame offered it, so anyone who needed inner space wrote `p-5` by hand and
-     * nothing objected. Measured at the time: 816 padding classes across the drawing, 48 of them
-     * off the scale, against zero off scale gaps. A rule with no typed path is a rule people
-     * route around, so the path exists here now.
+     * A rule with no typed path is a rule people route around, so inner space goes through this
+     * prop on the scale rather than a hand-written `p-*` class.
      *
      * Leaving it out renders no padding class at all, which keeps a plain layout box free of
-     * inner space and matches how the frame behaved before.
+     * inner space.
      */
     padding?: Responsive<PaddingValue>
     /** Cross axis alignment. `stretch` on a column, `center` on a row, matching the old Stack defaults. */
@@ -175,7 +170,7 @@ const FlexBase = ({
 
 /** `Flex.*` namespace. One shape, so only `.Base`. */
 /**
- * ⛔ INTERNAL to the frame tier (2026-07-27). `StackV`/`.H` are the public road; this box
+ * ⛔ INTERNAL to the frame tier. `StackV`/`.H` are the public road; this box
  * is what they are built on. It stays exported ONLY because `Stack.tsx` imports it — no
  * story, and nothing outside `components/frames/` may call it.
  *

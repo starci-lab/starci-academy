@@ -59,7 +59,7 @@ const continueAndSaveButtons = (
     </>
 )
 
-// No `Flex` node here (2026-07-28): the track's own root no longer self-badges with the
+// No `Flex` node here: the track's own root does not self-badge with the
 // internal box's name — `Flex` has no story of its own (it's not a public frame, see its
 // own file), so a node pointing there would never be clickable. `StackV`'s identity is already
 // the panel header; the only REAL nested part this frame ever composes is the divider below.
@@ -104,10 +104,9 @@ export const Default: Story = {
 
 /**
  * Gaps — the REASON this frame exists: `gap` is a STEP on an eight-rung scale
- * (`AllowedGap`), never a raw measurement. 2026-08-01 (wave-3 numeric-scale migration):
- * the old six-word union (`flush`…`page`) is gone with no deprecated stage; the number is
- * now the whole vocabulary a reader has, so every state below is titled by its step and
- * shows the sentence that earns it, straight from `gap.md`.
+ * (`AllowedGap`), never a raw measurement. The number is the whole vocabulary a reader
+ * has, so every state below is titled by its step and shows the sentence that earns it,
+ * straight from `gap.md`.
  */
 export const Gaps: Story = {
     render: () => (
@@ -229,9 +228,8 @@ export const WithDivider: Story = {
 
 /**
  * Nested — `border-l` + a matching indent, for a track that is ONE LEVEL DEEPER than
- * its caller (a threaded reply, a nested tree row). Added 2026-07-28 after a block
- * hand-wrote these exact classes itself for a reply thread's own indent guide — the
- * frame now owns them, same vocabulary as `SurfaceCard`'s `variant="nested"`.
+ * its caller (a threaded reply, a nested tree row). Same vocabulary as `SurfaceCard`'s
+ * `variant="nested"`.
  */
 export const Nested: Story = {
     render: () => (

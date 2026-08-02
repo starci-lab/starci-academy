@@ -24,7 +24,7 @@ export interface LearnNudge {
     /**
      * The row's text.
      *
-     * ⛔ NO separate `count` field (teacher's call 2026-07-26): the title
+     * ⛔ NO separate `count` field: the title
      * already contains the number ("Review 12 due flashcards"); showing a `12`
      * chip on the right too is **saying it twice**. One fact only ever appears
      * in ONE place within a row.
@@ -41,11 +41,9 @@ export interface LearnNudgesBaseProps {
      * ⏳ This strip's source is LATER the page's main data → the waiting stage
      * must hold its PLACE, not disappear and reappear.
      *
-     * Real-bug anchor (source noted 2026-07-12): `dueSwr`/`leaderboardSwr`
-     * resolve AFTER `outline`, so while waiting `dueCount`/`rank` default to
-     * 0/null → the block used to `return null` then pop back in ⇒ **the strip
-     * FLICKERED**. That's why this state exists; dropping it recreates that
-     * exact bug.
+     * `dueSwr`/`leaderboardSwr` resolve AFTER `outline`, so while waiting
+     * `dueCount`/`rank` default to 0/null. Without this state the block would
+     * `return null` then pop back in ⇒ the strip FLICKERS.
      */
     isSkeleton?: boolean
     /** Number of placeholder rows when `isSkeleton`. Default 2 — the most common nudge count. */
@@ -62,9 +60,9 @@ const LearnNudgesBase = ({
     skeletonRows = 2,
 }: LearnNudgesBaseProps) => (
     <SurfaceCardList
-        // The heading is OWNED by the BLOCK — the caller does NOT pass `heading`
-        // (§14d.1, teacher's call 2026-07-26). This cluster always answers the
-        // same one question, so the lead-in is a constant.
+        // The heading is OWNED by the BLOCK — the caller does NOT pass `heading`.
+        // This cluster always answers the same one question, so the lead-in is
+        // a constant.
         label="Things to do today"
 
         items={

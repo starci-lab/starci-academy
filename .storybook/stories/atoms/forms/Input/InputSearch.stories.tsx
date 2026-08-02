@@ -55,8 +55,6 @@ export const Default: Story = {
 
 /**
  * Leaf prop `placeholder` — the ghost text only shows while the field is empty.
- * Before 2026-07-26 it was stuffed into leaf `Default`, so the prop had a visible
- * shape with no leaf of its own owning it (§12g).
  */
 export const Placeholder: Story = {
     render: () => {

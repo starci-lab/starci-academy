@@ -97,9 +97,9 @@ export interface ContentCommentThreadProps extends ContentCommentThreadCallbacks
     currentUserId: string | null
     /**
      * Current viewer identity for the reply composer's own avatar (Facebook-style
-     * nested reply, teacher 2026-07-29) — `null`/omitted → reply composer renders with
-     * no avatar, same as before. Real `CommentComposer` never shows one at all; this
-     * is a deliberate divergence, not a `src` port.
+     * nested reply) — `null`/omitted → reply composer renders with no avatar. Real
+     * `CommentComposer` never shows one at all; this is a deliberate divergence, not
+     * a `src` port.
      */
     currentUser?: ContentCommentComposerViewer | null
     /** Nesting depth — 0 for a top-level comment, `depth + 1` for each reply. */
@@ -221,9 +221,9 @@ const ContentCommentThread = ({
             <StackV gap={2} body={bodyAndActions} />
 
             {/* reply composer — `ThreadConnector` draws the Facebook-style curved
-                guide from this comment down into the reply's own avatar (teacher
-                2026-07-29); `currentUser` is what gives the composer an avatar to
-                connect TO in the first place (see its own file header). */}
+                guide from this comment down into the reply's own avatar;
+                `currentUser` is what gives the composer an avatar to connect TO
+                in the first place (see its own file header). */}
             {replying ? (
                 <StackH
                     gap={2}
@@ -292,11 +292,10 @@ const ContentCommentThread = ({
     )
 
     return (
-        // `IdentityContentRow` (composite, teacher 2026-07-29 "group the black color
-        // into its own block") owns the avatar+byline+column shape — both its seams are `tight`
-        // ON PURPOSE, a denser standalone treatment, NOT a `src`-fidelity port
-        // (see the composite's own file header). `nested` still draws the reply
-        // indent guide via the same `Stack` frame prop as before.
+        // `IdentityContentRow` (composite) owns the avatar+byline+column shape — both
+        // its seams are `tight` ON PURPOSE, a denser standalone treatment, NOT a
+        // `src`-fidelity port (see the composite's own file header). `nested` draws the
+        // reply indent guide via the `Stack` frame prop.
         <IdentityContentRow
             avatarSrc={comment.author.avatarUrl}
             avatarName={comment.author.username}

@@ -44,26 +44,26 @@ const Chevron = () => <CaretRightIcon data-tier="fixture" className="size-3 text
 // merged — 1 semantic unit, does NOT split Title/Subtitle separately, see TitledText.tsx) ·
 // MetaTrailing?(meta+trailing cluster, sharing 1 gap-2 row on the right).
 //
-// ⚠️ 2026-07-28: `Leading` and `MetaTrailing` are CALLER SLOTS — the div only positions
+// `Leading` and `MetaTrailing` are CALLER SLOTS — the div only positions
 // whatever component `leading`/`meta`/`trailing` names, it doesn't build that content
 // itself, and neither has a story of its own to jump to. Per the panel's whitelist rule
 // (only a part with a REAL `storyId` or `tier: "heroui"` counts), they are NOT annotated
-// here anymore — the component also stopped badging them (nothing to declare).
+// here — the component does not badge them (nothing to declare).
 //
-// 2026-07-31 (COMPOSITE-8 fix): `leading`/`meta`/`trailing` now take a COMPONENT
-// reference each — the row calls them itself (forwarding `isSkeleton` into
-// `leading`) instead of receiving an already-built node. Every fixture below
-// defines a small named function component per slot instead of a JSX element.
+// `leading`/`meta`/`trailing` take a COMPONENT reference each — the row calls them
+// itself (forwarding `isSkeleton` into `leading`) instead of receiving an already-built
+// node. Every fixture below defines a small named function component per slot instead of
+// a JSX element.
 const TITLE_ONLY_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "TitledText": { tier: "composite", role: "title (body-sm medium), no subtitle/leading/meta", storyId: "composites-texts-titledtext--row" },
 }
 
 const LEADING_SUBTITLE_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "TitledText": { tier: "composite", role: "title + subtitle (module breadcrumb)", storyId: "composites-texts-titledtext--row" },
-    // 2026-07-31 — `FileTextLeading` (the `leading` component below) simply renders
+    // `FileTextLeading` (the `leading` component below) simply renders
     // nothing while `isSkeleton`, since the house has no dedicated icon-shimmer atom
-    // yet (see this task's atom-gap notes); it is still called every time (COMPOSITE-8),
-    // it just chooses to render null for this particular fixture.
+    // yet; it is still called every time, it just chooses to render null for this
+    // particular fixture.
 }
 
 const META_TRAILING_ANNOTATE: Record<string, AnatomyAnnotation> = {

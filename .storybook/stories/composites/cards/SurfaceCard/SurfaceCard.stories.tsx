@@ -35,10 +35,7 @@ type Story = StoryObj<typeof SurfaceCard>
  * same — it belongs to the caller, not a frame part.
  *
  * ⚠️ The key must match EXACTLY the `data-anat-part` string that
- * `surface-card-header.tsx` emits.
- * 2026-07-26: the atom changed from `SeeMoreLink.Base` to the `LinkSeeMore`
- * member (namespaced under the HeroUI `Link` family) ⇒ `storyId` changed with
- * it — forget this and the Deps link breaks SILENTLY.
+ * `surface-card-header.tsx` emits — forget this and the Deps link breaks SILENTLY.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "LinkSeeMore": {
@@ -49,13 +46,9 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * `description` renders through `RichText` (§4 — the frame owns scale/tone
+ * `description` renders through `RichText` (the frame owns scale/tone
  * for this caption), so the "Description" node it wraps gets a real
  * `storyId` to jump to.
- *
- * AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): was a bare
- * `Typography` — description is a "small richtext" tier, changed to `RichText`.
- * See `.artifacts/feedback/2026-07-29-challengepage-graded/round-1.md`.
  */
 const DESCRIPTION_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "RichText": {
@@ -310,15 +303,11 @@ export const Description: Story = {
 }
 
 /**
- * `variant` — the first INDEPENDENT axis (§1a): `"surface"` (default) carries its
+ * `variant` — the first INDEPENDENT axis: `"surface"` (default) carries its
  * own background + shadow when sitting DIRECTLY on `bg-background`; `"nested"`
  * switches to a border when this surface sits INSIDE another parent surface (the
  * shadow becomes nearly invisible stacked on the parent's shadow, especially in
- * dark mode). Merged from two old single-value leaves (`Default` implying
- * `surface`, `Bordered`) into ONE `Variant` leaf rendering both values side by
- * side.
- *
- * 2026-07-26 (teacher): changed from `bordered?: boolean` (`bordered=true` → `variant="nested"`).
+ * dark mode).
  *
  * The `variant="surface"` reference card beside the panel is a plain sibling, not
  * a state of this leaf: only ONE render sits inside `BlockAnatomy` here, so this
@@ -355,12 +344,9 @@ export const Variant: Story = {
  * `padding` — the second INDEPENDENT axis, the `AllowedPadding` step scale. Default
  * step `4` is the standard inset around the content; `padding={1}` drops the inset
  * (still keeps `overflow-hidden`) so a child can OWN its own edge (a cover image, a
- * full-bleed table) flush to the border. Merged from two old single-value
- * leaves (`Default` implying step `4`, `FlushContent`) into ONE `Padding` leaf
- * rendering both side by side.
+ * full-bleed table) flush to the border.
  *
- * 2026-07-26 (teacher): changed from `flushContent?: boolean`
- * (`flushContent=true` → `padding={1}`). An axis INDEPENDENT of `variant` — a
+ * An axis INDEPENDENT of `variant` — a
  * `nested` card AND `padding={1}` is a real combination (an edge-to-edge image
  * inside a nested card); merging them would kill that combination.
  *
@@ -446,13 +432,10 @@ export const Skeleton: Story = {
 }
 
 /**
- * ⭐ PRESSABLE STATES (instructor, 2026-07-29, "why still have .Pressable, when
- * it's already become isPressable as a prop?") — `onPress`/`href` fold the WHOLE card into a `<button>`/`<a>`
- * with ripple + `active:scale-[0.97]` feedback, no hover effect at rest. Was a
- * separate component/story, `SurfaceCard.Pressable`, before this merge — same
- * card, same fixture, one fewer name to import. `isSelected`/`isDisabled`/
- * `actions` only mean anything once the card IS pressable, so they live here,
- * not beside `Default`.
+ * PRESSABLE STATES — `onPress`/`href` fold the WHOLE card into a `<button>`/`<a>`
+ * with ripple + `active:scale-[0.97]` feedback, no hover effect at rest.
+ * `isSelected`/`isDisabled`/`actions` only mean anything once the card IS
+ * pressable, so they live here, not beside `Default`.
  */
 export const Pressable: Story = {
     render: () => (

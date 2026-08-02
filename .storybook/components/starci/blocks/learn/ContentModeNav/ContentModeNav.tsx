@@ -165,8 +165,7 @@ const ContentModeNav = ({
                     rightTabsNeutral
                     // A set-once preference, not a second navigation choice — folds behind a
                     // compact icon-only dropdown below `@app-sm` instead of crowding the reading
-                    // column with 4 inline tabs (instructor's call, 2026-07-29, reversing the 2026-07-29
-                    // "keep every language reachable in one tap" call from earlier the same day).
+                    // column with 4 inline tabs.
                     collapseRightOnMobile
 
                 />

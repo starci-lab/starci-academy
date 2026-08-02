@@ -41,18 +41,15 @@ export interface StackBaseProps {
     /**
      * Space INSIDE the track, same scale as `gap`.
      *
-     * ⭐ 2026-07-27: forwarded down to `Flex` so a stack that also needs padding no longer
-     * has to DROP to `Flex` and lose `divider` plus the axis semantics. That drop was the
-     * one remaining reason to reach past this frame, and a way out that costs less than the
-     * proper road always wins — the same force that produced 227 hand-written
-     * `flex flex-col gap-4` in the first place.
+     * Forwarded down to `Flex` so a stack that also needs padding no longer
+     * has to DROP to `Flex` and lose `divider` plus the axis semantics.
      */
     padding?: Responsive<PaddingValue>
     /**
      * `true` → a left guide border + matching indent (`pl-3`, `@app-sm:pl-6`),
      * for a track that is ONE LEVEL DEEPER than its caller (a threaded reply,
      * a nested tree row) — the frame owns the exact classes so no block ever
-     * hand-writes `border-l`/`pl-*` itself (per the teacher's note, 2026-07-28). Same vocabulary
+     * hand-writes `border-l`/`pl-*` itself. Same vocabulary
      * as `SurfaceCard`'s own `variant="nested"` (border marks "inside a
      * parent", not a fresh outer face) — this is that same idea for a track.
      */
@@ -60,9 +57,8 @@ export interface StackBaseProps {
     /**
      * The HTML element to render, forwarded to `Flex`. Defaults to `div`.
      *
-     * Added 2026-07-29 for the same reason `padding` was: a stack that also needed a real tag
-     * (`section`, `figure`, `span`) had to DROP to hand-written classes and lose the axis
-     * semantics along the way. Three call-sites sat outside the frame tier for exactly that.
+     * A stack that also needs a real tag (`section`, `figure`, `span`) would otherwise have to
+     * DROP to hand-written classes and lose the axis semantics along the way.
      */
     as?: "div" | "section" | "figure" | "span" | "li"
     /**

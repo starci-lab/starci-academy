@@ -31,7 +31,7 @@ export default meta
 
 type Story = StoryObj<typeof Divider>
 
-/** Bare leaf — default orientation (horizontal), default variant, no label. Migrated to `states` 2026-07-27. */
+/** Bare leaf — default orientation (horizontal), default variant, no label. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -58,7 +58,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `orientation` — BOTH values: horizontal (default) and vertical. Migrated to `states` 2026-07-27. */
+/** Leaf prop `orientation` — BOTH values: horizontal (default) and vertical. */
 export const Orientation: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -98,7 +98,7 @@ export const Orientation: Story = {
     ),
 }
 
-/** Leaf prop `variant` — the FULL weight/tone union of the line. Migrated to `states` 2026-07-27. */
+/** Leaf prop `variant` — the FULL weight/tone union of the line. */
 export const Variants: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -144,7 +144,7 @@ export const Variants: Story = {
     ),
 }
 
-/** Leaf prop `label` — horizontal only: rule · label · rule. Migrated to `states` 2026-07-27. */
+/** Leaf prop `label` — horizontal only: rule · label · rule. */
 export const WithLabel: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

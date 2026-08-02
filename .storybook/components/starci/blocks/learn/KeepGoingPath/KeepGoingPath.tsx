@@ -35,17 +35,13 @@ export interface KeepGoingContent {
  * Goes through `leading` (a node) rather than `leadingIcon`, because each state
  * carries its OWN COLOR while `leadingIcon` forces a shared `text-muted`.
  *
- * ALL THREE STATES SHARE ONE ROUND SHAPE (teacher's call 2026-07-26): the in-progress
+ * ALL THREE STATES SHARE ONE ROUND SHAPE: the in-progress
  * state uses `PlayCircleIcon` (a play mark INSIDE a circle) rather than a bare triangle
  * (`PlayIcon`) — its two siblings `CheckCircleIcon`/`CircleIcon` are both circles, so one
  * shape breaking the mould breaks the row's reading rhythm.
  *
- * `size-5` — the row's leading icon size (teacher's call 2026-07-26: heading icon = 5;
- * the icon inside the chip now follows the font instead).
- *
- * The three sentences above were left with HOLES by an earlier emoji sweep (the glyphs
- * were carrying the nouns), and the holes shipped in a commit. That is why removing a
- * marker means REWRITING the sentence, never just deleting the character.
+ * `size-5` — the row's leading icon size (heading icon = 5;
+ * the icon inside the chip follows the font instead).
  */
 /** The leading mark one content state resolves to: which glyph, and how it is coloured. */
 interface ContentLeadingStyle {
@@ -61,9 +57,9 @@ const CONTENT_LEADING: Record<KeepGoingContentState, ContentLeadingStyle> = {
 }
 /**
  * A LOCKED content item → the lock icon **REPLACES** the state icon at the head of
- * the row instead of hanging a second one on the tail (teacher's call 2026-07-26).
+ * the row instead of hanging a second one on the tail.
  *
- * COLOR: `warning` (teacher's call 2026-07-26) — NOT muted. A muted lock turns
+ * COLOR: `warning` — NOT muted. A muted lock turns
  * invisible, and this isn't decoration: it's a SALES DOOR, it has to be seen. Uses
  * the `-soft-foreground` step to match its siblings (accent/success), not a bold
  * `text-warning`.
@@ -77,17 +73,11 @@ const LOCKED_LEADING = { Icon: LockIcon, className: "size-5 text-warning-soft-fo
 /**
  * The MODULE this path belongs to.
  *
- * 2026-07-27 (teacher: "pass the module, not the module title — at block tier you stop
- * passing generic strings"): the prop used to be `moduleTitle: string` and every caller
- * shipped `"Chapter 2 · Containerization"`. That string carried TWO decisions the caller had
- * no business making — the word "Chapter" and the `·` separator — while the block only
- * bolted "Continue ·" on the front, so one heading was assembled in two places.
- *
  * A `string` prop cannot be checked: nothing stops a caller sending `"chapter 2-"` or a
  * completely different sentence. Two named fields make the wrong shape UNTYPEABLE.
  *
  * Declared as a NAMED, EXPORTED interface rather than inline `{ index: number; name:
- * string }` (teacher, 2026-07-27: "properly typesafe"): an inline shape has no name to
+ * string }`: an inline shape has no name to
  * import, so a caller building this object has nothing to type it against and every
  * call-site re-describes it by hand.
  */

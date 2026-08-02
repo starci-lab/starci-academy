@@ -21,7 +21,7 @@ const meta: Meta<typeof ButtonRadioGroup> = {
 }
 export default meta
 type Story = StoryObj<typeof ButtonRadioGroup>
-/** heroui TIER (2026-07-27) — the row's own raw HeroUI renders, tagged with the real identifier imported from `@heroui/react`. */
+/** heroui TIER — the row's own raw HeroUI renders, tagged with the real identifier imported from `@heroui/react`. */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button": { tier: "heroui", role: "one selectable option — standalone, or the select segment inside a fused ButtonGroup" },
     "ButtonGroup": { tier: "heroui", role: "fuses one item's select button with its itemAction buttons into one connected row" },

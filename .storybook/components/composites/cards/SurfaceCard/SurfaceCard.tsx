@@ -120,7 +120,7 @@ const RowAnchor = ({
  * whole-card target becomes a transparent overlay with no visible text of its
  * own, so `ariaLabel` becomes REQUIRED.
  *
- * Named `ariaLabel` here (not `label`, instructor's 2026-07-29 merge) — `SurfaceCardBaseProps`
+ * Named `ariaLabel` here (not `label`) — `SurfaceCardBaseProps`
  * already owns `label` for the VISIBLE section header above the card
  * ({@link SurfaceLabelProps.label}); reusing that name for the invisible
  * accessible-name of a pressable card would collide two unrelated concepts.
@@ -169,18 +169,15 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     description?: string
     /**
      * Face frame: `"surface"` (default) `shadow-surface`, or `"nested"` — border
-     * INSTEAD OF shadow when this face sits INSIDE another face (§1a).
-     *
-     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     * INSTEAD OF shadow when this face sits INSIDE another face.
      */
     variant?: SurfaceCardVariant
     /**
-     * Padding around the content, §10c scale. Default `{4}`. Set `{1}` when the child
+     * Padding around the content. Default `{4}`. Set `{1}` when the child
      * hugs the edge itself (a bleed-edge cover image) — still keeps
      * `overflow-hidden` so rounding clips a bleeding child correctly.
      *
-     * 2026-07-26 (instructor): changed from `flushContent?: boolean` (`flushContent=true` →
-     * `padding={1}`). An INDEPENDENT axis from `variant` — a `nested` card AND
+     * An INDEPENDENT axis from `variant` — a `nested` card AND
      * `padding={1}` is a real combination (a bleed-edge image inside a nested
      * card); merging them would kill that combo.
      */
@@ -209,25 +206,15 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
      * Use on EXACTLY ONE card that needs to stand out on a face — two cards
      * both highlighted cancel each other's emphasis out.
      *
-     * ⭐ 2026-07-26 (instructor: "just add isHighlight"): this used to be a
-     * separate component, `HighlightCard`, wrapping OUTSIDE the card. But it
-     * built no card chrome of its own — it just inserted an effect `div` — so
-     * filing it under the `Cards` family meant filing a *decorator* under the
-     * *card-face frame* family, and the caller had to nest two layers for one
-     * thing. As a prop, the outer layer disappears.
-     *
      * ⚠️ The visual lives in the GLOBAL class `.highlight-card-sweep`
      * (`src/app/globals.css`), not in this file — fixing the sweep effect means
-     * going to `src` (§0). This is the only node in the `SurfaceCard` tree in
+     * going to `src`. This is the only node in the `SurfaceCard` tree in
      * that situation.
      */
     isHighlight?: boolean
     /**
      * Press handler — set (with or without `href`) to render the WHOLE CARD as a
-     * `<button>`/`<a>` instead of a plain `<div>` (§ "isPressable" convention,
-     * instructor's 2026-07-29 merge — matches `List.Row`'s own `const isPressable =
-     * Boolean(onPress || href)`; was a separate component `SurfaceCard.Pressable`
-     * before this). Ripple + `active:scale-[0.97]` press feedback, no hover
+     * `<button>`/`<a>` instead of a plain `<div>`. Ripple + `active:scale-[0.97]` press feedback, no hover
      * effect at rest (hover is inert by design — the only feedback IS the
      * press). Ignored when `href` is also set.
      */
@@ -294,15 +281,13 @@ const Base = ({
     const paddingCls = padding === 1 ? "overflow-hidden" : PADDING_CLASS[padding]
     // A card is PRESSABLE the moment it gets `onPress`/`href` — same derived-not-
     // passed convention `List.Row` already uses (`const isPressable = Boolean(onPress
-    // || href)`). Was a SEPARATE component, `SurfaceCard.Pressable` (instructor, 2026-07-29:
-    // "why still have .Pressable, when it's already become isPressable as a prop?") — folded in here so
-    // every card face (bare or pressable) shares ONE frame/padding/variant path.
+    // || href)`).
     //
     // NEVER pressable while `isSkeleton`, though: nothing underneath can be
     // pressed yet, so a loading card falls through to the plain (non-interactive)
     // `!isPressable` branch below and simply renders `content` — the caller's own
-    // tree, already carrying `isSkeleton` down to whatever atoms it composed
-    // (§12c). COMPOSITE-10: this frame does not own a second "generic tile"
+    // tree, already carrying `isSkeleton` down to whatever atoms it composed.
+    // This frame does not own a second "generic tile"
     // shimmer of its own for the pressable case — same frame, same padding,
     // flag forwarded, exactly like the non-pressable path.
     const isPressable = !isSkeleton && Boolean(onPress || href)
@@ -310,10 +295,8 @@ const Base = ({
     if (!isPressable) {
         // `relative` — WITHOUT it this div is `static`, and `.highlight-card-sweep`
         // (`position: absolute`) paints ABOVE any `static` sibling regardless of DOM
-        // order, covering the card's own content instead of sitting behind it
-        // (instructor, 2026-07-29, caught live: the sweep visibly cut across the CTA
-        // button). The Pressable branch below already carries `relative` for the
-        // same reason — this branch had simply dropped it.
+        // order, covering the card's own content instead of sitting behind it.
+        // The Pressable branch below carries `relative` for the same reason.
         card = (
             <div
                 className={cn("relative", surfaceFrame(variant), paddingCls, isSelected && "ring-2 ring-accent", contentClassName)}
@@ -322,15 +305,13 @@ const Base = ({
             </div>
         )
     } else if (!actions) {
-        // Whole card IS the press target. TWO different hover languages, per the
-        // instructor (2026-07-29): a real navigation LINK (`href`) reads as a link, not an
-        // action button — no ripple/press-scale, just `.group` so the content
-        // can opt into the quiet `underlineOnGroupHover` convention
-        // (`Typography`'s own prop, shared with `SurfaceCardListItem.hover=
-        // "underline"`). An in-place ACTION (`onPress`, no `href`) keeps the
-        // ripple + `active:scale-[0.97]` push-in carried over VERBATIM from the
-        // old `.Pressable` "simple" branch — no hover effect at rest, the press
-        // IS the only feedback.
+        // Whole card IS the press target. TWO different hover languages: a real
+        // navigation LINK (`href`) reads as a link, not an action button — no
+        // ripple/press-scale, just `.group` so the content can opt into the quiet
+        // `underlineOnGroupHover` convention (`Typography`'s own prop, shared with
+        // `SurfaceCardListItem.hover="underline"`). An in-place ACTION (`onPress`, no
+        // `href`) keeps the ripple + `active:scale-[0.97]` push-in — no hover effect
+        // at rest, the press IS the only feedback.
         const isLink = Boolean(href) && !isDisabled
         const frameCls = cn(
             "relative block w-full overflow-hidden text-left outline-none focus-visible:ring-2 focus-visible:ring-accent [-webkit-tap-highlight-color:transparent]",
@@ -426,12 +407,11 @@ const Base = ({
             {card}
         </div>
     ) : card
-    // The frame owns this text so it wraps the atom (§4) — and so the flag simply
+    // The frame owns this text so it wraps the atom — and so the flag simply
     // flows straight into that same atom, instead of branching off to build a
-    // separate shimmer bar.
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): bare Typography →
-    // RichText — description is a "small richtext" tier. Same mold as before:
-    // isSkeleton flows straight down as a prop, no branching into two components.
+    // separate shimmer bar. Description is a "small richtext" tier, so it renders
+    // as RichText, not bare Typography; isSkeleton flows straight down as a prop,
+    // no branching into two components.
     const caption = <RichText size="body-xs" color="muted" isSkeleton={isSkeleton} text={description ?? ""} />
     const cardWithCaption = description != null ? (
         <StackV
@@ -514,8 +494,6 @@ export interface SurfaceCardNestedProps extends SlotProps {
     /**
      * Corner radius: `"3xl"` (default) or `"xl"` (tighter, for cramped contexts
      * like a chat bubble).
-     *
-     * 2026-07-26 (instructor): changed from `compact?: boolean` (`compact=true` → `radius="xl"`).
      */
     radius?: "xl" | "3xl"
     /**
@@ -524,8 +502,6 @@ export interface SurfaceCardNestedProps extends SlotProps {
      * `bg-surface-secondary` bubble, a modal/page card). Only leave
      * `variant="surface"` (default) when rendering DIRECTLY on
      * `bg-background`, with no parent face.
-     *
-     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
      */
     variant?: SurfaceCardVariant
     /**
@@ -768,25 +744,17 @@ const Ripple = ({ ripples, onClear }: RippleProps) => (
         })}
     </AnimatePresence>
 )
-// ⭐ `SurfaceCard.Pressable` REMOVED (instructor, 2026-07-29, "isPressable is already
-// a prop, isn't it?") — its whole render tree (ripple + active:scale simple branch, the
-// stretched-link actions branch) now lives INSIDE `Base` above, reached the same
-// way `List.Row` already reaches it: passing `onPress`/`href` derives
-// `isPressable` internally instead of importing a separate component. Callers
-// that used to write `<SurfaceCardPressable href={x}>` now write
-// `<SurfaceCard href={x}>` — same card, same props, one fewer name to import.
+// `SurfaceCard` derives `isPressable` internally from `onPress`/`href` — the
+// same way `List.Row` does — instead of a separate component. Its render tree
+// (ripple + active:scale simple branch, the stretched-link actions branch)
+// lives INSIDE `Base` above.
 // ─────────────────────────────────────────────────────────────────────────────
-// .PressableGroup — a grid of press targets (was `GroupPressableCard`)
+// .PressableGroup — a grid of press targets
 // ─────────────────────────────────────────────────────────────────────────────
 // Columns by container step: use {@link GridColumns} from `Grid` directly —
-// the ONE grid system of the frame tier (§13).
-//
-// 2026-07-26 (instructor): removed the local `SurfaceCardPressableGroupColumns`
-// table (7 steps `base/sm/md/lg/xl/xl3/xl4`, built with `@sm:`/`@md:`…) — that
-// was Tailwind's HALF-SIZE container scale (`@sm` = 24rem), completely
-// different from the `@app-*` scale (`@app-sm` = 40rem) that `Container`/
-// `Grid` and the rest of the system use. Every breakpoint in the old table
-// was silently firing at the wrong point compared to the rest of the app.
+// the ONE grid system of the frame tier. Use the `@app-*` container scale
+// (`@app-sm` = 40rem), not Tailwind's half-size `@sm` = 24rem scale, so
+// breakpoints fire at the same points as the rest of the system.
 /** One pressable card inside a {@link SurfaceCardPressableGroup}. */
 export interface SurfaceCardPressableGroupItem {
     /** Stable React key. Also fixes the item's position for the 1–N shortcut. */
@@ -844,18 +812,12 @@ export interface SurfaceCardPressableGroupProps {
      */
     ariaLabel: string
     /**
-     * Responsive column count — grid built with `Grid` (§13). Defaults to a
+     * Responsive column count — grid built with `Grid`. Defaults to a
      * single column.
-     *
-     * 2026-07-26 (instructor): changed from the local `SurfaceCardPressableGroupColumns`
-     * (7 steps, half-size container scale) to the shared {@link GridColumns}
-     * used tier-wide (4 steps `base/sm/md/lg`, `@app-*` scale).
      */
     columns?: GridColumns
     /**
-     * Gap between cards, §10c scale. Defaults to `{4}` (`gap-3`).
-     *
-     * 2026-07-26 (instructor): changed the type from a local `2 | 3` to the shared {@link AllowedGap}.
+     * Gap between cards. Defaults to `{4}` (`gap-3`).
      */
     gap?: AllowedGap
     /**
@@ -908,8 +870,7 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
 /**
  * One skeleton placeholder tile — mirrors {@link TILE_CHROME} + the standard
  * ProfileCard content shape (avatar + title + description), so the loading grid
- * holds the real shape these card-grids carry (decided 2026-07-22: skeleton
- * follows the ProfileCard pattern).
+ * holds the real shape these card-grids carry.
  */
 /** Props for the local {@link PressableGroupSkeletonTile}. */
 interface PressableGroupSkeletonTileProps {
@@ -1011,10 +972,9 @@ const PressableGroup = ({
             </div>
         )
     }
-    // 2026-07-26 (instructor): removed the self-opened `<div className="@container">`
-    // — from now on `Container` is where the frame tier OPENS a container
-    // (one frame, not every frame opening its own). Grid built with `Grid`
-    // (§13, the tier's ONE grid system) instead of hand-declaring `grid`/`grid-cols-*`.
+    // `Container` is where the frame tier OPENS a container (one frame, not every
+    // frame opening its own). Grid built with `Grid`, the tier's ONE grid system,
+    // instead of hand-declaring `grid`/`grid-cols-*`.
     return (
         <div
             role="group"
@@ -1225,16 +1185,15 @@ export interface SurfaceCardListItem {
     /**
      * Leading icon as a COMPONENT REF — the frame builds it and forces
      * `size-5`, colour follows the text (foreground), NOT downgraded to muted.
-     * The path for callers who must NOT hold an atom/JSX (SCREEN, §"only block":
-     * decided 2026-07-25). Loses to `leading` when both are passed; other
-     * blocks still use `leading`.
+     * The path for callers who must NOT hold an atom/JSX. Loses to `leading`
+     * when both are passed; other blocks still use `leading`.
      */
     leadingIcon?: ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
     /**
      * Set → the leading icon carries a STATUS meaning (a checklist "done", a
      * pass/fail row) instead of following the label's colour — reuses `Alert`'s
-     * own `AlertStatus` (§5.0/`Alert.Base`, instructor, 2026-07-29) rather than a
-     * bespoke enum, so this row's status vocabulary never drifts from Alert's.
+     * own `AlertStatus` rather than a bespoke enum, so this row's status
+     * vocabulary never drifts from Alert's.
      * Omit → unchanged existing behaviour (icon follows the label/foreground).
      */
     leadingIconColor?: AlertStatus
@@ -1416,13 +1375,11 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         ? <Typography size="sm" weight="medium"
  color="accent-soft" text={metaText} />
         : null)
-    // DIV position (icon §1c/§4.2): the row is a control with FIXED `p-3` padding (not
-    // hug-content), and its title is `text-sm` ⇒ line-height size = `size-5` — the SAME
-    // formula the row's own `LeadingIcon` (line above) and the `selected` `CheckCircleIcon`
-    // below already use. The previous `size-4` + forced `weight="bold"` was compensating
-    // for the WRONG size (comparing against `size-5` neighbours in the same row) rather
-    // than fixing the size itself (instructor's final call, 2026-07-29) — at `size-5`, weight defaults
-    // to Phosphor's `regular` (§3.2), matching `LeadingIcon`.
+    // DIV position (icon): the row is a control with FIXED `p-3` padding (not
+    // hug-content), and its title is `text-sm` ⇒ line-height size = `size-5` — the
+    // SAME formula the row's own `LeadingIcon` (line above) and the `selected`
+    // `CheckCircleIcon` below use. At `size-5`, weight defaults to Phosphor's
+    // `regular`, matching `LeadingIcon`.
     const trailingSlot = Trailing ? <Trailing /> : (TrailingIcon ? <TrailingIcon aria-hidden focusable="false" className="size-5 text-muted" /> : null)
     const content = (
         <>
@@ -1556,8 +1513,7 @@ const List = ({
         </div>
     )
     if (bare) return surface
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): bare Typography →
-    // RichText, same reasoning as the caption above.
+    // RichText, not bare Typography — same reasoning as the caption above.
     const caption = <RichText size="body-xs" color="muted" isSkeleton={isSkeleton} text={description ?? ""} />
     const withCaption = description != null ? (
         <StackV
@@ -1603,9 +1559,7 @@ export interface SurfaceCardAccordionItem {
     id: string
     /**
      * Trigger headline (the always-visible row). Plain string, no markdown at
-     * all — not even backtick code (instructor's final call, 2026-07-30, feedback
-     * ChallengePage/Graded round-2, reversing the 2026-07-29 backtick
-     * exception: title tier is plain, full stop).
+     * all — not even backtick code.
      */
     title: string
     /** Optional muted second line in the trigger. Text, same reasoning as {@link SurfaceCardAccordionItem.title}. */
@@ -1720,10 +1674,8 @@ const AccordionCard = ({
                             className="text-left"
                             body={
                                 <>
-                                    {/* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2, instructor's
-                                        final call): reverses the 2026-07-29 decision — title does NOT render
-                                        markdown, not even backtick-only via `parseInlineCode`. Title tier is
-                                        now plain, absolutely. */}
+                                    {/* title does NOT render markdown, not even backtick-only via `parseInlineCode`.
+                                        Title tier is plain, absolutely. */}
                                     <Typography size="sm" weight="medium" truncate text={item.title} />
                                     {item.subtitle != null ? (
                                         <Typography size="xs" color="muted" truncate text={item.subtitle} />
@@ -1804,11 +1756,11 @@ const AccordionCard = ({
 /** Per-row mark: success check · muted cross · NEUTRAL pending (not yet decided) · none. */
 export type ListMark = "check" | "cross" | "pending" | "none"
 /**
- * Tone of the mark — prominence climbs by TONE, the element stays (§2d):
+ * Tone of the mark — prominence climbs by TONE, the element stays:
  * `success` (green ✓ signal) · `muted` (recede, text leads) · `danger` (red — a hard
  * NEGATIVE signal: lost/blocked/warning row, not just "not included") · `neutral`
  * (`text-foreground`, same weight as body text — "not decided yet", NOT "unimportant";
- * §5a.3, teacher 2026-07-29: an icon carrying STATUS meaning must read the status, and
+ * an icon carrying STATUS meaning must read the status, and
  * `muted` reads as the latter).
  */
 export type MarkTone = "success" | "muted" | "danger" | "neutral"
@@ -1819,7 +1771,7 @@ const TONE_CLS: Record<MarkTone, string> = {
     neutral: "text-foreground",
 }
 /** {@link markIcon} — exported so a caller (e.g. a progress row) can reuse the ONE
- * icon-per-status mapping instead of hand-rolling a parallel one (instructor's final call, 2026-07-29). */
+ * icon-per-status mapping instead of hand-rolling a parallel one. */
 export const markIcon = (mark: ListMark, tone: MarkTone | undefined): ReactNode => {
     if (mark === "check") {
         return (
@@ -1880,9 +1832,7 @@ export interface SurfaceCardCrossListProps {
     /**
      * `"surface"` (default) `shadow-surface`, or `"nested"` — border INSTEAD OF
      * shadow when this list sits INSIDE another face (modal/drawer/panel) —
-     * where shadow is invisible (§1a).
-     *
-     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     * where shadow is invisible.
      */
     variant?: SurfaceCardVariant
     /** `true` → self-render `skeletonRows` placeholder rows (mark + text mirror) instead of `items`. */

@@ -23,11 +23,9 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * One list cannot drift from the render; a filtered copy always can.
  */
 export const PARTS: Array<AnatomyNode> = [
-    // 2026-07-27 (mentor: "a screen has layout components too, and they update the
-    // deps tree, then RECURSE into its children"): a FRAME is a DEP too. Before, the
-    // screen tree only listed blocks, so reading the tree gave no idea what laid this
-    // page out — `Container` (reading width + page padding) and `StackV` (rhythm
-    // between blocks) were invisible even though they decide the entire page frame.
+    // A FRAME is a DEP too, and the tree recurses into its children: `Container`
+    // (reading width + page padding) and `StackV` (rhythm between blocks) decide the
+    // entire page frame, so the screen tree lists them, not just blocks.
     {
         name: "Container",
         tier: "frame",
@@ -70,12 +68,9 @@ export const PARTS: Array<AnatomyNode> = [
     // leaf. A story-id gate can only prove an id EXISTS; that it points at the right leaf
     // is a reader's job (`scripts/check-story-ids.mjs` deliberately says so).
     { name: "TrialConversionStrip", tier: "block", role: "trial→enroll conversion strip; the screen drops it entirely once purchased", storyId: "starci-blocks-commerce-trialconversionstrip-trialconversionstrip--default" },
-    // 2026-07-27 (mentor: "design is only the place for UI/UX"): this node USED TO BE
-    // `ContinueCard` at tier `design` — the screen skipped straight over the block tier,
-    // and looking at the tree you could see the mismatch right away: the other five
-    // nodes were `block`, this one alone was `design`. Now the screen calls the
-    // `ContinueLearning` block, and that block is the one that composes the copy before
-    // handing it down to design.
+    // `design` is only the place for UI/UX: the screen must not skip the block tier.
+    // The screen calls the `ContinueLearning` block, and that block is the one that
+    // composes the copy before handing it down to design.
     { name: "ContinueLearning", tier: "block", role: "resume where you left off — the block writes the copy from NUMBERS (lessons read · challenges); the design only draws", storyId: "starci-blocks-learn-continuelearning-continuelearning--default" },
     { name: "LearnNudges", tier: "block", role: "what to do today — cards due · mock interview · rank. The screen passes `kind` (ENUM); the block picks the icon (§14b)", storyId: "starci-blocks-learn-learnnudges-learnnudges--nudges" },
     { name: "KeepGoingPath", tier: "block", role: "lessons of the current module — bordered SurfaceCardList; each row: state icon · title · reading time · difficulty chip · lock icon", storyId: "starci-blocks-learn-keepgoingpath-keepgoingpath--path" },
@@ -101,12 +96,11 @@ export interface DeviceLeafArgs {
 }
 
 /**
- * The Code tab's snippet for one leaf — §12g.3 demands EVERY leaf carry `code`, and
- * teacher confirmed 2026-07-27 that "the 5 layers are identical in form": a screen owes
+ * The Code tab's snippet for one leaf — EVERY leaf carries `code`: a screen owes
  * the same two tabs as an atom does.
  *
  * The snippet is built from the very args that produced the render, so it can never drift
- * from what is on screen — hand-writing one snippet per device × state (12 stories) would
+ * from what is on screen — hand-writing one snippet per device × state would
  * have gone stale on the first prop rename.
  */
 const leafCode = ({ width, isSkeleton, isEmpty, viewer }: Required<Pick<DeviceLeafArgs, "isSkeleton" | "isEmpty" | "viewer">> & { width?: number }) => {
@@ -133,8 +127,7 @@ export const deviceLeaf = ({ width, isSkeleton = false, isEmpty = false, viewer 
     <div className="p-8">
         <BlockAnatomy
             name="CourseContents"
-            // `screen`, NOT `block` — it used to lie because the `AnatomyTier` union had
-            // no `screen` member (fixed 2026-07-27 together with this).
+            // `screen`, NOT `block`.
             tier="screen"
             leaf={leaf}
             parts={PARTS}

@@ -70,8 +70,8 @@ const Frame = ({ width, label, children }: FrameProps) => (
     </div>
 )
 
-// No `Flex` node here (2026-07-28): same reasoning as `StackV` — the track's own root no
-// longer self-badges with the internal box's name, since `Flex` has no story of its own.
+// No `Flex` node here: same reasoning as `StackV` — the track's own root does not
+// self-badge with the internal box's name, since `Flex` has no story of its own.
 const DIVIDER_PARTS: Array<AnatomyNode> = [
     {
         name: "Divider",
@@ -111,11 +111,9 @@ export const Default: Story = {
  * `gap` applies to BOTH axes, so the space between lines matches the space between
  * children.
  *
- * 2026-08-01 (wave-3 numeric-scale migration, FRAME-10): `wrap?: boolean` is gone with
- * no deprecated stage. A boolean said only THAT the row could reflow, never WHERE — the
- * same row broke at a different width on every screen depending on the string, the
- * translation, the font. `at` names the width instead, the same fix `RailShell` already
- * made for its own stack↔row switch.
+ * `at` names the width to reflow at, rather than a boolean: a boolean says only THAT
+ * the row could reflow, never WHERE — the same row would break at a different width on
+ * every screen depending on the string, the translation, the font.
  */
 export const At: Story = {
     render: () => (

@@ -173,17 +173,7 @@ const Base = ({
     return (
         <div className={cn(className)} style={{ width }}>
             {children}
-            {/* ⚠️ 2026-07-28: this used to also emit an anatomy-only "Content" marker span
-                here (an inset-0 marker for the rail body region). Dropped: `children` is a
-                CALLER slot — whatever the caller renders as the rail body belongs to THEIR
-                own anatomy, not this frame's, and no story ever declared "Content" (there is
-                no component behind it to link to), so the marker only ever rendered into the
-                DOM invisibly. */}
-            {/* splitter: a thin line at the chosen edge that thickens to accent on hover/drag.
-                ⚠️ 2026-07-28: `` was dropped too — the splitter is this
-                frame's own internal geometry (no component/story of its own to link a reader
-                to, same as `Grid`'s per-cell wrapper), so the badge only ever rendered
-                invisibly as well. */}
+            {/* splitter: a thin line at the chosen edge that thickens to accent on hover/drag. */}
             <div
                 role="separator"
                 aria-orientation="vertical"

@@ -7,8 +7,6 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * Ported from `@/components/blocks/identity/SnippetIcon`.
- *
  * The trigger has no `classNames` hook into its internal icons — only the root
  * takes `classNames`.
  *

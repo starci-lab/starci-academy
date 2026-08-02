@@ -21,9 +21,9 @@ import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allo
 /**
  * Semantic tone — colours icon + text together. Omit for foreground (inherits currentColor).
  *
- * Alias, not a redeclaration (teacher's call, 2026-07-29): the same five values
- * {@link AlertStatus} already carries — neutral is `default`, matching every
- * other status-driven prop in the system instead of this composite's own `muted`.
+ * Alias, not a redeclaration: the same five values {@link AlertStatus} already
+ * carries — neutral is `default`, matching every other status-driven prop in
+ * the system.
  */
 export type InlineIconLabelTone = AlertStatus
 
@@ -49,8 +49,8 @@ const SKELETON_ICON = "size-4"
 const SIZE_CONFIG: Record<InlineIconLabelSize, SizeConfig> = {
     // gap-1 = 4px = the step-2 joint; an icon + its text as ONE thing — `icon-text`.
     xs: { gap: "gap-1", pattern: "icon-text" },
-    // `affordance` (gap-2, 8px) is retired: an icon next to text is `icon-text`, step 2, 4px,
-    // whether or not it is clickable (teacher's ruling, 2026-08-01).
+    // An icon next to text is `icon-text`, step 2, 4px, whether or not it is
+    // clickable.
     sm: { gap: "gap-1", pattern: "icon-text" },
 }
 
@@ -83,9 +83,9 @@ export interface InlineIconLabelProps {
     /** `true` → render the skeleton mirror (icon dot + text bar). */
     isSkeleton?: boolean
     /**
-     * Width of the label's shimmer, as a fraction of the row. Narrowed from `string` on
-     * 2026-07-31: this value is handed straight to `Typography`, whose `classNames` is a closed
-     * union, so an unconstrained string here would only fail one tier down.
+     * Width of the label's shimmer, as a fraction of the row. This value is
+     * handed straight to `Typography`, whose `classNames` is a closed union, so
+     * an unconstrained string here would only fail one tier down.
      */
     skeletonWidth?: SkeletonWidth
     /**

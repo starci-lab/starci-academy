@@ -32,15 +32,6 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /**
  * The byline slot's component. Forwards `isSkeleton` into its own `Typography`
  * atoms so the row's shimmer covers the byline too, not only the avatar.
- *
- * `wrap` dropped 2026-08-01 (wave-3 numeric-scale migration): `StackH`/`Flex`
- * lose the boolean entirely this session (responsive.md's open question
- * resolved against it), and this row never had a "why" of its own for wrapping
- * — no `at` threshold was ever named here, so it matches the "two dead call
- * sites" half of that question, not the "genuinely uneven pair" half. Three
- * short items (a name, a small badge, a timestamp) do not reflow at any
- * container width this composite is actually used at, so the safe fix is to
- * drop the prop rather than invent a threshold nobody chose.
  */
 const Byline = ({ isSkeleton }: { isSkeleton?: boolean }) => (
     <StackH

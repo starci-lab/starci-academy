@@ -26,13 +26,12 @@ const CRUMBS = [
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    // ⭐ 2026-07-27 (instructor: "a screen has layout components too, and they go
-    // into the deps tree, then RECURSE into its children"): a FRAME is a DEP at
+    // A FRAME is a DEP at
     // EVERY tier too. Without it the tree reads without knowing what this block
     // is laid out with — and the frame is exactly what decides the shape.
     // The node below IS `Typography` built by the block itself, for the title, the
     // description, and the meta line alike (real content or its skeleton mirror) ⇒ it has
-    // its own door, must be declared (decided 2026-07-27: "nothing is allowed to stand
+    // its own door, must be declared ("nothing is allowed to stand
     // outside the tree").
     "Typography": { tier: "atom", role: "one of the header's own text lines — the course title, its description, or the modules/hours/learners meta strip — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
     "PageHeader": { tier: "composite", role: "the page-header frame that lines up the breadcrumb, title, description, and meta line, owning the type scale for all four", storyId: "composites-layout-page-pageheader--full" },

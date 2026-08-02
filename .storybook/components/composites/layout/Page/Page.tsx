@@ -306,8 +306,5 @@ const BottomBar = ({
  * |---|---|
  * | `.Header` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
  * | `.BottomBar` | `body`/`actions` slots (+ `children` = body) |
- *
- * `.Container` moved to `Container` (`@sb-components/frames/Container/Container`)
- * on 2026-07-26 — see the history note at the top of this file.
  */
 export { Header as PageHeader, BottomBar as PageBottomBar }

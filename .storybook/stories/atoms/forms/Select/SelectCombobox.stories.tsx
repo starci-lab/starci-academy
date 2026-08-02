@@ -148,11 +148,6 @@ export const Required: Story = {
 /**
  * Leaf prop `value` — an empty box shows the muted `placeholder`; once a
  * selection is made the box carries the chosen option's label.
- *
- * ⚠️ Renamed 2026-07-26 (from `Labeled`): this leaf used to also carry `label`,
- * but `label` already had a home in the `WithLabel` leaf ⇒ two leaves showing off
- * the same prop, against §12g. Dropped `label`, returning the leaf to just the
- * prop it owns. `isDisabled` was also split out into the `Disabled` leaf the same day.
  */
 export const Value: Story = {
     render: () => {

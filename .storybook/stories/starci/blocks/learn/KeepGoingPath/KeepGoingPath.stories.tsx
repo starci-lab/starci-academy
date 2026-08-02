@@ -46,8 +46,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * lesson states (done · active · todo) · all 4 difficulty steps · a locked
  * lesson.
  *
- * ⛔ Do NOT render two copies to show off `bordered` (teacher's call
- * 2026-07-26): the app has NO surface-in-surface case ⇒ `bordered` would be a
+ * ⛔ Do NOT render two copies to show off `bordered`: the app has NO surface-in-surface case ⇒ `bordered` would be a
  * MADE-UP case. A block doesn't invent cases just to round out the set.
  */
 export const Path: Story = {

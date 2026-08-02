@@ -128,14 +128,10 @@ export const WithLabel: Story = {
     ),
 }
 /**
- * `variant` — the surface-in-surface AXIS (§1a), independent of every other axis.
+ * `variant` — the surface-in-surface AXIS, independent of every other axis.
  * Renders the FULL union side by side: `"surface"` (default, `shadow-surface` on a
  * bare background) / `"nested"` (a border replaces the shadow, when this frame sits
- * INSIDE a parent surface) — replacing the old `Bordered` leaf that only acted out
- * half the union.
- *
- * 2026-07-26 (teacher): merged from the `Bordered` leaf (changed from
- * `bordered?: boolean` to `variant?: SurfaceCardVariant`).
+ * INSIDE a parent surface).
  */
 export const Variants: Story = {
     render: () => (

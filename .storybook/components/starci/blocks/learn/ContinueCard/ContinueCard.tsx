@@ -123,13 +123,10 @@ const CardBody = ({
 
     return (
         <>
-            {/* ⭐ 2026-07-27 (teacher: "layout is built from layouts components"): this used to
-                be `<div className="relative flex items-center gap-3">` ⊃ `<div className="flex
-                min-w-0 flex-1 flex-col gap-2">` hand-rolled.
-                The outer row = ONE horizontal track ⇒ `StackH` (children are ARBITRARY, not a
-                repeating list so NOT `Cluster` — §13b). The inner column = a vertical track ⇒ `StackV`.
+            {/* The outer row = ONE horizontal track ⇒ `StackH` (children are ARBITRARY, not a
+                repeating list so NOT `Cluster`). The inner column = a vertical track ⇒ `StackV`.
                 `min-w-0 flex-1` stays in `className`: that's its PLACEMENT within the parent row
-                (§14d.1 allows `className` for placement), not the scaffold's own shape. */}
+                (`className` is allowed for placement), not the scaffold's own shape. */}
             <StackH
                 gap={4}
                 align="center"
@@ -139,8 +136,8 @@ const CardBody = ({
                     <StackV gap={3} classNames={["min-w-0", "flex-1"]} body={titleAndMeta} />
                 }
             />
-            {/* Progress SITS right under the text cluster, BEFORE the button (teacher
-            eyeballed 2026-07-25): where am I → how much progress → what's next. Put it
+            {/* Progress SITS right under the text cluster, BEFORE the button:
+            where am I → how much progress → what's next. Put it
             after the CTA and it reads as detached from the card, misread as belonging to the block below. */}
             {value === undefined ? null : isSkeleton ? (
                 // `ProgressMeter` (scaffold) has no `isSkeleton` yet and sits outside this

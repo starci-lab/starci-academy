@@ -35,7 +35,7 @@ const meta: Meta<typeof TabsExtended> = {
 }
 export default meta
 type Story = StoryObj<typeof TabsExtended>
-/** heroui TIER (2026-07-27) — the only DOM node this atom owns, the root `<Tabs>`. */
+/** heroui TIER — the only DOM node this atom owns, the root `<Tabs>`. */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Tabs": { tier: "heroui", role: "the root strip; the Tabs.ListContainer > Tabs.List > Tabs.Tab tree inside is the CALLER's own children" },
 }

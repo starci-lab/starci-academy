@@ -30,7 +30,7 @@ export interface CourseBriefBaseProps {
     /** One-sentence course description. */
     description?: string
     /**
-     * ⛔ NO pre-formatted `meta` string prop (teacher's call 2026-07-26).
+     * ⛔ NO pre-formatted `meta` string prop.
      * Passing `meta="8 modules · ~14h · 2,481 learners"` is **breaking the
      * structure**: the caller ends up deciding the join, units, and separator —
      * the block loses ownership of its own shape. Below are separate NUMBER

@@ -124,9 +124,8 @@ export interface ProfileHeroProps {
 /**
  * Ring tone for a ranked avatar — top-3 gets the strongest (warning) frame,
  * any other rank a quieter accent frame, no rank at all → no ring. A fact
- * about standing, not decoration chosen for its own sake (file header,
- * judgement call 2). The atom (`Avatar`'s `ring` prop, added 2026-07-31) now
- * owns the frame's shape; this only picks the tone.
+ * about standing, not decoration chosen for its own sake. The atom (`Avatar`'s
+ * `ring` prop) owns the frame's shape; this only picks the tone.
  */
 const rankRingTone = (rank: number | undefined): AvatarRing | undefined => {
     if (rank == null) return undefined

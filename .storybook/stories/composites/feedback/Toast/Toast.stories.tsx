@@ -19,7 +19,7 @@ export default meta
 
 type Story = StoryObj<typeof Toast>
 
-/** Leaf for prop `status` — renders the FULL union, each value its own state (§12g, merge the leaf, split the state). Migrated 2026-07-27. */
+/** Leaf for prop `status` — renders the FULL union, each value its own state (merge the leaf, split the state). */
 export const Statuses: Story = {
     render: () => (
         <div data-tier="fixture" className="max-w-md p-8">
@@ -91,7 +91,7 @@ const UndoAction = ({ isSkeleton }: { isSkeleton?: boolean }) => (
     </HeroButton>
 )
 
-/** Leaf for props `action` / `onClose` — grows an extra Action node + a real × button. Migrated to `states` 2026-07-27. */
+/** Leaf for props `action` / `onClose` — grows an extra Action node + a real × button. */
 export const WithAction: Story = {
     render: () => (
         <div data-tier="fixture" className="max-w-md p-8">

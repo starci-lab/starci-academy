@@ -92,9 +92,9 @@ const ContentDiscussion = ({
     // tradeoff real `Discussion` documents for its own archive line
     const answeredCount = comments.filter((comment) => comment.replyCount > 0).length
 
-    // no icon here — §5a.2 (teacher 2026-07-29): a chat-bubble icon needs an ASSOCIATION
-    // step to read as "discussion" (not a universal symbol like ✓/🔒), and the label
-    // text already carries the full fact on its own.
+    // no icon here: a chat-bubble icon needs an ASSOCIATION step to read as
+    // "discussion" (not a universal symbol like ✓/🔒), and the label text already
+    // carries the full fact on its own.
     const labelLines = (
         <>
             {isSkeleton ? (
@@ -162,9 +162,8 @@ const ContentDiscussion = ({
 
     const discussionBody = (
         <>
-            {/* These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly (teacher
-                2026-07-29, "feels a bit cramped" — the old version was one step looser in all
-                3 spots): [label+archive]↔composer = grouped (gap-3) · [icon+label]↔archive-line
+            {/* These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly:
+                [label+archive]↔composer = grouped (gap-3) · [icon+label]↔archive-line
                 = tight (gap-1) · icon↔label = related (gap-2). */}
             <StackV gap={4} body={discussionHeader} />
 

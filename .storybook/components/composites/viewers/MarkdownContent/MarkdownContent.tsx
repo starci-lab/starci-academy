@@ -316,10 +316,7 @@ export interface MarkdownContentProps {
     classNames?: Array<AllowedClassName>
     /**
      * `true` → render a 2-line shimmer mirror instead of the real document
-     * (§12c: the owner of the shape owns the skeleton). Added 2026-07-29 —
-     * before this, callers faked it by swapping in an unrelated `Typography
-     * isSkeleton`, the one call-site left doing that (`MockInterviewScorecard`)
-     * has since been switched to this prop instead.
+     * (the owner of the shape owns the skeleton).
      */
     isSkeleton?: boolean
 }

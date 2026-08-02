@@ -19,10 +19,9 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  */
 
 /**
- * Proper display casing for common fence languages (teacher's call 2026-07-29: map
- * `typescript` to `TypeScript` — a blanket `text-transform: uppercase` reads
- * `TYPESCRIPT`/`DOCKERFILE` for everything, which is wrong for names that are properly
- * MIXED-case, not all-caps).
+ * Proper display casing for common fence languages: map `typescript` to `TypeScript` —
+ * a blanket `text-transform: uppercase` reads `TYPESCRIPT`/`DOCKERFILE` for everything,
+ * which is wrong for names that are properly MIXED-case, not all-caps.
  * A language missing from this table falls back to the raw fence identifier as authored
  * (see {@link languageLabel}) rather than guessing a casing rule for it.
  */

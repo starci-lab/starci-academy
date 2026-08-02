@@ -200,7 +200,7 @@ export const Compact: Story = {
     ),
 }
 
-/** LEAF — the caller flips `isSkeleton`; a 2-line shimmer mirror stands in for the document (§12c, added 2026-07-29 so callers stop faking it with an unrelated atom). */
+/** LEAF — the caller flips `isSkeleton`; a 2-line shimmer mirror stands in for the document. */
 export const Skeleton: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

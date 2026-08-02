@@ -36,11 +36,9 @@ export interface VariantChipDifficultyProps {
     /** Difficulty tier — decides BOTH the label AND the dot color. The one axis. */
     difficulty: Difficulty
     /**
-     * Extra classes on the wrapper. Narrowed from `string` to a closed union on
-     * 2026-07-31 (ATOM-5): this value is handed straight to `Chip`'s own closed
-     * `classNames` union, so an unconstrained string here would only fail one tier
-     * down. No caller passed `className` at the time of narrowing, so `className`
-     * itself is cut, not kept alongside as a deprecated escape.
+     * Extra classes on the wrapper. A closed union, not a free string: this
+     * value is handed straight to `Chip`'s own closed `classNames` union, so an
+     * unconstrained string here would only fail one tier down.
      */
     classNames?: Array<AllowedClassName>
     /** `true` → shimmer bar mirroring the exact dot+label shape (the atom draws it itself). */
@@ -56,10 +54,6 @@ const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() 
  * language-dot style). A thin wrapper over the `Chip` atom; color comes from
  * {@link DIFFICULTY_COLOR}.
  *
- * ⚠️ Changed 2026-07-26: this used to call `Chip.Dot`. The atom folded the dot
- * into a PROP of the ONE chip, so the dot is now `dotClassName` on `Chip` —
- * no separate member anymore. The shape didn't change, only how you call it.
- *
  * The shape is ALWAYS a pill — the atom's default, and design doesn't expose a
  * shape axis to the caller (see the ⛔ note at the top of this file).
  *
@@ -72,7 +66,7 @@ const VariantChipDifficulty = ({
 }: VariantChipDifficultyProps) => {
     // Part name so the anatomy tree can call out exactly what this design builds —
     // the tree reads off the DOM, so without a name the story reveals nothing
-    // about what it's made of (teacher caught this 2026-07-25).
+    // about what it's made of.
     // The label must be the NAMESPACE name (`Chip`) because readers look it
     // up by story name.
     // Two branches because the atom's `isSkeleton` is a disjoint union (when
@@ -99,8 +93,8 @@ const VariantChipDifficulty = ({
     // The overlay emits an `inset-0` span sitting NEXT TO the chip rather than
     // wrapping it, so `Dot`/`Label` (inside the chip) walking up the ancestor
     // chain never reach `VariantChipDifficulty` → the anatomy tree flattens
-    // wrong, with the two atoms jumping up to sit level with design (teacher
-    // caught this 2026-07-26). The tree is inferred from the DOM, so the name
+    // wrong, with the two atoms jumping up to sit level with design. The tree
+    // is inferred from the DOM, so the name
     // must sit on the node that ACTUALLY contains the children.
     return chip
 }

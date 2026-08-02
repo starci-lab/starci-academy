@@ -24,12 +24,12 @@ export default meta
 type Story = StoryObj<typeof Button>
 
 /**
- * heroui TIER (2026-07-27, teacher's call): `Button` is a leaf atom wrapping
- * HeroUI directly, so its root DOM node IS a real HeroUI import, not a made-up
- * role name — tagged `"Button"`/`"Skeleton"`/`"Spinner"`, matching the identifier
- * imported from `@heroui/react` (`Button as HeroUIButton`, `Skeleton as
- * HeroSkeleton`, `Spinner`). No `storyId`: there's no story of OURS to jump to for
- * a library component.
+ * heroui TIER: `Button` is a leaf atom wrapping HeroUI directly, so its root DOM
+ * node IS a real HeroUI import, not a made-up role name — tagged
+ * `"Button"`/`"Skeleton"`/`"Spinner"`, matching the identifier imported from
+ * `@heroui/react` (`Button as HeroUIButton`, `Skeleton as HeroSkeleton`,
+ * `Spinner`). No `storyId`: there's no story of OURS to jump to for a library
+ * component.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button": { tier: "heroui", role: "the HeroUI button element this atom renders" },
@@ -272,10 +272,9 @@ export const IconSlide: Story = {
 /**
  * Leaf for prop `isIconOnly` — a button that drops the label, glyph only.
  *
- * Merged 2026-07-26: this used to be a SEPARATE component, `Button.Icon`. But an
- * icon-only button isn't a different shape — it's the same button with the label
- * dropped. Keeping two parallel components meant every rule (variant · size ·
- * weight · skeleton) had to be fixed in two places.
+ * An icon-only button isn't a different shape — it's the same button with the label
+ * dropped, so it is not a separate component: two parallel components would mean every
+ * rule (variant · size · weight · skeleton) had to be fixed in two places.
  */
 export const IsIconOnly: Story = {
     render: () => (

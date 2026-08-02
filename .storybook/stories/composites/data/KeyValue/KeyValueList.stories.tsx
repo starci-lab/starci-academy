@@ -145,7 +145,7 @@ export const WithTotal: Story = {
     ),
 }
 
-/** LEAF — the caller flips `isSkeleton`; the scaffold generates `skeletonRows` placeholder `KeyValueRow` nodes itself (§12g.0a, added 2026-07-29). `label`/`value` are `string` (COMPOSITE-8), so loading is never hand-mirrored into `items` — this flag is the only path. */
+/** LEAF — the caller flips `isSkeleton`; the scaffold generates `skeletonRows` placeholder `KeyValueRow` nodes itself. `label`/`value` are `string`, so loading is never hand-mirrored into `items` — this flag is the only path. */
 export const Skeleton: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

@@ -49,14 +49,8 @@ export interface CourseContentsLayoutProps {
     viewer?: "trial" | "paid"
     /**
      * `true` → the whole screen is at REST. The flag flows straight down to every
-     * block, and each block draws its OWN resting shape (§12c) — the screen builds
+     * block, and each block draws its OWN resting shape — the screen builds
      * no shimmer tree of its own.
-     *
-     * 2026-07-27 (teacher: "the top tier needs isSkeleton too, for consistency"):
-     * before this the screen used `state="loading"` — A SEPARATE VOCABULARY just for
-     * this tier, while atom · composite · design · block all already say `isSkeleton`.
-     * Same concept, different name at the top tier, and the reader has to translate
-     * it every time they cross the boundary.
      */
     isSkeleton?: boolean
     /** `true` → the course has no lessons yet; `AsyncContentEmpty` replaces the ENTIRE spine. */
@@ -65,11 +59,7 @@ export interface CourseContentsLayoutProps {
 /**
  * Empty state — the course has no contents yet.
  *
- * The frame and the content each carry THEIR OWN name. Until 2026-07-27 the wrapping
- * `Container` wore `` while the real frame emitted nothing,
- * so the single node in the Empty tree was the CONTAINER wearing the name (and the story
- * link) of the thing inside it, and `Container` — a dep like any other frame — vanished
- * from this state even though the content state declares it.
+ * The frame and the content each carry THEIR OWN name.
  */
 const CourseContentsEmpty = () => (
     <Container
@@ -95,16 +85,13 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     if (isEmpty) {
         return <CourseContentsEmpty />
     }
-    // 2026-07-27: the resting state is NO LONGER a separate tree. Before this there
-    // was a whole `CourseContentsLoading` hand-building a set of gray bars with HeroUI's
-    // `Skeleton` — meaning a SECOND TREE had to be kept in sync with the real tree by
-    // hand, and it HAD DRIFTED: the mirror drew 2 blocks while the real tree has 5.
-    // Now every block takes `isSkeleton` and draws its OWN resting shape (§12c), so
-    // there's only ONE tree left — it can no longer drift.
+    // The resting state is not a separate tree: every block takes `isSkeleton` and
+    // draws its OWN resting shape, so there is only ONE tree left — it can no longer
+    // drift.
     //
-    // VERTICAL rhythm owned by ONE party (§10a). Two deliberately different steps:
+    // VERTICAL rhythm owned by ONE party. Two deliberately different steps:
     // `8` separates the course IDENTITY cluster from the content below (seam between two
-    // REGIONS), `6` is the rhythm between blocks within the same region — §10
+    // REGIONS), `6` is the rhythm between blocks within the same region —
     // "sections-wide vs related-tight", uniform spacing is forbidden.
     const learnSection = (
         <>
@@ -127,12 +114,12 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                     isSkeleton={isSkeleton}
                 />
             ) : null}
-            {/* `hero`, NOT `plain` (teacher's call 2026-07-25): the frameless version
+            {/* `hero`, NOT `plain`: the frameless version
             lets the progress bar drift outside, with nothing holding it in place so it
             reads as belonging to the block below. The hero frame gathers title · meta ·
             progress · CTA into ONE block — this is also the canonical case for
             `HighlightCard`: a single "resume the in-progress session" highlight on the page.
-            NO `eyebrow` (teacher's eye check 2026-07-25): eyebrow exists to STAND IN for
+            NO `eyebrow`: eyebrow exists to STAND IN for
             the frame — a frameless block is what needs a light label line saying what this
             cluster is. The hero already has a frame + arc ring + a "Continue" button, so
             adding "Continue learning" would be saying it twice. */}
@@ -164,10 +151,10 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
 
     const courseContentsSections = (
         <>
-            {/* §11a — the badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
+            {/* The badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
             `PageHeader` composite lives INSIDE that block → drill down in CourseBrief's own
-            story, NOT here. Teacher's call 2026-07-25: this cluster carries business meaning
-            (read/unread) so it's a BLOCK, the screen no longer calls the composite directly. */}
+            story, NOT here. This cluster carries business meaning
+            (read/unread) so it's a BLOCK. */}
             <CourseBrief
 
                 breadcrumbItems={[
@@ -188,20 +175,18 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     const courseContentsBody = <StackV gap={7} body={courseContentsSections} />
 
     return (
-        // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div` (§13):
+        // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div`:
         //   • `mx-auto max-w-3xl p-6` → `Container size="md" padding={6}` — `md` reads
         //     from the token `--container-app-md`, the same 768px but from the RIGHT SOURCE;
         //     `max-w-3xl` is a different scale, and if the token changes it drifts silently
         //     (see the `SIZE_CLASS` JSDoc).
-        //   • `gap-10` → `gap={7}`. `10` is NOT on the §10c scale (0·1·2·3·6·8) — the frame's
-        //     `InsetScale` type means an off-scale value is now a TYPE ERROR at the call site,
-        //     it can no longer slip through. This is exactly where the §10 rule gets enforced.
-        // WARNING, 2026-07-27 — `gap` has been REMOVED from this call: `Container` only applies
-        // `gap` when using the `header`/`footer` slots; passing `body` directly means that
-        // prop is DROPPED SILENTLY. Measured consequence: the seam between `CourseBrief` and
-        // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
-        // card. Writing `gap={7}` with nothing to receive it is worse than not writing it at
-        // all: reading the code makes it look like the rhythm was already set.
+        //   • `gap-10` → `gap={7}`. `10` is NOT on the scale (0·1·2·3·6·8) — the frame's
+        //     `InsetScale` type means an off-scale value is a TYPE ERROR at the call site,
+        //     it can no longer slip through. This is exactly where the spacing rule gets enforced.
+        // NOTE — `Container` only applies `gap` when using the `header`/`footer` slots; passing
+        // `body` directly means that prop is DROPPED SILENTLY. Writing `gap={7}` with nothing to
+        // receive it is worse than not writing it at all: reading the code makes it look like the
+        // rhythm was already set.
         <Container size="md" padding={6} body={courseContentsBody} />
     )
 }

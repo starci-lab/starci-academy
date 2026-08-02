@@ -23,10 +23,6 @@ const members = [
  * The "+N" chip is HeroUI's own `Avatar` reused to hold a count instead of a person
  * (real name, `tier: "heroui"` — no `storyId`, there's no story of ours to jump to for
  * a library component); its skeleton mirror is HeroUI `Skeleton`, same reasoning.
- *
- * ⚠️ 2026-07-28 (naming pass): renamed from role-words `Avatar`/`Overflow` to the REAL
- * component each node renders — `Avatar` (ours) vs bare `Avatar` (HeroUI's own),
- * so the two no longer collide under one borrowed name.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Avatar": {

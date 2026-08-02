@@ -62,20 +62,14 @@ export interface ContainerBaseProps {
      */
     size?: ContainerSize
     /**
-     * Padding around the content. Default `6` (teacher's call: web measure = `p-6`). Set `1`
+     * Padding around the content. Default `6`. Set `1`
      * (`p-0`) when the child hugs the edge itself (edge-to-edge cover image, a table that
      * scrolls horizontally).
      */
     padding?: Responsive<PaddingValue>
     /**
      * The content this measure wraps. ONE region — a measure has no second one.
-     *
-     * ⭐ 2026-07-27: `header`/`footer`/`gap` were REMOVED. A container that owns page
-     * regions AND the rhythm between them is doing a second job, and it did that job
-     * badly: `gap` only applied when a slot was used, so `CourseContents` wrote
-     * `gap="page"` and MEASURED 0px. The fix in the field was `Container > StackV` —
-     * i.e. the slots were a weaker copy of `StackV`, and reality already voted.
-     * A measure now owns exactly one thing: how wide the reading column is.
+     * A measure owns exactly one thing: how wide the reading column is.
      */
     body?: ReactNode
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
@@ -111,8 +105,7 @@ const ContainerBase = ({
     pattern,
 }: ContainerBaseProps) => {
     return (
-        // TWO layers, not one (teacher, 2026-07-29, "shouldn't desktop render as
-        // flex?" — traced to here). A `@container` measures its QUERY CONTAINER'S
+        // TWO layers, not one. A `@container` measures its QUERY CONTAINER'S
         // OWN content-box, which EXCLUDES that same element's own padding — so
         // putting `p-*` on the SAME div that opens `@container` silently shrinks
         // the measured width by the padding amount. For most `size` steps this
@@ -120,8 +113,7 @@ const ContainerBase = ({
         // tier up), but `size="xl"` caps at EXACTLY `max-w-app-xl` = the SAME
         // token `@app-xl` itself fires at — so the padded content-box can NEVER
         // reach 80rem, at ANY viewport width, and `@app-xl:` children never
-        // fire. Confirmed live: `SplitWorkspace` inside `Container size="xl"`
-        // stuck at `flex-col` even at a 1920px window. Split fixes it — the
+        // fire. Split fixes it — the
         // OUTER div owns `@container`+`max-w` (unpadded, so it can actually
         // reach the full `size` cap), the INNER div owns padding.
         <div

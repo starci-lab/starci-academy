@@ -34,9 +34,8 @@ const BAR_LEGEND_CAPTION_PARTS: Array<AnatomyNode> = [
 ]
 
 // leaf Skeleton: flat track shimmer + a delegated `<Legend isSkeleton />`, no caption bar (the
-// default call passes no `caption`). Updated 2026-07-29 — the anatPart/showAnatomy sweep gave
-// the track its own `` (a raw HeroUI bar, no dedicated story), and
-// `Legend`'s own isSkeleton branch is now wired through as its own linked node.
+// default call passes no `caption`). The track is a raw HeroUI bar (no dedicated story), and
+// `Legend`'s own isSkeleton branch is wired through as its own linked node.
 const BAR_SKELETON_PARTS: Array<AnatomyNode> = [
     { name: "Skeleton", tier: "heroui", role: "the flat track shimmer standing in for the coloured proportion strip while data loads" },
     { name: "Legend", tier: "composite", role: "the delegated shimmer legend row — Legend owns its own isSkeleton, not redrawn by hand here", storyId: "composites-stats-legend--skeleton" },

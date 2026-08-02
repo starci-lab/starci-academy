@@ -27,7 +27,7 @@ const LEVELS: Array<Difficulty> = ["beginner", "intermediate", "advanced", "insa
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // ⚠️ The wrapping `<span>` this design draws around `Chip` ALSO emits its own
-    // badge (default `anatPart ?? "VariantChipDifficulty"`, teacher caught 2026-07-26):
+    // badge (default `anatPart ?? "VariantChipDifficulty"`):
     // without a real DOM node named after the design itself, `Chip`'s own insides
     // (`Dot`/`Label`) would climb the ancestor chain past this design entirely, so it
     // needs a self-entry the same way any other real component of ours does — same

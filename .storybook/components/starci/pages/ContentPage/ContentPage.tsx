@@ -202,9 +202,9 @@ const ContentPage = ({
             the right rail's own "Practice this lesson" already surfaces this, so
             `@app-lg:hidden` removes it from view above that width rather than
             the screen mounting two different trees. Mode/challenge gate mirrors
-            `src`'s `UpNextCard` exactly; `isHighlight` does NOT (teacher 2026-07-29,
-            deliberate — `src`'s own card is unaccented here, but this nudge is
-            the one focal action a mobile reader sees after the reaction bar). */}
+            `src`'s `UpNextCard` exactly; `isHighlight` does NOT — `src`'s own
+            card is unaccented here, but this nudge is
+            the one focal action a mobile reader sees after the reaction bar. */}
             {!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0 ? (
                 <MilestoneUpNextCard
 
@@ -304,8 +304,7 @@ const ContentPage = ({
 
             />
             {/* ModeNav↔Article↔(reaction cluster) sit CLOSER together than the identity/outcomes
-                block above (teacher 2026-07-29, deliberate — a chosen tightening, not a copy of
-                `src`'s uniform `gap-6`): they are all "reading this lesson", one continuous
+                block above: they are all "reading this lesson", one continuous
                 surface, not separate regions. */}
             <StackV gap={4} body={readingSection} />
         </>

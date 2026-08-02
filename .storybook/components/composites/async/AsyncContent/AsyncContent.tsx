@@ -5,10 +5,10 @@ import type { ReactNode, SVGProps } from "react"
 import { TrayIcon, WarningIcon, type Icon as PhosphorIcon } from "@phosphor-icons/react"
 
 import { EmptyState, type EmptyStateIcon } from "@sb-components/composites/feedback/EmptyState/EmptyState"
-// The ATOM `Button`, NOT the `_legacy` version (§0 + teacher, 2026-07-26):
+// The ATOM `Button`, NOT the `_legacy` version:
 // `AsyncContent` sits in the closure of the `CourseContents` screen, and that screen
 // is FORBIDDEN from touching `_legacy` — an import at the composite tier would drag the
-// whole dead branch back into the screen (caught by the 2026-07-27 deep-scan).
+// whole dead branch back into the screen.
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
@@ -64,11 +64,8 @@ interface MessageProps {
 }
 
 /**
- * Force `weight="duotone"` on the message frame's glyph — §4/§5: the FRAME owns
- * how the glyph looks, the caller only picks which glyph. Before 2026-07-25 the
- * frame took `icon?: ReactNode`, so each caller decided its own weight → they had
- * already drifted (story duotone, screen not). The old `nodeAsIcon` adapter was
- * removed per its own debt note.
+ * Force `weight="duotone"` on the message frame's glyph — the FRAME owns
+ * how the glyph looks, the caller only picks which glyph.
  */
 const withDuotone = (Icon: PhosphorIcon): EmptyStateIcon => {
     const Glyph = (props: SVGProps<SVGSVGElement>) => <Icon {...props} weight="duotone" />

@@ -36,23 +36,20 @@ const ITEMS = [
 ]
 
 /**
- * ANATOMY IS PER-LEAF, one shared whitelist (2026-07-28 — migrated off the deprecated
- * `parts` tree, {@link BlockAnatomyProps.parts}, to `annotate`; structure is always
- * derived from DOM, this table is only WHY + tier + storyId per name, §11a.1).
+ * ANATOMY IS PER-LEAF, one shared whitelist. Structure is always derived from
+ * DOM; this table is only WHY + tier + storyId per name.
  *
  * The real DOM tree is the HeroUI `Table` compound AS-IS: `Table` (root) →
  * `Table.ScrollContainer` → `Table.Content` → `Table.Header` (holds N `Table.Column`)
  * + `Table.Body` (holds N `Table.Row`). Every one of these nodes is HeroUI's OWN
  * component, not ours ⇒ tier `heroui`, with NO `storyId` (no story of our own to
  * point to) — the panel still accepts it because `tier: "heroui"` alone is enough
- * to qualify for the tree (unlike the old `parts` shape, which had no way to carry
- * a `tier` without a `storyId`, so it read as an orphan until the move to `annotate`).
+ * to qualify for the tree.
  *
  * The cell (`Table.Cell`) is not badged on its own because it is only a slot the
- * consumer drops a node into (§11a: badge the DIRECT child) — the same reason
+ * consumer drops a node into (badge the DIRECT child) — the same reason
  * `emptyContent` below (`renderEmptyState`) is also not badged: both are caller
- * slots (§11a.1 TYPE 3), and the component dropped ``
- * entirely (2026-07-28).
+ * slots.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Table": { tier: "heroui", role: "HeroUI's own table root — canvas, variant skin." },

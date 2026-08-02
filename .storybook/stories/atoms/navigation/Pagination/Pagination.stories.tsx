@@ -33,7 +33,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "shimmer square standing in for a page link before totalPages is known" },
 }
 
-/** Default — few pages → every page shown in full, no '…'. Migrated to `states` 2026-07-27. */
+/** Default — few pages → every page shown in full, no '…'. */
 export const Default: Story = {
     render: () => {
         const [page, setPage] = useState(2)
@@ -59,7 +59,7 @@ export const Default: Story = {
     },
 }
 
-/** ManyPages — many pages → distant pages collapse into '…' (first · … · current±1 · … · last). Migrated to `states` 2026-07-27. */
+/** ManyPages — many pages → distant pages collapse into '…' (first · … · current±1 · … · last). */
 export const ManyPages: Story = {
     render: () => {
         const [page, setPage] = useState(12)
@@ -84,7 +84,7 @@ export const ManyPages: Story = {
     },
 }
 
-/** Skeleton — the atom draws its own leaf skeleton (a row of squares); no Skeleton.* used. Migrated to `states` 2026-07-27. */
+/** Skeleton — the atom draws its own leaf skeleton (a row of squares); no Skeleton.* used. */
 export const Skeleton: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

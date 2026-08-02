@@ -22,10 +22,9 @@ type Story = StoryObj<typeof PhaseScarcityNote>
 const TYPOGRAPHY_STORY = "atoms-text-typography-typography--plain"
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    // ⭐ 2026-07-27: this line is now built with the layouts tier's `Cluster` FRAME
-    // (no more hand-typed `<div className="flex flex-wrap gap-2">`), so the frame must
+    // this line is built with the layouts tier's `Cluster` FRAME, so the frame must
     // SHOW UP in the tree — using a frame the panel can't see leaves the reader thinking
-    // this is still a hand-rolled div.
+    // this is a hand-rolled div.
     "Cluster": { tier: "frame", role: "a ONE-TRACK frame that wraps on its own and draws its own `·` separator — `gap` is pinned to the §10 scale instead of a hand-typed class", storyId: "frames-cluster-cluster--default" },
     // ⚠️ The panel only accepts a part with a REAL `storyId` (§11a whitelist) — the two
     // text lines below used to declare a role but were MISSING `storyId`, so they never
@@ -39,18 +38,15 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * ONE leaf, FOUR states — using the `states` API (teacher finalized layout C, 2026-07-27).
+ * ONE leaf, FOUR states — using the `states` API.
  *
  * All four states come from BACKEND DATA: the seat count, whether a next-phase price exists,
  * whether the phase caps seats at all. So they are STATES of one leaf, not four leaves: a leaf
  * is only earned by an axis the CALLER toggles, and here the caller always passes the same
  * three props.
  *
- * Before `states` existed, these four had to be stacked by hand inside `children` with
- * hand-rolled labels — nowhere explained each state individually, no snippet of its own, and
- * worst of all the deps tree was inferred from the DOM of ALL FOUR at once, so it never matched
- * any single state. Now each state carries its own `why` + `code`, and only the currently
- * selected state gets mounted, so the deps tree belongs to exactly that one.
+ * Each state carries its own `why` + `code`, and only the currently selected state gets
+ * mounted, so the deps tree belongs to exactly that one.
  */
 export const Default: Story = {
     render: () => (

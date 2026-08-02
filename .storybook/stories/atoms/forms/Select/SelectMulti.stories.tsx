@@ -146,11 +146,6 @@ export const Required: Story = {
 /**
  * Leaf for prop `value` — an empty array shows the trigger's `placeholder`; two or
  * more values collapse into a count ("2 selected") instead of a growing list.
- *
- * ⚠️ Renamed 2026-07-26 (from `Labeled`): this leaf used to also carry `label`, but
- * `label` already has a home in the `WithLabel` leaf ⇒ two leaves showing off the
- * same prop, against §12g. Dropped `label`, returning the leaf to only the prop it
- * owns. `isDisabled` was also split out into the `Disabled` leaf the same day.
  */
 export const Value: Story = {
     render: () => {

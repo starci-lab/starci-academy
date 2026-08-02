@@ -56,21 +56,18 @@ const ChallengeScoreCard = ({
     // meter — same defensive floor `ProgressMeter` itself applies internally.
     const safeMax = maxScore > 0 ? maxScore : 1
     const targetScore = passThreshold * safeMax
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded round-14, instructor: "the colors
-    // don't really make sense"): the fill now ANSWERS the question this card exists to answer. It used to
-    // ride `ProgressMeter`'s default `accent` — the brand tone — so a 52/70 attempt sitting
-    // BELOW its own 80% pass line looked exactly like one sitting above it: the bar carried
-    // a ratio but no verdict. `ProgressMeter`'s own prop doc already reserves the semantic
-    // tones for "when the bar's VALUE carries meaning", which is precisely this case.
-    // The target tick stays NEUTRAL (see `TargetMark`) so the two never compete for meaning.
+    // The fill ANSWERS the question this card exists to answer: a 52/70 attempt sitting
+    // BELOW its own 80% pass line must not look like one sitting above it. `ProgressMeter`'s
+    // own prop doc reserves the semantic tones for "when the bar's VALUE carries meaning",
+    // which is precisely this case. The target tick stays NEUTRAL (see `TargetMark`) so the
+    // two never compete for meaning.
     const meterColor = earnedScore >= targetScore ? "success" : "danger"
 
     // Score reading — earned score prominent, "/ max points" riding beside it as the unit
     // that gives it meaning (`tight`: a mark attached to the number, not a peer of it).
-    // AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): added `weight="bold"` —
-    // the number STANDING ALONE as the card's focal point = Tier A, always bold; without
-    // weight, HeroUI defaults to 600 (semibold), not the 700 (bold) canon requires. Cross-check:
-    // `ChallengeHeader.tsx`, same role, already declares weight="bold" correctly.
+    // `weight="bold"`: the number STANDING ALONE as the card's focal point = Tier A, always
+    // bold; without weight, HeroUI defaults to 600 (semibold), not the 700 (bold) canon
+    // requires. Cross-check: `ChallengeHeader.tsx`, same role, also declares weight="bold".
     const scoreReading = (
         <>
             <Typography

@@ -19,17 +19,16 @@ const meta: Meta<typeof ButtonGroup> = {
 export default meta
 type Story = StoryObj<typeof ButtonGroup>
 /**
- * DEPS = OTHER stories this cluster depends on (teacher's call 2026-07-26). ONLY list
+ * DEPS = OTHER stories this cluster depends on. ONLY list
  * components that have their OWN story — `Label`/`Icon`/`Spinner` are spans INSIDE the
  * atom with no story of their own, so they aren't deps. `Button` leaves deps EMPTY
  * (it wraps HeroUI directly); this cluster DOES have deps, and is the only component in
  * the family that does.
  *
- * The key MUST match the `data-anat-part` that shows up on every child button. Since
- * ATOM-10 (2026-07-31), `ButtonGroup` no longer hands a part name down — it only forwards
+ * The key MUST match the `data-anat-part` that shows up on every child button.
+ * `ButtonGroup` doesn't hand a part name down — it only forwards
  * the `showAnatomy` boolean, and each `Button` badges itself as `"Button"`. Only ONE entry:
- * since 2026-07-26 `Button.Icon` was removed, an item with no label is also `ButtonBase`
- * with `isIconOnly`.
+ * an item with no label is also `ButtonBase` with `isIconOnly`.
  */
 const GROUP_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button": {

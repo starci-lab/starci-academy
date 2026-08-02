@@ -78,9 +78,8 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
     return (
         <figure className={cn("overflow-hidden rounded-3xl border border-default bg-background", classNames)}>
             {/* Header row matches `CodeToHtml`'s exact chrome (label left, action right) — a
-                mermaid block is "a fence with a name" the same way a code fence is (teacher's
-                call 2026-07-29: drop the diagram icon entirely, spell out "mermaid" instead —
-                the WORD "mermaid" is the label, same as a code fence names its own language). The zoom
+                mermaid block is "a fence with a name" the same way a code fence is: the WORD
+                "mermaid" is the label, same as a code fence names its own language. The zoom
                 trigger is icon-only too, matching `SnippetIcon`'s copy button — always visible,
                 not a hover-only overlay. */}
             <div className="flex items-center justify-between border-b border-default px-3 py-2">

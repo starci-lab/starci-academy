@@ -45,14 +45,9 @@ export interface ClusterBaseProps {
     /**
      * `true` puts a `·` BETWEEN items, N items get N-1 marks, mirroring `Stack`'s `divider`.
      *
-     * ⭐ 2026-07-27. A `·` sitting between two meta fragments is not content, it is how the
+     * A `·` sitting between two meta fragments is not content, it is how the
      * TRACK marks the boundary between its items, so it belongs to the frame the same way a
-     * rule does. Written as content it caused two separate bugs: a hand-typed `mx-1` for its
-     * breathing room, which the padding gate then reported as a child pushing its own margin,
-     * and a node in the structure tree named `Separator` whose link went to the generic
-     * Typography story, so three different roles all pointed at the same unrelated page.
-     *
-     * Both disappear here: the mark carries no margin because the track's own `gap` already
+     * rule does. The mark carries no margin because the track's own `gap` already
      * spaces it, and it is not an item so it never becomes a node.
      */
     separator?: boolean
@@ -61,12 +56,10 @@ export interface ClusterBaseProps {
     /** Main-axis distribution of each line. Default `start`. */
     justify?: LayoutJustify
     /**
-     * Anatomy tag for THIS khung itself — lets the PARENT badge it as ONE node (§11a.1).
+     * Anatomy tag for THIS khung itself — lets the PARENT badge it as ONE node.
      *
-     * ⭐ 2026-07-27: without this prop the parent can't name the khung, so the khung
-     * doesn't make it into the Deps tree — use a `layouts`-tier khung and have the panel
-     * still not see it, and it counts as unused. Same gap already patched on
-     * `PageHeader`/`Divider`/`ChoiceSwitch`.
+     * Without this prop the parent can't name the khung, so the khung
+     * doesn't make it into the Deps tree and it counts as unused.
      */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.

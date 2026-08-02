@@ -91,9 +91,7 @@ const PaginationBase = ({
     const onNext = useCallback(() => onPageChange(Math.min(totalPages, currentPage + 1)), [currentPage, totalPages, onPageChange])
 
     if (isSkeleton) {
-        // Prev + a few page squares + next. Only the HeroSkeleton squares get
-        // data-anat-part — the wrapping div isn't a real component, tagging it
-        // would be a made-up name.
+        // Prev + a few page squares + next.
         return (
             <div data-tier="atom" data-component="Pagination" className={cn("flex items-center justify-center gap-1", classNames)}>
                 {Array.from({ length: 5 }, (_, index) => (

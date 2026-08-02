@@ -64,9 +64,7 @@ const AccordionBase = ({
     classNames,
 }: AccordionBaseProps) => {
     if (isSkeleton) {
-        // One collapsed trigger row per item. Only the HeroSkeleton elements get
-        // data-anat-part — the wrapping div isn't a real component, tagging it
-        // would be a made-up name.
+        // One collapsed trigger row per item.
         return (
             <div data-tier="atom" data-component="Accordion" className={cn("flex flex-col gap-2", classNames)}>
                 {items.map((item) => (

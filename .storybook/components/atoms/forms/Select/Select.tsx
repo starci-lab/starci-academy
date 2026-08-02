@@ -130,8 +130,6 @@ const SelectSingle = ({
                 fullWidth
                 className={cn(classNames)}
             >
-                {/* data-anat-part uses the real HeroUI component names (`Select.Trigger`/
-                    `Select.Value`), not generic slot words. */}
                 <HeroSelect.Trigger>
                     <HeroSelect.Value>
                         {() => (
@@ -218,9 +216,6 @@ const SelectMulti = ({
                 fullWidth
                 className={cn(classNames)}
             >
-                {/* data-anat-part uses the real HeroUI component name (`Select.Trigger`). The
-                    summary `<span>` below stays untagged — it's a plain hand-rolled text slot,
-                    not a real component (SelectMulti doesn't compose `Select.Value`). */}
                 <HeroSelect.Trigger>
                     <span className={cn("text-sm", summary == null && "text-field-placeholder")}>
                         {summary ?? placeholder}
@@ -303,8 +298,6 @@ const SelectCombobox = ({
                 className={cn("w-full", classNames)}
             >
                 <HeroComboBox.InputGroup className="relative">
-                    {/* data-anat-part uses the real HeroUI component names (`Input`/
-                        `ComboBox.Trigger`), not generic slot words. */}
                     <HeroInput placeholder={placeholder} className="w-full pr-9" />
                     <HeroComboBox.Trigger
                         className="absolute right-1 top-1/2 -translate-y-1/2 inline-flex size-7 items-center justify-center rounded-lg"

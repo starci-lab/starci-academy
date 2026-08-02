@@ -91,9 +91,7 @@ export const TabsBase = ({
         // Shape follows `variant`, known ahead of load: `primary` is a filled
         // segmented pill, `secondary` an underline in-page tab, so the shimmer
         // is a label bar + underline bar for `secondary`, not a pill —
-        // matching shapes avoids a layout jump once the real tabs mount. Only
-        // the HeroSkeleton bars get data-anat-part — the wrapping div isn't a
-        // real component, tagging it would be a made-up name.
+        // matching shapes avoids a layout jump once the real tabs mount.
         if (variant === "secondary") {
             return (
                 <div data-tier="atom" data-component="Tabs" className={cn("flex items-center gap-2", classNames)}>

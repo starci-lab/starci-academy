@@ -68,7 +68,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "MarkdownContent": { tier: "composite", role: "the panel's detail/suggestion — rendered faithfully rather than as plain text (the trigger's own message stays plain, see file header)", storyId: "composites-viewers-markdowncontent--compact" },
     "SeverityIcon": { tier: "heroui", role: "the trigger's severity mark, riding in `titleStart` — its own tone colour, independent of the message text" },
     "Chip": { tier: "atom", role: "the finding's file location, riding in the trigger's trailing slot", storyId: "atoms-chips-chip-chip--default" },
-    "Typography": { tier: "atom", role: "the location line's plain text, or the underlined link when the location resolves to a real href", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the location line's plain text, or the underlined link when the location resolves to a real href", storyId: "atoms-text-typography-typography--overview" },
     "AsyncContentEmpty": { tier: "composite", role: "the no-findings message, hosted inside the accordion's own `emptyState` slot", storyId: "composites-async-asynccontent-asynccontentempty--basic" },
     "AsyncContentError": { tier: "composite", role: "the failed-fetch message with a retry action, hosted inside the same `emptyState` slot", storyId: "composites-async-asynccontent-asynccontenterror--with-retry" },
 }

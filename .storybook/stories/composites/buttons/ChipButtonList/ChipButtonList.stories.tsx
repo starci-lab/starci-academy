@@ -63,13 +63,13 @@ const WRAP_ICON_PARTS: Array<AnatomyNode> = [
         name: "Button",
         tier: "composite",
         role: "A suggestion chip (variant secondary, size sm), repeated once per item. Its leading icon is the caller's own component reference (item.icon) — ChipButtonList calls it and forces its size (size-4 shrink-0, muted), so the icon itself carries no badge of its own.",
-        storyId: "legacy-primitives-buttons-button--variants",
+        storyId: "atoms-buttons-button-button--variants",
     },
 ]
 
 // wrap, no icon: the chip is just Button + a bare label (direct children, not Typography — same as the base Button).
 const WRAP_PLAIN_PARTS: Array<AnatomyNode> = [
-    { name: "Button", tier: "composite", role: "A suggestion chip (variant secondary, size sm), repeated once per item, with no icon.", storyId: "legacy-primitives-buttons-button--variants" },
+    { name: "Button", tier: "composite", role: "A suggestion chip (variant secondary, size sm), repeated once per item, with no icon.", storyId: "atoms-buttons-button-button--variants" },
 ]
 
 // column/ghost: each Button is a full-width row, its children are the icon + Typography (label via Typography, no hand-typed className).
@@ -78,9 +78,9 @@ const COLUMN_PARTS: Array<AnatomyNode> = [
         name: "Button",
         tier: "composite",
         role: "A full-width skill-menu row (variant ghost), repeated once per item. Its leading icon is the caller's own component reference, sized by ChipButtonList but not badged separately.",
-        storyId: "legacy-primitives-buttons-button--variants",
+        storyId: "atoms-buttons-button-button--variants",
         children: [
-            { name: "Typography", tier: "atom", role: "The skill label (weight medium, truncate).", storyId: "atoms-text-typography-typography--plain" },
+            { name: "Typography", tier: "atom", role: "The skill label (weight medium, truncate).", storyId: "atoms-text-typography-typography--overview" },
         ],
     },
 ]
@@ -92,7 +92,7 @@ const DISABLED_PARTS: Array<AnatomyNode> = [
         tier: "composite",
         role: "A suggestion chip, repeated once per item; one item's isDisabled still renders it, only interaction is blocked. Its leading icon is the caller's own component reference.",
         state: "1 item isDisabled",
-        storyId: "legacy-primitives-buttons-button--variants",
+        storyId: "atoms-buttons-button-button--variants",
     },
 ]
 
@@ -105,7 +105,7 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
 
 // single: same composition as wrap+icon, only 1 item — the container enforces no minimum chip count.
 const SINGLE_PARTS: Array<AnatomyNode> = [
-    { name: "Button", tier: "composite", role: "A suggestion chip; only one item is passed. Its leading icon is the caller's own component reference.", storyId: "legacy-primitives-buttons-button--variants" },
+    { name: "Button", tier: "composite", role: "A suggestion chip; only one item is passed. Its leading icon is the caller's own component reference.", storyId: "atoms-buttons-button-button--variants" },
 ]
 
 /** WRAP + ICON — a cluster of suggestion chips with a leading icon (retrieval-skill chips). */

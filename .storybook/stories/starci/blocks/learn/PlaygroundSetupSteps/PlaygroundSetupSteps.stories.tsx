@@ -100,8 +100,8 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "MarkdownContent": { tier: "composite", role: "a runnable command (fenced ```bash) or the selected OS's install guide, both through the same viewer", storyId: "composites-viewers-markdowncontent--compact" },
     "TabsExtended": { tier: "atom", role: "the OS switcher choosing which install guide renders underneath — a single group, not Toolbar's two-group nav", storyId: "atoms-navigation-tabs-tabsextended--default" },
     "Button": { tier: "atom", role: "a step's re-check action, or the pairing step's rotate-code action", storyId: "atoms-buttons-button-button--default" },
-    "Callout": { tier: "composite", role: "an informational aside once data confirms it — engine detail, models already installed, or device not yet known", storyId: "composites-feedback-callout-callout--default" },
-    "Typography": { tier: "atom", role: "a step's why-it-matters line, its pairing-code countdown, or a model row's label", storyId: "atoms-text-typography-typography--plain" },
+    "Callout": { tier: "composite", role: "an informational aside once data confirms it — engine detail, models already installed, or device not yet known", storyId: "composites-feedback-callout--default" },
+    "Typography": { tier: "atom", role: "a step's why-it-matters line, its pairing-code countdown, or a model row's label", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — infra flavor: 2 steps (pair, install). */

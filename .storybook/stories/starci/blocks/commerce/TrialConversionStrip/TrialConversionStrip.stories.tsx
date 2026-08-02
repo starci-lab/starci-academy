@@ -76,7 +76,7 @@ const HEADER_PARTS: Array<AnatomyNode> = [
         name: "TitledText",
         tier: "composite",
         role: "the title↔description pair as ONE unit — it owns the type scale (title sm medium, subtitle xs muted)",
-        storyId: "composites-texts-titledtext--row",
+        storyId: "composites-texts-titledtext--overview",
     },
 ]
 
@@ -127,7 +127,7 @@ const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
 const LOADING_PARTS: Array<AnatomyNode> = framed([
     // These two bars ARE `Typography isSkeleton` — a real component, so they need
     // a door. Without a `storyId` they emit DOM but never enter the tree (§11a whitelist).
-    { name: "Typography", tier: "atom", role: "mirrors one of the two waiting lines — the price (h4, 1/3 width) or the seats line (body-xs, 1/2 width)", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "mirrors one of the two waiting lines — the price (h4, 1/3 width) or the seats line (body-xs, 1/2 width)", storyId: "atoms-text-typography-typography--overview" },
 ])
 
 // LOADED shape — price landed: PriceTag owns the discount, PhaseScarcityNote sits as a

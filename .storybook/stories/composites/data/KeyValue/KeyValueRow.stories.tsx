@@ -32,7 +32,7 @@ const HINT_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "atom", role: "label (Sm muted) · hint (Xs muted, a secondary line under the label, gap-1 §10 tight) · value (Sm medium + tabular-nums)", storyId: "atoms-text-typography-typography--colors" },
 ]
 const EMPHASIS_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "label (Sm foreground + medium, total row's label) and value (Base BOLD + tabular-nums, a large number, §9b)", storyId: "atoms-text-typography-typography--bold" },
+    { name: "Typography", tier: "atom", role: "label (Sm foreground + medium, total row's label) and value (Base BOLD + tabular-nums, a large number, §9b)", storyId: "atoms-text-typography-typography--overview" },
 ]
 const SKELETON_PARTS: Array<AnatomyNode> = [
     { name: "Skeleton", tier: "heroui", role: "raw HeroUI `Skeleton` bars the row draws itself: a label bar (+ a second bar when `hint` is set) on the left, one value bar on the right" },

@@ -29,9 +29,9 @@ const PHOTO_SRC =
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame stacking identity, bio and the contact fork as one profile body — reused at two nesting levels, the inner one holding just name + role as a tighter unit", storyId: "frames-stack-stackv--default" },
     "Image": { tier: "atom", role: "the consultant's photo, owning its own loading skeleton and fallback glyph so the block never has to branch on load state itself", storyId: "atoms-media-image-image--with-image" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — name, role, bio or a contact link — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — name, role, bio or a contact link — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the pressable company row — opens the company the consultant works at, disabled while there is nowhere to open yet", storyId: "atoms-buttons-button-button--default" },
-    "Callout": { tier: "composite", role: "the locked-contact notice — a status alert with one built-in CTA button, reused rather than hand-rolled (same precedent as TaskLockedAlert)", storyId: "composites-feedback-callout-callout--with-action" },
+    "Callout": { tier: "composite", role: "the locked-contact notice — a status alert with one built-in CTA button, reused rather than hand-rolled (same precedent as TaskLockedAlert)", storyId: "composites-feedback-callout--with-action" },
 }
 
 const FULL_CONSULTANT = {

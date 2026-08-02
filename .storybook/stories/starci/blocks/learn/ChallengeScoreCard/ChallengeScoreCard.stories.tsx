@@ -25,7 +25,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Your result\" label above it and the fixed pass-condition caption below it", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical frame inside the card, stacking the score row above the meter", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the score row, holding the earned score and its \"/ max points\" unit on one baseline", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the earned score, or the muted \"/ max points\" riding beside it", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the earned score, or the muted \"/ max points\" riding beside it", storyId: "atoms-text-typography-typography--overview" },
     "ProgressMeter": { tier: "composite", role: "the score bar, marking the pass line via its own target tick", storyId: "composites-stats-progressmeter--target-below" },
     "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the meter — `ProgressMeter` has no `isSkeleton` shape of its own yet, so this block builds the shimmer bar directly, matching the real track's height" },
 }

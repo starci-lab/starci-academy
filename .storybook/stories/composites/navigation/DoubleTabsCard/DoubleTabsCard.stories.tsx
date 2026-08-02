@@ -24,7 +24,7 @@ type Story = StoryObj<typeof DoubleTabsCard>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the card face the tab row and body sit inside", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "Toolbar": { tier: "composite", role: "the two tab groups themselves, placed in the card's own header slot", storyId: "composites-navigation-toolbar-toolbar--two-groups" },
-    "Typography": { tier: "atom", role: "the card body text", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the card body text", storyId: "atoms-text-typography-typography--overview" },
 }
 
 const LeftOnlyDemo = () => {

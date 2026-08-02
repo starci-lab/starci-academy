@@ -50,7 +50,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Weekly Goals\" label above the summary and the six-metric grid", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical frame stacking the summary sentence above the grid, or one metric cell's icon+label row above its meter", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "a metric cell's icon+label row, or the row splitting it from the current/target ratio", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the summary sentence, a metric's label/ratio/coin-reward line, or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the summary sentence, a metric's label/ratio/coin-reward line, or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "StatGridCard": { tier: "composite", role: "the six-cell grid holding one metric per cell, divided by thin seams", storyId: "composites-stats-statgridcard--even" },
     "ProgressMeter": { tier: "composite", role: "one metric's bar, reading its current value against its effective target", storyId: "composites-stats-progressmeter--label-and-value" },
     "Skeleton": { tier: "heroui", role: "the loading mirror standing in for a metric's icon (a round dot) or its meter (a bar) — neither a bare glyph nor `ProgressMeter` has a usable `isSkeleton` shape of its own here, so this block substitutes shimmer sized to each real footprint" },

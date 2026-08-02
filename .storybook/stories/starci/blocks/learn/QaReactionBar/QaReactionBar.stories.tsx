@@ -20,7 +20,7 @@ export default meta
 type Story = StoryObj<typeof QaReactionBar>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Typography": { tier: "atom", role: "the reaction count, omitted entirely at zero", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the reaction count, omitted entirely at zero", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** Props for the `Controlled` demo wrapper below. */

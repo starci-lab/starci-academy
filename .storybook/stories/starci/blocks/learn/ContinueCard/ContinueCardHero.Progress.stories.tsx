@@ -74,7 +74,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
                         role: "The text column, title on top with the meta and subtitle underneath.",
                         storyId: "frames-stack-stackv--default",
                         children: [
-                            { name: "Typography", tier: "atom", role: "The name of the session in progress, medium weight with truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton).", storyId: "atoms-text-typography-typography--plain" },
+                            { name: "Typography", tier: "atom", role: "The name of the session in progress, medium weight with truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton).", storyId: "atoms-text-typography-typography--overview" },
                             {
                                 name: "ListMeta",
                                 tier: "composite",
@@ -107,7 +107,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 tier: "composite",
                 role: "The danger-tone message: icon, description, and a Retry button.",
                 state: "danger",
-                storyId: "composites-feedback-feedback-feedbackempty--action",
+                storyId: "composites-feedback-emptystate--action",
                 children: [
                     { name: "Button", tier: "atom", role: "The retry button (secondary), built by the story inside the action prop, so it is still declared per §11a.1.", storyId: "atoms-buttons-button-button--default" },
                 ],
@@ -135,7 +135,7 @@ const SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "The card surface; isHighlight turns on the hero accent glow, and the frame stays put across every state so switching state never shifts the layout.", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "StackH": { tier: "frame", role: "The outer row, one horizontal track; children are arbitrary, which is why this uses Stack rather than Cluster (§13b).", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "The text column, title on top with the meta and subtitle underneath.", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "The name of the session in progress, medium weight with truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton).", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "The name of the session in progress, medium weight with truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton).", storyId: "atoms-text-typography-typography--overview" },
     "Skeleton": { tier: "heroui", role: "The loading mirror standing in for the progress bar — ProgressMeter has no `isSkeleton` shape of its own yet, so CardBody builds this shimmer bar directly, matching the real track's height." },
     "Button": { tier: "atom", role: "The resume CTA (onPress plus a sliding ArrowRight icon).", storyId: "atoms-buttons-button-button--default" },
 }

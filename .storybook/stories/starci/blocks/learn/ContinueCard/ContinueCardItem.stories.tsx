@@ -61,8 +61,8 @@ const ITEM_PARTS: Array<AnatomyNode> = [
                         role: "text column — title on top, meta/subtitle underneath",
                         storyId: "frames-stack-stackv--default",
                         children: [
-                            { name: "Typography", tier: "atom", role: "the item name — medium weight, truncate", storyId: "atoms-text-typography-typography--plain" },
-                            { name: "Typography", tier: "atom", role: "the second line under the name — the subtitle (muted, truncate, shown only when there's no meta/timeLeft) real, or its mirror bar while loading", storyId: "atoms-text-typography-typography--plain" },
+                            { name: "Typography", tier: "atom", role: "the item name — medium weight, truncate", storyId: "atoms-text-typography-typography--overview" },
+                            { name: "Typography", tier: "atom", role: "the second line under the name — the subtitle (muted, truncate, shown only when there's no meta/timeLeft) real, or its mirror bar while loading", storyId: "atoms-text-typography-typography--overview" },
                         ],
                     },
                 ],
@@ -85,7 +85,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 tier: "composite",
                 role: "danger tone + icon + description + a Retry button",
                 state: "danger",
-                storyId: "composites-feedback-feedback-feedbackempty--action",
+                storyId: "composites-feedback-emptystate--action",
                 children: [
                     { name: "Button", tier: "atom", role: "retry button (secondary, inside the `action` prop — built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button--default" },
                 ],
@@ -111,7 +111,7 @@ const ITEM_SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "FLAT card surface — holds the info plus the CTA row", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "StackH": { tier: "frame", role: "outer row — one horizontal track (children are ARBITRARY ⇒ `Stack`, not `Cluster`, §13b)", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "text column — title on top, meta/subtitle underneath", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "the item name — medium weight, truncate", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the item name — medium weight, truncate", storyId: "atoms-text-typography-typography--overview" },
     "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the \"Continue →\" CTA — `LinkSeeMore` has no `isSkeleton` shape of its own yet, so `.Item` builds this shimmer bar directly, matching the label's text size" },
 }
 

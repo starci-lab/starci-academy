@@ -47,7 +47,7 @@ const CONSULTANTS: Array<ConsultantCardConsultant> = [
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame separating the count line from the grid below it, owning the seam between the two", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "the count line's own text, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the count line's own text, real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Grid": { tier: "frame", role: "the responsive tile track — real cards or their skeleton mirror, same shape either way", storyId: "frames-grid-grid--default" },
     "ConsultantCard": { tier: "block", role: "one consultant tile — photo, name, role, company, blurb, real or its own skeleton mirror", storyId: "starci-blocks-consultant-consultantcard-consultantcard--default" },
     "AsyncContentEmpty": { tier: "composite", role: "the empty-directory message, replacing the grid entirely when the resolved list has zero consultants", storyId: "composites-async-asynccontent-asynccontentempty--basic" },

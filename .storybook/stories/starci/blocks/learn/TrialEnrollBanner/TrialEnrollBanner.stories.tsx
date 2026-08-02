@@ -25,7 +25,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Callout": {
         tier: "composite",
         role: "the accent-tinted strip shape — icon-less frame holding the fixed title/description and the composed CTA child",
-        storyId: "composites-feedback-callout-callout--with-action",
+        storyId: "composites-feedback-callout--with-action",
     },
     "Button": {
         tier: "atom",

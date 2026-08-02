@@ -28,7 +28,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the row pinning the trigger beside its summary (or the trigger alone, when there's nothing to summarize)", storyId: "frames-stack-stackh--default" },
     "Button": { tier: "heroui", role: "the pill trigger — HeroUI's own Button, raw (the constrained atom's chrome doesn't fit a custom emoji+label trigger)" },
     "Popover.Content": { tier: "heroui", role: "the rounded picker panel — HeroUI's own Popover, raw (the constrained atom forces w-64 + a muted-text wrapper, wrong shape for a button row)" },
-    "Typography": { tier: "atom", role: "the summary total count", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the summary total count", storyId: "atoms-text-typography-typography--overview" },
 }
 
 const COUNTS = [

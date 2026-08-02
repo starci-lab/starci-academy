@@ -26,8 +26,8 @@ const CHECKOUT_STEPS: Array<StepperStep> = [
 // no badge (a link-less node is worse than no node at all). Only the two repeated
 // Typography nodes (label/description) get badged, once per step.
 const STEPPER_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "the step's short label text (repeats per step)", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "the step's optional one-line description under the label (repeats per step)", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the step's short label text (repeats per step)", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "the step's optional one-line description under the label (repeats per step)", storyId: "atoms-text-typography-typography--overview" },
 ]
 
 /** Horizontal, mid-flow: done = check, current = accent ring, upcoming = muted. */

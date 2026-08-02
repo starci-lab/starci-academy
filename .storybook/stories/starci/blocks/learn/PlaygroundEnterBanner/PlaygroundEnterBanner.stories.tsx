@@ -23,7 +23,7 @@ type Story = StoryObj<typeof PlaygroundEnterBanner>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the labelled card frame carrying the whole decision, owning the section label and the surface face", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical frame separating the readiness line from the CTA, owning the seam between the two", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "the readiness sentence the block builds itself from `allReady`/`pendingCount` — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the readiness sentence the block builds itself from `allReady`/`pendingCount` — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the single primary CTA, disabled until `allReady` — real or its skeleton mirror", storyId: "atoms-buttons-button-button--default" },
 }
 

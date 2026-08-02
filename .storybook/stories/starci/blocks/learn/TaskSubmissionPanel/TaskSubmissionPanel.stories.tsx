@@ -51,7 +51,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "InputText": { tier: "atom", role: "the bare repo-URL field this block owns the label/error text for", storyId: "atoms-forms-input-inputtext--default" },
     "InlineIconLabel": { tier: "composite", role: "an icon+text status unit — the autosave line, the language/branch summary, or the AI status line", storyId: "composites-texts-inlineiconlabel--overview" },
     "Button": { tier: "atom", role: "the settings gear or the Evaluate action, real or its own skeleton mirror", storyId: "atoms-buttons-button-button--default" },
-    "Typography": { tier: "atom", role: "the panel's own text — the result's hero score, its `/ maxScore`, its feedback line, or the no-evaluation-yet hint", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the panel's own text — the result's hero score, its `/ maxScore`, its feedback line, or the no-evaluation-yet hint", storyId: "atoms-text-typography-typography--overview" },
     "Chip": { tier: "atom", role: "the AI model badge next to the last score, present only when the grade carried one", storyId: "atoms-chips-chip-chip--icon" },
     "SelectSingle": { tier: "atom", role: "the settings drawer's language dropdown", storyId: "atoms-forms-select-selectsingle--default" },
     "InputPassword": { tier: "atom", role: "the settings drawer's masked token field", storyId: "atoms-forms-input-inputpassword--default" },

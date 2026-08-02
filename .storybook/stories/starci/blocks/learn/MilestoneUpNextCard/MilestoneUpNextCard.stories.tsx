@@ -29,7 +29,7 @@ type Story = StoryObj<typeof MilestoneUpNextCard>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the card face this handoff sits on — the light streak (isHighlight) marks it as the one focal action on a milestone result screen; a plain caller (see the `Plain` leaf) omits it", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "StackV": { tier: "frame", role: "the vertical track stacking eyebrow, title, description and CTA with one owned seam", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the eyebrow (with its optional check glyph), the task title, or the hand-off description — real or its skeleton mirror", storyId: "atoms-text-typography-typography--with-prefix-icon" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the eyebrow (with its optional check glyph), the task title, or the hand-off description — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the CTA into the next unlocked task, its arrow sliding on hover", storyId: "atoms-buttons-button-button--suffix-icon" },
 }
 

@@ -28,7 +28,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the whole-card press target, giving the tile its surface face, hover/press feedback and keyboard focus ring — the block only supplies the id it presses with", storyId: "composites-cards-surfacecard-surfacecard--pressable" },
     "StackV": { tier: "frame", role: "the vertical frame stacking photo, identity cluster, company row and blurb as one card body — reused at two nesting levels, the inner one holding just name + role as a tighter unit", storyId: "frames-stack-stackv--default" },
     "Image": { tier: "atom", role: "the consultant's photo, owning its own loading skeleton and fallback glyph so the block never has to branch on load state itself", storyId: "atoms-media-image-image--with-image" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — name, role, company (with its leading building icon) or blurb — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — name, role, company (with its leading building icon) or blurb — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
 }
 
 const FULL_CONSULTANT = {

@@ -25,7 +25,7 @@ type Story = StoryObj<typeof ContentPaywall>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the centred column holding the whole offer, owning the seam between the lock, the words, the price and the action", storyId: "frames-stack-stackv--default" },
     "IconTile": { tier: "atom", role: "the lock glyph on its tinted tile, the first thing that says the lesson stopped on purpose", storyId: "atoms-display-icontile-icontile--default" },
-    "Typography": { tier: "atom", role: "the headline, or the muted sentence under it saying what buying unlocks", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the headline, or the muted sentence under it saying what buying unlocks", storyId: "atoms-text-typography-typography--overview" },
     "PriceTagProminent": { tier: "block", role: "the price, reused unchanged from the course page so the two screens cannot drift on currency, grouping or how a discount reads", storyId: "starci-blocks-commerce-pricetag--default" },
     "PhaseScarcityNote": { tier: "block", role: "the phase-and-seats line, also reused from the course page, saying what waiting will cost", storyId: "starci-blocks-commerce-phasescarcitynote-phasescarcitynote--default" },
     "Button": { tier: "atom", role: "the single call to action, owning its own accent skin and the arrow that slides on hover", storyId: "atoms-buttons-button-button--default" },

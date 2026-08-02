@@ -48,7 +48,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Container": { tier: "frame", role: "the centered, width-capped measure the whole footer sits inside", storyId: "frames-container-container--default" },
     "StackV": { tier: "frame", role: "the root track (top region · bottom bar, `divider` interleaving the rule between them), and each brand/link column's own stack", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the top region's split, the socials row, the two-column wrapper, and the bottom bar's own split", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the tagline, a link column's title, and the bottom-bar copyright line", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the tagline, a link column's title, and the bottom-bar copyright line", storyId: "atoms-text-typography-typography--overview" },
     "Link": { tier: "heroui", role: "every navigable row — a link-column entry, a social icon, or a bottom-bar legal stub" },
     "Divider": { tier: "atom", role: "the rule between the top region and the bottom bar, interleaved by `StackV`'s own `divider` prop", storyId: "atoms-display-divider-divider--default" },
 }

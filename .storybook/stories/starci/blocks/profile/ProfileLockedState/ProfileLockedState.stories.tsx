@@ -34,7 +34,7 @@ const USER: ProfileHeroUser = {
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the card face holding the private-profile notice in place of the tabbed activity region", storyId: "composites-cards-surfacecard-surfacecard--default" },
-    "EmptyState": { tier: "composite", role: "the centered icon/title/description stack stating the profile is private", storyId: "composites-feedback-emptystate-emptystate--action" },
+    "EmptyState": { tier: "composite", role: "the centered icon/title/description stack stating the profile is private", storyId: "composites-feedback-emptystate--action" },
     "Button": { tier: "atom", role: "the single way out — browse courses instead of this profile's activity", storyId: "atoms-buttons-button-button--default" },
 }
 

@@ -169,7 +169,7 @@ const OnTrackChip = ({ isSkeleton }: SkeletonProps) => (
 
 const SLOT_ROW_ANNOTATE: Record<string, AnatomyAnnotation> = {
     ...ANNOTATE,
-    "Typography": { role: "the `leading` slot's own content — here a Sprint label, not part of ProgressMeter's fixed vocabulary", tier: "atom", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { role: "the `leading` slot's own content — here a Sprint label, not part of ProgressMeter's fixed vocabulary", tier: "atom", storyId: "atoms-text-typography-typography--overview" },
     "Chip": { role: "the `trailing` slot's own content — here a status chip, not part of ProgressMeter's fixed vocabulary", tier: "atom", storyId: "atoms-chips-chip-chip--default" },
 }
 

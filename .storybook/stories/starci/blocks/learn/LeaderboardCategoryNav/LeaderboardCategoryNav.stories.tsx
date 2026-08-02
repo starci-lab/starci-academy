@@ -30,7 +30,7 @@ const ITEMS = [
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ButtonRadioGroup": { tier: "atom", role: "the flex-wrap row of select buttons — single-select, filled `tertiary` when chosen, hollow `ghost` otherwise", storyId: "composites-buttons-buttonradiogroup--default" },
-    "Typography": { tier: "atom", role: "each chip's own icon+label+XP line, built from the category's icon/label table plus the caller's XP number", storyId: "atoms-text-typography-typography--with-prefix-icon" },
+    "Typography": { tier: "atom", role: "each chip's own icon+label+XP line, built from the category's icon/label table plus the caller's XP number", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the mobile chip row, one state per selected category. */

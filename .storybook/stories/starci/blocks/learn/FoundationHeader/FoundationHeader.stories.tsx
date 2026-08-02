@@ -38,9 +38,9 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Breadcrumbs": { tier: "atom", role: "the trail the block builds from crumb data handed down by the screen", storyId: "atoms-navigation-breadcrumbs-breadcrumbs--default" },
     "StackV": { tier: "frame", role: "the vertical frame separating the chip row from the author line, owning the seam between the two meta regions", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal frame holding the chip row, so kind/recommended/tags sit on one baseline with one seam", storyId: "frames-stack-stackh--default" },
-    "EnumChip": { tier: "composite", role: "the resource-kind badge, looked up in the block's own kind → tone/label table", storyId: "composites-chips-enumchip--accent" },
+    "EnumChip": { tier: "composite", role: "the resource-kind badge, looked up in the block's own kind → tone/label table", storyId: "composites-chips-enumchip--overview" },
     "Chip": { tier: "atom", role: "the recommended badge or a topic tag, both untoned or success-toned by the block, never by the caller", storyId: "atoms-chips-chip-chip--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the title, its description, or the author attribution — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the title, its description, or the author attribution — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the resource identity cluster: trail → title → description → meta row (kind + recommended + tags + author). Every difference below is a DATA condition inside this one leaf, not a structural one. */

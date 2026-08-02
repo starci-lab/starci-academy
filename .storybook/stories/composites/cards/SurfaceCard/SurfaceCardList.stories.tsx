@@ -58,7 +58,7 @@ const courseItems: ReadonlyArray<SurfaceCardListItem> = [
 const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     role: "Fills the Surface when `items` is empty: icon, title, description, and action.",
     tier: "composite",
-    storyId: "composites-feedback-feedback-feedbackempty--action",
+    storyId: "composites-feedback-emptystate--action",
 }
 export const Default: Story = {
     render: () => (

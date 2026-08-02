@@ -69,7 +69,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
                         role: "text column, title on top and meta/subtitle underneath",
                         storyId: "frames-stack-stackv--default",
                         children: [
-                            { name: "Typography", tier: "atom", role: "name of the session in progress, medium + truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton)", storyId: "atoms-text-typography-typography--plain" },
+                            { name: "Typography", tier: "atom", role: "name of the session in progress, medium + truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton)", storyId: "atoms-text-typography-typography--overview" },
                             {
                                 name: "ListMeta",
                                 tier: "composite",
@@ -101,7 +101,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 tier: "composite",
                 role: "danger tone + icon + description + a Retry button",
                 state: "danger",
-                storyId: "composites-feedback-feedback-feedbackempty--action",
+                storyId: "composites-feedback-emptystate--action",
                 children: [
                     { name: "Button", tier: "atom", role: "retry button (secondary, inside the `action` prop, built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button--default" },
                 ],

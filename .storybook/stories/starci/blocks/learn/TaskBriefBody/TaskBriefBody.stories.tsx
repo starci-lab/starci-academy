@@ -60,8 +60,8 @@ const LEGACY_CODE_IMPLEMENTATIONS = [
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame stacking every section of this reading column, owning the section-wide seam between them", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "title/description text and the legacy card's own sub-labels", storyId: "atoms-text-typography-typography--plain" },
-    "Callout": { tier: "composite", role: "the locked-preview notice, sitting inside the reading column with a single \"go to current task\" action", storyId: "composites-feedback-callout-callout--with-action" },
+    "Typography": { tier: "atom", role: "title/description text and the legacy card's own sub-labels", storyId: "atoms-text-typography-typography--overview" },
+    "Callout": { tier: "composite", role: "the locked-preview notice, sitting inside the reading column with a single \"go to current task\" action", storyId: "composites-feedback-callout--with-action" },
     "MarkdownContent": { tier: "composite", role: "the SCHEMA V2 brief body, and each legacy criterion hint / implementation guide-example pair at the compact measure", storyId: "composites-viewers-markdowncontent--reading" },
     "SurfaceCardAccordion": { tier: "composite", role: "the SCHEMA V1 fallback — one instance for criteria (points chip on the trigger), one for per-language implementation guides", storyId: "composites-cards-surfacecard-surfacecardaccordion--with-title-end" },
     "Chip": { tier: "atom", role: "a legacy criterion's point value, riding on its accordion trigger", storyId: "atoms-chips-chip-chip--default" },

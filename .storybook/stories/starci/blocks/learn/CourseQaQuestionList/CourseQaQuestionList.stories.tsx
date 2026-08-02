@@ -59,7 +59,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardList": { tier: "composite", role: "the bounded flush divide-y card — this block hands it BOTH the skeleton rows and the real rows via the free-form `content` slot, never its own `isSkeleton` mirror", storyId: "composites-cards-surfacecard-surfacecardlist--free-form" },
     "Avatar": { tier: "atom", role: "the asker's avatar, or its own shimmer while loading", storyId: "atoms-display-avatar-avatar--default" },
     "Chip": { tier: "atom", role: "the scope/status pills, or their own shimmer while loading", storyId: "atoms-chips-chip-chip--tones" },
-    "Typography": { tier: "atom", role: "the asker/time line and the preview text, or their own shimmer while loading", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the asker/time line and the preview text, or their own shimmer while loading", storyId: "atoms-text-typography-typography--overview" },
     "StackH": { tier: "frame", role: "the row's own horizontal layout (avatar · text column · status dot)", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "the row's own text column, and the content branch's list-above-pager stack", storyId: "frames-stack-stackv--default" },
     "Cluster": { tier: "frame", role: "the row's chip-pill peers", storyId: "frames-cluster-cluster--default" },

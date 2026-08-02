@@ -42,8 +42,8 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Tabs": { tier: "atom", role: "the stats/history switch — the same tab-strip atom every other mode row in this catalog uses, never a hand-rolled row", storyId: "atoms-navigation-tabs-tabs--default" },
     "StatGridCard": { tier: "composite", role: "the lifetime-numbers grid; this block only feeds it icon+label+value cells, the grid/border/span structure is the composite's own", storyId: "composites-stats-statgridcard--even" },
     "SurfaceCardList": { tier: "composite", role: "the run history, one row per past session; the block maps a session straight onto the row's title/subtitle/metaText/onPress fields", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
-    "Typography": { tier: "atom", role: "a stat cell's own label or value line, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
-    "EmptyState": { tier: "composite", role: "the single invitation the whole panel becomes when no session has ever run — it replaces the tab switch and both views at once", storyId: "composites-feedback-emptystate-emptystate--icon-and-title" },
+    "Typography": { tier: "atom", role: "a stat cell's own label or value line, real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
+    "EmptyState": { tier: "composite", role: "the single invitation the whole panel becomes when no session has ever run — it replaces the tab switch and both views at once", storyId: "composites-feedback-emptystate--icon-and-title" },
 }
 
 /** LEAF — progress data has landed: the tab switch plus whichever view is selected. */

@@ -67,11 +67,11 @@ const NOOP_CALLBACKS = {
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "several vertical frames — separating label/archive-line/composer from the list, stacking the comments, or pairing the label with its archive line", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "the label+count line, or the archive-line fact", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the label+count line, or the archive-line fact", storyId: "atoms-text-typography-typography--overview" },
     "ContentCommentComposer": { tier: "block", role: "the avatar-led, collapsible top-level composer", storyId: "starci-blocks-learn-contentcommentcomposer-contentcommentcomposer--collapsed-pill" },
     "ContentCommentThread": { tier: "block", role: "one threaded comment — author, reaction, actions, and its own recursive replies", storyId: "starci-blocks-learn-contentcommentthread-contentcommentthread--default" },
     "Button": { tier: "atom", role: "the \"load more comments\" action, only when a further page remains", storyId: "atoms-buttons-button-button--default" },
-    "EmptyState": { tier: "composite", role: "the centred block carrying either the invitation to write first or the failed-to-load message", storyId: "composites-feedback-emptystate-emptystate--title-only" },
+    "EmptyState": { tier: "composite", role: "the centred block carrying either the invitation to write first or the failed-to-load message", storyId: "composites-feedback-emptystate--title-only" },
 }
 
 /** LEAF — a lesson with a thread on it. */

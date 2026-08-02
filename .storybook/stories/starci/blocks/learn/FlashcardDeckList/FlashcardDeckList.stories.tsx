@@ -71,7 +71,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "VariantChipDifficulty": { tier: "block", role: "the difficulty chip — dot colour + label by tier, the block never reshapes it", storyId: "starci-blocks-learn-variantchip-variantchipdifficulty--levels" },
     "Chip": { tier: "atom", role: "the due-count chip (`tone=\"warning\"`) — omitted entirely when `dueCount` is `0`/absent", storyId: "atoms-chips-chip-chip--default" },
     "ProgressGauge": { tier: "atom", role: "the per-viewer mastery meter, shown only when `showProgress` is on and the deck has cards", storyId: "atoms-display-progress-progressgauge--overview" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — a title, a blurb, the mastery fraction, or the CTA label", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — a title, a blurb, the mastery fraction, or the CTA label", storyId: "atoms-text-typography-typography--overview" },
     "Pagination": { tier: "atom", role: "the page nav under the track, hidden while the track is empty or loading", storyId: "atoms-navigation-pagination-pagination--default" },
     "AsyncContentEmpty": { tier: "composite", role: "the empty-track message — replaces the grid/list entirely, wording forks on whether a search query is active", storyId: "composites-async-asynccontent-asynccontent--empty" },
 }

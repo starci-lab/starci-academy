@@ -42,7 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": {
         tier: "atom",
         role: "one of the block's own text lines inside a tile — the exercise title, or the decorative closing cue — real or its skeleton mirror",
-        storyId: "atoms-text-typography-typography--plain",
+        storyId: "atoms-text-typography-typography--overview",
     },
     "Chip": {
         tier: "atom",
@@ -52,7 +52,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "EmptyState": {
         tier: "composite",
         role: "the empty message that replaces the grid outright when the course has no Playground exercises",
-        storyId: "composites-feedback-emptystate-emptystate--icon-and-title",
+        storyId: "composites-feedback-emptystate--icon-and-title",
     },
 }
 

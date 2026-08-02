@@ -68,7 +68,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the body's vertical track — the device ribbon over the log lines, or the lone hint line when not connected", storyId: "frames-stack-stackv--default" },
     "Chip": { tier: "atom", role: "the peek row's status dot chip — tone and wording keyed off `connection`", storyId: "atoms-chips-chip-chip--default" },
     "Button": { tier: "atom", role: "the always-visible reconnect action, and the trailing icon-only toggle that expands/collapses the body", storyId: "atoms-buttons-button-button--default" },
-    "Typography": { tier: "atom", role: "the block's own text — latency, agent-log lines colored by level, or the not-connected hint", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the block's own text — latency, agent-log lines colored by level, or the not-connected hint", storyId: "atoms-text-typography-typography--overview" },
     "StatRibbon": { tier: "composite", role: "the device-spec cells (hostname·platform / CPU / RAM / GPU), reused as-is rather than rebuilt", storyId: "composites-stats-statribbon--overview" },
 }
 

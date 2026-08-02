@@ -105,7 +105,7 @@ const ACCOUNT_GUEST: NavbarAccountData = {
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the primary bar's row track (outer justify-between split, and each inner cluster of controls)", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "the notification popover's own column, and the mobile drawer's stacked regions", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "a route pill's label, the popover's own title/timestamps, or the guest prompt line", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "a route pill's label, the popover's own title/timestamps, or the guest prompt line", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "every plain trigger this block owns directly — the desktop pills' shared control, the mobile search icon, the mark-all-read action, the \"see all\" footer, and each mobile drawer row", storyId: "atoms-buttons-button-button--default" },
     "Divider": { tier: "atom", role: "the rule between the account header and its action list, and between the drawer's nav rows and its language/theme rows", storyId: "atoms-display-divider-divider--default" },
     "Switch": { tier: "heroui", role: "the dark/light toggle — raw HeroUI Switch, see the component's file header for why no atom fits" },

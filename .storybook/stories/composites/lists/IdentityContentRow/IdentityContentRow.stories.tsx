@@ -27,7 +27,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Avatar": { tier: "atom", role: "leading avatar, fallback chain owned by the atom", storyId: "atoms-display-avatar-avatar--default" },
     "StackH": { tier: "frame", role: "root row (gap={2}) and the caller-supplied byline row", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "the column: byline stacked over whatever content the caller's `body` component renders (gap={2})", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "byline text / body text", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "byline text / body text", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /**

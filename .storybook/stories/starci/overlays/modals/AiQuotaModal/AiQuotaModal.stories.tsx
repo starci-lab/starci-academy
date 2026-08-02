@@ -39,7 +39,7 @@ type Story = StoryObj<typeof AiQuotaModal>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Modal.CloseTrigger": { tier: "heroui", role: "the close button, upper-right" },
     "StackH": { tier: "frame", role: "the header row pairing the modal's title with its optional tier chip", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the modal's title text, in the header row", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the modal's title text, in the header row", storyId: "atoms-text-typography-typography--overview" },
     "Chip": { tier: "atom", role: "the tier badge next to the title — present only on a paid plan (`tier` set, `null` draws nothing)", storyId: "atoms-chips-chip-chip--default" },
     "Modal.Body": { tier: "heroui", role: "the body region — tab strip above the active tab's panel" },
     "StackV": { tier: "frame", role: "the vertical track holding the tab strip above whichever tab's panel is active", storyId: "frames-stack-stackv--default" },

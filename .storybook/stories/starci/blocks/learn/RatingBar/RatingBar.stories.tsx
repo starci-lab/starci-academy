@@ -32,7 +32,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardPressableGroup": { tier: "composite", role: "the four pressable tiles and their grid, owning the tile box, the verdict band the block colours, and the 1-to-4 keyboard shortcut", storyId: "composites-cards-surfacecard-surfacecardpressablegroup--default" },
     "StackV": { tier: "frame", role: "the vertical frame inside one tile, stacking the label row above the interval hint", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the label row, pushing the grade name to one end and its key hint to the other", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the grade name, or the muted next-interval preview under it", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the grade name, or the muted next-interval preview under it", storyId: "atoms-text-typography-typography--overview" },
     "Chip": { tier: "atom", role: "the keyboard shortcut — the one classifying mark on a tile, which is why the interval below it stays plain text", storyId: "atoms-chips-chip-chip--default" },
 }
 

@@ -57,7 +57,7 @@ const OFFER = {
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the reading card the lesson sits on, owning the paper surface and the padding around everything inside it", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "StackV": { tier: "frame", role: "the vertical frame separating the hint, the body and the offer, owning the seams between them", storyId: "frames-stack-stackv--default" },
-    "Callout": { tier: "composite", role: "the one-time tip that a passage can be selected to ask AI, drawn as a flat strip so it leads the body without competing with it", storyId: "composites-feedback-callout-callout--default" },
+    "Callout": { tier: "composite", role: "the one-time tip that a passage can be selected to ask AI, drawn as a flat strip so it leads the body without competing with it", storyId: "composites-feedback-callout--default" },
     "MarkdownContent": { tier: "composite", role: "the viewer that repeats the authored lesson; the block hands it the document and never inspects what is in it", storyId: "composites-viewers-markdowncontent--reading" },
     "ContentPaywall": { tier: "block", role: "the offer under the faded tail, reused unchanged so pricing reads the same here as on the course page", storyId: "starci-blocks-learn-contentpaywall-contentpaywall--full" },
 }

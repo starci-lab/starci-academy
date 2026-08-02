@@ -22,7 +22,7 @@ type Story = StoryObj<typeof PlaygroundHubHeader>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the header frame that lines up the title and description, owning the type scale for both", storyId: "composites-layout-page-pageheader--full" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the hub title or its purpose line, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the hub title or its purpose line, real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the only shape this block has: title + optional purpose line. */

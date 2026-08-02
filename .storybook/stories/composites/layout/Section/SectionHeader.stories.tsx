@@ -33,26 +33,26 @@ type Story = StoryObj<typeof SectionHeader>
  * passes that slot.
  */
 const TITLE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "the region's title, rendered at the size the level sets, always bold weight", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the region's title, rendered at the size the level sets, always bold weight", storyId: "atoms-text-typography-typography--overview" },
 ]
 const EYEBROW_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "a muted kicker sitting above the title, context rather than a second title", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "a muted kicker sitting above the title, context rather than a second title", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--overview" },
 ]
 const DESCRIPTION_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "a supporting line under the title, muted and one size smaller", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "a supporting line under the title, muted and one size smaller", storyId: "atoms-text-typography-typography--overview" },
 ]
 // `Action` is an arbitrary caller-supplied slot (docs: "pass a Button.* atom node") — the frame
 // never fixes which one and never claims it as its own anatomy (§11a caller-slot rule), so it
 // carries no badge even though this demo happens to fill it with a Button.
 const ACTION_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--overview" },
 ]
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "a muted kicker above the title", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "a muted supporting line", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "a muted kicker above the title", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "a muted supporting line", storyId: "atoms-text-typography-typography--overview" },
 ]
 /** Minimal — only `title`. Still a flex row frame, just with one text column. */
 export const Default: Story = {

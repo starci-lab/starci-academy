@@ -51,7 +51,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the horizontal frame holding a card's verdict chip on its own row", storyId: "frames-stack-stackh--default" },
     "SurfaceCard": { tier: "composite", role: "one answered card's surface, owning its padding and the box every part inside it sits in", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "Chip": { tier: "atom", role: "how the RUN judged this answer — the system's verdict, not the learner's own rating", storyId: "atoms-chips-chip-chip--default" },
-    "Typography": { tier: "atom", role: "the counter line, a section label, or the answer the learner typed during the run", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the counter line, a section label, or the answer the learner typed during the run", storyId: "atoms-text-typography-typography--overview" },
     "MarkdownContent": { tier: "composite", role: "the viewer repeating the authored question and expected answer at the compact measure, because here a card is a passenger rather than the page", storyId: "composites-viewers-markdowncontent--compact" },
     "RatingBar": { tier: "block", role: "the learner's OWN recall grade for this card, reused unchanged from flashcard review so both places feed the schedule the same way", storyId: "starci-blocks-learn-ratingbar-ratingbar--full" },
     "Skeleton": { tier: "heroui", role: "the counter-line bar plus, per shimmering card, a chip bar and two text bars, standing in for the recap before real `cards` have arrived" },

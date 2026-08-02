@@ -59,7 +59,7 @@ const items: ReadonlyArray<SurfaceCardAccordionItem> = [
 const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     role: "Fills the surface when items is empty, showing an icon with a title and description.",
     tier: "composite",
-    storyId: "composites-feedback-feedback-feedbackempty--description",
+    storyId: "composites-feedback-emptystate--description",
 }
 /**
  * ⭐ Rendering is delegated to the house `Accordion` atom (COMPOSITE-3) — this frame

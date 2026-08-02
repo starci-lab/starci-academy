@@ -28,9 +28,9 @@ const FULL_PARTS: Array<AnatomyNode> = [
         role: "the card frame, giving the value its border, background fill and rounded corners",
         storyId: "composites-stats-metriccard--default",
         children: [
-            { name: "Typography", tier: "atom", role: "the highlighted number, rendered semibold at h4 size", storyId: "atoms-text-typography-typography--plain" },
-            { name: "Typography", tier: "atom", role: "the description underneath, the prominent foreground line", storyId: "atoms-text-typography-typography--plain" },
-            { name: "Typography", tier: "atom", role: "a quiet supplementary note, muted and one size smaller than the label", storyId: "atoms-text-typography-typography--plain" },
+            { name: "Typography", tier: "atom", role: "the highlighted number, rendered semibold at h4 size", storyId: "atoms-text-typography-typography--overview" },
+            { name: "Typography", tier: "atom", role: "the description underneath, the prominent foreground line", storyId: "atoms-text-typography-typography--overview" },
+            { name: "Typography", tier: "atom", role: "a quiet supplementary note, muted and one size smaller than the label", storyId: "atoms-text-typography-typography--overview" },
         ],
     },
 ]
@@ -41,8 +41,8 @@ const NO_HINT_PARTS: Array<AnatomyNode> = [
         role: "the card frame, giving the value its border, background fill and rounded corners",
         storyId: "composites-stats-metriccard--default",
         children: [
-            { name: "Typography", tier: "atom", role: "the highlighted number, rendered semibold at h4 size", storyId: "atoms-text-typography-typography--plain" },
-            { name: "Typography", tier: "atom", role: "the description underneath, the prominent foreground line", storyId: "atoms-text-typography-typography--plain" },
+            { name: "Typography", tier: "atom", role: "the highlighted number, rendered semibold at h4 size", storyId: "atoms-text-typography-typography--overview" },
+            { name: "Typography", tier: "atom", role: "the description underneath, the prominent foreground line", storyId: "atoms-text-typography-typography--overview" },
         ],
     },
 ]

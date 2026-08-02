@@ -104,7 +104,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": {
         role: "the name and, when set, the muted @handle line — two separate Typography instances",
         tier: "atom",
-        storyId: "atoms-text-typography-typography--plain",
+        storyId: "atoms-text-typography-typography--overview",
     },
     "Skeleton": {
         role: "shimmer bar — the avatar circle (delegated to Avatar), the name bar, and the handle bar all resolve to this same HeroUI Skeleton",

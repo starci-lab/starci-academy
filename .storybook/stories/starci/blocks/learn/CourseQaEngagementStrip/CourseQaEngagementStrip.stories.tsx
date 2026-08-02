@@ -21,7 +21,7 @@ type Story = StoryObj<typeof CourseQaEngagementStrip>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical track holding the two lines as one aggregate statement, owning the flush seam between them", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "one of the block's own muted lines — enrollment or the answered/total readout, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own muted lines — enrollment or the answered/total readout, real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /**

@@ -96,7 +96,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "a horizontal track — avatar beside identity/preview/chips, an identity line, or chips beside the reaction bar", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "a vertical track — the row's own text stack, or the conversation's own regions (header / bubbles / composer)", storyId: "frames-stack-stackv--default" },
     "Avatar": { tier: "atom", role: "the asker's avatar in the collapsed row", storyId: "atoms-display-avatar-avatar--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — asker name, relative time, the empty-thread notice, or their skeleton mirrors", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — asker name, relative time, the empty-thread notice, or their skeleton mirrors", storyId: "atoms-text-typography-typography--overview" },
     "MarkdownContent": { tier: "composite", role: "the question body — a two-line clamp in the collapsed row, a compact render inside the question bubble", storyId: "composites-viewers-markdowncontent--compact" },
     "Chip": { tier: "atom", role: "the scope or status chip, real or its skeleton mirror", storyId: "atoms-chips-chip-chip--default" },
     "Cluster": { tier: "frame", role: "the scope + status (+ reply-count) chip row", storyId: "frames-cluster-cluster--default" },

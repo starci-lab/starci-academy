@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `hint` line each mount one — see `ImageDropzone.tsx`).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Typography": { tier: "atom", role: "label / hint text", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "label / hint text", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /**

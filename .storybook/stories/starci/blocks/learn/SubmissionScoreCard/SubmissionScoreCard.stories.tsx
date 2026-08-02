@@ -27,7 +27,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the card face holding the score, verdict, and every optional row beneath them, plus the section label above the face", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "StackV": { tier: "frame", role: "the vertical track separating the hero row from the sub-line, feedback, link, and byline rows below it", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal track lining up the score number with its max and the verdict chip on one baseline, or the byline's model/tier/time on one line", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the score number, its max, the threshold sub-line, feedback, the submission link, or the relative time — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the score number, its max, the threshold sub-line, feedback, the submission link, or the relative time — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Chip": { tier: "atom", role: "the pass/fail verdict badge, tinted to the same tone as the score number", storyId: "atoms-chips-chip-chip--default" },
     "InlineIconLabel": { tier: "composite", role: "the sparkle + \"graded by <model>\" text unit that opens the byline row", storyId: "composites-texts-inlineiconlabel--overview" },
     "EnumChip": { tier: "composite", role: "the model's cost/quality tier chip, trailing the byline text", storyId: "composites-chips-enumchip--overview" },

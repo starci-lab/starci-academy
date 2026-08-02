@@ -23,7 +23,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the outer column (top answer + its replies), and each message row's own author-line-over-bubble column", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the author line (avatar + name + time + accepted badge), and the reaction-bar/accept-toggle row beneath the top-level bubble", storyId: "frames-stack-stackh--default" },
     "Avatar": { tier: "atom", role: "the message author's avatar", storyId: "atoms-display-avatar-avatar--default" },
-    "Typography": { tier: "atom", role: "author name and the relative-time fact on the author line", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "author name and the relative-time fact on the author line", storyId: "atoms-text-typography-typography--overview" },
     "MarkdownContent": { tier: "composite", role: "the answer body, inside the chat bubble", storyId: "composites-viewers-markdowncontent--compact" },
     "QaChatBubble": { tier: "block", role: "the message surface itself", storyId: "starci-blocks-learn-qachatbubble-qachatbubble--roles" },
     "QaReactionBar": { tier: "block", role: "like-and-count toggle under the top-level answer only", storyId: "starci-blocks-learn-qareactionbar-qareactionbar--default" },

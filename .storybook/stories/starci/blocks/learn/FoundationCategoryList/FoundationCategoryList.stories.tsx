@@ -79,7 +79,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "EmptyState": {
         tier: "composite",
         role: "the empty message riding inside SurfaceCardList's own bounded emptyState slot; wording forks on whether a search query drove the empty result",
-        storyId: "composites-feedback-emptystate-emptystate--overview",
+        storyId: "composites-feedback-emptystate--overview",
     },
 }
 

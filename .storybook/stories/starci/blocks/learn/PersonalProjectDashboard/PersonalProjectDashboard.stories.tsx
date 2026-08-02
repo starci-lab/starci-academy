@@ -48,7 +48,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Chip": { tier: "atom", role: "the GitHub connection status, or its own shimmer mirror while that data is still loading", storyId: "atoms-chips-chip-chip--default" },
     "ContinueCardHero": { tier: "block", role: "the one highlight card for the next task to work on, carrying the continue CTA", storyId: "starci-blocks-learn-continuecard-hero-progress--overview" },
     "ProgressMeter": { tier: "composite", role: "the capstone's own overall completion, kept separate from the hero's card so the two don't compete over what 'progress' means", storyId: "composites-stats-progressmeter--overview" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the all-done line or the stats sentence — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the all-done line or the stats sentence — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "SurfaceCard": { tier: "composite", role: "the labeled card framing the keep-going grid, owning the 'Continue · <milestone>' heading row", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "ContinueCardItem": { tier: "block", role: "one task tile in the keep-going grid, its subtitle line picked from the task's own state", storyId: "starci-blocks-learn-continuecard-continuecarditem--content" },
 }

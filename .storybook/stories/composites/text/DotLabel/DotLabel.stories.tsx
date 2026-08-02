@@ -22,7 +22,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": {
         tier: "atom",
         role: "the label text; its tone comes from this composite's own 6-value `tone` scale, not a colour the caller sets on Typography directly",
-        storyId: "atoms-text-typography-typography--plain",
+        storyId: "atoms-text-typography-typography--overview",
     },
 }
 

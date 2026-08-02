@@ -34,7 +34,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the flat, namespace-free stand-in for the real app's `LabeledCard`, holding the milestone-0 task rows under its own section label", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical track separating the hero, the meter and the task card, or the vertical stack of task rows inside the card", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "one task row's horizontal track, holding the bullet mark beside its title", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "one task row's title text", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one task row's title text", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the capstone teaser. */

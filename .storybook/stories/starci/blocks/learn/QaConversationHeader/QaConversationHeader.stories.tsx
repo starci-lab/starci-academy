@@ -23,7 +23,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button": { tier: "atom", role: "the collapse-back control, and the optional follow toggle", storyId: "atoms-buttons-button-button--default" },
     "Avatar": { tier: "atom", role: "the asker's avatar", storyId: "atoms-display-avatar-avatar--default" },
     "AvatarGroup": { tier: "atom", role: "distinct people who have answered so far", storyId: "composites-lists-avatargroup--default" },
-    "Typography": { tier: "atom", role: "asker name and the reply-count line", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "asker name and the reply-count line", storyId: "atoms-text-typography-typography--overview" },
 }
 
 const ASKER = { id: "u1", displayName: "Minh Anh", avatarUrl: undefined }

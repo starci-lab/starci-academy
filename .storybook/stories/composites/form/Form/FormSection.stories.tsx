@@ -37,7 +37,7 @@ const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
         name: "Typography",
         tier: "atom",
         role: "the group title (Sm medium, §9b)",
-        storyId: "atoms-text-typography-typography--bold",
+        storyId: "atoms-text-typography-typography--overview",
     },
 ]
 const WITH_DESCRIPTION_PARTS: Array<AnatomyNode> = [

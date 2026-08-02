@@ -35,8 +35,8 @@ const RESOURCES = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame separating the panel's header row from its body region", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal frame pinning the header's icon+label to the start and the total count to the end", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the panel's header label (with its leading icon) or the total-count text beside it", storyId: "atoms-text-typography-typography--plain" },
-    "EmptyState": { tier: "composite", role: "the centred message filling the body region before pairing, and again after pairing while the first snapshot is still in flight", storyId: "composites-feedback-emptystate-emptystate--icon-and-title" },
+    "Typography": { tier: "atom", role: "the panel's header label (with its leading icon) or the total-count text beside it", storyId: "atoms-text-typography-typography--overview" },
+    "EmptyState": { tier: "composite", role: "the centred message filling the body region before pairing, and again after pairing while the first snapshot is still in flight", storyId: "composites-feedback-emptystate--icon-and-title" },
     "SurfaceCardAccordion": { tier: "composite", role: "the bounded card of collapsible kind-groups, each trigger row carrying its own resource count as `titleEnd`", storyId: "composites-cards-surfacecard-surfacecardaccordion--with-title-end" },
     "Chip": { tier: "atom", role: "a per-kind resource count in a trigger row, or a per-resource status pill toned by the block's own CLI-text heuristic", storyId: "atoms-chips-chip-chip--tones" },
     "ListRow": { tier: "composite", role: "one resource inside its kind group, carrying the resource's name and its toned status chip as trailing meta", storyId: "composites-lists-list-listrow--meta-trailing" },

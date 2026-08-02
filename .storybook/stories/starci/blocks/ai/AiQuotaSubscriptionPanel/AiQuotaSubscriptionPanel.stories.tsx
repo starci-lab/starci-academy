@@ -23,7 +23,7 @@ type Story = StoryObj<typeof AiQuotaSubscriptionPanel>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the bordered inset region the no-tier offer sits inside, reading as its own region against the modal's already-filled face", storyId: "composites-cards-surfacecard-surfacecard--variant" },
     "StackV": { tier: "frame", role: "the vertical track owning the seam between the sentence and the button, or between the lane and its caption", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "the muted sentence explaining what buying unlocks, or the caption naming the active tier", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the muted sentence explaining what buying unlocks, or the caption naming the active tier", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the single subscribe CTA, owning its own accent skin and the arrow that slides on hover", storyId: "atoms-buttons-button-button--default" },
     "AiQuotaLane": { tier: "block", role: "the reused Premium lane — two rolling-window quota bars, fed straight from this panel's `premiumLane` prop with no reshaping", storyId: "starci-blocks-ai-aiquotalane-aiquotalane--content" },
 }

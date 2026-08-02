@@ -13,7 +13,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": {
         tier: "atom",
         role: "the title, the optional subtitle, and the optional hint — up to three separate Typography instances stacked in a StackV",
-        storyId: "atoms-text-typography-typography--plain",
+        storyId: "atoms-text-typography-typography--overview",
     },
 }
 

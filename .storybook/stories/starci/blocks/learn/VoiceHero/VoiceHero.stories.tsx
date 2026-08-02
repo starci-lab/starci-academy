@@ -35,7 +35,7 @@ const LABELS = {
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical track holding the mic (or textarea), its transcript, and the optional switch link — owning the single seam between them", storyId: "frames-stack-stackv--default" },
     "Button": { tier: "atom", role: "the circular icon-only mic control; color carries idle-versus-listening rather than a second icon", storyId: "atoms-buttons-button-button--is-icon-only" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the live/committed transcript, or the switch-mode link — real, muted-provisional, or a link, per state", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the live/committed transcript, or the switch-mode link — real, muted-provisional, or a link, per state", storyId: "atoms-text-typography-typography--overview" },
     "TextArea": { tier: "atom", role: "the typed answer field inside `InputTextarea`, bound straight to the same `value`/`onValueChange` pair MicHero's transcript reads from", storyId: "atoms-forms-input-inputtextarea--default" },
 }
 

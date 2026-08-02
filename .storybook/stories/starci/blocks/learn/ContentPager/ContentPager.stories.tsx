@@ -28,7 +28,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardPressableGroup": { tier: "composite", role: "the pressable card pair and the grid they sit in, owning the card box, the hover skin and the one-to-two column split", storyId: "composites-cards-surfacecard-surfacecardpressablegroup--default" },
     "StackH": { tier: "frame", role: "the horizontal frame inside one card, holding the direction caret beside the two text lines", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "the vertical frame stacking the direction label above the lesson title, with no seam because the two are one unit of meaning", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "one of the card's two lines — the muted direction label, or the lesson title clamped to two lines", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the card's two lines — the muted direction label, or the lesson title clamped to two lines", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — a lesson in the middle of a module: both neighbours exist. */

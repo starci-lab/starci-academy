@@ -56,11 +56,11 @@ const Chevron = () => <CaretRightIcon data-tier="fixture" className="size-3 text
 // node. Every fixture below defines a small named function component per slot instead of
 // a JSX element.
 const TITLE_ONLY_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "TitledText": { tier: "composite", role: "title (body-sm medium), no subtitle/leading/meta", storyId: "composites-texts-titledtext--row" },
+    "TitledText": { tier: "composite", role: "title (body-sm medium), no subtitle/leading/meta", storyId: "composites-texts-titledtext--overview" },
 }
 
 const LEADING_SUBTITLE_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "TitledText": { tier: "composite", role: "title + subtitle (module breadcrumb)", storyId: "composites-texts-titledtext--row" },
+    "TitledText": { tier: "composite", role: "title + subtitle (module breadcrumb)", storyId: "composites-texts-titledtext--overview" },
     // `FileTextLeading` (the `leading` component below) simply renders
     // nothing while `isSkeleton`, since the house has no dedicated icon-shimmer atom
     // yet; it is still called every time, it just chooses to render null for this
@@ -68,11 +68,11 @@ const LEADING_SUBTITLE_ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 const META_TRAILING_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "TitledText": { tier: "composite", role: "title + subtitle (submission date)", storyId: "composites-texts-titledtext--row" },
+    "TitledText": { tier: "composite", role: "title + subtitle (submission date)", storyId: "composites-texts-titledtext--overview" },
 }
 
 const LEADING_META_TRAILING_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "TitledText": { tier: "composite", role: "title + subtitle", storyId: "composites-texts-titledtext--row" },
+    "TitledText": { tier: "composite", role: "title + subtitle", storyId: "composites-texts-titledtext--overview" },
 }
 
 /** The simplest row — just a title. Used when the list has no subtitle, icon, or trailing action. */

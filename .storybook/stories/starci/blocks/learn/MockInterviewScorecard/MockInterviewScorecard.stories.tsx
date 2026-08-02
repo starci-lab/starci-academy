@@ -48,13 +48,13 @@ const GAPS = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical track separating the byline, the verdict banner and every breakdown card, one seam per region", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "a horizontal row inside one part — a score row's label+bar+value, or the CTA row", storyId: "frames-stack-stackh--default" },
-    "Callout": { tier: "composite", role: "the verdict banner — tone/icon/wording driven entirely by the `verdict` enum", storyId: "composites-feedback-callout-callout--default" },
+    "Callout": { tier: "composite", role: "the verdict banner — tone/icon/wording driven entirely by the `verdict` enum", storyId: "composites-feedback-callout--default" },
     "SurfaceCard": { tier: "composite", role: "the bounded card face for the score breakdown, the attribute breakdown, and the follow-up question", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "ProgressMeter": { tier: "composite", role: "one score row's bar, value-colored by how close it is to its own max", storyId: "composites-stats-progressmeter--label-and-value" },
     "SurfaceCardCrossList": { tier: "composite", role: "the strengths (✓) / gaps (✗) list — marked rows in a bounded card with its own skeleton mirror", storyId: "composites-cards-surfacecard-surfacecardcrosslist--checks" },
     "MarkdownContent": { tier: "composite", role: "one authored line of text — a strength, a gap, or the follow-up question", storyId: "composites-viewers-markdowncontent--compact" },
     "Chip": { tier: "atom", role: "tags the weak area the primary CTA is about to send the learner back into", storyId: "atoms-chips-chip-chip--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — a row label, a score value, a section caption, or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — a row label, a score value, a section caption, or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "one of the three CTAs — study the weak area, do the capstone, or retry", storyId: "atoms-buttons-button-button--default" },
     "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the verdict banner — `Callout` has no `isSkeleton` shape of its own, so this block draws the shimmer bar directly, in the banner's own slot" },
 }

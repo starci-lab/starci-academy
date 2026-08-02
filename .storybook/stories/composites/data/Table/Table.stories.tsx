@@ -62,7 +62,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": {
         tier: "atom",
         role: "isSkeleton bar filling each cell so the row's shape doesn't jump when data lands.",
-        storyId: "atoms-text-typography-typography--loading",
+        storyId: "atoms-text-typography-typography--overview",
     },
 }
 

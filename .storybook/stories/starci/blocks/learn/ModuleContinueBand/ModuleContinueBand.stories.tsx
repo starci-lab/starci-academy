@@ -24,7 +24,7 @@ type Story = StoryObj<typeof ModuleContinueBand>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the resume row: eyebrow-plus-title on the left, the resume button on the right, one seam between them", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "the vertical text cluster inside the row — eyebrow flush above the resume title, since the two read as one unit of meaning", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the eyebrow, the resume title, or the stat sentence it writes itself, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the eyebrow, the resume title, or the stat sentence it writes itself, real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the resume CTA, only present while there is a lesson left to jump to", storyId: "atoms-buttons-button-button--default" },
     "ProgressMeter": { tier: "composite", role: "the lessons-read meter, the one progress signal this band shows", storyId: "composites-stats-progressmeter--label-and-value" },
     "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the progress bar — `ProgressMeter` has no `isSkeleton` shape of its own yet, so the block builds this shimmer bar directly, matching the real track's height" },

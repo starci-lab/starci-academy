@@ -36,7 +36,7 @@ type Story = StoryObj<typeof PremiumGateModal>
 // PhaseScarcityNote, OR two skeleton Typography bars) + Modal.Footer > Button.
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Modal.CloseTrigger": { tier: "heroui", role: "the close button, upper-right" },
-    "Typography": { tier: "atom", role: "header title + description (named-course or generic, from the block's own `GATE_HEADER` table) — merges with the unlock-row labels and the resting price bars, all the same atom", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "header title + description (named-course or generic, from the block's own `GATE_HEADER` table) — merges with the unlock-row labels and the resting price bars, all the same atom", storyId: "atoms-text-typography-typography--overview" },
     "Modal.Body": { tier: "heroui", role: "the body region — unlock checklist above the price/scarcity region" },
     "StackV": { tier: "frame", role: "vertical column(s): the body's own section stack, and the row-stack holding the three unlock lines", storyId: "frames-stack-stackv--default" },
     "Cluster": { tier: "frame", role: "one unlock line — a check glyph beside its benefit label; repeats once per `GATE_UNLOCKS` row", storyId: "frames-cluster-cluster--default" },

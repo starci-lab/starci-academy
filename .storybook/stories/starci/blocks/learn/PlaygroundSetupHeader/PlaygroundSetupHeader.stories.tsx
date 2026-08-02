@@ -25,7 +25,7 @@ type Story = StoryObj<typeof PlaygroundSetupHeader>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the header frame that lines up the back link, title and description, owning the type scale and the seam between them", storyId: "composites-layout-page-pageheader--full" },
     "LinkBack": { tier: "atom", role: "the single hop back to the playground hub, sitting in the header's breadcrumb slot since a Setup screen has no trail to show", storyId: "atoms-navigation-link-linkback--default" },
-    "Typography": { tier: "atom", role: "the exercise title or its one-line intro — real or its skeleton mirror while the exercise is still loading", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the exercise title or its one-line intro — real or its skeleton mirror while the exercise is still loading", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the only shape this block has: back link + title + description, no meta cluster. */

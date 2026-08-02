@@ -30,7 +30,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical rhythm used at every level of this tree — the outer identity/overview split, the hero column, and each section's own label-over-body stack", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal rows — the location/work-mode line, the icon+text meta rows, and a course row's title/percent line", storyId: "frames-stack-stackh--default" },
     "Grid": { tier: "frame", role: "the 2-col responsive grid holding the skills section's two stat cards", storyId: "frames-grid-grid--default" },
-    "Typography": { tier: "atom", role: "every text line in this tree, mirrored via its own `isSkeleton` shimmer — the hero's name/role/handle/bio, the section labels, the metric card's value/label/hint, a course row's title and percent", storyId: "atoms-text-typography-typography--loading" },
+    "Typography": { tier: "atom", role: "every text line in this tree, mirrored via its own `isSkeleton` shimmer — the hero's name/role/handle/bio, the section labels, the metric card's value/label/hint, a course row's title and percent", storyId: "atoms-text-typography-typography--overview" },
     "Chip": { tier: "atom", role: "the rank pill under the hero avatar, and the work-mode status chip beside the location line", storyId: "atoms-chips-chip-chip--skeleton" },
     "Button": { tier: "atom", role: "the hero's two full-width action buttons", storyId: "atoms-buttons-button-button--skeleton" },
     "IconTile": { tier: "atom", role: "the course thumbnail leading each courses-list row", storyId: "atoms-display-icontile-icontile--skeleton" },

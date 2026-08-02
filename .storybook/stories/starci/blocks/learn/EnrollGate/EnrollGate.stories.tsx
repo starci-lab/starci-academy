@@ -52,7 +52,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the conversion card's own face — surface fill, rounded-3xl, shadow — so it floats up whether alone or over a faded teaser", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "StackV": { tier: "frame", role: "the vertical frame stacking lock, headline, description, price region and CTA with one owned seam", storyId: "frames-stack-stackv--default" },
     "IconTile": { tier: "atom", role: "the lock identity marking this as a gated surface", storyId: "atoms-display-icontile-icontile--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the headline or the outcome sentence", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the headline or the outcome sentence", storyId: "atoms-text-typography-typography--overview" },
     "PriceTagProminent": { tier: "block", role: "the loyalty-aware price, the SAME render as the payment modal's own price line", storyId: "starci-blocks-commerce-pricetag--prominent" },
     "PhaseScarcityNote": { tier: "block", role: "the honest seats-left + next-phase-price line, self-hiding when the phase has no seat cap", storyId: "starci-blocks-commerce-phasescarcitynote-phasescarcitynote--default" },
     "Button": { tier: "atom", role: "the single enroll CTA — one way through, no second control to weigh", storyId: "atoms-buttons-button-button--icon-slide" },

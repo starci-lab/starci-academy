@@ -26,7 +26,7 @@ export default meta
 type Story = StoryObj<typeof TaskLockedAlert>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Callout": { tier: "composite", role: "the warning-tinted alert frame this block builds its title/description/CTA into, owning the Alert+Button pairing so this block doesn't hand-roll it", storyId: "composites-feedback-callout-callout--default" },
+    "Callout": { tier: "composite", role: "the warning-tinted alert frame this block builds its title/description/CTA into, owning the Alert+Button pairing so this block doesn't hand-roll it", storyId: "composites-feedback-callout--default" },
 }
 
 /** LEAF — a target task is known, so the "go to current task" CTA renders. */

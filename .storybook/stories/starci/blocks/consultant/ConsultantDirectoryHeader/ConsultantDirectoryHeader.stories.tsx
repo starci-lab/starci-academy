@@ -29,7 +29,7 @@ const CRUMBS = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the header frame that lines up the trail, title and description, owning the type scale for all three", storyId: "composites-layout-page-pageheader--full" },
     "Breadcrumbs": { tier: "atom", role: "the trail the block builds from crumb data handed down by the screen", storyId: "atoms-navigation-breadcrumbs-breadcrumbs--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the directory title or its description, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the directory title or its description, real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — full set: trail → title → optional description. */

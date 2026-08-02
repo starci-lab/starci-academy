@@ -20,7 +20,7 @@ export default meta
 type Story = StoryObj<typeof ProfileNotFoundState>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "EmptyState": { tier: "composite", role: "the centered icon/title/description/action stack — the same shape every other empty spot in this codebase uses", storyId: "composites-feedback-emptystate-emptystate--action" },
+    "EmptyState": { tier: "composite", role: "the centered icon/title/description/action stack — the same shape every other empty spot in this codebase uses", storyId: "composites-feedback-emptystate--action" },
     "Button": { tier: "atom", role: "the single way out, back to the home route — its label is owned by this block, not passed in by the caller", storyId: "atoms-buttons-button-button--default" },
 }
 

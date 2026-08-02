@@ -36,7 +36,7 @@ const SUGGESTIONS: Array<FoundationCategorySuggestion> = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the horizontal frame holding the field and the count on one baseline, one seam apart", storyId: "frames-stack-stackh--default" },
     "SearchAutocomplete": { tier: "atom", role: "the debounced suggest-as-you-type field, fed the block's mapped domain suggestions", storyId: "atoms-forms-searchautocomplete--overview" },
-    "Typography": { tier: "atom", role: "the count text, or its skeleton mirror while `isSkeleton` — content and wording owned entirely by this block", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the count text, or its skeleton mirror while `isSkeleton` — content and wording owned entirely by this block", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the one shape this block has: field + count. */

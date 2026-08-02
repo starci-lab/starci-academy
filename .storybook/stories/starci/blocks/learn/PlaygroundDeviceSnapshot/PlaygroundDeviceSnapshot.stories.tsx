@@ -48,7 +48,7 @@ const NO_GPU_DEVICE: PlaygroundDeviceInfo = {
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StatRibbon": { tier: "composite", role: "the 4-cell divider row this block feeds computed OS/CPU/RAM/GPU pairs into — the same composite the Lab route's stat panel renders", storyId: "composites-stats-statribbon--four-stats" },
-    "Typography": { tier: "atom", role: "one of the block's own value/detail lines, real text or its own shimmer bar while isSkeleton", storyId: "atoms-text-typography-typography--loading" },
+    "Typography": { tier: "atom", role: "one of the block's own value/detail lines, real text or its own shimmer bar while isSkeleton", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the 4-cell ribbon: OS · CPU · RAM · GPU. */

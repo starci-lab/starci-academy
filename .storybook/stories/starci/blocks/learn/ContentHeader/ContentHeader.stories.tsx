@@ -39,7 +39,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Breadcrumbs": { tier: "atom", role: "the trail the block builds from crumb data handed down by the screen", storyId: "atoms-navigation-breadcrumbs-breadcrumbs--default" },
     "StackH": { tier: "frame", role: "the horizontal frame holding the meta row, so the chip and the two quiet facts sit on one baseline with one seam", storyId: "frames-stack-stackh--default" },
     "Chip": { tier: "atom", role: "the read-state badge, the single classifying fact in the meta row and therefore the only chip in it", storyId: "atoms-chips-chip-chip--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the lesson title, its description, reading time, or challenge count — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the lesson title, its description, reading time, or challenge count — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "SurfaceCardList": { tier: "composite", role: "the what-you-will-learn card, taking outcome rows as data and drawing the label, the rows and their dividers itself", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
 }
 

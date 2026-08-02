@@ -28,9 +28,9 @@ type Story = StoryObj<typeof QuotaBar>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the outer column stacking the label row on top, the bar in the middle, and the reset caption underneath", storyId: "frames-stack-stackv--default" },
     "LabelRow": { tier: "frame", role: "the window label on the left, the \"used / limit\" count on the right — a `StackH` with `justify=\"between\"`, two fixed slots rather than a repeating row", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the window label, the used/limit count, or the optional unit suffix after it", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the window label, the used/limit count, or the optional unit suffix after it", storyId: "atoms-text-typography-typography--overview" },
     "Bar": { tier: "atom", role: "the fill bar itself, coloured by the 3-tier consumption ramp", storyId: "atoms-display-progress-progressbar--overview" },
-    "ResetCaption": { tier: "atom", role: "the reset time note under the bar, only present once there is a reset time to show", storyId: "atoms-text-typography-typography--plain" },
+    "ResetCaption": { tier: "atom", role: "the reset time note under the bar, only present once there is a reset time to show", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the live bar: label, count, ramp-coloured fill, optional reset caption. */

@@ -28,7 +28,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "IdentityContentRow": { tier: "composite", role: "avatar + byline + everything under it (body, actions, replies) — both its seams tight on purpose", storyId: "composites-lists-identitycontentrow-identitycontentrow--default" },
     "StackH": { tier: "frame", role: "the byline row (author name/badge/time), the action-row cluster, and the reply-composer row (connector beside the composer)", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "the nested-replies track", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — author name, time, edited marker, body, or the view-replies link", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — author name, time, edited marker, body, or the view-replies link", storyId: "atoms-text-typography-typography--overview" },
     "ReactionButton": { tier: "block", role: "this comment's own reaction control — the exact same block ContentReaction uses for the lesson-level reaction", storyId: "starci-blocks-learn-reactionbutton-reactionbutton--full" },
     "ContentCommentComposer": { tier: "block", role: "the inline edit form, or the reply box beneath the action row", storyId: "starci-blocks-learn-contentcommentcomposer-contentcommentcomposer--reply-or-edit" },
     "ThreadConnector": { tier: "atom", role: "the Facebook-style curved guide linking this comment down into the reply composer's own avatar", storyId: "atoms-display-threadconnector-threadconnector--default" },

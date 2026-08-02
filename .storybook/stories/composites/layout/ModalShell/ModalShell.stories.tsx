@@ -32,8 +32,8 @@ type Story = StoryObj<typeof ModalShell>
 // the `footer` slot is passed.
 const TITLE_DESC_FOOTER_PARTS: Array<AnatomyNode> = [
     { name: "Modal.CloseTrigger", tier: "heroui", role: "the close button, in the upper-right corner" },
-    { name: "Typography", tier: "atom", role: "the modal's title, bold body text", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "the description line under the title, muted body-sm text", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the modal's title, bold body text", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "the description line under the title, muted body-sm text", storyId: "atoms-text-typography-typography--overview" },
     { name: "Modal.Body", tier: "heroui", role: "the modal's body content" },
     { name: "Modal.Footer", tier: "heroui", role: "the bottom CTA row, right-aligned with a gap-2 seam" },
 ]
@@ -46,7 +46,7 @@ const CUSTOM_HEADER_PARTS: Array<AnatomyNode> = [
 
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "Modal.CloseTrigger", tier: "heroui", role: "the close button, in the upper-right corner" },
-    { name: "Typography", tier: "atom", role: "the modal's title, bold body text", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the modal's title, bold body text", storyId: "atoms-text-typography-typography--overview" },
     { name: "Modal.Body", tier: "heroui", role: "the modal's body content" },
 ]
 

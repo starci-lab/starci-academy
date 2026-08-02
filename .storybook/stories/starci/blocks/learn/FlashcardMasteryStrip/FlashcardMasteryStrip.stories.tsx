@@ -24,7 +24,7 @@ type Story = StoryObj<typeof FlashcardMasteryStrip>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the labelled card face — draws the \"Mastery\" label and, when the block hands one over, the streak chip pinned to its right", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "Chip": { tier: "atom", role: "the streak chip, present only once the block has a streak to report", storyId: "atoms-chips-chip-chip--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the mastered/total count, or the trailing percentage, real or its shimmer mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the mastered/total count, or the trailing percentage, real or its shimmer mirror", storyId: "atoms-text-typography-typography--overview" },
     "StackV": { tier: "frame", role: "the vertical track holding the stat row above the segment bar, owning the seam between them", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal track lining the mastered/total count up with its percentage on one baseline", storyId: "frames-stack-stackh--default" },
     "SegmentBar": { tier: "composite", role: "the mastered · learning · new proportion bar, drawing its own legend and — reused rather than duplicated — its own caption line for the retention/first-review sentence", storyId: "composites-stats-segmentbar--overview" },

@@ -26,8 +26,8 @@ type Story = StoryObj<typeof DrawerShell>
 
 const TITLE_DESC_FOOTER_PARTS: Array<AnatomyNode> = [
     { name: "Drawer.CloseTrigger", tier: "heroui", role: "the close button, in the upper-right corner" },
-    { name: "Typography", tier: "atom", role: "the drawer's title, bold body text", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "the description line under the title, muted body-sm text", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the drawer's title, bold body text", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "the description line under the title, muted body-sm text", storyId: "atoms-text-typography-typography--overview" },
     { name: "Drawer.Body", tier: "heroui", role: "the drawer's body content, scrolls independently" },
     { name: "Drawer.Footer", tier: "heroui", role: "the bottom CTA row, right-aligned with a gap-2 seam" },
 ]

@@ -14,7 +14,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": {
         tier: "atom",
         role: "the amount, the struck original, and the period — three separate Typography instances, one per part",
-        storyId: "atoms-text-typography-typography--plain",
+        storyId: "atoms-text-typography-typography--overview",
     },
 }
 

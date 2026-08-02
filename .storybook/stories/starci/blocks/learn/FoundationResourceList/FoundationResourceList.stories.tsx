@@ -58,7 +58,7 @@ const RESOURCES: Array<FoundationResourceItem> = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardList": { tier: "composite", role: "the bounded row surface — dividers, row box, and its own row-for-row mirror while loading; the block only hands it resource rows as data", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
     "IconTile": { tier: "atom", role: "each row's leading thumbnail — already falls back from `src` to a `StackIcon` glyph on its own, so no separate thumbnail component exists", storyId: "atoms-display-icontile-icontile--default" },
-    "EnumChip": { tier: "composite", role: "the kind chip, built from the block's own kind→label/color table", storyId: "composites-chips-enumchip--gallery" },
+    "EnumChip": { tier: "composite", role: "the kind chip, built from the block's own kind→label/color table", storyId: "composites-chips-enumchip--overview" },
     "Chip": { tier: "atom", role: "the plain 'Recommended' chip, riding beside the kind chip", storyId: "atoms-chips-chip-chip--default" },
     "Cluster": { tier: "frame", role: "the row's meta slot, holding the kind chip and the optional recommended chip", storyId: "frames-cluster-cluster--default" },
     "StackV": { tier: "frame", role: "stacks the row surface above the pager inside the content branch", storyId: "frames-stack-stackv--default" },

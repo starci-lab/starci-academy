@@ -30,7 +30,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame stacking the header row over the question region, and the name over the role inside the identity cluster", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal frame holding the identity cluster against the TTS toggle, and the role against the live-speaking status line", storyId: "frames-stack-stackh--default" },
     "Avatar": { tier: "atom", role: "the interviewer's face, wrapped by the block in a decorative pulse ring that appears only while `speaking` is true", storyId: "atoms-display-avatar-avatar--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the interviewer's name, role, or the live-speaking status label", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the interviewer's name, role, or the live-speaking status label", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the icon-only TTS mute/unmute toggle, drawn only once the caller supplies both `ttsEnabled` and `onToggleTts`", storyId: "atoms-buttons-button-button--is-icon-only" },
     "MarkdownContent": { tier: "composite", role: "the current question, rendered as authored/streamed markdown", storyId: "composites-viewers-markdowncontent--reading" },
 }

@@ -24,10 +24,10 @@ type Story = StoryObj<typeof FlashcardDueHero>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the labelled section frame (\"Review today\"); it stays put across the 'No resume' and 'Nothing due' leaves so the section never disappears just because today is empty", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical track holding the due-count text cluster above the Start button, and — one level in — the tighter track grouping the three text lines together", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the due-count headline, its \"cards due today\" caption, or the review/new breakdown — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the due-count headline, its \"cards due today\" caption, or the review/new breakdown — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the primary Start CTA, only present when there is no paused batch to resume instead", storyId: "atoms-buttons-button-button--default" },
     "ContinueCardHero": { tier: "block", role: "the resume card — replaces the whole due-count cluster once a batch is mid-way, same reasoning ContinueLearningBase already applies to a paused lesson", storyId: "starci-blocks-learn-continuecard-hero-progress--not-urgent" },
-    "EmptyState": { tier: "composite", role: "the caught-up message that takes the due-count cluster's place once nothing is left to review, with no action since there is nothing left to start", storyId: "composites-feedback-emptystate-emptystate--icon-and-title" },
+    "EmptyState": { tier: "composite", role: "the caught-up message that takes the due-count cluster's place once nothing is left to review, with no action since there is nothing left to start", storyId: "composites-feedback-emptystate--icon-and-title" },
 }
 
 /** LEAF — no paused batch: due-count cluster + primary Start button. */

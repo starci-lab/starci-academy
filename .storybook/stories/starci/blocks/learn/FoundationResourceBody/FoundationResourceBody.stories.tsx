@@ -38,7 +38,7 @@ docker run -e DATABASE_URL=$DB_URL app:release-42
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the card face a document or a video slot sits on, owning the paper surface and the padding around whatever the leaf puts inside it", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "MarkdownContent": { tier: "composite", role: "the viewer that repeats the authored resource body; the block hands it the markdown and never inspects what is in it", storyId: "composites-viewers-markdowncontent--reading" },
-    "EmptyState": { tier: "composite", role: "the honestly-labeled gap standing in for a video player this pass does not build — chrome without a stub", storyId: "composites-feedback-emptystate-emptystate--icon-and-title" },
+    "EmptyState": { tier: "composite", role: "the honestly-labeled gap standing in for a video player this pass does not build — chrome without a stub", storyId: "composites-feedback-emptystate--icon-and-title" },
     "Button": { tier: "atom", role: "the whole-card CTA for an external resource, handing the resolved URL up to `onOpenLink` on press", storyId: "atoms-buttons-button-button--default" },
 }
 

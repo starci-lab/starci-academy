@@ -24,7 +24,7 @@ type Story = StoryObj<typeof ContentReaction>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the row frame pushing the reaction control to one end and the view-count fact to the other", storyId: "frames-stack-stackh--default" },
     "ReactionButton": { tier: "block", role: "the pill trigger + six-emotion picker + summary — shared verbatim with each comment row in ContentDiscussion", storyId: "starci-blocks-learn-reactionbutton-reactionbutton--full" },
-    "Typography": { tier: "atom", role: "the muted view count with its eye glyph, or its skeleton mirror while the summary is still loading", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the muted view count with its eye glyph, or its skeleton mirror while the summary is still loading", storyId: "atoms-text-typography-typography--overview" },
 }
 
 const COUNTS = [

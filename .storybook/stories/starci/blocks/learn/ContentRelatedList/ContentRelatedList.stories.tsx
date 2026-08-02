@@ -30,7 +30,7 @@ const ITEMS = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardList": { tier: "composite", role: "the nested list surface, owning the label, the row box, the dividers and the row mirror while loading; the block only hands it lesson rows as data", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
     "StackV": { tier: "frame", role: "one row's own column — breadcrumb, title, optional lock line", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "one line of a row — the breadcrumb, the title (underlines on hover), or the lock line", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one line of a row — the breadcrumb, the title (underlines on hover), or the lock line", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the course has related reading. */

@@ -31,7 +31,7 @@ const CRUMBS = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the header frame that lines up the trail, title, description and meta row, owning the type scale for all four", storyId: "composites-layout-page-pageheader--full" },
     "Breadcrumbs": { tier: "atom", role: "the trail the block builds from crumb data handed down by the screen", storyId: "atoms-navigation-breadcrumbs-breadcrumbs--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the module title or its description — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the module title or its description — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "StackH": { tier: "frame", role: "the horizontal frame holding the meta row, so the tier chip and the three counts sit on one baseline with one seam", storyId: "frames-stack-stackh--default" },
     "EnumChip": { tier: "composite", role: "the tier badge — the module's one classifying fact, drawn only once a tier is known", storyId: "composites-chips-enumchip--overview" },
     "HighlightChip": { tier: "composite", role: "one of the module's headline counts (lessons, minutes, or challenges), or its skeleton mirror — drawn only once its count is above zero", storyId: "composites-chips-highlightchip--with-icon" },

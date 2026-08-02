@@ -24,7 +24,7 @@ type Story = StoryObj<typeof LeaderboardToolbar>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the row frame holding the label, the quiet timestamp and the refresh button on one baseline with one seam, doubling as the block's own anatomy node", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the 'ranked by' sentence it built from the category, or the muted relative-time fact — real, or absent when there is nothing to claim yet", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the 'ranked by' sentence it built from the category, or the muted relative-time fact — real, or absent when there is nothing to claim yet", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the refresh trigger, owning its own busy skin while a refresh is in flight; the block only decides the word and when it is pressable", storyId: "atoms-buttons-button-button--default" },
 }
 

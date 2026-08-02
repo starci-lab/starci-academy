@@ -23,7 +23,7 @@ type Story = StoryObj<typeof CourseQaInvite>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the face the invitation sits on, consistent with the other Q&A/course surfaces around it", storyId: "composites-cards-surfacecard-surfacecard--default" },
-    "EmptyState": { tier: "composite", role: "the centered icon/title/description/action stack — the same shape every other empty spot in this codebase uses", storyId: "composites-feedback-emptystate-emptystate--action" },
+    "EmptyState": { tier: "composite", role: "the centered icon/title/description/action stack — the same shape every other empty spot in this codebase uses", storyId: "composites-feedback-emptystate--action" },
     "Button": { tier: "atom", role: "the single call to action, owning its own accent skin, the arrow that slides on hover, and its own shimmer while its destination is still resolving", storyId: "atoms-buttons-button-button--default" },
 }
 

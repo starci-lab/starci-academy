@@ -25,8 +25,8 @@ type Story = StoryObj<typeof PageHeader>
 
 // Bare set: no breadcrumb, no meta, no actions.
 const TITLE_DESCRIPTION_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "primary title, an H3 heading, or body-bold text when size=\"compact\"", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "supporting line under the title, muted, clamps to 2 lines on mobile", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "primary title, an H3 heading, or body-bold text when size=\"compact\"", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "supporting line under the title, muted, clamps to 2 lines on mobile", storyId: "atoms-text-typography-typography--overview" },
 ]
 
 // Full set leaf: breadcrumb row + actions slot + a meta chip/stat strip below. Breadcrumb/Actions/Meta
@@ -35,8 +35,8 @@ const TITLE_DESCRIPTION_PARTS: Array<AnatomyNode> = [
 // there. PageHeader never claims them as its own anatomy (§11a caller-slot rule), so only the two
 // Typography.Base nodes it actually BUILDS itself carry a badge.
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "atom", role: "primary title, an H3 heading", storyId: "atoms-text-typography-typography--plain" },
-    { name: "Typography", tier: "atom", role: "supporting line under the title, muted", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "primary title, an H3 heading", storyId: "atoms-text-typography-typography--overview" },
+    { name: "Typography", tier: "atom", role: "supporting line under the title, muted", storyId: "atoms-text-typography-typography--overview" },
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {

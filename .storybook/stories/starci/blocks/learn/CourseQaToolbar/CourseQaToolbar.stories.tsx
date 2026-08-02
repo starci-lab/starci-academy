@@ -26,7 +26,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Toolbar": { tier: "composite", role: "the filter tab row — leftTabs only, since this board has no second tab group", storyId: "composites-navigation-toolbar-toolbar--single-group" },
     "StackH": { tier: "frame", role: "the horizontal frame holding the search field and the count on one baseline, pinned to opposite edges", storyId: "frames-stack-stackh--justify" },
     "InputSearch": { tier: "atom", role: "the controlled search field the screen debounces before folding into its query", storyId: "atoms-forms-input-inputsearch--default" },
-    "Typography": { tier: "atom", role: "the live match-count line, or its own skeleton mirror while the count is still unknown", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the live match-count line, or its own skeleton mirror while the count is still unknown", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** Props for the local {@link Controlled} story wrapper. */

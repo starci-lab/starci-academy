@@ -24,7 +24,7 @@ type Story = StoryObj<typeof SubmissionResultHeader>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "PageHeader": { tier: "composite", role: "the header frame that lines up the back-link, title and description, owning the type scale for both", storyId: "composites-layout-page-pageheader--full" },
     "LinkBack": { tier: "atom", role: "the back-link the block builds from the caller's label + handler, dropped into PageHeader's breadcrumb slot", storyId: "atoms-navigation-link-linkback--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the requirement title or its description, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the requirement title or its description, real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the one shape this block draws: back-link → title → description. */

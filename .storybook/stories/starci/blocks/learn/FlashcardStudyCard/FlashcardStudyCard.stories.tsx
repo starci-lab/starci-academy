@@ -37,7 +37,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Chip": { tier: "atom", role: "the level chip — the one classifying mark in the meta row, per `no-adjacent-chip`", storyId: "atoms-chips-chip-chip--default" },
     "ChipGroup": { tier: "atom", role: "the tag row, truncated as ONE unit instead of a second run of bare chips", storyId: "composites-chips-chipgroup--default" },
     "MarkdownContent": { tier: "composite", role: "the question, the answer, or the explanation — each an authored document this block repeats without understanding it", storyId: "composites-viewers-markdowncontent--compact" },
-    "Typography": { tier: "atom", role: "a section label ('Answer'/'Explanation') or a line of the lock notice", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "a section label ('Answer'/'Explanation') or a line of the lock notice", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "reveal, unlock, or one of the prev/next nav controls", storyId: "atoms-buttons-button-button--default" },
     "RatingBar": { tier: "block", role: "the shared recall-grade row, reused unchanged from quiz recap", storyId: "starci-blocks-learn-ratingbar-ratingbar--full" },
 }

@@ -59,7 +59,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard": { tier: "composite", role: "the labeled card face, drawing the \"Weekly Challenge\" label above the title, status row and leaderboard — this label never unmounts across loading/empty/content", storyId: "composites-cards-surfacecard-surfacecard--with-label" },
     "StackV": { tier: "frame", role: "the vertical frame stacking the title, status row, passed-count line and leaderboard", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the status row, splitting the countdown from the viewer's pass/claim status", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the challenge title (a link when routable), the countdown, a \"Start now\" prompt, the passed-count line, or a finisher's relative-time trailing text", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the challenge title (a link when routable), the countdown, a \"Start now\" prompt, the passed-count line, or a finisher's relative-time trailing text", storyId: "atoms-text-typography-typography--overview" },
     "Chip": { tier: "atom", role: "the \"already claimed\" status pill, or its skeleton mirror", storyId: "atoms-chips-chip-chip--default" },
     "Button": { tier: "atom", role: "the claim-reward action once the viewer has passed but not yet claimed", storyId: "atoms-buttons-button-button--default" },
     "SurfaceCardList": { tier: "composite", role: "the bounded, nested finisher list — takes each row as free-form `UserCell` content via its `content` escape hatch", storyId: "composites-cards-surfacecard-surfacecardlist--free-form" },

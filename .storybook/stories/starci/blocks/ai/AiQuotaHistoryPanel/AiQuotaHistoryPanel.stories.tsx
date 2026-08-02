@@ -39,7 +39,7 @@ const CHARGES: Array<AiQuotaHistoryChargeItem> = [
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical track separating the chart region from the charges-list region, and — inside each — the caption above its content", storyId: "frames-stack-stackv--default" },
-    "Typography": { tier: "atom", role: "the chart caption or the charges-list caption", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the chart caption or the charges-list caption", storyId: "atoms-text-typography-typography--overview" },
     "SurfaceCard": { tier: "composite", role: "the bordered box holding the chart, surface-in-surface (no shadow, since it sits inside the modal's own face)", storyId: "composites-cards-surfacecard-surfacecard--variant" },
     "SurfaceCardList": { tier: "composite", role: "the bounded, bordered row list — dividers, row box, and its own row-for-row mirror while loading; the block only hands it charge rows as data", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
     "Chip": { tier: "atom", role: "the trailing credit-delta badge on each row, or its shimmer mirror while loading", storyId: "atoms-chips-chip-chip--tones" },

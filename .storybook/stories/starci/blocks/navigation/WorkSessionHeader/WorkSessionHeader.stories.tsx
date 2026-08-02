@@ -27,7 +27,7 @@ type Story = StoryObj<typeof WorkSessionHeader>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "a horizontal frame — the top row of controls, or the rail whose segments it spaces on scale", storyId: "frames-stack-stackh--default" },
     "LinkBack": { tier: "atom", role: "the quiet way out that keeps the run resumable, owning its own caret and hover", storyId: "atoms-navigation-link-linkback--default" },
-    "Typography": { tier: "atom", role: "one of the band's text slots — the session name, the position counter, or the tabular time left", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the band's text slots — the session name, the position counter, or the tabular time left", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the end-now control, deliberately a different weight from the back link because it ends the run rather than pausing it", storyId: "atoms-buttons-button-button--default" },
     "Skeleton": { tier: "heroui", role: "the shimmer mirror standing in for the band while `isSkeleton` — a back-link-width bar, a counter-width bar, and a flat rail bar with no segments" },
 }

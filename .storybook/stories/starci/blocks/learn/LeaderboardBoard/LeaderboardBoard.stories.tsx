@@ -47,7 +47,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "IconTile": { tier: "atom", role: "the trophy badge on the standing card, giving the viewer's rank an identity mark", storyId: "atoms-display-icontile-icontile--default" },
     "Avatar": { tier: "atom", role: "a podium finisher's face — the same fallback chain (upload → generated → initials → icon) as everywhere else a person renders", storyId: "atoms-display-avatar-avatar--default" },
     "UserCell": { tier: "composite", role: "a ranked row's identity + accent — `isOwnRow` marks the viewer's own row without this block hand-rolling a second accent mechanism", storyId: "composites-lists-usercell-usercell--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — a rank number, a username, a score, or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — a rank number, a username, a score, or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "SurfaceCardList": { tier: "composite", role: "the bounded row list — takes the ranked rows plus the ellipsis + pinned self-row as data, via its free-form `content` escape hatch", storyId: "composites-cards-surfacecard-surfacecardlist--free-form" },
 }
 

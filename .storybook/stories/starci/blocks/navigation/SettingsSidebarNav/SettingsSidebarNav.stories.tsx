@@ -60,7 +60,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Divider": { tier: "atom", role: "the rule this block draws above every group but the first, the inlined `SidebarNavGroup` gap", storyId: "atoms-display-divider-divider--default" },
     "StackV": { tier: "frame", role: "the column holding one group's rows, `flush` because each row already carries its own vertical padding", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the row inside a nav row (icon + label) or the mobile bar's own horizontal scroll strip, depending on which leaf it appears in", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "a destination's label — real text in the expanded rail and the mobile pills, dropped entirely from a collapsed rail row", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "a destination's label — real text in the expanded rail and the mobile pills, dropped entirely from a collapsed rail row", storyId: "atoms-text-typography-typography--overview" },
 }
 
 /** LEAF — the desktop collapsible rail, visible once the demo container clears `@app-md` (48rem). */

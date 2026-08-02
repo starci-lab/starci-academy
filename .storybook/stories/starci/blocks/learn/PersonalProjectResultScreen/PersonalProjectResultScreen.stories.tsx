@@ -72,7 +72,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ContentRelatedList": { tier: "block", role: "a quiet nudge toward more reading, shown only on a failing attempt", storyId: "starci-blocks-learn-contentrelatedlist-contentrelatedlist--full" },
     "SurfaceCard": { tier: "composite", role: "the highlight card face for the next-task handoff — isHighlight marks it as the one thing to look at once a milestone closes", storyId: "composites-cards-surfacecard-surfacecard--default" },
     "StackH": { tier: "frame", role: "the handoff card's own row — eyebrow+title on one side, the forward CTA on the other", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "the handoff card's own text — its eyebrow or the next task's title, real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "the handoff card's own text — its eyebrow or the next task's title, real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Button": { tier: "atom", role: "the handoff card's forward CTA, the only pressable part this new card owns", storyId: "atoms-buttons-button-button--default" },
 }
 

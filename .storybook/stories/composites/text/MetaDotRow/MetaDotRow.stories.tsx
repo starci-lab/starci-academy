@@ -20,7 +20,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": {
         tier: "atom",
         role: "each fragment's text — one Typography instance per string in items, muted xs",
-        storyId: "atoms-text-typography-typography--plain",
+        storyId: "atoms-text-typography-typography--overview",
     },
     "Divider": {
         tier: "atom",

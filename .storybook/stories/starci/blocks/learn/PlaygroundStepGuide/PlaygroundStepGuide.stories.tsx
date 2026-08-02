@@ -25,11 +25,11 @@ type Story = StoryObj<typeof PlaygroundStepGuide>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical track holding the step title, its body, the optional command fence and the action slot, one seam between each", storyId: "frames-stack-stackv--default" },
     "StackH": { tier: "frame", role: "the horizontal track pairing the manual spinner with its status line while a verify check is in flight", storyId: "frames-stack-stackh--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — the step title, the command-fence label, or a verify-state hint", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — the step title, the command-fence label, or a verify-state hint", storyId: "atoms-text-typography-typography--overview" },
     "MarkdownContent": { tier: "composite", role: "the markdown viewer, composed twice: once for the step's prose body, once for the command wrapped in a fenced code block so it gets the same copy-button skin", storyId: "composites-viewers-markdowncontent--reading" },
     "Button": { tier: "atom", role: "the Verify action (or, in the completion leaf, the back-to-hub action)", storyId: "atoms-buttons-button-button--default" },
     "Spinner": { tier: "atom", role: "the manual busy indicator standing in for the button while a remote verify check is open-ended", storyId: "atoms-display-spinner-spinner--default" },
-    "EmptyState": { tier: "composite", role: "the completion placeholder replacing the whole pane once every step is done", storyId: "composites-feedback-emptystate-emptystate--action" },
+    "EmptyState": { tier: "composite", role: "the completion placeholder replacing the whole pane once every step is done", storyId: "composites-feedback-emptystate--action" },
     "Skeleton": { tier: "heroui", role: "the shimmer mirror standing in for the step title, body lines and verify button while `isSkeleton`" },
 }
 

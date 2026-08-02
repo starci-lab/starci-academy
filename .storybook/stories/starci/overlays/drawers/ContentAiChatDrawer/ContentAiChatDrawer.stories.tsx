@@ -30,7 +30,7 @@ const SHELL_PARTS: Array<AnatomyNode> = [
     { name: "Drawer.CloseTrigger", tier: "heroui", role: "the close button, in the upper-right corner" },
     { name: "Drawer.Header", tier: "heroui", role: "wraps this block's own custom header row (title + optional mode switch)" },
     { name: "StackH", tier: "frame", role: "the horizontal row holding the title and the mode switch, owning the seam and the pr-8 room for the close button", storyId: "frames-stack-stackh--default" },
-    { name: "Typography", tier: "atom", role: "the drawer's title — the caller's lesson/course title, or the block's fixed fallback wording", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the drawer's title — the caller's lesson/course title, or the block's fixed fallback wording", storyId: "atoms-text-typography-typography--overview" },
 ]
 
 const MODE_SWITCH_PART: AnatomyNode = {
@@ -43,7 +43,7 @@ const MODE_SWITCH_PART: AnatomyNode = {
 const BODY_PARTS: Array<AnatomyNode> = [
     { name: "Drawer.Body", tier: "heroui", role: "the drawer's scrollable body region" },
     { name: "SurfaceCard", tier: "composite", role: "the bounded face standing in for the real chat panel's outer shell", storyId: "composites-cards-surfacecard-surfacecard--default" },
-    { name: "EmptyState", tier: "composite", role: "the scope-cut gap message — icon + honest title/description — replacing ChatThread/ChatComposer", storyId: "composites-feedback-emptystate-emptystate--description" },
+    { name: "EmptyState", tier: "composite", role: "the scope-cut gap message — icon + honest title/description — replacing ChatThread/ChatComposer", storyId: "composites-feedback-emptystate--description" },
 ]
 
 /** Controlled wrapper — opens on mount; the trigger reopens after a close. Mirrors `DrawerShell`'s own story helper. */

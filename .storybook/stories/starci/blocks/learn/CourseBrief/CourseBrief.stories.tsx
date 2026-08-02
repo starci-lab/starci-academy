@@ -33,7 +33,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // description, and the meta line alike (real content or its skeleton mirror) ⇒ it has
     // its own door, must be declared ("nothing is allowed to stand
     // outside the tree").
-    "Typography": { tier: "atom", role: "one of the header's own text lines — the course title, its description, or the modules/hours/learners meta strip — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the header's own text lines — the course title, its description, or the modules/hours/learners meta strip — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "PageHeader": { tier: "composite", role: "the page-header frame that lines up the breadcrumb, title, description, and meta line, owning the type scale for all four", storyId: "composites-layout-page-pageheader--full" },
     "Breadcrumbs": { tier: "atom", role: "the trail the block builds from crumb data handed down by the caller", storyId: "atoms-navigation-breadcrumbs-breadcrumbs--default" },
 }

@@ -60,7 +60,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": {
         role: "the name, the `·` separator, and the timestamp — three separate Typography instances",
         tier: "atom",
-        storyId: "atoms-text-typography-typography--plain",
+        storyId: "atoms-text-typography-typography--overview",
     },
 }
 

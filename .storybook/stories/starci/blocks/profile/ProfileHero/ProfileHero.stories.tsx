@@ -63,10 +63,10 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackH": { tier: "frame", role: "the horizontal frame pairing followers with badges, and the primary CTA with the share button", storyId: "frames-stack-stackh--with-divider" },
     "Cluster": { tier: "frame", role: "the wrapping row holding the location fact beside the work-mode chip, both peers of one set", storyId: "frames-cluster-cluster--default" },
     "Avatar": { tier: "atom", role: "the person's photo, wrapped in this block's own rank-tinted ring — a plain className on top of the atom's own fallback chain", storyId: "atoms-display-avatar-avatar--default" },
-    "Typography": { tier: "atom", role: "one of the block's own text lines — name, handle, role, bio, rank caption, follower count, or a social link — real or its skeleton mirror", storyId: "atoms-text-typography-typography--plain" },
+    "Typography": { tier: "atom", role: "one of the block's own text lines — name, handle, role, bio, rank caption, follower count, or a social link — real or its skeleton mirror", storyId: "atoms-text-typography-typography--overview" },
     "Chip": { tier: "atom", role: "one earned-achievement badge, or its skeleton pill while badges are still loading", storyId: "atoms-chips-chip-chip--default" },
-    "EnumChip": { tier: "composite", role: "the work-mode fact, its tone and label coming from this block's own remote/onsite/hybrid map", storyId: "composites-chips-enumchip--neutral" },
-    "InlineIconLabel": { tier: "composite", role: "an icon + text meta row — the location fact, or the joined-date fact at the foot of the sidebar", storyId: "composites-texts-inlineiconlabel--foreground" },
+    "EnumChip": { tier: "composite", role: "the work-mode fact, its tone and label coming from this block's own remote/onsite/hybrid map", storyId: "composites-chips-enumchip--overview" },
+    "InlineIconLabel": { tier: "composite", role: "an icon + text meta row — the location fact, or the joined-date fact at the foot of the sidebar", storyId: "composites-texts-inlineiconlabel--overview" },
     "Button": { tier: "atom", role: "the one primary CTA (hire, follow, or edit — the caller's state decides which) or the icon-only share trigger beside it", storyId: "atoms-buttons-button-button--default" },
     "Divider": { tier: "atom", role: "the rule separating the profile's own content from its external meta list", storyId: "atoms-display-divider-divider--default" },
 }

@@ -139,7 +139,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord) => {
         ),
         ...(attempt.modelCategory != null ? [() => (
             <EnumChip
-                value={attempt.modelCategory}
+                value={attempt.modelCategory ?? ""}
                 map={MODEL_CATEGORY_MAP}
 
             />

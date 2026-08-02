@@ -181,7 +181,7 @@ const LessonVideoModal = ({
     const descriptionAndCaption = [
         ...(video?.description?.trim() ? [() => (
             <MarkdownContent
-                source={video.description}
+                source={video.description ?? ""}
                 measure="compact"
 
 
@@ -189,7 +189,7 @@ const LessonVideoModal = ({
         )] : []),
         ...(video?.caption?.trim() ? [() => (
             <MarkdownContent
-                source={video.caption}
+                source={video.caption ?? ""}
                 measure="compact"
 
 

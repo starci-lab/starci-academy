@@ -1694,7 +1694,10 @@ const AccordionCard = ({
                 gap={2}
                 classNames={["min-w-0", "flex-1"]}
                 items={[
-                    ...(item.titleStart ? [() => <item.titleStart />] : []),
+                    ...(item.titleStart ? [() => {
+                        const TitleStart = item.titleStart
+                        return TitleStart ? <TitleStart /> : null
+                    }] : []),
                     () => (
                         <StackV
                             gap={1}
@@ -1712,7 +1715,10 @@ const AccordionCard = ({
                             ]}
                         />
                     ),
-                    ...(item.titleEnd ? [() => <item.titleEnd />] : []),
+                    ...(item.titleEnd ? [() => {
+                        const TitleEnd = item.titleEnd
+                        return TitleEnd ? <TitleEnd /> : null
+                    }] : []),
                 ]}
             />
         ),

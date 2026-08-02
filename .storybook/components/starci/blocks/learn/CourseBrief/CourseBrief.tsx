@@ -1,5 +1,6 @@
 import React from "react"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
@@ -43,17 +44,11 @@ export interface CourseBriefBaseProps {
     learnerCount?: number
     /**
      * `true` → the cluster switches to a mirror shimmer INSTEAD OF waiting for
-     * data — the flag FLOWS DOWN to the actual text-rendering atoms
-     * (`Breadcrumbs`/`Typography`), not a parallel skeleton tree
-     * (§12c).
-     *
-     * ⚠️ `PageHeader` (the frame wrapping `title`/`description`) does NOT have
-     * `isSkeleton` yet and sits OUTSIDE the 4 files edited this round — the
-     * block can't pass the flag through it. For those two slots, the block
-     * calls the `Typography isSkeleton` atom DIRECTLY (matching the
-     * size/weight `PageHeader` itself uses for `title`/`description`) and
-     * feeds the RESULT into the slot instead of a raw string — still "flag
-     * flows down to the atom", just a different PLACE that calls the atom.
+     * data — the flag FLOWS DOWN to the actual text-rendering atoms/frames
+     * (`PageHeader`/`Breadcrumbs`/`Typography`), not a parallel skeleton tree
+     * (§12c). `PageHeader` owns `isSkeleton` itself now (it swaps
+     * `title`/`description` to shimmer internally), so this block just
+     * forwards the flag straight through.
      */
     isSkeleton?: boolean
 }
@@ -85,52 +80,33 @@ const CourseBriefBase = ({
         <div>
             <PageHeader
 
+                isSkeleton={isSkeleton}
                 breadcrumb={
-                    isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit">
-                            {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old
+                    breadcrumbItems?.length
+                        ? ({ isSkeleton: skeleton }: SkeletonProps) => (
+                            <div className="w-fit">
+                                {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old
                         capability of ResponsiveBreadcrumb, now a prop of the Breadcrumbs atom). */}
-                            <Breadcrumbs
-                                collapseOnMobile
-                                collapseFrom={4}
-                                items={breadcrumbItems ?? []}
-                                isSkeleton={isSkeleton}
-                            />
-                        </div>
-                    ) : undefined
+                                <Breadcrumbs
+                                    collapseOnMobile
+                                    collapseFrom={4}
+                                    items={breadcrumbItems ?? []}
+                                    isSkeleton={skeleton}
+                                />
+                            </div>
+                        )
+                        : undefined
                 }
-                title={
-                    isSkeleton ? (
-                        // `PageHeader` has no `isSkeleton` yet (outside this round's edit
-                        // boundary) — call the `Typography` atom directly with the EXACT
-                        // size/weight `PageHeader` itself uses for `title` (size="h3"
-                        // weight="bold"), then feed the result into the slot.
-                        <Typography size="h3" weight="bold" isSkeleton />
-                    ) : (
-                        <span>{title}</span>
-                    )
-                }
-                description={
-                    isSkeleton ? (
-                        // Same reasoning — `PageHeader` uses size="sm" color="muted" for
-                        // description; call that atom directly instead of a raw string. ALWAYS
-                        // show this line while loading (even when the final call site leaves
-                        // description empty) — it's the most common line in the cluster; keeping
-                        // the layout stable (§8) matters more than saving one shimmer line for
-                        // the rare case with no description.
-                        <Typography size="sm" color="muted" isSkeleton />
-                    ) : (
-                        description
-                    )
-                }
+                title={title}
+                description={description}
                 meta={
-                    isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} />
-                    ) : metaParts.length > 0 ? (
-                        <span>
-                            <Typography size="xs" color="muted" text={metaParts.join(" · ")} />
-                        </span>
-                    ) : undefined
+                    metaParts.length > 0
+                        ? () => (
+                            <span>
+                                <Typography size="xs" color="muted" text={metaParts.join(" · ")} />
+                            </span>
+                        )
+                        : undefined
                 }
             />
         </div>

@@ -1,6 +1,5 @@
 import React from "react"
 import { StatRibbon, type StatRibbonItem } from "@sb-components/composites/stats/StatRibbon/StatRibbon"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * `PlaygroundDeviceSnapshot` — "Your machine": the paired agent's `device:info`
@@ -8,10 +7,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * on top of `StatRibbon`: unit math (bytes -> whole GB, MiB -> GB for VRAM,
  * matching the model-recommendation tiers), the `win32`/`darwin`/`linux` ->
  * "Windows"/"macOS"/"Linux" name table, and the three VRAM phrasings ("no GPU" /
- * "GPU with no VRAM read" / "X GB VRAM · Y MB free"). The caller supplies the
- * label. The dynamic half of each cell carries `isSkeleton`; captions stay
- * fixed. The two-line label is a raw `<span>` (phrasing content required inside
- * `StatRibbon`'s inline label slot).
+ * "GPU with no VRAM read" / "X GB VRAM · Y MB free"). `StatRibbonItem.value`/
+ * `.label` are plain `string` (the ribbon wraps them in `Typography` itself),
+ * so each cell's caption + computed detail are joined into one label string;
+ * loading state is `StatRibbon`'s own `isSkeleton`, not a per-cell shimmer.
  */
 
 /**
@@ -69,30 +68,14 @@ const vramDetail = (gpu: string | null, vramTotalMb?: number, vramFreeMb?: numbe
         ? `${Math.round(vramTotalMb / 1024)} GB VRAM${vramFreeMb != null ? ` · ${vramFreeMb} MB free` : ""}`
         : gpu ? "" : "couldn't read"
 
-/** Props for {@link DeviceStatLabel}. */
-interface DeviceStatLabelProps {
-    /** Fixed category word ("Operating system", "CPU"…) — real text even while `isSkeleton`. */
-    caption: string
-    /** Supporting detail line, computed from `deviceInfo`. */
-    detail: string
-    isSkeleton: boolean
-}
-
 /**
- * One ribbon cell's two-line label: the fixed category on top, the computed
- * detail beneath. See the file header for why this is a raw `<span>` rather
- * than a `StackV` frame.
+ * One ribbon cell's label: the fixed category word, plus the computed detail
+ * when there is one — `StatRibbonItem.label` is a plain `string` (the ribbon
+ * renders it itself through `Typography`), so caption and detail join into a
+ * single line instead of the old two-line `<span>`.
  */
-const DeviceStatLabel = ({ caption, detail, isSkeleton }: DeviceStatLabelProps) => (
-    <span className="flex flex-col">
-        <span>{caption}</span>
-        {isSkeleton ? (
-            <Typography size="xs" isSkeleton />
-        ) : (
-            <span className="truncate">{detail}</span>
-        )}
-    </span>
-)
+const deviceStatLabel = (caption: string, detail: string): string =>
+    detail ? `${caption} · ${detail}` : caption
 
 /** Props for {@link PlaygroundDeviceSnapshot}. */
 export interface PlaygroundDeviceSnapshotProps {
@@ -114,58 +97,26 @@ const PlaygroundDeviceSnapshot = ({
     deviceInfo,
     isSkeleton = false,
 }: PlaygroundDeviceSnapshotProps) => {
-    const skeletonValue = (
-        <Typography size="base" isSkeleton />
-    )
-
     const items: ReadonlyArray<StatRibbonItem> = [
         {
             key: "os",
-            value: isSkeleton ? skeletonValue : platformLabel(deviceInfo.platform),
-            label: (
-                <DeviceStatLabel
-                    caption="Operating system"
-                    detail={`${deviceInfo.arch} · ${deviceInfo.hostname}`}
-                    isSkeleton={isSkeleton}
-
-                />
-            ),
+            value: platformLabel(deviceInfo.platform),
+            label: deviceStatLabel("Operating system", `${deviceInfo.arch} · ${deviceInfo.hostname}`),
         },
         {
             key: "cpu",
-            value: isSkeleton ? skeletonValue : `${deviceInfo.cpuCores} cores`,
-            label: (
-                <DeviceStatLabel
-                    caption="CPU"
-                    detail={deviceInfo.cpuModel}
-                    isSkeleton={isSkeleton}
-
-                />
-            ),
+            value: `${deviceInfo.cpuCores} cores`,
+            label: deviceStatLabel("CPU", deviceInfo.cpuModel),
         },
         {
             key: "ram",
-            value: isSkeleton ? skeletonValue : `${gbOf(deviceInfo.totalMemBytes)} GB`,
-            label: (
-                <DeviceStatLabel
-                    caption="RAM"
-                    detail={`${gbOf(deviceInfo.freeMemBytes)} GB free`}
-                    isSkeleton={isSkeleton}
-
-                />
-            ),
+            value: `${gbOf(deviceInfo.totalMemBytes)} GB`,
+            label: deviceStatLabel("RAM", `${gbOf(deviceInfo.freeMemBytes)} GB free`),
         },
         {
             key: "gpu",
-            value: isSkeleton ? skeletonValue : deviceInfo.gpu ?? "—",
-            label: (
-                <DeviceStatLabel
-                    caption="GPU"
-                    detail={vramDetail(deviceInfo.gpu, deviceInfo.vramTotalMb, deviceInfo.vramFreeMb)}
-                    isSkeleton={isSkeleton}
-
-                />
-            ),
+            value: deviceInfo.gpu ?? "—",
+            label: deviceStatLabel("GPU", vramDetail(deviceInfo.gpu, deviceInfo.vramTotalMb, deviceInfo.vramFreeMb)),
         },
     ]
 
@@ -173,6 +124,7 @@ const PlaygroundDeviceSnapshot = ({
         <div>
             <StatRibbon
                 valueType="body"
+                isSkeleton={isSkeleton}
                 items={items}
 
             />

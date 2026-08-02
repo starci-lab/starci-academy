@@ -192,7 +192,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                 () => (
                     <div className="min-w-0 flex-1 text-muted [&_p]:m-0">
                         <MarkdownContent
-                            source={finding.suggestion}
+                            source={finding.suggestion ?? ""}
                             measure="compact"
 
                         />
@@ -209,7 +209,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                 ...(finding.detail ? [() => (
                     <div className="text-muted [&_p]:m-0">
                         <MarkdownContent
-                            source={finding.detail}
+                            source={finding.detail ?? ""}
                             measure="compact"
 
                         />

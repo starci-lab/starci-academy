@@ -16,58 +16,13 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `AiQuotaHistoryPanel`: the body of the "History" tab inside
- * `AiQuotaModal` — a 7-day credit-usage bar chart plus a scrollable list of
- * recent AI charges (model · what it was for · when · credit delta).
+ * `AiQuotaHistoryPanel` — the "History" tab body of `AiQuotaModal`: a 7-day
+ * credit-usage bar chart over a scrollable list of recent AI charges
+ * (model · purpose · time · credit delta).
  *
- * PORTED FROM `src/components/modals/AiQuotaModal/HistoryTab/index.tsx`, same
- * discipline as `LanguageDonut`/`ContentModeNav` (see their file headers): the
- * recharts call is carried over as-is (no chart wrapper exists in this design
- * system yet), and the domain vocabulary (purpose labels, the "auto model"
- * fallback, the credits unit) is OWNED here as a block-local table — the caller
- * hands over an enum (`surface`) and a number, never a pre-formatted string
- * (§14d.1), same pattern as `ContentModeNav`'s `MODE_LABEL`.
- *
- * FOUR JUDGEMENT CALLS worth flagging:
- *
- * 1. **New group `ai/`.** None of the five existing block groups
- *    (`commerce`/`consultant`/`learn`/`navigation`/`profile`) fit: this is
- *    neither a pricing/urgency nudge (`commerce`), nor lesson content
- *    (`learn`), nor identity (`profile`) — it is the AI-credit-usage domain on
- *    its own, and forcing it into a neighbour group would misfile it just to
- *    avoid a new folder.
- * 2. **Chart caption says "7 days", not the source's "14 days".** `vi.json`'s
- *    `aiQuota.history.chartTitle` reads "…(last 14 days)", but the source
- *    hook that feeds it only ever builds SEVEN day-buckets (`for (let offset =
- *    7 - 1; …)`) — the "14" was already stale copy sitting above a 7-bar
- *    chart. This block (and the task spec) commit to the real bucket count,
- *    so the caption is fixed to match what actually renders instead of
- *    carrying the mismatch forward. Same reasoning: the X-axis shows every
- *    day (`interval={0}`) instead of the source's `interval={1}` — that
- *    skip-one tuning made sense for 14 points, not for 7.
- * 3. **No `ScrollShadow` atom exists yet.** The source wraps the row list in
- *    HeroUI's `ScrollShadow`; this design system has no equivalent atom, so
- *    the scrollable region here is a plain `max-h-64 overflow-y-auto` div —
- *    flagged as a gap per §B3 rather than faking the fade effect by hand.
- * 4. **Credit-delta chip tone is ported VERBATIM**, sign included:
- *    `credits > 0 → "warning"`, otherwise `→ "success"`. This reads oddly for
- *    a "cost" metric at a glance, but re-deriving the sign convention is a
- *    business-logic call outside this port's scope — kept exactly as the
- *    source branches so behaviour does not silently drift.
- *
- * LEAVES:
- *   - `Chart` — the recharts `BarChart`, ALWAYS rendered from `chartPoints`
- *     (defaults to `[]`) regardless of `isLoading`/emptiness — the source
- *     never skeletons or empties it, so neither does this port.
- *   - `ChargesList` — the ONE `AsyncContent`-switched region: a 3-row
- *     `SurfaceCardList` mirror while `isLoading`, otherwise the real bordered,
- *     scrollable row list — which itself falls to an empty message when
- *     `items` is `[]`. Per canon `2-leaf-states.md` §0 R0 (see the story's
- *     own header): `isLoading` is the caller-set switch ⇒ its own leaf;
- *     `items.length === 0` is DATA returning empty ⇒ a STATE inside the
- *     "loaded" leaf, not a leaf of its own.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The chart always renders from `chartPoints`. The charges list is the one async
+ * region — a 3-row skeleton while `isLoading`, the real rows otherwise, falling
+ * to an empty message when `items` is empty.
  */
 
 /** What an AI charge was for — the block owns the display label per surface. */

@@ -191,12 +191,6 @@ const EnrollGateBase = ({
             />
             <AsyncContent
                 isLoading={priceLoading}
-                // Plain HeroUI skeleton, NOT badged: it's a raw library primitive with
-                // no owning story to jump to (same call as `PhaseScarcityNote`'s
-                // decorative glyph — "can't badge it, so don't badge it"). `AsyncContent`
-                // itself also can't be badged as a tree NODE (its `.Base` member takes no
-                // `anatPart` — only `.Empty`/`.Error` do); it self-labels its active
-                // branch via its own dev overlay when `showAnatomy` is on.
                 skeleton={<HeroSkeleton className="h-7 w-32 rounded-xl" />}
 
             >

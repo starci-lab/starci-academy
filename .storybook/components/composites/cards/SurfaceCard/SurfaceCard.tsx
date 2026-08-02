@@ -1933,11 +1933,6 @@ export interface SurfaceCardCrossListProps {
     skeletonRows?: number
     /** Where the list root sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
-    /**
-     * When on, every row (real or self-generated skeleton) emits
-     * `` for the anatomy panel — unless the item
-     * carries its own `anatPart`.
-     */
 }
 /**
  * One row of a {@link SurfaceCardCrossList}: an optional leading mark + a free body,

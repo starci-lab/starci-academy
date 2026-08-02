@@ -58,11 +58,6 @@ export interface TrialConversionStripProps {
     onEnroll?: () => void
     /** Layout utilities on the root, from the closed positioning union (SurfaceCard's `className` door was deleted, COMPOSITE-4). */
     classNames?: Array<AllowedClassName>
-    /**
-     * Anatomy tag for THIS block itself — so the caller can badge it as ONE node (§11a).
-     * Without this prop, the screen has to wrap `<div data-anat-part>` around it,
-     * meaning the screen adds a DOM node that doesn't belong to the real tree (§14b).
-     */
 }
 
 /**
@@ -215,10 +210,6 @@ const TrialConversionStripBase = ({
         // Going through the frame now, radius/shadow/padding come from ONE source:
         // `padding` defaults to `3` — the system's actual `p-3` card rule.
         <SurfaceCard
-            // `anatPart` from the PARENT wins; running in ITS OWN story it names itself
-            // so the Deps tree can see the surface FRAME (otherwise the root node is
-            // missing and the tree reads as if the block still drew its own surface).
-
             classNames={classNames}
             body={() => (
                 <StackV gap={6} body={(

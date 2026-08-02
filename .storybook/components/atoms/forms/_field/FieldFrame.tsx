@@ -14,13 +14,6 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * "Bare" mode: when there is no label/hint/errorMessage/required (and not
  * skeleton), FieldFrame renders `children` directly with zero wrapper, so the
  * atom can still be used as a bare cell nested inside something else.
- *
- * Only `Label` and the label-bar `Skeleton` carry `data-anat-part` — both are
- * HeroUI's own components. `Description`/`Error` stay unbadged: they're plain
- * hand-rolled `<p>`s, not real components, and `FieldFrame` has no story of
- * its own to declare them against. The control cell badges its own part;
- * `FieldFrame` doesn't badge the control wrapper, to avoid nesting two badge
- * tiers.
  */
 export interface FieldFrameProps {
     /** Label above the control (`text-sm font-medium`). Omit → no label. */

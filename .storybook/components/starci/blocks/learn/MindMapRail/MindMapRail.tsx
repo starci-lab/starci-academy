@@ -64,7 +64,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * to pin leaf 2's popover open for the story, mirroring `Popover`'s own
  * `defaultOpen`/`isOpen` contract ("STORY soak" per that atom's file header).
  * The real screen never needs to force the funnel open, so this is dev/spec
- * plumbing forwarded straight through, the same category as `showAnatomy`.
+ * plumbing forwarded straight through.
  *
  * ⭐ JUDGEMENT CALL — the popularity → row tone mapping (`popularityTone`) is
  * this block's own vocabulary (§14d.1), same footing as `ContentModeNav`'s

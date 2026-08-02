@@ -122,14 +122,7 @@ const MenuBase = ({
     isSkeleton = false,
     classNames,
 }: MenuBaseProps) => {
-    /**
-     * Render one menu row (shared by flat + sectioned modes).
-     *
-     * Defined inside the component so it reads `showAnatomy` from scope. As a module-level helper
-     * it needed the switch as a second parameter, and a parameter that exists only to badge a part
-     * vanishes with the overlay — leaving the app's copy of this file holding a function of a
-     * different arity than the blueprint's. Closing over it keeps one signature true in both trees.
-     */
+    /** Render one menu row (shared by flat + sectioned modes). */
     const renderItem = (item: MenuItemModel) => {
         const Icon = item.icon
         return (

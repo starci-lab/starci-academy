@@ -87,8 +87,6 @@ export const InputTags = ({
             >
                 {value.map((tag, index) => (
                     <span key={`${tag}-${index}`} className="inline-flex">
-                        {/* Chip hardcodes its own `data-anat-part` — it takes ``
-                            straight through, not a caller-supplied name (ATOM-10). */}
                         <Chip
                             text={tag}
                             onRemove={isDisabled ? undefined : () => removeAt(index)}

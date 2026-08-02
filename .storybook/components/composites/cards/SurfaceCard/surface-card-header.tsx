@@ -44,11 +44,6 @@ export interface SurfaceLabelProps {
     /** Render the label as a SUBTLE eyebrow (`text-xs text-muted`, tighter gap). */
     subtleLabel?: boolean
     /**
-     * Storybook-only: attaches `data-anat-part` to header row parts rebuilt from an
-     * atom (currently: `LinkSeeMore`) so a BlockAnatomy panel can anchor the badge +
-     * link to that atom's own story. Doesn't affect the visual.
-     */
-    /**
      * `true` → the header row is in the RESTING state: `label` and the slot must turn
      * into shimmer.
      *

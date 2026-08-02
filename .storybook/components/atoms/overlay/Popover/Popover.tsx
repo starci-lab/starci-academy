@@ -79,9 +79,7 @@ const PopoverBase = ({
         <HeroPopover data-tier="atom" data-component="Popover" isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
             <HeroButton variant={triggerVariant} className={cn(classNames)}>
                 {TriggerIcon ? (
-                    // `!` needed: HeroUI's `.button svg` rule has higher specificity. This
-                    // span is a plain wrapper around a caller-supplied icon, not a named
-                    // component, so it does not emit `data-anat-part`.
+                    // `!` needed: HeroUI's `.button svg` rule has higher specificity.
                     <span aria-hidden className="inline-flex shrink-0 [&_svg]:!size-3.5">
                         <TriggerIcon weight={TRIGGER_ICON_WEIGHT} />
                     </span>

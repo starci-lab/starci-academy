@@ -162,8 +162,6 @@ const QuotaBar = ({
         />
     )
 
-    // `ProgressBar` (atom) has no `anatPart` prop of its own — only // which tags its OWN internal track/fill parts. A wrapping `div` is how
-    // `RatingBar` names a same-shaped atom/composite for the parent's tree too.
     const bar = (
         <div>
             <ProgressBar

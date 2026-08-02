@@ -119,10 +119,6 @@ const PhaseScarcityNoteBase = ({
             // does; written as content it also produced a `Separator` node in the structure tree
             // whose link went to the generic Typography story.
             separator
-            // The PARENT's `anatPart` wins (the parent names this node); when
-            // running in ITS OWN story it self-identifies as "Cluster" so the
-            // Deps tree can see the frame it uses.
-
             className={cn("text-warning-soft-foreground", className)}
             items={[
                 {

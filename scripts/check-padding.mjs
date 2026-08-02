@@ -128,7 +128,12 @@ const exempt = []
  */
 const EXCEPTION = /inset-exception:\s*\S/
 
-const files = walk(SB).filter((f) => !f.includes("_legacy") && !f.includes(".stories."))
+const files = walk(SB).filter((f) =>
+    !f.includes("_legacy") && !f.includes(".stories.")
+    // `_`-prefixed files are internal registries/helpers (`_spacing.ts` maps padding STEPS to
+    // classes, `_principles.ts`/`_slot.ts` are types) — the definition table, not a call-site
+    // using padding. Scanning them flags the class literals in the map itself (false positive).
+    && !/[\\/]_[^\\/]*\.tsx?$/.test(f))
 
 for (const file of files) {
     const rel = relative(ROOT, file).replaceAll("\\", "/")

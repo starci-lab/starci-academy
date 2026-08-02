@@ -19,7 +19,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * chip is always `warning` tone (a production-stage badge). The player engine is out
  * of scope and stands in as a placeholder.
  *
- * Presentational: `isOpen`/`onOpenChange` + a typed `video`, plus optional `isLoading`
+ * Presentational: `isOpen`/`onOpenChange` + a typed `video`, plus optional `isSkeleton`
  * (withholds the two markdown fields while loading; other leaves skeleton).
  */
 
@@ -73,11 +73,11 @@ export interface LessonVideoModalProps {
     onOpenChange: (open: boolean) => void
     /**
      * The video being watched. `undefined` while the caller has not resolved
-     * which video to show yet — meaningful together with {@link isLoading}.
+     * which video to show yet — meaningful together with {@link isSkeleton}.
      */
     video?: LessonVideo
     /** `true` → the meta row and link mirror their own skeleton; see file header. */
-    isLoading?: boolean
+    isSkeleton?: boolean
 }
 
 /** {@link LessonVideoKind} → chip tone + tooltip. Every value is `warning` — a stage badge, not a verdict. */
@@ -161,11 +161,11 @@ export const _LessonVideoModal = ({
     isOpen,
     onOpenChange,
     video,
-    isLoading = false,
+    isSkeleton = false,
 }: LessonVideoModalProps) => {
     const playerAndLink = [
         () => <PlayerGap />,
-        ...(isLoading
+        ...(isSkeleton
             ? [() => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />]
             : [() => (
                 <Typography
@@ -208,7 +208,7 @@ export const _LessonVideoModal = ({
                         <EnumChip
                             value={video?.kind ?? LessonVideoKind.RawStream}
                             map={KIND_MAP}
-                            isSkeleton={isLoading}
+                            isSkeleton={isSkeleton}
 
                         />
                     ),
@@ -217,11 +217,11 @@ export const _LessonVideoModal = ({
                             icon={ClockIcon}
                             tone="default"
                             size="sm"
-                            isSkeleton={isLoading}
+                            isSkeleton={isSkeleton}
                             label={formatDuration(video?.durationMs ?? 0)}
                         />
                     ),
-                    () => (isLoading ? (
+                    () => (isSkeleton ? (
                         <Typography
                             size="sm"
                             color="muted"
@@ -240,7 +240,7 @@ export const _LessonVideoModal = ({
                 ]}
             />
         ),
-        () => <StackV gap={4} align="center" isSkeleton={isLoading} items={playerAndLink} />,
+        () => <StackV gap={4} align="center" isSkeleton={isSkeleton} items={playerAndLink} />,
         // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
         // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
         // WRAPPER — every child element (`p`, `em`…) hardcodes `text-foreground`
@@ -249,8 +249,8 @@ export const _LessonVideoModal = ({
         // code. Left at the composite's default tone rather than shipping a
         // className that silently does nothing — a real, marked gap, not this
         // port's to close (`MarkdownContent` is composite tier, out of scope here).
-        ...(!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? [() => (
-            <StackV gap={4} isSkeleton={isLoading} items={descriptionAndCaption} />
+        ...(!isSkeleton && (video?.description?.trim() || video?.caption?.trim()) ? [() => (
+            <StackV gap={4} isSkeleton={isSkeleton} items={descriptionAndCaption} />
         )] : []),
     ]
 
@@ -263,9 +263,9 @@ export const _LessonVideoModal = ({
                 scroll="inside"
                 // `ModalShell` now owns its own title skeleton (COMPOSITE-8's `isSkeleton`
                 // forwarding) — no more hand-built `Typography` stand-in for the title text.
-                isSkeleton={isLoading}
+                isSkeleton={isSkeleton}
                 title={video?.title ?? ""}
-                body={() => <StackV gap={6} isSkeleton={isLoading} items={metaAndPlayer} />}
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={metaAndPlayer} />}
             />
         </div>
     )

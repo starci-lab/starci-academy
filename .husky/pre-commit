@@ -14,3 +14,8 @@ node scripts/check-one-instance-per-state.mjs
 # block dau STORY (.stories.tsx) — story la nguon-su-that (thanh autodocs). Drift =
 # doc code va doc thiet ke lech nhau, khong tsc/eslint nao bat. Sua: npm run check:doc-parity -- --fix
 node scripts/check-doc-parity.mjs
+
+# P1: cai gi render SHIMMER thi prop = `isSkeleton` (thread xuong). `isPending` (nut
+# dang chay -> spinner) va `isLoading` (switch AsyncContent) la khai niem KHAC, khong bi
+# cam. Vi pham = feed khai niem non-skeleton vao `isSkeleton={...}`.
+node scripts/check-skeleton-prop.mjs

@@ -70,11 +70,11 @@ export interface LessonVideoModalProps {
     onOpenChange: (open: boolean) => void
     /**
      * The video being watched. `undefined` while the caller has not resolved
-     * which video to show yet — meaningful together with {@link isLoading}.
+     * which video to show yet — meaningful together with {@link isSkeleton}.
      */
     video?: LessonVideo
     /** `true` → the meta row and link mirror their own skeleton; see file header. */
-    isLoading?: boolean
+    isSkeleton?: boolean
 }
 
 /** {@link LessonVideoKind} → chip tone + tooltip. Every value is `warning` — a stage badge, not a verdict. */
@@ -158,11 +158,11 @@ const LessonVideoModal = ({
     isOpen,
     onOpenChange,
     video,
-    isLoading = false,
+    isSkeleton = false,
 }: LessonVideoModalProps) => {
     const playerAndLink = [
         () => <PlayerGap />,
-        ...(isLoading
+        ...(isSkeleton
             ? [() => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />]
             : [() => (
                 <Typography
@@ -205,7 +205,7 @@ const LessonVideoModal = ({
                         <EnumChip
                             value={video?.kind ?? LessonVideoKind.RawStream}
                             map={KIND_MAP}
-                            isSkeleton={isLoading}
+                            isSkeleton={isSkeleton}
 
                         />
                     ),
@@ -214,11 +214,11 @@ const LessonVideoModal = ({
                             icon={ClockIcon}
                             tone="default"
                             size="sm"
-                            isSkeleton={isLoading}
+                            isSkeleton={isSkeleton}
                             label={formatDuration(video?.durationMs ?? 0)}
                         />
                     ),
-                    () => (isLoading ? (
+                    () => (isSkeleton ? (
                         <Typography
                             size="sm"
                             color="muted"
@@ -237,7 +237,7 @@ const LessonVideoModal = ({
                 ]}
             />
         ),
-        () => <StackV gap={4} align="center" isSkeleton={isLoading} items={playerAndLink} />,
+        () => <StackV gap={4} align="center" isSkeleton={isSkeleton} items={playerAndLink} />,
         // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
         // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
         // WRAPPER — every child element (`p`, `em`…) hardcodes `text-foreground`
@@ -246,8 +246,8 @@ const LessonVideoModal = ({
         // code. Left at the composite's default tone rather than shipping a
         // className that silently does nothing — a real, marked gap, not this
         // port's to close (`MarkdownContent` is composite tier, out of scope here).
-        ...(!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? [() => (
-            <StackV gap={4} isSkeleton={isLoading} items={descriptionAndCaption} />
+        ...(!isSkeleton && (video?.description?.trim() || video?.caption?.trim()) ? [() => (
+            <StackV gap={4} isSkeleton={isSkeleton} items={descriptionAndCaption} />
         )] : []),
     ]
 
@@ -260,9 +260,9 @@ const LessonVideoModal = ({
                 scroll="inside"
                 // `ModalShell` now owns its own title skeleton (COMPOSITE-8's `isSkeleton`
                 // forwarding) — no more hand-built `Typography` stand-in for the title text.
-                isSkeleton={isLoading}
+                isSkeleton={isSkeleton}
                 title={video?.title ?? ""}
-                body={() => <StackV gap={6} isSkeleton={isLoading} items={metaAndPlayer} />}
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={metaAndPlayer} />}
             />
         </div>
     )

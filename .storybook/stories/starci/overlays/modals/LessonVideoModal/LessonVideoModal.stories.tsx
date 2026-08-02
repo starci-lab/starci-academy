@@ -98,7 +98,7 @@ const ControlledLessonVideoModal = ({
  * ONE LEAF. Every state below is the SAME structural tree — meta row, player
  * gap, link, optional commentary — only the DATA changes: a raw stream with no
  * commentary, a premium record with both description and caption, and the
- * `isLoading` mirror.
+ * `isSkeleton` mirror.
  */
 export const Default: Story = {
     render: () => (
@@ -155,13 +155,13 @@ export const Default: Story = {
                     ),
                 },
                 {
-                    name: "isLoading = true",
+                    name: "isSkeleton = true",
                     why: "The kind chip, duration label and host-platform label mirror their own skeleton; the player gap stays static (it is scope chrome, not data); the two MarkdownContent leaves have no skeleton mirror of their own, so they are withheld entirely rather than shown against empty text.",
-                    code: "<LessonVideoModal isOpen={isOpen} onOpenChange={setIsOpen} isLoading />",
+                    code: "<LessonVideoModal isOpen={isOpen} onOpenChange={setIsOpen} isSkeleton />",
                     render: (
                         <ControlledLessonVideoModal
                             triggerLabel="Open loading video"
-                            isLoading
+                            isSkeleton
                         />
                     ),
                 },

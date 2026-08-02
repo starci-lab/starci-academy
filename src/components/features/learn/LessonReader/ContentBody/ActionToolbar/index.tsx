@@ -1,6 +1,6 @@
 "use client"
 
-import { BookmarkSimpleIcon, ShareNetworkIcon, ArrowsOutIcon } from "@phosphor-icons/react"
+import { BookmarkSimpleIcon, ShareNetworkIcon } from "@phosphor-icons/react"
 import React from "react"
 import {
     Button,
@@ -21,12 +21,10 @@ export interface ActionToolbarProps extends WithClassNames<undefined> {
     onToggleFavorite: () => void
     /** Open the share overlay. */
     onShare: () => void
-    /** Open the fullscreen content overlay. */
-    onFullscreen: () => void
 }
 
 /**
- * Row of icon actions above the content body: bookmark, share and fullscreen.
+ * Row of icon actions above the content body: bookmark and share.
  *
  * Presentational: renders the buttons and forwards `onXXX` callbacks; the
  * favorite mutation + overlay state live in the {@link ContentBody} container.
@@ -38,7 +36,6 @@ export const ActionToolbar = ({
     isFavoritePending,
     onToggleFavorite,
     onShare,
-    onFullscreen,
     className,
 }: ActionToolbarProps) => {
     return (
@@ -72,14 +69,6 @@ export const ActionToolbar = ({
                     <ShareNetworkIcon className="size-5" />
                 </Button>
             )}
-            <Button
-                isIconOnly
-                variant="secondary"
-                onPress={onFullscreen}
-                id="content-fullscreen-btn"
-            >
-                <ArrowsOutIcon className="size-5" />
-            </Button>
         </div>
     )
 }

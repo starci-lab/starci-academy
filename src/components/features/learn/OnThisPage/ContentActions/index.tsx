@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { ActionToolbar } from "@/components/features/learn/LessonReader/ContentBody/ActionToolbar"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
-import { useContentOverlayState, useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useMutateToggleFavoriteSwr } from "@/hooks/swr/api/graphql/mutations/useMutateToggleFavoriteSwr"
 import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentStatusSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
@@ -30,7 +30,6 @@ export const ContentActions = ({ className }: ContentActionsProps) => {
     const statusSwr = useQueryContentStatusSwr()
     const favoriteSwr = useMutateToggleFavoriteSwr()
     const shareOverlay = useShareOverlayState()
-    const contentOverlay = useContentOverlayState()
 
     /** Toggle the favorite/bookmark flag, then re-fetch the content status. */
     const onToggleFavorite = useCallback(async () => {
@@ -55,8 +54,6 @@ export const ContentActions = ({ className }: ContentActionsProps) => {
 
     /** Open the share overlay. */
     const onShare = useCallback(() => shareOverlay.setOpen(true), [shareOverlay])
-    /** Open the fullscreen content overlay. */
-    const onFullscreen = useCallback(() => contentOverlay.setOpen(true), [contentOverlay])
 
     if (!contentId) {
         return null
@@ -71,7 +68,6 @@ export const ContentActions = ({ className }: ContentActionsProps) => {
                 isFavoritePending={favoriteSwr.isMutating}
                 onToggleFavorite={onToggleFavorite}
                 onShare={onShare}
-                onFullscreen={onFullscreen}
             />
         </div>
     )

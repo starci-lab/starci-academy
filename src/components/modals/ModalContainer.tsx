@@ -1,6 +1,5 @@
 import React from "react"
 import { AuthenticationModal } from "./AuthenticationModal"
-import { ContentModal } from "./ContentModal"
 import { LivestreamCalendarModal } from "./LivestreamCalendarModal"
 import { PaymentModal } from "./PaymentModal"
 import { LanguageModal } from "./LanguageModal"
@@ -10,7 +9,6 @@ import { CvReviewLevelDetailsModal } from "./CvReviewLevelDetailsModal"
 import { GlobalSearchModal } from "./GlobalSearchModal"
 import { LinkGithubModal } from "./LinkGithubModal"
 import { ShareModal } from "./ShareModal"
-import { HeadhunterModal } from "./HeadhunterModal"
 import { AiQuotaModal } from "./AiQuotaModal"
 import { PremiumGateModal } from "./PremiumGateModal"
 import { AdModal } from "./AdModal"
@@ -24,7 +22,6 @@ export const ModalContainer = () => {
         <>
             <AuthenticationModal />
             <PaymentModal />
-            <ContentModal />
             <LivestreamCalendarModal />
             <LanguageModal />
             <FeedbackDetailsModal />
@@ -33,7 +30,6 @@ export const ModalContainer = () => {
             <GlobalSearchModal />
             <LinkGithubModal />
             <ShareModal />
-            <HeadhunterModal />
             <AiQuotaModal />
             <PremiumGateModal />
             <AdModal />

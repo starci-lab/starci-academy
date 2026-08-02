@@ -7,7 +7,6 @@ import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ConsultantAvatar } from "../ConsultantAvatar"
-import { useOpenHeadhunterDetail } from "../../hooks"
 import type { ConsultantEntity } from "@/modules/types/entities/consultant"
 import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
@@ -28,17 +27,10 @@ export const ConsultantCard = ({ consultant, className }: ConsultantCardProps) =
     const locale = useLocale()
     const router = useRouter()
     const courseDisplayId = useAppSelector((state) => state.course.displayId)
-    const openHeadhunterDetail = useOpenHeadhunterDetail()
 
     const companyTitle = useMemo(
         () => consultant.company?.title ?? "",
         [consultant.company?.title],
-    )
-
-    /** Open this consultant's profile modal. */
-    const onOpenDetail = useCallback(
-        () => openHeadhunterDetail(consultant),
-        [openHeadhunterDetail, consultant],
     )
 
     /** Navigate to the consultant's company page. */
@@ -65,7 +57,6 @@ export const ConsultantCard = ({ consultant, className }: ConsultantCardProps) =
     return (
         <PressableCard
             className={className}
-            onPress={onOpenDetail}
         >
             <div className="flex flex-col gap-3">
                 <ConsultantAvatar

@@ -52,8 +52,6 @@ export const useAuthenticationOverlayState = () => useOverlayHandle("authenticat
 export const useAvatarUploadOverlayState = () => useOverlayHandle("avatarUpload")
 /** Challenge overlay state. */
 export const useChallengeOverlayState = () => useOverlayHandle("challenge")
-/** Content overlay state. */
-export const useContentOverlayState = () => useOverlayHandle("content")
 /** Content AI chat drawer overlay state (ask StarCi AI about the current content). */
 export const useContentAiChatOverlayState = () => useOverlayHandle("contentAiChat")
 /** Cookie preferences modal overlay state ("Tùy chỉnh" granular cookie consent). */
@@ -83,8 +81,6 @@ export const useCvReviewLevelDetailsOverlayState = () => useOverlayHandle("cvRev
 export const useE2eResultOverlayState = () => useOverlayHandle("e2eResult")
 /** Feedback details overlay state. */
 export const useFeedbackDetailsOverlayState = () => useOverlayHandle("feedbackDetails")
-/** Headhunter overlay state. */
-export const useHeadhunterOverlayState = () => useOverlayHandle("headhunter")
 /** Language overlay state. */
 export const useLanguageOverlayState = () => useOverlayHandle("language")
 /** Link GitHub overlay state. */

@@ -33,16 +33,13 @@ export type OverlayKey =
     | "avatarUpload"
     | "aiQuota"
     | "authentication"
-    | "challenge"
-    | "content"
-    | "contentAiChat"
+    | "challenge"    | "contentAiChat"
     | "cookiePreferences"
     | "cvPreview"
     | "cvReviewLevelDetails"
     | "e2eResult"
     | "feedbackDetails"
-    | "followList"    | "headhunter"
-    | "language"    | "linkGithub"
+    | "followList"    | "language"    | "linkGithub"
     | "livestreamCalendar"
     | "maintenance"
     | "miniCart"
@@ -61,16 +58,13 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "avatarUpload",
     "aiQuota",
     "authentication",
-    "challenge",
-    "content",
-    "contentAiChat",
+    "challenge",    "contentAiChat",
     "cookiePreferences",
     "cvPreview",
     "cvReviewLevelDetails",
     "e2eResult",
     "feedbackDetails",
-    "followList",    "headhunter",
-    "language",    "linkGithub",
+    "followList",    "language",    "linkGithub",
     "livestreamCalendar",
     "maintenance",
     "miniCart",

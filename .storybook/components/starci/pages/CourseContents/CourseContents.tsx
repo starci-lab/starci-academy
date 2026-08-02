@@ -189,8 +189,6 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
 
     const courseContentsSections = (
         <>
-            {/* 2026-07-26: dropped the old note "blocks have no `anatPart` yet so they need
-            a div wrapper" — all six blocks now take `anatPart` directly, no wrapper left. */}
             {/* §11a — the badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
             `PageHeader` composite lives INSIDE that block → drill down in CourseBrief's own
             story, NOT here. Teacher's call 2026-07-25: this cluster carries business meaning

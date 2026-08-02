@@ -239,8 +239,6 @@ const AiQuotaModal = ({
 
     const tabsAndPanel = (
         <>
-            {/* Tabs (atom) carries no `anatPart` prop of its own (unlike Typography/Chip) —
-                same wrapping convention `ContentModeNav` uses around its `Toolbar`. */}
             <div>
                 <Tabs
                     items={TAB_ITEMS}

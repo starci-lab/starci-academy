@@ -199,8 +199,6 @@ const QuizProgressPanel = ({
 
     const panelBody = (
         <>
-            {/* `Tabs` carries no `anatPart` of its own (§ pattern, same as `Toolbar` in
-                `ContentModeNav`) — the wrapping div is the badge anchor. */}
             <div>
                 <Tabs
                     items={tabItems}
@@ -212,7 +210,6 @@ const QuizProgressPanel = ({
                 />
             </div>
             {view === "stats" ? (
-                // `StatGridCard` carries no `anatPart` of its own either — same wrap.
                 <div>
                     <StatGridCard items={statItems} />
                 </div>

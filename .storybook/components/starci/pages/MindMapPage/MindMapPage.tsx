@@ -303,9 +303,6 @@ const MindMapPage = ({
                 className="absolute bottom-4 left-4 z-10"
 
                 body={
-                    // `Legend` carries no `anatPart` of its own — same bare, class-free
-                    // anatomy marker `MindMapRail`'s own file already uses for the same
-                    // reason (naming a node without laying anything out).
                     <div>
                         <Legend items={legendItems} />
                     </div>

@@ -150,9 +150,6 @@ const ContentPager = ({
 
     return (
         <div>
-            {/* The group owns the card box and the grid but takes no `anatPart` of its
-                own, so the block names it from the outside — otherwise the one node that
-                decides this block's whole shape would be missing from the tree. */}
             <div>
                 <SurfaceCardPressableGroup
                     ariaLabel={ariaLabel}

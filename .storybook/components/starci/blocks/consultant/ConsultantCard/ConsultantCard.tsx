@@ -44,12 +44,6 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * interactive element inside it would either be unreachable (nested inside
  * the whole-card `<button>`/`<a>`) or require the stretched-link `actions`
  * pattern for a fact that carries no action of its own.
- *
- * ⚠️ `SurfaceCard.Pressable` and `Image` have NO `anatPart` prop of their own
- * (only `showAnatomy`) — unlike `PageHeader`/`Breadcrumbs` in `ContentHeader`,
- * neither accepts a caller-supplied part name. Both are wrapped in a plain
- * `<div>` instead, same pattern `ContentHeader` uses for
- * `Breadcrumbs`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 

@@ -62,9 +62,6 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * two callbacks — no text prop for the locked message — so the copy is chrome
  * this block owns outright, same move `TaskLockedAlert` makes for its fixed
  * title.
- *
- * ⚠️ `Image` has no `anatPart` prop of its own (only `showAnatomy`), same gap
- * `ConsultantCard`'s header notes — wrapped in a plain `<div data-anat-part>`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 

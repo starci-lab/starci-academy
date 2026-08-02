@@ -159,7 +159,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
         <StackH
             gap={2}
             align="center"
-
+            pattern="icon-text"
             items={[
                 () => <MapPinIcon aria-hidden focusable="false" weight="bold" className="size-3 shrink-0 text-muted" />,
                 () =>
@@ -185,7 +185,7 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
         <StackH
             gap={2}
             align="start"
-
+            pattern="icon-text"
             items={[
                 () => <LightbulbIcon aria-hidden focusable="false" weight="bold" className="size-3.5 shrink-0 text-muted" />,
                 () => (

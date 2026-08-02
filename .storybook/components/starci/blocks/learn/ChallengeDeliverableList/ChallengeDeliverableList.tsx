@@ -324,7 +324,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
     const gradedSection = graded != null ? (
         <StackV
             gap={4}
-
+            pattern="card-caption"
             items={[
                 /* ONE single meta row — verdict chip + "attempt #N · HH:mm dd/MM" — rather than
                     three stacked layers. No "Your latest attempt scored N/M. Minimum required: R."
@@ -336,6 +336,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
                 () => (
                     <StackH
                         gap={3}
+                        pattern="identity"
                         align="center"
                         at="sm"
 

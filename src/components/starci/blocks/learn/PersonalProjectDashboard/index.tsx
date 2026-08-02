@@ -242,6 +242,7 @@ const Body = ({
     return (
         <StackV
             gap={6}
+            pattern="block-boundary"
             isSkeleton={isSkeleton}
 
             items={[
@@ -256,6 +257,7 @@ const Body = ({
                             <Grid
                                 columns={{ base: 1, sm: 2 }}
                                 gap={4}
+                                pattern="sibling-stack"
 
                                 items={tasks.map((task) => ({
                                     key: task.id,

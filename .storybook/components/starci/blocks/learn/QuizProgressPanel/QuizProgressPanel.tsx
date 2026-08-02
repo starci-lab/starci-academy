@@ -106,11 +106,13 @@ const statCell = (stat: QuizProgressStat, isSkeleton: boolean): StatGridCardItem
         content: () => (
             <StackV
                 gap={2}
+                pattern="title-subtitle"
                 isSkeleton={isSkeleton}
                 items={[
                     ({ isSkeleton }: SkeletonProps) => (
                         <StackH
                             gap={2}
+                            pattern="icon-text"
                             align="center"
                             isSkeleton={isSkeleton}
                             items={[

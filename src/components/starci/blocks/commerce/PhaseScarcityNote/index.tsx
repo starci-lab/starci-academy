@@ -100,6 +100,7 @@ const PhaseScarcityNoteBase = ({
         <div className="text-warning-soft-foreground">
             <Cluster
                 gap={3}
+                pattern="separator-dot"
                 align="center"
                 // The `·` between the two clauses is drawn by the FRAME, not written as a text item.
                 // A mark that separates a track's items belongs to the track, the same way a rule

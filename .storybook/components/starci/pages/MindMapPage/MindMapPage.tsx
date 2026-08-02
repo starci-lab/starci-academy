@@ -275,6 +275,7 @@ const MindMapPage = ({
             <div className="overflow-y-auto">
                 <StackV
                     padding={6}
+                    pattern="page-pad"
                     gap={1}
                     classNames={["h-full"]}
                     isSkeleton={isSkeleton}

@@ -81,7 +81,7 @@ const ConsultantProfileBody = ({
     const { fullName, jobTitle, companyTitle, description, avatarUrl, contactUnlocked, contactLinks } = consultant
 
     const nameRow = (
-        <StackV gap={1} align="center" isSkeleton={isSkeleton} items={[
+        <StackV gap={1} align="center" pattern="name-handle" isSkeleton={isSkeleton} items={[
             () => (
                 <Typography
                     size="h4"
@@ -107,7 +107,7 @@ const ConsultantProfileBody = ({
 
     // identity: centered photo, name+role, pressable company row
     const identity = (
-        <StackV gap={4} align="center" isSkeleton={isSkeleton} items={[
+        <StackV gap={4} align="center" pattern="card-caption" isSkeleton={isSkeleton} items={[
             () => (
                 <div className="w-28">
                     <Image

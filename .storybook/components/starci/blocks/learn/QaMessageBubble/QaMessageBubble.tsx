@@ -73,6 +73,7 @@ const MessageRow = ({
     const authorRow = (
         <StackH
             gap={2}
+            pattern="icon-text separator-dot"
             align="center"
 
             items={[
@@ -87,6 +88,7 @@ const MessageRow = ({
     const reactionRow = interactive ? (
         <StackH
             gap={3}
+            pattern="flex-action"
             align="center"
 
             items={[
@@ -129,7 +131,7 @@ const MessageRow = ({
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
             <div className="max-w-[92%]">
-                <StackV gap={2} align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
+                <StackV gap={2} pattern="title-subtitle" align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
             </div>
         </div>
     )
@@ -153,6 +155,7 @@ const QaMessageBubble = ({
             <>
                 <StackH
                     gap={2}
+                    pattern="icon-text separator-dot"
                     align="center"
 
                     items={[

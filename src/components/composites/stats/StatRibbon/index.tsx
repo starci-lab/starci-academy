@@ -93,6 +93,7 @@ export const StatRibbon = ({
                     columns={2}
                     at="sm"
                     gap={4}
+                    pattern="sibling-stack"
                     items={cells.map((item, index) => () => (
                         <div
                             className={cn(

@@ -68,11 +68,12 @@ const recapCardBody = (
 ): ReactNode => (
     <StackV
         gap={6}
-
+        pattern="block-boundary"
         items={[
             () => (
                 <StackH
                     gap={3}
+                    pattern="chip-row"
                     align="center"
 
                     items={[

@@ -377,6 +377,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions}: Mark
                         <div className="text-start">
                             <StackH
                                 gap={4}
+                                pattern="content-row"
                                 justify="between"
                                 classNames={["w-full"]}
                                 items={[

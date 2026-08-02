@@ -167,7 +167,7 @@ interface ContentProps {
 
 const Content = ({ data, isSkeleton }: ContentProps) => {
     const statusRow = (
-        <StackH gap={4} justify="between" align="center" items={[
+        <StackH gap={4} pattern="content-row" justify="between" align="center" items={[
             () => (data.endsInLabel != null || isSkeleton ? (
                 <Typography
                     size="xs"

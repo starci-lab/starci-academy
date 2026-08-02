@@ -187,6 +187,7 @@ interface SettingsSummaryRowProps {
 const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: SettingsSummaryRowProps) => (
     <StackH
         gap={3}
+        pattern="flex-action"
         align="center"
         justify="between"
         isSkeleton={isSkeleton}
@@ -195,6 +196,7 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
             ({ isSkeleton }: SkeletonProps) => (
                 <StackH
                     gap={3}
+                    pattern="chip-row"
                     align="center"
                     at="sm"
                     isSkeleton={isSkeleton}
@@ -249,6 +251,7 @@ interface EvaluateActionRowProps {
 const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton }: EvaluateActionRowProps) => (
     <StackH
         gap={3}
+        pattern="flex-action"
         align="center"
         justify="between"
         at="sm"
@@ -339,10 +342,11 @@ const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps) => {
     return (
         <StackV
             gap={2}
+            pattern="title-subtitle"
             isSkeleton={isSkeleton}
 
             items={[
-                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} pattern="content-row" align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />,
                 ...(result.shortFeedback != null ? [() => (
                     <Typography
                         size="sm"

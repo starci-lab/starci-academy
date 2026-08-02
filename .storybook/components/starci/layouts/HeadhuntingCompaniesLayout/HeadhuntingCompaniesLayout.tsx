@@ -56,7 +56,7 @@ const HeadhuntingCompaniesLayout = ({
     )
 
     return (
-        <StackH gap={6} align="start" classNames={classNames} items={[() => navAndContent]} />
+        <StackH gap={6} pattern="block-boundary" align="start" classNames={classNames} items={[() => navAndContent]} />
     )
 }
 

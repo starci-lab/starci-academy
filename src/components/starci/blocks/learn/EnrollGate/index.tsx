@@ -143,7 +143,7 @@ const EnrollGateBase = ({
             <AsyncContent
                 isLoading={priceLoading}
                 skeleton={() => <HeroSkeleton className="h-7 w-32 rounded-xl" />}
-                content={() => <StackV gap={4} align="center" isSkeleton={isSkeleton} items={[() => priceGroup]} />}
+                content={() => <StackV gap={4} pattern="card-caption" align="center" isSkeleton={isSkeleton} items={[() => priceGroup]} />}
             />
             <Button
                 label="Enroll now"
@@ -169,7 +169,7 @@ const EnrollGateBase = ({
             <SurfaceCard
                 padding={6}
 
-                body={() => <StackV gap={4} align="center" isSkeleton={isSkeleton} items={[() => offerBody]} />}
+                body={() => <StackV gap={4} pattern="content-row" align="center" isSkeleton={isSkeleton} items={[() => offerBody]} />}
             />
         </div>
     )
@@ -179,7 +179,7 @@ const EnrollGateBase = ({
     // governs the wrapper's padding instead of a hand-typed `p-*` value.
     if (preview == null) {
         return (
-            <StackH gap={1} justify="center" padding={6} isSkeleton={isSkeleton} classNames={classNames} items={[() => card]} />
+            <StackH gap={1} pattern="page-pad" justify="center" padding={6} isSkeleton={isSkeleton} classNames={classNames} items={[() => card]} />
         )
     }
 
@@ -201,7 +201,7 @@ const EnrollGateBase = ({
                 hand-written: it is the float-over-the-fade OVERLAP effect itself, not a seam
                 between siblings, the same idiom as `SurfaceCard.Pressable`'s highlight layer. */}
             <div className="relative z-10 -mt-32">
-                <StackH gap={1} justify="center" padding={6} isSkeleton={isSkeleton} items={[() => card]} />
+                <StackH gap={1} pattern="page-pad" justify="center" padding={6} isSkeleton={isSkeleton} items={[() => card]} />
             </div>
         </div>
     )

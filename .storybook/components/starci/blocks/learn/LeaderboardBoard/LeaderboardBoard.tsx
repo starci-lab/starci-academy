@@ -138,6 +138,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
         <div key={entry.rank} className="w-24">
             <StackV
                 gap={2}
+                pattern="title-subtitle"
                 align="center"
                 isSkeleton={isSkeleton}
                 items={[
@@ -186,6 +187,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
 const Podium = ({ entries, meLabel, isSkeleton }: PodiumProps) => (
     <StackH
         gap={3}
+        pattern="sibling-stack"
         justify="center"
         align="end"
         isSkeleton={isSkeleton}
@@ -279,6 +281,7 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
     content: () => (
         <StackH
             gap={3}
+            pattern="identity"
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -411,6 +414,7 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
             body={() => (
                 <StackH
                     gap={3}
+                    pattern="identity"
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[

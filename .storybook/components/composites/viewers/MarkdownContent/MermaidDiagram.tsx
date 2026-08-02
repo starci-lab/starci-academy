@@ -121,6 +121,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                         <StackV
                                             as="figure"
                                             gap={3}
+                                            pattern="sibling-stack"
                                             align="center"
                                             justify="center"
                                             classNames={["h-full"]}

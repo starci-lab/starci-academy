@@ -409,7 +409,7 @@ const submissionPanel = (props: {
 
                 />
             </div>
-            <StackH gap={3} at="sm" isSkeleton={isSkeleton} items={[() => evaluateActions]} />
+            <StackH gap={3} at="sm" pattern="flex-action" isSkeleton={isSkeleton} items={[() => evaluateActions]} />
         </>
     )
 

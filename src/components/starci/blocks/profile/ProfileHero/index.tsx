@@ -165,7 +165,7 @@ const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: Profile
             ) : null}
         </>
     )
-    return <StackV gap={2} align="center" isSkeleton={isSkeleton} items={[() => rankBody]} />
+    return <StackV gap={2} pattern="title-subtitle" align="center" isSkeleton={isSkeleton} items={[() => rankBody]} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -393,7 +393,7 @@ const ProfileHero = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={1} align="center" isSkeleton={isSkeleton} items={[() => nameBlock]} />
+            <StackV gap={1} pattern="name-handle" align="center" isSkeleton={isSkeleton} items={[() => nameBlock]} />
         </>
     )
 
@@ -461,7 +461,7 @@ const ProfileHero = ({
 
     const cardBody = (
         <>
-            <StackV gap={4} align="center" isSkeleton={isSkeleton} items={[() => identitySection]} />
+            <StackV gap={4} pattern="card-caption" align="center" isSkeleton={isSkeleton} items={[() => identitySection]} />
 
             {isSkeleton || bio ? (
                 <Typography
@@ -478,6 +478,7 @@ const ProfileHero = ({
             {hasLocationRow ? (
                 <Cluster
                     gap={3}
+                    pattern="chip-row"
                     justify="center"
                     items={[
                         ...(isSkeleton || location
@@ -506,7 +507,7 @@ const ProfileHero = ({
                 />
             ) : null}
 
-            <StackH gap={3} divider isSkeleton={isSkeleton} items={[() => statsRow]} />
+            <StackH gap={3} pattern="sibling-stack" divider isSkeleton={isSkeleton} items={[() => statsRow]} />
 
             <StackH gap={3} isSkeleton={isSkeleton} items={[() => actionsRow]} />
 

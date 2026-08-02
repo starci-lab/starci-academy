@@ -160,6 +160,7 @@ const KeyValueRow = ({
             align="start"
             justify="between"
             gap={3}
+            pattern="value-row"
             classNames={classNames}
             isSkeleton={isSkeleton}
             items={[() => pairContent]}

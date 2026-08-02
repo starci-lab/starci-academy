@@ -99,7 +99,7 @@ const ContentPaywall = ({
 
     return (
         <div>
-            <StackV gap={4} align="center" items={[() => offer]} />
+            <StackV gap={4} pattern="content-row" align="center" items={[() => offer]} />
         </div>
     )
 }

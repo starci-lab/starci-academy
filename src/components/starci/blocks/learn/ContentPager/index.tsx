@@ -70,6 +70,7 @@ const ContentPager = ({
         const previousCard = (
             <StackH
                 gap={4}
+                pattern="content-row"
                 align="center"
                 isSkeleton={isSkeleton}
                 items={[
@@ -100,11 +101,12 @@ const ContentPager = ({
         const nextCard = (
             <StackH
                 gap={4}
+                pattern="content-row"
                 align="center"
                 justify="end"
                 isSkeleton={isSkeleton}
                 items={[
-                    ({ isSkeleton }: SkeletonProps) => <StackV gap={1} align="end" isSkeleton={isSkeleton} items={[() => nextLabel]} />,
+                    ({ isSkeleton }: SkeletonProps) => <StackV gap={1} pattern="name-handle" align="end" isSkeleton={isSkeleton} items={[() => nextLabel]} />,
                     // Same DIV position/size reasoning as the mirrored left caret above.
                     () => <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
                 ]}

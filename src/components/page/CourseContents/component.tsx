@@ -219,6 +219,7 @@ export const _CourseContents = ({
             body={() => (
                 <StackV
                     gap={7}
+                    pattern="layout-split"
                     items={[
                         // Header — its OWN tier, gap-10 (page band) from the content cluster below.
                         () => (
@@ -236,6 +237,7 @@ export const _CourseContents = ({
                         () => (
                             <StackV
                                 gap={6}
+                                pattern="block-boundary"
                                 items={[
                                     () => <GithubTeamGate />,
                                     ...(trialStrip ? [() => (
@@ -248,12 +250,14 @@ export const _CourseContents = ({
                                     () => (
                                         <StackV
                                             gap={4}
+                                            pattern="card-caption"
                                             items={[
                                                 () => (
                                                     <StackH
                                                         align="start"
                                                         justify="between"
                                                         gap={4}
+                                                        pattern="content-row"
                                                         items={[
                                                             () => (
                                                                 <StackV

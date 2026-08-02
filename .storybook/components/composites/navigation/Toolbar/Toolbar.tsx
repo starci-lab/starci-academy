@@ -272,6 +272,7 @@ const ToolbarBase = ({
         <StackH
             gap={4}
             justify="between"
+            pattern="content-row"
             classNames={classNames}
 
             items={[

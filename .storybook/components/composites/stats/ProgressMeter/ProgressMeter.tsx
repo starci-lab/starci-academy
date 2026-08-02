@@ -100,6 +100,7 @@ export const ProgressMeter = ({
     const topRow = hasTopRow ? (
         <StackH
             gap={3}
+            pattern="content-row"
             justify="between"
             isSkeleton={isSkeleton}
             items={[
@@ -119,6 +120,7 @@ export const ProgressMeter = ({
     const slotRow = hasSlotRow ? (
         <StackH
             gap={3}
+            pattern="content-row"
             justify="between"
             isSkeleton={isSkeleton}
             items={[

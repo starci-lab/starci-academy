@@ -71,6 +71,7 @@ export const StatPair = ({
     return (
         <StackV
             gap={1}
+            pattern="name-handle"
             align="start"
             classNames={classNames}
             items={[

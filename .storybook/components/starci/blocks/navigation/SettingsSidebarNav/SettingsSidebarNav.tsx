@@ -139,7 +139,7 @@ const DesktopNavRow = ({ item, isActive, onNavigate }: DesktopNavRowProps) => {
                 isActive ? "bg-accent-soft text-accent-soft-foreground" : "text-foreground hover:bg-default/40",
             )}
         >
-            <StackH gap={2} align="center" justify={collapsed ? "center" : "start"} items={[() => rowContent]} />
+            <StackH gap={2} pattern="icon-text" align="center" justify={collapsed ? "center" : "start"} items={[() => rowContent]} />
         </button>
     )
 }
@@ -229,6 +229,7 @@ const SettingsSidebarNav = ({
                 <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
                     <StackH
                         gap={3}
+                        pattern="flex-action"
                         padding={{ x: 4, y: 3 }}
                         items={flatItems.map((item) => () => {
                             const isActive = item.href === activeHref
@@ -249,7 +250,7 @@ const SettingsSidebarNav = ({
                                         isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
                                     )}
                                 >
-                                    <StackH gap={2} align="center" items={[() => pillContent]} />
+                                    <StackH gap={2} pattern="icon-text" align="center" items={[() => pillContent]} />
                                 </button>
                             )
                         })}

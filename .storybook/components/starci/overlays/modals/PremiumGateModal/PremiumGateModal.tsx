@@ -153,6 +153,7 @@ const PremiumGateModal = ({
     const unlockItems = GATE_UNLOCKS.map((item) => () => (
         <Cluster
             gap={3}
+            pattern="identity"
             align="center"
 
             items={[

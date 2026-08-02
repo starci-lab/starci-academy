@@ -165,10 +165,10 @@ const StepperBase = ({
                                     onClick={() => onStepPress(index)}
                                     className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                 >
-                                    <StackV gap={3} align="center" items={[() => indicatorAndCopy]} />
+                                    <StackV gap={3} pattern="identity" align="center" items={[() => indicatorAndCopy]} />
                                 </button>
                             ) : (
-                                <StackV gap={3} align="center" items={[() => indicatorAndCopy]} />
+                                <StackV gap={3} pattern="identity" align="center" items={[() => indicatorAndCopy]} />
                             )}
                         </React.Fragment>
                     )
@@ -222,9 +222,10 @@ const StepperBase = ({
                     <StackH
                         key={step.id}
                         gap={4}
+                        pattern="content-row"
                         align="stretch"
                         items={[
-                            () => <StackV gap={2} align="center" items={[() => railAndConnector]} />,
+                            () => <StackV gap={2} pattern="icon-text" align="center" items={[() => railAndConnector]} />,
                             () => (isClickable ? (
                                 <button
                                     type="button"

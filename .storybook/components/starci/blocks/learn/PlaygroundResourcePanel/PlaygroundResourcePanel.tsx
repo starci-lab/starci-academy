@@ -162,6 +162,7 @@ const PlaygroundResourcePanel = ({
     const headerRow = (
         <StackH
             gap={3}
+            pattern="value-row"
             justify="between"
             align="center"
 

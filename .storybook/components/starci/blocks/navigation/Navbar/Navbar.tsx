@@ -393,7 +393,7 @@ const Navbar = ({
     // notification popover body: header row → async list → footer link
     const notificationPanel = (
         <>
-            <StackH gap={3} justify="between" items={[() => notificationHeader]} />
+            <StackH gap={3} pattern="sibling-stack" justify="between" items={[() => notificationHeader]} />
             <AsyncContent
                 isLoading={notifications.isLoading && notifications.items.length === 0}
                 skeleton={() => <StackV gap={1} items={[() => notificationSkeletonRows]} />}
@@ -632,8 +632,8 @@ const Navbar = ({
     // controls hidden from the mobile bar live here: language + theme
     const drawerControls = (
         <>
-            <StackH gap={3} justify="between" items={[() => languageRow]} />
-            <StackH gap={3} justify="between" items={[() => themeRow]} />
+            <StackH gap={3} pattern="sibling-stack" justify="between" items={[() => languageRow]} />
+            <StackH gap={3} pattern="sibling-stack" justify="between" items={[() => themeRow]} />
         </>
     )
 
@@ -654,6 +654,7 @@ const Navbar = ({
             <div className="h-16 min-h-16">
                 <StackH
                     gap={6}
+                    pattern="block-boundary"
                     justify="between"
                     padding={{ x: 4 }}
 

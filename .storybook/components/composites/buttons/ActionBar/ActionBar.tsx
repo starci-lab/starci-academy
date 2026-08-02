@@ -118,6 +118,7 @@ export const ActionBar = ({
             data-component="ActionBar"
             at={at}
             gap={3}
+            pattern="flex-action"
             justify="end"
             classNames={classNames}
             items={items}

@@ -157,6 +157,7 @@ export const EmptyState = (props: EmptyStateProps) => {
             {isPage ? (
                 <StackV
                     gap={3}
+                    pattern="sibling-stack"
                     isSkeleton={isSkeleton}
                     items={[
                         () => (

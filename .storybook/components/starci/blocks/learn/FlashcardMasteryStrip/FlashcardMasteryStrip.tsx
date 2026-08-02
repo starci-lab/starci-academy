@@ -92,6 +92,7 @@ const FlashcardMasteryStrip = ({
         <>
             <StackH
                 gap={2}
+                pattern="value-row"
                 align="baseline"
                 isSkeleton={isSkeleton}
                 items={[

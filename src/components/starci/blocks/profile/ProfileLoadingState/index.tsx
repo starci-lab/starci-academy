@@ -75,7 +75,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
         )
         const courseDetails = (
             <>
-                <StackH gap={3} justify="between" items={[() => progressHeader]} />
+                <StackH gap={3} pattern="value-row" justify="between" items={[() => progressHeader]} />
                 <ProgressBar isSkeleton />
             </>
         )
@@ -178,13 +178,13 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
 
     const identityColumnBody = (
         <>
-            <StackV gap={2} align="start" items={[() => rankAvatarRow]} />
+            <StackV gap={2} pattern="title-subtitle" align="start" items={[() => rankAvatarRow]} />
             <StackV gap={1} items={[() => nameBlock]} />
 
             {/* short bio */}
             <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
 
-            <StackH gap={3} at="sm" items={[() => locationRow]} />
+            <StackH gap={3} pattern="chip-row" at="sm" items={[() => locationRow]} />
             <StackH gap={4} items={[() => followRow]} />
 
             {/* earned-badge medal strip — `AvatarGroup` already owns the overlap look */}
@@ -262,7 +262,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             <StackV gap={4} items={[() => coursesSection]} />
             <StackV gap={4} items={[() => contributionsSection]} />
             {/* skills — 2-col grid of stat cards */}
-            <Grid columns={{ base: 1, md: 2 }} gap={6} items={skillItems} />
+            <Grid columns={{ base: 1, md: 2 }} gap={6} pattern="block-boundary" items={skillItems} />
         </>
     )
 

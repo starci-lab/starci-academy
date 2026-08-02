@@ -78,6 +78,7 @@ const PersonalProjectGatePreview = ({
         <StackH
             key={index}
             gap={2}
+            pattern="icon-text"
             align="center"
             isSkeleton={isSkeleton}
 

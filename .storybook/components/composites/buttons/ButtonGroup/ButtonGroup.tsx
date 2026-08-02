@@ -69,6 +69,7 @@ export const ButtonGroup = ({
         data-component="ButtonGroup"
         at={at}
         gap={3}
+        pattern="flex-action"
         justify={align}
         classNames={classNames}
         isSkeleton={isSkeleton}

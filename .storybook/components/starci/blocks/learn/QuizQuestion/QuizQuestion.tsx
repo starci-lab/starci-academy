@@ -75,6 +75,7 @@ const QuizQuestion = ({
     const levelRow = levelLabel != null ? (
         <StackH
             gap={3}
+            pattern="chip-row"
             align="center"
             isSkeleton={isSkeleton}
             items={[() => <Chip tone="default" text={levelLabel} isSkeleton={isSkeleton} />]}
@@ -101,11 +102,13 @@ const QuizQuestion = ({
     const gradedDetails = isGraded ? (
         <StackV
             gap={6}
+            pattern="block-boundary"
             isSkeleton={isSkeleton}
             items={[
                 () => (
                     <StackH
                         gap={3}
+                        pattern="chip-row"
                         align="center"
                         isSkeleton={isSkeleton}
                         items={[
@@ -138,6 +141,7 @@ const QuizQuestion = ({
     const actionRow = (
         <StackH
             gap={3}
+            pattern="flex-action"
             justify="end"
             isSkeleton={isSkeleton}
             items={[

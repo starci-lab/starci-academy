@@ -160,6 +160,7 @@ const Header = ({
             align="start"
             justify="between"
             gap={4}
+            pattern="content-row"
             isSkeleton={isSkeleton}
             items={[
                 () => <StackV gap={3} classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} />,
@@ -186,6 +187,7 @@ const Header = ({
                     <StackH
                         gap={3}
                         align="stretch"
+                        pattern="chip-row"
                         isSkeleton={isSkeleton}
                         items={[
                             () => <Chip isSkeleton />,

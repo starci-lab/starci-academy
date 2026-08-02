@@ -73,5 +73,7 @@ export const LearnNudges = () => {
     // while either is pending; only self-hide once BOTH resolve and there's truly nothing.
     const isPending = (dueSwr.isLoading && !dueSwr.data) || (leaderboardSwr.isLoading && !leaderboardSwr.data)
 
-    return <_LearnNudges items={items} isPending={isPending} />
+    // The connected file owns WHEN to shimmer (counts still loading); it hands that
+    // condition to the presentational leaf as the universal `isSkeleton`.
+    return <_LearnNudges items={items} isSkeleton={isPending} />
 }

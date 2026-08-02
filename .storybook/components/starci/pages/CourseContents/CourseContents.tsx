@@ -1,26 +1,84 @@
 import React from "react"
-import { StackIcon } from "@phosphor-icons/react"
-import { CourseBrief } from "@sb-components/starci/blocks/learn/CourseBrief/CourseBrief"
-import { KeepGoingPath, type KeepGoingContent } from "@sb-components/starci/blocks/learn/KeepGoingPath/KeepGoingPath"
-import { LearnNudges, type LearnNudge } from "@sb-components/starci/blocks/learn/LearnNudges/LearnNudges"
+import {
+    ArrowRightIcon,
+    CheckCircleIcon,
+    CircleIcon,
+    ClockIcon,
+    LockIcon,
+    PlayIcon,
+    StackIcon,
+    UsersIcon,
+} from "@phosphor-icons/react"
 import { CourseTeamGate } from "@sb-components/starci/blocks/learn/CourseTeamGate/CourseTeamGate"
+import { LearnNudges, type LearnNudge } from "@sb-components/starci/blocks/learn/LearnNudges/LearnNudges"
 import { TrialConversionStrip, type TrialConversionStripPrice } from "@sb-components/starci/blocks/commerce/TrialConversionStrip/TrialConversionStrip"
 import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
-import { ContinueLearning } from "@sb-components/starci/blocks/learn/ContinueLearning/ContinueLearning"
 import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/AsyncContent"
+import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { HighlightChip } from "@sb-components/composites/chips/HighlightChip/HighlightChip"
+import { PageHeader } from "@sb-components/composites/layout/Page/Page"
+import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import { Breadcrumbs, type BreadcrumbItem } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
+import { ChipBase } from "@sb-components/atoms/chips/Chip/ChipBase"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Container } from "@sb-components/frames/Container/Container"
-import { StackV } from "@sb-components/frames/Stack/Stack"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+
 /**
  * `CourseContents` — the `/learn/content` dashboard screen, rendered as a static
- * presentational leaf (the live feature reads Redux/SWR; this composes the ported
- * blocks with demo data).
- *
- * Six blocks, nothing else: `CourseBrief` (what this course is), `CourseTeamGate`
- * (GitHub team gate), `TrialConversionStrip` (trial → purchase), `ContinueLearning`
- * (resume where you left off), `LearnNudges` (what to do today), `KeepGoingPath` (keep
- * going in the chapter). A screen arranges blocks in frames and hands them typed data
- * only — no atoms, no design tier, no hand-rolled layout divs.
+ * presentational leaf that mirrors the real `_CourseContents` (src) layout with demo
+ * data. Same spine, same tier-correct vocabulary: breadcrumb → header (title +
+ * description + catalog meta) → GitHub-team gate → trial conversion strip → continue
+ * cluster (eyebrow + resume title + Resume button, one completion meter, the
+ * lessons·challenges stat line) → contextual nudges → keep-going path (the current
+ * module's lessons as rows). A screen arranges blocks in frames and hands them typed
+ * data only.
  */
+
+/** Difficulty → chip tone, so the keep-going rows read their level at a glance. */
+const DIFFICULTY_TONE = {
+    beginner: "success",
+    intermediate: "warning",
+    advanced: "danger",
+} as const
+
+/** One keep-going lesson row (demo shape). */
+interface LessonRow {
+    id: string
+    title: string
+    minutesReadText: string
+    state: "active" | "read" | "unread"
+    difficulty?: keyof typeof DIFFICULTY_TONE
+    isPremium: boolean
+}
+
+/** state → leading row icon (the list forces `size-5`). */
+const STATE_ICON = {
+    active: PlayIcon,
+    read: CheckCircleIcon,
+    unread: CircleIcon,
+} as const
+
+const CRUMBS: Array<BreadcrumbItem> = [
+    { key: "courses", label: "Courses", onPress: () => {} },
+    { key: "course", label: "DevOps Mastery" },
+]
+
+const LESSONS: Array<LessonRow> = [
+    { id: "l1", title: "What is Docker", minutesReadText: "6 min read", state: "read", difficulty: "beginner", isPremium: false },
+    { id: "l2", title: "Writing an optimized Dockerfile", minutesReadText: "12 min read", state: "active", difficulty: "intermediate", isPremium: false },
+    { id: "l3", title: "Multi-stage build", minutesReadText: "9 min read", state: "unread", difficulty: "intermediate", isPremium: true },
+]
+
+// Plain DATA — `kind` is an ENUM; the `LearnNudges` block decides the icon itself.
+const NUDGES: Array<LearnNudge> = [
+    { id: "flashcards", kind: "flashcards", title: "Review 12 cards due today", onPress: () => {} },
+    { id: "mock-interview", kind: "interview", title: "Practice interviewing for your capstone", onPress: () => {} },
+    { id: "league", kind: "league", title: "You're ranked #42 this week", onPress: () => {} },
+]
+
 const SAMPLE_PRICE: TrialConversionStripPrice = {
     discountedPriceVnd: 1_990_000,
     originalPriceVnd: 2_990_000,
@@ -30,45 +88,26 @@ const SAMPLE_PRICE: TrialConversionStripPrice = {
     seatsRemainingInCurrentPhase: 14,
     nextPhasePriceVnd: 2_490_000,
 }
-// Plain DATA — the visuals (state icon, difficulty chip, lock mark) are owned by the
-// `KeepGoingPath` block. The screen doesn't know what an "in-progress" lesson looks like.
-const KEEP_GOING: Array<KeepGoingContent> = [
-    { id: "l1", title: "What is Docker", minutes: 6, state: "done", difficulty: "beginner", onPress: () => {} },
-    { id: "l2", title: "Writing an optimized Dockerfile", minutes: 12, state: "active", difficulty: "intermediate", onPress: () => {} },
-    { id: "l3", title: "Multi-stage build", minutes: 9, state: "todo", difficulty: "intermediate", locked: true, onPress: () => {} },
-]
-// Plain DATA — `kind` is an ENUM; the `LearnNudges` block decides the icon itself (§14b).
-const NUDGES: Array<LearnNudge> = [
-    { id: "flashcards", kind: "flashcards", title: "Review 12 cards due today", onPress: () => {} },
-    { id: "mock-interview", kind: "interview", title: "Practice interviewing for your capstone", onPress: () => {} },
-    { id: "league", kind: "league", title: "You're ranked #42 this week", onPress: () => {} },
-]
+
 /** Props for {@link CourseContents}. */
 export interface CourseContentsLayoutProps {
-    /** `"trial"` shows the gh-team gate + conversion strip; `"paid"` self-hides both. */
+    /** `"trial"` shows the gh-team gate + conversion strip; `"paid"` self-hides the strip. */
     viewer?: "trial" | "paid"
-    /**
-     * `true` → the whole screen is at REST. The flag flows straight down to every
-     * block, and each block draws its OWN resting shape — the screen builds
-     * no shimmer tree of its own.
-     */
+    /** `true` → the whole screen is at REST; the flag flows to every part, each draws its own resting shape. */
     isSkeleton?: boolean
     /** `true` → the course has no lessons yet; `AsyncContentEmpty` replaces the ENTIRE spine. */
     isEmpty?: boolean
 }
+
 /**
  * Empty state — the course has no contents yet.
- *
- * The frame and the content each carry THEIR OWN name.
  */
 const CourseContentsEmpty = () => (
     <Container
-
         size="md"
         padding={6}
         body={
             <AsyncContentEmpty
-
                 icon={StackIcon}
                 title="This course has no lessons yet"
                 description="Content is still being written — check back later."
@@ -76,6 +115,7 @@ const CourseContentsEmpty = () => (
         }
     />
 )
+
 /**
  * The `/learn/content` dashboard leaf.
  *
@@ -85,108 +125,140 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     if (isEmpty) {
         return <CourseContentsEmpty />
     }
-    // The resting state is not a separate tree: every block takes `isSkeleton` and
-    // draws its OWN resting shape, so there is only ONE tree left — it can no longer
-    // drift.
-    //
-    // VERTICAL rhythm owned by ONE party. Two deliberately different steps:
-    // `8` separates the course IDENTITY cluster from the content below (seam between two
-    // REGIONS), `6` is the rhythm between blocks within the same region —
-    // "sections-wide vs related-tight", uniform spacing is forbidden.
-    const learnSection = (
-        <>
-            {/* Gate is for people who ALREADY BOUGHT (backend scopes the team by
-            is_enrolled). The old version gated it backwards, on `viewer === "trial"`. The
-            block hides itself, so the screen just hands over the facts. */}
-            <CourseTeamGate
 
-                isEnrolled={viewer === "paid"}
-                isInTeam={false}
-                onJoin={() => {}}
-                isSkeleton={isSkeleton}
-            />
-            {viewer === "trial" ? (
-                <TrialConversionStrip
+    // Header slots the PageHeader calls itself (skipped while it draws its own skeleton header).
+    const BreadcrumbSlot: ComponentTypeWithSkeleton = () => <Breadcrumbs items={CRUMBS} />
+    const MetaChips: ComponentTypeWithSkeleton = () => (
+        <StackH
+            gap={3}
+            body={
+                <>
+                    <HighlightChip icon={StackIcon} value={8} label="chapters" />
+                    <HighlightChip icon={ClockIcon} value="~14" label="hours" />
+                    <HighlightChip icon={UsersIcon} value="2,481" label="learners" />
+                </>
+            }
+        />
+    )
 
-                    freeLessonsRemaining={9}
-                    price={SAMPLE_PRICE}
-                    onEnroll={() => {}}
-                    isSkeleton={isSkeleton}
+    // Keep-going rows — leading state icon, title, minutes-read subtitle, difficulty + premium-lock meta.
+    const lessonRows: Array<SurfaceCardListItem> = LESSONS.map((lesson) => {
+        const { difficulty, isPremium } = lesson
+        const metaSlot = difficulty != null || isPremium
+            ? () => (
+                <StackH
+                    gap={3}
+                    body={
+                        <>
+                            {difficulty != null ? (
+                                <ChipBase tone={DIFFICULTY_TONE[difficulty]} text={difficulty} />
+                            ) : null}
+                            {isPremium ? (
+                                <LockIcon aria-label="Premium lesson" focusable="false" className="size-5 text-muted" />
+                            ) : null}
+                        </>
+                    }
                 />
-            ) : null}
-            {/* `hero`, NOT `plain`: the frameless version
-            lets the progress bar drift outside, with nothing holding it in place so it
-            reads as belonging to the block below. The hero frame gathers title · meta ·
-            progress · CTA into ONE block — this is also the canonical case for
-            `HighlightCard`: a single "resume the in-progress session" highlight on the page.
-            NO `eyebrow`: eyebrow exists to STAND IN for
-            the frame — a frameless block is what needs a light label line saying what this
-            cluster is. The hero already has a frame + arc ring + a "Continue" button, so
-            adding "Continue learning" would be saying it twice. */}
-            <ContinueLearning
+            )
+            : undefined
+        return {
+            key: lesson.id,
+            title: lesson.title,
+            subtitle: lesson.minutesReadText,
+            leadingIcon: STATE_ICON[lesson.state],
+            leadingIconColor: lesson.state === "active" ? "accent" : lesson.state === "read" ? "success" : undefined,
+            onPress: () => {},
+            meta: metaSlot,
+        }
+    })
 
-                lessonIndex={4}
-                lessonTitle="Writing an optimized Dockerfile"
-                lessonsRead={8}
-                lessonsTotal={23}
-                challengesDone={2}
-                challengesTotal={9}
-                progressPercent={34}
-                onResume={() => {}}
-                isSkeleton={isSkeleton}
-            />
-            <LearnNudges
+    const contentCluster = (
+        <StackV
+            gap={6}
+            body={
+                <>
+                    {/* Gate is for people who ALREADY BOUGHT; the block self-hides when it doesn't apply. */}
+                    <CourseTeamGate isEnrolled={viewer === "paid"} isInTeam={false} onJoin={() => {}} isSkeleton={isSkeleton} />
+                    {viewer === "trial" ? (
+                        <TrialConversionStrip freeLessonsRemaining={9} price={SAMPLE_PRICE} onEnroll={() => {}} isSkeleton={isSkeleton} />
+                    ) : null}
 
-                items={NUDGES}
-                isSkeleton={isSkeleton}
-            />
-            <KeepGoingPath
+                    {/* Continue + progress — flat (no card face), the honest unified meter. */}
+                    <StackV
+                        gap={4}
+                        body={
+                            <>
+                                <StackH
+                                    align="start"
+                                    justify="between"
+                                    gap={4}
+                                    body={
+                                        <>
+                                            <StackV
+                                                gap={1}
+                                                classNames={["min-w-0"]}
+                                                body={
+                                                    <>
+                                                        <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Continue where you left off" />
+                                                        <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text="Writing an optimized Dockerfile" />
+                                                    </>
+                                                }
+                                            />
+                                            {!isSkeleton ? (
+                                                <Button
+                                                    label="Resume"
+                                                    variant="primary"
+                                                    size="lg"
+                                                    suffixIcon={ArrowRightIcon}
+                                                    iconSlide
+                                                    onPress={() => {}}
+                                                    classNames={["shrink-0"]}
+                                                />
+                                            ) : null}
+                                        </>
+                                    }
+                                />
+                                <ProgressMeter value={34} max={100} label="Completion" showValue isSkeleton={isSkeleton} />
+                                <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="8 / 23 lessons · 2 / 9 challenges" />
+                            </>
+                        }
+                    />
 
-                module={{ index: 2, name: "Containerization" }}
-                contents={KEEP_GOING}
-                isSkeleton={isSkeleton}
-            />
-        </>
+                    {/* Contextual nudges — aids that orbit the spine; each self-hides at 0. */}
+                    <LearnNudges items={NUDGES} isSkeleton={isSkeleton} />
+
+                    {/* Keep-going path — the current module's lessons as rows. */}
+                    <StackV
+                        gap={4}
+                        body={
+                            <>
+                                <Typography size="sm" weight="semibold" color="muted" isSkeleton={isSkeleton} text="Keep going · Containerization" />
+                                <SurfaceCardList items={lessonRows} isSkeleton={isSkeleton} />
+                            </>
+                        }
+                    />
+                </>
+            }
+        />
     )
 
-    const courseContentsSections = (
-        <>
-            {/* The badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
-            `PageHeader` composite lives INSIDE that block → drill down in CourseBrief's own
-            story, NOT here. This cluster carries business meaning
-            (read/unread) so it's a BLOCK. */}
-            <CourseBrief
-
-                breadcrumbItems={[
-                    { key: "courses", label: "Courses", onPress: () => {} },
-                    { key: "course", label: "DevOps Mastery" },
-                ]}
-                title="DevOps Mastery"
-                description="From CI/CD to production Kubernetes — a hands-on learning path."
-                moduleCount={8}
-                hours={14}
-                learnerCount={2481}
-                isSkeleton={isSkeleton}
-            />
-            <StackV gap={6} body={learnSection} />
-        </>
+    const body = (
+        <StackV
+            gap={7}
+            body={
+                <>
+                    <PageHeader
+                        breadcrumb={BreadcrumbSlot}
+                        title="DevOps Mastery"
+                        description="From CI/CD to production Kubernetes — a hands-on learning path."
+                        meta={MetaChips}
+                        isSkeleton={isSkeleton}
+                    />
+                    {contentCluster}
+                </>
+            }
+        />
     )
 
-    const courseContentsBody = <StackV gap={7} body={courseContentsSections} />
-
-    return (
-        // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div`:
-        //   • `mx-auto max-w-3xl p-6` → `Container size="md" padding={6}` — `md` reads
-        //     from the token `--container-app-md`, the same 768px but from the RIGHT SOURCE;
-        //     `max-w-3xl` is a different scale, and if the token changes it drifts silently
-        //     (see the `SIZE_CLASS` JSDoc).
-        //   • `gap-10` → `gap={7}`. `10` is NOT on the scale (0·1·2·3·6·8) — the frame's
-        //     `InsetScale` type means an off-scale value is a TYPE ERROR at the call site,
-        //     it can no longer slip through. This is exactly where the spacing rule gets enforced.
-        // NOTE — `Container` only applies `gap` when using the `header`/`footer` slots; passing
-        // `body` directly means that prop is DROPPED SILENTLY. Writing `gap={7}` with nothing to
-        // receive it is worse than not writing it at all: reading the code makes it look like the
-        // rhythm was already set.
-        <Container size="md" padding={6} body={courseContentsBody} />
-    )
+    return <Container size="md" padding={6} body={body} />
 }

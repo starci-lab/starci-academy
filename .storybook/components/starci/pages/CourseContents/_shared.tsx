@@ -10,8 +10,8 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  */
 
 /**
- * EVERY node this screen can show, in ONE list — 10 entries: 3 frames, 6 blocks, and the
- * empty-state frame.
+ * EVERY node this screen can show, in ONE list — 11 entries: 4 frames, 3 blocks, and 4
+ * composites (incl. the empty-state frame). Mirrors the real `_CourseContents` spine.
  *
  * There is deliberately NO per-state variant of this list. The panel derives the tree from
  * the DOM and uses this table only as a whitelist, so a node that is not rendered cannot
@@ -46,13 +46,19 @@ export const PARTS: Array<AnatomyNode> = [
         storyId: "frames-stack-stackv--default",
     },
     {
-        // §11a — at the SCREEN tier, only the HIGHEST node: CourseBrief is ONE node (the
-        // PageHeader frame + breadcrumb + status chip are internal to it → drill deeper
-        // in CourseBrief's own story, not here).
-        name: "CourseBrief",
-        tier: "block",
-        role: "course identity — breadcrumb + title + description + meta. The screen calls THIS BLOCK, never the PageHeader frame or the Breadcrumbs atom",
-        storyId: "starci-blocks-learn-coursebrief-coursebrief--full",
+        name: "StackH",
+        tier: "frame",
+        role: "horizontal row — the continue cluster (title ↔ Resume) and each lesson row's meta cluster",
+        storyId: "frames-stack-stackh--default",
+    },
+    {
+        // §11a — SCREEN tier, only the HIGHEST node: the screen composes PageHeader directly
+        // (mirrors the real `_CourseContents`). Breadcrumbs + HighlightChip meta are internal
+        // to it → drill in PageHeader's own story, not here.
+        name: "PageHeader",
+        tier: "composite",
+        role: "course identity — breadcrumb + title + description + catalog-meta chips",
+        storyId: "composites-layout-page-pageheader--full",
     },
     // WARNING: the node name must match EXACTLY the `data-anat-part` the component emits:
     // the DOM emits `CourseTeamGate`, not `Callout` (that's the FRAME the block
@@ -68,12 +74,9 @@ export const PARTS: Array<AnatomyNode> = [
     // leaf. A story-id gate can only prove an id EXISTS; that it points at the right leaf
     // is a reader's job (`scripts/check-story-ids.mjs` deliberately says so).
     { name: "TrialConversionStrip", tier: "block", role: "trial→enroll conversion strip; the screen drops it entirely once purchased", storyId: "starci-blocks-commerce-trialconversionstrip-trialconversionstrip--default" },
-    // `design` is only the place for UI/UX: the screen must not skip the block tier.
-    // The screen calls the `ContinueLearning` block, and that block is the one that
-    // composes the copy before handing it down to design.
-    { name: "ContinueLearning", tier: "block", role: "resume where you left off — the block writes the copy from NUMBERS (lessons read · challenges); the design only draws", storyId: "starci-blocks-learn-continuelearning-continuelearning--default" },
+    { name: "ProgressMeter", tier: "composite", role: "the continue cluster's honest unified completion meter (lessons + challenges in one bar)", storyId: "composites-stats-progressmeter--label-and-value" },
     { name: "LearnNudges", tier: "block", role: "what to do today — cards due · mock interview · rank. The screen passes `kind` (ENUM); the block picks the icon (§14b)", storyId: "starci-blocks-learn-learnnudges-learnnudges--nudges" },
-    { name: "KeepGoingPath", tier: "block", role: "lessons of the current module — bordered SurfaceCardList; each row: state icon · title · reading time · difficulty chip · lock icon", storyId: "starci-blocks-learn-keepgoingpath-keepgoingpath--path" },
+    { name: "SurfaceCardList", tier: "composite", role: "keep-going path — the current module's lessons as rows: state icon · title · reading time · difficulty chip · lock", storyId: "composites-cards-surfacecard-surfacecardlist--default" },
     // The empty state replaces the whole spine with this frame. It lives in the SAME list:
     // on a content render it simply is not in the DOM, so it cannot reach the tree.
     { name: "AsyncContentEmpty", tier: "composite", role: "the course has no contents yet — icon + title + description", storyId: "composites-async-asynccontent-asynccontentempty--basic" },

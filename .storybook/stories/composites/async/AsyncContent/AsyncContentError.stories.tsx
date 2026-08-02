@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { ArrowClockwiseIcon, WifiSlashIcon } from "@phosphor-icons/react"
 import { AsyncContentError } from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
  * ⚠️ STATE SCOPE (decided 2026-07-25): `AsyncContentError` is the ERROR MESSAGE
@@ -161,14 +161,13 @@ export const WithAction: Story = {
                         code: `<AsyncContentError
   title="Your session has expired"
   description="Sign in again to continue."
-  action={<Button size="sm" variant="secondary" icon={<ArrowClockwiseIcon />}>Reload page</Button>}
+  action={<Button size="sm" variant="secondary" suffixIcon={ArrowClockwiseIcon} label="Reload page" />}
 />`,
                         render: (
                             <AsyncContentError
                                 title="Your session has expired"
                                 description="Sign in again to continue."
-                                action={<Button size="sm" variant="secondary" icon={<ArrowClockwiseIcon data-tier="fixture" />}>Reload page</Button>}
-                               
+                                action={<Button size="sm" variant="secondary" suffixIcon={ArrowClockwiseIcon} label="Reload page" />}
                             />
                         ),
                     },

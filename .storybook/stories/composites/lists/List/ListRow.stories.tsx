@@ -15,7 +15,7 @@ import {
     LockIcon,
 } from "@phosphor-icons/react"
 import { ListRow } from "@sb-components/composites/lists/List/List"
-import { DifficultyChip } from "@sb-components/_legacy/designs/chips/DifficultyChip/DifficultyChip"
+import { VariantChipDifficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -350,13 +350,13 @@ const DoneLeading = () => <CheckCircleIcon data-tier="fixture" className="size-5
 const InProgressLeading = () => <PlayCircleIcon data-tier="fixture" className="size-5 text-accent" aria-hidden />
 const NotStartedLeading = () => <CircleIcon data-tier="fixture" className="size-5 text-muted" aria-hidden />
 
-const LoopsMeta = () => <DifficultyChip difficulty="beginner" />
-const FunctionsMeta = () => <DifficultyChip difficulty="intermediate" />
+const LoopsMeta = () => <VariantChipDifficulty difficulty="beginner" />
+const FunctionsMeta = () => <VariantChipDifficulty difficulty="intermediate" />
 // Next to a `text-xs` chip → `size-4` (Phosphor scale §5a); smaller than `size-5` ⇒
 // compensate with `weight="bold"` (§5.0a).
 const RecursionMeta = () => (
     <>
-        <DifficultyChip difficulty="advanced" />
+        <VariantChipDifficulty difficulty="advanced" />
         <LockIcon data-tier="fixture" className="size-4 text-muted" weight="bold" aria-hidden />
     </>
 )

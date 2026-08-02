@@ -1,5 +1,5 @@
 import { cn } from "@heroui/react"
-import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
@@ -80,11 +80,6 @@ const CONTAINER_CLS: Record<ChipButtonListDirection, string> = {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ChipButtonList" } as const
 
-const ITEM_CLS: Record<ChipButtonListDirection, string> = {
-    wrap: "justify-start text-start",
-    column: "h-auto w-full justify-start gap-3 px-3 py-2 text-start",
-}
-
 /**
  * ChipButtonList — a row of secondary "suggestion" chips OR a vertical ghost "menu"
  * list, both composing the base {@link Button}. See the file header for the two
@@ -114,8 +109,6 @@ export const ChipButtonList = ({
                 isSkeleton
                 variant={resolvedVariant}
                 size={direction === "wrap" ? "sm" : "md"}
-                className={ITEM_CLS[direction]}
-
             />
         ))
         : items.map((item, index) => {
@@ -125,28 +118,29 @@ export const ChipButtonList = ({
                     key={item.id ?? index}
                     variant={resolvedVariant}
                     size={direction === "wrap" ? "sm" : "md"}
-                    className={ITEM_CLS[direction]}
+                    align="start"
                     onPress={item.onPress}
                     isDisabled={item.isDisabled}
-
-                >
-                    {Icon ? (
-                        <span aria-hidden className="[&_svg]:size-4 shrink-0 text-muted">
-                            <Icon />
-                        </span>
-                    ) : null}
-                    {direction === "column" ? (
-                        <Typography size="sm"
-                            weight="medium"
-                            truncate
-                            classNames={["min-w-0", "flex-1"]}
-
-                            text={item.label}
-                        />
-                    ) : (
-                        item.label
-                    )}
-                </Button>
+                    label={
+                        <>
+                            {Icon ? (
+                                <span aria-hidden className="[&_svg]:size-4 shrink-0 text-muted">
+                                    <Icon />
+                                </span>
+                            ) : null}
+                            {direction === "column" ? (
+                                <Typography size="sm"
+                                    weight="medium"
+                                    truncate
+                                    classNames={["min-w-0", "flex-1"]}
+                                    text={item.label}
+                                />
+                            ) : (
+                                item.label
+                            )}
+                        </>
+                    }
+                />
             )
         })
 

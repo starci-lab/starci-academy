@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
  * ⚠️ STATE SCOPE (teacher's call 2026-07-25): `AsyncContentEmpty` is the EMPTY
@@ -160,14 +160,13 @@ export const WithAction: Story = {
                         code: `<AsyncContentEmpty
   title="No decks yet"
   description="Create your first deck to start reviewing."
-  action={<Button size="sm" icon={<PlusIcon />}>Create deck</Button>}
+  action={<Button size="sm" suffixIcon={PlusIcon} label="Create deck" />}
 />`,
                         render: (
                             <AsyncContentEmpty
                                 title="No decks yet"
                                 description="Create your first deck to start reviewing."
-                                action={<Button size="sm" icon={<PlusIcon data-tier="fixture" />}>Create deck</Button>}
-                               
+                                action={<Button size="sm" suffixIcon={PlusIcon} label="Create deck" />}
                             />
                         ),
                     },

@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@heroui/react"
-import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
@@ -50,17 +50,24 @@ export const FloatingActionButton = ({
     classNames,
 }: FloatingActionButtonProps) => {
     return (
-        <Button
-            iconOnly
-            variant="primary"
-            ariaLabel={ariaLabel}
-            onPress={onPress}
-            icon={Icon ? <Icon /> : undefined}
-            isSkeleton={isSkeleton}
+        <div
             className={cn(
-                "fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40 shadow-lg",
+                "fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40",
                 classNames,
             )}
-        />
+        >
+            <Button
+                isIconOnly
+                variant="primary"
+                ariaLabel={ariaLabel}
+                onPress={onPress}
+                // `icon` is optional (the "icon unset" state is a bare circle); the atom
+                // renders no glyph when `prefixIcon` is undefined (guarded), so the cast
+                // only bridges the isIconOnly type which demands a definite component.
+                prefixIcon={Icon as IconComponent}
+                isSkeleton={isSkeleton}
+                isElevated
+            />
+        </div>
     )
 }

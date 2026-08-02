@@ -86,7 +86,7 @@ export const Default: Story = {
                 states={[
                     {
                         name: "byline + body components",
-                        why: "Both seams (avatar↔column, byline↔body) are `gap={2}` — a deliberate denser standalone treatment (teacher, 2026-07-29), not a `src`-fidelity port.",
+                        why: "Both seams (avatar↔column, byline↔body) are `gap={2}` — a deliberate denser standalone treatment, not a `src`-fidelity port.",
                         code: `<IdentityContentRow avatarName="Minh Anh" avatarSeed="u1" byline={Byline} body={CommentBody} />`,
                         render: (
                             <IdentityContentRow

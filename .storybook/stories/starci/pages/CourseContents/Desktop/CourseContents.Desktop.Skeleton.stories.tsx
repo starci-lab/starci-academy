@@ -19,5 +19,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ isSkeleton: true, leaf: "Prop `isSkeleton`", reason: "The resting shape of the whole screen. Every tier owns a leaf for this prop (teacher, 2026-07-27): the flag flows down and each block DRAWS its own resting shape, so the pixels here are drawn by the components themselves, not by different data." }),
+    render: () => deviceLeaf({ isSkeleton: true, leaf: "Prop `isSkeleton`", reason: "The resting shape of the whole screen. Every tier owns a leaf for this prop: the flag flows down and each block DRAWS its own resting shape, so the pixels here are drawn by the components themselves, not by different data." }),
 }

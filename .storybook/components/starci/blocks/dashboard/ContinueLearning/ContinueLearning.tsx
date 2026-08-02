@@ -119,10 +119,8 @@ const ContinueLearning = ({
                     ),
 
                 }}
-
-            >
-                <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} />
-            </AsyncContent>
+                content={<Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} />}
+            />
         </div>
     )
 }

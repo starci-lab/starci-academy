@@ -81,7 +81,7 @@ export interface InlineIconLabelProps {
      */
     icon: TypographyIcon
     /** The inline label text, rendered through `Typography`. Omit only while `isSkeleton`. */
-    children?: string
+    label?: string
     /** Semantic tone colouring icon + text. Omit → foreground (inherits currentColor). */
     tone?: InlineIconLabelTone
     /** Text scale (icon follows). Defaults to `"xs"`. */
@@ -105,7 +105,7 @@ export interface InlineIconLabelProps {
 /**
  * InlineIconLabel renders a leading icon beside an inline text label as one unit.
  * The composite OWNS the icon size (per the text scale) and the tone colour; the
- * caller passes the icon bare and the label as children.
+ * caller passes the icon bare and the label as a string.
  *
  * @param props - {@link InlineIconLabelProps}
  */
@@ -114,7 +114,7 @@ export const meta = { tier: "composite", name: "InlineIconLabel" } as const
 
 export const InlineIconLabel = ({
     icon: Icon,
-    children,
+    label,
     tone,
     size = "xs",
     truncate = false,
@@ -164,7 +164,7 @@ export const InlineIconLabel = ({
                 classNames={isSkeleton ? [skeletonWidth] : undefined}
                 truncate={truncate}
                 isSkeleton={isSkeleton}
-                text={children}
+                text={label}
             />
         </span>
     )

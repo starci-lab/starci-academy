@@ -146,10 +146,8 @@ const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
                 tone="default"
                 size="xs"
                 isSkeleton={isSkeleton}
-
-            >
-                {attempt?.processedAtLabel ?? ""}
-            </InlineIconLabel>
+                label={attempt?.processedAtLabel ?? ""}
+            />
         </>
     )
 

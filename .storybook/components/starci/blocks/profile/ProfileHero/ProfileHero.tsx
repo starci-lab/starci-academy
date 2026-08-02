@@ -454,10 +454,8 @@ const ProfileHero = ({
                 icon={CalendarBlankIcon}
                 tone="default"
                 isSkeleton={isSkeleton}
-
-            >
-                {isSkeleton ? undefined : `Joined ${formatJoinedDate(joinedAt)}`}
-            </InlineIconLabel>
+                label={isSkeleton ? undefined : `Joined ${formatJoinedDate(joinedAt)}`}
+            />
         </>
     )
 
@@ -499,10 +497,8 @@ const ProfileHero = ({
                                         <InlineIconLabel
                                             icon={MapPinIcon}
                                             isSkeleton={isSkeleton}
-
-                                        >
-                                            {location}
-                                        </InlineIconLabel>
+                                            label={location}
+                                        />
                                     ),
                                 },
                             ]

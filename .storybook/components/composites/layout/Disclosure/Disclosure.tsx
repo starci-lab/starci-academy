@@ -10,7 +10,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * `Disclosure.*` — the collapsible frame namespace.
  *
  * `.Base` is a wrapper frame: `title` names the trigger slot and `body` names the
- * revealed region (`children` = shorthand for `body`). It reveals ONE region, not
+ * revealed region. It reveals ONE region, not
  * a repeating list, so there is no `items` member — a multi-panel accordion is a
  * different frame (`SurfaceCardAccordion`, items-driven). Namespace only — no bare
  * component export.
@@ -37,12 +37,10 @@ export interface DisclosureBaseProps {
     /**
      * Content revealed under the trigger while expanded, as a COMPONENT
      * reference (COMPOSITE-8) — the composite calls it itself so it can
-     * forward `isSkeleton`, never an already-built node. Equivalent to
-     * `children`; wins over it when both are passed.
+     * forward `isSkeleton`, never an already-built node.
      */
     body?: ComponentTypeWithSkeleton
     /** Shorthand for {@link DisclosureBaseProps.body} — same component-reference contract. */
-    children?: ComponentTypeWithSkeleton
     /**
      * Controlled expanded state. Omit to run uncontrolled (see
      * {@link DisclosureBaseProps.defaultOpen}) — same dual mode as `Switch`.
@@ -82,7 +80,6 @@ export interface DisclosureBaseProps {
 const Base = ({
     title,
     body,
-    children,
     isOpen,
     onOpenChange,
     defaultOpen = false,
@@ -93,7 +90,7 @@ const Base = ({
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
     const isControlled = isOpen !== undefined
     const open = isControlled ? isOpen : uncontrolledOpen
-    const Content = body ?? children
+    const Content = body
 
     const toggle = () => {
         if (isDisabled || isSkeleton) return
@@ -150,6 +147,6 @@ const Base = ({
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Base` | `title` (trigger) + `body` slot (+ `children` = body) |
+ * | `.Base` | `title` (trigger) + `body` slot |
  */
 export { Base as Disclosure }

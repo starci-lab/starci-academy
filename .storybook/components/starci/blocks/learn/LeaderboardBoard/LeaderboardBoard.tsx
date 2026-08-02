@@ -505,22 +505,24 @@ const LeaderboardBoard = ({
                 onRetry,
                 retryLabel: "Try again",
             }}
+            content={(
+                <>
+                    {/* Only the CONTENT branch celebrates — there is nothing worth confetting
+                        over loading chrome, an empty board, or an error message. */}
+                    <Confetti celebrateKey={celebrateKey} />
+                    <Board
+                        standing={standing}
+                        podiumEntries={podiumEntries}
+                        rows={rows}
+                        selfRow={selfRow}
+                        hiddenBetweenCount={hiddenBetweenCount}
+                        meLabel={meLabel}
+                        isSkeleton={isSkeleton}
 
-        >
-            {/* Only the CONTENT branch celebrates — there is nothing worth confetting
-                over loading chrome, an empty board, or an error message. */}
-            <Confetti celebrateKey={celebrateKey} />
-            <Board
-                standing={standing}
-                podiumEntries={podiumEntries}
-                rows={rows}
-                selfRow={selfRow}
-                hiddenBetweenCount={hiddenBetweenCount}
-                meLabel={meLabel}
-                isSkeleton={isSkeleton}
-
-            />
-        </AsyncContent>
+                    />
+                </>
+            )}
+        />
     </div>
 )
 

@@ -42,9 +42,8 @@ const LeftOnlyDemo = () => {
                 ariaLabel: "Switch tab",
                 onSelectionChange: (k) => setKey(String(k)),
             }}
-        >
-            <Typography size="sm" color="muted" text={key === "overview" ? "Overview content." : "Activity content."} />
-        </DoubleTabsCard>
+            body={<Typography size="sm" color="muted" text={key === "overview" ? "Overview content." : "Activity content."} />}
+        />
     )
 }
 
@@ -74,9 +73,8 @@ const TwoGroupsDemo = () => {
                 onSelectionChange: (k) => setRight(String(k)),
             }}
             rightTabsNeutral
-        >
-            <Typography size="sm" color="muted" text={`${left} · ${right}`} />
-        </DoubleTabsCard>
+            body={<Typography size="sm" color="muted" text={`${left} · ${right}`} />}
+        />
     )
 }
 
@@ -160,9 +158,8 @@ export const Nested: Story = {
                                     ariaLabel: "Switch tab",
                                     onSelectionChange: () => {},
                                 }}
-                            >
-                                <Typography size="sm" color="muted" text="Overview content." />
-                            </DoubleTabsCard>
+                                body={<Typography size="sm" color="muted" text="Overview content." />}
+                            />
                         ),
                     },
                 ]}

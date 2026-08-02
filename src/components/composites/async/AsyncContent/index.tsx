@@ -22,14 +22,13 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  *
  * | Member | Role | Content channel |
  * |---|---|---|
- * | `.Base`  | the STATE-SWITCH frame (4-branch switch) | slot `content` (+ `children` = shorthand), `skeleton`, `emptyContent`, `errorContent` |
+ * | `.Base`  | the STATE-SWITCH frame (4-branch switch) | slot `content`, `skeleton`, `emptyContent`, `errorContent` |
  * | `.Empty` | the EMPTY-MESSAGE frame  | props `title`/`description`/`action` |
  * | `.Error` | the ERROR-MESSAGE frame   | props `title`/`description`/`action` |
  *
  * FRAME API LAW (§13b):
- * - `.Base` is a WRAPPER frame → the named slot (`content`) is the main path,
- *   `children` is still allowed (= `content` shorthand); the other three
- *   branches each get their own named slot (`skeleton` · `emptyContent` ·
+ * - `.Base` is a WRAPPER frame → the named slot (`content`) is the main path;
+ *   the other three branches each get their own named slot (`skeleton` · `emptyContent` ·
  *   `errorContent`).
  * - `.Empty`/`.Error` are props-only MESSAGE frames — NO `children`: they don't
  *   wrap content, they LAY OUT a message (icon · title · description · action)
@@ -153,11 +152,9 @@ export interface AsyncContentBaseProps {
     errorContent?: AsyncContentErrorProps
     /**
      * The CONTENT branch slot — data has finished loading. The wrapper frame's
-     * main path; `children` is the shorthand. `content` wins when both are passed.
+     * main path.
      */
     content?: ReactNode
-    /** Shorthand for {@link AsyncContentBaseProps.content}. */
-    children?: ReactNode
     /** Dev/spec: overlay an anatomy annotation around the branch currently rendering. */
 }
 
@@ -180,8 +177,7 @@ const Base = ({
     emptyContent,
     error,
     errorContent,
-    content,
-    children}: AsyncContentBaseProps) => {
+    content}: AsyncContentBaseProps) => {
     let branch: React.ReactNode
     if (error && errorContent) {
         branch = <ErrorMessage {...errorContent} />
@@ -190,7 +186,7 @@ const Base = ({
     } else if (isEmpty) {
         branch = emptyContent ? <Empty {...emptyContent} /> : null
     } else {
-        branch = content ?? children
+        branch = content
     }
     return <>{branch}</>
 }
@@ -261,7 +257,7 @@ const ErrorMessage = (props: AsyncContentErrorProps) => {
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Base`  | `content` (+ `children` = shorthand) · `skeleton` · `emptyContent` · `errorContent` |
+ * | `.Base`  | `content` · `skeleton` · `emptyContent` · `errorContent` |
  * | `.Empty` | props-only (`title`/`description`/`icon`/`action`) |
  * | `.Error` | props-only (`title`/`description`/`icon`/`action`) |
  */

@@ -160,9 +160,9 @@ export const FullWidthAction: Story = {
                         render: (
                             <Screen
                                 bar={(
-                                    <PageBottomBar>
-                                        {StartLearningAction}
-                                    </PageBottomBar>
+                                    <PageBottomBar
+                                        body={StartLearningAction}
+                                    />
                                 )}
                             />
                         ),

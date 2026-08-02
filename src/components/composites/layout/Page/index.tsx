@@ -16,8 +16,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
  *
  * FRAME API LAW (§13b):
  * - `PageBottomBar` is a WRAPPER frame → named slots `body`/`actions` (a bar
- *   is a horizontal row, so `header`/`footer` would be a lie); `children`
- *   stays as shorthand for `body`.
+ *   is a horizontal row, so `header`/`footer` would be a lie).
  * - `PageHeader` is NOT a generic wrapper — it already owns semantic slots
  *   (`breadcrumb`/`title`/`description`/`actions`/`meta`) and deliberately
  *   takes no `children`.
@@ -231,7 +230,7 @@ export interface PageBottomBarProps {
     /**
      * Leading content of the bar — typically a price — as a COMPONENT
      * reference (COMPOSITE-8): the frame calls it itself so it can forward
-     * `isSkeleton`. Equivalent to `children`; wins over it when both are passed.
+     * `isSkeleton`.
      */
     body?: ComponentTypeWithSkeleton
     /**
@@ -242,7 +241,6 @@ export interface PageBottomBarProps {
      */
     actions?: ComponentTypeWithSkeleton
     /** Shorthand for {@link PageBottomBarProps.body} — same component-reference contract. */
-    children?: ComponentTypeWithSkeleton
     /**
      * `true` → forwarded into whichever of `body`/`actions` renders, so a bar
      * whose price/CTA is not known yet (e.g. still loading enrollment status)
@@ -271,10 +269,9 @@ export interface PageBottomBarProps {
 const BottomBar = ({
     body,
     actions,
-    children,
     isSkeleton = false,
     classNames}: PageBottomBarProps) => {
-    const Main = body ?? children
+    const Main = body
     const Actions = actions
     const chrome = "fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-6 py-3"
 
@@ -314,7 +311,7 @@ const BottomBar = ({
  * | Member | Content channel |
  * |---|---|
  * | `.Header` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
- * | `.BottomBar` | `body`/`actions` slots (+ `children` = body) |
+ * | `.BottomBar` | `body`/`actions` slots |
  *
  * `.Container` moved to `Container` (`@sb-components/frames/Container/Container`)
  * on 2026-07-26 — see the history note at the top of this file.

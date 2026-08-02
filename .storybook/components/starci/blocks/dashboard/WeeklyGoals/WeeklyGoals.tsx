@@ -258,9 +258,7 @@ const WeeklyGoals = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-
-            >
-                {data ? (
+                content={data ? (
                     <Content
                         items={data.items}
                         composite={data.composite}
@@ -270,7 +268,7 @@ const WeeklyGoals = ({
 
                     />
                 ) : null}
-            </AsyncContent>
+            />
         )}
     />
 )

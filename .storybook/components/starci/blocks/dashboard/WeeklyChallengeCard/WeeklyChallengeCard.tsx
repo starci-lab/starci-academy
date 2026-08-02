@@ -248,12 +248,10 @@ const WeeklyChallengeCard = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-
-            >
-                {data ? (
+                content={data ? (
                     <Content data={data} isSkeleton={isSkeleton} />
                 ) : null}
-            </AsyncContent>
+            />
         )}
     />
 )

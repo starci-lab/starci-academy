@@ -36,7 +36,7 @@ export interface DoubleTabsCardProps {
     /** `"md"` (default, full-width) or `"sm"` (compact, hugs content). */
     tabSize?: "sm" | "md"
     /** Card body BELOW the tab row. */
-    children?: ReactNode
+    body?: ReactNode
     /** Card face: `"surface"` (default, shadow) or `"nested"` (border only). */
     cardVariant?: SurfaceCardVariant
     /** Padding around the body, §10c scale. Default `{4}` (`SurfaceCard`'s own default). */
@@ -62,7 +62,7 @@ const DoubleTabsCard = ({
     rightTabsNeutral,
     variant = "secondary",
     tabSize = "md",
-    children,
+    body,
     cardVariant,
     padding,
     classNames,
@@ -86,7 +86,7 @@ const DoubleTabsCard = ({
 
             />
         )}
-        body={() => children}
+        body={() => body}
     />
 )
 

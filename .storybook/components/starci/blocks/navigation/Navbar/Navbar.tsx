@@ -407,9 +407,8 @@ const Navbar = ({
                     onRetry: notifications.onRetry,
                     retryLabel: "Try again",
                 }}
-            >
-                <StackV gap={1} className="max-h-[420px] overflow-y-auto" body={notificationRows} />
-            </AsyncContent>
+                content={<StackV gap={1} className="max-h-[420px] overflow-y-auto" body={notificationRows} />}
+            />
             <Button
                 variant="ghost"
                 size="sm"
@@ -432,8 +431,7 @@ const Navbar = ({
         <AsyncContent
             isLoading={account.isLoading}
             skeleton={<UserCell username="" isSkeleton />}
-        >
-            {account.isAuthed && account.user ? (
+            content={account.isAuthed && account.user ? (
                 <UserCell
                     username={account.user.username}
                     avatar={account.user.avatarUrl}
@@ -442,7 +440,7 @@ const Navbar = ({
             ) : (
                 <StackH gap={3} body={guestAccountRow} />
             )}
-        </AsyncContent>
+        />
     )
 
     // `InputButtonLike.suffix` is now a component reference (COMPOSITE-4/8), so the

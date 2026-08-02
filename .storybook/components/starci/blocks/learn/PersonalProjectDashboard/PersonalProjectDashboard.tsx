@@ -341,19 +341,19 @@ const PersonalProjectDashboard = ({
             }
             isEmpty={isEmpty}
             emptyContent={EMPTY_STATE}
+            content={(
+                <Body
+                    currentTask={currentTask}
+                    onContinue={onContinue}
+                    milestoneLabel={milestoneLabel}
+                    tasks={tasks}
+                    onSelectTask={onSelectTask}
+                    stats={stats}
+                    isSkeleton={false}
 
-        >
-            <Body
-                currentTask={currentTask}
-                onContinue={onContinue}
-                milestoneLabel={milestoneLabel}
-                tasks={tasks}
-                onSelectTask={onSelectTask}
-                stats={stats}
-                isSkeleton={false}
-
-            />
-        </AsyncContent>
+                />
+            )}
+        />
     )
 
     return (

@@ -82,11 +82,9 @@ export const Default: Story = {
                         {
                             name: "isSkeleton = false (default)",
                             why: "The sweep renders at full emphasis behind the wrapped ProfileCard, drawing the reader's eye to this one card on the surface. Reach for this on the single card that genuinely needs to stand out — a second highlighted card on the same screen cancels this one's emphasis out.",
-                            code: "<HighlightCard><ProfileCard /></HighlightCard>",
+                            code: "<HighlightCard body={<ProfileCard />} />",
                             render: (
-                                <HighlightCard>
-                                    <ProfileCard />
-                                </HighlightCard>
+                                <HighlightCard body={<ProfileCard />} />
                             ),
                         },
                     ]}
@@ -111,21 +109,17 @@ export const Skeleton: Story = {
                         {
                             name: "isSkeleton = false",
                             why: "The sweep renders behind the real ProfileCard, the shape isSkeleton mutes below.",
-                            code: "<HighlightCard><ProfileCard /></HighlightCard>",
+                            code: "<HighlightCard body={<ProfileCard />} />",
                             render: (
-                                <HighlightCard>
-                                    <ProfileCard />
-                                </HighlightCard>
+                                <HighlightCard body={<ProfileCard />} />
                             ),
                         },
                         {
                             name: "isSkeleton = true",
                             why: "No sweep layer mounts at all — only the wrapped ProfileCardSkeleton's own shimmer shows, sitting in the frame the sweep would otherwise wrap. False emphasis on a loading card would tell the reader something is ready to look at when nothing is.",
-                            code: "<HighlightCard isSkeleton><ProfileCardSkeleton /></HighlightCard>",
+                            code: "<HighlightCard isSkeleton body={<ProfileCardSkeleton />} />",
                             render: (
-                                <HighlightCard isSkeleton>
-                                    <ProfileCardSkeleton />
-                                </HighlightCard>
+                                <HighlightCard isSkeleton body={<ProfileCardSkeleton />} />
                             ),
                         },
                     ]}

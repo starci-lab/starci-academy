@@ -227,10 +227,8 @@ const LessonVideoModal = ({
                                 tone="default"
                                 size="sm"
                                 isSkeleton={isLoading}
-
-                            >
-                                {formatDuration(video?.durationMs ?? 0)}
-                            </InlineIconLabel>
+                                label={formatDuration(video?.durationMs ?? 0)}
+                            />
                         ),
                     },
                     {

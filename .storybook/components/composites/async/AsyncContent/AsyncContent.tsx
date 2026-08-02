@@ -18,11 +18,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  *
  * | Member | Role | Content channel |
  * |---|---|---|
- * | `.Base`  | the state-switch frame (4-branch switch) | slot `content` (+ `children` shorthand), `skeleton`, `emptyContent`, `errorContent` |
+ * | `.Base`  | the state-switch frame (4-branch switch) | slot `content`, `skeleton`, `emptyContent`, `errorContent` |
  * | `.Empty` | the empty-message frame | props `title`/`description`/`action` |
  * | `.Error` | the error-message frame | props `title`/`description`/`action` |
  *
- * `.Base` is a wrapper frame: `content` is the main path (`children` = shorthand),
+ * `.Base` is a wrapper frame: `content` is the main path,
  * the other three branches each get their own named slot. `.Empty`/`.Error` are
  * props-only message frames with NO `children` — they lay out an
  * icon/title/description/action message the caller passes in, carrying no domain
@@ -136,11 +136,9 @@ export interface AsyncContentBaseProps {
     errorContent?: AsyncContentErrorProps
     /**
      * The CONTENT branch slot — data has finished loading. The wrapper frame's
-     * main path; `children` is the shorthand. `content` wins when both are passed.
+     * main path.
      */
     content?: ReactNode
-    /** Shorthand for {@link AsyncContentBaseProps.content}. */
-    children?: ReactNode
     /** Dev/spec: overlay an anatomy annotation around the branch currently rendering. */
 }
 
@@ -164,7 +162,6 @@ const Base = ({
     error,
     errorContent,
     content,
-    children,
 }: AsyncContentBaseProps) => {
     let branch: React.ReactNode
     if (error && errorContent) {
@@ -174,7 +171,7 @@ const Base = ({
     } else if (isEmpty) {
         branch = emptyContent ? <Empty {...emptyContent} /> : null
     } else {
-        branch = content ?? children
+        branch = content
     }
     // `branch == null` = the SILENT empty branch: nothing rendered, so there is no
     // node to annotate — skip the overlay instead of badging an empty box.
@@ -249,7 +246,7 @@ const ErrorMessage = (props: AsyncContentErrorProps) => {
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Base`  | `content` (+ `children` = shorthand) · `skeleton` · `emptyContent` · `errorContent` |
+ * | `.Base`  | `content` · `skeleton` · `emptyContent` · `errorContent` |
  * | `.Empty` | props-only (`title`/`description`/`icon`/`action`) |
  * | `.Error` | props-only (`title`/`description`/`icon`/`action`) |
  */

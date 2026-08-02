@@ -17,15 +17,15 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * TODO: swap for the SectionCard local when the cards category ports it.
  */
 const SectionCard = ({
-    children,
+    body,
     classNames,
 }: {
-    children: React.ReactNode
+    body: React.ReactNode
     classNames?: Array<AllowedClassName>
 }) => (
     <Card className={cn(classNames)} data-tier="composite" data-component="MetricCard">
         <CardContent>
-            <StackV gap={4} body={children} />
+            <StackV gap={4} body={body} />
         </CardContent>
     </Card>
 )
@@ -98,7 +98,7 @@ export const MetricCard = ({
 }: MetricCardProps) => {
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
-        <SectionCard classNames={classNames}>
+        <SectionCard classNames={classNames} body={
             <StackV
                 gap={3}
                 body={
@@ -118,6 +118,6 @@ export const MetricCard = ({
                     </>
                 }
             />
-        </SectionCard>
+        } />
     )
 }

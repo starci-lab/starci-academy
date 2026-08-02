@@ -134,10 +134,8 @@ const SubmissionScoreCard = ({
                         tone="default"
                         size="xs"
                         isSkeleton={isSkeleton}
-
-                    >
-                        {`${gradedByLabel ?? "Graded by"} ${gradedByModel}`}
-                    </InlineIconLabel>
+                        label={`${gradedByLabel ?? "Graded by"} ${gradedByModel}`}
+                    />
                     {modelCategory != null ? (
                         <EnumChip
                             value={modelCategory}

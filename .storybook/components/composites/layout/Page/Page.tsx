@@ -11,8 +11,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * above the content and pinned under it). Members are `PageHeader` and
  * `PageBottomBar`.
  *
- * `PageBottomBar` is a wrapper frame with named slots `body`/`actions` (`children`
- * = shorthand for `body`). `PageHeader` is not a generic wrapper — it owns semantic
+ * `PageBottomBar` is a wrapper frame with named slots `body`/`actions`. `PageHeader` is not a generic wrapper — it owns semantic
  * slots (`breadcrumb`/`title`/`description`/`actions`/`meta`) and takes no
  * `children`. No repeating list, so no `items` member. Namespace only — no bare
  * component export.
@@ -217,7 +216,7 @@ export interface PageBottomBarProps {
     /**
      * Leading content of the bar — typically a price — as a COMPONENT
      * reference (COMPOSITE-8): the frame calls it itself so it can forward
-     * `isSkeleton`. Equivalent to `children`; wins over it when both are passed.
+     * `isSkeleton`.
      */
     body?: ComponentTypeWithSkeleton
     /**
@@ -228,7 +227,6 @@ export interface PageBottomBarProps {
      */
     actions?: ComponentTypeWithSkeleton
     /** Shorthand for {@link PageBottomBarProps.body} — same component-reference contract. */
-    children?: ComponentTypeWithSkeleton
     /**
      * `true` → forwarded into whichever of `body`/`actions` renders, so a bar
      * whose price/CTA is not known yet (e.g. still loading enrollment status)
@@ -261,11 +259,10 @@ export interface PageBottomBarProps {
 const BottomBar = ({
     body,
     actions,
-    children,
     isSkeleton = false,
     classNames,
 }: PageBottomBarProps) => {
-    const Main = body ?? children
+    const Main = body
     const Actions = actions
     const chrome = "fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-6 py-3"
 
@@ -305,6 +302,6 @@ const BottomBar = ({
  * | Member | Content channel |
  * |---|---|
  * | `.Header` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
- * | `.BottomBar` | `body`/`actions` slots (+ `children` = body) |
+ * | `.BottomBar` | `body`/`actions` slots |
  */
 export { Header as PageHeader, BottomBar as PageBottomBar }

@@ -36,7 +36,7 @@ export const Default: Story = {
                         name: "no tone, size = \"xs\" (default), truncate = false",
                         why: "Icon and text inherit the ambient foreground colour, since no tone is set — the shape a plain tab label takes, where the row must not compete with a nearby tone of its own.",
                         code: "<InlineIconLabel icon={SparkleIcon}>Overview</InlineIconLabel>",
-                        render: <InlineIconLabel icon={SparkleIcon}>Overview</InlineIconLabel>,
+                        render: <InlineIconLabel icon={SparkleIcon} label="Overview" />,
                     },
                 ]}
             />
@@ -59,19 +59,19 @@ export const IconProp: Story = {
                         name: "icon = UsersIcon",
                         why: "A people glyph leads a learner count, the most common lane this composite fills — a number that needs a quick visual cue for what it is counting.",
                         code: "<InlineIconLabel icon={UsersIcon} tone=\"default\">1,284 learners</InlineIconLabel>",
-                        render: <InlineIconLabel icon={UsersIcon} tone="default">1,284 learners</InlineIconLabel>,
+                        render: <InlineIconLabel icon={UsersIcon} tone="default" label="1,284 learners" />,
                     },
                     {
                         name: "icon = ChatCircleIcon",
                         why: "Swapping the icon component swaps only the glyph, nothing about the row's gap or text scale — this is how a comment count gets its own icon without a second component to keep in sync.",
                         code: "<InlineIconLabel icon={ChatCircleIcon} tone=\"default\">128 comments</InlineIconLabel>",
-                        render: <InlineIconLabel icon={ChatCircleIcon} tone="default">128 comments</InlineIconLabel>,
+                        render: <InlineIconLabel icon={ChatCircleIcon} tone="default" label="128 comments" />,
                     },
                     {
                         name: "icon = SparkleIcon",
                         why: "A sparkle glyph reads as AI-produced wherever it leads a caption, the same icon this composite's own eyebrow lane already uses for a Graded-by-AI note.",
                         code: "<InlineIconLabel icon={SparkleIcon} tone=\"default\">Graded by AI</InlineIconLabel>",
-                        render: <InlineIconLabel icon={SparkleIcon} tone="default">Graded by AI</InlineIconLabel>,
+                        render: <InlineIconLabel icon={SparkleIcon} tone="default" label="Graded by AI" />,
                     },
                 ]}
             />
@@ -94,43 +94,43 @@ export const Tones: Story = {
                         name: "tone = undefined (foreground, default)",
                         why: "Icon and text inherit whatever colour the surrounding text already has — the shape for a plain tab label where the row must not compete with a nearby tone.",
                         code: "<InlineIconLabel icon={SparkleIcon}>Overview</InlineIconLabel>",
-                        render: <InlineIconLabel icon={SparkleIcon}>Overview</InlineIconLabel>,
+                        render: <InlineIconLabel icon={SparkleIcon} label="Overview" />,
                     },
                     {
                         name: "tone = \"default\"",
                         why: "Icon and text both take the neutral muted colour, for an inline note that should read as secondary without any semantic charge — a count or a plain caption.",
                         code: "<InlineIconLabel icon={UsersIcon} tone=\"default\">1,284 learners</InlineIconLabel>",
-                        render: <InlineIconLabel icon={UsersIcon} tone="default">1,284 learners</InlineIconLabel>,
+                        render: <InlineIconLabel icon={UsersIcon} tone="default" label="1,284 learners" />,
                     },
                     {
                         name: "tone = \"accent\"",
                         why: "Icon and text take the brand accent colour, for a caption the composite wants to draw a little attention to without alarming the reader.",
                         code: "<InlineIconLabel icon={SparkleIcon} tone=\"accent\">Graded by Claude</InlineIconLabel>",
-                        render: <InlineIconLabel icon={SparkleIcon} tone="accent">Graded by Claude</InlineIconLabel>,
+                        render: <InlineIconLabel icon={SparkleIcon} tone="accent" label="Graded by Claude" />,
                     },
                     {
                         name: "tone = \"success\"",
                         why: "Icon and text take the success colour, for a caption reporting something completed or passed, e.g. grading finishing without issue.",
                         code: "<InlineIconLabel icon={SparkleIcon} tone=\"success\">Grading complete</InlineIconLabel>",
-                        render: <InlineIconLabel icon={SparkleIcon} tone="success">Grading complete</InlineIconLabel>,
+                        render: <InlineIconLabel icon={SparkleIcon} tone="success" label="Grading complete" />,
                     },
                     {
                         name: "tone = \"warning\"",
                         why: "Icon and text take the warning colour, for a caption that wants the reader's attention before a deadline or a limit closes in.",
                         code: "<InlineIconLabel icon={WarningCircleIcon} tone=\"warning\">3 spots left — price is about to rise</InlineIconLabel>",
-                        render: <InlineIconLabel icon={WarningCircleIcon} tone="warning">3 spots left — price is about to rise</InlineIconLabel>,
+                        render: <InlineIconLabel icon={WarningCircleIcon} tone="warning" label="3 spots left — price is about to rise" />,
                     },
                     {
                         name: "tone = \"danger\"",
                         why: "Icon and text take the danger colour, for a caption reporting something that has already gone wrong, e.g. a missed deadline.",
                         code: "<InlineIconLabel icon={WarningCircleIcon} tone=\"danger\">Submission deadline passed</InlineIconLabel>",
-                        render: <InlineIconLabel icon={WarningCircleIcon} tone="danger">Submission deadline passed</InlineIconLabel>,
+                        render: <InlineIconLabel icon={WarningCircleIcon} tone="danger" label="Submission deadline passed" />,
                     },
                     {
                         name: "tone = \"info\"",
                         why: "Icon and text take the info colour, for a caption surfacing a neutral fact worth a small amount of attention, without the weight of a warning or an error.",
                         code: "<InlineIconLabel icon={InfoIcon} tone=\"info\">New grading model available</InlineIconLabel>",
-                        render: <InlineIconLabel icon={InfoIcon} tone="info">New grading model available</InlineIconLabel>,
+                        render: <InlineIconLabel icon={InfoIcon} tone="info" label="New grading model available" />,
                     },
                 ]}
             />
@@ -153,13 +153,13 @@ export const Sizes: Story = {
                         name: "size = \"xs\" (default)",
                         why: "The label renders at body-xs, the tightest inline scale, for a dense caption row such as a count sitting under a card title.",
                         code: "<InlineIconLabel icon={ChatCircleIcon} tone=\"default\" size=\"xs\">128 comments</InlineIconLabel>",
-                        render: <InlineIconLabel icon={ChatCircleIcon} tone="default" size="xs">128 comments</InlineIconLabel>,
+                        render: <InlineIconLabel icon={ChatCircleIcon} tone="default" size="xs" label="128 comments" />,
                     },
                     {
                         name: "size = \"sm\"",
                         why: "The label steps up to body-sm while the icon stays the same size-4 box, for a caption that needs to read a little larger without growing its glyph out of step.",
                         code: "<InlineIconLabel icon={ChatCircleIcon} tone=\"default\" size=\"sm\">128 comments</InlineIconLabel>",
-                        render: <InlineIconLabel icon={ChatCircleIcon} tone="default" size="sm">128 comments</InlineIconLabel>,
+                        render: <InlineIconLabel icon={ChatCircleIcon} tone="default" size="sm" label="128 comments" />,
                     },
                 ]}
             />
@@ -184,7 +184,7 @@ export const Truncate: Story = {
                         code: "<InlineIconLabel icon={SparkleIcon} tone=\"default\">A very long label gets clipped at the end of the line</InlineIconLabel>",
                         render: (
                             <div data-tier="fixture" className="w-44 rounded-2xl border border-separator p-3">
-                                <InlineIconLabel icon={SparkleIcon} tone="default">A very long label gets clipped at the end of the line</InlineIconLabel>
+                                <InlineIconLabel icon={SparkleIcon} tone="default" label="A very long label gets clipped at the end of the line" />
                             </div>
                         ),
                     },
@@ -194,7 +194,7 @@ export const Truncate: Story = {
                         code: "<InlineIconLabel icon={SparkleIcon} tone=\"default\" truncate>A very long label gets clipped at the end of the line</InlineIconLabel>",
                         render: (
                             <div data-tier="fixture" className="w-44 rounded-2xl border border-separator p-3">
-                                <InlineIconLabel icon={SparkleIcon} tone="default" truncate>A very long label gets clipped at the end of the line</InlineIconLabel>
+                                <InlineIconLabel icon={SparkleIcon} tone="default" truncate label="A very long label gets clipped at the end of the line" />
                             </div>
                         ),
                     },
@@ -219,7 +219,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton = false (default)",
                         why: "The real icon and label render, tone applied to both — the shape isSkeleton mirrors.",
                         code: "<InlineIconLabel icon={SparkleIcon} tone=\"default\">Graded by AI</InlineIconLabel>",
-                        render: <InlineIconLabel icon={SparkleIcon} tone="default">Graded by AI</InlineIconLabel>,
+                        render: <InlineIconLabel icon={SparkleIcon} tone="default" label="Graded by AI" />,
                     },
                     {
                         name: "isSkeleton = true",

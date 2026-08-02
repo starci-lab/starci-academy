@@ -153,15 +153,13 @@ const DailyQuest = ({
                     retryLabel: "Retry",
 
                 }}
-
-            >
-                <StackV gap={4} body={
+                content={<StackV gap={4} body={
                     <>
                         <SurfaceCardCrossList items={items} />
                         {claimSlot}
                     </>
-                } />
-            </AsyncContent>
+                } />}
+            />
         </div>
     )
 }

@@ -210,9 +210,7 @@ const JobReadinessWidget = ({
                     onRetry,
                     retryLabel: "Retry",
                 }}
-
-            >
-                {track ? (
+                content={track ? (
                     <Content
                         codingPercentile={codingPercentile}
                         track={track}
@@ -220,7 +218,7 @@ const JobReadinessWidget = ({
 
                     />
                 ) : null}
-            </AsyncContent>
+            />
         )}
     />
 )

@@ -13,8 +13,8 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 /** Props for {@link HighlightCard}. */
 export interface HighlightCardProps {
     /** The wrapped card (e.g. a `SectionCard`/`Card`) — `HighlightCard` only adds the sweeping-light layer, it renders no card chrome of its own. */
-    children: React.ReactNode
-    /** `true` → MUTE the sweep layer (no `highlight-card-sweep` behind children). Use while the wrapped content is still loading — a skeleton has no "verdict" yet, so it shouldn't read as emphasized. `children` still renders as passed (e.g. its own skeleton state). */
+    body: React.ReactNode
+    /** `true` → MUTE the sweep layer (no `highlight-card-sweep` behind the body). Use while the wrapped content is still loading — a skeleton has no "verdict" yet, so it shouldn't read as emphasized. The body still renders as passed (e.g. its own skeleton state). */
     isSkeleton?: boolean
     /**
      * Where the wrapper sits inside its parent. Appearance is not passable — it is
@@ -35,13 +35,13 @@ export interface HighlightCardProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "HighlightCard" } as const
 
-export const HighlightCard = ({ children, isSkeleton = false, classNames}: HighlightCardProps) => (
+export const HighlightCard = ({ body, isSkeleton = false, classNames}: HighlightCardProps) => (
     <div
         className={cn("relative", classNames)}
         data-tier="composite"
         data-component="HighlightCard"
     >
         {!isSkeleton && <div aria-hidden className="highlight-card-sweep" />}
-        {children}
+        {body}
     </div>
 )

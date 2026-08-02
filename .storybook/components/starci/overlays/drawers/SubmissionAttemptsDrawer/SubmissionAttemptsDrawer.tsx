@@ -136,10 +136,8 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord) => {
                 icon={SparkleIcon}
                 tone="default"
                 size="xs"
-
-            >
-                {`Graded by ${attempt.gradedByModel}`}
-            </InlineIconLabel>
+                label={`Graded by ${attempt.gradedByModel}`}
+            />
             {attempt.modelCategory != null ? (
                 <EnumChip
                     value={attempt.modelCategory}

@@ -167,10 +167,8 @@ const GithubUrlField = ({
                             icon={AutosaveIcon}
                             tone={AUTOSAVE_TONE[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
                             size="xs"
-
-                        >
-                            {AUTOSAVE_LABEL[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
-                        </InlineIconLabel>
+                            label={AUTOSAVE_LABEL[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
+                        />
                     ) : null}
                 </>
             }
@@ -206,19 +204,15 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
                                 tone="default"
                                 size="xs"
                                 isSkeleton={isSkeleton}
-
-                            >
-                                {settingsSummary.langLabel}
-                            </InlineIconLabel>
+                                label={settingsSummary.langLabel}
+                            />
                             <InlineIconLabel
                                 icon={GitBranchIcon}
                                 tone="default"
                                 size="xs"
                                 isSkeleton={isSkeleton}
-
-                            >
-                                {settingsSummary.branch}
-                            </InlineIconLabel>
+                                label={settingsSummary.branch}
+                            />
                         </>
                     }
                 />
@@ -261,10 +255,8 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton 
                         tone="default"
                         size="xs"
                         isSkeleton={isSkeleton}
-
-                    >
-                        {aiStatusText}
-                    </InlineIconLabel>
+                        label={aiStatusText}
+                    />
                 ) : (
                     // Keeps the row's justify-between shape even with no status text to show.
                     <span />

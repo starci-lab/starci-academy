@@ -112,9 +112,7 @@ export const Content: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading={false} skeleton={<ProfileCardSkeleton />}>
-                                <ProfileCard />
-                            </AsyncContent>
+                            <AsyncContent isLoading={false} skeleton={<ProfileCardSkeleton />} content={<ProfileCard />} />
                         ),
                     },
                 ]}
@@ -171,9 +169,7 @@ export const Loading: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading skeleton={<ProfileCardSkeleton />}>
-                                <ProfileCard />
-                            </AsyncContent>
+                            <AsyncContent isLoading skeleton={<ProfileCardSkeleton />} content={<ProfileCard />} />
                         ),
                     },
                 ]}
@@ -211,10 +207,8 @@ export const Empty: Story = {
                                     description: "Related lessons will show up here once there are any.",
                                 }}
                                 skeleton={<ProfileCardSkeleton />}
-                               
-                            >
-                                <ProfileCard />
-                            </AsyncContent>
+                                content={<ProfileCard />}
+                            />
                         ),
                     },
                 ]}
@@ -242,9 +236,7 @@ export const EmptySilent: Story = {
     <ProfileCard />
 </AsyncContent>`,
                         render: (
-                            <AsyncContent isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />}>
-                                <ProfileCard />
-                            </AsyncContent>
+                            <AsyncContent isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />} content={<ProfileCard />} />
                         ),
                     },
                 ]}
@@ -284,10 +276,8 @@ export const Error: Story = {
                                     retryLabel: "Retry",
                                 }}
                                 skeleton={<ProfileCardSkeleton />}
-                               
-                            >
-                                <ProfileCard />
-                            </AsyncContent>
+                                content={<ProfileCard />}
+                            />
                         ),
                     },
                 ]}

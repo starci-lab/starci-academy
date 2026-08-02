@@ -23,8 +23,8 @@ import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/Diffi
 import { GithubTeamGate } from "@/components/features/auth/GithubTeamGate"
 import { LearnBreadcrumb } from "@/components/features/learn/shared/LearnBreadcrumb"
 import { CourseContentsSkeleton } from "./CourseContentsSkeleton"
-import { LearnNudges } from "./LearnNudges"
-import { TrialConversionStrip } from "./TrialConversionStrip"
+import { LearnNudges } from "@/components/blockv2/LearnNudges"
+import { TrialConversionStrip } from "@/components/blockv2/TrialConversionStrip"
 
 /** One lesson row on the "keep going" path — leading state icon · title · minutes-read · difficulty + premium-lock. */
 export interface CourseContentsLesson {

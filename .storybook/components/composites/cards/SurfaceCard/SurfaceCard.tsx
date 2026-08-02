@@ -612,7 +612,7 @@ const Nested = ({
                     <StackH
                         gap={3}
                         justify="between"
-                        pattern="content-row"
+                        principles={["content-row"]}
                         classNames={["min-w-0"]}
                         padding={{ x: 4, y: 3 }}
                         isSkeleton={isSkeleton}
@@ -936,7 +936,7 @@ const PressableGroup = ({
                 <Grid
                     columns={columns}
                     gap={gap}
-                    pattern="sibling-stack"
+                    principles={["sibling-stack"]}
                     items={items.map((item) => ({
                         key: item.key,
                         content: () => <PressableGroupSkeletonTile classNames={item.classNames} />,
@@ -960,7 +960,7 @@ const PressableGroup = ({
             <Grid
                 columns={columns}
                 gap={gap}
-                pattern="sibling-stack"
+                principles={["sibling-stack"]}
                 items={items.map((item) => {
                     // A component reference, not a built node (COMPOSITE-8) — `Base`'s
                     // `body` slot calls this itself; the closure keeps the item's own
@@ -1079,7 +1079,7 @@ const SelectableGroup = <T extends string>({
         >
             <Grid
                 gap={3}
-                pattern="sibling-stack"
+                principles={["sibling-stack"]}
                 columns={SELECTABLE_GROUP_COLUMNS[columns]}
                 classNames={classNames}
                 items={items.map((item) => ({
@@ -1847,7 +1847,7 @@ const CrossListRow = ({
         <StackH
             gap={4}
             align="start"
-            pattern="content-row"
+            principles={["content-row"]}
             padding={4}
             isSkeleton={isSkeleton}
             items={

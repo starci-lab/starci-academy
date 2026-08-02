@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Responsive } from "@/components/frames/_spacing"
+import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -54,7 +55,7 @@ export interface SplitBaseProps {
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
     /** `true` mounts both sides in their loading state. */
     isSkeleton?: boolean
 }
@@ -70,7 +71,7 @@ const SplitBase = ({
     gap,
     align = "center",
     classNames,
-    pattern,
+    principles,
     isSkeleton}: SplitBaseProps) => {
     const Start = start
     const End = end
@@ -78,7 +79,7 @@ const SplitBase = ({
         <div
             data-tier="frame"
             data-component="Split"
-            data-principles={pattern}
+            data-principles={principlesAttr(principles)}
             className={cn(
                 "flex w-full",
                 ...gapClassNames(gap),

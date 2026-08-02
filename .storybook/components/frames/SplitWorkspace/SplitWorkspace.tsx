@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
  * `SplitWorkspace` — the read-column + sticky-aside workspace layout frame.
@@ -33,7 +34,7 @@ export interface SplitWorkspaceProps {
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /**
@@ -68,13 +69,13 @@ const SplitWorkspace = ({
     at = "xl",
     isSkeleton,
     classNames,
-    pattern,
+    principles,
 }: SplitWorkspaceProps) => (
     <div
         data-tier="frame"
         data-component="SplitWorkspace"
 
-        data-principles={pattern}
+        data-principles={principlesAttr(principles)}
         className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
     >
         {/* `main`/`aside` are CALLER SLOTS — the node inside belongs to whoever passed it, not

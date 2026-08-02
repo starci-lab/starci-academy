@@ -457,7 +457,7 @@ const ToggleRow = ({
             gap={4}
             isSkeleton={isSkeleton}
             classNames={classNames}
-            pattern="label-field"
+            principles={["label-field"]}
             items={[
                 () => (
                     <TitledText

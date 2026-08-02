@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@/components/frames/_spacing"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -124,7 +125,7 @@ export interface GridBaseProps {
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
 }
@@ -135,11 +136,11 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, classNames, pattern, isSkeleton }: GridBaseProps) => (
+const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton }: GridBaseProps) => (
     <div
         data-tier="frame"
         data-component="Grid"
-        data-principles={pattern}
+        data-principles={principlesAttr(principles)}
         className={cn(
             "grid",
             ...gapClassNames(gap),

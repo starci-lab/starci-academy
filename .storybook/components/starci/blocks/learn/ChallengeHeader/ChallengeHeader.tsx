@@ -160,7 +160,7 @@ const ChallengeHeader = ({
                 // and `PageHeader` now owns the muted styling + skeleton swap itself.
                 description={description}
                 meta={({ isSkeleton }: SkeletonProps) =>
-                    <StackH gap={3} align="center" pattern="chip-row" isSkeleton={isSkeleton} items={[() => metaRow]} />
+                    <StackH gap={3} align="center" principles={["chip-row"]} isSkeleton={isSkeleton} items={[() => metaRow]} />
                 }
             />
         </div>

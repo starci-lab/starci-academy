@@ -215,11 +215,11 @@ export const _CourseContents = ({
     const spine = (isSkeleton: boolean) => (
         <Container
             size="md"
-            pattern="center-measure"
+            principles={["center-measure"]}
             body={() => (
                 <StackV
                     gap={7}
-                    pattern="layout-split"
+                    principles={["layout-split"]}
                     items={[
                         // Header — its OWN tier, gap-10 (page band) from the content cluster below.
                         () => (
@@ -237,7 +237,7 @@ export const _CourseContents = ({
                         () => (
                             <StackV
                                 gap={6}
-                                pattern="block-boundary"
+                                principles={["block-boundary"]}
                                 items={[
                                     () => <GithubTeamGate />,
                                     ...(trialStrip ? [() => (
@@ -250,14 +250,14 @@ export const _CourseContents = ({
                                     () => (
                                         <StackV
                                             gap={4}
-                                            pattern="card-caption"
+                                            principles={["card-caption"]}
                                             items={[
                                                 () => (
                                                     <StackH
                                                         align="start"
                                                         justify="between"
                                                         gap={4}
-                                                        pattern="content-row"
+                                                        principles={["content-row"]}
                                                         items={[
                                                             () => (
                                                                 <StackV

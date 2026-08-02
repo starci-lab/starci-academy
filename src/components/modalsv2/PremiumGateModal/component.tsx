@@ -154,7 +154,7 @@ export const _PremiumGateModal = ({
     const unlockItems = GATE_UNLOCKS.map((item) => () => (
         <Cluster
             gap={3}
-            pattern="icon-text"
+            principles={["icon-text"]}
             align="center"
 
             items={[

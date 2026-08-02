@@ -212,7 +212,7 @@ const MockInterviewSetup = ({
     const actionsRow = (
         <StackH
             gap={3}
-            pattern="flex-action"
+            principles={["flex-action"]}
             justify="end"
             isSkeleton={isSkeleton}
             items={[

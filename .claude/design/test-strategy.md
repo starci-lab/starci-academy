@@ -16,12 +16,23 @@ Mỗi node render mang `data-*` mã hoá quyết định thiết kế của nó.
 |---|---|---|
 | `data-tier` | tầng: `atom·frame·composite·block·page` | tự phát (atom/frame/…) |
 | `data-component` | component nào (frame → `"Flex"`; atom → tên atom) | tự phát |
-| `data-principles` | token(s) layout/seam từ `patterns.mjs`, space-separated như `class` | **CALLER khai** qua prop `pattern` |
+| `data-principles` | token(s) layout/seam từ `patterns.mjs`, space-separated như `class` | **CALLER khai** qua prop `principles={[…]}` |
 | `data-anat-part` | part của `BlockAnatomy` | atom tự phát khi `showAnatomy` |
 
 `data-tier`/`data-component`/`data-anat-part` **tự động**. `data-principles` **chỉ có
-khi caller truyền `pattern`** — vì chỉ caller biết *tại sao* một seam là như vậy
-(giống `anatPart`). Frame không tự biết pattern của mình.
+khi caller truyền `principles={[…]}`** — vì chỉ caller biết *tại sao* một seam là như
+vậy (giống `anatPart`). Frame không tự biết principles của mình.
+
+### `principles` prop + `Box` + `PrincipleToken`
+
+- **`principles?: Array<PrincipleToken>`** — prop trên MỌI frame (Stack/Cluster/Grid/…);
+  tự build `data-principles={principles.join(" ")}`. Không ai gõ `data-principles="…"` thô.
+- **`PrincipleToken`** (`components/frames/_principles.ts`) — union đóng LẤY từ `patterns.mjs`
+  → `tsc` chặn token bịa (guard compile-time trên cả gate runtime).
+- **`Box`** (`components/frames/Box`) — escape-hatch primitive: div nhận raw `className`
+  (appearance/mount 3rd-party) + `principles`. Dùng ở COMPOSITE bọc thư viện (Mermaid/PDF/
+  code). Block/page KHÔNG dùng Box — chúng ghép frame + atom (`Divider` cho kẻ, `SurfaceCard`
+  cho skin); raw skin box trong block = dấu hiệu phải là atom/composite.
 
 ## 3. Registry pattern — `.storybook/test-runner/patterns.mjs`
 
@@ -40,16 +51,20 @@ Token = KHÁI NIỆM, không bao giờ pixel: `data-principles="card-padding"`, 
 
 ## 4. Luật pattern-coverage ⭐
 
-**Mọi frame call-site realise một seam CÓ NGHĨA phải khai `pattern`.** Một `StackH/StackV/
+**Mọi frame call-site realise một seam CÓ NGHĨA phải khai `principles`.** Một `StackH/StackV/
 Cluster/Grid/Split` set `gap`+`justify`/`align`/`wrap` = một quyết định layout → phải
 đặt tên nó bằng token → mới có `data-principles` → mới nằm trong lưới test.
 
-- Frame CÓ `gap`+ (justify hoặc align hoặc wrap) mà THIẾU `pattern` = **seam hở** (không test được).
+- Frame CÓ `gap`+ (justify hoặc align hoặc wrap) mà THIẾU `principles` = **seam hở** (không test được).
 - Chọn token theo Ý ĐỒ seam (hàng control → `flex-action`; label↔field → `label-field`;
   hàng chip → `chip-row`; title↔subtitle → `title-subtitle`; block↔block → `block-boundary`…).
-- Nhiều token space-separated được: `pattern="content-row push-end"`.
+- Nhiều token trong mảng: `principles={["content-row", "push-end"]}`.
+- ⭐ **Block/page KHÔNG có raw `<div>`** — mọi layout qua frame; `border`/`bg`/skin → atom
+  (`Divider`) hoặc composite. Composite bọc 3rd-party dùng `Box principles={[…]}`. **Atom
+  MIỄN** `data-principles` (chrome cố định của primitive).
 
-Gate `check-pattern-coverage.mjs` flag frame set layout mà thiếu `pattern`.
+Gate `check-pattern-coverage.mjs` flag frame set layout thiếu `principles` + raw-spacing div
+trong tier design-system.
 
 ## 5. Sáu tầng test → gate
 

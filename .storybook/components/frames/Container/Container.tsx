@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
+import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
  * `Container` — the content-column layout frame: centered, width-capped, padded.
@@ -73,7 +74,7 @@ export interface ContainerBaseProps {
      * actually carries the gap, per this change's own rule, not the element beside the other
      * data-* markers.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /**
@@ -90,7 +91,7 @@ const ContainerBase = ({
     body: Body,
     isSkeleton,
     classNames,
-    pattern,
+    principles,
 }: ContainerBaseProps) => {
     return (
         // TWO layers, not one. A `@container` measures its QUERY CONTAINER'S
@@ -114,7 +115,7 @@ const ContainerBase = ({
                 classNames,
             )}
         >
-            <div data-principles={pattern} className={cn(...paddingClassNames(padding))}>
+            <div data-principles={principlesAttr(principles)} className={cn(...paddingClassNames(padding))}>
                 {Body && <Body isSkeleton={isSkeleton} />}
             </div>
         </div>

@@ -6,6 +6,7 @@ import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 import { Flex } from "@sb-components/frames/Flex/Flex"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
+import type { PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
  * `Stack` — a LAYOUT frame: the base one-axis track. Two members = two axes:
@@ -91,7 +92,7 @@ export interface StackBaseProps {
      * track renders through, the same way `gap`/`align`/`justify` are. See `Flex`'s own
      * `pattern` doc for the full contract.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /** Props for {@link StackV} — a vertical track (no row-only prop to add). */
@@ -154,7 +155,7 @@ const StackV = ({
     isSkeleton,
     padding,
     classNames,
-    pattern,
+    principles,
 }: StackVProps) => {
     // `items` (buildable) is the preferred path — the track renders each item itself, threading
     // `isSkeleton`; `body` (a plain node) is the simple fallback when no build/shimmer is needed.
@@ -170,7 +171,7 @@ const StackV = ({
             justify={justify}
             nested={nested}
             classNames={classNames}
-            pattern={pattern}
+            principles={principles}
             body={divider ? interleaveDividers(content, "vertical") : content}
         />
     )
@@ -190,7 +191,7 @@ const StackH = ({
     isSkeleton,
     padding,
     classNames,
-    pattern,
+    principles,
 }: StackHProps) => {
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     return (
@@ -205,7 +206,7 @@ const StackH = ({
             at={at}
             nested={nested}
             classNames={classNames}
-            pattern={pattern}
+            principles={principles}
             body={divider ? interleaveDividers(content, "horizontal") : content}
         />
     )

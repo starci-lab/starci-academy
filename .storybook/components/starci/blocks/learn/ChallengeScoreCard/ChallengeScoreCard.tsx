@@ -82,7 +82,7 @@ const ChallengeScoreCard = ({
 
     const scoreBody = (
         <>
-            <StackH gap={2} pattern="title-subtitle" align="baseline" isSkeleton={isSkeleton} items={[() => scoreReading]} />
+            <StackH gap={2} principles={["title-subtitle"]} align="baseline" isSkeleton={isSkeleton} items={[() => scoreReading]} />
             {isSkeleton ? (
                 <HeroSkeleton
                     className="h-1 w-full rounded-full"

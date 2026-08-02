@@ -105,7 +105,7 @@ export const SurfaceCardHeader = ({
         <StackH
             gap={4}
             justify="between"
-            pattern="content-row"
+            principles={["content-row"]}
             items={[
                 () => <StackH gap={3} classNames={["min-w-0"]} items={[() => labelSlot]} />,
                 () => endSlot,

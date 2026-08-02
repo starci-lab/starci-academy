@@ -172,7 +172,7 @@ export const _PersonalProject = ({
         return (
             <StackV
                 gap={6}
-                pattern="block-boundary"
+                principles={["block-boundary"]}
                 isSkeleton={isSkeleton}
                 items={[
                     // Continue hero (or the all-done line) + completion meter + stats line.
@@ -222,7 +222,7 @@ export const _PersonalProject = ({
                                 <Grid
                                     columns={{ base: 1, sm: 2 }}
                                     gap={4}
-                                    pattern="sibling-stack"
+                                    principles={["sibling-stack"]}
                                     items={rows.map((task) => ({
                                         key: task.id,
                                         content: () => (

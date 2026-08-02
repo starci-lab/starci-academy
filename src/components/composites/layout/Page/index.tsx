@@ -174,7 +174,7 @@ const Header = ({
             align="start"
             justify="between"
             gap={4}
-            pattern="content-row"
+            principles={["content-row"]}
             items={[
                 () => <StackV gap={3} classNames={["min-w-0"]} items={[() => titleBlock]} />,
                 // Right slot: shrink-0 prevents action buttons from being squeezed.
@@ -200,7 +200,7 @@ const Header = ({
                     <StackH
                         gap={3}
                         align="stretch"
-                        pattern="chip-row"
+                        principles={["chip-row"]}
                         items={[
                             () => <Chip isSkeleton />,
                             () => <Chip isSkeleton />,
@@ -290,7 +290,7 @@ const BottomBar = ({
                 align="center"
                 justify="between"
                 gap={4}
-                pattern="content-row"
+                principles={["content-row"]}
                 items={[
                     () => <div className="min-w-0"><Main isSkeleton={isSkeleton} /></div>,
                     () => <div className="shrink-0"><Actions isSkeleton={isSkeleton} /></div>,

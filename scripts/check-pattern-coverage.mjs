@@ -51,15 +51,39 @@ function* frameTags(src) {
     }
 }
 
+// A raw spacing class on a NON-frame element — an actual spacing decision that must
+// still carry `data-principles`. ATOMS are exempt (their inset is fixed primitive
+// chrome, not a caller/composition decision — thầy 2026-08-02). Frames pass `pattern`
+// (checked above) so their className rarely carries these.
+const SPACING = /\b(gap-[1-9]|p-[1-9]|px-[1-9]|py-[1-9]|ml-auto|mt-auto|mx-auto)\b/
+// raw-div check applies ONLY to design-system tiers (not atoms/frames, not the
+// legacy world src/components/{features,blocks,modals,drawers,providers,…} which is
+// being replaced by page/blockv2/modalsv2/drawersv2/layoutsv2).
+const DS_ROOTS = [
+    ".storybook/components/composites", ".storybook/components/starci",
+    "src/components/composites", "src/components/starci", "src/components/page",
+    "src/components/blockv2", "src/components/modalsv2", "src/components/drawersv2", "src/components/layoutsv2",
+]
+const inDesignSystem = (rel) => DS_ROOTS.some((r) => rel.replace(/\\/g, "/").startsWith(r))
+
 const holes = []
 for (const root of ROOTS) {
     for (const file of walk(path.join(ROOT, root))) {
         const src = fs.readFileSync(file, "utf8")
+        const rel = path.relative(ROOT, file)
         for (const { name, tag, line } of frameTags(src)) {
-            if (/\bpattern[=\s]/.test(tag)) continue        // already named
+            if (/\bprinciples[=\s]/.test(tag)) continue     // already named
             if (!DECISION.test(tag)) continue                 // bare gap-only wrapper — skip
-            holes.push({ rel: path.relative(ROOT, file), line, name })
+            holes.push({ rel, line, name })
         }
+        // raw spacing on a plain element (div/span/…) in a composite/block/page — needs data-principles
+        if (!inDesignSystem(rel)) continue
+        src.split("\n").forEach((l, i) => {
+            const cm = l.match(/className=(?:"|`)([^"`]*)(?:"|`)/)
+            if (!cm || !SPACING.test(cm[1])) return
+            if (/data-principles/.test(l)) return             // already named on this line
+            holes.push({ rel, line: i + 1, name: "raw", raw: cm[1].match(SPACING)[0] })
+        })
     }
 }
 

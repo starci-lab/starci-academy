@@ -3,6 +3,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, paddingClassNames, type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
+import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -113,7 +114,7 @@ export interface FlexBaseProps {
      * the pattern names. A frame does not KNOW its pattern — the caller does — so it is
      * passed in.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /** Direction to its literal class. Tailwind never emits an interpolated `flex-${x}`. */
@@ -154,7 +155,7 @@ const FlexBase = ({
     nested = false,
     body,
     classNames,
-    pattern}: FlexBaseProps) => (
+    principles}: FlexBaseProps) => (
     // No self-name fallback: `Flex` is internal-only (see the export note below) and has
     // no story of its own, so a default badge here would only ever point nowhere (§11a.1 rule
     // on undeclared parts). A caller that needs THIS box badged as a node passes ``
@@ -162,7 +163,7 @@ const FlexBase = ({
     <Tag
         data-tier="frame"
         data-component="Flex"
-        data-principles={pattern}
+        data-principles={principlesAttr(principles)}
         className={cn(
             inline ? "inline-flex" : "flex",
             DIRECTION_CLASS[direction],

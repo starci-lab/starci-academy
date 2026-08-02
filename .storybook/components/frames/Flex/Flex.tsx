@@ -3,6 +3,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, paddingClassNames, type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
+import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
  * `Flex` — THE flex box of the system, and the only place allowed to write
@@ -100,7 +101,7 @@ export interface FlexBaseProps {
      * the pattern names. A frame does not KNOW its pattern — the caller does — so it is
      * passed in.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /** Direction to its literal class. Tailwind never emits an interpolated `flex-${x}`. */
@@ -142,13 +143,13 @@ const FlexBase = ({
     nested = false,
     body,
     classNames,
-    pattern,
+    principles,
 }: FlexBaseProps) => (
     <Tag
         data-tier="frame"
         data-component="Flex"
 
-        data-principles={pattern}
+        data-principles={principlesAttr(principles)}
         className={cn(
             inline ? "inline-flex" : "flex",
             DIRECTION_CLASS[direction],

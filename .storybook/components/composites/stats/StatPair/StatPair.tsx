@@ -68,7 +68,7 @@ export const StatPair = ({
     return (
         <StackV
             gap={1}
-            pattern="name-handle"
+            principles={["name-handle"]}
             align="start"
             isSkeleton={isSkeleton}
             classNames={classNames}

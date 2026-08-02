@@ -89,7 +89,7 @@ const TrialConversionStripBase = ({
         : undefined
 
     const headerRow = (
-        <StackH gap={4} pattern="content-row" align="center" isSkeleton={isSkeleton} items={[
+        <StackH gap={4} principles={["content-row"]} align="center" isSkeleton={isSkeleton} items={[
             ({ isSkeleton }: SkeletonProps) => (
                 <IconTile
                     isSkeleton={isSkeleton}
@@ -170,7 +170,7 @@ const TrialConversionStripBase = ({
     const footerRow = (
         <StackH
             gap={6}
-            pattern="block-boundary"
+            principles={["block-boundary"]}
             align="end"
             justify="between"
             at="sm"

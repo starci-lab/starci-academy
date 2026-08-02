@@ -3,6 +3,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { GAP_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutJustify } from "@/components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -62,7 +63,7 @@ export interface ResponsiveClusterProps {
      * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
      * `pattern` doc for the full contract.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
 }
@@ -97,13 +98,13 @@ const ResponsiveClusterBase = ({
     classNames,
     "data-tier": dataTier,
     "data-component": dataComponent,
-    pattern,
+    principles,
     isSkeleton,
 }: ResponsiveClusterProps) => (
     <div
         data-tier={dataTier}
         data-component={dataComponent}
-        data-principles={pattern}
+        data-principles={principlesAttr(principles)}
         className={cn(
             "flex w-full flex-col items-center",
             GAP_CLASS[gap],

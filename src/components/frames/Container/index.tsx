@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
+import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -129,7 +130,7 @@ export interface ContainerBaseProps {
      * header note on why padding must live on a second, inner div). The padding class is on the
      * INNER div, so `data-principles` lands there too — the element that actually carries the gap.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /**
@@ -146,7 +147,7 @@ const ContainerBase = ({
     body: Body,
     isSkeleton,
     classNames,
-    pattern}: ContainerBaseProps) => {
+    principles}: ContainerBaseProps) => {
     return (
         // TWO layers, not one (teacher 2026-07-29, "shouldn't desktop render as
         // flex?" — traced to here). A `@container` measures its QUERY CONTAINER'S
@@ -169,7 +170,7 @@ const ContainerBase = ({
                 SIZE_CLASS[size],
                 classNames)}
         >
-            <div data-principles={pattern} className={cn(...paddingClassNames(padding))}>
+            <div data-principles={principlesAttr(principles)} className={cn(...paddingClassNames(padding))}>
                 {Body && <Body isSkeleton={isSkeleton} />}
             </div>
         </div>

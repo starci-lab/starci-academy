@@ -66,7 +66,7 @@ const ProfileLockedState = ({
             />
         </>
     )
-    return <StackV gap={6} pattern="block-boundary" padding={6} classNames={classNames} items={[() => lockedBody]} />
+    return <StackV gap={6} principles={["block-boundary"]} padding={6} classNames={classNames} items={[() => lockedBody]} />
 }
 
 export { ProfileLockedState }

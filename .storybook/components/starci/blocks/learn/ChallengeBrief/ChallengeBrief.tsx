@@ -100,7 +100,7 @@ const outputRow = (body: string) => (
     <StackH
         gap={2}
         align="start"
-        pattern="icon-text"
+        principles={["icon-text"]}
         items={[
             () => (
                 <CheckCircleIcon

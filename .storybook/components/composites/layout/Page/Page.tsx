@@ -160,7 +160,7 @@ const Header = ({
             align="start"
             justify="between"
             gap={4}
-            pattern="content-row"
+            principles={["content-row"]}
             isSkeleton={isSkeleton}
             items={[
                 () => <StackV gap={3} classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} />,
@@ -187,7 +187,7 @@ const Header = ({
                     <StackH
                         gap={3}
                         align="stretch"
-                        pattern="chip-row"
+                        principles={["chip-row"]}
                         isSkeleton={isSkeleton}
                         items={[
                             () => <Chip isSkeleton />,
@@ -283,7 +283,7 @@ const BottomBar = ({
                 align="center"
                 justify="between"
                 gap={4}
-                pattern="content-row"
+                principles={["content-row"]}
                 isSkeleton={isSkeleton}
                 items={[
                     () => <div className="min-w-0"><Main isSkeleton={isSkeleton} /></div>,

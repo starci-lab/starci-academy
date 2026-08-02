@@ -124,7 +124,7 @@ const ScoreRow = ({
     <StackH
         gap={4}
         align="center"
-        pattern="content-row"
+        principles={["content-row"]}
         items={[
             () => <Typography size="sm" truncate classNames={["shrink-0"]} text={label} />,
             () => <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} />,
@@ -138,7 +138,7 @@ const ScoreRowSkeleton = () => (
     <StackH
         gap={4}
         align="center"
-        pattern="content-row"
+        principles={["content-row"]}
         items={[
             () => <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />,
             () => <HeroSkeleton className="h-1 flex-1 rounded-full" />,
@@ -198,7 +198,7 @@ const MockInterviewScorecard = ({
             gap={4}
             justify="between"
             at="sm"
-            pattern="content-row"
+            principles={["content-row"]}
             isSkeleton={isSkeleton}
             items={[
                 () => (isSkeleton ? (
@@ -257,7 +257,7 @@ const MockInterviewScorecard = ({
         <StackH
             gap={2}
             align="center"
-            pattern="icon-text"
+            principles={["icon-text"]}
             isSkeleton={isSkeleton}
             items={[
                 ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text="Weakest:" isSkeleton={isSkeleton} />,
@@ -270,7 +270,7 @@ const MockInterviewScorecard = ({
         <StackH
             gap={4}
             at="sm"
-            pattern="flex-action"
+            principles={["flex-action"]}
             isSkeleton={isSkeleton}
             items={[
                 () => (

@@ -98,7 +98,7 @@ const ModuleContinueBand = ({
     const headerRow = (
         <StackH
             gap={4}
-            pattern="content-row"
+            principles={["content-row"]}
             justify="between"
             align="start"
             isSkeleton={isSkeleton}

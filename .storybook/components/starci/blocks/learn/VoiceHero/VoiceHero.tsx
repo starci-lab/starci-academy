@@ -122,7 +122,7 @@ const VoiceHero = ({
         <div>
             <StackV
                 gap={4}
-                pattern="card-caption"
+                principles={["card-caption"]}
                 align="center"
 
                 items={[

@@ -31,6 +31,7 @@ nhưng ý đồ khác nhau → token khác nhau:
 - **24px**: `block-boundary` (2 block/page — seam phổ biến nhất).
 - **32px**: `layout-split` (2 cột, header↔content).
 
-Frame khai token qua prop `pattern="…"` → phát `data-principles` → test-runner đo. Frame
-realise seam mà không khai `pattern` = **seam hở** (không test được, gate
-`check-pattern-coverage`). Xem [test-strategy](../../../test-strategy.md).
+Frame khai token qua prop `principles={[…]}` (typed `PrincipleToken[]`) → tự phát
+`data-principles` → test-runner đo. Frame realise seam mà không khai `principles` =
+**seam hở** (không test được, gate `check-pattern-coverage`). Div hợp lệ (composite bọc
+3rd-party) dùng `Box principles={[…]}`. Xem [test-strategy](../../../test-strategy.md).

@@ -101,7 +101,7 @@ const ContentCommentComposer = ({
         return (
             <StackH
                 gap={4}
-                pattern="content-row"
+                principles={["content-row"]}
                 align="center"
 
                 items={[
@@ -170,7 +170,7 @@ const ContentCommentComposer = ({
     )
 
     return (
-        <StackH gap={4} pattern="content-row" align="start" classNames={classNames} items={[() => composerRow]} />
+        <StackH gap={4} principles={["content-row"]} align="start" classNames={classNames} items={[() => composerRow]} />
     )
 }
 

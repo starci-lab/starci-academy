@@ -19,7 +19,8 @@
 - `data-component` — tên component. Frame delegate `Flex` → `data-component="Flex"` (Stack
   không render element riêng nên DOM đọc "Flex", không "StackV"; identity source ở `meta`).
 - `data-anat-part` — atom tự phát khi `showAnatomy` (cho panel BlockAnatomy).
-- `data-principles` — token layout, **caller khai** qua `pattern` (xem [gap](../principles/gap.md)).
+- `data-principles` — token layout, **caller khai** qua `principles={[…]}` (typed
+  `PrincipleToken[]`; div escape-hatch = `Box`). Atom MIỄN. Xem [gap](../principles/gap.md).
 
 ## `meta` — identity ở source
 

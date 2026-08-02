@@ -187,7 +187,7 @@ const FlashcardDeckList = ({
                 {showProgress && deck.totalCount > 0 ? (
                     <StackH gap={2} isSkeleton={isSkeleton} items={[() => progressRow]} />
                 ) : null}
-                <StackH gap={2} pattern="icon-text" justify="end" isSkeleton={isSkeleton} items={[() => ctaRow]} />
+                <StackH gap={2} principles={["icon-text"]} justify="end" isSkeleton={isSkeleton} items={[() => ctaRow]} />
             </>
         )
 
@@ -250,7 +250,7 @@ const FlashcardDeckList = ({
         />
     ) : view === "grid" ? (
         <div>
-            <Grid columns={{ base: 1, sm: 2, md: 3 }} gap={4} pattern="sibling-stack" items={tiles} />
+            <Grid columns={{ base: 1, sm: 2, md: 3 }} gap={4} principles={["sibling-stack"]} items={tiles} />
         </div>
     ) : (
         <SurfaceCardList isSkeleton={isSkeleton} items={rows} />
@@ -281,7 +281,7 @@ const FlashcardDeckList = ({
 
     const listBody = (
         <>
-            <StackH gap={3} pattern="flex-action" at="sm" isSkeleton={isSkeleton} items={[() => searchAndView]} />
+            <StackH gap={3} principles={["flex-action"]} at="sm" isSkeleton={isSkeleton} items={[() => searchAndView]} />
             {track}
             {!isSkeleton && decks.length > 0 ? (
                 <div>

@@ -121,7 +121,7 @@ const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
         <StackV
             gap={3}
             padding={4}
-            pattern="sibling-stack cell-pad"
+            principles={["sibling-stack", "cell-pad"]}
             items={Array.from({ length: lines }, (_unused, index) => () => (
                 <Typography size="xs" isSkeleton classNames={[index === lines - 1 ? "w-1/2" : "w-3/4"]} />
             ))}
@@ -136,7 +136,7 @@ const renderOsTabSkeleton = (key: PlaygroundSetupOs) => (
         key={key}
         gap={2}
         align="center"
-        pattern="title-subtitle"
+        principles={["title-subtitle"]}
         items={[
             () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
             () => <Typography size="xs" isSkeleton classNames={["w-1/3"]} />,
@@ -247,7 +247,7 @@ const PlaygroundSetupSteps = ({
     const pairStepBody: ReactNode = (
         <StackV
             gap={3}
-            pattern="sibling-stack"
+            principles={["sibling-stack"]}
             isSkeleton={isSkeleton}
             items={[
                 () => (
@@ -267,7 +267,7 @@ const PlaygroundSetupSteps = ({
                     <StackH
                         gap={3}
                         at="sm"
-                        pattern="flex-action"
+                        principles={["flex-action"]}
                         isSkeleton={isSkeleton}
                         items={[
                             () => renderVerifyButton(),

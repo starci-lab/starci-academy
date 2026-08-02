@@ -113,7 +113,7 @@ const InterviewerPresence = ({
     const speakingStatus = speaking ? (
         <StackH
             gap={2}
-            pattern="icon-text"
+            principles={["icon-text"]}
             align="center"
 
             items={[
@@ -134,7 +134,7 @@ const InterviewerPresence = ({
     const nameAndRole = (
         <StackV
             gap={1}
-            pattern="name-handle"
+            principles={["name-handle"]}
 
             items={[
                 () => (
@@ -147,7 +147,7 @@ const InterviewerPresence = ({
                 () => (
                     <StackH
                         gap={3}
-                        pattern="identity"
+                        principles={["identity"]}
                         align="center"
 
                         items={[
@@ -170,7 +170,7 @@ const InterviewerPresence = ({
     const identity = (
         <StackH
             gap={3}
-            pattern="identity"
+            principles={["identity"]}
             align="center"
 
             items={[
@@ -194,7 +194,7 @@ const InterviewerPresence = ({
     const headerRow = (
         <StackH
             gap={3}
-            pattern="flex-action"
+            principles={["flex-action"]}
             align="center"
             justify="between"
 
@@ -208,7 +208,7 @@ const InterviewerPresence = ({
     const typingDots = isAsking ? (
         <StackH
             gap={2}
-            pattern="separator-dot"
+            principles={["separator-dot"]}
             align="center"
 
             items={[

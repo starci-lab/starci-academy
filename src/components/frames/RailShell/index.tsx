@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -89,7 +90,7 @@ export interface RailShellProps {
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /**
@@ -130,11 +131,11 @@ const RailShell = ({
     isRailSticky = false,
     isSkeleton,
     classNames,
-    pattern}: RailShellProps) => (
+    principles}: RailShellProps) => (
     <div
         data-tier="frame"
         data-component="RailShell"
-        data-principles={pattern}
+        data-principles={principlesAttr(principles)}
         className={cn("flex flex-col gap-6", SHELL_SWITCH_CLASS[at], classNames)}
     >
         {/* `rail`/`body` are CALLER SLOTS — whatever sits inside belongs to whoever passed

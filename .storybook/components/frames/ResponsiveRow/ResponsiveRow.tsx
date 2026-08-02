@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
+import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
  * `ResponsiveRow` — a LAYOUT frame: a repeat-list row that is a FIXED grid below a
@@ -64,7 +65,7 @@ export interface ResponsiveRowProps {
      * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
      * `pattern` doc for the full contract.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /** Grid column count → literal class. Tailwind never emits an interpolated `grid-cols-${n}`. */
@@ -98,13 +99,13 @@ const ResponsiveRowBase = ({
     gap,
     isSkeleton,
     classNames,
-    pattern,
+    principles,
 }: ResponsiveRowProps) => (
     <div
         data-tier="frame"
         data-component="ResponsiveRow"
 
-        data-principles={pattern}
+        data-principles={principlesAttr(principles)}
         className={cn(
             "grid",
             COLUMNS_CLASS[columns],

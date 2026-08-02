@@ -453,7 +453,7 @@ const ToggleRow = ({
         <StackH
             gap={4}
             classNames={classNames}
-            pattern="label-field"
+            principles={["label-field"]}
             items={[
                 () => (
                     <TitledText

@@ -165,7 +165,7 @@ const PlaygroundConnectSheet = ({
             <div className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
                 <StackH
                     gap={4}
-                    pattern="content-row cell-pad"
+                    principles={["content-row", "cell-pad"]}
                     align="center"
                     justify="between"
                     padding={4}
@@ -188,7 +188,7 @@ const PlaygroundConnectSheet = ({
     const statusGroup = (
         <StackH
             gap={3}
-            pattern="sibling-stack"
+            principles={["sibling-stack"]}
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -217,7 +217,7 @@ const PlaygroundConnectSheet = ({
     const actionsGroup = (
         <StackH
             gap={3}
-            pattern="flex-action"
+            principles={["flex-action"]}
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -274,7 +274,7 @@ const PlaygroundConnectSheet = ({
             {/* PEEK — always visible: status + reconnect, plus the toggle that opens the body. */}
             <StackH
                 gap={4}
-                pattern="content-row cell-pad"
+                principles={["content-row", "cell-pad"]}
                 align="center"
                 justify="between"
                 padding={4}
@@ -287,7 +287,7 @@ const PlaygroundConnectSheet = ({
             {/* BODY — mounted only while open, matching a real bottom-sheet's collapsed state. */}
             {open ? (
                 <div className="border-t border-default">
-                    <StackV gap={4} pattern="card-caption cell-pad" padding={4} isSkeleton={isSkeleton} items={[() => sheetBody]} />
+                    <StackV gap={4} principles={["card-caption", "cell-pad"]} padding={4} isSkeleton={isSkeleton} items={[() => sheetBody]} />
                 </div>
             ) : null}
         </div>

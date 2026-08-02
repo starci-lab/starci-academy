@@ -344,7 +344,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions}: Mark
                     as="span"
                     at="sm"
                     gap={3}
-                    pattern="chip-row"
+                    principles={["chip-row"]}
                     items={String(items ?? "").split("|").filter(Boolean).map((keyword) => () => (
                         <Chip tone="default" text={keyword} />
                     ))}
@@ -377,7 +377,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions}: Mark
                         <div className="text-start">
                             <StackH
                                 gap={4}
-                                pattern="content-row"
+                                principles={["content-row"]}
                                 justify="between"
                                 classNames={["w-full"]}
                                 items={[

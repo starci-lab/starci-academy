@@ -106,7 +106,7 @@ export const ProgressMeter = ({
     const topRow = hasTopRow ? (
         <StackH
             gap={3}
-            pattern="content-row"
+            principles={["content-row"]}
             justify="between"
             items={[
                 () => <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />,
@@ -125,7 +125,7 @@ export const ProgressMeter = ({
     const slotRow = hasSlotRow ? (
         <StackH
             gap={3}
-            pattern="content-row"
+            principles={["content-row"]}
             justify="between"
             items={[
                 () => (Leading ? (

@@ -169,7 +169,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     const contentCluster = (
         <StackV
             gap={6}
-            pattern="block-boundary"
+            principles={["block-boundary"]}
             isSkeleton={isSkeleton}
             items={[
                 // Gate is for people who ALREADY BOUGHT; the block self-hides when it doesn't apply.
@@ -179,7 +179,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                 () => (
                     <StackV
                         gap={4}
-                        pattern="group-boundary"
+                        principles={["group-boundary"]}
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
@@ -187,7 +187,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                                     align="start"
                                     justify="between"
                                     gap={4}
-                                    pattern="content-row"
+                                    principles={["content-row"]}
                                     isSkeleton={isSkeleton}
                                     items={[
                                         () => (

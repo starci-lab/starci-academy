@@ -94,7 +94,7 @@ const IdentityContentRow = ({
     classNames}: IdentityContentRowProps) => (
     <StackH
         gap={4}
-        pattern="content-row"
+        principles={["content-row"]}
         align="start"
         nested={nested}
         classNames={classNames}

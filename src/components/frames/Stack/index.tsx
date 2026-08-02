@@ -6,6 +6,7 @@ import { Divider } from "@/components/atoms/display/Divider"
 import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
 import { Flex } from "@/components/frames/Flex"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
+import type { PrincipleToken } from "@/components/frames/_principles"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -102,7 +103,7 @@ export interface StackBaseProps {
      * track renders through, the same way `gap`/`align`/`justify` are. See `Flex`'s own
      * `pattern` doc for the full contract.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
 }
 
 /** Props for {@link StackV} — a vertical track (no row-only prop to add). */
@@ -165,7 +166,7 @@ const StackV = ({
     isSkeleton,
     padding,
     classNames,
-    pattern}: StackVProps) => {
+    principles}: StackVProps) => {
     // `items` (buildable) wins over legacy `body`: the track renders each item itself, threading
     // `isSkeleton`, so it can shimmer the whole column and interleave dividers on the real children.
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
@@ -180,7 +181,7 @@ const StackV = ({
             justify={justify}
             nested={nested}
             classNames={classNames}
-            pattern={pattern}
+            principles={principles}
             body={divider ? interleaveDividers(content, "vertical") : content}
         />
     )
@@ -200,7 +201,7 @@ const StackH = ({
     isSkeleton,
     padding,
     classNames,
-    pattern}: StackHProps) => {
+    principles}: StackHProps) => {
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     return (
         <Flex
@@ -214,7 +215,7 @@ const StackH = ({
             at={at}
             nested={nested}
             classNames={classNames}
-            pattern={pattern}
+            principles={principles}
             body={divider ? interleaveDividers(content, "horizontal") : content}
         />
     )

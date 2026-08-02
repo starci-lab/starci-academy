@@ -4,6 +4,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@sb-components/frames/_spacing"
+import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
  * `Cluster` — a repeating-list frame: a wrapping row of N elements of the same kind
@@ -58,7 +59,7 @@ export interface ClusterBaseProps {
      * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
      * `pattern` doc for the full contract.
      */
-    pattern?: string
+    principles?: Array<PrincipleToken>
     /** `true` mounts every item in its loading state. */
     isSkeleton?: boolean
 }
@@ -76,14 +77,14 @@ const ClusterBase = ({
     justify = "start",
     separator = false,
     classNames,
-    pattern,
+    principles,
     isSkeleton,
 }: ClusterBaseProps) => (
     <div
         data-tier="frame"
         data-component="Cluster"
 
-        data-principles={pattern}
+        data-principles={principlesAttr(principles)}
         className={cn(
             "flex flex-wrap",
             ...gapClassNames(gap),

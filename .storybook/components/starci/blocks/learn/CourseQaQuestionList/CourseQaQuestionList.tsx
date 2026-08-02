@@ -160,7 +160,7 @@ const SkeletonQuestionRow = ({  }: SkeletonQuestionRowProps) => {
     return (
         <StackH
             gap={4}
-            pattern="content-row"
+            principles={["content-row"]}
             align="start"
 
             items={[
@@ -241,7 +241,7 @@ const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewRowProps
     return (
         <StackH
             gap={4}
-            pattern="content-row"
+            principles={["content-row"]}
             align="start"
 
             items={[

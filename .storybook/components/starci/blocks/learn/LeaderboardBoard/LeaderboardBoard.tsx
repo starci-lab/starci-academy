@@ -141,51 +141,51 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
         </div>
     )
     return (
-        <StackV
-            key={entry.rank}
-            gap={2}
-            align="center"
-            className="w-24"
-            isSkeleton={isSkeleton}
-            items={[
-                () => (
-                    <div>
-                        <Avatar
-                            name={entry.username}
-                            src={entry.avatar ?? undefined}
-                            seed={entry.username}
-                            size={entry.rank === 1 ? "lg" : "md"}
+        <div key={entry.rank} className="w-24">
+            <StackV
+                gap={2}
+                align="center"
+                isSkeleton={isSkeleton}
+                items={[
+                    () => (
+                        <div>
+                            <Avatar
+                                name={entry.username}
+                                src={entry.avatar ?? undefined}
+                                seed={entry.username}
+                                size={entry.rank === 1 ? "lg" : "md"}
+                                isSkeleton={isSkeleton}
+
+                            />
+                        </div>
+                    ),
+                    () => (
+                        <Typography
+                            size="sm"
+                            weight="medium"
+                            color={entry.isMe ? "accent" : undefined}
+                            truncate
+                            align="center"
                             isSkeleton={isSkeleton}
+                            text={isSkeleton ? undefined : entry.username}
+                            classNames={["w-full"]}
 
                         />
-                    </div>
-                ),
-                () => (
-                    <Typography
-                        size="sm"
-                        weight="medium"
-                        color={entry.isMe ? "accent" : undefined}
-                        truncate
-                        align="center"
-                        isSkeleton={isSkeleton}
-                        text={isSkeleton ? undefined : entry.username}
-                        classNames={["w-full"]}
+                    ),
+                    () => (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text={isSkeleton ? undefined : entry.pointsLabel}
 
-                    />
-                ),
-                () => (
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        isSkeleton={isSkeleton}
-                        text={isSkeleton ? undefined : entry.pointsLabel}
-
-                    />
-                ),
-                () => riser,
-                ...(entry.isMe ? [() => <span className="sr-only">{meLabel}</span>] : []),
-            ]}
-        />
+                        />
+                    ),
+                    () => riser,
+                    ...(entry.isMe ? [() => <span className="sr-only">{meLabel}</span>] : []),
+                ]}
+            />
+        </div>
     )
 }
 
@@ -282,7 +282,7 @@ const Confetti = ({ celebrateKey }: ConfettiProps) => {
 const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): SurfaceCardListItem => ({
     key: row.key,
     href: row.profileHref,
-    content: (
+    content: () => (
         <StackH
             gap={3}
             align="center"
@@ -347,7 +347,7 @@ const buildListItems = (
         hiddenBetweenCount != null && hiddenBetweenCount > 0
             ? {
                 key: "ellipsis",
-                content: (
+                content: () => (
                     <Typography
                         size="xs"
                         color="muted"
@@ -439,7 +439,7 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
                 )] : []),
                 ({ isSkeleton }: SkeletonProps) => (
                     <SurfaceCardList
-                        items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton)}
+                        items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton ?? false)}
                         isSkeleton={isSkeleton}
                     />
                 ),

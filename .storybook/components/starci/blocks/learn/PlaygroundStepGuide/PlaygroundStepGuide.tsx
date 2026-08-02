@@ -169,7 +169,7 @@ const PlaygroundStepGuide = ({
                 () => <Typography size="xs" weight="medium" color="muted" text="Command to run" />,
                 () => (
                     <MarkdownContent
-                        source={commandFence(step.commandHint)}
+                        source={commandFence(step.commandHint ?? "")}
                         measure="compact"
 
                     />

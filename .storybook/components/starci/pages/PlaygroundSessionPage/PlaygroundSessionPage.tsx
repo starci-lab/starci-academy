@@ -126,83 +126,87 @@ const PlaygroundSessionPage = ({
         connection === "connected" ? "connected" : "notConnected"
 
     const guidePane = (
-        <StackV
-            gap={1}
-            padding={6}
-            className="overflow-y-auto"
-            classNames={["min-w-0", "flex-1"]}
+        <div className="overflow-y-auto">
+            <StackV
+                gap={1}
+                padding={6}
+                classNames={["min-w-0", "flex-1"]}
 
-            items={[
-                () => (
-                    <PlaygroundStepGuide
+                items={[
+                    () => (
+                        <PlaygroundStepGuide
 
-                        step={step}
-                        verifyState={verifyState}
-                        onVerify={onVerify}
-                        onLeaveComplete={onLeaveGuideComplete}
+                            step={step}
+                            verifyState={verifyState}
+                            onVerify={onVerify}
+                            onLeaveComplete={onLeaveGuideComplete}
 
-                    />
-                ),
-            ]}
-        />
+                        />
+                    ),
+                ]}
+            />
+        </div>
     )
 
     const resourcePane = (
-        <StackV
-            gap={1}
-            padding={6}
-            className="overflow-y-auto @app-xl:w-[24rem]"
-            classNames={["w-full", "shrink-0"]}
+        <div className="overflow-y-auto @app-xl:w-[24rem]">
+            <StackV
+                gap={1}
+                padding={6}
+                classNames={["w-full", "shrink-0"]}
 
-            items={[
-                () => (
-                    <PlaygroundResourcePanel
+                items={[
+                    () => (
+                        <PlaygroundResourcePanel
 
-                        connection={resourcePanelConnection}
-                        resources={resources}
+                            connection={resourcePanelConnection}
+                            resources={resources}
 
-                    />
-                ),
-            ]}
-        />
+                        />
+                    ),
+                ]}
+            />
+        </div>
     )
 
     // The workspace region: two panes side by side, plus the docked sheet
     // anchored (not laid out) against this box — see the file header.
     const workspaceRegion = (
         <>
-            <StackH
-                gap={6}
-                align="start"
-                divider
-                className="overflow-hidden"
-                classNames={["h-full", "min-h-0"]}
+            <div className="overflow-hidden">
+                <StackH
+                    gap={6}
+                    align="start"
+                    divider
+                    classNames={["h-full", "min-h-0"]}
 
-                items={[
-                    () => guidePane,
-                    () => resourcePane,
-                ]}
-            />
-            <StackV
-                gap={1}
-                className="absolute inset-x-0 bottom-0 z-10"
+                    items={[
+                        () => guidePane,
+                        () => resourcePane,
+                    ]}
+                />
+            </div>
+            <div className="absolute inset-x-0 bottom-0 z-10">
+                <StackV
+                    gap={1}
 
-                items={[
-                    () => (
-                        <PlaygroundConnectSheet
+                    items={[
+                        () => (
+                            <PlaygroundConnectSheet
 
-                            connection={connection}
-                            latencyMs={latencyMs}
-                            device={device}
-                            agentLog={agentLog}
-                            onReconnect={onReconnect}
-                            open={isConnectSheetOpen}
-                            onOpenChange={onConnectSheetOpenChange}
+                                connection={connection}
+                                latencyMs={latencyMs}
+                                device={device}
+                                agentLog={agentLog}
+                                onReconnect={onReconnect}
+                                open={isConnectSheetOpen}
+                                onOpenChange={onConnectSheetOpenChange}
 
-                        />
-                    ),
-                ]}
-            />
+                            />
+                        ),
+                    ]}
+                />
+            </div>
         </>
     )
 
@@ -222,17 +226,22 @@ const PlaygroundSessionPage = ({
                 onFinish={onFinish}
 
             />
-            <StackV
-                gap={1}
-                className="relative"
-                classNames={["min-h-0", "flex-1"]}
+            <div className="relative">
+                <StackV
+                    gap={1}
+                    classNames={["min-h-0", "flex-1"]}
 
-                items={[() => workspaceRegion]}
-            />
+                    items={[() => workspaceRegion]}
+                />
+            </div>
         </>
     )
 
-    return <StackV gap={1} className="h-[calc(100vh-4rem)]" items={[() => sessionSections]} />
+    return (
+        <div className="h-[calc(100vh-4rem)]">
+            <StackV gap={1} items={[() => sessionSections]} />
+        </div>
+    )
 }
 
 export { PlaygroundSessionPage }

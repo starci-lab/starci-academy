@@ -1,5 +1,6 @@
 import React from "react"
 import { Link as HeroUILink, cn } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -28,7 +29,8 @@ export interface NavLinksProps {
     items: Array<NavLinkItem>
     /** Fired with the pressed item's `path` — the caller owns the actual navigation. */
     onNavigate: (path: string) => void
-    className?: string
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -38,12 +40,12 @@ export interface NavLinksProps {
  *
  * @param props - {@link NavLinksProps}
  */
-const NavLinks = ({ items, onNavigate, className }: NavLinksProps) => (
-    <div>
+const NavLinks = ({ items, onNavigate, classNames }: NavLinksProps) => (
+    <div className="hidden @app-md:flex">
         <StackH
             gap={3}
             justify="center"
-            className={cn("hidden @app-md:flex", className)}
+            classNames={classNames}
 
             items={items.map((item) => () => (
                 <HeroUILink

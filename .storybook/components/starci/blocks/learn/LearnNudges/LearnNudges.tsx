@@ -73,7 +73,7 @@ const LearnNudgesBase = ({
                 // `KeepGoingPath`.
                 ? Array.from({ length: skeletonRows }).map((_, index) => ({
                     key: `pending-${index}`,
-                    title: (
+                    content: () => (
                         <Typography
                             size="sm"
                             isSkeleton

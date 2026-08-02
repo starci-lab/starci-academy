@@ -92,14 +92,14 @@ const toneForStatus = (status: string): ChipTone => {
 const groupToAccordionItem = (group: PlaygroundResourceGroup): SurfaceCardAccordionItem => ({
     id: group.kind,
     title: titleCaseKind(group.kind),
-    titleEnd: (
+    titleEnd: () => (
         <Chip
             tone="default"
             text={String(group.resources.length)}
 
         />
     ),
-    body: (
+    body: () => (
         <StackV
             gap={1}
 

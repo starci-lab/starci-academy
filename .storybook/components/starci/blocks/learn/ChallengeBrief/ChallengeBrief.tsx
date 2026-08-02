@@ -180,9 +180,9 @@ const ChallengeBrief = ({
         id: item.key,
         title: item.title,
         titleEnd: item.points != null
-            ? <ScoreValue points={item.points} />
+            ? () => <ScoreValue points={item.points ?? 0} />
             : undefined,
-        body: markdownBody(item.body),
+        body: () => markdownBody(item.body),
     }))
 
     const stepItems: Array<SurfaceCardAccordionItem> = (steps ?? []).map((item, index) => ({
@@ -190,7 +190,7 @@ const ChallengeBrief = ({
         // The block owns this sentence (§14d.1) — the caller hands an optional headline
         // plus its position via array order, never a pre-numbered string.
         title: `${index + 1}. ${item.title || `Step ${index + 1}`}`,
-        body: markdownBody(item.body),
+        body: () => markdownBody(item.body),
     }))
 
     // A BARE `SurfaceCard`, `label="Hint"`, with content as ONE markdown paragraph

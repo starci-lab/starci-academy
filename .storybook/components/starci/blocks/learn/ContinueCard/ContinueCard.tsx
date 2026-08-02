@@ -128,15 +128,16 @@ const CardBody = ({
                 repeating list so NOT `Cluster`). The inner column = a vertical track ⇒ `StackV`.
                 `min-w-0 flex-1` stays in `className`: that's its PLACEMENT within the parent row
                 (`className` is allowed for placement), not the scaffold's own shape. */}
-            <StackH
-                gap={4}
-                align="center"
-                className="relative"
-                isSkeleton={isSkeleton}
-                items={[
-                    ({ isSkeleton }: SkeletonProps) => <StackV gap={3} classNames={["min-w-0", "flex-1"]} isSkeleton={isSkeleton} items={[() => titleAndMeta]} />,
-                ]}
-            />
+            <div className="relative">
+                <StackH
+                    gap={4}
+                    align="center"
+                    isSkeleton={isSkeleton}
+                    items={[
+                        ({ isSkeleton }: SkeletonProps) => <StackV gap={3} classNames={["min-w-0", "flex-1"]} isSkeleton={isSkeleton} items={[() => titleAndMeta]} />,
+                    ]}
+                />
+            </div>
             {/* Progress SITS right under the text cluster, BEFORE the button:
             where am I → how much progress → what's next. Put it
             after the CTA and it reads as detached from the card, misread as belonging to the block below. */}

@@ -29,7 +29,7 @@ export const ValueAndLabel: Story = {
 export const WithIcon: Story = {
     render: () => (
         <div data-tier="fixture" className="rounded-2xl border p-8">
-            <HighlightChip icon={<BookOpenIcon data-tier="fixture" aria-hidden focusable="false" />} value={276} label="Exercises" />
+            <HighlightChip icon={BookOpenIcon} value={276} label="Exercises" />
         </div>
     ),
 }

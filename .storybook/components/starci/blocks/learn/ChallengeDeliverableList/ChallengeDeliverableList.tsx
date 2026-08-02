@@ -347,7 +347,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
                     <StackH
                         gap={3}
                         align="center"
-                        wrap
+                        at="sm"
 
                         items={[
                             () => <EnumChip value={graded.verdict} map={VERDICT_MAP} />,
@@ -440,10 +440,10 @@ const ChallengeDeliverableList = ({
 
     const accordionItems: Array<SurfaceCardAccordionItem> = items.map((item, index) => ({
         id: item.id,
-        titleStart: triggerIcon(item),
+        titleStart: () => triggerIcon(item),
         title: `${index + 1}. ${item.title}`,
-        titleEnd: scoreEnd(item),
-        body: deliverableBody(item),
+        titleEnd: () => scoreEnd(item),
+        body: () => deliverableBody(item),
     }))
 
     // ONE surface, not two: the accordion IS the card's entire content — nothing else

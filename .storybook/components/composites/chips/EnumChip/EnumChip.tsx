@@ -96,8 +96,10 @@ export const EnumChip = <E extends string>({ value, map, className, classNames, 
     if (isSkeleton) {
         // The atom's shimmer matches the real chip box, so no `h-6` patch is needed
         // here — a call site having to patch the atom's shape is the sign the atom is
-        // wrong, not this spot.
-        return <Chip isSkeleton className={className} classNames={classNames} />
+        // wrong, not this spot. `Chip` no longer takes a free `className`; the legacy
+        // string (kept only for the two `_legacy` callers) wraps a div instead.
+        const skeletonChip = <Chip isSkeleton classNames={classNames} />
+        return className ? <div className={className}>{skeletonChip}</div> : skeletonChip
     }
     const entry = map[value]
     if (!entry) {
@@ -106,17 +108,16 @@ export const EnumChip = <E extends string>({ value, map, className, classNames, 
     const chip = (
         <Chip
             tone={entry.color ?? "default"}
-            className={className}
             classNames={classNames}
-
             text={entry.label}
             icon={entry.icon != null ? ENUM_CHIP_ICON_MAP[entry.icon] : undefined}
         />
     )
+    const wrappedChip = className ? <div className={className}>{chip}</div> : chip
     if (entry.tooltip == null) {
-        return chip
+        return wrappedChip
     }
     return (
-        <Tooltip label={entry.tooltip}>{chip}</Tooltip>
+        <Tooltip label={entry.tooltip}>{wrappedChip}</Tooltip>
     )
 }

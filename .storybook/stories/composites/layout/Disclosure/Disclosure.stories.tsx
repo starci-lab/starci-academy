@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { type SkeletonProps } from "@sb-components/composites/_slot"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Typography } from "@heroui/react"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Disclosure } from "@sb-components/composites/layout/Disclosure/Disclosure"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -25,9 +25,12 @@ export default meta
 type Story = StoryObj<typeof Disclosure>
 
 const SampleContent = ({ isSkeleton }: SkeletonProps) => (
-    <Typography data-tier="fixture" type="body-sm" color="muted" isSkeleton={isSkeleton}>
-        Choose the question count, answer style, and language for the interview session.
-    </Typography>
+    <Typography
+        size="sm"
+        color="muted"
+        isSkeleton={isSkeleton}
+        text="Choose the question count, answer style, and language for the interview session."
+    />
 )
 
 /**

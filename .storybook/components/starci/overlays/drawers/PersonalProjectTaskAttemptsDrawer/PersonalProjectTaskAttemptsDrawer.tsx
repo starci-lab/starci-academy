@@ -128,7 +128,7 @@ const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
                 gap={4}
                 align="center"
                 justify="between"
-                wrap
+                at="sm"
                 isSkeleton={isSkeleton}
 
                 items={attemptLabelAndChip}
@@ -209,7 +209,7 @@ const PersonalProjectTaskAttemptsDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={DRAWER_TITLE}
-                className={className}
+                dialogClassName={className}
                 body={() => (
                     <AsyncContent
                         // A parent-forced skeleton and this drawer's own in-flight fetch share

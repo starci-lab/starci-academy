@@ -96,7 +96,7 @@ const FlashcardStudyCard = ({
     const metaRow = hasMeta ? (
         <StackH
             gap={3}
-            wrap
+            at="sm"
             align="center"
             isSkeleton={isSkeleton}
             items={[

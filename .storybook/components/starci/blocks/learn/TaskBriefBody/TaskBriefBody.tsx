@@ -125,10 +125,12 @@ const TaskBriefBody = ({
         id: item.key,
         title: `${index + 1}. ${item.text}`,
         titleEnd: () => <Chip tone="accent" text={`${item.score} pts`} />,
-        body: item.hint?.trim() ? (
-            <MarkdownContent source={item.hint} measure="compact" />
-        ) : (
-            <Typography size="sm" color="muted" isItalic text={CRITERIA_NO_HINT} />
+        body: () => (
+            item.hint?.trim() ? (
+                <MarkdownContent source={item.hint} measure="compact" />
+            ) : (
+                <Typography size="sm" color="muted" isItalic text={CRITERIA_NO_HINT} />
+            )
         ),
     }))
 
@@ -147,7 +149,7 @@ const TaskBriefBody = ({
     const implementationItems: Array<SurfaceCardAccordionItem> = (legacyCodeImplementations ?? []).map((item) => ({
         id: item.key,
         title: item.lang,
-        body: implementationBody(item),
+        body: () => implementationBody(item),
     }))
 
     const readingColumn = (

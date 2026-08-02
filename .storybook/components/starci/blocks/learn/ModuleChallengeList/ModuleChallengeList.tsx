@@ -94,7 +94,7 @@ const ModuleChallengeList = ({
             isSkeleton={isSkeleton}
             items={rows.map((challenge) => ({
                 key: challenge.id,
-                leading: isSkeleton ? (
+                leading: () => (isSkeleton ? (
                     // The color is chosen DIRECTLY by this block (no atom in between) —
                     // hand-roll a single shimmer dot in place of the puzzle icon.
                     <HeroSkeleton className="size-5 shrink-0 rounded-full" />
@@ -104,7 +104,7 @@ const ModuleChallengeList = ({
                         focusable="false"
                         className={CHALLENGE_LEADING_CLASS[challenge.completed ? "completed" : "todo"]}
                     />
-                ),
+                )),
                 title: challenge.title,
                 // Only a SOLVED challenge earns the subtitle — an unsolved row says
                 // nothing extra, the difficulty chip is already the row's other fact.
@@ -113,7 +113,7 @@ const ModuleChallengeList = ({
                 // Meta holds EXACTLY ONE thing: difficulty. The shape is owned by
                 // DESIGN — this block doesn't reshape the chip (§14d.1). The flag
                 // flows straight down into the `VariantChipDifficulty` atom.
-                meta: (
+                meta: () => (
                     <VariantChipDifficulty
                         difficulty={challenge.difficulty}
                         isSkeleton={isSkeleton}

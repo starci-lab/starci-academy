@@ -211,7 +211,7 @@ const ContentCommentThread = ({
             )}
 
             {!comment.isDeleted && !editing ? (
-                <StackH gap={4} wrap align="center" items={[() => actionRow]} />
+                <StackH gap={4} at="sm" align="center" items={[() => actionRow]} />
             ) : null}
         </>
     )
@@ -237,7 +237,7 @@ const ContentCommentThread = ({
                                 submitLabel="Reply"
                                 ariaLabel="Write a reply"
                                 currentUser={currentUser}
-                                className="min-w-0 flex-1"
+                                classNames={["min-w-0", "flex-1"]}
                                 onCancel={() => setReplying(false)}
                                 onSubmit={(body) => {
                                     onReply(comment.id, body)
@@ -306,7 +306,7 @@ const ContentCommentThread = ({
             byline={() => (
                 <StackH
                     gap={2}
-                    wrap
+                    at="sm"
                     align="center"
 
                     items={[() => (

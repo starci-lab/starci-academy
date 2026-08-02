@@ -134,30 +134,31 @@ const Base = ({
                             <Drawer.Header><Header isSkeleton={isSkeleton} /></Drawer.Header>
                         ) : title != null ? (
                             <Drawer.Header>
-                                <StackV
-                                    gap={2}
-                                    pattern="title-subtitle"
-                                    className={cn("pr-8", titleClassName)}
-                                    isSkeleton={isSkeleton}
-                                    items={[
-                                        () => (
-                                            <Typography
-                                                weight="bold"
-                                                isSkeleton={isSkeleton}
-                                                text={title}
-                                            />
-                                        ),
-                                        ...(description != null
-                                            ? [() => (
-                                                <Typography size="sm"
-                                                    color="muted"
+                                <div className={cn("pr-8", titleClassName)}>
+                                    <StackV
+                                        gap={2}
+                                        pattern="title-subtitle"
+                                        isSkeleton={isSkeleton}
+                                        items={[
+                                            () => (
+                                                <Typography
+                                                    weight="bold"
                                                     isSkeleton={isSkeleton}
-                                                    text={description}
+                                                    text={title}
                                                 />
-                                            )]
-                                            : []),
-                                    ]}
-                                />
+                                            ),
+                                            ...(description != null
+                                                ? [() => (
+                                                    <Typography size="sm"
+                                                        color="muted"
+                                                        isSkeleton={isSkeleton}
+                                                        text={description}
+                                                    />
+                                                )]
+                                                : []),
+                                        ]}
+                                    />
+                                </div>
                             </Drawer.Header>
                         ) : null}
                         <Drawer.Body

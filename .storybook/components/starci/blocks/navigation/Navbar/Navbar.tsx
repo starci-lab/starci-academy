@@ -408,7 +408,11 @@ const Navbar = ({
                     onRetry: notifications.onRetry,
                     retryLabel: "Try again",
                 }}
-                content={() => <StackV gap={1} className="max-h-[420px] overflow-y-auto" items={[() => notificationRows]} />}
+                content={() => (
+                    <div className="max-h-[420px] overflow-y-auto">
+                        <StackV gap={1} items={[() => notificationRows]} />
+                    </div>
+                )}
             />
             <Button
                 variant="ghost"
@@ -476,7 +480,9 @@ const Navbar = ({
                 />
             </span>
 
-            <StackH gap={3} className="hidden @app-md:flex" items={[() => quickControls]} />
+            <div className="hidden @app-md:flex">
+                <StackH gap={3} items={[() => quickControls]} />
+            </div>
 
             {/* cart — always shown (guests included), count badge only when non-empty.
                 Raw HeroUI `Button` (not our atom, see file header): the atom's
@@ -514,7 +520,7 @@ const Navbar = ({
                     </HeroButton>
                     <PopoverContent placement="bottom right" className="w-[360px]">
                         {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
-                        <StackV gap={2} className="px-2 py-1" items={[() => notificationPanel]} />
+                        <StackV gap={2} padding={{ x: 3, y: 2 }} items={[() => notificationPanel]} />
                     </PopoverContent>
                 </Popover>
             ) : null}
@@ -648,13 +654,15 @@ const Navbar = ({
             className={cn("sticky top-0 z-50 border-b border-default bg-surface", className)}
         >
             {/* primary row — fixed 4rem tall, matching the real bar's height contract */}
-            <StackH
-                gap={6}
-                justify="between"
-                className="h-16 min-h-16 px-3"
+            <div className="h-16 min-h-16">
+                <StackH
+                    gap={6}
+                    justify="between"
+                    padding={{ x: 4 }}
 
-                items={[() => primaryRow]}
-            />
+                    items={[() => primaryRow]}
+                />
+            </div>
 
             {/* mobile navigation drawer — the ONE local (non-overlay-store) drawer this run's
                 contract calls for; every other overlay in this system opens through the global

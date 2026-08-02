@@ -239,9 +239,9 @@ const FlashcardDeckList = ({
             subtitle: deck.description ?? `${deck.totalCount} cards`,
             meta: metaChips.length > 0 ? () => <Cluster gap={3} items={metaChips} /> : undefined,
             trailing:
-                showProgress && !isSkeleton && deck.totalCount > 0 ? (
-                    <Typography size="xs" color="muted" text={`${deck.masteredCount ?? 0}/${deck.totalCount}`} />
-                ) : undefined,
+                showProgress && !isSkeleton && deck.totalCount > 0
+                    ? () => <Typography size="xs" color="muted" text={`${deck.masteredCount ?? 0}/${deck.totalCount}`} />
+                    : undefined,
             onPress: usingPlaceholders ? undefined : () => onSelectDeck(deck.id),
         }
     })
@@ -287,7 +287,7 @@ const FlashcardDeckList = ({
 
     const listBody = (
         <>
-            <StackH gap={3} wrap isSkeleton={isSkeleton} items={[() => searchAndView]} />
+            <StackH gap={3} at="sm" isSkeleton={isSkeleton} items={[() => searchAndView]} />
             {track}
             {!isSkeleton && decks.length > 0 ? (
                 <div>

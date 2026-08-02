@@ -75,12 +75,12 @@ const SettingsLayout = ({
 
     return (
         <div>
-            <StackV
-                gap={1}
-                className="@app-md:flex-row @app-md:items-start"
-
-                items={navAndContent}
-            />
+            <div className="@app-md:flex-row @app-md:items-start">
+                <StackV
+                    gap={1}
+                    items={navAndContent}
+                />
+            </div>
         </div>
     )
 }

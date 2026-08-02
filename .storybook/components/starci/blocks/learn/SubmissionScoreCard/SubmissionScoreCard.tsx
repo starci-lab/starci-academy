@@ -125,7 +125,7 @@ const SubmissionScoreCard = ({
         <StackH
             gap={3}
             align="center"
-            wrap
+            at="sm"
             isSkeleton={isSkeleton}
 
             items={[
@@ -161,7 +161,7 @@ const SubmissionScoreCard = ({
 
     const scoreSummary = (
         <>
-            <StackH gap={4} align="baseline" wrap isSkeleton={isSkeleton} items={[() => scoreRow]} />
+            <StackH gap={4} align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />
 
             {pointsNeeded != null && pointsNeeded > 0 ? (
                 <Typography

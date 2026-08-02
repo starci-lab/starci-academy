@@ -135,7 +135,7 @@ const PlaygroundExerciseGrid = ({
 
     const items: Array<SurfaceCardPressableGroupItem> = source.map((exercise) => ({
         key: exercise.id,
-        content: renderExerciseContent(exercise),
+        content: () => renderExerciseContent(exercise),
         // Guessed placeholder tiles never become press targets — nothing
         // underneath can act yet, and a clickable shimmer tile would be a
         // false affordance (rule 7's boundary: this is NOT a business lock).

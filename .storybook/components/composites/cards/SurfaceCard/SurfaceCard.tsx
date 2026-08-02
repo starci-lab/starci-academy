@@ -376,7 +376,11 @@ const Base = ({
                     isSkeleton={isSkeleton}
                     items={[
                         () => <div className="min-w-0 flex-1">{content}</div>,
-                        () => <StackH isSkeleton={isSkeleton} gap={3} classNames={["shrink-0"]} className="relative z-10" items={[() => actions]} />,
+                        () => (
+                            <div className="relative z-10">
+                                <StackH isSkeleton={isSkeleton} gap={3} classNames={["shrink-0"]} items={[() => actions]} />
+                            </div>
+                        ),
                     ]}
                 />
                 {href && !isDisabled ? (
@@ -625,38 +629,37 @@ const Nested = ({
             data-component="SurfaceCardNested"
         >
             {hasHeader ? (
-                // ⚠️ Padding stays literal (`px-3 py-2`, ASYMMETRIC): the new `AllowedPadding`
-                // scale DOES have an x/y shape (`PaddingValue = AllowedPadding | { x?; y? }`,
-                // see padding.md) that could now express this — but this class also carries
-                // the header's own border chrome (`border-b border-default`) in the same
-                // string, and only a frame owns chrome+padding together, not a composite
-                // hand-class. Left as a finding rather than converted (only the `flex`/`gap`
-                // layout below is routed through the frame).
-                <StackH
-                    gap={3}
-                    justify="between"
-                    classNames={["min-w-0"]}
-                    className="border-b border-default px-3 py-2"
-                    isSkeleton={isSkeleton}
-                    items={[
-                        () => (Header != null ? <Header isSkeleton={isSkeleton} /> : (
-                            // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
-                            <StackH
-                                gap={3}
-                                classNames={["min-w-0"]}
-                                className="text-muted [&_svg]:size-4"
-                                isSkeleton={isSkeleton}
-                                items={[
-                                    ...(Icon ? [() => <Icon aria-hidden focusable="false" />] : []),
-                                    () => (isSkeleton
-                                        ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-                                        : <Typography size="xs" color="muted" truncate text={title} />),
-                                ]}
-                            />
-                        )),
-                        ...(Meta ? [() => <span className="shrink-0"><Meta /></span>] : []),
-                    ]}
-                />
+                // ⚠️ The header's own border chrome (`border-b border-default`) is not a
+                // positioning token, so it wraps a div; the `px-3 py-2` padding threads
+                // through the frame's own `padding` prop (asymmetric x/y shape).
+                <div className="border-b border-default">
+                    <StackH
+                        gap={3}
+                        justify="between"
+                        classNames={["min-w-0"]}
+                        padding={{ x: 4, y: 3 }}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (Header != null ? <Header isSkeleton={isSkeleton} /> : (
+                                // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
+                                <div className="text-muted [&_svg]:size-4">
+                                    <StackH
+                                        gap={3}
+                                        classNames={["min-w-0"]}
+                                        isSkeleton={isSkeleton}
+                                        items={[
+                                            ...(Icon ? [() => <Icon aria-hidden focusable="false" />] : []),
+                                            () => (isSkeleton
+                                                ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+                                                : <Typography size="xs" color="muted" truncate text={title} />),
+                                        ]}
+                                    />
+                                </div>
+                            )),
+                            ...(Meta ? [() => <span className="shrink-0"><Meta /></span>] : []),
+                        ]}
+                    />
+                </div>
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {Footer ? (
@@ -1088,68 +1091,68 @@ const SelectableGroup = <T extends string>({
     columns = 2,
     classNames,
 }: SurfaceCardSelectableGroupProps<T>) => (
-    <RadioGroup
-        aria-label={ariaLabel}
-        value={value}
-        onChange={(next) => onChange(next as T)}
-        data-tier="composite"
-        data-component="SurfaceCardSelectableGroup"
-    >
-        <Grid
-            gap={3}
-            columns={SELECTABLE_GROUP_COLUMNS[columns]}
-            classNames={classNames}
-            items={items.map((item) => ({
-                key: item.value,
-                content: () => (
-                    <Radio value={item.value} isDisabled={item.isDisabled} className="w-full">
-                        <Radio.Content className="block w-full">
-                            {({ isSelected, isDisabled, isFocusVisible }) => {
-                                const optionRow = (
-                                    <>
-                                        {item.icon ? (
-                                            <span className="shrink-0" aria-hidden>
-                                                <item.icon />
-                                            </span>
-                                        ) : null}
-                                        <span className="flex min-w-0 flex-col">
-                                            <Typography size="sm" truncate text={item.label} />
-                                            {item.description != null ? (
-                                                <Typography size="xs" color="muted" truncate text={item.description} />
+        <RadioGroup
+            aria-label={ariaLabel}
+            value={value}
+            onChange={(next) => onChange(next as T)}
+            data-tier="composite"
+            data-component="SurfaceCardSelectableGroup"
+        >
+            <Grid
+                gap={3}
+                columns={SELECTABLE_GROUP_COLUMNS[columns]}
+                classNames={classNames}
+                items={items.map((item) => ({
+                    key: item.value,
+                    content: () => (
+                        <Radio value={item.value} isDisabled={item.isDisabled} className="w-full">
+                            <Radio.Content className="block w-full">
+                                {({ isSelected, isDisabled, isFocusVisible }) => {
+                                    const optionRow = (
+                                        <>
+                                            {item.icon ? (
+                                                <span className="shrink-0" aria-hidden>
+                                                    <item.icon />
+                                                </span>
                                             ) : null}
-                                        </span>
-                                        {item.badge ? (
-                                            <span className="ml-auto shrink-0">
-                                                <item.badge />
+                                            <span className="flex min-w-0 flex-col">
+                                                <Typography size="sm" truncate text={item.label} />
+                                                {item.description != null ? (
+                                                    <Typography size="xs" color="muted" truncate text={item.description} />
+                                                ) : null}
                                             </span>
-                                        ) : null}
-                                    </>
-                                )
-                                return (
-                                    <Card
-                                        variant="default"
-                                        className={cn(
-                                            "w-full text-sm text-foreground transition-colors",
-                                            // selection & keyboard focus = an accent OUTLINE ring, NO
-                                            // fill / colour change. Drop the card's `shadow-surface`
-                                            // while the ring is up so the two elevations don't stack.
-                                            (isSelected || isFocusVisible) &&
+                                            {item.badge ? (
+                                                <span className="ml-auto shrink-0">
+                                                    <item.badge />
+                                                </span>
+                                            ) : null}
+                                        </>
+                                    )
+                                    return (
+                                        <Card
+                                            variant="default"
+                                            className={cn(
+                                                "w-full text-sm text-foreground transition-colors",
+                                                // selection & keyboard focus = an accent OUTLINE ring, NO
+                                                // fill / colour change. Drop the card's `shadow-surface`
+                                                // while the ring is up so the two elevations don't stack.
+                                                (isSelected || isFocusVisible) &&
                                             "outline outline-2 outline-accent outline-offset-0 !shadow-none",
-                                            !isSelected && !isDisabled && "hover:bg-default",
-                                            isDisabled && "opacity-60",
-                                        )}
-                                    >
-                                        <StackH gap={3} classNames={["w-full"]} items={[() => optionRow]} />
-                                    </Card>
-                                )
-                            }}
-                        </Radio.Content>
-                    </Radio>
-                ),
-            }))}
-        />
-    </RadioGroup>
-)
+                                                !isSelected && !isDisabled && "hover:bg-default",
+                                                isDisabled && "opacity-60",
+                                            )}
+                                        >
+                                            <StackH gap={3} classNames={["w-full"]} items={[() => optionRow]} />
+                                        </Card>
+                                    )
+                                }}
+                            </Radio.Content>
+                        </Radio>
+                    ),
+                }))}
+            />
+        </RadioGroup>
+    )
 // ─────────────────────────────────────────────────────────────────────────────
 // .List — bounded surface list of rows (was `SurfaceListCard` + its two rows)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1380,13 +1383,14 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
-                        <Typography size="sm"
-                            truncate
-                            isSkeleton={isSkeleton}
-                            underlineOnGroupHover={underlineHover}
-                            className={titleClassName}
-                            text={title}
-                        />
+                        <div className={titleClassName}>
+                            <Typography size="sm"
+                                truncate
+                                isSkeleton={isSkeleton}
+                                underlineOnGroupHover={underlineHover}
+                                text={title}
+                            />
+                        </div>
                     ),
                     ...(subtitle ? [() => (
                         <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
@@ -1394,20 +1398,21 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 ]}
             />
             {metaSlot || trailingSlot || selected ? (
-                <StackH
-                    gap={3}
-                    classNames={["shrink-0"]}
-                    className="ml-auto"
-                    isSkeleton={isSkeleton}
-                    items={[
-                        () => metaSlot,
-                        () => trailingSlot,
-                        // Single-select indicator — trailing accent CheckCircleIcon (B).
-                        ...(selected ? [() => (
-                            <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
-                        )] : []),
-                    ]}
-                />
+                <div className="ml-auto">
+                    <StackH
+                        gap={3}
+                        classNames={["shrink-0"]}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => metaSlot,
+                            () => trailingSlot,
+                            // Single-select indicator — trailing accent CheckCircleIcon (B).
+                            ...(selected ? [() => (
+                                <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
+                            )] : []),
+                        ]}
+                    />
+                </div>
             ) : null}
         </>
     )
@@ -1659,20 +1664,21 @@ const AccordionCard = ({
                         return TitleStart ? <TitleStart /> : null
                     }] : []),
                     () => (
-                        <StackV
-                            gap={1}
-                            classNames={["min-w-0", "flex-1"]}
-                            className="text-left"
-                            isSkeleton={isSkeleton}
-                            items={[
-                                // title does NOT render markdown, not even backtick-only via `parseInlineCode`.
-                                // Title tier is plain, absolutely.
-                                () => <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} text={item.title} />,
-                                ...(item.subtitle != null ? [() => (
-                                    <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={item.subtitle} />
-                                )] : []),
-                            ]}
-                        />
+                        <div className="text-left">
+                            <StackV
+                                gap={1}
+                                classNames={["min-w-0", "flex-1"]}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    // title does NOT render markdown, not even backtick-only via `parseInlineCode`.
+                                    // Title tier is plain, absolutely.
+                                    () => <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} text={item.title} />,
+                                    ...(item.subtitle != null ? [() => (
+                                        <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={item.subtitle} />
+                                    )] : []),
+                                ]}
+                            />
+                        </div>
                     ),
                     ...(item.titleEnd ? [() => {
                         const TitleEnd = item.titleEnd
@@ -1854,27 +1860,30 @@ const CrossListRow = ({
     text,
     isSkeleton = false,
 }: Omit<SurfaceCardCrossListItem, "key" | "text"> & { text?: string; isSkeleton?: boolean }) => (
-    <StackH
-        as="li"
-        gap={4}
-        align="start"
-        padding={4}
-        className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-        isSkeleton={isSkeleton}
-        items={
-            isSkeleton ? [
-                () => <div aria-hidden className="size-5 shrink-0 rounded-full bg-default" />,
-                () => (
-                    <div className="min-w-0 flex-1">
-                        <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                    </div>
-                ),
-            ] : [
-                () => markIcon(mark, tone),
-                () => <div className="min-w-0 flex-1"><Typography size="sm" text={text ?? ""} /></div>,
-            ]
-        }
-    />
+    // The full-bleed inset separator (`after:*`) is chrome, not a positioning token, so it
+    // wraps the `<li>` itself (a plain `<div>` here would break `<ul>`/`<li>` nesting) — the
+    // frame inside stays a plain `div` and only lays out the row's two children.
+    <li className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden">
+        <StackH
+            gap={4}
+            align="start"
+            padding={4}
+            isSkeleton={isSkeleton}
+            items={
+                isSkeleton ? [
+                    () => <div aria-hidden className="size-5 shrink-0 rounded-full bg-default" />,
+                    () => (
+                        <div className="min-w-0 flex-1">
+                            <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
+                        </div>
+                    ),
+                ] : [
+                    () => markIcon(mark, tone),
+                    () => <div className="min-w-0 flex-1"><Typography size="sm" text={text ?? ""} /></div>,
+                ]
+            }
+        />
+    </li>
 )
 /**
  * Static "brief list" of MARKED rows (✓ / ✗ / none) in a bounded `bg-surface` card with

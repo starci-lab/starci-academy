@@ -159,17 +159,19 @@ export const SegmentBar = ({
             </div>
             {!hideLegend ? (
                 <Legend
-
-
-                    isSkeleton={isSkeleton}
-                    items={isSkeleton ? undefined : colored.map((segment) => ({
-                        key: segment.key,
-                        label: segment.label,
-                        color: segment.color,
-                        // the strip already prints the % inline in ladder mode, so
-                        // drop the count suffix there; otherwise show the real count.
-                        suffix: !inlineLabels ? ` · ${segment.value}` : undefined,
-                    }))}
+                    {...(isSkeleton
+                        ? { isSkeleton: true, items: undefined }
+                        : {
+                            isSkeleton: false,
+                            items: colored.map((segment) => ({
+                                key: segment.key,
+                                label: segment.label,
+                                color: segment.color,
+                                // the strip already prints the % inline in ladder mode, so
+                                // drop the count suffix there; otherwise show the real count.
+                                suffix: !inlineLabels ? ` · ${segment.value}` : "",
+                            })),
+                        })}
                 />
             ) : null}
             {caption !== undefined ? (

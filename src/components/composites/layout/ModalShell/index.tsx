@@ -155,30 +155,31 @@ const Base = ({
                             <Modal.Header><Header isSkeleton={isSkeleton} /></Modal.Header>
                         ) : title != null ? (
                             <Modal.Header>
-                                <StackV
-                                    gap={2}
-                                    pattern="title-subtitle"
-                                    className={cn("pr-8", titleClassName)}
-                                    isSkeleton={isSkeleton}
-                                    items={[
-                                        () => (
-                                            <Typography
-                                                weight="bold"
-                                                isSkeleton={isSkeleton}
-                                                text={title}
-                                            />
-                                        ),
-                                        ...(description != null
-                                            ? [() => (
-                                                <Typography size="sm"
-                                                    color="muted"
+                                <div className={cn("pr-8", titleClassName)}>
+                                    <StackV
+                                        gap={2}
+                                        pattern="title-subtitle"
+                                        isSkeleton={isSkeleton}
+                                        items={[
+                                            () => (
+                                                <Typography
+                                                    weight="bold"
                                                     isSkeleton={isSkeleton}
-                                                    text={description}
+                                                    text={title}
                                                 />
-                                            )]
-                                            : []),
-                                    ]}
-                                />
+                                            ),
+                                            ...(description != null
+                                                ? [() => (
+                                                    <Typography size="sm"
+                                                        color="muted"
+                                                        isSkeleton={isSkeleton}
+                                                        text={description}
+                                                    />
+                                                )]
+                                                : []),
+                                        ]}
+                                    />
+                                </div>
                             </Modal.Header>
                         ) : null}
                         {/* ⚠️ `bodyStartsWithTabs` was DELETED in this same pass. It made the

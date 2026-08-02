@@ -102,7 +102,7 @@ const RatingBar = ({
         onPress: () => onRate(option.grade),
         isDisabled: isPending,
         withVerdict: { enable: true, color: GRADE_COLOR[option.grade] },
-        content: ratingTileBody(option, position),
+        content: () => ratingTileBody(option, position),
     }))
 
     return (

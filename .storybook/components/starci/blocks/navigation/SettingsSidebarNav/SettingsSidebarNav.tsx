@@ -230,34 +230,35 @@ const SettingsSidebarNav = ({
             {/* ── Mobile pill bar — the OTHER leaf: chip-shaped buttons in a horizontal
                 scroll strip, not the rail's row shape. Visible only below @app-md. */}
             <nav aria-label={mobileNavAriaLabel ?? title} className="sticky top-16 z-30 @app-md:hidden">
-                <StackH
-                    gap={3}
-                    className="overflow-x-auto border-b border-default bg-background/80 px-3 py-2 backdrop-blur-xl"
-
-                    items={flatItems.map((item) => () => {
-                        const isActive = item.href === activeHref
-                        const Icon = DESTINATION_ICON[item.key]
-                        const pillContent = (
-                            <>
-                                <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
-                                <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />
-                            </>
-                        )
-                        return (
-                            <button
-                                type="button"
-                                aria-current={isActive ? "page" : undefined}
-                                onClick={() => onNavigate(item.href)}
-                                className={cn(
-                                    "shrink-0 rounded-full border px-3 py-2 transition-colors",
-                                    isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
-                                )}
-                            >
-                                <StackH gap={2} align="center" items={[() => pillContent]} />
-                            </button>
-                        )
-                    })}
-                />
+                <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
+                    <StackH
+                        gap={3}
+                        padding={{ x: 4, y: 3 }}
+                        items={flatItems.map((item) => () => {
+                            const isActive = item.href === activeHref
+                            const Icon = DESTINATION_ICON[item.key]
+                            const pillContent = (
+                                <>
+                                    <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
+                                    <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />
+                                </>
+                            )
+                            return (
+                                <button
+                                    type="button"
+                                    aria-current={isActive ? "page" : undefined}
+                                    onClick={() => onNavigate(item.href)}
+                                    className={cn(
+                                        "shrink-0 rounded-full border px-3 py-2 transition-colors",
+                                        isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
+                                    )}
+                                >
+                                    <StackH gap={2} align="center" items={[() => pillContent]} />
+                                </button>
+                            )
+                        })}
+                    />
+                </div>
             </nav>
         </div>
     )

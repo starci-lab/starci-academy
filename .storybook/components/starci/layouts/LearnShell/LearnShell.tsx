@@ -144,12 +144,12 @@ const LearnShell = ({
 
                 />
             ) : (
-                <StackH
-                    gap={1}
-                    className="min-h-[calc(100dvh-4rem)]"
-
-                    items={railAndContent}
-                />
+                <div className="min-h-[calc(100dvh-4rem)]">
+                    <StackH
+                        gap={1}
+                        items={railAndContent}
+                    />
+                </div>
             )}
 
             {showAiTriggers ? (

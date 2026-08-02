@@ -243,23 +243,25 @@ const readingColumn = (props: {
             id: item.key,
             title: `${index + 1}. ${item.text}`,
             titleEnd: () => <Chip tone="accent" text={`${item.score} points`} />,
-            body: item.hint
-                ? legacyMarkdown(item.hint)
-                : <Typography size="sm" color="muted"
- isItalic text="No grading hint yet" />,
+            body: () => (
+                item.hint
+                    ? legacyMarkdown(item.hint)
+                    : <Typography size="sm" color="muted"
+                        isItalic text="No grading hint yet" />
+            ),
         }))
         : isSkeleton
-            ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `criteria-skeleton-${index}`, title: "", body: null }))
+            ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `criteria-skeleton-${index}`, title: "", body: () => null }))
             : []
 
     const codeItems: Array<SurfaceCardAccordionItem> = hasLegacyCode
         ? (legacyCodeImplementations ?? []).map((item) => ({
             id: item.key,
             title: item.lang,
-            body: legacyCodeBody(item),
+            body: () => legacyCodeBody(item),
         }))
         : isSkeleton
-            ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `code-skeleton-${index}`, title: "", body: null }))
+            ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `code-skeleton-${index}`, title: "", body: () => null }))
             : []
 
     const legacyAccordions = (
@@ -400,14 +402,14 @@ const submissionPanel = (props: {
                 <ListRow
                     leading={SettingsLeading}
                     title="Grading settings"
-                    meta={`${panel.settingsLangLabel} · ${panel.settingsBranch}`}
+                    meta={() => <Typography size="sm" color="muted" text={`${panel.settingsLangLabel} · ${panel.settingsBranch}`} />}
                     trailing={SettingsChevron}
                     onPress={panel.onOpenSettings}
                     isSkeleton={isSkeleton}
 
                 />
             </div>
-            <StackH gap={3} wrap isSkeleton={isSkeleton} items={[() => evaluateActions]} />
+            <StackH gap={3} at="sm" isSkeleton={isSkeleton} items={[() => evaluateActions]} />
         </>
     )
 

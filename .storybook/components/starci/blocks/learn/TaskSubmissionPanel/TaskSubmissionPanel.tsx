@@ -199,7 +199,7 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
                 <StackH
                     gap={3}
                     align="center"
-                    wrap
+                    at="sm"
                     isSkeleton={isSkeleton}
 
                     items={[
@@ -254,7 +254,7 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton 
         gap={3}
         align="center"
         justify="between"
-        wrap
+        at="sm"
         isSkeleton={isSkeleton}
 
         items={[
@@ -345,7 +345,7 @@ const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps) => {
             isSkeleton={isSkeleton}
 
             items={[
-                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} align="baseline" wrap isSkeleton={isSkeleton} items={[() => scoreRow]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />,
                 ...(result.shortFeedback != null ? [() => (
                     <Typography
                         size="sm"

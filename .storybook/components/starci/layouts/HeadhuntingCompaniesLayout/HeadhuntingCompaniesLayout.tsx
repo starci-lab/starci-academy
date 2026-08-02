@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { SidebarIcon } from "@phosphor-icons/react"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/AsyncContent"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `HeadhuntingCompaniesLayout` — the wrapper for every route under
@@ -20,7 +21,7 @@ export interface HeadhuntingCompaniesLayoutProps {
      */
     children: ReactNode
     /** Extra class on the root track. */
-    className?: string
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -32,7 +33,7 @@ export interface HeadhuntingCompaniesLayoutProps {
  */
 const HeadhuntingCompaniesLayout = ({
     children,
-    className,
+    classNames,
 }: HeadhuntingCompaniesLayoutProps) => {
     const navAndContent = (
         <>
@@ -54,7 +55,7 @@ const HeadhuntingCompaniesLayout = ({
     )
 
     return (
-        <StackH gap={6} align="start" className={className} items={[() => navAndContent]} />
+        <StackH gap={6} align="start" classNames={classNames} items={[() => navAndContent]} />
     )
 }
 

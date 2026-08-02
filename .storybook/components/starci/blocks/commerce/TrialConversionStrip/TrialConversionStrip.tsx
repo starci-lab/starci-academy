@@ -170,7 +170,7 @@ const TrialConversionStripBase = ({
             gap={6}
             align="end"
             justify="between"
-            wrap
+            at="sm"
             isSkeleton={isSkeleton}
             items={[
                 () => priceColumn,

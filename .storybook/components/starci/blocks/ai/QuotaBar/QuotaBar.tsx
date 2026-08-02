@@ -2,6 +2,7 @@ import React from "react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ProgressBar, type ProgressColor } from "@sb-components/atoms/display/Progress/Progress"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `QuotaBar` — a BLOCK: one labelled used/limit AI-credit row ("Next 5 hours" over
@@ -60,7 +61,8 @@ export interface QuotaBarProps {
     resetLabel?: string | null
     /** `true` → the block draws its own row mirror (label, bar, caption all shimmer). */
     isSkeleton?: boolean
-    className?: string
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -75,7 +77,7 @@ const QuotaBar = ({
     showUnit = false,
     resetLabel,
     isSkeleton = false,
-    className,
+    classNames,
 }: QuotaBarProps) => {
     const ratio = limit > 0
         ? Math.min(1, Math.max(0, used / limit))
@@ -153,7 +155,7 @@ const QuotaBar = ({
     return (
         <StackV
             gap={4}
-            className={className}
+            classNames={classNames}
             isSkeleton={isSkeleton}
             items={[
                 () => labelRow,

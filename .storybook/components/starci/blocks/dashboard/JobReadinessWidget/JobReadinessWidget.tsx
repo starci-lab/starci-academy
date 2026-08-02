@@ -120,14 +120,14 @@ const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
         <>
             <StackH
                 gap={4}
-                wrap
+                at="sm"
                 align="center"
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <StatPair
-                            value={isSkeleton ? undefined : String(track.depthScore ?? 0)}
-                            label={isSkeleton ? undefined : track.courseTitle}
+                            value={(isSkeleton ? undefined : String(track.depthScore ?? 0)) ?? ""}
+                            label={(isSkeleton ? undefined : track.courseTitle) ?? ""}
                             isSkeleton={isSkeleton}
 
                         />

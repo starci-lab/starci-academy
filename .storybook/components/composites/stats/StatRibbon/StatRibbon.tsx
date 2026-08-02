@@ -89,27 +89,28 @@ export const StatRibbon = ({
                 top+bottom border = FULL-HEIGHT. Cells carry their own padding instead. The
                 divider is a per-cell `border-l` (Tailwind v4 here emits no `divide-*` rule).
                 Mobile keeps the padded 2-col grid (no dividers there). */}
-            <ResponsiveRow
-                columns={2}
-                at="sm"
-                gap={4}
-                className="@app-sm:-m-3"
-                items={cells.map((item, index) => () => (
-                    <div
+            <div className="@app-sm:-m-3">
+                <ResponsiveRow
+                    columns={2}
+                    at="sm"
+                    gap={4}
+                    items={cells.map((item, index) => () => (
+                        <div
 
-                        className={cn(
-                            "min-w-0 @app-sm:flex-1 @app-sm:px-6 @app-sm:py-3 @app-sm:first:pl-3 @app-sm:last:pr-3",
-                            index > 0 && "@app-sm:border-l @app-sm:border-default",
-                        )}
-                    >
-                        {isSkeleton ? (
-                            <StatPair isSkeleton valueType={valueType} />
-                        ) : (
-                            <StatPair value={(item as StatRibbonItem).value} label={(item as StatRibbonItem).label} valueType={valueType} />
-                        )}
-                    </div>
-                ))}
-            />
+                            className={cn(
+                                "min-w-0 @app-sm:flex-1 @app-sm:px-6 @app-sm:py-3 @app-sm:first:pl-3 @app-sm:last:pr-3",
+                                index > 0 && "@app-sm:border-l @app-sm:border-default",
+                            )}
+                        >
+                            {isSkeleton ? (
+                                <StatPair isSkeleton valueType={valueType} />
+                            ) : (
+                                <StatPair value={(item as StatRibbonItem).value} label={(item as StatRibbonItem).label} valueType={valueType} />
+                            )}
+                        </div>
+                    ))}
+                />
+            </div>
         </Card>
     )
 }

@@ -12,6 +12,7 @@ import {
     type AiQuotaHistoryChartPoint,
     type AiQuotaHistoryChargeItem,
 } from "@sb-components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `AiQuotaModal` — the root overlay for "how much AI have I used": a dialog with the
@@ -84,7 +85,7 @@ export interface AiQuotaModalProps {
     /** Fired when the "view full usage" link is pressed. */
     onViewDetails: () => void
     /** Extra classes merged onto the dialog. */
-    className?: string
+    classNames?: Array<AllowedClassName>
 }
 
 /** Tab → label. The block's own vocabulary (§14d.1), same pattern as `ContentModeNav`'s `MODE_LABEL`. */
@@ -125,7 +126,7 @@ const AiQuotaModal = ({
     history,
     onSubscribe,
     onViewDetails,
-    className,
+    classNames,
 }: AiQuotaModalProps) => {
     // Caller-built header (title + optional tier chip): `ModalShell.title` only carries ONE
     // Typography node, so a second element beside it (the chip) has to compose its own
@@ -146,13 +147,13 @@ const AiQuotaModal = ({
     ]
 
     const header = (
-        <StackH
-            gap={3}
-            align="center"
-            className="pr-8"
-
-            items={titleAndTierChip}
-        />
+        <div className="pr-8">
+            <StackH
+                gap={3}
+                align="center"
+                items={titleAndTierChip}
+            />
+        </div>
     )
 
     // The one panel slot, filled by whichever sibling block the active tab names. The wrapper
@@ -205,7 +206,7 @@ const AiQuotaModal = ({
                 header={() => header}
                 size="lg"
                 scroll="inside"
-                className={className}
+                classNames={classNames}
                 footer={() => (
                     <LinkSeeMore
                         label="View full usage"

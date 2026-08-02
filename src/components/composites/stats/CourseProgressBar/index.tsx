@@ -110,14 +110,18 @@ export const CourseProgressBar = ({
                     </div>
                 ),
                 ...(!hideLegend ? [() => (
-                    <Legend
-                            isSkeleton={isSkeleton}
-                            items={isSkeleton ? undefined : lanes.map((lane) => ({
+                    isSkeleton ? (
+                        <Legend isSkeleton />
+                    ) : (
+                        <Legend
+                            isSkeleton={false}
+                            items={lanes.map((lane) => ({
                                 key: lane.key,
                                 label: lane.label,
                                 color: lane.color,
                                 suffix: ` · ${lane.completed}`}))}
-                    />
+                        />
+                    )
                 )] : []),
             ]}
         />

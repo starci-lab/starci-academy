@@ -46,7 +46,7 @@ const Byline = ({ isSkeleton }: SkeletonProps) => (
                     weight="medium"
                     text="Minh Anh"
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-20"] : undefined}
+                    classNames={isSkeleton ? ["w-1/3"] : undefined}
                 />
             ),
             ...(!isSkeleton ? [
@@ -58,7 +58,7 @@ const Byline = ({ isSkeleton }: SkeletonProps) => (
                     color="muted"
                     text="2 hours ago"
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-16"] : undefined}
+                    classNames={isSkeleton ? ["w-1/4"] : undefined}
                 />
             ),
         ]}
@@ -90,7 +90,7 @@ export const Default: Story = {
                     {
                         name: "byline + body components",
                         why: "Both seams (avatar↔column, byline↔body) are `gap={2}` — a deliberate denser standalone treatment, not a `src`-fidelity port.",
-                        code: `<IdentityContentRow avatarName="Minh Anh" avatarSeed="u1" byline={Byline} body={CommentBody} />`,
+                        code: "<IdentityContentRow avatarName=\"Minh Anh\" avatarSeed=\"u1\" byline={Byline} body={CommentBody} />",
                         render: (
                             <IdentityContentRow
 

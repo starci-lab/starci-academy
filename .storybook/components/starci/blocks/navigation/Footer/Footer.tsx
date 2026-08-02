@@ -119,7 +119,9 @@ const Footer = ({
     const brandMark = (
         <>
             <Logo size="footer" />
-            <StackV gap={1} className="hidden @app-md:flex" items={[() => wordmark]} />
+            <div className="hidden @app-md:flex">
+                <StackV gap={1} items={[() => wordmark]} />
+            </div>
         </>
     )
 
@@ -161,8 +163,10 @@ const Footer = ({
     // top region: brand + tagline + socials (left) · two link columns (right)
     const topRegion = (
         <>
-            <StackV gap={4} className="max-w-sm" items={[() => brandColumn]} />
-            <StackH gap={7} wrap items={[() => linkColumns]} />
+            <div className="max-w-sm">
+                <StackV gap={4} items={[() => brandColumn]} />
+            </div>
+            <StackH gap={7} at="sm" items={[() => linkColumns]} />
         </>
     )
 
@@ -203,17 +207,19 @@ const Footer = ({
             <StackH
                 gap={7}
                 justify="between"
-                className="flex-col @app-md:flex-row"
+                at="md"
 
                 items={[() => topRegion]}
             />
-            <StackH
-                gap={3}
-                justify="between"
-                className="flex-col items-start @app-sm:flex-row @app-sm:items-center"
+            <div className="items-start @app-sm:items-center">
+                <StackH
+                    gap={3}
+                    justify="between"
+                    at="sm"
 
-                items={[() => bottomBar]}
-            />
+                    items={[() => bottomBar]}
+                />
+            </div>
         </>
     )
 

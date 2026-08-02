@@ -94,7 +94,7 @@ const ContentPager = ({
         items.push({
             key: "previous",
             href: previous.href,
-            content: previousCard,
+            content: () => previousCard,
         })
     }
     if (next) {
@@ -128,7 +128,7 @@ const ContentPager = ({
             // card) is the nearest supported fallback — same as the `PagerFullWidth`
             // leaf in `SurfaceCardPressableGroup.stories.tsx`.
             classNames: ["col-span-2"],
-            content: nextCard,
+            content: () => nextCard,
         })
     }
 

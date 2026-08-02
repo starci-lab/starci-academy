@@ -4,7 +4,6 @@ import {
     type SurfaceCardCrossListItem,
 } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { Split } from "@sb-components/frames/Split/Split"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
@@ -75,15 +74,8 @@ const TASK_LABEL: Record<DailyQuestTaskKey, string> = {
     reviewFlashcards: "Review flashcards",
 }
 
-/** One row's body: title (leading) ↔ current/target (trailing) — two peers on one line. */
-const rowBody = (task: DailyQuestTask) => (
-    <Split
-        gap={3}
-        start={() => <Typography size="sm" text={TASK_LABEL[task.key]} />}
-        end={() => <Typography size="xs" color="muted" text={`${task.current}/${task.target}`} />}
-
-    />
-)
+/** One row's text: title (leading) ↔ current/target (trailing) — plain text, the composite wraps it in `Typography` itself. */
+const rowBody = (task: DailyQuestTask): string => `${TASK_LABEL[task.key]} — ${task.current}/${task.target}`
 
 /**
  * The dashboard's "Today's Quests" content. See the file header for the

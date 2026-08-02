@@ -99,7 +99,7 @@ const ModuleHeader = ({
         <StackH
             gap={3}
             align="center"
-            wrap
+            at="sm"
             isSkeleton={isSkeleton}
 
             items={[
@@ -120,7 +120,7 @@ const ModuleHeader = ({
                 ) : hasLessons ? (
                     <span>
                         <HighlightChip
-                            icon={<StackIcon aria-hidden focusable="false" className="size-4" />}
+                            icon={StackIcon}
                             value={lessonCount}
                             label="lessons"
                         />
@@ -133,7 +133,7 @@ const ModuleHeader = ({
                 ) : hasMinutes ? (
                     <span>
                         <HighlightChip
-                            icon={<ClockIcon aria-hidden focusable="false" className="size-4" />}
+                            icon={ClockIcon}
                             value={minutesTotal}
                             label="minutes"
                         />
@@ -146,7 +146,7 @@ const ModuleHeader = ({
                 ) : hasChallenges ? (
                     <span>
                         <HighlightChip
-                            icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-4" />}
+                            icon={PuzzlePieceIcon}
                             value={challengeCount}
                             label="challenges"
                         />

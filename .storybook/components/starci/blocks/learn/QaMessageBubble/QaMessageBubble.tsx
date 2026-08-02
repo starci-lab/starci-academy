@@ -130,7 +130,9 @@ const MessageRow = ({
 
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
-            <StackV gap={2} className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} items={[() => bubbleBody]} />
+            <div className="max-w-[92%]">
+                <StackV gap={2} align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
+            </div>
         </div>
     )
 }
@@ -165,8 +167,8 @@ const QaMessageBubble = ({
             </>
         )
         return (
-            <div>
-                <StackV gap={2} className="max-w-[92%]" isSkeleton={isSkeleton} items={[() => skeletonBody]} />
+            <div className="max-w-[92%]">
+                <StackV gap={2} isSkeleton={isSkeleton} items={[() => skeletonBody]} />
             </div>
         )
     }

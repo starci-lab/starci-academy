@@ -77,13 +77,12 @@ const LeaderboardCategoryNav = ({
     className,
     classNames,
 }: LeaderboardCategoryNavProps) => (
-    <div>
+    <div className={className}>
         <div>
             <ButtonRadioGroup
                 ariaLabel={ariaLabel}
                 value={selected}
                 onChange={onSelect}
-                className={className}
                 classNames={classNames}
 
                 items={items.map((item) => ({

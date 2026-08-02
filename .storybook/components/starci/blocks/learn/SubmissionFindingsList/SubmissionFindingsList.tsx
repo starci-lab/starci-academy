@@ -253,10 +253,10 @@ const SubmissionFindingsList = ({
         ? []
         : sortFindings(findings).map((finding) => ({
             id: finding.id,
-            titleStart: findingIcon(finding),
+            titleStart: () => findingIcon(finding),
             title: finding.message,
-            titleEnd: findingLocationChip(finding),
-            body: findingPanel(finding, repositoryUrl),
+            titleEnd: () => findingLocationChip(finding),
+            body: () => findingPanel(finding, repositoryUrl),
         }))
 
     // Both branches render BOUNDED inside `SurfaceCard.Accordion`'s own `emptyState`

@@ -1,6 +1,7 @@
 import React from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { WarningCircleIcon } from "@phosphor-icons/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
@@ -26,8 +27,8 @@ const PHASE_LABEL: Record<PricingPhase, string> = {
 
 /** Props {@link PhaseScarcityNote} carries regardless of loading state. */
 interface PhaseScarcityNoteOwnProps {
-    /** Extra classes on the root. */
-    className?: string
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
     /**
      * Anatomy tag for THIS line itself — lets the caller badge it as ONE node.
      *
@@ -75,10 +76,10 @@ const PhaseScarcityNoteBase = ({
     seatsRemaining,
     nextPhasePriceVnd,
     isSkeleton = false,
-    className,
+    classNames,
 }: PhaseScarcityNoteBaseProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-4 w-64 max-w-full rounded", className)} />
+        return <HeroSkeleton className={cn("h-4 w-64 max-w-full rounded", classNames)} />
     }
     // no seat cap at this phase → no honest scarcity reason → stay silent
     if (seatsRemaining == null) {
@@ -96,52 +97,54 @@ const PhaseScarcityNoteBase = ({
         // What's gained isn't "fewer classes" but that `gap` is now PINNED to
         // the scale BY TYPE: hand-written it's `gap-2` today, `gap-1.5`
         // tomorrow, nothing stops that.
-        <Cluster
-            gap={3}
-            align="center"
-            // The `·` between the two clauses is drawn by the FRAME, not written as a text item.
-            // A mark that separates a track's items belongs to the track, the same way a rule
-            // does; written as content it also produced a `Separator` node in the structure tree
-            // whose link went to the generic Typography story.
-            separator
-            className={cn("text-warning-soft-foreground", className)}
-            items={[
-                () => (
-                    // §5a: icon matches the FONT-SIZE of the text beside it — `sm`
-                    // (14px) ⇒ `size-3.5`. §5.0a: below `size-5` ⇒ force
-                    // `weight="bold"` to compensate for the thin strokes.
-                    <WarningCircleIcon
-                        aria-hidden
-                        focusable="false"
-                        weight="bold"
-                        className="size-3.5 shrink-0"
-                    />
-                ),
-                () => (
-                    <Typography
-                        size="sm"
-                        weight="medium"
-                        text={`${seatsRemaining} seats left at the ${currentPhase != null ? PHASE_LABEL[currentPhase] : ""} price`}
+        <div className="text-warning-soft-foreground">
+            <Cluster
+                gap={3}
+                align="center"
+                // The `·` between the two clauses is drawn by the FRAME, not written as a text item.
+                // A mark that separates a track's items belongs to the track, the same way a rule
+                // does; written as content it also produced a `Separator` node in the structure tree
+                // whose link went to the generic Typography story.
+                separator
+                classNames={classNames}
+                items={[
+                    () => (
+                        // §5a: icon matches the FONT-SIZE of the text beside it — `sm`
+                        // (14px) ⇒ `size-3.5`. §5.0a: below `size-5` ⇒ force
+                        // `weight="bold"` to compensate for the thin strokes.
+                        <WarningCircleIcon
+                            aria-hidden
+                            focusable="false"
+                            weight="bold"
+                            className="size-3.5 shrink-0"
+                        />
+                    ),
+                    () => (
+                        <Typography
+                            size="sm"
+                            weight="medium"
+                            text={`${seatsRemaining} seats left at the ${currentPhase != null ? PHASE_LABEL[currentPhase] : ""} price`}
 
-                    />
-                ),
-                // The next two pieces go TOGETHER (no rise means nothing to separate
-                // it from) — but they're still TWO SEPARATE cluster items, since the
-                // `·` mark must be allowed to wrap onto the line with the piece after
-                // it when the row runs tight.
-                ...(nextPhasePriceVnd != null
-                    ? [
-                        () => (
-                            <Typography
-                                size="sm"
-                                text={`price rises to ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ after that`}
+                        />
+                    ),
+                    // The next two pieces go TOGETHER (no rise means nothing to separate
+                    // it from) — but they're still TWO SEPARATE cluster items, since the
+                    // `·` mark must be allowed to wrap onto the line with the piece after
+                    // it when the row runs tight.
+                    ...(nextPhasePriceVnd != null
+                        ? [
+                            () => (
+                                <Typography
+                                    size="sm"
+                                    text={`price rises to ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ after that`}
 
-                            />
-                        ),
-                    ]
-                    : []),
-            ]}
-        />
+                                />
+                            ),
+                        ]
+                        : []),
+                ]}
+            />
+        </div>
     )
 }
 

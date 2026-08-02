@@ -64,7 +64,9 @@ export const Default: Story = {
                         code: "<Logo className=\"h-9\" />   // compact — nav bar",
                         render: (
                             <div data-tier="fixture" className="flex items-center gap-2 rounded-lg border border-default bg-surface p-6">
-                                <Logo className="h-9" />
+                                <div className="h-9">
+                                    <Logo />
+                                </div>
                                 <span className="text-[11px] text-muted">h-9 · compact</span>
                             </div>
                         ),
@@ -75,7 +77,9 @@ export const Default: Story = {
                         code: "<Logo className=\"h-10\" />  // default lockup",
                         render: (
                             <div data-tier="fixture" className="flex items-center gap-2 rounded-lg border border-default bg-surface p-6">
-                                <Logo className="h-10" />
+                                <div className="h-10">
+                                    <Logo />
+                                </div>
                                 <span className="text-[11px] text-muted">h-10 · default</span>
                             </div>
                         ),
@@ -86,7 +90,9 @@ export const Default: Story = {
                         code: "<Logo className=\"h-14\" />  // splash / hero",
                         render: (
                             <div data-tier="fixture" className="flex items-center gap-2 rounded-lg border border-default bg-surface p-6">
-                                <Logo className="h-14" />
+                                <div className="h-14">
+                                    <Logo />
+                                </div>
                                 <span className="text-[11px] text-muted">h-14 · splash</span>
                             </div>
                         ),
@@ -100,7 +106,9 @@ export const Default: Story = {
 </div>`,
                         render: (
                             <div data-tier="fixture" className="flex items-center gap-2 rounded-lg bg-neutral-950 p-6">
-                                <Logo className="h-10" />
+                                <div className="h-10">
+                                    <Logo />
+                                </div>
                                 <span className="text-[11px] text-neutral-400">on dark surface</span>
                             </div>
                         ),

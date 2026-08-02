@@ -1,6 +1,7 @@
 import React from "react"
 import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { Popover } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackV } from "@sb-components/frames/Stack/Stack"
@@ -72,8 +73,8 @@ export interface PriceTagProps {
      * the percent). Defaults to `true`; set `false` where space is tight (dense cards).
      */
     showSavingLine?: boolean
-    /** Extra classes on the root. */
-    className?: string
+    /** Where the root sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -118,7 +119,7 @@ const PriceTagBase = ({
     isSkeleton = false,
     breakdown,
     showSavingLine = true,
-    className,
+    classNames,
 }: PriceTagProps & { emphasis: PriceEmphasis }) => {
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
@@ -158,7 +159,7 @@ const PriceTagBase = ({
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped`, not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <StackV gap={4} className="p-3" isSkeleton={isSkeleton} items={[
+        <StackV gap={4} padding={4} isSkeleton={isSkeleton} items={[
             ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text="Price breakdown" isSkeleton={isSkeleton} />,
             // No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
             // is the §10b `grouped` step). Passing one from here overrides the composite's
@@ -292,7 +293,7 @@ const PriceTagBase = ({
             // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
             // inside a lower-tier component — the saving line read as if it were glued under the number.
             gap={4}
-            className={className}
+            classNames={classNames}
             isSkeleton={isSkeleton}
             items={[
                 () => priceRow,

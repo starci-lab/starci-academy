@@ -103,7 +103,7 @@ const MilestoneUpNextCard = ({
                     gap={4}
                     justify="between"
                     align="center"
-                    wrap
+                    at="sm"
 
                     items={[
                         () => titleColumn,

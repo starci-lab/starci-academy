@@ -3,6 +3,7 @@ import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputTextarea } from "@sb-components/atoms/forms/Input/Input"
 import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLike/InputButtonLike"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -51,8 +52,8 @@ export interface ContentCommentComposerProps {
     collapsible?: boolean
     /** Accessible name for the field. */
     ariaLabel: string
-    /** Extra classes on the root (placement only, e.g. `flex-1` beside a `ThreadConnector`). */
-    className?: string
+    /** Where this sits inside its parent (placement only, e.g. `flex-1` beside a `ThreadConnector`). */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -70,7 +71,7 @@ const ContentCommentComposer = ({
     currentUser,
     collapsible = false,
     ariaLabel,
-    className,
+    classNames,
 }: ContentCommentComposerProps) => {
     const [body, setBody] = useState(initialValue ?? "")
     // collapsible composers start closed; reply/edit always render expanded
@@ -169,7 +170,7 @@ const ContentCommentComposer = ({
     )
 
     return (
-        <StackH gap={4} align="start" className={className} items={[() => composerRow]} />
+        <StackH gap={4} align="start" classNames={classNames} items={[() => composerRow]} />
     )
 }
 

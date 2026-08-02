@@ -427,7 +427,11 @@ const Base = ({
                     gap={4}
                     items={[
                         () => <div className="min-w-0 flex-1">{content}</div>,
-                        () => <StackH gap={3} classNames={["shrink-0"]} className="relative z-10" items={[() => actions]} />,
+                        () => (
+                            <div className="relative z-10">
+                                <StackH gap={3} classNames={["shrink-0"]} items={[() => actions]} />
+                            </div>
+                        ),
                     ]}
                 />
                 {href && !isDisabled ? (
@@ -669,36 +673,35 @@ const Nested = ({
             data-component="SurfaceCardNested"
         >
             {hasHeader ? (
-                // ⚠️ Padding stays literal (`px-3 py-2`, ASYMMETRIC): the new `AllowedPadding`
-                // scale DOES have an x/y shape (`PaddingValue = AllowedPadding | { x?; y? }`,
-                // see padding.md) that could now express this — but this class also carries
-                // the header's own border chrome (`border-b border-default`) in the same
-                // string, and only a frame owns chrome+padding together, not a composite
-                // hand-class. Left as a finding rather than converted (only the `flex`/`gap`
-                // layout below is routed through the frame).
-                <StackH
-                    gap={3}
-                    justify="between"
-                    classNames={["min-w-0"]}
-                    className="border-b border-default px-3 py-2"
-                    items={[
-                        () => (Header != null ? <Header isSkeleton={isSkeleton} /> : (
-                            // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
-                            <StackH
-                                gap={3}
-                                classNames={["min-w-0"]}
-                                className="text-muted [&_svg]:size-4"
-                                items={[
-                                    ...(Icon ? [() => <Icon aria-hidden focusable="false" />] : []),
-                                    () => (isSkeleton
-                                        ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-                                        : <Typography size="xs" color="muted" truncate text={title} />),
-                                ]}
-                            />
-                        )),
-                        ...(Meta ? [() => <span className="shrink-0"><Meta /></span>] : []),
-                    ]}
-                />
+                // ⚠️ The header's own border chrome (`border-b border-default`) is not a
+                // positioning token, so it wraps a div; the `px-3 py-2` padding threads
+                // through the frame's own `padding` prop (asymmetric x/y shape).
+                <div className="border-b border-default">
+                    <StackH
+                        gap={3}
+                        justify="between"
+                        classNames={["min-w-0"]}
+                        padding={{ x: 4, y: 3 }}
+                        items={[
+                            () => (Header != null ? <Header isSkeleton={isSkeleton} /> : (
+                                // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
+                                <div className="text-muted [&_svg]:size-4">
+                                    <StackH
+                                        gap={3}
+                                        classNames={["min-w-0"]}
+                                        items={[
+                                            ...(Icon ? [() => <Icon aria-hidden focusable="false" />] : []),
+                                            () => (isSkeleton
+                                                ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+                                                : <Typography size="xs" color="muted" truncate text={title} />),
+                                        ]}
+                                    />
+                                </div>
+                            )),
+                            ...(Meta ? [() => <span className="shrink-0"><Meta /></span>] : []),
+                        ]}
+                    />
+                </div>
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {Footer ? (
@@ -1410,7 +1413,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     ) : null)
     const metaSlot = Meta ? <Meta /> : (metaText != null
         ? <Typography size="sm" weight="medium"
- color="accent-soft" text={metaText} />
+            color="accent-soft" text={metaText} />
         : null)
     // DIV position (icon §1c/§4.2): the row is a control with FIXED `p-3` padding (not
     // hug-content), and its title is `text-sm` ⇒ line-height size = `size-5` — the SAME
@@ -1428,13 +1431,14 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 classNames={["min-w-0"]}
                 items={[
                     () => (
-                        <Typography size="sm"
-                            truncate
-                            isSkeleton={isSkeleton}
-                            underlineOnGroupHover={underlineHover}
-                            className={titleClassName}
-                            text={title}
-                        />
+                        <div className={titleClassName}>
+                            <Typography size="sm"
+                                truncate
+                                isSkeleton={isSkeleton}
+                                underlineOnGroupHover={underlineHover}
+                                text={title}
+                            />
+                        </div>
                     ),
                     ...(subtitle ? [() => (
                         <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
@@ -1442,19 +1446,20 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 ]}
             />
             {metaSlot || trailingSlot || selected ? (
-                <StackH
-                    gap={3}
-                    classNames={["shrink-0"]}
-                    className="ml-auto"
-                    items={[
-                        () => metaSlot,
-                        () => trailingSlot,
-                        // Single-select indicator — trailing accent CheckCircleIcon (B).
-                        ...(selected ? [() => (
-                            <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
-                        )] : []),
-                    ]}
-                />
+                <div className="ml-auto">
+                    <StackH
+                        gap={3}
+                        classNames={["shrink-0"]}
+                        items={[
+                            () => metaSlot,
+                            () => trailingSlot,
+                            // Single-select indicator — trailing accent CheckCircleIcon (B).
+                            ...(selected ? [() => (
+                                <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
+                            )] : []),
+                        ]}
+                    />
+                </div>
             ) : null}
         </>
     )
@@ -1699,21 +1704,22 @@ const AccordionCard = ({
                         return TitleStart ? <TitleStart /> : null
                     }] : []),
                     () => (
-                        <StackV
-                            gap={1}
-                            classNames={["min-w-0", "flex-1"]}
-                            className="text-left"
-                            items={[
-                                /* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2, instructor's
-                                    final call): reverses the 2026-07-29 decision — title does NOT render
-                                    markdown, not even backtick-only via `parseInlineCode`. Title tier is
-                                    now plain, absolutely. */
-                                () => <Typography size="sm" weight="medium" truncate text={item.title} />,
-                                ...(item.subtitle != null ? [() => (
-                                    <Typography size="xs" color="muted" truncate text={item.subtitle} />
-                                )] : []),
-                            ]}
-                        />
+                        <div className="text-left">
+                            <StackV
+                                gap={1}
+                                classNames={["min-w-0", "flex-1"]}
+                                items={[
+                                    /* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2, instructor's
+                                        final call): reverses the 2026-07-29 decision — title does NOT render
+                                        markdown, not even backtick-only via `parseInlineCode`. Title tier is
+                                        now plain, absolutely. */
+                                    () => <Typography size="sm" weight="medium" truncate text={item.title} />,
+                                    ...(item.subtitle != null ? [() => (
+                                        <Typography size="xs" color="muted" truncate text={item.subtitle} />
+                                    )] : []),
+                                ]}
+                            />
+                        </div>
                     ),
                     ...(item.titleEnd ? [() => {
                         const TitleEnd = item.titleEnd
@@ -1889,28 +1895,31 @@ const CrossListRow = ({
     text,
     isSkeleton = false,
 }: Omit<SurfaceCardCrossListItem, "key" | "text"> & { text?: string; isSkeleton?: boolean }) => (
-    <StackH
-        as="li"
-        gap={4}
-        align="start"
-        padding={4}
-        className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-        items={
-            isSkeleton
-                ? [
-                    () => <div aria-hidden className="size-5 shrink-0 rounded-full bg-default" />,
-                    () => (
-                        <div className="min-w-0 flex-1">
-                            <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                        </div>
-                    ),
-                ]
-                : [
-                    () => markIcon(mark, tone),
-                    () => <div className="min-w-0 flex-1"><Typography size="sm" text={text ?? ""} /></div>,
-                ]
-        }
-    />
+    // The full-bleed inset separator (`after:*`) is chrome, not a positioning token, so it
+    // wraps the `<li>` itself (a plain `<div>` here would break `<ul>`/`<li>` nesting) — the
+    // frame inside stays a plain `div` and only lays out the row's two children.
+    <li className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden">
+        <StackH
+            gap={4}
+            align="start"
+            padding={4}
+            items={
+                isSkeleton
+                    ? [
+                        () => <div aria-hidden className="size-5 shrink-0 rounded-full bg-default" />,
+                        () => (
+                            <div className="min-w-0 flex-1">
+                                <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
+                            </div>
+                        ),
+                    ]
+                    : [
+                        () => markIcon(mark, tone),
+                        () => <div className="min-w-0 flex-1"><Typography size="sm" text={text ?? ""} /></div>,
+                    ]
+            }
+        />
+    </li>
 )
 /**
  * Static "brief list" of MARKED rows (✓ / ✗ / none) in a bounded `bg-surface` card with

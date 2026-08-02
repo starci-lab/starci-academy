@@ -167,7 +167,7 @@ export const WithAction: Story = {
                             <AsyncContentError
                                 title="Your session has expired"
                                 description="Sign in again to continue."
-                                action={<Button size="sm" variant="secondary" suffixIcon={ArrowClockwiseIcon} label="Reload page" />}
+                                action={() => <Button size="sm" variant="secondary" suffixIcon={ArrowClockwiseIcon} label="Reload page" />}
                             />
                         ),
                     },

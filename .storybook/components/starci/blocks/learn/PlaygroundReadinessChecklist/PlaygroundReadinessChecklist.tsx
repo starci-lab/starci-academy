@@ -71,7 +71,7 @@ const checklistRow = (
     const status: ReadinessStatus = item.ready ? "ready" : "pending"
     return {
         key: item.key,
-        leading: (
+        leading: () => (
             <IconTile
                 // circle-check, not a bare tick — icon.md §2: every "done / passed"
                 // mark is `CheckCircleIcon`. Carried over from the ported source.
@@ -84,7 +84,7 @@ const checklistRow = (
         ),
         title: item.label,
         subtitle: item.ready ? item.readyDescription : item.pendingDescription,
-        trailing: (
+        trailing: () => (
             <EnumChip
                 value={status}
                 map={READINESS_CHIP_MAP}

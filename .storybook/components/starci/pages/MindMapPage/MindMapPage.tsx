@@ -127,21 +127,21 @@ const MindMapCanvasGap = ({ isLoading = false}: MindMapCanvasGapProps) => (
  * `CourseContents`/`ModulePage` already established for this exact case.
  */
 const MindMapWorkspaceEmpty = () => (
-    <StackV
-        gap={1}
-        align="center"
-        justify="center"
-        className="h-[calc(100dvh-4rem)]"
+    <div className="h-[calc(100dvh-4rem)]">
+        <StackV
+            gap={1}
+            align="center"
+            justify="center"
+            items={[() => (
+                <AsyncContentEmpty
 
-        items={[() => (
-            <AsyncContentEmpty
-
-                icon={MapTrifoldIcon}
-                title={WORKSPACE_EMPTY_TITLE}
-                description={WORKSPACE_EMPTY_DESCRIPTION}
-            />
-        )]}
-    />
+                    icon={MapTrifoldIcon}
+                    title={WORKSPACE_EMPTY_TITLE}
+                    description={WORKSPACE_EMPTY_DESCRIPTION}
+                />
+            )]}
+        />
+    </div>
 )
 
 /**
@@ -204,48 +204,51 @@ const MindMapPage = ({
     // "OVERLAYS ARE FRAMES" note.
     const canvasOverlays = (
         <>
-            <StackV
-                gap={1}
-                align="center"
-                className="absolute inset-x-0 top-4 z-10"
-                isSkeleton={isSkeleton}
-                items={[() => (
-                    <MindMapContinueButton
+            <div className="absolute inset-x-0 top-4 z-10">
+                <StackV
+                    gap={1}
+                    align="center"
+                    isSkeleton={isSkeleton}
+                    items={[() => (
+                        <MindMapContinueButton
 
-                        resumeHref={resumeHref}
-                        allContentDone={allContentDone}
-                        onResume={onResume}
-                        continueAriaLabel={continueAriaLabel}
-                        isSkeleton={isSkeleton}
-                    />
-                )]}
-            />
-            <StackV
-                gap={1}
-                className="absolute bottom-4 left-4 z-10"
-                isSkeleton={isSkeleton}
-                items={[() => (
-                    <div>
-                        <Legend items={legendItems} />
-                    </div>
-                )]}
-            />
-            <StackV
-                gap={1}
-                className="absolute bottom-4 right-4 z-10"
-                isSkeleton={isSkeleton}
-                items={[() => (
-                    <MindMapFullscreenButton
+                            resumeHref={resumeHref}
+                            allContentDone={allContentDone}
+                            onResume={onResume}
+                            continueAriaLabel={continueAriaLabel}
+                            isSkeleton={isSkeleton}
+                        />
+                    )]}
+                />
+            </div>
+            <div className="absolute bottom-4 left-4 z-10">
+                <StackV
+                    gap={1}
+                    isSkeleton={isSkeleton}
+                    items={[() => (
+                        <div>
+                            <Legend items={legendItems} />
+                        </div>
+                    )]}
+                />
+            </div>
+            <div className="absolute bottom-4 right-4 z-10">
+                <StackV
+                    gap={1}
+                    isSkeleton={isSkeleton}
+                    items={[() => (
+                        <MindMapFullscreenButton
 
-                        onZoomIn={onZoomIn}
-                        onZoomOut={onZoomOut}
-                        onToggleFullscreen={onToggleFullscreen}
-                        isFullscreen={isFullscreen}
-                        ariaLabels={fullscreenAriaLabels}
-                        isSkeleton={isSkeleton}
-                    />
-                )]}
-            />
+                            onZoomIn={onZoomIn}
+                            onZoomOut={onZoomOut}
+                            onToggleFullscreen={onToggleFullscreen}
+                            isFullscreen={isFullscreen}
+                            ariaLabels={fullscreenAriaLabels}
+                            isSkeleton={isSkeleton}
+                        />
+                    )]}
+                />
+            </div>
         </>
     )
 
@@ -267,14 +270,15 @@ const MindMapPage = ({
             className="h-full shrink-0 border-r border-default"
 
         >
-            <StackV
-                padding={6}
-                gap={1}
-                className="overflow-y-auto"
-                classNames={["h-full"]}
-                isSkeleton={isSkeleton}
-                items={[() => railSection]}
-            />
+            <div className="overflow-y-auto">
+                <StackV
+                    padding={6}
+                    gap={1}
+                    classNames={["h-full"]}
+                    isSkeleton={isSkeleton}
+                    items={[() => railSection]}
+                />
+            </div>
         </ResizableRail>
     )
 
@@ -284,17 +288,22 @@ const MindMapPage = ({
             {/* The canvas region: the out-of-reach engine's gap, plus (standalone only) the
                 floating chrome that in the real app renders as the SAME engine's own Panel
                 children — see the file header's "OVERLAYS ARE FRAMES" note. */}
-            <StackV
-                gap={1}
-                className="relative"
-                classNames={["min-w-0", "flex-1"]}
-                isSkeleton={isSkeleton}
-                items={[() => canvasRegion]}
-            />
+            <div className="relative">
+                <StackV
+                    gap={1}
+                    classNames={["min-w-0", "flex-1"]}
+                    isSkeleton={isSkeleton}
+                    items={[() => canvasRegion]}
+                />
+            </div>
         </>
     )
 
-    return <StackH gap={1} className="h-[calc(100dvh-4rem)]" isSkeleton={isSkeleton} items={[() => workspaceSections]} />
+    return (
+        <div className="h-[calc(100dvh-4rem)]">
+            <StackH gap={1} isSkeleton={isSkeleton} items={[() => workspaceSections]} />
+        </div>
+    )
 }
 
 export { MindMapPage }

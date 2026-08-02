@@ -164,7 +164,7 @@ export const WithAction: Story = {
                             <AsyncContentEmpty
                                 title="No decks yet"
                                 description="Create your first deck to start reviewing."
-                                action={<Button size="sm" suffixIcon={PlusIcon} label="Create deck" />}
+                                action={() => <Button size="sm" suffixIcon={PlusIcon} label="Create deck" />}
                             />
                         ),
                     },

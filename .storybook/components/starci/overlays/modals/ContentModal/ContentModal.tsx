@@ -1,5 +1,6 @@
 import React from "react"
 import { ScrollShadow, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 
@@ -40,8 +41,8 @@ export interface ContentModalProps {
      * file header's own "TITLE IS CONDITIONAL" note).
      */
     isSkeleton?: boolean
-    /** Extra classes merged onto the dialog. */
-    className?: string
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -55,13 +56,13 @@ const ContentModal = ({
     onOpenChange,
     content,
     isSkeleton = false,
-    className,
+    classNames,
 }: ContentModalProps) => (
     <div>
         <ModalShell
             isOpen={isOpen}
             onOpenChange={onOpenChange}
-            className={className}
+            classNames={classNames}
             size="full"
             scroll="inside"
             bodyClassName="pb-6"

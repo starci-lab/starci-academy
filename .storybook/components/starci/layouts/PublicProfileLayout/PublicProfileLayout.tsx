@@ -209,12 +209,12 @@ const PublicProfileLayout = ({
 
     // column-first, becomes a row from @app-md — same technique SettingsLayout uses for its own outer switch (see file header)
     const profileBody = (
-        <StackV
-            gap={7}
-            className="@app-md:flex-row @app-md:items-start"
-
-            items={asideAndPanel}
-        />
+        <div className="@app-md:flex-row @app-md:items-start">
+            <StackV
+                gap={7}
+                items={asideAndPanel}
+            />
+        </div>
     )
 
     // chrome above the body — mirrors the real Navbar bottom-layer position; see file header

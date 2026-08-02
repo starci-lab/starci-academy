@@ -108,7 +108,7 @@ const FoundationHeader = ({
             <StackH
                 gap={3}
                 align="center"
-                wrap
+                at="sm"
                 isSkeleton={isSkeleton}
                 items={[
                     () => (

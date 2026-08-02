@@ -142,7 +142,10 @@ export const Callout = (props: CalloutProps) => {
             action={
                 actionLabel ? (
                     // The frame owns the CTA: builds the button + applies skin per status itself. Caller only supplies text.
-                    <Button label={actionLabel} size="sm" onPress={onAction} className={CALLOUT_ACTION_CLASS[status]} />
+                    // Button is an atom — it owns its own appearance, so the per-status skin wraps a div rather than reaching into the atom.
+                    <div className={CALLOUT_ACTION_CLASS[status]}>
+                        <Button label={actionLabel} size="sm" onPress={onAction} />
+                    </div>
                 ) : undefined
             }
             onClose={onClose}

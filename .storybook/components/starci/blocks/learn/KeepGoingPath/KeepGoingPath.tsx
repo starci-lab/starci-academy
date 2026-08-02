@@ -151,14 +151,16 @@ const KeepGoingPathBase = ({
                     leading: isSkeleton ? (
                         // The icon is chosen DIRECTLY by the block itself (no atom in between) —
                         // hand-roll a single shimmer dot in place of the state/lock icon.
-                        <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                        () => <HeroSkeleton className="size-5 shrink-0 rounded-full" />
                     ) : (
-                        <Icon
-                            aria-label={content.locked ? "Paid content" : undefined}
-                            aria-hidden={content.locked ? undefined : true}
-                            focusable="false"
-                            className={className}
-                        />
+                        () => (
+                            <Icon
+                                aria-label={content.locked ? "Paid content" : undefined}
+                                aria-hidden={content.locked ? undefined : true}
+                                focusable="false"
+                                className={className}
+                            />
+                        )
                     ),
                     title: content.title,
                     subtitle: `${content.minutes} min read`,
@@ -166,7 +168,7 @@ const KeepGoingPathBase = ({
                     // Meta now holds EXACTLY ONE thing: difficulty. The shape is owned by
                     // DESIGN — the block doesn't reshape the chip (§14d.1). The flag flows
                     // straight down into the `VariantChipDifficulty` atom.
-                    meta: (
+                    meta: () => (
                         <VariantChipDifficulty
                             difficulty={content.difficulty}
                             isSkeleton={isSkeleton}

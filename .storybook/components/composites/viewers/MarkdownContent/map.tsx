@@ -337,16 +337,17 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
         // Custom `:::chip` directive tag: a wrapped row of chips, one per authored keyword line.
         // Reuses the `Chip` ATOM (soft/neutral) rather than HeroUI `Chip` directly.
         chipblock: ({ items }: MarkdownChipBlockProps) => (
-            <StackH
-                as="span"
-                wrap
-                gap={3}
-                pattern="chip-row"
-                className="my-2"
-                items={String(items ?? "").split("|").filter(Boolean).map((keyword) => () => (
-                    <Chip tone="default" text={keyword} />
-                ))}
-            />
+            <div className="my-2">
+                <StackH
+                    as="span"
+                    at="sm"
+                    gap={3}
+                    pattern="chip-row"
+                    items={String(items ?? "").split("|").filter(Boolean).map((keyword) => () => (
+                        <Chip tone="default" text={keyword} />
+                    ))}
+                />
+            </div>
         ),
         // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so `TabsBlock` matches them.
         tabblock: ({ children }: MarkdownNodeProps) => <TabsBlock>{children}</TabsBlock>,
@@ -371,16 +372,17 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
             <Accordion.Item aria-label={String(title ?? "")}>
                 <Accordion.Heading>
                     <Accordion.Trigger>
-                        <StackH
-                            gap={4}
-                            justify="between"
-                            classNames={["w-full"]}
-                            className="text-start"
-                            items={[
-                                () => <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>,
-                                () => <Accordion.Indicator />,
-                            ]}
-                        />
+                        <div className="text-start">
+                            <StackH
+                                gap={4}
+                                justify="between"
+                                classNames={["w-full"]}
+                                items={[
+                                    () => <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>,
+                                    () => <Accordion.Indicator />,
+                                ]}
+                            />
+                        </div>
                     </Accordion.Trigger>
                 </Accordion.Heading>
                 <Accordion.Panel>

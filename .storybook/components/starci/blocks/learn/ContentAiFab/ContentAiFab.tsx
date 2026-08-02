@@ -2,6 +2,7 @@
 
 import { SparkleIcon } from "@phosphor-icons/react"
 import { FloatingActionButton } from "@sb-components/composites/buttons/FloatingActionButton/FloatingActionButton"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `ContentAiFab` — a BLOCK: the floating "ask StarCi AI" trigger mounted once in
@@ -35,8 +36,8 @@ export interface ContentAiFabProps {
      * to `false` (visible).
      */
     isOpen?: boolean
-    /** Extra classes on the button. */
-    className?: string
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -48,7 +49,7 @@ export interface ContentAiFabProps {
 const ContentAiFab = ({
     onOpen,
     isOpen = false,
-    className,
+    classNames,
 }: ContentAiFabProps) => {
     // The panel this button opens is already up — a second trigger floating on
     // top of it would be redundant chrome (and could overlap the panel's own
@@ -63,8 +64,8 @@ const ContentAiFab = ({
                 <FloatingActionButton
                     onPress={onOpen}
                     ariaLabel={ARIA_LABEL}
-                    icon={<SparkleIcon aria-hidden focusable="false" />}
-                    className={className}
+                    icon={SparkleIcon}
+                    classNames={classNames}
                 />
             </div>
         </div>

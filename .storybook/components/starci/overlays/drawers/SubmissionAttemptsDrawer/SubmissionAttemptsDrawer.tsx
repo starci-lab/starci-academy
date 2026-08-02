@@ -98,7 +98,7 @@ const scoreChipFor = (attempt: SubmissionAttemptRecord): { tone: "success" | "da
 }
 
 /** Turns one attempt into a {@link SurfaceCardListItem}'s free-form `content` — mirrors real `src`'s row exactly: attempt line + verdict chip + time-ago on line 1, model byline on line 2. */
-const attemptRowContent = (attempt: SubmissionAttemptRecord) => {
+const attemptRowContent = (attempt: SubmissionAttemptRecord, isSelected: boolean) => {
     const chip = scoreChipFor(attempt)
 
     const attemptLabelAndChip = [
@@ -157,12 +157,18 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord) => {
             />
         ),
         ...(attempt.gradedByModel != null ? [() => (
-            <StackH gap={3} align="center" wrap items={bylineContent} />
+            <StackH gap={3} align="center" at="sm" items={bylineContent} />
         )] : []),
     ]
 
+    // highlight-exception: the selected row's tint is baked into the row's own
+    // content wrapper (a plain, un-tightened `<div>`), since `SurfaceCardListItem`
+    // no longer takes a raw `className` — same class real `src`'s
+    // `SurfaceListCardItem` uses.
     return (
-        <StackV gap={2} items={rowContent} />
+        <div className={isSelected ? "bg-accent-soft hover:bg-accent-soft" : undefined}>
+            <StackV gap={2} items={rowContent} />
+        </div>
     )
 }
 
@@ -218,12 +224,11 @@ const SubmissionAttemptsDrawer = ({
 
     // `selected` (a trailing check) is only wired for the FIXED title/subtitle row
     // shape — this row uses free-form `content` instead (2 lines, richer than that
-    // shape fits), so the highlight goes through `className` on the row itself,
-    // same mechanism (and same class) real `src`'s `SurfaceListCardItem` uses.
+    // shape fits), so the highlight is baked into `attemptRowContent`'s own wrapper
+    // div, same class real `src`'s `SurfaceListCardItem` uses.
     const items: Array<SurfaceCardListItem> = pagedAttempts.map((attempt) => ({
         key: attempt.id,
-        content: attemptRowContent(attempt),
-        className: attempt.id === selectedAttemptId ? "bg-accent-soft hover:bg-accent-soft" : undefined,
+        content: () => attemptRowContent(attempt, attempt.id === selectedAttemptId),
         onPress: () => {
             onSelect(attempt.id)
             onOpenChange(false)

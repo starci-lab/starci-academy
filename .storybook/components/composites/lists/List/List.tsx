@@ -1,5 +1,5 @@
 import React from "react"
-import type { ComponentType, ReactNode } from "react"
+import type { ComponentType } from "react"
 import { Label, Switch, cn } from "@heroui/react"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -155,16 +155,17 @@ const Row = ({
 
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
-                <StackH
-                    gap={3}
-                    isSkeleton={isSkeleton}
-                    classNames={["shrink-0"]}
-                    className="ml-auto"
-                    items={[
-                        ...(MetaSlot ? [() => <MetaSlot />] : []),
-                        ...(TrailingSlot ? [() => <TrailingSlot />] : []),
-                    ]}
-                />
+                <div className="ml-auto">
+                    <StackH
+                        gap={3}
+                        isSkeleton={isSkeleton}
+                        classNames={["shrink-0"]}
+                        items={[
+                            ...(MetaSlot ? [() => <MetaSlot />] : []),
+                            ...(TrailingSlot ? [() => <TrailingSlot />] : []),
+                        ]}
+                    />
+                </div>
             ) : null}
         </>
     )
@@ -361,26 +362,26 @@ const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
         items={[
             ...(Chip ? [() => <span className="shrink-0"><Chip /></span>] : []),
             ...(items.length > 0 ? [() => (
-                    <Typography size="xs"
-                        text={(
-                            <>
-                                {items.map((item, index) => (
-                                    <React.Fragment key={index}>
-                                        {/* The breathing room around the `·` comes from the whitespace
+                <Typography size="xs"
+                    text={(
+                        <>
+                            {items.map((item, index) => (
+                                <React.Fragment key={index}>
+                                    {/* The breathing room around the `·` comes from the whitespace
                                             IN the string itself, NOT a hand-typed `mx-1`: a child's own
                                             margin is a two-owner seam, and the `check-padding`
                                             gate catches exactly this spot. */}
-                                        {index > 0 ? <span aria-hidden>{" · "}</span> : null}
-                                        {item}
-                                    </React.Fragment>
-                                ))}
-                            </>
-                        )}
-                        color="muted"
-                        truncate
-                        classNames={["min-w-0"]}
+                                    {index > 0 ? <span aria-hidden>{" · "}</span> : null}
+                                    {item}
+                                </React.Fragment>
+                            ))}
+                        </>
+                    )}
+                    color="muted"
+                    truncate
+                    classNames={["min-w-0"]}
 
-                    />
+                />
             )] : []),
         ]}
     />
@@ -468,29 +469,29 @@ const ToggleRow = ({
                     />
                 ),
                 () => isSkeleton ? (
-                        <ChoiceSwitch
-                            isSkeleton
-                            isSelected={false}
-                            onValueChange={() => undefined}
-                            classNames={["shrink-0"]}
+                    <ChoiceSwitch
+                        isSkeleton
+                        isSelected={false}
+                        onValueChange={() => undefined}
+                        classNames={["shrink-0"]}
 
-                        />
-                    ) : (
-                        <Switch
-                            className="shrink-0"
-                            isSelected={checked}
-                            isDisabled={isDisabled}
-                            onChange={onCheckedChange}
-                            aria-label={label}
+                    />
+                ) : (
+                    <Switch
+                        className="shrink-0"
+                        isSelected={checked}
+                        isDisabled={isDisabled}
+                        onChange={onCheckedChange}
+                        aria-label={label}
 
-                        >
-                            <Switch.Content>
-                                <Switch.Control>
-                                    <Switch.Thumb />
-                                </Switch.Control>
-                            </Switch.Content>
-                        </Switch>
-                    ),
+                    >
+                        <Switch.Content>
+                            <Switch.Control>
+                                <Switch.Thumb />
+                            </Switch.Control>
+                        </Switch.Content>
+                    </Switch>
+                ),
             ]}
         />
     </div>

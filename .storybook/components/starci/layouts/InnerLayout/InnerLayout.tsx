@@ -1,9 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
 import { Navbar, type NavbarProps } from "@sb-components/starci/blocks/navigation/Navbar/Navbar"
 import { Footer, type FooterProps } from "@sb-components/starci/blocks/navigation/Footer/Footer"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `InnerLayout` — the root wrapper for every route: a sticky Navbar on top, the
@@ -27,8 +27,8 @@ export interface InnerLayoutProps extends NavbarProps, Omit<FooterProps, "classN
      * this layout only obeys the flag.
      */
     showFooter: boolean
-    /** Extra class on the root track. */
-    className?: string
+    /** Layout utilities on the root track, from the closed positioning union. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -46,7 +46,7 @@ const InnerLayout = ({
     socials,
     onTermsPress,
     onPrivacyPress,
-    className,
+    classNames,
     ...navbarProps
 }: InnerLayoutProps) => {
     const navMainFooter = [
@@ -79,7 +79,9 @@ const InnerLayout = ({
     ]
 
     return (
-        <StackV gap={1} className={cn("min-h-dvh", className)} items={navMainFooter} />
+        <div className="min-h-dvh">
+            <StackV gap={1} classNames={classNames} items={navMainFooter} />
+        </div>
     )
 }
 

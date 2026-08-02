@@ -134,7 +134,7 @@ const statusSlot = (data: WeeklyChallengeData, isSkeleton: boolean) => {
 /** Builds one finisher's free-form `SurfaceCardList` content: the unchanged `UserCell`. */
 const finisherItem = (entry: WeeklyChallengeLeaderboardEntry, isSkeleton: boolean): SurfaceCardListItem => ({
     key: entry.key,
-    content: (
+    content: () => (
         <div>
             <UserCell
                 username={entry.username}

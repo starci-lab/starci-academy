@@ -233,18 +233,20 @@ const StepperBase = ({
                         items={[
                             () => <StackV gap={2} align="center" items={[() => railAndConnector]} />,
                             () => isClickable ? (
-                                    <button
-                                        type="button"
-                                        onClick={() => onStepPress(index)}
-                                        // inset-exception: optical nudge lining the label up with the step dot, not a surface inset
-                                        className="pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                                    >
-                                        <StackV gap={1} items={[() => clickableCopy]} />
-                                    </button>
-                                ) : (
-                                    // inset-exception: optical nudge lining the label up with the step dot
-                                    <StackV gap={1} className="pt-1" items={[() => staticCopy]} />
-                                ),
+                                <button
+                                    type="button"
+                                    onClick={() => onStepPress(index)}
+                                    // inset-exception: optical nudge lining the label up with the step dot, not a surface inset
+                                    className="pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                >
+                                    <StackV gap={1} items={[() => clickableCopy]} />
+                                </button>
+                            ) : (
+                            // inset-exception: optical nudge lining the label up with the step dot
+                                <div className="pt-1">
+                                    <StackV gap={1} items={[() => staticCopy]} />
+                                </div>
+                            ),
                         ]}
                     />
                 )

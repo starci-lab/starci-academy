@@ -5,6 +5,7 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/profile/ProfileHero/ProfileHero"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `ProfileLockedState` — the non-owner view of a profile whose owner has turned it
@@ -22,8 +23,11 @@ export interface ProfileLockedStateProps {
     user: ProfileHeroUser
     /** Fired when the visitor takes the one way forward (browse courses instead). */
     onGoCourses: () => void
-    /** Extra classes on the root. */
-    className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -35,7 +39,7 @@ export interface ProfileLockedStateProps {
 const ProfileLockedState = ({
     user,
     onGoCourses,
-    className,
+    classNames,
 }: ProfileLockedStateProps) => {
     const lockedBody = (
         <>
@@ -64,7 +68,7 @@ const ProfileLockedState = ({
             />
         </>
     )
-    return <StackV gap={6} padding={6} className={className} items={[() => lockedBody]} />
+    return <StackV gap={6} padding={6} classNames={classNames} items={[() => lockedBody]} />
 }
 
 export { ProfileLockedState }

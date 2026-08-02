@@ -277,7 +277,7 @@ const QaQuestionThread = ({
         const askerNameRow = (
             <StackH
                 gap={3}
-                wrap
+                at="sm"
                 align="center"
                 isSkeleton={isSkeleton}
 
@@ -389,7 +389,7 @@ const QaQuestionThread = ({
     const questionMetaRow = (
         <StackH
             gap={3}
-            wrap
+            at="sm"
             align="center"
             isSkeleton={isSkeleton}
 
@@ -409,7 +409,7 @@ const QaQuestionThread = ({
     const questionFooterRow = (
         <StackH
             gap={3}
-            wrap
+            at="sm"
             align="center"
             isSkeleton={isSkeleton}
 
@@ -437,27 +437,30 @@ const QaQuestionThread = ({
     // the question itself, as the first bubble of the conversation
     const questionBubble = (
         <div className={cn("flex w-full", isMineQuestion ? "justify-end" : "justify-start")}>
-            <StackV
-                gap={2}
-                className={cn("min-w-0 max-w-[92%]", isMineQuestion && "items-end")}
-                isSkeleton={isSkeleton}
+            <div className="max-w-[92%]">
+                <StackV
+                    gap={2}
+                    align={isMineQuestion ? "end" : "stretch"}
+                    classNames={["min-w-0"]}
+                    isSkeleton={isSkeleton}
 
-                items={[
-                    () => questionMetaRow,
-                    ({ isSkeleton }: SkeletonProps) => (
-                        <QaChatBubble role={isMineQuestion ? "user" : "assistant"} isSkeleton={isSkeleton}>
-                            <div className="[&_p]:m-0">
-                                <MarkdownContent
-                                    source={question.body}
-                                    measure="compact"
+                    items={[
+                        () => questionMetaRow,
+                        ({ isSkeleton }: SkeletonProps) => (
+                            <QaChatBubble role={isMineQuestion ? "user" : "assistant"} isSkeleton={isSkeleton}>
+                                <div className="[&_p]:m-0">
+                                    <MarkdownContent
+                                        source={question.body}
+                                        measure="compact"
 
-                                />
-                            </div>
-                        </QaChatBubble>
-                    ),
-                    () => questionFooterRow,
-                ]}
-            />
+                                    />
+                                </div>
+                            </QaChatBubble>
+                        ),
+                        () => questionFooterRow,
+                    ]}
+                />
+            </div>
         </div>
     )
 

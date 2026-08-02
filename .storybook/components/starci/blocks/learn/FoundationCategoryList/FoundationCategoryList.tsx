@@ -112,7 +112,7 @@ const FoundationCategoryList = ({
         const { src, fallbackSrc } = resolveThumbnail(category)
         return {
             key: category.id,
-            leading: (
+            leading: () => (
                 <div className="size-10 shrink-0">
                     <Image
                         src={src}

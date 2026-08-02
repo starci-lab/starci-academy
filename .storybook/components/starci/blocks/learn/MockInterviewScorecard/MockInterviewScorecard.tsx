@@ -186,22 +186,14 @@ const MockInterviewScorecard = ({
         key: `strength-${index}`,
         mark: "check",
         tone: "success",
-        text: (
-            <div className="[&_p]:m-0">
-                <MarkdownContent source={strength} measure="compact" />
-            </div>
-        ),
+        text: strength,
     }))
 
     const gapItems: Array<SurfaceCardCrossListItem> = gaps.map((gap, index) => ({
         key: `gap-${index}`,
         mark: "cross",
         tone: "danger",
-        text: (
-            <div className="[&_p]:m-0">
-                <MarkdownContent source={gap} measure="compact" />
-            </div>
-        ),
+        text: gap,
     }))
 
     const primaryCtaLabel = weakAreaLabel ? `Review: ${weakAreaLabel}` : "Review your weak areas"
@@ -210,7 +202,7 @@ const MockInterviewScorecard = ({
         <StackH
             gap={4}
             justify="between"
-            wrap
+            at="sm"
             isSkeleton={isSkeleton}
             items={[
                 () => (isSkeleton ? (
@@ -280,7 +272,7 @@ const MockInterviewScorecard = ({
     const ctaButtonRow = (
         <StackH
             gap={4}
-            wrap
+            at="sm"
             isSkeleton={isSkeleton}
             items={[
                 () => (

@@ -10,6 +10,7 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { PhaseScarcityNote, type PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { PriceTagProminent, type PriceBreakdown } from "@sb-components/starci/blocks/commerce/PriceTag/PriceTag"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `EnrollGate` — shown in place of an enrollment-required learn surface when the viewer
@@ -69,8 +70,11 @@ export interface EnrollGateProps {
      * headline, description and CTA never shimmer — see the file header.
      */
     isSkeleton?: boolean
-    /** Extra classes on the root. */
-    className?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Prefer this over `className`; the string form is going away.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -86,7 +90,7 @@ const EnrollGateBase = ({
     price,
     onEnroll,
     isSkeleton = false,
-    className,
+    classNames,
 }: EnrollGateProps) => {
     // no price to show yet (unresolved) OR the caller forces the loading state —
     // either way the price region falls to the AsyncContent shimmer branch.
@@ -101,17 +105,14 @@ const EnrollGateBase = ({
                 discounted={price.discountedVnd}
                 original={price.originalVnd}
                 breakdown={price.breakdown}
-                className="justify-center"
-
+                classNames={["self-center"]}
             />
             {price.currentPhase != null ? (
                 <PhaseScarcityNote
                     currentPhase={price.currentPhase}
                     seatsRemaining={price.seatsRemaining ?? null}
                     nextPhasePriceVnd={price.nextPhasePriceVnd ?? null}
-                    className="justify-center"
-
-
+                    classNames={["self-center"]}
                 />
             ) : null}
         </>
@@ -182,7 +183,7 @@ const EnrollGateBase = ({
     // governs the wrapper's padding instead of a hand-typed `p-*` value.
     if (preview == null) {
         return (
-            <StackH gap={1} justify="center" padding={6} isSkeleton={isSkeleton} className={className} items={[() => card]} />
+            <StackH gap={1} justify="center" padding={6} isSkeleton={isSkeleton} classNames={classNames} items={[() => card]} />
         )
     }
 
@@ -190,7 +191,7 @@ const EnrollGateBase = ({
     // renders the whole real body and only fades its tail, never truncates
     // early), with the enroll card floating over the faded tail.
     return (
-        <div className={cn("relative", className)}>
+        <div className={cn("relative", classNames)}>
             <div aria-hidden className="pointer-events-none relative">
                 {preview}
                 {/* Same fade band as `ContentArticle`'s locked-body tail — fades into
@@ -203,7 +204,9 @@ const EnrollGateBase = ({
                 port, since the scale is symmetric and has no asymmetric step. `-mt-32` stays
                 hand-written: it is the float-over-the-fade OVERLAP effect itself, not a seam
                 between siblings, the same idiom as `SurfaceCard.Pressable`'s highlight layer. */}
-            <StackH gap={1} justify="center" padding={6} isSkeleton={isSkeleton} className="relative z-10 -mt-32" items={[() => card]} />
+            <div className="relative z-10 -mt-32">
+                <StackH gap={1} justify="center" padding={6} isSkeleton={isSkeleton} items={[() => card]} />
+            </div>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React from "react"
-import type { ComponentType, ReactNode } from "react"
+import type { ComponentType } from "react"
 import { Label, Switch, cn } from "@heroui/react"
 import { TitledText } from "@/components/composites/text/TitledText"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -159,15 +159,16 @@ const Row = ({
                 truncate
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
-                <StackH
-                    gap={3}
-                    classNames={["shrink-0"]}
-                    className="ml-auto"
-                    items={[
-                        ...(MetaSlot ? [() => <MetaSlot />] : []),
-                        ...(TrailingSlot ? [() => <TrailingSlot />] : []),
-                    ]}
-                />
+                <div className="ml-auto">
+                    <StackH
+                        gap={3}
+                        classNames={["shrink-0"]}
+                        items={[
+                            ...(MetaSlot ? [() => <MetaSlot />] : []),
+                            ...(TrailingSlot ? [() => <TrailingSlot />] : []),
+                        ]}
+                    />
+                </div>
             ) : null}
         </>
     )

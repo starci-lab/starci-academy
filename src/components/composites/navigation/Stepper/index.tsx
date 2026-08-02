@@ -236,7 +236,9 @@ const StepperBase = ({
                                 </button>
                             ) : (
                                 // inset-exception: optical nudge lining the label up with the step dot
-                                <StackV gap={1} className="pt-1" items={[() => staticCopy]} />
+                                <div className="pt-1">
+                                    <StackV gap={1} items={[() => staticCopy]} />
+                                </div>
                             )),
                         ]}
                     />

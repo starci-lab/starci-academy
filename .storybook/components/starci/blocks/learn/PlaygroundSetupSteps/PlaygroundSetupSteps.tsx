@@ -263,7 +263,7 @@ const PlaygroundSetupSteps = ({
                 ({ isSkeleton }: SkeletonProps) => (
                     <StackH
                         gap={3}
-                        wrap
+                        at="sm"
                         isSkeleton={isSkeleton}
                         items={[
                             () => renderVerifyButton(),

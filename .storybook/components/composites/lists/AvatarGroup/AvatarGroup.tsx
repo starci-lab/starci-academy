@@ -83,7 +83,7 @@ export const AvatarGroup = ({
             {visible.map((item) => (
                 // One badge per member: names each avatar as one opaque part
                 // instead of exposing Avatar's own Image/Fallback parts.
-                <span key={item.key} className="inline-flex">
+                <span key={item.key} className={cn("inline-flex", GROUP_RING)}>
                     <Avatar
                         src={item.src}
                         seed={item.seed}
@@ -91,7 +91,6 @@ export const AvatarGroup = ({
                         icon={item.icon}
                         size={size}
                         isSkeleton={isSkeleton}
-                        className={GROUP_RING}
                     />
                 </span>
             ))}
@@ -101,8 +100,8 @@ export const AvatarGroup = ({
                     // a real count inside a loading row would leak real data into fake state.
                     // Forwards to the same `Avatar` atom the visible items use above: the
                     // count/person distinction only matters once real content lands.
-                    <span className="inline-flex">
-                        <Avatar isSkeleton size={size} className={GROUP_RING} />
+                    <span className={cn("inline-flex", GROUP_RING)}>
+                        <Avatar isSkeleton size={size} />
                     </span>
                 ) : (
                     // "+N" is a COUNT, not a person — rendered here rather than through

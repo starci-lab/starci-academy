@@ -112,13 +112,13 @@ const ContentAiChatDrawer = ({
     ]
 
     const header = () => (
-        <StackH
-            gap={3}
-            justify="between"
-            className="pr-8"
-
-            items={titleAndModeSwitch}
-        />
+        <div className="pr-8">
+            <StackH
+                gap={3}
+                justify="between"
+                items={titleAndModeSwitch}
+            />
+        </div>
     )
 
     return (

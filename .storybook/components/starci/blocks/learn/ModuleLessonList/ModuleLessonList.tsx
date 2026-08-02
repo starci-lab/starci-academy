@@ -110,14 +110,14 @@ const ModuleLessonList = ({
         const { Icon, className } = STATUS_LEADING[lessonStatus(lesson, resumeLessonId)]
         return {
             key: lesson.id,
-            leading: isSkeleton ? (
+            leading: () => (isSkeleton ? (
                 // The status icon is chosen DIRECTLY by the block from `STATUS_LEADING`,
                 // never through an atom in between — hand-roll a single shimmer dot in
                 // its place instead of branching off to build a whole separate row (§12c).
                 <HeroSkeleton className="size-5 shrink-0 rounded-full" />
             ) : (
                 <Icon aria-hidden focusable="false" className={className} />
-            ),
+            )),
             title: lesson.title,
             // The subtitle sentence is assembled HERE — the caller hands over two
             // numbers, never a pre-formatted string (§14d.1).
@@ -127,9 +127,9 @@ const ModuleLessonList = ({
             onPress: usingPlaceholders ? undefined : () => onSelectLesson(lesson.id),
             // Difficulty is DESIGN's shape (`VariantChipDifficulty`, §14d.1) — the block
             // doesn't reshape the chip, only decides whether one is offered at all.
-            meta: lesson.difficulty != null ? (
+            meta: lesson.difficulty != null ? () => (
                 <VariantChipDifficulty
-                    difficulty={lesson.difficulty}
+                    difficulty={lesson.difficulty!}
                     isSkeleton={isSkeleton}
 
                 />

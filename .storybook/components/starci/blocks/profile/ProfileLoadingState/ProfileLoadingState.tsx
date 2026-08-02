@@ -183,7 +183,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             {/* short bio */}
             <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
 
-            <StackH gap={3} wrap items={[() => locationRow]} />
+            <StackH gap={3} at="sm" items={[() => locationRow]} />
             <StackH gap={4} items={[() => followRow]} />
 
             {/* earned-badge medal strip — `AvatarGroup` already owns the overlap look */}
@@ -271,24 +271,24 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     // identity column + a flexing content column need).
     const outerRow = (
         <>
-            <StackV
-                gap={4}
-                classNames={["w-full"]}
-                className="@app-md:w-72 @app-md:shrink-0"
-
-                items={[() => identityColumnBody]}
-            />
+            <div className="@app-md:w-72 @app-md:shrink-0">
+                <StackV
+                    gap={4}
+                    classNames={["w-full"]}
+                    items={[() => identityColumnBody]}
+                />
+            </div>
             <StackV gap={6} classNames={["min-w-0", "flex-1"]} items={[() => overviewSections]} />
         </>
     )
 
     const overviewBody = (
-        <StackV
-            gap={6}
-            className="@app-md:flex-row @app-md:items-start"
-
-            items={[() => outerRow]}
-        />
+        <div className="@app-md:flex-row @app-md:items-start">
+            <StackV
+                gap={6}
+                items={[() => outerRow]}
+            />
+        </div>
     )
 
     return (

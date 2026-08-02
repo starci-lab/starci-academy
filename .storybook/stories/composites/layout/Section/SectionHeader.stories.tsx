@@ -154,7 +154,7 @@ export const WithAction: Story = {
                             render: (
                                 <SectionHeader
                                     title="My courses"
-                                    action={<Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
+                                    action={() => <Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
                                    
                                 />
                             ),
@@ -190,7 +190,7 @@ export const Full: Story = {
                                     eyebrow="Fullstack Mastery"
                                     title="Submitted assignments"
                                     description="AI grades within minutes; you can resubmit up to 3 times."
-                                    action={<Button label="Settings" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
+                                    action={() => <Button label="Settings" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
                                    
                                 />
                             ),

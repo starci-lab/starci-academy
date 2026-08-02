@@ -1364,7 +1364,6 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      * passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Description) for a BlockAnatomy panel. */
 }
 /** Resolves an item's left DATA band — `withVerdict` (full shape) wins over the `tone` shorthand. */
 /**
@@ -1714,7 +1713,6 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
      * passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Row) for a BlockAnatomy panel. */
 }
 /**
  * An "Accordion Card": one bounded `bg-surface` frame holding collapsible sections,

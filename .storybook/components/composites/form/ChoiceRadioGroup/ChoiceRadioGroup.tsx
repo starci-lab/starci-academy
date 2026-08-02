@@ -56,7 +56,6 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
     isSkeleton?: boolean
     /** Row count for the skeleton mirror (default = `options.length`). */
     skeletonRows?: number
-    /** `true` → tag each option row (`ChoiceRadio`) and its internals for BlockAnatomy. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

@@ -36,7 +36,6 @@ interface LinkBackOwnProps {
      * before `target` is known.
      */
     skeletonWidth?: SkeletonWidth
-    /** `true` → tag the root with `` so a BlockAnatomy panel can badge it. */
     /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }

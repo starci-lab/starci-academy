@@ -190,7 +190,6 @@ export interface MarkdownRenderersParams {
     reading: boolean
     /** Figure captions keyed by trimmed mermaid source, paired from the following paragraph. */
     mermaidCaptions: Record<string, string>
-    /** `true` → tag the reused atoms (`SnippetIcon`, `Chip`) for a BlockAnatomy panel. */
 }
 
 /**

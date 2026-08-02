@@ -45,7 +45,6 @@ export interface ButtonGroupProps {
     size?: ButtonSize
     /** `true` renders a skeleton mirroring the item count (pill/square per item). */
     isSkeleton?: boolean
-    /** `true` → tag each rendered `Button` for a BlockAnatomy panel (the atom names itself). */
     /**
      * Main-axis distribution once the row is packed — same three-value vocabulary as
      * `Button`'s own `align` and `Form`'s `FormActionsAlign`. Left out means the browser

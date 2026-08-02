@@ -269,7 +269,6 @@ export interface ListLabeledProps {
     skeletonRows?: number
     /** Layout utilities on the outer section, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
 }
 
 /**

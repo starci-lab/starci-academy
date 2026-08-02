@@ -85,7 +85,6 @@ const SKELETON_NODE_COUNT = 3
 interface FlowDiagramOwnProps {
     /** Where the canvas frame sits inside its parent. */
     classNames?: Array<AllowedClassName>
-    /** `true` → tag the skeleton placeholder cards' `Typography` for a BlockAnatomy panel. */
 }
 
 /**

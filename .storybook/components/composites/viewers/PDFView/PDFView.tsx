@@ -158,7 +158,6 @@ interface PDFViewOwnProps {
     isSkeleton?: boolean
     /** Where this sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** `true` → tag the whole-file skeleton placeholder pages' `Typography` for a BlockAnatomy panel. */
 }
 
 /**

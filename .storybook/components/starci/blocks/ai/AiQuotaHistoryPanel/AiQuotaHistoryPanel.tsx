@@ -118,7 +118,6 @@ export interface AiQuotaHistoryPanelProps {
     isLoading: boolean
     /** Extra classes on the root. */
     className?: string
-    /** Dev/spec: tag this block's own directly-composed parts (`StackV`/`Typography`/`SurfaceCard`/`SurfaceCardList`/`Chip`) for a BlockAnatomy panel. */
 }
 
 /** How many placeholder rows the loading mirror shows — matches the source's 3-row skeleton. */

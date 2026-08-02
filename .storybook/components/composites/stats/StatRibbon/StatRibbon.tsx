@@ -42,7 +42,6 @@ interface StatRibbonOwnProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
 }
 
 /**

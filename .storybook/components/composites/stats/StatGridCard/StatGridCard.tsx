@@ -26,7 +26,6 @@ export interface StatGridCardProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: emit `` on each grid cell for a BlockAnatomy panel. */
 }
 
 /**

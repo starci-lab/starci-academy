@@ -85,7 +85,6 @@ export interface ActionBarProps {
      * before packing than `ButtonGroup`'s own default (`sm`) does.
      */
     at?: ResponsiveRowSwitch
-    /** `true` → tag each rendered `Button` for a BlockAnatomy panel (the atom names itself). */
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }

@@ -105,11 +105,6 @@ export interface ListRowProps {
     isSkeleton?: boolean
     /** Layout utilities merged onto the root element, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /**
-     * When `true`, each composed part (leading / title-text / meta-trailing
-     * cluster) emits `` so a BlockAnatomy panel can badge
-     * it on-render. Off by default (production).
-     */
 }
 
 /**
@@ -266,7 +261,6 @@ export interface ListLabeledProps {
     skeletonRows?: number
     /** Layout utilities on the outer section, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: badge this composite's OWN direct parts for a BlockAnatomy panel. */
 }
 
 /**

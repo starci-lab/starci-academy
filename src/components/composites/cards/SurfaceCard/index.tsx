@@ -940,7 +940,6 @@ interface PressableGroupSkeletonTileProps {
      * already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: names the Avatar mirror so a BlockAnatomy panel can badge/link it. Avatar has no of its own, so the frame wraps it instead. */
 }
 const PressableGroupSkeletonTile = ({ classNames}: PressableGroupSkeletonTileProps) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", classNames)}>
@@ -1339,7 +1338,6 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      * passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Description) for a BlockAnatomy panel. */
 }
 /** Resolves an item's left DATA band — `withVerdict` (full shape) wins over the `tone` shorthand. */
 /**
@@ -1680,7 +1678,6 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
      * passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Row) for a BlockAnatomy panel. */
 }
 /**
  * An "Accordion Card": one bounded `bg-surface` frame holding collapsible sections,

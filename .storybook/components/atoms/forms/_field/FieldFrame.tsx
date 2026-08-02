@@ -41,7 +41,6 @@ export interface FieldFrameProps {
     id?: string
     /** Where this sits inside its parent (the outer column). Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
-    /** Storybook: badges Label/Description/Control/Error for BlockAnatomy. */
 }
 
 /**

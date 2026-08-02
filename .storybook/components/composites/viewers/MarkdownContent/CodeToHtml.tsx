@@ -69,7 +69,6 @@ export interface CodeToHtmlProps {
     language: string
     /** Shiki theme id resolved from the current Storybook toolbar theme. */
     theme: string
-    /** `true` → tag the copy control so a BlockAnatomy panel can link to its own story. */
     /**
      * Where the root element sits inside its parent, from the closed positioning
      * union. The block-rhythm margin between fences (`"my-4"`/`"my-3"`) has no

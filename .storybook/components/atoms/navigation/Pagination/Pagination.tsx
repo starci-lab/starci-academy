@@ -160,7 +160,6 @@ interface PaginationLinkProps {
     isActive: boolean
     /** Fired with this link's page number on press. */
     onPageChange: (pageNumber: number) => void
-    /** When on, emit `` for the parent `BlockAnatomy` panel. */
 }
 
 /**

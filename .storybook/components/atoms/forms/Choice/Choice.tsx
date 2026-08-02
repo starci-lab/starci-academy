@@ -132,7 +132,6 @@ export interface ChoiceRadioProps {
     isDisabled?: boolean
     /** Render the control-shaped skeleton — one radio-row shimmer (dot + label bar). */
     isSkeleton?: boolean
-    /** `true` → tag `Radio.Content` · `Radio.Control` for BlockAnatomy. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -180,7 +179,6 @@ export interface ChoiceSwitchProps extends InlineFrameProps {
     size?: "sm" | "md" | "lg"
     /** Render the control-shaped skeleton — a switch-track pill (+ label bar). */
     isSkeleton?: boolean
-    /** `true` → tag `Switch` · `Label` for BlockAnatomy. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

@@ -64,7 +64,6 @@ export interface IconLabelValueRowProps {
     isSkeleton?: boolean
     /** Layout utilities on the root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** `true` → the icon slot also emits ``, so a BlockAnatomy panel can badge it on-render. */
 }
 
 /**

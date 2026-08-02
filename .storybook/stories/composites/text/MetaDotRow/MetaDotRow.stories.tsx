@@ -12,14 +12,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * it).
  *
  * 📐 **1 PROP = 1 LEAF.** `items`, `isSkeleton`, `skeletonCount` each get their
- * own leaf. `anatPart`/`classNames` get none — pure wiring/placement props
- * with no visible shape of their own to demonstrate.
- *
- * COMPOSITE GAP — `MetaDotRow` does not forward `showAnatomy` into its
- * per-fragment `Typography`/`Divider` calls yet, so the Structure tab below
- * stays empty for now; the table is left in place as the mapping for when
- * that wiring lands, the same way `AuthorByline`'s header documents its own
- * icon-shimmer gap without pretending it is already closed.
+ * own leaf. `classNames` gets none — a pure placement prop with no visible
+ * shape of its own to demonstrate.
  */
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {

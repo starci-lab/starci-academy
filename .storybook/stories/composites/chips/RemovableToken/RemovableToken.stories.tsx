@@ -22,12 +22,6 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * element — the row calls it itself at a fixed `size-4` scale so it can also
  * be called during `isSkeleton`. `icon={BuildingOfficeIcon}`, not
  * `icon={<BuildingOfficeIcon />}`.
- *
- * ⚠️ No `annotate` table: `RemovableToken` does not yet accept `anatPart` /
- * so none of its parts (or the `Button`/`Typography` atoms it
- * composes) emit `data-anat-part` — there is nothing for a structure tree to
- * pick up yet. Every leaf below still renders the full `BlockAnatomy` panel
- * for its states/why/code.
  */
 const meta: Meta<typeof RemovableToken> = {
     title: "Composites/Chips/RemovableToken",

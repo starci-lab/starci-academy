@@ -169,9 +169,6 @@ const TableBase = ({
             renderEmptyState={
                 EmptyContent != null
                     ? () => (
-                        // No `data-anat-part` here: `emptyContent` is the CALLER's own component,
-                        // so there is no ONE fixed component for a panel link to point to
-                        // (§11a.1 TYPE 3 — caller slot, stop badging).
                         <div className="p-8 text-center">
                             <EmptyContent isSkeleton={isSkeleton} />
                         </div>

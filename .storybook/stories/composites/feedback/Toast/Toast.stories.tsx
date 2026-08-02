@@ -20,13 +20,6 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * second leaf `WithAction` stays separate because it grows ADDITIONAL real
  * nodes (`Action`/`Close`).
  *
- * ⚠️ NO `annotate`: Toast does not emit its own `data-anat-part` at the
- * `Alert` boundary (it doesn't forward an `anatPart` down — the current
- * `Alert` no longer accepts that prop, the atom names itself per ATOM-10) —
- * every name that shows up (`Icon`/`Content`/`Title`/`Description`/`Action`/
- * `Close`) is an INTERNAL span of `Alert`, with no story of its own to jump
- * to ⇒ not a real dep.
- *
  * MIGRATED TO `states` (2026-07-27): `Statuses` used to map the full `ToastStatus`
  * union into one stacked block with no room to explain any one tone on its own —
  * now each tone is its own `states[]` entry.

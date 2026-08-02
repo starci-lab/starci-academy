@@ -20,13 +20,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * `className` (deprecated legacy escape) and `classNames` get **no leaf**, same call as
  * every other composite/atom story in this system: neither ever changes how the chip
- * looks, only where it sits. `anatPart` gets no leaf either — see the caveat below.
- *
- * ⚠️ This composite does not forward `showAnatomy` to the `Chip` atom it renders (its
- * own `anatPart` prop is dead: `ChipBase` never destructures a prop named * so passing it is a no-op). No element under any leaf below ever carries
- * so the Structure tab stays empty for every leaf here — same
- * documented caveat as `Atoms/Media/QRCode`, not a bug in this story. The `ANNOTATE`
- * table is still written out, for when that instrumentation lands.
+ * looks, only where it sits.
  */
 const meta: Meta<typeof EnumChip> = {
     title: "Composites/Chips/EnumChip",

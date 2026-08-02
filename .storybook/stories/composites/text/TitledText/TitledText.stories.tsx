@@ -14,10 +14,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 📐 **1 PROP = 1 LEAF.** `subtitle`, `hint`, `size`, `weight`, `truncate`,
  * `isSkeleton` each get their own leaf. `title` has no leaf of its own — it
- * is the content every other leaf fills in. `anatPart`/`classNames`/
- * `showAnatomy` get none — wiring props with no visible shape of their own
- * (`showAnatomy` is the anatomy-panel plumbing itself, turned on directly on
- * the leaves below rather than demonstrated as a value).
+ * is the content every other leaf fills in. `classNames` gets none — a
+ * placement prop with no visible shape of its own.
  */
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {

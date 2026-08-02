@@ -23,7 +23,6 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * is the content every other leaf fills in.
  *
  * Props with NO leaf, and why:
- * - `showAnatomy` / `anatPart` — anatomy tooling only, not a rendered value.
  * - `classNames` — placement inside a parent, appearance is not passable
  *   through it.
  *

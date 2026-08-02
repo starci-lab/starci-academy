@@ -18,16 +18,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * content every other leaf fills in.
  *
  * Props with NO leaf, and why:
- * - `anatPart` — anatomy tooling only, not a rendered value. (This composite
- *   has no `showAnatomy` prop at all — see the Structure gap note below.)
  * - `classNames` — placement inside a parent, appearance is not passable
  *   through it.
- *
- * ⚠️ STRUCTURE GAP: unlike `DotLabel`/`AuthorByline`, this composite has no
- * `showAnatomy` prop, so it cannot forward anatomy tagging down into its own
- * inner `Typography` — `ANNOTATE` stays empty; there is nothing the Structure
- * tab can derive from the DOM here. A documented gap in the component itself,
- * not fixed by this story (out of scope: story files only).
  */
 const meta: Meta<typeof InlineIconLabel> = {
     title: "Composites/Texts/InlineIconLabel",

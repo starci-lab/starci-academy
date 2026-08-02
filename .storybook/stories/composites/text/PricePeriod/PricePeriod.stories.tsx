@@ -17,12 +17,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * 📐 **1 PROP = 1 LEAF.** `original`, `period`, `size`, `isSkeleton` each get
  * their own leaf. `amount` has no leaf of its own — it is the content every
  * other leaf fills in, the same role `label`/`value` play on `KeyValueRow`.
- * `anatPart`/`classNames` get none — pure wiring/placement props with no
- * visible shape of their own.
- *
- * COMPOSITE GAP — `PricePeriod` does not forward `showAnatomy` into its three
- * `Typography` calls yet, so the Structure tab below stays empty for now; the
- * table is left in place as the mapping for when that wiring lands.
+ * `classNames` gets none — a pure placement prop with no visible shape of its own.
  */
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {

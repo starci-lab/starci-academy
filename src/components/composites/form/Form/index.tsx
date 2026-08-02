@@ -126,10 +126,6 @@ const Base = ({
                 to `min-width: min-content` (which would break truncation inside).
             */}
             <fieldset disabled={isDisabled} className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
-                {/* No `data-anat-part` on `Body`/`Actions`: both wrap an ARBITRARY node the
-                    caller supplies (any fields, or usually a `FormActions` but never enforced),
-                    with no ONE fixed component a panel link could point to (§11a.1 CASE 3 —
-                    caller slot, stop badging). */}
                 {main != null ? (
                     <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
                         {main}

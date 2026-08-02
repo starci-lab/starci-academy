@@ -89,8 +89,7 @@ export const ConfirmDialog = ({
     const isDanger = tone === "danger"
     return (
         <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
-            {/* `AlertDialog` root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM
-                node of its own, so it can't carry `data-anat-part` (nothing for the scan to find). */}
+            {/* `AlertDialog` root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM node of its own. */}
             <AlertDialog.Backdrop>
                 <AlertDialog.Container size="sm">
                     <AlertDialog.Dialog className={cn(classNames)}>

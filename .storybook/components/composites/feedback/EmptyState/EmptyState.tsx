@@ -143,9 +143,6 @@ export const EmptyState = ({
                 </div>
             ) : null}
             {Icon ? (
-                // No `data-anat-part` here: `icon` is an arbitrary caller-supplied component (a
-                // different Phosphor glyph every call), so there is no ONE fixed component for a
-                // panel link to point to (§11a.1 CASE 3 — caller slot, stop badging).
                 <span className={cn("inline-flex", tone === "danger" ? "text-danger" : "text-foreground")}>
                     <Icon className="size-8" />
                 </span>
@@ -178,9 +175,6 @@ export const EmptyState = ({
                     ) : null}
                 </>
             )}
-            {/* No `data-anat-part` on `Body`/`Action` below: both are arbitrary caller-supplied
-                nodes (a hint list here, one or two buttons there) with no ONE fixed component a
-                panel link could point to (§11a.1 CASE 3 — caller slot, stop badging). */}
             {main != null ? <div>{main}</div> : null}
             {action ? (
                 <div className={isPage ? "flex flex-wrap items-center justify-center gap-3" : undefined}>

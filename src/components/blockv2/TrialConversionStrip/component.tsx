@@ -1,15 +1,35 @@
 import React from "react"
-import { Button, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
-import { IconTile } from "@/components/blocks/identity/IconTile"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
-import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
+import { PriceTagProminent, type PriceBreakdown } from "@sb-components/starci/blocks/commerce/PriceTag/PriceTag"
+// The NON-legacy version (`designs/commerce/…`) — the `_legacy` version of the same
+// name still exists but is a dead end; screens are forbidden from touching `_legacy`
+// so every link in the chain has to move off it.
+import { PhaseScarcityNote, PricingPhase as SbPricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import type { QueryCoursePricePreviewData } from "@/modules/api/graphql/queries/types/course-price-preview"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/**
+ * Real backend {@link PricingPhase} → the sb-components `PhaseScarcityNote`'s own local
+ * enum — the two are declared separately (different string values, e.g. `earlyBird` vs
+ * `early_bird`), so a plain pass-through would silently break the phase label. This is
+ * the ONE adapter seam between the domain type and the design-system block.
+ */
+const SB_PHASE: Record<PricingPhase, SbPricingPhase> = {
+    [PricingPhase.Pioneer]: SbPricingPhase.Pioneer,
+    [PricingPhase.EarlyBird]: SbPricingPhase.EarlyBird,
+    [PricingPhase.Regular]: SbPricingPhase.Regular,
+}
 
 /** Props for {@link _TrialConversionStrip} — presentational; all text + price resolved, no fetch/store/i18n. */
-export interface TrialConversionStripProps extends WithClassNames<undefined> {
+export interface TrialConversionStripProps {
     /** Card title (already localized). */
     title: string
     /** Supporting line under the title — the connected file already picked the goal-gradient vs generic copy. */
@@ -18,10 +38,17 @@ export interface TrialConversionStripProps extends WithClassNames<undefined> {
     cta: string
     /** Resolved pre-checkout price; omitted/null → the price line is skipped. */
     price?: QueryCoursePricePreviewData | null
-    /** `true` while the price is still fetching → the price line shimmers instead of showing an empty gap. */
-    isPriceLoading?: boolean
+    /**
+     * `true` while the price is still fetching → the price column shimmers instead of
+     * showing an empty gap, KEEPING its line boxes so nothing jumps in layout. The
+     * header (icon/title/description) and the CTA never depend on the price fetch, so
+     * they always render their real content.
+     */
+    isSkeleton?: boolean
     /** Open the shared payment modal in the course-enroll flow. */
     onEnroll: () => void
+    /** Where this strip sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -37,59 +64,89 @@ export const _TrialConversionStrip = ({
     description,
     cta,
     price,
-    isPriceLoading = false,
+    isSkeleton = false,
     onEnroll,
-    className,
-}: TrialConversionStripProps) => (
-    <div className={cn("flex flex-col gap-3 rounded-3xl bg-surface p-5 shadow-surface", className)}>
-        <div className="flex items-start gap-3">
-            <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="accent" size="sm" />
-            <div className="flex min-w-0 flex-col gap-1">
-                <Typography type="body" weight="semibold">
-                    {title}
-                </Typography>
-                <Typography type="body-sm" color="muted">
-                    {description}
-                </Typography>
-            </div>
-        </div>
-        <div className="flex flex-wrap items-end justify-between gap-3 border-t border-default pt-3">
-            <div className="flex flex-col gap-1">
-                {isPriceLoading && !price ? (
-                    // The CTA card renders instantly once the outline resolves, but the price is a
-                    // second fetch — mirror the price line instead of an empty gap until it lands.
-                    <>
-                        <Skeleton.Typography type="h4" width="1/3" />
-                        <Skeleton.Typography type="body-xs" width="1/2" />
-                    </>
-                ) : price?.discountedPriceVnd != null ? (
-                    <>
-                        <PriceTag
-                            discounted={price.discountedPriceVnd}
-                            original={price.originalPriceVnd}
-                            size="md"
-                            breakdown={{
-                                phase: price.phasePriceVnd,
-                                loyaltyPercent: price.discountPercent,
-                            }}
-                        />
-                        <PhaseScarcityNote
-                            currentPhase={price.currentPhase}
-                            seatsRemaining={price.seatsRemainingInCurrentPhase}
-                            nextPhasePriceVnd={price.nextPhasePriceVnd}
-                        />
-                    </>
-                ) : null}
-            </div>
-            <Button
-                variant="primary"
-                size="lg"
-                className="shrink-0"
-                onPress={onEnroll}
-            >
-                {cta}
-                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-            </Button>
-        </div>
-    </div>
-)
+    classNames,
+}: TrialConversionStripProps) => {
+    const breakdown: PriceBreakdown | undefined = price
+        ? {
+            phase: price.phasePriceVnd,
+            loyaltyPercent: price.discountPercent,
+        }
+        : undefined
+
+    // Header never rests — title/description already arrived as resolved strings
+    // (i18n + the outline), not a fetch, so there is nothing here to shimmer.
+    const headerRow = (
+        <StackH gap={4} align="center" items={[
+            () => <IconTile icon={LockIcon} tone="accent" size="sm" />,
+            () => <TitledText classNames={["flex-1"]} title={title} subtitle={description} />,
+        ]} />
+    )
+
+    // The scarcity line is a CAPTION OF THE PRICE — price + scarcity are one cluster,
+    // this is an intra-cluster seam (not the wider seam around the whole card).
+    const priceColumn = (
+        <StackV gap={4} isSkeleton={isSkeleton} items={
+            isSkeleton && !price ? [
+                // The header + CTA render instantly, but the price is a second fetch —
+                // mirror the price line instead of showing an empty gap until it lands.
+                () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
+                () => <Typography size="xs" isSkeleton classNames={["w-1/2"]} />,
+            ] : price?.discountedPriceVnd != null ? [
+                ({ isSkeleton }: SkeletonProps) => (
+                    <PriceTagProminent
+                        isSkeleton={isSkeleton}
+                        discounted={price.discountedPriceVnd}
+                        original={price.originalPriceVnd}
+                        breakdown={breakdown}
+                    />
+                ),
+                ({ isSkeleton }: SkeletonProps) => (
+                    <PhaseScarcityNote
+                        isSkeleton={isSkeleton}
+                        currentPhase={SB_PHASE[price.currentPhase]}
+                        seatsRemaining={price.seatsRemainingInCurrentPhase}
+                        nextPhasePriceVnd={price.nextPhasePriceVnd}
+                    />
+                ),
+            ] : []
+        } />
+    )
+
+    // Price is a NUMBER — shrinking it means nothing, unlike a long title that can
+    // truncate. The row wraps when tight (`StackH`): the button drops to the next
+    // line instead of the price getting squeezed.
+    const footerRow = (
+        <StackH gap={6} align="end" justify="between" at="sm" items={[
+            () => priceColumn,
+            // ATOM `Button`, NOT the legacy HeroUI one — `suffixIcon` takes a COMPONENT
+            // REF, the atom forces scale + weight; the CTA is never gated on the price
+            // fetch, so it does not take `isSkeleton`.
+            () => (
+                <Button
+                    variant="primary"
+                    size="lg"
+                    classNames={["shrink-0"]}
+                    label={cta}
+                    suffixIcon={ArrowRightIcon}
+                    iconSlide
+                    onPress={onEnroll}
+                />
+            ),
+        ]} />
+    )
+
+    return (
+        // The frame owns radius/shadow/padding from ONE source: `SurfaceCard`.
+        <SurfaceCard
+            classNames={classNames}
+            body={() => (
+                <StackV gap={6} items={[
+                    () => headerRow,
+                    () => footerRow,
+                ]} />
+            )}
+        />
+    )
+}

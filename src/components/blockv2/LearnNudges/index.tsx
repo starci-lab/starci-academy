@@ -4,15 +4,11 @@ import React from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useCourseResume } from "@/components/features/learn/shared/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
 import { useLeaderboardSwr } from "@/components/features/learn/Leaderboard/useLeaderboardSwr"
 import { _LearnNudges, type LearnNudgeItem } from "./component"
-
-/** Props for {@link LearnNudges}. */
-export type LearnNudgesProps = WithClassNames<undefined>
 
 /**
  * Contextual "next actions" strip on the content home — the CONNECTED half: it reads its own SWR
@@ -21,7 +17,7 @@ export type LearnNudgesProps = WithClassNames<undefined>
  * Each nudge is surfaced only when its state is timely (due count > 0, enrolled-with-capstone, a
  * known rank). See `design/storybook/architecture/split.md`.
  */
-export const LearnNudges = ({ className }: LearnNudgesProps) => {
+export const LearnNudges = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -77,5 +73,5 @@ export const LearnNudges = ({ className }: LearnNudgesProps) => {
     // while either is pending; only self-hide once BOTH resolve and there's truly nothing.
     const isPending = (dueSwr.isLoading && !dueSwr.data) || (leaderboardSwr.isLoading && !leaderboardSwr.data)
 
-    return <_LearnNudges items={items} isPending={isPending} className={className} />
+    return <_LearnNudges items={items} isPending={isPending} />
 }

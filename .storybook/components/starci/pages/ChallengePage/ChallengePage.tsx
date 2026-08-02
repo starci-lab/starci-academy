@@ -160,8 +160,8 @@ const ChallengePage = ({
     const challengeBody = (
         <SplitWorkspace
 
-            main={<StackV gap={7} items={readColumn} />}
-            aside={<StackV gap={6} items={actColumn} />}
+            main={<StackV gap={7} isSkeleton={isSkeleton} items={readColumn} />}
+            aside={<StackV gap={6} isSkeleton={isSkeleton} items={actColumn} />}
         />
     )
 

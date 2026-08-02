@@ -142,11 +142,11 @@ const FoundationsCategoryPage = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={6} items={[() => resourcesSection]} />
+            <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourcesSection]} />
         </>
     )
 
-    const categoryBody = <StackV gap={7} items={[() => categorySections]} />
+    const categoryBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => categorySections]} />
 
     return <Container size="md" padding={6} body={categoryBody} />
 }

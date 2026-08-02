@@ -73,7 +73,7 @@ export const StatPair = ({
         <StackV
             gap={1}
             align="start"
-
+            isSkeleton={isSkeleton}
             classNames={classNames}
             items={[
                 () => (

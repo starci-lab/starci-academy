@@ -108,6 +108,7 @@ export const ProgressMeter = ({
         <StackH
             gap={3}
             justify="between"
+            isSkeleton={isSkeleton}
             items={[
                 () => <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />,
                 ...(showValue ? [() => (
@@ -126,6 +127,7 @@ export const ProgressMeter = ({
         <StackH
             gap={3}
             justify="between"
+            isSkeleton={isSkeleton}
             items={[
                 () => Leading ? (
                         <div className="min-w-0">
@@ -195,7 +197,7 @@ export const ProgressMeter = ({
         <StackV
             gap={3}
             classNames={classNames}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => topRow,
                 () => slotRow,

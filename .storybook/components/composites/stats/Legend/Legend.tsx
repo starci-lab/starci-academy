@@ -104,6 +104,7 @@ export const Legend = ({
                     <StackH
                         key={index}
                         gap={3}
+                        isSkeleton={isSkeleton}
                         items={[
                                     /* ATOM GAP: no swatch/dot atom exists yet, so the dot stays a
                                     real plain span in both states — a neutral flat fill (no
@@ -127,6 +128,7 @@ export const Legend = ({
                         <StackH
                             key={item.key}
                             gap={3}
+                            isSkeleton={isSkeleton}
                             items={[
                                 () => (
                                     <span
@@ -135,7 +137,7 @@ export const Legend = ({
                                         className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
                                     />
                                 ),
-                                () => <Typography size="xs" color="muted" text={`${item.label}${item.suffix ?? ""}`} />,
+                                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={`${item.label}${item.suffix ?? ""}`} />,
                             ]}
                         />
                     )

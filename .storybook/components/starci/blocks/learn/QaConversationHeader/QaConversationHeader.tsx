@@ -73,6 +73,7 @@ const QaConversationHeader = ({
         <StackH
             gap={2}
             align="center"
+            isSkeleton={isSkeleton}
 
             items={isSkeleton
                 ? [() => <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} />]
@@ -89,6 +90,7 @@ const QaConversationHeader = ({
         <StackV
             gap={1}
             classNames={["min-w-0", "flex-1"]}
+            isSkeleton={isSkeleton}
 
             items={[
                 () => nameRow,
@@ -149,7 +151,7 @@ const QaConversationHeader = ({
 
     return (
         <div>
-            <StackH gap={4} align="center" items={[() => headerRow]} />
+            <StackH gap={4} align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
         </div>
     )
 }

@@ -215,11 +215,11 @@ const PlaygroundPreparePage = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={6} items={[() => readinessSection]} />
+            <StackV gap={6} isSkeleton={isSkeleton} items={[() => readinessSection]} />
         </>
     )
 
-    const prepareBody = <StackV gap={6} items={[() => prepareSections]} />
+    const prepareBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => prepareSections]} />
 
     return <Container size="md" padding={6} body={prepareBody} />
 }

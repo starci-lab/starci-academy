@@ -66,7 +66,7 @@ const ConsultantCard = ({
     const { id, fullName, jobTitle, companyTitle, description, avatarUrl } = consultant
 
     const nameRow = (
-        <StackV gap={1} items={[
+        <StackV gap={1} isSkeleton={isSkeleton} items={[
             () => (
                 <Typography
                     size="sm"
@@ -134,7 +134,7 @@ const ConsultantCard = ({
                     onPress={() => onOpen(id)}
                     isDisabled={isSkeleton}
 
-                    body={() => <StackV gap={4} items={[() => consultantInfo]} />}
+                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => consultantInfo]} />}
                 />
             </div>
         </div>

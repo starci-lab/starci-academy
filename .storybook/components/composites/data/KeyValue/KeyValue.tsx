@@ -108,6 +108,7 @@ const KeyValueRow = ({
                 gap={2}
                 classNames={["min-w-0"]}
                 pattern="title-subtitle"
+                isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <span>
@@ -160,7 +161,7 @@ const KeyValueRow = ({
             justify="between"
             gap={3}
             classNames={classNames}
-
+            isSkeleton={isSkeleton}
             items={[() => pairContent]}
         />
     )

@@ -134,6 +134,7 @@ export const InputButtonLike = ({
         >
             <StackH
                 gap={3}
+                isSkeleton={isSkeleton}
                 classNames={["min-w-0"]}
                 items={[
                     ...(!isSkeleton && Icon ? [() => (
@@ -151,7 +152,7 @@ export const InputButtonLike = ({
                 ]}
             />
             {!isSkeleton && Suffix ? (
-                <StackH gap={3} classNames={["shrink-0"]} items={[() => <Suffix isSkeleton={isSkeleton} />]} />
+                <StackH gap={3} isSkeleton={isSkeleton} classNames={["shrink-0"]} items={[() => <Suffix isSkeleton={isSkeleton} />]} />
             ) : null}
         </Button>
     )

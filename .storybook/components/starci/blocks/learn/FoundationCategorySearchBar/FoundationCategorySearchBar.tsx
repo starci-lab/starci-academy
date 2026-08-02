@@ -64,8 +64,7 @@ const FoundationCategorySearchBar = ({
             <StackH
                 gap={4}
                 justify="between"
-
-
+                isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <div className="min-w-0 flex-1">
@@ -84,8 +83,9 @@ const FoundationCategorySearchBar = ({
                         ? [() => <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} />]
                         : count !== undefined
                             ? [
-                                () => (
+                                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                                     <Typography
+                                        isSkeleton={isSkeleton}
                                         size="sm"
                                         color="muted"
                                         text={countLabel(count)}

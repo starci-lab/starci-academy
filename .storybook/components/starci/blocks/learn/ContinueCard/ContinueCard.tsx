@@ -131,9 +131,9 @@ const CardBody = ({
                 gap={4}
                 align="center"
                 className="relative"
-
+                isSkeleton={isSkeleton}
                 items={[
-                    () => <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[() => titleAndMeta]} />,
+                    ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={3} classNames={["min-w-0", "flex-1"]} isSkeleton={isSkeleton} items={[() => titleAndMeta]} />,
                 ]}
             />
             {/* Progress SITS right under the text cluster, BEFORE the button:

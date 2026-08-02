@@ -152,7 +152,7 @@ const MockInterviewSetup = ({
     const identityRow = (
         <StackH
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <div>
@@ -166,7 +166,7 @@ const MockInterviewSetup = ({
                         />
                     </div>
                 ),
-                () => <StackV gap={1} items={[() => personaDetails]} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={1} isSkeleton={isSkeleton} items={[() => personaDetails]} />,
             ]}
         />
     )
@@ -174,9 +174,9 @@ const MockInterviewSetup = ({
     const sessionNameField = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="sm" weight="medium" text="Session name" />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography isSkeleton={isSkeleton} size="sm" weight="medium" text="Session name" />,
                 () => (
                     <InputText
                         value={sessionName}
@@ -194,9 +194,9 @@ const MockInterviewSetup = ({
     const tierField = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="sm" weight="medium" text="Level" />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography isSkeleton={isSkeleton} size="sm" weight="medium" text="Level" />,
                 () => (
                     <ButtonRadioGroup
                         ariaLabel="Interview level"
@@ -217,10 +217,11 @@ const MockInterviewSetup = ({
         <StackH
             gap={3}
             justify="end"
-
+            isSkeleton={isSkeleton}
             items={[
-                ...(showDesignStart ? [() => (
+                ...(showDesignStart ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <Button
+                        isSkeleton={isSkeleton}
                         label="Start Design"
                         variant="secondary"
                         prefixIcon={FlowArrowIcon}
@@ -230,8 +231,9 @@ const MockInterviewSetup = ({
 
                     />
                 )] : []),
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <Button
+                        isSkeleton={isSkeleton}
                         label="Start Q&A"
                         variant="primary"
                         prefixIcon={PlayIcon}
@@ -250,7 +252,7 @@ const MockInterviewSetup = ({
     const footer = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
                 ...(errorMessage != null ? [() => (
                     <Callout
@@ -280,7 +282,7 @@ const MockInterviewSetup = ({
                 label={label}
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} items={[() => setupBody]} />}
+                body={({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={6} isSkeleton={isSkeleton} items={[() => setupBody]} />}
             />
         </div>
     )

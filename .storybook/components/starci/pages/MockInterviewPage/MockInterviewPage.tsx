@@ -408,7 +408,7 @@ const MockInterviewPage = ({
     const interviewPhases = (
         <>
             {phase === "setup" ? (
-                <StackV gap={6} items={[() => setupSection]} />
+                <StackV gap={6} isSkeleton={isSkeleton} items={[() => setupSection]} />
             ) : null}
 
             {phase === "live" ? (
@@ -416,7 +416,7 @@ const MockInterviewPage = ({
             ) : null}
 
             {phase === "result" ? (
-                <StackV gap={6} items={[() => resultSection]} />
+                <StackV gap={6} isSkeleton={isResultSkeleton} items={[() => resultSection]} />
             ) : null}
         </>
     )

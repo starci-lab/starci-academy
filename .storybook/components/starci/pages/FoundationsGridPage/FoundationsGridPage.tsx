@@ -120,11 +120,11 @@ const FoundationsGridPage = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={6} items={[() => categoriesSection]} />
+            <StackV gap={6} isSkeleton={isSkeleton} items={[() => categoriesSection]} />
         </>
     )
 
-    const gridBody = <StackV gap={6} items={[() => gridSections]} />
+    const gridBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => gridSections]} />
 
     return <Container size="md" padding={6} body={gridBody} />
 }

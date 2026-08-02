@@ -284,6 +284,7 @@ export const PDFView = ({
                 // into view, each one handed `isSkeleton` `Typography` lines.
                 <StackV
                     gap={4}
+                    isSkeleton={isSkeleton}
                     items={Array.from({ length: SKELETON_PAGE_COUNT }, () => () => (
                         <div
                             className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
@@ -306,6 +307,7 @@ export const PDFView = ({
                 >
                     <StackV
                         gap={4}
+                        isSkeleton={isSkeleton}
                         items={Array.from({ length: pageCount }, (_, index) => {
                             const pageNumber = index + 1
                             const eager = !showAllPages || pageNumber <= 2

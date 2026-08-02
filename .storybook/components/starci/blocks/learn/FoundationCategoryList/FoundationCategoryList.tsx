@@ -158,7 +158,7 @@ const FoundationCategoryList = ({
     return (
         <StackV
             gap={4}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <SurfaceCardList

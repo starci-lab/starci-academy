@@ -73,6 +73,7 @@ const IdentityContentRow = ({
         align="start"
         nested={nested}
         classNames={classNames}
+        isSkeleton={isSkeleton}
 
         items={[
             () => (
@@ -89,6 +90,7 @@ const IdentityContentRow = ({
                 <StackV
                     gap={2}
                     classNames={["min-w-0", "flex-1"]}
+                    isSkeleton={isSkeleton}
 
                     items={[
                         () => <Byline isSkeleton={isSkeleton} />,

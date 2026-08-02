@@ -86,9 +86,10 @@ const TrialConversionStripBase = ({
         : undefined
 
     const headerRow = (
-        <StackH gap={4} align="center" items={[
-            () => (
+        <StackH gap={4} align="center" isSkeleton={isSkeleton} items={[
+            ({ isSkeleton }: { isSkeleton?: boolean }) => (
                 <IconTile
+                    isSkeleton={isSkeleton}
                     icon={LockIcon}
                     tone="accent"
                     size="sm"
@@ -127,7 +128,7 @@ const TrialConversionStripBase = ({
     // rhythm stops reading as groups. With 3 the
     // card reads 24/12/12/24 — two groups, which is what it is.
     const priceColumn = (
-        <StackV gap={4} items={
+        <StackV gap={4} isSkeleton={isSkeleton} items={
             isSkeleton && !price ? [
                 // The CTA card renders instantly once the outline
                 // resolves, but the price is a second fetch — mirror the price
@@ -135,17 +136,18 @@ const TrialConversionStripBase = ({
                 () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
                 () => <Typography size="xs" isSkeleton classNames={["w-1/2"]} />,
             ] : price?.discountedPriceVnd != null ? [
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <PriceTagProminent
+                        isSkeleton={isSkeleton}
                         discounted={price.discountedPriceVnd}
                         original={price.originalPriceVnd}
                         breakdown={breakdown}
 
                     />
                 ),
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <PhaseScarcityNote
-
+                        isSkeleton={isSkeleton}
                         currentPhase={price.currentPhase}
                         seatsRemaining={price.seatsRemainingInCurrentPhase}
                         nextPhasePriceVnd={price.nextPhasePriceVnd}
@@ -168,14 +170,15 @@ const TrialConversionStripBase = ({
             align="end"
             justify="between"
             wrap
-
+            isSkeleton={isSkeleton}
             items={[
                 () => priceColumn,
                 // ATOM `Button`, NOT the `_legacy` version: going around the port is drift —
                 // fixing the atom in one place won't propagate here.
                 // `suffixIcon` takes a COMPONENT REF, the atom forces scale + weight.
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <Button
+                        isSkeleton={isSkeleton}
                         variant="primary"
                         size="lg"
                         classNames={["shrink-0"]}
@@ -195,8 +198,8 @@ const TrialConversionStripBase = ({
         // `padding` defaults to `3` — the system's actual `p-3` card rule.
         <SurfaceCard
             classNames={classNames}
-            body={() => (
-                <StackV gap={6} items={[
+            body={({ isSkeleton }: { isSkeleton?: boolean }) => (
+                <StackV gap={6} isSkeleton={isSkeleton} items={[
                     () => headerRow,
                     () => footerRow,
                 ]} />

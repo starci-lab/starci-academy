@@ -78,7 +78,7 @@ const PersonalProjectGatePreview = ({
             key={index}
             gap={2}
             align="center"
-
+            isSkeleton={isSkeleton}
 
             items={[
                 () => <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />,
@@ -98,7 +98,7 @@ const PersonalProjectGatePreview = ({
     const taskList = (
         <StackV
             gap={4}
-
+            isSkeleton={isSkeleton}
 
             items={items.map((item, index) => () => renderTaskRow(item, index))}
         />
@@ -108,7 +108,7 @@ const PersonalProjectGatePreview = ({
         <StackV
             gap={6}
             className={className}
-
+            isSkeleton={isSkeleton}
 
             items={[
                 () => (

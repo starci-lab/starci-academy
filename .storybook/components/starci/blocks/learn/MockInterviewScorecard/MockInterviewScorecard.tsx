@@ -210,7 +210,7 @@ const MockInterviewScorecard = ({
             gap={4}
             justify="between"
             wrap
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (isSkeleton ? (
                     <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} />
@@ -268,10 +268,10 @@ const MockInterviewScorecard = ({
         <StackH
             gap={2}
             align="center"
-
+            isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="xs" color="muted" text="Weakest:" />,
-                () => <Chip tone="warning" text={weakAreaLabel} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" color="muted" text="Weakest:" isSkeleton={isSkeleton} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Chip tone="warning" text={weakAreaLabel} isSkeleton={isSkeleton} />,
             ]}
         />
     ) : null
@@ -280,7 +280,7 @@ const MockInterviewScorecard = ({
         <StackH
             gap={4}
             wrap
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Button
@@ -347,7 +347,7 @@ const MockInterviewScorecard = ({
                     label="Score by section"
 
 
-                    body={() => <StackV gap={4} items={[() => scoreBreakdownBody]} />}
+                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => scoreBreakdownBody]} />}
                 />
             ) : null}
 
@@ -356,16 +356,16 @@ const MockInterviewScorecard = ({
                     label="Score by criterion"
 
 
-                    body={() => <StackV gap={4} items={[() => attributeBreakdownBody]} />}
+                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => attributeBreakdownBody]} />}
                 />
             ) : null}
 
             {hasStrengths ? (
-                <StackV gap={3} items={[() => strengthsBody]} />
+                <StackV gap={3} isSkeleton={isSkeleton} items={[() => strengthsBody]} />
             ) : null}
 
             {hasGaps ? (
-                <StackV gap={3} items={[() => gapsBody]} />
+                <StackV gap={3} isSkeleton={isSkeleton} items={[() => gapsBody]} />
             ) : null}
 
             {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
@@ -389,13 +389,13 @@ const MockInterviewScorecard = ({
                 />
             ) : null}
 
-            <StackV gap={3} items={[() => ctaSection]} />
+            <StackV gap={3} isSkeleton={isSkeleton} items={[() => ctaSection]} />
         </>
     )
 
     return (
         <div>
-            <StackV gap={6} items={[() => scorecardBody]} />
+            <StackV gap={6} isSkeleton={isSkeleton} items={[() => scorecardBody]} />
         </div>
     )
 }

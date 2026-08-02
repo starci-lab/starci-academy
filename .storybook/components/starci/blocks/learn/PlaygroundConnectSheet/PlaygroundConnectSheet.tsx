@@ -166,7 +166,7 @@ const PlaygroundConnectSheet = ({
                     align="center"
                     justify="between"
                     padding={4}
-
+                    isSkeleton={isSkeleton}
                     items={[
                         () => <HeroSkeleton className="h-5 w-24 rounded-full" />,
                         () => <HeroSkeleton className="h-8 w-24 rounded-xl" />,
@@ -186,14 +186,14 @@ const PlaygroundConnectSheet = ({
         <StackH
             gap={3}
             align="center"
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Chip
                         tone={STATUS_TONE[safeConnection]}
                         dotClassName={STATUS_DOT_CLASS[safeConnection]}
                         text={STATUS_LABEL[safeConnection]}
-
+                        isSkeleton={isSkeleton}
                     />
                 ),
                 ...(isConnected && latencyMs != null ? [() => (
@@ -201,6 +201,7 @@ const PlaygroundConnectSheet = ({
                         size="sm"
                         color="muted"
                         tabularNums
+                        isSkeleton={isSkeleton}
                         text={`${latencyMs} ms`}
 
                     />
@@ -213,7 +214,7 @@ const PlaygroundConnectSheet = ({
         <StackH
             gap={3}
             align="center"
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Button
@@ -222,6 +223,7 @@ const PlaygroundConnectSheet = ({
                         size="sm"
                         prefixIcon={ArrowClockwiseIcon}
                         onPress={onReconnect}
+                        isSkeleton={isSkeleton}
                     />
                 ),
                 () => (
@@ -232,6 +234,7 @@ const PlaygroundConnectSheet = ({
                         prefixIcon={open ? CaretUpIcon : CaretDownIcon}
                         ariaLabel={open ? "Collapse connection panel" : "Expand connection panel"}
                         onPress={() => onOpenChange(!open)}
+                        isSkeleton={isSkeleton}
                     />
                 ),
             ]}
@@ -255,7 +258,7 @@ const PlaygroundConnectSheet = ({
             <div>
                 <StatRibbon items={buildDeviceItems(device)} valueType="body" bordered />
             </div>
-            <StackV gap={2} items={(agentLog ?? []).map((entry) => () => renderLogLine(entry))} />
+            <StackV gap={2} isSkeleton={isSkeleton} items={(agentLog ?? []).map((entry) => () => renderLogLine(entry))} />
         </>
     ) : (
         <Typography size="sm" color="muted" text={NOT_CONNECTED_HINT} />
@@ -269,7 +272,7 @@ const PlaygroundConnectSheet = ({
                 align="center"
                 justify="between"
                 padding={4}
-
+                isSkeleton={isSkeleton}
                 items={[
                     () => statusGroup,
                     () => actionsGroup,
@@ -278,7 +281,7 @@ const PlaygroundConnectSheet = ({
             {/* BODY — mounted only while open, matching a real bottom-sheet's collapsed state. */}
             {open ? (
                 <div className="border-t border-default">
-                    <StackV gap={4} padding={4} items={[() => sheetBody]} />
+                    <StackV gap={4} padding={4} isSkeleton={isSkeleton} items={[() => sheetBody]} />
                 </div>
             ) : null}
         </div>

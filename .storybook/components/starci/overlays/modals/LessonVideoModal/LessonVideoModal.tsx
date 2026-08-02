@@ -249,7 +249,7 @@ const LessonVideoModal = ({
                 ]}
             />
         ),
-        () => <StackV gap={4} align="center" items={playerAndLink} />,
+        () => <StackV gap={4} align="center" isSkeleton={isLoading} items={playerAndLink} />,
         // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
         // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
         // WRAPPER — every child element (`p`, `em`…) hardcodes `text-foreground`
@@ -259,7 +259,7 @@ const LessonVideoModal = ({
         // className that silently does nothing — a real, marked gap, not this
         // port's to close (`MarkdownContent` is composite tier, out of scope here).
         ...(!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? [() => (
-            <StackV gap={4} items={descriptionAndCaption} />
+            <StackV gap={4} isSkeleton={isLoading} items={descriptionAndCaption} />
         )] : []),
     ]
 
@@ -281,7 +281,7 @@ const LessonVideoModal = ({
                         video?.title ?? ""
                     )
                 }
-                body={<StackV gap={6} items={metaAndPlayer} />}
+                body={<StackV gap={6} isSkeleton={isLoading} items={metaAndPlayer} />}
             />
         </div>
     )

@@ -83,6 +83,7 @@ export const CourseProgressBar = ({
     return (
         <StackV
             gap={3}
+            isSkeleton={isSkeleton}
             classNames={classNames}
             items={[
                     /* ATOM GAP: equal-width multi-lane track has no atom counterpart (see

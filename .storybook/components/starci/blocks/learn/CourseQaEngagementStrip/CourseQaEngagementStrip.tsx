@@ -78,7 +78,7 @@ const CourseQaEngagementStrip = ({
 
     return (
         <div>
-            <StackV gap={1} items={[() => lines]} />
+            <StackV gap={1} isSkeleton={isSkeleton} items={[() => lines]} />
         </div>
     )
 }

@@ -77,7 +77,7 @@ const ContentPager = ({
             <StackH
                 gap={4}
                 align="center"
-
+                isSkeleton={isSkeleton}
                 items={[
                     // DIV position: this card is a control with its own FIXED padding
                     // (`SurfaceCardPressableGroup` tile, `cozy` inset) — not hug-content —
@@ -86,7 +86,7 @@ const ContentPager = ({
                     // (`SurfaceCard.tsx`) already forces for icons in this exact tile shape.
                     // Weight omitted → Phosphor default `regular`, correct at `size-5`.
                     () => <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
-                    () => <StackV gap={1} items={[() => previousLabel]} />,
+                    ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={1} isSkeleton={isSkeleton} items={[() => previousLabel]} />,
                 ]}
             />
         )
@@ -108,9 +108,9 @@ const ContentPager = ({
                 gap={4}
                 align="center"
                 justify="end"
-
+                isSkeleton={isSkeleton}
                 items={[
-                    () => <StackV gap={1} align="end" items={[() => nextLabel]} />,
+                    ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={1} align="end" isSkeleton={isSkeleton} items={[() => nextLabel]} />,
                     // Same DIV position/size reasoning as the mirrored left caret above.
                     () => <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
                 ]}

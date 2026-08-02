@@ -115,8 +115,9 @@ export const SurfaceCardHeader = ({
         <StackH
             gap={4}
             justify="between"
+            isSkeleton={isSkeleton}
             items={[
-                () => <StackH gap={3} classNames={["min-w-0"]} items={[() => labelSlot]} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackH gap={3} classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => labelSlot]} />,
                 () => endSlot,
             ]}
         />

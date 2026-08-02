@@ -166,7 +166,7 @@ const QaMessageBubble = ({
         )
         return (
             <div>
-                <StackV gap={2} className="max-w-[92%]" items={[() => skeletonBody]} />
+                <StackV gap={2} className="max-w-[92%]" isSkeleton={isSkeleton} items={[() => skeletonBody]} />
             </div>
         )
     }
@@ -195,7 +195,7 @@ const QaMessageBubble = ({
 
     return (
         <div>
-            <StackV gap={2} items={[() => threadBody]} />
+            <StackV gap={2} isSkeleton={isSkeleton} items={[() => threadBody]} />
         </div>
     )
 }

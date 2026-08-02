@@ -284,6 +284,7 @@ const QaQuestionThread = ({
                 gap={3}
                 wrap
                 align="center"
+                isSkeleton={isSkeleton}
 
                 items={[
                     () =>
@@ -308,6 +309,7 @@ const QaQuestionThread = ({
         const questionPreview = isSkeleton ? (
             <StackV
                 gap={2}
+                isSkeleton={isSkeleton}
 
                 items={[
                     () => <Typography size="sm" isSkeleton classNames={["w-full"]} />,
@@ -328,6 +330,7 @@ const QaQuestionThread = ({
             <StackV
                 gap={2}
                 classNames={["min-w-0", "flex-1"]}
+                isSkeleton={isSkeleton}
 
                 items={[
                     () => askerNameRow,
@@ -347,6 +350,7 @@ const QaQuestionThread = ({
             <StackH
                 gap={4}
                 align="start"
+                isSkeleton={isSkeleton}
 
                 items={[
                     () => (
@@ -392,16 +396,17 @@ const QaQuestionThread = ({
             gap={3}
             wrap
             align="center"
+            isSkeleton={isSkeleton}
 
             items={[
-                () => <Typography size="xs" weight="medium" text={askerDisplayName} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" weight="medium" isSkeleton={isSkeleton} text={askerDisplayName} />,
                 ...(question.isFounderAuthor ? [() => (
                     <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                 )] : []),
                 ...(question.isPinned ? [() => (
                     <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                 )] : []),
-                () => <Typography size="xs" color="muted" text={question.createdTimeAgo} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={question.createdTimeAgo} />,
             ]}
         />
     )
@@ -411,6 +416,7 @@ const QaQuestionThread = ({
             gap={3}
             wrap
             align="center"
+            isSkeleton={isSkeleton}
 
             items={[
                 () => (
@@ -420,11 +426,12 @@ const QaQuestionThread = ({
 
                     />
                 ),
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <QaReactionBar
                         count={questionReaction.count}
                         myReaction={questionReaction.myReaction}
                         onReact={onReactQuestion}
+                        isSkeleton={isSkeleton}
 
                     />
                 ),
@@ -438,11 +445,12 @@ const QaQuestionThread = ({
             <StackV
                 gap={2}
                 className={cn("min-w-0 max-w-[92%]", isMineQuestion && "items-end")}
+                isSkeleton={isSkeleton}
 
                 items={[
                     () => questionMetaRow,
-                    () => (
-                        <QaChatBubble role={isMineQuestion ? "user" : "assistant"}>
+                    ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                        <QaChatBubble role={isMineQuestion ? "user" : "assistant"} isSkeleton={isSkeleton}>
                             <div className="[&_p]:m-0">
                                 <MarkdownContent
                                     source={question.body}
@@ -483,6 +491,7 @@ const QaQuestionThread = ({
     const conversationBody = (
         <StackV
             gap={4}
+            isSkeleton={isSkeleton}
 
             items={[
                 () => questionBubble,
@@ -494,9 +503,10 @@ const QaQuestionThread = ({
     const threadPanel = (
         <StackV
             gap={6}
+            isSkeleton={isSkeleton}
 
             items={[
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <QaConversationHeader
                         asker={{
                             id: question.author.id,
@@ -507,12 +517,13 @@ const QaQuestionThread = ({
                         participants={participants}
                         replyCount={question.replyCount}
                         onCollapse={() => setIsExpanded(false)}
+                        isSkeleton={isSkeleton}
 
                     />
                 ),
                 () => conversationBody,
                 // bottom composer — the only way to answer a course-general question
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <CourseQaComposer
                         mode="plain"
                         currentUser={currentUser ? { name: currentUser.username, avatarSrc: currentUser.avatar } : undefined}
@@ -521,7 +532,7 @@ const QaQuestionThread = ({
                         onSubmit={onSubmitAnswer}
                         placeholder="Write your answer…"
                         submitLabel="Send"
-
+                        isSkeleton={isSkeleton}
 
                     />
                 ),

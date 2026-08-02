@@ -149,7 +149,7 @@ const ContentHeader = ({
                 title={title}
                 description={description}
                 meta={() =>
-                    <StackH gap={3} align="center" items={[() => metaRow]} />
+                    <StackH gap={3} align="center" isSkeleton={isSkeleton} items={[() => metaRow]} />
                 }
             />
             {hasOutcomes ? (
@@ -170,7 +170,7 @@ const ContentHeader = ({
 
     return (
         <div>
-            <StackV gap={6} items={[() => headerBody]} />
+            <StackV gap={6} isSkeleton={isSkeleton} items={[() => headerBody]} />
         </div>
     )
 }

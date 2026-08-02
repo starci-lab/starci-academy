@@ -493,7 +493,7 @@ const ChallengeDeliverableList = ({
     )
 
     return (
-        <StackV gap={3} items={[() => listBody]} />
+        <StackV gap={3} isSkeleton={isSkeleton} items={[() => listBody]} />
     )
 }
 

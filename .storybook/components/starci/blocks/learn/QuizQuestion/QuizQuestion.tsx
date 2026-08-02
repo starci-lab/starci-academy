@@ -76,17 +76,17 @@ const QuizQuestion = ({
         <StackH
             gap={3}
             align="center"
-
-            items={[() => <Chip tone="default" text={levelLabel} />]}
+            isSkeleton={isSkeleton}
+            items={[() => <Chip tone="default" text={levelLabel} isSkeleton={isSkeleton} />]}
         />
     ) : null
 
     const expectedAnswerBlock = expectedAnswer != null ? (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="sm" weight="medium" text="Expected answer" />,
+                () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Expected answer" />,
                 () => (
                     <MarkdownContent
                         source={expectedAnswer}
@@ -101,13 +101,13 @@ const QuizQuestion = ({
     const gradedDetails = isGraded ? (
         <StackV
             gap={6}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <StackH
                         gap={3}
                         align="center"
-
+                        isSkeleton={isSkeleton}
                         items={[
                             // One chip for the classifying axis. The reasoning below is an
                             // ordinary document — two loud signals and the learner reads the
@@ -117,7 +117,7 @@ const QuizQuestion = ({
                                     tone={verdict === "correct" ? "success" : "danger"}
                                     icon={verdict === "correct" ? CheckCircleIcon : XCircleIcon}
                                     text={verdict === "correct" ? "Correct" : "Not quite"}
-
+                                    isSkeleton={isSkeleton}
                                 />
                             ),
                         ]}
@@ -139,7 +139,7 @@ const QuizQuestion = ({
         <StackH
             gap={3}
             justify="end"
-
+            isSkeleton={isSkeleton}
             items={[
                 () =>
                     isGraded ? (

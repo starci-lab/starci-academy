@@ -157,15 +157,15 @@ const PriceTagBase = ({
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped`, not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <StackV gap={4} className="p-3" items={[
-            () => <Typography size="xs" color="muted" text="Price breakdown" />,
+        <StackV gap={4} className="p-3" isSkeleton={isSkeleton} items={[
+            ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" color="muted" text="Price breakdown" isSkeleton={isSkeleton} />,
             // No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
             // is the §10b `grouped` step). Passing one from here overrides the composite's
             // spacing from OUTSIDE, which §10 forbids — a composite owns its internal
             // spacing and must not receive it.
-            () => (
+            ({ isSkeleton }: { isSkeleton?: boolean }) => (
                 <KeyValueList
-
+                    isSkeleton={isSkeleton}
                     items={[
                         {
                             key: "list",
@@ -304,7 +304,7 @@ const PriceTagBase = ({
             // inside a lower-tier component — the saving line read as if it were glued under the number.
             gap={4}
             className={className}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => priceRow,
                 () => savingLine,

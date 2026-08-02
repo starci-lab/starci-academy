@@ -231,12 +231,12 @@ const ModulePage = ({
 
                 />
             ) : (
-                <StackV gap={6} items={[() => moduleContent]} />
+                <StackV gap={6} isSkeleton={isSkeleton} items={[() => moduleContent]} />
             )}
         </>
     )
 
-    const moduleBody = <StackV gap={7} items={[() => moduleSections]} />
+    const moduleBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => moduleSections]} />
 
     return <Container size="md" padding={6} body={moduleBody} />
 }

@@ -134,6 +134,7 @@ export const TitledText = ({
         <StackV
             gap={1}
             classNames={rootClassNames}
+            isSkeleton={isSkeleton}
 
             items={[
                 () => (

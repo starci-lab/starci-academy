@@ -149,6 +149,7 @@ const GithubUrlField = ({
     return (
         <StackV
             gap={2}
+            isSkeleton={isSkeleton}
 
             items={[
                 () => (
@@ -163,12 +164,13 @@ const GithubUrlField = ({
 
                     />
                 ),
-                ...(!isSkeleton && AutosaveIcon != null ? [() => (
+                ...(!isSkeleton && AutosaveIcon != null ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <InlineIconLabel
                         icon={AutosaveIcon}
                         tone={AUTOSAVE_TONE[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
                         size="xs"
                         label={AUTOSAVE_LABEL[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
+                        isSkeleton={isSkeleton}
                     />
                 )] : []),
             ]}
@@ -189,13 +191,15 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
         gap={3}
         align="center"
         justify="between"
+        isSkeleton={isSkeleton}
 
         items={[
-            () => (
+            ({ isSkeleton }: { isSkeleton?: boolean }) => (
                 <StackH
                     gap={3}
                     align="center"
                     wrap
+                    isSkeleton={isSkeleton}
 
                     items={[
                         () => (
@@ -250,6 +254,7 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton 
         align="center"
         justify="between"
         wrap
+        isSkeleton={isSkeleton}
 
         items={[
             () =>
@@ -336,9 +341,10 @@ const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps) => {
     return (
         <StackV
             gap={2}
+            isSkeleton={isSkeleton}
 
             items={[
-                () => <StackH gap={4} align="baseline" wrap items={[() => scoreRow]} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackH gap={4} align="baseline" wrap isSkeleton={isSkeleton} items={[() => scoreRow]} />,
                 ...(result.shortFeedback != null ? [() => (
                     <Typography
                         size="sm"
@@ -425,6 +431,7 @@ const TaskSubmissionPanel = ({
             body={() => (
                 <StackV
                     gap={4}
+                    isSkeleton={isSkeleton}
 
                     items={[
                         () => (

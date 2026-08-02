@@ -155,6 +155,7 @@ const TaskBriefBody = ({
             {/* TitleDesc — always present; both lines fall back to their own shimmer bar. */}
             <StackV
                 gap={2}
+                isSkeleton={isSkeleton}
 
                 items={[
                     () => <Typography size="h3" weight="bold" isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} text={title} />,
@@ -189,6 +190,7 @@ const TaskBriefBody = ({
                 isSkeleton ? (
                     <StackV
                         gap={2}
+                        isSkeleton={isSkeleton}
 
                         items={BRIEF_SKELETON_LINE_WIDTHS.map((width) => () => (
                             <Typography size="base" isSkeleton classNames={[width]} />
@@ -203,6 +205,7 @@ const TaskBriefBody = ({
             {showLegacy ? (
                 <StackV
                     gap={4}
+                    isSkeleton={isSkeleton}
 
                     items={[
                         () => <Typography size="sm" weight="semibold" text={CRITERIA_LABEL} />,
@@ -239,7 +242,7 @@ const TaskBriefBody = ({
     )
 
     return (
-        <StackV gap={6} items={[() => readingColumn]} />
+        <StackV gap={6} isSkeleton={isSkeleton} items={[() => readingColumn]} />
     )
 }
 

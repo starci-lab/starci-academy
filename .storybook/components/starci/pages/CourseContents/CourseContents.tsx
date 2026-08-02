@@ -131,10 +131,11 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     const MetaChips: ComponentTypeWithSkeleton = () => (
         <StackH
             gap={3}
+            isSkeleton={isSkeleton}
             items={[
-                () => <HighlightChip icon={StackIcon} value={8} label="chapters" />,
-                () => <HighlightChip icon={ClockIcon} value="~14" label="hours" />,
-                () => <HighlightChip icon={UsersIcon} value="2,481" label="learners" />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <HighlightChip isSkeleton={isSkeleton} icon={StackIcon} value={8} label="chapters" />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <HighlightChip isSkeleton={isSkeleton} icon={ClockIcon} value="~14" label="hours" />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <HighlightChip isSkeleton={isSkeleton} icon={UsersIcon} value="2,481" label="learners" />,
             ]}
         />
     )
@@ -146,8 +147,9 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             ? () => (
                 <StackH
                     gap={3}
+                    isSkeleton={isSkeleton}
                     items={[
-                        ...(difficulty != null ? [() => <ChipBase tone={DIFFICULTY_TONE[difficulty]} text={difficulty} />] : []),
+                        ...(difficulty != null ? [({ isSkeleton }: { isSkeleton?: boolean }) => <ChipBase isSkeleton={isSkeleton} tone={DIFFICULTY_TONE[difficulty]} text={difficulty} />] : []),
                         ...(isPremium ? [() => <LockIcon aria-label="Premium lesson" focusable="false" className="size-5 text-muted" />] : []),
                     ]}
                 />
@@ -167,6 +169,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     const contentCluster = (
         <StackV
             gap={6}
+            isSkeleton={isSkeleton}
             items={[
                 // Gate is for people who ALREADY BOUGHT; the block self-hides when it doesn't apply.
                 () => <CourseTeamGate isEnrolled={viewer === "paid"} isInTeam={false} onJoin={() => {}} isSkeleton={isSkeleton} />,
@@ -175,25 +178,29 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                 () => (
                     <StackV
                         gap={4}
+                        isSkeleton={isSkeleton}
                         items={[
                             () => (
                                 <StackH
                                     align="start"
                                     justify="between"
                                     gap={4}
+                                    isSkeleton={isSkeleton}
                                     items={[
                                         () => (
                                             <StackV
                                                 gap={1}
                                                 classNames={["min-w-0"]}
+                                                isSkeleton={isSkeleton}
                                                 items={[
                                                     () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Continue where you left off" />,
                                                     () => <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text="Writing an optimized Dockerfile" />,
                                                 ]}
                                             />
                                         ),
-                                        ...(!isSkeleton ? [() => (
+                                        ...(!isSkeleton ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
                                             <Button
+                                                isSkeleton={isSkeleton}
                                                 label="Resume"
                                                 variant="primary"
                                                 size="lg"
@@ -217,6 +224,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                 () => (
                     <StackV
                         gap={4}
+                        isSkeleton={isSkeleton}
                         items={[
                             () => <Typography size="sm" weight="semibold" color="muted" isSkeleton={isSkeleton} text="Keep going · Containerization" />,
                             () => <SurfaceCardList items={lessonRows} isSkeleton={isSkeleton} />,
@@ -230,6 +238,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     const body = (
         <StackV
             gap={7}
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <PageHeader

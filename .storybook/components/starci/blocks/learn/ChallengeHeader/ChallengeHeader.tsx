@@ -171,8 +171,8 @@ const ChallengeHeader = ({
                 // already typed/documented as a plain one-sentence summary, never markdown,
                 // and `PageHeader` now owns the muted styling + skeleton swap itself.
                 description={description}
-                meta={() =>
-                    <StackH gap={3} align="center" items={[() => metaRow]} />
+                meta={({ isSkeleton }: { isSkeleton?: boolean }) =>
+                    <StackH gap={3} align="center" isSkeleton={isSkeleton} items={[() => metaRow]} />
                 }
             />
         </div>

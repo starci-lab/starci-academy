@@ -93,7 +93,7 @@ export const ProgressRing = ({
             gap={3}
             align="center"
             classNames={classNames}
-
+            isSkeleton={isSkeleton}
             items={[
                 // Relative container: the ring fills it, the label overlays its center
                 () => (

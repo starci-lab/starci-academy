@@ -208,7 +208,7 @@ const MindMapPage = ({
                 gap={1}
                 align="center"
                 className="absolute inset-x-0 top-4 z-10"
-
+                isSkeleton={isSkeleton}
                 items={[() => (
                     <MindMapContinueButton
 
@@ -216,14 +216,14 @@ const MindMapPage = ({
                         allContentDone={allContentDone}
                         onResume={onResume}
                         continueAriaLabel={continueAriaLabel}
-
+                        isSkeleton={isSkeleton}
                     />
                 )]}
             />
             <StackV
                 gap={1}
                 className="absolute bottom-4 left-4 z-10"
-
+                isSkeleton={isSkeleton}
                 items={[() => (
                     <div>
                         <Legend items={legendItems} />
@@ -233,7 +233,7 @@ const MindMapPage = ({
             <StackV
                 gap={1}
                 className="absolute bottom-4 right-4 z-10"
-
+                isSkeleton={isSkeleton}
                 items={[() => (
                     <MindMapFullscreenButton
 
@@ -242,7 +242,7 @@ const MindMapPage = ({
                         onToggleFullscreen={onToggleFullscreen}
                         isFullscreen={isFullscreen}
                         ariaLabels={fullscreenAriaLabels}
-
+                        isSkeleton={isSkeleton}
                     />
                 )]}
             />
@@ -272,7 +272,7 @@ const MindMapPage = ({
                 gap={1}
                 className="overflow-y-auto"
                 classNames={["h-full"]}
-
+                isSkeleton={isSkeleton}
                 items={[() => railSection]}
             />
         </ResizableRail>
@@ -288,13 +288,13 @@ const MindMapPage = ({
                 gap={1}
                 className="relative"
                 classNames={["min-w-0", "flex-1"]}
-
+                isSkeleton={isSkeleton}
                 items={[() => canvasRegion]}
             />
         </>
     )
 
-    return <StackH gap={1} className="h-[calc(100dvh-4rem)]" items={[() => workspaceSections]} />
+    return <StackH gap={1} className="h-[calc(100dvh-4rem)]" isSkeleton={isSkeleton} items={[() => workspaceSections]} />
 }
 
 export { MindMapPage }

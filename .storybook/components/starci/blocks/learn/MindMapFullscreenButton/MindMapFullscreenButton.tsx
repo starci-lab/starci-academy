@@ -64,7 +64,7 @@ const MindMapFullscreenButton = ({
         <div>
             <StackV
                 gap={2}
-
+                isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <ButtonBase

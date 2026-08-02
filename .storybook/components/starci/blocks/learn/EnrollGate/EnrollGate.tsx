@@ -146,7 +146,7 @@ const EnrollGateBase = ({
             <AsyncContent
                 isLoading={priceLoading}
                 skeleton={<HeroSkeleton className="h-7 w-32 rounded-xl" />}
-                content={<StackV gap={4} align="center" items={[() => priceGroup]} />}
+                content={<StackV gap={4} align="center" isSkeleton={isSkeleton} items={[() => priceGroup]} />}
             />
             <Button
                 label="Enroll now"
@@ -172,7 +172,7 @@ const EnrollGateBase = ({
             <SurfaceCard
                 padding={6}
 
-                body={() => <StackV gap={4} align="center" items={[() => offerBody]} />}
+                body={() => <StackV gap={4} align="center" isSkeleton={isSkeleton} items={[() => offerBody]} />}
             />
         </div>
     )
@@ -182,7 +182,7 @@ const EnrollGateBase = ({
     // governs the wrapper's padding instead of a hand-typed `p-*` value.
     if (preview == null) {
         return (
-            <StackH gap={1} justify="center" padding={6} className={className} items={[() => card]} />
+            <StackH gap={1} justify="center" padding={6} isSkeleton={isSkeleton} className={className} items={[() => card]} />
         )
     }
 
@@ -203,7 +203,7 @@ const EnrollGateBase = ({
                 port, since the scale is symmetric and has no asymmetric step. `-mt-32` stays
                 hand-written: it is the float-over-the-fade OVERLAP effect itself, not a seam
                 between siblings, the same idiom as `SurfaceCard.Pressable`'s highlight layer. */}
-            <StackH gap={1} justify="center" padding={6} className="relative z-10 -mt-32" items={[() => card]} />
+            <StackH gap={1} justify="center" padding={6} isSkeleton={isSkeleton} className="relative z-10 -mt-32" items={[() => card]} />
         </div>
     )
 }

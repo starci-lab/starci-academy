@@ -81,6 +81,7 @@ const composeSlots = ({ header: Header, body: Body, footer: Footer, isSkeleton }
     return (
         <StackV
             gap={4}
+            isSkeleton={isSkeleton}
             items={[
                 ...(Header != null ? [() => <div><Header isSkeleton={isSkeleton} /></div>] : []),
                 ...(main != null ? [() => <div>{main}</div>] : []),
@@ -372,9 +373,10 @@ const Base = ({
             >
                 <StackH
                     gap={4}
+                    isSkeleton={isSkeleton}
                     items={[
                         () => <div className="min-w-0 flex-1">{content}</div>,
-                        () => <StackH gap={3} classNames={["shrink-0"]} className="relative z-10" items={[() => actions]} />,
+                        () => <StackH isSkeleton={isSkeleton} gap={3} classNames={["shrink-0"]} className="relative z-10" items={[() => actions]} />,
                     ]}
                 />
                 {href && !isDisabled ? (
@@ -412,6 +414,7 @@ const Base = ({
     const cardWithCaption = description != null ? (
         <StackV
             gap={3}
+            isSkeleton={isSkeleton}
             items={[
                 () => highlighted,
                 () => caption,
@@ -526,6 +529,7 @@ const NestedSection = ({ title, eyebrow, content: Content, onPress, href, classN
         <StackV
             gap={2}
             classNames={["min-w-0"]}
+            isSkeleton={isSkeleton}
             items={[
                 ...(eyebrow ? [() => (
                     <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
@@ -633,6 +637,7 @@ const Nested = ({
                     justify="between"
                     classNames={["min-w-0"]}
                     className="border-b border-default px-3 py-2"
+                    isSkeleton={isSkeleton}
                     items={[
                         () => (Header != null ? <Header isSkeleton={isSkeleton} /> : (
                             // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
@@ -640,6 +645,7 @@ const Nested = ({
                                 gap={3}
                                 classNames={["min-w-0"]}
                                 className="text-muted [&_svg]:size-4"
+                                isSkeleton={isSkeleton}
                                 items={[
                                     ...(Icon ? [() => <Icon aria-hidden focusable="false" />] : []),
                                     () => (isSkeleton
@@ -1371,6 +1377,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
             <StackV
                 gap={1}
                 classNames={["min-w-0"]}
+                isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <Typography size="sm"
@@ -1391,6 +1398,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                     gap={3}
                     classNames={["shrink-0"]}
                     className="ml-auto"
+                    isSkeleton={isSkeleton}
                     items={[
                         () => metaSlot,
                         () => trailingSlot,
@@ -1500,6 +1508,7 @@ const List = ({
     const withCaption = description != null ? (
         <StackV
             gap={3}
+            isSkeleton={isSkeleton}
             items={[
                 () => surface,
                 () => <div>{caption}</div>,
@@ -1643,6 +1652,7 @@ const AccordionCard = ({
             <StackH
                 gap={2}
                 classNames={["min-w-0", "flex-1"]}
+                isSkeleton={isSkeleton}
                 items={[
                     ...(item.titleStart ? [() => <item.titleStart />] : []),
                     () => (
@@ -1650,12 +1660,13 @@ const AccordionCard = ({
                             gap={1}
                             classNames={["min-w-0", "flex-1"]}
                             className="text-left"
+                            isSkeleton={isSkeleton}
                             items={[
                                 // title does NOT render markdown, not even backtick-only via `parseInlineCode`.
                                 // Title tier is plain, absolutely.
-                                () => <Typography size="sm" weight="medium" truncate text={item.title} />,
+                                () => <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} text={item.title} />,
                                 ...(item.subtitle != null ? [() => (
-                                    <Typography size="xs" color="muted" truncate text={item.subtitle} />
+                                    <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={item.subtitle} />
                                 )] : []),
                             ]}
                         />
@@ -1694,6 +1705,7 @@ const AccordionCard = ({
     const withCaption = description != null ? (
         <StackV
             gap={3}
+            isSkeleton={isSkeleton}
             items={[
                 () => frame,
                 () => <div>{description}</div>,
@@ -1842,7 +1854,7 @@ const CrossListRow = ({
         align="start"
         padding={4}
         className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-
+        isSkeleton={isSkeleton}
         items={
             isSkeleton ? [
                 () => <div aria-hidden className="size-5 shrink-0 rounded-full bg-default" />,

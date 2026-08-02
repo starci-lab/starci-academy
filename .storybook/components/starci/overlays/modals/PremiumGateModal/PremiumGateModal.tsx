@@ -192,23 +192,25 @@ const PremiumGateModal = ({
     const gateBody = [
         // "What unlocks" — static chrome, never skeletonised: known before
         // any price data lands, exactly like `ContentModeNav`'s own row.
-        () => <StackV gap={3} items={unlockItems} />,
+        ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={3} isSkeleton={isSkeleton} items={unlockItems} />,
 
         // Price + scarcity — the ONLY region `isSkeleton` reaches, same
         // `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
         // `TrialConversionStrip` uses for its own price region.
         ...(isSkeleton && !price
-            ? [() => <StackV gap={4} items={skeletonPrice} />]
+            ? [({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonPrice} />]
             : price?.discountedPriceVnd != null
-                ? [() => (
+                ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <StackV
                         gap={4}
+                        isSkeleton={isSkeleton}
                         items={[
-                            () => (
+                            ({ isSkeleton }: { isSkeleton?: boolean }) => (
                                 <PriceTagProminent
                                     discounted={price.discountedPriceVnd}
                                     original={price.originalPriceVnd}
                                     breakdown={breakdown}
+                                    isSkeleton={isSkeleton}
 
                                 />
                             ),
@@ -245,7 +247,7 @@ const PremiumGateModal = ({
 
                     />
                 }
-                body={<StackV gap={6} items={gateBody} />}
+                body={<StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
             />
         </div>
     )

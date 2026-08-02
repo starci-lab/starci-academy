@@ -159,7 +159,7 @@ const QuizRecapList = ({
             <SurfaceCard
                 key={index}
 
-                body={() => <StackV gap={6} items={[() => skeletonCardBody]} />}
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => skeletonCardBody]} />}
             />
         ))
         const loadingBody = (
@@ -170,7 +170,7 @@ const QuizRecapList = ({
         )
         return (
             <div>
-                <StackV gap={6} items={[() => loadingBody]} />
+                <StackV gap={6} isSkeleton={isSkeleton} items={[() => loadingBody]} />
             </div>
         )
     }
@@ -200,7 +200,7 @@ const QuizRecapList = ({
 
     return (
         <div>
-            <StackV gap={6} items={[() => recapBody]} />
+            <StackV gap={6} isSkeleton={isSkeleton} items={[() => recapBody]} />
         </div>
     )
 }

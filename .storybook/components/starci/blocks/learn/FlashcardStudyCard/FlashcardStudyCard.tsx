@@ -97,15 +97,15 @@ const FlashcardStudyCard = ({
             gap={3}
             wrap
             align="center"
-
+            isSkeleton={isSkeleton}
             items={[
-                ...(levelLabel != null ? [() => <Chip tone="default" text={levelLabel} />] : []),
+                ...(levelLabel != null ? [({ isSkeleton }: { isSkeleton?: boolean }) => <Chip isSkeleton={isSkeleton} tone="default" text={levelLabel} />] : []),
                 ...(tagItems.length > 0
                     ? [
-                        () => (
+                        ({ isSkeleton }: { isSkeleton?: boolean }) => (
                             <ChipGroup
                                 items={tagItems}
-
+                                isSkeleton={isSkeleton}
 
                             />
                         ),
@@ -122,29 +122,29 @@ const FlashcardStudyCard = ({
     const lockNotice = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <StackH
                         gap={3}
                         align="center"
-
+                        isSkeleton={isSkeleton}
                         items={[
                             () => <LockIcon aria-hidden focusable="false" weight="bold" className="size-5 shrink-0 text-muted" />,
-                            () => (
+                            ({ isSkeleton }: { isSkeleton?: boolean }) => (
                                 <StackV
                                     gap={1}
-
+                                    isSkeleton={isSkeleton}
                                     items={[
-                                        () => <Typography size="sm" weight="medium" text="Answer locked" />,
-                                        () => <Typography size="xs" color="muted" text="Upgrade to Premium to see this card's answer and explanation" />,
+                                        ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Answer locked" />,
+                                        ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Upgrade to Premium to see this card's answer and explanation" />,
                                     ]}
                                 />
                             ),
                         ]}
                     />
                 ),
-                () => <Button label="Unlock this card" variant="primary" onPress={onUnlock} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Button isSkeleton={isSkeleton} label="Unlock this card" variant="primary" onPress={onUnlock} />,
             ]}
         />
     )
@@ -152,14 +152,14 @@ const FlashcardStudyCard = ({
     const answerBody = (
         <StackV
             gap={6}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <StackV
                         gap={3}
-
+                        isSkeleton={isSkeleton}
                         items={[
-                            () => <Typography size="xs" color="muted" text="Answer" />,
+                            ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Answer" />,
                             () => (
                                 <MarkdownContent
                                     source={answer ?? ""}
@@ -172,12 +172,12 @@ const FlashcardStudyCard = ({
                 ),
                 ...(explanation != null
                     ? [
-                        () => (
+                        ({ isSkeleton }: { isSkeleton?: boolean }) => (
                             <StackV
                                 gap={3}
-
+                                isSkeleton={isSkeleton}
                                 items={[
-                                    () => <Typography size="xs" color="muted" text="Explanation" />,
+                                    ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Explanation" />,
                                     () => (
                                         <MarkdownContent
                                             source={explanation}
@@ -192,13 +192,13 @@ const FlashcardStudyCard = ({
                     : []),
                 // The recall grade, not the run's right/wrong — same shared block
                 // and same reasoning as `QuizRecapList`'s use of it.
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <RatingBar
                         options={ratingOptions}
                         onRate={onRate}
                         ariaLabel="Choose recall level"
                         isPending={isRatingPending}
-
+                        isSkeleton={isSkeleton}
 
                     />
                 ),
@@ -212,10 +212,11 @@ const FlashcardStudyCard = ({
             gap={3}
             justify="between"
             align="center"
-
+            isSkeleton={isSkeleton}
             items={[
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <Button
+                        isSkeleton={isSkeleton}
                         isIconOnly
                         prefixIcon={CaretLeftIcon}
                         ariaLabel="Previous card"
@@ -225,9 +226,10 @@ const FlashcardStudyCard = ({
 
                     />
                 ),
-                ...(!revealed ? [() => <Button label="Show answer" variant="primary" onPress={onReveal} />] : []),
-                () => (
+                ...(!revealed ? [({ isSkeleton }: { isSkeleton?: boolean }) => <Button isSkeleton={isSkeleton} label="Show answer" variant="primary" onPress={onReveal} />] : []),
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <Button
+                        isSkeleton={isSkeleton}
                         isIconOnly
                         prefixIcon={CaretRightIcon}
                         ariaLabel="Next card"
@@ -259,7 +261,7 @@ const FlashcardStudyCard = ({
             <SurfaceCard
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} items={[() => cardBody]} />}
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => cardBody]} />}
             />
         </div>
     )

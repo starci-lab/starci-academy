@@ -97,7 +97,7 @@ const QuotaBar = ({
             gap={3}
             align="center"
             justify="between"
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Typography
@@ -154,7 +154,7 @@ const QuotaBar = ({
         <StackV
             gap={4}
             className={className}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => labelRow,
                 () => bar,

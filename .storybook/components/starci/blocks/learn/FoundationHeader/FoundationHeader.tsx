@@ -109,7 +109,7 @@ const FoundationHeader = ({
                 gap={3}
                 align="center"
                 wrap
-
+                isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <EnumChip
@@ -162,7 +162,7 @@ const FoundationHeader = ({
                 title={title}
                 description={description}
                 meta={() =>
-                    <StackV gap={4} items={[() => metaCluster]} />
+                    <StackV gap={4} isSkeleton={isSkeleton} items={[() => metaCluster]} />
                 }
             />
         </div>

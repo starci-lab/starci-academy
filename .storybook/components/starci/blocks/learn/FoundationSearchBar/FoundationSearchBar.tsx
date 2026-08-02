@@ -79,7 +79,7 @@ const FoundationSearchBar = ({
             <StackH
                 gap={3}
                 justify="between"
-
+                isSkeleton={isSkeleton}
 
                 items={[
                     () => (

@@ -98,7 +98,7 @@ const E2eResultDrawer = ({
 
         return (
             <div>
-                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} body={<StackV gap={4} items={skeletonRows} />} />
+                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} body={<StackV gap={4} isSkeleton={isSkeleton} items={skeletonRows} />} />
             </div>
         )
     }
@@ -117,15 +117,17 @@ const E2eResultDrawer = ({
     const items: Array<AccordionItem> = visible.map((flow) => {
         const isPass = flow.status === "passed"
         const chipAndTitle = [
-            () => (
+            ({ isSkeleton }: { isSkeleton?: boolean }) => (
                 <ChipBase
+                    isSkeleton={isSkeleton}
                     tone={isPass ? "success" : "danger"}
                     text={isPass ? "pass" : "fail"}
 
                 />
             ),
-            () => (
+            ({ isSkeleton }: { isSkeleton?: boolean }) => (
                 <Typography
+                    isSkeleton={isSkeleton}
                     text={flow.title}
                     size="sm"
                     weight="medium"
@@ -138,7 +140,7 @@ const E2eResultDrawer = ({
             title: (
                 <StackH
                     gap={2}
-
+                    isSkeleton={isSkeleton}
 
                     items={chipAndTitle}
                 />
@@ -155,8 +157,9 @@ const E2eResultDrawer = ({
     })
 
     const countFilterAndAccordion = [
-        () => (
+        ({ isSkeleton }: { isSkeleton?: boolean }) => (
             <Typography
+                isSkeleton={isSkeleton}
                 text={`${passed}/${visible.length} flows passed — real logs recorded from an actual E2E run against the backend and UI.`}
                 size="sm"
                 color="muted"
@@ -175,8 +178,9 @@ const E2eResultDrawer = ({
                 />
             </div>
         )] : []),
-        () => (
+        ({ isSkeleton }: { isSkeleton?: boolean }) => (
             <Accordion
+                isSkeleton={isSkeleton}
                 items={items}
 
             />
@@ -190,7 +194,7 @@ const E2eResultDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={DRAWER_TITLE}
-                body={<StackV gap={4} items={countFilterAndAccordion} />}
+                body={<StackV gap={4} isSkeleton={isSkeleton} items={countFilterAndAccordion} />}
             />
         </div>
     )

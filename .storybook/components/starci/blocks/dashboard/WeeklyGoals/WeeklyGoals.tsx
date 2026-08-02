@@ -110,7 +110,7 @@ const goalCellContent = (
     const effectiveTarget = item.target ?? defaultTargets[item.key]
 
     const iconLabel = (
-        <StackH gap={2} items={[
+        <StackH gap={2} isSkeleton={isSkeleton} items={[
             () => (isSkeleton ? (
                 <HeroSkeleton
                     className="size-5 shrink-0 rounded-full"
@@ -131,7 +131,7 @@ const goalCellContent = (
     )
 
     const labelRow = (
-        <StackH gap={3} justify="between" items={[
+        <StackH gap={3} justify="between" isSkeleton={isSkeleton} items={[
             () => iconLabel,
             () => (
                 <Typography
@@ -147,7 +147,7 @@ const goalCellContent = (
     )
 
     return (
-        <StackV gap={3} items={[
+        <StackV gap={3} isSkeleton={isSkeleton} items={[
             () => labelRow,
             () => (isSkeleton ? (
                 <HeroSkeleton
@@ -165,6 +165,7 @@ const goalCellContent = (
                 <Typography
                     size="xs"
                     color={item.canClaim ? "accent" : "muted"}
+                    isSkeleton={isSkeleton}
                     text={`+${item.coinReward} coins when met`}
 
                 />
@@ -202,7 +203,7 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton }:
         content: goalCellContent(item, defaultTargets, isSkeleton),
     }))
     return (
-        <StackV gap={4} items={[
+        <StackV gap={4} isSkeleton={isSkeleton} items={[
             () => (
                 <Typography
                     size="sm"

@@ -97,15 +97,16 @@ const QuizSetup = ({
     const nameField = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="sm" weight="medium" text="Session name" />,
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Session name" />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <InputText
                         value={name}
                         onValueChange={onNameChange}
                         placeholder="e.g. review Docker before the interview"
                         ariaLabel="Session name"
+                        isSkeleton={isSkeleton}
 
                     />
                 ),
@@ -116,9 +117,9 @@ const QuizSetup = ({
     const lengthField = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="sm" weight="medium" text="Length" />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Length" />,
                 () => (
                     <ButtonRadioGroup
                         ariaLabel="Session length"
@@ -138,9 +139,9 @@ const QuizSetup = ({
     const levelField = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="sm" weight="medium" text="Level" />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Level" />,
                 () => (
                     <ButtonRadioGroup
                         ariaLabel="Question level"
@@ -161,15 +162,16 @@ const QuizSetup = ({
         <StackH
             gap={3}
             justify="end"
-
+            isSkeleton={isSkeleton}
             items={[
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <Button
                         label={`Start · ${LENGTH_CARDS[length]} questions`}
                         variant="primary"
                         prefixIcon={PlayIcon}
                         onPress={onStart}
                         isPending={isPending}
+                        isSkeleton={isSkeleton}
 
                     />
                 ),
@@ -182,7 +184,7 @@ const QuizSetup = ({
     const actionField = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
                 ...(errorMessage != null ? [() => (
                     <Callout
@@ -224,7 +226,7 @@ const QuizSetup = ({
                 label={label}
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} items={[() => formBody]} />}
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => formBody]} />}
             />
         </div>
     )

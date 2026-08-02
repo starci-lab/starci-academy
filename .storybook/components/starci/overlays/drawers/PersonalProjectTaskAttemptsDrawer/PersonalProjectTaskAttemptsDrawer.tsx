@@ -129,7 +129,7 @@ const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
                 align="center"
                 justify="between"
                 wrap
-
+                isSkeleton={isSkeleton}
 
                 items={attemptLabelAndChip}
             />
@@ -156,7 +156,7 @@ const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
     ]
 
     return (
-        <StackV gap={2} items={rowLines} />
+        <StackV gap={2} isSkeleton={isSkeleton} items={rowLines} />
     )
 }
 

@@ -100,6 +100,7 @@ const ModuleHeader = ({
             gap={3}
             align="center"
             wrap
+            isSkeleton={isSkeleton}
 
             items={[
                 () => (isSkeleton ? (

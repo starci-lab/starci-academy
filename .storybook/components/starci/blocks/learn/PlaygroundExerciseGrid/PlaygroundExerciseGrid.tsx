@@ -89,6 +89,7 @@ const PlaygroundExerciseGrid = ({
         const titleAndSteps = (
             <StackV
                 gap={2}
+                isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <div>
@@ -107,6 +108,7 @@ const PlaygroundExerciseGrid = ({
         return (
             <StackV
                 gap={4}
+                isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <div>

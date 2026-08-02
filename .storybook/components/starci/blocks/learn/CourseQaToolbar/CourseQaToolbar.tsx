@@ -118,13 +118,13 @@ const CourseQaToolbar = ({
 
                 />
             </div>
-            <StackH gap={3} justify="between" wrap items={[() => searchAndCount]} />
+            <StackH gap={3} justify="between" wrap isSkeleton={isSkeleton} items={[() => searchAndCount]} />
         </>
     )
 
     return (
         <div>
-            <StackV gap={4} items={[() => strip]} />
+            <StackV gap={4} isSkeleton={isSkeleton} items={[() => strip]} />
         </div>
     )
 }

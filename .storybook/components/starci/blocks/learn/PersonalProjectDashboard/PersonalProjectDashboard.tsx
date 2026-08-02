@@ -196,6 +196,7 @@ const Body = ({
     const heroSection = (
         <StackV
             gap={4}
+            isSkeleton={isSkeleton}
 
             items={[
                 () => (isSkeleton || currentTask ? (
@@ -216,7 +217,7 @@ const Body = ({
                         max={stats.total || 1}
                         label={PROGRESS_LABEL}
                         showValue
-
+                        isSkeleton={isSkeleton}
 
                     />
                 ),
@@ -237,6 +238,7 @@ const Body = ({
     return (
         <StackV
             gap={6}
+            isSkeleton={isSkeleton}
 
             items={[
                 () => heroSection,
@@ -362,6 +364,7 @@ const PersonalProjectDashboard = ({
         <div>
             <StackV
                 gap={6}
+                isSkeleton={isSkeleton}
 
                 items={[
                     () => header,

@@ -94,7 +94,7 @@ const ConsultantProfileBody = ({
     const { fullName, jobTitle, companyTitle, description, avatarUrl, contactUnlocked, contactLinks } = consultant
 
     const nameRow = (
-        <StackV gap={1} align="center" items={[
+        <StackV gap={1} align="center" isSkeleton={isSkeleton} items={[
             () => (
                 <Typography
                     size="h4"
@@ -120,7 +120,7 @@ const ConsultantProfileBody = ({
 
     // identity: centered photo, name+role, pressable company row
     const identity = (
-        <StackV gap={4} align="center" items={[
+        <StackV gap={4} align="center" isSkeleton={isSkeleton} items={[
             () => (
                 <div className="w-28">
                     <Image
@@ -151,12 +151,12 @@ const ConsultantProfileBody = ({
 
     // contact fork — see file header for why loading shimmers neutrally
     const contactFork = isSkeleton ? (
-        <StackV gap={2} items={[
+        <StackV gap={2} isSkeleton={isSkeleton} items={[
             () => <Typography size="sm" isSkeleton classNames={["w-1/2"]} />,
             () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
         ]} />
     ) : contactUnlocked ? (
-        <StackV gap={2} items={(contactLinks ?? []).map((link) => () => (
+        <StackV gap={2} isSkeleton={isSkeleton} items={(contactLinks ?? []).map((link) => () => (
             <Typography
                 size="sm"
                 isLink
@@ -181,7 +181,7 @@ const ConsultantProfileBody = ({
 
     return (
         <div>
-            <StackV gap={6} items={[
+            <StackV gap={6} isSkeleton={isSkeleton} items={[
                 () => identity,
                 // full bio — no clamp, unlike ConsultantCard's directory teaser
                 ...(isSkeleton || description ? [() => (

@@ -95,7 +95,7 @@ const ContentRelatedList = ({
         // matches the real row's own affordance (no accent, no arrow).
         hover: "underline",
         content: (
-            <StackV gap={2} items={[() => relatedItemBody(item, enrollToOpenLabel)]} />
+            <StackV gap={2} isSkeleton={isSkeleton} items={[() => relatedItemBody(item, enrollToOpenLabel)]} />
         ),
     }))
 

@@ -338,7 +338,7 @@ const readingColumn = (props: {
         </>
     )
 
-    return <StackV gap={7} items={[() => readingSections]} />
+    return <StackV gap={7} isSkeleton={isSkeleton} items={[() => readingSections]} />
 }
 
 /**
@@ -406,7 +406,7 @@ const submissionPanel = (props: {
 
                 />
             </div>
-            <StackH gap={3} wrap items={[() => evaluateActions]} />
+            <StackH gap={3} wrap isSkeleton={isSkeleton} items={[() => evaluateActions]} />
         </>
     )
 
@@ -416,7 +416,7 @@ const submissionPanel = (props: {
                 label="Project GitHub"
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} items={[() => githubFields]} />}
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => githubFields]} />}
             />
 
             {isSkeleton || panel.result != null ? (
@@ -438,7 +438,7 @@ const submissionPanel = (props: {
         </>
     )
 
-    return <StackV gap={6} items={[() => panelSections]} />
+    return <StackV gap={6} isSkeleton={isSkeleton} items={[() => panelSections]} />
 }
 
 /**

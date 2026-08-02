@@ -123,7 +123,7 @@ const ReactionButton = ({
         <StackH
             gap={3}
             align="center"
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <span className="flex items-center -space-x-1">
@@ -132,7 +132,7 @@ const ReactionButton = ({
                         ))}
                     </span>
                 ),
-                () => <Typography size="sm" text={String(total)} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography isSkeleton={isSkeleton} size="sm" text={String(total)} />,
             ]}
         />
     ) : null
@@ -169,7 +169,7 @@ const ReactionButton = ({
     )
 
     return (
-        <StackH gap={3} align="center" items={[() => triggerAndSummary]} />
+        <StackH gap={3} align="center" isSkeleton={isSkeleton} items={[() => triggerAndSummary]} />
     )
 }
 

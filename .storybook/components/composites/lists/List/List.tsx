@@ -157,6 +157,7 @@ const Row = ({
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
                 <StackH
                     gap={3}
+                    isSkeleton={isSkeleton}
                     classNames={["shrink-0"]}
                     className="ml-auto"
                     items={[
@@ -294,18 +295,20 @@ const Labeled = ({
         <StackV
             as="section"
             gap={4}
+            isSkeleton={isSkeleton}
             classNames={classNames}
             items={[
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <StackH
                         gap={3}
+                        isSkeleton={isSkeleton}
                         items={[
                             ...(Icon ? [() => <Icon />] : []),
                             () => <Label>{label}</Label>,
                         ]}
                     />
                 ),
-                () => <StackV gap={3} items={[() => rows]} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={3} isSkeleton={isSkeleton} items={[() => rows]} />,
                 // `isSkeleton`-gated: while loading there is no data behind the CTA yet,
                 // same reasoning as the `meta`/`trailing` omission on `Row` above.
                 ...(!isSkeleton && Action ? [() => <div><Action /></div>] : []),
@@ -451,6 +454,7 @@ const ToggleRow = ({
     <div className={cn(isDisabled && "opacity-50")}>
         <StackH
             gap={4}
+            isSkeleton={isSkeleton}
             classNames={classNames}
             pattern="label-field"
             items={[

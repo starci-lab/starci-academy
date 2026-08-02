@@ -93,9 +93,10 @@ export const RemovableToken = ({
         <StackH
             gap={3}
             classNames={["shrink-0"]}
+            isSkeleton={isSkeleton}
             items={[
-                ...(onEdit ? [() => (
-                    <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit} prefixIcon={XIcon} label={editLabel} />
+                ...(onEdit ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
+                    <Button isSkeleton={isSkeleton} variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit} prefixIcon={XIcon} label={editLabel} />
                 )] : []),
                 ...(onRemove ? [() => (
                     // Compact chip-scale close × (NOT the button-scale edit
@@ -129,6 +130,7 @@ export const RemovableToken = ({
             <StackH
                 gap={3}
                 classNames={["min-w-0"]}
+                isSkeleton={isSkeleton}
                 items={[
                     ...(Icon ? [() => (
                         // COMPOSITE owns the size (§4) — the atom's own scale, not the

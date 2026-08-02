@@ -148,12 +148,12 @@ const FoundationResourcePage = ({
             {isEmpty ? (
                 <FoundationResourceEmpty />
             ) : (
-                <StackV gap={6} items={[() => resourceSection]} />
+                <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSection]} />
             )}
         </>
     )
 
-    const resourceBody = <StackV gap={6} items={[() => resourceSections]} />
+    const resourceBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSections]} />
 
     return <Container size="md" padding={6} body={resourceBody} />
 }

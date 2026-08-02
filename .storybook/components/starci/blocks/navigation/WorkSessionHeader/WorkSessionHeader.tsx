@@ -84,7 +84,7 @@ const WorkSessionHeader = ({
         )
         return (
             <div className="border-b border-default bg-surface">
-                <StackH gap={4} align="center" items={[() => skeletonRow]} />
+                <StackH gap={4} align="center" isSkeleton={isSkeleton} items={[() => skeletonRow]} />
                 <div className="p-2">
                     <HeroSkeleton className="h-1 w-full rounded-full" />
                 </div>
@@ -147,10 +147,10 @@ const WorkSessionHeader = ({
 
     return (
         <div className="border-b border-default bg-surface">
-            <StackH gap={4} align="center" items={[() => headerRow]} />
+            <StackH gap={4} align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
             {/* The rail. Segments are laid out by a frame so the seam stays on scale; each
                 segment carries its own hit zone, because a 4px bar is not a touch target. */}
-            <StackH gap={2} align="center" items={[() => railSegments]} />
+            <StackH gap={2} align="center" isSkeleton={isSkeleton} items={[() => railSegments]} />
         </div>
     )
 }

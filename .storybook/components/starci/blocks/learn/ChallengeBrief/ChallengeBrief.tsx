@@ -269,7 +269,7 @@ const ChallengeBrief = ({
     )
 
     return (
-        <StackV gap={6} items={[() => sections]} />
+        <StackV gap={6} isSkeleton={isSkeleton} items={[() => sections]} />
     )
 }
 

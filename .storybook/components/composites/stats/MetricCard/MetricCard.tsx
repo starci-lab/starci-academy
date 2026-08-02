@@ -101,6 +101,7 @@ export const MetricCard = ({
         <SectionCard classNames={classNames} body={
             <StackV
                 gap={3}
+                isSkeleton={isSkeleton}
                 items={[
                     // Primary metric value — large and visually prominent
                     () => <Typography size="h4" isSkeleton={isSkeleton} text={value} />,

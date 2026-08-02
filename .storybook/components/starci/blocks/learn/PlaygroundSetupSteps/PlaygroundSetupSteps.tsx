@@ -244,7 +244,7 @@ const PlaygroundSetupSteps = ({
     const pairStepBody: ReactNode = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Typography
@@ -259,11 +259,11 @@ const PlaygroundSetupSteps = ({
                     ? <CommandSkeleton />
                     : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" />),
                 ...(!isSkeleton ? [() => pairingCodeNote] : []),
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <StackH
                         gap={3}
                         wrap
-
+                        isSkeleton={isSkeleton}
                         items={[
                             () => renderVerifyButton(),
                             () => renderRotateButton(),
@@ -309,7 +309,7 @@ const PlaygroundSetupSteps = ({
     const engineStepBody: ReactNode = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Typography
@@ -333,7 +333,7 @@ const PlaygroundSetupSteps = ({
 
                     />
                 )] : []),
-                () => <StackH gap={3} items={[() => renderVerifyButton()]} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackH gap={3} isSkeleton={isSkeleton} items={[() => renderVerifyButton()]} />,
             ]}
         />
     )
@@ -345,10 +345,11 @@ const PlaygroundSetupSteps = ({
     const genModelSection = genModelCommand != null ? (
         <StackV
             gap={2}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <Typography
+                        isSkeleton={isSkeleton}
                         size="xs"
                         color="muted"
                         text={`Model sinh — ${recommendedGenModel}`}
@@ -363,10 +364,11 @@ const PlaygroundSetupSteps = ({
     const embedModelSection = (
         <StackV
             gap={2}
-
+            isSkeleton={isSkeleton}
             items={[
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <Typography
+                        isSkeleton={isSkeleton}
                         size="xs"
                         color="muted"
                         text={`Model embedding — ${EMBEDDING_MODEL_NAME}`}
@@ -381,7 +383,7 @@ const PlaygroundSetupSteps = ({
     const modelsCommandsSection = (
         <StackV
             gap={4}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => genModelSection,
                 () => embedModelSection,
@@ -392,6 +394,7 @@ const PlaygroundSetupSteps = ({
     const modelsSkeletonCommands = (
         <StackV
             gap={3}
+            isSkeleton={isSkeleton}
             items={[
                 () => <CommandSkeleton />,
                 () => <CommandSkeleton />,
@@ -402,7 +405,7 @@ const PlaygroundSetupSteps = ({
     const modelsStepBody: ReactNode = (
         <StackV
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Typography
@@ -434,7 +437,7 @@ const PlaygroundSetupSteps = ({
                 ) : (
                     modelsCommandsSection
                 )),
-                () => <StackH gap={3} items={[() => renderVerifyButton()]} />,
+                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackH gap={3} isSkeleton={isSkeleton} items={[() => renderVerifyButton()]} />,
             ]}
         />
     )
@@ -489,8 +492,7 @@ const PlaygroundSetupSteps = ({
     return (
         <StackV
             gap={4}
-
-
+            isSkeleton={isSkeleton}
             items={[
                 ...steps.map((step) => () => renderStep(step)),
                 () => rotateConfirm,

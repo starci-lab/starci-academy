@@ -78,7 +78,7 @@ const PlaygroundStepGuide = ({
                 <HeroSkeleton className="h-6 w-48 rounded" />
                 <StackV
                     gap={2}
-
+                    isSkeleton={isSkeleton}
                     items={[
                         () => <HeroSkeleton className="h-4 w-full rounded" />,
                         () => <HeroSkeleton className="h-4 w-2/3 rounded" />,
@@ -89,7 +89,7 @@ const PlaygroundStepGuide = ({
         )
         return (
             <div>
-                <StackV gap={6} items={[() => loadingStep]} />
+                <StackV gap={6} isSkeleton={isSkeleton} items={[() => loadingStep]} />
             </div>
         )
     }
@@ -119,7 +119,7 @@ const PlaygroundStepGuide = ({
     const verifyPendingStatus = (
         <StackH
             gap={3}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => <Spinner size="sm" tone="accent" />,
                 () => <Typography size="sm" color="muted" text="Checking…" />,
@@ -130,7 +130,7 @@ const PlaygroundStepGuide = ({
     const verifyControls = (
         <StackV
             gap={2}
-
+            isSkeleton={isSkeleton}
             items={[
                 ...(verifyState === "waitingForConnection" ? [() => (
                     <Typography
@@ -164,7 +164,7 @@ const PlaygroundStepGuide = ({
     const commandSection = step.commandHint != null ? (
         <StackV
             gap={2}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => <Typography size="xs" weight="medium" color="muted" text="Command to run" />,
                 () => (
@@ -189,7 +189,7 @@ const PlaygroundStepGuide = ({
 
     return (
         <div>
-            <StackV gap={6} items={[() => guideBody]} />
+            <StackV gap={6} isSkeleton={isSkeleton} items={[() => guideBody]} />
         </div>
     )
 }

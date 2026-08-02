@@ -117,7 +117,7 @@ const ContentDiscussion = ({
 
     const discussionHeader = (
         <>
-            <StackV gap={2} items={[() => labelLines]} />
+            <StackV gap={2} isSkeleton={isSkeleton} items={[() => labelLines]} />
             <ContentCommentComposer
                 onSubmit={onSubmitComment}
                 currentUser={currentUser}
@@ -165,7 +165,7 @@ const ContentDiscussion = ({
             {/* These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly:
                 [label+archive]↔composer = grouped (gap-3) · [icon+label]↔archive-line
                 = tight (gap-1) · icon↔label = related (gap-2). */}
-            <StackV gap={4} items={[() => discussionHeader]} />
+            <StackV gap={4} isSkeleton={isSkeleton} items={[() => discussionHeader]} />
 
             {errorMessage != null ? (
                 <EmptyState
@@ -183,14 +183,14 @@ const ContentDiscussion = ({
 
                 />
             ) : (
-                <StackV gap={4} items={[() => commentList]} />
+                <StackV gap={4} isSkeleton={isSkeleton} items={[() => commentList]} />
             )}
         </>
     )
 
     return (
         <div>
-            <StackV gap={4} items={[() => discussionBody]} />
+            <StackV gap={4} isSkeleton={isSkeleton} items={[() => discussionBody]} />
         </div>
     )
 }

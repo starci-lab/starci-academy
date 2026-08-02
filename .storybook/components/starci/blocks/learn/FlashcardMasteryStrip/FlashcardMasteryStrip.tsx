@@ -95,7 +95,7 @@ const FlashcardMasteryStrip = ({
             <StackH
                 gap={2}
                 align="baseline"
-
+                isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <Typography
@@ -147,7 +147,7 @@ const FlashcardMasteryStrip = ({
                 isSkeleton={isSkeleton}
 
 
-                body={() => <StackV gap={4} items={[() => masteryReadout]} />}
+                body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => masteryReadout]} />}
             />
         </div>
     )

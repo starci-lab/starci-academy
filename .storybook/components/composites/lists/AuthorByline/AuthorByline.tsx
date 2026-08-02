@@ -62,6 +62,7 @@ const AuthorByline = ({
         gap={2}
         pattern="icon-text separator-dot"
         classNames={["min-w-0", ...(classNames ?? [])]}
+        isSkeleton={isSkeleton}
 
         items={[
             () => (

@@ -73,7 +73,7 @@ const ModuleContinueBand = ({
         <StackV
             gap={1}
             classNames={["min-w-0"]}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Typography
@@ -103,7 +103,7 @@ const ModuleContinueBand = ({
             gap={4}
             justify="between"
             align="start"
-
+            isSkeleton={isSkeleton}
             items={[
                 () => eyebrowAndTitle,
                 ...(showResumeRow ? [() => (
@@ -149,7 +149,7 @@ const ModuleContinueBand = ({
     return (
         <StackV
             gap={4}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => headerRow,
                 () => progress,

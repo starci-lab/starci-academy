@@ -64,7 +64,7 @@ const PlaygroundEnterBanner = ({
             body={() => (
                 <StackV
                     gap={4}
-
+                    isSkeleton={isSkeleton}
                     items={[
                         () => (
                             <Typography

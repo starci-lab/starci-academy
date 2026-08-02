@@ -360,6 +360,7 @@ const MarkdownContent = ({
             <StackV
                 gap={3}
                 classNames={classNames}
+                isSkeleton={isSkeleton}
 
                 items={[
                     () => <Typography isSkeleton size="base" classNames={["w-full"]} />,

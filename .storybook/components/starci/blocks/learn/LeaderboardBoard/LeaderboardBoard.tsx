@@ -145,7 +145,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
             gap={2}
             align="center"
             className="w-24"
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <div>
@@ -193,7 +193,7 @@ const Podium = ({ entries, meLabel, isSkeleton }: PodiumProps) => (
         gap={3}
         justify="center"
         align="end"
-
+        isSkeleton={isSkeleton}
         items={[...entries]
             .sort((a, b) => PODIUM_VISUAL_ORDER[a.rank] - PODIUM_VISUAL_ORDER[b.rank])
             .map((entry) => () => podiumEntryCard(entry, meLabel, isSkeleton))}
@@ -285,7 +285,7 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
         <StackH
             gap={3}
             align="center"
-
+            isSkeleton={isSkeleton}
             items={[
                 () => (
                     <Typography
@@ -376,7 +376,7 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
     const standingLabels = standing ? (
         <StackV
             gap={1}
-
+            isSkeleton={isSkeleton}
             items={[
                 // The rank NUMBER is typed data; "Rank #N" is the block's own wording (§14d.1).
                 () => (
@@ -417,7 +417,7 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
                 <StackH
                     gap={3}
                     align="center"
-
+                    isSkeleton={isSkeleton}
                     items={[
                         () => <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} />,
                         () => standingLabels,
@@ -430,17 +430,16 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
     return (
         <StackV
             gap={6}
-
+            isSkeleton={isSkeleton}
             items={[
                 () => standingCard,
                 ...(podiumEntries.length > 0 ? [() => (
                     <Podium entries={podiumEntries} meLabel={meLabel} isSkeleton={isSkeleton} />
                 )] : []),
-                () => (
+                ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     <SurfaceCardList
                         items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton)}
-
-
+                        isSkeleton={isSkeleton}
                     />
                 ),
             ]}

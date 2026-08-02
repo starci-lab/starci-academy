@@ -4,43 +4,13 @@ import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShe
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentModal`: fullscreen READ view of a content entity (a lesson,
- * a support article), opened from anywhere in the app.
+ * `ContentModal` — the fullscreen read view of a content entity (a lesson, a support
+ * article), opened from anywhere. Renders the markdown title inline in the header
+ * and the markdown body at full reading measure, scrolling independently (the shell
+ * caps at 85vh, the body's `ScrollShadow` scrolls). The header renders only when a
+ * title is present; the body always renders.
  *
- * OVERLAY, PRESENTATIONAL ONLY (Rule 13 / canon §11a "screen owns overlay
- * store"). The real `src/components/modals/ContentModal/index.tsx` reads
- * `isOpen`/`content` off `useContentOverlayState()` (Zustand) and Redux
- * (`state.content.entity`) directly — that wiring is APP-LEVEL, same discipline
- * as a page never wiring its own router. This port takes the same two things
- * as PLAIN PROPS instead: `isOpen`/`onOpenChange` (open state) and `content`
- * (the entity to read). The caller — the real overlay-store hook, in `src` —
- * is responsible for supplying both.
- *
- * WHY IT EARNS A BLOCK LAYER (not just a bare `ModalShell` call from the
- * screen): it decides the DOMAIN shape — a content entity has a `title` and a
- * `body`, both markdown — and it decides HOW each field is read: the title
- * inline/compact (so it sits as one line of `Modal.Header`, matching the
- * legacy `[&_p]:m-0 [&_p]:inline` override), the body at full reading measure,
- * scrollable independently of the header. A composite (`ModalShell`,
- * `MarkdownContent`) does not know any of that — it only knows "a header slot"
- * and "a markdown document". Wired to `ModalShell`'s `header` prop (not `title`)
- * on purpose: `title` funnels its value through `Typography`'s `text` prop,
- * which would wrap this already-styled `MarkdownContent` node in a second,
- * conflicting text style — `header` renders custom content as-is.
- *
- * TITLE IS CONDITIONAL, BODY IS NOT. Mirrors the source 1:1: `content?.title`
- * gates whether `Modal.Header` renders at all (no header the source line
- * `content?.title ? <MarkdownContent .../> : null`), while the body always
- * renders — `content?.body ?? ""` — because a modal with a header but no body
- * frame reads as a bug, not a valid empty state.
- *
- * SCROLL LIVES ON THE BODY, NOT THE SHELL, on purpose (matches source): the
- * shell is asked for `scroll="inside"` (caps the container so the modal itself
- * never grows past `85vh`), and the actual scrolling box is the `ScrollShadow`
- * around the body markdown — same split the legacy component makes, kept
- * rather than collapsed into one for this port.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Presentational: `isOpen`/`onOpenChange` + `content`.
  */
 
 /** The content entity `ContentModal` reads — a title and a body, both markdown. */

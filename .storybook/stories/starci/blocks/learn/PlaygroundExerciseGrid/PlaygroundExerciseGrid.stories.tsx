@@ -3,21 +3,12 @@ import { PlaygroundExerciseGrid, type PlaygroundExerciseGridItem } from "@sb-com
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundExerciseGrid`: the core function of the Playground hub
- * screen — a grid of hands-on exercises the learner opens one of. See the
- * component's own file header for the reuse map (why this wraps
- * `SurfaceCardPressableGroup` instead of rebuilding a card grid), why the cue
- * row at the bottom of each tile stays decorative text rather than a nested
- * button, and why the empty branch lives inside this block.
- *
- * TWO LEAVES BY STRUCTURE (§14d.2):
- *   - `Default` — one bounded press-target grid holding real tiles (or, while
- *     loading, the composite's own generic tile mirror). Loading never
- *     removes/adds a node — only the tile content switches to shimmer — so it
- *     stays a STATE of this leaf, the same call `FoundationCategoryList`'s
- *     file header already makes for its own `isSkeleton`.
- *   - `Empty` — the grid is REPLACED by `EmptyState`, because the course
- *     has no Playground exercises at all.
+ * `PlaygroundExerciseGrid` — the core of the Playground hub screen: a grid of
+ * hands-on exercises the learner opens one of. Wraps `SurfaceCardPressableGroup`;
+ * the cue row at the bottom of each tile stays decorative text, not a nested button.
+ * Two shapes: `Default` (a bounded press-target grid of real tiles, or the
+ * composite's own tile mirror while loading) and `Empty` (the grid replaced by
+ * `EmptyState` when the course has no Playground exercises).
  */
 const meta: Meta<typeof PlaygroundExerciseGrid> = {
     title: "StarCi/Blocks/Learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid",

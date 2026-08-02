@@ -4,29 +4,13 @@ import { QuizPage } from "@sb-components/starci/pages/QuizPage/QuizPage"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `QuizPage`: drill yourself against written questions, one run at a
- * time. Set the run up, work through it, then look back over every card.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. Eight blocks — seven
- * reused, one new (`QuizProgressPanel`) — arranged by `phase`; see the
- * component's own file header for the full contract and the two GAPs it leaves
- * marked rather than fakes (the breadcrumb row, and a mid-`active`-phase
- * "level ran out of questions" swap that would have required either breaking the
- * screen import boundary or inventing a ninth block outside this run's scope).
- *
- * ⚠️ THREE OF THE EIGHT BLOCKS HAVE NO STORY YET — `QuizEnrollGate`, `QuizSetup`,
- * `QuizQuestion` were built before this run but never got a `.stories.tsx`
- * (`node scripts/check-story-ids.mjs --list` confirms no id exists for any of the
- * three). §"every storyId must be REAL" means those three parts are left OUT of
- * `ANNOTATE` below rather than pointed at a made-up id — a badge with no entry is
- * an honest "not linked yet", a fabricated `storyId` is a silently broken one.
- * They still carry `anatPart` so the DOM keeps its badge; only the Deps LINK is
- * missing.
- *
- * 📐 FIVE LEAVES, matching the two structural forks (`isEnrolled`, `phase`) plus
- * the one prop-flip (`isSkeleton`) that only the setup phase can show:
- *   `SetupEnrolled` · `SetupTrial` (enroll gate replaces setup+progress) ·
- *   `SetupLoading` (prop flip) · `Active` · `Recap`.
+ * `QuizPage` — the screen to drill yourself against written questions, one run
+ * at a time: set the run up, work through it, then look back over every card. A
+ * screen owns a list of functions: eight blocks — seven reused, one new
+ * (`QuizProgressPanel`) — arranged by `phase`. Five leaves matching the two
+ * structural forks (`isEnrolled`, `phase`) plus the setup-only `isSkeleton`
+ * prop-flip: `SetupEnrolled` · `SetupTrial` (enroll gate replaces
+ * setup+progress) · `SetupLoading` · `Active` · `Recap`.
  */
 const meta: Meta<typeof QuizPage> = {
     title: "StarCi/Pages/QuizPage/QuizPage",

@@ -10,17 +10,11 @@ import React, {
 import { cn } from "@heroui/react"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `ResizableRail.*`, the drag-to-resize side-rail
- * FRAME namespace (teacher 2026-07-25, canon §13a). Authored in Storybook (not
- * `src`); synced to `src` later. No `@/components` imports (design-spec ports
- * stay self-contained).
+ * `ResizableRail.*` — the drag-to-resize side-rail frame namespace.
  *
- * KHUNG API LAW (§13b): `.Base` is a WRAPPER frame that holds ONE region (the
- * rail body) — nothing is being crammed into a single slot, so it keeps plain
- * `children` and grows no `header`/`footer`. No repeating list → no `items`.
+ * `.Base` is a wrapper frame holding ONE region (the rail body), so it keeps plain
+ * `children` and grows no `header`/`footer`; no repeating list, so no `items`.
  * Namespace only — no bare component export.
- * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Props for {@link ResizableRail}. */

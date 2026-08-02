@@ -6,23 +6,13 @@ import type { FoundationModalProps } from "@sb-components/starci/overlays/modals
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `FoundationModal` — fullscreen overlay that shows ONE foundation resource
- * (document / video / external link). Opened from anywhere via the app's
- * global overlay store; this port takes plain `isOpen`/`onOpenChange` props
- * instead of reading Zustand/Redux directly (Rule 13).
- *
- * ⚠️ RELOCATED (2026-07-28) from `StarCi/Blocks/Learn/FoundationModal` to
- * `StarCi/Overlays/Modals/FoundationModal` — an overlay-modal item belongs
- * under `overlays/modals` per the app-folder split contract, matching the
- * sibling `ContentModal` story. Content/behaviour unchanged.
- *
- * ONE LEAF (`Default`). The wrapper shape never changes across `kind` —
- * only the container width/scroll (both plain style decisions the block
- * makes) and which `FoundationResourceBody` leaf renders inside, so `kind`
- * is a STATE of this one leaf, not three leaves of this block — the three
- * structurally-different trees already live one level down, inside
- * `FoundationResourceBody` itself. See the component file header for the
- * full container/scroll-per-kind reasoning.
+ * `FoundationModal` — a fullscreen overlay showing one foundation resource
+ * (document / video / external link). Opened via the app's global overlay
+ * store; this port takes plain `isOpen`/`onOpenChange` props. One leaf
+ * (`Default`): the wrapper shape never changes across `kind` — only the
+ * container width/scroll and which `FoundationResourceBody` leaf renders
+ * inside, so `kind` is a state; the three structurally-different trees live one
+ * level down inside `FoundationResourceBody`.
  */
 const meta: Meta<typeof FoundationModal> = {
     title: "StarCi/Overlays/Modals/FoundationModal/FoundationModal",

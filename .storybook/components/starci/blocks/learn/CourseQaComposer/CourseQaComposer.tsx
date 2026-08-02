@@ -6,56 +6,17 @@ import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLi
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseQaComposer`: the ONE writing-shape reused three ways inside a
- * course Q&A board — the root "ask the whole course" composer (a collapsible
- * avatar pill that opens into a textarea), an answer's inline EDIT form, and an
- * inline REPLY form.
+ * `CourseQaComposer` — one writing-shape reused three ways on a course Q&A board: the
+ * root "ask the whole course" composer (a collapsible avatar pill that opens into a
+ * textarea), an inline answer-EDIT form, and an inline REPLY form.
  *
- * ⭐ GENUINELY NEW, NOT A RE-DUPLICATE. The real app's `CommentComposer`
- * (`src/components/features/community/Discussion/CommentComposer.tsx`) has no
- * Storybook port anywhere, including `_legacy`. The one component that LOOKS
- * related, `_legacy/blocks/feed/Composer`, is a DIFFERENT real-app shape —
- * always-open, no avatar pill, used only for the bottom "write an answer" box
- * in the real `QuestionRow`. This block's `mode="plain"` covers exactly that
- * ground (always-expanded, avatar optional), so `_legacy/blocks/feed/Composer`
- * stays as its own thing rather than being folded in — this is a THIRD,
- * younger sibling that happens to make `_legacy`'s shape reachable through one
- * of its own two modes, not a copy of it.
+ * Text is strictly controlled (`value`/`onValueChange`); `initialValue` is read once
+ * only to decide how a `mode="collapsible"` composer boots. After submit/cancel the
+ * pill folds itself back down but never clears the draft (the caller owns `value`).
+ * Cancel shows when `mode === "collapsible"` or when `onCancel` is passed.
  *
- * WHY A BLOCK ON TOP OF `Avatar`/`InputTextarea`/`Button`: none of the three
- * knows a course Q&A board has exactly two writing shapes (collapsed
- * invitation vs. open form), that a locked composer must still fire `onCancel`
- * cleanly, or that submitting should fold a collapsible composer back down.
- * `InputButtonLike` (existing composite) is reused for the collapsed pill
- * instead of hand-rolling a field-look `<button>` — the exact "rebuilt a worse
- * version of an existing composite" trap this run's brief warns about.
- *
- * ⭐ TEXT IS STRICTLY CONTROLLED (`value`/`onValueChange`), matching every
- * `Input.*` atom's own §4 contract — the block owns NO copy of the draft.
- * `initialValue` is NOT a second source of truth for the text; it is read
- * EXACTLY ONCE, only to decide how a `mode="collapsible"` composer BOOTS: an
- * edit/reply reopened with existing content must not start visually shut
- * (`useState(() => mode === "plain" || Boolean(initialValue))`). A plain
- * composer never collapses at all, so the flag is irrelevant there.
- *
- * ⭐ THE PILL FOLDS ITSELF BACK; THE DRAFT DOES NOT CLEAR ITSELF. Collapsing
- * to the pill after Submit/Cancel is presentational chrome this block owns
- * (the same way a popover closes itself after a pick) — it does not touch
- * `value`. Clearing the actual draft text is the CALLER's job (it owns
- * `value`), so rule 7 stays intact: the block never decides what submitting
- * or cancelling MEANS, only how its own shell reacts.
- *
- * ⭐ CANCEL SHOWS WHEN `mode === "collapsible"` (always — a way back to the
- * pill must exist) OR when the caller passes `onCancel` (the edit/reply
- * shapes of `mode === "plain"`) — 1:1 with the real `CommentComposer`'s
- * `{onCancel || collapsible ? …}` check.
- *
- * 📐 TWO LEAVES BY STRUCTURE (§14d.2): `CollapsedPrompt` (avatar + pill,
- * nothing else composed) and `ExpandedForm` (avatar + textarea + action row).
- * `isSkeleton` only swaps each composed atom's own shimmer within whichever
- * leaf is showing — it never changes what is composed, so it stays a STATE.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Two structural leaves: `CollapsedPrompt` (avatar + pill) and `ExpandedForm`
+ * (avatar + textarea + action row).
  */
 
 /** Which of the block's two writing shapes to render. */

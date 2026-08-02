@@ -6,40 +6,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PlaygroundEnterBanner`: the playground page's SINGLE primary
- * decision. Everything else on that page (the checklist of prerequisite
- * steps, the resource meta) is context; this is the one card that tells the
- * learner "here is where you stand, and here is the one button that matters".
- *
- * REUSE, NOT REBUILD (the run this task exists to correct against). The shape
- * is exactly `FlashcardDueHero`'s leaf 1: `SurfaceCard` (`label`) ⊃ `StackV`
- * holding a status line + a primary `Button`. No new card chrome, no hand-rolled
- * `flex gap-*` — `SurfaceCard`/`StackV`/`Button`/`Typography` already draw
- * every pixel this needs.
- *
- * ⭐ §14d.1 — THE BLOCK OWNS THE SENTENCE, not the caller. `allReady` and
- * `pendingCount` are two raw booleans/numbers; nowhere does the caller hand a
- * pre-formatted "2 steps left…" string. The status line is built HERE from that
- * data, same discipline `FlashcardDueHero.buildBreakdown` applies to its own
- * due-count line.
- *
- * ONE LEAF (`Default`), TWO DATA STATES (§11f) — ready and pending share the
- * exact same card/stack/button structure; only the status text/color and the
- * button's `isDisabled` flip. Neither swap removes or adds a composed node,
- * so this stays one leaf per the LEAF=structure / STATE=content rule.
- *
- * ⭐ GATED, NOT SWALLOWED (rule #7, read carefully — this is the narrow
- * exception, not a contradiction). Rule #7 forbids a block hard-coding what a
- * LOCKED action means (a paywalled tab must still fire `onModeChange` so the
- * caller can decide to open a paywall). Here there is no such caller decision
- * to make: `allReady=false` means the checklist genuinely has nothing to
- * enter yet — there is no destination behind the button until the steps are
- * done. So the CTA disables via the atom's own `isDisabled` (a visible,
- * standard affordance), and `onEnter` is never called from a disabled button
- * in the first place — nothing is silently swallowed, the control simply
- * isn't actionable yet.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PlaygroundEnterBanner` — the playground page's single primary decision: a
+ * labeled `SurfaceCard` holding a status line and the one button that enters the
+ * lab. The block builds the status sentence from `allReady`/`pendingCount`
+ * rather than a caller-supplied string. One leaf, two data states (ready vs
+ * pending); the CTA disables via the button's own `isDisabled` while steps
+ * remain.
  */
 
 /** Props for {@link PlaygroundEnterBanner}. */

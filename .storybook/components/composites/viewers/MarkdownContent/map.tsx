@@ -24,27 +24,20 @@ import {
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * The element-renderer MAP for `MarkdownContent` — one file so the whole grammar
- * (headings, tables, code, mermaid, the custom directive tags) is readable in one
- * place, same split as `src`'s own `map.tsx`.
+ * The element-renderer MAP for `MarkdownContent` — the whole grammar (headings,
+ * tables, code, mermaid, custom directive tags) in one file.
  *
- * SCOPE (teacher's approved pass, 2026-07-29, in priority order): Shiki syntax
- * highlighting · mermaid diagrams · `:::tab`/`:::code`/`:::preview` → Preview↔Code
- * tabs · GFM tables → real HeroUI `Table` · `::::accordion`/`:::panel` → real
- * HeroUI `Accordion` with the correct surface chrome · `:::muted` + `:::chip` +
- * image captions + link routing + heading anchors. NOT in scope this pass:
- * `arcSections`, `plain` mode, the ` ```mdx ` live-render fence, the ` ```layout `
- * fence — each is its own viewer with its own runtime; half-porting one leaves a
- * body that looks finished and renders wrong.
+ * Handles: Shiki syntax highlighting, mermaid diagrams, `:::tab`/`:::code`/
+ * `:::preview` → Preview↔Code tabs, GFM tables → HeroUI `Table`,
+ * `::::accordion`/`:::panel` → HeroUI `Accordion`, `:::muted`, `:::chip`, image
+ * captions, link routing, heading anchors. Not handled here: `arcSections`,
+ * `plain` mode, the ` ```mdx ` live-render fence, the ` ```layout ` fence.
  *
- * Vertical rhythm is owned by the single wrapper in `MarkdownContent.tsx` (compact
- * measure) or, in reading measure, by a plain `<div className={blockMy}>` wrapped
- * around each block-level renderer's own output right here — margin is a seam
- * between two blocks (`principles/margin.md`), so it is written at the one place
- * that sees both, not passed as a `className` prop into the block's own component
- * (COMPOSITE-4: `CodeToHtml` / `MermaidDiagram` / `MarkdownTable` take no `className`).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Vertical rhythm is owned by the single wrapper in `MarkdownContent.tsx`, or in
+ * reading measure by a plain `<div className={blockMy}>` around each block-level
+ * renderer's output — margin is a seam between two blocks, written where both are
+ * visible rather than passed as a `className` prop. `CodeToHtml`,
+ * `MermaidDiagram`, and `MarkdownTable` take no `className`.
  */
 
 /** UI copy for the code/table/mermaid chrome. Storybook has no i18n-aware runtime

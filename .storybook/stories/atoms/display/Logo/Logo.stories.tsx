@@ -3,25 +3,13 @@ import { Logo } from "@sb-components/atoms/display/Logo/Logo"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Logo`: the system's ONE AND ONLY brand mark (a "C" glyph in pink
- * stroke plus two dotted corner marks), inline SVG, no background, one fixed
- * colour.
+ * ATOM — `Logo`: the system's one and only brand mark (a "C" glyph in pink stroke
+ * plus two dotted corner marks), inline SVG, no background, one fixed colour.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). The component has only ONE prop: `className`
- * — and `className`/`classNames` sit on the "produces no shape of its own"
- * list (a sizing/placement door, not a meaningful axis). So this atom has NO
- * leaf other than `Default` — no `tone`, no `size`, no union to enumerate.
- *
- * The side-by-side tiles shown below (three heights + a dark background) are
- * NOT separate leaves — §12g forbids splitting leaves by the VALUE of
- * `className`. They show the SAME shape at different sizes/backgrounds,
- * salvaged from the old file `stories/atoms/identity/Logo`
- * (`DefaultH9`/`LockupH10`/`SplashH14`/`OnDarkSurface`) — now four `states[]`
- * entries of the SAME ONE leaf `Default` (2026-07-27), not four leaves.
- *
- * ⚠️ That old file (old title `"Atoms/Display/Logo"`, NOT wrapped in
- * `BlockAnatomy`) predates canon §12g. It is NOT in scope for this pass —
- * see `issues`.
+ * Its only prop is `className`, which produces no shape of its own — so the atom has
+ * no leaf other than `Default`, no union to enumerate. The side-by-side tiles (three
+ * heights + a dark background) are `states[]` entries of that one leaf, not separate
+ * leaves.
  */
 
 /** Copy shown at the top of the autodocs page. UI text is written in ENGLISH. */

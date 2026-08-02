@@ -6,51 +6,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `VoiceHero`: the voice-first answer composer. A big push-to-talk mic
- * with its live transcript is the HERO; a quiet typed textarea is the fallback
- * for browsers that cannot do speech-to-text, or for a lesson that only wants
- * typed answers.
- *
- * TWO LEAVES, NOT ONE LEAF WITH A CONTENT STATE (§14d.2). `MicHero` and
- * `TypedFallback` are different SHAPES — a circular button plus a transcript
- * line vs. a textarea plus a switch-back link — not the same nodes wearing
- * different data. Reusing one leaf and hiding half of it behind a boolean
- * would leave a dead `Button` node sitting in the DOM whenever text mode is
- * forced (no STT, or `answerMode="text"`), which is exactly the kind of
- * present-but-inert node BlockAnatomy exists to catch.
- *
- * WHICH LEAF RENDERS is computed, not asked of the caller:
- *   • no STT support, or `answerMode="text"` → `TypedFallback` is the ONLY
- *     shape offered — no "use voice" link back, because there is nothing to
- *     switch TO.
- *   • STT supported and `answerMode="voice"` → `MicHero` is the ONLY shape —
- *     no "type instead" link, because the caller deliberately asked for a
- *     voice-only answer and a silent escape hatch would undercut that.
- *   • STT supported and `answerMode="both"` → `MicHero` by default, with a
- *     switch link each way. WHICH of the two is on screen right now is
- *     EPHEMERAL UI STATE — which input method you're currently looking at is
- *     not domain data the caller needs to own or persist, the same call
- *     `InputPassword` already makes for its `reveal` toggle. It is
- *     deliberately NOT one of this block's props.
- *
- * THE TRANSCRIPT IS ONE LINE, NOT TWO. While listening, an interim (still
- * being recognized) transcript reads muted + italic to mark it provisional;
- * once it lands in `value` it reads as plain committed text. Splitting these
- * into two permanent DOM nodes would mean the committed line and the live
- * line fight for the same space instead of one settling into the other. A
- * silent mic with nothing recognized yet still needs SOME line, so it falls
- * back to the `listening` label rather than collapsing to empty space.
- *
- * MIC COLOR CARRIES THE STATE, NOT A DIFFERENT ICON. `danger` while listening
- * is the everyday "recording" signal (a red mic) — swapping to a stop-square
- * glyph on top of that would be a second signal for the same fact.
- *
- * NO `isSkeleton`, ON PURPOSE — same reasoning as `ContentModeNav`'s file
- * header: the given prop contract has none. A composer only ever mounts once
- * the caller already knows `sttSupported`, so there is no loading moment this
- * block itself needs to hide behind a shimmer.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `VoiceHero` — the voice-first answer composer: a big push-to-talk mic with its
+ * live transcript as the hero, and a quiet typed textarea fallback for browsers
+ * without speech-to-text (or text-only lessons). Two leaves by structure,
+ * `MicHero` and `TypedFallback`. Which renders is computed from `sttSupported`
+ * and `answerMode` (`voice`/`text`/`both`); in `both`, which input is on screen
+ * is ephemeral UI state, not a prop. The transcript is one line — interim text
+ * reads muted+italic, committed text plain. Mic colour (`danger` while
+ * listening) carries the recording state. No `isSkeleton` (the composer mounts
+ * once `sttSupported` is known).
  */
 
 /** How the caller wants an answer collected. */

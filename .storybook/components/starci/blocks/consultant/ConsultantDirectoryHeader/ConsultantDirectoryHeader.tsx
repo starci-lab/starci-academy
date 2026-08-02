@@ -3,39 +3,21 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ConsultantDirectoryHeader`: the DIRECTORY IDENTITY block, answering
- * "what directory is this" at the top of the consultant directory screen —
- * a course-scoped breadcrumb trail, a title and an optional one-line summary.
+ * `ConsultantDirectoryHeader` — a BLOCK: the directory identity block at the top
+ * of the consultant directory screen — a course-scoped breadcrumb trail, a title,
+ * and an optional one-line summary.
  *
- * SIBLING OF `ContentHeader`/`FoundationsHeader`, NOT A COPY of either. All
- * three place identity into the same `PageHeader` frame with a `Breadcrumbs`
- * trail built from crumb DATA, but each answers a different question. This one
- * is deliberately as THIN as `FoundationsHeader`: no read-state chip, no
- * reading-time/challenge-count meta row, no outcomes card — a consultant
- * directory carries no per-item progress, so there is nothing to summarize in
- * a meta row. Inventing one here would be decorating with facts this screen
- * never tracks (§14d.3), same call `FoundationsHeader`'s file header makes.
+ * A sibling of `ContentHeader`/`FoundationsHeader`: all three place identity into
+ * the same `PageHeader` frame with a `Breadcrumbs` trail built from crumb DATA, but
+ * this one is deliberately thin — no read-state chip, no meta row, no outcomes card,
+ * because a consultant directory carries no per-item progress. It earns its layer
+ * by building the `Breadcrumbs` atom itself from `breadcrumbItems` and driving
+ * `PageHeader`'s title/description slots with the skeleton-vs-real decision.
  *
- * EARNS ITS LAYER (rule #10) the same way its siblings do: the block builds
- * the `Breadcrumbs` atom itself from `breadcrumbItems` DATA rather than
- * accepting a pre-built node, and it drives `PageHeader`'s title/description
- * slots with the exact skeleton-vs-real decision its siblings make. A block
- * that only forwarded `title`/`description` straight into `PageHeader` with
- * no breadcrumb-building step would be a passthrough.
- *
- * ⛔ NO "no breadcrumb" leaf, same call `ContentHeader`/`FoundationsHeader`
- * make: the directory is always reached through its course, so the trail
- * always exists on the real screen. `breadcrumbItems` stays optional only so
- * a Storybook/skeleton consumer can omit it.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). Losing `description` is the same magnitude
- * as `FoundationsHeader`'s own description toggle — one atom node inside an
- * already-composed frame — so it stays a STATE of the `Default` leaf. The
- * caller flipping `isSkeleton` swaps every composed atom for its own mirror,
- * which is its own leaf, same as `ContentHeader`/`FoundationsHeader`'s
- * `Skeleton` leaf.
- * ─────────────────────────────────────────────────────────────────────────────
+ * No "no breadcrumb" leaf — the directory is always reached through its course;
+ * `breadcrumbItems` is optional only so a Storybook/skeleton consumer can omit it.
+ * Losing `description` is a state of the `Default` leaf; `isSkeleton` is its own
+ * leaf.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

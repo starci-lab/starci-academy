@@ -3,22 +3,12 @@ import { FoundationCategoryList, type FoundationCategoryListItem } from "@sb-com
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FoundationCategoryList`: the Foundations content library's
- * browse-and-drill-in list — joined rows with a thumbnail, title, one-line
- * description and a trailing caret, plus a pager once there is more than one
- * page. See the component's own file header for the full reuse map (why this
- * is NEW rather than `ModuleLessonList`), the thumbnail-priority chain, and
- * the two distinct empty reasons.
- *
- * TWO LEAVES BY STRUCTURE (§14d.2):
- *   - `Default` — one bounded `SurfaceCardList` holding real rows (or, while
- *     loading, its own row mirror). Loading never removes/adds a node — only
- *     the row content switches to shimmer — so it stays a STATE of this leaf,
- *     the same call `FoundationCategorySearchBar`'s file header already makes
- *     for its own `isSkeleton`.
- *   - `Empty` — the rows are REPLACED by `EmptyState`, bounded inside the
- *     same `SurfaceCardList` surface. Forks into its two wording states by
- *     whether a search query drove the empty result.
+ * `FoundationCategoryList` — the Foundations content library's browse-and-drill-in
+ * list: joined rows with a thumbnail, title, one-line description and a trailing
+ * caret, plus a pager once there is more than one page. Loading swaps row content
+ * to shimmer; the `Empty` state replaces the rows with an `EmptyState` (worded by
+ * whether a search query drove the empty result), both bounded inside the same
+ * `SurfaceCardList` surface.
  */
 const meta: Meta<typeof FoundationCategoryList> = {
     title: "StarCi/Blocks/Learn/FoundationCategoryList/FoundationCategoryList",

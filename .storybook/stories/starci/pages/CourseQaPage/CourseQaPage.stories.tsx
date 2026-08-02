@@ -3,20 +3,14 @@ import { CourseQaPage } from "@sb-components/starci/pages/CourseQaPage/CourseQaP
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `CourseQaPage`: the course-wide Q&A roll-up. A screen owns a LIST
- * OF FUNCTIONS and nothing else — it calls blocks, places them in frames, and
- * hands each one typed data.
- *
- * SIX FUNCTIONS, in the order the reader meets them: what this board is · the
- * "you're not learning alone" honest readout · ask a new question ·
- * filter/search the board · the questions themselves, paged.
- *
- * ⭐ THE SCREEN OWNS EXACTLY ONE BRANCH, THE SAME WAY `ContentPage` OWNS ITS
- * `!isLocked` BRANCH: `isInvitationEmpty`, ported verbatim from `src`'s own
- * boolean. A default `unanswered`-filtered zero does NOT mean "nobody has ever
- * asked anything" — only `all`/`engagement` with no search proves that TRUE
- * zero. The `Invitation` leaf below is what that looks like; every other empty
- * result is `CourseQaQuestionList`'s own narrower `Empty` leaf one layer down.
+ * `CourseQaPage` — the screen for the course-wide Q&A roll-up. A screen owns a
+ * list of functions: it calls blocks, places them in frames, and hands each
+ * typed data. Six functions, in reading order: what this board is · the
+ * "you're not learning alone" readout · ask a new question · filter/search the
+ * board · the questions themselves, paged. The screen owns one branch,
+ * `isInvitationEmpty`: only `all`/`engagement` with no search proves a true
+ * zero (the `Invitation` leaf); every other empty result is
+ * `CourseQaQuestionList`'s own `Empty` leaf one layer down.
  */
 const meta: Meta<typeof CourseQaPage> = {
     title: "StarCi/Pages/CourseQaPage/CourseQaPage",

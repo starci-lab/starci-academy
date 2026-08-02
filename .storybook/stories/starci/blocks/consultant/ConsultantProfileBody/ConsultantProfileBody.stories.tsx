@@ -4,21 +4,11 @@ import { ConsultantProfileBody } from "@sb-components/starci/blocks/consultant/C
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ConsultantProfileBody`: the full DETAIL content of one consultant's
- * profile — photo, name+role, a pressable company row, the full bio, and a
- * fork on the way out: real contact links once unlocked, or a locked callout
- * with a way to unlock them.
- *
- * THE DETAIL SIBLING OF `ConsultantCard` (see that block's own file header,
- * which named this exact gap), not a copy of it — the company row is a real
- * `Button` here (the tile's whole-card press is already spent by the time
- * this renders) and the bio runs in full instead of clamping to a teaser.
- *
- * 📐 ONE LEAF (§14d.2). `contactUnlocked` never changes the composed OUTER
- * frame (photo → identity → bio → contact area) — only which content fills
- * the last slot — same precedent as `FoundationModal`'s `kind` switch cited
- * in the task brief. So unlocked/locked are two STATES of `Default`, not two
- * leaves.
+ * `ConsultantProfileBody` — the full detail content of one consultant's profile:
+ * photo, name+role, a pressable company row, the full bio, and either real
+ * contact links once unlocked or a locked callout with a way to unlock them.
+ * The detail sibling of `ConsultantCard`. `contactUnlocked` only changes which
+ * content fills the last slot, not the outer frame.
  */
 const meta: Meta<typeof ConsultantProfileBody> = {
     title: "StarCi/Blocks/Consultant/ConsultantProfileBody/ConsultantProfileBody",

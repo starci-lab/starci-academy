@@ -7,25 +7,19 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * `Breadcrumbs` — the single breadcrumb-trail atom wrapping HeroUI `Breadcrumbs`.
  *
- * Data-driven: pass `items` (root → current). Renders `HeroBreadcrumbs >
- * HeroBreadcrumbs.Item`. The last item is the current page, usually without
- * `onPress` (read-only). `maxItems` truncates a longer trail to a single
- * non-pressable "…" crumb in the middle (first + ellipsis + tail).
+ * Data-driven: pass `items` (root → current). The last item is the current page,
+ * usually read-only (no `onPress`). `maxItems` truncates a longer trail to a
+ * single non-pressable "…" crumb in the middle (first + ellipsis + tail).
  *
- * Responsive collapse also lives here: a narrow column can't hold a trail, and
- * a deep trail wraps and eats vertical space, so the atom can swap the whole
- * trail for a single back affordance ("← Back") pointing at the deepest
- * pressable ancestor:
- *   • `collapseOnMobile` → back link below `@app-sm`, trail from `@app-sm` up.
- *   • `collapseFrom={n}` → back link at every width once the trail has ≥ n crumbs.
- * The back link is built inline here (HeroUI `Link` + Phosphor `ArrowLeftIcon`)
- * rather than reusing the `BackLink` block, since an atom must not import
- * `blocks/`.
+ * Responsive collapse lives here too: the atom can swap the whole trail for a
+ * single "← Back" affordance pointing at the deepest pressable ancestor —
+ * `collapseOnMobile` (back link below `@app-sm`) or `collapseFrom={n}` (back link
+ * once the trail has ≥ n crumbs). The back link is built inline (HeroUI `Link` +
+ * Phosphor `ArrowLeftIcon`) since an atom must not import `blocks/`.
  *
- * Only `Breadcrumbs` is exported — no bare component. `items`/`label` are data
- * props, not `children`. The atom owns separators, truncation, and
- * current-crumb styling. `isSkeleton` renders a co-located trail skeleton whose
- * shape follows `collapseFrom`/`collapseOnMobile`.
+ * Only `Breadcrumbs` is exported. The atom owns separators, truncation, and
+ * current-crumb styling; `isSkeleton` renders a trail skeleton whose shape follows
+ * `collapseFrom`/`collapseOnMobile`.
  */
 
 /** One crumb in a {@link BreadcrumbsBase} trail. */

@@ -3,30 +3,18 @@ import { Alert as AtomAlert } from "@sb-components/atoms/feedback/Alert/Alert"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 /**
- * COMPOSITE — `Toast`: the floating notification surface, built entirely from
- * the `Alert` atom. Promoted from the atom tier (ATOM-3: a component whose
- * whole body is `<Alert {...} />` is assembling the vocabulary, not being a
- * word in it — the same reason `Callout` sits at this tier). Toast
- * and Callout share the same alert primitive and differ only in PLACEMENT
- * (toast floats, callout sits inside a surface) — a shape decision, which is
- * exactly what a composite owns. Uses `tone="plain"` (default tint, not forced
- * to soft) with `sm` glyphs. The HeroUI port lives solely in `AtomAlert`.
+ * `Toast` — the floating notification surface, built entirely from the `Alert`
+ * atom (which owns the HeroUI port). Toast and Callout share the same alert
+ * primitive and differ only in PLACEMENT (toast floats, callout sits inside a
+ * surface). Uses `tone="plain"` with `sm` glyphs. A static surface — a feature
+ * uses it as the body of a toast or inline alert.
  *
- * This is a static notification surface (inspectable, no live queue
- * needed) — a feature uses it as the body of a toast or inline alert.
- *
- * All exports go through `Toast.*` (currently only `Base`).
- *
- * No `children`: toast is fully data-driven — `title`/`description` are
- * `string` content (not children); `action` is a COMPONENT reference the
- * composite calls itself with `isSkeleton` forwarded (COMPOSITE-8), never a
- * built node.
- *
- * `status` selects the tone (success/warning/danger/info) and the atom
- * picks the icon itself, so a caller cannot pass a mismatched icon.
- * `title`/`description` are content; `action` (optional) sits before the
- * close button; `onClose` enables the close button. The icon table lives
- * solely in `AtomAlert`.
+ * All exports go through `Toast.*` (currently only `Base`). No `children`: it is
+ * data-driven — `title`/`description` are `string`; `action` is a component
+ * reference the composite calls itself with `isSkeleton` forwarded. `status`
+ * selects the tone (success/warning/danger/info) and the atom picks the matching
+ * icon, so a caller cannot pass a mismatched one. `action` (optional) sits before
+ * the close button; `onClose` enables it.
  */
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "Toast" } as const

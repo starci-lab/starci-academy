@@ -4,54 +4,21 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * FRAME (khung) — `RailShell`: a LEADING rail that introduces the page, beside a
- * body column that grows. The rail comes FIRST in reading order and never
- * shrinks; the body follows and absorbs every remaining pixel.
+ * `RailShell` — a FRAME: a LEADING rail that introduces the page, beside a body
+ * column that grows. The rail comes first in reading order and never shrinks
+ * (`shrink-0`); the body follows and absorbs every remaining pixel (`min-w-0`).
+ * The two sides are NAMED (`rail`/`body`) so those width rules live in one file.
  *
- * ⭐ WHY THIS IS NOT `SplitWorkspace`. That khung is the mirror image and a
- * different job: its `main` reading column comes first and the `aside` is a
- * 360px action rail that pins beside it. Here the rail LEADS — it is who you
- * are, or where you are, and the body is what you came to read. Same two boxes,
- * opposite reading order, opposite shrink strategy. Folding both into one khung
- * would need a `railFirst` flag, and a flag that reverses reading order is not
- * a variant of one shape, it is two shapes sharing a file.
+ * Mirror image of `SplitWorkspace`, whose reading column comes first and whose
+ * aside is a pinned action rail — opposite reading order, opposite shrink
+ * strategy, so it is a separate frame rather than a `railFirst` flag.
  *
- * ⭐ WHY IT EXISTS AT ALL (audit 2026-07-30, dashboard overview). Real `src` has
- * this exact shape TWICE and both wrote it by hand:
- *   • `features/dashboard/index.tsx:61-67` — identity rail, then the open tab
- *   • `features/profile/Settings/SettingsLayout/index.tsx:62-96` — settings nav
- *     rail, then the settings panel
- * Both hand-rolled `@app-md:flex-row` on the wrapper, `shrink-0` on the aside
- * and `min-w-0 flex-1` on the main — the 44th and 45th call sites of the
- * shrink-strategy pattern `Split` was built to own in ONE place. Two independent
- * cases stating the same lack is the bar for a new khung (`frame` decision
- * sheet), and it is met.
+ * `at` names the switch breakpoint (a `ResponsiveRowSwitch` prop, default `md`);
+ * the 288px rail width stays a hard-owned constant. `isRailSticky` is a prop
+ * because real consumers disagree (a scrolling identity rail vs. a viewport-pinned
+ * settings rail). No `wrap` — the breakpoint is declared, not hoped for.
  *
- * ⭐ THE RAIL IS `shrink-0`, THE BODY IS `min-w-0`. This is the whole contract,
- * and it is why the sides are NAMED. A caller who writes the two columns by
- * hand has to remember both classes at every call site; naming them puts the
- * rule in one file. Without `min-w-0` the body refuses to shrink below its
- * content and pushes the rail off-screen — a failure that only shows up once
- * real long content arrives.
- *
- * ⭐ `at` NAMES THE BREAKPOINT (FRAME-10), 288px IS STILL HARD-OWNED. Both real
- * sources agree on the switch step and on the rail width, so the width stays a
- * constant (§6c: a khung owns its own sizing) — but the STEP itself is a
- * `ResponsiveRowSwitch` prop, defaulting to `md` (both sources' step), so the
- * threshold is readable from the prop list instead of buried in a class string.
- * They DISAGREE on sticky — dashboard scrolls its rail with the page, settings
- * pins its rail to the viewport — so `isRailSticky` is a prop for the same
- * reason. A number becomes a prop when a real consumer disagrees, not before.
- *
- * ⭐ NO `wrap`. The breakpoint is declared, not hoped for. `wrap` carries no
- * threshold: the body shrinks without limit so the row almost never wraps, which
- * is exactly how two screens shipped with their columns glued together at every
- * width including mobile (`responsive` decision sheet).
- *
- * KHUNG API LAW (§13b): two DISTINCT roles ⇒ two NAMED slots (`rail`/`body`),
- * never a single `children`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Two distinct roles ⇒ two named slots, never a single `children`.
  */
 
 /** Props for {@link RailShell}. */

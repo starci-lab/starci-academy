@@ -4,27 +4,13 @@ import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcit
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentArticle`: the lesson itself, on the page it is read from.
- *
- * WHY A BLOCK OVER THE VIEWER: `MarkdownContent` repeats a document; this block
- * knows the document is a LESSON — that it can be locked, that a first-time
- * reader needs telling they can ask AI about a passage, and that the offer
- * belongs UNDER the text rather than in place of it.
- *
- * ⭐ LOCKED FADES, IT DOES NOT CUT. The body stays mounted and its tail fades
- * into the surface with the offer under it. Truncating would tell the reader
- * nothing about what they are being asked to buy; the fade shows the lesson
- * continues and stops them at the same time. Selection is switched off too — the
- * fade only hides the tail visually, and a reader could otherwise select through
- * it.
- *
- * ⭐ THE PAYWALL IS INSIDE THE SAME CARD, flat, under the faded tail: one surface
- * that runs out, not a second card interrupting the first. That is exactly why
- * `ContentPaywall` draws no frame of its own.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). Locking adds the fade and the offer and removes
- * the hint ⇒ its own leaf; so does the caller flipping `isSkeleton`. Whether the
- * hint shows on an open lesson is data ⇒ a state.
+ * `ContentArticle` — the lesson body on the page it is read from. Over the bare
+ * `MarkdownContent` viewer, it knows the document is a lesson: it can be locked,
+ * and it offers a first-time reader the hint that they can ask AI about a
+ * passage, placed under the text. When locked, the body stays mounted and its
+ * tail fades into the surface (selection disabled) with `ContentPaywall` flat
+ * beneath it in the same card. Locking and `isSkeleton` are each their own leaf;
+ * the open-lesson hint is a state.
  */
 const meta: Meta<typeof ContentArticle> = {
     title: "StarCi/Blocks/Learn/ContentArticle/ContentArticle",

@@ -7,47 +7,14 @@ import { SegmentBar, type SegmentBarSegment } from "@sb-components/composites/st
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FlashcardMasteryStrip`: mastery-first progress readout for a deck —
- * "how much of this do I actually own", not "how many cards are left today".
- * Maps to the real `FlashcardStatsStrip`.
+ * `FlashcardMasteryStrip` — a mastery-first progress readout for a deck ("how much do
+ * I own", not "how many are left today"). Composes `SurfaceCard` + `SegmentBar`, using
+ * the bar's own `caption` slot for the retention / first-review line.
  *
- * WHY A BLOCK ON TOP OF `SurfaceCard` + `SegmentBar`: neither composite knows
- * what "mastered" means for a deck, that a streak is a study-habit signal worth
- * its own chip, or that a retention number only means something once the
- * learner has actually reviewed enough cards. That vocabulary — the 5-review
- * floor, the wording for zero reviews, which segment is which colour — is what
- * this block owns (§14d.1); the two composites just draw a labelled card face
- * and a proportion bar.
- *
- * ⭐ REUSED `SegmentBar`'S OWN `caption` SLOT instead of hand-building a second
- * muted text row underneath it. This is the exact trap the catalog header for
- * this run points at (`ContentModeNav`'s file header, re: `ContentTabBar`): the
- * composite already carries a caption slot built for "a quiet takeaway sentence
- * under the bar", which is precisely what the retention/first-review line is —
- * duplicating it as a sibling `Typography` would be a second implementation of
- * the same idea sitting one prop away from the one that already exists.
- *
- * ⭐ JUDGMENT CALL — `SegmentBar` HAS NO `isSkeleton` OF ITS OWN (checked: grepped
- * the composite, confirmed). This block cannot add one — sibling agents are
- * editing other blocks against the same composite catalog in this run, so only
- * `FlashcardMasteryStrip.tsx` is in scope here. Rather than fork a parallel
- * "fake bar" tree (which would violate skeleton-flows-into-real-atoms, §12c, in
- * spirit even if there's no atom to flow into), the SAME `SegmentBar` node stays
- * mounted through the loading state: it is fed one flat, uncoloured segment and
- * told to hide its legend/caption, so the DOM shape never changes and only the
- * two `Typography` numbers above it — which DO own `isSkeleton` — actually
- * shimmer. No fabricated mastered/learning/new split is ever shown as if real.
- *
- * 📐 LEAF BY STRUCTURE (§14d.2). Streak present/absent is the `action` slot on
- * `SurfaceCard` appearing or disappearing — same shape of call as `ContentHeader`
- * `isRead` chip. Retention caption vs. the first-review hint is a second
- * structural branch: below 1 lifetime review nothing has been measured yet, so
- * the block swaps the WHOLE caption for a nudge instead of printing a retention
- * number computed from zero data. Between 1 and 4 reviews (not enough signal
- * yet, but not zero either) the caption is simply omitted — no leaf claims a
- * fake number belongs there either.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Owns the 5-review retention floor and the wording for low-review states: below 1
+ * review a nudge replaces the caption, between 1–4 the caption is omitted. Streak
+ * rides in `SurfaceCard`'s `action` slot. `SegmentBar` has no skeleton of its own, so
+ * it stays mounted flat/uncoloured while the two `Typography` numbers above it shimmer.
  */
 
 /** Props for {@link FlashcardMasteryStrip}. */

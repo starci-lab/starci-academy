@@ -5,39 +5,17 @@ import type { TypographyColor } from "@sb-components/atoms/text/Typography/Typog
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE — `DotLabel`: a colour swatch + an inline text label, as ONE unit —
- * NO pill/background around it (a status line inside a card, an "Online" row
- * beside a name, a category line in a dense list — anywhere a coloured dot
- * reads faster than the word alone, but a full chip's padding/background would
- * be too heavy for the surface it sits in).
+ * `DotLabel` — a colour swatch + an inline text label, as ONE unit with NO
+ * pill/background around it (a status line inside a card, an "Online" row beside a
+ * name, a category line in a dense list — anywhere a coloured dot reads faster than
+ * the word, but a chip's padding/background would be too heavy).
  *
- * CHECKED BEFORE BUILDING (per the build brief's "two candidates" audit):
- *
- * ⭐ NOT already covered by `Chip`'s dot variant (`dotColor`/`dotClassName` on
- * `atoms/chips/Chip`, informally "Chip.Dot"). That variant is still a real
- * `HeroChip` underneath — `variant="soft"`, the chip's own background/padding/
- * rounded-full pill shell, just with a coloured dot in the leading-glyph slot
- * instead of an icon. It answers "a status **chip**"; it cannot render a bare
- * dot + label with no chip shell around it, because `ChipBase` never renders
- * without the `HeroChip` wrapper. Confirmed by reading `ChipBase.tsx` directly
- * — every branch (skeleton and real) returns a `<HeroChip>` root.
- *
- * ⭐ THE SAME BARE SHAPE ALREADY EXISTS, but only INLINED inside `Legend`
- * (`composites/stats/Legend`), one entry of its `items` list, and its own file
- * flags the same thing this composite now fixes: *"ATOM GAP: no swatch/dot
- * atom exists yet, so the dot stays a real plain span"*. `DotLabel` reuses
- * that exact swatch mechanism (`resolveDotColor`, size-2.5 flat circle,
- * neutral skeleton fill) so the two composites don't invent two different dots
- * for the same idea — but exposes it as its own standalone single-instance
- * composite, since `Legend` only takes a repeated `items` array and is scoped
- * to "a legend for a chart", not any dot+label row in the app.
- *
- * SAME ATOM GAP AS `Legend`: no swatch/dot atom exists yet in `atoms/`. Kept
- * as a plain `<span>` here for the same reason — a flat, non-animated fill is
- * already a correct "not loaded yet" indicator for a shape this simple, so
- * reaching for a vendor `Skeleton` here would be COMPOSITE-10 for no gain.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Distinct from `Chip`'s dot variant, which is still a `HeroChip` with the chip's
+ * background/padding/pill shell and cannot render a bare dot + label. It reuses the
+ * same swatch mechanism as `Legend` (`resolveDotColor`, a size-2.5 flat circle,
+ * neutral skeleton fill) but exposes it as a standalone single-instance composite,
+ * whereas `Legend` only takes a repeated `items` array. No swatch/dot atom exists
+ * yet, so the dot stays a plain non-animated `<span>`.
  */
 
 /** Label tone — the 6-value scale every composite text draws from. Default `muted` (a status line reads as secondary text; the swatch already carries the emphasis). */

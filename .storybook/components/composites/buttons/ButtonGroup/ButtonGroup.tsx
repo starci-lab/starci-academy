@@ -9,14 +9,11 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
  * `ButtonGroup` — a row of buttons described by `items` data: the HOMOGENEOUS case
  * (a filter row, a toolbar of icon buttons, N elements of the same kind). The
  * heterogeneous case (Submit / Save draft / Cancel, three different ROLES) is
- * `ActionBar`, a separate composite — see `examples/composite.md`'s own test:
- * "is the content N elements of the SAME kind repeating?".
+ * `ActionBar`, a separate composite.
  *
- * Rebuilt on `ResponsiveCluster` (Wave 3, 2026-08-01): this used to hand-roll its own
- * `<div className="flex items-center gap-2">`, which is a frame's job (FRAME-1), and
- * left the seam with nowhere to carry a named responsive threshold (FRAME-10). Now it
- * imports `Button`, renders one per item, and hands the row itself to the frame below —
- * this composite adds no arrangement of its own.
+ * Built on `ResponsiveCluster`: it imports `Button`, renders one per item, and
+ * hands the row itself to the frame below — this composite adds no arrangement of
+ * its own.
  */
 
 /** One button in a {@link ButtonGroup} — described as data, not JSX. */

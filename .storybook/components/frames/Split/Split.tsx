@@ -4,24 +4,16 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (khung) — `Split.*`: the LEFT ↔ RIGHT row (`items-center justify-between`).
- * One member, `Split`: the shape has no second form — a split is a split.
+ * `Split` — a LAYOUT frame: the left ↔ right row (`items-center
+ * justify-between`). One member; a split has no second form.
  *
- * WHY IT IS ITS OWN KHUNG and not "a `StackH` with `justify=between`": the row
- * appears 43× across the app (card title ↔ action, label ↔ value, price ↔ CTA)
- * and it is not one track of N children — it is TWO NAMED SIDES with different
- * width strategies: `start` may truncate (`min-w-0`), `end` must never be
- * squeezed (`shrink-0`). Naming the sides is what makes that rule enforceable in
- * ONE place instead of at 43 call sites.
- *
- * KHUNG API LAW (§13b): two NAMED SLOTS (`start`/`end`) are the whole content
- * contract → NO `children`. Children would reopen the "which child goes where"
- * question the named slots exist to close.
+ * Two NAMED sides with different width strategies: `start` may truncate
+ * (`min-w-0`), `end` must never be squeezed (`shrink-0`). Naming the sides makes
+ * that rule enforceable in one place. Two named slots (`start`/`end`) are the
+ * whole content contract ⇒ no `children`.
  *
  * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED (off-scale is a
- * type error). §13: no domain content, no behaviour — placement only.
- * ─────────────────────────────────────────────────────────────────────────────
+ * type error). No domain content, no behaviour — placement only.
  */
 
 /** Props for {@link Split}. */

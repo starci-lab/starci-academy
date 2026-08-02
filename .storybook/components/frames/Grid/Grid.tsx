@@ -5,28 +5,19 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (frame) — `Grid.*`: the responsive grid of equal cells. One member,
- * `Grid` (a grid has one shape; density is a PROP, §6b).
+ * `Grid` — a LAYOUT frame: the responsive grid of equal cells. One member;
+ * density is a prop. A repeating list ⇒ `items` DATA, `children` forbidden (every
+ * cell is the same kind of thing).
  *
- * FRAME API LAW (§13b) — REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN.
- * A grid's premise is that every cell is the same kind of thing; children would
- * let one cell be something else and quietly break the premise.
+ * Uses container queries, not viewport: `@app-sm/md/lg` are pinned to the same
+ * pixel values as the viewport scale but measure the nearest `@container` ancestor
+ * (which the app shell and Storybook preview provide), so a grid answers to its
+ * own column width, not the viewport. This frame deliberately does NOT open its
+ * own container. (Tailwind's built-in `@sm/@md/@lg` are a different, half-size
+ * scale.)
  *
- * ⭐ CONTAINER QUERIES, NOT VIEWPORT (`@app-*`, `globals.css`): the app shell is a
- * split — the whole app renders in a left column that a docked AI rail can narrow
- * at will. A grid that read `md:` would keep 3 columns while its own column had
- * been squeezed to 400px. `@app-sm/md/lg` are pinned to the SAME pixel values as
- * the viewport scale, so the steps read the same but measure the CONTAINER.
- * (Tailwind's built-in `@sm/@md/@lg` are a DIFFERENT, half-size scale — using
- * them here would silently halve every breakpoint.) These variants resolve
- * against the nearest `@container` ancestor, which the app shell (and the
- * Storybook preview) already provides — this frame deliberately does NOT open its
- * own container, or every grid would answer to its own width instead of the shell's.
- *
- * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED.
- * §13: no domain content, no behaviour — placement only.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED. No domain
+ * content, no behaviour — placement only.
  */
 
 /** One cell of a {@link Grid}. */

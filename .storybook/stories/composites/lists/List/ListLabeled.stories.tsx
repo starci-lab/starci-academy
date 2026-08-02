@@ -12,16 +12,10 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
 const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon data-tier="fixture" {...props} weight="duotone" />
 
 /**
- * ⚠️ STATE SCOPE (teacher's call 2026-07-25): `ListLabeled` is a REPEATED-LIST
- * frame with no card frame. What it produces: a section label (icon + Label),
- * a `gap-2` column built from `items`, a footer CTA, and the two states of the
- * list ITSELF — EMPTY (`emptyState`) + LOADING (`isSkeleton`). Slot variants of
- * a single ROW (leading/meta/trailing/divider/href) belong to `ListRow` —
- * NOT repeated here.
- *
- * 2026-07-31 (COMPOSITE-8 fix): `icon`/`action`/`emptyState` now take a
- * COMPONENT reference each, and `label` takes a plain `string` — the frame
- * calls each component itself instead of receiving an already-built node.
+ * `ListLabeled` — a repeated-list frame with no card chrome: a section label (icon + Label), a
+ * `gap-2` column built from `items`, a footer CTA, and the list's own empty (`emptyState`) and
+ * loading (`isSkeleton`) states. `icon`/`action`/`emptyState` take component references and
+ * `label` a plain string. Single-row slot variants belong to `ListRow`.
  */
 const meta: Meta<typeof ListLabeled> = {
     title: "Composites/Lists/List/ListLabeled",

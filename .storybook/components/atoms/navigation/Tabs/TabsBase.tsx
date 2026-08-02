@@ -7,19 +7,14 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * `Tabs` — the single tab-strip atom wrapping HeroUI `Tabs`.
  *
  * Data-driven: pass `items` (id + label + optional `icon`/`badge`/`isDisabled`);
- * the atom renders the full HeroUI compound internally —
- * `Tabs.ListContainer > Tabs.List > Tabs.Tab` (+ `Tabs.Indicator`) plus the
- * `sr-only` `Tabs.Panel`s react-aria needs to keep the tab↔tabpanel ARIA
- * relationship valid. Variants (icon / badge / disabled) are driven by
- * per-item props, not separate components.
+ * the atom renders the full HeroUI compound internally, plus the `sr-only` panels
+ * react-aria needs to keep the tab↔tabpanel ARIA relationship valid. Variants
+ * (icon / badge / disabled) are driven by per-item props, not separate components.
  *
- * Only `Tabs`/`TabsExtended` (from `./Tabs`) are exported — no bare component
- * from this file. No `children` — tabs pass through `items`; `label` is a
- * `ReactNode` prop, not children. The atom owns all tab chrome (indicator,
- * icon scale, badge float). `icon` is a component reference (`icon: House`);
- * the atom renders it at label scale so a caller cannot inject a wrong-size
- * glyph. `isSkeleton` renders a co-located tab-strip skeleton whose shape
- * follows `variant` (pill vs underline bar).
+ * Only `Tabs`/`TabsExtended` are exported. No `children`; `label` is a `ReactNode`
+ * prop and `icon` is a component reference (`icon: House`) rendered at label scale
+ * so a caller cannot inject a wrong-size glyph. `isSkeleton` renders a tab-strip
+ * skeleton whose shape follows `variant` (pill vs underline bar).
  */
 
 /** An icon passed as a COMPONENT (e.g. `House`), rendered by the atom at label scale. */

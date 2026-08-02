@@ -10,15 +10,10 @@ export default meta
 type Story = StoryObj
 
 /**
- * `InputTime` does NOT compose any atom that has its own story — the DOM emits
- * heroui's `TimeField.Group` (wrapping `TimeField` directly) plus the internal
- * `FieldFrame`'s `Label`/`Skeleton`. There is no `storyId` to point at, but these
- * three heroui parts still need tier `heroui` so the two-law panel doesn't silently
- * skip them (2026-07-28; read `.storybook/components/atoms/forms/Input/Input.tsx`,
- * `InputTime`).
- *
- * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
- * `states` entry, since none of them stacks more than one rendering.
+ * `InputTime` does not compose any atom with its own story — the DOM emits HeroUI's
+ * `TimeField.Group` (wrapping `TimeField` directly) plus the internal `FieldFrame`'s
+ * `Label`/`Skeleton`. There is no `storyId` to point at, but these three HeroUI parts get
+ * tier `heroui` so the two-law panel doesn't silently skip them.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "TimeField.Group": { tier: "heroui", role: "time segment input group" },

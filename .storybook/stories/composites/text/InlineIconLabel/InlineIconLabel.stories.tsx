@@ -4,22 +4,10 @@ import { InlineIconLabel } from "@sb-components/composites/text/InlineIconLabel/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `InlineIconLabel`: a leading icon + an inline text label as ONE
- * unit — a count, an eyebrow, a tab label, a toned caption. The composite OWNS
- * the icon size (per the text scale, §5) and the tone colour, so a call-site
- * never hand-rolls `flex items-center gap-1` + a bare icon + a `Typography`.
- * Second most-recurring composite in the app (≥15 call-sites, 5 lanes: a
- * CourseCard count, a grading byline, a Toolbar tab label, a chat/UpNext
- * eyebrow, a scarcity notice).
- *
- * 📐 1 PROP = 1 LEAF: `icon` · `tone` · `size` · `truncate` · `isSkeleton` ·
- * `skeletonWidth`, each its own leaf, each rendering the FULL set of its
- * values. `children` (the label text) has no leaf of its own — it is the
- * content every other leaf fills in.
- *
- * Props with NO leaf, and why:
- * - `classNames` — placement inside a parent, appearance is not passable
- *   through it.
+ * `InlineIconLabel` — a leading icon + an inline text label as one unit (a count, an eyebrow, a
+ * tab label, a toned caption). Owns the icon size (per the text scale) and the tone colour, so a
+ * call-site never hand-rolls `flex items-center gap-1` + a bare icon + a `Typography`. Leaves:
+ * `icon`, `tone`, `size`, `truncate`, `isSkeleton`, `skeletonWidth`.
  */
 const meta: Meta<typeof InlineIconLabel> = {
     title: "Composites/Texts/InlineIconLabel",

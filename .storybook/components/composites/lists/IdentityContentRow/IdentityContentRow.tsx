@@ -4,43 +4,18 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE — `IdentityContentRow`: avatar leading a byline line + whatever
- * content sits under it (comment body, actions, nested replies…). Extracted
- * 2026-07-29 (teacher: "group the recurring shape into its own block") from
- * `ContentCommentThread`, which had this exact avatar+column shape hand-rolled
- * inline — a second real occurrence (`QaQuestionThread`'s own avatar+byline+body
- * row) makes it a genuine repeat, not a premature abstraction.
+ * `IdentityContentRow` — an avatar leading a byline line plus whatever content sits
+ * under it (comment body, actions, nested replies). Used by `ContentCommentThread`
+ * and `QaQuestionThread`.
  *
- * ⭐⭐ GAP HISTORY (teacher, 2026-07-29, both revisions on the SAME day): the
- * first decision was "all 3 seams tight" (a deliberate denser override, not a
- * `src`-fidelity port). After seeing the actual render, the teacher corrected
- * avatar↔column back to `grouped` (a visibly wider `gap-3`) — too cramped in
- * practice — while byline↔children stayed `tight`. So: root `StackH`
- * (avatar↔column) = `grouped`, inner `StackV` (byline↔children) = `tight`. This
- * is STILL the opposite call from `ContentCommentThread`'s own byline-INTERNAL
- * gap (`related`, matched to real `CommentItem.tsx:101` `gap-2`) — that one
- * lives INSIDE the caller-supplied `byline` slot, unaffected by either of this
- * composite's own seams. Lesson: a gap decision made before seeing the real
- * render is provisional — verify empirically once it's actually on screen,
- * don't treat the first decision as final just because it was explicit.
+ * `byline` and `body` are free-form slots — the composite has no opinion on what a
+ * byline or body IS, only on the SHAPE: avatar beside a column, byline on top of
+ * whatever comes after it. Both are COMPONENT references
+ * (`ComponentType<{ isSkeleton?: boolean }>`) the row calls itself and forwards
+ * `isSkeleton` to, so it can shimmer them rather than only mirroring the `Avatar`.
  *
- * `byline` and `body` are both free-form slots (§13b) — this composite has
- * no opinion on what a byline or a body IS (founder badge count differs between
- * `ContentCommentThread` and `QaQuestionThread`), only on the SHAPE: avatar
- * beside a column, byline on top of whatever comes after it.
- *
- * 2026-07-31 (COMPOSITE-8 fix): `byline` and the former `children` prop are now
- * COMPONENT references (`ComponentType<{ isSkeleton?: boolean }>`), not built
- * nodes — the row calls each itself and forwards `isSkeleton`, so it can
- * actually shimmer them instead of only mirroring the `Avatar`. The former
- * `children` prop is renamed `body` to make the "you must pass a component, not
- * JSX children" contract explicit at the call site. This DOES break the one
- * live caller, `ContentCommentThread` (`.storybook/components/starci/blocks/
- * learn/ContentCommentThread/ContentCommentThread.tsx`) — that block lives
- * outside this composite's own folder, so its edit is recorded rather than
- * applied here (see the task's `externalCallerEdits`).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Gaps: root `StackH` (avatar↔column) = `grouped` (`gap-3`), inner `StackV`
+ * (byline↔children) = `tight`.
  */
 
 /** Props for {@link IdentityContentRow}. */

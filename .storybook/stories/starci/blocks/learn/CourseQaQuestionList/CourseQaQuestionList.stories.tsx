@@ -6,25 +6,12 @@ import {
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `CourseQaQuestionList`: the course-wide Q&A ROLL-UP region — async
- * lifecycle (loading → error → search-empty → content) around a flush
- * divide-y list of questions plus a pager. Port of `src`'s `CourseQa/index.tsx`
- * list region + its own `CourseQaSkeleton.tsx`.
- *
- * ⚠️ GAP (see the component file header for the full reasoning): the real
- * per-question row block, `QaQuestionThread` (the `src` sibling is
- * `QuestionRow` — collapsed social-inbox row that expands into the full
- * conversation), does not exist in this Storybook yet. The Content leaf below
- * renders a clearly-marked, honest stand-in (`QuestionPreviewRow`, internal to
- * the component file) showing the COLLAPSED look with real data — no
- * expand/reply behaviour invented for it. Swap it for the real block the
- * moment it lands; this list's own props (`currentUserId`/`currentUser`/
- * `onAnswered`) already match what it will need.
- *
- * 📐 FOUR LEAVES (per the task brief, not the R0 default of folding empty into
- * content): `Loading` · `Error` · `Empty` (current filter/search matched
- * nothing — the true zero-questions-ever case is the separate, existing
- * `CourseQaInvite` block one screen-layer up) · `Content`.
+ * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async
+ * lifecycle (loading → error → search-empty → content) around a flush divide-y
+ * question list plus a pager. The Content leaf renders `QuestionPreviewRow`, a
+ * marked collapsed-look stand-in with real data, until the real per-question
+ * thread block lands. Four leaves: `Loading`, `Error`, `Empty` (filter matched
+ * nothing; true zero-ever is `CourseQaInvite` a layer up), `Content`.
  */
 const meta: Meta<typeof CourseQaQuestionList> = {
     title: "StarCi/Blocks/Learn/CourseQaQuestionList/CourseQaQuestionList",

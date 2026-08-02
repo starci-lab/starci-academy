@@ -6,25 +6,18 @@ import type { SearchAutocompleteItem } from "@sb-components/atoms/forms/SearchAu
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Real
- * free-text anatomy: `ComboBox.InputGroup` (Input + leading icon) plus
- * `ComboBox.Popover` (ListBox of suggestion rows / spinner / empty state).
- *
- * Leaf atom: `ComboBox.InputGroup`/`ComboBox.Popover`/`Skeleton` are REAL heroui
- * components (not hand-rolled internal slots) — none of them has ITS OWN story
- * to jump to here, so `annotate` carries no `storyId`, but they still need the
- * `heroui` tier so the two-law panel doesn't silently skip them (2026-07-28;
- * their names used to be shortened to "InputGroup"/"Popover" — fixed back to
- * the real compound name). Tier corrected to `atom` (it used to be `primitive`
- * — the old name for the frame tier §13, now split into frame/composite as of
- * 2026-07-27 — wrong here since this is a real atom, and the title is already
- * `Atoms/Forms/SearchAutocomplete`).
- *
- * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
- * its OWN BlockAnatomy reflecting the parts THAT leaf composes — the field +
- * dropdown shape is constant across WithSuggestions/Loading/NoResults (only the
- * dropdown's INTERNAL content changes, which is the Popover's own concern);
- * `Skeleton` collapses to a single field-box mirror with no dropdown at all.
+ * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Anatomy:
+ * `ComboBox.InputGroup` (Input + leading icon) plus `ComboBox.Popover` (ListBox of
+ * suggestion rows / spinner / empty state).
+ * 
+ * Leaf atom: `ComboBox.InputGroup`/`ComboBox.Popover`/`Skeleton` are real HeroUI components
+ * (not hand-rolled slots) — none has its own story here, so `annotate` carries no `storyId`,
+ * but they get the `heroui` tier so the two-law panel doesn't silently skip them.
+ * 
+ * ANATOMY IS PER-LEAF: each story is its own leaf wrapping its render in its own BlockAnatomy
+ * reflecting the parts that leaf composes — the field + dropdown shape is constant across
+ * WithSuggestions/Loading/NoResults (only the dropdown's internal content changes);
+ * `Skeleton` collapses to a single field-box mirror with no dropdown.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ComboBox.InputGroup": { tier: "heroui", role: "search field + leading icon group" },

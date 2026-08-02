@@ -3,17 +3,11 @@ import { ContentAiFab } from "@sb-components/starci/blocks/learn/ContentAiFab/Co
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentAiFab`: the floating "ask StarCi AI" trigger mounted once by
+ * `ContentAiFab` — the floating "ask StarCi AI" trigger mounted once by
  * `learn/layout.tsx`, bottom-right over every `/learn/**` route. Composes the
- * existing `FloatingActionButton` composite untouched — this block only fixes
- * the icon + accessible name and decides when the trigger should hide.
- *
- * ⭐ ONE LEAF (§14d.2). The button never changes shape — `isOpen` only decides
- * WHETHER it renders at all, not what it looks like while visible, so
- * "visible" and "hidden" are one leaf with two states, not two leaves.
- *
- * ⛔ No `isSkeleton` prop, on purpose (see file header): this is static layout
- * chrome, not data-driven — there is nothing to shimmer while loading.
+ * `FloatingActionButton` composite, fixing the icon + accessible name. `isOpen`
+ * decides whether it renders at all, not its shape. No `isSkeleton` — it is
+ * static chrome.
  */
 const meta: Meta<typeof ContentAiFab> = {
     title: "StarCi/Blocks/Learn/ContentAiFab/ContentAiFab",

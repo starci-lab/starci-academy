@@ -6,54 +6,14 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FoundationResourceBody`: renders ONE foundation resource by its
- * `kind`. Same name as the real `src` feature component
- * (`src/components/features/learn/Foundations/FoundationResourceBody`) — this
- * is the Storybook-driven rebuild of that switch, not a new idea.
- *
- * WHY A BLOCK OVER THE VIEWER/CARD DIRECTLY: neither `SurfaceCard` nor
- * `MarkdownContent` knows a "foundation resource" exists, or that the same slot
- * can hold a document, a video, or a bare link depending on data. The block
- * owns exactly that dispatch — the DOMAIN fact "this resource is a video, not
- * an article" — which is why it sits above the viewer instead of the caller
- * branching on `kind` itself.
- *
- * ⭐ SCOPE CUT (§B3, deliberate this pass) — VIDEO. No video-playback primitive
- * exists anywhere in the inventory (atoms/frames/composites/blocks) — `src`'s
- * `VideoRenderer` picks between a DASH and a standard HTML5 player per URL, a
- * real media engine this pass does not build. Faking it with a `<div>` that
- * "looks like a player" would pass every gate and lie on first render. Instead
- * this leaf draws the CHROME a video resource gets — the same card face the
- * other two kinds sit in — and an HONESTLY LABELED gap via `EmptyState`
- * instead of a stub. This is the exact mistake the file header of
- * `ContentModeNav` warns against, applied on purpose in the other direction: a
- * marked absence, not a silent one.
- *
- * ⭐ DEVIATION FROM `src` (rule 7 — a block never performs a business-decided
- * action itself). The real component calls `window.open(url, "_blank", …)`
- * directly inside its `ExternalLink` branch. That is a side effect a BLOCK
- * does not get to own — whether a link opens in a new tab, inside an in-app
- * browser, or behind a confirmation, is the CALLER's call. This block instead
- * renders the button and hands the URL to `onOpenLink`; the screen decides
- * what "open" means.
- *
- * ⭐ JUDGEMENT CALL — `linkUrl` was not in the brief's prop list, but
- * `onOpenLink: (url: string) => void` cannot be satisfied without one: the
- * block has to hold the destination to pass it along. Added as the DATA path
- * parallel to `linkTitle`, mirroring the real entity's `value` field (URL for
- * `ExternalLink`, markdown for `Document`) — omitting it would leave the prop
- * declared but impossible to honor.
- *
- * 📐 LEAVES = the three `kind`s, because each draws a STRUCTURALLY different
- * tree (card+document vs. card+empty-state vs. a bare button) — not three
- * states of one shape. `isSkeleton` stays a STATE inside each leaf (§11f).
- *
- * ⛔ NO EMPTY-LINK LEAF. Mirrors `src`: an `ExternalLink` with no URL renders
- * NOTHING (matches the source's `if (!value?.trim()) return null`) rather than
- * a disabled button that dangles with no destination — inventing a "broken
- * link" affordance nobody asked for would be §14d.3's forbidden case.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `FoundationResourceBody` — renders one foundation resource by its `kind` (external
+ * link / video / document); owns the dispatch. Composes `SurfaceCard` + `MarkdownContent`
+ * for the document kind. Video draws only the card chrome plus an honestly-labelled
+ * `EmptyState` gap (no video-playback primitive exists in the inventory). The external-
+ * link branch renders a button and hands the URL to `onOpenLink` — the caller decides
+ * what "open" means (the block never calls `window.open` itself); `linkUrl` carries the
+ * destination. Leaves are the three kinds (structurally different trees); a link with
+ * no URL renders nothing.
  */
 
 /** Kind of resource this body renders — mirrors backend `FoundationKind` values 1:1. */

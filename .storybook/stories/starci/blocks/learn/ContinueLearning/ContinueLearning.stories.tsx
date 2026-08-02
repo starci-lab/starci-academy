@@ -3,17 +3,10 @@ import { ContinueLearning } from "@sb-components/starci/blocks/learn/ContinueLea
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContinueLearning`: the "jump back to where you left off" feature.
- *
- * ⭐ This block was born 2026-07-27 (teacher: "design is only the UI/UX layer"):
- * the `CourseContents` screen used to import `ContinueCard` (the design tier)
- * DIRECTLY and assemble the string `"Read 8/23 lessons"` itself. The domain wording
- * now lives HERE; the screen only hands over NUMBERS.
- *
- * §11f — leaves split by STRUCTURE: there's only ONE structure, so `isSkeleton`
- * is a STATE of that same leaf, not a second leaf. The `shell` helper has been
- * removed; each leaf now declares its own `states[]` (teacher finalized layout
- * C, 2026-07-27).
+ * `ContinueLearning` — the "jump back to where you left off" feature. It owns
+ * the domain wording (e.g. "Read 8/23 lessons"); the screen hands over only
+ * numbers. There is one structure, so `isSkeleton` is a state of that leaf, not
+ * a second leaf.
  */
 const meta: Meta<typeof ContinueLearning> = {
     title: "StarCi/Blocks/Learn/ContinueLearning/ContinueLearning",

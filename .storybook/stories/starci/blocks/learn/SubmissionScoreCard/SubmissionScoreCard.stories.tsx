@@ -3,24 +3,14 @@ import { SubmissionScoreCard } from "@sb-components/starci/blocks/learn/Submissi
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `SubmissionScoreCard`: the #1 signal after the attempt selector on a
- * graded-result page — score hero (tinted pass/fail), verdict chip + "needs N
- * more points" sub-line, optional short feedback, optional submission link, and an
- * optional model-byline row (who graded it, its tier, when).
- *
- * SIBLING OF `SubmissionResultHeader`, NOT A COPY. The header answers "where am
- * I, what was I graded on"; this card answers "how did it go" — one layer
- * below it on the same result page.
- *
- * ⭐ ONE TONE, TWO PLACES. Pass/fail drives BOTH the hero number's color and
- * the verdict chip's tone together — a score and its chip disagreeing on
- * color would read as two different verdicts.
- *
- * 📐 ONE LEAF (§14d.2), same judgement as `SubmissionResultHeader`. Every
- * difference below — pass vs fail tint, a submission link appearing or not, a
- * feedback line appearing or not, the whole model-byline row appearing or not,
- * `isSkeleton` — changes DATA on the same shape, never the arrangement of
- * parts, so all seven are STATES of the one `ScoreCard` leaf.
+ * `SubmissionScoreCard` — the headline signal after the attempt selector on a
+ * graded-result page: a tinted pass/fail score hero, a verdict chip + "needs N more
+ * points" sub-line, optional short feedback, an optional submission link, and an
+ * optional model-byline row (who graded it, its tier, when). Sibling of
+ * `SubmissionResultHeader` — the header answers "what was I graded on", this card
+ * answers "how did it go". Pass/fail drives both the hero number's color and the
+ * verdict chip's tone together. Every optional part and `isSkeleton` are states of
+ * one shape.
  */
 const meta: Meta<typeof SubmissionScoreCard> = {
     title: "StarCi/Blocks/Learn/SubmissionScoreCard/SubmissionScoreCard",

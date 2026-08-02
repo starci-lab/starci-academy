@@ -6,83 +6,27 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ConsultantCard, type ConsultantCardConsultant } from "@sb-components/starci/blocks/consultant/ConsultantCard/ConsultantCard"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ConsultantDirectoryGrid`: the BROWSE surface of the consultant
- * directory — how many consultants matched, then the cards themselves, across
- * the full loading → empty → content lifecycle.
+ * `ConsultantDirectoryGrid` — a BLOCK: the browse surface of the consultant
+ * directory — how many consultants matched, then the cards, across the
+ * loading → empty → content lifecycle.
  *
- * REUSE, NOT A REBUILD (the exact trap this run exists to correct — see
- * `ContentModeNav`'s file header for the shape of that bug). Nothing here is
- * hand-rolled:
- *   • `AsyncContent` (composite)  — the error → loading → empty → content
- *     switch, ported straight from the real `ConsultantGrid`'s
- *     `isLoading={!consultants}` / `isEmpty={sortedConsultants.length === 0}`
- *     gating (`src/…/Headhuntings/ConsultantGrid/index.tsx`).
- *   • `Grid` (frame)              — the responsive tile track. The block only
- *     decides the column steps and the seam; it does not lay out cells itself.
- *   • `Typography` (atom)         — the count line's text, real or its own
- *     skeleton bar.
- *   • `ConsultantCard` (block)    — one consultant tile, UNCHANGED. This block
- *     never reaches past it to draw an avatar/name/company card by hand — that
- *     shape already belongs to `ConsultantCard`.
- * This block only decides HOW MANY tiles, IN WHAT SHAPE, and WHAT the count
- * line says — never how one card itself looks.
+ * Composes rather than rebuilds: `AsyncContent` (the error → loading → empty →
+ * content switch), `Grid` (the responsive tile track), `Typography` (the count
+ * line), and `ConsultantCard` (one tile, unchanged). It decides how many tiles, in
+ * what shape, and what the count line says — never how one card looks.
  *
- * WHAT THIS BLOCK OWNS (§14d.1 — domain wording the caller must not hand in):
- * the count line's wording ("N consultants"). The caller hands over a
- * bare `count` number, never a pre-formatted string — same contract
- * `FoundationCategorySearchBar` and `ModuleHeader`-style meta rows use. The
- * EMPTY message itself (`emptyTitle`) stays a caller prop rather than an owned
- * string, because — unlike the count — the directory's "nothing matched"
- * copy depends on caller-side context this block never receives (plain empty
- * course roster vs. a search that came up empty), exactly like the real
- * `ConsultantGrid` which hands `AsyncContent` an already-translated
- * `t("headhuntings.empty")` rather than deciding the words itself.
+ * Owns the count-line wording ("N consultants"); the caller passes a bare `count`
+ * number. `emptyTitle` stays a caller prop because the "nothing matched" copy
+ * depends on context this block never receives.
  *
- * ⭐ `isLoading` IS A SEPARATE PROP FROM `consultants`, on purpose — matching
- * `AsyncContent`'s own contract (§ composite doc): the region's loading state
- * is never INFERRED from content presence, it is always an explicit signal
- * the caller passed in already reduced. The real screen computes it exactly
- * as `!consultants` (the Redux slice not yet resolved) and hands the FLAG
- * down, not the raw undefined-vs-array distinction — this block stays a pure
- * function of `{ isLoading, isEmpty }` like every other `AsyncContent` user
- * in this tree.
+ * `isLoading` is a separate prop from `consultants` (never inferred from content
+ * presence). `count` is separate from `consultants.length` — it is the directory
+ * total, not the fetched page size; `count === undefined` renders no count line.
  *
- * ⭐ `count` IS NOT `consultants.length` — the count line answers "how many
- * consultants are listed in this directory", which the real query resolves
- * once at the top of the page. `consultants` is only what got fetched for the
- * grid itself. Kept as two separate props rather than deriving one from the
- * other so a future paginated/filtered directory does not have to lie by
- * passing a page slice's length as the total (same reasoning
- * `FlashcardDeckList` documents for its own added `totalPages` prop).
- *
- * 📐 ONE LEAF (`Default`), per the brief. `isLoading` / `isEmpty` swap which
- * `AsyncContent` branch renders (skeleton grid ↔ empty message ↔ real grid),
- * but the block's own shape never changes — it is always "a count line above
- * one grid-shaped region" — so these are STATES of the one leaf, not leaves
- * of their own (§14d.2: a branch `AsyncContent` itself already owns is not a
- * NEW structural fork for the block wrapping it, same call
- * `FoundationResourceList`'s R0 note makes for `resources.length === 0`).
- *
- * ⭐ JUDGEMENT CALL — the count line lives INSIDE `AsyncContent`'s `content`
- * slot, beside the grid, not as permanent chrome above the whole switch. A
- * "0 consultants" line sitting on top of the empty message would say
- * the same thing twice in two different voices; the count is only worth
- * saying once real cards are on screen to be counted.
- *
- * ⭐ JUDGEMENT CALL — `count === undefined` renders NO count line at all
- * (rather than falling back to `consultants?.length`), matching
- * `FoundationCategorySearchBar`'s "count not known yet" contract: a directory
- * that has cards but has not resolved its total should stay silent, not
- * guess a number from whatever page happened to load.
- *
- * ⭐ SKELETON TILES CARRY A BLANK PLACEHOLDER `consultant`, never a press
- * handler that could fire. `ConsultantCard` takes `consultant` unconditionally
- * (it has no `undefined`-shaped variant), so the placeholder is an id-only,
- * name-empty stub — `ConsultantCard`'s own `isSkeleton` branch never reads any
- * of its text fields anyway (§12c: the atom, not this block, decides what a
- * loading tile shows).
- * ─────────────────────────────────────────────────────────────────────────────
+ * One leaf (`Default`): `isLoading`/`isEmpty` swap the `AsyncContent` branch but
+ * the shape never changes. The count line lives inside the `content` slot beside
+ * the grid, not as permanent chrome. Skeleton tiles carry a blank placeholder
+ * `consultant`, never a live press handler.
  */
 
 /** Props for {@link ConsultantDirectoryGrid}. */

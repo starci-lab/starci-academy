@@ -6,12 +6,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE: `StackH` is the single-axis HORIZONTAL frame. Its own states =
- * `at` (only a horizontal row reflows onto new lines, and only below a NAMED
- * container threshold — FRAME-10, 2026-08-01: the old `wrap?: boolean` is gone with
- * no deprecated stage) and `justify` (legible because a row always has leftover
- * width), plus the VERTICAL rule from `divider`. `gap` (the seam scale) and `align`
- * were already demoed in `StackV`, same prop, not repeated here.
+ * `StackH` — the single-axis HORIZONTAL frame. Its own props: `at` (the row
+ * reflows onto new lines below a named container threshold) and `justify`
+ * (distributes leftover row width), plus a vertical `divider`. `gap` and
+ * `align` are the same props demoed in `StackV`.
  */
 const meta: Meta<typeof StackH> = {
     title: "Frames/Stack/StackH",

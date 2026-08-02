@@ -4,23 +4,12 @@ import { QuizProgressPanel } from "@sb-components/starci/blocks/learn/QuizProgre
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `QuizProgressPanel`: how has this learner actually been drilling —
- * lifetime numbers, and the sessions behind them. Sits beside `QuizSetup` in the
- * setup pane.
- *
- * ⭐ EMPTY IS ITS OWN LEAF, not a state of `Content`. With zero sessions ever run
- * BOTH views would be empty (every stat reads 0, the history list has no rows),
- * so the whole panel — tab switch, grid, list — collapses to ONE invitation
- * instead of letting a learner flip between two empty views. That is a
- * structural loss (three composed nodes gone, one new node in their place),
- * the same call `ContentHeader` made for its `NoOutcomes` leaf.
- *
- * 📐 THE VIEW SWITCH (`stats` ⇄ `history`) IS A STATE INSIDE `Content`, not two
- * more leaves, even though it does swap which composite is on screen
- * (`StatGridCard` vs `SurfaceCardList`). Both branches read the SAME data set
- * (`stats` + `sessions` stay the props that were passed in) — the switch only
- * changes which of two already-loaded views is visible, so it is grouped as
- * data-condition states of one `Content` leaf per this block's brief.
+ * `QuizProgressPanel` — how has this learner been drilling: lifetime numbers and the
+ * sessions behind them. Sits beside `QuizSetup` in the setup pane. `Empty` is its
+ * own shape — with zero sessions both views would be empty, so the whole panel
+ * collapses to one invitation rather than letting the learner flip between two empty
+ * views. The `stats` ⇄ `history` view switch is a state inside `Content` (swapping
+ * `StatGridCard` vs `SurfaceCardList`) since both read the same already-loaded data.
  */
 const meta: Meta<typeof QuizProgressPanel> = {
     title: "StarCi/Blocks/Learn/QuizProgressPanel/QuizProgressPanel",

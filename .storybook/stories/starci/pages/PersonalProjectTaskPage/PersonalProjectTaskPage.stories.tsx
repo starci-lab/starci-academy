@@ -4,27 +4,16 @@ import type { PersonalProjectTaskSubmissionPanelProps } from "@sb-components/sta
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `PersonalProjectTaskPage`: solve one personal-project task.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. Split workspace: a
- * READING column that swaps per task (task identity, the locked-preview
- * banner, the authored brief OR the legacy rubric/implementation guides, and
- * related lessons) beside a PERSISTENT, sticky ACT column (repo URL, the
- * settings-drawer trigger, evaluate/secondary actions, and the latest graded
- * result).
- *
- * ⭐ TWO COLUMNS, composed with `SplitWorkspace` (§ layout frame, 2026-07-29,
- * the same frame `ChallengePage` now uses — real `src`'s `PersonalProjectWorkspace`
- * and `ChallengeView` share byte-for-byte identical split CSS): `min-w-0
- * flex-1` reading column beside a `shrink-0 w-[360px]` sticky aside, STACKED
- * (mobile/tablet) → `@app-xl:flex-row` (desktop only). Was `StackH…wrap`, a
- * FIXED horizontal axis that never actually stacked below desktop — the same
- * bug the teacher caught on `ChallengePage`, just not yet spotted here.
- *
- * ⚠️ SCOPE OF THIS PASS: the grading-settings Drawer's content (language
- * picker, branch, private-repo token) is NOT built — `onOpenSettings` is a
- * chrome trigger only, same discipline `ChallengeDeliverableList`/
- * `ChallengePage` already document for their own settings trigger.
+ * `PersonalProjectTaskPage` — the screen to solve one personal-project task. A
+ * screen owns a list of functions. Split workspace: a reading column that swaps
+ * per task (task identity, the locked-preview banner, the authored brief or the
+ * legacy rubric/implementation guides, and related lessons) beside a
+ * persistent, sticky act column (repo URL, the settings-drawer trigger,
+ * evaluate/secondary actions, and the latest graded result). Two columns
+ * composed with `SplitWorkspace`: a `min-w-0 flex-1` reading column beside a
+ * `shrink-0 w-[360px]` sticky aside, stacked on mobile/tablet →
+ * `@app-xl:flex-row` on desktop. The grading-settings drawer content is not
+ * built — `onOpenSettings` is a chrome trigger only.
  */
 const meta: Meta<typeof PersonalProjectTaskPage> = {
     title: "StarCi/Pages/PersonalProjectTaskPage/PersonalProjectTaskPage",

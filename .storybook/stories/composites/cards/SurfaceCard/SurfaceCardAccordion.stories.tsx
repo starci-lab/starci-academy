@@ -10,24 +10,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 // into a component to KEEP the artwork as-is.
 const FolderOpenDuotone = (props: SVGProps<SVGSVGElement>) => <FolderOpenIcon data-tier="fixture" {...props} weight="duotone" />
 /**
- * FRAME (Layouts) — a bounded `bg-surface` frame wrapping COLLAPSIBLE sections, the
- * separator running full-bleed to the card edge: same skin as `SurfaceCardList`,
- * differing in that each row expands.
- *
- * ⚠️ STATE SCOPE (teacher decided 2026-07-25): stories here only render state that
- * THIS component itself produces — `items` (a REPEATED list → data, children
- * forbidden), `titleEnd`, expand mode (`allowsMultipleExpanded` /
- * `defaultExpandedKeys`), `variant`, empty, and the loading mirror. The section
- * header slot set shares `SurfaceCardHeader` with `SurfaceCard` → here we keep
- * only ONE leaf `WithLabel`, not the whole set repeated.
- *
- * ⭐ 2026-07-26 (teacher): `bordered?: boolean` changed to `variant?: SurfaceCardVariant`
- * (`"surface" | "nested"`, one of THREE INDEPENDENT AXES shared with
- * `SurfaceCard`/`.List`/`.CrossList`). The `Bordered` leaf (which only acted out
- * half the union) merged into `Variants` — rendering the FULL `surface`/`nested`
- * union side by side instead of splitting by the old boolean VALUE.
- *
- * ANATOMY IS PER-LEAF: each story is its own leaf, carrying its own BlockAnatomy.
+ * `SurfaceCardAccordion` — a bounded `bg-surface` frame wrapping collapsible sections, the
+ * separator running full-bleed to the card edge: same skin as `SurfaceCardList`, differing in
+ * that each row expands. Owns `items`, `titleEnd`, expand mode (`allowsMultipleExpanded`/
+ * `defaultExpandedKeys`), and `variant` (`"surface" | "nested"`).
  */
 const meta: Meta<typeof SurfaceCardAccordion> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardAccordion",

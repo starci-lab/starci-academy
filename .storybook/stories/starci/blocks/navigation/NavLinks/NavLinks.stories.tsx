@@ -3,23 +3,13 @@ import { NavLinks } from "@sb-components/starci/blocks/navigation/NavLinks/NavLi
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `NavLinks`: the desktop primary-route row inside the site's top nav —
- * "Home / Courses / Community / Contact", one of them pinned as current.
- *
- * ⭐ PRESENTATIONAL HALF OF A CONTAINER. The real `src` `NavLinks` derives its
- * own `items` from `next-intl` + `usePathname()` and self-navigates with
- * `useRouter().push(...)`. Neither exists in a Storybook tree, so this block
- * takes `items` already resolved (label/path/isActive) and an `onNavigate`
- * callback — the router wiring is the caller's job.
- *
- * ⭐ `Link` (HeroUI), NOT `Toolbar`/`Tabs`. These are real routes, each its own
- * page — not panels switching under one ARIA tablist, so a tab compound would
- * claim keyboard/selection semantics this row never had.
- *
- * 📐 ONE LEAF, `Row`. Desktop-only visibility (`hidden @app-md:flex`) is a
- * container-query rule, not something a second leaf could demonstrate side by
- * side with the first — so it stays a structural fact of the one leaf rather
- * than a state. Which route is current is DATA, so it is a state, not a leaf.
+ * `NavLinks` — the desktop primary-route row inside the site's top nav
+ * ("Home / Courses / Community / Contact"), one pinned as current. The
+ * presentational half of a container: it takes `items` already resolved
+ * (label/path/isActive) and an `onNavigate` callback, leaving router wiring to
+ * the caller. Rendered with `Link` (HeroUI), not a tab compound — these are
+ * real routes, not panels under one ARIA tablist. One leaf, `Row`; the current
+ * route is data, so it is a state.
  */
 const meta: Meta<typeof NavLinks> = {
     title: "StarCi/Blocks/Navigation/NavLinks/NavLinks",

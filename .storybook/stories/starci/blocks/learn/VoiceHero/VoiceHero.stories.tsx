@@ -3,35 +3,15 @@ import { VoiceHero } from "@sb-components/starci/blocks/learn/VoiceHero/VoiceHer
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `VoiceHero`: the voice-first answer composer. A big push-to-talk mic
- * with its live transcript is the HERO; a quiet typed textarea is the fallback
- * for browsers that cannot do speech-to-text, or a lesson that only wants
- * typed answers.
- *
- * 📐 LEAF by STRUCTURE (§14d.2), TWO OF THEM, given by the shape rather than
- * derived: `MicHero` (circular button + transcript) and `TypedFallback`
- * (textarea + switch-back link) are different NODE TREES, not the same nodes
- * with different data. Which one renders is computed from `sttSupported` +
- * `answerMode`, plus an EPHEMERAL internal toggle only reachable when both
- * input methods are actually offered (`answerMode="both"` and STT supported)
- * — see the component's file header.
- *
- * ⭐ The "type instead" / "use voice" switch link is a STATE inside each leaf,
- * not a third leaf: unlike `ContentModeNav`'s language group (a whole second
- * tab cluster), it is one `Typography` node whose presence tracks a single
- * boolean (`canToggle`) already visible in the state's data.
- *
- * ⚠️ THE MANUAL SWITCH ITSELF IS NOT STORY-ABLE, same call as `InputPassword`'s
- * `reveal`: props alone always mount fresh with `manualTyped = false`, so a
- * `both`-mode render always lands on `MicHero` — the "already switched to
- * typing under `both` mode" shape only exists after a click no static render
- * can perform. `TypedFallback`'s states therefore use the two shapes that
- * ARE reachable from props alone (unsupported browser, and `answerMode="text"`),
- * both of which coincidentally also hide the switch-back link — which is
- * exactly why `MicHero`'s states are the ones that show the link ON.
- *
- * ⚠️ NO SKELETON LEAF. See the component file header — the prop contract has
- * no `isSkeleton`, so there is nothing to mirror.
+ * `VoiceHero` — the voice-first answer composer. A large push-to-talk mic with
+ * its live transcript is the hero; a quiet typed textarea is the fallback for
+ * browsers without speech-to-text, or lessons that only want typed answers.
+ * Two structural leaves — `MicHero` (circular button + transcript) and
+ * `TypedFallback` (textarea + switch-back link) — chosen from `sttSupported`
+ * and `answerMode`, plus an ephemeral toggle reachable only when both input
+ * methods are offered (`answerMode="both"` with STT supported). The
+ * "type instead" / "use voice" link is a state inside each leaf, tracking the
+ * `canToggle` boolean. No `isSkeleton` — nothing to mirror.
  */
 const meta: Meta<typeof VoiceHero> = {
     title: "StarCi/Blocks/Learn/VoiceHero/VoiceHero",

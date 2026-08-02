@@ -3,28 +3,13 @@ import { ContentModeNav } from "@sb-components/starci/blocks/learn/ContentModeNa
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentModeNav`: HOW to look at this lesson. Modes on the left, the
- * code language on the right.
- *
- * ⚠️ NAMED FOR WHAT IT DOES (renamed from `ContentTabBar` 2026-07-28). Switching
- * mode changes the ROUTE, so this is navigation, not a tab/panel pair — the body
- * it switches to is a separate block, being the content of a different route.
- *
- * ⭐ A LOCKED MODE IS CLICKABLE, and clicking it is the whole point. The first cut
- * disabled locked modes, so tapping did nothing — killing the offer this row
- * exists to surface. A locked mode renders MUTED but still fires `onModeChange`;
- * the SCREEN decides that a locked tap opens the paywall. "What locked does" is a
- * business decision, not a behaviour this block hardcodes.
- *
- * ⭐ ONE ACCENT SIGNAL. The mode group carries accent; the language group is
- * NEUTRAL — switching language changes how the same lesson is presented, not what
- * the reader is doing.
- *
- * ⚠️ NEVER SKELETONISED, on purpose: the row is static chrome. No `isSkeleton`
- * prop at all rather than one quietly unused.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): the right group appearing is STRUCTURAL ⇒ its own
- * leaf. Which mode is selected, and whether one is locked, are data ⇒ states.
+ * `ContentModeNav` — how to view this lesson: modes on the left, code language
+ * on the right. Switching mode changes the route, so this is navigation, not a
+ * tab/panel pair. A locked mode renders muted but still fires `onModeChange` —
+ * the screen decides a locked tap opens the paywall. The mode group carries the
+ * one accent; the language group is neutral. No `isSkeleton` — it is static
+ * chrome. The right group appearing is its own leaf; selected mode and lock
+ * state are data.
  */
 const meta: Meta<typeof ContentModeNav> = {
     title: "StarCi/Blocks/Learn/ContentModeNav/ContentModeNav",

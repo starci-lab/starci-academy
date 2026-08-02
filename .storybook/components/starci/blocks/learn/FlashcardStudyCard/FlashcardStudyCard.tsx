@@ -10,47 +10,16 @@ import { RatingBar, type RatingOption } from "@sb-components/starci/blocks/learn
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FlashcardStudyCard`: one card of a review run — question, then reveal
- * to grade. Shared shape for BOTH surfaces that walk cards one at a time
- * (due-review and deck-review are near-identical in the real source), the way
- * `QuizQuestion` is shared by the quiz surfaces.
+ * `FlashcardStudyCard` — one card of a review run: question, then reveal to grade.
+ * Shared by both the due-review and deck-review surfaces.
  *
- * ⭐ REUSE FIRST, NOT REBUILD: this composes `SurfaceCard` (face) · `MarkdownContent`
- * (question/answer/explanation) · `Chip`/`ChipGroup` (level/tags) · `Button`
- * (reveal/prev/next/unlock) · the shared `RatingBar` block UNCHANGED for grading.
- * The one genuinely new bit is the locked-premium message, because no existing
- * composite draws a lock notice sized for a single card face — see the note on
- * that leaf below for why it stays hand-rolled instead of reaching for
- * `EmptyState` (that composite fills a whole pane; this is one paragraph
- * inside a card that still has a question and nav controls around it).
+ * Composes `SurfaceCard`, `MarkdownContent`, `Chip`/`ChipGroup`, `Button`, and the
+ * shared `RatingBar` for grading; a locked-premium card face is hand-rolled. One
+ * classifying `Chip` per meta row (`levelLabel`), with `tags` in a `ChipGroup`.
  *
- * ⭐ ONE CHIP PER META ROW (`starci-fe/no-adjacent-chip`, L3). `levelLabel` gets
- * the lone classifying `Chip`; `tags` go through `ChipGroup` instead of a second
- * run of bare `<Chip>` siblings — `ChipGroup` exists exactly for "a row of chips
- * that is ONE unit, truncated when it overflows" (see its own file header), so
- * it is the sanctioned way to show more than one tag without re-opening the rule
- * `ContentHeader`/`ChallengeHeader` already burned down to zero debt.
- *
- * ⭐ THREE LEAVES BY STRUCTURE, NOT FOUR. `revealed` toggling from false → true
- * swaps the question-only body for the answer body — a real structural change,
- * so it is its own leaf. Within the revealed leaf, `isLocked` swaps the answer
- * for a lock notice — also structural (the answer, the explanation and
- * `RatingBar` all disappear together), so LOCKED is its own leaf too. But
- * `levelLabel`/`tags`/`explanation` being present or absent only changes what
- * shows INSIDE an already-existing node, so those stay STATES of their leaf
- * (§14d.2) rather than four more leaves.
- *
- * ⭐ PREV/NEXT NEVER GRADE. They sit in the same footer row as the reveal button
- * but fire `onPrev`/`onNext` regardless of `revealed`/`isLocked` — walking away
- * from a card the learner has not graded is a real, ungated action (skip it, come
- * back later), not something this block gets to block on the caller's behalf
- * (§ block never swallows an event on business grounds).
- *
- * ⛔ NO SCORE, NO STREAK. Grading feedback is `RatingBar`'s job once tapped; a
- * running count belongs to whatever session header wraps a run of these cards,
- * not to one card repeating it.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Three structural leaves: question-only, revealed (answer + explanation + `RatingBar`),
+ * and locked. Prev/Next always fire regardless of reveal/lock state. No running score
+ * or streak — that belongs to the session header wrapping a run of these cards.
  */
 
 /** Props for {@link FlashcardStudyCard}. */

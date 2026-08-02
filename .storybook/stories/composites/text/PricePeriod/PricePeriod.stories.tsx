@@ -3,21 +3,11 @@ import { PricePeriod } from "@sb-components/composites/text/PricePeriod/PricePer
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `PricePeriod`: a price shown as one baseline-aligned unit — a
- * prominent amount, an optional struck original/list price, and an optional
- * billing period ("/month"). Replaces the retired `PricePoint` atom, which
- * reached ATOM-3 by rendering raw spans instead of the house `Typography`
- * atom; this composite fixes that by composing `Typography` for all three
- * parts, so each part draws its own tone AND its own skeleton bar.
- *
- * Distinct from `commerce/PriceTag`, which is a product-discount price
- * (VND/USD numbers + a −X% chip + a breakdown popover) — `PricePeriod` takes
- * pre-formatted strings plus a billing `/period`.
- *
- * 📐 **1 PROP = 1 LEAF.** `original`, `period`, `size`, `isSkeleton` each get
- * their own leaf. `amount` has no leaf of its own — it is the content every
- * other leaf fills in, the same role `label`/`value` play on `KeyValueRow`.
- * `classNames` gets none — a pure placement prop with no visible shape of its own.
+ * `PricePeriod` — a price shown as one baseline-aligned unit: a prominent amount, an optional
+ * struck original/list price, and an optional billing period ("/month"). Composes `Typography`
+ * for all three parts, so each draws its own tone and skeleton bar. Takes pre-formatted strings
+ * plus a billing `/period` (distinct from `commerce/PriceTag`). Leaves: `original`, `period`,
+ * `size`, `isSkeleton`.
  */
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {

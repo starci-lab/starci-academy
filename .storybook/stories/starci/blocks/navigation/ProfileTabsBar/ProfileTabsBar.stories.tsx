@@ -3,21 +3,13 @@ import { ProfileTabsBar, type ProfileTab } from "@sb-components/starci/blocks/na
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ProfileTabsBar`: the public-profile route strip (overview / projects
- * / challenges / skills / cv / activity).
- *
- * ⭐ GATING STAYS UPSTREAM. The real component computes `visibleTabs` from
- * `isSelf`/`hasPublicCv`/`sectionVisibility` and pushes routes itself; this
- * block only draws the ALREADY-GATED list the caller hands it and reports a
- * pick back via `onTabChange` — see the component file header.
- *
- * ⭐ `TabsExtended`, not `TabsBase` — a plain `items` atom cannot express one
- * region (icon) staying visible while another (label + owner marker) drops out
- * below `@app-md`, so this composes the compound `Tabs.*` children directly.
- *
- * 📐 ONE LEAF by STRUCTURE: which tabs show, which is active, and which
- * carries the "· hidden" marker are DATA — states inside one leaf, not separate
- * leaves.
+ * `ProfileTabsBar` — the public-profile route strip (overview / projects /
+ * challenges / skills / cv / activity). Draws the already-gated tab list the
+ * caller hands it and reports a pick back via `onTabChange`; visibility gating
+ * stays upstream. Uses `TabsExtended` (composing the `Tabs.*` children
+ * directly) so one region (icon) can stay visible while another (label + owner
+ * marker) drops below `@app-md`. One leaf: which tabs show, which is active,
+ * and which carries the "· hidden" marker are data.
  */
 const meta: Meta<typeof ProfileTabsBar> = {
     title: "StarCi/Blocks/Navigation/ProfileTabsBar/ProfileTabsBar",

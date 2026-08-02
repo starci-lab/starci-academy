@@ -3,21 +3,12 @@ import { ModuleContinueBand } from "@sb-components/starci/blocks/learn/ModuleCon
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ModuleContinueBand`: the flat "resume + progress" cluster that opens
- * both `course-home` and `module-home` in `src` — see the component file header
- * for why this is a NEW block rather than a reuse of `ContinueLearning` /
- * `ContinueCardHero` (that pair is a CARD shape; both real screens spell out
- * "flat, no card frame" in their own comments).
- *
- * 📐 LEAF by STRUCTURE (§14d.2). `resumeLessonTitle` presence drops TWO nodes
- * together (the title `Typography` and the resume `Button`), the same size of
- * change `ContentHeader`'s `NoOutcomes` leaf makes when it loses its whole
- * outcomes card — so "resume available" vs "all done" are separate LEAVES, not
- * states of one leaf. `isSkeleton` is its own leaf too (every composed part
- * swaps to a mirror, same precedent as `ContentHeader`'s `Skeleton` leaf).
- *
- * Data-only variation (which numbers show up in the meter/sentence) stays
- * INSIDE the `ResumeAvailable` leaf as two states.
+ * `ModuleContinueBand` — the flat "resume + progress" cluster that opens both
+ * course-home and module-home. A flat cluster, not a card (distinct from
+ * `ContinueLearning` / `ContinueCardHero`). `resumeLessonTitle` presence drops two
+ * nodes together (the title and the resume button), so "resume available" vs "all
+ * done" are separate shapes; `isSkeleton` is its own too. Which numbers show in the
+ * meter/sentence are data states inside the resume-available shape.
  */
 const meta: Meta<typeof ModuleContinueBand> = {
     title: "StarCi/Blocks/Learn/ModuleContinueBand/ModuleContinueBand",

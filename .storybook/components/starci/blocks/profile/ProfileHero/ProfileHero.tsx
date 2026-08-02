@@ -26,58 +26,15 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ProfileHero`: the bare identity sidebar for a person's profile page —
- * a rank-framed avatar, name/@handle/role, bio, location + work-mode, follower
- * and badge social proof, one primary CTA + share, and a github/linkedin/
- * website/joined meta list. NEW category (`profile`) — nothing profile-specific
- * existed in this tree before this run.
- *
- * ⭐ REUSE FIRST (the reason this run exists — see `ContentModeNav`'s file header
- * for the sibling incident this corrects). Nothing here is a new card face or a
- * new text atom: the sidebar is `SurfaceCard` (composite) around `StackV`/`StackH`/
- * `Cluster` (frame) holding `Avatar`/`Typography`/`Chip`/`Button`/`Divider` (atom)
- * and `EnumChip`/`InlineIconLabel` (composite). The only genuinely NEW code is the
- * four small DOMAIN leaves below — `ProfileRankAvatar`, `ProfileFollowers`,
- * `ProfileBadges`, `ShareProfileButton` — each of which is itself just a
- * composition of the same lower-tier pieces, never a hand-rolled shape.
- *
- * 📐 FOUR JUDGEMENT CALLS worth naming up front:
- *
- * 1. **RANK IS A NUMBER, "Rank #N" IS THE BLOCK'S OWN SENTENCE** (§14d.1) — same
- *    convention `LeaderboardBoard` already uses for its own `rank: number` +
- *    `Rank #${standing.rank}` line. The caller hands over the ordinal only.
- * 2. **THE RANK FRAME IS A RING, NOT A NEW AVATAR SHAPE.** `Avatar` already owns
- *    its size/skeleton/fallback chain (§4) — a colour ring is a `className` on
- *    top of it, exactly the `ring-2 ring-accent ring-offset-2` idiom `Stepper`
- *    already uses for its own "current step" ring. No rank at all → no ring; the
- *    frame is a fact about standing, never decoration on its own.
- * 3. **`onHire` IS AN ADDED PROP, NOT IN THE TASK'S LITERAL PROP LIST.** The brief
- *    names `canHire` as a gate but the CTA it gates ("hire/follow/edit", ONE
- *    slot) needs somewhere to fire — a caller-supplied `canHire` with no callback
- *    would be a switch wired to nothing, and §7 already forbids a block quietly
- *    deciding what a press means. Adding the matching `onHire?: () => void` is
- *    the same shape as the existing `onEdit`/`onToggleFollow` pair, not a new
- *    concept.
- * 4. **`ProfileFollowers` DOES NOT REACH FOR THE `StatPair` COMPOSITE.** `StatPair`
- *    (`composites/stats/StatPair`) has no `isSkeleton` of its own, so wiring it in
- *    would mean this block still hand-building a separate shimmer mirror right
- *    next to it — two shapes for one number. `FlashcardDueHero` already solved
- *    the identical "big tabular number + muted caption" shape straight from
- *    `Typography` (`size="h5" tabularNums` + `size="xs" color="muted"`), with
- *    skeleton flowing into the SAME atom instance — so `ProfileFollowers` mirrors
- *    that block's idiom instead of introducing a second one.
- *
- * ⚠️ SOCIAL LINKS RENDER AS `Typography isLink`, NOT `InlineIconLabel` — the latter
- * always wraps its child text in its OWN `HeroTypography`, so nesting a link
- * `Typography` inside it would be a text component inside a text component for no
- * reason. `InlineIconLabel` is reused ONLY for the two non-link meta rows
- * (location, joined date) where its plain-text contract fits exactly.
- *
- * ⭐ `isSkeleton` flows straight into every atom that draws real content (hybrid
- * C, §12c) — `SurfaceCard` itself only owns its OWN label row (unused here), so
- * this block never asks it to guess a body shape it never designed.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ProfileHero` — the identity sidebar for a profile page: a rank-framed avatar,
+ * name/@handle/role, bio, location + work-mode, follower and badge social proof,
+ * one primary CTA + share, and a github/linkedin/website/joined meta list.
+ * Composes `SurfaceCard`/frames/atoms plus the domain leaves `ProfileRankAvatar`,
+ * `ProfileFollowers`, `ProfileBadges`, `ShareProfileButton`. Rank is a number;
+ * "Rank #N" is the block's own sentence, and the rank ring is a `className` on
+ * `Avatar`, not a new shape. `onHire` fires the `canHire`-gated CTA. Social links
+ * render as `Typography isLink`; `InlineIconLabel` is used only for the
+ * plain-text meta rows. `isSkeleton` flows into every content atom.
  */
 
 /** An icon passed as a COMPONENT (e.g. a Phosphor `*Icon`), rendered at the tile's own scale. Declared locally per atom convention (§5.0) rather than importing one library's type. */

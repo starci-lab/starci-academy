@@ -4,23 +4,12 @@ import type { ContentCommentNode } from "@sb-components/starci/blocks/learn/Cont
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentDiscussion`: talk about this lesson — label + honest
- * archive line, an avatar-led collapsible composer, and the threaded comment
- * list. Sits FRAMELESS directly on the page canvas — no card — see the
- * component's own file header for the full rebuild against the earlier
- * flat-list, wrongly-carded cut.
- *
- * ⭐ EMPTY IS DRAWN, ON PURPOSE — the exact OPPOSITE of `ContentRelatedList`,
- * which hides itself when it has nothing. Here nobody having written yet is
- * an INVITATION.
- *
- * THE COMPOSER NEVER HIDES — not while loading, not when empty, not on
- * error. That is also why the error replaces the LIST only.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). The comment count, the archive line, and
- * `hasMore` are all data ⇒ states of `Full`. Losing the list to an empty
- * invitation, to an error, or to the loading mirror each change the shape ⇒
- * their own leaf.
+ * `ContentDiscussion` — talk about this lesson: a label + archive line, an
+ * avatar-led collapsible composer, and the threaded comment list, frameless on
+ * the page canvas. The empty state is drawn on purpose — no comments yet is an
+ * invitation. The composer never hides, and an error replaces the list only.
+ * Comment count, archive line, and `hasMore` are states of `Full`; empty, error,
+ * and the loading mirror are each their own leaf.
  */
 const meta: Meta<typeof ContentDiscussion> = {
     title: "StarCi/Blocks/Learn/ContentDiscussion/ContentDiscussion",

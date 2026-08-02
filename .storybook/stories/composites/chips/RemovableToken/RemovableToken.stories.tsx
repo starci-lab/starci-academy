@@ -4,24 +4,12 @@ import { RemovableToken } from "@sb-components/composites/chips/RemovableToken/R
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `RemovableToken`: a bordered, single-line selected-item row — an
- * optional leading icon, a label, and up to two trailing affordances (edit /
- * remove). Ground-truth is the hand-rolled "picked company" row in
- * `CompanySection` (`src/components/features/careers/Jobs/JobPostForm/CompanySection/index.tsx`),
- * generalised into a reusable token: any label/icon in, an optional edit
- * ("Change"-style) and/or remove (×) affordance out.
+ * `RemovableToken` — a bordered, single-line selected-item row: an optional leading icon, a
+ * label, and up to two trailing affordances (edit / remove). Leaves: `icon`, `onEdit`
+ * (+`editLabel`), `onRemove` (+`removeLabel`), `isDisabled`, `isSkeleton`.
  *
- * 📐 **1 PROP = 1 LEAF.** Every prop with a visual gets its own leaf, and that
- * leaf renders the FULL set of the prop's values: `icon` · `onEdit`
- * (+ `editLabel`) · `onRemove` (+ `removeLabel`) · `isDisabled` · `isSkeleton`.
- * `label` has no leaf of its own — it is the content every other leaf fills
- * in. `classNames` has no leaf either: appearance is not passable, it is
- * already a prop, so there is no value to enumerate.
- *
- * ⚠️ `icon` takes a COMPONENT REFERENCE (`IconComponent`), never a built JSX
- * element — the row calls it itself at a fixed `size-4` scale so it can also
- * be called during `isSkeleton`. `icon={BuildingOfficeIcon}`, not
- * `icon={<BuildingOfficeIcon />}`.
+ * `icon` takes a component reference (`IconComponent`), never a built element — the row calls
+ * it itself at a fixed `size-4` so it also renders during `isSkeleton`.
  */
 const meta: Meta<typeof RemovableToken> = {
     title: "Composites/Chips/RemovableToken",

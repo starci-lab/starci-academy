@@ -4,16 +4,10 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE: `Cluster` is a REPEATING-LIST FRAME — a wrapping row of N
- * elements of the SAME KIND (chip/tag/button). The state it produces = `gap`
- * (§10), `justify`, `align`. `wrap` is NOT a state here: a cluster ALWAYS wraps
- * (that's its definition) — a row that may-or-may-not wrap is `StackH`. An
- * EMPTY list just leaves an empty track: the "nothing here" copy belongs to the
- * caller, not the frame (§13 — a frame carries no content).
- *
- * 2026-07-27: migrated to the `states` API (§8) — the `Gaps`/`Justify` demo rows
- * are now `states[]` entries, one per scale step, instead of a hand-stacked column
- * under a single shared `note`.
+ * `Cluster` — a repeating-list frame: a wrapping row of N elements of the same kind
+ * (chip/tag/button). Produces `gap`, `justify`, `align`. A cluster always wraps by definition
+ * (a row that may or may not wrap is `StackH`); an empty list just leaves an empty track, since
+ * a frame carries no content.
  */
 const meta: Meta<typeof Cluster> = {
     title: "Frames/Cluster/Cluster",

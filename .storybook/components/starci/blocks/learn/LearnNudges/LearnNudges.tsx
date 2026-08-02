@@ -3,25 +3,9 @@ import { ArrowRightIcon, CardsIcon, MicrophoneStageIcon, TrophyIcon } from "@pho
 import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `LearnNudges`: WHAT TO DO TODAY.
- *
- * WHY IT EXISTS (§14a): every FUNCTION of a screen is ONE block. "What should I
- * do today" is a function, so it needs a name. Before 2026-07-25 the
- * `/learn/content` screen called `SurfaceCardList` (composite tier) directly and
- * plugged in items + picked icons itself — the screen was wiring up details on
- * the block's behalf, so reading the screen's code couldn't tell you what the
- * page does.
- *
- * §14b — THE CALLER ONLY GIVES DATA: `kind` is an ENUM, not an icon. The block
- * owns the `kind → icon` table; the screen must NOT know what "review
- * flashcards" looks like. If the prop were `leadingIcon`, the screen would have
- * to hold an atom/icon again ⇒ breaking the rule.
- *
- * §14c — the block only ASSEMBLES: shell and rhythm flow through
- * `SurfaceCardList`, the SAME layout as `KeepGoingPath` right below it. It
- * doesn't draw its own frame or pick its own border.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `LearnNudges` — the "what to do today" block: a list of suggested actions rendered
+ * through `SurfaceCardList`, the same layout as `KeepGoingPath` below it. Takes `kind`
+ * as an enum and owns the `kind → icon` table; the caller supplies only data.
  */
 /** Task type — a data ENUM; the block alone decides how it looks. */
 export type LearnNudgeKind = "flashcards" | "interview" | "league"

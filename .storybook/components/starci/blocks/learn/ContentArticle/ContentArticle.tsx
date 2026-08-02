@@ -8,30 +8,18 @@ import type { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseSc
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentArticle`: the lesson itself, on the page it is read from.
+ * `ContentArticle` — a BLOCK: the lesson itself, on the page it is read from.
+ * Over the `MarkdownContent` viewer it knows the document is a LESSON — that it can
+ * be locked, and that a first-time reader should be told they can ask AI about a
+ * passage.
  *
- * WHY A BLOCK OVER THE VIEWER: `MarkdownContent` repeats a document; this block
- * knows the document is a LESSON — that it can be locked, that a first-time
- * reader should be told they can ask AI about a passage, and that the offer
- * belongs under the text rather than in place of it.
+ * When locked the body still renders and its tail fades into the surface (rather
+ * than truncating), with the paywall flat underneath it — one surface that runs out,
+ * which is why `ContentPaywall` draws no frame of its own. Text is unselectable
+ * while locked, so a reader cannot select through the fade.
  *
- * ⭐ LOCKED FADES, IT DOES NOT CUT. The body still renders and its tail fades
- * into the surface, with the offer under it. Truncating instead would tell the
- * reader nothing about what they are buying; the fade shows the lesson continues
- * and stops the reader at the same time.
- *
- * ⭐ THE PAYWALL IS INSIDE THE SAME CARD. It is flat, under the faded tail — one
- * surface that runs out, not a second card interrupting the first. That is why
- * `ContentPaywall` draws no frame of its own.
- *
- * TEXT IS UNSELECTABLE WHILE LOCKED. Not decoration: the fade only hides the
- * tail visually, and a reader could otherwise select straight through it.
- *
- * THE HINT SHOWS ONCE AND ONLY WHEN OPEN. It teaches a feature that needs a
- * selection to be discovered at all, so it leads the body — and it never shows
- * on a locked lesson, where selecting is off anyway.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The ask-AI hint shows once, only when the lesson is open (unlocked), leading the
+ * body — it teaches a feature that needs a selection to be discovered at all.
  */
 
 /** Everything the offer under a locked lesson needs, as typed data. */

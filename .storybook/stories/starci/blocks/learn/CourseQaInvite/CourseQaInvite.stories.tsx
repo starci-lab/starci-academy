@@ -3,21 +3,12 @@ import { CourseQaInvite } from "@sb-components/starci/blocks/learn/CourseQaInvit
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `CourseQaInvite`: the whole-page "nobody has asked anything yet"
- * invitation for a course's Q&A tab. Icon, a headline saying the tab is
- * genuinely empty, a hint, one way forward.
- *
- * ⭐ GENUINELY DIFFERENT FROM A SEARCH-EMPTY BRANCH inside the Q&A list — same
- * gotcha this codebase already documents for `ContentDiscussion` vs
- * `ContentRelatedList`. TRUE zero (never had a single question) reads as an
- * INVITATION with a "go read the content" remedy; "no results for this
- * filter/search" is a narrower miss with a "try something else" remedy. Same
- * word, opposite scope — not one component with a prop switch.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). The block always renders the same
- * icon/title/hint/action shape — `isSkeleton` only swaps the CTA's own render
- * (real ⇄ shimmer), it never changes what is composed, so it stays a STATE
- * inside the one `Default` leaf rather than spawning its own.
+ * `CourseQaInvite` — the whole-page "nobody has asked anything yet" invitation
+ * for a course's Q&A tab: icon, headline, hint, one way forward. Distinct from a
+ * search-empty branch: true zero (never a single question) reads as an
+ * invitation with a "go read the content" remedy, versus a filtered miss's "try
+ * something else". `isSkeleton` only swaps the CTA's render, so it stays a state
+ * of the one `Default` leaf.
  */
 const meta: Meta<typeof CourseQaInvite> = {
     title: "StarCi/Blocks/Learn/CourseQaInvite/CourseQaInvite",

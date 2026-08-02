@@ -8,55 +8,21 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `WeeklyChallengeCard`: "Weekly Challenge" — the featured challenge of
- * the week: a routable title, a countdown, the viewer's pass/claim status,
- * the total pass count, and a short leaderboard of recent finishers.
+ * `WeeklyChallengeCard` — a BLOCK (dashboard): "Weekly Challenge" — the featured
+ * challenge of the week: a routable title, a countdown, the viewer's pass/claim
+ * status, the total pass count, and a short leaderboard of recent finishers.
  *
- * GROUND TRUTH: `src`'s `components/features/dashboard/WeeklyChallengeCard/
- * index.tsx`, backed by the real `weeklyChallenge` query
- * (`QueryWeeklyChallengeData | null` — `null` is a REAL shape: "no event
- * active", not a loading/error condition).
+ * Backed by a `QueryWeeklyChallengeData | null` shape, where `null` is a real state
+ * ("no event active"), not loading/error. Composed: `SurfaceCard` (labeled) wraps
+ * `AsyncContent`, so the label renders once above whichever branch is active and the
+ * dashboard slot never disappears. The finisher list is `SurfaceCardList` (nested),
+ * each row's identity from the `UserCell` atom.
  *
- * COMPOSED, NOT REBUILT: the card face is `SurfaceCard` (labeled variant, same
- * as every sibling dashboard block in this pass), the finisher list is
- * `SurfaceCardList` (nested variant — it already sits inside this card's own
- * face) with each row's identity built from the `UserCell` atom, unchanged
- * from `LeaderboardBoard`'s own row shape.
- *
- * ⭐ THE FRAME NEVER UNMOUNTS. `src`'s own file header calls this out
- * explicitly: the label stays up across loading / no-active-event / content so
- * the dashboard slot never disappears. Here that falls out of the structure
- * for free — `SurfaceCard` wraps `AsyncContent` (not the other way around), so
- * the label renders once, above whichever of the four branches is active,
- * same architecture as this pass's `WeeklyGoals`/`JobReadinessWidget`.
- *
- * ⭐ ROUTING IS FULLY CALLER-BUILT (§14d.1, same convention as
- * `JobReadinessWidget.nextAction`). `src` resolves the challenge's route via a
- * dashboard-only hook (`useResolveRouteNavigation` against an opaque
- * `globalId`) — that resolve-and-navigate round trip is screen wiring, not
- * generic block knowledge, so `onOpenChallenge` arrives pre-resolved and
- * covers BOTH the title link and the "Do it now" prompt (the exact same
- * destination in `src`, just two entry points into it). Omitted → both render
- * as plain, non-interactive text (mirrors `EntityToken`'s own `!routable`
- * fallback).
- *
- * ⭐ THE COUNTDOWN AND EACH FINISHER'S TIMESTAMP ARRIVE PRE-WORDED (§14d.1,
- * same boundary as `ChallengeDeliverableItem.processedAt`/`WeeklyGoals.
- * resetInLabel`): this block owns no date/locale math, so `endsInLabel` and
- * each entry's `passedAtLabel` are caller-built strings, omitted while unknown
- * instead of raw ISO timestamps for this block to parse.
- *
- * ⭐ THE PASSED-COUNT AND REWARD LINES ARE BLOCK WORDING (same convention as
- * `LeaderboardBoard`'s "Rank #N"): `passedCount`/`coinReward` are typed
- * numbers, and the sentence/button label around them is built HERE.
- *
- * ⭐ AN ADDED ERROR BRANCH, NOT IN `src`. `src`'s own `AsyncContent` call never
- * passes `error`/`errorContent` — the SWR `error` sits unused. That reads as a
- * real gap rather than a deliberate absence (every sibling dashboard block in
- * this pass wires the same SWR error into a retry branch), so this block wires
- * it the same way its siblings do.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `onOpenChallenge` arrives pre-resolved (routing is screen wiring) and covers both
+ * the title link and the "Do it now" prompt; omitted → both render as plain text.
+ * `endsInLabel` and each `passedAtLabel` are caller-built strings (no date/locale
+ * math here). The passed-count and reward lines are block wording around typed
+ * numbers. Adds an error branch (retry) that `src` left unwired.
  */
 
 /** One leaderboard row: a finisher who already passed this week's challenge. */

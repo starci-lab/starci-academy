@@ -3,23 +3,12 @@ import { ContentPager } from "@sb-components/starci/blocks/learn/ContentPager/Co
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentPager`: step to the neighbouring lesson, at the foot of the
- * reading screen.
- *
- * WHY A BLOCK: it knows what a LESSON is — the cards carry a lesson title and a
- * lesson link, and the block words its own "previous lesson" / "next lesson"
- * labels itself. A frame would only know it has two cells.
- *
- * ⚠️ ASYMMETRY IS THE POINT. The right card mirrors the left one so the pair
- * reads as a DIRECTION rather than as two identical cards, and it pins to the
- * second column only where the grid really has two — a CONTAINER query, because
- * the split is decided by the slot the block sits in, not by the window.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). Losing one of the two cards changes the shape,
- * so each edge case is its own leaf; so is the caller flipping `isSkeleton`.
- * Having no neighbour at all renders NOTHING, which is a leaf that shows the
- * block's own absence — the first and last lesson of a course are ordinary
- * cases, not errors.
+ * `ContentPager` — step to the neighbouring lesson at the foot of the reading
+ * screen. It owns the "previous lesson" / "next lesson" labels and the lesson
+ * title + link on each card. The right card mirrors the left so the pair reads
+ * as a direction, pinning to a second column only where the grid has two (a
+ * container query). Losing either card, and `isSkeleton`, are each their own
+ * leaf; having no neighbour renders nothing.
  */
 const meta: Meta<typeof ContentPager> = {
     title: "StarCi/Blocks/Learn/ContentPager/ContentPager",

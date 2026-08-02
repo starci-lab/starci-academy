@@ -5,44 +5,11 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `UserCell`: the system's ONE person row (avatar + name + optional `@handle`).
- * Promoted from the atom tier (ATOM-3): a component composing `Avatar` AND
- * `Typography` is assembling the vocabulary, not being a word in it — moved to
- * `composites/lists/`, beside `IdentityContentRow`, the other "face beside
- * content" shape in this folder.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g). A prop with a shape gets its own leaf: `size` ·
- * `handle` · `trailing` · `leadingIcon` · `isOwnRow` · `isSkeleton`. Props
- * WITHOUT a leaf: `username`/`displayName` (content that fills every leaf, the
- * same role `text` plays on `Chip` — not a "shape" of its own to test);
- * `avatar` (only swaps the IMAGE inside `Avatar`, which already has its own
- * story — `Atoms/Display/Avatar/Avatar`, leaf `Source`; repeating it here would
- * be re-testing the child, not testing `UserCell`); `leadingTone` (only tints
- * the `IconTile` that `leadingIcon` already grows a leaf for — `IconTile`'s own
- * story owns the `tone` axis, leaf `Tones`); `className`
- * (plumbing, generates no new shape).
- *
- * ⭐ ADDED 2026-08-01 (additive): `leadingIcon`/`leadingTone` let the row lead
- * with a framed `IconTile` instead of `Avatar` — for rows that aren't a person
- * (a course/org/resource). Omitted, every other leaf on this page is
- * unaffected — the row renders `Avatar` exactly as before.
- *
- * ⭐ PROMOTED 2026-08-01 (ATOM-3): the atom-tier `Typography` no longer accepts
- * `anatPart` (an atom self-names, ATOM-10), so the two child `Typography`
- * calls below no longer pass one — the panel still finds them, badged as
- * `Typography`, exactly as before. Skeleton bars for name/handle now delegate
- * to `Typography isSkeleton` (fractional `classNames` width) instead of a raw
- * HeroUI `Skeleton`, so COMPOSITE-10 holds: this composite decides which parts
- * shimmer and how many, the atom decides the shape of each.
- *
- * DEPS — `Avatar` and `Typography` BOTH have their own story, so they're
- * declared via `annotate` for click-through. `Trailing` is a free slot the
- * caller pours content into, with no "canonical shape" of its own, so it gets
- * no `storyId`.
- *
- * MIGRATED TO `states` (2026-07-27): leaves that used to stack a "before/after"
- * pair by hand in one `children` block now carry one `states[]` entry per value,
- * each with its own `why` and its own `code`.
+ * `UserCell` — the system's one person row: avatar + name + optional `@handle`. Leaves: `size`,
+ * `handle`, `trailing`, `leadingIcon`, `isOwnRow`, `isSkeleton`. `leadingIcon`/`leadingTone` let
+ * the row lead with a framed `IconTile` instead of `Avatar`, for rows that aren't a person
+ * (a course/org/resource). `avatar` swaps the image inside `Avatar`; `username`/`displayName`
+ * are the content each leaf fills in. Deps `Avatar` and `Typography` link to their own stories.
  */
 
 /** Description shown at the top of the autodocs page. UI-facing copy is written in English. */

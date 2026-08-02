@@ -3,23 +3,12 @@ import { SubmissionResultHeader } from "@sb-components/starci/blocks/learn/Submi
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `SubmissionResultHeader`: the IDENTITY band of a graded-result page —
- * a way back to the challenge, plus the requirement's title/description.
- *
- * SIBLING OF `ContentHeader`, NOT A COPY. Both place identity into the same
- * `PageHeader` frame, but a result page has already left the material — the
- * learner submitted and is looking at a verdict — so there is no read-state
- * chip, no minutes, no outcomes card, just "where am I, what is this, how do I
- * leave".
- *
- * ⭐ THE BREADCRUMB SLOT HOLDS A BACK-LINK. `backLabel` + `onBack` compose into
- * a single `LinkBack`, the same judgement call `WorkSessionHeader` makes for
- * its own back-link — the caller hands over a label and a handler, never a
- * pre-built node.
- *
- * 📐 ONE LEAF (§14d.2). Nothing here changes the SHAPE of what is composed —
- * only the DATA (title/description text, skeleton or not) — so `isSkeleton` is
- * a state inside the one `Header` leaf, not a leaf of its own.
+ * `SubmissionResultHeader` — the identity band of a graded-result page: a way back
+ * to the challenge, plus the requirement's title and description. Sibling of
+ * `ContentHeader`, but a result page has left the material — no read-state chip,
+ * minutes, or outcomes card, just "where am I, what is this, how do I leave". The
+ * breadcrumb slot holds a `LinkBack` composed from `backLabel` + `onBack`. One
+ * shape: `isSkeleton` is a state, since only the data changes.
  */
 const meta: Meta<typeof SubmissionResultHeader> = {
     title: "StarCi/Blocks/Learn/SubmissionResultHeader/SubmissionResultHeader",

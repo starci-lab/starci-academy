@@ -3,19 +3,12 @@ import { InterviewerPresence } from "@sb-components/starci/blocks/learn/Intervie
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `InterviewerPresence`: "someone is interviewing you" — persona,
- * live-speaking cue, TTS toggle, and the question underneath.
- *
- * 📐 ONE LEAF, FOUR STATES (§14d.2, mirrors `QuizQuestion`). Whether the
- * question region exists at all is presence/absence DATA inside this one
- * leaf, not a structural fork into two leaves — an idle interviewer and a
- * mid-question interviewer are the same block wearing different data, exactly
- * like `QuizQuestion`'s graded/ungraded region.
- *
- * See `InterviewerPresence.tsx`'s file header for why `speaking` (audio) and
- * `isAsking` (text still streaming) are two independent props, and why the
- * identity row composes `Avatar` + `Typography` directly instead of `UserCell`
- * (role ≠ handle, plus the pulse ring `UserCell` has no room for).
+ * `InterviewerPresence` — "someone is interviewing you": persona, live-speaking
+ * cue, TTS toggle, and the question underneath. Whether the question region
+ * exists is presence/absence data on the same shape — an idle and a mid-question
+ * interviewer are one block with different data. `speaking` (audio) and `isAsking`
+ * (text still streaming) are independent props; the identity row composes `Avatar`
+ * + `Typography` directly (role, not a handle, plus a pulse ring).
  */
 const meta: Meta<typeof InterviewerPresence> = {
     title: "StarCi/Blocks/Learn/InterviewerPresence/InterviewerPresence",

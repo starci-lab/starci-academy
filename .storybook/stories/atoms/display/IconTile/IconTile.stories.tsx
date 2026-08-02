@@ -9,33 +9,16 @@ import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `IconTile`: the avatar frame of a THING (course, project, section…).
+ * ATOM — `IconTile`: the avatar frame of a thing (course, project, section…).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Every prop has one leaf, rendering EVERY state
- * that prop produces: `tone` · `size` · `src` (a cover image over the icon) ·
- * `isSkeleton`. A prop that produces no visual (`alt`, `className`)
- * has NO leaf.
+ * One prop = one leaf, each rendering every state the prop produces: `tone` · `size` ·
+ * `src` (a cover image over the icon) · `isSkeleton`. Props with no visual (`alt`,
+ * `className`) get no leaf. The tile is always round. `icon` has no leaf of its own —
+ * it is required content (except while `isSkeleton`), not a caller-toggled axis.
  *
- * ⚠️ REMOVED 2026-07-26: the `shape` axis (`circle`/`square`) + the `Shape` leaf.
- * No consumer in the design tree ever passed `shape` — a choice nobody made.
- * The tile is now ALWAYS round (teacher decided).
- *
- * ⚠️ `icon` has NO leaf of its own — it's REQUIRED CONTENT (except while skeleton),
- * not a "visual" axis to toggle like `Chip`. The icon appears throughout every
- * leaf, changing per leaf so the sample data reads real, but "having an icon or
- * not" itself isn't something this component leaves for the caller to choose
- * (always present unless `isSkeleton`).
- *
- * 🎨 The icon takes a COMPONENT (`icon={GraduationCapIcon}`), NOT JSX — the atom
- * renders it and forces its own scale per `size` (§5.0). All three steps
- * (`sm`=size-5, `md`=size-6, `lg`=size-8) are ≥ `size-5`, so the atom does NOT pass
- * `weight` (§5.0a — only a glyph < size-5 needs `bold`).
- *
- * The atom has `showAnatomy` — each leaf turns it on at the FIRST tile. `Tile`
- * (root div) · `Cover` (the `<img>`) · `Icon` (the caller's glyph) are plain
- * elements/arbitrary content, not fixed importable components, so none of them
- * gets a name in `annotate` (§ naming pass, 2026-07-28) — only `Skeleton`
- * (a direct HeroUI import) is a real, nameable node, `tier: "heroui"`.
+ * The icon takes a component (`icon={GraduationCapIcon}`), not JSX; the atom forces
+ * its scale per `size`. In the anatomy, `Tile`/`Cover`/`Icon` are plain elements
+ * (unnamed); only `Skeleton` is a nameable HeroUI node.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": {

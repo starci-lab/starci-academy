@@ -7,84 +7,21 @@ import { Pagination } from "@sb-components/atoms/navigation/Pagination/Paginatio
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FoundationCategoryList`: the FULL browse-and-drill-in list of the
- * Foundations content library — every category on the current page, each row a
- * navigation target, plus its own pager when there is more than one page.
+ * `FoundationCategoryList` — the browse-and-drill-in list of the Foundations library:
+ * every category on the current page as a navigation row, plus a pager. Wraps
+ * `SurfaceCardList` and `Pagination`.
  *
- * SIBLING OF `FoundationCategoryHeader`/`FoundationCategorySearchBar`, SAME HUB
- * — those two already establish the domain (`foundationCategorySuggestions`,
- * course-agnostic categories with a bare `{id, label}` shape) — this block is
- * the actual result list that search bar's picks drill into.
+ * Owns three domain decisions:
+ *   1. The thumbnail-priority chain — `logoSrc` wins, `thumbnailUrl` rides as the
+ *      `Image` atom's own `fallbackSrc`, else the atom's built-in glyph.
+ *   2. Two empty reasons — a blank query reads "the library has nothing yet" (no icon);
+ *      a non-blank query reads "no matches for X" (magnifier icon), quoting the query.
+ *   3. A trailing caret on every row (all rows navigate; there is no lock/disabled
+ *      concept, so every real row is a plain press target).
  *
- * REUSE, NOT A REBUILD (the exact trap `ContentModeNav`'s file header warns
- * about): wraps `SurfaceCardList` for the frame/row rhythm — same shape
- * `ModuleLessonList` wraps — and `Pagination` verbatim for the pager. NEW
- * because the DOMAIN doesn't match either: `ModuleLessonList` is a course's own
- * lesson progress (status icon, resume marker, premium lock) with no pager and
- * no thumbnail; this list is a flat, course-agnostic library of categories,
- * each carrying an optional THUMBNAIL (not a progress icon), no lock/resume
- * concept at all, and — because a library can be paged AND searched — TWO
- * distinct reasons a row set can come back empty.
- *
- * WHAT THIS BLOCK OWNS (§14d.1 — domain judgement the caller must not pre-decide):
- *
- *   1. THE THUMBNAIL-PRIORITY CHAIN. A category may carry a dedicated
- *      `thumbnailUrl`, a `logoSrc` (the underlying tech/brand mark), both, or
- *      neither. The chain: `logoSrc` wins when present (ported verbatim from
- *      `FoundationCategoryThumbnail` in `src`, which always prefers the brand
- *      mark); `thumbnailUrl` rides as the `Image` atom's OWN `fallbackSrc`
- *      (used if the logo 404s, or immediately as `src` when there is no logo
- *      at all); neither present → the atom's own built-in glyph. This is not
- *      a new fallback mechanism — it is the priority chain expressed entirely
- *      through `Image`'s existing `src`/`fallbackSrc` contract, so the block
- *      adds a naming decision, not a second rendering path.
- *
- *   2. THE TWO EMPTY REASONS (the domain reason this needs its own frame-facing
- *      wording rather than a caller-supplied string, §14d.1). An empty row set
- *      means one of two different things and reads differently for each:
- *        - `searchQuery` blank/absent → "the library itself has nothing yet",
- *          no icon (nothing to try differently).
- *        - `searchQuery` non-blank    → "this search matched nothing", quoting
- *          the trimmed query, with a magnifying-glass icon — no second-line
- *          hint, matching the real `foundations.searchEmpty` copy (one line,
- *          no icon in `src` either — the icon here stays a Storybook-local
- *          empty-state affordance, ported per this block's own icon judgement,
- *          not from real copy).
- *      `searchQuery` only ever DRIVES this choice — the block never renders it
- *      back verbatim beyond quoting it in its own title sentence.
- *
- *   3. THE TRAILING CARET. Every row navigates (drills into the category), so
- *      every row carries the same `CaretRightIcon` — a constant of THIS domain,
- *      not something the caller decides per row (contrast `ModuleLessonList`,
- *      where the trailing mark is conditional on `isPremium`).
- *
- * ⛔ A ROW NEVER SWALLOWS ITS PRESS ON BUSINESS GROUNDS (rule 7 / the exact bug
- * `ContentModeNav`'s header documents) — there is no lock/disabled concept in
- * this domain at all, so every real row is a plain press target; only
- * SKELETON placeholder rows carry no handler (nothing underneath can act yet).
- *
- * JUDGEMENT CALL — TWO LEAVES, `isSkeleton` FOLDED IN AS A STATE. Loading never
- * changes the STRUCTURE (still one bounded `SurfaceCardList`, only the row
- * text/thumbnail switch to shimmer) — same reasoning `FoundationCategorySearchBar`
- * already documents for its own `isSkeleton` ("only swaps which state each
- * composed atom renders … not its own leaf", §14d.2). So `Default` covers both
- * the populated and the loading row set; only the EMPTY branch — which replaces
- * the rows with a message entirely — earns its own leaf, split further into its
- * two wording states.
- *
- * JUDGEMENT CALL — the empty message renders THROUGH `SurfaceCardList`'s OWN
- * bounded `emptyState` slot, not by swapping the block's own tree for a loose,
- * unbounded message. Same reasoning `SubmissionFindingsList`'s file header
- * gives for its accordion card: the library's bounded surface is worth keeping
- * alive across every state — shimmering, empty, or full — never a card that
- * vanishes and a floating message appears in its place.
- *
- * JUDGEMENT CALL — the pager renders ONLY once there is something real to page
- * through (`!isSkeleton && categories.length > 0 && pagination` supplied).
- * There is nothing to page during the first fetch or an empty result, so it
- * never appears half-built underneath either.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Two leaves — populated/loading fold into `Default`; empty gets its own leaf split by
+ * its two wordings, rendered through `SurfaceCardList`'s bounded `emptyState` slot. The
+ * pager renders only once there are real rows to page.
  */
 
 /** One category row — plain data; the block resolves the thumbnail chain and builds the wording. */

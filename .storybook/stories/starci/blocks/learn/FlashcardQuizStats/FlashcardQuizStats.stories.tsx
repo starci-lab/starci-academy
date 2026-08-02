@@ -3,19 +3,12 @@ import { _FlashcardQuizStats, type FlashcardQuizStatsLabels } from "@/components
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FlashcardQuizStats`: the "Quick quiz" aggregate stats surface (the setup screen's Stats
- * tab). It is the PRESENTATIONAL half of a split component (`design/storybook/architecture/split.md`):
- * the connected `index.tsx` fetches the stats and resolves every label; this file (`component.tsx`,
- * `_FlashcardQuizStats`) takes them as props and renders. That is why a story can show all four async
- * states with no backend.
- *
- * ⭐ TEXT IS DATA. Every string arrives as a prop, already localized by the connected file. A story has
- * no locale, so it passes the raw i18n KEY as each label — the key names the slot without inventing
- * copy. The app passes `t(key)`; the story passes `"the.key"`; the component renders whichever it gets.
- *
- * ⭐ NO ANATOMY OVERLAY. This is real `src` code, so it carries no `showAnatomy`
- * (split.md) — the Structure tab stays empty here on purpose. The states below are the point: one leaf,
- * four data-driven states of the async switch, plus the coverage band.
+ * `FlashcardQuizStats` — the "Quick quiz" aggregate stats surface (the setup
+ * screen's Stats tab). The presentational half of a split component: the
+ * connected `index.tsx` fetches stats and resolves labels, while this
+ * `component.tsx` (`_FlashcardQuizStats`) takes them as props and renders. Every
+ * label arrives as a prop (a story passes the raw i18n key). One leaf, four
+ * data-driven states of the async switch; no anatomy overlay.
  */
 
 /** Every label as its i18n key — the self-naming placeholder a locale-free story passes in. */

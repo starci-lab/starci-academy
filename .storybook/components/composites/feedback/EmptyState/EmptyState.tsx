@@ -5,21 +5,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `EmptyState`, a CENTERED vertical stack that
- * fills an empty/error spot (`code`/`icon`/`title`/`description`/`body`(+`children`)/`action`).
+ * `EmptyState` — a CENTERED vertical stack that fills an empty/error spot
+ * (`code`/`icon`/`title`/`description`/`body`(+`children`)/`action`).
  *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
- * file — the 2026-07-25 consolidation grouped `Callout`/`Empty`/`Confirm` under
- * one `Feedback` folder; this reverses that so each frame is discoverable by
- * its own name again (this member was `Feedback.Empty` / `FeedbackEmpty`).
- * Props/behaviour are UNCHANGED — this is a file-location + naming refactor,
- * not a visual or API change.
- *
- * ATOM COMPOSITION (§12): text goes through `Typography.*`, icons come from
- * `@phosphor-icons/react` — ONE SET ONLY (§5⃣0), passed as a component ref, the
- * frame forces size/weight itself (§4/§5).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Text goes through `Typography.*`; icons come from `@phosphor-icons/react` passed
+ * as a component ref, with the frame forcing size/weight itself.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

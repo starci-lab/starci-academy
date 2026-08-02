@@ -7,20 +7,15 @@ import {
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — faithful port of
- * `@/components/blocks/rendering/MarkdownContent/MarkdownTableParts`. Authored in
- * Storybook (not `src`); synced back to `src` later.
+ * `MarkdownTableParts` — renders a markdown GFM table for `MarkdownContent` via
+ * the HeroUI `Table` compound.
  *
- * ⚠️ NOT the `composites/data/Table` composite. That composite is CONFIG-DRIVEN
- * (`columns` + `items` DATA, children forbidden by its own §13b contract) — a
- * markdown GFM table arrives as an arbitrary, already-rendered `thead`/`tbody`
- * children TREE from `react-markdown`, which cannot be reduced back into that
- * shape without re-parsing the table by hand. `MarkdownContent` is a VIEWER — it
- * never knows its own shape ahead of render (see the file header on
- * `MarkdownContent.tsx`) — so it goes straight to the HeroUI `Table` compound
- * instead, exactly like `src` does.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Not the `composites/data/Table` composite: that one is config-driven (`columns`
+ * + `items` data, children forbidden), whereas a GFM table arrives as an
+ * already-rendered `thead`/`tbody` children tree from `react-markdown` that cannot
+ * be reduced back into that shape without re-parsing. As a viewer, `MarkdownContent`
+ * never knows its own shape ahead of render, so it goes straight to the HeroUI
+ * `Table` compound.
  */
 
 /**

@@ -10,60 +10,18 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `MockInterviewSetup`: the green-room card. Who is interviewing, what
- * to call this run, how hard it should be, and the button(s) that start it.
+ * `MockInterviewSetup` — the green-room card: who is interviewing, a name for the run, a
+ * difficulty tier, and the button(s) that start it. Sibling of `QuizSetup` (resumable
+ * banner leads, form body, action row trailing).
  *
- * WHY A BLOCK: every field here is a DOMAIN decision — which interviewer
- * persona greets the candidate, what a tier means, and which start actions a
- * course even offers. A caller passing pre-formatted strings or a raw button
- * list would move that judgement out of the design system (§14d.1). SIBLING OF
- * `QuizSetup` (same "green-room card" shape: resumable banner leads, form
- * body, action row trailing) — this file reuses its layout rhythm on purpose
- * instead of inventing a new one, per this run's reuse-first mandate.
+ * Two start buttons are two different interviews — Q&A always, plus a Design round only
+ * when `isDesignAvailable`; availability is the caller's to pass, never guessed from the
+ * course kind. A resumable run leads the card above the form. Persona identity is
+ * `Avatar` + `Typography` (not `UserCell`, whose second line is a handle, not a role).
  *
- * ⭐ TWO START BUTTONS ARE TWO DIFFERENT INTERVIEWS, NOT ONE MODE TOGGLE. Q&A
- * always exists; the Design round is a SEPARATE session type only System-Design
- * courses offer (`isDesignAvailable`). Folding them into one button plus a
- * mode switch would make the caller decide "which session starts" through a
- * hidden side-channel instead of a real prop — and would silently invent a
- * Design round on courses that never asked for one. The caller decides
- * availability; the block never guesses it from the course kind itself
- * (rule 7 — a block never hardcodes a business call it wasn't handed).
- *
- * ⭐ A RUN IN PROGRESS TAKES PRIORITY OVER STARTING A NEW ONE, same reasoning as
- * `QuizSetup`: the resumable banner leads the card, above the form, so a
- * candidate who left mid-interview is not asked to scroll past a fresh-start
- * button to find their own session.
- *
- * ⭐ PERSONA IS NOT `UserCell`. The sibling composite `UserCell` composes
- * avatar+name+`@handle` for an ACCOUNT identity; an interviewer persona's
- * second line is a ROLE ("Senior Backend @ a digital bank"), not a handle, and
- * this block's own compose list names `Avatar`+`Typography` directly rather
- * than `UserCell` — so the identity row is built from those two atoms instead
- * of reaching for a component shaped for a different kind of row.
- *
- * ⭐ ONE LEAF THIS PASS (task-scoped judgement call). Structurally, resumable
- * on/off and Design-mode on/off each add or remove a real node (the banner,
- * the second button) — by the letter of §14d.2 that reads as "new leaf per
- * structural change". This run's brief pins the scope explicitly ("one leaf
- * this pass: identity + tier + name + start"; the "Customize" deep-config body
- * is a SECOND leaf, deferred out of scope) — so every combination this pass
- * covers is filed as STATES of that one leaf rather than split further,
- * matching how `QuizRecapList`'s sibling story keeps its data combinations in
- * one leaf. `isSkeleton` is a state for the same reason `SurfaceCard` docs it
- * as one (§11f): it changes the STATE of an already-built tree, not its shape.
- *
- * NEVER RENDERS THE "Customize" DISCLOSURE. That deep-config body (languages /
- * question kinds / answer mode / AI model) is real scope but a DIFFERENT leaf
- * — this pass only builds identity + tier + name + start, so `Disclosure` is
- * not composed here at all rather than stubbed in half-built (§B3: a gap left
- * clearly absent beats a stub that renders nothing real).
- *
- * THE ERROR SITS WITH THE ACTION, same placement rule as `QuizSetup`: a failed
- * draw is reported next to the button row that failed, not floated above the
- * form where it would read as a problem with the whole card.
- * ─────────────────────────────────────────────────────────────────────────────
+ * One leaf this pass (identity + tier + name + start); the "Customize" deep-config
+ * disclosure is a deferred second leaf and is not composed here. The error sits next to
+ * the action row.
  */
 
 /** How hard the interviewer's questions run. The block owns the label (§14d.1). */

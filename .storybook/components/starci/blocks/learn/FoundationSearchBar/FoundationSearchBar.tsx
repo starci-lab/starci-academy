@@ -3,39 +3,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FoundationSearchBar`: the search row — debounced-typeahead field on
- * the left, a live match count on the right, `justify-between` — matching
- * `src`'s `flex items-center justify-between` row for this list's toolbar.
- *
- * SIBLING OF `FoundationCategorySearchBar`, NOT A COPY. Both draw a
- * `SearchAutocomplete` beside a count `Typography` in one `StackH`, because
- * that IS the shape of "search field + live count" — reusing the shape is not
- * reusing the block, the two sit on different screens with different counted
- * things. The real difference is the count's LOADING axis: the category bar's
- * count answers off the SAME query as its suggestions, so one `isSkeleton`
- * covers both; this bar's `resultCount` comes from a SEPARATE `SWR` read than
- * `suggestions` in `src` (the field can already show typeahead rows while the
- * count for the full result set is still in flight, or vice versa), so
- * `isCountLoading` is its own prop and the count can shimmer independently of
- * the field.
- *
- * OWNS THE COUNT'S WORDING (§14d.1) — the caller hands over a bare
- * `resultCount` number, never a formatted string like "12 resources"; this
- * block is the one place that turns that number into copy, including the
- * newsworthy-zero case ("no matches" is real information, unlike a nav
- * badge's zero, which is why it is not hidden here).
- *
- * ONE LEAF. Neither `isCountLoading` nor `resultCount` add or remove a
- * composed node — the count slot always occupies the same place in the row,
- * it only swaps between a text skeleton, a formatted number, and (before any
- * count has ever arrived) nothing. That is three DATA conditions on one
- * structure, so they are STATES, not separate leaves. `isSkeleton` also stays
- * inside the same leaf for the same reason: it swaps both composed atoms to
- * their own resting mirrors without changing which nodes exist (unlike
- * `ContentHeader`, where `isSkeleton` there needed its own leaf only because
- * this block has no second card that could disappear).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `FoundationSearchBar` — the resource-list search row: a debounced typeahead field
+ * left, a live match count right, `justify-between`. Sibling of
+ * `FoundationCategorySearchBar`, but `resultCount` comes from a separate read than the
+ * suggestions, so `isCountLoading` lets the count shimmer independently of the field.
+ * Owns the count wording from a bare `resultCount` (including the newsworthy "no
+ * matches" zero). One leaf.
  */
 
 /** One autocomplete suggestion row (id + label only — the generic shape this bar needs). */

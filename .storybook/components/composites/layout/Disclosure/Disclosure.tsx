@@ -7,31 +7,19 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `Disclosure.*`, the collapsible frame namespace
- * (teacher's call, 2026-07-25, canon §13a). Authored in Storybook (not `src`);
- * synced to `src` later. NO `@/components` imports.
+ * `Disclosure.*` — the collapsible frame namespace.
  *
- * FRAME API LAW (§13b): `.Base` is a WRAPPER frame → `title` names the trigger
- * slot and `body` names the revealed region, with `children` kept as shorthand
- * for `body`. It reveals ONE region, not a repeating list, so the `items` rule
- * does NOT apply here — a multi-panel accordion is a DIFFERENT frame and lives
- * as `SurfaceCardAccordion` (items-driven), not as a member of this family.
- * Namespace only — no bare component export.
+ * `.Base` is a wrapper frame: `title` names the trigger slot and `body` names the
+ * revealed region (`children` = shorthand for `body`). It reveals ONE region, not
+ * a repeating list, so there is no `items` member — a multi-panel accordion is a
+ * different frame (`SurfaceCardAccordion`, items-driven). Namespace only — no bare
+ * component export.
  *
- * Ground truth: MockInterviewSession's "Customize session" green-room row — a
- * hand-rolled `<button aria-expanded>` with a leading `CaretDownIcon` that
- * rotates 180° on the local `configOpen` boolean, `text-muted
- * hover:text-foreground`, `w-fit` (hug-content) trigger; the config content
- * (a `LabeledCard`) is rendered below only while open. NOT built on HeroUI's
- * headless `Disclosure` compound — that compound's default indicator/trigger
- * slots assume a trailing, `justify-between` row, a different shape than this
- * leading-caret, hug-width trigger; this port generalises the SAME hand-roll
- * instead of fighting that layout. `TaskSubmissionPanel`'s settings summary row is the
- * sibling shape (icon + label, trailing `CaretRightIcon` that does NOT
- * rotate) — that one opens an external Drawer, not an inline region, so it
- * is a different control, not this frame.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The trigger is a hug-width (`w-fit`) `<button aria-expanded>` with a leading
+ * caret that rotates 180° when open (`text-muted hover:text-foreground`); the body
+ * renders below only while open. It generalises that hand-rolled shape rather than
+ * building on HeroUI's headless `Disclosure`, whose default trailing,
+ * `justify-between` trigger is a different shape.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

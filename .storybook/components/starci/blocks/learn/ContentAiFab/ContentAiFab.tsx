@@ -4,39 +4,18 @@ import { SparkleIcon } from "@phosphor-icons/react"
 import { FloatingActionButton } from "@sb-components/composites/buttons/FloatingActionButton/FloatingActionButton"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentAiFab`: the floating "ask StarCi AI" trigger mounted once in
- * `learn/layout.tsx` (the layout tier, §11a/§4 of
- * `D:/Repositories/starci-academy-backend/.claude/fe/steps/11-overlays-layouts-brainstorm.md`),
- * bottom-right over every `/learn/**` route.
+ * `ContentAiFab` — a BLOCK: the floating "ask StarCi AI" trigger mounted once in
+ * `learn/layout.tsx`, bottom-right over every `/learn/**` route.
  *
- * ⭐ REUSE FIRST, checked before writing this file (Glob over
- * `components/starci/blocks/**` and `components/{atoms,frames,composites}/**`):
- * `FloatingActionButton` (composites/buttons) already owns the round accent
- * circle, fixed placement, shadow and icon-only press affordance. This block
- * adds nothing structural on top of it — only the ONE domain decision an
- * app-wide floating trigger is allowed to own: which icon it shows, what it is
- * called, and when it should not be there at all.
+ * Reuses `FloatingActionButton` (which owns the round accent circle, fixed
+ * placement, shadow, and icon-only press affordance) and adds only the domain
+ * decisions: which icon it shows (a sparkle), its fixed accessible name, and when it
+ * should not be there. It does not own chat state, drag position, or panel mode —
+ * it only calls `onOpen()`.
  *
- * WHAT THIS BLOCK OWNS (per the task brief): the icon (a sparkle — the app's
- * one "AI" glyph) and its fixed accessible name, per §14d.1 — this app ships a
- * single locale, so a caller-supplied aria-label prop would just repeat the
- * same string at its one call site. It does NOT own chat state, drag position,
- * or which mode the panel it opens lands on — all of that is
- * `ContentAiChatDrawer` + `useOverlayStore` wiring living in the layout that
- * mounts this block; this block only calls `onOpen()`.
- *
- * `isOpen` HIDES rather than disables. When the rail-mode AI chat panel this
- * FAB opens is already open, a second floating trigger sitting on top of it is
- * dead chrome — on narrow viewports it can even sit over the panel's own close
- * control. Returning `null` (not a disabled/dimmed button) matches the
- * "nothing true left to show" leaf already used by `MindMapContinueButton`.
- *
- * NEVER SKELETONISED, on purpose — same call as `ContentModeNav`. This is
- * static layout chrome with no data dependency: whether the trigger shows
- * never waits on a fetch, only on `isOpen`, which the layout already knows
- * synchronously from its own overlay-store subscription.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `isOpen` HIDES rather than disables: when the AI chat panel is already open a
+ * second trigger on top of it is dead chrome, so it returns `null`. Never
+ * skeletonised — static layout chrome with no data dependency.
  */
 
 /** Fixed accessible name — see the file header on why this is not a prop. */

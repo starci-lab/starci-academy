@@ -3,22 +3,13 @@ import { QuizRecapList } from "@sb-components/starci/blocks/learn/QuizRecapList/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `QuizRecapList`: the run is over, go back over what you answered and
- * say how well you actually knew each one.
- *
- * ⭐ THE GRADE HERE IS NOT THE VERDICT FROM THE RUN. During the drill the SYSTEM
- * judged right or wrong; here the LEARNER judges how well they remembered. They
- * are different questions — a card can be marked correct and still be one the
- * learner wants back tomorrow, which is exactly the case the spaced-repetition
- * schedule needs and an automatic verdict cannot see. The `CorrectButShaky`
- * state below is that case.
- *
- * ⭐ ALREADY-GRADED CARDS KEEP THEIR RATING BAR. Nothing collapses or locks after
- * a tap: someone going back over a run changes their mind, and removing the
- * control would make the first tap final without ever saying so.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): how many cards, and which are rated, is data ⇒
- * states inside one leaf. Finishing the recap changes the counter line only.
+ * `QuizRecapList` — the run is over: go back over what you answered and say how well
+ * you actually knew each one. This learner-supplied grade is not the run's verdict —
+ * a card can be marked correct yet be one the learner wants back tomorrow (the
+ * `CorrectButShaky` case), which the spaced-repetition schedule needs. Already-graded
+ * cards keep their rating bar — nothing locks after a tap, so a changed mind still
+ * counts. Card count and which are rated are states of one shape; finishing changes
+ * only the counter line.
  */
 const meta: Meta<typeof QuizRecapList> = {
     title: "StarCi/Blocks/Learn/QuizRecapList/QuizRecapList",

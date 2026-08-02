@@ -8,55 +8,14 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `Footer`: the marketing site footer. Brand + tagline + founder
- * socials on the left, two quiet link columns (explore / support) on the
- * right, then a bottom bar with copyright + legal stubs. Rendered by
- * `InnerLayout` only on the routes that opt in (landing, `/home`) — every
- * other route (dashboard/learn/profile/auth) renders none of this, per the
- * real component's own doc comment.
- *
- * PORTED FROM `src/components/features/footer/Footer` (verified live —
- * `InnerLayout.tsx` imports this one, not a second copy). Faithful to its
- * structure and real Vietnamese copy (`src/messages/vi.json`'s `footer.*`
- * keys), with the same container→presentational split every other block in
- * this run takes: i18n resolution and the app router are wiring, not this
- * block's job.
- *
- * ⭐ STATIC CHROME IS HARDCODED, DOMAIN LISTS STAY TYPED PROPS — same split
- * `Navbar`'s own header documents. The tagline, the two column TITLES
- * ("Explore" / "Support"), and the "made by" + copyright line are fixed
- * marketing copy this block owns outright (matches the PriceTag/ContentPaywall
- * precedent for inlined-vs-prop copy) — they never vary per caller, so a prop
- * for them would just be a fancier way to always pass the same string. The
- * LINK ENTRIES themselves (`exploreLinks`/`supportLinks`/`socials`) stay typed
- * domain props, exactly like `NavLinks`' `items`: the actual route paths and
- * external URLs come from real path helpers / i18n / a contacts constants
- * file, none of which exists in a Storybook tree — this block only knows the
- * SHAPE of a link row (label + action), not which routes exist.
- *
- * ⭐ BRANDLOCKUP FOLDED INLINE, NOT PROMOTED TO ITS OWN COMPONENT. The real
- * `Footer` composes `@/components/blocks/identity/BrandLockup` (shared with
- * `Navbar`'s brand mark). This Storybook tree only has a `_legacy`-tier port
- * of it (`_legacy/designs/identity/BrandLockup`) — off-limits per this run's
- * boundary (read-only reference, not an import source) — and `Navbar` itself
- * already chose not to build it, using the bare `Logo` atom instead. Same
- * call here: the brand mark + "StarCi / Academy" wordmark are inlined
- * directly (the exact markup `BrandLockup` would produce), one judgement
- * call flagged once rather than a new atom promoted mid-task.
- *
- * ⭐ SOCIAL ICONS USE `react-icons/fa6`, NOT PHOSPHOR — carried over
- * verbatim from the real component's own rule ("brand logos → react-icons/fa6
- * per the icon rule"): Phosphor is this system's UI-icon set, but a brand
- * logo (Facebook/LinkedIn/GitHub) is a fixed trademark glyph, a different
- * vocabulary the icon rule already carves out an exception for.
- *
- * ⭐ THE SEAM BETWEEN THE TOP REGION AND THE BOTTOM BAR REUSES `StackV`'s OWN
- * `divider` PROP instead of a hand-placed `<Divider />` — the real component
- * hand-draws a `border-t` on the bottom bar's wrapper; this port lets the
- * frame interleave the atom itself (§13c: a frame never hand-rolls what an
- * atom already owns).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `Footer` — the marketing site footer: brand + tagline + founder socials on the
+ * left, two quiet link columns (explore/support) on the right, and a bottom bar
+ * with copyright + legal stubs. Rendered only on opted-in routes (landing,
+ * `/home`). Static chrome (tagline, column titles, made-by/copyright line) is
+ * hardcoded; the link entries (`exploreLinks`/`supportLinks`/`socials`) are typed
+ * domain props. The brand lockup is folded inline; social icons use
+ * `react-icons/fa6` (brand glyphs, not Phosphor UI icons). The top-region/
+ * bottom-bar seam uses `StackV`'s `divider` prop.
  */
 
 /** One row inside a footer link column, or one of the two bottom-bar legal links. */

@@ -6,17 +6,11 @@ import type { SubmissionAttemptRecord } from "@sb-components/starci/overlays/dra
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `SubmissionAttemptsDrawer` — presentational-only overlay drawer listing every
- * past graded attempt at one challenge requirement, client-paginated. Filed
- * under `overlays/drawers` per `components/README.md` (see the component's own
- * file header for why).
- *
- * ⭐ REBUILT to match real `src/components/drawers/SubmissionResultHistoryDrawer`
- * (2026-07-29, teacher: "there's already a page for this"). A row IS the select
- * action — tapping it both picks that attempt and closes the drawer, same
- * gesture as real `src`.
- * Pagination is owned INSIDE this block (the full attempt list in, sliced 6-at-
- * a-time), not a caller-controlled `currentPage`/`totalPages` pair.
+ * `SubmissionAttemptsDrawer` — a presentational overlay drawer listing every
+ * past graded attempt at one challenge requirement, client-paginated. A row is
+ * the select action: tapping it both picks that attempt and closes the drawer.
+ * Pagination is owned inside this block (the full attempt list in, sliced
+ * 6-at-a-time), not a caller-controlled `currentPage`/`totalPages` pair.
  */
 const meta: Meta<typeof SubmissionAttemptsDrawer> = {
     title: "StarCi/Overlays/Drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer",

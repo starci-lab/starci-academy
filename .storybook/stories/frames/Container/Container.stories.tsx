@@ -5,20 +5,12 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT (frame) — `Container`: the CONTENT COLUMN (centered + width cap + padding).
+ * `Container` — the content-column layout frame: centered, width-capped, padded.
  *
- * ⭐ The most notable leaf is `ContainerQuery`: this frame OPENS `@container`, so a
- * grid inside it measures the COLUMN WIDTH instead of the app's column anymore. Two
- * columns with a different `size` wrapping the SAME `Grid` with the same `columns`
- * end up with a DIFFERENT column count — that's exactly why the teacher decided to
- * open the container (2026-07-26).
- *
- * Leaves at the frame tier split by the frame's STRUCTURE/prop axis (§14d.2), not by
- * the atom tier's 1-prop-1-leaf rule (§12g).
- *
- * MIGRATED TO `states` (2026-07-27): leaves that used to stack several renders by
- * hand in one `children` block (`Sizes`, `Padding`, `ContainerQuery`) now carry one
- * `states[]` entry per rendered value, each with its own `why` and `code`.
+ * The `ContainerQuery` leaf opens an `@container`, so a grid inside measures the
+ * COLUMN width rather than the app column — two columns of different `size`
+ * wrapping the same `Grid` with the same `columns` resolve to different column
+ * counts.
  */
 
 /** Props for the demo tile. */

@@ -12,19 +12,11 @@ import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-util
 const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon data-tier="fixture" {...props} weight="duotone" />
 
 /**
- * DESIGN — the `item` variant of ContinueCard: one of N "resume the in-progress
- * session" cards in a grid/list (the story shows 1 representative card, the grid is
- * the consumer's concern). A static SectionCard frame; the CTA is a real SeeMoreLink
- * on its own row.
- *
- * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
- * BlockAnatomy axis (Diagram + Tree) reflecting the parts THAT leaf composes — there
- * is no separate consolidated "Anatomy" story.
- *
- * MIGRATED TO `states` (2026-07-27): each leaf below renders exactly one shape, so
- * each carries a single `states[]` entry. The `mx-auto max-w-4xl` that used to wrap
- * `BlockAnatomy` itself moved into `renderClassName` — the panel now keeps its own
- * full width instead of inheriting the card's cap.
+ * The `item` variant of `ContinueCard`: one of N "resume the in-progress
+ * session" cards in a grid/list (the story shows one representative card; the
+ * grid is the consumer's concern). A static `SectionCard` frame; the CTA is a
+ * real `SeeMoreLink` on its own row. Each state below is its own leaf carrying
+ * its own `BlockAnatomy` axis.
  */
 const meta: Meta<typeof ContinueCardItem> = {
     title: "StarCi/Blocks/Learn/ContinueCard/ContinueCardItem",

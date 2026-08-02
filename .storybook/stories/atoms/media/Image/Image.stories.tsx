@@ -3,20 +3,19 @@ import { Image } from "@sb-components/atoms/media/Image/Image"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Image`: framed image wrapping `<img>`, handling its own skeleton while
- * fetching + a fallback on error/empty. Icon lib = `@phosphor-icons/react` (§5.0). It
- * doesn't compose any atom with its own story ⇒ LEAF ATOM. `Frame`/`Img`/`Fallback` are just
- * internal SLOTS, not components with a home to jump to — no badge (CATEGORY 2b, `check-orphan-parts.mjs`).
- * `Skeleton` alone IS HeroUI's own `Skeleton` rendered straight through, so it gets a badge + the
- * `annotate: { "Skeleton": { tier: "heroui" } }` declaration (CATEGORY 2a) — the panel only accepts
- * a node with a `storyId` or `tier: "heroui"`.
- *
- * 📐 **TWO LEAVES** (§14d.2 — leaves split by STRUCTURE):
+ * ATOM — `Image`: framed image wrapping `<img>`, handling its own skeleton while fetching +
+ * a fallback on error/empty. Icon lib = `@phosphor-icons/react`. It composes no atom with its
+ * own story ⇒ LEAF ATOM. `Frame`/`Img`/`Fallback` are internal slots, not components with a
+ * home to jump to — no badge. `Skeleton` is HeroUI's own `Skeleton` rendered straight
+ * through, so it gets a badge + `annotate: { "Skeleton": { tier: "heroui" } }` — the panel
+ * only accepts a node with a `storyId` or `tier: "heroui"`.
+ * 
+ * TWO LEAVES (split by structure):
  *   • `WithImage` — the tree has an `Img` node. Loaded · loading (skeleton overlay) · using
- *     `fallbackSrc` · every `ratio`/`radius`/`fit` share the SAME DOM tree ⇒ they are
- *     STATES/VARIANTS living inside ONE leaf, not split into separate stories.
- *   • `FallbackGlyph` — the `Img` node DISAPPEARS, replaced by a `Fallback` node. A node is lost
- *     ⇒ this is genuinely the second leaf.
+ *     `fallbackSrc` · every `ratio`/`radius`/`fit` share the same DOM tree ⇒ states/variants
+ *     inside ONE leaf, not separate stories.
+ *   • `FallbackGlyph` — the `Img` node disappears, replaced by a `Fallback` node. A lost node
+ *     ⇒ genuinely the second leaf.
  */
 const meta: Meta<typeof Image> = {
     title: "Atoms/Media/Image/Image",

@@ -5,25 +5,17 @@ import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, paddingClassNames, type Allo
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * FRAME. `Flex` is THE flex box of the system, and the ONLY place in the drawing
- * allowed to write `flex`, `flex-col`, `flex-wrap`, `items-*`, `justify-*` or `gap-*`.
+ * `Flex` — THE flex box of the system, and the only place allowed to write
+ * `flex`, `flex-col`, `flex-wrap`, `items-*`, `justify-*`, or `gap-*`. A single
+ * box with a direction and a wrap flag covers columns, rows, wrapping rows, and
+ * split rows.
  *
- * WHY IT EXISTS (teacher, 2026-07-27). The spacing scale was already typed, yet 227 places in
- * the stories still hand wrote `flex flex-col gap-4` because reaching for a frame cost more
- * keystrokes than writing the classes. Measured, those 227 places break down as 126 columns,
- * 48 wrapping rows, 46 rows and 6 split rows, so a single box with a direction and a wrap flag
- * covers 226 of them. With the classes living here, changing how a gap step renders is one edit
- * instead of a sweep across the tree.
+ * Every axis is a UNION, so an off-scale value is a type error where it is written
+ * rather than something a reviewer must notice — the gap scale is held by the
+ * compiler.
  *
- * Every axis is a UNION, so an off scale value is a type error where it is written rather than
- * something a reviewer has to notice. That is the whole point of the frame tier: the 10 scale
- * stops being a convention people remember and becomes something the compiler holds.
- *
- * Named frames stay, they simply stop owning classes. `StackV` still means vertical rhythm and
- * `Split` still means two named sides; they now delegate here, so the vocabulary survives while
- * the implementation lives in one file.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Named frames (`StackV`, `Split`, …) stay but stop owning classes: they delegate
+ * here, so the vocabulary survives while the implementation lives in one file.
  */
 
 /** Main axis. `col` grows without bound, which is why only `row` can wrap. */

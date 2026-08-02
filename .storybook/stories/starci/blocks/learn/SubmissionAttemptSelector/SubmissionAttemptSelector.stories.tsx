@@ -3,22 +3,14 @@ import { SubmissionAttemptSelector, type SubmissionAttempt } from "@sb-component
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `SubmissionAttemptSelector`: which GRADED ATTEMPT the reader is
- * looking at — a flex-wrap row of attempt buttons (verdict + "Attempt N" + score)
- * plus an optional "+N" trigger for whatever holds the rest of the history.
- *
- * REUSE, NOT A NEW ROW: the SELECT chrome is `ButtonRadioGroup` (role="group",
- * aria-pressed, flex-wrap) and each button's content is a `Chip` (verdict icon
- * + tone + label) — the block only owns turning `{ attemptNumber, score,
- * isPassing }` into that composition, and the "+N" trigger is
- * `ButtonRadioGroup`'s own documented `trailing` slot, not an invented node.
- *
- * ⛔ Pressing "+N" only fires `onOverflowPress` — what it opens (a history
- * drawer, say) is a SCREEN decision, out of scope for this block.
- *
- * 📐 ONE LEAF (`AttemptRow`): every difference below — loading, empty, error,
- * few attempts, many attempts — is the SAME chip strip with different content,
- * never a different structure, so none of them earns its own leaf.
+ * `SubmissionAttemptSelector` — which graded attempt the reader is looking at: a
+ * flex-wrap row of attempt buttons (verdict + "Attempt N" + score) plus an optional
+ * "+N" trigger for the rest of the history. The select chrome is `ButtonRadioGroup`
+ * and each button's content is a `Chip`; the block turns `{ attemptNumber, score,
+ * isPassing }` into that composition, and the "+N" trigger uses the group's own
+ * `trailing` slot. Pressing "+N" only fires `onOverflowPress` — what it opens is a
+ * screen decision. Loading, empty, error, few, and many attempts are all states of
+ * the one chip strip.
  */
 const meta: Meta<typeof SubmissionAttemptSelector> = {
     title: "StarCi/Blocks/Learn/SubmissionAttemptSelector/SubmissionAttemptSelector",

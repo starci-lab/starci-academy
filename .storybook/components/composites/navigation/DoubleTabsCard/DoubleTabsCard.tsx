@@ -6,24 +6,14 @@ import { type AllowedPadding } from "@sb-components/frames/_spacing"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `DoubleTabsCard`: a `Toolbar` (two tab groups)
- * living inside a `SurfaceCard` face, instead of sitting bare on the page
- * canvas the way `ContentModeNav` does today.
+ * `DoubleTabsCard` — a `Toolbar` (two tab groups) living inside a `SurfaceCard`
+ * face, rather than sitting bare on the page canvas the way `ContentModeNav` does.
+ * It is the named combination of `SurfaceCard`+`Toolbar` so every caller that needs
+ * "tabs inside a card" reaches for the same shape.
  *
- * ⭐ COMPOSES, DOES NOT REINVENT (teacher's ruling, 2026-07-29, "add a
- * doubleTabsCard built from Toolbar + Card"). `SurfaceCard.Base`'s own `header` slot is already
- * documented for exactly this shape ("a title row, A TOOLBAR") — this
- * composite is that ONE combination, named, so every caller that needs "tabs
- * inside a card" reaches for the same shape instead of re-composing
- * `SurfaceCard`+`Toolbar` by hand at each call-site (the drift `Alert.Base`
- * itself was created to avoid, §5.0/`Alert.tsx`).
- *
- * OWNS: the seam between the tab row and the body (`Toolbar`'s own `p-3`-ish
- * row sits INSIDE the card's `header`, `padding` on the card governs the body).
- * DOES NOT own: what the tabs ARE (mode/language/anything) — that vocabulary
- * stays with whichever block calls this (§6a.1: this composite stays generic).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Owns the seam between the tab row and the body (`Toolbar`'s row sits inside the
+ * card's `header`; `padding` on the card governs the body). Does not own what the
+ * tabs ARE — that vocabulary stays with whichever block calls it.
  */
 
 /** Props for {@link DoubleTabsCard}. */

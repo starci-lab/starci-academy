@@ -36,70 +36,16 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `Navbar`: the sticky top app bar. It owns the whole "what lives in
- * the header" vocabulary — brand + home link, the primary route nav, the
- * search entry point, locale + theme, cart/notifications/account, and the ONE
- * local (non-overlay-store) drawer that stands in for the desktop row on a
- * narrow viewport.
- *
- * PORTED FROM `src/components/features/navbar/Navbar` (the LIVE one — a sibling
- * `src/components/blocks/layout/shell/Navbar` also exists and is NOT wired into
- * `InnerLayout`; verified via `grep` before starting, see the run's research
- * notes). Structure, wording and behaviour below faithfully mirror that file
- * and its eight children (`Logo`/`NavLinks`/`SearchButton`/`LanguageDropdown`/
- * `DarkLightModeSwitch`/`CartButton`/`NotificationBell`/`AccountMenuDropdown`)
- * plus its `MobileNavbar` drawer — all folded into ONE file because this run's
- * contract is exactly two files (this component + its story).
- *
- * ⭐⭐ REUSE LEDGER — every child is either a real composite/atom already in this
- * Storybook, or (where none exists) a deliberate, documented drop to raw HeroUI:
- *   • desktop search field → `InputButtonLike` composite (verbatim placeholder +
- *     icon + `Kbd` suffix contract, same as `PriceTag`'s `Popover.Trigger` use).
- *   • desktop route pills → `Button.RadioGroup` atom. The real app hand-draws a
- *     `bg-accent-soft` pill; the atom's own selected/unselected skin (filled
- *     `tertiary` vs hollow `ghost`) is the closest CONTROL shape already owned by
- *     the system (single-select, one active value) — reusing it beats hand-
- *     rolling a third pill style. Judgement call, flagged here on purpose.
- *   • notification list rows → `ListRow` composite (`isSkeleton` mirrors the
- *     loading branch, same shape the real `ListRow` block gives them).
- *   • notification/account states → `AsyncContent` composite (error → loading →
- *     empty → content, same priority order as the real SWR-backed bell/menu).
- *   • account header row → `UserCell` atom (co-located skeleton, same shape the
- *     real `UserSummary` renders).
- *   • mobile nav panel → `DrawerShell` composite (per this run's instructions —
- *     NOT a hand-rolled `Drawer.Backdrop > … > Drawer.Dialog` tree).
- *   • theme switch (sun/moon glyph RIDING INSIDE the thumb) and the account /
- *     language dropdowns (a STATIC header region + a SEPARATOR + a sectioned
- *     action list, one single-select CHECK indicator) have no existing atom
- *     that reaches that anatomy — `Choice.Switch` has no thumb-icon slot,
- *     `Menu`/`Popover` atoms take a single flat/sectioned `items` list with no
- *     room for a non-item header block, and neither exposes a check indicator.
- *     These compose raw HeroUI (`Switch`, `Dropdown`/`Dropdown.Popover`/
- *     `Dropdown.Menu`/`Dropdown.Item`/`Dropdown.ItemIndicator`) directly, the
- *     same justified drop `PriceTag` already takes for its breakdown `Popover`.
- *   • cart / bell / account triggers → also raw HeroUI `Button` (`HeroButton`),
- *     for a THIRD reason: our `Button` atom's `isIconOnly` mode takes one bare
- *     `prefixIcon` COMPONENT — there is no slot for the `Badge` (cart/bell) or
- *     `Avatar` (authed account) each trigger anchors its glyph inside. Same
- *     "no `children`" gap `InputButtonLike` already documents for itself.
- *
- * ⭐ THE MOBILE DRAWER IS LOCAL STATE OWNED BY THE CALLER, NOT AN OVERLAY-STORE
- * SINGLETON (per this run's Rule 13 boundary: only `isMobileDrawerOpen` +
- * `onMobileDrawerOpenChange` are threaded in). The notification popover and the
- * two dropdown menus stay UNCONTROLLED (bare HeroUI open state) — nothing in
- * this run's prop contract asks for them to be controlled, and the atoms they
- * are built from (`Popover`/`Dropdown`) already default that way.
- *
- * ⭐ Ctrl/Cmd+K IS CARRIED OVER FROM THE REAL COMPONENT (not new wiring): the
- * real `Navbar` registers this listener on `window` itself and calls the SAME
- * `onSearchPress` prop it already owns — no new dependency, so it stays here
- * rather than being pushed out as "app wiring".
- *
- * ⛔ NO ReactNode SLOT ABOVE THIS BLOCK'S OWN ITEMS. Every list (`navItems`,
- * `languages`, `notifications.items`, `account.menuItems`) is typed DOMAIN DATA
- * (§14d.1) — a caller cannot smuggle a one-off node into any of these rows.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `Navbar` — the sticky top app bar. Owns the header vocabulary: brand + home
+ * link, primary route nav, the search entry point, locale + theme,
+ * cart/notifications/account, and one local drawer standing in for the desktop
+ * row on narrow viewports. Composes real atoms/composites where they exist
+ * (`InputButtonLike`, `Button.RadioGroup`, `ListRow`, `AsyncContent`, `UserCell`,
+ * `DrawerShell`) and drops to raw HeroUI where none fits (theme switch, the
+ * dropdown menus, and the badge/avatar-anchored icon triggers). The mobile drawer
+ * is caller-controlled (`isMobileDrawerOpen`/`onMobileDrawerOpenChange`); the
+ * popover/menus stay uncontrolled. Ctrl/Cmd+K fires `onSearchPress`. Every list
+ * is typed domain data — no `ReactNode` slots.
  */
 
 /** One top-level desktop/mobile route entry. */

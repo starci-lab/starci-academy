@@ -6,24 +6,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `HighlightCard`: wraps a card with a single accent-colored arc
- * SWEEPING around it, sitting as its own layer BEHIND it (peeking out past
- * the edges by 2px) — a pure "standout" decoration, NOT a data signal
- * (contrast with `SectionCard`'s `withVerdict`). Use for the ONE card that
- * genuinely needs to stand out on a surface — multiple highlighted cards on
- * the same screen cancel each other's emphasis out.
- *
- * 📐 **1 PROP = 1 LEAF.** `HighlightCard` only has ONE prop that changes its
- * own visual: `isSkeleton`. `children` has no leaf of its own — it is the
- * wrapped card, arbitrary content this wrapper never inspects. `classNames`
- * has no leaf either: appearance is not passable, it is already a prop.
- * `anatPart` is anatomy wiring, not a design prop — it is set on every
- * render below so the wrapper can badge its own root, never leafed itself.
- *
- * ⚠️ The wrapped `children` is arbitrary caller content (§11a.1 CASE 3 — no
- * ONE fixed component to point to), so it is NOT declared in `annotate`.
- * Only the wrapper's own root gets a self-entry, the same convention
- * `MetricCard`/`ProgressRing` use for a composite that badges only itself.
+ * `HighlightCard` — wraps a card with a single accent-colored arc sweeping around it, on its
+ * own layer behind the card (peeking 2px past the edges). A pure standout decoration, not a
+ * data signal. Use for the one card that must stand out on a surface; multiple highlighted
+ * cards cancel each other's emphasis. Leaf: `isSkeleton`.
  */
 const meta: Meta<typeof HighlightCard> = {
     title: "Composites/Cards/HighlightCard",

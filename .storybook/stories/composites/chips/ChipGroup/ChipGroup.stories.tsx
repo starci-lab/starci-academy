@@ -3,20 +3,10 @@ import type { ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 import { ChipGroup, type ChipGroupItem } from "@sb-components/composites/chips/ChipGroup/ChipGroup"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * COMPOSITE — `ChipGroup`: a ROW of chips built from `items` data, cut at `maxVisible`,
- * the overflow gathered into a `+N` chip that opens a Tooltip.
- *
- * ⚠️ STATE SCOPE (§12f): the cluster does NOT invent new meaning — it `import { Chip }`
- * and rebuilds. So the story here ONLY renders state BELONGING TO THE CLUSTER: `items` ·
- * `maxVisible` · cluster-level `tone` · `isSkeleton` for the whole row. State of EACH chip
- * (glyph, color dot, × button) lives in the `Chip` story — NOT repeated here.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g). The cluster's prop set is smaller than `Chip`'s, correctly, per §12f.
- *
- * ⚠️ This is the old `TagChips` (moved 2026-07-26). The old version called HeroUI Chip
- * directly so it drifted away from the atom: chips in the row didn't follow tone, the
- * skeleton drew a different size on its own. Now every pill in the row is a real
- * `Chip` — see the Deps tab.
+ * `ChipGroup` — a row of chips built from `items` data, cut at `maxVisible`, the overflow
+ * gathered into a `+N` chip that opens a Tooltip. Owns cluster-level state (`items`,
+ * `maxVisible`, `tone`, `isSkeleton`); each pill is a real `Chip`, whose per-chip state (glyph,
+ * color dot, × button) lives in the `Chip` story.
  */
 const meta: Meta<typeof ChipGroup> = {
     title: "Composites/Chips/ChipGroup",

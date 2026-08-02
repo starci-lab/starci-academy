@@ -6,43 +6,25 @@ import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `Form.*`, the ONE form composite namespace
- * (§13, teacher confirmed 2026-07-25 — tier name changed from `layout` to
- * `composite` at the tier split 2026-07-27: `Form` owns a content role via
- * `Section`/`Actions`, it is not a bare slot like the 7 frames are).
- *
- * Once a form atom carries its OWN `label`/`hint`/`errorMessage`/`isRequired`
- * (§12e — the `Field.*` tier was DELETED per §13c), the form shell has nothing
- * left to "dress" for a field. Its remaining job is LAYOUT ONLY: build a real
- * `<form>`, group fields under a heading, and lay out the closing button row.
+ * `Form.*` — the form composite namespace. Because each form atom carries its own
+ * `label`/`hint`/`errorMessage`/`isRequired`, the shell's job is LAYOUT ONLY:
+ * build a real `<form>`, group fields under a heading, and lay out the closing
+ * button row.
  *
  * | Member | Shell | Content channel |
  * |---|---|---|
  * | `.Base`    | `<form>` shell + content column + button row | slot `body` (+`children`) · `actions` |
- * | `.Section` | a titled group of fields                     | `title`/`description` + slot `body` (+`children`) |
- * | `.Actions` | the closing button row                        | **`items` — children FORBIDDEN** |
+ * | `.Section` | a titled group of fields | `title`/`description` + slot `body` (+`children`) |
+ * | `.Actions` | the closing button row | `items` — children forbidden |
  *
- * SHELL API LAW (§13b):
- * - `.Base` / `.Section` are WRAPPING shells → the named slot (`body`) is the
- *   main path, `children` stays as a shorthand for `body`.
- * - `.Actions` is a REPEATED LIST (N buttons of the same kind) → `items` DATA
- *   is REQUIRED, children FORBIDDEN — exactly like `ButtonGroup.items` (§12b).
- * - Namespace only — does NOT export a bare component (§13a).
+ * `.Base`/`.Section` are wrapping shells (`body` is the main path, `children` a
+ * shorthand); `.Actions` is a repeated list requiring `items` and composing the
+ * `ButtonGroup` atom. Namespace only — no bare component export.
  *
- * THE SHELL CARRIES NO BEHAVIOUR (§13):
- * - It must NOT re-declare `label`/`hint`/`errorMessage`/`isRequired` — the atom
- *   owns those (§12e).
- * - NO validation, NO field state, NO business rule — that belongs to the
- *   `block` tier. The shell only knows "locked or not" (`isDisabled`) and "submit".
- * - It must NOT hand-draw a button — `.Actions` COMPOSES the atom `ButtonGroup` (§13c).
- *
- * SPACING (§10c): every gap goes through {@link AllowedGap} — a union literal
- * `1..8`, a STEP in the scale, never a raw px number (`gap={3}` → `gap-2`, not
- * `gap-3`). The shell FORCES the scale via the TYPE, it accepts no arbitrary
- * number; off-scale values simply don't compile. Spacing comes from the
- * **parent's gap**, NEVER a child's margin (§10a).
- * ─────────────────────────────────────────────────────────────────────────────
+ * The shell carries no behaviour: no validation, field state, or business rule
+ * (that is the block tier); it knows only "locked or not" (`isDisabled`) and
+ * "submit". Every gap goes through {@link AllowedGap} (`1..8`); spacing comes from
+ * the parent's gap, never a child's margin.
  */
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "Form" } as const

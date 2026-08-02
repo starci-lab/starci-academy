@@ -5,26 +5,13 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `Pagination` wraps HeroUI `Pagination` directly (`Pagination.Previous`/
- * `Pagination.Link`/`Pagination.Ellipsis`/`Pagination.Next` are all sub-parts of
- * the HeroUI compound, not atoms of our own system with their own story).
- * 2026-07-27: the heroui tier was added to canon — each of those sub-parts is
- * still a REAL import, so they still get declared `tier: "heroui"` in `ANNOTATE`
- * below, the name matching the import identifier EXACTLY (no `storyId` needed,
- * there is no story OF OURS to jump to).
- *
- * Leaf `Skeleton` was renamed from `Loading` (2026-07-27, per the ruling: a leaf
- * takes the PROP'S NAME — the prop that produces this leaf is `isSkeleton`).
- * §12g requires Skeleton to render every step WITH A KNOWN SHAPE — but the
- * "windowing" axis (Default = every page shown in full, ManyPages = the far
- * pages collapsed into '…') depends DIRECTLY on `totalPages`, which is exactly
- * the number NOT YET AVAILABLE while loading (the very reason it's skeleton in
- * the first place). Unlike `Button`'s `size` or `Breadcrumbs`'s `collapseFrom`
- * (known ahead of time by the caller, independent of data), windowing here
- * CANNOT be known ahead of time ⇒ one representative shape (a row of squares)
- * is enough, not a missed step.
- *
- * MIGRATED TO `states` (2026-07-27): each leaf below still renders exactly one
- * shape, so each carries a single `states[]` entry.
+ * `Pagination.Link`/`Pagination.Ellipsis`/`Pagination.Next` are sub-parts of the HeroUI
+ * compound). Each is a real import, so they declare `tier: "heroui"` in `ANNOTATE`, the name
+ * matching the import identifier exactly (no `storyId`).
+ * 
+ * The `Skeleton` leaf carries the prop's name (`isSkeleton`). The windowing axis (Default =
+ * every page shown; ManyPages = far pages collapsed into "…") depends on `totalPages`, which
+ * is not available while loading, so one representative shape (a row of squares) is enough.
  */
 
 const meta: Meta<typeof Pagination> = {

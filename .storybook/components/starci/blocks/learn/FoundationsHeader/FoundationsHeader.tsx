@@ -3,39 +3,12 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FoundationsHeader`: the CATEGORY IDENTITY block, answering "what
- * foundations category is this" at the top of a foundations category screen.
- *
- * FOURTH SIBLING of `ContentHeader` (lesson identity), `CourseBrief` (course
- * identity) and `ModuleHeader` (module identity) — NOT a copy of any of them.
- * All four place identity into the same `PageHeader` frame with a
- * `Breadcrumbs` trail, but each answers a different question with different
- * domain fields. See `ContentHeader`'s file header for why that makes each one
- * its own block instead of a prop bolted onto an existing one.
- *
- * ⭐ THINNER THAN ITS SIBLINGS, ON PURPOSE. `ContentHeader` carries a read-state
- * chip, a reading-time/challenge-count meta row and an outcomes list;
- * `ModuleHeader` carries a tier chip and three count pills. This block carries
- * NEITHER — the `src` original (`FoundationsLearnHeader`) never had a meta row
- * or a secondary card, because a foundations category is a plain navigational
- * hub, not a graded unit with its own stats. Inventing a meta row here would be
- * decorating a screen with facts the source never tracked (§14d.3).
- *
- * EARNS ITS LAYER (rule #10) the same way `ContentHeader` does: the block
- * builds the `Breadcrumbs` atom from crumb DATA (`breadcrumbItems`) rather
- * than accepting a pre-built node, and it drives `PageHeader`'s title slot
- * with the exact skeleton-vs-real decision its siblings make. A block that
- * only forwarded `title`/`description` straight into `PageHeader` with no
- * breadcrumb-building step would be a passthrough; building the trail from
- * data is the judgement call that makes this its own layer.
- *
- * NO "NO BREADCRUMB" LEAF, same call `ContentHeader` and `ModuleHeader` make:
- * a foundations category is always reached through home → courses → course →
- * foundations hub → this category, so the trail always exists in the real
- * screen. `breadcrumbItems` stays optional only so a Storybook/skeleton
- * consumer can omit it, not because a real screen ever will.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `FoundationsHeader` — the category-identity block at the top of a foundations category
+ * screen: breadcrumb trail, title, description. Sibling of `ContentHeader`/`CourseBrief`/
+ * `ModuleHeader` on the same `PageHeader` frame, but thinner — no meta row or secondary
+ * card (a foundations category is a navigational hub, not a graded unit). Builds
+ * `Breadcrumbs` from `breadcrumbItems` DATA; the trail always exists in the real screen
+ * (optional only for skeleton/story).
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

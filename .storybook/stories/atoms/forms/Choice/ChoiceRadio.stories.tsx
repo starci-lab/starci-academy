@@ -5,11 +5,10 @@ import { ChoiceRadio } from "@sb-components/atoms/forms/Choice/Choice"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Radio.Content`/`Radio.Control` — heroui's OWN compound parts (imported `Radio as
- * HeroRadio` and rendered directly), so they enter the tree as tier `heroui` with
- * no `storyId` (§ two-law pass, 2026-07-28). `Skeleton` is the same heroui
- * `Skeleton` the `isSkeleton` branch renders directly, so it gets the same
- * treatment (2026-07-28 orphan-part pass).
+ * `Radio.Content`/`Radio.Control` — HeroUI's own compound parts (imported `Radio as
+ * HeroRadio` and rendered directly), so they enter the tree as tier `heroui` with no
+ * `storyId`. `Skeleton` is the same HeroUI `Skeleton` the `isSkeleton` branch renders
+ * directly, so it gets the same treatment.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Radio.Content": { tier: "heroui", role: "row wrapping the dot + label" },

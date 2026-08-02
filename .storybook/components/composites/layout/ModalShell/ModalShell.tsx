@@ -6,24 +6,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `ModalShell.*`, the dialog-scaffold FRAME
- * namespace (teacher's call, 2026-07-25, canon §13a). Authored in Storybook (not `src`);
- * synced to `src` later. No `@/components` imports (design-spec ports stay
- * self-contained).
+ * `ModalShell.*` — the dialog-scaffold frame namespace.
  *
- * FRAME API LAW (§13b): `.Base` is a WRAPPER frame → the named slots
- * `header`/`body`/`footer` are the main road, `children` stays as shorthand
- * for `body`. `footer` is a REAL slot now (rendered as HeroUI `Modal.Footer`)
- * — before this refactor every caller hand-rolled a
- * `<div className="flex justify-end gap-2">` CTA row INSIDE the body, which is
- * exactly the "several things crammed into one place" the slot law exists to
- * stop. Nothing here repeats, so no `items` member. Namespace only — no bare
- * component export.
+ * `.Base` is a wrapper frame: named slots `header`/`body`/`footer` are the main
+ * road, `children` a shorthand for `body`. `footer` is a real slot (rendered as
+ * HeroUI `Modal.Footer`) so the CTA row is no longer hand-rolled inside the body.
+ * Nothing repeats, so no `items` member. Namespace only — no bare component export.
  *
- * A tier-3 presentational frame — it owns no state of its own; the caller
- * threads open/close state plus the header and body content via props.
- * ─────────────────────────────────────────────────────────────────────────────
+ * A tier-3 presentational frame: it owns no state of its own — the caller threads
+ * open/close state plus header and body content via props.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

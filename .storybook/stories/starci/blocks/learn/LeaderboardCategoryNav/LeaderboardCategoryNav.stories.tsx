@@ -3,19 +3,12 @@ import { LeaderboardCategoryNav } from "@sb-components/starci/blocks/learn/Leade
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `LeaderboardCategoryNav`: the MOBILE chip row for switching which XP
- * category the leaderboard is sorted by — the `variant="chips"` half of the src
- * `LeaderboardCategoryRail`. The `variant="rail"` half (desktop `ListBox`) lives
- * in the shared learn-shell `leftRail` slot and is out of scope for this block.
- *
- * ⭐ REUSE, NOT A NEW ROW. Picking a category RE-SORTS the same board — a
- * single-value facet toggle, not navigation to a different body — so this wraps
- * `Button.RadioGroup` (already documented for "a facet/config toggle isn't a
- * CTA") instead of `ContentModeNav`'s tab-navigation idiom.
- *
- * 📐 ONE LEAF, `ChipRow`. Every difference below (which category is selected,
- * how many XP each carries) is the SAME four-chip row wearing different data,
- * never a different structure, so none of it earns its own leaf.
+ * `LeaderboardCategoryNav` — the mobile chip row for switching which XP category
+ * the leaderboard is sorted by (the `variant="chips"` half of `LeaderboardCategoryRail`;
+ * the desktop `ListBox` rail lives in the learn-shell `leftRail` slot). Picking a
+ * category re-sorts the same board — a facet toggle, not navigation — so it wraps
+ * `Button.RadioGroup`. Which category is selected and each XP count are data on the
+ * same chip row.
  */
 const meta: Meta<typeof LeaderboardCategoryNav> = {
     title: "StarCi/Blocks/Learn/LeaderboardCategoryNav/LeaderboardCategoryNav",

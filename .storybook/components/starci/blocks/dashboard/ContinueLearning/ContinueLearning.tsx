@@ -5,53 +5,24 @@ import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContinueLearning` (dashboard): the "Continue learning" content slot —
- * a capped set of resume targets (recently-read lessons, mixed with AT MOST one
- * in-progress challenge), or an onboarding CTA when there is nothing to resume
- * yet. Content only — the PAGE frames it with a label; this block never draws
- * its own title (mirrors the real `src/components/features/dashboard/ContinueLearning`,
- * whose own file header says the same: "the greeting lives in the identity column").
+ * `ContinueLearning` — a BLOCK (dashboard): the "Continue learning" content slot —
+ * a capped set of resume targets (recently-read lessons mixed with at most one
+ * in-progress challenge), or an onboarding CTA when there is nothing to resume yet.
+ * Content only — the page frames it with a label; this block never draws its own
+ * title.
  *
- * ⭐ AUDITED FROM `src` 2026-07-31 (matrix-driven build). Data shape in hand: a
- * CAPPED array (≤3, decided upstream by the real `useResumeItems` hook — this
- * block does not slice) of `{ globalId, label, kind }`, `kind` a closed
- * two-value enum (`"lesson" | "challenge"`) that only changes a subtitle word,
- * no long free text anywhere. `node scripts/matrix.mjs` answers:
- *   • `"An ARRAY of UNIFORM cells divided by COLUMN COUNT at container-query steps"`
- *     → `Grid` (frames) — the resume cards reflow `1 → 2 → 3` columns exactly like
- *     the real component's `@app-sm:grid-cols-2 @app-lg:grid-cols-3`.
- *   • `"'Nothing here yet' + at most one way out"` → `AsyncContentEmpty` — the
- *     onboarding CTA (message + one button), reached whether the viewer has zero
- *     courses or zero resume targets; only the WORDING forks on `hasCourses`.
- *   • The card itself is NOT re-derived: `ContinueCardItem` (design tier,
- *     `starci/blocks/learn/ContinueCard`) already owns exactly this shape — its
- *     own JSDoc says `".Item — ONE of N 'continue' cards in a list/grid"`. This
- *     block only decides WHICH `kind` word becomes the subtitle; it never
- *     reshapes the card.
+ * Data: a capped array (≤3, sliced upstream) of `{ globalId, label, kind }`, `kind`
+ * a closed `"lesson" | "challenge"` enum that only changes a subtitle word. The
+ * resume cards reflow 1 → 2 → 3 columns via the `Grid` frame; the onboarding CTA is
+ * `AsyncContentEmpty` (message + one button). Each card is the existing
+ * `ContinueCardItem`, unchanged — this block only picks which `kind` word becomes
+ * the subtitle.
  *
- * LEAF BY STRUCTURE (§14d.2), three of them:
- *   1. Content — 1–3 `ContinueCardItem` tiles inside a `Grid`.
- *   2. Empty   — the WHOLE track is replaced by `AsyncContentEmpty`; wording
- *      forks on `hasCourses` (browse courses vs. nothing resumed yet), but the
- *      shape never forks — always one message + one button.
- *   3. Loading — `items` still empty and `isLoading`: a guessed 3-tile grid,
- *      each tile `ContinueCardItem`'s OWN skeleton mirror (no fabricated title).
- *
- * FULL STATE SET (read before building — nothing left unstated):
- *   • empty   → leaf 2 (two wordings, one shape).
- *   • loading → leaf 3.
- *   • error   → ABSENT, WITH REASON: the real `useResumeItems` hook merges three
- *     SWR queries into `{ resumeItems, hasCourses, isLoading }` — no `error`
- *     field ever reaches this block, so there is no error branch to model
- *     (confirmed by reading `useResumeItems.ts`: SWR errors are not surfaced).
- *   • content → leaf 1.
- *   • pending → ABSENT, WITH REASON: the real `ResumeCard` holds a LOCAL
- *     `pending` flag while it resolves a card's route before navigating
- *     (`queryResolveRoute`). That is a per-press UI detail owned by the caller
- *     that presses `onSelectItem`, not data this presentational block receives
- *     or a shape it draws — nothing in the entity below carries a pending state.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Three leaves by structure: Content (1–3 tiles in a `Grid`), Empty (whole track
+ * replaced by `AsyncContentEmpty`; wording forks on `hasCourses`, shape does not),
+ * Loading (a guessed 3-tile grid of `ContinueCardItem` skeletons). No error branch
+ * (the source hook never surfaces one) and no pending state (route-resolve pending
+ * is the caller's, not this block's).
  */
 
 /** Resume target kind — the ONLY thing that changes the card's subtitle wording. */

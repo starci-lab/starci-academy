@@ -4,52 +4,16 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `MindMapContinueButton`: the SINGLE primary next-step action floating
- * over the course mind-map. "Jump to whatever I have not read yet", or a quiet
- * confirmation once there is nothing left to jump to.
+ * `MindMapContinueButton` — the single primary next-step action floating over the course
+ * mind-map: a resume pill, or a quiet "all done" note. Precedence: `resumeHref` present →
+ * resume pill (regardless of `allContentDone`); null + `allContentDone` → the note; null
+ * + not done → renders nothing. `resumeHref` is the single source of truth for "is there
+ * something to resume", so the CTA never goes nowhere.
  *
- * GROUNDED IN THE REAL SCREEN — read
- * `src/components/features/learn/MindMap/MindMapContinueButton/index.tsx`
- * before touching this file. That component decides between THREE outcomes, not
- * two, and this block reproduces the same precedence:
- *   1. `resumeHref` present → the resume pill, REGARDLESS of `allContentDone`.
- *   2. `resumeHref` null AND `allContentDone` → the quiet "all done" note.
- *   3. `resumeHref` null AND NOT `allContentDone` (a guest with nothing
- *      resolved yet) → renders nothing. Real, but not one of the two STORY
- *      leaves — the storybook LEAVES describe the two states that have a
- *      shape; "nothing" has none to show.
- *
- * ⭐ `resumeHref` WINS ON PURPOSE (not "content-driven omission" by wording
- * alone, but the same *rule*, §7): a caller cannot flag `allContentDone = true`
- * while still handing back a real href and have this block show the CTA
- * anyway — but the reverse (href present, done flag stale) is exactly the
- * state a screen has for one tick when a learner finishes the last lesson and
- * a new "next" target has not resolved yet. Picking `resumeHref` as the single
- * source of truth for "is there something to resume" avoids a button that
- * would go nowhere, which is the one thing a primary CTA must never do.
- *
- * TWO LEAVES, TWO DIFFERENT ATOMS — not a style flip on one shape. The resume
- * state is an ACTION (`Button`, pressable, carries the arrow); the done state
- * is a NOTICE (`Typography`, inert, no press handler at all). Collapsing them
- * into one "pill" component with an `isDone` flag would let a caller wire
- * `onResume` to a note that can never fire it — the type split makes that
- * combination unrepresentable instead of merely unwise.
- *
- * JUDGEMENT CALL — `shadow-lg` on both leaves. This block has exactly one call
- * site (floating over the map canvas, `<Panel position="top-center">` in the
- * real screen) and is never read sitting flush on a page — the shadow is what
- * tells the eye "this is on top of the canvas, not part of it". The PANEL
- * POSITIONING itself (`top-center`, the `m-4` offset) stays out of this file:
- * that is where-on-screen, decided by whatever embeds this block into
- * `ReactFlow`, not what-this-button-is.
- *
- * SKELETON GUESSES THE FULLER SHAPE, same reasoning as `ModuleContinueBand`:
- * while loading, neither `resumeHref` nor `allContentDone` is known yet, and a
- * returning learner mid-course sees the resume pill far more often than the
- * done note — so the shimmer mirrors the `Button` pill rather than the
- * `Typography` note, and does not jump shape once data lands.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Two leaves with two different atoms — the resume state is a pressable `Button` (with
+ * arrow), the done state an inert `Typography`. Both carry `shadow-lg` (this floats over
+ * the canvas). Skeleton mirrors the resume pill (the more common returning-learner
+ * shape). Panel positioning stays with whatever embeds this into `ReactFlow`.
  */
 
 /** Label the block writes itself (§14d.1) — not opened to the caller. */

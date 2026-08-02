@@ -3,20 +3,13 @@ import { PlaygroundStepGuide } from "@sb-components/starci/blocks/learn/Playgrou
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundStepGuide`: the left pane of a playground run — read the
- * current step, run its command on your own machine, ask the agent to verify
- * it. See the component's file header for the reuse check and the leaf/state
- * split; this file only builds on top of that.
- *
- * THREE LEAVES BY STRUCTURE:
- *   • `Step` — a step WITH a command fence. `verifyState` moves through its
- *     four DATA states inside the one action slot.
- *   • `StepNoCommand` — a read-only explainer step. `commandHint` is missing,
- *     so the whole second `MarkdownContent` node is gone — a node
- *     disappearing is a structural change, so this earns its own leaf rather
- *     than folding into `Step` as a fifth state.
- *   • `Complete` — `step` is `undefined`: the pane is replaced end to end by
- *     `EmptyState`, the largest structural change the block can make.
+ * `PlaygroundStepGuide` — the left pane of a playground run: read the current step,
+ * run its command on your own machine, ask the agent to verify it. Three shapes:
+ *   • `Step` — a step with a command fence; `verifyState` moves through its four
+ *     data states inside the one action slot.
+ *   • `StepNoCommand` — a read-only explainer step with `commandHint` missing, so the
+ *     second `MarkdownContent` node is gone.
+ *   • `Complete` — `step` is `undefined`, so the pane is replaced end to end by `EmptyState`.
  */
 const meta: Meta<typeof PlaygroundStepGuide> = {
     title: "StarCi/Blocks/Learn/PlaygroundStepGuide/PlaygroundStepGuide",

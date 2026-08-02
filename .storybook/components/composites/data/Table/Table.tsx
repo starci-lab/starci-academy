@@ -5,32 +5,24 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `Table.*`: data-table frame, wrapping the HeroUI `Table`.
+ * `Table.*` — the data-table frame, wrapping the HeroUI `Table`.
  *
  * | Member | Shape | Content channel |
  * |---|---|---|
- * | `.Base` | 1 column–row table | **`columns` + `items` DATA — children FORBIDDEN** |
+ * | `.Base` | 1 column–row table | `columns` + `items` DATA — children forbidden |
  *
- * FRAME API LAW (§13b):
- *   • A table is a REPEATED LIST (N rows of the same kind) ⇒ `items` is
- *     **REQUIRED**, `children` is FORBIDDEN. Column configuration goes through
- *     `columns` (not a JSX `<Column>` child).
- *   • The frame carries NO domain content: it does NOT format money/dates/status —
- *     the consumer passes an already-formatted `ReactNode` into each cell
- *     (`items[i][column.key]`).
- *   • The frame does NOT grow functionality: no internal sort/filter/paginate/select.
- *     An interactive cell (button, chip) is a node the consumer passes in.
+ * A table is a repeated list, so `items` is required and `children` forbidden;
+ * columns are configured through `columns`, not a JSX `<Column>` child. The frame
+ * carries no domain content — it does NOT format money/dates/status (the consumer
+ * passes an already-formatted `ReactNode` per cell) — and grows no
+ * sort/filter/paginate/select; an interactive cell is a node the consumer passes in.
  *
- * COMPOSE (§13c): uses the HeroUI `Table` compound DIRECTLY (alias `HeroTable`) —
- * `Table.ScrollContainer` → `Table.Content` → `Header/Column` + `Body/Row/Cell`;
- * the skeleton mirror uses `Typography.isSkeleton` bars (structural scaffold, §12c).
+ * Uses the HeroUI `Table` compound directly (alias `HeroTable`); the skeleton
+ * mirror uses `Typography.isSkeleton` bars.
  *
- * ⚠️ ALIGNMENT via a WRAPPING SPAN, not a class on `<th>/<td>`: HeroUI's own CSS
- * (`.table__column { text-align: left }`) is un-layered, so it WINS over Tailwind
- * v4 utilities (which live inside `@layer utilities`). Declaring `text-align` on
- * the child itself (the span) always wins over an INHERITED value → no `!important` needed.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Alignment is applied via a wrapping span, not a class on `<th>/<td>`: HeroUI's
+ * un-layered `.table__column { text-align: left }` beats Tailwind v4 utilities, but
+ * declaring `text-align` on the child span always wins over the inherited value.
  */
 
 /** Which edge a column's content aligns to (reading start, or the right edge for numbers/actions). */

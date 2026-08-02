@@ -9,29 +9,12 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QuizSetup`: choose the shape of a drill, then start it.
- *
- * WHY A BLOCK: every choice on this form is DOMAIN — how long a run is, what
- * seniority the questions aim at, what the run is called. The block owns those
- * words and the lengths behind them; the caller says which level is picked, never
- * what "Middle" reads as or how many cards `deep` means.
- *
- * ⭐ LENGTH IS A CHOICE OF SHAPE, NOT A NUMBER. The learner picks "quick" or
- * "deep"; the block turns that into 5 or 10 cards and SAYS so on the button. A
- * caller passing a card count would move the judgement about what a short run is
- * out of the design system and into whoever wired the screen.
- *
- * ⭐ A RUN IN PROGRESS TAKES PRIORITY OVER STARTING A NEW ONE. When one exists,
- * the resume strip leads the card, above the form. Starting fresh is still there
- * — but a learner who left mid-run almost always means to come back, and making
- * them scroll past a start button to find their own session is how a run gets
- * abandoned twice.
- *
- * THE ERROR SITS WITH THE ACTION. A failed draw is reported next to the button
- * that failed, not at the top of the card: an error far from its cause reads as a
- * problem with the whole form.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QuizSetup` — choose the shape of a drill (length, seniority, name), then
+ * start it. The block owns the domain wording and the lengths behind it: the
+ * learner picks "quick" or "deep" and the block turns that into 5 or 10 cards,
+ * saying so on the button. A run already in progress takes priority — the resume
+ * strip leads the card above the form. A failed draw is reported next to the
+ * button that failed.
  */
 
 /** How long a drill runs. */

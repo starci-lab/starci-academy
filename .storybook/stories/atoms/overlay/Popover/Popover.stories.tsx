@@ -4,33 +4,24 @@ import { Popover } from "@sb-components/atoms/overlay/Popover/Popover"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Popover`: the ONE click-panel atom, wraps HeroUI `Popover` directly +
- * a `Button` as its pressable trigger (react-aria's `DialogTrigger` requires a
- * pressable trigger). No child atom splits off into its own story — `heading`/
- * `triggerIcon`/`triggerVariant`/`placement`/`showArrow` are all prop-driven LEAVES
- * of `Popover` itself (§12g — the 2026-07-26 audit added the last 3 leaves, missing before then).
- *
- * 🌿 `annotate` (2026-07-28): every HeroUI import that `Popover.tsx` renders directly
- * declares `tier: "heroui"` — the `heroui` tier needs NO `storyId`. Node names match
- * the REAL import name (`Button` for the trigger; `Popover.Content`/`Popover.Arrow`/
- * `Popover.Heading` — real dot-access on the `HeroPopover` compound — for the panel),
- * not the role it plays (no longer calling the trigger `"Trigger"` or the panel a bare `"Content"`).
- *
- * ⚠️ Still a PORTAL LIMIT: `Popover.Content` (and the `Popover.Arrow`/`Popover.Heading`
- * nested inside it) render into `document.body`, OUTSIDE the render-box that
- * {@link BlockAnatomy} scans, so even with `annotate` declared they still do NOT
- * show up in the Structure tree — declaring the right name is still worth doing, it's
- * just DATA honesty, not a promise they'll be VISIBLE. Only `Button` (the trigger,
- * no portal) actually lands in the tree.
- *
- * 🧭 The `Placement`/`ShowArrow` leaves open the panel through a PORTAL, so they need
- * `defaultOpen` to be SEEN at all (closed = nothing to inspect). Both lay their popovers
- * out in a VERTICAL COLUMN, each row leaving a tall empty band — so the panel can open
- * up/down/left/right without overlapping the next row. The `TriggerVariant` leaf is the
- * opposite: the difference lives in the BUTTON (closed), no need to open the panel.
- *
- * ✍️ Text that shows up in the UI (`triggerLabel`, `content`, `reason`/`why`) is written
- * in ENGLISH (teacher's call, 2026-07-26) — including demo content, not just the panel's own annotation.
+ * ATOM — `Popover`: the one click-panel atom, wraps HeroUI `Popover` directly + a `Button` as
+ * its pressable trigger (react-aria's `DialogTrigger` requires one). No child atom splits into
+ * its own story — `heading`/`triggerIcon`/`triggerVariant`/`placement`/`showArrow` are all
+ * prop-driven leaves of `Popover` itself.
+ * 
+ * `annotate`: every HeroUI import `Popover.tsx` renders directly declares `tier: "heroui"`
+ * (no `storyId`). Node names match the real import name (`Button` for the trigger;
+ * `Popover.Content`/`Popover.Arrow`/`Popover.Heading` for the panel).
+ * 
+ * PORTAL LIMIT: `Popover.Content` and its nested `Popover.Arrow`/`Popover.Heading` render into
+ * `document.body`, outside the render-box {@link BlockAnatomy} scans, so they do not show up in
+ * the Structure tree — declaring the right name is data honesty, not a visibility promise. Only
+ * `Button` (the trigger) lands in the tree.
+ * 
+ * The `Placement`/`ShowArrow` leaves open the panel through a portal, so they need `defaultOpen`
+ * to be seen, and lay their popovers out in a vertical column so each can open in any direction
+ * without overlapping. The `TriggerVariant` leaf's difference lives in the closed button, so it
+ * needn't open the panel. UI text (`triggerLabel`, `content`, `reason`/`why`) is English.
  */
 
 /**

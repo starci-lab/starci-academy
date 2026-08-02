@@ -3,26 +3,11 @@ import { FoundationResourceBody } from "@sb-components/starci/blocks/learn/Found
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FoundationResourceBody`: renders one foundation resource by `kind` —
- * a markdown article, an honestly-gapped video slot, or an "open link" button.
- *
- * ⭐ VIDEO IS A SCOPE CUT, NOT A STUB (§B3). No video-playback primitive exists
- * in the inventory, so this leaf draws the card CHROME a video resource gets
- * and an honest `EmptyState` gap instead of faking a player — see the
- * component file header for the full reasoning.
- *
- * ⭐ `onOpenLink` is a DEVIATION from `src`, which calls `window.open` itself.
- * A block never performs a business-decided side effect (rule 7) — this one
- * hands the resolved URL up and lets the screen decide what "open" means.
- *
- * 📐 THREE LEAVES = the three `kind`s (each a structurally different tree).
- * `isSkeleton` stays a STATE inside each leaf rather than its own leaf: unlike
- * `ContentHeader`/`ContentArticle` (where flipping the flag re-shapes several
- * composed parts at once), here it only ever swaps ONE atom — and for the
- * `document`/`video` leaves it has no visible effect at all (`SurfaceCard`
- * only shimmers a `label`/`description` this block never gives it), which is
- * exactly why those two states are shown as an honest near-blank card rather
- * than invented shimmer.
+ * `FoundationResourceBody` — renders one foundation resource by `kind`: a markdown
+ * article, a video slot (drawn as the card chrome plus an honest `EmptyState` gap,
+ * since no video-playback primitive exists), or an "open link" button. `onOpenLink`
+ * hands the resolved URL up to the screen rather than opening it here. Three
+ * structural shapes, one per kind; `isSkeleton` is a state inside each.
  */
 const meta: Meta<typeof FoundationResourceBody> = {
     title: "StarCi/Blocks/Learn/FoundationResourceBody/FoundationResourceBody",

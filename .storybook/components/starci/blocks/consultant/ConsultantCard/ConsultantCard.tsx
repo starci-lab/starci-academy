@@ -6,45 +6,21 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ConsultantCard`: ONE recruiting consultant as a self-contained
- * pressable tile — photo, name, role, company, blurb. Opening it is the whole
- * point of the card, so it reuses `SurfaceCard.Pressable` (composite,
- * navigation behaviour) rather than reaching for the bare `Image`/`Typography`
- * atoms and hand-rolling a `<button>` around them — the exact mistake this run
- * exists to correct (see `ContentModeNav`'s file header for the prior
- * incident).
+ * `ConsultantCard` — a BLOCK: one recruiting consultant as a self-contained
+ * pressable tile (photo, name, role, company, blurb). Opening it is the whole
+ * point, so it reuses `SurfaceCard.Pressable` rather than hand-rolling a
+ * `<button>` around bare atoms. A domain identity block: it knows what a
+ * "consultant" is, reusable wherever one consultant is shown.
  *
- * A DOMAIN IDENTITY BLOCK, not a one-off. It knows what a "consultant" is (a
- * person with a role and a company, offered so a visitor can open their
- * profile) — a fact neither `SurfaceCard.Pressable` (content-agnostic khung)
- * nor `Image`/`Typography` (no domain at all) can know on their own. Reusable
- * wherever ONE consultant needs to be shown — today's `ConsultantDirectoryGrid`
- * tiles, tomorrow's not-yet-built profile overlay.
+ * Does NOT forward `isSkeleton` into `SurfaceCard.Pressable`'s own flag: that
+ * built-in skeleton is a horizontal leading-avatar row, which would flip this
+ * top-aligned photo tile's layout on every load. Instead the block keeps
+ * `.Pressable` on its real branch (only dropping `onPress` via `isDisabled`) and
+ * pushes `isSkeleton` straight into `Image` and `Typography`. During loading every
+ * optional row (role / company / blurb) is drawn as a shimmer bar.
  *
- * ⚠️ DOES NOT FORWARD `isSkeleton` INTO `SurfaceCard.Pressable`'s OWN flag.
- * `.Pressable`'s built-in skeleton branch swaps in a FIXED, DIFFERENT shape —
- * a horizontal row (leading avatar + two text bars, see its source) — because
- * that generic mirror was drawn for a leading-avatar list tile, not a
- * top-aligned photo tile. Feeding this block's `isSkeleton` into that branch
- * would flip the layout from vertical (photo → name → role → company → blurb)
- * to horizontal on every load, which is the shape-drift `feedback-fix-skeleton
- * -with-every-layout-change` warns about. Instead this block keeps `.Pressable`
- * on its REAL branch always and pushes `isSkeleton` straight into `Image` and
- * `Typography`, the atoms that actually draw each part (§12c) — the composite
- * only loses its `onPress` wiring (`isDisabled`) while there is nothing real
- * to open yet.
- *
- * DURING LOADING every optional row (role / company / blurb) is drawn as a
- * shimmer bar, same convention as `ContentHeader`'s outcomes card: the caller
- * does not yet know the final shape, so the loading state shows the full one.
- *
- * COMPANY IS PLAIN TEXT WITH A LEADING ICON, never a nested link (per the task
- * brief's risk note) — the card is already ONE press target; a second
- * interactive element inside it would either be unreachable (nested inside
- * the whole-card `<button>`/`<a>`) or require the stretched-link `actions`
- * pattern for a fact that carries no action of its own.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Company is plain text with a leading icon, never a nested link — the card is
+ * already one press target.
  */
 
 /** One recruiting consultant — plain data, the block builds the tile from it. */

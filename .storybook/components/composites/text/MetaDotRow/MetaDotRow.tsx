@@ -5,28 +5,15 @@ import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — MetaDotRow: a row of small text fragments
- * separated by a `·` mark ("12 lessons · 3 hours · Free", "12 minutes ago ·
- * Edited"). The fragments are one recurring meta-line SHAPE — the same info
- * seen today as a hand-rolled `flex flex-wrap items-center gap-2 text-xs
- * text-muted` with a bare `<span aria-hidden>·</span>` between children
- * (`PostRow`, `ProfileHero`'s sidebar meta) — so it becomes ONE composite
- * that owns the separator, the gap, and the tone, instead of every call site
- * re-typing the same three things.
+ * `MetaDotRow` — a row of small text fragments separated by a `·` mark
+ * ("12 lessons · 3 hours · Free", "12 minutes ago · Edited").
  *
- * `items` is a plain `string[]`, not `ClusterItem[]`/`ReactNode[]` (COMPOSITE-8):
- * each fragment is TEXT the composite renders through `Typography` itself, so
- * it can shimmer the fragment — a pre-built node could not be told it is loading.
- *
- * GAP — the registry's own `separator-dot` token (`patterns.mjs`): "a · separating
- * meta fragments", step 2, 4px (`gap-1`). The real call sites above sit at `gap-2`
- * (8px) today; that is the debt this composite corrects, not a convention to copy.
- *
- * TONE — every fragment is `muted` (§law-2, explicit on the atom). The `·` mark
- * itself is `Divider`'s `shape="inline"` glyph, which paints `text-current` (no
- * colour prop of its own — ATOM-shape, not a status) — so the row's ROOT carries
- * a fixed `text-muted` class the mark inherits, keeping fragment and mark on the
- * same tone without a second colour decision.
+ * `items` is a plain `string[]`: each fragment is TEXT the composite renders through
+ * `Typography` itself, so it can shimmer the fragment. The gap is the registry's
+ * `separator-dot` token (step 2, 4px / `gap-1`). Every fragment is `muted`; the `·`
+ * is `Divider`'s `shape="inline"` glyph (paints `text-current`), so the row's root
+ * carries a fixed `text-muted` class the mark inherits, keeping fragment and mark
+ * on the same tone.
  */
 
 /** Props {@link MetaDotRow} carries regardless of loading state. */

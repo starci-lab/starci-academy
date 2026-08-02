@@ -8,16 +8,14 @@ export default meta
 type Story = StoryObj
 
 /**
- * LEAF ATOM — `InputSearch` wraps HeroUI `SearchField` directly (leading icon +
- * built-in clear) + an internal `FieldFrame` (§11a). No component here has its own
- * story ⇒ `annotate` carries no `storyId` — but HeroUI's `SearchField.Group` along
- * with `FieldFrame`'s own `Label`/`Skeleton` still need tier `heroui` so the
- * two-rule panel doesn't silently miss them (2026-07-28).
- *
- * ⭐ 2026-07-26 (§12g): leaf `Invalid` split off from `Error` — `isInvalid` alone
- * only changes the border (no message line), `errorMessage` is what pulls in the
- * border plus the red line. Two props that differ by a pixel must be two separate
- * leaves (§12g.1: a pixel change means a leaf).
+ * LEAF ATOM — `InputSearch` wraps HeroUI `SearchField` directly (leading icon + built-in
+ * clear) + an internal `FieldFrame`. No component here has its own story ⇒ `annotate`
+ * carries no `storyId` — but HeroUI's `SearchField.Group` plus `FieldFrame`'s own
+ * `Label`/`Skeleton` get tier `heroui` so the two-rule panel doesn't silently miss them.
+ * 
+ * Leaf `Invalid` is split off from `Error`: `isInvalid` alone only changes the border (no
+ * message line), while `errorMessage` pulls in the border plus the red line — different
+ * pixels, so two leaves.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SearchField.Group": { tier: "heroui", role: "search field group with icon" },

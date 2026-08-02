@@ -4,11 +4,9 @@ import { ListToggleRow } from "@sb-components/composites/lists/List/List"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE (teacher finalized 2026-07-25): `ListToggleRow` is a ONE SETTINGS
- * ROW scaffold. What it produces: the on/off switch, with/without a description
- * line, locked (`isDisabled`), and the `isSkeleton` mirror of THIS row itself.
- * ARRANGING multiple rows into a list (section label, gap, CTA) belongs to
- * `ListLabeled` — NOT repeated here.
+ * `ListToggleRow` — one settings row: the on/off switch, an optional description line, locked
+ * (`isDisabled`), and the `isSkeleton` mirror of the row. Arranging multiple rows into a list
+ * (section label, gap, CTA) belongs to `ListLabeled`.
  */
 const meta: Meta<typeof ListToggleRow> = {
     title: "Composites/Lists/List/ListToggleRow",

@@ -3,26 +3,14 @@ import { LeaderboardPage } from "@sb-components/starci/pages/LeaderboardPage/Lea
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `LeaderboardPage`: see who's ranked where, sorted by whichever XP
- * category the reader cares about right now.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * FIVE FUNCTIONS, in the order the reader meets them: what this page is · a
- * quiet nudge toward enrolling, if the reader hasn't · which category to rank
- * by · what that ranking is and when it last refreshed · the ranking itself.
- *
- * ⭐ `TrialEnrollBanner` IS REUSED HERE, NOT A NEW `EnrollNudgeBanner` — its own
- * file header already names "leaderboard" among the surfaces it serves. See
- * `LeaderboardPage`'s own file header for why building a fourth near-copy of
- * an already-tripled block would have been the wrong move.
- *
- * ⭐ THE `Enrolled` LEAF BELOW IS A REAL STRUCTURAL DIFFERENCE, NOT A DATA
- * STATE: `TrialEnrollBanner` self-hides once the reader is enrolled, removing
- * a whole node from the tree — the same kind of shape change `ContentPage`'s
- * own `Locked` leaf demonstrates for its footer cluster.
+ * `LeaderboardPage` — the screen to see who's ranked where, sorted by whichever
+ * XP category the reader cares about. A screen owns a list of functions: it
+ * calls blocks, places them in frames, and hands each typed data. Five
+ * functions, in reading order: what this page is · a quiet nudge toward
+ * enrolling · which category to rank by · what that ranking is and when it last
+ * refreshed · the ranking itself. Reuses `TrialEnrollBanner` (not a new block).
+ * The `Enrolled` leaf is a real structural difference: the banner self-hides
+ * once enrolled, removing a whole node from the tree.
  */
 const meta: Meta<typeof LeaderboardPage> = {
     title: "StarCi/Pages/LeaderboardPage/LeaderboardPage",

@@ -13,57 +13,15 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `ContentPage`: read one lesson.
+ * `ContentPage` — the screen for reading one lesson. It composes blocks in frames and
+ * hands each typed data, drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own —
- * every `div` here would be a shape it had no right to decide.
- *
- * SEVEN FUNCTIONS, in the order the reader meets them: what this lesson is · how
- * to look at it · read it · say how it landed · what else to read · talk about it
- * · step to the next one.
- *
- * ⭐ THE FOOTER IS CONDITIONAL, AND THE CONDITION IS THE POINT. Reaction,
- * related reading, discussion and the pager only appear on an OPEN lesson. A
- * reader who has hit the paywall has one decision in front of them, and four
- * more things to do underneath would compete with it.
- *
- * SCOPE OF THIS PASS: the reading mode. The tab row offers sandbox, challenges
- * and AI lab because a lesson really has them, but their bodies are their own
- * blocks and are not built yet — the screen does not fake them with a frame and
- * a div, because a stub that renders is worse than an absence that does not
- * (§B3).
- *
- * ⚠️ `ContentHeader` is what the screen calls for identity, NOT `CourseBrief`:
- * the two are siblings, and the one that knows about read state, reading time
- * and learning outcomes is the lesson one.
- *
- * ⭐ MOBILE/TABLET-ONLY PRACTICE NUDGE — CSS, NOT A SEPARATE COMPONENT (teacher
- * 2026-07-28, corrected off an earlier namespace attempt). Right after
- * `ContentReaction`, `MilestoneUpNextCard` (reused: its shape is domain-generic
- * even though its name says "milestone") always MOUNTS when the lesson has
- * challenges, and hides itself above `@app-lg` via `className="@app-lg:hidden"`
- * — the exact mechanism `src`'s own `UpNextCard` uses at
- * `LessonReader/index.tsx:386-398`. On desktop the right rail's own "Practice this
- * lesson" already surfaces this, so the card would be a duplicate CTA there;
- * CSS removes it from view rather than the screen needing a second component
- * tree to not-render it. One screen, one render — see this file's story for
- * how to actually SEE it (narrow the `@container` the render sits in).
- *
- * ⚠️ `isHighlight={false}` ON PURPOSE. `MilestoneUpNextCard`'s DEFAULT (`true`)
- * paints the light-streak highlight it needs at its ORIGINAL call site (the
- * one focal action on a milestone result screen) — real `src`'s `UpNextCard`
- * here is a PLAIN, unaccented card (its `SectionCard` never passes `accent`).
- * Caught by comparing this render against the live app (teacher, 2026-07-28):
- * reusing the block does not mean reusing every one of its callers' defaults.
- *
- * ⚠️ COPY VERIFIED AGAINST REAL i18n (teacher, 2026-07-28: "too much invented copy" — an
- * earlier pass invented eyebrow/description/ctaLabel instead of reading them).
- * Real keys: `src/messages/vi.json:1581-1590` (`content.upNext.*`), consumed at
- * `LessonReader/index.tsx:390-395`. Only `title` had been copied correctly;
- * the other three are now the real strings, not invented ones.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Seven functions in reader order: what this lesson is, how to view it, read it, react
+ * to it, what else to read, discuss it, step to the next one. The footer cluster
+ * (reaction, related reading, discussion, pager) appears only on an open lesson —
+ * under the paywall the reader has one decision to make. A mobile/tablet practice
+ * nudge mounts when the lesson has challenges and hides above `@app-lg` via CSS. The
+ * sandbox/challenges/AI-lab tab bodies are their own blocks, not built here.
  */
 
 /** Props for {@link ContentPage}. */

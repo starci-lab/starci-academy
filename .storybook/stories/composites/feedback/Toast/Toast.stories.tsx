@@ -4,25 +4,9 @@ import { Toast } from "@sb-components/composites/feedback/Toast/Toast"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `Toast`: the ONE notification-surface, composed from `Alert`
- * (`tone="plain"` + glyph `sm`). The HeroUI port lives entirely in `Alert`.
- * Promoted from the atom tier (ATOM-3): a component whose entire body is
- * `<Alert {...} />` is assembling the vocabulary, not being a word in it —
- * moved to `composites/feedback/`, beside `Callout`, the sibling
- * this file's own header already called out ("toast and callout share the
- * same alert primitive and differ only in placement").
- *
- * 📐 **1 PROP = 1 LEAF** (§12g). The previous version split four leaves
- * `Success`/`Warning`/`Danger`/`Info` — exactly the "split leaf by VALUE"
- * anti-pattern (like splitting `Small`/`Medium` instead of merging into
- * `Sizes`). Merged into ONE leaf `Statuses` rendering the full `ToastStatus`
- * union, matching what `Alert.stories.tsx` already does for `status`. The
- * second leaf `WithAction` stays separate because it grows ADDITIONAL real
- * nodes (`Action`/`Close`).
- *
- * MIGRATED TO `states` (2026-07-27): `Statuses` used to map the full `ToastStatus`
- * union into one stacked block with no room to explain any one tone on its own —
- * now each tone is its own `states[]` entry.
+ * `Toast` — the one notification surface, composed from `Alert` (`tone="plain"` + glyph `sm`);
+ * the HeroUI port lives entirely in `Alert`. Leaves: `Statuses` (the full `ToastStatus` union)
+ * and `WithAction` (adds `Action`/`Close` nodes).
  */
 const meta: Meta<typeof Toast> = {
     title: "Composites/Feedback/Toast/Toast",

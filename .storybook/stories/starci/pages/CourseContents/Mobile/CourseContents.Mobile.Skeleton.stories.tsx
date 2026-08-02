@@ -3,10 +3,10 @@ import { CourseContents } from "@sb-components/starci/pages/CourseContents/Cours
 import { deviceLeaf } from "@sb-components/starci/pages/CourseContents/_shared"
 
 /**
- * SCREEN `/learn/content` at MOBILE (375px, below `@app-sm`) — SKELETON: `isSkeleton` flows down
- * into every block and each one draws its OWN resting shape. This is a LEAF, not merely a
- * state (teacher, 2026-07-27): the flag makes the components draw different pixels, and
- * whoever owns the shape owns its resting shape.
+ * `CourseContents` at MOBILE (375px, below `@app-sm`) — skeleton state:
+ * `isSkeleton` flows down into every block and each draws its own resting
+ * shape. This is a leaf, not merely a state — the flag makes components draw
+ * different pixels, and whoever owns the shape owns its resting shape.
  */
 const W = 375
 

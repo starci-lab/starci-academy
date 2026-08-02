@@ -3,45 +3,13 @@ import { Link as HeroUILink, cn } from "@heroui/react"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `NavLinks`: the desktop primary-route row inside the site's top nav
- * (`Navbar`) — "Home / Courses / Community / Contact", one of them pinned
- * as the active route.
- *
- * Storybook-local port of `src/components/blocks/layout/shell/Navbar/NavLinks`
- * (already a REUSE of the same idea, renamed from the earlier
- * `src/components/features/navbar/Navbar/NavLinks` — same shape, moved folder).
- *
- * ⭐ THE REAL COMPONENT IS A CONTAINER; THIS ONE IS NOT, ON PURPOSE. The `src`
- * version derives its own `items` from `next-intl` + `usePathname()` and
- * self-navigates with `useRouter().push(...)` — none of that exists in a
- * Storybook tree. Stripping it down to `items` (typed domain data, already
- * resolved to label/path/isActive) + `onNavigate` is not a smaller version of
- * the same block, it is the presentational HALF of it — the container's job
- * (reading the route, localizing labels) is app wiring, same discipline as a
- * screen never wiring a real router (see canon rule 13 on overlays, the same
- * argument applies to any container→presentational split).
- *
- * ⭐ WHY `Link` (HeroUI) DIRECTLY, AND NOT `Toolbar` OR `Tabs`. These are real
- * ROUTES, each its own page with its own URL — not panels switching under one
- * ARIA tablist. `ContentModeNav` reuses `Toolbar` for its mode row even though
- * mode-switching is also navigation, because that row is shaped like two tab
- * groups; this row has no such second group and no tab semantics to borrow, so
- * composing the tab compound here would claim `role="tab"` behaviour (arrow-key
- * roving, `aria-selected`) this row never had. A plain `Link` per item, exactly
- * what the real component renders, is the honest primitive for "a set of real
- * links, one of them current".
- *
- * ⛔ NO ICON/LABEL TABLE HERE, unlike `LeaderboardCategoryNav`'s category table.
- * A nav item is not a closed enum this block knows the vocabulary of — the
- * caller (the real `Navbar` container) owns which routes exist and their
- * copy, sourced from i18n. This block's only domain knowledge is what an
- * active pill looks like versus an inactive one.
- *
- * DESKTOP-ONLY BY DEFAULT: `hidden @app-md:flex` on the row itself, matching
- * the real `Navbar`'s companion (a separate mobile drawer trigger, out of
- * scope here — this block only ever renders the inline desktop row or nothing).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `NavLinks` — the desktop primary-route row inside `Navbar` (Home / Courses /
+ * Community / Contact, one pinned active). The presentational half:
+ * `items` (resolved label/path/isActive) + `onNavigate`, with route reading and
+ * localization left to the caller/container. Each item is a plain HeroUI `Link`
+ * (real routes, not tab panels), so no tab semantics are claimed. No
+ * icon/label table — a nav item isn't a closed enum this block owns. Desktop-only
+ * (`hidden @app-md:flex`).
  */
 
 /** One route entry in the nav row — TYPED DOMAIN DATA, never a pre-formatted node. */

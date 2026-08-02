@@ -3,20 +3,10 @@ import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE (§12f/§13) — `KeyValueList` is a REPEATING-LIST scaffold: it only
- * owns what emerges when MULTIPLE rows stand side by side — mapping `items`, the
- * `gap` rhythm (§10), the divider BETWEEN rows (`divider`), and the summary shape
- * "N lines + 1 total line" (`emphasis` on the last item).
- *
- * The layout/type scale of ONE row (muted label · medium value · `hint`) is a state
- * of `KeyValueRow` → lives in story `KeyValueRow`, NOT repeated here.
- *
- * `label`/`value` are `string` (COMPOSITE-8 — "the same trap one level in"): the
- * scaffold owns its own loading state via `isSkeleton`/`skeletonRows` (see the
- * `Skeleton` leaf below), so a caller never hand-builds a shimmer pair into `items`.
- *
- * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
- * `states` entry, since none of them stacks more than one rendering.
+ * `KeyValueList` — a repeating-list scaffold for label–value rows. Owns what emerges when
+ * multiple rows stand together: mapping `items`, the `gap` rhythm, the divider between rows
+ * (`divider`), and the "N lines + 1 total line" summary shape (`emphasis` on the last item).
+ * Owns its own loading state via `isSkeleton`/`skeletonRows`. One row's layout lives in `KeyValueRow`.
  */
 const meta: Meta<typeof KeyValueList> = {
     title: "Composites/Data/KeyValue/KeyValueList",

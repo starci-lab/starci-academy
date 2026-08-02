@@ -12,52 +12,13 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { ContinueCardHero, ContinueCardItem } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PersonalProjectDashboard`: the capstone LANDING OVERVIEW, shown by the
- * real `personal-project/layout.tsx` (`PersonalProjectWorkspace`) whenever the
- * route carries no `taskId` — "where am I + what's next", not a task's own body.
- *
- * GROUNDED IN THE REAL COMPONENT, NOT INVENTED: `src/components/features/learn/
- * PersonalProject/PersonalProjectDashboard/index.tsx` (final-mvp) already builds
- * this exact surface out of `PageHeader` + `ContinueCard` + `LabeledCard` +
- * `ProgressMeter` + `AsyncContent`. This port reproduces that same tree with the
- * Storybook-side names for the same composites/blocks, per the task's own
- * COMPOSE-FROM list — it does not add or drop a region.
- *
- * THREE LEAVES, matching the task spec:
- *   • `Header` — breadcrumb + title + description + GitHub-status chip. Sits
- *     OUTSIDE `AsyncContent` (mirrors `src`: the trail/title/description are
- *     always known ahead of the milestone fetch), so it never has an empty or
- *     error shape of its own — only `isSkeleton` reaches its dynamic part (the
- *     chip), same convention as `ContentHeader`'s meta row.
- *   • `ContinueHero+ProgressStats` — the next task as `ContinueCardHero` (or an
- *     "all done" line when every task is finished) over the completion meter and
- *     the block-owned stats sentence.
- *   • `KeepGoingGrid` — the current milestone's tasks as a two-column grid of
- *     `ContinueCardItem` tiles, framed in a labeled `SurfaceCard` — the SAME
- *     "labeled card wrapping a task list" shape `PersonalProjectGatePreview`
- *     already uses for its own milestone-0 teaser (see that file's header), kept
- *     consistent across the two personal-project surfaces rather than inventing
- *     a second frameless-grid shape Storybook doesn't have yet.
- *
- * ASYNC BOUNDARY (§ AsyncContent, only around the two data-dependent leaves):
- * `isLoading`/`isEmpty` drive the BRANCH (skeleton mirror ▸ empty message ▸ real
- * body) exactly like `AsyncContent` everywhere else in this tree; `isSkeleton`
- * is the SEPARATE flag threaded into `Header`'s own dynamic part, because the
- * trail/title never wait on the milestone fetch but the GitHub chip can still be
- * mid-load independently of it (its data comes off the enrollment record, not
- * `milestoneTaskProgress`).
- *
- * THE BLOCK OWNS ITS OWN WORDING (§14d.1): "Next task", the "Continue ·"
- * heading prefix, the stats sentence shape, and the per-`subtitleState` label
- * table are ALL assembled here — the caller only hands over numbers/entities/
- * enum members, never a formatted string. `githubStatus.label` is the one
- * deliberate exception: formatting a GitHub URL into `owner/repo · branch` is
- * business logic (parsing a URL), not presentation, so the caller (the real
- * `toRepoLabel` helper in `src`) still owns that string; this block only decides
- * the chip's TONE from `isConnected`, same split as `ContentModeNav`'s
- * already-localized `ContentLanguage.label`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PersonalProjectDashboard` — the capstone landing overview shown when the
+ * personal-project route carries no `taskId`: a header (breadcrumb + title +
+ * GitHub-status chip), a "next task" continue hero over a completion meter and
+ * stats line, and a two-column grid of the current milestone's task tiles.
+ * The header sits outside the async boundary; only the milestone-dependent
+ * leaves wait on the fetch. The block owns its own wording, deriving labels from
+ * the numbers/entities/enum members the caller hands over.
  */
 
 /** One breadcrumb link above the dashboard title — plain data, the block builds the atom. */

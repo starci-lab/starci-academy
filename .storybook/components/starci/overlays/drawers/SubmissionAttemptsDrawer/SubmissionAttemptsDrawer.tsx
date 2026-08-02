@@ -16,41 +16,15 @@ import { MODEL_CATEGORY_MAP, type AiModelCategory } from "@sb-components/starci/
 import { Pagination } from "@sb-components/atoms/navigation/Pagination/Pagination"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `SubmissionAttemptsDrawer`: the full graded HISTORY of one challenge
- * requirement — every past attempt, client-paginated, opened over the active
- * result screen.
+ * `SubmissionAttemptsDrawer` — the full graded history of one challenge requirement:
+ * every past attempt, client-paginated (6 per page), opened over the result screen.
+ * Tapping any row both selects that attempt and closes the drawer. Composes
+ * `DrawerShell` + `AsyncContent` + `SurfaceCard.List`, reusing the model-byline
+ * recipe (`EnumChip`/`InlineIconLabel`/`MODEL_CATEGORY_MAP`).
  *
- * ⭐ REBUILT to match real `src` (2026-07-29, reviewer: "there's already a page
- * for this" — caught
- * that the previous version was never actually checked against a real
- * counterpart). Real: `src/components/drawers/SubmissionResultHistoryDrawer/
- * index.tsx`. THE INTERACTION MODEL IS DIFFERENT FROM THE FIRST DRAFT: a row IS
- * the select action — tapping ANY row both picks that attempt AND closes the
- * drawer (`onSelect(id); onOpenChange(false)`), same one gesture. There are no
- * separate "view details"/"view submission" buttons on the row — that was invented
- * without a real source to check against.
- *
- * ⭐ PAGINATION IS OWNED HERE, NOT BY THE CALLER. Real `src` fetches the FULL
- * attempt list once and slices it client-side (`HISTORY_PAGE_SIZE = 6`,
- * `useState` page, reset to 1 whenever the drawer opens) — so this block takes
- * the WHOLE `attempts` array and does the same, instead of a caller-controlled
- * `currentPage`/`totalPages`/`onPageChange` trio (the previous, unverified
- * draft's shape).
- *
- * ⭐ REUSE, KEPT: `DrawerShell` (panel scaffold) · `AsyncContent` (the one
- * error→loading→empty→content switch) · `SurfaceCard.List` — real `src` uses
- * `SurfaceListCard`/`SurfaceListCardItem` (flat pressable rows), this
- * namespace's equivalent shape (§13z, same "row IS the pressable" contract as
- * `SurfaceCardListItem.onPress`) · `EnumChip`/`InlineIconLabel`/`MODEL_CATEGORY_MAP`
- * — the SAME model-byline recipe `SubmissionScoreCard` already owns, reused
- * verbatim (not re-invented) so the two places a graded model shows up never
- * drift apart.
- *
- * ONE LEAF, `AttemptRow` (data-driven via `content`, §13b free-form row) — pass/
- * fail, model present/absent, time-ago present/absent are STATES of the same
- * row shape, not separate leaves.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Takes the whole `attempts` array and slices it client-side (page resets to 1 on
+ * open). One `AttemptRow` leaf; pass/fail, model present/absent, and time-ago
+ * present/absent are states of it.
  */
 
 /** One past graded attempt at this challenge requirement. */

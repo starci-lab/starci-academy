@@ -11,80 +11,15 @@ import {
 } from "@sb-components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT — `LearnShell`: the wrapper mounted once per `/learn/**` scope (maps
- * 1:1 to the real `courses/[courseId]/learn/layout.tsx`, per canon
- * `D:/Repositories/starci-academy-backend/.claude/fe/steps/11-overlays-layouts-brainstorm.md`
- * §4/§7 — layouts answer "what wraps every route in this scope", take a
- * mandatory `children`, and outlive the route that mounts under them). It never
- * decides what a route SHOWS — that is every child screen's job — it only
- * decides the CHROME every `/learn/**` route shares: the resizable side rail
- * (when the active surface has one), the enrollment gate that can replace the
- * whole body, and the two AI triggers.
+ * `LearnShell` — the wrapper mounted once per `/learn/**` scope. It owns the chrome
+ * every learn route shares: the resizable side rail (when the active surface has
+ * one), the enrollment gate that can replace the whole body, and the two AI
+ * triggers (chat FAB + selection-ask). Takes a mandatory `children`.
  *
- * ⭐ FOLDER, NOT `blocks/<group>` — confirmed against `components/README.md`
- * (updated 2026-07-28, the same day this was built): `layouts/` is the sibling
- * of `blocks/pages/overlays` under each app, not a subfolder of `blocks`. The
- * task brief's own generic path example predates that split; Rule 12 in the
- * brief and the README agree this is a `layouts/` citizen.
- *
- * ⛔ `LeaderboardCategoryNav` was NOT reused here, despite the inventory hint
- * saying to. Read its own file header first: it explicitly states it is only
- * HALF of the real `LeaderboardCategoryRail` fetch — the MOBILE chip strip
- * (`variant="chips"`), rendered directly inside `Leaderboard/index.tsx`. The
- * DESKTOP `ListBox` half (`variant="rail"`) is the one that actually lives in
- * the shared `learn/layout.tsx` rail slot this component owns, and that half is
- * explicitly flagged OUT OF SCOPE in that same file — i.e. not built yet.
- * Forcing the chip strip (a flex-WRAP row of buttons) into a narrow vertical
- * rail slot would be the exact `ContentTabBar` mistake this run's brief opens
- * with: reusing a real component in the WRONG shape reads as correct at a
- * glance and is worse than a documented gap.
- *
- * ⛔ SCOPE GAP (§B3) — the rail BODY. None of `ContentMap` / `OnThisPage` /
- * `MilestoneOutline` / `LeaderboardCategoryRail`'s desktop half are in this
- * task's compose list, so this layout cannot draw any of them. What it CAN
- * responsibly decide is WHETHER a rail exists for the active surface
- * (`content`/`leaderboard` do, per the real layout; `personalProject`/`other`
- * don't — the personal-project workspace is a full-bleed area with, if
- * anything, its own internal chrome, and `other` is the safe unknown-surface
- * default). Where a rail exists, its body is `Spinner` — the one leaf the task
- * names for exactly this — never a bare placeholder `div`.
- *
- * ⛔ `GithubLinkGate` (the real layout's third gate, alongside `EnrollGate` and
- * `PersonalProjectGatePreview`) is NOT composed here — it is not in this task's
- * compose list, so it is left out rather than guessed at.
- *
- * ⭐ `preview` IS A RELAYED SLOT, NOT A NEW VIOLATION. `EnrollGate` already
- * owns a `preview?: ReactNode` prop (a whole teaser block, e.g.
- * `PersonalProjectGatePreview` — confirmed by THAT block's own file header:
- * "fed into `EnrollGate`'s `preview` slot inside `LearnShell`"). This layout
- * does not construct that node — the real page under the gated route does,
- * exactly the way any `EnrollGate` caller already would — `LearnShell` only
- * forwards it one layer further up, because the gate itself now mounts here
- * instead of directly in the screen. `enrollGateProps` also relays `price`
- * (`EnrollGate`'s own optional resolved-price shape) alongside the
- * `title`/`description`/`preview` the task brief names explicitly, plus the
- * `onEnroll` callback `EnrollGate` requires to function at all — leaving
- * `price` out would strand the price region in `EnrollGate`'s permanent
- * "unresolved" shimmer for every gated route.
- *
- * ⭐ `onOpenAiChat` / `isAiChatOpen` / `selectionAsk` / `onOpenSelectionAsk` are
- * additions beyond the task brief's literal five props — necessary because
- * `ContentAiFab` and `ContentAiSelectionAsk` cannot render at all without them.
- * `ContentAiSelectionAsk`'s OWN file header assigns tracking + positioning the
- * live text selection to "the SCREEN (`ContentArticle`'s owner)", explicitly
- * OUT of that block's own scope — so this layout does not run a
- * `selectionchange` listener either; `selectionAsk` arrives as a plain,
- * already-resolved value (`null` → nothing selected), the same "store/DOM
- * wiring lives in the real `src` layout, this design-system component only
- * takes the resolved prop" discipline Rule 13 already applies to overlays.
- *
- * ONE GATE REPLACES THE WHOLE BODY. `isEnrollGated` does not sit beside the
- * rail+children row — per `EnrollGate`'s own header ("shown IN PLACE OF an
- * enrollment-required learn surface"), it REPLACES it. The two AI triggers
- * suppress alongside it (a locked surface has nothing to ask AI about yet), on
- * top of `isAssessmentLive`'s own suppression the task brief already names.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `enrollGateProps` relays `title`/`description`/`preview`/`price`/`onEnroll` down to
+ * `EnrollGate`; `onOpenAiChat`/`isAiChatOpen`/`selectionAsk`/`onOpenSelectionAsk`
+ * drive the AI triggers. The gate replaces the rail+children body when
+ * `isEnrollGated`; the AI triggers also suppress while an assessment is live.
  */
 
 /** Which `/learn/**` surface is currently active — drives whether a rail mounts. */

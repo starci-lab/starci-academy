@@ -15,10 +15,8 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `ResizableRail` — a side rail whose width the reader drags, persisted to
- * `localStorage`. One region (the rail body) → plain `children`, no named slots.
- *
- * 2026-07-27: migrated every leaf below to the `states[]` API.
+ * `ResizableRail` — a side rail whose width the reader drags, persisted to `localStorage`.
+ * One region (the rail body) → plain `children`, no named slots.
  */
 const meta: Meta<typeof ResizableRail> = {
     title: "Behaviors/ResizableRail/ResizableRail",

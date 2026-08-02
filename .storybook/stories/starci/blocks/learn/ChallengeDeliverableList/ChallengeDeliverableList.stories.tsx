@@ -4,22 +4,11 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ChallengeDeliverableList`: the "Submit assignment" card — one
- * accordion row per challenge requirement, its trigger a live status, its
- * panel the submission form plus, once graded, the verdict and the reasons
- * behind it.
- *
- * ⭐ REUSES `SurfaceCard.Accordion` instead of hand-rolling an accordion — see the
- * component file's header for the `src` drift this run exists to avoid.
- *
- * ⭐ ONE COMPONENT, NOT TWO. `src` keeps the ungraded form and the graded result
- * in sibling files that always render together; here `graded` toggles a STATE
- * inside the same leaf, the same treatment `QuizQuestion` gives its `verdict`.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): how many requirements, which are graded, and
- * whether a submission is mid-flight are all DATA ⇒ states inside one leaf. The
- * accordion shell, the trigger's icon+score slots, and the graded block's shape
- * never change.
+ * `ChallengeDeliverableList` — the "Submit assignment" card: one
+ * `SurfaceCard.Accordion` row per challenge requirement, its trigger a live
+ * status, its panel the submission form plus, once graded, the verdict and its
+ * reasons. `graded` toggles a state inside the same leaf. How many requirements,
+ * which are graded, and whether a submission is mid-flight are all data.
  */
 const meta: Meta<typeof ChallengeDeliverableList> = {
     title: "StarCi/Blocks/Learn/ChallengeDeliverableList/ChallengeDeliverableList",

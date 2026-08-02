@@ -4,25 +4,13 @@ import { FlashcardDeckList, type FlashcardDeckListDeck, type FlashcardDeckListVi
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FlashcardDeckList`: the course's deck picker — search, switch
- * between a grid of tiles and a scan-friendly line list, page through the
- * result, and jump into any deck. See the component's own file header for the
- * full reuse map and the four judgement calls (added `totalPages` prop, chrome
- * that never skeletonises, the tile's narrowed accessible name, the CTA staying
- * decorative text instead of a nested button).
- *
- * FOUR LEAVES BY STRUCTURE (§14d.2):
- *   - `GridView`    — tiles inside a responsive `Grid`.
- *   - `LineView`    — rows inside one bounded `SurfaceCardList`.
- *   - `SearchEmpty` — the whole track becomes `AsyncContentEmpty`; no grid, no
- *     list, just the message — reached the same way whether `view` is grid or
- *     line, so it isn't a per-view leaf.
- *   - `Loading`     — `decks` is still empty; a guessed tile count renders
- *     through each composite's own built-in mirror.
- *
- * Toggling `view` on an already-populated list, or `isSkeleton` firing while
- * `decks` is already non-empty, repaint the SAME tree rather than swapping it,
- * so neither gets its own leaf (§11f).
+ * `FlashcardDeckList` — the course's deck picker: search, switch between a grid
+ * of tiles and a scan-friendly line list, page through results, and open any
+ * deck. Four leaves: `GridView` (tiles in a responsive `Grid`), `LineView`
+ * (rows in one `SurfaceCardList`), `SearchEmpty` (`AsyncContentEmpty`,
+ * view-agnostic), and `Loading` (a guessed tile count through each composite's
+ * mirror). Toggling `view` or `isSkeleton` on a populated list repaints the same
+ * tree.
  */
 const meta: Meta<typeof FlashcardDeckList> = {
     title: "StarCi/Blocks/Learn/FlashcardDeckList/FlashcardDeckList",

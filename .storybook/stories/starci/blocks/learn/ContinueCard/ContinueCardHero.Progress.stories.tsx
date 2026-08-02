@@ -13,12 +13,10 @@ import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-util
 const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon data-tier="fixture" {...props} weight="duotone" />
 
 /**
- * DESIGN — the "resume an in-progress session" hero card with progress. Each state below
- * is its OWN leaf and carries its OWN BlockAnatomy axis (Diagram + Tree) reflecting
- * the parts THAT leaf composes — there is no separate consolidated "Anatomy" story.
- *
- * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a); `role` rewritten
- * in ENGLISH per rule B (diacritics dropped — ↔ becomes a plain dash).
+ * The "resume an in-progress session" hero card with progress. Each state below
+ * is its own leaf and carries its own `BlockAnatomy` axis (Diagram + Tree)
+ * reflecting the parts that leaf composes; there is no consolidated Anatomy
+ * story.
  */
 const meta: Meta<typeof ContinueCardHero> = {
     title: "StarCi/Blocks/Learn/ContinueCard/Hero/Progress",

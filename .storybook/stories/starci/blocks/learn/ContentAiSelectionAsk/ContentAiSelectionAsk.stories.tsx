@@ -3,16 +3,10 @@ import { ContentAiSelectionAsk } from "@sb-components/starci/blocks/learn/Conten
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentAiSelectionAsk`: the "Ask AI" pill that pops up next to a
- * text selection inside lesson content.
- *
- * ⭐ SCOPE CUT: selection-tracking + portal-positioning is pure DOM behaviour
- * with no reusable presentational surface, so it stays out of this block (see
- * the component file header). The story fixes `anchor` to a demo point inside
- * the canvas instead of driving a real `window.getSelection()`.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): `isNew` is DATA (whether the "New" chip shows
- * up next to the pill), not a structural difference ⇒ one leaf, two states.
+ * `ContentAiSelectionAsk` — the "Ask AI" pill that pops up next to a text
+ * selection inside lesson content. Selection tracking and portal positioning are
+ * DOM behaviour handled outside the block; it takes an `anchor` point. `isNew`
+ * toggles a "New" chip beside the pill.
  */
 const meta: Meta<typeof ContentAiSelectionAsk> = {
     title: "StarCi/Blocks/Learn/ContentAiSelectionAsk/ContentAiSelectionAsk",

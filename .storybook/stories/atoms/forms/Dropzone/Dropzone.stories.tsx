@@ -4,12 +4,10 @@ import { Dropzone } from "@sb-components/atoms/forms/Dropzone/Dropzone"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Skeleton` — heroui's OWN component (imported `Skeleton as HeroSkeleton` and
- * rendered directly in the `isSkeleton` branch), so it enters the tree as tier
- * `heroui` with no `storyId` (§ two-law pass, 2026-07-28). The drag box and the
- * error line are no longer badged at all (2026-07-28 orphan-part pass) — they're
- * plain hand-rolled `<div>`s, not a real component, and a badge that can never be
- * declared is worse than no badge.
+ * `Skeleton` — HeroUI's own component (imported `Skeleton as HeroSkeleton` and rendered
+ * directly in the `isSkeleton` branch), so it enters the tree as tier `heroui` with no
+ * `storyId`. The drag box and the error line are not badged — they're plain hand-rolled
+ * `<div>`s, not real components.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "loading placeholder box" },

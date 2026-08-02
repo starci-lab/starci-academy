@@ -7,44 +7,21 @@ import { AiQuotaLane, type AiQuotaLaneData } from "@sb-components/starci/blocks/
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `AiQuotaSubscriptionPanel`: body of the "Package" (Subscription) tab
- * inside `AiQuotaModal` — either a plain "no paid tier yet" CTA, or the
- * Premium `AiQuotaLane` plus a caption naming the active tier.
+ * `AiQuotaSubscriptionPanel` — a BLOCK: the body of the "Package" (Subscription)
+ * tab inside `AiQuotaModal` — either a "no paid tier yet" CTA, or the Premium
+ * `AiQuotaLane` plus a caption naming the active tier.
  *
- * PORTED FROM `src/components/modals/AiQuotaModal/SubscriptionTab/index.tsx`.
- * The source fetches `useQueryMyAiQuotaSwr` itself and routes the CTA via
- * `useRouter`/`pathConfig`; both are APP WIRING, out of scope here (§13/rule
- * 13's sibling discipline for a presentational block — same cut a `page.tsx`
- * makes for its data hooks). `tier` and `premiumLane` arrive as plain typed
- * props instead, and `onSubscribe` is a bare callback the screen wires up.
+ * `tier` and `premiumLane` arrive as plain typed props and `onSubscribe` is a bare
+ * callback; data fetching and routing stay app wiring, out of scope. Two leaves,
+ * branching on whether `tier` is set:
+ *   - `NoTierCta` — a muted sentence + one button inside a bordered `SurfaceCard`
+ *     (`variant="nested"`) so the offer reads as its own inset region.
+ *   - `ActiveLane` — the reused `AiQuotaLane` block plus a caption naming the
+ *     tier; `data`/`isLoading` pass straight through.
  *
- * TWO LEAVES, branching on whether `tier` is set — same branch the source
- * makes on `!quota.tier`:
- *   - `NoTierCta` — a muted sentence + one button, inside a bordered
- *     `SurfaceCard` (`variant="nested"`) so the offer reads as its own inset
- *     region inside the modal's already-filled face — the SAME composite
- *     `AiQuotaHistoryPanel` (this plan's sibling tab body) already reuses for
- *     its chart panel, instead of a hand-rolled `border` div.
- *   - `ActiveLane` — the reused `AiQuotaLane` block (this plan's sibling,
- *     "new, reuse within this plan") plus a caption naming the tier. `data`/
- *     `isLoading` pass straight through to it unshaped — this panel does not
- *     re-decide what a quota bar looks like, only what wraps it.
- *
- * §14d.1 — THE BLOCK OWNS ITS OWN WORDING. All three Vietnamese strings (the
- * CTA label, the "no tier" sentence, the "active tier" caption) are ported
- * verbatim from `vi.json`'s `aiQuota.subscribeCta` / `subscriptionNone` /
- * `subscriptionActive` and hardcoded here — there is no `ctaLabel`/`caption`
- * string prop, matching the task's own prop list (`tier` / `premiumLane` /
- * `onSubscribe` only, no pre-formatted text).
- *
- * JUDGEMENT CALL — `AiQuotaTier` is the real tier enum (`plus`/`pro`/`max`,
- * mirroring `src`'s `AiSubTier`); the "no tier" state is modelled as
- * `tier: AiQuotaTier | null` rather than folding "null" into the tier union
- * itself, since a tier value and "no tier at all" are a different KIND of
- * fact (what plan vs. whether there is one), and the null check is exactly
- * the leaf switch this block makes.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The block owns its own wording (CTA label, "no tier" sentence, "active tier"
+ * caption are hardcoded, not string props). "No tier" is modelled as
+ * `tier: AiQuotaTier | null` rather than folding null into the tier union.
  */
 
 /** Paid AI subscription tier (mirrors `src`'s `AiSubTier`). */

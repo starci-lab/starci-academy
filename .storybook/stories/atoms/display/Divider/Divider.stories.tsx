@@ -3,30 +3,14 @@ import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Divider`: wraps HeroUI `Separator` directly (HeroUI has no
- * "Divider", renamed for the app's vocabulary). A leaf atom — it doesn't build
- * any atom OF OURS with its own story, so it has no atom-tier dep. `Label` is an
- * INTERNAL span holding the free-form label content (a slot, nowhere else to jump
- * to), not a dep.
+ * ATOM — `Divider`: wraps HeroUI `Separator` directly (HeroUI has no "Divider";
+ * renamed for the app's vocabulary). A leaf atom — it builds none of our own storied
+ * atoms, so it has no atom-tier dep; `Label` is an internal slot for the free-form
+ * label, not a dep. Every rule it draws is a direct `Separator` render (`tier:
+ * "heroui"`).
  *
- * ⚠️ 2026-07-28 (naming pass): every rule this atom draws IS a direct HeroUI
- * `Separator` render — renamed from the role-word `Line` to the real import name,
- * `tier: "heroui"` (no `storyId`). Previously the tree showed nothing at all for
- * this atom (no `annotate`), hiding that HeroUI usage entirely.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g): `orientation` · `variant` · `label`, each prop
- * one leaf, and the leaf renders EVERY value in full. The previous version split
- * `Horizontal`/`Vertical` into two separate leaves — that's splitting by the
- * VALUE of the SAME prop `orientation`, exactly what §12g forbids (its own
- * example calls out `Small`/`Medium`/`OnDark` as wrong) — merged back into one
- * `Orientation` leaf rendering both values in full. `variant` previously had no
- * leaf at all, even though it's also a prop with a visible shape — added
- * `Variants` to complete the set.
- *
- * MIGRATED TO `states` (2026-07-27): each prop's values used to be stacked by
- * hand in one `children` block with no room to explain any single value on its
- * own. Now each value is its own `states[]` entry — its own `why` and its own
- * `code` — reachable through the leaf's state tabs.
+ * One prop = one leaf: `orientation` · `variant` · `label`, each leaf rendering every
+ * value in full. Each value is a `states[]` entry with its own `why` and `code`.
  */
 /** The only node this atom ever draws is a direct HeroUI `Separator`. */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {

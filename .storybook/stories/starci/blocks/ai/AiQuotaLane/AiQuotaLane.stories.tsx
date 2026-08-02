@@ -3,20 +3,11 @@ import { AiQuotaLane, type AiQuotaLaneData } from "@sb-components/starci/blocks/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `AiQuotaLane`: one lane's pair of rolling-window quota bars — "next 5
- * hours" above "this week" — ported from `src`'s `QuotaLane` (+ its `QuotaBar`
- * leaf), shared by the Auto tab and the Premium branch of the Subscription tab
- * inside `AiQuotaModal`.
- *
- * ⭐ TWO LEAVES, ONE SHAPE: the next-5-hours row and the this-week row are the
- * SAME `QuotaBar` composition reading a different window — see the
- * component's file header for why this is one leaf rendered twice, not two
- * structures (and why it carries no per-instance anatomy tag of its own).
- *
- * 📐 LEAF by STRUCTURE (§14d.2): `data` unset/`isLoading` is the SAME shape
- * (both bars shimmer) — the difference between "no data yet" and "loading" is
- * a caller GUARANTEE, not a render difference, so it stays one leaf below with
- * data states, not two separate leaves.
+ * `AiQuotaLane` — one lane's pair of rolling-window quota bars ("next 5 hours"
+ * above "this week"), shared by the Auto tab and the Premium branch of the
+ * Subscription tab inside `AiQuotaModal`. Both rows are the same `QuotaBar`
+ * composition reading a different window. Unset `data`/`isLoading` shimmers
+ * both bars.
  */
 const meta: Meta<typeof AiQuotaLane> = {
     title: "StarCi/Blocks/Ai/AiQuotaLane/AiQuotaLane",

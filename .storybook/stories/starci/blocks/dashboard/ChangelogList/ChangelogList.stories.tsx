@@ -3,26 +3,12 @@ import { ChangelogList, type ChangelogListEntry } from "@sb-components/starci/bl
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ChangelogList`: the dashboard right-rail "What's new" list — dated
- * rows (optional category, a title that opens the entry when it has a
- * destination, an optional one-line body).
- *
- * REUSE, NOT A NEW SHAPE: `SurfaceCardNested` owns the card-in-card frame,
- * its own header bar and the divided row column; `AsyncContent` owns the
- * error/loading/empty/content switch. This block only decides the meta-line
- * wording (date + category label), which rows become links, and the retry
- * copy — see `ChangelogList.tsx`'s file header for the full judgement-call
- * list (meta-line is TEXT not a chip, whole-row link, no outer label
- * wrapper, plain-text body).
- *
- * 📐 LEAF BOUNDARY (canon `2-leaf-states.md` §0 R0 — "who flips the prop that
- * changes the tree?"): `isLoading` and `error` are CALLER-set switches that
- * swap the whole region ⇒ each its own leaf. `entries.length === 0` is DATA
- * returning `0` (R0's own worked example) ⇒ a STATE inside `Default`, not a
- * leaf of its own — `AsyncContent`'s own silent-empty contract (no
- * `emptyContent` passed) renders nothing at all, the same "hide the whole
- * block" behaviour the real `src` component hand-rolled with its own
- * `return null` guard.
+ * `ChangelogList` — the dashboard right-rail "What's new" list: dated rows with
+ * an optional category, a title that links to the entry when it has a
+ * destination, and an optional one-line body. `SurfaceCardNested` owns the
+ * card-in-card frame; `AsyncContent` owns the error/loading/empty/content
+ * switch. `isLoading` and `error` each swap the whole region; an empty
+ * `entries` array renders nothing.
  */
 const meta: Meta<typeof ChangelogList> = {
     title: "StarCi/Blocks/Dashboard/ChangelogList/ChangelogList",

@@ -3,25 +3,15 @@ import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ProfileHero`: the bare identity sidebar for a person's profile page —
- * rank-framed avatar, name/@handle/role, bio, location + work-mode, follower and
- * badge social proof, one primary CTA (hire/follow/edit) + share, and a
- * github/linkedin/website/joined meta list. NEW `profile` category.
- *
- * REUSE-FIRST (see `ConsultantCard`'s file header for the sibling incident this
- * run is written against): the sidebar is `SurfaceCard` around `StackV`/`StackH`/
- * `Cluster` holding `Avatar`/`Typography`/`Chip`/`Button`/`Divider` and
- * `EnumChip`/`InlineIconLabel` — no new card face, no new text atom.
- *
- * 📐 TWO LEAVES by STRUCTURE (§14d.2):
- *   1. **Default** — every optional row present (rank, role, bio, location,
- *      work-mode, badges, social links). The CTA/skeleton/follow-state variants
- *      pack into this leaf's `states`, since the button changes CONTENT, never
- *      the tree shape.
- *   2. **Minimal** — a person with no rank yet, no role/bio/location/work-mode,
- *      no badges, no social links: losing all of them removes real nodes from
- *      the tree, so it earns its own leaf, same rule `ConsultantCard.Minimal`
- *      already follows.
+ * `ProfileHero` — the identity sidebar for a person's profile page:
+ * rank-framed avatar, name/@handle/role, bio, location + work-mode, follower
+ * and badge social proof, one primary CTA (hire/follow/edit) + share, and a
+ * github/linkedin/website/joined meta list. Composed from `SurfaceCard` around
+ * `StackV`/`StackH`/`Cluster` holding `Avatar`/`Typography`/`Chip`/`Button`/
+ * `Divider` plus `EnumChip`/`InlineIconLabel`. Two leaves: `Default` (every
+ * optional row present; CTA/skeleton/follow-state are content states) and
+ * `Minimal` (no rank/role/bio/location/work-mode/badges/social links — losing
+ * those removes real nodes, earning its own leaf).
  */
 const meta: Meta<typeof ProfileHero> = {
     title: "StarCi/Blocks/Profile/ProfileHero/ProfileHero",

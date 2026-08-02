@@ -5,21 +5,14 @@ import { ContentAiChatDrawer, type ContentAiChatDrawerMode } from "@sb-component
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentAiChatDrawer`: the global "ask StarCi AI" chat panel, drawer
- * presentation. OVERLAY, PRESENTATIONAL ONLY (Rule 13) — `isOpen`/`onOpenChange`
- * are plain props, the real `useOverlayStore` wiring lives in the app layout
- * that mounts this, out of scope here.
- *
- * TWO LEAVES = two STRUCTURAL shapes of the header: the mode switch present
- * (desktop, where rail⇄drawer is a real choice) versus entirely absent
- * (forced mobile, where there is only one presentation to switch between).
- * Which title text shows (caller-supplied vs. the block's own fixed fallback)
- * is a DATA difference within the same structure, so it rides as a STATE
- * inside the `Default` leaf rather than a third leaf.
- *
- * The chat body itself is a deliberate SCOPE-CUT GAP (`SurfaceCard` +
- * `EmptyState`) standing in for the real `ChatThread`/`ChatComposer` blocks
- * — see the component's own file header for why.
+ * `ContentAiChatDrawer` — the global "ask StarCi AI" chat panel in drawer
+ * presentation. Presentational overlay only: `isOpen`/`onOpenChange` are plain
+ * props, the overlay-store wiring lives in the mounting layout. Two structural
+ * leaves by header shape: the mode switch present (desktop, where rail⇄drawer
+ * is a real choice) versus absent (forced mobile). Which title text shows
+ * (caller-supplied vs the block's fallback) is a data state. The chat body is a
+ * placeholder (`SurfaceCard` + `EmptyState`) standing in for the real
+ * `ChatThread`/`ChatComposer` blocks.
  */
 const meta: Meta<typeof ContentAiChatDrawer> = {
     title: "StarCi/Overlays/Drawers/ContentAiChatDrawer/ContentAiChatDrawer",

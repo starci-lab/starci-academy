@@ -11,60 +11,16 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `QuizPage`: drill yourself against written questions, one run at a
- * time. Set the run up, work through it, then look back over every card.
+ * `QuizPage` — the screen for drilling against written questions one run at a time:
+ * set the run up, work through it, then look back over every card. It composes blocks
+ * in frames and hands each typed data, drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. Every node below is one of the
- * EIGHT blocks the catalog already had (seven reused, one new — `QuizProgressPanel`) —
- * this file draws no shape of its own.
- *
- * ⭐ THREE PHASES, ONE SCREEN, NEVER TWO AT ONCE. `phase` decides which cluster of
- * blocks is on screen — `setup` (choose + look back), `active` (answer one
- * question at a time), `recap` (self-grade the whole run). The phases don't
- * overlay each other: `FlashcardModeSwitch` belongs to `setup` alone and is gone
- * the moment a run starts, same reasoning `ContentModeNav`'s file header gives for
- * disappearing rather than disabling — a disabled mode row still says "you could
- * switch", and mid-run that would be a lie.
- *
- * ⭐ SETUP HAS ITS OWN STRUCTURAL FORK. A learner who has not enrolled sees
- * `FlashcardModeSwitch` + `QuizEnrollGate` and NOTHING else — no setup form, no
- * progress panel, because there is nothing to preview (see `QuizEnrollGate`'s own
- * header). An enrolled learner sees `FlashcardModeSwitch` + `QuizSetup` +
- * `QuizProgressPanel` side by side: `QuizSetup` starts the next run,
- * `QuizProgressPanel` looks back at every run before it.
- *
- * ⭐ `WorkSessionHeader` IS SHARED BETWEEN `active` AND `recap`, WITH DIFFERENT
- * DATA. Both phases are "inside a session" in the sense the header cares about —
- * a way out, a position, a rail — so the same block is called twice rather than
- * invented twice. The screen hands each phase its OWN counter/total/current, it
- * does not try to make one session band serve both at once.
- *
- * ⛔ NO BREADCRUMB / "WHERE AM I" ROW (§B3 SCOPE). The planner's tree asked for
- * one; no block in the catalog draws it (the one candidate, `QuizBrief`, does not
- * exist), and inventing a ninth block to fill one row is exactly the reach the
- * corrected `ContentModeNav` warns against. Left as a marked gap rather than a
- * bare `div` standing in for it.
- *
- * ⛔ NO "LEVEL RAN OUT OF QUESTIONS" LEAF EITHER, for the same reason. The
- * planner's tree wanted the screen to swap `QuizQuestion` for a raw
- * `EmptyState` composite mid-`active`-phase — but §0's import boundary is
- * exact: a screen calls blocks and frames, never a composite directly (the one
- * documented exception, `CourseContents`'s `AsyncContentEmpty`, replaces the
- * ENTIRE screen, not one phase's one node). There is no block in today's catalog
- * that wraps that state for a mid-session swap, so building it here would mean
- * either breaking the import boundary or inventing a ninth block outside this
- * run's actual scope (the task's own tally stops at eight). Left as a marked gap;
- * a stub that renders is worse than an absence that does not (§B3).
- *
- * ⛔ `isSkeleton` REACHES ONLY THE BLOCKS THAT CAN MIRROR THEMSELVES —
- * `QuizSetup`, `QuizProgressPanel`, `QuizQuestion`. `FlashcardModeSwitch`,
- * `QuizEnrollGate`, `WorkSessionHeader` and `QuizRecapList` carry no such prop by
- * design (their own file headers say why: chrome known ahead of any request, or a
- * gate/recap with nothing to preview before its data exists), so the flag is not
- * threaded to them.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Three phases, never two at once: `setup` (a mode switch plus either `QuizEnrollGate`
+ * when not enrolled, or `QuizSetup` + `QuizProgressPanel` when enrolled), `active`
+ * (answer one question at a time), `recap` (self-grade the whole run).
+ * `WorkSessionHeader` is shared between `active` and `recap` with its own data each
+ * time; the mode switch is absent once a run starts. `isSkeleton` reaches only
+ * `QuizSetup`, `QuizProgressPanel`, and `QuizQuestion`.
  */
 
 /** Which part of a drill the learner is in. */

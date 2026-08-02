@@ -6,25 +6,16 @@ import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLi
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentCommentComposer`: the textarea + submit control used for new
- * comments, replies, AND edits — one component, three call shapes, ported
- * verbatim from real `src`'s `CommentComposer`.
+ * `ContentCommentComposer` — a BLOCK: the textarea + submit control used for new
+ * comments, replies, and edits — one component, three call shapes.
  *
- * ⭐ `collapsible` — the TOP-LEVEL composer only. Starts as a slim avatar +
- * placeholder pill (in the style of YouTube/GitHub) and expands to the full field on
- * click, so an empty grey box never dominates the discussion zone. Reply and
- * edit composers omit `collapsible` and render expanded immediately, with no
- * avatar (real `src`'s `CommentItem` never passes `currentUser` for those two
- * calls — the avatar-led row is a TOP-LEVEL-ONLY treatment).
+ * `collapsible` (top-level composer only) starts as a slim avatar + placeholder
+ * pill and expands to the full field on click, so an empty box never dominates the
+ * discussion zone. Reply and edit composers omit `collapsible`, render expanded,
+ * and show no avatar.
  *
- * ⭐ `variant="primary"` ON PURPOSE (instructor 2026-07-28). Real `Discussion` is
- * explicitly FRAMELESS — no card wraps it, it sits directly on the page
- * canvas — so this field never sits "inside a card" the way a modal's fields
- * do (those use `variant="secondary"`, see `ModalShell` stories). A field on
- * the plain page canvas is the "primary" case, exactly what real
- * `CommentComposer` passes to its own `TextField`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Uses `variant="primary"`: the discussion is frameless (no card wraps it), so this
+ * field sits directly on the page canvas rather than inside a card.
  */
 
 /** Minimal identity for the avatar-led top-level composer. */

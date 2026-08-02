@@ -3,23 +3,14 @@ import { LearnShell } from "@sb-components/starci/layouts/LearnShell/LearnShell"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT — `LearnShell`: the wrapper mounted once per `/learn/**` scope. See the
- * component's own file header for the full contract, the scope gaps left
- * deliberately open (rail body, `GithubLinkGate`), and why `LeaderboardCategoryNav`
- * was NOT reused despite the inventory hint (that block's own file header states
- * the desktop rail half it would need is itself out of scope, unbuilt).
- *
- * FIVE LEAVES BY STRUCTURE (§14d.2) — each one GAINS or LOSES a whole node,
- * never just a prop flip on one existing part:
+ * `LearnShell` — the wrapper mounted once per `/learn/**` scope. Five
+ * structural leaves, each gaining or losing a whole node:
  *   - `RailSurface`        — rail mounted beside `children`, one floating FAB.
- *   - `NoRailSurface`       — no rail at all, `children` fills the width.
- *   - `SelectionAskActive` — **gains** the `ContentAiSelectionAsk` pill node
- *     alongside the FAB (mirrors `EnrollGate.WithPreview`'s "whole extra layer"
- *     reasoning).
- *   - `AiSuppressed`        — `isAssessmentLive` **loses** BOTH AI trigger nodes
- *     at once (mirrors `MindMapPage.StandaloneLoading`'s "structurally absent,
- *     not just hidden" reasoning).
- *   - `EnrollGated`         — the whole rail+children row is **replaced** by
+ *   - `NoRailSurface`      — no rail; `children` fills the width.
+ *   - `SelectionAskActive` — gains the `ContentAiSelectionAsk` pill alongside
+ *     the FAB.
+ *   - `AiSuppressed`       — `isAssessmentLive` loses both AI trigger nodes.
+ *   - `EnrollGated`        — the whole rail+children row is replaced by
  *     `EnrollGate`.
  */
 const meta: Meta<typeof LearnShell> = {

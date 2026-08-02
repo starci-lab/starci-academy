@@ -6,20 +6,11 @@ import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa6"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT — `InnerLayout`: the wrapper for EVERY route in the app. See the
- * component's own file header for the full RULE 12 reasoning (why this is a
- * layout, the deliberate `flush` seam, the consolidation note explaining the
- * `AppShell` name this component used to carry, and the documented gaps
- * against the real `src/app/InnerLayout.tsx`).
- *
- * `children` is a REAL slot — each state below swaps its contents to show the
- * shell stays mounted while the routed page underneath changes, exactly the
- * demonstration `SettingsLayout`'s own story already settled on.
- *
- * TWO LEAVES, by STRUCTURE: `showFooter` gains or loses a WHOLE composed node
- * (the Footer), which is the "loses a node ⇒ own leaf" test `ContentHeader`'s
- * `NoOutcomes` leaf already established — not a state of one leaf, because
- * nothing about the Footer's own shape changes, it is simply present or gone.
+ * `InnerLayout` — the wrapper for every route in the app. `children` is a real
+ * slot: the shell stays mounted while the routed page underneath changes. Two
+ * structural leaves: `showFooter` gains or loses a whole composed node (the
+ * Footer), so it is a leaf rather than a state — the Footer's own shape never
+ * changes, it is simply present or gone.
  */
 const meta: Meta<typeof InnerLayout> = {
     title: "StarCi/Layouts/InnerLayout/InnerLayout",

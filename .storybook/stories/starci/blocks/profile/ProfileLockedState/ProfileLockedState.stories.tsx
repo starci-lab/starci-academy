@@ -4,21 +4,11 @@ import type { ProfileHeroUser } from "@sb-components/starci/blocks/profile/Profi
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ProfileLockedState`: the non-owner view of a profile its owner has
- * turned private. The identity hero stays visible; the tabbed activity region
- * is replaced by a single "private profile" notice with one way out (browse
- * courses instead).
- *
- * ⚠️ `ProfileHero` IS NOT BADGED HERE (known gap, §B3 scope discipline): its
- * component landed from a sibling agent in this same run, but its own story
- * file had not, at the time of writing. `check-orphan-parts` treats a badge
- * with no `storyId` to point to as worse than no badge — so the component
- * renders it un-badged for now. Add `` on the
- * component AND a `storyId`-bearing entry here the moment its story lands.
- *
- * 📐 ONE LEAF (§14d.2). The block always renders the exact same
- * hero-then-notice shape — nothing branches the STRUCTURE, so different
- * `user` values are a state inside this one leaf, not a second leaf.
+ * `ProfileLockedState` — the non-owner view of a profile its owner has turned
+ * private. The identity hero stays visible; the tabbed activity region is
+ * replaced by a single "private profile" notice with one way out (browse
+ * courses instead). One leaf: the block always renders the same
+ * hero-then-notice shape, so different `user` values are states.
  */
 const meta: Meta<typeof ProfileLockedState> = {
     title: "StarCi/Blocks/Profile/ProfileLockedState/ProfileLockedState",

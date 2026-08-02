@@ -3,29 +3,18 @@ import { Accordion } from "@sb-components/atoms/navigation/Accordion/Accordion"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Accordion` wraps HeroUI `DisclosureGroup` + `Disclosure` directly; it
- * doesn't compose any atom OF OURS with its own story. BUT (2026-07-27, the heroui
- * tier added to canon): every one of those sub-parts is still a REAL import from
- * `@heroui/react`, so each node still declares `tier: "heroui"` in `ANNOTATE` below —
- * the name matches the import identifier EXACTLY (`DisclosureGroup`/`Disclosure`/
- * `Disclosure.Trigger`/`Disclosure.Indicator`/`Disclosure.Content`/`Skeleton`), with
- * NO `storyId` since there is no story OF OURS to jump to. Before 2026-07-27 these
- * nodes were dropped ENTIRELY (empty annotate) — the tree "lied by omission" even
- * though the HeroUI compound was still rendering for real.
- *
- * The leaf set = `Default` (bare, prop `items`) + `Single`/`Multiple` (prop
- * `allowsMultiple`, each cell uses `defaultExpandedKeys` to open a panel UP FRONT —
- * since `allowsMultiple` only changes BEHAVIOR on interaction, without seeding state
- * the two cells would mount looking identical) + `Skeleton` (prop `isSkeleton`). The
- * old `DefaultOpen` leaf has been MERGED into `Single` — same `defaultExpandedKeys`
- * mechanism opening one panel; splitting it out would just produce two cells with
- * the same shape (2026-07-26).
- *
- * `Skeleton` was renamed from `Loading` (2026-07-27, teacher's ruling: a leaf carries
- * the PROP'S name, not the name of the situation — the prop that produces this leaf
- * is `isSkeleton`). The atom has no other size/variant axis for the skeleton to hang
- * off of (only `items`/`allowsMultiple`, neither changes shape under `isSkeleton`), so
- * ONE rendering is enough per §12g — no rung was left out.
+ * ATOM — `Accordion` wraps HeroUI `DisclosureGroup` + `Disclosure` directly; it composes no
+ * atom of ours with a story. Every sub-part is a real `@heroui/react` import, so each node
+ * declares `tier: "heroui"` in `ANNOTATE` with the name matching the import identifier
+ * exactly (`DisclosureGroup`/`Disclosure`/`Disclosure.Trigger`/`Disclosure.Indicator`/
+ * `Disclosure.Content`/`Skeleton`), with no `storyId`.
+ * 
+ * Leaf set = `Default` (bare, prop `items`) + `Single`/`Multiple` (prop `allowsMultiple`,
+ * each cell uses `defaultExpandedKeys` to open a panel up front, since `allowsMultiple` only
+ * changes behavior on interaction) + `Skeleton` (prop `isSkeleton`).
+ * 
+ * `Skeleton` carries the prop's name (`isSkeleton`). The atom has no other size/variant axis
+ * for the skeleton, so one rendering is enough.
  */
 
 const meta: Meta<typeof Accordion> = {

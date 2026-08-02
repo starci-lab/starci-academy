@@ -4,39 +4,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FoundationCategorySearchBar`: the search row on the Foundations hub,
- * exactly as `FoundationsCategoryGridLayout` draws it in `src` — a debounced
- * autocomplete field on the left, a live "N topics" count riding beside it on
- * the right, one `StackH` seam apart.
- *
- * NEW, not a rebuild — `SearchAutocomplete` is an ATOM the screen cannot call
- * bare (§decompose rule 1: nothing above atom tier reaches past a composite it
- * already has, and there is no existing composite/block that draws this row).
- * This block earns its layer two ways:
- *   1. It maps the DOMAIN suggestion entity (`FoundationCategorySuggestion`,
- *      `{ id, label }` off the `foundationCategorySuggestions` GraphQL query)
- *      into the atom's generic `SearchAutocompleteItem` shape. The atom stays
- *      reusable for any suggestion source; this block is the one place that
- *      knows a foundation category suggestion looks like that.
- *   2. It OWNS the count's wording, the same way `ContentModeNav` owns its
- *      mode-label table (§14d.1) — the caller hands over a bare `count`
- *      number, never a pre-formatted string. Ported straight from the real
- *      copy (`vi.json` foundations.categoryCount`):
- *        - 0            → "No topics yet" (a real, newsworthy zero — the
- *                          search genuinely turned up nothing — unlike
- *                          `ContentModeNav`'s badge count, where 0 is not
- *                          news and is hidden instead)
- *        - N ≥ 1        → "N topics"
- *      `count` itself stays OPTIONAL and undefined ⇒ nothing is rendered:
- *      that is the "count not known yet" case (first paint, before the
- *      category list has answered), distinct from the real zero above.
- *
- * ONE LEAF. `isSkeleton` only swaps which state each composed atom renders
- * (field → field skeleton, count text → text skeleton bar) — no node
- * appears/disappears, so it is a STATE inside the one leaf, not its own leaf
- * (§14d.2).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `FoundationCategorySearchBar` — the Foundations-hub search row: a debounced
+ * autocomplete field left, a live "N topics" count right, one `StackH` apart. Maps the
+ * `FoundationCategorySuggestion` (`{ id, label }`) entity into `SearchAutocomplete`'s
+ * generic item shape and owns the count wording (0 → "No topics yet", N → "N topics");
+ * `count` undefined renders nothing (not known yet). One leaf, `isSkeleton` a state.
  */
 
 /** One foundation-category autocomplete suggestion (from `foundationCategorySuggestions`). */

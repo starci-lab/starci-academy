@@ -17,75 +17,35 @@ import { PADDING_CLASS, type AllowedGap, type AllowedPadding } from "@sb-compone
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `SurfaceCard.*`, the ONE card FRAME namespace
- * (instructor's call, 2026-07-25). Eight sibling card frames that used to live as eight loose
- * folders (`SurfaceCard` · `NestedCard` · `PressableCard` · `GroupPressableCard`
- * · `SurfaceListCard` · `SurfaceAccordionCard` · `CrossListCard` ·
- * `DashedPlaceholderCard`) are now MEMBERS of one namespace — same tier, same
- * job (laying out content within one card face), one import.
+ * `SurfaceCard.*` — the card frame namespace whose members lay out content within
+ * one card face. Members include `.Base`, `.Nested`, `.List`, `.PressableGroup`,
+ * `.SelectableGroup`, `.Accordion`, and `.CrossList`.
  *
- * FRAME API LAW:
- * - Named slots are the main road: `header` / `body` / `footer` — each a COMPONENT
- *   reference the frame calls itself (COMPOSITE-8), never an already-built node,
- *   so `isSkeleton` can reach inside it the same way it reaches every atom this
- *   composite renders directly.
- * - A REPEATING LIST must take DATA via `items`; elements are forbidden there
+ * Frame API law:
+ * - Named slots are the main road: `header` / `body` / `footer`, each a COMPONENT
+ *   reference the frame calls itself so `isSkeleton` can reach inside it.
+ * - A repeating list takes DATA via `items`; elements are forbidden there
  *   (`.List` · `.PressableGroup` · `.SelectableGroup` · `.Accordion` · `.CrossList`).
  * - Namespace only — no bare component export.
  *
- * Behaviour/skin of every member is carried over VERBATIM from its old folder;
- * this is an API refactor, not a visual one. Synced to `src` later.
+ * `.Base` derives `isPressable = Boolean(onPress || href)` internally and owns the
+ * press capabilities (`onPress`/`href`/`isDisabled`/`isSelected`/`actions`/
+ * `ariaLabel`, ripple, `active:scale-[0.97]`, stretched-link `actions`).
  *
- * ⭐ `.Pressable` REMOVED, FOLDED INTO `.Base` (instructor, 2026-07-29: "why still
- * have `.Pressable`, when it's already become `isPressable` as a prop?"). `Base` derives
- * `isPressable = Boolean(onPress || href)` internally — same convention
- * `List.Row` already used — instead of forcing the caller to import a second,
- * separate component for the exact same card face plus a press target. Every
- * `onPress`/`href`/`isDisabled`/`isSelected`/`actions`/`ariaLabel` capability
- * `.Pressable` used to own now lives on `SurfaceCardBaseProps`, unchanged in
- * behaviour (ripple, `active:scale-[0.97]`, the stretched-link `actions`
- * pattern) — only the entry point moved. `.PressableGroup` (the GRID of
- * press-target tiles) still exists — a repeating list is a genuinely different
- * shape (§13b) — but each tile now renders straight off `.Base`, not a
- * bespoke sibling.
- *
- * ⭐ NINTH MEMBER (decided 2026-07-26): `.SelectableGroup` — moved in from the
- * atom tier (`atoms/navigation/SelectableCardGroup`). It composes several cards
- * into ONE bounded, laid-out cluster, which is a layout-tier job, not an atom's
- * (§12a/§6b — an atom is a single leaf, not a composed grid). It is the SIBLING
- * of `.PressableGroup` — same "grid of cards" shape — differing in exactly one
+ * `.PressableGroup` vs `.SelectableGroup` are both grids of cards differing in one
  * axis: `.PressableGroup` is an ACTIONS grid of independent press targets
  * (`role="group"`, each tile its own `<button>`/`<a>`, optional decorative
- * `selected` ring with no enforced exclusivity); `.SelectableGroup` is a REAL
- * single-select control (`role="radiogroup"` via HeroUI `RadioGroup`/`Radio` —
- * React Aria roving tabindex + arrow-key navigation + enforced one-of-N value).
- * That is a DOM/interaction-contract difference, not a stylistic one, so it is
- * its own member (option A over folding a `selectedKey` prop into
- * `.PressableGroup` — the two can't share one underlying element shape).
+ * `selected` ring, no enforced exclusivity); `.SelectableGroup` is a real
+ * single-select control (`role="radiogroup"` via HeroUI `RadioGroup`/`Radio`,
+ * roving tabindex, arrow-key nav, enforced one-of-N value).
  *
- * ⚠️ KNOWN DRIFT (do not fix in this pass): `.SelectableGroup` calls HeroUI
- * `Radio`/`RadioGroup` directly instead of going through the design system's
- * own `ChoiceRadio`/`ChoiceRadioGroup` atom
- * (`.storybook/components/atoms/forms/Choice/Choice.tsx`, which has its own
- * story). Every other member of this namespace composes lower-tier atoms; this
- * one reaches past them straight to HeroUI. Left as-is per instruction —
- * flagged here for a future pass.
+ * Three independent axes on the card face:
  *
- * ⭐ THREE INDEPENDENT AXES (decided 2026-07-26) — three old `boolean` props that
- * looked like one idea ("smaller/lighter card") turned out to be THREE UNRELATED
- * dimensions. Merging them would kill real combinations (a nested card WITH a
- * bleed-edge image is a valid combo):
- *
- * | Old prop | New prop | Union | Default | Present on member |
- * |---|---|---|---|---|
- * | `bordered?: boolean` | `variant` | `"surface" \| "nested"` | `"surface"` | `.Base` `.Nested` `.List` `.Accordion` `.CrossList` |
- * | `flushContent?: boolean` | `padding` | `AllowedPadding` (from `_spacing`) | `{4}` | `.Base` |
- * | `compact?: boolean` | `radius` | `"xl" \| "3xl"` | `"3xl"` | `.Nested` |
- *
- * 1-1 mapping: `bordered` → `variant="nested"` · `flushContent` → `padding={1}` ·
- * `compact` → `radius="xl"`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * | Prop | Union | Default | Present on member |
+ * |---|---|---|---|
+ * | `variant` | `"surface" \| "nested"` | `"surface"` | `.Base` `.Nested` `.List` `.Accordion` `.CrossList` |
+ * | `padding` | `AllowedPadding` (from `_spacing`) | `{4}` | `.Base` |
+ * | `radius` | `"xl" \| "3xl"` | `"3xl"` | `.Nested` |
  */
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "SurfaceCard" } as const

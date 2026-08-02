@@ -3,27 +3,11 @@ import { ConsultantDirectoryHeader } from "@sb-components/starci/blocks/consulta
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ConsultantDirectoryHeader`: the DIRECTORY-IDENTITY cluster at the
- * top of the consultant directory screen. It answers one question, "what
- * directory is this", via a course-scoped breadcrumb trail, a title and an
- * optional one-line description.
- *
- * SIBLING OF `ContentHeader`/`FoundationsHeader`, NOT A COPY of either. All
- * three place identity into the same `PageHeader` frame with a `Breadcrumbs`
- * trail, but this one is deliberately THIN like `FoundationsHeader`: no
- * read-state chip, no meta row, no secondary card — the directory carries no
- * per-item progress, so there is nothing to summarize in a meta row.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). Losing the `description` Typography is the
- * same MAGNITUDE of change as `FoundationsHeader`'s own description toggle —
- * one atom node inside an already-composed frame — so it stays a STATE of the
- * `Default` leaf. The caller flipping `isSkeleton` swaps every composed atom
- * for its own mirror, which is its own leaf, same as `ContentHeader`'s and
- * `FoundationsHeader`'s `Skeleton` leaf.
- *
- * ⛔ There is deliberately NO "no breadcrumb" leaf. The directory is always
- * reached through its course, so the trail always exists — building that leaf
- * would be inventing a case no screen asks for (§14d.3).
+ * `ConsultantDirectoryHeader` — the directory-identity cluster atop the
+ * consultant directory screen: a course-scoped breadcrumb trail, a title, and an
+ * optional one-line description. A thin `PageHeader` cluster with no read-state
+ * chip or meta row. `description` is optional; `isSkeleton` swaps every atom for
+ * its mirror. The breadcrumb trail always exists.
  */
 const meta: Meta<typeof ConsultantDirectoryHeader> = {
     title: "StarCi/Blocks/Consultant/ConsultantDirectoryHeader/ConsultantDirectoryHeader",

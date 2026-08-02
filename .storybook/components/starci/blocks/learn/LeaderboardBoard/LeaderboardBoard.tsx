@@ -12,63 +12,19 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `LeaderboardBoard`: the ranked board itself — async lifecycle, the
- * viewer's own standing, the top-3 podium, the ranked rows with a pinned
- * self-row + ellipsis, and the top-3 confetti celebration.
+ * `LeaderboardBoard` — the ranked board: async lifecycle, the viewer's own standing, a
+ * top-3 podium, ranked rows with a pinned self-row + ellipsis, and top-3 confetti.
  *
- * ⭐ WHY THIS FILE IS MOSTLY REUSE. This task's whole reason for existing is a
- * previous block that reached PAST a composite it should have used and rebuilt a
- * worse version by hand. So the loading/empty/error/content switch here is
- * `AsyncContent` WHOLESALE (not a hand-rolled if/else ladder), the bordered row
- * list is `SurfaceCard.List` WHOLESALE (not a new list composite), and every row's
- * identity + "this is me" accent is the `UserCell` atom UNCHANGED — `isOwnRow`
- * already does the accent, `trailing` already takes the score. Reaching past any
- * of these to hand-roll a row would be the exact mistake this file exists to
- * avoid repeating.
+ * Reuses `AsyncContent` (branch switch), `SurfaceCard.List` (rows), and `UserCell` (row
+ * identity + `isOwnRow` accent). Two internal-only parts: `Podium` (a raised dais of
+ * `Avatar` + `Typography`) and `Confetti` (a fixed decorative particle overlay pulsed by
+ * `celebrateKey`).
  *
- * TWO GENUINELY NEW PARTS, both INTERNAL to this block (no catalog equivalent,
- * and deliberately not their own screen-facing blocks — nothing else in the tree
- * needs a dais or a particle overlay today):
- *   • `Podium` — the raised champion dais. Composes ONLY `Avatar` + `Typography`;
- *     nothing under `stats/*`/`cards/*` draws a stepped riser.
- *   • `Confetti` — a fixed, non-interactive falling-particle overlay, pulsed by
- *     `celebrateKey`. Not an atom (no size/skeleton contract, purely decorative,
- *     unmounts itself) and not reusable outside a "you just placed" moment.
- *
- * ⭐ ONE LEAF, MANY STATES (§11f). Loading / empty / error / content are DATA
- * conditions of the same async region, not different shapes this block draws —
- * `AsyncContent` already treats them that way (its own file calls itself "the
- * ONE async-state FRAME"), so a block wrapping it inherits the same read: the
- * leaf is "Board", and loading/empty/error/content are its states.
- *
- * ⭐ TWO INDEPENDENT SKELETON KNOBS, on purpose. `isLoading` drives `AsyncContent`'s
- * branch switch — BEFORE any real shape exists, so its skeleton slot is built from
- * fixed placeholder counts, not from the caller's arrays. `isSkeleton` flows into
- * the REAL standing/podium/row atoms once data exists (§12c: a caller-held flag
- * for a background revalidate) — an entirely different moment from "no data yet".
- * Conflating the two would mean a screen mid-revalidate has no way to shimmer
- * without also discarding the board that's already on screen.
- *
- * ⭐ THE RANK NUMBER IS BLOCK WORDING, `primaryLabel`/`secondaryLabel` ARE NOT.
- * `standing.rank` is typed domain data (a number); the sentence "Rank #12" is
- * built HERE (§14d.1 — typed data in, a sentence out). `primaryLabel`/
- * `secondaryLabel` arrive pre-worded from the caller because they carry
- * screen-specific business phrasing (which stat counts as "primary" this season)
- * that does not belong to a generic board.
- *
- * ⭐ `meLabel` IS AN ACCESSIBLE TAG, NOT VISIBLE CHROME. `isOwnRow`/color already
- * carries the "this is me" signal for sighted readers; a screen reader gets
- * nothing from a colour change, so `meLabel` rides as an `sr-only` span next to
- * every row/podium entry/pinned self-row that is the viewer's own. Rendering it
- * as visible chrome next to every "me" occurrence (podium AND pinned row) would
- * repeat the same badge on screen twice for one viewer.
- *
- * ⭐ THE ELLIPSIS + PINNED SELF-ROW IS ONE SHAPE, NOT A SEPARATE LEAF. Whether the
- * viewer's own row needs pinning is a DATA condition (`selfRow` set + a gap to
- * bridge), so it lives inside the same `SurfaceCard.List` as an extra couple of
- * rows — never a second list composite bolted on below the first.
- * ─────────────────────────────────────────────────────────────────────────────
+ * One leaf, many states. Two skeleton knobs: `isLoading` drives `AsyncContent`'s branch
+ * from fixed placeholder counts (no data yet); `isSkeleton` flows into the real atoms
+ * during a background revalidate. Builds the "Rank #N" sentence from typed
+ * `standing.rank`; `primaryLabel`/`secondaryLabel` arrive pre-worded. `meLabel` rides as
+ * an `sr-only` tag on the viewer's own rows.
  */
 
 /** The viewer's own standing, shown above the podium. */

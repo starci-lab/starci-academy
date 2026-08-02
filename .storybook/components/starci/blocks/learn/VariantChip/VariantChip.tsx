@@ -3,35 +3,13 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * DESIGN — `VariantChip.*`: chip family that APPLIES ONE MEANINGFUL ROLE on top of
- * the `Chip.*` atom.
- *
- * True to the `design` tier (§14d — design carries WHY): it doesn't invent a new
- * shape, it just attaches the MEANING + the color scale of that role onto the
- * shape the atom already has. Changing the chip's SHAPE is the atom's job;
- * changing the MEANING "difficulty" / "language" / "platform" is this file's job.
- *
- * MEMBER = MEANINGFUL ROLE, not shape. This is where the design tier differs from
- * the atom tier: the atom has only ONE chip (`Chip`) split by PROP, while
- * design splits by WHY.
- *
- * ⛔ **DESIGN MUST NEVER EXPOSE `custom` OR `bare`** (teacher's call, 2026-07-26):
- * no caller-chosen label, no shape swap. Opening those two up would let the caller
- * change both the text and the look — at that point it stops being a MEANINGFUL
- * ROLE and is just a chip again. Design must be the ONE CANONICAL FORM of that
- * role; anyone who wants a free-form chip should call the atom `Chip.*` directly.
- *
- * Consequence: `difficulty` is the ONE axis — it decides both the label and the
- * color.
- *
- * NO `Base` member: a "variant chip" carrying no role IS `Chip` with a dot —
- * adding an empty `Base` here would be an empty namespace (§12a forbids it).
- *
- * This family will also grow `.Language` · `.HostPlatform` · `.AiCategory`
- * (currently in `_legacy`). Only build the member a SCREEN ACTUALLY NEEDS — don't
- * feed a member nobody calls.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `VariantChip.*` — a chip family (design tier) that applies one meaningful role
+ * (difficulty, language, platform) on top of the `Chip.*` atom, attaching the
+ * role's meaning and colour scale to the shape the atom already owns. Each member
+ * is a meaningful role, not a shape variant. Never exposes `custom` or `bare`: no
+ * caller-chosen label or shape swap — each member is the one canonical form of
+ * its role (use `Chip.*` directly for a free-form chip). No `Base` member. Grows
+ * `.Language`/`.HostPlatform`/`.AiCategory` as screens need them.
  */
 
 /** The supported difficulty levels a piece of content can be tagged with. */

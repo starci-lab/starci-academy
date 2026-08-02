@@ -3,26 +3,13 @@ import { PlaygroundSetupHeader } from "@sb-components/starci/blocks/learn/Playgr
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundSetupHeader`: the IDENTITY cluster at the top of the
- * playground Setup screen — a way back to the playground hub, the exercise
- * title, and its one-line intro copy.
- *
- * SIBLING OF `ContentHeader` / `CourseBrief`, NOT A COPY. All three place
- * identity into `PageHeader`, but a playground exercise has neither a read
- * state, an outcomes list, nor a module/hour/learner count, so this block
- * carries NO meta cluster at all.
- *
- * ⭐ REUSE, NOT A NEW BACK ROW. `PageHeader.breadcrumb` already accepts a
- * plain anchor chain, so a Setup screen's single hop back to the hub is
- * `LinkBack` sitting directly in that slot — no one-crumb `Breadcrumbs`
- * array pretending to be a trail, and no outer `StackV` wrapping a single
- * `PageHeader` (that frame already owns its own breadcrumb-to-title seam).
- *
- * 📐 ONE LEAF. `isSkeleton` swaps `title`/`description` to their shimmer
- * mirror but keeps the same nodes in the same slots — a DATA condition, not
- * a structural one — so it is a STATE inside `Default`, not its own leaf.
- * The back link never gets a skeleton mirror: `breadcrumbLabel`/`onBack` are
- * supplied synchronously by the caller and never wait on the exercise fetch.
+ * `PlaygroundSetupHeader` — the identity cluster at the top of the playground Setup
+ * screen: a way back to the playground hub, the exercise title, and its one-line
+ * intro. Sibling of `ContentHeader` / `CourseBrief` but carries no meta cluster —
+ * a playground exercise has no read state, outcomes, or counts. The single hop back
+ * is a `LinkBack` placed directly in `PageHeader.breadcrumb`. One shape:
+ * `isSkeleton` swaps `title`/`description` to their shimmer mirror in the same
+ * slots; the back link never waits on the fetch, so it gets no skeleton.
  */
 const meta: Meta<typeof PlaygroundSetupHeader> = {
     title: "StarCi/Blocks/Learn/PlaygroundSetupHeader/PlaygroundSetupHeader",

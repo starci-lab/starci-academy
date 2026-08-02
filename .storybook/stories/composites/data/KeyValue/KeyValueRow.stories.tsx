@@ -3,23 +3,10 @@ import { KeyValueRow } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE (§12f/§13) — `KeyValueRow` owns the SHAPE of ONE label–value
- * pair: label (+`hint`) left, value right, and the `emphasis` EMPHASIS tier for
- * the total row. Those three states originate from its own props → they all live
- * here.
- *
- * `divider` has NO story of its own here: the rule line is a SEAM BETWEEN two
- * rows, only meaningful when the row sits inside a list — its home is
- * `KeyValueList` (where the list decides the last row skips the rule). This is
- * exactly the §12f test: "does this state originate from the component's OWN
- * props, or does it only make sense one level up?".
- *
- * The frame does NOT format: the `value` below is a string ALREADY formatted
- * (`"1.200.000 ₫"`), not a number for the frame to convert units on its own.
- *
- * ⭐ ADDED 2026-08-01 (additive): `copyable` grows a one-tap `SnippetIcon` copy
- * affordance beside the value. Default `false` — every leaf above the
- * `Copyable` one renders with no `copyable` passed and is unaffected.
+ * `KeyValueRow` — the shape of one label–value pair: label (+`hint`) left, value right, and
+ * the `emphasis` tier for a total row. The value is an already-formatted string (`"1.200.000 ₫"`),
+ * not a number the row converts. `copyable` grows a one-tap `SnippetIcon` copy affordance beside
+ * the value (default `false`). `divider` belongs to `KeyValueList`, not here.
  */
 const meta: Meta<typeof KeyValueRow> = {
     title: "Composites/Data/KeyValue/KeyValueRow",

@@ -6,40 +6,14 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `MilestoneUpNextCard`: the passed-attempt handoff to the NEXT
- * unlocked milestone task, on a capstone track.
+ * `MilestoneUpNextCard` — the passed-attempt handoff to the next unlocked milestone task
+ * on a linear capstone track: one focal action, `isHighlight` default `true`. Reused for
+ * `ContentPage`'s mobile/tablet practice nudge, where the caller sets `isHighlight` off
+ * for a plain inline aside.
  *
- * WHY THIS EXISTS, DISTINCT FROM THE CHALLENGE FLOW: a challenge attempt ends
- * on its own `SubmissionScoreCard`/`SubmissionResultHeader` pair with no fixed
- * successor — the learner picks their own next move. A MILESTONE sits on a
- * linear capstone track (task 1 → 2 → 3 → …), so a passed attempt has exactly
- * ONE real "what's next", and this card IS that handoff — the single focal
- * action on the milestone result screen, `isHighlight` on. `ContinueCardHero`
- * documents the same reasoning for why two highlighted cards would cancel
- * each other's emphasis.
- *
- * ⭐ `isHighlight` IS NOW CALLER-CONTROLLED (teacher 2026-07-28, default `true` —
- * every existing call site is unchanged). Reused a second time for
- * `ContentPage`'s mobile/tablet practice nudge, which is an inline aside in a
- * scrolling reading page, not the one focal moment of its own screen — `src`'s
- * real `UpNextCard` there is a plain, unaccented card. Hardcoding the
- * highlight would have painted every future reuse with milestone's own
- * one-focal-action semantics; this is domain-generic shape, not a milestone
- * fact, so the caller decides.
- *
- * `showCheck` marks that the attempt just handed off FROM was a PASS: a small
- * `CheckCircleIcon` sits beside the eyebrow through `Typography`'s own
- * `prefixIcon` slot. This is a STATE of the one leaf, not a second leaf
- * (§14d.2) — the shape (eyebrow → title → description → CTA) never changes,
- * only whether that one glyph is present.
- *
- * `eyebrow`/`title`/`description`/`ctaLabel` all come in as plain strings
- * (§14d.1): the CALLER supplies the milestone's own wording (which task, what
- * it asks for, what the button says). This block owns only the layout, the
- * check-glyph placement, the highlight treatment, and the CTA's arrow
- * affordance — never the domain text itself.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `showCheck` places a check glyph beside the eyebrow (a state, not a leaf). `eyebrow`/
+ * `title`/`description`/`ctaLabel` are caller strings; the block owns layout, the check
+ * placement, the highlight treatment, and the CTA arrow.
  */
 
 /** Props for {@link MilestoneUpNextCard}. */

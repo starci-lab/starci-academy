@@ -5,41 +5,13 @@ import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/Sur
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ModuleChallengeList`: every CHALLENGE across this module's lessons,
- * flattened into one list — solve-me rows, not read-me rows.
- *
- * ⭐ A SEPARATE BLOCK FROM A LESSON LIST, NOT ONE LIST WITH A `kind` SWITCH
- * (§14d). This shares its layout composite with a plain lesson list
- * (`SurfaceCardList`), but the WHY underneath differs on every axis that
- * matters:
- *   - VERB: a lesson row means "go read this"; a challenge row means "go solve
- *     this" — the row's job is to send the learner into a puzzle, not a page.
- *   - ICON: a lesson leans on read-state glyphs (play/check/circle, see
- *     `KeepGoingPath`); a challenge is always the same `PuzzlePieceIcon`,
- *     recoloured by whether it's been solved — there is no "in progress" for a
- *     challenge, only solved / not yet.
- *   - NAV TARGET: a lesson row opens the LESSON itself; a challenge row opens
- *     the OWNING LESSON'S CHALLENGES TAB — the row's `id` identifies the
- *     challenge for the key, but `onSelectChallenge` is called with the
- *     `lessonId`, because that's the route that actually exists.
- * Folding these into one list behind a prop would hide that divergence behind
- * a boolean nobody could read the reason for later — this is exactly the
- * mistake the file header of `ContentModeNav` documents (a "shared" component
- * that quietly drops a real behaviour because two different jobs got merged
- * into one shape).
- *
- * COMPOSED FROM `SurfaceCardList` (layout) + `VariantChipDifficulty` (design) —
- * the block adds no card chrome of its own, it only supplies the domain: which
- * icon color a row gets, what its subtitle says, and where a press goes.
- *
- * THE LEADING ICON IS HAND-ROLLED, NOT `leadingIcon` (§4/§5 escape hatch, same
- * call as `KeepGoingPath`'s state table): `leadingIcon` forces the frame's
- * shared `text-muted`/foreground rule, but "solved" carries its OWN success
- * color that must survive independent of the row's text. Going through
- * `leading` (a node) is the one path that lets a per-row color live outside
- * the frame's own rule.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ModuleChallengeList` — every challenge across this module's lessons flattened into one
+ * list of solve-me rows. A separate block from a lesson list, not a `kind` switch: a
+ * challenge row means "solve this", always uses `PuzzlePieceIcon` recoloured by
+ * solved/not-solved, and navigates to the owning lesson's challenges tab
+ * (`onSelectChallenge` is called with the `lessonId`). Composes `SurfaceCardList` +
+ * `VariantChipDifficulty`. The leading icon is hand-rolled via the `leading` node slot
+ * so "solved" keeps its own success colour, outside the frame's text rule.
  */
 
 /** One challenge row — plain DATA, the block builds the row shape itself. */

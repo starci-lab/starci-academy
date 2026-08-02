@@ -3,22 +3,13 @@ import { ModuleLessonList, type ModuleLessonListLesson } from "@sb-components/st
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ModuleLessonList`: the full, ordered lesson table of contents for
- * one module — every lesson it has, not just what's next.
- *
- * SIBLING OF `KeepGoingPath`, NOT A DUPLICATE. `KeepGoingPath` trims down to the
- * top of the continue-learning queue and owns its own heading sentence; this
- * block lists the WHOLE module and takes no heading of its own — the
- * screen/section wrapping it supplies that.
- *
- * THE BLOCK OWNS: the status icon per row (`resume`/`read`/`unread`) · the
- * subtitle sentence ("N min read · M challenges") · whether a difficulty chip and
- * a premium lock ride on the trailing side. The caller only supplies data.
- *
- * 📐 ONE LEAF for the data shape (§11f + §14d.2): every row-level difference
- * (status, difficulty, premium) shares the SAME `SurfaceCardList` tree, only
- * the CONTENT differs ⇒ they're all STATE inside one leaf. Flipping
- * `isSkeleton` is its own leaf (a caller PROP flip, not a data difference).
+ * `ModuleLessonList` — the full, ordered lesson table of contents for one module —
+ * every lesson, not just what's next. Sibling of `KeepGoingPath` (which trims to
+ * the continue-learning queue and owns a heading); this block takes no heading of
+ * its own. The block owns the per-row status icon (`resume`/`read`/`unread`), the
+ * "N min read · M challenges" subtitle, and whether a difficulty chip and premium
+ * lock ride on the trailing side. Row-level differences are states of one
+ * `SurfaceCardList` tree; `isSkeleton` is its own leaf.
  */
 const meta: Meta<typeof ModuleLessonList> = {
     title: "StarCi/Blocks/Learn/ModuleLessonList/ModuleLessonList",

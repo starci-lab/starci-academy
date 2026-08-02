@@ -7,41 +7,15 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `FoundationsGridPage`: browse the Foundations content library and
- * drill into a category.
+ * `FoundationsGridPage` — the screen for browsing the Foundations content library and
+ * drilling into a category. It composes blocks in frames and hands each typed data,
+ * drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own —
- * every `div` here would be a shape it had no right to decide.
- *
- * SIX FUNCTIONS, in the order the reader meets them:
- *   1. Orient — the breadcrumb trail + hub title/description.        → `FoundationCategoryHeader`
- *   2. Get nudged to unlock the course while still on trial.         → `TrialEnrollBanner`
- *   3. See how many categories exist / match, live.                  → `FoundationCategorySearchBar`
- *   4. Search by name with autocomplete suggestions.                 → `FoundationCategorySearchBar`
- *   5. Browse the category list and open one.                        → `FoundationCategoryList`
- *   6. Page through categories when there's more than one page.      → `FoundationCategoryList` (pager)
- *
- * CUT PER §B1 (state, not function): "see a clear empty message" is a STATE of
- * function 5 (`FoundationCategoryList`'s own empty-state branch), not its own
- * function — it never appears independent of browsing, so it is not a seventh
- * block here.
- *
- * TWO SEAMS, TWO OWNERS (§10a). The outer `StackV gap={6}` separates the
- * three REGIONS of the page — identity, the trial nudge, and the browse
- * cluster. The inner `StackV gap={6}` is its own separate owner for the
- * "browse cluster" — search row above list — mirroring the real
- * `FoundationsCategoryGrid` layout's own inner `gap-6` cluster between its
- * search row and its grid/pager (the `gap-3` inside that layout is a
- * DIFFERENT seam, internal to the search row itself, already handled by
- * `FoundationCategorySearchBar`'s own `StackH gap={4}`).
- *
- * ⚠️ `isSkeleton` flows to every block uniformly, INCLUDING the trial banner:
- * `TrialEnrollBanner` treats `isSkeleton` as a state that WINS over
- * `isVisible` (see that block's own file header) — the screen does not need to
- * pick one or the other, it hands both down and the block resolves the rest.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Six functions: header (breadcrumb + hub title/description), a self-hiding
+ * trial-enroll banner, a live category count, name search with autocomplete, the
+ * category list, and its pager. An empty result is a state of the list, not its own
+ * block. `isSkeleton` flows to every block, including the trial banner (which treats
+ * it as a state that wins over `isVisible`).
  */
 
 /** Props for {@link FoundationsGridPage}. */

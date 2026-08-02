@@ -8,37 +8,21 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentHeader`: the LESSON IDENTITY block, answering "what is this
- * lesson" at the top of the reading screen.
+ * `ContentHeader` — a BLOCK: the lesson identity block at the top of the reading
+ * screen — the single thing the screen calls for the whole identity cluster: trail,
+ * title, description, the quiet meta strip, and the "what you'll learn" list.
  *
- * WHY IT EXISTS: the screen owns a LIST OF FUNCTIONS, never a heading frame plus
- * loose atoms. `ContentHeader` is the single thing the screen calls for the
- * whole identity cluster — trail, title, description, the quiet meta strip, and
- * the "what you'll learn" list.
+ * A sibling of `CourseBrief`, not a copy: both place identity into `PageHeader`, but
+ * a lesson header carries read state, reading time, challenge count, and learning
+ * outcomes rather than a course's module/hour/learner counts.
  *
- * SIBLING, NOT A COPY of `CourseBrief`. Both place identity into `PageHeader`,
- * but they answer different questions and carry different data: a course brief
- * counts modules/hours/learners, a lesson header carries read state, reading
- * time, challenge count, and learning outcomes. Same frame, different domain.
+ * Receives DATA and does all the wording itself — no `meta` string, no `heading`:
+ * the caller hands numbers and the block decides units, separator, and order.
  *
- * CONTRACT — the block receives DATA and does ALL the wording itself (§14d.1).
- * No `meta` string, no `heading`: the caller hands over numbers and the block
- * decides the units, the separator and the order. A caller that could pass
- * `meta="12 min read · 3 challenges"` would own the shape, and the block would
- * stop owning its own appearance.
- *
- * ONE CHIP PER CLUSTER (`starci-fe/no-adjacent-chip`). The read state is the
- * classifying axis, so it gets the chip; reading time and challenge count are
- * quiet facts and ride as muted text with an inline icon. The `src` original
- * stacked a badge, a chip and a text line — three weights for three facts of
- * equal importance.
- *
- * SEAM: header proper to outcomes is `section`. They are two REGIONS of one
- * thing (what this lesson is), not two features. ⚠️ `src` writes `gap-10` there,
- * which is OFF-SCALE — the scale admits `0·1·2·3·6·8` only, so this is a
- * deliberate correction, not a transcription slip.
- * ─────────────────────────────────────────────────────────────────────────────
+ * One chip per cluster: the read state is the classifying axis and gets the chip;
+ * reading time and challenge count ride as muted text with an inline icon. The seam
+ * from the header proper to the outcomes list is `section` (two regions of one
+ * thing).
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

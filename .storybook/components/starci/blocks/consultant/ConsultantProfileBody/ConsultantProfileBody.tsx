@@ -7,62 +7,24 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ConsultantProfileBody`: the full DETAIL content of one consultant's
- * profile — photo, name+role, a pressable company row, the full bio, and a
- * fork on the way out: real contact links once unlocked, or a locked callout
- * with a way to unlock them.
+ * `ConsultantProfileBody` — a BLOCK: the full detail content of one consultant's
+ * profile — photo, name+role, a pressable company row, the full bio, and a fork on
+ * the way out: real contact links once unlocked, or a locked callout with a way to
+ * unlock them.
  *
- * ⭐ THE DETAIL SIBLING OF `ConsultantCard`, NOT A COPY. `ConsultantCard`'s own
- * file header named this exact gap ("tomorrow's not-yet-built profile
- * overlay") — same `Consultant` entity, two different jobs: the card is a
- * directory TILE (whole card presses to open), this block is what fills the
- * profile once it IS open. That is why the shapes genuinely differ instead of
- * one importing the other:
- *   • `ConsultantCard`'s company row is PLAIN TEXT (a fact inside an already-
- *     pressable card — a second control there would be unreachable/need the
- *     stretched-link pattern for a fact with no action of its own).
- *   • Here the company row is a real `Button` (`onOpenCompany`) — the whole
- *     card press is spent, so opening the company is its own, reachable,
- *     press target.
- *   • `ConsultantCard` clamps the bio to 2 lines (a directory tile teaser);
- *     this block renders it in full — a profile IS the place to read it all.
+ * The detail sibling of `ConsultantCard` (same `Consultant` entity, different job).
+ * Shapes differ deliberately: here the company row is a real `Button`
+ * (`onOpenCompany`) since the whole-card press is spent, and the bio renders in
+ * full rather than clamped.
  *
- * ⭐ JUDGMENT CALL — CONTACT FORK REUSES `Callout`, not a hand-rolled
- * `Alert` + `Button` pair, same precedent `TaskLockedAlert`/`CourseTeamGate`
- * already set: `Callout` already IS "a status alert + one CTA button
- * it builds and skins itself" (composites/feedback/Feedback). Rebuilding that
- * pair from bare atoms here would be the exact `ContentTabBar` mistake this
- * run exists to correct.
+ * The contact fork reuses the `Callout` composite (a status alert + one CTA) rather
+ * than a hand-rolled `Alert` + `Button`. Contact links carry no callback — they are
+ * plain navigable data (`href`) rendered via `Typography`'s `isLink` + `href`; the
+ * two callbacks are `onOpenCompany` and `onImproveCv`.
  *
- * ⭐ JUDGMENT CALL — CONTACT LINKS CARRY NO CALLBACK OF THEIR OWN. The task
- * brief gives this block exactly two callbacks (`onOpenCompany`, `onImproveCv`)
- * — there is no per-link `onPress` in the contract. So `contactLinks` are
- * plain navigable data (`href`, e.g. `mailto:`/`tel:`/`https:`) rendered with
- * `Typography`'s own `isLink` + `href` — the atom already knows how to be a
- * link; a `Button` (which has no `href`) would have forced a callback array
- * this block was never given. `onOpenCompany` stays separate because a
- * company is an ENTITY the caller navigates to (not a URL this block holds).
- *
- * ⭐ JUDGMENT CALL — ONE LEAF, `contactUnlocked` IS A STATE. Same precedent as
- * `FoundationModal`'s `kind` switch (cited in the task brief): the composed
- * outer frame (photo → identity → bio → contact area) never changes shape —
- * only WHICH content fills the last slot changes, so this is a state of the
- * `Default` leaf, not two leaves.
- *
- * ⭐ JUDGMENT CALL — DURING `isSkeleton`, THE CONTACT FORK ITSELF SHIMMERS
- * NEUTRALLY rather than picking either branch. `contactUnlocked` is business
- * data the caller does not have yet while loading — rendering the locked
- * callout OR the real links would assert an answer this block does not know,
- * the same reasoning `ConsultantCard`'s header gives for shimmering every
- * optional row instead of guessing which ones the real data will have.
- *
- * ⭐ JUDGMENT CALL — LOCKED CALLOUT'S TITLE/DESCRIPTION ARE BLOCK-OWNED TEXT
- * (§14d.1), not props. The task brief hands this block exactly `consultant` +
- * two callbacks — no text prop for the locked message — so the copy is chrome
- * this block owns outright, same move `TaskLockedAlert` makes for its fixed
- * title.
- * ─────────────────────────────────────────────────────────────────────────────
+ * One leaf: `contactUnlocked` is a state (only the last slot's content changes).
+ * During `isSkeleton` the contact fork shimmers neutrally rather than asserting
+ * either branch. The locked callout's title/description are block-owned text.
  */
 
 /** One way to reach this consultant once contact is unlocked — plain navigable data. */

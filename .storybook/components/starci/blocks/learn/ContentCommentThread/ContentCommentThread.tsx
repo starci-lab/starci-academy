@@ -8,27 +8,17 @@ import { ContentCommentComposer, type ContentCommentComposerViewer } from "@sb-c
 import { ReactionButton, type ReactionType, type ReactionCount } from "@sb-components/starci/blocks/learn/ReactionButton/ReactionButton"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentCommentThread`: ONE threaded comment — author, reactions,
- * reply/edit/delete actions, and its recursively-rendered replies. Ported
- * verbatim from real `src`'s `CommentItem`.
+ * `ContentCommentThread` — a BLOCK: one threaded comment — author, reactions,
+ * reply/edit/delete actions, and its recursively-rendered replies.
  *
- * ⭐⭐ THIS IS THE MASSIVE GAP THE EARLIER `ContentDiscussion` NEVER HAD (teacher:
- * "over-engineered it"). The first cut was a flat two-line list — no replies, no
- * per-comment reactions, no edit/delete, no founder badge, no load-more. This
- * block owns everything real `CommentItem` owns: nested replies (capped visual
- * indent via a left guide border), a reaction control (`ReactionButton` — the
- * SAME control `ContentReaction` uses for the content-level reaction), owner-
- * only edit/delete, and a collapsible reply composer.
+ * Owns nested replies (capped visual indent via a left guide border), a
+ * `ReactionButton` (the same control `ContentReaction` uses), owner-only
+ * edit/delete, and a collapsible reply composer.
  *
- * RECURSION, NOT A SEPARATE "REPLY" COMPONENT. A reply is just another
- * `ContentCommentThread` one `depth` deeper — real `src` renders `<CommentItem
- * depth={depth + 1} .../>` for each loaded reply, not a different shape.
- *
- * DEPTH DRIVES ONLY THE INDENT GUIDE (`border-l`, capped visual nesting) — a
- * plain utility on-scale (`pl-3`), not a layout composed via flex/grid+gap, so
- * it stays here rather than needing a frame of its own.
- * ─────────────────────────────────────────────────────────────────────────────
+ * A reply is just another `ContentCommentThread` one `depth` deeper — recursion,
+ * not a separate "reply" component. `depth` drives only the indent guide
+ * (`border-l`, capped nesting), a plain on-scale utility rather than a composed
+ * layout, so it stays here rather than needing a frame.
  */
 
 /** Minimal identity for a comment's author. */

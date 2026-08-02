@@ -18,89 +18,17 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PlaygroundSetupSteps`: the ordered WORK of getting a playground ready
- * — pair the local agent, install the engine (an OS-tabbed guide), and — RAG
- * flavor only — pull the VRAM-sized models. Each step is its own status chip +
- * why-it-matters line + runnable command(s) + re-check action.
- *
- * ⭐ REUSE CHECK DONE FIRST (this run exists to prevent skipping it). Two sibling
- * blocks already live in `blocks/learn/Playground*` and neither is this shape:
- *   - `PlaygroundReadinessChecklist` is the compact "Machine status" GLANCE — one
- *     `SurfaceCardList` row per prerequisite (agent/engine/genModel/embedModel),
- *     ready/pending chip, nothing to DO from it. This block is the opposite job:
- *     it is what a learner opens to actually GET each prerequisite done — a
- *     command to run, an OS guide to read, a re-check button to press. Same
- *     domain, same "Ready"/chip vocabulary reused for consistency, but a
- *     genuinely different shape (rich per-step card vs. one bounded list).
- *   - `PlaygroundConnectSheet` is the ONGOING connection console — device specs
- *     + a live agent log, for AFTER pairing already happened at least once. This
- *     block is the ONE-TIME setup guide that runs BEFORE that console has
- *     anything to show; neither reaches into the other's job.
- * `composites/navigation/Toolbar` (the two-tab-group nav) was also checked and
- * does not fit: the OS switcher here is ONE group choosing which markdown guide
- * to show underneath, not a route/content switch with a second group beside it
- * — `TabsExtended` alone (the shape `ContentModeNav`'s header warns against
- * reaching past) is the right-sized composition.
- *
- * ⭐ SURFACECARD.BASE, ONE PER STEP — not `.List`/`.Accordion`. Those two row
- * shapes are FIXED (leading/title/subtitle or a collapsible trigger+panel) and
- * neither has room for "a why-line, an OS tab row, a command block, and its own
- * action row" without degrading into a free-form blob that fights the composite's
- * own padding/divider job. `.Base`'s `label`/`action` header slots already draw
- * exactly "step title + trailing status chip" above a bare card face, so each
- * step becomes one `.Base` whose entire BODY this block composes itself.
- *
- * ⭐ TWO LEAVES, NOT ONE LEAF WITH A HIDDEN STEP (unlike `ChallengeBrief`'s "one
- * leaf, five optional sections"). `flavor` is chosen once per PLAYGROUND KIND,
- * not per render from data that might come back empty — an `infra` playground
- * never carries `genModelReady`/`recommendedGenModel` at all, so a third step
- * would either dangle on stale props or be permanently hidden noise. The task
- * brief calls this out explicitly ("2 steps for infra, 3 for ollama") and asks
- * for ONE BLOCK (not N separate step blocks) — satisfied here as one component
- * whose `flavor` branch decides whether the third `SurfaceCard` exists at all;
- * the STORY then carries two leaves, one per flavor, per §14d.2 (a step that can
- * never appear for a given caller is a structural fact, not a data condition).
- *
- * ⭐ COMMANDS RENDER THROUGH `MarkdownContent`, not a hand-rolled `<pre>`. A
- * fenced ```bash block already gets the copy button (`SnippetIcon`) and the
- * bordered/monospace chrome for free — the SAME viewer also renders the raw
- * `osGuides[os]` document (which is a full guide, not a single command), so one
- * composed part covers both "one command" and "a whole guide".
- *
- * ⚠️ `MarkdownContent`/`TabsExtended` HAVE NO `isSkeleton` OF THEIR OWN. Neither
- * composite ships a loading branch (a markdown VIEWER cannot guess at a document
- * it hasn't received; `TabsExtended` is a thin `children` wrapper with nothing
- * to shimmer on its own). Mirroring `ChallengeBrief`'s `skeletonListRows`
- * precedent (built for the identical reason on `SurfaceCardList`'s free-form
- * row), this block builds its OWN placeholder mirrors — `CommandSkeleton`
- * (the code block's border/header/line chrome, in shimmer) and `OsTabsSkeleton`
- * (a label+underline bar per OS, matching `Tabs`'s own `variant="secondary"`
- * skeleton shape) — using real `Typography isSkeleton` bars laid out with
- * `Stack.*`, never a second hand-built component pretending to BE the real one.
- *
- * ⭐ THE EMBEDDING MODEL NAME IS THIS BLOCK'S OWN CONSTANT, not a prop. Only the
- * GENERATION model varies by the learner's VRAM (`recommendedGenModel`, chosen
- * server-side once the device is known) — the embedding model is the one fixed
- * model the whole platform's RAG pipeline runs on regardless of machine, so it
- * is domain vocabulary this block owns (§14d.1), the same way `ContentModeNav`
- * owns `MODE_LABEL` or `PlaygroundReadinessChecklist` owns `KIND_ICON`.
- *
- * ⭐ ROTATING THE PAIRING CODE GATES THROUGH `ConfirmDialog` ONLY WHEN AN AGENT
- * IS ALREADY ATTACHED (`agentReady`). Rotating while nothing is paired yet is
- * free — the old code was never in use — so it fires `onRefreshPairingCode`
- * straight away. Rotating while paired invalidates the code the connected agent
- * is currently holding, so it confirms first. `tone="default"`, not `"danger"`:
- * per this catalog's own rule ("ConfirmDialog danger is only for delete/undo"),
- * rotating a code is disruptive-but-recoverable, not a delete/undo action.
- *
- * ⚠️ NO `isSkeleton` ON `MarkdownContent`/`Callout`/`ConfirmDialog`
- * WHILE LOADING. The two callouts (models-already-installed, device-unknown)
- * assert something the block has not been told yet while `isSkeleton` is true,
- * so — same reasoning as `ChallengeBrief`'s un-checked output skeleton row —
- * they simply do not render until real data lands; the confirm dialog stays
- * closed (its own local `isOpen` state starts `false`).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PlaygroundSetupSteps` — the ordered work of getting a playground ready: pair
+ * the local agent, install the engine (an OS-tabbed guide via `TabsExtended`),
+ * and — RAG flavor only — pull the VRAM-sized models. Each step is one
+ * `SurfaceCard.Base` (title + status chip header) whose body carries a
+ * why-it-matters line, commands rendered through `MarkdownContent` (fenced
+ * blocks get copy + monospace chrome), and a re-check action. Two leaves by
+ * `flavor` (2 steps for infra, 3 for ollama). Builds its own `CommandSkeleton`
+ * and `OsTabsSkeleton` mirrors since `MarkdownContent`/`TabsExtended` have no
+ * `isSkeleton`. The embedding model name is a block-owned constant; only the
+ * generation model varies by VRAM. Rotating the pairing code confirms via
+ * `ConfirmDialog` (tone `default`) only when an agent is attached.
  */
 
 /** The three OS guides a `flavor="infra"`/`"ollama"` engine install can offer. */

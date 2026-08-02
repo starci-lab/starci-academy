@@ -5,52 +5,13 @@ import { IconTile, type IconComponent } from "@sb-components/atoms/display/IconT
 import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PlaygroundReadinessChecklist`: the consolidated "Machine status" list
- * — every playground prerequisite (the local agent, the Docker engine, the
- * generation model, the embedding model) at a glance, one row each.
- *
- * ⭐ REUSE FIRST — a near-direct PORT, not a new shape. This is the exact
- * `ReadinessChecklist` block that already exists twice in this codebase
- * (`src/components/blocks/feedback/ReadinessChecklist` and its `_legacy`
- * Storybook port at `components/_legacy/blocks/feedback/ReadinessChecklist`),
- * rebuilt ONLY because both of those sit on components this catalog has since
- * folded away (`ListRow` from a standalone `List` composite, a bespoke
- * `StatusChip`). The row shape — leading tile (check-when-ready, the item's own
- * icon otherwise) · title · ready/pending subtitle · trailing status chip — is
- * carried over VERBATIM onto today's equivalents: `SurfaceCardList`'s FIXED row
- * (`leading`/`title`/`subtitle`/`trailing`) instead of a standalone `ListRow`,
- * `IconTile` (same atom, new import path), `EnumChip` instead of `StatusChip`
- * (a `Chip` locked to one tone was retired in favour of this exact
- * value→presentation map composite — see `EnumChip`'s own file header).
- * Nothing here hand-rolls a row box, a divider, or a shimmer mirror — those all
- * stay `SurfaceCardList`'s job.
- *
- * ⭐ THE BLOCK OWNS ITS WORDING NOW (§14d.1), where the ported source did not.
- * Both prior versions took `readyLabel`/`pendingLabel` as caller-supplied
- * strings — a copy-holding pattern that predates this catalog's "a block owns
- * its own vocabulary" rule. Ready/pending is a closed two-value enum with fixed
- * fixed copy ("Ready" / "Pending"), so it belongs in this block's own
- * `READINESS_CHIP_MAP`, exactly like `ContentModeNav`'s `MODE_LABEL` or
- * `FoundationResourceList`'s `KIND_CHIP_MAP` own their tables. A caller building
- * a NEW checklist screen never invents its own status wording by hand.
- *
- * ⭐ `kind` IS DOMAIN VOCABULARY, NOT A PASSED-IN ICON. The four prerequisites a
- * playground session checks are a closed set (`agent` · `engine` · `genModel` ·
- * `embedModel`), so this block owns the kind → icon lookup (`KIND_ICON`) the
- * same way it owns the ready/pending chip table — a caller states WHICH
- * prerequisite a row is, never which glyph draws it. `ready` still overrides the
- * icon with a check, independent of kind — matching the ported source exactly.
- *
- * 📐 TWO LEAVES: `Default` (N rows, real content) and `Prop \`isSkeleton\`` —
- * per `2-leaf-states.md` §1, `isSkeleton` is a leaf AT EVERY TIER ("whoever owns
- * the shape owns the skeleton", §12c): the component draws its own rest shape, so
- * that is a shape change, not a data change, even though no node grows or
- * disappears. The flag is threaded into every atom THIS block itself composes
- * per row (`IconTile`, `EnumChip`) — mirroring `LeaderboardBoard`'s row builder
- * — while the title/subtitle text shimmer is `SurfaceCardList`'s own job once
- * its own `isSkeleton` is set.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PlaygroundReadinessChecklist` — the compact "Machine status" list: every
+ * playground prerequisite (agent, engine, generation model, embedding model) as
+ * one `SurfaceCardList` row — leading tile (check when ready, else the item's
+ * kind icon), title, ready/pending subtitle, trailing status chip. Owns its own
+ * vocabulary: the ready/pending chip table (`READINESS_CHIP_MAP`) and the
+ * `kind` -> icon lookup (`KIND_ICON`); `ready` overrides the icon with a check.
+ * Two leaves: `Default` and `isSkeleton`.
  */
 
 /** The four prerequisites a playground session checks. Closed set — see file header. */

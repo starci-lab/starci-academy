@@ -7,39 +7,22 @@ import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `Section.*`, the frame of a REGION inside a page.
+ * `Section.*` — the frame of a REGION inside a page: a titled band ("My courses",
+ * "Recent activity") that owns NO chrome of its own (no surface fill, border,
+ * radius, or padding). It stacks a header, a body, and an optional footer at ONE
+ * rhythm.
  *
- * A section is the region between a page and a card: a titled band of a route
- * ("My courses", "Recent activity") that owns NO chrome of its own — no
- * surface fill, no border, no radius, no padding. It only stacks a header, a
- * body and an optional footer at ONE rhythm (§10).
+ * Not `SectionCard` (that IS a card — HeroUI `Card` chrome, `accent` skin,
+ * `withVerdict` band); `Section` is the bare frame around it. Not `PageHeader`
+ * (route chrome, one per page); `SectionHeader` is a region header, many per page,
+ * scaling down via `level`.
  *
- * ⚠️ NOT `SectionCard` (design tier, `blocks/cards/SectionCard`): that one IS a
- * card — HeroUI `Card` chrome (border + radius + padding), an `accent` skin, a
- * `withVerdict` DATA band and its own `isSkeleton` mirror. `SectionCard` is the
- * SURFACE a section's body may sit ON; `Section` is the bare frame AROUND it.
- * Rule of thumb: needs a bounded surface ⇒ `SectionCard`/`SurfaceCard.*`; only
- * needs "title + content in one vertical rhythm" ⇒ `Section.*`.
- *
- * ⚠️ NOT `PageHeader` either: that is the chrome of a whole ROUTE (breadcrumb +
- * H3 title + meta strip), ONE per page. `SectionHeader` is the header of a
- * region INSIDE that page, many per page, and scales down via `level`.
- *
- * KHUNG API LAW (§13b):
- * - `.Base` is a WRAPPER frame → named slots `header`/`body`/`footer` are the
- *   main road; `children` stays as shorthand for `body`.
- * - `.Header` is NOT a generic wrapper — it owns semantic slots
- *   (`eyebrow`/`title`/`description`/`action`) and takes no `children`.
- * - No repeating list here, so no `items` member (§13b list clause N/A).
- * - Namespace only — no bare component export.
- *
- * §10: the vertical rhythm is a TYPED token ({@link AllowedGap}), not a free number —
- * the frame cannot be asked for an off-scale step.
- * §13c: text goes through the `Typography.*` ATOM, never a hand-rolled `<p>`;
- * `action` takes a `Button.*` atom node from the caller (the frame stays
- * feature-less — it never decides WHAT the action is).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `.Base` is a wrapper frame with named slots `header`/`body`/`footer` (`children`
+ * = shorthand for `body`). `.Header` owns semantic slots
+ * (`eyebrow`/`title`/`description`/`action`) and takes no `children`. Namespace
+ * only — no bare component export. The vertical rhythm is a typed token
+ * ({@link AllowedGap}); text goes through `Typography.*`; `action` takes a
+ * `Button.*` node from the caller.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

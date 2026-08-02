@@ -5,35 +5,19 @@ import {
 } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ConsultantDirectoryCompanySearch`: a typed, debounced DEEP-LINK to one
- * recruiting company's page, not a filter on the consultant grid below it.
+ * `ConsultantDirectoryCompanySearch` — a BLOCK: a typed, debounced deep-link to
+ * one recruiting company's page, not a filter on the consultant grid below it (the
+ * real query has no server-side consultant search, only an ES company-suggester).
  *
- * WHY THIS EXISTS: the real query has no server-side search over consultants —
- * only an ES company-suggester. So this row cannot narrow "which consultants are
- * shown"; it can only help the visitor jump straight to a company they already
- * have in mind. Naming it a "search" without saying what it searches would repeat
- * the `ContentTabBar` mistake this run exists to correct — see
- * `ContentModeNav.tsx`'s file header for the exact shape of that bug.
+ * Owns the placeholder wording and the mapping from a `ConsultantCompanySuggestion`
+ * onto the atom's generic `SearchAutocompleteItem` shape. Nothing else — no
+ * debouncing, no fetch, no `router.push`; those stay the screen's job, matching
+ * `SearchAutocomplete`'s controlled, no-fetch contract.
  *
- * WHAT IT OWNS: the placeholder wording (§14d.1 — a block owns its own copy, it
- * never accepts a pre-formatted string from the caller) and the mapping from a
- * named domain suggestion (`ConsultantCompanySuggestion`) onto the atom's generic
- * `SearchAutocompleteItem` shape. Nothing else — no debouncing, no fetch, no
- * `router.push`. Those stay the SCREEN's job, matching `SearchAutocomplete`'s own
- * controlled, no-fetch contract (it is a tier-3 presentational atom: the parent
- * always owns the query and the results).
- *
- * ⭐ NEVER SKELETONISED, on purpose (ContentModeNav precedent). This row is static
- * chrome — its shape is known before any company data loads — so there is no
- * `isSkeleton` prop at all rather than one quietly unused.
- *
- * ⚖️ JUDGEMENT CALL — one leaf, no state split. `Default` is the only leaf: there
- * is exactly one structural shape (field + suggestion popover), and the loading
- * flag only swaps which content sits inside the SAME popover shell — that is a
- * DATA condition, not a structural one, so it is a `why` inside the one state
- * rather than a second leaf.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Never skeletonised — static chrome, known before any company data loads, so
+ * there is no `isSkeleton` prop. One leaf (`Default`): the loading flag only swaps
+ * content inside the same popover shell, a data condition rather than a structural
+ * one.
  */
 
 /** One company the ES suggester matched against the typed query. */

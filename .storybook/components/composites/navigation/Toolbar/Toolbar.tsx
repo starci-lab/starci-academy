@@ -4,39 +4,22 @@ import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `Toolbar.*`, the FRAME of a nav/control ROW above a panel.
+ * `Toolbar.*` — the frame of a nav/control ROW above a panel. It has no card, fill,
+ * border, radius, or padding: a `flex items-center justify-between gap-3` row that
+ * pins one tab group left, an optional inline action cluster (`leftEnd`) after it,
+ * and an optional second tab group right — collapsing that right group into a
+ * compact dropdown below `@app-sm`.
  *
- * ⚠️ RENAMED (2026-07-25): this was `TabsCard`. The name was a lie — there is no
- * card anywhere in it: the root is `flex items-center justify-between gap-3`,
- * with NO surface fill, NO border, NO radius, NO padding. What it actually is:
- * a TOOLBAR row that pins one tab group left, an optional inline action cluster
- * (`leftEnd`) right after it, and an optional second tab group right — collapsing
- * that right group into a compact dropdown below `@app-sm`. Behaviour and skin
- * are carried over VERBATIM; this is a rename, not a redesign.
+ * Every channel is a named slot: the two tab groups arrive as DATA (`items` +
+ * `selectedKey` + `onSelectionChange`, {@link ToolbarTabGroup}), never as children;
+ * only `leftEnd` is a free node slot. Namespace only — no bare component export.
  *
- * FRAME API LAW (§13b): `Toolbar` is NOT a generic wrapper — every channel
- * is a named slot. The two tab groups arrive as DATA (`items` + `selectedKey` +
- * `onSelectionChange`, {@link ToolbarTabGroup}), never as children; only
- * `leftEnd` is a free node slot. Namespace only — no bare component export.
- *
- * §13c — WHY this frame is not "an atom in a costume", i.e. why `Tabs.Base` /
- * `Select.Single` are NOT composed here (would change the pixels):
- *  - `Tabs.Base` (atom) renders HeroUI's own tab chrome only. This row needs the
- *    `.extended-tabs` hug-content variant, the `size="sm"` compact strip, the
- *    NEUTRAL selected chrome (`border-b-2 border-foreground` — `.tabs--secondary`'s
- *    indicator is hardcoded `bg-accent`, so the native indicator is suppressed on
- *    that path), the per-item `muted` tone, and the icon-only-on-mobile label
- *    (`sr-only @app-sm:not-sr-only`). None of those are expressible through the
- *    atom's locked API, so the group keeps rendering through `ExtendedTabs`.
- *  - `Select.Single` (atom) is a FIELD control: `FieldFrame` + `fullWidth` + a
- *    trigger that prints the selected LABEL. The collapsed right group here is a
- *    compact ICON-ONLY trigger (label `sr-only`) that must not stretch. Swapping
- *    it in would visibly change the mobile row, so the HeroUI `Select` compound
- *    stays. Revisit if the atom ever grows a `fullWidth={false}` + trigger slot.
- *
- * Authored in Storybook (not `src`); synced to `src` later.
- * ─────────────────────────────────────────────────────────────────────────────
+ * It does not compose the `Tabs.Base` / `Select.Single` atoms because their locked
+ * APIs can't express what this row needs: the tab groups render through
+ * `ExtendedTabs` (hug-content variant, `sm` strip, neutral `border-b-2
+ * border-foreground` selection, `muted` tone, icon-only-on-mobile labels), and the
+ * collapsed right group uses the HeroUI `Select` compound (a compact icon-only
+ * trigger that must not stretch).
  */
 /** One tab in a {@link ToolbarTabGroup}. */
 export interface ToolbarTabItem {

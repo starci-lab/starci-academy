@@ -7,14 +7,11 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * ⚠️ STATE SCOPE (teacher finalized 2026-07-25): `AsyncContent` is a STATE-
- * TRANSITION SCAFFOLD — its own asset is BRANCH SELECTION (error → loading → empty →
- * content), not the shape of each message. So here every story is ONE branch, and
- * the empty/error branches only take the MINIMAL shape to prove the switch runs
- * correctly; the full set of message variants lives in story `AsyncContentEmpty` /
- * `AsyncContentError`, NOT repeated here.
- *
- * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a).
+ * STATE SCOPE: `AsyncContent` is a state-transition scaffold — its own asset is BRANCH
+ * SELECTION (error → loading → empty → content), not the shape of each message. Every story
+ * is one branch, and the empty/error branches take only the minimal shape to prove the switch
+ * runs; the full set of message variants lives in `AsyncContentEmpty` / `AsyncContentError`,
+ * not repeated here.
  */
 const meta: Meta<typeof AsyncContent> = {
     title: "Composites/Async/AsyncContent/AsyncContent",

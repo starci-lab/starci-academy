@@ -7,48 +7,15 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ModuleContinueBand`: the "resume + progress" cluster that opens both
- * `course-home` and `module-home`.
+ * `ModuleContinueBand` — the flat (no card frame) "resume + progress" cluster that opens
+ * both course-home and module-home. Deliberately unframed — no `SurfaceCard`, streak, or
+ * watermark — which is why it is not `ContinueCardHero`.
  *
- * ⭐ WHY A NEW BLOCK INSTEAD OF `ContinueLearning`/`ContinueCardHero`: read the
- * actual markup in `src/components/features/learn/CourseContents/index.tsx`
- * (`// continue + progress — flat (no card frame), the honest unified meter`)
- * and `src/components/features/learn/ModulePage/index.tsx` (`// continue +
- * progress — flat (no card frame), mirrors course-home`). Both screens spell
- * out, in a comment, that this band is deliberately FLAT — no `SurfaceCard`, no
- * light streak, no watermark glyph. `ContinueCardHero` (which `ContinueLearning`
- * wraps) is a CARD: face + highlight streak, meant to be the one focal surface
- * on a page. Reaching for it here would have bought a shape the real screen
- * explicitly opts out of, for a component that is not "continue-learning but
- * plainer" — it is a different composition (two atoms + a composite stacked
- * directly on the page background), not a variant of the card. Confirmed no
- * existing block/composite draws an unframed resume-row-plus-meter shape before
- * adding this one (grepped `components/starci/blocks/**` and
- * `components/composites/**`).
- *
- * WHAT IT OWNS: the sentence. `lessonsRead`/`lessonsTotal`/`challengesDone`/
- * `challengesTotal` come in as plain numbers (§14d.1) — the block writes
- * "Read X/Y lessons · Completed Z/W challenges" itself, same wording precedent as
- * `ContinueLearningBase`. A caller handing over a pre-built string would have
- * re-opened the exact drift the sibling block was built to close.
- *
- * CONTENT-DRIVEN OMISSION, NOT EVENT-SWALLOWING (§7 of the block rules): the
- * resume title + `Button` disappear together when `resumeLessonTitle` is
- * unset — that is the "all done" state both screens hit once every lesson in
- * the module/course is read, and there is genuinely no lesson left to jump to.
- * `onResume` stays OPTIONAL and is simply forwarded to the button's `onPress`
- * when the title is present; the block never inspects it to decide whether to
- * render — that decision is `resumeLessonTitle`'s alone, so a caller that has a
- * title but hasn't wired a handler yet still sees the true shape.
- *
- * SKELETON: while loading, neither branch is known yet, so the shimmer always
- * paints the FULLER shape (title bar + button pill) rather than guessing
- * "all done" — that matches what a returning learner almost always sees, and
- * avoids a layout jump if the real data turns out to have a lesson to resume.
- * `ProgressMeter` has no `isSkeleton` of its own (same gap `ContinueCard`
- * documents), so a bare `h-1` bar stands in for it, matching the real track.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Owns the summary sentence ("Read X/Y lessons · Completed Z/W challenges") from plain
+ * numbers. The resume title + `Button` disappear together when `resumeLessonTitle` is
+ * unset (the "all done" state); `onResume` is optional and only forwarded, never
+ * inspected to decide rendering. Skeleton paints the fuller shape (title bar + button);
+ * `ProgressMeter` has no skeleton of its own, so a bare `h-1` bar stands in.
  */
 
 /** Resume label — a block-owned wording constant (§14d.1), not a caller prop. */

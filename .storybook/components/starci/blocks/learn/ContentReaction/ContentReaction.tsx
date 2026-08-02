@@ -4,21 +4,15 @@ import { ReactionButton, type ReactionType, type ReactionCount } from "@sb-compo
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentReaction`: say how the lesson landed. `ReactionButton` on
- * the left, the quiet view count on the right, at the foot of the reading card.
+ * `ContentReaction` — a BLOCK: say how the lesson landed. A `ReactionButton` on the
+ * left, the quiet view count on the right, at the foot of the reading card.
  *
- * ⭐⭐ REBUILT 2026-07-28 (teacher: "over-engineered it" — the first cut was a single
- * boolean like/unlike toggle; real `src` is a Facebook-style SIX-EMOTION picker,
- * the SAME control used for the content reaction and every comment). The
- * trigger+picker+summary control itself was later EXTRACTED into its own block,
- * `ReactionButton`, once `ContentDiscussion`'s comment rows needed the exact
- * same control — matching how real `src` already shares ONE `ReactionBar`
- * between `InteractionBar` (here) and `CommentItem`.
+ * A Facebook-style six-emotion picker (the same control used for the content
+ * reaction and every comment). The trigger+picker+summary control is extracted into
+ * its own `ReactionButton` block, shared with `ContentDiscussion`'s comment rows.
  *
- * COUNTS ARE DATA, THE WORDING IS NOT. The caller hands over `counts`/
- * `viewCount`; the block adds the thousands separator and the words.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Counts are data, the wording is not: the caller hands `counts`/`viewCount`, the
+ * block adds the thousands separator and the words.
  */
 
 export type { ReactionType, ReactionCount as ContentReactionCount }

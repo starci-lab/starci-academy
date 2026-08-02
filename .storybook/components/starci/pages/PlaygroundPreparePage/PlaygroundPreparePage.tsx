@@ -18,63 +18,16 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `PlaygroundPreparePage`: get one playground exercise ready before
- * entering it — pair the local agent, install the engine, pull models when the
- * flavor needs them — then press one CTA once every step is done.
+ * `PlaygroundPreparePage` — the screen for getting one playground exercise ready:
+ * pair the local agent, install the engine, pull models when the flavor needs them,
+ * then press one CTA once every step is done. It composes blocks in frames and hands
+ * each typed data, drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own —
- * every `div` here would be a shape it had no right to decide.
- *
- * FIVE FUNCTIONS, in the order the learner meets them: what exercise is this and
- * how to leave it · the one primary decision (enter, once ready) · what machine
- * this will run on · the ordered setup work itself · a glance-back checklist of
- * every prerequisite.
- *
- * ⚠️ CORRECTING THE PLANNER'S TREE — NO `AsyncContent.Base` AT THIS TIER. The
- * planner's proposal reached past this codebase's own settled precedent and
- * wired the screen straight to `AsyncContent.Base`'s four-branch state switch
- * (`isLoading`/`error`/`isEmpty`/`content`) — exactly the "rebuilt a worse
- * version from a bare [part] instead of reusing the whole thing" mistake this
- * run's own brief was written to stop. Checked against EVERY existing screen in
- * this catalog before writing this file: none of them import `AsyncContent.Base`
- * or `AsyncContentError` at the screen tier — `QuizPage`'s own file header
- * states the rule outright ("§0's import boundary is exact: a screen calls
- * blocks and frames, never a composite directly — the one documented exception,
- * `CourseContents`'s `AsyncContentEmpty`, replaces the ENTIRE screen, not one
- * phase's one node"), and `PlaygroundSessionPage`'s file header independently
- * confirms the loading/error moment for a route lives OUTSIDE the screen
- * component entirely. None of the five blocks this screen composes carry an
- * `error` prop either — inventing one here would be inventing a state no
- * composed part can express. So this screen follows the SAME idiom every
- * sibling screen already uses: `isSkeleton` flows down to every block that can
- * mirror itself, and `isEmpty` (the exercise id resolved to nothing) swaps the
- * ENTIRE body for `AsyncContentEmpty` — the one documented composite exception,
- * used exactly like `CourseContents`/`ModulePage`/`FoundationResourcePage`
- * already use it.
- *
- * ⭐ `checklistItems` IS THE ONE SOURCE OF TRUTH, DERIVED THREE WAYS — not three
- * props that could quietly disagree. `PlaygroundEnterBanner`'s `allReady`/
- * `pendingCount`, and `PlaygroundSetupSteps`'s per-kind `agentReady`/
- * `engineReady`/`genModelReady`/`embedModelReady`, are all read off the SAME
- * `checklistItems` array this screen also hands to `PlaygroundReadinessChecklist`
- * verbatim. A caller supplying the enter banner's readiness and the checklist's
- * readiness as two separate props could have them drift out of sync (the banner
- * says "ready", the list still shows a pending row); deriving both from one array
- * makes that impossible. Same discipline `PlaygroundSessionPage`'s file header
- * documents for its own "ONE CONNECTION ENUM, TWO VOCABULARIES" derivation.
- *
- * ⭐ `deviceKnown` IS DERIVED FROM `deviceInfo`, NOT A SEPARATE PROP, for the
- * identical reason: "is the device known" and "is there a `deviceInfo` to show"
- * are the same fact asked twice.
- *
- * ⭐ `PlaygroundDeviceSnapshot` IS A CONDITIONAL LEAF. The verified proposal was
- * correct on this point: the screen renders "Your machine" only once the paired
- * agent has actually reported a snapshot — the same conditional-render precedent
- * `ContentPage`'s footer stack and `ModulePage`'s paywall already set,
- * not a new pattern.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Five functions: what this exercise is + how to leave, the enter banner (the one
+ * primary decision), the device snapshot (conditional on a reported snapshot), the
+ * ordered setup steps, and a readiness checklist. `checklistItems` is the single
+ * source of truth — the enter banner's readiness, the per-step ready flags, and the
+ * checklist all derive from it. `isEmpty` swaps the whole body for `AsyncContentEmpty`.
  */
 
 /** kind → readiness, read off {@link PlaygroundPreparePageProps.checklistItems}. */

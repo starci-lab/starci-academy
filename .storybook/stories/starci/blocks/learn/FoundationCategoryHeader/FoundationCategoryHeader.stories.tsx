@@ -3,22 +3,11 @@ import { FoundationCategoryHeader } from "@sb-components/starci/blocks/learn/Fou
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FoundationCategoryHeader`: the FOUNDATIONS-HUB IDENTITY cluster —
- * trail above a title + description, nothing else.
- *
- * SIBLING OF `ContentHeader`, NOT A COPY. Both build `Breadcrumbs` from crumb
- * data and place identity into `PageHeader`, but a lesson header also carries
- * read state, reading time, challenge count and outcomes; a Foundations
- * category has none of those facts, so this block stops at description.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). The caller flipping `isSkeleton` swaps every
- * composed atom to its own shimmer, a structural change ⇒ its own leaf.
- *
- * ⛔ There is deliberately NO "no breadcrumb" leaf, even though the prop is
- * optional. A missing trail (a root category reached directly) is the SAME
- * shape decision `isSkeleton` already demonstrates — the slot dropping out —
- * so a third leaf for it would just repeat what `Skeleton` already shows
- * about this block's "omit the slot" contract, not add a new one (§14d.3).
+ * `FoundationCategoryHeader` — the Foundations-hub identity cluster: a breadcrumb
+ * trail above a title and description, nothing more. Sibling of `ContentHeader`
+ * but thinner — a Foundations category carries no read state, reading time, or
+ * outcomes, so it stops at the description. The breadcrumb slot is optional and
+ * simply drops out when absent.
  */
 const meta: Meta<typeof FoundationCategoryHeader> = {
     title: "StarCi/Blocks/Learn/FoundationCategoryHeader/FoundationCategoryHeader",

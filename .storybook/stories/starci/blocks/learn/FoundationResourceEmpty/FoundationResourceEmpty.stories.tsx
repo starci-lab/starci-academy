@@ -3,16 +3,8 @@ import { FoundationResourceEmpty } from "@sb-components/starci/blocks/learn/Foun
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FoundationResourceEmpty`: the message shown when a foundation
- * resource id resolved to nothing.
- *
- * ⭐ WHY THIS BLOCK EXISTS AT ALL — see the component's own file header.
- * `FoundationResourcePage`'s `isEmpty` branch replaces only the identity +
- * body pair, not the whole screen, so the screen tier cannot reach for
- * `AsyncContentEmpty` directly; this one-node block holds it instead.
- *
- * 📐 ONE LEAF — a single fixed message, no structural fork and no props to
- * vary it by.
+ * `FoundationResourceEmpty` — the message shown when a foundation resource id
+ * resolved to nothing. A single fixed message, no props to vary it by.
  */
 const meta: Meta<typeof FoundationResourceEmpty> = {
     title: "StarCi/Blocks/Learn/FoundationResourceEmpty/FoundationResourceEmpty",

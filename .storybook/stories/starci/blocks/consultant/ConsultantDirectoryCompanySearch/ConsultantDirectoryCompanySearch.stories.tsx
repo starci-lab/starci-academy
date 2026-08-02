@@ -3,20 +3,11 @@ import { ConsultantDirectoryCompanySearch } from "@sb-components/starci/blocks/c
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ConsultantDirectoryCompanySearch`: a typed, debounced DEEP-LINK to one
+ * `ConsultantDirectoryCompanySearch` — a typed, debounced deep-link to one
  * recruiting company's page, sitting above the consultant grid on the directory
- * screen.
- *
- * ⚠️ NOT A GRID FILTER. The real query has no server-side search over
- * consultants — only an ES company-suggester — so this row can only jump the
- * visitor straight to a company page it already knows about. See
- * `ConsultantDirectoryCompanySearch.tsx`'s file header for the exact naming
- * mistake this block is careful not to repeat (`ContentModeNav`'s history).
- *
- * 📐 ONE LEAF. The field + suggestion popover is a single structural shape;
- * `isLoadingSuggestions` only swaps which content the SAME popover shell shows,
- * which is a DATA condition, not a new shape — so it lives as a `why` inside the
- * one `Default` leaf rather than splitting into its own leaf.
+ * screen. It is not a grid filter: there is no server-side search over
+ * consultants, only a company suggester, so it jumps straight to a known
+ * company page. `isLoadingSuggestions` swaps the popover's content.
  */
 const meta: Meta<typeof ConsultantDirectoryCompanySearch> = {
     title: "StarCi/Blocks/Consultant/ConsultantDirectoryCompanySearch/ConsultantDirectoryCompanySearch",

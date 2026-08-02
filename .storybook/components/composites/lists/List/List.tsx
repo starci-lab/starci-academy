@@ -9,37 +9,25 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `List.*`, the ONE row/list FRAME namespace
- * (teacher's call 2026-07-25, canon §13). Four sibling frames that used to live as
- * four loose folders (`lists/ListRow` · `lists/LabeledList` · `lists/MetaRow` ·
- * `list/SettingToggleRow`) are now MEMBERS of one namespace — same tier, same
- * job (arranging elements into a ROW / a LIST), one import.
+ * `List.*` — the row/list frame namespace, arranging elements into a ROW or a LIST.
  *
  * | Member | Shape | Content channel |
  * |---|---|---|
  * | `.Row` | 1 generic list row | data props (`leading`/`title`/`subtitle`/`meta`/`trailing`) |
- * | `.Labeled` | label + REPEATING list (+CTA) | **`items` — children FORBIDDEN** |
- * | `.Meta` | 1 inline meta row | `chip` + **`items`** (meta segments) |
+ * | `.Labeled` | label + repeating list (+CTA) | `items` — children forbidden |
+ * | `.Meta` | 1 inline meta row | `chip` + `items` (meta segments) |
  * | `.ToggleRow` | 1 settings row with a switch | data props (`label`/`description`/`checked`) |
  *
- * FRAME API LAW (§13b):
- * - A REPEATING-LIST frame (`.Labeled`) MUST receive `items` data — children are FORBIDDEN.
- * - A single-ROW frame (`.Row` / `.Meta` / `.ToggleRow`) receives named data props, does NOT
- *   accept free-form children: the row is a FIXED shape (leading · text · meta/trailing),
- *   free-form content is the design/block tier's job.
- * - Namespace only — no bare component export.
+ * A repeating-list frame (`.Labeled`) must receive `items` data; children are
+ * forbidden. A single-row frame (`.Row`/`.Meta`/`.ToggleRow`) takes named data
+ * props and a fixed shape, no free-form children. Namespace only — no bare
+ * component export.
  *
- * Each member's behaviour/skin is kept VERBATIM from the old folder; this is an API
- * refactor, not a visual refactor. Synced to `src` later.
- *
- * 2026-07-31: converted every slot the frame renders and is responsible for the
- * loading state of from `ReactNode` to a COMPONENT reference or `string`
- * (COMPOSITE-8) — `leading`/`meta`/`trailing`/`icon`/`action`/`emptyState`/`chip`
- * now take a component the frame calls itself, and `title`/`subtitle`/`label`/
- * `.Meta`'s `items` now take `string`, since the frame wraps them in its own
- * atom. See callers in this same folder's stories for the updated call shape.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The slots the frame renders and owns the loading state of are COMPONENT
+ * references or `string`: `leading`/`meta`/`trailing`/`icon`/`action`/`emptyState`/
+ * `chip` take a component the frame calls itself, and
+ * `title`/`subtitle`/`label`/`.Meta`'s `items` take `string` (the frame wraps them
+ * in its own atom).
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

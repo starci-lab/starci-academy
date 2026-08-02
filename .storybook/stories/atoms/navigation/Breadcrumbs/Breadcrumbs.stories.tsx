@@ -3,32 +3,18 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Breadcrumbs` wraps HeroUI `Breadcrumbs` directly, composing no
- * other atom of the SYSTEM with its own story. 2026-07-27 (heroui tier added to
- * canon): every sub-part is still a REAL import from `@heroui/react`, so each one
- * is declared `tier: "heroui"` in `ANNOTATE` below, named after the identifier it
- * actually renders — `Breadcrumbs` (the trail) · `Breadcrumbs.Item` (one crumb, a
- * real destination or the "…" placeholder) · `Link` (the collapsed back
- * affordance) · `Skeleton` (a shimmer bar). No `storyId` — there's no story of
- * ours to jump to for a library component. Renamed from the old role-shaped names
- * `Crumb`/`Ellipsis`/`Back`/`SkeletonBack`, which pretended to be four different
- * components when they're really the SAME two HeroUI imports wearing different
- * hats (§ two-rule pass, 2026-07-27).
- *
- * Leaf `Skeleton` renamed from `Loading` (2026-07-27, teacher's call: a leaf
- * carries the PROP'S NAME — the prop that produces this leaf is `isSkeleton`).
- * §12g: ONE `isSkeleton` leaf must render EVERY shape-bearing state that prop
- * itself produces when known in advance (not waiting on data) — here that's
- * `collapseFrom`/`collapseOnMobile`: plain trail bars · back-link (the real
- * trail is about to collapse) · both responsive variants. Before the fix
- * (2026-07-27) the component ALWAYS emitted one bar strip regardless of these
- * two props — a real bug, the same shape as the `Button` skeleton anchor
- * hard-locking `w-24` for every size (§12g). Fixed `Breadcrumbs.tsx`: the
- * `isSkeleton` branch now computes `collapseAlways`/`collapseMobile` (using
- * `items.length` instead of `onPress` — a skeleton item usually has no
- * `onPress` yet) and then picks the right shape. `maxItems` (Truncated) needs
- * NO separate state — the bar count depends on the REAL ITEM COUNT (unknown
- * while loading), not a different structural shape like collapse.
+ * ATOM — `Breadcrumbs` wraps HeroUI `Breadcrumbs` directly, composing no other atom with a
+ * story. Every sub-part is a real `@heroui/react` import, so each declares `tier: "heroui"`
+ * in `ANNOTATE`, named after the identifier it renders — `Breadcrumbs` (the trail) ·
+ * `Breadcrumbs.Item` (one crumb or the "…" placeholder) · `Link` (the collapsed back
+ * affordance) · `Skeleton` (a shimmer bar). No `storyId`.
+ * 
+ * The `Skeleton` leaf carries the prop's name (`isSkeleton`) and renders every
+ * shape-bearing state known before data: `collapseFrom`/`collapseOnMobile` — plain trail
+ * bars · back-link (trail about to collapse) · both responsive variants. The `isSkeleton`
+ * branch computes `collapseAlways`/`collapseMobile` from `items.length` and picks the right
+ * shape. `maxItems` (Truncated) needs no separate state — the bar count depends on the real
+ * item count, unknown while loading.
  */
 
 const meta: Meta<typeof Breadcrumbs> = {

@@ -2,24 +2,10 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { AvatarGroup } from "@sb-components/composites/lists/AvatarGroup/AvatarGroup"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * COMPOSITE — `AvatarGroup`: a row of edge-overlapping avatars ("who follows") + a "+N" chip.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g). `items`/mapping is the bare leaf `Default` (no
- * shape-bearing prop turned on yet). `max` and `total` BOTH produce the same
- * shape — the "+N" chip — so they share leaf `Overflow` instead of splitting in
- * two (mirrors the dot exception on `Chip`, where `dotColor`/`dotClassName`
- * also merge into one leaf because they're the same shape). `size` sits at the
- * CLUSTER LEVEL so it gets its own leaf `Sizes`. `isSkeleton` is the rule-correct
- * exception: its leaf re-renders the exact SHAPE the composite produces while loading
- * — the whole row mirrors, keeping the same footprint.
- *
- * ⛔ NO leaf `Status`/`Colors`/`Fallback`: those are states of member
- * `Avatar`, this cluster doesn't repeat them (§12f) — click the `Avatar`
- * part in the Deps tab to jump to where those states actually live.
- *
- * ⭐ Real deps: `AvatarGroup` `import { Avatar }` to build each avatar — the
- * ONLY component in the Avatar family with deps, so the `Avatar` part is
- * annotated with a storyId that jumps to `Avatar`.
+ * `AvatarGroup` — a row of edge-overlapping avatars ("who follows") plus a "+N" chip. Leaves:
+ * `Default` (items mapping), `Overflow` (`max` and `total`, both producing the "+N" chip),
+ * `Sizes` (cluster-level `size`), and the `isSkeleton` mirror. Per-avatar state
+ * (status/colors/fallback) lives in `Avatar`; `AvatarGroup` imports `Avatar` to build each one.
  */
 // Stable local data-URI "photo" so image avatars render without an external host.
 const PHOTO = (hue: number) =>

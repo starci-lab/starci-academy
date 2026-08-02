@@ -3,54 +3,11 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { SurfaceCardSelectableGroup, type SurfaceCardSelectableGroupItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * COMPOSITE — `SurfaceCardSelectableGroup`: a select-one card group on top of HeroUI's
- * `RadioGroup`/`Radio`, each choice a neutral `Card`, an accent outline ring lights up
- * once selected.
- *
- * 2026-07-26 (teacher): moved from the ATOM tier (`atoms/navigation/SelectableCardGroup`)
- * into the `SurfaceCard` namespace — it composes multiple cards into ONE LAID-OUT CLUSTER
- * (a grid), which is composite-tier work, not a single atom leaf (§12a/§6b). It's the BLOOD
- * SIBLING of `SurfaceCardPressableGroup` — same "card grid" shape — differing on exactly
- * one axis: PressableGroup is an ACTION grid (each cell presses on its own, `selected` is
- * just a decorative ring, not enforcing mutual exclusion); SelectableGroup is a REAL
- * select-one control (`role="radiogroup"`, roving tabindex, arrow-key navigation,
- * `value`/`onChange` enforcing exactly 1-of-N) — a different DOM/interaction contract,
- * not just a style difference, so it's split into its OWN MEMBER instead of stuffing
- * `selectedKey` into `PressableGroup`.
- *
- * Leaves KEPT AS-IS from the old atom version (not re-audited — only namespace + tier changed):
- *
- * 📐 **1 PROP = 1 LEAF** (§12g — the ATOM TIER rule, still applies here because the
- * component body did NOT change, only its LOCATION did):
- * - `items` — data that builds N child cards ⇒ **leaf `Default`** (§12g.2, anchored to
- *   `ButtonGroup`). Every OPTIONAL field of an item (`description` · `icon` · `badge` ·
- *   `isDisabled`) is a SHAPE of `items`, not a separate atom axis ⇒ lives together INSIDE
- *   `Default`, does NOT spawn separate `Icon`/`Badge`/`Disabled` leaves — matching the
- *   anchor rule *"an item with a label renders a normal button, none render an icon-only
- *   button"*.
- * - `columns` — changes real pixels (grid column count) ⇒ **leaf `Columns`**, renders the
- *   FULL 1/2/3 stacked vertically on the SAME `items` so the eye sees only the column
- *   count change, nothing else moving with it.
- * - `value`/`onChange` — not a value union to enumerate, just a control wire; every leaf
- *   runs it through `ControlledGroup` itself so it needs no leaf of its own.
- * - `ariaLabel` — ONLY feeds `RadioGroup`'s `aria-label`, doesn't change a single pixel ⇒
- *   **NO leaf** (§12g.1, same family as `ChoiceRadioGroup`'s `ariaLabel`).
- * - `className` — escape hatch / dev flag, not part of the atom's visual
- *   form ⇒ no leaf.
- *
- * ⚠️ `tier` changed from `"atom"` (old version) to `"composite"` — the composite tier of the
- * blueprint tree uses the `"composite"` label for `BlockAnatomy` (unlike an atom, which
- * uses `"atom"` directly).
- *
- * ⚠️ UNFIXED DRIFT (recorded, not refactored in this pass): the component calls HeroUI's
- * `Radio`/`RadioGroup` DIRECTLY instead of the `ChoiceRadio`/`ChoiceRadioGroup` atom that
- * already has its own story (`.storybook/components/atoms/forms/Choice/Choice.tsx`).
- * `Icon`/`Label`/`Badge` emitted via `data-anat-part` are all internal SPANs (not an atom
- * with its own story) ⇒ there are NO real deps, so `annotate` is NOT passed (teacher
- * confirmed 2026-07-26, second pass — kept as-is here).
- *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`), demo labels, and every
- * JSDoc/comment in this file are written in ENGLISH.
+ * `SurfaceCardSelectableGroup` — a select-one card group over HeroUI `RadioGroup`/`Radio`;
+ * each choice is a neutral `Card` with an accent outline ring on selection. Blood sibling of
+ * `SurfaceCardPressableGroup` but a real select-one control (`role="radiogroup"`, roving
+ * tabindex, arrow-key nav, `value`/`onChange` enforcing 1-of-N). Leaves: `items` (`Default`,
+ * with per-item description/icon/badge/isDisabled) and `columns` (`Columns`, full 1/2/3).
  */
 const meta: Meta<typeof SurfaceCardSelectableGroup> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardSelectableGroup",

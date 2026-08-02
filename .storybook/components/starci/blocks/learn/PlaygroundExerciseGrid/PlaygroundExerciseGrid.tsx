@@ -8,67 +8,14 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PlaygroundExerciseGrid`: the core function of the Playground hub
- * screen — browse the course's hands-on exercises and open one.
- *
- * REUSE, NOT A REBUILD (the exact trap `ContentModeNav`'s file header warns
- * about — a "new" grid-of-press-target-cards is almost always wrong). Wraps
- * `SurfaceCardPressableGroup`, the catalog's grid-of-press-target-cards
- * composite: the SAME shape `src`'s `PlaygroundCard` grid is, just previously
- * hand-rolled from a bare HeroUI `Card`/`Button` instead of going through it.
- * This block owns everything the composite itself doesn't know:
- *
- *   1. THE ICON IS ALWAYS `TerminalWindowIcon`, via the `IconTile` atom. An
- *      exercise tile is never a generic press target with a caller-chosen
- *      icon — it is always "a hands-on terminal exercise", so the block hard-
- *      codes the glyph rather than exposing an `icon` prop that could drift
- *      per call-site.
- *
- *   2. THE TILE BODY IS ICON + TITLE + STEP-COUNT CHIP, STACKED. Built as the
- *      composite's `content` (not its `icon` leading-slot — that slot lays the
- *      icon out BESIDE the content in a row, which is the wrong shape here;
- *      `PlaygroundCard`'s own layout stacks the tile icon above its text).
- *
- *   3. THE CLOSING "Enter playground →" CUE ROW is DECORATIVE affordance text,
- *      not a second interactive element. Because the whole tile is ONE press
- *      target (`SurfaceCardPressableGroup`'s "simple" whole-card pattern — no
- *      `actions` passed), nesting a real `<button>`/`<a>` for the cue inside it
- *      would be the exact illegal-nesting trap `SurfaceCard.Pressable`'s own
- *      file header warns about (a `<button>` inside a `<button>`/`<a>`). The
- *      row is plain `Typography` with a sliding arrow suffix — it reads as an
- *      affordance without being its own target.
- *
- *   4. THE EMPTY BRANCH is OWNED HERE, not exposed as a separate top-level
- *      block. `SurfaceCardPressableGroup` renders nothing (`null`) for zero
- *      items, so a caller-visible hole would appear with no explanation. This
- *      block instead swaps in `EmptyState` — the SAME composite
- *      `FoundationCategoryList` reaches for on its own bounded list — mirroring
- *      that block's judgement to keep the surface's SPOT on the screen filled
- *      by a real, worded state rather than a component that silently vanishes.
- *
- * JUDGEMENT CALL — TWO LEAVES, `isSkeleton` FOLDED IN AS A STATE OF `Default`
- * (§14d.2, same call `FoundationCategoryList`'s file header makes). Loading
- * never changes the STRUCTURE: it is still one `role="group"` grid, just every
- * tile mirrored by the composite's own generic skeleton tile — so it stays a
- * state, not its own leaf. Losing all exercises DOES change the structure (the
- * grid is replaced outright by `EmptyState`), so `Empty` earns its own leaf.
- *
- * JUDGEMENT CALL — SKELETON PLACEHOLDER COUNT. `SurfaceCardPressableGroup`
- * returns `null` for an empty `items` array REGARDLESS of `isSkeleton` (it
- * checks length before it checks the flag), so the very first fetch — before
- * any real exercise has landed — needs a GUESSED placeholder row set, same as
- * `FoundationCategoryList`'s `SKELETON_CATEGORIES` convention. Four tiles: the
- * smallest count that fills both steps of this block's own two-column grid.
- *
- * COLUMNS: `{ base: 1, sm: 2 }` — a literal match for the real screen's
- * `grid-cols-1 @app-sm:grid-cols-2` (`src`'s `PlaygroundHub`).
- *
- * ⛔ A ROW NEVER SWALLOWS ITS PRESS ON BUSINESS GROUNDS (rule 7). There is no
- * lock/disabled concept in this domain — every real tile is a plain press
- * target; only the guessed SKELETON placeholders carry no handler, because
- * nothing underneath them can act yet.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PlaygroundExerciseGrid` — the Playground hub's core: browse the course's
+ * hands-on exercises and open one. Wraps `SurfaceCardPressableGroup` and owns
+ * what the composite doesn't: the fixed `TerminalWindowIcon`, the stacked
+ * icon + title + step-count-chip tile body, a decorative "Enter playground ->"
+ * cue row (plain text, not a nested target — the whole tile is one press
+ * target), and the empty branch via `EmptyState`. Two leaves: `Default` (grid,
+ * with `isSkeleton` as a state; four guessed placeholder tiles) and `Empty`.
+ * Columns `{ base: 1, sm: 2 }`.
  */
 
 /** One hands-on exercise offered by the course. */

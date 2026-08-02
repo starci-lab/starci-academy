@@ -6,28 +6,20 @@ import { Avatar as HeroAvatar, AvatarImage as HeroAvatarImage, AvatarFallback as
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ATOM — `Avatar`: the ONE constrained avatar atom over HeroUI Avatar.
+ * `Avatar` — the constrained avatar atom over HeroUI Avatar.
  *
  * Fallback chain, in order: real image (`src`) → generated image (DiceBear,
- * seeded by `seed ?? name`) → initials (`name`) → icon.
+ * seeded by `seed ?? name`) → initials (`name`) → icon. `fallback` selects what
+ * shows when there is no `src`: `"generated"` (default) joins DiceBear to the
+ * image chain; `"initials"`/`"icon"` skip it and show directly.
  *
- * `fallback` selects what shows when there is no `src`:
- *   • `"generated"` (default) — DiceBear joins the image chain; only once
- *     that fails does it drop to initials/icon.
- *   • `"initials"` / `"icon"` — DiceBear is skipped; initials/icon show directly.
+ * The image chain advances on load ERROR: HeroUI/Radix mounts the `<img>` only
+ * after it loads, so the atom listens to `onLoadingStatusChange` rather than
+ * `onError`. It forces size (sm/md/lg), draws its own status dot and leaf
+ * skeleton (`isSkeleton`), and takes `icon` as a COMPONENT (e.g. `icon={UserIcon}`).
  *
- * The image chain advances on load ERROR, not just a missing URL: HeroUI/Radix
- * only mounts the `<img>` after it has loaded, so `onError` on the element
- * never fires — the atom listens to `onLoadingStatusChange` instead.
- *
- * The atom forces size (sm/md/lg) and draws its own status dot + leaf skeleton
- * (`isSkeleton`). `icon` takes a COMPONENT (e.g. `icon={UserIcon}`), not JSX —
- * the atom renders it inside the fallback.
- *
- * Icon library is `@phosphor-icons/react` only. Glyph weight follows size:
- * `size-5` and up renders `regular` (no `weight` prop); below `size-5` (avatar
- * `sm` → `size-4`) renders `weight="bold"` to keep the stroke visible at that
- * scale. The atom derives weight from `size`; callers do not set it.
+ * Icons are `@phosphor-icons/react` only; glyph weight is derived from size
+ * (`bold` below `size-5` to keep the stroke visible), never set by callers.
  */
 
 /**

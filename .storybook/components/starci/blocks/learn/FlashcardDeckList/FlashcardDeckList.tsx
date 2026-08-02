@@ -18,78 +18,19 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FlashcardDeckList`: the course's DECK PICKER — search a deck, switch
- * between a grid of tiles and a scan-friendly line list, and jump into any deck
- * from either shape. Shared by the plain browse surface and the SR (spaced
- * repetition) study entry point — this block carries no SR CHROME itself, it
- * just needs to be truthful about which decks have cards due, which is why
- * `dueCount` and `showProgress` exist at all.
+ * `FlashcardDeckList` — the course's deck picker: search decks, toggle between a grid
+ * of tiles and a scan-friendly line list, and open any deck. Shared by plain browse
+ * and the spaced-repetition entry point (`dueCount`/`showProgress` mark decks with
+ * cards due).
  *
- * REUSE, NOT A REBUILD (the exact trap `ContentModeNav`'s header warns about).
- * No existing composite bundles "search a repeating list + toggle its shape +
- * page it" — `ModuleLessonList`/`ModuleChallengeList` are both a single
- * `SurfaceCardList`, nothing else. So THIS block is assembled from primitives
- * that already own each piece:
- *   • `InputSearch` (atom)                — the query field, verbatim.
- *   • `Tabs` (atom), icon-only             — same atom `FlashcardModeSwitch` and
- *     `ContentModeNav` use for a mode row; here the two "modes" are view shapes.
- *   • `SurfaceCard` (composite)   — one deck tile, GRID view.
- *   • `SurfaceCardList` (composite)        — the bounded row list, LINE view.
- *   • `VariantChipDifficulty` (design)     — the difficulty chip, unchanged.
- *   • `Chip` (atom)                        — the due-count chip (`tone="warning"`).
- *   • `Pagination` (atom)                  — the page nav, verbatim.
- *   • `ProgressGauge` (atom)               — the per-viewer mastery meter.
- *   • `Grid` (frame)                       — the responsive tile track.
- * None of these get reshaped; this block only decides WHICH ones fire for a
- * given deck and WHAT their numbers mean.
+ * Composed from `InputSearch`, icon-only `Tabs` (view toggle), `SurfaceCard`/
+ * `SurfaceCardList`, `VariantChipDifficulty`, `Chip`, `Pagination`, `ProgressGauge`,
+ * and `Grid`. `totalPages` is required — `decks` is only the current page's slice.
  *
- * ⭐ ADDED PROP NOT IN THE ORIGINAL BRIEF — `totalPages`. `Pagination` (§4:
- * STRICT props) needs both `currentPage` AND `totalPages` to clamp itself and
- * decide when to collapse into an ellipsis; there is no way to build a real
- * pager without knowing how many pages exist. `decks` is only the CURRENT
- * page's slice (search/pagination happen server-side), so the count can't be
- * derived from `decks.length`. Documented here rather than silently invented.
- *
- * LEAF BY STRUCTURE (§14d.2), four of them:
- *   1. Grid view    — tiles (`SurfaceCard`) inside a `Grid`.
- *   2. Line view    — rows inside one bounded `SurfaceCardList`.
- *   3. Search empty — the whole track is REPLACED by `AsyncContentEmpty`; no
- *      grid, no list, just the message. Happens whether `view` is grid or line,
- *      so it doesn't fork by view — it forks by `decks.length === 0`.
- *   4. Loading      — `decks` is still empty and `isSkeleton` is on: a guessed
- *      row/tile count renders through the SAME shape the real data will use,
- *      each tile/row its own composite's built-in mirror.
- *   `view` toggling between an already-populated grid/list, and `isSkeleton`
- *   firing while `decks` is already non-empty (a background refetch), are
- *   STATES of the leaves above, not new leaves — nothing DISAPPEARS, the same
- *   tree just repaints.
- *
- * ⭐ JUDGEMENT CALL — the search field and the view toggle are NEVER
- * skeletonised, same reasoning as `ContentModeNav`/`FlashcardModeSwitch`: both
- * controls are usable before any deck has loaded (typing a query, or picking a
- * shape, doesn't depend on the list already being there), so they stay live
- * chrome across every leaf.
- *
- * ⭐ JUDGEMENT CALL — a GRID tile's accessible name is the deck TITLE alone
- * (`label` passed explicitly), not "whatever text is inside the card". Without
- * it, `SurfaceCard` reads its own visible text as the name, which
- * would include the difficulty word, the due count, the mastery fraction and
- * the CTA label in one run-on sentence per tile. Naming the tile after the
- * title only keeps the announcement to what a card actually IS.
- *
- * ⭐ JUDGEMENT CALL — the CTA at the foot of a grid tile ("Study now" by default,
- * `ctaLabel`) is DECORATIVE text, not a second interactive element. The whole
- * tile is already one press target (`onSelectDeck`); nesting a real `<button>`
- * inside `SurfaceCard`'s own `<button>` is illegal HTML, and the
- * `actions` escape hatch on `SurfaceCard` exists for controls that act
- * INDEPENDENTLY of the card press — "start studying" is exactly what pressing
- * the card already does, so it rides as a plain label + caret instead.
- *
- * ⛔ A DUE COUNT OF ZERO NEVER SHOWS A CHIP — same rule `ContentModeNav`'s
- * count suffix follows: a "0 due" chip claims something is waiting when
- * nothing is. `dueCount` omitted or `0` ⇒ no chip at all.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Four leaves: grid, line, search-empty, loading; the search field and view toggle are
+ * never skeletonised. A grid tile's accessible name is the deck title alone, its footer
+ * CTA is decorative (the whole tile is the press target), and a `dueCount` of 0 shows
+ * no chip.
  */
 
 /** How the deck track is currently laid out. Persisted by the caller, not a leaf-driving prop by itself (see file header). */

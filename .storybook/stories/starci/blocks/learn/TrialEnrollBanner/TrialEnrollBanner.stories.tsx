@@ -3,20 +3,12 @@ import { TrialEnrollBanner } from "@sb-components/starci/blocks/learn/TrialEnrol
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `TrialEnrollBanner`: the ambient "you're on a trial" nudge, reused
- * verbatim across every free surface a trial learner can reach (foundations —
- * both the resource page and the grid — and leaderboard).
- *
- * ⭐ CONSOLIDATED FROM THREE BLOCKS (2026-07-29) — see the component's own file
- * header for the full history. `title = "isKnown"/"isEnrolled"` collapsed into
- * one caller-resolved `isVisible`; gained `description` (real `src`'s
- * `TrialEnrollHook` always renders both lines) and `isSkeleton` (the enrollment
- * check itself can still be in flight).
- *
- * 📐 **THREE LEAVES** (§14d.2): "shown"/"hidden" differ in STRUCTURE (a node vs
- * an empty tree — same split as `CourseTeamGate`); `isSkeleton` is its own
- * third leaf because the shimmer shape (two text bars, no CTA) is a THIRD
- * structure, not a state of either of the other two.
+ * `TrialEnrollBanner` — the ambient "you're on a trial" nudge, reused across every
+ * free surface a trial learner can reach (foundations resource page and grid, and
+ * leaderboard). A caller-resolved `isVisible` drives shown vs hidden; it renders
+ * both a title and a description, and `isSkeleton` covers the enrollment check still
+ * being in flight. Three leaves: "shown"/"hidden" differ in structure (a node vs an
+ * empty tree), and the skeleton (two text bars, no CTA) is a third structure.
  */
 const meta: Meta<typeof TrialEnrollBanner> = {
     title: "StarCi/Blocks/Learn/TrialEnrollBanner/TrialEnrollBanner",

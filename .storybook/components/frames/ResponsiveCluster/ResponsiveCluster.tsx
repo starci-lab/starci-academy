@@ -5,45 +5,25 @@ import { GAP_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutJustify } from "@
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * FRAME — `ResponsiveCluster`: a repeat-list track that is a FULL-WIDTH COLUMN
- * below a named container step and a packed ROW from it up, ONE shared gap on
- * both sides. One member, `ResponsiveCluster`.
+ * `ResponsiveCluster` — a FRAME: a repeat-list track that is a full-width COLUMN
+ * below a named container step and a packed ROW from it up, with one shared gap on
+ * both sides. One member.
  *
- * WHY THIS EXISTS (Wave 3, 2026-08-01, `ButtonGroup` rebuild). `ButtonGroup`
- * needs a homogeneous row (a filter bar, a toolbar of icon buttons) that packs
- * into a row once there is room and stacks full width in a narrow container —
- * with ONE real gap in both forms. Neither existing frame covers this:
- * `Cluster` wraps onto a new line but never commits to a full column and never
- * stops being a row; `ResponsiveRow` switches shape at a named step but goes
- * FLUSH (`gap-0`) once it turns into a row — correct for its own caller
- * (`StatRibbon`, whose row marks its seam with a border instead of a gap) and
- * wrong here, where nothing else marks the seam between two buttons. Widening
- * either would fix one caller by breaking the one it already serves, which is
- * the thing this migration's own rule forbids — so this is a new, narrow
- * frame, not a change to either. `examples/composite.md`'s own text ("both
- * switch from a row to a full-width column at a named container width … the
- * frame under them owns the seam") describes exactly this shape for BOTH
- * `ButtonGroup` and `ActionBar` — this frame is offered as that shared frame,
- * not yet promoted to its own Storybook story (see the INTERNAL note below).
+ * Fills the gap between `Cluster` (wraps but never commits to a full column and
+ * never stops being a row) and `ResponsiveRow` (switches shape but goes flush
+ * `gap-0` as a row) — this one keeps one real gap in both forms, for a
+ * homogeneous row like a filter bar or icon toolbar (its caller is `ButtonGroup`).
  *
- * ⚠️ INTERNAL-only for now, same posture as `Flex` (2026-07-27): no story here,
- * built to satisfy one call site (`ButtonGroup`) inside this same change. It
- * takes `data-tier`/`data-component` as literal pass-through attributes rather
- * than asserting its own — it has no public identity of its own yet, so the
- * composite calling it supplies one. Promote it (a name, a story, its own
- * `data-tier="frame"`) the day a second caller needs it verified independently.
+ * A repeating list ⇒ `items` DATA, `children` forbidden. Below the switch each
+ * item is wrapped in `w-full`, released to `w-auto` at the switch step, so a
+ * caller's `Button` never has to know which form it is in.
  *
- * FRAME API LAW ⇒ REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN, same
- * contract as `Cluster`/`Grid`: every cell is the same kind of thing.
+ * Container queries, not viewport: `@app-sm/md/lg/xl` answer the nearest
+ * `@container`.
  *
- * FULL WIDTH BELOW THE SWITCH: each item is wrapped in `w-full`, released to
- * `w-auto` at the switch step — the wrapper carries the class, not the item's
- * own content, so a caller's `Button` never has to know which form it is in.
- *
- * CONTAINER QUERIES, NOT VIEWPORT: same reasoning as `Grid`/`ResponsiveRow` —
- * `@app-sm/md/lg/xl` answer the nearest `@container`, not the viewport.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Internal-only for now (no story of its own): it takes `data-tier`/
+ * `data-component` as literal pass-through attributes rather than asserting its
+ * own identity; the composite calling it supplies one.
  */
 
 /** One cell of a {@link ResponsiveCluster}. */

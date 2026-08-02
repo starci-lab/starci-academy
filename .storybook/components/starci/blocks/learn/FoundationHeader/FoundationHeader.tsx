@@ -7,57 +7,15 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FoundationHeader`: the FOUNDATION-RESOURCE IDENTITY block, answering
- * "what is this resource" at the top of a foundation item's own page (ported
- * from `src` `FoundationResourceLayout` + `FoundationMeta`).
+ * `FoundationHeader` — the foundation-resource identity block at the top of a resource
+ * page: kind, recommended flag, tags, and author attribution. Sibling of `ContentHeader`/
+ * `ModuleHeader`/`CourseBrief` on the same `PageHeader` frame.
  *
- * FOURTH SIBLING of `ContentHeader` (lesson identity), `ModuleHeader` (module
- * identity) and `CourseBrief` (course identity) — NOT a copy of any of them.
- * All four place identity into the same `PageHeader` frame with a `Breadcrumbs`
- * trail, but each answers a different question with different domain fields: a
- * lesson header carries read state / minutes / challenge count / outcomes, a
- * module header carries a tier plus three counts, this block carries a
- * foundation resource's KIND, its recommended flag, its tags, and its author
- * attribution — none of which exist on the other three. Same frame, different
- * domain — see `ContentHeader`'s file header for why that makes each of these
- * a new block rather than a prop bolted onto an existing one.
- *
- * KIND IS A CLOSED 3-VALUE ENUM (mirrors `src`'s `FoundationKind`: external
- * link / video / document), so its map is an EXHAUSTIVE `Record`, not the
- * `Partial<Record<…>>` `EnumChip` itself accepts — the compiler must refuse a
- * build that adds a fourth kind and forgets its chip entry, the same
- * discipline `ModuleHeader` applies to `CourseContentTier`. `kind` is
- * REQUIRED (no "no chip" case): a foundation resource with no chosen kind
- * cannot exist in `src`, unlike a lesson's optional read state.
- *
- * TWO CHIPS CAN BE TRUE TOGETHER, `src` shows them side by side (kind chip +
- * a green "Recommended" pill), so this block keeps that shape rather than folding
- * to `no-adjacent-chip`'s "one chip, rest as text" idiom — see `ModuleHeader`'s
- * file header for the same call on its tier + count chips. Both KIND and
- * RECOMMENDED classify the resource (what it is / whether it is singled out),
- * so both earn a chip; TAGS are also classifying facts (topic labels a reader
- * filters by in `src`), so they render as chips too, just untoned (`Chip`
- * with no `tone` → `neutral`) so they read as a lower tier than kind/recommended.
- *
- * AUTHOR IS TEXT, NOT A CHIP — `src`'s `FoundationMeta` renders it as a plain
- * muted line below the chip row ("Author: {author}"), never inside a pill.
- * It is attribution, not a classifying fact, so a chip would overstate it.
- *
- * CONTRACT — the block takes DATA, never a pre-formatted string (§14d.1):
- * `author` is the raw name, the block owns the "Author: " prefix itself; a
- * caller that could pass `authorLabel="Author: Rob Pike"` would own the
- * join and the block would stop owning its own wording.
- *
- * SKELETON — kind is skeletonised through `EnumChip`'s own `isSkeleton` (same
- * move as `ModuleHeader`'s tier chip). `isRecommended`/`tags`/`author` are
- * OPTIONAL and their real count is unknown before data lands, so the skeleton
- * renders a fixed placeholder shape (one recommended-shaped pill + two tag-shaped
- * pills + one author-line bar) rather than trying to pre-measure the real
- * list — a deliberate "typical shape" placeholder, the same reasoning
- * `ContentHeader` uses for its skeleton meta row, not a promise that exactly
- * that many chips will land.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `kind` is a required closed 3-value enum (external link / video / document) mapped
+ * through an exhaustive `Record` `EnumChip`. The kind chip and a "Recommended" pill can
+ * both show; tags render as untoned chips; author is plain muted text ("Author: {name}",
+ * the block owns the prefix). `kind` skeletons through `EnumChip`; the optional
+ * recommended/tags/author render a fixed placeholder shape while loading.
  */
 
 /** Resource kind of a foundation item — mirrors `src`'s `FoundationKind` enum (closed to 3 values). */

@@ -7,51 +7,13 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/profile/ProfileHero/ProfileHero"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ProfileLockedState`: the non-owner view of a profile its owner has
- * turned private. Ported from
- * `src/components/features/profile/PublicProfile/ProfileLockedState/index.tsx`.
+ * `ProfileLockedState` — the non-owner view of a profile whose owner has turned it
+ * private. `ProfileHero` still renders the full identity (name, avatar, headline)
+ * exactly as on a public profile; only the tabbed activity region is replaced by a
+ * single notice. Presentation guard only — the server withholds the tab data.
  *
- * ⭐ THE HERO STAYS, ONLY THE TABBED BODY IS WITHHELD. A recruiter (or anyone
- * else) landing on a locked profile still needs to see WHO this is — name,
- * avatar, headline — so `ProfileHero` renders exactly as it does on a public
- * profile. Only the region that would normally hold the tabbed activity
- * (overview/projects/challenges/skills/activity) is replaced by one notice.
- * This is a PRESENTATION guard mirroring the real component's own doc comment
- * ("the server also withholds the tab data, so this is a presentation guard,
- * not the security boundary") — the block never pretends to enforce privacy.
- *
- * BLOCK IMPORTS BLOCK (same justification as `ContentPaywall`/`EnrollGate`):
- * `ProfileHero` is the identity column already built for the public profile
- * screen. Re-deriving a second "name + avatar" cluster here would fork that
- * identity rendering in two places the moment either one changes copy or
- * layout.
- *
- * ⭐ JUDGEMENT CALL — `user`/`onGoCourses` are TYPED PROPS, the real component
- * reads `useRouter`/`pathConfig` itself and needs no props at all. A block may
- * not decide navigation on business grounds (a screen/layout does): the real
- * component's `router.push(pathConfig().locale(locale).course().build())` is
- * app wiring, out of scope for this tier (`onGoCourses: () => void`), and
- * `user` is the same domain shape `ProfileHero` itself takes — this block does
- * not invent a second "profile user" shape beside it.
- *
- * ⭐ ONLY `user` IS FORWARDED TO `ProfileHero`. Its full contract also takes
- * `isSelf`/`canHire`/`following`/`isFollowPending`/`onToggleFollow`/`onHire`/
- * `onEdit`/`onShare` — every one OPTIONAL. A viewer who hit a locked profile
- * is, by definition, never its owner and this block's own prop list (per
- * spec) carries no follow/hire wiring of its own, so those all fall to
- * `ProfileHero`'s own defaults (`isSelf=false`, `following=false`, no
- * handlers). The primary action still renders ("Follow") but presses do
- * nothing absent a handler — the same "declared optional, caller may not
- * have one yet" contract `ProfileHero` itself defines, not a bug this block
- * introduces. If a locked profile should also support following, that is a
- * follow-up prop threaded through here, not a change to `ProfileHero`.
- *
- * 📐 ONE LEAF. There is no state that changes this block's SHAPE — the hero is
- * always present, the notice is always the same three parts (icon, title,
- * description) plus one CTA. The two data props are the only inputs; different
- * `user` values are DATA, not a different leaf.
- * ─────────────────────────────────────────────────────────────────────────────
+ * @param user Same identity shape `ProfileHero` takes.
+ * @param onGoCourses Fired by the notice's one CTA.
  */
 
 /** Props for {@link ProfileLockedState}. */

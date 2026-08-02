@@ -9,21 +9,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Section`, the frame for ONE region of a page: it stacks `header` / `body` /
- * `footer` along ONE vertical rhythm (`gap`) and does nothing else. NO chrome: no
- * background, no border, no radius, no padding, the surface lives INSIDE it
- * (`SurfaceCard.*`/`SectionCard`).
- *
- * ⚠️ Do not confuse this with `SectionCard` (design tier, `blocks/cards/SectionCard`):
- * that one IS a card, it carries HeroUI Card chrome (border, radius, padding), an
- * accent skin, a data-driven `withVerdict` band, and its own `isSkeleton`. `Section`
- * is the bare frame around it.
- *
- * ⚠️ STATE SCOPE (§12f/§13): only the frame's OWN states live here, the slot
- * combination and the `gap` scale. The header's own slot set (eyebrow/description/
- * action/level) belongs to `SectionHeader`, see its own story; loading/empty/error are
- * states of the BLOCK inside `body`, the frame does not own them (hence no `isSkeleton`
- * flag of its own).
+ * `Section` — the frame for one region of a page: it stacks `header` / `body` / `footer` along
+ * one vertical rhythm (`gap`) and nothing else. No chrome (no background, border, radius, or
+ * padding) — the surface lives inside it (`SurfaceCard.*`/`SectionCard`). Distinct from
+ * `SectionCard`, which is an actual card with chrome. Owns only slot combination and `gap`.
  */
 const meta: Meta<typeof Section> = {
     title: "Composites/Layout/Section/Section",

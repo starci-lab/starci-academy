@@ -5,51 +5,16 @@ import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/compos
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ModuleLessonList`: the FULL, ORDERED lesson list of one module —
- * every lesson the module has, not just what's next.
+ * `ModuleLessonList` — the full, ordered lesson table of contents of one module. Wraps
+ * `SurfaceCardList` + `VariantChipDifficulty`. Sibling of `KeepGoingPath` but shows the
+ * whole module with no heading of its own and never trims to "what's next".
  *
- * REUSE, NOT A REBUILD (the exact trap `ContentModeNav`'s header warns about):
- * this wraps `SurfaceCardList` for the frame/row rhythm and `VariantChipDifficulty`
- * for the trailing chip — it does not hand-roll a bordered `<div>` and `.map()`
- * its own rows. Same composite `KeepGoingPath` already reaches for.
- *
- * SIBLING OF `KeepGoingPath`, NOT A DUPLICATE. `KeepGoingPath` shows the top of
- * the CONTINUE queue for the current chapter and owns its own heading sentence
- * ("Continue · Chapter N …"); this block shows the WHOLE module's lesson table of
- * contents with no heading of its own (the screen/section around it supplies
- * that), and it never trims the list down to "what's next".
- *
- * ⭐ JUDGEMENT CALL — bare glyphs, not `KeepGoingPath`'s round trio. `KeepGoingPath`
- * deliberately keeps `PlayCircleIcon`/`CheckCircleIcon`/`CircleIcon` (one round
- * silhouette across all three states) because it is a short, glanceable queue.
- * This block is a full table of contents read top-to-bottom, closer to a
- * checklist, so it uses the spec's literal glyphs — `PlayIcon` (bare triangle) ·
- * `CheckIcon` (bare check) · `CircleIcon` (open ring) — three DIFFERENT
- * silhouettes reading as "in progress / done / not started" at a glance, the way
- * a course-outline checklist usually reads. Both tables are correct for their own
- * list; this is not a drift off `KeepGoingPath`, it's a distinct reading rhythm.
- *
- * ⭐ JUDGEMENT CALL — the lock does NOT replace the state icon. In `KeepGoingPath`
- * a locked item's paywall status is the only thing worth saying, so the lock
- * REPLACES the leading icon. Here premium-ness is ORTHOGONAL to progress — a
- * paid lesson can already be read, or be the one to resume — so the state icon
- * always stays at the head of the row, and the lock rides as its OWN trailing
- * marker next to the difficulty chip, never covering up progress.
- *
- * ⭐ `resumeLessonId` WINS OVER `isRead`. A lesson can be marked read (finished
- * once before) and still be the one the reader left off on this session — the
- * resume marker answers "where do I go next", which outranks "have I seen this
- * before" for deciding the leading icon.
- *
- * THE BLOCK OWNS THE SUBTITLE SENTENCE ("N min read · M challenges", §14d.1) — the
- * caller hands over the two numbers, never a formatted string.
- *
- * ⛔ A PREMIUM ROW IS NOT DISABLED. Exactly the bug `ContentModeNav`'s header
- * documents: `onSelectLesson` fires for every row regardless of `isPremium`. What
- * a tap on a locked lesson MEANS (open the reader anyway, or bounce to the
- * paywall) is the CALLER's business decision, not this block's to hardcode.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Uses distinct bare glyphs (`PlayIcon`/`CheckIcon`/`CircleIcon`) for a checklist reading
+ * rhythm. The premium lock is a trailing marker beside the difficulty chip and never
+ * replaces the state icon (premium is orthogonal to progress). `resumeLessonId` outranks
+ * `isRead` for the leading icon. Owns the subtitle sentence ("N min read · M challenges")
+ * from two numbers. A premium row is not disabled — `onSelectLesson` fires for every row;
+ * what a locked tap means is the caller's decision.
  */
 
 /** Where this lesson sits in the reader's progress through the module. */

@@ -4,29 +4,20 @@ import { Menu } from "@sb-components/atoms/overlay/Menu/Menu"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Menu`: the ONE menu atom, wrapping HeroUI `Dropdown` directly (Trigger ·
- * Popover · Menu · Section · Item). No child atom splits off into its own story —
- * `items`/`sections`/icon/disabled are all LEAF prop-driven states of `Menu` itself.
- *
- * 🌿 `annotate` (2026-07-28): every HeroUI import that `Menu.tsx` renders directly
- * declares `tier: "heroui"` — the `heroui` tier needs NO `storyId` (there's no story
- * of OURS to point to). The node name matches the REAL import name
- * (`DropdownTrigger`/`DropdownPopover`/`DropdownMenu`/`DropdownSection`/`Header`/
- * `DropdownItem`), not the role it plays.
- *
- * ⚠️ Still a PORTAL LIMITATION: `DropdownPopover` (and everything nested inside it —
- * `DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`) renders into
- * `document.body`, OUTSIDE the render-box that {@link BlockAnatomy} scans, so even
- * with `annotate` declared they still do NOT show up in the Structure tree —
- * declaring the correct name still matters, it's about DATA honesty, not a promise
- * they'll actually be VISIBLE. Only `DropdownTrigger` (not portaled) and `Skeleton`
- * (the `isSkeleton` branch, which never mounts the Dropdown) actually reach the tree.
- *
- * ✍️ Text shown on the UI (menu labels, `triggerLabel`, `why`/`reason`) is written in
- * ENGLISH (teacher's call 2026-07-26) — including demo content, not just the panel
- * commentary.
- *
- * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a).
+ * ATOM — `Menu`: the one menu atom, wrapping HeroUI `Dropdown` directly (Trigger · Popover ·
+ * Menu · Section · Item). No child atom splits into its own story — `items`/`sections`/icon/
+ * disabled are all leaf prop-driven states of `Menu` itself.
+ * 
+ * `annotate`: every HeroUI import `Menu.tsx` renders directly declares `tier: "heroui"` (no
+ * `storyId`), the node name matching the real import name (`DropdownTrigger`/`DropdownPopover`/
+ * `DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`).
+ * 
+ * PORTAL LIMITATION: `DropdownPopover` and everything nested inside it renders into
+ * `document.body`, outside the render-box {@link BlockAnatomy} scans, so even with `annotate`
+ * declared they do not show up in the Structure tree — declaring the correct name is about
+ * data honesty, not visibility. Only `DropdownTrigger` and `Skeleton` actually reach the tree.
+ * 
+ * Text shown on the UI (menu labels, `triggerLabel`, `why`/`reason`) is written in English.
  */
 
 /**

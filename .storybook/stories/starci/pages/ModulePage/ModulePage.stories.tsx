@@ -5,26 +5,14 @@ import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcit
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `ModulePage`: one module's own page — orient, resume, then
- * browse everything it contains.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * FIVE FUNCTIONS, in the order the learner meets them: orient · gate (paywall,
- * REUSED from `ContentPaywall`) · resume + completion · browse lessons ·
- * browse challenges.
- *
- * ⭐ THE PAYWALL REPLACES BROWSING, IT DOES NOT SIT ABOVE IT. The `Locked` leaf
- * below is what that looks like — the same "one decision, nothing competing
- * with it" shape `ContentPage` already uses for its own footer.
- *
- * ⭐ THE CHALLENGE LIST IS A SCREEN-OWNED STRUCTURAL SWITCH, worth its own leaf
- * (`NoChallenges`) — unlike `ContentRelatedList`'s internal "nothing related"
- * self-hide (which `ContentPage`'s story does not re-demonstrate, because
- * that decision belongs to the block, not the screen), `challenges.length > 0`
- * is a branch the SCREEN itself makes in its own tree.
+ * `ModulePage` — the screen for one module's own page: orient, resume, then
+ * browse everything it contains. A screen owns a list of functions: it calls
+ * blocks, places them in frames, and hands each typed data. Five functions, in
+ * reading order: orient · gate (paywall, reused from `ContentPaywall`) · resume
+ * + completion · browse lessons · browse challenges. The paywall replaces
+ * browsing rather than sitting above it (the `Locked` leaf). The challenge list
+ * is a screen-owned structural switch worth its own leaf (`NoChallenges`), on
+ * the `challenges.length > 0` branch the screen itself makes.
  */
 const meta: Meta<typeof ModulePage> = {
     title: "StarCi/Pages/ModulePage/ModulePage",

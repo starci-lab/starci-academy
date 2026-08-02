@@ -3,21 +3,17 @@ import { PersonalProjectDashboard } from "@sb-components/starci/blocks/learn/Per
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PersonalProjectDashboard`: the capstone LANDING OVERVIEW — "where am I
- * + what's next" — shown when the personal-project route carries no `taskId`.
- * Ported from the real `PersonalProjectDashboard` (final-mvp `src/components/
- * features/learn/PersonalProject/PersonalProjectDashboard/index.tsx`): breadcrumb
- * → title/description/GitHub-status header, over a continue hero + completion
- * meter, over the current milestone's tasks as a two-column grid.
+ * `PersonalProjectDashboard` — the capstone landing overview ("where am I + what's
+ * next"), shown when the personal-project route carries no `taskId`: breadcrumb →
+ * title/description/GitHub-status header, over a continue hero + completion meter,
+ * over the current milestone's tasks as a two-column grid.
  *
- * 📐 LEAF by STRUCTURE (§14d.2):
- *   • `Full` — a next task exists ⇒ the continue hero renders; GitHub connected
- *     vs not-connected are STATES inside it (same shape, different chip data).
- *   • `AllDone` — no `currentTask` ⇒ the hero node is GONE, replaced by the
- *     "all done" line — a real structural loss, not a data tweak.
- *   • `Loading` — `isLoading` ⇒ `AsyncContent` falls to the shimmer mirror.
- *   • `Empty` — `isEmpty` ⇒ `AsyncContent` falls to the empty message; the
- *     header above it is unaffected (it never waits on this fetch).
+ * Shapes:
+ *   • `Full` — a next task exists, so the continue hero renders; GitHub connected
+ *     vs not are states inside it.
+ *   • `AllDone` — no `currentTask`, so the hero is gone, replaced by an "all done" line.
+ *   • `Loading` — `AsyncContent` falls to the shimmer mirror.
+ *   • `Empty` — `AsyncContent` falls to the empty message; the header is unaffected.
  */
 const meta: Meta<typeof PersonalProjectDashboard> = {
     title: "StarCi/Blocks/Learn/PersonalProjectDashboard/PersonalProjectDashboard",

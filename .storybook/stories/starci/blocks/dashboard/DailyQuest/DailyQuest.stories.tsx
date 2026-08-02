@@ -3,19 +3,11 @@ import { DailyQuest, type DailyQuestData } from "@sb-components/starci/blocks/da
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `DailyQuest` (dashboard): "Today's quests" — a fixed 3-task
- * checklist plus a claim action once every task clears its target. See the
- * component's own file header for the full matrix trail (`SurfaceCardCrossList`
- * for the checklist, `Split` for each row's title↔progress line) and why
- * `mark="pending"` (not `"cross"`) is the not-yet-done state.
- *
- * FOUR ASYNC LEAVES, Content further split by claim state:
- *   - `Loading` — `SurfaceCardCrossList`'s own 3-row mirror.
- *   - `Error`   — the fetch failed; retry.
- *   - `Empty`   — `quest` resolved to nothing for today.
- *   - `Content` — 4a incomplete (prompt text) / 4b all-done unclaimed (claim
- *     button, `isPending` while claiming — the block's ONE pending state) /
- *     4c already claimed (chip, no action left).
+ * `DailyQuest` (dashboard) — "Today's quests": a fixed 3-task checklist plus a
+ * claim action once every task clears its target. Four async leaves — `Loading`,
+ * `Error`, `Empty`, and `Content`, the last forking on claim state: incomplete
+ * (prompt), all-done unclaimed (claim button, `isPending` while claiming), or
+ * already claimed (chip, no action left).
  */
 const meta: Meta<typeof DailyQuest> = {
     title: "StarCi/Blocks/Dashboard/DailyQuest/DailyQuest",

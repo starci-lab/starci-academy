@@ -3,15 +3,9 @@ import { SplitWorkspace } from "@sb-components/frames/SplitWorkspace/SplitWorksp
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT (frame) — `SplitWorkspace`: the read-column + sticky-aside workspace
- * shape (§ file header on the component). Every size is hard-owned — real
- * `src` has this exact CSS twice, byte-for-byte identical, so there is no
- * second shape to make configurable yet.
- *
- * ⭐ The one leaf that matters — `Default`'s 3 states are the EVIDENCE for the
- * axis switch (teacher, 2026-07-29: "shouldn't desktop render as flex?"):
- * `main`/`aside` stack full-width below `@app-xl` (mobile/tablet) and only go
- * side-by-side from `@app-xl` (1280px) up — never a fixed row at every width.
+ * `SplitWorkspace` — the read-column + sticky-aside workspace layout frame.
+ * Every size is hard-owned. `main`/`aside` stack full-width below `@app-xl`
+ * (mobile/tablet) and go side-by-side only from `@app-xl` (1280px) up.
  */
 
 /** Props for the demo tile. */

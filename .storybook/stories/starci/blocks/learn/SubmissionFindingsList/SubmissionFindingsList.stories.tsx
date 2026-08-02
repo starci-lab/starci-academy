@@ -3,22 +3,14 @@ import { SubmissionFindingsList, type SubmissionFinding } from "@sb-components/s
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `SubmissionFindingsList`: "Feedback" — one accordion row per quality-gate
- * finding on a graded attempt: severity icon + plain-text message (backtick
- * code only — a trigger title is never richtext) + location chip in the
- * trigger, markdown detail + a linked file location + a markdown suggestion
- * in the panel.
- *
- * REUSE, NOT A NEW ACCORDION: the frame is `SurfaceCard.Accordion` end to end —
- * this block only supplies the DOMAIN (severity → icon/tone/sort-rank, the
- * high→low sort, the repo-URL→file-link builder), ported from `SubmissionResult`
- * / `FindingAccordionItem`.
- *
- * 📐 ONE LEAF (`FindingsAccordion`): loading, empty, error, and populated are all
- * the SAME bounded accordion card wearing different content, never a different
- * structure — see the block's own file header for why loading/empty/error all
- * stay routed through `SurfaceCard.Accordion`'s own `isSkeleton`/`emptyState`
- * axes instead of `AsyncContent`'s state-switch wrapper.
+ * `SubmissionFindingsList` — "Feedback": one accordion row per quality-gate finding
+ * on a graded attempt — severity icon + plain-text message (backtick code only) +
+ * location chip in the trigger; markdown detail, a linked file location, and a
+ * markdown suggestion in the panel. The frame is `SurfaceCard.Accordion` end to end;
+ * the block supplies the domain (severity → icon/tone/sort-rank, the high→low sort,
+ * the repo-URL → file-link builder). Loading, empty, error, and populated are all
+ * states of the one accordion card, routed through its own `isSkeleton`/`emptyState`
+ * axes.
  */
 const meta: Meta<typeof SubmissionFindingsList> = {
     title: "StarCi/Blocks/Learn/SubmissionFindingsList/SubmissionFindingsList",

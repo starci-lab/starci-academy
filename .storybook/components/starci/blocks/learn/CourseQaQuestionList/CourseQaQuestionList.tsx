@@ -15,95 +15,21 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseQaQuestionList`: the course-wide Q&A ROLL-UP region — the
- * async lifecycle (loading → error → search-empty → content) wrapped around a
- * flush divide-y list of questions plus a pager. Port of `src`'s
- * `CourseQa/index.tsx` list region (§E/§F of that file) + its own
- * `CourseQaSkeleton.tsx`.
+ * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async lifecycle
+ * (loading → error → search-empty → content) wrapped around a flush divide-y list of
+ * questions plus a pager.
  *
- * REUSE, NOT A NEW SHAPE (the exact mistake this task exists to avoid — see
- * `ContentModeNav`'s file header):
- *   • `AsyncContent` (composite) — owns the error → loading → empty → content
- *     switch. This block does not track "which message am I showing" itself.
- *   • `SurfaceCardList` (composite) — the bounded flush divide-y card. Its OWN
- *     `isSkeleton` mirror is a GENERIC 3-line row (leading/title/subtitle) —
- *     wrong shape for this list (avatar + 2 text bars + chip-pill row + status
- *     dot). So this block never sets `SurfaceCardList`'s `isSkeleton`; instead
- *     it hands BOTH the loading branch and the content branch their rows via
- *     the free-form `items[].content` slot, and owns the mirror shape itself
- *     (ported verbatim from `CourseQaSkeleton.tsx`) — see judgement call ★1.
- *   • `Pagination` (atom) — the page nav, verbatim.
- *   • `Avatar` / `Chip` / `Typography` (atoms), `StackV` / `StackH` / `Cluster`
- *     (frames) — the row's own composition, nothing hand-rolled beyond them
- *     except the status dot (★3).
+ * Composes `AsyncContent` (branch switch), `SurfaceCardList` (flush list shell, fed
+ * rows via its free-form `content` slot), `Pagination`, and per-row atoms
+ * (`Avatar`/`Chip`/`Typography`) with a hand-rolled answered/unanswered status dot.
+ * The per-question row renders real question data in a COLLAPSED preview only
+ * (no expand/reply).
  *
- * ⚠️ GAP — `QaQuestionThread` DOES NOT EXIST YET (★2). The task's compose-from
- * list names a `QaQuestionThread` block for the per-question row (collapsed
- * social-inbox row that expands into the full conversation — the real `src`
- * sibling is `QuestionRow`, which composes `QaInboxRow` + `QaConversationHeader`
- * + `QaMessageBubble` + a reply `Composer`). Verified ABSENT from this pass via
- * `Glob`/`Grep` across both `components/**` and `stories/**` (2026-07-28,
- * repeated 3× over the course of this build while sibling `CourseQa*` blocks
- * kept landing around it — it never appeared). Per SCOPE DISCIPLINE (§B3): the
- * chrome around it is built here IN FULL (async switch, own skeleton mirror,
- * flush list surface, pager) and the missing per-question piece is a CLEARLY
- * MARKED, HONEST placeholder (`QuestionPreviewRow` below) — real atoms
- * rendering real question data in the COLLAPSED look only, no expand/reply
- * behaviour invented for it — rather than either (a) silently faking the full
- * conversation experience, or (b) guessing `QaQuestionThread`'s prop contract
- * and importing a module that does not resolve (which would red-gate `tsc` on
- * THIS file for a dependency this task was told not to build). The moment
- * `QaQuestionThread` lands, swap `<QuestionPreviewRow .../>` for
- * `<QaQuestionThread question={…} currentUserId={…} currentUser={…}
- * onAnswered={…} />` in `questionItem()` below and delete `QuestionPreviewRow`
- * — the props this block already threads through (`currentUserId`,
- * `currentUser`, `onAnswered`) are exactly `QuestionRow`'s real contract, so
- * the swap is one function body, not a prop-surface change.
- *
- * 📐 LEAF BOUNDARY — four leaves, per the task brief (NOT the R0 default of
- * folding empty into content, which is `FoundationResourceList`'s call for a
- * DATA-driven `resources.length === 0`): here "empty" means specifically
- * "the current filter/search matched nothing", a caller-decided FILTER STATE
- * this list has no visibility into (the true zero-questions-ever case is a
- * SEPARATE screen-level concern already owned by the existing `CourseQaInvite`
- * block, one layer up) — closer to a caller-flipped switch than to R0's "0 is
- * just data" example, hence its own leaf rather than a state of `Content`.
- *
- * ⭐ JUDGEMENT CALLS:
- * ★1 — the loading branch's rows are NOT `SurfaceCardList`'s own mirror; they
- *   are this block's own `SkeletonQuestionRow`, handed in via `items[].content`
- *   so `SurfaceCardList` only ever supplies the flush divide-y card shell, in
- *   BOTH branches. This is why `SurfaceCardList.isSkeleton` is never set.
- * ★2 — see the GAP note above for the full reasoning behind `QuestionPreviewRow`.
- * ★3 — the status dot (answered=success / unanswered=warning) has no home atom
- *   anywhere in this system; it is hand-rolled at this tier exactly as the real
- *   `CourseQaSkeleton.tsx`/`QaInboxRow` do it at their own tier — parity, not a
- *   new pattern. Its SKELETON twin reaches for `HeroSkeleton` directly (no
- *   atom to flow `isSkeleton` into either), the same escape hatch the
- *   `Pagination` ATOM itself uses for its own placeholder squares.
- * ★4 — `pagerAriaLabel` names a `<nav>` WRAPPING `Pagination`, not a prop ON
- *   it — the `Pagination` atom hard-codes its own `aria-label` (§4: it owns
- *   its a11y strings) and does not expose one to override. Wrapping is the
- *   least-invasive way to still give the region a caller-chosen accessible name.
- * ★5 — `isSkeleton` is DISTINCT from `isLoading`: `isLoading` is this list's
- *   own fetch flag (feeds `AsyncContent` directly); `isSkeleton` is an EXTERNAL
- *   override — a parent's own `isSkeleton` flowing down, or a story pinning the
- *   Loading leaf without wiring a fetch flag — that also routes to the Loading
- *   branch. Both is-a's converge on one `AsyncContent.isLoading` computation
- *   rather than opening a second, competing branch.
- * ★6 — the asker's own question is labelled "You" instead of their real name
- *   (mirrors `QuestionRow`'s `isMineQuestion`), the one piece of `currentUserId`
- *   the placeholder DOES use — everything else `currentUserId`/`currentUser`/
- *   `onAnswered` carry is pure pass-through for the future `QaQuestionThread`
- *   swap (★2), not consumed by `QuestionPreviewRow`.
- * ★7 — the chip-pill row keeps exactly ONE `Chip` (status — the axis worth
- *   scanning the whole list for) per row; the scope tag rides as plain muted
- *   text beside it instead of a second chip (`eslint-plugin-starci-fe`'s
- *   `no-adjacent-chip`: "≥2 adjacent chips — keep 1 chip, the rest as inline
- *   text + icon"). The real `src` sibling (`QaInboxRow`) uses two chips; this
- *   port deliberately diverges to honor THIS Storybook's own enforcement gate.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Four leaves; "empty" here means the current filter/search matched nothing (the true
+ * zero-questions case belongs to `CourseQaInvite`). Each row keeps exactly one status
+ * `Chip`, the scope tag riding as inline text. `isSkeleton` and the internal
+ * `isLoading` fetch flag both route to the loading branch; `currentUserId`/
+ * `currentUser`/`onAnswered` are threaded for the per-question row.
  */
 
 /** One asker — plain data, the row builds the avatar + name from it. */

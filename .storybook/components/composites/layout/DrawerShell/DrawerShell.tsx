@@ -6,19 +6,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `DrawerShell.*`, the panel-scaffold KHUNG
- * namespace. Sibling of `ModalShell` (canon §13a/§13b) — same slot contract
- * (`header`/`body`/`footer`, `children` = body shorthand), same seam rule
- * (`gap-3` on the Dialog owns the rhythm, children only cancel HeroUI's own
- * `mt-*` with `mt-0!`), same tier-3 presentational contract (no state of its
- * own — caller threads `isOpen`/`onOpenChange` plus content via props).
+ * `DrawerShell.*` — the panel-scaffold frame namespace, sibling of `ModalShell`.
+ * Same slot contract (`header`/`body`/`footer`, `children` = body shorthand), same
+ * seam rule (`gap-3` on the Dialog owns the rhythm; children cancel HeroUI's own
+ * `mt-*` with `mt-0!`), same tier-3 presentational contract (no state of its own —
+ * the caller threads `isOpen`/`onOpenChange` plus content via props).
  *
- * Differs from `ModalShell` only where the underlying HeroUI primitive
- * differs: `Modal.Container` takes `size` (dialog width, centered dialog);
- * `Drawer.Content` takes `placement` (which edge the panel slides from — a
- * drawer has no "size" in that sense, it is full-bleed along its edge).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Differs from `ModalShell` only where the HeroUI primitive does: `Modal.Container`
+ * takes `size` (centered dialog width); `Drawer.Content` takes `placement` (which
+ * edge the full-bleed panel slides from).
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

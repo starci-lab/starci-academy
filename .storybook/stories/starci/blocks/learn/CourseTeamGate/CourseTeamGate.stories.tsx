@@ -3,20 +3,11 @@ import { CourseTeamGate } from "@sb-components/starci/blocks/learn/CourseTeamGat
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `CourseTeamGate`: a nudge to join the course's GitHub team.
- *
- * 🔴 **AUDIENCE = SOMEONE WHO'S PAID.** The backend scopes the team by
- * `is_enrolled = true`, so without a purchase there's no team to join. The block
- * **self-hides** for trial and for someone already in the team — the screen
- * doesn't have to ask (§14b).
- *
- * ⚠️ The screen built 2026-07-25 once had the gate BACKWARDS (`viewer === "trial"`).
- * The two leaves below lock in the correct direction so it doesn't flip back again.
- *
- * 📐 **TWO LEAVES** (§14d.2): "shown" and "hidden" differ in STRUCTURE (a node vs
- * empty). The two reasons for hiding (trial · already-in-team) produce the SAME
- * empty tree ⇒ they're STATES of the same leaf, now two `states[]` entries
- * (teacher's call on layout C, 2026-07-27) instead of two renders hand-laid inside `leafShell`.
+ * `CourseTeamGate` — a nudge to join the course's GitHub team. The backend
+ * scopes the team by `is_enrolled = true`, so the block self-hides for trial
+ * viewers and for anyone already in the team. Two leaves — shown vs. hidden (a
+ * node vs. an empty tree); the two hiding reasons produce the same empty tree,
+ * so they are states of the hidden leaf.
  */
 const meta: Meta<typeof CourseTeamGate> = {
     title: "StarCi/Blocks/Learn/CourseTeamGate/CourseTeamGate",

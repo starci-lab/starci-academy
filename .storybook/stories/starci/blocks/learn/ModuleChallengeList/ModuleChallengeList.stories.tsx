@@ -3,20 +3,12 @@ import { ModuleChallengeList, type ModuleChallengeItem } from "@sb-components/st
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ModuleChallengeList`: every CHALLENGE across this module's lessons,
- * flattened into one solve-me list.
- *
- * ⭐ A SEPARATE BLOCK FROM A LESSON LIST (§14d), not the same list with a `kind`
- * switch — the WHY differs on every axis: a lesson row means "go read", a
- * challenge row means "go solve"; a challenge always shows the SAME
- * `PuzzlePieceIcon` recoloured by solved state (there is no "in progress" for a
- * challenge, unlike a lesson's play/check/circle trio); and a press opens the
- * OWNING LESSON's Challenges tab, not the challenge itself — there is no
- * standalone challenge route.
- *
- * 📐 ONE LEAF (§11f + §14d.2): every variant below shares the SAME DOM tree
- * (`SurfaceCardList` → rows), differing only in content ⇒ solved/unsolved and
- * all 4 difficulty steps are STATE inside one leaf, not separate leaves.
+ * `ModuleChallengeList` — every challenge across this module's lessons, flattened
+ * into one solve-me list. Distinct from a lesson list: a challenge row means "go
+ * solve", shows the same `PuzzlePieceIcon` recoloured by solved state (no
+ * in-progress state), and a press opens the owning lesson's Challenges tab (there
+ * is no standalone challenge route). Solved/unsolved and all four difficulty steps
+ * are states of one `SurfaceCardList` → rows tree.
  */
 const meta: Meta<typeof ModuleChallengeList> = {
     title: "StarCi/Blocks/Learn/ModuleChallengeList/ModuleChallengeList",

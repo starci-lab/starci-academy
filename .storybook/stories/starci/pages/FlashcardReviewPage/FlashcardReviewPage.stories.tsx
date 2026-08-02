@@ -3,20 +3,12 @@ import { FlashcardReviewPage } from "@sb-components/starci/pages/FlashcardReview
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `FlashcardReviewPage`: browse decks and clear today's due queue, one
- * card at a time. See the component's own file header for the full phase model
- * and the two marked GAPs it leaves rather than fakes (the confirm dialog on
- * leave/end-early, and the dead `FlashcardStudyRail`).
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. Six blocks — two reused
- * (`FlashcardModeSwitch`, `WorkSessionHeader`), four new this run — arranged by
- * `phase`.
- *
- * 📐 THREE LEAVES, matching the one structural fork (`phase`) plus the one
- * prop-flip that only the overview phase exposes (`isSkeleton`) — the same
- * granularity `QuizPage`'s own story keeps its `SetupLoading` leaf at:
- *   `Overview` (2 states: resume-in-progress vs. plain due queue) ·
- *   `OverviewLoading` (prop flip) · `Session` (2 states: question vs. graded).
+ * `FlashcardReviewPage` — the screen to browse decks and clear today's due
+ * queue, one card at a time. A screen owns a list of functions: six blocks —
+ * two reused (`FlashcardModeSwitch`, `WorkSessionHeader`), four new — arranged
+ * by `phase`. Three leaves matching the `phase` fork plus the overview-only
+ * `isSkeleton` prop-flip: `Overview` (resume-in-progress vs plain due queue) ·
+ * `OverviewLoading` · `Session` (question vs graded).
  */
 const meta: Meta<typeof FlashcardReviewPage> = {
     title: "StarCi/Pages/FlashcardReviewPage/FlashcardReviewPage",

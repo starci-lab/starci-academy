@@ -3,25 +3,12 @@ import { ChallengeHeader } from "@sb-components/starci/blocks/learn/ChallengeHea
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ChallengeHeader`: the CHALLENGE-IDENTITY cluster at the top of the
- * solve page. It answers "what is this challenge, and where do I stand on it".
- *
- * SIBLING OF `ContentHeader`, NOT AN EDIT OF IT. Both place identity into the
- * same `PageHeader` frame, but a lesson header carries read state / reading
- * time / outcomes, while a challenge header carries score / difficulty / the
- * learner's own pass-fail status — different domain fields entirely.
- *
- * ⚠️ TWO CHIPS ON PURPOSE, unlike `ContentHeader`'s one-chip-per-cluster. Here
- * `difficulty` (a property of the CHALLENGE, always known) and `status` (a
- * property of the ATTEMPT, may not exist yet) are two separate classifying
- * axes, not one fact weighed twice.
- *
- * 📐 ONE LEAF (§14d.2). The composed shape never changes — back link, title,
- * optional description, and a meta row that always exists — so this is a
- * SINGLE leaf. Whether the status chip is drawn, and whether the block is
- * loading, are DATA, not structure: the status chip is one item inside a row
- * that already exists (same reasoning `ContentHeader` used for its
- * `minutesRead`/`challengeCount` facts, which also stayed inside one leaf).
+ * `ChallengeHeader` — the challenge-identity cluster atop the solve page: back
+ * link, title, optional description, and a meta row carrying score, difficulty,
+ * and the learner's pass-fail status. A `PageHeader` cluster. Two chips on
+ * purpose — `difficulty` (a property of the challenge) and `status` (a property
+ * of the attempt) are separate axes. Whether the status chip draws, and loading,
+ * are data.
  */
 const meta: Meta<typeof ChallengeHeader> = {
     title: "StarCi/Blocks/Learn/ChallengeHeader/ChallengeHeader",

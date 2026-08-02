@@ -12,58 +12,21 @@ import { ScoreValue } from "@sb-components/composites/text/ScoreValue/ScoreValue
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ChallengeDeliverableList`: the "Submit" card — one accordion row per
+ * `ChallengeDeliverableList` — a BLOCK: the "Submit" card — one accordion row per
  * challenge requirement, each row's trigger a live status, and its panel the
  * submission form plus, once graded, the verdict and the reasons behind it.
  *
- * ⭐ THIS RUN EXISTS BECAUSE A SIBLING BLOCK REBUILT A COMPOSITE FROM A BARE ATOM
- * (see `ContentModeNav`'s own file header). The lesson here: `src`'s
- * `ChallengeSubmissionPanel` hand-rolls its accordion straight on HeroUI's
- * `Accordion` — three separate files (`ChallengeSubmissionPanel` /
- * `SubmissionRow` / `LastAttemptResult`) reconstructing a shell this design
- * system already owns as `SurfaceCard.Accordion`. This block reaches for that
- * composite instead, and folds all three `src` files into ONE component, because
- * none of them draws its own outer card face — they all share the single
- * "deliverable row" shape.
+ * Reaches for the `SurfaceCard.Accordion` composite rather than hand-rolling an
+ * accordion on HeroUI, and folds the ungraded form and the graded result into ONE
+ * component — the graded block is a STATE toggling on `graded`, not a second leaf.
  *
- * ⭐ ONE COMPONENT, NOT TWO. `src` splits the ungraded form (`SubmissionRow`) from
- * the graded result (`LastAttemptResult`) into sibling files that always render
- * together. `QuizQuestion` already answers this exact shape with ONE component
- * toggling on `verdict` — a deliverable toggles the same way on `graded`, so it
- * gets the same treatment: the graded block is a STATE inside this leaf, not a
- * second leaf and not a second component.
+ * The status icon rides `titleStart` (needing its own status colour independent of
+ * the title text) while `title` stays plain text. The trailing slot shows "N points"
+ * before an attempt and switches to "earned/required" once graded — never both.
  *
- * ⭐ THE STATUS ICON RIDES `titleStart`, `title` STAYS PLAIN TEXT (teacher's call
- * 2026-07-29, markdown-tier-rules.html: a title is never richtext). The icon
- * needs its OWN status colour (muted/success/danger) independent of the title
- * text — `Typography`'s `prefixIcon` would force it to the text's `currentColor`,
- * recolouring "1. Write API" red along with the icon on a failed row — so it goes
- * through `titleStart` (a leading slot beside `titleEnd`, both OUTSIDE
- * `Typography`) instead of composing custom JSX into `title` itself.
- *
- * ⭐ POINTS BECOMES SCORE, NEVER BOTH. Before an attempt the trailing slot reads
- * "N points" — what the row is worth. Once `graded` lands it switches to
- * "earned/required" — what was actually scored. Showing both at once would ask
- * the learner to do the subtraction themselves; the row already knows the
- * answer.
- *
- * ⭐ SCOPE CUT (§B3, deliberate this pass): `onOpenGradingSettings` is CHROME
- * ONLY — a trigger in the card header. `src`'s `GradeModelDropdown` +
- * `GradeCreditCaption` (the grading-lane picker, quota caption, premium
- * upsell) are a whole settings surface of their own and do not fit this pass;
- * wiring only the open affordance and leaving the drawer's content as a gap is
- * the honest state here, not a stub panel that renders nothing real.
- *
- * ⭐ AUTO-EXPAND MIRRORS THE REAL SCREEN: the first requirement that has not
- * PASSED opens by default (`status !== "done"`), so a returning learner lands
- * on the thing they still owe rather than requirement #1 every time.
- *
- * ⛔ NO EMPTY-STATE LEAF. `items` is always at least one requirement in every
- * real screen this feeds — a challenge with zero deliverables is not a shape
- * the domain produces, so no `emptyState` is wired into `SurfaceCard.Accordion`
- * here (§14d.3: building a case no screen asks for).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `onOpenGradingSettings` is chrome only (a header trigger); the grading-lane picker
+ * itself is out of this scope. Auto-expand opens the first requirement that has not
+ * passed. No empty-state leaf — every real screen has at least one requirement.
  */
 
 /** Where one requirement stands. */

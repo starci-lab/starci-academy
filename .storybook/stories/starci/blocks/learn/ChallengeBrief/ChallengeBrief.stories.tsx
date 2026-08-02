@@ -3,21 +3,11 @@ import { ChallengeBrief } from "@sb-components/starci/blocks/learn/ChallengeBrie
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ChallengeBrief`: the reading column of a challenge, ported from
- * `src`'s `ChallengeView` — prerequisites, requirements (points-per-row),
- * guided steps, expected outputs, and a hint, each present only when the
- * challenge actually carries it.
- *
- * ONE LEAF, THREE STATES. `src` gates each of the five sections on
- * `items.length > 0`, and so does this block — but which of the five show up
- * is DATA (§14d.2), not a different shape of block, so this stays a single
- * leaf. The three states below are: every section present, some sections
- * genuinely absent (the real conditional path), and the loading mirror.
- *
- * ⛔ No "empty everything" leaf/state. A challenge with all five sections
- * blank never reaches this block in `src` — the caller simply would not
- * render a `ChallengeBrief` with nothing to say, so that case is not one this
- * story invents (§14d.3).
+ * `ChallengeBrief` — the reading column of a challenge: prerequisites,
+ * requirements (points-per-row), guided steps, expected outputs, and a hint,
+ * each present only when the challenge carries it. One leaf: which of the five
+ * sections show up is data. States: every section present, some genuinely
+ * absent, and the loading mirror.
  */
 const meta: Meta<typeof ChallengeBrief> = {
     title: "StarCi/Blocks/Learn/ChallengeBrief/ChallengeBrief",

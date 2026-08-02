@@ -3,26 +3,12 @@ import { ContentHeader } from "@sb-components/starci/blocks/learn/ContentHeader/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentHeader`: the LESSON-IDENTITY cluster at the top of the reading
- * screen. It answers one question, "what is this lesson", and the screen calls
- * this one block instead of holding a header frame plus loose atoms.
- *
- * SIBLING OF `CourseBrief`, NOT A COPY. Both place identity into `PageHeader`,
- * but a course brief counts modules, hours and learners, while a lesson header
- * carries read state, reading time, challenge count, and learning outcomes.
- *
- * ⚠️ ONE CHIP PER CLUSTER (`starci-fe/no-adjacent-chip`). Read state is the one
- * classifying fact, so it takes the chip; reading time and challenge count are
- * quiet facts riding as muted text with an inline icon. The `src` original gave
- * all three their own weight, which reads as three competing signals.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). `isRead` toggles a chip inside one cluster, so
- * it is a STATE. Losing the whole outcomes card, and the caller flipping
- * `isSkeleton`, each change the shape ⇒ their own leaf.
- *
- * ⛔ There is deliberately NO "no breadcrumb" leaf. A lesson is always reached
- * through its course, so the trail always exists — building that leaf would be
- * inventing a case no screen asks for (§14d.3).
+ * `ContentHeader` — the lesson-identity cluster atop the reading screen: a
+ * `PageHeader` cluster carrying read state, reading time, challenge count, and
+ * learning outcomes. One chip per cluster (`starci-fe/no-adjacent-chip`): read
+ * state takes the chip, reading time and challenge count ride as muted text with
+ * an inline icon. `isRead` is a state; losing the outcomes card and `isSkeleton`
+ * are each their own leaf. The breadcrumb trail always exists.
  */
 const meta: Meta<typeof ContentHeader> = {
     title: "StarCi/Blocks/Learn/ContentHeader/ContentHeader",

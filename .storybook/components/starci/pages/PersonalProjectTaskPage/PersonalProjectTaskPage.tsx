@@ -27,92 +27,16 @@ import {
 } from "@sb-components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `PersonalProjectTaskPage`: solve ONE personal-project task.
+ * `PersonalProjectTaskPage` — the screen for solving one personal-project task. It
+ * composes blocks/composites in frames and hands each typed data.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks/composites,
- * places them in frames, and hands each one typed data. Ported from `src`'s
- * `PersonalProjectWorkspace` task branch (`.claude/fe/steps/11-overlays-layouts-
- * brainstorm.md` §6.3 — that file's `page.tsx` is an empty stub, the real split
- * lives in `PersonalProjectWorkspace`'s middle branch: `taskId` present, not the
- * `/result` route) — split into a READING column that swaps per task
- * (`Task`/`TaskBrief`/`TaskCriteriaList`/`TaskCodeImplementations`/
- * `RelatedContentList`) and a PERSISTENT, sticky ACT column
- * (`TaskSubmissionPanel`: `PersonalProjectSubmission` + settings summary +
- * `TaskActions` + `TaskResults`). The dashboard (`taskId` absent) and the graded
- * result page (`/result`) are `PersonalProjectWorkspace`'s OTHER two branches —
- * out of scope here; this screen is only the middle one.
- *
- * ⭐ NO SEPARATE `TaskBriefBody`/`TaskSubmissionPanel` FILES — the task brief lists
- * them as "(new)", but with the reading column and the submission column each
- * being exactly ONE region of this ONE screen (the two LEAVES declared for this
- * run: `ReadingColumn` / `SubmissionPanel(sticky)`), splitting them into their
- * own storied components would invent anatomy nodes with nowhere to point a
- * `storyId` (§11a.1 — a node without a real story is dropped from the tree, not
- * shown unclickable). They are private render helpers below, composed inline;
- * every REAL sub-part they use (`PageHeader`, `Callout`,
- * `SurfaceCard`/`SurfaceCardAccordion`, `ContentRelatedList`, `ListRow`,
- * `InputText`, `Button`, `SubmissionScoreCard`) already has its own story and
- * carries its own so the DOM structure the anatomy panel reads is
- * unaffected either way.
- *
- * REUSE, NOT REBUILD:
- *   • `PageHeader` (composite) carries the trail + task title/description —
- *     same frame `ChallengeHeader`/`ContentHeader` build on, no meta row here
- *     (a task has no score/difficulty of its own to show next to its title).
- *   • `Callout` (`status="warning"`) is the locked-preview banner — the
- *     ONE thing `src`'s hand-rolled `TaskLockedAlert` draws that isn't already a
- *     composite. Kept to a fixed title/description (the block's own wording,
- *     §14d.1) since `isLocked` is the only signal handed down; the "go to
- *     current task" CTA `TaskLockedAlert` also draws needs a target task id this
- *     screen's prop list does not carry, so it is a deliberate, marked SCOPE CUT
- *     (§B3) rather than a guessed prop.
- *   • The brief itself is `SurfaceCard label="Guide"` around `MarkdownContent`
- *     — the exact shape `ContentArticle` already uses for a lesson body
- *     (`isSkeleton` passed straight to the card, the document itself is not
- *     mirrored — same precedent, not a new skeleton strategy).
- *   • Legacy criteria/code guides (schema-v1 tasks with no authored brief) reuse
- *     `SurfaceCardAccordion` twice, `variant="nested"`, inside ONE outer
- *     `SurfaceCard` — mirrors `src`'s own move (one `LabeledCard` wrapping both
- *     `TaskCriteriaList` + `TaskCodeImplementations`, neither titled on its own)
- *     translated onto this design system's accordion composite instead of a
- *     hand-rolled `LabeledAccordionCard` + raw `ImplementationCard`.
- *   • `relatedItems`/`relatedLabel` go straight into `ContentRelatedList` — same
- *     shape `src`'s `RelatedContentList` fills from a query built off the task's
- *     own title/description; building that query is screen-wiring, out of scope
- *     for a presentational prop list.
- *   • `SubmissionScoreCard` is the graded-result signal in the act column,
- *     reused rather than re-porting `src`'s `TaskResults` (`Score` + AI badge +
- *     short feedback) by hand — same shape, already a block with its own story.
- *
- * ⭐ THE SETTINGS SUMMARY ROW REUSES `ListRow`, not a hand-rolled button. `src`'s
- * `TaskSubmissionPanel` builds this trigger as a bare `<button>` with manual
- * flex/icon/chevron markup — exactly the "raw atom instead of the composite
- * this system already owns" mistake `ContentModeNav`'s file header warns about.
- * `ListRow` already is "leading icon + title + meta + trailing chevron,
- * pressable" — `leading=GearSixIcon`, `title="Grading settings"` (block-owned,
- * §14d.1), `meta="{lang} · {branch}"` (joined by THIS block from two data
- * fields, never a pre-joined string from the caller), `trailing=CaretRightIcon`.
- *
- * ⭐ SCOPE CUT (§B3, inherited from `ChallengeDeliverableList`'s own file header):
- * the grading-settings Drawer's CONTENT (language picker, branch, private-repo
- * token — `src`'s `GithubGradingSettings`) is NOT built. `onOpenSettings` is
- * wired as a chrome trigger only, same discipline as `ChallengePage`'s
- * `onOpenGradingSettings` — leaving the drawer's content as a gap is the honest
- * state, not a stub that renders nothing real.
- *
- * ⭐ EVALUATE CTA WORDING IS OWNED HERE (§14d.1): `hasAttempts` flips
- * "Evaluate" ↔ "Re-evaluate", mirroring `src`'s `TaskActions` — the caller
- * never hands over the label string itself.
- *
- * TWO COLUMNS, COMPOSED WITH `SplitWorkspace` (§ layout khung, 2026-07-29) —
- * same shape `ChallengePage` uses, and the reason the khung was built: real
- * `src`'s `PersonalProjectWorkspace/index.tsx:61` has the EXACT same split CSS
- * as `ChallengeView`'s, byte-for-byte, so both screens now share ONE khung
- * instead of each hand-rolling its own `StackH…wrap` stand-in — the fixed
- * horizontal axis that never actually stacked below desktop (the teacher caught it
- * live on `ChallengePage`, the same bug was here too, just not yet spotted).
- * ─────────────────────────────────────────────────────────────────────────────
+ * Two columns via `SplitWorkspace`: a reading column that swaps per task (task brief,
+ * criteria, code implementations, related content) beside a persistent sticky act
+ * column (submission field, grading-settings summary row, actions, results). The
+ * locked-preview banner is a `warning` `Callout`; the brief is a `SurfaceCard` around
+ * `MarkdownContent`; the settings summary reuses `ListRow`. The grading-settings
+ * drawer content is out of scope (`onOpenSettings` is a chrome trigger). The
+ * Evaluate ↔ Re-evaluate label is owned here, flipped by `hasAttempts`.
  */
 
 /** One personal-project schema-v1 evaluation criterion — the legacy rubric row. */

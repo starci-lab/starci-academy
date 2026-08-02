@@ -3,27 +3,14 @@ import { PlaygroundResourcePanel } from "@sb-components/starci/blocks/learn/Play
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundResourcePanel`: the RIGHT pane of the playground screen —
- * the live workspace. Nothing until the paired machine reports in, then the
- * resource snapshot the socket sent, grouped by kind.
- *
- * REUSE, NOT A NEW ACCORDION/LIST — no card frame, no collapsible row, no list
- * row of its own. `SurfaceCard.Accordion` is the same composite
- * `SubmissionFindingsList` builds its card from, `List.Row` is the same row
- * `ContentRelatedList`'s rows are built from, `EmptyState` is the same
- * centred placeholder every other pre-content block uses.
- *
- * ⭐ WHY `Chip`, NOT `EnumChip`, FOR THE STATUS. Status is FREE-FORM CLI text
- * ("Up 2 hours", "Exited (0)"...) — `EnumChip` needs a closed, exhaustive map of
- * known values. This block runs a heuristic instead (`toneForStatus`) that
- * degrades to `tone="neutral"` on anything it doesn't recognize, so an unusual
- * CLI string never throws or gets silently mislabeled.
- *
- * 📐 ONE LEAF, THREE STATES (§14d.2/§11f) — `notConnected`, connected-but-empty,
- * and connected-with-resources all draw the same shape (a header row over a
- * body region); only what fills the body region changes. That is the same call
- * `SubmissionFindingsList` makes for its own loading/empty/populated states
- * inside one accordion frame.
+ * `PlaygroundResourcePanel` — the right pane of the playground screen, the live
+ * workspace: nothing until the paired machine reports in, then the resource
+ * snapshot the socket sent, grouped by kind. Reuses `SurfaceCard.Accordion`,
+ * `List.Row`, and `EmptyState` rather than inventing its own. Status uses `Chip`,
+ * not `EnumChip`, because it is free-form CLI text ("Up 2 hours", "Exited (0)"): a
+ * `toneForStatus` heuristic degrades to neutral on anything unrecognized. One shape,
+ * three states (not-connected, connected-empty, connected-with-resources) — a header
+ * row over a body region whose fill changes.
  */
 const meta: Meta<typeof PlaygroundResourcePanel> = {
     title: "StarCi/Blocks/Learn/PlaygroundResourcePanel/PlaygroundResourcePanel",

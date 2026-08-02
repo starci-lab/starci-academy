@@ -4,25 +4,15 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `Callout`, a tinted flat strip LIVING INSIDE a
- * surface (`title`/`description`/`body`(+`children`)/`action`).
+ * `Callout` — a tinted flat strip that lives INSIDE a surface
+ * (`title`/`description`/`body`(+`children`)/`action`).
  *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
- * file — the 2026-07-25 consolidation grouped `Callout`/`Empty`/`Confirm` under
- * one `Feedback` folder; this reverses that so each frame is discoverable by
- * its own name again. Props/behaviour are UNCHANGED — this is a file-location +
- * naming refactor, not a visual or API change.
- *
- * ATOM COMPOSITION (§12): text goes through `Typography.*`, buttons through
- * `Button.*`, icons come from `@phosphor-icons/react` — ONE SET ONLY (§5⃣0),
- * passed as a component ref, the frame forces size/weight itself (§4/§5).
- * DELIBERATE EXCEPTION: keeps HeroUI's `Alert.Title`/`Alert.Description`
- * because HeroUI itself carries the COLOR-BY-STATUS contract (`.alert--warning
- * .alert__title` → `text-warning-soft-foreground`). Swapping in `Typography` would
- * mean hand-feeding a color table — that's the real "hand-rolled". Switch to the
- * atom once an `Alert` atom exists.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Text goes through `Typography.*`, buttons through `Button.*`, icons from
+ * `@phosphor-icons/react` passed as a component ref (the frame forces size/weight).
+ * Deliberate exception: it keeps HeroUI's `Alert.Title`/`Alert.Description`
+ * because HeroUI itself carries the color-by-status contract; swapping in
+ * `Typography` would mean hand-feeding a color table. Switch to the atom once an
+ * `Alert` atom exists.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

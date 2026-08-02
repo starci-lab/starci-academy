@@ -4,27 +4,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `ProgressGauge`: a static MEASUREMENT (storage, battery, quota), wrapping
- * HeroUI/react-aria Meter DIRECTLY.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g). Leaf set: `Value` (merges `value`+`max` — two props
- * but ONE shape, same as `Chip` merging `dotColor`/`dotClassName` into the `Dot`
- * leaf) · `Colors` · `Sizes` · `Loading`.
- *
- * ⛔ NO `Indeterminate` leaf — react-aria Meter is always determinate; a
- * measurement can never be "unknown" (unlike `ProgressBar`/`Circle`).
- * ⛔ `ariaLabel` has NO leaf (§12g.1): it only feeds `aria-label`, it never changes a pixel.
- *
- * ⭐ `Meter` calls its own `HeroMeter` directly, it does NOT recompose `ProgressBar`.
- * `Meter.Track`/`Meter.Fill` ARE real HeroUI compound components (not an internal
- * slot) ⇒ `tier: "heroui"`, no `storyId` (§ naming pass, 2026-07-28) — renamed
- * from `Track`/`Fill`, names that used to collide with `ProgressBar`/
- * `ProgressCircle`'s own `Track`/`Fill` (DIFFERENT compounds despite the same name).
- *
- * ⚠️ Fixed 2026-07-26: the old `Bands` leaf only rendered 3 of 5 `color` values
- * (missing `accent`, `default`) — a missed value would grow into a stray story, so
- * it was renamed to `Colors` covering the full union; the "tone = threshold" idea
- * moved into `reason`. The `Sizes` leaf did NOT exist before, even though `size`
- * genuinely changes the height.
+ * HeroUI/react-aria Meter directly.
+ * 
+ * 1 PROP = 1 LEAF. Leaf set: `Value` (merges `value`+`max` into one shape) · `Colors` ·
+ * `Sizes` · `Loading`. No `Indeterminate` leaf — react-aria Meter is always determinate.
+ * `ariaLabel` has no leaf: it only feeds `aria-label`, never changing a pixel.
+ * 
+ * `Meter` calls its own `HeroMeter` directly; it does NOT recompose `ProgressBar`.
+ * `Meter.Track`/`Meter.Fill` are real HeroUI compound components ⇒ `tier: "heroui"`, no `storyId`.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Meter.Track": {

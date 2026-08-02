@@ -3,19 +3,11 @@ import { MockInterviewAnswerAction } from "@sb-components/starci/blocks/learn/Mo
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `MockInterviewAnswerAction`: the one control that submits the
- * candidate's current answer and moves the live interview forward.
- *
- * ⭐ WHY THIS BLOCK EXISTS AT ALL — see the component's own file header. The
- * real `src` screen renders this as a bare `Button`; the design-system
- * screen tier is not allowed to import an atom directly, so this one-node
- * block exists to hold the decision (`isLastQuestion`) and the wording that
- * `Button` alone cannot own.
- *
- * 📐 ONE LEAF — a single control, no structural fork. `isLastQuestion` /
- * `isDisabled` / `isPending` each flip the SAME button's label/press-ability,
- * never its shape, so every combination below is a STATE of one leaf —
- * mirroring `MindMapContinueButton`'s own resume-pill leaf.
+ * `MockInterviewAnswerAction` — the one control that submits the candidate's
+ * current answer and advances the live interview. Exists as a one-node block so the
+ * screen tier need not import a bare `Button` directly; it holds the
+ * `isLastQuestion` decision and wording the button alone cannot own. `isLastQuestion`
+ * / `isDisabled` / `isPending` flip the same button's label and press-ability.
  */
 const meta: Meta<typeof MockInterviewAnswerAction> = {
     title: "StarCi/Blocks/Learn/MockInterviewAnswerAction/MockInterviewAnswerAction",

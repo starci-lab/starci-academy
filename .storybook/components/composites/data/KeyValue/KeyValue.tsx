@@ -7,34 +7,22 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `KeyValue.*`: the LABEL–VALUE pair COMPOSITE.
+ * `KeyValue.*` — the label–value pair composite, for spec tables, order summaries,
+ * and invoices where "one name, one number" repeats.
  *
  * | Member | Shape | Content channel |
  * |---|---|---|
  * | `.Row`  | ONE label–value pair | data props (`label`/`value`/`hint`) |
- * | `.List` | N pairs stacked vertically | **`items` DATA — children FORBIDDEN** (§13b) |
+ * | `.List` | N pairs stacked vertically | `items` DATA — children forbidden |
  *
- * Use for spec tables, order summaries, invoices — anywhere "one name, one number"
- * repeats into a block.
- *
- * COMPOSITE API LAW:
- *   • The composite carries NO domain content and **does NOT format** money/dates/units —
- *     the consumer passes an ALREADY-formatted `string` into `value` (`"1,200,000 ₫"`).
- *     `label`/`value` are `string`, never `ReactNode` (COMPOSITE-8, "the same trap one
- *     level in") — the row wraps each in `Typography` itself, which is what lets it
- *     shimmer either one while `isSkeleton`.
- *   • The composite does NOT grow functionality (no self-computed totals): `emphasis` is
- *     only a visual STRESS for a total row, the number is still supplied by the consumer.
- *   • `.List` is a repeated list ⇒ `items` is REQUIRED, children are forbidden.
- *
- * COMPOSE (§13c): text goes ENTIRELY through the `Typography.*` atom (§9 — no scattered
- * `text-*`/`font-*`), rules go through the `Divider` atom. The composite only handles
- * LAYOUT + the spacing scale.
- *
- * §10 — the gap scale is ENFORCED BY TYPE ({@link AllowedGap}): only `1..8`, the
- * composite doesn't accept arbitrary numbers so it can't drift off the scale.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The composite carries no domain content and does NOT format money/dates/units —
+ * the consumer passes an already-formatted `string` into `value` (`"1,200,000 ₫"`).
+ * `label`/`value` are `string`, never `ReactNode`; the row wraps each in
+ * `Typography` itself, which is what lets it shimmer either one while `isSkeleton`.
+ * `emphasis` is a visual stress for a total row only — the number is still supplied
+ * by the consumer (no self-computed totals). Text goes through `Typography.*`,
+ * rules through `Divider`. The gap scale is enforced by type ({@link AllowedGap},
+ * `1..8`).
  */
 
 

@@ -5,31 +5,21 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (frame) — `ResponsiveRow.*`: a repeat-list row that is a FIXED grid below
- * a container step and an EQUAL-SHARE flex row from it up. One member, `ResponsiveRow`.
+ * `ResponsiveRow` — a LAYOUT frame: a repeat-list row that is a FIXED grid below a
+ * container step and an EQUAL-SHARE flex row from it up. One member. Built for
+ * `StatRibbon`: a padded 2-column grid on a narrow shell, and from `@app-sm` one
+ * un-padded row where N cells share the width evenly with a `border-l` marking the
+ * seam.
  *
- * WHY THIS EXISTS (§13z, 2026-07-29). `StatRibbon` needs BOTH shapes on the same row: a
- * padded 2-column grid on a narrow shell, and — from `@app-sm` — one un-padded row where
- * N cells share the width evenly and a `border-l` marks the seam between them instead of a
- * gap. Neither existing frame covers this: `Grid` is always `display:grid` with a FIXED
- * column count, so 2 items in a 4-column grid leave two tracks empty instead of sharing the
- * row; `Flex`/`Stack` is always one display type, with no per-step switch at all. Measured
- * that day: exactly one call-site needed this (`StatRibbon`), so the frame stays narrow —
- * one switch step, one gap, columns capped at what a narrow shell can actually hold.
+ * A repeating list ⇒ `items` DATA, `children` forbidden (every cell is the same
+ * kind of thing).
  *
- * FRAME API LAW (§13b) — REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN, same
- * contract as `Grid`/`Cluster`: every cell is the same kind of thing.
+ * No gap above the switch step: a divided row has one seam mechanism, not two, so
+ * it goes flush (`gap-0`) once flex takes over and the caller marks the seam with
+ * a border on its own cell content.
  *
- * WHY NO GAP ABOVE THE SWITCH STEP: a divided row (`border-l` between cells) has ONE seam
- * mechanism, not two — a `gap` AND a border would double the visible space on every cell
- * boundary. The row goes flush (`gap-0`) once flex takes over; the caller marks the seam
- * with a border on its own cell content instead (§10a: a divided row owns its rhythm with
- * a border, not a gap it would then have to strip off the first/last cell by hand).
- *
- * CONTAINER QUERIES, NOT VIEWPORT: same reasoning as `Grid` (see that file's header) —
- * `@app-sm/md/lg` answer the nearest `@container`, not the viewport.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Container queries, not viewport: `@app-sm/md/lg` answer the nearest
+ * `@container` (see `Grid`).
  */
 
 /** One cell of a {@link ResponsiveRow}. */

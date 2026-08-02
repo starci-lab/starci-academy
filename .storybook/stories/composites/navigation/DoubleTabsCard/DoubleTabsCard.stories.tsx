@@ -5,17 +5,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `DoubleTabsCard`: a `Toolbar` (two tab groups) living INSIDE a
- * `SurfaceCard` face, instead of sitting bare on the page canvas.
- *
- * ⭐ COMPOSES, DOES NOT REINVENT. `SurfaceCard.Base`'s own `header` slot is
- * already documented for exactly this shape ("a title row, a toolbar") — this
- * composite is that ONE combination, named once so every caller reaches for
- * the same shape instead of hand-composing `SurfaceCard`+`Toolbar` per call-site.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): a second tab group appearing, or the card
- * face switching to `nested`, are STRUCTURAL ⇒ their own leaf. Which tab is
- * selected is data ⇒ a state inside one leaf.
+ * `DoubleTabsCard` — a `Toolbar` (two tab groups) living inside a `SurfaceCard` face instead of
+ * sitting bare on the page canvas. Composes `SurfaceCard`'s `header` slot rather than reinventing
+ * it. Leaves by structure: a second tab group appearing, or the card face switching to `nested`;
+ * which tab is selected is data.
  */
 const meta: Meta<typeof DoubleTabsCard> = {
     title: "Composites/Navigation/DoubleTabsCard/DoubleTabsCard",

@@ -3,26 +3,14 @@ import { PersonalProjectResultScreen } from "@sb-components/starci/blocks/learn/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PersonalProjectResultScreen`: what came back from grading ONE
- * capstone task attempt — near-total reuse of `ChallengeResultPage`'s own
- * blocks, plus a capstone-specific "what's next" handoff once the attempt
- * passes.
- *
- * FIVE of six composed leaves are the EXACT SAME blocks `ChallengeResultPage`
- * calls (`SubmissionResultHeader`, `SubmissionAttemptSelector`,
- * `SubmissionScoreCard`, `SubmissionFindingsList`, `ContentRelatedList`). The
- * only new material is the next-task handoff card, which renders inline in
- * this file (see the component's own file header for why it is not a fourth
- * file this pass).
- *
- * ⭐ THE SCORE CLUSTER IS CONDITIONAL, AND THE CONDITION IS THE POINT. Nothing
- * about "how did it go" can render before an attempt is actually selected —
- * `NoSelection` below is what that looks like: two blocks, not five.
- *
- * ⭐ THE RELATED-READING NUDGE ONLY APPEARS ON A FAILING ATTEMPT, AND THE
- * NEXT-TASK HANDOFF ONLY APPEARS ON A PASSING ONE WITH A `nextTask` SET — the
- * two conditionals never overlap, so `Passing`/`Failing` below each show
- * exactly one of them.
+ * `PersonalProjectResultScreen` — what came back from grading one capstone task
+ * attempt: near-total reuse of `ChallengeResultPage`'s blocks
+ * (`SubmissionResultHeader`, `SubmissionAttemptSelector`, `SubmissionScoreCard`,
+ * `SubmissionFindingsList`, `ContentRelatedList`), plus an inline capstone
+ * "what's next" handoff card. The score cluster is conditional on an attempt being
+ * selected (`NoSelection` shows two blocks, not five). The related-reading nudge
+ * appears only on a failing attempt; the next-task handoff only on a passing one
+ * with a `nextTask` set — the two never overlap.
  */
 const meta: Meta<typeof PersonalProjectResultScreen> = {
     title: "StarCi/Blocks/Learn/PersonalProjectResultScreen/PersonalProjectResultScreen",

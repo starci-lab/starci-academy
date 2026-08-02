@@ -9,25 +9,12 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QuizQuestion`: one question, the learner's answer, and the verdict.
- *
- * ⭐ THE ANSWER STAYS ON SCREEN AFTER GRADING. The field turns read-only rather
- * than emptying: the whole value of a drill is comparing what you said with what
- * was expected, and clearing the field takes that comparison away at the exact
- * moment it becomes useful.
- *
- * ⭐ THE EXPECTED ANSWER APPEARS ONLY AFTER GRADING, and never before. Showing it
- * alongside an empty field would turn recall into reading.
- *
- * VERDICT IS A CHIP, THE REASONING IS NOT. One chip carries right-or-wrong — the
- * classifying axis — and the explanation rides as an ordinary document under it.
- * Two loud signals would make the learner read the verdict twice.
- *
- * ⛔ NO SCORE NUMBER. The verdict is a judgement about one answer, not a running
- * total; the session's own progress lives in `WorkSessionHeader`, and repeating
- * it here would give the learner two places to look for the same thing.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QuizQuestion` — one question, the learner's answer, and the verdict. The
+ * answer field turns read-only after grading rather than emptying (the value of
+ * a drill is comparing what you said with what was expected). The expected
+ * answer appears only after grading. The verdict is a chip; the reasoning rides
+ * as a document below it. No score number — the running total lives in
+ * `WorkSessionHeader`.
  */
 
 /** How the answer was judged. */

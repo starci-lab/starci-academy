@@ -4,22 +4,10 @@ import { ChoiceRadioGroup } from "@sb-components/composites/form/ChoiceRadioGrou
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `ChoiceRadio` — the house atom this composite rebuilds once per `options`
- * entry (`composites/form/ChoiceRadioGroup/ChoiceRadioGroup.tsx`). `ChoiceRadio`
- * itself takes no name-prop of its own (ATOM-10), so the composite badges the
- * wrapping `<span>` around each one instead — the same technique `AvatarGroup`
- * uses for `Avatar` — which is what lets this dep link to `ChoiceRadio`'s own
- * story instead of staying an unlinked internal slot (2026-07-31, ATOM-8 pass:
- * this used to be a known gap with `annotate` dropped entirely — see git
- * history on this file before that date for the old note).
- *
- * `Label` — the internal `FieldFrame`'s real heading (heroui's own `Label`,
- * rendered directly), only present when `groupLabel` is passed. Tier `heroui`,
- * no `storyId` (§ two-law pass, 2026-07-28) — `FieldFrame` itself has no story of
- * its own to jump to, but the library component underneath still deserves to
- * show up rather than being silently dropped. `Skeleton` is the same heroui
- * `Skeleton` `ChoiceRadio`'s own `isSkeleton` branch renders directly, so it
- * gets the same treatment (2026-07-28 orphan-part pass).
+ * `ChoiceRadioGroup` — a radio group that rebuilds the house `ChoiceRadio` atom once per
+ * `options` entry. `ChoiceRadio` takes no name-prop of its own, so the composite badges the
+ * wrapping `<span>` around each one to link the dep to `ChoiceRadio`'s story. The internal
+ * `FieldFrame`'s `Label` (heroui) shows only when `groupLabel` is passed.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ChoiceRadio": { tier: "atom", role: "each option renders as one ChoiceRadio row", storyId: "atoms-forms-choice-choiceradio--default" },

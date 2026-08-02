@@ -4,31 +4,17 @@ import type { ChallengeDeliverableItem } from "@sb-components/starci/blocks/lear
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `ChallengePage`: solve one challenge.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * FIVE FUNCTIONS, split across a read column and an act column: (1) what this
- * challenge is — score, difficulty, the learner's own status; (2) the brief
- * itself; (3) submit each requirement and see its graded verdict; (4) reopen
- * grading settings, chrome trigger only; (5) the roll-up score against the
- * pass line.
- *
- * ⭐ TWO COLUMNS, composed with `SplitWorkspace` (§ frame layout, 2026-07-29):
- * `min-w-0 flex-1` reading column beside a `shrink-0 w-[360px]` sticky aside
- * — STACKED (mobile/tablet) → `@app-xl:flex-row` (desktop only), matching
- * real `src`'s `ChallengeView` exactly. Was `StackH…wrap`, a FIXED horizontal
- * axis that never actually stacked below desktop — the teacher caught the render
- * forcing side-by-side even on mobile ("shouldn't desktop be the one that
- * renders flex?"); see the `Responsive` leaf below for the 3-width proof. `Container
- * size="xl"` (not the `md` a single-column screen uses) is what buys the two
- * columns enough room to sit side by side without crowding each other.
- *
- * ⚠️ SCOPE OF THIS PASS: the grading-settings drawer (language picker +
- * private-repo token) is NOT built — `onOpenGradingSettings` is a chrome
- * trigger only, same scope cut `ChallengeDeliverableList` already documents.
+ * `ChallengePage` — the screen to solve one challenge. A screen owns a list of
+ * functions: it calls blocks, places them in frames, and hands each typed data.
+ * Five functions across a read column and an act column: (1) what this
+ * challenge is — score, difficulty, the learner's status; (2) the brief; (3)
+ * submit each requirement and see its graded verdict; (4) reopen grading
+ * settings (chrome trigger only); (5) the roll-up score against the pass line.
+ * Two columns composed with `SplitWorkspace`: a `min-w-0 flex-1` reading column
+ * beside a `shrink-0 w-[360px]` sticky aside, stacked on mobile/tablet →
+ * `@app-xl:flex-row` on desktop, inside a `Container size="xl"`. The
+ * grading-settings drawer is not built — `onOpenGradingSettings` is a chrome
+ * trigger only.
  */
 const meta: Meta<typeof ChallengePage> = {
     title: "StarCi/Pages/ChallengePage/ChallengePage",

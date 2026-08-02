@@ -9,49 +9,13 @@ import { StatGridCard, type StatGridCardItem } from "@sb-components/composites/s
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QuizProgressPanel`: how has this learner actually been drilling —
- * lifetime numbers, and the sessions behind them. Sits BESIDE `QuizSetup` in the
- * setup pane (already enrolled): setup starts the next run, this panel looks
- * back at every run before it.
- *
- * WHY A BLOCK ON TOP OF THREE COMPOSITES: none of `Tabs` / `SurfaceCardList` /
- * `StatGridCard` knows a "practice session" exists. This block is the one place
- * that turns a `QuizProgressStat` / `QuizProgressSession` into the two views a
- * learner actually asks for — "how am I doing" vs. "what did I run" — and owns
- * the words on the switch between them (§14d.1: the caller hands over `view` and
- * data, never a label).
- *
- * ⛔ REUSE, NOT REBUILD (file exists BECAUSE a sibling block once reached past
- * `Toolbar` and rebuilt a worse tab row from a bare atom — see
- * `ContentModeNav`'s header). This block does not draw its own tab strip, grid,
- * or list frame: `Tabs` is the SAME atom `FlashcardModeSwitch`/`ContentModeNav`
- * already use for a two-way switch, `StatGridCard` is the SAME composite the
- * profile "weekly goals" tile uses for a stat grid, `SurfaceCardList` is the
- * SAME composite every other row-list block in this catalog uses. Nothing new is
- * drawn — three existing pieces are wired to quiz-progress data.
- *
- * ⭐ JUDGMENT CALL — EMPTY IS ITS OWN LEAF, not a state hidden inside
- * `SurfaceCardList`'s own `emptyState` slot. `SurfaceCardList` already supports
- * an inner empty message, and that would have been enough if only the HISTORY
- * view could ever be empty. But with zero sessions ever run, the STATS view
- * would be empty too (every number reads 0) — switching between two empty views
- * is noise, not information. So when there is no history at all, the whole
- * panel (tab switch, grid, list — all three) is replaced by ONE invitation.
- * That is a genuine STRUCTURAL loss (three composed nodes gone, one new node in
- * their place), which is why it is a LEAF (§14d.2) rather than a state of the
- * content leaf, the same call `ContentHeader` made for `NoOutcomes`.
- *
- * ⭐ THE TWO VIEWS SHARE ONE `SurfaceCard` FACE. A learner flips between "stats"
- * and "history" far more often than the panel as a whole appears/disappears, so
- * the card face and its `label` stay put across the switch — only the content
- * beneath the tab row changes. Two separate cards, one per view, would make the
- * switch read as a navigation away from the panel instead of a filter on it.
- *
- * NEVER SWALLOWS A ROW PRESS. `sessions[].onPress` is forwarded straight through
- * `SurfaceCardList` — whether a past session is even worth opening (e.g. a
- * finished vs. an abandoned run) is the CALLER's call, not this block's (§7).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QuizProgressPanel` — how a learner has been drilling: lifetime numbers and
+ * the sessions behind them, beside `QuizSetup` in the setup pane. Turns
+ * `QuizProgressStat`/`QuizProgressSession` into two views — "how am I doing"
+ * (`StatGridCard`) vs "what did I run" (`SurfaceCardList`) — switched by a
+ * block-owned `Tabs`, sharing one `SurfaceCard` face across the switch. Empty is
+ * its own leaf: with no history, the whole panel is replaced by one invitation.
+ * Forwards `sessions[].onPress` straight through without swallowing it.
  */
 
 /** Which half of the panel is showing. */

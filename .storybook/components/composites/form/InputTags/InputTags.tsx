@@ -6,14 +6,11 @@ import { FieldSkeleton, type FrameProps } from "@sb-components/atoms/forms/Input
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `InputTags` — token input row: `value` a string[], add with Enter, remove with ×.
- *
- * Moved out of `atoms/forms/Input/Input.tsx` (ATOM-8, 2026-07-31): it rebuilt one
- * `Chip` per tag, which is the composite signal (rendering another house atom once
- * per item), not the atom one. It still carries the same label/hint/error frame
- * every other `Input.*` member does via {@link FrameProps}, and still draws the
- * same field-box shimmer via `FieldSkeleton` while loading — both stayed behind at
- * the atom tier and are imported back in here rather than redrawn.
+ * `InputTags` — a token input row: `value` is a `string[]`, add with Enter, remove
+ * with ×. It carries the same label/hint/error frame as every other `Input.*`
+ * member via {@link FrameProps} and draws the same field-box shimmer via
+ * `FieldSkeleton` while loading (both imported from the atom tier). Renders one
+ * `Chip` per tag.
  */
 export interface InputTagsProps extends FrameProps {
     /** Tags in order. */

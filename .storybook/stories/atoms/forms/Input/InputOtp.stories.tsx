@@ -8,16 +8,16 @@ export default meta
 type Story = StoryObj
 
 /**
- * ATOM — `InputOtp`: one-time-code cells (HeroUI InputOTP), `length` slots, wrapped
- * through an internal `FieldFrame` (§12e).
- *
- * No component here has its own story ⇒ `annotate` has no `storyId` —
- * but the heroui `InputOTP.Group` along with `FieldFrame`'s `Label`/`Skeleton` still need
- * the `heroui` tier so the two-rule panel doesn't silently miss them (2026-07-28).
- *
- * a11y: a COMPOUND control (a row of cells, not a single `<input>`) can't wire up `htmlFor`
- * → the atom pours `label`/`ariaLabel` into `aria-label` itself via the `fieldName` helper
- * (§12e) — mandatory, since losing this connection means the screen reader can't read the field's name.
+ * ATOM — `InputOtp`: one-time-code cells (HeroUI InputOTP), `length` slots, wrapped through
+ * an internal `FieldFrame`.
+ * 
+ * No component here has its own story ⇒ `annotate` has no `storyId` — but the HeroUI
+ * `InputOTP.Group` plus `FieldFrame`'s `Label`/`Skeleton` still get the `heroui` tier so the
+ * two-rule panel doesn't silently miss them.
+ * 
+ * a11y: a compound control (a row of cells, not one `<input>`) can't wire up `htmlFor` → the
+ * atom pours `label`/`ariaLabel` into `aria-label` itself via the `fieldName` helper, so the
+ * screen reader can read the field's name.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "InputOTP.Group": { tier: "heroui", role: "one-time-code cell group" },

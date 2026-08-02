@@ -6,66 +6,24 @@ import { HouseIcon, CompassIcon, GraduationCapIcon } from "@phosphor-icons/react
 import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ATOM — `TabsExtended`: the StarCi tab strip, wrapping the HeroUI `Tabs` root.
- * Moved into the `Tabs.*` namespace 2026-07-26 (previously stood alone as
- * `ExtendedTabs.Base` — see the `TabsExtended.tsx` header for why it was merged,
- * and why `children` here is a valid EXCEPTION rather than debt).
- *
- * 📐 **1 PROP THAT PRODUCES A SHAPE = 1 LEAF** (§12g — the ATOM-tier rule, unlike
- * §14d.2 for the tier above). Leaf set = `Default` (bare) + one leaf per prop
- * THAT PRODUCES A SHAPE: `variant` · `size`. `selectedKey`/`onSelectionChange` is
- * the mandatory controlled mechanism (not a value to compare, so it has NO leaf
- * of its own), `className` is an escape hatch (NO leaf, same reason `Chip`
- * excludes `className`).
- *
- * `children` is a NAMED EXCEPTION under §12b (atom-WRAPPER) — re-examined
- * 2026-07-26 and the original conclusion STANDS. A mid-stream note once called
- * this "real debt" on the grounds that `Tabs` gets by with `items`; that's wrong,
- * because it ignores the consumer: `Toolbar` attaches an `accent`/`muted` class to
- * each tab and hides responsive labels — something a data-only `TabItem` can't
- * carry. See the `TabsExtended.tsx` header. Per §12g.2, a prop of the "builds N
- * children" kind (here `children` instead of `items`) DOES have a leaf, and that
- * leaf IS `Default` — no separate `Children` leaf is spawned.
- *
- * The leaf set was CARRIED OVER AS-IS from `ExtendedTabs.Base.stories.tsx`
- * (audited in a prior pass, NOT re-audited in this merge pass) — only the
- * import/display name changed to `TabsExtended`:
- *
- * ⚠️ MERGED 2026-07-26 (leaves, before the namespace merge): the previous version
- * split 5 leaves by STRUCTURE (`InputWFit` / `FullWidthTruncate` / `PrimaryLarge` /
- * `Secondary` / `SecondaryWithIcons`) — correct under §14d.2 (structure) rather
- * than §12g (prop) for the atom tier. Result: the `variant` prop had nowhere
- * rendering its full union in ONE leaf, and `size` was torn across two leaves not
- * named after the prop. Merged: `InputWFit`+`FullWidthTruncate` → leaf `Size`
- * (these really are the two VALUES of `size`, which turns out to match the
- * "truncates (w-full) or sizes to label (w-fit)" comment in `TabsExtended.tsx`);
- * `PrimaryLarge`+`Secondary` → leaf `Variant`. `SecondaryWithIcons` wasn't a new
- * value of any prop (the icon lives in `children`, not a prop of this atom) — its
- * content moved into the `secondary` example inside the `Variant` leaf instead of
- * standing as its own named leaf.
- *
- * `annotate` (2026-07-27, heroui tier added to canon): the atom wraps HeroUI
- * `Tabs` directly (not through the system's own `Tabs` atom, aliased `HeroTabs`),
- * and the only DOM node it OWNS is the root `<Tabs>` — the
- * `Tabs.ListContainer > Tabs.List > Tabs.Tab` tree below it belongs to the STORY
- * that builds it (i.e. `children`), so ONLY the root `<Tabs>` is tagged (`"Tabs"`,
- * heroui tier, matching the import identifier). Previously `showAnatomy`/
- * `data-anat-part` were dropped entirely — a genuine case of "the tree lies by
- * omission" (the Popover opens fine but the tree shows nothing): this atom
- * renders a REAL `HeroTabs` that no tree node ever saw.
- *
- * 🔎 NOTE (not fixed here — out of scope for a leaf audit, see the component
- * header for the full account): the component's own header describes it as a
- * "full port of `@/components/blocks/navigation/ExtendedTabs`" — an old block
- * carried straight into an atom, never redesigned as one. It doesn't use the
- * system's own `Tabs` atom (imports HeroUI `Tabs` directly), so it overlaps in
- * surface with `Tabs`; compared to `Tabs` (takes `items`, builds its own DOM,
- * choose-1-of-N — the shape of a proper self-contained atom), `TabsExtended`
- * takes raw `children` and doesn't constrain the tab count or each tab's
- * structure on its own — closer to a bare slot `frame` than a content atom.
- *
- * 2026-07-27: migrated to the `states` API (§8) — `Variant`/`Size` now render their
- * union as `states[]` tabs instead of a stacked column under one shared `note`.
+ * ATOM — `TabsExtended`: the StarCi tab strip, wrapping the HeroUI `Tabs` root. Lives in the
+ * `Tabs.*` namespace (see the `TabsExtended.tsx` header for why `children` here is a valid
+ * exception rather than debt).
+ * 
+ * 1 PROP THAT PRODUCES A SHAPE = 1 LEAF. Leaf set = `Default` (bare) + one leaf per
+ * shape-producing prop: `variant` · `size`. `selectedKey`/`onSelectionChange` is the
+ * controlled mechanism (no leaf), `className` is an escape hatch (no leaf).
+ * 
+ * `children` is a named exception (atom-wrapper): consumers like `Toolbar` attach an
+ * `accent`/`muted` class to each tab and hide responsive labels — something a data-only
+ * `TabItem` can't carry. A "builds N children" prop has a leaf, and that leaf is `Default`.
+ * The `Size` leaf covers the two values of `size` (truncates w-full vs sizes-to-label w-fit);
+ * `Variant` covers the variant union.
+ * 
+ * `annotate`: the atom wraps HeroUI `Tabs` directly (aliased `HeroTabs`), and the only DOM
+ * node it owns is the root `<Tabs>` — the `Tabs.ListContainer > Tabs.List > Tabs.Tab` tree
+ * below belongs to the story that builds `children`, so only the root `<Tabs>` is tagged
+ * (`"Tabs"`, heroui tier).
  */
 const meta: Meta<typeof TabsExtended> = {
     title: "Atoms/Navigation/Tabs/TabsExtended",

@@ -2,29 +2,9 @@ import React from "react"
 import { ContinueCardHero } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContinueLearning.*`: the "jump back to where you left off" feature of
- * the learning page.
- *
- * ⭐ WHY THIS BLOCK EXISTS (teacher confirmed 2026-07-27): the `CourseContents`
- * screen used to import `ContinueCard` DIRECTLY from the **design** tier — leapfrogging
- * the block tier. Looking at the screen's Deps tree exposes the mismatch right away: the
- * other five nodes are `block`, this one alone is `design`.
- *
- * **Design is UI/UX ONLY.** It knows how to draw a pretty "continue" card; it must NOT
- * know what "lessons read" is, what a "challenge" is, or which sentence describes them.
- * When the screen assembles the string `"Read 8/23 lessons"` itself and throws it down
- * to design via `meta`, two bad things happen at once:
- *   1. **The screen ends up doing presentation work** — it decides the wording, the
- *      order, the `/` separator. Another screen that needs the exact same phrase will
- *      copy it, and the two copies will drift apart.
- *   2. **Nobody owns the wording.** Changing "lesson" → "chapter" means hunting across
- *      every screen.
- *
- * This block takes **NUMBERS** (`lessonsRead`/`lessonsTotal`…) and writes the sentence
- * itself. The screen only hands over typed data (§14d.1); design only receives an
- * already-built node and handles the shape.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ContinueLearning.*` — the "jump back to where you left off" feature of the learning
+ * page. Takes progress numbers (`lessonsRead`/`lessonsTotal`…) and writes the summary
+ * sentence itself, handing an already-built node down to the design tier for shape.
  */
 
 /** Props for {@link ContinueLearning}. */

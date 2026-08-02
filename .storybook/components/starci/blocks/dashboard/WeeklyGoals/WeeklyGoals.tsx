@@ -17,64 +17,25 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `WeeklyGoals`: "Weekly Goals" — the composite weekly-goal summary
- * plus the fixed six-metric breakdown (lessons / study-days / challenges /
+ * `WeeklyGoals` — a BLOCK (dashboard): "Weekly Goals" — the composite weekly-goal
+ * summary plus the fixed six-metric breakdown (lessons / study-days / challenges /
  * coding / flashcards / milestones), each with a bar once it has an effective
  * target, plus an optional coin-reward hint.
  *
- * GROUND TRUTH: `src`'s `components/features/dashboard/WeeklyGoals/index.tsx`,
- * backed by the real `myKpis` query (`QueryMyKpisData`: `items[]` + the
- * server-computed `composite` + `resetAt`).
+ * Backed by a `QueryMyKpisData` shape (`items[]` + server-computed `composite` +
+ * `resetAt`). Composed: the six-cell grid is `StatGridCard`, each bar is
+ * `ProgressMeter`, the card face is `SurfaceCard` (labeled).
  *
- * COMPOSED, NOT REBUILT: the six-cell grid is `StatGridCard` — "MULTIPLE cells,
- * each more complex than a number-label pair (icon + meter + multiple lines)"
- * is that composite's own matrix entry (`node scripts/matrix.mjs "MULTIPLE
- * cells, each more complex than a number-label pair"`) — nothing here hand-rolls
- * a grid. Each bar is `ProgressMeter` ("ONE ratio over ONE total"). The card
- * face is `SurfaceCard` (labeled variant), same as every sibling dashboard
- * block in this pass.
+ * `items` is the full, fixed six-KPI set and every cell always has something to
+ * show, so there is no `isEmpty` branch — only loading / error / content. The
+ * `composite` field is read straight from the server, not re-derived from `items`.
+ * `resetInLabel` is a caller-built string (no date math here). The summary sentence
+ * and ratio/reward lines are block wording around typed numbers; each item's
+ * `label` is a caller string but the icon-per-key mapping is a local constant.
  *
- * ⭐ SIX CELLS, ALWAYS. `items` is the FULL, FIXED KPI set — the real query
- * always returns all six keys, and the effective target (custom-or-default)
- * means every cell has something to show from the first paint. So there is no
- * `isEmpty` branch here (§14d.3: building a case no screen asks for) — only
- * loading / error / content are real states for this block.
- *
- * ⭐ THE COMPOSITE FIELD IS REAL DATA, NOT RECOMPUTED. `QueryMyKpisData.composite`
- * (percent/completed/total) already comes off the server — this block reads it
- * straight instead of re-deriving it from `items` a second time (two sources of
- * truth for the same number is exactly the trap `.artifacts/domain` warns about).
- *
- * ⭐ THE RESET COUNTDOWN ARRIVES PRE-WORDED (§14d.1 — same boundary as
- * `ChallengeDeliverableItem.processedAt`): this block does not own date/locale
- * math, so `resetInLabel` is a caller-built string ("3 days 12 hours left"),
- * omitted while unknown instead of a raw `resetAt` ISO timestamp for this block
- * to parse.
- *
- * ⭐ THE SUMMARY SENTENCE AND THE RATIO/REWARD LINES ARE BLOCK WORDING, NOT
- * CALLER STRINGS (same convention as `LeaderboardBoard`'s "Rank #N"): `percent`
- * / `completed` / `total` / `current` / `target` / `coinReward` are typed
- * numbers, and the Vietnamese sentence around them is built HERE, once, so
- * every screen embedding this block reads the identical wording.
- *
- * ⭐ `label` PER ITEM IS A CALLER STRING, THE ICON IS NOT. The metric NAME
- * ("Lessons", "Study days"…) is screen copy the block never owns (it never calls
- * `useTranslations` itself, same rule `ProgressMeter.label` documents); the
- * icon-per-key mapping is a pure display constant, kept local exactly like
- * `ChallengeDeliverableList`'s own `STATUS_MARK` table.
- *
- * ⭐ `ProgressMeter` HAS NO USABLE `isSkeleton` HERE — same known gap
- * `ChallengeScoreCard`/`MockInterviewScorecard` already document (its own
- * discriminated union can't narrow against a plain `boolean`). While skeleton,
- * this block substitutes a bar-shaped `HeroSkeleton` sized to the meter's own
- * track height instead — same position in the tree, so nothing jumps when the
- * real ratio lands.
- *
- * ⛔ NO `isPending` STATE. This block is a read-only weekly snapshot — claiming
- * a KPI's coin reward happens in the `/kpi` editor, not here, so there is no
- * user action in this tree to be pending on.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ProgressMeter` has no usable `isSkeleton`; while skeleton this block substitutes
+ * a bar-shaped `HeroSkeleton` sized to the meter's track height. No `isPending`
+ * state — this is a read-only snapshot; claiming happens in the `/kpi` editor.
  */
 
 /** The six weekly metrics this block always renders, in display order (mirrors backend `KpiKey`). */

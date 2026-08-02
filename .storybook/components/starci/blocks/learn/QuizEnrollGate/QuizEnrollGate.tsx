@@ -4,23 +4,10 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QuizEnrollGate`: drilling is for enrolled learners. Shown in place of
- * the whole quiz pane to someone still on a trial.
- *
- * WHY IT REPLACES THE PANE INSTEAD OF DISABLING IT: there is nothing to preview
- * here. A lesson can fade its tail because the part above the fade is real value
- * already delivered; a drill has no such part — a disabled setup form would show
- * a shape with nothing in it.
- *
- * ⭐ NOT A PAYWALL, AND THE DIFFERENCE IS REAL. `ContentPaywall` asks for money
- * against a price; this asks for ENROLMENT, which a trial learner may already be
- * entitled to. So there is no price, no scarcity line, and one plain action —
- * pricing vocabulary here would answer a question the learner did not ask.
- *
- * ONE ACTION. Someone who came to practise and found a gate needs a way through,
- * not a menu.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QuizEnrollGate` — shown in place of the whole quiz pane to a trial learner:
+ * drilling is for enrolled learners. Replaces the pane rather than disabling it
+ * (a drill has no previewable part). Not a paywall — it asks for enrolment, not
+ * money, so there is no price or scarcity line, just one plain action through.
  */
 
 /** Props for {@link QuizEnrollGate}. */

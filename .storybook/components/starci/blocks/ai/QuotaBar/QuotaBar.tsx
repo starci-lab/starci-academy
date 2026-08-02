@@ -4,49 +4,21 @@ import { ProgressBar, type ProgressColor } from "@sb-components/atoms/display/Pr
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QuotaBar`: one labelled used/limit AI-credit row — "Next 5 hours"
- * over "12 / 50" — whose fill colour steps through a 3-tier ramp as the window
- * fills up, with an optional reset-time caption underneath.
+ * `QuotaBar` — a BLOCK: one labelled used/limit AI-credit row ("Next 5 hours" over
+ * "12 / 50") whose fill colour steps through a 3-tier ramp as the window fills, with
+ * an optional reset-time caption underneath.
  *
- * PORTED from `src`'s `components/modals/AiQuotaModal/QuotaBar` (used by
- * `QuotaLane`, two bars per lane: a 5-hour window and a 7-day window).
+ * A block because the thresholds are DOMAIN knowledge — crossing 75% means "getting
+ * close" and 90% means "about to run out" (an AI-credit policy), which the generic
+ * `ProgressMeter` composite does not know. So this block owns the ramp itself
+ * (`resolveQuotaBarFillTone`). Belongs to the `ai` group.
  *
- * WHY A BLOCK: it knows what a QUOTA WINDOW is — that consumption crossing 75%
- * means "getting close" and crossing 90% means "about to run out", and that
- * those two thresholds are DOMAIN knowledge (an AI-credit policy), not a
- * generic progress-bar concern. The generic composite `ProgressMeter`
- * (`composites/stats/ProgressMeter`) does not know this ramp — it only shows
- * whatever tone the caller hands it — so this block owns the ramp itself
- * (`resolveQuotaBarFillTone`) instead of leaning on that composite.
+ * `resolveQuotaBarFillTone` is an inlined local pure function. Fill tone and the
+ * 0–100 bar value both derive from one `ratio` (`used/limit` clamped to `[0, 1]`,
+ * or `used > 0 ? 1 : 0` when `limit <= 0`) so the two never drift.
  *
- * NEW GROUP `ai`: none of the five existing groups (commerce / consultant /
- * learn / navigation / profile) fit — this isn't a course/content concern
- * (`learn`), a sale (`commerce`), or a directory/nav concern. It is the first
- * block about AI-credit consumption, opened from `AiQuotaModal` (an overlay
- * flagged elsewhere in the canon, not built in this pass) and likely joined
- * later by more AI-quota pieces (`QuotaLane`, the modal itself).
- *
- * ⭐ JUDGEMENT CALL — `resolveQuotaBarFillTone` is INLINED as a local pure
- * function rather than a sibling `utils/` file: the task scope for this pass
- * is exactly two files (this component + its story), so the ported util lives
- * right next to its only caller instead of spawning a third file. The ratio
- * math is also MERGED — `src` computed the fill tone and the 0–100 bar value
- * as two separate `useMemo`s from `used`/`limit`; here both derive from one
- * `ratio` (still `used/limit` clamped to `[0, 1]`, still `used > 0 ? 1 : 0`
- * when `limit <= 0`), so the two never drift apart. Same thresholds, same
- * edge case, one fewer place to keep in sync.
- *
- * ⭐ JUDGEMENT CALL — SKELETON ALWAYS RESERVES THE CAPTION LINE. `src`'s own
- * skeleton (hand-drawn in `QuotaLane`, not on `QuotaBar` itself) unconditionally
- * shows a reset-caption shimmer line, because every real lane this block is
- * used in always ends up with a reset time once data lands. This block folds
- * that skeleton into itself via `isSkeleton` (§12c: the flag flows down into
- * the same atoms instead of a parallel tree) and keeps that same assumption —
- * the caption row renders while `isSkeleton`, even if the eventual `resetLabel`
- * turns out to be `null` — so the box the caption will land in doesn't pop in
- * once the reset time resolves (§8).
- * ─────────────────────────────────────────────────────────────────────────────
+ * The skeleton always reserves the caption line (rendered while `isSkeleton` even
+ * if `resetLabel` is null) so the box doesn't pop in once the reset time resolves.
  */
 
 /** Usage ratio above which the bar shows warning colour (>75%). */

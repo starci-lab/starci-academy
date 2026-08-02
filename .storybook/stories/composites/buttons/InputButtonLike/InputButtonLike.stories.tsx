@@ -5,30 +5,11 @@ import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLi
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `InputButtonLike`: a button disguised as an input field — it
- * carries the native HeroUI field look (rounded shell, field background +
- * border, muted placeholder text) but behaves as a single press target with
- * no inner dividers, so it can trigger an overlay (a global search dialog, a
- * command palette) instead of accepting typed input.
- *
- * 📐 1 PROP = 1 LEAF: `icon` · `suffix` · `size` · `isSkeleton` ·
- * `placeholder`, each its own leaf, each rendering the FULL set of its
- * values.
- *
- * Props with NO leaf, and why:
- * - `ariaLabel` — an accessible name only; falls back to `placeholder` when
- *   omitted, produces no visible difference to read on screen.
- * - `onPress` — the press handler; wires up behaviour, not appearance.
- * - `classNames` — placement inside a parent, appearance is not passable
- *   through it.
- *
- * ⚠️ STRUCTURE GAP: this composite renders a raw HeroUI `Button` directly
- * (see the component's own file header for the three real API gaps that rule
- * out the house `Button` atom) and does not forward `data-anat-part` on its
- * own root or through its inner `StackH`/`Typography`/icon spans, so
- * `ANNOTATE` below only documents what it wraps — the Structure tab has
- * nothing to derive from the DOM here. A documented gap in the component
- * itself, not fixed by this story (out of scope: story files only).
+ * `InputButtonLike` — a button disguised as an input field: it carries the native HeroUI
+ * field look (rounded shell, field background + border, muted placeholder) but behaves as a
+ * single press target with no inner dividers, so it can trigger an overlay (a global search
+ * dialog, a command palette) instead of accepting typed input. Leaves: `icon`, `suffix`,
+ * `size`, `isSkeleton`, `placeholder`.
  */
 const meta: Meta<typeof InputButtonLike> = {
     title: "Composites/Buttons/InputButtonLike",

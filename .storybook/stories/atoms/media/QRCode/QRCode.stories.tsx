@@ -4,23 +4,17 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `QRCode`: an image frame rendering a QR bitmap, with an optional centered icon.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g — the rule for the ATOM TIER). Every prop with a visual
- * effect gets its own leaf, rendering the FULL set of that prop's values: `size` · `icon`
- * · `isSkeleton`.
- *
- * `data` gets **no leaf of its own** — same call as `Chip`'s `text` and `Button`'s
- * `label`: it is the content the atom renders, not a state to enumerate, so it stays
- * constant across every leaf below and only its value in the code snippet changes.
- *
- * `classNames` gets **no leaf** either, for the same reason no atom story in this
- * system gives one: it only places the atom inside its parent, it never changes how the
- * atom looks (ATOM-5), so there is no visual state for a leaf to show.
- *
- * ⚠️ This atom does not yet tag any element with `data-anat-part` (no `showAnatomy` prop
- * on {@link QRCode} at all), unlike `Button`/`Chip`. The `ANNOTATE` table below is written
- * for when that instrumentation lands; until then the Structure tab stays empty for every
- * leaf, which is expected, not a bug in this story.
+ * 
+ * 1 PROP = 1 LEAF. Every prop with a visual effect gets its own leaf rendering the full set
+ * of that prop's values: `size` · `icon` · `isSkeleton`.
+ * 
+ * `data` gets no leaf — it is the content the atom renders, not a state to enumerate, so it
+ * stays constant across every leaf and only its value in the code snippet changes.
+ * `classNames` gets no leaf either: it only places the atom inside its parent, never changing
+ * how the atom looks.
+ * 
+ * This atom does not yet tag any element with `data-anat-part` (no `showAnatomy` prop on
+ * {@link QRCode}), so the Structure tab stays empty for every leaf — expected, not a bug.
  */
 const meta: Meta<typeof QRCode> = {
     title: "Atoms/Media/QRCode",

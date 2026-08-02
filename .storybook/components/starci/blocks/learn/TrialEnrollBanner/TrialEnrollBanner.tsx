@@ -5,47 +5,14 @@ import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `TrialEnrollBanner`: the ambient "you're on a trial" nudge. Reused
- * as-is across every free surface a trial learner can reach — foundations
- * (both the resource page and the grid), leaderboard — the wording and shape
- * live HERE, not on any one screen.
- *
- * ⭐ CONSOLIDATED FROM THREE BLOCKS INTO ONE (teacher 2026-07-29, "ok, go ahead" —
- * merging `TrialEnrollNudge`/`FoundationTrialEnrollBanner`/`TrialEnrollBanner`).
- * All three were independent ports of the SAME real `src` component
- * (`components/features/learn/shared/TrialEnrollHook`) — a Foundations audit
- * caught them shipping three different invented Vietnamese strings for the
- * one real `enrollGate.hookTitle`/`hookDesc`/`hookCta` copy. `LeaderboardPage`
- * had already independently flagged this exact drift in its own file header
- * before the audit ran, and chose to reuse this block rather than add a
- * fourth — this pass finishes what that flag started. Shape decisions below
- * were picked from whichever of the three sources got it right, not just
- * "whatever this file already had":
- *   - `description` — the removed `FoundationTrialEnrollBanner` had a second
- *     line; the OLD version of THIS block argued "one sentence only" — wrong,
- *     real `TrialEnrollHook`'s `Callout` always renders both `hookTitle` AND
- *     `hookDesc`.
- *   - CTA composed as an explicit `Button` CHILD, not `Callout`'s
- *     `actionLabel`/`onAction` shorthand — kept from the removed
- *     `TrialEnrollNudge`.
- *   - `isSkeleton` — kept from the removed `FoundationTrialEnrollBanner`.
- *     Copy is fixed (nothing to shimmer about the WORDS), but the enrollment
- *     check feeding `isVisible` can still be in flight — this reserves the
- *     banner's footprint for that window so the surrounding list/header does
- *     not jump once the check resolves. Wins over `isVisible`: while still
- *     checking, the caller cannot yet compute a meaningful `isVisible`.
- *
- * SELF-GATING, NOT A DUMB WRAPPER. `isVisible` is the caller's RESOLVED
- * answer to "is this learner an enrolled/known non-trial learner" — the
- * caller derives it from whatever raw enrolled/trial-known state it holds
- * (e.g. `isEnrollmentKnown && !isEnrolled`); this block never fetches.
- * `isVisible = false` is a real STRUCTURAL leaf (the whole node disappears).
- *
- * FIXED VIETNAMESE COPY (§14d.1) — `title`/`description`/CTA are NOT props.
- * A caller-supplied string here would let five different screens drift into
- * five different nudges for the same fact; the block owns the one sentence.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `TrialEnrollBanner` — the ambient "you're on a trial" nudge, reused as-is
+ * across every free surface a trial learner reaches (foundations, leaderboard).
+ * Composes `Callout` with a title, description, and an explicit `Button` CTA.
+ * Self-gating: `isVisible` is the caller's resolved "enrolled/known non-trial"
+ * answer, and `isVisible=false` is a real structural leaf (the node disappears);
+ * `isSkeleton` reserves the footprint while the enrollment check is in flight and
+ * wins over `isVisible`. The Vietnamese copy is fixed and block-owned, not a
+ * prop, so screens can't drift into different nudges for the same fact.
  */
 
 /** Props for {@link TrialEnrollBanner}. */

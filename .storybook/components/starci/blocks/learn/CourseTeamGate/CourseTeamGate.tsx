@@ -4,29 +4,10 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseTeamGate`: reminds the learner to join the course's GitHub team.
- *
- * REASON FOR EXISTING (§14a): a screen may only list BLOCKS. Before this, the
- * `/learn/content` screen called `Callout` (composite tier) directly and wrote
- * the content itself — the screen was declaring a feature's details instead of just
- * naming it. This block is thin, but it exists for the TIER BOUNDARY + because it
- * owns the SHOW CONDITION (below).
- *
- * 🔴 SHOW CONDITION — for learners who have **PAID** (teacher's call, 2026-07-25).
- * The backend scopes the team by `is_enrolled = true` (`features/auth/GithubTeamGate`), so:
- *   • PAID + not yet in the team → SHOW the warning
- *   • Trial / already in the team → SELF-HIDE
- * Not paid means there's no team to join in the first place.
- *
- * ⚠️ The screen built on 2026-07-25 had the gate INVERTED (`viewer === "trial"`) —
- * showing for people who hadn't paid, hiding for people who had. That was a regression
- * from the tree approved on 07/24 (the tree explicitly says "paid, not yet in team").
- * Keep this note so it doesn't flip back again.
- *
- * §14c — the block only ASSEMBLES: all of its visuals go through `Callout`,
- * it draws nothing itself.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `CourseTeamGate` — reminds a learner to join the course's GitHub team. Show
+ * condition: PAID learners not yet in the team see the warning; trial learners or
+ * those already in the team self-hide. A thin block that assembles a `Callout` and
+ * owns the show condition; it draws nothing itself.
  */
 
 /** Props for {@link CourseTeamGate}. */

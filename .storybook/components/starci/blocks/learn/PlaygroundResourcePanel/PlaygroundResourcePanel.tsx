@@ -8,58 +8,15 @@ import { ListRow } from "@sb-components/composites/lists/List/List"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PlaygroundResourcePanel`: the RIGHT pane of the playground screen —
- * the live workspace. Nothing until the paired machine reports in, then the
- * resource snapshot the socket sent, grouped by kind.
- *
- * REUSE, NOT A NEW ACCORDION/LIST (the exact mistake this task exists to avoid
- * — see `ContentModeNav`'s file header). This block draws no card frame, no
- * collapsible row, no list row of its own: `SurfaceCard.Accordion` is the SAME
- * composite `SubmissionFindingsList`/`ChallengeBrief` use for a bounded card of
- * collapsible sections, `List.Row` is the SAME row `ContentRelatedList`'s rows
- * are built from, `EmptyState` is the SAME centered placeholder every other
- * pre-content block in this catalog uses for "nothing here yet". The only new
- * code is the DOMAIN: what a resource snapshot looks like and how to read it.
- *
- * WHAT THIS BLOCK OWNS (§14d.1):
- *   • `groupByKind` — the flat socket snapshot has no grouping of its own; the
- *     block buckets it, in FIRST-SEEN kind order (no hardcoded priority table —
- *     the agent can report any kind string, so ordering by arrival is the only
- *     order that doesn't silently drop an unrecognized one to the bottom).
- *   • `toneForStatus` — a status→chip-tone heuristic over FREE-FORM CLI text
- *     ("Up 2 hours", "Exited (0)", "Restarting (1) 4 seconds ago"...). This is
- *     why the status chip is the bare `Chip` atom and NOT `EnumChip`: `EnumChip`
- *     requires an exhaustive map keyed by a CLOSED set of known values, and the
- *     agent can report whatever the underlying CLI prints. A heuristic that
- *     degrades to `tone="neutral"` on anything it doesn't recognize is the only
- *     safe contract here — a closed map would throw or silently mislabel the
- *     first status word the CLI changes.
- *   • The panel's own header wording ("Resources") — fixed, not a prop. This
- *     panel always shows the same thing (the paired machine's resources), so
- *     there is no second caller who would ever need to relabel it — a `label`
- *     prop here would just be a pre-formatted string with one call site (§14d.1).
- *
- * ⭐ JUDGEMENT CALL — ONE LEAF, THREE STATES, NOT THREE LEAVES (§14d.2 / §11f).
- * `notConnected`, `connected`-but-empty, and `connected`-with-resources all draw
- * the exact same SHAPE: a header row over a body region. Only what fills the
- * body region changes (an invitation to pair, an invitation to wait, or the
- * grouped accordion) — the same call `SubmissionFindingsList` makes for its own
- * loading/empty/populated states inside one accordion frame. A caller flipping
- * `connection` from `"notConnected"` to `"connected"` is not a different block
- * appearing, it's the SAME panel updating what it has to say.
- *
- * ⭐ WHY TWO SEPARATE `EmptyState` CALLS INSTEAD OF ONE SHARED ELSE-BRANCH.
- * "Not connected" and "connected, nothing yet" are different FACTS or a learner
- * would wrongly read "empty" as "broken" right after pairing succeeds — pairing
- * worked, the first snapshot just hasn't arrived. Distinct icon + copy per state
- * keeps that reassurance instead of collapsing both into one generic "no data".
- *
- * NEVER SKELETONISED. There is no `isSkeleton` prop: the "waiting for the first
- * snapshot" `EmptyState` already IS the loading state for this panel (the
- * socket has nothing to shimmer — it either has no snapshot yet or a real one).
- * Adding a second flag on top would just be two ways to say the same thing.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PlaygroundResourcePanel` — the right pane of the playground screen (the live
+ * workspace): nothing until the paired machine reports in, then the socket's
+ * resource snapshot grouped by kind in a `SurfaceCard.Accordion`. Owns the
+ * domain: `groupByKind` (first-seen kind order), `toneForStatus` (a heuristic
+ * over free-form CLI status text, degrading to `neutral` — hence a bare `Chip`,
+ * not `EnumChip`), and the fixed "Resources" header. One leaf, three states
+ * (not-connected / connected-empty / connected-with-resources) sharing one
+ * header-over-body shape, with distinct `EmptyState` copy per empty case. No
+ * `isSkeleton` — the waiting `EmptyState` is the loading state.
  */
 
 /** Whether the playground's paired machine is reachable right now. */

@@ -6,14 +6,8 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — shared header of the `Surface*Card` family.
- *
- * Authored inside Storybook (not `src/components`) so the design is iterated here
- * first and synced to `src` later (teacher 2026-07-21: storybook-driven, "fix
- * storybook first, sync to code after"). Imported by the local SurfaceCard /
- * SurfaceListCard / SurfaceAccordionCard specs so all three share ONE header.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The shared header of the `Surface*Card` family. Imported by SurfaceCard,
+ * SurfaceListCard, and SurfaceAccordionCard so all three share ONE header.
  */
 
 /** Shared label props every `Surface*Card` accepts to render a header above the surface. */

@@ -5,36 +5,15 @@ import { ReactionPicker } from "@sb-components/atoms/feedback/ReactionPicker/Rea
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ReactionButton`: the Facebook-style six-emotion reaction control —
- * a pill trigger (current pick's emoji + label, or a neutral invitation) that
- * opens a Popover with the six reactions in a row, plus a compact summary
- * (top-3 reacted emoji stacked + total) beside it.
- *
- * ⭐⭐ EXTRACTED 2026-07-28 while building `ContentDiscussion` — real `src`
- * uses the SAME `ReactionBar` for both the content-level reaction
- * (`InteractionBar`) and every individual comment (`CommentItem`). This block
- * was first built inline inside `ContentReaction` for the content case only;
- * pulling it out here is what real `src` already does, now that a second
- * caller (a comment row) needs the identical control.
- *
- * WHY RAW HEROUI POPOVER/BUTTON, NOT THE CONSTRAINED ATOM: `atoms/overlay/
- * Popover` fixes its own chrome (arrow, `w-64`, a `text-sm text-muted` content
- * wrapper) — this picker needs `rounded-full`/`overflow-visible`/`px-2 py-1`,
- * none of which that atom's fixed opinions allow. Real `src` reaches for raw
- * HeroUI for the exact same reason.
- *
- * THE SIX-BUTTON ROW ITSELF IS THE ATOM `ReactionPicker` (teacher 2026-07-28 —
- * "complex CSS only in atoms/frames"). This block only supplies data; the
- * animation/hover CSS lives there.
- *
- * COUNTS ARE DATA, THE VOCABULARY IS NOT. The caller hands over `counts`
- * (one entry per emotion actually reacted); the block owns the six fixed
- * labels/emoji (§14d.1, universal — not a per-lesson/per-comment fact).
- *
- * ZERO IS NOT NEWS. With nobody having reacted yet the summary is dropped
- * entirely (not "0"), so the trigger reads as an invitation.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ReactionButton` — the Facebook-style six-emotion reaction control: a pill
+ * trigger (current pick's emoji + label, or a neutral invitation) that opens a
+ * Popover with the six reactions in a row, plus a compact summary (top-3 reacted
+ * emoji stacked + total) beside it. Shared by the content-level reaction and
+ * individual comments. Uses raw HeroUI Popover/Button (the constrained atom's
+ * fixed chrome can't do `rounded-full`/`overflow-visible`); the six-button row
+ * itself is the `ReactionPicker` atom. Counts are data; the six labels/emoji are
+ * block-owned. With no reactions yet the summary is dropped so the trigger reads
+ * as an invitation.
  */
 
 /** The six reactions, in the fixed display order real `src` uses. */

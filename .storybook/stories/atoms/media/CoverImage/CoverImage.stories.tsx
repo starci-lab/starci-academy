@@ -20,14 +20,10 @@ const COVER_SRC =
     "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20450'%3E%3Cdefs%3E%3ClinearGradient%20id='g'%20x1='0'%20y1='0'%20x2='1'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%236366f1'/%3E%3Cstop%20offset='1'%20stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width='800'%20height='450'%20fill='url(%23g)'/%3E%3Ctext%20x='400'%20y='240'%20font-family='sans-serif'%20font-size='44'%20fill='white'%20text-anchor='middle'%3ECourse%20cover%2016:9%3C/text%3E%3C/svg%3E"
 
 /**
- * Annotation SHARED across all three leaves (IconTile/PricePoint convention,
- * 2026-07-28): only `Skeleton` (a real HeroUI import, `tier: "heroui"`) earns a
- * name — `WithImage`/`NoImage` render a BARE div/img with no sub-part that's a
- * real component worth naming, so the Deps tab for those two leaves is naturally
- * empty (same as `IconTile`'s `Tile`/`Cover`). Do NOT self-declare a `"CoverImage"`
- * key pointing at the root itself — that's an anti-pattern already removed
- * (precedent: `Spinner.Base` self-declaring a part pointing at itself, caught by
- * the teacher on 2026-07-26).
+ * Annotation shared across all three leaves: only `Skeleton` (a real HeroUI import,
+ * `tier: "heroui"`) earns a name — `WithImage`/`NoImage` render a bare div/img with no
+ * sub-part that's a real component worth naming, so the Deps tab for those two leaves is
+ * naturally empty. Do not self-declare a `"CoverImage"` key pointing at the root itself.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "the SAME aspect-video/rounded-2xl footprint, shimmering — no `<img>` mounted while the source is loading" },

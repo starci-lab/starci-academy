@@ -3,31 +3,16 @@ import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `LinkBack`: the ONLY "← Back" button in the system, wrapping HeroUI `Link`
- * directly. A leaf atom — it doesn't build on top of any other atom OF THE SYSTEM,
- * but the HeroUI `Link` it renders is still a REAL import (2026-07-27, heroui tier
- * added to canon), so its root is tagged `"Link"` and declared `tier: "heroui"` in
- * `ANNOTATE` below — no `storyId`, there's no story of ours for a library component.
- *
- * 2026-07-26: merged from `BackLink.Base` into the `Link.*` namespace alongside
- * `LinkSeeMore` (§12a) — two shapes of the same "text-link + arrow" concept.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g). The atom's four props: `label` · `target` · `onPress` ·
- * `className`. NO prop earns its own leaf:
- *   • `label`/`target` only swap the TEXT inside one existing `<span>` — no element is
- *     added or removed (unlike `Divider label`, where turning on `label` builds a
- *     whole 3-part layout, rule|label|rule). §12g.1: changing a prop's value without
- *     changing the structural pixels earns no leaf — this is exactly the "prop is just
- *     TEXT" carve-out (`text`/`title`/`label` as a single string).
- *   • `onPress`/`className` produce no visual (§12g's exclusion list).
- *
- * Result: this atom has just ONE leaf, `Default` — like `Logo` (a component with
- * only `className`, no union to enumerate).
- *
- * The previous version split `WithTarget`/`CustomLabel` into two separate leaves —
- * that's splitting leaves by the VALUE of a text prop, exactly what §12g forbids.
- * Merged back: `Default` demonstrates all three call shapes (bare / `target` / `label`)
- * in one frame, not three states of three different props.
+ * ATOM — `LinkBack`: the only "← Back" button in the system, wrapping HeroUI `Link`
+ * directly. A leaf atom — it builds on no other atom, but the HeroUI `Link` it renders is a
+ * real import, so its root is tagged `"Link"` and declared `tier: "heroui"` in `ANNOTATE`,
+ * no `storyId`. Lives in the `Link.*` namespace alongside `LinkSeeMore` — two shapes of the
+ * same "text-link + arrow" concept.
+ * 
+ * 1 PROP = 1 LEAF. No prop earns its own leaf: `label`/`target` only swap the text inside
+ * one existing `<span>` (no element added or removed), and `onPress`/`className` produce no
+ * visual. Result: one leaf, `Default`, which demonstrates all three call shapes (bare /
+ * `target` / `label`) in one frame.
  */
 const meta: Meta<typeof LinkBack> = {
     title: "Atoms/Navigation/Link/LinkBack",

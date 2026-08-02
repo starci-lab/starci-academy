@@ -5,21 +5,12 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ButtonGroup } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `ConfirmDialog`, a blocking dialog shell for an
- * action that can't be undone (`title`/`description` + `confirmLabel`/`cancelLabel`).
+ * `ConfirmDialog` — a blocking dialog shell for an action that can't be undone
+ * (`title`/`description` + `confirmLabel`/`cancelLabel`).
  *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
- * file — the 2026-07-25 consolidation grouped `Callout`/`Empty`/`Confirm` under
- * one `Feedback` folder; this reverses that so each frame is discoverable by
- * its own name again (this member was `Feedback.Confirm` / `FeedbackConfirm`).
- * Props/behaviour are UNCHANGED — this is a file-location + naming refactor,
- * not a visual or API change.
- *
- * FRAME API LAW: the shell already builds a FULL header/body/footer (footer =
- * `ButtonGroup` cancel + confirm) so it does NOT open up `children` — content
- * goes through `title`/`description` only.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The shell builds a full header/body/footer (footer = `ButtonGroup` cancel +
+ * confirm), so it does not open up `children` — content goes through
+ * `title`/`description` only.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

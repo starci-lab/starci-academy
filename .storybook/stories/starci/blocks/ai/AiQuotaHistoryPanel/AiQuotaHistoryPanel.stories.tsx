@@ -3,21 +3,11 @@ import { AiQuotaHistoryPanel, type AiQuotaHistoryChartPoint, type AiQuotaHistory
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `AiQuotaHistoryPanel`: the body of the "History" tab inside
- * `AiQuotaModal` — a 7-day usage bar chart plus a scrollable, bordered list of
- * recent AI charges. Ported from `src`'s `AiQuotaModal/HistoryTab` (see the
- * component's file header for the four judgement calls: new `ai/` group, the
- * chart caption's day-count fix, the missing `ScrollShadow` atom, and the
- * verbatim credit-delta chip tone).
- *
- * 📐 LEAF BOUNDARY (canon `2-leaf-states.md` §0 R0 — same reasoning as this
- * group's sibling `AiQuotaLane`, and as `FoundationResourceList`): `isLoading`
- * is the CALLER-set switch that swaps the whole `ChargesList` region for its
- * shimmer mirror ⇒ its own leaf. `items.length === 0` is DATA returning empty
- * (R0's own worked example) ⇒ a STATE inside `Default`, not a leaf of its own
- * — the thing deciding the swap is the `items` array itself, not a prop
- * flipped on purpose. The `Chart` leaf never varies with either: it draws
- * straight from `chartPoints` regardless of `isLoading`/emptiness.
+ * `AiQuotaHistoryPanel` — the "History" tab body inside `AiQuotaModal`: a 7-day
+ * usage bar chart plus a scrollable, bordered list of recent AI charges.
+ * `isLoading` swaps the whole `ChargesList` region for its shimmer mirror; an
+ * empty `items` array renders the list's own empty state. The chart draws from
+ * `chartPoints` regardless of either.
  */
 const meta: Meta<typeof AiQuotaHistoryPanel> = {
     title: "StarCi/Blocks/Ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel",

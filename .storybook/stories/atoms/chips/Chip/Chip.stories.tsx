@@ -3,24 +3,14 @@ import { CheckCircleIcon, ClockIcon, LockIcon, XCircleIcon } from "@phosphor-ico
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ATOM — `Chip`: the ONLY chip in the system.
+ * ATOM — `Chip`: the only chip in the system.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — the law for the ATOM TIER). Each prop gets one leaf,
- * and that leaf renders EVERY state the prop can produce: `tone` · `icon` · colour dot
- * · `onRemove` · `isSkeleton`. Props that produce no visual (`removeLabel`, `className`,
- * `showAnatomy`) get NO leaf.
+ * One prop = one leaf, each rendering every state the prop can produce: `tone` ·
+ * `icon` · colour dot · `onRemove` · `isSkeleton`. Props that produce no visual
+ * (`removeLabel`, `className`, `showAnatomy`) get no leaf.
  *
- * ⚠️ Don't confuse this with §14d.2 (leaf = STRUCTURE) — that law is for
- * design/block/screen. The previous version of this file split leaves by
- * "composition" (`Base`/`WithIcon`/`Removable`/`Loading`), so `tone` had nowhere to
- * render its full union, and the colour dot had no home at all.
- *
- * ⚠️ REMOVED 2026-07-26: the `Chip.Dot`, `StatusChip`, `TagChips` stories. The dot is a
- * PROP of this same chip (leaf `Dot`); `StatusChip` only hard-locked `tone`; `TagChips`
- * had real behaviour so it became `ChipGroup`, its own story.
- *
- * 🎨 Icon = Phosphor (§5.0). The atom pins both the scale (`size-3`, matching the
- * chip's text size) and the `weight` (§5.0a) — a story only picks "which glyph".
+ * Icon = Phosphor; the atom pins both the scale (`size-3`, matching the chip's text)
+ * and the `weight`.
  */
 /** Guide shown at the top of the autodocs page. UI copy is written in ENGLISH (teacher's call, 2026-07-26). */
 const CHIP_DOC = `

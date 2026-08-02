@@ -8,44 +8,21 @@ import { ContentCommentComposer, type ContentCommentComposerViewer } from "@sb-c
 import { ContentCommentThread, type ContentCommentNode, type ContentCommentThreadCallbacks } from "@sb-components/starci/blocks/learn/ContentCommentThread/ContentCommentThread"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentDiscussion`: talk about this lesson — label + honest archive
+ * `ContentDiscussion` — a BLOCK: talk about this lesson — a label + honest archive
  * line, an avatar-led collapsible composer, and the threaded comment list.
  *
- * ⭐⭐ REBUILT 2026-07-28 (teacher: "over-engineered this"). The first cut was a flat
- * two-line comment list inside a `SurfaceCard` — missing threaded replies,
- * per-comment reactions, edit/delete, a founder badge, and pagination
- * entirely, PLUS a structural mistake real `src` explicitly documents against:
- * `Discussion` is FRAMELESS. Ported verbatim now:
+ * No card of its own: the discussion is frameless so it never stacks a second
+ * bordered surface under the reading card above it — which is also why the
+ * composer's field stays `variant="primary"`.
  *
- * ⭐ NO CARD. Real `Discussion`'s own file header says so explicitly — it sits
- * directly on the page canvas so it never stacks a second bordered surface
- * under the reading "paper" card above it. This is also WHY the composer's
- * field stays `variant="primary"` (see `ContentCommentComposer`'s own file
- * header) — nothing here is "a field inside a card".
+ * The archive line is honest: `answeredCount` is computed from the comments this
+ * caller already loaded (`replyCount > 0`), never a made-up aggregate. The empty
+ * state is drawn on purpose (an invitation to be the first to write), opposite of
+ * `ContentRelatedList` which hides itself. The composer never hides — it sits above
+ * the list in every state.
  *
- * ⭐ THE ARCHIVE LINE IS HONEST, NOT FABRICATED. `answeredCount` is computed
- * from the comments THIS caller already loaded (`replyCount > 0`), the same
- * real, under-counts-until-fully-paged tradeoff `Discussion` itself documents
- * — never a made-up aggregate.
- *
- * ⭐ EMPTY IS DRAWN, ON PURPOSE — opposite of `ContentRelatedList`, which
- * hides itself when it has nothing. Nobody having written yet is an
- * INVITATION: the reader is the first, and saying so is what makes them
- * likely to write.
- *
- * THE COMPOSER NEVER HIDES. It sits above the list in every state (loading,
- * empty, error), because a reader who wants to write should never wait for a
- * list to load first.
- *
- * ⭐ LOADING = `isSkeleton`, ONE prop, matching EVERY sibling block in this
- * system (teacher 2026-07-28: "everything has a skeleton, trust the code not
- * the concepts" — real `Discussion` happens to show a bare `Spinner` for this
- * one case, but copying that one-off choice would make this the ONLY block
- * in the whole design system without a self-mirroring skeleton, breaking
- * consistency with `ContentReaction`/`ContentRelatedList`/every other block
- * already built today). Two placeholder threads mirror the real row shape.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Loading is a single `isSkeleton` prop (matching every sibling block), rendering
+ * two placeholder threads that mirror the real row shape.
  */
 
 /** Props for {@link ContentDiscussion}. */

@@ -13,61 +13,14 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PersonalProjectTaskAttemptsDrawer`: the AI-review history for ONE
- * personal-project milestone task — every attempt the learner has submitted for
- * THIS task, each with its score, a line of grader feedback, and when it was
- * processed.
+ * `PersonalProjectTaskAttemptsDrawer` — the AI-review history for one personal-
+ * project milestone task: every attempt the learner submitted, each with its score,
+ * a line of grader feedback, and when it was processed. Composes `DrawerShell` +
+ * `AsyncContent` + `SurfaceCardList` (free-form rows). One `AttemptRow` leaf with a
+ * co-located skeleton mirror; a `null` score renders a neutral "Grading" chip. No
+ * pagination or footer action.
  *
- * Filed under `overlays/drawers/` (kind: overlay-drawer per Rule 13), matching
- * its siblings `E2eResultDrawer` and `SubmissionAttemptsDrawer` — corrected
- * from an earlier pass that filed it under `blocks/learn/` instead.
- *
- * ⭐ REUSE-FIRST CHECK (this run's mandated read). Composed entirely from
- * existing tier-3-and-below pieces, nothing hand-rolled past them: `DrawerShell`
- * (scaffold — CloseTrigger+Header+Body, per Rule 13, mirroring the ported
- * `E2eResultDrawer`), `AsyncContent` (the one loading/empty/error/content
- * switch), `SurfaceCardList` in its FREE-FORM row shape (`item.content` —
- * documented alongside the fixed row shape, story
- * `composites-cards-surfacecard-surfacecardlist--free-form`), `Chip` +
- * `InlineIconLabel` atoms/composites already used for this exact "sparkle +
- * score" and "muted icon + label" idiom in `SubmissionScoreCard` and
- * `TaskSubmissionPanel`'s `TaskResultSummary`.
- *
- * WHY FREE-FORM, NOT `SurfaceCardList`'s fixed row. The fixed row shape only
- * offers `title`+`subtitle` (two lines) plus one `meta`/`trailing` slot — this
- * row needs FOUR pieces stacked (attempt label + score chip on one line, then a
- * feedback line, then a clock+time line), which is a different DOM shape, not a
- * data difference the fixed row's slots can carry. Free-form still gets the
- * shared list face/row-box/divider from `SurfaceCardList` for free — only the
- * inner content is bespoke.
- *
- * ⭐ ONE LEAF, `AttemptRow` (§11f), CO-LOCATED SKELETON (§6b/rule 6). Loading /
- * empty / error / populated are branches of the SAME `AttemptRow` tree wearing
- * different content, never a second parallel shape — so the skeleton mirror
- * passed to `AsyncContent` is built from the exact same `AttemptRow` component
- * with `isSkeleton` flipped, not a hand-drawn placeholder that can drift from
- * the real row the next time this block's layout changes.
- *
- * ⭐ SIMPLER THAN ITS CHALLENGE-SIDE SIBLING `SubmissionAttemptsDrawer`, ON
- * PURPOSE (confirmed against
- * `starci-academy-backend/.claude/fe/steps/11-overlays-layouts-brainstorm.md`
- * §3 before this build): no pagination (a milestone task's attempt count is
- * small — one drawer's worth), no footer action row (nothing to do here besides
- * read the history; re-attempting happens from the task panel this drawer opens
- * off of, not from inside the drawer itself).
- *
- * ⭐ SCORE `null` IS A REAL STATE, NOT A LOADING STUB (§2) — an attempt that has
- * been submitted but not yet graded (e.g. the AI review job is still running).
- * The row shows "Grading" in a neutral chip instead of a number, same idiom as
- * `TaskSubmissionPanel`'s "no graded attempts yet" — a named absence, never a
- * blank/undefined render.
- *
- * ⛔ OVERLAY, PRESENTATIONAL ONLY (Rule 13). `isOpen`/`onOpenChange` forward
- * straight to `DrawerShell`; which task's attempts these are, and when the
- * drawer opens, is app wiring (`useOverlayStore` + a real fetch hook) that lives
- * outside this block, same discipline as every other port in this pass.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Presentational: `isOpen`/`onOpenChange`.
  */
 
 /** One AI-graded attempt at a personal-project milestone task. */

@@ -5,10 +5,9 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `ThreadConnector`: the curved guide line linking a comment's avatar
- * down into a reply composer's own avatar (per teacher's note, 2026-07-29, Facebook-style
- * nested reply). Same family as `Stack.nested`'s straight indent-guide border,
- * bent into a corner instead of a straight drop.
+ * ATOM — `ThreadConnector`: the curved guide line linking a comment's avatar down into a
+ * reply composer's own avatar (Facebook-style nested reply). Same family as `Stack.nested`'s
+ * straight indent-guide border, bent into a corner instead of a straight drop.
  */
 const meta: Meta<typeof ThreadConnector> = {
     title: "Atoms/Display/ThreadConnector/ThreadConnector",

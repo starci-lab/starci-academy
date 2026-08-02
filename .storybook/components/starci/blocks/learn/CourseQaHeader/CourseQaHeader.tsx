@@ -3,30 +3,10 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseQaHeader`: the PAGE IDENTITY cluster at the top of a course
- * Q&A screen — trail, title, description. Nothing else.
- *
- * NOT A NEW IDEA — a thin sibling cloned from the `LeaderboardHeader` /
- * `FoundationsHeader` template (see either file header for the full rationale
- * this repeats): every ported screen wraps `PageHeader` in its own
- * domain-named block rather than the screen touching the composite directly
- * (rule 1), and this keeps that shape even though a Q&A board has less to say
- * up top than `ContentHeader`/`ModuleHeader` do.
- *
- * ⭐ NO META ROW, ON PURPOSE. The real screen's honest-strip/toolbar (question
- * count, filter, sort) carries the facts that would otherwise ride a meta row
- * here. Inventing one on this block would duplicate a fact the toolbar below
- * already owns — the same call `LeaderboardHeader` makes about rank/score
- * living in the list, not the header.
- *
- * EARNS ITS LAYER the same way its siblings do: it builds `Breadcrumbs` from
- * crumb DATA rather than accepting a pre-built node, and it drives
- * `PageHeader`'s title slot with the `isSkeleton` → `Typography` swap idiom
- * every ported header uses. A block that only forwarded `title`/`description`
- * straight through would be a passthrough; building the trail from data is the
- * judgement call that makes this its own layer.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `CourseQaHeader` — the page-identity cluster at the top of a course Q&A screen:
+ * breadcrumb trail, title, description. Builds `Breadcrumbs` from crumb DATA and drives
+ * `PageHeader`'s title slot with the `isSkeleton` → `Typography` swap. No meta row
+ * (the toolbar below owns question count / filter / sort).
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

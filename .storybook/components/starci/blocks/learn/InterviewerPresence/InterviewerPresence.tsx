@@ -7,54 +7,15 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `InterviewerPresence`: "someone is interviewing you" — the persona
- * reading the current question, a TTS mute toggle, and the question itself.
+ * `InterviewerPresence` — the "someone is interviewing you" surface: the persona reading
+ * the current question, a TTS mute toggle, and the question itself. The identity row is
+ * composed from `Avatar` + `Typography` (not `UserCell`, whose second line is a handle,
+ * not a job role).
  *
- * WHY THIS IS ITS OWN BLOCK AND NOT A ROW OF ATOMS. Three domain facts have to
- * agree on one surface: who is talking, whether they are talking RIGHT NOW
- * (audio), and what they just said (text). No composite in the catalog knows
- * any of that — this block owns the vocabulary (`speaking` drives a pulse ring
- * + status line, `isAsking` drives the streaming cursor under the question,
- * `questionMarkdown` decides whether there is a question at all).
- *
- * ⭐ WHY NOT COMPOSE `UserCell` (composites/lists/UserCell) FOR THE IDENTITY ROW.
- * `UserCell` was checked first — it is the catalog's avatar+name row — but its
- * second line is `handle` (an `@username`), and an interviewer's second line is
- * `role` (a static job title): same POSITION, different MEANING, and `UserCell`
- * has no prop that means "job title". It also has no room for the pulse ring
- * this block hangs off the avatar or the speaking-status line beside the role.
- * Bending `handle` into carrying a role would be exactly the "reach past a
- * composite and rebuild a worse version" mistake this run exists to avoid — so
- * the identity row is composed straight from `Avatar` + `Typography` instead,
- * the same primitives `UserCell` itself composes, at the layer this block
- * actually needs (§14d.2: the shape here is not `UserCell`'s shape).
- *
- * ⭐ `speaking` AND `isAsking` ARE TWO DIFFERENT SIGNALS, on purpose:
- *   • `speaking` — TTS AUDIO is voicing the question RIGHT NOW. Drives the
- *     pulse ring around the avatar and the `speakingLabel` status line. A
- *     learner with TTS off never sees this true.
- *   • `isAsking` — this question's TEXT is still streaming in, independent of
- *     audio. Drives the typing-dots cue under the question body. A learner
- *     with TTS off still sees this while the words arrive.
- *   Collapsing them into one flag would force audio-off sessions to either
- *     fake a "speaking" pulse with no sound behind it, or lose the streaming
- *     cue entirely — two real UI states, so two real props.
- *
- * 📐 ONE LEAF (§14d.2), not two. Whether the question region exists at all
- * (idle, between questions) versus is present (asking / delivered) is a
- * PRESENCE/ABSENCE STATE inside this one leaf — it never changes what kind of
- * thing the block is, only whether one of its regions currently has content,
- * exactly the reasoning `QuizQuestion` already uses for its own graded region.
- *
- * ⛔ NO `isSkeleton`. Deliberate, not an oversight (mirrors `ContentModeNav`'s
- * reasoning for the same omission). `questionMarkdown` presence/absence and
- * `isAsking` already model "this hasn't arrived yet" as real domain states;
- * `MarkdownContent` itself has no skeleton contract to delegate to (it never
- * sees its children as nodes, only whatever the parser hands back — see its
- * own file header), so a bolt-on skeleton here would leave the question region
- * out of step with the rest of the block instead of mirroring it.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Two independent signals: `speaking` (TTS audio voicing now — drives the avatar pulse
+ * ring and status line) and `isAsking` (the question text still streaming — drives the
+ * typing-dots cue). One leaf; the question region's presence/absence is a state. No
+ * `isSkeleton` — `questionMarkdown`/`isAsking` already model "not arrived yet".
  */
 
 /** Who is interviewing — identity only, no session state. */

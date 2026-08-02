@@ -4,35 +4,12 @@ import { CheckCircleIcon, CircleIcon, LockIcon, PlayCircleIcon } from "@phosphor
 import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `KeepGoingPath`: the CONTINUE-LEARNING PATH for the current module.
- *
- * WHY IT EXISTS (teacher's call 2026-07-25): **a SCREEN must never reach for an
- * atom — block only.** The `/learn/content` screen used to write its own heading
- * with `Typography`, `.map()` the list itself, and pick the icon per content state
- * itself.
- *
- * RENDER CONSISTENCY (teacher's eye-check 2026-07-25): **don't invent a new
- * render concept.** This cluster and `LearnNudges` right above it LOOK IDENTICAL
- * (a list of rows inside a bordered frame), so they must share ONE layout:
- * `SurfaceCardList`. The first version of this block drew its own
- * `div.rounded-2xl.border` and stuffed `ListRow` into it — two render paths for
- * one shape, exactly the drift that has to be swept away. The heading also goes
- * through SurfaceCard's `label` (rendered OUTSIDE/above the surface), not a
- * standalone `Typography`.
- *
- * THE BLOCK OWNS: state → leading icon map · difficulty chip · premium lock mark ·
- * **AND THE HEADING SENTENCE ITSELF**. The caller only hands over DOMAIN DATA.
- *
- * DOES NOT accept `heading` (teacher's call 2026-07-26): the heading text is
- * presentation, the block owns it. The caller only states the **module name**
- * (`module`) — an entity; the block assembles the whole heading itself.
- * Accepting `heading` would open a custom escape hatch (§14d.1).
- *
- * TERMINOLOGY, STRICT: `contents`, NOT `lessons` (teacher's call 2026-07-26 — strict
- * everywhere, DON'T trust the old code: `src/` still calls it `lessons`, that's
- * the wrong spot).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `KeepGoingPath` — the continue-learning path for the current module: content rows
+ * inside a `SurfaceCardList`, sharing the same layout as `LearnNudges` above it. Owns
+ * the content-state → leading-icon map, the difficulty chip, the premium lock mark, and
+ * the heading sentence itself (built from the `module` entity — there is no `heading`
+ * prop). Uses the term `contents`, not `lessons`. The heading renders through
+ * `SurfaceCard`'s `label` slot.
  */
 /** Learning state of a content item in the path. */
 export type KeepGoingContentState = "done" | "active" | "todo"

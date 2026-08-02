@@ -4,25 +4,15 @@ import { Badge } from "@sb-components/atoms/display/Badge/Badge"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Badge`: wraps HeroUI `Badge` directly (+ `Badge.Anchor` when it has `children`).
- * Leaf atom — it doesn't compose any of our own atoms that have their own story ⇒ no atom-tier deps.
- * `Content` is an INTERNAL span holding free-form `children` (a slot, with nowhere of its own to jump to),
- * not a dep.
+ * ATOM — `Badge`: wraps HeroUI `Badge` directly (+ `Badge.Anchor` when it has
+ * `children`). A leaf atom — it composes none of our own storied atoms, so it has no
+ * atom-tier deps; `Content` is an internal slot for free-form `children`, not a dep.
+ * `Badge`/`Badge.Anchor`/`Skeleton` are direct `@heroui/react` renders (`tier:
+ * "heroui"`), and `Badge` is a valid atom-wrapper holding `children`.
  *
- * ⚠️ 2026-07-28 (naming pass): `Badge`/`Badge.Anchor`/`Skeleton` are ALL a direct
- * `@heroui/react` import rendered straight through ⇒ declare `tier: "heroui"` (no `storyId`) —
- * previously this was missed entirely (empty annotate), the tree lying by omission.
- * `Anchor` was actually renamed to `Badge.Anchor` to match the HeroUI compound.
- *
- * `Badge` is a valid atom-WRAPPER holding `children` (§12b) — the anchor needs to wrap the
- * element it hangs off, this is not a children-forbidden loophole.
- *
- * MIGRATED TO the `states[]` API (teacher's call on 2026-07-27, canon §8): each prop value
- * (`count`/`dot`/`max` for `Anchored` · each tone for `Colors` · each size for
- * `Sizes` · each corner for `Placement`) used to be laid out side by side in the SAME
- * `children`, with only ONE element getting `showAnatomy`. Now each value is its own STATE,
- * and the panel mounts only the currently selected state, so the deps tree and code snippet
- * belong to it alone instead of being mixed together across the whole row.
+ * Uses the `states[]` API: each prop value (`count`/`dot`/`max` for `Anchored`, each
+ * tone for `Colors`, each size for `Sizes`, each corner for `Placement`) is its own
+ * state, so the deps tree and code snippet belong to it alone.
  */
 /** Every node this atom renders is a direct HeroUI import — all `tier: "heroui"`, no `storyId`. */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {

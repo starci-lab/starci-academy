@@ -5,38 +5,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentRelatedList`: what else in this course is worth reading after
- * this lesson. A quiet list, never a call to action.
- *
- * WHY A BLOCK: it knows a LESSON has neighbours in meaning, not just in order —
- * these come from searching the course on this lesson's own subject, so the rows
- * are lessons, and their wording is domain.
- *
- * SELF-HIDES, AND THAT IS THE WHOLE POINT. With nothing related the block draws
- * NOTHING — no card, no label, no empty state. This is the opposite of
- * `ContentDiscussion`, which MUST draw its empty state because silence there is
- * an invitation to write. Here silence means the course has nothing else on this
- * subject, and saying so out loud would be noise about an absence nobody asked
- * about.
- *
- * QUIET ON PURPOSE. It sits below the reading card among the other footer
- * blocks, in the nested surface, with no accent and no button. The reader
- * already has one forward step (`ContentPager`); a second loud one would split
- * their attention between two exits.
- *
- * ⚠️ NO SNIPPET, ROW = breadcrumb → title → lock line (teacher 2026-07-28:
- * "over-engineered it" — a prior pass invented a `snippet` field this real row never
- * shows). Real `src`'s `RelatedContentList` calls `EntityResultRow` with
- * `showSnippet` left at its default `false` — the backend even strips the
- * snippet for locked rows, so there is nothing to read there anyway. What the
- * real row DOES show above the title is the item's course breadcrumb, and
- * below it, when the viewer must enrol first, a quiet lock line — both
- * missing from the earlier port. `content` (the composite's free-form row
- * slot) replaces the fixed title/subtitle pair because this shape (an
- * optional line ABOVE the title, an optional line BELOW it) does not fit
- * that pair's title/subtitle order.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ContentRelatedList` — a quiet list of other lessons in the course worth reading
+ * after this one, surfaced by searching the course on this lesson's subject.
+ * Self-hides entirely (no card, no label, no empty state) when nothing is related.
+ * Each row shows the item's course breadcrumb above the title and, when the viewer
+ * must enrol first, a lock line below it; never a snippet.
  */
 
 /** One related lesson — plain data, the block builds the row. */

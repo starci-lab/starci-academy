@@ -3,30 +3,16 @@ import { HeadhuntingsPage } from "@sb-components/starci/pages/HeadhuntingsPage/H
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `HeadhuntingsPage`: browse the consultant directory for a course
- * and jump either to a listed consultant's profile or to a recruiting
- * company's page.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * THREE FUNCTIONS, in the order the reader meets them: orient · deep-link to a
- * company already in mind · browse the consultant roster and open one.
- *
- * ⚠️ THE COMPANY SEARCH IS NOT A GRID FILTER. Picking a suggestion never
- * changes `consultants`/`consultantCount` on this screen — it only fires
- * `onSelectCompany` with an id, which the real page turns into a route push.
- * See `ConsultantDirectoryCompanySearch`'s own file header for the exact
- * naming mistake this design is careful not to repeat.
- *
- * ⭐ ONLY `isSkeleton` FORKS INTO ITS OWN LEAF. Whether the search field has a
- * query, whether suggestions are loading, and whether the roster is
- * loading/empty/populated are all DATA the screen hands straight through to a
- * block without branching its OWN render on them — none of them removes a
- * block from the screen's own JSX. So they stay STATES of the one `Default`
- * leaf (§14d.2), matching the same "optional slot presence is a state, not a
- * leaf" precedent `FoundationsGridPage`'s own story sets.
+ * `HeadhuntingsPage` — the screen to browse the consultant directory for a
+ * course and jump either to a listed consultant's profile or to a recruiting
+ * company's page. A screen owns a list of functions: it calls blocks, places
+ * them in frames, and hands each typed data. Three functions, in reading order:
+ * orient · deep-link to a company already in mind · browse the consultant
+ * roster and open one. The company search is not a grid filter — picking a
+ * suggestion fires `onSelectCompany` with an id, which the real page turns into
+ * a route push, and never changes `consultants`/`consultantCount`. Only
+ * `isSkeleton` forks into its own leaf; everything else is a data state of the
+ * one `Default` leaf.
  */
 const meta: Meta<typeof HeadhuntingsPage> = {
     title: "StarCi/Pages/HeadhuntingsPage/HeadhuntingsPage",

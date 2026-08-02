@@ -3,22 +3,10 @@ import { AuthorByline } from "@sb-components/composites/lists/AuthorByline/Autho
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `AuthorByline`: name + optional verified/pinned glyphs + a
- * relative timestamp, as ONE inline row. Scanned from
- * `blocks/feed/CommunityPostCard` (name+`SealCheckIcon` line, `@handle ·
- * timeAgo · channel` line beneath it) and flattened into the single row the
- * "status+text" shape calls for — a real implementation of
- * `IdentityContentRow`'s own `byline` slot.
- *
- * 📐 **1 PROP = 1 LEAF.** `verified` and `pinned` each get their own leaf
- * (they can combine, but each is its own on/off shape worth seeing alone).
- * `name`/`timestamp` have no leaf of their own — they are the content every
- * other leaf fills in, the role `text` plays on `Chip`.
- *
- * ATOM GAP — no icon-shaped shimmer atom exists yet, so the verified/pinned
- * glyphs render only outside `isSkeleton`; the `·` separator is fixed chrome
- * (not a value), so it renders in BOTH states per COMPOSITE-10 ("the frame
- * stays real throughout: … separators, gaps").
+ * `AuthorByline` — name + optional verified/pinned glyphs + a relative timestamp, as one
+ * inline row; a concrete implementation of `IdentityContentRow`'s `byline` slot. Leaves:
+ * `verified`, `pinned` (each its own on/off shape). The verified/pinned glyphs render only
+ * outside `isSkeleton` (no icon-shaped shimmer atom yet); the `·` separator is fixed chrome.
  */
 
 const AUTHOR_BYLINE_DOC = `

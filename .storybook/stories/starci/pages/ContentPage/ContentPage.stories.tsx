@@ -4,27 +4,15 @@ import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcit
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `ContentPage`: read one lesson.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * SEVEN FUNCTIONS, in the order the reader meets them: what this lesson is · how
- * to look at it · read it · say how it landed · what else to read · talk about it
- * · step to the next one.
- *
- * ⭐ THE FOOTER IS CONDITIONAL, AND THE CONDITION IS THE POINT. Reaction, related
- * reading, discussion and the pager appear only on an OPEN lesson. A reader
- * stopped by the paywall has ONE decision in front of them, and four more things
- * to do underneath would compete with it. The `Locked` leaf below is what that
- * looks like.
- *
- * ⚠️ SCOPE OF THIS PASS: the reading mode. The tab row offers sandbox,
- * challenges and AI lab because a lesson really has them, but their bodies are
- * their own blocks and are not built yet. The screen does NOT fake them with a
- * frame and a div: a stub that renders is worse than an absence that does not
- * (§B3), because the stub passes every gate.
+ * `ContentPage` — the screen to read one lesson. A screen owns a list of
+ * functions: it calls blocks, places them in frames, and hands each typed data.
+ * Seven functions, in reading order: what this lesson is · how to look at it ·
+ * read it · say how it landed · what else to read · talk about it · step to the
+ * next one. The footer (reaction, related reading, discussion, pager) is
+ * conditional — it appears only on an open lesson; a reader stopped by the
+ * paywall sees one decision (the `Locked` leaf). The sandbox / challenges / AI
+ * lab tab bodies are their own not-yet-built blocks and are deliberately left
+ * unrendered rather than stubbed.
  */
 const meta: Meta<typeof ContentPage> = {
     title: "StarCi/Pages/ContentPage/ContentPage",

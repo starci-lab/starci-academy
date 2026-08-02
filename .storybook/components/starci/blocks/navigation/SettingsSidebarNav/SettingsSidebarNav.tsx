@@ -19,82 +19,17 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { CollapsibleSidebar, useSidebarCollapsed } from "@sb-components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `SettingsSidebarNav`: owns the domain vocabulary of the account-
- * settings destination list (which grouped destinations exist, their icon,
- * their order) and renders it as the two structurally different navigation
- * surfaces the real screen needs — a collapsible desktop rail, and a mobile
- * pill-bar fallback below the `@app-md` tier.
- *
- * ⭐⭐ ONE COMPOSITE GAP REUSED, TWO STILL INLINED — read before touching the
- * shape. The real `src` builds this from THREE reusable pieces:
- *   • `CollapsibleSidebar` — collapse/expand in place, persists the flag to
- *     `localStorage`, owns the width chrome + scroll. ✅ ALREADY PORTED, by a
- *     sibling pass, at `starci/blocks/navigation/CollapsibleSidebar` (same
- *     run, same restriction to `blocks/`+`stories/` — its own file header
- *     flags it as composite-tier chrome misfiled under `blocks/` for that
- *     reason). REUSED HERE VERBATIM, not rebuilt — the exact discipline this
- *     task's brief opens with (`ContentTabBar` rebuilding a worse `Toolbar`).
- *   • `SidebarNavGroup` — a divider above the group (except the first).
- *   • `SidebarNavItem` — one icon+label row, `aria-current`, accent-soft fill
- *     when active, icon-only when the rail is collapsed
- *     (`useSidebarCollapsed()`, exported by the ported `CollapsibleSidebar`).
- * Neither of the last two exists anywhere in this Storybook yet, and this run
- * writes exactly two files for THIS block — so, per §B3 scope discipline, they
- * are reproduced here as a PRIVATE, non-exported `DesktopNavRow` + an inline
- * `Divider`-per-group loop (verified against `src/components/blocks/navigation/
- * SidebarNavGroup` + `.../SidebarNavItem`), not left as a placeholder: unlike
- * `HeadhuntingCompaniesLayout`'s marked `AsyncContentEmpty` gap, this chrome
- * IS the deliverable of this task, not domain content out of reach. ⚠️ MARKED
- * GAP for a future pass: the day a second screen needs the same nav-row shape,
- * promote `DesktopNavRow` into a real `SidebarNavItem` composite so both
- * consumers share one definition instead of two copies drifting apart.
- *
- * ⭐ JUDGEMENT CALL — THE DESTINATION VOCABULARY IS AN ENUM THE BLOCK OWNS
- * (§14d.1), not a `ReactNode` icon + i18n key handed down the way `src`'s
- * `nav.tsx` does it. Same call as `ContentModeNav`'s `MODE_ICON`/`MODE_LABEL`
- * and `LeaderboardCategoryNav`'s `CATEGORY_ICON`/`CATEGORY_LABEL`: a caller
- * that could pass an icon component or a formatted label owns wording that
- * belongs to this block, and canon avoids a bare `ReactNode` prop above frame
- * tier. `groups`/`items` carry only a stable `key` (closed
- * {@link SettingsDestinationKey} union) + `href` — typed domain data, nothing
- * pre-rendered.
- *
- * ⭐ JUDGEMENT CALL — `@app-md`, NOT `md:`. `src`'s `SettingsLayout` switches
- * on the Next.js viewport breakpoint (`md:hidden` / `hidden md:block`); this
- * codebase has since migrated every responsive block to CONTAINER queries
- * (`globals.css`: `--container-app-md: 48rem`, the exact same 768px step) —
- * see `HeadhuntingCompaniesLayout`/`ContentModeNav`/`NavLinks` for the same
- * `@app-*` vocabulary. Ported 1:1 onto the new variant, not re-derived.
- *
- * ⭐ JUDGEMENT CALL — THE MOBILE PILL ROW IS HAND-ROLLED, NOT A STRETCHED ATOM.
- * No existing atom fits: `ChipBase` is a static LABEL (no `onPress`), and
- * `Button`'s variant table has no bordered-pill / accent-soft-on-active shape.
- * Reaching for either would be exactly the `ContentTabBar` mistake this task's
- * brief warns about (bending an atom into a shape it was never given) rather
- * than the `WorkSessionHeader` precedent this follows instead: a plain
- * `<button>` for chrome nothing else owns, with `StackH`/`Typography` doing
- * all of the actual layout and text inside it so the hand-written part stays
- * colour/radius/border only — never a `flex`/`grid` + `gap-*` combo (kept
- * out of `check-seams`'s hand-rolled-layout rule).
- *
- * NEVER SKELETONISED, on purpose — same call as `ContentModeNav`/
- * `LeaderboardCategoryNav`: the destination list is static chrome, known
- * before any account fetch lands, so it paints immediately.
- *
- * TWO LEAVES, by STRUCTURE (unlike `NavLinks`'s single leaf, where narrowing
- * only ever HIDES the same row — here a genuinely different shape replaces
- * it, so the split earns two leaves rather than staying one structural fact):
- *   • Desktop rail   — visible from `@app-md`, sticky under the fixed navbar
- *     (`top-16`, matching the app's `h-16` bar), `CollapsibleSidebar`'s own
- *     scroll, a `Divider` between groups, `Link`-shaped rows.
- *   • Mobile pill bar — sticky horizontal strip of every destination
- *     flattened out of their groups (grouping only matters to the desktop
- *     rail's dividers), rounded-full chip buttons instead of the rail's rows.
- * Both subtrees are always in the DOM (CSS-toggled, not JS-conditional) —
- * the same progressive-disclosure shape `src`'s `SettingsLayout` uses, so
- * there is no hydration/layout-shift cost to hiding one of them.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `SettingsSidebarNav` — owns the account-settings destination vocabulary (which
+ * grouped destinations exist, their icon, their order) and renders it as two
+ * surfaces: a collapsible desktop rail and a mobile pill-bar below `@app-md`.
+ * Reuses the ported `CollapsibleSidebar` (with `useSidebarCollapsed`) for the
+ * rail chrome; the per-row shape (`DesktopNavRow`) and per-group dividers are
+ * private here (a future `SidebarNavItem` composite should absorb them). The
+ * destination vocabulary is a block-owned enum keyed by a closed
+ * {@link SettingsDestinationKey}; `groups`/`items` carry only `key` + `href`.
+ * The mobile pill row is a plain `<button>` with `StackH`/`Typography` inside.
+ * Never skeletonised. Two leaves by structure (rail vs pill bar), both always in
+ * the DOM and CSS-toggled.
  */
 
 /** Every account-settings destination this rail can offer — the closed vocabulary the block owns. */

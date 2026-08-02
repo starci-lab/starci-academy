@@ -3,22 +3,12 @@ import { PlaygroundHubPage } from "@sb-components/starci/pages/PlaygroundHubPage
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `PlaygroundHubPage`: land on the course's Playground hub, see
- * what it is for, and open a hands-on exercise.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * TWO FUNCTIONS, in the order the reader meets them: orient · browse the
- * course's exercises and open one.
- *
- * ⭐ ONLY `isSkeleton` FORKS INTO ITS OWN LEAF. Having no exercises yet is DATA
- * the screen hands straight through to `PlaygroundExerciseGrid` without
- * branching its OWN render on it — it never removes a block from the screen's
- * own JSX, so it stays a STATE of the one `Default` leaf (§14d.2), the same
- * "optional content is a state, not a leaf" precedent `FoundationsGridPage`'s
- * own story sets for an empty search result.
+ * `PlaygroundHubPage` — the screen to land on the course's Playground hub, see
+ * what it is for, and open a hands-on exercise. A screen owns a list of
+ * functions: it calls blocks, places them in frames, and hands each typed data.
+ * Two functions, in reading order: orient · browse the course's exercises and
+ * open one. Only `isSkeleton` forks into its own leaf; having no exercises yet
+ * is data handed to `PlaygroundExerciseGrid`, a state of the one `Default` leaf.
  */
 const meta: Meta<typeof PlaygroundHubPage> = {
     title: "StarCi/Pages/PlaygroundHubPage/PlaygroundHubPage",

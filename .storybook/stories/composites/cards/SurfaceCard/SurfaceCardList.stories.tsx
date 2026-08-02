@@ -9,21 +9,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 // phosphor's `weight="duotone"` can no longer tag along, so it's wrapped in a component to KEEP the artwork.
 const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon data-tier="fixture" {...props} weight="duotone" />
 /**
- * ⚠️ STATE SCOPE (confirmed by the mentor 2026-07-25): `SurfaceCardList` is a REPEATING
- * LIST frame, so `items` MUST be data (children forbidden). The stories here only render
- * states that this component itself produces: two row shapes (fixed `title` vs free-form
- * `content`), row flags (`selected`/`isDisabled`/`hover`/`tone`), the empty + 1-row edge
- * cases, and the loading mirror.
- *
- * The header section set (`label`/`labelEnd`/`onSeeMore`/`action`/`subtleLabel`/
- * `description`) SHARES `SurfaceCardHeader` with `SurfaceCard`, so here only ONE leaf
- * `WithLabel` is kept to prove the header can turn on; the full header state set lives in
- * the `SurfaceCard` story.
- *
- * ⚠️ `variant` (§1a, `.List` also has this prop, added 2026-07-26) has NO leaf of its own
- * here: that state is the surface-in-surface AXIS, the same `Variants` leaf already
- * demonstrated on `SurfaceCard`/`.Accordion`, so it is not repeated again for every
- * member of the same frame.
+ * `SurfaceCardList` — a repeating-list frame; `items` is required data. Owns two row shapes
+ * (fixed `title` vs free-form `content`), row flags (`selected`/`isDisabled`/`hover`/`tone`), the
+ * empty + 1-row edge cases, and the loading mirror. Shares `SurfaceCardHeader` and the `variant`
+ * axis with `SurfaceCard`.
  */
 const meta: Meta<typeof SurfaceCardList> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardList",

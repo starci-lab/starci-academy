@@ -3,30 +3,12 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * VIEWER — `MarkdownContent`: paint an authored markdown document faithfully.
- *
- * ⭐ WHY A VIEWER (§4b). Every other composite KNOWS its shape before it renders
- * — a card has a label and rows, a header has a title and meta. This one CANNOT:
- * the shape is decided by the PAYLOAD. That is the whole membership test for the
- * `viewers` group.
- *
- * ⭐ SCOPE OF THIS PASS (teacher's call, 2026-07-29, in priority order): Shiki
- * syntax-highlighted fenced code · mermaid diagrams (SVG, click-to-zoom, caption
- * pairing) · `:::tab`/`:::code`/`:::preview` → Preview↔Code tabs · GFM tables →
- * real HeroUI `Table` · `::::accordion`/`:::panel` → the CORRECT HeroUI
- * `Accordion` (with `bg-surface rounded-3xl border border-default` chrome — the
- * previous port used the wrong, Disclosure-based `Accordion` atom) · `:::muted` +
- * `:::chip` + image captions + link routing + heading anchors. Still NOT ported:
- * `arcSections`, `plain` mode, the ` ```mdx ` live-render fence, the
- * ` ```layout ` fence — each is a viewer/runtime of its own.
- *
- * ⚠️ THE ONLY PLACE HAND-WRITTEN SPACING IS CORRECT. A viewer cannot reach for
- * frames: it never sees its children as nodes, only as whatever the parser hands
- * back. Same exemption §13z gives the atom tier, for the same reason — there is
- * no seam to own when the tree is not yours.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): the two MEASURES are leaves, because the whole
- * rhythm changes. Which grammar a document happens to use is payload ⇒ states.
+ * `MarkdownContent` — a viewer that paints an authored markdown document faithfully. Unlike
+ * other composites it cannot know its shape before rendering — the payload decides it. Handles
+ * Shiki-highlighted fenced code, mermaid diagrams (click-to-zoom, caption pairing),
+ * `:::tab`/`:::code`/`:::preview` → Preview↔Code tabs, GFM tables → HeroUI `Table`,
+ * `::::accordion`/`:::panel` → HeroUI `Accordion`, plus `:::muted`/`:::chip`, image captions,
+ * link routing, and heading anchors. Leaves by structure are the two spacing measures.
  */
 const meta: Meta<typeof MarkdownContent> = {
     title: "Composites/Viewers/MarkdownContent",

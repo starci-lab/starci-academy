@@ -29,94 +29,16 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `MockInterviewPage`: get ready for a mock interview, work through
- * it live, then read the debrief.
+ * `MockInterviewPage` — the screen for getting ready for a mock interview, working
+ * through it live, then reading the debrief. It composes blocks in frames and hands
+ * each typed data, drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own.
- *
- * THREE PHASES, ONE SCREEN, NEVER TWO AT ONCE — the same `phase` idiom
- * `QuizPage`/`FlashcardReviewPage` already use: `setup` (the green room),
- * `live` (one question at a time), `result` (the debrief). `WorkSessionHeader`
- * appears only in `live` this pass — `result` is a finished, read-only page
- * (a debrief, not a second live session), so it reuses `SubmissionResultHeader`
- * instead, the same "identity band" shape `ChallengeResultPage` already
- * reuses it for.
- *
- * SEVEN BLOCKS: three reused (`WorkSessionHeader`, and — corrected from the
- * planner's tree, see below — `PlaygroundSetupHeader`/`SubmissionResultHeader`
- * in place of a bare `PageHeader` composite), four new this run
- * (`MockInterviewSetup`, `InterviewerPresence`, `VoiceHero`,
- * `MockInterviewScorecard`), plus one more new this pass —
- * `MockInterviewAnswerAction` — built alongside this screen for the reason
- * below.
- *
- * ⭐ THE IDENTITY HEADER IS A BLOCK, NOT THE BARE `PageHeader` COMPOSITE THE
- * PLANNER'S TREE NAMED. §0's import boundary is exact: a screen calls blocks
- * and frames, never a composite directly — `ContentPage`/`ModuleHeader`'s own
- * file headers spell out why every "identity band" in this catalog is a BLOCK
- * that wraps `PageHeader`, never the composite itself reached from a screen.
- * `setup`'s identity is a single hop back to wherever Mock Interview was
- * opened from, plus a title/description — EXACTLY `PlaygroundSetupHeader`'s
- * own contract ("the IDENTITY cluster at the top of the … Setup screen …
- * a way back … no meta cluster at all" — that file header, not this one,
- * decided a Setup screen carries no chips). `result`'s identity is a back
- * link plus the graded run's own title — EXACTLY `SubmissionResultHeader`'s
- * contract, already reused cross-domain by `ChallengeResultPage` for the
- * identical shape. Reusing both beats inventing a `MockInterviewHeader` that
- * would draw the same two rows a third time.
- *
- * ⭐ `MockInterviewAnswerAction` IS A NEW BLOCK, NOT THE BARE `Button` THE
- * PLANNER'S TREE DREW DIRECTLY IN THE SCREEN. Neither `InterviewerPresence`
- * nor `VoiceHero` owns a submit action (see each file's own header) — the
- * real `src` screen fires `submitQnaAnswer` from a plain `Button` sitting
- * right in its own JSX, but a Storybook SCREEN may not import an atom
- * directly. See `MockInterviewAnswerAction`'s own file header for the full
- * reasoning (it earns its layer via the `isLastQuestion` label decision,
- * same pattern `MindMapContinueButton` already established for the course
- * mind-map's own single floating CTA).
- *
- * ⛔ NO `ConfirmDialog` WIRED HERE, though the planner's tree asked for one
- * directly inside `live` (leave / finish-early). `FlashcardReviewPage`'s own
- * file header already burned down this exact question for its identical
- * session band: a screen may not import a composite directly, no block in
- * today's catalog wraps a confirm shell, and inventing one to hold a single
- * dialog is exactly the reach this run's own brief (`ContentModeNav`'s file
- * header) warns against. `WorkSessionHeader`'s `onBack`/`onFinish` already
- * fire; whatever the caller does with that event — including opening a
- * confirm dialog — is a decision made ABOVE this component, not faked here.
- *
- * ⛔ NO `Disclosure` WIRED HERE EITHER. `MockInterviewSetup`'s own file header
- * already scopes the "Customize session" deep-config body (languages / kinds /
- * answer mode / AI model) out of this pass as a SECOND, deferred leaf — the
- * block that would hold that `Disclosure` was never built this run, so the
- * screen has nothing real to compose it around either.
- *
- * ⛔ NO DOCKED WORKSPACE PANE (whiteboard/code) IN `live`. The planner's tree
- * wanted a two-column split with `EmptyState` chrome on the right — but
- * that is a bare composite import too, and unlike `PlaygroundSessionPage`'s
- * two-pane workspace (which has real blocks, `PlaygroundResourcePanel` +
- * `PlaygroundConnectSheet`, to put in each pane) nothing in today's catalog
- * wraps "here is where the whiteboard/code tool would sit". §B3 again: a gap
- * left clearly absent beats a stub that renders nothing real. `live` is
- * therefore ONE reading-width column — the same `Container size="md"` idiom
- * `QuizPage`'s own `active` phase already uses for its session band + one
- * live block — not the full-bleed two-pane grid the real `src` screen draws.
- * The right-pane tool itself (and the 5-phase Design-mode script, and the
- * "Customize" config body) stay OUT OF THIS TREE ENTIRELY, exactly as scoped
- * in this run's own brief.
- *
- * ⛔ `isSkeleton` REACHES ONLY THE BLOCKS THAT CAN MIRROR THEMSELVES —
- * `PlaygroundSetupHeader`, `MockInterviewSetup` (setup phase), and
- * `SubmissionResultHeader`, `MockInterviewScorecard` (result phase).
- * `WorkSessionHeader`, `InterviewerPresence`, `VoiceHero` and
- * `MockInterviewAnswerAction` carry no such prop by design (their own file
- * headers say why: chrome known ahead of any request, or a composer/action
- * with nothing of its own to preview), so the flag is not threaded to them —
- * same reasoning `QuizPage`'s own file header gives for stopping short of
- * `WorkSessionHeader`/`QuizRecapList`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Three phases, never two at once: `setup` (the green room, identity via
+ * `PlaygroundSetupHeader` + `MockInterviewSetup`), `live` (`WorkSessionHeader` +
+ * `InterviewerPresence` + `VoiceHero` + `MockInterviewAnswerAction`, in one
+ * reading-width column), `result` (identity via `SubmissionResultHeader` +
+ * `MockInterviewScorecard`). `isSkeleton` reaches only the blocks that can mirror
+ * themselves (the setup and result headers/bodies).
  */
 
 /** Which part of the mock interview the candidate is in. */

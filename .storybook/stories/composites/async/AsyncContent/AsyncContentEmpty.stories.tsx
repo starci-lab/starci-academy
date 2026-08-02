@@ -5,12 +5,10 @@ import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ⚠️ STATE SCOPE (teacher's call 2026-07-25): `AsyncContentEmpty` is the EMPTY
- * MESSAGE FRAME — its own asset is the message SLOTS (icon · title · description ·
- * action). So every state here originates from TOGGLING its own slots. The
- * question of "when does the empty branch get picked" is a state of
- * `AsyncContent`, and is NOT repeated here.
- *
+ * STATE SCOPE: `AsyncContentEmpty` is the empty-message frame — its own asset is the message
+ * slots (icon · title · description · action). Every state here comes from toggling its own
+ * slots. When the empty branch gets picked is a state of `AsyncContent`, not repeated here.
+ * 
  * ANATOMY IS PER-LEAF: each story is its own leaf, carrying its own parts tree.
  */
 const meta: Meta<typeof AsyncContentEmpty> = {

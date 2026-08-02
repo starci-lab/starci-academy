@@ -11,40 +11,15 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `ModulePage`: one module's own page — orient, resume, then
- * browse everything it contains.
+ * `ModulePage` — one module's own page: orient, resume, then browse everything it
+ * contains. It composes blocks in frames and hands each typed data, drawing no shape
+ * of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own —
- * every `div` here would be a shape it had no right to decide (§13, and the
- * `ContentPage`/`CourseContents` precedent this file follows).
- *
- * FIVE FUNCTIONS, in the order the learner meets them:
- *   1. orient — `ModuleHeader` (what this module is, its tier, its size)
- *   2. gate — `ContentPaywall`, REUSED, only while `isLocked` (the module is
- *      behind the paid tier and nothing else on the page can be trusted yet)
- *   3. resume + completion — `ModuleContinueBand` (only once unlocked)
- *   4. browse lessons — `ModuleLessonList` (only once unlocked)
- *   5. browse challenges — `ModuleChallengeList`, only once unlocked AND the
- *      module actually has challenges — an empty challenge list is not a
- *      "no challenges yet" message worth a whole block, it is simply absent
- *      (the same "a count of zero is not news" idiom `ModuleHeader` and
- *      `ContentModeNav` already use, extended to a whole block's presence).
- *
- * ⭐ THE PAYWALL REPLACES FUNCTIONS 3–5, IT DOES NOT SIT ABOVE THEM. A learner
- * who has not bought the course has exactly one decision in front of them —
- * the same "one decision, nothing competing with it" reasoning `ContentPage`
- * already applies to its own footer under `isLocked`. Showing a resume band or
- * a lesson list behind a paywall would either leak content or dangle controls
- * that go nowhere, so the whole browsing region is swapped out, not stacked
- * underneath.
- *
- * ⚠️ `ContentPaywall` is REUSED as-is from `starci/blocks/learn/ContentPaywall`
- * — same block the lesson reader falls back to. A module and a lesson stop at
- * the same wall for the same reason ("buy the course"), so the offer block is
- * one thing wearing two call sites, not two similar offers built twice.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Five functions: `ModuleHeader` (what this module is, its tier, its size);
+ * `ContentPaywall` (reused, only while `isLocked`); `ModuleContinueBand` (resume +
+ * completion); `ModuleLessonList`; and `ModuleChallengeList` (only when the module has
+ * challenges). The paywall replaces functions 3–5 rather than sitting above them — a
+ * locked learner has one decision, nothing competing with it.
  */
 
 /** Props for {@link ModulePage}. */

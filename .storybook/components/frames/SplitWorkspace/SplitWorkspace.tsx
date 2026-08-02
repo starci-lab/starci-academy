@@ -4,51 +4,20 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * FRAME — `SplitWorkspace`: the READ-COLUMN + STICKY-ASIDE workspace
- * shape — a brief/content column that grows, beside a fixed-width action column
- * that pins to the viewport once there's room for both side by side.
+ * `SplitWorkspace` — a FRAME: the read-column + sticky-aside workspace shape — a
+ * brief/content column that grows, beside a fixed-width action column that pins to
+ * the viewport once there is room for both side by side.
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): renamed the tier
- * label "LAYOUT" → "FRAME" — this file lives in the `frames/` folder, and
- * `principles/naming` §6 has RULED (2026-07-29, the filesystem as arbiter):
- * `frame` = `frames/`, `layout` = `<app>/layouts/`, two different tiers. Also
- * removed the fake `.Base` namespace declaration below — this file truly
- * exports BARE (confirmed via every call site), not a namespace.
+ * `flex-col` (mobile/tablet) → `@app-xl:flex-row` (desktop). Distinct from a
+ * responsive `Stack`: `StackH` is a fixed horizontal axis that, with `wrap` and
+ * the main column's `min-w-0 flex-1`, almost never actually wraps and so renders
+ * side-by-side at every width; this named shape stacks cleanly below its
+ * breakpoint instead.
  *
- * ⭐ WHY THIS FRAME EXISTS (teacher, 2026-07-29: "shouldn't desktop render as
- * flex?"). Real `src` has this EXACT shape TWICE, byte-for-byte identical CSS —
- * `ChallengeView/index.tsx:195` and `PersonalProjectWorkspace/index.tsx:61` —
- * and BOTH corresponding Storybook screens (`ChallengePage`, `PersonalProjectTaskPage`)
- * worked around its absence with `StackH gap="section" align="start" wrap`
- * holding two `StackV` children, each self-flagging the exact same comment:
- * *"the BEST-AVAILABLE substitute... this design system has no dedicated
- * 'reading column + fixed aside' frame yet"*. `StackH` is a FIXED horizontal
- * axis (§13, by design — two `Stack.*` members = two axes, chosen by the
- * caller, never switching on their own) — with `wrap` and the main column's
- * `min-w-0 flex-1` (free to shrink without limit), the row almost never
- * actually wraps, so the split was rendering side-by-side at EVERY width,
- * mobile included, instead of stacking cleanly below desktop like `src` does.
+ * `at` names the switch breakpoint (a `ResponsiveRowSwitch` prop, default `xl`);
+ * `gap`, `w-[360px]`, `top-24`, and `max-h-[calc(100dvh-7rem)]` stay hard-owned.
  *
- * `flex-col` (mobile/tablet) → `@app-xl:flex-row` (desktop, `src`'s own
- * breakpoint) is not a generic "responsive Stack" ask — it is THIS one named
- * shape, so it gets its own frame instead of a new prop bolted onto `Stack.*`
- * that would blur what "two axes" means there.
- *
- * ⭐ `at` NAMES THE BREAKPOINT (FRAME-10), EVERY OTHER NUMBER STAYS HARD-OWNED
- * (§6c: a layout frame owns its internal sizing). Both real `src` sources agree
- * on `@app-xl` as the switch step, so `at` defaults to `xl` and an unmigrated
- * caller renders identically — but the step itself is now a
- * `ResponsiveRowSwitch` prop instead of a bare string in `cn(...)`, so it is
- * readable from the prop list. `gap-6`/`gap-8`, `w-[360px]`, `top-24` and
- * `max-h-[calc(100dvh-7rem)]` are the SAME in both sources — there is no second
- * shape to generalize for yet. Add a prop for one of those only when a THIRD
- * real consumer actually disagrees with it.
- *
- * FRAME API LAW (§13b): two DISTINCT roles ⇒ two NAMED slots (`main`/`aside`),
- * not a single `children` — a workspace has no "one obvious slot" the way
- * `Container`/`Stack` do.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Two distinct roles ⇒ two named slots (`main`/`aside`), not a single `children`.
  */
 
 /** Props for {@link SplitWorkspace}. */

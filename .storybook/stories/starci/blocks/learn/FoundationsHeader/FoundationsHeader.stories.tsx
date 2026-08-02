@@ -3,28 +3,12 @@ import { FoundationsHeader } from "@sb-components/starci/blocks/learn/Foundation
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FoundationsHeader`: the CATEGORY-IDENTITY cluster at the top of a
- * foundations category screen. It answers one question, "what foundations
- * category is this", via a breadcrumb trail (home → courses → course →
- * foundations hub → this category), a title and an optional description.
- *
- * SIBLING OF `ContentHeader`/`ModuleHeader`, NOT A COPY of either. All three
- * place identity into the same `PageHeader` frame with a `Breadcrumbs` trail,
- * but this one is deliberately THINNER: no read-state chip, no meta row, no
- * secondary card — the `src` original (`FoundationsLearnHeader`) never had
- * them, because a foundations category is a plain navigational hub, not a
- * graded unit with its own stats.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). Losing the `description` Typography is the
- * same MAGNITUDE of change as `ContentHeader`'s `isRead` toggle — one atom
- * node inside an already-composed frame — so it stays a STATE of the `Full`
- * leaf. The caller flipping `isSkeleton` swaps every composed atom for its own
- * mirror, which is its own leaf, same as `ContentHeader`'s `Skeleton` leaf.
- *
- * ⛔ There is deliberately NO "no breadcrumb" leaf. A foundations category is
- * always reached through its course, so the trail always exists in the real
- * screen — building that leaf would be inventing a case no screen asks for
- * (§14d.3).
+ * `FoundationsHeader` — the category-identity cluster at the top of a foundations
+ * category screen: a breadcrumb trail (home → courses → course → foundations hub →
+ * this category), a title, and an optional description. Deliberately thin — a
+ * foundations category is a navigational hub, so no read-state chip, meta row, or
+ * secondary card. The description may drop out; `isSkeleton` swaps every composed
+ * atom for its mirror.
  */
 const meta: Meta<typeof FoundationsHeader> = {
     title: "StarCi/Blocks/Learn/FoundationsHeader/FoundationsHeader",

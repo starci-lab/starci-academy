@@ -3,21 +3,11 @@ import { KeepGoingPath, type KeepGoingContent } from "@sb-components/starci/bloc
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `KeepGoingPath`: the continue-learning path for the **current
- * chapter**.
- *
- * Deliberately does NOT redraw the full module tree — that tree lives in the
- * left rail, drawing it twice would be two sources of truth. This block only
- * answers "where am I + what's next".
- *
- * The BLOCK OWNS the shape: state icon (play/check/circle) · difficulty chip ·
- * lock. The caller only supplies DATA — no node, no class.
- *
- * 📐 **ONE LEAF** (§11f + §14d.2): every variant below shares the SAME DOM tree
- * (`SurfaceCardList` → rows), differing only in content ⇒ they're all
- * **STATE**, rendered inside one leaf's `states[]` (teacher's call on layout C,
- * 2026-07-27). Previously `AllRead`/`AllDifficulties`/`Bordered` were split into
- * separate stories — wrong, since none of them add or remove a node.
+ * `KeepGoingPath` — the continue-learning path for the current chapter, answering
+ * "where am I + what's next". Deliberately does not redraw the full module tree
+ * (that lives in the left rail). The block owns the shape — state icon
+ * (play/check/circle), difficulty chip, lock — while the caller supplies only data.
+ * Every variant shares one `SurfaceCardList` → rows tree, differing only in content.
  */
 const meta: Meta<typeof KeepGoingPath> = {
     title: "StarCi/Blocks/Learn/KeepGoingPath/KeepGoingPath",

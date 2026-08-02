@@ -8,52 +8,16 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `SubmissionScoreCard`: the #1 signal right after the attempt
- * selector on a graded-result page (a challenge, a mock interview) — how well
- * did THIS attempt do, and who said so.
- *
- * SIBLING OF `SubmissionResultHeader`, NOT A COPY. The header answers "where am
- * I, what was I graded on"; this card answers "how did it go" — the verdict
- * itself, one layer below.
- *
- * ⭐ PASS/FAIL TINTING + THRESHOLD WORDING IS OWNED HERE, mirroring the real
- * `SubmissionResult` component's `isPassing`/`scoreLabel` helpers: the hero
- * number and the verdict chip flip the SAME success/danger tone together (one
- * signal, not two disagreeing ones), and the "need N more points" sub-line does
- * the `passScore − score` subtraction itself rather than taking a pre-computed
- * string from the caller (§14d.1 — a block owns its own wording, never a
- * formatted string prop).
- *
- * ⭐ MODEL-CATEGORY VOCABULARY IS LOCAL, ON PURPOSE. `_legacy/designs/chips/
- * AiCategoryChip` already draws a tier badge, but it is out of reach from this
- * app folder (`_legacy` is read-only reference, never imported from `starci/`)
- * and it works over a 5-STEP HUE RAMP that `EnumChip` — the composite this tier
- * actually offers — cannot reproduce (`EnumChip` only carries the 5 SEMANTIC
- * tones: default/success/warning/danger/accent). Rather than smuggle a sixth
- * "tier" axis into `Chip`, this block maps the 5 categories onto the 5 semantic
- * tones it already has (free→default, economy→success, balanced→accent,
- * premium→warning, frontier→danger) and owns that table itself, the same way
- * `ContentModeNav` owns its own mode→label table. Revisit if a shared
- * tier-ramp primitive lands at this tier later.
- *
- * 📐 ONE LEAF (§14d.2), like `SubmissionResultHeader`. Nothing here changes the
- * SHAPE of what is composed — pass/fail only flips a TONE, and every optional
- * row (sub-line, feedback, submission link, model byline) is a presence/absence
- * of DATA, not a different arrangement of parts. So every difference below is a
- * STATE of the one `ScoreCard` leaf, not a leaf of its own.
- *
- * ⭐ THE MODEL BYLINE IS ONE ROW, GATED ON `gradedByModel`. Mirrors the ported
- * `ModelByline`'s own rule ("renders nothing when the served model wasn't
- * recorded"): with no model there is nothing to attribute, so the tier chip and
- * the relative time have nothing to sit next to either — the whole row drops,
- * not just the model name.
- *
- * `gradedByLabel` is an OPTIONAL override of the row's leading word (default
- * "Graded by", owned here). It exists for callers that need a different
- * attribution phrasing for the same shape — e.g. a re-grade — without handing
- * the block a whole pre-built sentence.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `SubmissionScoreCard` — the top signal after the attempt selector on a
+ * graded-result page (challenge, mock interview): how well this attempt did and
+ * who said so. Owns pass/fail tinting (hero number and verdict chip flip the
+ * same success/danger tone) and the "need N more points" sub-line (computes
+ * `passScore - score` itself). Maps the 5 model categories onto the 5 semantic
+ * chip tones locally (free->default, economy->success, balanced->accent,
+ * premium->warning, frontier->danger). One leaf; every optional row is a
+ * presence/absence of data. The model byline gates on `gradedByModel`;
+ * `gradedByLabel` is an optional override of the leading word (default "Graded
+ * by").
  */
 
 /** Cost/quality tier of the model that produced the grade. */

@@ -8,57 +8,16 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `LeaderboardPage`: see who's ranked where, sorted by whichever XP
- * category the reader cares about right now.
+ * `LeaderboardPage` — the screen for seeing rankings sorted by whichever XP category
+ * the reader cares about. It composes blocks in frames and hands each typed data,
+ * drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own.
- *
- * FIVE FUNCTIONS, in the order the reader meets them: what this page is · a
- * quiet nudge toward enrolling, if the reader hasn't · which category to rank
- * by · what that ranking is and when it last refreshed · the ranking itself.
- *
- * ⭐ `TrialEnrollBanner`, NOT A NEW `EnrollNudgeBanner`. The planner's tree
- * asked for a block by that name asserting none existed yet — that assertion
- * was checked and found false: `TrialEnrollBanner`'s own file header already
- * names "leaderboard" as one of the surfaces it is reused on ("foundations,
- * flashcard study, leaderboard — this screen (Quiz) is just one caller among
- * several"). Building a fourth near-duplicate of an already-tripled block
- * (`TrialEnrollBanner`, `FoundationTrialEnrollBanner`,
- * `TrialEnrollNudge`) would compound the exact parallel-agent drift this
- * catalog is trying to converge out of, not add a new function.
- *
- * ⭐ `LeaderboardCategoryNav` IS THE MOBILE HALF ONLY (`@app-lg:hidden`). Its
- * own file header explains why: the desktop rail half of the same fetch lives
- * in the shared `courses/[courseId]/learn/layout.tsx` `leftRail` slot, handed
- * to every learn tab, not just this screen — out of scope for a screen that
- * only owns what's inside its own body.
- *
- * ⭐ TWO INDEPENDENT SKELETON SURFACES, NOT ONE FLAG THREADED EVERYWHERE.
- * `isSkeleton` reaches only `LeaderboardHeader` and `LeaderboardBoard` — the
- * two blocks whose own file headers document an `isSkeleton` contract.
- * `LeaderboardCategoryNav` is deliberately NEVER skeletonised (its categories
- * are static chrome known before any fetch) and `LeaderboardToolbar` has no
- * such prop either (see their file headers) — so the flag simply is not
- * threaded to them, the same restraint `ContentPage` documents for its own
- * mode row.
- *
- * ⭐ THE BOARD'S OWN ASYNC LIFECYCLE (`isBoardLoading`/`isBoardEmpty`/
- * `boardError`) IS SEPARATE FROM THE SCREEN'S `isSkeleton`. The first load has
- * no shape yet — that is `LeaderboardBoard`'s own `AsyncContent` switch, fed
- * fixed-count placeholders. `isSkeleton` is for a background revalidate of a
- * board that is already showing real data (§12c) — an entirely different
- * moment, and conflating them would mean a mid-revalidate screen has no way to
- * shimmer without also discarding the ranking already on screen.
- *
- * ⭐ `categoryLabel` ARRIVES PRE-WORDED FROM THIS SCREEN'S OWN CALLER. It is
- * the bare category name `LeaderboardToolbar` builds its "Ranked by …"
- * sentence around (see that block's file header) — the same source of truth
- * the app page already used to build `categoryItems`, handed straight through
- * rather than this screen re-deriving or inventing a second copy of that
- * table.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Five functions: what this page is, a self-hiding trial-enroll nudge, which category
+ * to rank by (`LeaderboardCategoryNav`, the mobile half only — the desktop rail lives
+ * in the shared learn layout), the toolbar (ranking + last-refresh), and the ranking
+ * board. `categoryLabel` arrives pre-worded. `isSkeleton` (a background revalidate)
+ * reaches only the header and board, separate from the board's own first-load async
+ * lifecycle.
  */
 
 /** Props for {@link LeaderboardPage}. */

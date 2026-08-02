@@ -4,26 +4,15 @@ import type { PublicProfileUser } from "@sb-components/starci/layouts/PublicProf
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT — `PublicProfileLayout`: the wrapper mounted once per
- * `/profile/[username]/**` scope. See the component's own file header for the
- * full contract, why this is a `layouts/` file, and every judgement call.
- *
- * FOUR LEAVES BY STRUCTURE (§14d.2), the same "loading → not-found → locked →
- * content" branch order the real `PublicProfile` checks, each swapping the
- * WHOLE composed body rather than flipping a prop on one shared shape:
+ * `PublicProfileLayout` — the wrapper mounted once per `/profile/[username]/**`
+ * scope. Four structural leaves, in the "loading → not-found → locked →
+ * content" branch order, each swapping the whole composed body:
  *   - `Loading`  — `ProfileLoadingState` alone.
  *   - `NotFound` — `ProfileNotFoundState` alone.
- *   - `Locked`   — `ProfileLockedState` alone (identity stays visible, tabs withheld).
- *   - `Content`  — the real shape: `ProfileTabsBar` chrome above a two-column
- *     `ProfileHero` + route-panel body. Owner-vs-visitor tab gating and the
- *     `canHire` CTA fork are DATA differences (this layout's own `resolveProfileTabs`/
- *     `canHire` computation), folded into `states` inside this one leaf — mirrors
- *     `ProfileTabsBar`'s own story, which does the identical fold for the same reason.
- *
- * All five composed leaves (`ProfileHero`/`ProfileTabsBar`/`ProfileLoadingState`/
- * `ProfileNotFoundState`/`ProfileLockedState`) had landed with their own real
- * stories by the time this file was written, so every `ANNOTATE` entry below
- * points at an actual `storyId`.
+ *   - `Locked`   — `ProfileLockedState` alone (identity visible, tabs withheld).
+ *   - `Content`  — `ProfileTabsBar` chrome above a two-column `ProfileHero` +
+ *     route-panel body; owner-vs-visitor tab gating and the `canHire` CTA fork
+ *     are data states within this leaf.
  */
 const meta: Meta<typeof PublicProfileLayout> = {
     title: "StarCi/Layouts/PublicProfileLayout/PublicProfileLayout",

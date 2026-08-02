@@ -6,39 +6,21 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ChallengeScoreCard`: "Your results" — the ONE aggregate fact for a
+ * `ChallengeScoreCard` — a BLOCK: "Your results" — the one aggregate fact for a
  * finished challenge attempt, the earned/max score read against the pass line.
  *
- * SIBLING OF `ChallengeDeliverableList`, NOT PART OF IT (per the task brief).
- * The deliverable list owns ONE ROW PER REQUIREMENT; this card owns the ROLL-UP
- * across all of them. Folding the total into the list would make the list's last
- * row secretly mean something different from the rest (a sum, not a requirement),
- * which is exactly the "quietly different row" trap `card.md` warns about.
+ * A sibling of `ChallengeDeliverableList`, not part of it: the list owns one row per
+ * requirement, this card owns the roll-up across all of them. Composed, not rebuilt:
+ * the card face + label is `SurfaceCard` (labeled), the bar is `ProgressMeter` with
+ * its `target` prop for the pass line.
  *
- * COMPOSED, NOT REBUILT (see `ContentModeNav`'s file header for the incident this
- * rule exists to prevent): the card face + label is `SurfaceCard` (labeled
- * variant), the bar is `ProgressMeter` with its `target` prop for the pass line —
- * nothing here hand-rolls a card shell or a progress track.
+ * One leaf: `earnedScore`/`maxScore`/`passThreshold` change only the numbers, never
+ * the tree shape, and even `isSkeleton` stays a state. The caption ("Passing needs
+ * every requirement, not just the total") is fixed, wired into `SurfaceCard`'s
+ * `description` slot rather than a prop.
  *
- * 📐 ONE LEAF (§14d.2). `earnedScore` / `maxScore` / `passThreshold` never change
- * the SHAPE of the tree — same score row, same meter, same caption — only the
- * numbers inside them. That makes every combination a STATE of one leaf
- * (`ChallengeScoreCard`), not a family of leaves; only `isSkeleton` is a second
- * axis, and even that stays a state (§11f) since the tree shape does not change,
- * only which atoms are shimmering.
- *
- * ⭐ THE CAPTION IS FIXED, NOT A PROP (§14d.1). "Passing needs every requirement,
- * not just the total" is true for every attempt this card will ever render, so it
- * is wired straight into `SurfaceCard`'s own `description` slot instead of being
- * threaded through as a string prop nobody would ever vary. That also means the
- * caption's shimmer is free: `SurfaceCard.isSkeleton` already owns `description`.
- *
- * ⚠️ `ProgressMeter` HAS NO `isSkeleton` OF ITS OWN YET (same gap `ContinueCard`
- * already documents). While `isSkeleton`, this block substitutes a bar-shaped
- * `HeroSkeleton` sized to the meter's own track height (`h-1`) instead of one —
- * SAME position in the tree, so nothing jumps when the real data lands.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ProgressMeter` has no `isSkeleton` of its own; while skeleton this block
+ * substitutes a bar-shaped `HeroSkeleton` sized to the meter's track height (`h-1`).
  */
 
 /** Props for {@link ChallengeScoreCard}. */

@@ -3,22 +3,18 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `ReactionPicker` — a row of image buttons, each scaling up and lifting with
- * its name floating above on hover, and popping in with a slight stagger when
- * the row first appears (Facebook-style reaction picker).
+ * `ReactionPicker` — a row of image buttons, each scaling up and lifting with its
+ * name floating above on hover, and popping in with a slight stagger when the row
+ * first appears (Facebook-style reaction picker).
  *
- * Owns all of the interaction CSS; callers only supply data (`items`,
- * `activeKey`, `onSelect`) — it has no notion of what the images represent,
- * so it is reusable for any small labeled-icon picker with this interaction.
+ * Owns all of the interaction CSS; callers supply only data (`items`, `activeKey`,
+ * `onSelect`), so it is reusable for any small labeled-icon picker with this
+ * interaction. `reactionPop` is a `@keyframes` defined in `src/app/globals.css`.
  *
- * `reactionPop` is a `@keyframes` defined in `src/app/globals.css` (Storybook's
- * `preview.tsx` imports the same file).
- *
- * @noSkeleton the reactions are a fixed set the caller declares, not a value fetched behind this
- * component. There is nothing standing behind the row to wait for, so a shimmer here would be a
- * shimmer for nothing — and the row already animates itself in, which is the opposite of a
- * placeholder holding space. If a product ever loads its reaction set over the wire, that product
- * has an async decision to make and it belongs to the block that owns the fetch, not here.
+ * @noSkeleton the reactions are a fixed set the caller declares, not a value
+ * fetched behind this component — there is nothing to wait for, and the row
+ * already animates itself in. A product that loads its reaction set over the wire
+ * owns that async decision in the block that owns the fetch, not here.
  */
 
 /** One pickable item in a {@link ReactionPicker} row. */

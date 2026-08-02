@@ -13,35 +13,20 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `AsyncContent.*`, the ONE async-state FRAME
- * namespace (teacher's call, 2026-07-25). Three sibling frames that used to live as
- * three loose folders (`AsyncContent` · `EmptyContent` · `ErrorContent`) are now
- * MEMBERS of one namespace — same tier, same job (holding the lifecycle of ONE
- * async data region: error → loading → empty → content), one import.
+ * `AsyncContent.*` — the async-state frame namespace holding the lifecycle of ONE
+ * async data region (error → loading → empty → content).
  *
  * | Member | Role | Content channel |
  * |---|---|---|
- * | `.Base`  | the STATE-SWITCH frame (4-branch switch) | slot `content` (+ `children` = shorthand), `skeleton`, `emptyContent`, `errorContent` |
- * | `.Empty` | the EMPTY-MESSAGE frame  | props `title`/`description`/`action` |
- * | `.Error` | the ERROR-MESSAGE frame   | props `title`/`description`/`action` |
+ * | `.Base`  | the state-switch frame (4-branch switch) | slot `content` (+ `children` shorthand), `skeleton`, `emptyContent`, `errorContent` |
+ * | `.Empty` | the empty-message frame | props `title`/`description`/`action` |
+ * | `.Error` | the error-message frame | props `title`/`description`/`action` |
  *
- * FRAME API LAW (§13b):
- * - `.Base` is a WRAPPER frame → the named slot (`content`) is the main path,
- *   `children` is still allowed (= `content` shorthand); the other three
- *   branches each get their own named slot (`skeleton` · `emptyContent` ·
- *   `errorContent`).
- * - `.Empty`/`.Error` are props-only MESSAGE frames — NO `children`: they don't
- *   wrap content, they LAY OUT a message (icon · title · description · action)
- *   already translated and passed in by the caller. They carry no domain
- *   text/semantics of their own.
- * - Namespace only — do NOT export a bare component.
- *
- * Each member's behaviour/skin stays VERBATIM from the old folders; this is an
- * API refactor, not a visual one. The one NEW thing: a general `action` slot on
- * `.Empty`/`.Error` (the `onRetry` + `retryLabel` shorthand still works exactly
- * as before). Synced to `src` later.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `.Base` is a wrapper frame: `content` is the main path (`children` = shorthand),
+ * the other three branches each get their own named slot. `.Empty`/`.Error` are
+ * props-only message frames with NO `children` — they lay out an
+ * icon/title/description/action message the caller passes in, carrying no domain
+ * text of their own. Namespace only — no bare component export.
  */
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -10,66 +10,16 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `FlashcardReviewPage`: browse decks and clear today's due queue, one
- * card at a time. Two phases, `overview` (pick what to study) and `session` (work
- * through one deck or the due queue) — never both on screen together.
+ * `FlashcardReviewPage` — the screen for browsing decks and clearing today's due
+ * queue one card at a time. Two phases, `overview` and `session`, never both at once.
+ * It composes blocks in frames and hands each typed data, drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. Every node below is one of the
- * SIX blocks the catalog already had (two reused — `FlashcardModeSwitch`,
- * `WorkSessionHeader` — four new this run) — this file draws no shape of its own,
- * following `QuizPage`'s own precedent exactly (same phase-cluster pattern,
- * same session band reused across phases with its own data each time).
- *
- * ⭐ `overview` HAS THREE BLOCKS, NOT ONE, AND THEY ANSWER DIFFERENT QUESTIONS.
- * `FlashcardDueHero` answers "what do I owe today, across every enrolled
- * course"; `FlashcardMasteryStrip` answers "how much of THIS deck do I actually
- * own"; `FlashcardDeckList` answers "which deck do I open". None of the three
- * subsumes another — collapsing them would either bury the due-today number
- * inside a deck list row (losing the cross-course total) or drop the mastery
- * readout into the hero (which the block's own file header already rejected,
- * since a due count and a mastery percentage are different questions).
- *
- * ⭐ `session` IS ONE SHAPE FOR TWO STARTING POINTS. Pressing "Start review" on
- * the due hero, resuming a paused batch, or opening a deck from the deck list all
- * land on the identical `WorkSessionHeader` + `FlashcardStudyCard` pair — the
- * screen does not fork on `kind: "due" | "deck"` because nothing about the two
- * blocks' shape or props changes between them; the difference is only which cards
- * the CALLER queued up before switching `phase`, which is state this screen does
- * not own.
- *
- * ⭐ THE MODE SWITCH DISAPPEARS THE MOMENT A SESSION STARTS, same reasoning as
- * `QuizPage`'s `FlashcardModeSwitch` and its own file header's "it disappears
- * once a session starts" note: switching between "Study cards"/"Quick quiz" mid-run
- * would abandon the run in progress, so the row is absent rather than disabled —
- * an absent control says the question is closed, a disabled one still invites
- * the tap.
- *
- * ⛔ NO CONFIRM DIALOG WIRED HERE, though the planner's tree asked for
- * `ConfirmDialog` directly inside `session` (leave/end-early). §0's import
- * boundary is exact — a screen calls blocks and frames, never a composite
- * directly — and `QuizPage`'s own file header already burned down the identical
- * question for its "ran out of questions" gap: the one documented exception
- * (`CourseContents`'s `AsyncContentEmpty`) replaces the ENTIRE screen body, not
- * one phase's one dialog. No block in today's catalog wraps a confirm shell, and
- * inventing a seventh block to hold one dialog is exactly the reach this run's
- * own brief (`ContentModeNav`'s file header) warns against. Left as a marked gap:
- * `WorkSessionHeader`'s back link already fires `onSessionBack` — whatever the
- * real screen does with that event (including opening a confirm dialog) is a
- * decision the CALLER makes above this component, not something faked here with
- * a bare composite import.
- *
- * ⛔ NO `FlashcardStudyRail`, confirmed dead code before this run started (see the
- * task brief) — the live mode/view navigation is `FlashcardModeSwitch` (session
- * picker) and the view toggle already living inside `FlashcardDeckList`.
- *
- * ⛔ `isSessionSkeleton` REACHES ONLY `FlashcardStudyCard`. `WorkSessionHeader`
- * carries no `isSkeleton` by design (its own file header: the band's shape — a
- * back link, a counter, a rail — is known before any card loads), so the flag is
- * not threaded to it, mirroring exactly how `QuizPage` stops `isSkeleton` short
- * of `WorkSessionHeader` and `QuizRecapList` for the same reason.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `overview` has three blocks answering different questions: `FlashcardDueHero` (what's
+ * owed today across courses), `FlashcardMasteryStrip` (how much of this deck is owned),
+ * `FlashcardDeckList` (which deck to open). `session` is one shape
+ * (`WorkSessionHeader` + `FlashcardStudyCard`) for both the due queue and a picked
+ * deck. The mode switch is absent once a session starts; `isSessionSkeleton` reaches
+ * only the study card.
  */
 
 /** Which part of the flashcard flow is on screen. */

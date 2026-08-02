@@ -18,21 +18,13 @@ import type {
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `Navbar`: the sticky top app bar. See the component's own file
- * header for the full port/reuse ledger; this story only exercises what a
- * caller actually configures.
- *
- * TWO LEAVES, by STRUCTURE (this run's own `LEAVES` line): the desktop row
- * (route pills + inline language/theme) and the mobile collapsed row (icon
- * bar + drawer trigger) are two DIFFERENT compositions — the desktop row has
- * no drawer trigger at all, the mobile row has no pills. Everything else
- * (signed-in vs guest, empty vs busy badges, drawer open vs closed) is DATA,
- * so it lives as a state tab inside the matching leaf, not a third leaf.
- *
- * Viewport note: both leaves render the SAME component (the `@app-md:` rules
- * live in its own className, not a separate prop), so the "Mobile" leaf pins a
- * narrow `renderClassName` frame to force the collapsed row into view instead
- * of relying on the Storybook canvas width.
+ * `Navbar` — the sticky top app bar. Two structural leaves: the desktop row
+ * (route pills + inline language/theme) and the mobile collapsed row (icon bar
+ * + drawer trigger) are different compositions. Signed-in vs guest, empty vs
+ * busy badges, and drawer open vs closed are data, so they are states inside
+ * the matching leaf. Both leaves render the same component (the `@app-md:`
+ * rules live in its className), so the mobile leaf pins a narrow
+ * `renderClassName` frame to force the collapsed row into view.
  */
 const meta: Meta<typeof Navbar> = {
     title: "StarCi/Blocks/Navigation/Navbar/Navbar",

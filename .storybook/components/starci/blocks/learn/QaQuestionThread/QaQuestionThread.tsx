@@ -15,78 +15,16 @@ import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QaQuestionThread`: ONE course-Q&A conversation. Collapsed, it is a
- * private social inbox row (asker, preview, scope + status, reply count,
- * status dot, the whole row pressable). Pressing it swaps in the FULL
- * conversation: a {@link QaConversationHeader}, the question itself as the
- * first chat bubble (own chips + reactions), every answer as a
- * {@link QaMessageBubble} (recursing internally for flattened reply-to-reply),
- * and a bottom plain {@link CourseQaComposer}. Port of `src`'s `QuestionRow`
- * (`src/components/features/learn/CourseQa/QuestionRow/index.tsx`), which
- * itself does `if (!expanded) return <QaInboxRow/>` — ONE component, a real
- * toggle, not two permanently-separate leaves. This file's story still treats
- * Collapsed/Expanded as two structural leaves (per the task brief) because the
- * DOM each side renders shares nothing beyond the outer wrapper.
- *
- * ⭐ REUSE FIRST — the collapsed row is `SurfaceCard.Pressable` (whole-card
- * press target, §"whole row pressable"), NOT a hand-rolled `role="button"` div
- * the way `src`'s `QaInboxRow` does it — this design system already owns that
- * behaviour. The expanded conversation is `SurfaceCard` (`.Base`) as its bounding
- * face. Chips route through `Cluster` (a same-kind repeating row, §13b), not a
- * hand-rolled wrapping flex.
- *
- * ⚠️ KNOWN LAYERING FRICTION WITH `CourseQaQuestionList` (built earlier in this
- * same run — see its file header's GAP note, ★2). That block's real usage
- * threads each question through `SurfaceCardList`'s FREE-FORM `content` slot,
- * which already supplies its own `p-3` + hover row + bottom separator — nesting
- * THIS block's own `SurfaceCard.Pressable` (its own `rounded-3xl` + `shadow-surface`)
- * inside that slot would double the card chrome (a floating rounded card inside
- * a flush divided row). This file still builds the collapsed leaf as a
- * standalone pressable card because that is what the task brief's compose-from
- * list and "whole row pressable" phrasing ask for, and because `QaQuestionThread`
- * is also a reasonable STANDALONE unit (used on its own, or inside a plain
- * `StackV` with `divider`, not only inside `SurfaceCardList`). Reconciling the
- * two — most likely by having `CourseQaQuestionList` switch its list surface to
- * a divider-only `StackV` once this block lands — is left to whichever pass
- * does that swap; flagged here rather than silently guessing one side away.
- *
- * ⚠️ ASSUMED CONTRACTS — FOUR of the five compose-from siblings did not exist
- * anywhere in `components/**` at the time this file was written (verified via
- * `Glob` immediately before writing, and re-verified once more mid-session as
- * sibling agents kept landing `CourseQaComposer`/`CourseQaToolbar` around this
- * one): `QaConversationHeader`, `QaChatBubble`, `QaReactionBar`,
- * `QaMessageBubble`. Their prop contracts below are this file's BEST-EFFORT
- * mirror of `src`'s real `QaConversationHeader`/`ChatBubble`/legacy
- * `ReactionBar`/real `QaMessageBubble` (all read in full before writing this
- * file), simplified to the plain-data props this task's own PROPS line allows
- * (`question, currentUserId, currentUser, onAnswered?, isSkeleton?` — no
- * per-answer reply/edit/delete/follow callbacks,
- * since none of those are named in the task's PURPOSE text either). `tsc` will
- * report an unresolved module for each of the four until its sibling file
- * lands — that is a dependency this task explicitly assigns to a different
- * agent, not a defect in this one. `CourseQaComposer` (the fifth) DID exist by
- * the time this file was written and is wired to its REAL, verified contract.
- *
- * ⭐ EVERYTHING BUT `onAnswered` IS LOCAL, EPHEMERAL UI STATE — deliberately,
- * mirroring `src`'s own `QuestionRow`: the real component ALSO keeps `expanded`,
- * the follow toggle, the answer draft and every reply/react/accept action
- * inside itself (via its own `useQuestionAnswers` facade hook) and exposes only
- * `onAnswered` outward ("bumps the parent roll-up's aggregates"). This design
- * system has no fetch/mutation layer to wire in its place, so reacting to a
- * message, accepting an answer, and posting a new one all mutate a local copy
- * of `question.answers` seeded once on mount — correct for a block instantiated
- * once per question (`key={question.id}` at the call site, exactly like `src`'s
- * `<QuestionRow key={question.id} .../>`), which is the only way this block is
- * ever used. The follow toggle itself is left OUT entirely (optional on
- * `QaConversationHeader`'s real contract) rather than guessed, to keep the
- * assumed-contract surface as small as the task's own PROPS line asks for.
- *
- * 📐 LEAVES BY STRUCTURE: `Collapsed` (inbox row) | `Expanded` (conversation).
- * Within `Expanded`, zero answers is a STATE ("be the first"), not a
- * third leaf — rules/2 §8's 0/1-3/many, same call `ContentDiscussion` already
- * makes for an empty comment list.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QaQuestionThread` — one course-Q&A conversation. Collapsed, it is a
+ * pressable inbox row (`SurfaceCard.Pressable`: asker, preview, scope + status,
+ * reply count, status dot). Pressing it swaps in the full conversation inside a
+ * `SurfaceCard`: a {@link QaConversationHeader}, the question as the first chat
+ * bubble, every answer as a {@link QaMessageBubble} (recursing for replies), and
+ * a bottom {@link CourseQaComposer}. Chips route through `Cluster`. Everything
+ * but `onAnswered` is local ephemeral UI state — expand, drafts, react/accept/
+ * post all mutate a local copy of `question.answers` seeded once per
+ * `key={question.id}` mount. Leaves by structure: `Collapsed` | `Expanded`;
+ * zero answers is a state within `Expanded`, not a third leaf.
  */
 
 /** Reaction kinds a message in this thread can carry (mirrors backend `ReactionType`). */

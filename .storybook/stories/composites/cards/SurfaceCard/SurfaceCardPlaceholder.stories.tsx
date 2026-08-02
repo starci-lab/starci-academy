@@ -3,21 +3,10 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { FilePlusIcon } from "@phosphor-icons/react"
 import { SurfaceCardPlaceholder } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 /**
- * FRAME (Layouts) — the "add new" tile: a `rounded-3xl` card with a DASHED border, pressable,
- * icon + label centered, muted. Carries no function beyond "this spot is empty, press to create."
- *
- * Press contract §7: only `active:scale`, NO hover-bg — the dashed tile sits still both at rest
- * and on hover, the only feedback is the press itself.
- *
- * ⚠️ STATE SCOPE (teacher's call 2026-07-25): this is the ONLY member that takes no content
- * (no slot, no `items`) — the story only has its OWN state: default icon vs. swapped icon,
- * `isSelected`, `isDisabled`, `isSkeleton`. No BlockAnatomy since this frame doesn't expose
- * `showAnatomy` (§11a: only attach an anatomy tree when there's a real `data-anat-part`).
- *
- * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `.Placeholder` is NOT on the list of members
- * that change `bordered`/`flushContent`/`compact` — `SurfaceCardPlaceholderProps` has none of
- * the props in those three axes (only `icon`/`label`/`onPress`/`isSelected`/`isDisabled`/
- * `isSkeleton`/`classNames`), so this story changes nothing in the prop codemod.
+ * `SurfaceCardPlaceholder` — the "add new" tile: a `rounded-3xl` card with a dashed border,
+ * pressable, icon + label centered, muted. Press feedback is `active:scale` only, no hover-bg.
+ * The only card member that takes no content. Props: `icon`, `label`, `onPress`, `isSelected`,
+ * `isDisabled`, `isSkeleton`.
  */
 const meta: Meta<typeof SurfaceCardPlaceholder> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardPlaceholder",

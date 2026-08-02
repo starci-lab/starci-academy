@@ -19,11 +19,9 @@ import { VariantChipDifficulty } from "@sb-components/starci/blocks/learn/Varian
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE (teacher confirmed 2026-07-25): `ListRow` is a SINGLE-ROW frame. What
- * it produces: toggling each slot on/off (`leading`/`subtitle`/`meta`/`trailing`), the
- * `divider` separator line, swapping the wrapper tag on interaction (`href`/`onPress`),
- * and mirroring `isSkeleton` for THIS row itself. The section label (`label` + CTA) and
- * the list's EMPTY state belong to `ListLabeled`, NOT repeated here.
+ * `ListRow` — a single-row frame: toggling each slot on/off (`leading`/`subtitle`/`meta`/`trailing`),
+ * the `divider` separator line, swapping the wrapper tag on interaction (`href`/`onPress`), and
+ * mirroring `isSkeleton` for the row. The section label and the list's empty state belong to `ListLabeled`.
  */
 const meta: Meta<typeof ListRow> = {
     title: "Composites/Lists/List/ListRow",

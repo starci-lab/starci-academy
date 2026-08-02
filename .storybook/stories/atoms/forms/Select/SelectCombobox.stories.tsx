@@ -4,15 +4,14 @@ import { SelectCombobox } from "@sb-components/atoms/forms/Select/Select"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `SelectCombobox`: a type-to-filter single-select autocomplete, wrapping
- * HeroUI `ComboBox` directly.
- *
+ * ATOM — `SelectCombobox`: a type-to-filter single-select autocomplete, wrapping HeroUI
+ * `ComboBox` directly.
+ * 
  * Leaf atoms: the typed field + caret is HeroUI `Input`/`ComboBox.Trigger`, the
- * label/description/error frame is the INTERNAL `FieldFrame` (no story of its
- * own). No component here has its own story to jump to ⇒ `annotate` has no
- * `storyId` — but the four real heroui parts (`Input`/`ComboBox.Trigger`/
- * `Label`/`Skeleton`) still need `tier: "heroui"` so the two-law panel doesn't
- * silently miss them (2026-07-28).
+ * label/description/error frame is the internal `FieldFrame` (no story of its own). No
+ * component here has its own story ⇒ `annotate` has no `storyId` — but the four real HeroUI
+ * parts (`Input`/`ComboBox.Trigger`/`Label`/`Skeleton`) get `tier: "heroui"` so the two-law
+ * panel doesn't silently miss them.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Input": { tier: "heroui", role: "typed filter text field" },

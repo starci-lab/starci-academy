@@ -6,21 +6,12 @@ import { ButtonBase } from "@sb-components/atoms/buttons/Button/ButtonBase"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE (PREREQUISITE) — `CollapsibleSidebar`: a content-agnostic shell for a
- * left navigation sidebar that collapses IN PLACE (no overlay/Drawer). Owns
- * collapse/expand, the width animation, persisting the choice to
- * `localStorage`, and a `useSidebarCollapsed` context so nav-row content can
- * self-adapt to the icon-only rail. It never inspects `children` — this story's
- * `DemoNavRow` is throwaway story-local content only, standing in for the real
- * nav-row block (`SidebarNavGroup`/`SidebarNavItem`), which is a separate,
- * not-yet-built item.
- *
- * ⚠️ Filed under `blocks/navigation/` per this run's write-scope boundary, not
- * `components/composites/` where it architecturally belongs (§5b) — see the
- * component file header for the full judgment call.
- *
- * 📐 ONE LEAF — the panel has exactly one shape; `topSlot` presence and the
- * collapsed flag are DATA, so they are STATES, not separate leaves.
+ * `CollapsibleSidebar` — a content-agnostic shell for a left navigation sidebar
+ * that collapses in place (no overlay/Drawer). Owns collapse/expand, the width
+ * animation, persisting the choice to `localStorage`, and a `useSidebarCollapsed`
+ * context so nav-row content can self-adapt to the icon-only rail. It never
+ * inspects `children`. One leaf: `topSlot` presence and the collapsed flag are
+ * data, so they are states, not separate leaves.
  */
 const meta: Meta<typeof CollapsibleSidebar> = {
     title: "StarCi/Blocks/Navigation/CollapsibleSidebar/CollapsibleSidebar",

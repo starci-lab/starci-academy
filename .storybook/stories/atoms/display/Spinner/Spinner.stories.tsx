@@ -3,15 +3,11 @@ import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Spinner`: wraps HeroUI Spinner directly, only forcing `size`/`tone` (§4).
- *
- * ⭐ LEAF atom — it composes NO atom OF OUR OWN with its own story, so it has no
- * atom-tier dep. But `` is attached to `HeroSpinner` itself —
- * ONE `@heroui/react` IMPORT rendered directly, so it still enters the tree with
- * `tier: "heroui"` (no `storyId`, the library has no story of ours to jump to) —
- * §heroui, teacher's call 2026-07-27/28. The previous version dropped `annotate`
- * entirely, conflating two different rules: "no storyId ⇒ skip the dep" (true for
- * OUR OWN atoms) was wrongly applied to the heroui node too.
+ * ATOM — `Spinner`: wraps HeroUI Spinner directly, only forcing `size`/`tone`.
+ * 
+ * LEAF atom — it composes no atom of our own with a story, so it has no atom-tier dep.
+ * It renders one `@heroui/react` import directly, so `HeroSpinner` enters the tree with
+ * `tier: "heroui"` (no `storyId`, the library has no story of ours to jump to).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Spinner": {

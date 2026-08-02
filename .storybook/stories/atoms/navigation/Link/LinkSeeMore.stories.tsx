@@ -3,40 +3,23 @@ import { LinkSeeMore } from "@sb-components/atoms/navigation/Link/Link"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `LinkSeeMore`: the system's ONE "See more →" / "Continue →" affordance,
- * shared by `SurfaceCard`'s header (`onSeeMore`) and `ContinueCard`'s item CTA
- * (`decorative`).
- *
- * 2026-07-26: merged from `SeeMoreLink.Base` into the `Link.*` namespace alongside
- * `LinkBack` (§12a), two shapes of the same "text-link + arrow" concept.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g). `decorative` and `size` have visual form → each gets
- * its own leaf, rendering the FULL union. `label` is TEXT (§12g.2) so it has NO leaf of
- * its own — every other leaf still has to pass it. Props with no visual form
- * (`className`) get NO leaf.
- *
- * ⚠️ `onPress` has NO leaf of its own — whether or not there's a handler, the text +
- * arrow are identical, only the press behavior changes (not pixels). `href` is the same:
- * it changes the rendered TAG (`<a>` instead of HeroUI `Link`) but does NOT change pixels
- * (§12g.1, the "tag change ≠ visual change" test), so there's NO separate `WithHref`
- * leaf; calling with `href` only shows up in the Code tab of the bare leaf.
- *
- * 🔗 The bare leaf is named `Default` (renamed from `OnPress` on 2026-07-26, `onPress`
- * has no visual form so it can't name a leaf). `SurfaceCard` pins this leaf's story
- * id into its `ANNOTATE` deps; renaming the export here MUST come with updating the
- * `storyId` over there, or the Deps link breaks silently (no build error, the click
- * just doesn't navigate).
- *
- * ⚠️ The story id changed with this merge (`atoms-navigation-seemorelink-base--*` →
- * `atoms-navigation-link-link-see-more--*`), whoever coordinates this needs to sweep
- * every `storyId` pinned to this atom (e.g. `SurfaceCard`).
- *
- * `annotate` (2026-07-27, heroui tier added to canon): the root is HeroUI `Link`
- * ONLY on the `onPress`/no-`href`/non-`decorative` branch — that's the only branch
- * tagged `"Link"` (tier heroui) in `ANNOTATE` below. The `href` branch renders a
- * plain `<a>` and the `decorative` branch a plain `<span>`; neither is a real HeroUI
- * or system component, so neither gets a fallback tag (Rule 1 — a node's name must
- * match what's actually rendered, not a role).
+ * ATOM — `LinkSeeMore`: the system's one "See more →" / "Continue →" affordance, shared by
+ * `SurfaceCard`'s header (`onSeeMore`) and `ContinueCard`'s item CTA (`decorative`). Lives
+ * in the `Link.*` namespace alongside `LinkBack` — two shapes of the same "text-link + arrow"
+ * concept.
+ * 
+ * 1 PROP = 1 LEAF. `decorative` and `size` have visual form → each gets its own leaf
+ * rendering the full union. `label` is text, so no leaf. Props with no visual form
+ * (`className`, `onPress`) get no leaf. `href` changes the rendered tag (`<a>` vs HeroUI
+ * `Link`) but not the pixels, so there's no separate `WithHref` leaf.
+ * 
+ * The bare leaf is `Default`. `SurfaceCard` pins this leaf's story id into its `ANNOTATE`
+ * deps; renaming the export here must update the `storyId` there, or the Deps link breaks
+ * silently.
+ * 
+ * `annotate`: the root is HeroUI `Link` only on the `onPress`/no-`href`/non-`decorative`
+ * branch — that's the only branch tagged `"Link"` (tier heroui). The `href` branch renders a
+ * plain `<a>` and the `decorative` branch a plain `<span>`; neither gets a fallback tag.
  */
 
 const meta: Meta<typeof LinkSeeMore> = {

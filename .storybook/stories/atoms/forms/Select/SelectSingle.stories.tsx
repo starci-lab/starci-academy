@@ -4,15 +4,13 @@ import { SelectSingle } from "@sb-components/atoms/forms/Select/Select"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `SelectSingle`: a SINGLE-pick dropdown, wraps HeroUI `Select` directly.
- *
- * Leaf atom: the BARE control is HeroUI `Select.Trigger`/`Select.Value`/`Select.Popover`,
- * the label/description/error frame is the INTERNAL `FieldFrame` (no story of its own).
- * No component here has its own story to jump to ⇒ `annotate` carries no `storyId`
- * — but the four real heroui parts (`Select.Trigger`/`Select.Value`/`Label`/`Skeleton`)
- * still need the `heroui` tier so the two-rule panel doesn't silently drop them (2026-07-28).
- *
- * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a).
+ * ATOM — `SelectSingle`: a single-pick dropdown, wraps HeroUI `Select` directly.
+ * 
+ * Leaf atom: the bare control is HeroUI `Select.Trigger`/`Select.Value`/`Select.Popover`, the
+ * label/description/error frame is the internal `FieldFrame` (no story of its own). No
+ * component here has its own story ⇒ `annotate` carries no `storyId` — but the four real
+ * HeroUI parts (`Select.Trigger`/`Select.Value`/`Label`/`Skeleton`) get the `heroui` tier so
+ * the two-rule panel doesn't silently drop them.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Select.Trigger": { tier: "heroui", role: "dropdown trigger button" },

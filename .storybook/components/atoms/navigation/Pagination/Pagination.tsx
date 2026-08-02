@@ -5,16 +5,13 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * `Pagination` — the single page-nav atom wrapping HeroUI `Pagination`.
  *
- * Controlled + presentational: pass `currentPage` / `totalPages` and a raw
- * `onPageChange`; the atom renders the full HeroUI compound —
- * `Pagination.Content > Item > (Previous | Link | Ellipsis | Next)` — and owns
- * prev/next clamping and windowing. When the page count is large it collapses
- * distant pages behind `Pagination.Ellipsis` (first · … · current±siblings ·
- * … · last); a short list shows every page.
+ * Controlled and presentational: pass `currentPage` / `totalPages` and a raw
+ * `onPageChange`; the atom renders the full HeroUI compound and owns prev/next
+ * clamping and windowing. A large page count collapses distant pages behind
+ * `Pagination.Ellipsis` (first · … · current±siblings · … · last); a short list
+ * shows every page.
  *
- * Only `Pagination` is exported — no bare component. No `children` — the
- * pager is fully data-driven (`currentPage`/`totalPages`). The atom owns
- * clamping/windowing/aria; the consumer never touches the compound.
+ * Only `Pagination` is exported. No `children` — the pager is fully data-driven.
  * `isSkeleton` renders a co-located control skeleton.
  */
 

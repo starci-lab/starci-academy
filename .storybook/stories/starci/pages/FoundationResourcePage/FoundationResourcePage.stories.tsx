@@ -4,25 +4,13 @@ import { FoundationKind } from "@sb-components/starci/blocks/learn/FoundationHea
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `FoundationResourcePage`: one foundation resource's own page.
- *
- * THREE FUNCTIONS, in the order the reader meets them: say if this trial
- * learner should upgrade · what the resource is · the resource itself. Each
- * is a block — the screen itself draws no shape at all.
- *
- * ⭐ THE TRIAL BANNER SITS OUTSIDE THE `isEmpty` SWITCH. It answers a question
- * ("is this learner on a trial") that has nothing to do with whether the
- * particular resource id resolved to anything, so it stays on screen even
- * when the identity + body pair below it is replaced by the empty state. The
- * block already self-hides on its own two grounds — the screen adds no third
- * condition.
- *
- * 📐 THREE LEAVES. `Resource` (the identity + body pair, kind switched as a
- * DATA condition — the screen's own tree never restructures across
- * `document`/`video`/`external_link`, only `FoundationResourceBody`'s
- * INTERNAL tree does) · `Empty` (the id resolved to nothing — the identity +
- * body pair is replaced wholesale) · `Skeleton` (every block that can mirror
- * itself does).
+ * `FoundationResourcePage` — the screen for one foundation resource's own page.
+ * Three functions, in reading order: say if this trial learner should upgrade ·
+ * what the resource is · the resource itself. The trial banner sits outside the
+ * `isEmpty` switch — it answers whether the learner is on a trial, unrelated to
+ * whether the resource id resolved, and self-hides on its own grounds. Three
+ * leaves: `Resource` (identity + body, kind switched as data inside
+ * `FoundationResourceBody`) · `Empty` (the id resolved to nothing) · `Skeleton`.
  */
 const meta: Meta<typeof FoundationResourcePage> = {
     title: "StarCi/Pages/FoundationResourcePage/FoundationResourcePage",

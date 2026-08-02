@@ -14,61 +14,14 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ProfileTabsBar`: the public-profile route strip (overview / projects
- * / challenges / skills / cv / activity), sibling of `SettingsSidebarNav` under
- * `blocks/navigation/` — same idea (a block-owned destination vocabulary over a
- * generic nav atom), different shape (a full-width top strip vs a side rail).
- *
- * ⭐ GROUND TRUTH: `src/components/features/profile/PublicProfile/ProfileTabsBar`
- * already exists and is what this ports. Its real props are `username` +
- * `isSelf` + `hasPublicCv` + `sectionVisibility` — it computes `visibleTabs`/
- * `activeTab` ITSELF from those, via `useMemo`, then `router.push`es a built
- * href on selection, and reads the active tab back off `usePathname()`. ALL of
- * that — routing, the URL↔tab derivation, and the gating computation from raw
- * viewer/user flags — is APP WIRING (same discipline as an overlay never owning
- * its store, brief rule 13, extended here to a routed nav strip): this block
- * takes the ALREADY-COMPUTED result as plain props (`activeTab`, `visibleTabs`,
- * `onTabChange`, `hiddenTabs`) and never touches `next/navigation` or a gating
- * flag itself. The screen (real `[username]/layout.tsx` counterpart) is where
- * `isSelf`/`hasPublicCv`/`sectionVisibility` actually get read and turned into
- * these three arrays.
- *
- * ⭐ `hiddenTabs` is NOT "tabs to remove" — those are already absent from
- * `visibleTabs` (a visitor never receives a withheld section's key at all, per
- * the real `visibleTabs` filter). `hiddenTabs` is the OWNER-ONLY "· hidden" marker:
- * a subset of `visibleTabs` the owner sees annotated because they turned that
- * section off for everyone else. A caller viewing as a visitor simply never
- * passes a tab here (their withheld tabs already never reached `visibleTabs`).
- *
- * ⭐ WHY `TabsExtended`, NOT `TabsBase` — this is the exact "read the file header
- * first" case the task brief calls out. `TabsBase` is data-driven (`items`,
- * `label: ReactNode` + `icon` as ONE atom-owned glyph), which cannot express
- * this row's actual chrome: the icon stays visible on every width while the
- * LABEL (and the marker riding beside it) specifically drops out below
- * `@app-md` — two independently-toggled regions inside one tab, not one label
- * slot. `TabsExtended` is the named exception for exactly this ("each tab may
- * carry chrome a `TabItem` cannot", see its own file header) — and it is the
- * SAME atom the real `ProfileTabsBar` composes with (`ExtendedTabs` there).
- * Reaching for `TabsBase` here would repeat the very mistake ("ContentTabBar")
- * the brief opens with, just in the other direction — bending a data-only atom
- * to fit chrome it was never given.
- *
- * ⭐ THE DESTINATION VOCABULARY IS AN ENUM THE BLOCK OWNS (§14d.1), same call as
- * `ContentModeNav`'s `MODE_LABEL`/`MODE_ICON` and `SettingsSidebarNav`'s
- * `DESTINATION_LABEL`/`DESTINATION_ICON` — icons ported 1:1 from the real
- * `TAB_ICONS` table so this reads as ONE control, not a second guess at it.
- *
- * NEVER SKELETONISED, on purpose — same call as `ContentModeNav`/
- * `SettingsSidebarNav`/`LeaderboardCategoryNav`: by the time this block mounts,
- * the caller already resolved `visibleTabs` from profile data, so there is no
- * partial-chrome state for this row to own.
- *
- * ONE LEAF by STRUCTURE: every tab is the same `icon + responsive label(+
- * marker)` shape: which tabs are present, which is active, and which carries
- * the owner marker are DATA, not a structural fork — so this ships one leaf
- * with states, not several leaves.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ProfileTabsBar` — the public-profile route strip (overview / projects /
+ * challenges / skills / cv / activity). Takes already-computed props
+ * (`activeTab`, `visibleTabs`, `onTabChange`, `hiddenTabs`); routing and the
+ * URL<->tab derivation are app wiring done by the screen. `hiddenTabs` is the
+ * owner-only "· hidden" marker on a subset of `visibleTabs`, not tabs to remove.
+ * Uses `TabsExtended` (icon stays visible while the label + marker drop below
+ * `@app-md` — two independently-toggled regions per tab). The destination
+ * vocabulary is a block-owned enum. Never skeletonised. One leaf.
  */
 
 /** Every public-profile destination this strip can offer — ported from the real `ProfileTab`. */

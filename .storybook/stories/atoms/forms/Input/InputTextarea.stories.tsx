@@ -8,12 +8,10 @@ export default meta
 type Story = StoryObj
 
 /**
- * LEAF ATOM — `InputTextarea` wraps HeroUI `TextField`/`TextArea` + an internal
- * `FieldFrame` (§11a). No component here has its own story ⇒ `annotate` carries no
- * `storyId` — but the heroui `TextArea` along with `FieldFrame`'s `Label`/`Skeleton`
- * still need tier `heroui` so the two-law panel doesn't silently skip them
- * (2026-07-28). `Description`/`Error` are left undeclared — they're just bare
- * `<p>` tags.
+ * LEAF ATOM — `InputTextarea` wraps HeroUI `TextField`/`TextArea` + an internal `FieldFrame`.
+ * No component here has its own story ⇒ `annotate` carries no `storyId` — but the HeroUI
+ * `TextArea` plus `FieldFrame`'s `Label`/`Skeleton` get tier `heroui` so the two-law panel
+ * doesn't silently skip them. `Description`/`Error` are left undeclared — bare `<p>` tags.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "TextArea": { tier: "heroui", role: "multi-line text field" },

@@ -4,21 +4,9 @@ import { FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceCardNested, type SurfaceCardNestedSection } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `SurfaceCardNested` is the
- * CARD-IN-CARD frame — the only thing it adds over `.Base` is: a HEADER BAR sitting
- * INSIDE the frame (eyebrow icon + title + meta), a BODY split into sections by
- * dividers (`items`), a FOOTER bar, and a `radius` corner tier. The header section
- * OUTSIDE the card (label/see-more/action) belongs to `.Base` — NOT repeated here.
- *
- * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `bordered?: boolean` →
- * `variant?: SurfaceCardVariant` (`"surface" | "nested"`), `compact?: boolean` →
- * `radius?: "xl" | "3xl"`. The two old single-value leaves (`Bordered`, `Compact`)
- * merge into two leaves named after the PROP (`Variant`, `Radius`), each rendering
- * the full union side by side instead of just the value that differs from default.
- *
- * 2026-07-27: migrated to the `states` API (§8) — each leaf's stacked renders are
- * now `states[]` entries with their own `why`/`code`, instead of hand-labelled
- * siblings inside `children`.
+ * `SurfaceCardNested` — the card-in-card frame. Over the base it adds a header bar inside the
+ * frame (eyebrow icon + title + meta), a body split into sections by dividers (`items`), a
+ * footer bar, a `variant` (`"surface" | "nested"`) and a `radius` corner tier (`"xl" | "3xl"`).
  */
 const meta: Meta<typeof SurfaceCardNested> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardNested",

@@ -9,24 +9,12 @@ import { RatingBar, type RatingOption } from "@sb-components/starci/blocks/learn
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QuizRecapList`: the run is over, go back over what you answered and
- * say how well you actually knew each one.
- *
- * ⭐ THE GRADE HERE IS NOT THE VERDICT FROM THE RUN. During the drill the system
- * judged whether the answer was right; here the LEARNER judges how well they
- * remembered. They are different questions, and a card can be marked correct and
- * still be one the learner wants back tomorrow — which is exactly the case the
- * spaced-repetition schedule needs and the automatic verdict cannot see.
- *
- * ⭐ ALREADY-GRADED CARDS KEEP THEIR RATING BAR. Nothing collapses or locks after
- * a tap: a learner going back over a run changes their mind, and taking the
- * control away would make the first tap final without ever saying so.
- *
- * PROGRESS IS COUNTED, NOT CELEBRATED. A quiet line says how many are still
- * unrated. No confetti, no score — the recap is work, and the learner is here to
- * finish it rather than to be congratulated for starting.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QuizRecapList` — after a run ends, go back over each answer and rate how well
+ * you actually knew it. This grade is the learner's self-assessment for the
+ * spaced-repetition schedule, distinct from the run's automatic right/wrong
+ * verdict. Already-graded cards keep their rating bar (a learner can change
+ * their mind). Progress is a quiet count of unrated cards — no score, no
+ * confetti.
  */
 
 /** One answered card in the recap. */

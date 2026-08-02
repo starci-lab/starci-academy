@@ -21,44 +21,16 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { SplitWorkspace } from "@sb-components/frames/SplitWorkspace/SplitWorkspace"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `ChallengePage`: solve one challenge.
+ * `ChallengePage` — the screen for solving one challenge. It composes blocks in
+ * frames and hands each typed data, drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own —
- * every `div` here would be a shape it had no right to decide.
- *
- * FIVE FUNCTIONS, split across a read column and an act column, mirroring the
- * real `src/.../Challenge/ChallengeView` split ("read a brief, submit a repo,
- * get AI-graded") — READ: (1) what this challenge is — score, difficulty, the
- * learner's own status; (2) the brief itself — prerequisites, requirements,
- * guided steps, expected outputs, hint. ACT: (3) submit each requirement's repo
- * URL and see its graded verdict + feedback; (4) reopen grading settings (the
- * language picker) as a chrome trigger; (5) the roll-up score against the pass
- * line.
- *
- * TWO COLUMNS, NOT ONE. `src`'s `ChallengeView` is explicit about this being a
- * SPLIT WORKSPACE, not a single reading column with a card bolted to the
- * bottom: the read column and the act column answer different questions ("what
- * do I need to do" vs "how did it go / let me try"), so `ChallengeDeliverableList`
- * + `ChallengeScoreCard` sit in their own track beside the brief instead of
- * being appended under it. Composed with `SplitWorkspace` (§ layout frame,
- * 2026-07-29) — `min-w-0 flex-1` reading column beside a `shrink-0 w-[360px]`
- * sticky aside, STACKED (mobile/tablet) → `@app-xl:flex-row` (desktop) —
- * matching `src`'s own responsive axis exactly (was `StackH…wrap`, a fixed
- * horizontal axis that never actually stacked below desktop; the reviewer caught the
- * render forcing side-by-side even on mobile). `Container size="xl"` (not the
- * `md` a single-column screen like `ContentPage`/`CourseContents` uses) is
- * what actually buys the room: at `md` (48rem) the two columns would fight
- * each other for space the moment `ChallengeDeliverableList`'s card face
- * wants to breathe.
- *
- * ⚠️ SCOPE OF THIS PASS, inherited from `ChallengeDeliverableList`'s own file
- * header: the grading-settings drawer (language picker + private-repo token,
- * `src`'s `Drawer`) is NOT built. `onOpenGradingSettings` is wired as a chrome
- * trigger only — leaving the drawer's content as a gap is the honest state,
- * not a stub that renders nothing real (§B3).
- * ─────────────────────────────────────────────────────────────────────────────
+ * A read column and an act column, split with `SplitWorkspace` (`Container size="xl"`,
+ * stacked on mobile/tablet, side-by-side from `@app-xl`). READ: what this challenge
+ * is (score, difficulty, the learner's status) and the brief (prerequisites,
+ * requirements, guided steps, expected outputs, hint). ACT: submit each requirement's
+ * repo URL and see its graded verdict + feedback, a grading-settings trigger, and the
+ * roll-up score against the pass line. The grading-settings drawer content is out of
+ * scope; `onOpenGradingSettings` is a chrome trigger only.
  */
 
 /** Props for {@link ChallengePage}. */

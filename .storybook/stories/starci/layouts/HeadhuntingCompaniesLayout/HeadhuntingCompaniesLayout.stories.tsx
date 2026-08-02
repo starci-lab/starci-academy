@@ -5,21 +5,12 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT — `HeadhuntingCompaniesLayout`: the wrapper for every route under
- * `courses/[courseId]/headhunting-companies/**`. See the component's own file
- * header for the full RULE 12 reasoning (why this is a layout, why it is a
- * thinner sibling of `LearnShell`, and why its rail is a marked §B3 gap).
- *
- * ⚠️ `@app-lg` is a CONTAINER query, not a viewport one — it measures the
- * nearest `@container`, not the browser window. To demo both the desktop and
- * the narrow shape in one page, each state below opens its OWN `@container`
- * at a fixed width straddling `--container-app-lg` (64rem), exactly the idiom
- * `Grid`'s own story already uses to demo a breakpoint.
- *
- * 📐 ONE LEAF. The layout takes no prop besides `children`/`className` — there
- * is no second SHAPE to switch between, only the ambient container width the
- * real app shell would provide. That is a STATE of this one leaf, not a
- * second leaf.
+ * `HeadhuntingCompaniesLayout` — the wrapper for every route under
+ * `courses/[courseId]/headhunting-companies/**`, a thinner sibling of
+ * `LearnShell`. `@app-lg` is a container query measuring the nearest
+ * `@container`, not the viewport. One leaf: the layout takes no prop besides
+ * `children`/`className`, so the ambient container width is a state, not a
+ * second shape.
  */
 const meta: Meta<typeof HeadhuntingCompaniesLayout> = {
     title: "StarCi/Layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout",

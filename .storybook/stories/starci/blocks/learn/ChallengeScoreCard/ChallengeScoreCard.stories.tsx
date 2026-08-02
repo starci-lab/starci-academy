@@ -3,22 +3,12 @@ import { ChallengeScoreCard } from "@sb-components/starci/blocks/learn/Challenge
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ChallengeScoreCard`: "Your result" — the aggregate earned/max
- * score for a finished challenge attempt, read against the pass line.
- *
- * SIBLING OF `ChallengeDeliverableList`, NOT PART OF IT. The deliverable list
- * owns one row per requirement; this card owns the roll-up across all of them —
- * a small, single-fact block kept deliberately separate so the list's rows never
- * have to make room for a total that is not one of them.
- *
- * COMPOSED, NOT REBUILT: the card face is `SurfaceCard` (labeled variant, its
- * `description` slot carrying the fixed pass-condition caption), the bar is
- * `ProgressMeter` with its `target` prop for the pass line.
- *
- * 📐 ONE LEAF (§14d.2). `earnedScore` / `maxScore` / `passThreshold` only ever
- * change the NUMBERS inside the same score row + meter + caption, never the
- * shape of the tree — so every combination, including `isSkeleton`, is a STATE
- * of the one leaf below, not a family of leaves.
+ * `ChallengeScoreCard` — "Your result": the aggregate earned/max score for a
+ * finished challenge attempt, read against the pass line. The roll-up sibling of
+ * `ChallengeDeliverableList`. The card face is `SurfaceCard` (labeled, its
+ * `description` slot the pass-condition caption); the bar is `ProgressMeter` with
+ * a `target` for the pass line. `earnedScore`/`maxScore`/`passThreshold` and
+ * `isSkeleton` only change the numbers.
  */
 const meta: Meta<typeof ChallengeScoreCard> = {
     title: "StarCi/Blocks/Learn/ChallengeScoreCard/ChallengeScoreCard",

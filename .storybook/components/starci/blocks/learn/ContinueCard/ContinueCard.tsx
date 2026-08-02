@@ -10,36 +10,11 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * DESIGN — `ContinueCard.*`: "come back to where you left off".
- *
- * ⭐ MEMBER SPLIT 2026-07-26 (teacher finalized) — before this it was ONE component
- * with `variant: "item" | "hero" | "plain"`, i.e. a SHAPE AXIS for the caller to
- * pick. §14d.1 forbids that at the design tier: design OWNS both shape and text,
- * the caller only supplies DATA.
- *
- * But merging into one shape was also wrong: checking `src`, `hero` (2 spots) and
- * `item` (4 spots) are both running for real, and they **differ in WHY**, not in
- * appearance — §14d says *different WHY means SPLIT*:
- *
- * | Member | WHY | Shape (component decides itself, no open prop) |
- * |---|---|---|
- * | `.Hero` | ONE single highlight on a surface | card face + light streak + CTA is a BUTTON |
- * | `.Item` | ONE of N cards in a list | flat card face + CTA is a LINK |
- *
- * Two heroes side by side cancel each other's emphasis — that's why `.Item` has
- * no light streak, not because it's a "stripped-down version".
- *
- * ⚠️ REMOVED: `variant="plain"` (frameless). The §14d.3 test — *which screen in
- * the app needs it?* — `src` uses it in **0 places**, it only lives in its own story.
- *
- * ⚠️ REMOVED per §14d.1: `ctaLabel`/`eyebrow` (caller-set labels — the same anchor
- * as `CourseTeamGate.actionLabel`) · `icon` (swapping icons + injecting JSX). The
- * CTA label and watermark glyph now belong to the component itself.
- *
- * ⚠️ Content props TIGHTEN THEIR TYPE (§14d.1 consequence 2): `title`/`subtitle`/`meta`/`timeLeft`
- * go from `ReactNode` → `string`. `ReactNode` was a door for the caller to slip a shape in.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ContinueCard.*` — a "come back to where you left off" card, in two members that
+ * differ in role: `.Hero` is a single highlighted card face with a light streak and
+ * a CTA button; `.Item` is one flat card among many in a list with a CTA link.
+ * The component owns its own CTA label and watermark glyph; callers supply only data
+ * (`title`/`subtitle`/`meta`/`timeLeft` as strings).
  */
 /** CTA label — a design CONSTANT, not opened to the caller (§14d.1). */
 const CTA_LABEL = "Continue"

@@ -3,23 +3,13 @@ import { LeaderboardToolbar } from "@sb-components/starci/blocks/learn/Leaderboa
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `LeaderboardToolbar`: the strip above the ranking — "ranked by X" on
- * the left, a quiet last-updated fact next to it, a plain refresh button on
- * the right. It sits OUTSIDE the board's async region, which is why it is its
- * own block rather than living inside whatever wraps the ranked list.
- *
- * ⚠️ HAND-COMPOSED FROM ATOMS, ON PURPOSE. No composite draws this exact
- * "label · muted timestamp · secondary button" shape — `Toolbar` in
- * `composites/navigation` is two TAB GROUPS, not a fact strip. See the
- * component's own file header for the full reasoning.
- *
- * OWNS TWO PIECES OF WORDING (§14d.1): the "Ranked by …" template and the
- * relative-time phrasing built from a plain `updatedAt: Date` — the caller
- * never hands over a ready-made sentence.
- *
- * 📐 ONE LEAF (§14d.2). Whether `updatedAt` has landed yet and whether a
- * refresh is in flight are DATA conditions on the same three-slot row — none
- * of them add or remove a composed node — so they stay states inside `Toolbar`.
+ * `LeaderboardToolbar` — the strip above the ranking: "ranked by X" on the left, a
+ * quiet last-updated fact beside it, a plain refresh button on the right. It sits
+ * outside the board's async region, hence its own block. Hand-composed from atoms —
+ * no composite draws this "label · muted timestamp · secondary button" shape. Owns
+ * the "Ranked by …" template and the relative-time phrasing built from a plain
+ * `updatedAt: Date`. Whether the timestamp has landed and whether a refresh is in
+ * flight are states on the same three-slot row.
  */
 const meta: Meta<typeof LeaderboardToolbar> = {
     title: "StarCi/Blocks/Learn/LeaderboardToolbar/LeaderboardToolbar",

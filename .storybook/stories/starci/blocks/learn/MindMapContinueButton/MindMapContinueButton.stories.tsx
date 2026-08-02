@@ -3,19 +3,11 @@ import { MindMapContinueButton } from "@sb-components/starci/blocks/learn/MindMa
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `MindMapContinueButton`: the single floating "what's next" action over
- * the course mind-map. Grounded in
- * `src/components/features/learn/MindMap/MindMapContinueButton/index.tsx`.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). `resumeHref` swaps the whole node from a
- * `Button` (pressable, arrow) to a `Typography` note (inert) — two different
- * atoms, not one shape with a flag — so "resume available" vs "all done" are
- * separate LEAVES. `isSkeleton` is its own leaf too, same precedent as
- * `ContentHeader`'s and `ModuleContinueBand`'s `Skeleton` leaf.
- *
- * ⛔ NO "renders nothing" leaf. The real component returns `null` for a guest
- * whose progress has not resolved into a verdict either way — real behaviour,
- * documented in the component file header, but nothing a leaf can show.
+ * `MindMapContinueButton` — the single floating "what's next" action over the
+ * course mind-map. `resumeHref` swaps the whole node from a pressable `Button`
+ * (with arrow) to an inert `Typography` note — two different atoms — so "resume
+ * available" and "all done" are separate shapes; `isSkeleton` is its own too. The
+ * real component renders nothing for a guest whose progress has not resolved.
  */
 const meta: Meta<typeof MindMapContinueButton> = {
     title: "StarCi/Blocks/Learn/MindMapContinueButton/MindMapContinueButton",

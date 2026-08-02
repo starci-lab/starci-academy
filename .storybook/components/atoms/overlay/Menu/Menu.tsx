@@ -17,25 +17,18 @@ import { Header as HeroMenuHeader } from "react-aria-components"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ATOM — `Menu`: the constrained action-menu atom over HeroUI Dropdown.
+ * `Menu` — the constrained action-menu atom over HeroUI Dropdown (Trigger ·
+ * Popover · Menu · Section · Item) with a `Button` as trigger. Owns the chrome:
+ * popover surface, placement, item layout, icon scale. All exports go through
+ * `Menu.*` (currently only `Base`).
  *
- * Wraps HeroUI `Dropdown` (Trigger · Popover · Menu · Section · Item) with
- * a `Button` (aliased `HeroButton`) as trigger. This atom owns the chrome:
- * popover surface, placement, item layout, icon scale.
+ * No `children`: the open-button label is `triggerLabel` (`triggerIcon` is a
+ * component rendered at trigger scale). The caller passes data — flat `items` or
+ * grouped `sections` of `{ key, label, icon?, isDisabled? }` — rather than
+ * building `DropdownItem` by hand; selecting an item fires `onAction(key)`.
  *
- * All exports go through `Menu.*` (currently only `Base`).
- *
- * No `children`: the open-button label is the data prop `triggerLabel`
- * (`triggerIcon` is a component, rendered at trigger scale by the atom).
- *
- * A caller passes data (flat `items` or grouped `sections`) rather than
- * building `DropdownItem` by hand. Each item is
- * `{ key, label, icon?, isDisabled? }`; `icon` is a component reference
- * (Phosphor), rendered by the atom. Selecting an item fires `onAction(key)`.
- *
- * `DropdownPopover` renders through a portal outside this component's own
- * render box, so an on-render anatomy badge can only anchor to `Trigger`;
- * the menu parts still show in the legend and tree.
+ * `DropdownPopover` renders through a portal, so an on-render anatomy badge can
+ * only anchor to `Trigger`; the menu parts still show in the legend and tree.
  */
 
 /** An icon passed as a COMPONENT (e.g. `Gear`), rendered by the atom at menu scale. */

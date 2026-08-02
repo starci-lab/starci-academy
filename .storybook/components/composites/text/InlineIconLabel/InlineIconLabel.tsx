@@ -6,26 +6,16 @@ import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — InlineIconLabel: a leading icon + an inline text
- * label as ONE composite. An "icon + text" row (a count, an eyebrow, a tab label,
- * a toned caption) is a semantic UNIT — so it is a single component that OWNS the
- * icon size (§5 icon-ownership: it sits with the text scale) instead of every
- * call-site hand-rolling `flex items-center gap-1` + a bare icon + a Typography.
+ * `InlineIconLabel` — a leading icon + an inline text label as ONE composite. An
+ * "icon + text" row (a count, an eyebrow, a tab label, a toned caption) is a
+ * semantic unit, so it owns the icon size (sitting with the text scale) instead of
+ * every call-site hand-rolling `flex items-center gap-1` + a bare icon + Typography.
  *
- * Second most-recurring composite in the app (≥15 call-sites, 5 lanes: CourseCard
- * count, GradeModelDropdown/GradingByline/GradeCreditCaption, Toolbar tab label,
- * ChatToolResult/UpNextCard eyebrow, PhaseScarcityNote notice…). NO `@/components`
- * imports.
- *
- * TONE — neutral (`default`) flows through Typography's `color="muted"` prop
- * (§9-clean, Typography's OWN vocabulary — not this tone's name); `accent`/`success`
- * flow through `color="accent-soft"`/`"success-soft"` (real Typography colour
- * tokens, mirrors PriceTag). `warning`/`danger`/`info` have no matching SOFT
- * Typography colour token (only accent-soft/success-soft exist), so those three
- * ride Typography's own full-strength `warning`/`danger`/`info` colour instead —
- * ATOM GAP: a `warning-soft`/`danger-soft`/`info-soft` trio doesn't exist yet. The
- * leading icon gets the SAME tone via a className on its own plain span
- * (currentColor), so icon + text stay in lockstep.
+ * Tone: neutral (`default`) flows through Typography's `color="muted"`;
+ * `accent`/`success` flow through `color="accent-soft"`/`"success-soft"`.
+ * `warning`/`danger`/`info` have no matching soft token, so they ride Typography's
+ * full-strength colour instead. The leading icon gets the same tone via a className
+ * on its own span (currentColor), so icon and text stay in lockstep.
  */
 
 /**

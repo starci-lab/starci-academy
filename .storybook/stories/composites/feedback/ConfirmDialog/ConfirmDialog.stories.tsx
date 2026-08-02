@@ -6,33 +6,11 @@ import { ConfirmDialog } from "@sb-components/composites/feedback/ConfirmDialog/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE (composite tier) — `ConfirmDialog`: a BLOCKING dialog shell for
- * an irreversible action (unenroll, delete a submission). The composite
- * already builds Header/Body/Footer; content goes through `title`/
- * `description` + the two button labels — it does NOT open up `children`
- * (the shell's shape is already fixed, §13b).
- *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) — this shell was
- * `Feedback.Confirm` / `FeedbackConfirm`. Props/behaviour UNCHANGED.
- *
- * A PURELY presentational composite: `isOpen` + every callback comes in via
- * props. The Confirm button does NOT close the dialog itself — the caller
- * closes it through `onOpenChange` once the action finishes (which is why
- * `isConfirming` is what keeps the dialog open while waiting).
- *
- * ⚠️ STATE SCOPE (§12f): only renders state that THIS composite itself
- * produces — with/without `description`, `tone`, `isConfirming`. Each
- * button's own spinner/disabled state belongs to `Button.*` (the atom
- * story) — here we only see the consequence at the composite tier.
- *
- * The real DOM tree is the HeroUI `AlertDialog` WHOLESALE (`Backdrop →
- * Container → Dialog → Header[→Heading] · Body[→Typography] · Footer[→Button
- * × 2]`) — tier `heroui` for every library node (2026-07-28, RULE: node name
- * = the real component name). `Footer` forwards `showAnatomy` down to
- * `ButtonGroup` so the two REAL buttons (`Button`) show up, instead of
- * labelling this HeroUI `Footer` wrapper as if it were `ButtonGroup` itself.
- *
- * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a).
+ * `ConfirmDialog` — a blocking dialog shell for an irreversible action (unenroll, delete a
+ * submission). Builds Header/Body/Footer; content goes through `title`/`description` + the two
+ * button labels, not `children`. Purely presentational: `isOpen` and every callback come via
+ * props. The Confirm button does not close the dialog — the caller closes it through
+ * `onOpenChange` once the action finishes, so `isConfirming` keeps it open while waiting.
  */
 const meta: Meta<typeof ConfirmDialog> = {
     title: "Composites/Feedback/ConfirmDialog",

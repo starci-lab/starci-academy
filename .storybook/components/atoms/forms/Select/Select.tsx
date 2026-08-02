@@ -13,19 +13,15 @@ import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFr
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Select.*` — the choose-from-a-list field-control atom namespace (wraps
- * HeroUI `Select` + `ComboBox`).
+ * `Select.*` — the choose-from-a-list field-control atom namespace (wraps HeroUI
+ * `Select` + `ComboBox`).
  *
  * Members are grouped by selection mode — `SelectSingle` (one) · `SelectMulti`
  * (many) · `SelectCombobox` (type-to-filter autocomplete). Each carries its own
  * label, hint, error, and required mark via `FieldFrame`.
  *
- * `isSkeleton` renders a trigger-box skeleton co-located on the atom, without
- * importing the `Skeleton.*` compound.
- *
- * Icons use Phosphor (`@phosphor-icons/react`). The caret here is `size-4`
- * (below `size-5`), so it needs `weight="bold"` to keep its stroke from
- * looking thinner than the standard icon size.
+ * `isSkeleton` renders a trigger-box skeleton co-located on the atom. Icons use
+ * Phosphor (`@phosphor-icons/react`); the caret is `size-4` with `weight="bold"`.
  */
 
 /**

@@ -3,36 +3,20 @@ import { BookOpenIcon, CodeIcon, FlaskIcon, PlayIcon, PuzzlePieceIcon } from "@p
 import { Toolbar, type ToolbarTabItem } from "@sb-components/composites/navigation/Toolbar/Toolbar"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentModeNav`: HOW to look at this lesson. Modes on the left, the
- * code language on the right.
+ * `ContentModeNav` — a BLOCK: how to look at this lesson. Reading modes on the left,
+ * the code language on the right.
  *
- * ⚠️ NAMED FOR WHAT IT DOES, not what it looks like (renamed from `ContentTabBar`
- * 2026-07-28). Switching mode changes the ROUTE — the real screen does
- * `router.replace(?tab=…)` — so this is NAVIGATION, not a tab/panel pair. Calling
- * it a "tab bar" promised `role="tab"` + `aria-controls` semantics it never had.
- * The body it switches to is a SEPARATE block (`ContentArticle` and its siblings),
- * because it is the content of a different route, not a panel this row owns.
+ * Switching mode changes the ROUTE (`router.replace(?tab=…)`), so this is
+ * NAVIGATION, not a tab/panel pair — the body it switches to is a separate block
+ * (`ContentArticle` and siblings), the content of a different route.
  *
- * ⭐ A LOCKED MODE IS CLICKABLE, and clicking it is the WHOLE POINT. The first cut
- * set `isDisabled` on locked modes, so tapping them did nothing — which quietly
- * killed the offer this block exists to surface. A locked mode is rendered MUTED
- * (dimmed) but still fires `onModeChange`; the CALLER decides what a locked tap
- * means (open the paywall). "What locked does" is a business decision that lives
- * on the screen, not a behaviour this block gets to hardcode.
+ * A locked mode is clickable (rendered muted but still firing `onModeChange`); the
+ * caller decides what a locked tap means (e.g. open the paywall). Over `Toolbar`
+ * the block owns the modes' order, words, icons, and which a lesson offers. `mode`
+ * is an enum; the caller never hands over labels.
  *
- * WHY A BLOCK ON TOP OF `Toolbar`: the composite knows it has two tab groups; it
- * does not know what a reading MODE is. The block owns their order, their words,
- * their icons, and which of them a lesson offers.
- *
- * MODE IS AN ENUM, NOT A LIST OF TABS. The caller says `mode="challenges"` and
- * which modes exist; it never hands over labels. Labels from the caller would be
- * §14d.1's pre-formatted-string trap one level up.
- *
- * NEVER SKELETONISED, on purpose. Static chrome, known before any lesson data
- * lands, so it paints immediately. There is no `isSkeleton` prop at all rather
- * than one quietly unused.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Never skeletonised — static chrome known before any lesson data lands, so there
+ * is no `isSkeleton` prop.
  */
 
 /** The ways a lesson can be looked at. */

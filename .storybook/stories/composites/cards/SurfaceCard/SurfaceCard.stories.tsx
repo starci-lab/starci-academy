@@ -6,24 +6,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `SurfaceCard` is the general
- * WRAPPER FRAME of the card family — it OWNS the header section (`SurfaceCardHeader`:
- * label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer` slot set,
- * the `description` outside the card, and TWO independent frame axes `variant`/`padding`.
- *
- * COMPOSITE-8: each slot is a COMPONENT reference the frame calls itself (never an
- * already-built node), so `isSkeleton` can reach inside it. `ProfileRow` below is
- * handed to `body` as a reference (`body={ProfileRow}`), not called ahead of time.
- *
- * Because the HEADER and SLOTS are this wrapper frame's own property, ALL their state
- * lives here; `.List`/`.Accordion` (which also take `SurfaceLabelProps`) keep only ONE
- * `WithLabel` leaf to prove the header can turn on, NOT the whole set repeated.
- *
- * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `bordered?: boolean` → `variant?: SurfaceCardVariant`
- * (`"surface" | "nested"`), `flushContent?: boolean` → `padding?: PaddingValue`. The two
- * old single-value leaves (`Bordered`, `FlushContent`) merged into two leaves named
- * AFTER THE PROP (`Variant`, `Padding`), each leaf rendering the full union side by
- * side instead of just the value that differs from the default.
+ * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
+ * (`SurfaceCardHeader`: label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer`
+ * slot set, the `description` outside the card, and two independent frame axes `variant`
+ * (`"surface" | "nested"`) and `padding`. Each slot is a component reference the frame calls
+ * itself, so `isSkeleton` can reach inside it.
  */
 const meta: Meta<typeof SurfaceCard> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCard",

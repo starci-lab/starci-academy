@@ -4,26 +4,15 @@ import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIco
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `SnippetIcon`: the system's ONE single-click copy affordance.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g — the atom-tier rule). Going through every prop
- * after the first fix pass: `copyString` is REQUIRED but produces NO visual
- * difference — every value renders the same copy glyph, only the content written
- * to the clipboard changes, so it gets no leaf of its own. `className` is the
- * class back door, no leaf either. What's left is exactly ONE prop with a shape:
- *
- * - `isCopied` — pins the ✓ glyph from the outside (§12f). BEFORE this fix, the ✓
- *   frame was only produced by INTERNAL `useState`/`setTimeout`, so no static story
- *   could pin it — the old version had to fake it with `play()` simulating a click
- *   (see the old file; don't port that approach).
- *
- * So the leaf set is: `Default` (bare, idle) + `Copied` (prop `isCopied`, two states
- * side by side). The atom now has `showAnatomy` so both leaves can carry
- * a badge — this used to be the ONE atom in the system without anatomy.
- *
- * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a). The `Copied` leaf
- * used to stack TWO examples (idle + pinned) side by side in one frame; now split
- * into two states.
+ * ATOM — `SnippetIcon`: the system's one single-click copy affordance.
+ * 
+ * 1 PROP = 1 LEAF. `copyString` is required but produces no visual difference — every
+ * value renders the same copy glyph, only the clipboard content changes — so it gets no
+ * leaf. `className` gets no leaf. The one prop with a shape is `isCopied`, which pins the
+ * ✓ glyph from the outside.
+ * 
+ * Leaf set: `Default` (idle) + `Copied` (prop `isCopied`). The atom exposes `showAnatomy`
+ * so both leaves can carry an anatomy badge.
  */
 
 /** Heading shown at the top of the autodocs page. UI copy is written in ENGLISH. */

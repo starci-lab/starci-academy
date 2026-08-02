@@ -3,19 +3,10 @@ import { ProfileNotFoundState } from "@sb-components/starci/blocks/profile/Profi
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ProfileNotFoundState`: the 404-style whole-route message for a
- * profile that cannot be read (not found, soft-deleted, or a failed fetch).
- *
- * ⚠️ Deliberately NOT the `src` app's numeral-hero shell (`ErrorPageState`,
- * a big "404" above the title) — that shape has no other consumer anywhere in
- * this design system, so this block composes `EmptyState` in its plain
- * icon+title+description+action form instead of inventing a one-off numeral
- * frame. See the component file header for the full reasoning.
- *
- * 📐 ONE LEAF (§14d.2). The block always renders the exact same
- * icon/title/description/action shape — there is no branch that adds or
- * removes a node, so there is nothing here for a second leaf to structurally
- * differ on.
+ * `ProfileNotFoundState` — the 404-style whole-route message for a profile
+ * that cannot be read (not found, soft-deleted, or a failed fetch). Composes
+ * `EmptyState` in its plain icon+title+description+action form. One leaf: the
+ * shape never branches, so different inputs are states.
  */
 const meta: Meta<typeof ProfileNotFoundState> = {
     title: "StarCi/Blocks/Profile/ProfileNotFoundState/ProfileNotFoundState",

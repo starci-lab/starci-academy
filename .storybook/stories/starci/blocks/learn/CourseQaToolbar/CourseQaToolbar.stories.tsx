@@ -4,21 +4,11 @@ import { CourseQaToolbar, type CourseQaFilter } from "@sb-components/starci/bloc
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `CourseQaToolbar`: the control strip above a course Q&A board's
- * question list — status/scope filter tabs, a search field, and a live match
- * count. Ports `src`'s `CourseQa/index.tsx` "C · toolbar" region.
- *
- * TWO STACKED ROWS, not one `Toolbar` call: the filter tabs go through
- * `Toolbar` (leftTabs only), and the search field + count are hand-composed
- * beside each other in a `StackH` — `Toolbar`'s `leftEnd` slot sits right
- * after the left tab group, not on the row's trailing edge, so it cannot host
- * a `justify-between` search+count pair. See the block's file header for the
- * full rationale.
- *
- * 📐 ONE LEAF (`Default`, §14d.2): which filter is active, what the search box
- * holds, and whether the count is still loading are all DATA conditions on
- * the exact same two-row structure — nothing appears or disappears — so they
- * are STATES here, not separate leaves.
+ * `CourseQaToolbar` — the control strip above a course Q&A question list:
+ * status/scope filter tabs, a search field, and a live match count. Two stacked
+ * rows — the filter tabs go through `Toolbar` (leftTabs only), while the search
+ * field + count are hand-composed in a `StackH` beside them. One leaf: active
+ * filter, search text, and count loading are all data on the same two-row shape.
  */
 const meta: Meta<typeof CourseQaToolbar> = {
     title: "StarCi/Blocks/Learn/CourseQaToolbar/CourseQaToolbar",

@@ -3,27 +3,13 @@ import { CourseContentTier, ModuleHeader } from "@sb-components/starci/blocks/le
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ModuleHeader`: the MODULE-IDENTITY cluster at the top of a module's
- * own page. It answers "what is this module, and how big is it".
- *
- * THIRD SIBLING of `ContentHeader` (lesson identity) and `CourseBrief` (course
- * identity), NOT a copy of either. All three place identity into the same
- * `PageHeader` frame, but this one carries a module's tier plus three counts
- * of its own (lessons, minutes, challenges) rather than read-state/outcomes or
- * modules/hours/learners.
- *
- * ⚠️ THREE REAL `HighlightChip`s, not muted text — a deliberate departure from
- * `ContentHeader`'s "one chip, rest as quiet text". Here the counts ARE the
- * module's headline figures (mirrors the real `ModulePage`'s own meta row), so
- * they keep their chip shape; `tier` stays the one fact that CLASSIFIES the
- * module, same split `ChallengeHeader` draws between `difficulty` and `status`.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). Which chips are drawn inside the meta row —
- * tier present/absent, each count above/at zero — never changes the row's own
- * shape, so all of that stays STATES of one leaf (same reasoning
- * `ChallengeHeader` uses for its status chip). Only losing the WHOLE meta row
- * — description gone too — drops an entire `PageHeader` region, which is why
- * that gets its own leaf, the way `CourseBrief`'s `TitleOnly` does.
+ * `ModuleHeader` — the module-identity cluster at the top of a module's page,
+ * answering "what is this module, and how big is it". Sibling of `ContentHeader`
+ * and `CourseBrief`: places identity into `PageHeader`, but carries a module's tier
+ * plus three `HighlightChip` counts (lessons, minutes, challenges) — the counts are
+ * the headline figures, so they keep their chip shape while `tier` classifies the
+ * module. Which chips draw stays states of one shape; losing the whole meta row
+ * drops a `PageHeader` region and earns its own shape.
  */
 const meta: Meta<typeof ModuleHeader> = {
     title: "StarCi/Blocks/Learn/ModuleHeader/ModuleHeader",

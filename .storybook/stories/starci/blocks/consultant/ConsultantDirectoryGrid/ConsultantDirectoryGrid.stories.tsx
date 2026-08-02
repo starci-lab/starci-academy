@@ -4,24 +4,11 @@ import { type ConsultantCardConsultant } from "@sb-components/starci/blocks/cons
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ConsultantDirectoryGrid`: the consultant directory's BROWSE surface —
- * how many consultants matched, then the cards themselves, across the full
- * loading → empty → content lifecycle.
- *
- * REUSE, NOT A REBUILD. `AsyncContent` owns the error/loading/empty/content
- * switch, `Grid` owns the responsive tile track, `ConsultantCard` owns one
- * tile — this block only decides how many tiles, in what shape, and what the
- * count line says.
- *
- * ⭐ THE COUNT LINE ONLY SHOWS BESIDE REAL CARDS. It lives inside
- * `AsyncContent`'s `content` branch, not as chrome above the whole switch — a
- * "0 consultants" line stacked on top of the empty message would say
- * the same thing twice.
- *
- * 📐 ONE LEAF (`Default`). `isLoading`/`isEmpty` swap which `AsyncContent`
- * branch renders, but the block's own shape never changes — always "a count
- * line above one grid-shaped region" — so loading/empty/content are STATES of
- * the one leaf, not leaves of their own.
+ * `ConsultantDirectoryGrid` — the consultant directory's browse surface: a
+ * match count above the cards, across the loading → empty → content lifecycle.
+ * `AsyncContent` owns the branch switch, `Grid` the responsive track,
+ * `ConsultantCard` one tile. The count line renders inside the `content` branch
+ * only, beside real cards.
  */
 const meta: Meta<typeof ConsultantDirectoryGrid> = {
     title: "StarCi/Blocks/Consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid",

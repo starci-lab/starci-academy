@@ -11,40 +11,15 @@ import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/
 import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (page) — the `/learn/content` dashboard, rendered as a STATIC
- * presentational leaf (like the `Overlays/*` stories): the live feature
- * `src/components/features/learn/CourseContents` reads redux/SWR, so — same as
- * every layout/overlay story — this port composes the ALREADY-PORTED blocks with
- * demo data instead of mounting the store-coupled original.
+ * `CourseContents` — the `/learn/content` dashboard screen, rendered as a static
+ * presentational leaf (the live feature reads Redux/SWR; this composes the ported
+ * blocks with demo data).
  *
- * §14a — a screen is a LIST OF FEATURES. Six blocks, nothing else:
- * `CourseBrief` (what this course is) · `CourseTeamGate` (GitHub team gate) ·
- * `TrialConversionStrip` (trial→purchase conversion) · `ContinueLearning` (resume where
- * you left off) · `LearnNudges` (what to do today) · `KeepGoingPath` (keep going in the
- * chapter).
- *
- * The list above names BLOCKS. It used to say `Callout` for the gate — that is
- * the FRAME the gate uses internally, not the block the screen calls. Naming the frame
- * here is the same mistake that keeps the node out of the anatomy tree (the DOM emits
- * `CourseTeamGate`), so the two must be kept in the same words.
- *
- * Screen IMPORT BOUNDARY (tightened 2026-07-27 — the old note said "no importing the
- * layout tier" but this very file already imports `Container`/`Stack`, so the rule
- * contradicted itself; the layout tier has since split into `frame` and `composite`, §0):
- *   ALLOWED: use the FRAME tier (`Container`, `Stack`, `Grid`) to arrange —
- *      that's exactly where §10c's scale gets enforced by TYPE (`gap: InsetScale`).
- *   FORBIDDEN: hand-rolling a `div` + layout class. No `mx-auto max-w-*`, no `flex gap-*`.
- *   FORBIDDEN: importing an ATOM. Text/buttons/chips are the block's job — a screen
- *      touching an atom means it's presenting itself, encroaching on the tier below.
- *   FORBIDDEN: passing JSX down to a block. Only TYPED DATA (§14d.1).
- *   FORBIDDEN: importing the DESIGN tier. Design is UI/UX ONLY (teacher's call
- *      2026-07-27) — it must not know what a "lesson"/"challenge" is. A screen touching
- *      design means the screen is writing domain copy itself. Anchor: `ContinueCard`
- *      (design) used to sit directly here with the screen assembling `"Read 8/23
- *      lessons"` itself; it now goes through the block `ContinueLearning`, and the
- *      screen only hands over NUMBERS.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Six blocks, nothing else: `CourseBrief` (what this course is), `CourseTeamGate`
+ * (GitHub team gate), `TrialConversionStrip` (trial → purchase), `ContinueLearning`
+ * (resume where you left off), `LearnNudges` (what to do today), `KeepGoingPath` (keep
+ * going in the chapter). A screen arranges blocks in frames and hands them typed data
+ * only — no atoms, no design tier, no hand-rolled layout divs.
  */
 const SAMPLE_PRICE: TrialConversionStripPrice = {
     discountedPriceVnd: 1_990_000,

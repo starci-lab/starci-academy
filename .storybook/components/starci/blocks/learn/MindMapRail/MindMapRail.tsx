@@ -12,77 +12,20 @@ import type { VerdictBandVariant } from "@sb-components/composites/cards/verdict
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `MindMapRail`: the keyword LOOKUP PANE beside a mind-map canvas —
- * search a term, narrow by how popular it is in the map, pick one from the
- * result list. This block never touches the canvas: picking a result only
- * fires `onPick`, and drawing/centering the graph on that node is the
- * out-of-reach engine's job (§B3 — this is the CHROME around it, not the
- * canvas itself).
+ * `MindMapRail` — the keyword lookup pane beside a mind-map canvas: search a term, narrow
+ * by how popular it is in the map, pick a result. Picking a result fires `onPick` only;
+ * drawing/centering the graph is the canvas engine's job.
  *
- * ⭐ REUSE, NOT A NEW SHAPE (the exact mistake this task exists to avoid — see
- * `ContentModeNav`'s file header). Every piece here is an existing primitive,
- * unreshaped:
- *   • `InputSearch` (atom)       — the query field, verbatim (same wrapping
- *     `<div className="min-w-0 flex-1">` pattern as `FlashcardDeckList`'s
- *     search row, so the field grows and the funnel trigger stays intrinsic).
- *   • `Popover` (atom)           — the funnel trigger + its panel. This block
- *     does not hand-roll a dropdown; the popularity radio group rides inside
- *     the atom's own `content` slot.
- *   • `ButtonRadioGroup` (atom)  — the tier control INSIDE the popover, same
- *     single-select atom `QuizSetup`/`SubmissionAttemptSelector` already use
- *     for a value + `onChange` pair — not a second toggle-row component.
- *   • `Badge` (atom), `dot`      — a presence signal on the funnel trigger
- *     when a non-default tier is active, so "a filter is on" reads before
- *     the popover is even opened.
- *   • `AsyncContent` (composite) — the loading → empty → content switch. This
- *     block does not track its own "which message am I showing" state, it
- *     just feeds the branches (no `error` prop in this brief, so the error
- *     branch is simply never armed — same shape `FoundationResourceList`
- *     uses when it HAS an error prop, minus the branch this one doesn't need).
- *   • `SurfaceCardList` (composite), bare (no `label`) — the bounded row
- *     surface, its dividers, and its OWN row mirror while loading. This block
- *     never builds a row box by hand.
- * None of these get reshaped; this block only decides the tier vocabulary,
- * the popularity → row-tone mapping, and which of them fires for a result.
+ * Composed from `InputSearch`, `Popover` (funnel trigger + panel), `ButtonRadioGroup`
+ * (popularity tier inside the popover), `Badge` (a dot on the funnel when a non-default
+ * tier is active), `AsyncContent`, and a bare `SurfaceCardList`. Owns the tier vocabulary
+ * and the popularity → row-tone map (two bands only — `accent` for a hub term, `warning`
+ * for a middling one; the common case stays bare).
  *
- * LEAF BY STRUCTURE (§14d.2), two of them:
- *   1. Default      — funnel popover closed. Loading / empty / populated are
- *      STATES of this SAME tree (`AsyncContent`'s own three branches already
- *      swap the one region under the header row — nothing else in the block
- *      appears or disappears across them).
- *   2. Filter open   — the popover panel is open, so the tier
- *      `ButtonRadioGroup` is now a real node in the tree. That is a genuine
- *      structural difference (a whole control appears), not a data condition
- *      of leaf 1.
- *
- * ⭐ JUDGEMENT CALL — `defaultFilterOpen` (uncontrolled, optional) exists ONLY
- * to pin leaf 2's popover open for the story, mirroring `Popover`'s own
- * `defaultOpen`/`isOpen` contract ("STORY soak" per that atom's file header).
- * The real screen never needs to force the funnel open, so this is dev/spec
- * plumbing forwarded straight through.
- *
- * ⭐ JUDGEMENT CALL — the popularity → row tone mapping (`popularityTone`) is
- * this block's own vocabulary (§14d.1), same footing as `ContentModeNav`'s
- * mode labels: a keyword's popularity is a bare number from the caller, never
- * a pre-picked colour. Two bands only (`accent` for a hub term, `warning` for
- * a middling one) — a THIRD band for low-popularity terms would turn a long
- * rail into a wall of colour and defeat the point of highlighting the ones
- * worth noticing first, so the common case stays bare.
- *
- * ⭐ JUDGEMENT CALL — the search field and the funnel trigger are NEVER
- * skeletonised, same reasoning as `ContentModeNav`/`FlashcardDeckList`'s
- * search row: both are usable before any result has loaded (typing a query
- * or opening the tier filter doesn't depend on the list already being
- * there), so only the result list swaps to its mirror.
- *
- * ⭐ JUDGEMENT CALL — `isLoading` (this rail's own in-flight query/tier fetch)
- * and `isSkeleton` (a parent-forced skeleton paint, the canon-standard prop
- * every component carries) both fall into `AsyncContent`'s ONE loading
- * branch via `isLoading || isSkeleton` — same reconciliation
- * `SubmissionAttemptSelector` uses, since `AsyncContent` only exposes a
- * single loading concept.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Two leaves: default (funnel closed; loading/empty/populated are states) and filter-open
+ * (the tier radio group becomes a real node). `defaultFilterOpen` pins the popover open
+ * for stories. The search field and funnel are never skeletonised; `isLoading` and
+ * `isSkeleton` both feed `AsyncContent`'s one loading branch.
  */
 
 /** The popularity-tier filter this rail's result list is narrowed by. */

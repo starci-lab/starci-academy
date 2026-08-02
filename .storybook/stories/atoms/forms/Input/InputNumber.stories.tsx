@@ -8,18 +8,16 @@ export default meta
 type Story = StoryObj
 
 /**
- * ATOM — `InputNumber`: numeric field + stepper (HeroUI NumberField), wrapped
- * through `FieldFrame` internally (§12e — a form atom carries its own
- * label/hint/errorMessage/required, there's NO separate Field tier).
- *
- * No component here has its own story ⇒ `annotate` carries no `storyId` — but
- * the heroui `NumberField.Group` along with `FieldFrame`'s `Label`/`Skeleton`
- * still need tier `heroui` so the two-rule panel doesn't silently skip them
- * (2026-07-28).
- *
- * a11y: this is a COMPOUND control (stepper + input) that can't wire up
- * `htmlFor` → the atom pours `label`/`ariaLabel` into `aria-label` itself via
- * the `fieldName` helper (§12e).
+ * ATOM — `InputNumber`: numeric field + stepper (HeroUI NumberField), wrapped through
+ * `FieldFrame` internally (a form atom carries its own label/hint/errorMessage/required;
+ * there is no separate Field tier).
+ * 
+ * No component here has its own story ⇒ `annotate` carries no `storyId` — but the HeroUI
+ * `NumberField.Group` plus `FieldFrame`'s `Label`/`Skeleton` still get tier `heroui` so the
+ * two-rule panel doesn't silently skip them.
+ * 
+ * a11y: a compound control (stepper + input) can't wire up `htmlFor` → the atom pours
+ * `label`/`ariaLabel` into `aria-label` itself via the `fieldName` helper.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "NumberField.Group": { tier: "heroui", role: "number stepper group" },

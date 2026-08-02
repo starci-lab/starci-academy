@@ -5,18 +5,10 @@ import { Disclosure } from "@sb-components/composites/layout/Disclosure/Disclosu
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Disclosure` is the generic collapsible frame: a trigger row (leading
- * caret + title) toggling ONE content region below it. Ground truth:
- * MockInterviewSession's "Customize session" green-room row (leading
- * `CaretDownIcon` rotated 180° on open, `text-muted hover:text-foreground`,
- * `w-fit` trigger). A multi-panel accordion is a different frame
- * (`SurfaceCardAccordion`, items-driven), not a member of this family.
- *
- * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
- * `states` entry, since none of them stacks more than one rendering.
- *
- * COMPOSITE-8: `body`/`children` take a COMPONENT reference, not a built
- * node — the composite calls it itself so it can forward `isSkeleton`.
+ * `Disclosure` — the generic collapsible frame: a trigger row (leading caret + title) toggling
+ * one content region below it (caret rotates 180° on open, `w-fit` trigger). A multi-panel
+ * accordion is a different frame (`SurfaceCardAccordion`). `body`/`children` take a component
+ * reference, not a built node, so the composite can forward `isSkeleton`.
  */
 const meta: Meta<typeof Disclosure> = {
     title: "Composites/Layout/Disclosure/Disclosure",

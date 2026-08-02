@@ -6,28 +6,16 @@ import type { PlaygroundSetupOs } from "@sb-components/starci/blocks/learn/Playg
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `PlaygroundPreparePage`: get one playground exercise ready before
- * entering it — pair the local agent, install the engine, pull models when the
- * flavor needs them — then press one CTA once every step is done.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * FIVE FUNCTIONS, in the order the learner meets them: what exercise is this and
- * how to leave it · the one primary decision (enter, once ready) · what machine
- * this will run on · the ordered setup work itself · a glance-back checklist.
- *
- * ⚠️ NO `AsyncContent.Base` AT THIS TIER — corrected from the planner's proposal.
- * Every existing screen in this catalog only ever uses `AsyncContentEmpty` as a
- * WHOLE-SCREEN swap (`isEmpty`), never the four-branch `.Base` switch — see the
- * component's own file header for the full precedent check (`QuizPage`,
- * `PlaygroundSessionPage`). This screen follows that same idiom.
- *
- * ⭐ `checklistItems` IS THE ONE SOURCE OF TRUTH. The enter banner's readiness and
- * each setup step's own per-kind status are all DERIVED from the same array this
- * screen also hands to the checklist block — never three props that could drift
- * apart from each other.
+ * `PlaygroundPreparePage` — the screen to get one playground exercise ready
+ * before entering it: pair the local agent, install the engine, pull models
+ * when the flavor needs them, then press one CTA once every step is done. A
+ * screen owns a list of functions: it calls blocks, places them in frames, and
+ * hands each typed data. Five functions, in reading order: what exercise this
+ * is and how to leave · the one primary decision (enter, once ready) · what
+ * machine this runs on · the ordered setup work · a glance-back checklist.
+ * `checklistItems` is the single source of truth — the enter banner's readiness
+ * and each step's per-kind status are all derived from it. Uses
+ * `AsyncContentEmpty` as a whole-screen swap, never the four-branch `.Base`.
  */
 const meta: Meta<typeof PlaygroundPreparePage> = {
     title: "StarCi/Pages/PlaygroundPreparePage/PlaygroundPreparePage",

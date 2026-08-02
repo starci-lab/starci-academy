@@ -3,19 +3,10 @@ import { TitledText } from "@sb-components/composites/text/TitledText/TitledText
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `TitledText`: a primary line + optional muted secondary (and
- * optional hint) stacked vertically as ONE composite. A "title↔subtitle" pair
- * is a semantic unit, so it is a single component (one anatomy node), NOT
- * two or three raw `<Typography>` hand-rolled at every row — the
- * single most-recurring composite in the app (≥16 call sites, ≥6 lanes:
- * `SettingToggleRow`, `ListRow`, `Stepper`, `PageHeader`, `EmptyState`,
- * `RewardItemCard`, `PersonaIdentityChip` name/role, `SummaryCard` stat…).
- * The composite OWNS the type scale per `size`; the caller passes nodes only.
- *
- * 📐 **1 PROP = 1 LEAF.** `subtitle`, `hint`, `size`, `weight`, `truncate`,
- * `isSkeleton` each get their own leaf. `title` has no leaf of its own — it
- * is the content every other leaf fills in. `classNames` gets none — a
- * placement prop with no visible shape of its own.
+ * `TitledText` — a primary line + optional muted secondary (and optional hint) stacked
+ * vertically as one composite; a title↔subtitle pair is a single semantic unit rather than raw
+ * `<Typography>` hand-rolled at every row. The composite owns the type scale per `size`; the
+ * caller passes nodes only. Leaves: `subtitle`, `hint`, `size`, `weight`, `truncate`, `isSkeleton`.
  */
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {

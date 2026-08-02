@@ -5,31 +5,19 @@ import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentPager`: the STEP-TO-THE-NEXT-LESSON block at the foot of the
+ * `ContentPager` — a BLOCK: the step-to-the-next-lesson block at the foot of the
  * reading screen. Two pressable cards, "previous lesson" on the left and "next
  * lesson" on the right.
  *
- * WHY A BLOCK AND NOT A FRAME: it knows what a LESSON is. The neighbour cards
- * carry a lesson title and a lesson link, and the block words the labels itself.
- * A frame would only know it has two cells.
+ * A block rather than a frame because it knows what a LESSON is — the neighbour
+ * cards carry a lesson title and link, and the block words the labels itself
+ * ("Previous content" / "Next content"). Self-hides when neither neighbour exists.
  *
- * SELF-HIDES. With neither neighbour there is nothing to step to, so the block
- * renders NOTHING rather than an empty rail — the first and last lesson of a
- * course are the ordinary cases, not an error to report.
- *
- * ASYMMETRY IS THE POINT. "Previous" reads left-to-right behind a back caret;
- * "next" is mirrored, right-aligned behind a forward caret, so the pair reads as
- * a direction rather than as two identical cards. The right card pins itself to
- * the second column ONLY where the grid actually has two — a CONTAINER query, not
- * a viewport one, because the split is decided by the slot this block sits in.
- *
- * CONTRACT: the caller hands over the two neighbours as DATA (`title` + `href`).
- * The words "Previous content" / "Next content" belong to the block (§14d.1) — a
- * caller that passed them would own the wording, and two callers would drift.
- * Matches real `src`'s own `t("content.pager.prevLesson"/"nextLesson")` exactly
- * (verified 2026-07-28 against a prior pass that had invented "Previous/Next lesson").
- * ─────────────────────────────────────────────────────────────────────────────
+ * Asymmetric on purpose: "previous" reads left-to-right behind a back caret, "next"
+ * is mirrored and right-aligned behind a forward caret, so the pair reads as a
+ * direction. The right card pins to the second column only where the grid has two,
+ * via a container query. The caller hands the two neighbours as DATA (`title` +
+ * `href`).
  */
 
 /** One neighbouring lesson — plain data, the block builds the card from it. */

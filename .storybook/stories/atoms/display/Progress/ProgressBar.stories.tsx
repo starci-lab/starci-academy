@@ -14,12 +14,10 @@ export default meta
 type Story = StoryObj<typeof ProgressBar>
 
 /**
- * `ProgressBar.Track`/`ProgressBar.Fill` are direct HeroUI compound-component
- * renders (`tier: "heroui"`, no `storyId` — there is no story of ours to jump
- * to for a library component). `Skeleton` is HeroUI's own `Skeleton`, same
- * reasoning. Renamed from the role-words `Track`/`Fill` (§ naming pass,
- * 2026-07-28) — those names collided with `ProgressCircle`/`ProgressMeter`'s
- * own `Track`/`Fill`, which are DIFFERENT real compound components.
+ * `ProgressBar.Track`/`ProgressBar.Fill` are direct HeroUI compound-component renders
+ * (`tier: "heroui"`, no `storyId` — a library component has no story of ours to jump to).
+ * `Skeleton` is HeroUI's own `Skeleton`, same reasoning. Named distinctly from
+ * `ProgressCircle`/`ProgressMeter`'s own `Track`/`Fill`, which are different compounds.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ProgressBar.Track": {

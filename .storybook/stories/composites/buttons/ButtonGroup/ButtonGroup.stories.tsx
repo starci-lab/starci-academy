@@ -6,30 +6,9 @@ import { ButtonGroup, type ButtonGroupItem } from "@sb-components/composites/but
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ⚠️ STATE SCOPE (teacher's call 2026-07-25): `ButtonGroup` does NOT grow new meaning —
- * it only lays out + `import { ButtonBase }` and rebuilds from `items`. So the stories
- * here ONLY render state that BELONGS TO THE CLUSTER: items mapping · cluster-level
- * `size` · skeleton for the whole cluster. Per-BUTTON state (prefixIcon · Pending ·
- * Disabled · variant) lives in the `Button` story — NOT repeated here.
- *
- * 📐 **1 PROP = 1 LEAF** (§12g — atom tier): `items` · `size` · `isSkeleton`, each prop
- * one leaf. This is the FULL prop set of the cluster — smaller than `Button`
- * because of §12f: any prop that just forwards down to each button
- * (`variant`/`prefixIcon`/`isPending`/`isDisabled`) belongs to `Button`, the cluster
- * must NOT open a leaf for it.
- *
- * ⚠️ The previous version invoked §14d.2 to merge all three into one leaf — that rule
- * belongs to design/block/screen.
- *
- * ⚠️ Tab States was REMOVED (teacher's call 2026-07-26, second time). §12f still holds —
- * the cluster doesn't re-list `Button`'s state (`variant`/`isPending`…) — there's
- * just no cell reminding you anymore, read carefully when writing a leaf.
- *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`role`/`hint`/`code`) and demo labels
- * in the render frame, along with all JSDoc/comments, are written in ENGLISH; §
- * anchors live here.
- *
- * 🎨 Icons = Phosphor (§5.0); stroke weight is enforced by the atom per cluster `size` (§5.0a).
+ * `ButtonGroup` — a layout cluster that arranges buttons built from `items`, with a
+ * cluster-level `size`. Composes `ButtonBase`; per-button props
+ * (`variant`/`prefixIcon`/`isPending`/`isDisabled`) belong to `Button`, not the cluster.
  */
 const meta: Meta<typeof ButtonGroup> = {
     title: "Composites/Buttons/ButtonGroup",

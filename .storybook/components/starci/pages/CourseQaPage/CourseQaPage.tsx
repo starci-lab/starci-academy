@@ -9,84 +9,15 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `CourseQaPage`: the course-wide Q&A roll-up (`src`'s
- * `CourseQa/index.tsx`) — every top-level learner question across the course's
- * lessons, with a filter/search toolbar and pagination.
+ * `CourseQaPage` — the course-wide Q&A roll-up: every top-level learner question
+ * across the course's lessons, with a filter/search toolbar and pagination. It
+ * composes blocks in frames and hands each typed data, drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own —
- * every `div` here would be a shape it had no right to decide.
- *
- * SIX FUNCTIONS, in the order the reader meets them: what this board is · the
- * "you're not learning alone" honest readout · ask a new question · filter/search the
- * board · the questions themselves, paged.
- *
- * ⭐ THE SCREEN OWNS EXACTLY ONE BRANCH, THE SAME WAY `ContentPage` OWNS ITS
- * `!isLocked` BRANCH: `isInvitationEmpty`. Ported VERBATIM from `src`'s own
- * boolean (`CourseQa/index.tsx`), because the logic is genuinely subtle and
- * worth keeping exact rather than re-deriving:
- *
- *     hasQuery = (filter !== "all" && filter !== "engagement") || search.length > 0
- *     isInvitationEmpty = questions.length === 0 && !hasQuery
- *
- * A default `unanswered`-filtered zero does NOT mean "nobody has ever asked
- * anything" — it can just as easily mean "every question already has an
- * answer". Only `all`/`engagement` (which do not narrow by answered-status)
- * proves the TRUE zero that earns the whole-page invitation; every other
- * empty result is a narrower "nothing matches this filter/search" miss that
- * `CourseQaQuestionList` already renders as its own `Empty` leaf one layer
- * down (see that block's file header for the same "empty ≠ empty" distinction
- * made explicit). `isSkeleton` short-circuits the branch to `false` so a
- * loading screen always mirrors the POPULATED shape, never the invitation.
- *
- * ⚠️ JUDGEMENT CALL — no separate "matched result count" prop exists on this
- * contract, so `CourseQaToolbar`'s `resultCount` reads the same
- * `totalQuestions` that also feeds `CourseQaEngagementStrip`. In the live
- * feature these can diverge once a filter narrows the set; a future revision
- * that grows a dedicated filtered-count field should split them, but with one
- * number on hand today, reusing it is the honest simplification rather than
- * inventing a second value nobody hands in (§B3).
- *
- * ⚠️ JUDGEMENT CALL — `CourseQaQuestionList`'s OWN async lifecycle
- * (`isLoading`/`error`/`onRetry`) is a separate concern from this screen's
- * `isSkeleton` per that block's own ★5 note ("both converge on one
- * `AsyncContent.isLoading` computation"). This contract carries only the one
- * combined flag, so `isSkeleton` is wired straight into the list's `isLoading`
- * and no `error`/`onRetry` reaches it — a real per-fetch failure surface for
- * THIS list is out of scope for this pass, the same restraint `ContentPage`
- * already documents for its own narrower slice of a bigger feature.
- *
- * ⭐ TWO DIFFERENT "CURRENT USER" SHAPES, ONE SCREEN-OWNED TYPE.
- * `CourseQaComposer` wants `{ name, avatarSrc }`; `CourseQaQuestionList` wants
- * `{ username, avatar }` (its own field names are pass-through plumbing for a
- * future `QaQuestionThread` swap — see that block's ★2/★6). Neither shape is
- * "the" domain user, so this screen defines its own {@link CourseQaViewer} and
- * adapts it into each block's own vocabulary rather than picking one sibling's
- * shape and forcing the other to match it.
- *
- * ⭐ THE COMPOSER'S DRAFT TEXT IS SCREEN-LOCAL UI STATE, NOT A PROP PAIR.
- * `CourseQaComposer` is a fully controlled text field (`value`/`onValueChange`,
- * §4 contract every `Input.*` atom shares) and this contract's own
- * `onAskQuestion` fires with the finished `body: string` — exactly `src`'s own
- * `onSubmitQuestion(body: string)` shape. Something has to hold the in-progress
- * keystrokes between "empty" and "submitted", and since the caller only cares
- * about the FINISHED body (not every keystroke), this screen owns that one
- * `useState` itself rather than growing the prop surface with a pair nobody
- * outside this screen needs to see — the same kind of screen-local chrome
- * `CourseQaComposer` itself already keeps for its own collapse/expand toggle.
- *
- * ⚠️ SCOPE OF THIS PASS — `filterAriaLabel`/`pagerAriaLabel` are fixed,
- * board-wide accessible names (they never vary per course, unlike
- * `LeaderboardPage`'s `categoryAriaLabel`), so this screen owns them as
- * constants rather than threading two more props for strings that can never
- * change call to call. Same reasoning for the invitation's copy
- * (`INVITE_TITLE`/`INVITE_HINT`/`INVITE_CTA`): `src`'s own `courseQa.empty.*`
- * keys are static, course-independent copy — this screen's own fixed
- * vocabulary (§14d.1), the same way `CourseQaToolbar` owns its filter-label
- * table and `CourseQaQuestionList` owns its empty/error copy without either
- * being threaded in as a prop.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Owns one branch, `isInvitationEmpty` — a true zero (only under the `all`/`engagement`
+ * filters, which don't narrow by answered-status) earns the whole-page invitation;
+ * every narrower empty is the question list's own empty leaf. Defines its own
+ * `CourseQaViewer` type and adapts it into each block's user shape, and holds the
+ * composer's draft text as screen-local state (`onAskQuestion` fires the finished body).
  */
 
 /** The signed-in viewer, in this screen's own vocabulary. Adapted into each composed block's own shape below. */

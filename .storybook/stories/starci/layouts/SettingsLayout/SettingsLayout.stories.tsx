@@ -4,19 +4,12 @@ import type { SettingsNavGroup } from "@sb-components/starci/blocks/navigation/S
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT — `SettingsLayout`: the chrome around every `/profile/(settings)`
- * route. Nav rail beside a centered content column, column-first on a narrow
- * screen and a row from `@app-md`.
- *
- * `children` is a REAL slot — this story swaps its contents between two
- * states to show the shell stays put while whatever page is active changes
- * underneath it, which is the whole reason this is a `layouts/` file rather
- * than a `blocks/` one (see the component's own file header, RULE 12).
- *
- * ⛔ There is deliberately no second LEAF here — the nav-plus-content
- * arrangement never loses a region depending on data, so every difference
- * below is a STATE (which page is active, what the page renders), not a new
- * structural shape.
+ * `SettingsLayout` — the chrome around every `/profile/(settings)` route: a nav
+ * rail beside a centered content column, column-first on a narrow screen and a
+ * row from `@app-md`. `children` is a real slot — the shell stays put while the
+ * active page changes underneath. One leaf: the nav-plus-content arrangement
+ * never loses a region on data, so which page is active and what it renders are
+ * states.
  */
 const meta: Meta<typeof SettingsLayout> = {
     title: "StarCi/Layouts/SettingsLayout/SettingsLayout",

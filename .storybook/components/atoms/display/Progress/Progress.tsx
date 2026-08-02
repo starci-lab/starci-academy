@@ -10,17 +10,16 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
  * `Progress.*` — the progress-indicator atom namespace, wrapping HeroUI.
  *
- * Members, by shape and meaning:
+ * Members:
  *   - `ProgressBar` — linear bar for ongoing progress. Determinate (`value`) or
  *     `isIndeterminate` (duration unknown).
  *   - `ProgressCircle` — circular, same progress semantics as Bar.
- *   - `ProgressMeter` — static measurement (capacity, battery level, score).
- *     Always determinate — react-aria's Meter has no indeterminate state.
+ *   - `ProgressMeter` — static measurement (capacity, battery, score). Always
+ *     determinate — react-aria's Meter has no indeterminate state.
  *
- * Bar/Circle wrap react-aria's ProgressBar (supports indeterminate); Meter wraps
- * react-aria's Meter (measurement only). Each member owns its size/color mapping
- * and draws its own leaf skeleton (`isSkeleton`). Track/Fill are internal parts —
- * owned by the atom, not inserted by the consumer.
+ * Bar/Circle wrap react-aria's ProgressBar; Meter wraps react-aria's Meter. Each
+ * member owns its size/color mapping and draws its own leaf skeleton
+ * (`isSkeleton`). Track/Fill are internal parts owned by the atom.
  */
 
 /** Fill tone shared by all three members. */

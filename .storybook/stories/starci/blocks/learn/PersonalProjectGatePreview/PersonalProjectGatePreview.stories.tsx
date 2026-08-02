@@ -3,23 +3,12 @@ import { PersonalProjectGatePreview, type PersonalProjectGatePreviewTask } from 
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PersonalProjectGatePreview`: the capstone teaser dropped into
- * `EnrollGate`'s `preview` slot inside `LearnShell` — what a trial viewer sees
- * of the personal-project workspace, sitting behind the gate's own fade/lock.
- *
- * ⭐ THREE REUSED LEAVES, NO REBUILD: `ContinueCardHero` for the headline,
- * a STANDALONE `ProgressMeter` for the capstone's own completion (kept apart
- * from the hero card's own optional bar — see the component file's header),
- * and `SurfaceCard` called with `label` — the flat stand-in for the real app's
- * (unported) `LabeledCard`.
- *
- * ⛔ NON-INTERACTIVE: no press handler anywhere in the prop list. The fade/
- * lock affordance around this preview belongs to `EnrollGate`, not to this
- * block.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): the headline, the meter, and the task rows
- * never change shape — how many tasks and what they're called are DATA, so
- * they stay a STATE inside one leaf rather than spawning a second one.
+ * `PersonalProjectGatePreview` — the capstone teaser dropped into `EnrollGate`'s
+ * `preview` slot inside `LearnShell`: what a trial viewer sees of the
+ * personal-project workspace, behind the gate's fade/lock. Composes
+ * `ContinueCardHero` for the headline, a standalone `ProgressMeter` for capstone
+ * completion, and `SurfaceCard` with a `label`. Non-interactive — the fade/lock
+ * affordance belongs to `EnrollGate`. Task count and names are data on one shape.
  */
 const meta: Meta<typeof PersonalProjectGatePreview> = {
     title: "StarCi/Blocks/Learn/PersonalProjectGatePreview/PersonalProjectGatePreview",

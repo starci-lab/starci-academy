@@ -3,23 +3,12 @@ import { PlaygroundReadinessChecklist } from "@sb-components/starci/blocks/learn
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundReadinessChecklist`: the consolidated "Machine status" list
- * — every playground prerequisite at a glance, one row each.
- *
- * REUSE, NOT A NEW SHAPE — a near-direct port of the existing `ReadinessChecklist`
- * block onto today's composite catalog: `SurfaceCardList`'s fixed row shape
- * (leading tile · title · subtitle · trailing chip), `IconTile` for the leading
- * glyph, `EnumChip` for the trailing status. See the component's own file header
- * for the full reuse contract and the two judgement calls (the block now owns
- * its ready/pending wording, and `kind` is domain vocabulary the block maps to
- * an icon, not a caller-supplied glyph).
- *
- * 📐 TWO LEAVES: `Default` (N rows, real content) and `Prop \`isSkeleton\``.
- * Per `2-leaf-states.md` §1, `isSkeleton` is a leaf at every tier — the owner
- * of the shape owns the skeleton (§12c) — even though no node grows or
- * disappears: every atom the block composes per row (`IconTile`, `EnumChip`)
- * swaps to its own shimmer, while `SurfaceCardList` mirrors the title/subtitle
- * text itself.
+ * `PlaygroundReadinessChecklist` — the consolidated "Machine status" list: every
+ * playground prerequisite at a glance, one row each. Reuses `SurfaceCardList`'s row
+ * shape (leading tile · title · subtitle · trailing chip), `IconTile` for the
+ * leading glyph, and `EnumChip` for the trailing status. The block owns the
+ * ready/pending wording and maps `kind` (domain vocabulary) to an icon. Two shapes:
+ * `Default` (N real rows) and the `isSkeleton` skeleton.
  */
 const meta: Meta<typeof PlaygroundReadinessChecklist> = {
     title: "StarCi/Blocks/Learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist",

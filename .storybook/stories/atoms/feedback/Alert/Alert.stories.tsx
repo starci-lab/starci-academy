@@ -5,26 +5,14 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Alert`: the ONE port down to HeroUI Alert (`Callout`
- * and `Toast` both compose from here).
- *
- * 📐 **1 PROP = 1 LEAF** (§12g — the law of the ATOM TIER). This file's earlier
- * version used §14d.2's reasoning ("leaf = structure, state shares a leaf") —
- * WRONG for an atom: §14d.2 is for design/block/screen (see the warning at
- * the top of `Chip.stories.tsx`). At the atom tier, `tone`/`icon`/`body`/
- * `action`/`onClose` each change a real SHAPE (a different fill, a different
- * added node), so each gets its own leaf; the two old leaves (`Statuses`,
- * `WithActionAndClose`) completely missed `icon` and `body` — two props whose
- * shape had never once been shown anywhere.
- *
- * The ONE true DEP: the `Close` node — the atom builds the × button ITSELF
- * from `Button` (not a slot the caller supplies), so it's clickable
- * through to its story. `action` is a slot where the caller supplies ANY node
- * (not specifically `Button`), so it does not count as a dep.
- *
- * 2026-07-27: migrated to the `states` API (§8) — `Statuses`/`Tone`/`Icon`/
- * `Skeleton` now render their compared values as `states[]` entries instead of
- * a stacked column under one shared `note`.
+ * ATOM — `Alert`: the one port down to HeroUI Alert (`Callout` and `Toast` both compose from here).
+ * 
+ * 1 PROP = 1 LEAF. At the atom tier, `tone`/`icon`/`body`/`action`/`onClose` each change a
+ * real shape (a different fill, a different added node), so each gets its own leaf.
+ * 
+ * The one true DEP: the `Close` node — the atom builds the × button itself from `Button`
+ * (not a caller slot), so it's clickable through to its story. `action` is a slot where the
+ * caller supplies any node, so it does not count as a dep.
  */
 const meta: Meta<typeof Alert> = {
     title: "Atoms/Feedback/Alert/Alert",

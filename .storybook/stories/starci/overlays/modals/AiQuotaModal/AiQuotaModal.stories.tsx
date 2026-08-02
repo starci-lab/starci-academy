@@ -13,23 +13,12 @@ import type { AiQuotaLaneData } from "@sb-components/starci/blocks/ai/AiQuotaLan
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `AiQuotaModal` — the root overlay for "how much AI have I used": dialog
- * shell + title/tier-chip header + 3-tab strip + the active tab's panel +
- * "view full usage" link. Opened from anywhere via the app's global overlay
- * store; this port takes plain `isOpen`/`onOpenChange`/`activeTab` props
- * instead of reading Zustand directly (Rule 13), same as its siblings
- * `FoundationModal`/`PremiumGateModal`.
- *
- * ⚠️ FILED UNDER `StarCi/Overlays/Modals`, not `StarCi/Blocks/Ai` — see the
- * component's own file header for why (Rule 13 + `components/README.md`'s
- * app-folder split law, matching the `FoundationModal`/`PremiumGateModal`
- * relocation precedent).
- *
- * ONE LEAF (`Default`). The wrapper shape (header · tab strip · one panel slot
- * · footer link) never changes — only WHICH sibling `ai`-group block fills the
- * panel slot changes across states, exactly the reasoning `FoundationModal`'s
- * own file header gives for its `kind` prop. `tier` (the header's chip) and
- * each tab's own `isLoading` are further states of that same one leaf.
+ * `AiQuotaModal` — the root overlay for "how much AI have I used": dialog shell
+ * + title/tier-chip header + 3-tab strip + the active tab's panel + "view full
+ * usage" link. Opened via the app's global overlay store; this port takes plain
+ * `isOpen`/`onOpenChange`/`activeTab` props. One leaf (`Default`): the wrapper
+ * shape never changes — only which `ai`-group block fills the panel slot. `tier`
+ * (the header chip) and each tab's `isLoading` are further states.
  */
 const meta: Meta<typeof AiQuotaModal> = {
     title: "StarCi/Overlays/Modals/AiQuotaModal/AiQuotaModal",

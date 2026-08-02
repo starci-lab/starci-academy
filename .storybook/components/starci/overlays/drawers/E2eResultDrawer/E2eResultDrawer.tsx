@@ -10,52 +10,13 @@ import { ChipBase } from "@sb-components/atoms/chips/Chip/ChipBase"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `E2eResultDrawer`: the recorded Playwright E2E proof for the active
- * lesson, shown as a per-flow pass/fail list that expands to the full proof
- * markdown.
+ * `E2eResultDrawer` — the recorded Playwright E2E proof for the active lesson: a
+ * per-flow pass/fail list (status chip + title) that expands to the full proof
+ * markdown, with a language filter that appears only when the flows span more than
+ * one stack. Passed/total counts the currently visible set, not the whole array.
  *
- * COLLAPSES A REAL SRC PAIR ON PURPOSE (same call as `ContentModal`, per the
- * task brief). `src/components/drawers/E2eResultDrawer` is a thin `Drawer`
- * shell that reads `useE2eResultOverlayState()` (Zustand open-state) and
- * `state.content.entity.e2eFlows` (Redux) then renders its sibling
- * `src/components/features/learn/LessonReader/E2eBody` inside the body — a
- * PANEL, not a second concept. This port is the panel's actual shape (status
- * chip + title per flow, language filter, expandable proof) behind the SAME
- * plain-props contract Rule 13 gives every overlay: the drawer shell part and
- * the body-content part were only ever split because Redux/Zustand sat between
- * them, and that wiring is exactly what a port strips out.
- *
- * OVERLAY, PRESENTATIONAL ONLY (Rule 13). `isOpen`/`onOpenChange` are forwarded
- * straight to `DrawerShell`; the caller (the real overlay-store hook, in
- * `src`) owns opening/closing this. `flows` is the resolved array off the
- * active lesson — this block never reads Redux, never decides which lesson is
- * "active".
- *
- * ROOT GUARD MIRRORS BOTH REAL CALL-SITES. The real `E2eResultDrawer` bails
- * `if (flows.length === 0) return null` BEFORE the `<Drawer>` even mounts (its
- * trigger button is hidden in that case too), and `E2eBody`'s own empty branch
- * only exists because a caller COULD still open the drawer some other way.
- * Since this port owns both halves at once, there is only ever the outer guard
- * to honour — "nothing recorded" means the whole overlay stays inert, not a
- * drawer that opens onto an empty message.
- *
- * LANGUAGE FILTER IS A LEAF, NOT A DATA BRANCH THIS BLOCK OWNS THE WORDING OF.
- * `flow.lang` is open-ended domain data (whatever stack the lesson's flows
- * were recorded in — `"typescript"`, `"go"`, `"csharp"`…), so unlike
- * `ContentModeNav`'s closed `ContentMode` enum there is no fixed label table to
- * keep here — the tab label is just the lang value, capitalized. The filter
- * itself only renders when the flow set spans more than one distinct lang
- * (single-stack lessons never show a one-tab strip). Which language starts
- * active, and which flows are currently visible, is UI-local state (`useState`)
- * exactly like the real `E2eBody` keeps it — it is not part of the overlay's
- * open/closed contract, so it does not need to be a controlled prop.
- *
- * PASSED/TOTAL COUNTS THE VISIBLE SET, not the whole `flows` array — ported
- * 1:1 from the real `E2eBody` (`passed = visible.filter(...)`, `total =
- * visible.length`): switching the language tab is meant to answer "how did
- * THIS stack's run go", not repeat the grand total on every tab.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Presentational: `isOpen`/`onOpenChange` + a resolved `flows` array; the whole
+ * overlay stays inert when nothing is recorded.
  */
 
 /** One recorded Playwright proof flow (mirrors the seeded `content.e2eFlows` jsonb shape). */

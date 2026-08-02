@@ -3,19 +3,12 @@ import { MockInterviewScorecard } from "@sb-components/starci/blocks/learn/MockI
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `MockInterviewScorecard`: read-only render of one graded mock-interview
- * run. See the component file header for the full contract, the scope cut (no
- * per-question model-answer review this pass — blocked on a missing primitive),
- * and why every optional section (byline, attribute breakdown, strengths, gaps,
- * follow-up, weak-area tag, retry) is a STATE of this one leaf rather than its
- * own leaf.
- *
- * REUSE NOTE: the verdict banner goes through `Callout`, the score and
- * attribute breakdowns are hand-laid `ProgressMeter` rows (no existing composite
- * owns "labeled meter list" — same call `ChallengeScoreCard` already makes), and
- * strengths/gaps go through `SurfaceCard.CrossList` — an addition to the task's
- * compose list, picked because it already owns "N marked rows + its own skeleton"
- * rather than this block re-deriving that shape by hand.
+ * `MockInterviewScorecard` — read-only render of one graded mock-interview run:
+ * a verdict banner (`Callout`), hand-laid `ProgressMeter` rows for the score and
+ * attribute breakdowns, and strengths/gaps via `SurfaceCard.CrossList`. Every
+ * optional section — byline, attribute breakdown, strengths, gaps, follow-up,
+ * weak-area tag, retry — is a state of one shape. Per-question model-answer review
+ * is out of scope (no primitive for it yet).
  */
 const meta: Meta<typeof MockInterviewScorecard> = {
     title: "StarCi/Blocks/Learn/MockInterviewScorecard/MockInterviewScorecard",

@@ -8,22 +8,17 @@ export default meta
 type Story = StoryObj
 
 /**
- * LEAF ATOM — `InputPassword` wraps HeroUI `TextField`/`Input` (type="password")
- * plus a show/hide button (Phosphor `EyeIcon`/`EyeSlashIcon`) and its own internal
- * `FieldFrame` (§11a). No component here has a story of its own to jump to, so
- * `annotate` carries no `storyId` — but the heroui `Input` it renders, and
- * `FieldFrame`'s own heroui `Label`/`Skeleton`, still need tier `heroui` so the
- * two-law panel doesn't silently drop them (2026-07-28). `Toggle` (the hand-rolled
+ * LEAF ATOM — `InputPassword` wraps HeroUI `TextField`/`Input` (type="password") plus a
+ * show/hide button (Phosphor `EyeIcon`/`EyeSlashIcon`) and its own internal `FieldFrame`.
+ * No component here has a story to jump to, so `annotate` carries no `storyId` — but the
+ * HeroUI `Input` it renders, and `FieldFrame`'s own HeroUI `Label`/`Skeleton`, get tier
+ * `heroui` so the two-law panel doesn't silently drop them. `Toggle` (the hand-rolled
  * show/hide `<button>`) stays unannotated — plain markup, not a real component.
- *
- * ⭐ 2026-07-26 (§12g): leaf `Invalid` split off from `Error`, since `isInvalid` alone
- * only changes the border (no text line), while `errorMessage` adds the border AND the
- * red line. The two props produce different pixels, so they must be two different
- * leaves (§12g.1: a pixel change earns a leaf).
- *
- * ⭐ The show/hide button (`reveal`) is INTERNAL `useState`, no prop can pin the
- * "revealed" state from outside, so no leaf can be built for it without touching the
- * component (forbidden in this pass), noted as an issue instead of a leaf.
+ * 
+ * Leaf `Invalid` is split off from `Error`: `isInvalid` alone only changes the border (no
+ * text line), while `errorMessage` adds the border AND the red line — different pixels, so
+ * two leaves. The show/hide `reveal` state is internal `useState`, so no prop can pin it
+ * from outside and it earns no leaf.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Input": { tier: "heroui", role: "masked text field" },

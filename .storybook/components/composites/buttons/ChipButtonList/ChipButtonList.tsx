@@ -5,33 +5,20 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — a NEW composite (no `src` yet; synced later).
+ * `ChipButtonList` — a shared list of chip-shaped buttons (leading bare icon +
+ * label, `justify-start text-start`) used for suggestion chips, retrieval-skill
+ * chips, quick-asks, and skill menus.
  *
- * Ported from 4 near-identical call-sites in `ContentAiChat`
- * (`src/components/features/learn/ContentAiChat/index.tsx:1329-1449`) that each
- * hand-roll a list of `secondary`/`ghost` Buttons with the SAME shape — leading bare
- * icon (optional) + label, `justify-start text-start` — for: empty-state suggestion
- * chips, retrieval-skill chips, selected-passage quick-asks, and the skill menu.
- * Folded into ONE shared composite (§4 ownership): anywhere that needs "a row of
- * suggestion chips" or "a skill-menu row" composes THIS composite — no hand-rolling
- * a Button list again.
- *
- * COMPOSES the base {@link Button} for EVERY item (does NOT import HeroUI directly) —
- * press/pending/disabled live on the base Button (§4); this composite only owns
- * LAYOUT (cluster vs column) + icon size (§5: the leading icon is always forced to
- * `size-4 shrink-0 text-muted` — it does NOT use `Button`'s own trailing/sliding
- * `icon` slot; a chip's icon stays put, leading the label).
+ * Composes the base {@link Button} for every item (not HeroUI directly) —
+ * press/pending/disabled live on the Button; this composite owns only LAYOUT
+ * (cluster vs column) and icon size (the leading icon is forced to
+ * `size-4 shrink-0 text-muted`, not routed through Button's trailing icon slot).
  *
  * `direction`:
  * - `"wrap"` — a cluster of suggestion chips: default variant `secondary`,
- *   `flex-wrap gap-2`, each chip auto-width, the label is Button's own bare
- *   children (not routed through Typography — same as how the base Button already
- *   displays its own label).
- * - `"column"` — a vertical skill-menu list: default variant `ghost`, each row is
- *   full-width `px-3 py-2`, the label goes through {@link Typography}
- *   (`weight="medium"`, `truncate`) instead of a hand-typed `text-sm font-medium
- *   text-foreground` className (canon §1: color/weight go through a PROP, not a
- *   `text-*`/`font-*` class on Typography).
+ *   `flex-wrap gap-2`, auto-width, label as Button's own bare children.
+ * - `"column"` — a vertical skill-menu list: default variant `ghost`, full-width
+ *   `px-3 py-2` rows, label through {@link Typography} (`weight="medium"`, `truncate`).
  */
 
 /** One chip/row item. */

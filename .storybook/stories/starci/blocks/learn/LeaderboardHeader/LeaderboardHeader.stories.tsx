@@ -3,22 +3,10 @@ import { LeaderboardHeader } from "@sb-components/starci/blocks/learn/Leaderboar
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `LeaderboardHeader`: the PAGE-IDENTITY cluster at the top of the
- * leaderboard screen — trail, title, subtitle, nothing else.
- *
- * SIBLING OF `ContentHeader`/`ModuleHeader`, NOT A COPY. Every ported screen
- * wraps `PageHeader` in its own domain-named block rather than the screen
- * touching the composite directly (rule 1). Leaderboard keeps that shape even
- * though its real header carries no meta chips — no read-state, no tier, no
- * count fact rides here, because rank and score live in the list below.
- *
- * ⚠️ ONLY ONE LEAF. Unlike `ContentHeader` (whose outcomes card is a whole
- * extra node that can be absent), `LeaderboardHeader` has nothing left that
- * changes SHAPE once the trail and title are drawn — a missing subtitle is a
- * data condition on the same three-part cluster, not a different structure.
- * That is also why this block was flagged for a second look against
- * `check-passthrough-block`: see the file header on the component for the
- * judgement call left open there.
+ * `LeaderboardHeader` — the page-identity cluster at the top of the leaderboard
+ * screen: trail, title, subtitle, nothing else. Wraps `PageHeader` in a
+ * domain-named block; it carries no meta chips because rank and score live in the
+ * list below. A missing subtitle is a data condition on the same three-part cluster.
  */
 const meta: Meta<typeof LeaderboardHeader> = {
     title: "StarCi/Blocks/Learn/LeaderboardHeader/LeaderboardHeader",

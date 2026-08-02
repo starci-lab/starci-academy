@@ -3,19 +3,11 @@ import { MindMapFullscreenButton } from "@sb-components/starci/blocks/learn/Mind
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `MindMapFullscreenButton`: the floating zoom + fullscreen rail over a
- * mind-map canvas, bottom-right, `ButtonBase` (iconOnly) ×3 inside `StackV`.
- *
- * ⭐ ONE LEAF (§14d.2). The rail never gains or loses a button — three actions,
- * fixed order, always. `isFullscreen` only swaps the third button's glyph and
- * label between "enter" and "exit", so it is a STATE inside the one leaf, not
- * a second leaf: the shape on screen never changes, only which icon a slot shows.
- *
- * ⛔ There is deliberately NO "disabled at zoom limit" leaf/state. This block
- * has no bounds data to know a limit was hit — that judgement belongs to the
- * screen holding the canvas transform, and building it here would be inventing
- * a case the props do not support (§14d.3, and the file header's §7 note: this
- * block never swallows a press on business grounds).
+ * `MindMapFullscreenButton` — the floating zoom + fullscreen rail over a mind-map
+ * canvas, bottom-right: three `ButtonBase` (iconOnly) actions in a `StackV`, fixed
+ * order, always present. `isFullscreen` swaps only the third button's glyph and
+ * label between "enter" and "exit". The block never disables at a zoom limit —
+ * that judgement belongs to the screen holding the canvas transform.
  */
 const meta: Meta<typeof MindMapFullscreenButton> = {
     title: "StarCi/Blocks/Learn/MindMapFullscreenButton/MindMapFullscreenButton",

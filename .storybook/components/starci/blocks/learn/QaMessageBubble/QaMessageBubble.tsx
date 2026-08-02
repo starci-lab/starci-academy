@@ -10,23 +10,12 @@ import { QaChatBubble } from "@sb-components/starci/blocks/learn/QaChatBubble/Qa
 import { QaReactionBar, type QaReactionType } from "@sb-components/starci/blocks/learn/QaReactionBar/QaReactionBar"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QaMessageBubble`: ONE answer in a `QaQuestionThread` conversation —
- * author line, {@link QaChatBubble} body, an "accept this answer" toggle
- * (only for the asker, direct top-level answers only), a
- * {@link QaReactionBar}, and — recursing internally — every flattened reply
- * to THIS answer as a sibling bubble beneath it. Split out because
- * `QaQuestionThread`'s own file header names it as one of four siblings it
- * composes but does not itself build (§"ASSUMED CONTRACTS").
- *
- * ⭐ REPLIES ARE READ-ONLY, DOCUMENTED CUT: `QaQuestionThread`'s task brief
- * only threads `onReact`/`onAcceptAnswer` for the TOP-LEVEL answer (its
- * `answers.map` call passes them per top-level answer id, never per reply).
- * A reply therefore renders its bubble + author line with no accept/react
- * controls, rather than this block guessing a reply-targeting callback shape
- * nobody asked for. Widening that is a prop-shape change for
- * `QaQuestionThread`, not something to invent silently here.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QaMessageBubble` — one answer in a `QaQuestionThread`: author line,
+ * {@link QaChatBubble} body, an accept-answer toggle (asker only, top-level
+ * answers only), a {@link QaReactionBar}, and — recursing internally — every
+ * flattened reply to this answer as a sibling bubble beneath it. Replies are
+ * read-only (no accept/react controls), since the thread threads
+ * `onReact`/`onAcceptAnswer` only for top-level answers.
  */
 
 /** Minimal identity carried by whoever wrote an answer. */

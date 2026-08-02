@@ -9,14 +9,10 @@ export default meta
 type Story = StoryObj
 
 /**
- * `InputDate` composes NO atom with its own story — the DOM emits heroui's
- * `DateField.Group` (wrapping `DatePicker`/`Calendar` directly) plus the internal
- * `FieldFrame`'s own `Label`/`Skeleton`. There's no `storyId` to point at, but these
- * three heroui parts still need the `heroui` tier so the two-rule panel doesn't
- * silently drop them (2026-07-28; see `.storybook/components/atoms/forms/Input/Input.tsx`, `InputDate`).
- *
- * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
- * `states` entry, since none of them stacks more than one rendering.
+ * `InputDate` composes no atom with its own story — the DOM emits HeroUI's `DateField.Group`
+ * (wrapping `DatePicker`/`Calendar` directly) plus the internal `FieldFrame`'s own
+ * `Label`/`Skeleton`. There's no `storyId` to point at, but these three HeroUI parts still
+ * get the `heroui` tier so the two-rule panel doesn't silently drop them.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "DateField.Group": { tier: "heroui", role: "date segment input group" },

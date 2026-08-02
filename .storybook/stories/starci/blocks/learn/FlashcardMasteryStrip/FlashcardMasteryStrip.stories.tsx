@@ -3,24 +3,12 @@ import { FlashcardMasteryStrip } from "@sb-components/starci/blocks/learn/Flashc
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FlashcardMasteryStrip`: mastery-first progress readout for a deck —
- * "how much of this do I actually own", not "how many cards are left today".
- * Maps to the real `FlashcardStatsStrip`.
- *
- * REUSES `SegmentBar`'s OWN `caption` slot for the retention/first-review line
- * instead of a second hand-built text row underneath it — the exact drift the
- * `ContentModeNav` header on this catalog warns against.
- *
- * ⭐ `SegmentBar` has no `isSkeleton` of its own. Loading feeds it one flat,
- * uncoloured segment with the legend hidden instead of forking a parallel bar —
- * see the component's own file header for the full reasoning.
- *
- * 📐 LEAF by STRUCTURE (§14d.2), four of them: the streak chip (`SurfaceCard`'s
- * `action` slot) appearing/disappearing is one axis; the caption switching
- * between a retention number and a first-review nudge — a genuinely different
- * sentence answering a genuinely different question — is the other. Between 1
- * and 4 lifetime reviews neither leaf applies and the caption is simply absent;
- * that gap is not invented as a fifth leaf because no screen asks for it.
+ * `FlashcardMasteryStrip` — mastery-first progress readout for a deck ("how much
+ * of this do I own", not "how many cards are left today"); maps to
+ * `FlashcardStatsStrip`. Reuses `SegmentBar`'s own `caption` slot for the
+ * retention/first-review line; loading feeds one flat uncoloured segment with
+ * the legend hidden. Four leaves across two axes: the streak chip appearing, and
+ * the caption switching between a retention number and a first-review nudge.
  */
 const meta: Meta<typeof FlashcardMasteryStrip> = {
     title: "StarCi/Blocks/Learn/FlashcardMasteryStrip/FlashcardMasteryStrip",

@@ -12,47 +12,15 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ProfileLoadingState`: the FIRST-LOAD skeleton for the public profile
- * screen. It exists so nothing on that screen jumps once the real data resolves —
- * the tab strip, the identity column and every overview section already sit in
- * their FINAL box before a single byte of profile data has arrived.
- *
- * NEW block (no `src` port to diff against — `src/components/features/profile`
- * was read read-only as reference for WHICH sections exist and in what order,
- * not copied verbatim: this file rebuilds the same shell out of THIS system's own
- * atoms/frames/composites rather than mirroring `src`'s `Skeleton.*` namespace,
- * which does not exist here — see `[[storybook-no-namespace]]`).
- *
- * WHY THIS IS A BLOCK, NOT A DESIGN/COMPOSITE: it hard-codes the real profile
- * screen's specific section order (job-readiness → courses → contributions →
- * skills) — that ordering is DOMAIN knowledge about one specific screen, which is
- * exactly what makes something a block instead of a feature-less design piece
- * (`[[fe-primitive-definition]]`).
- *
- * PROPS: none beyond `className` (rule 9) — this is a
- * PURE skeleton, it never receives or displays data, so there is nothing else to
- * parameterize and therefore only one leaf/one story state.
- *
- * COMPOSITION, per real section (`ProfileHeroSkeleton` / `ProfileTabsBar` /
- * `ProfileOverviewTab`'s four sections read as reference):
- *   • tab strip      → `Tabs` (`isSkeleton variant="secondary"`) — the atom OWNS
- *     this exact shimmer shape already, so the strip is not hand-rolled.
- *   • hero column    → avatar+rank / name+role+handle / bio / location+work-mode /
- *     follower line / earned-badge medal strip (`AvatarGroup isSkeleton`, its
- *     native overlap job) / action buttons / meta rows.
- *   • overview body  → job-readiness (metric card + a tracked-goal row) /
- *     courses (icon-tile + title/percent + progress) / contributions
- *     (heatmap + streak line) / skills (2-col `Grid` of stat cards).
- *
- * Every text/pill/progress/tile spot with a matching atom uses that atom's own
- * `isSkeleton` (rule 6, §12c) instead of a hand-rolled bar, so the footprint is
- * guaranteed to match the atom's real box. FIVE spots genuinely have no atom to
- * carry the flag (a 128px hero avatar circle — bigger than `Avatar`'s three
- * presets; three decorative 20px leading-icon boxes; a 160px contribution
- * heatmap) — those build a raw HeroUI `Skeleton` directly, the same escape valve
- * `ContinueCard` documents in its own header for the same reason.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ProfileLoadingState` — the first-load skeleton for the public profile screen,
+ * so nothing jumps once real data resolves: the tab strip, identity column, and
+ * every overview section already sit in their final box. A block (not a
+ * design/composite) because it hard-codes the screen's section order
+ * (job-readiness -> courses -> contributions -> skills). No props beyond
+ * `className`; one leaf. Each spot uses its atom's own `isSkeleton` (`Tabs`,
+ * `Avatar`, `AvatarGroup`, `Grid`...) so footprints match; five spots with no
+ * matching atom (a 128px hero avatar, three 20px leading-icon boxes, a 160px
+ * heatmap) build a raw HeroUI `Skeleton` directly.
  */
 
 /** Props for {@link ProfileLoadingState}. Pure skeleton — no data props (see file header). */

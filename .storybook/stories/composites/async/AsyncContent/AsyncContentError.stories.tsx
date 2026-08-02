@@ -5,11 +5,11 @@ import { AsyncContentError } from "@sb-components/composites/async/AsyncContent/
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ⚠️ STATE SCOPE (decided 2026-07-25): `AsyncContentError` is the ERROR MESSAGE
- * FRAME — the same slot set as `.Empty` but with `tone="danger"`. State here comes
- * from TOGGLING its own slots (description · action · icon). Branch priority
- * (error wins over loading) is a state of `AsyncContent`, NOT repeated here.
- *
+ * STATE SCOPE: `AsyncContentError` is the error-message frame — the same slot set as `.Empty`
+ * but with `tone="danger"`. State here comes from toggling its own slots (description · action
+ * · icon). Branch priority (error wins over loading) is a state of `AsyncContent`, not repeated
+ * here.
+ * 
  * ANATOMY IS PER-LEAF: each story is its own leaf, carrying its own parts tree.
  */
 const meta: Meta<typeof AsyncContentError> = {

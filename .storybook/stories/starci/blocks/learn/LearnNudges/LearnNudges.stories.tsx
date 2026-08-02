@@ -3,20 +3,10 @@ import { LearnNudges, type LearnNudge } from "@sb-components/starci/blocks/learn
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `LearnNudges`: things to do today.
- *
- * §14b — the caller only passes `kind` (ENUM), **the block owns the `kind → icon`
- * table**. The screen must not know what "review a card" looks like; if the prop
- * were `leadingIcon`, the screen would have to hold an atom ⇒ breaks the law.
- *
- * Shares its `SurfaceCardList` layout with `KeepGoingPath` — two clusters that
- * look alike must share one render path.
- *
- * 📐 **ONE LEAF** (§14d.2): full-3-things · single-thing · bordered all use the
- * SAME `SurfaceCardList` tree ⇒ **STATE**, rendered inside one leaf's `states[]`
- * (teacher's call on layout C, 2026-07-27), not a separate story. `isSkeleton` alone gets
- * its OWN LEAF (§12g.0a, teacher's call 2026-07-27) even though the DOM tree is
- * identical — the rule for this prop is an exception that overrides §14d.2.
+ * `LearnNudges` — the "things to do today" list. The caller passes only `kind`
+ * (an enum); the block owns the `kind → icon` table. Shares its `SurfaceCardList`
+ * layout with `KeepGoingPath`. Full/single/bordered are all states of one tree;
+ * `isSkeleton` gets its own leaf even though the DOM is identical.
  */
 const meta: Meta<typeof LearnNudges> = {
     title: "StarCi/Blocks/Learn/LearnNudges/LearnNudges",

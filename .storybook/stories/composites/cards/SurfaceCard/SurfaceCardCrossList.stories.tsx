@@ -2,20 +2,10 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { SurfaceCardCrossList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * FRAME (Layouts) — a STATIC "brief" list of MARKED rows (✓ / ✗ / none) inside a
- * bounded `bg-surface` frame with a full-bleed divider: ONE list can mix both ✓
- * (included) and ✗ (not included). Read-only; for CLICKABLE rows use `SurfaceCardList`.
- *
- * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): this is a REPEATING list, so `items`
- * is REQUIRED data (children forbidden). Stories here only render the states of
- * ITS OWN props: `mark` (check/cross/none), `tone` (success/muted/danger), `variant`,
- * and the `isSkeleton` mirror.
- *
- * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `bordered?: boolean` → `variant?:
- * SurfaceCardVariant` (`"surface" | "nested"`, default `"surface"`). 1-1 mapping:
- * `bordered=true` → `variant="nested"`. The leaf previously split out as `Bordered`
- * is now merged into ONE `Variant` leaf rendering both values side by side (§ union
- * side-by-side, same mold as `MutedTone`).
+ * `SurfaceCardCrossList` — a static "brief" list of marked rows (✓ / ✗ / none) inside a
+ * bounded `bg-surface` frame with a full-bleed divider: one list can mix both ✓ (included) and
+ * ✗ (not included). Read-only; for clickable rows use `SurfaceCardList`. Owns `mark`
+ * (check/cross/none), `tone` (success/muted/danger), and `variant` (`"surface" | "nested"`).
  */
 const meta: Meta<typeof SurfaceCardCrossList> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardCrossList",

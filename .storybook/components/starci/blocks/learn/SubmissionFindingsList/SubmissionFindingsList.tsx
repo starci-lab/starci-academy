@@ -13,65 +13,15 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `SubmissionFindingsList`: "Feedback" — the quality-gate findings for one
- * graded attempt, one finding per accordion row.
- *
- * REUSE, NOT A NEW ACCORDION (the exact mistake this task exists to avoid — see
- * `ContentModeNav`'s file header). The `src` original (`FindingAccordionItem`
- * inside `SubmissionResult`) hand-rolled its own `Accordion.Item`/`Accordion.Trigger`
- * tree straight from raw HeroUI. This port goes through `SurfaceCard.Accordion`
- * instead — the composite ALREADY owns the bounded `bg-surface` frame, the
- * trigger row's icon+title+titleEnd+caret layout, its OWN `isSkeleton` mirror
- * (row-for-row, matching `items.length`), and its OWN `emptyState` slot (bounded
- * inside the same frame, never a bare/broken card). This block supplies none of
- * that shape — it only supplies the DOMAIN: which severity means which icon,
- * which findings sort first, and how a `location` string becomes a file link.
- *
- * WHAT THIS BLOCK OWNS (§14d.1 — domain vocabulary the caller must not hand in):
- *   • `SEVERITY_VISUAL` — severity → trigger icon, text tone, sort rank. Ported
- *     from `SubmissionResult`'s local table of the same name.
- *   • `sortFindings` — high → low, then by the findings' own authored order
- *     (`sortIndex`). Ported from `SubmissionResult`'s `sortedFeedbacks` memo.
- *   • `buildLocationHref` — `repositoryUrl` + a repo-relative `location` string
- *     become a `blob/HEAD` deep-link. Ported from `FindingAccordionItem`
- *     unchanged (strip a trailing `.git`, strip a leading `/`).
- *
- * JUDGEMENT CALLS:
- *
- *   1. ONE LEAF (`FindingsAccordion`). Loading / empty / error / populated never
- *      change the STRUCTURE — it is always one bounded accordion card, only what
- *      sits inside it changes — so all four are STATES of one leaf (§11f), never
- *      four leaves.
- *
- *   2. LOADING AND EMPTY ROUTE THROUGH `SurfaceCard.Accordion`'S OWN AXES
- *      (`isSkeleton` / `emptyState`), NOT THROUGH `AsyncContent`'s state-switch
- *      wrapper — the one deliberate DEPARTURE from the sibling block built for
- *      this same screen (`SubmissionAttemptSelector`, which DOES wrap itself in
- *      `AsyncContent`). The reason is structural, not stylistic: a chip strip has
- *      no bounded frame of its own to protect, so swapping it for `AsyncContent`'s
- *      centered message on every non-content branch costs nothing. An accordion
- *      CARD does have a frame worth protecting — the "Feedback" section should read
- *      as the same bounded surface whether it is shimmering, empty, erroring, or
- *      full, never as a card that vanishes and a loose message appearing in its
- *      place. `SurfaceCard.Accordion` already built exactly that bounded
- *      loading/empty behaviour (see its own file header, "owner of the shape is
- *      the owner of the skeleton"), so reusing its two axes keeps ONE frame alive
- *      across every state instead of a second frame fighting it for the job.
- *
- *   3. ERROR STILL REUSES `AsyncContent` — just its MESSAGE frames
- *      (`AsyncContentError`), not its switch. Passed as the accordion's
- *      `emptyState` (with `items=[]` so the card has nothing else to show
- *      alongside it), so the retry message renders BOUNDED inside the same card
- *      face rather than breaking out to its own unbounded region. Error still
- *      outranks a stale `isLoading`/`isSkeleton` (mirrors `AsyncContent`'s own
- *      "error beats even loading" priority), in case a caller hands both at once.
- *
- *   4. `isLoading` (this list's own in-flight fetch) and `isSkeleton` (a
- *      parent-forced skeleton paint) fold into the SAME branch — same reasoning
- *      `SubmissionAttemptSelector` documents: the card exposes only one shimmer
- *      shape, so there is nothing for two separate flags to disagree about.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `SubmissionFindingsList` — "Feedback": the quality-gate findings for one
+ * graded attempt, one finding per `SurfaceCard.Accordion` row. Owns the domain:
+ * `SEVERITY_VISUAL` (severity -> icon, tone, sort rank), `sortFindings` (high ->
+ * low then authored order), and `buildLocationHref` (`repositoryUrl` + relative
+ * `location` -> a `blob/HEAD` deep link). One leaf; loading/empty/error/populated
+ * are states. Loading and empty route through the accordion's own
+ * `isSkeleton`/`emptyState` axes to keep one bounded frame alive; error reuses
+ * `AsyncContent`'s message frames as `emptyState` and outranks a stale loading
+ * flag. `isLoading` and `isSkeleton` fold into one branch.
  */
 
 /** Severity a finding carries — drives the trigger icon/tone and the sort rank (high sorts first). */

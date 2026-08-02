@@ -7,39 +7,20 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `Page.*`, the ONE page-chrome frame namespace
- * (teacher's call, 2026-07-25, canon §13a). Sibling frames that used to live as loose
- * folders (`PageHeader` · `StickyBottomBar`) are now MEMBERS of one namespace
- * — same tier (frame / layout), same family (chrome of a ROUTE: what sits above
- * the content and pinned under it), one import.
+ * `Page.*` — the page-chrome frame namespace: the chrome of a ROUTE (what sits
+ * above the content and pinned under it). Members are `PageHeader` and
+ * `PageBottomBar`.
  *
- * FRAME API LAW (§13b):
- * - `PageBottomBar` is a WRAPPER frame → named slots `body`/`actions` (a bar
- *   is a horizontal row, so `header`/`footer` would be a lie); `children`
- *   stays as shorthand for `body`.
- * - `PageHeader` is NOT a generic wrapper — it already owns semantic slots
- *   (`breadcrumb`/`title`/`description`/`actions`/`meta`) and deliberately
- *   takes no `children`.
- * - No repeating list here, so no `items` member (§13b list clause N/A).
- * - Namespace only — no bare component export.
+ * `PageBottomBar` is a wrapper frame with named slots `body`/`actions` (`children`
+ * = shorthand for `body`). `PageHeader` is not a generic wrapper — it owns semantic
+ * slots (`breadcrumb`/`title`/`description`/`actions`/`meta`) and takes no
+ * `children`. No repeating list, so no `items` member. Namespace only — no bare
+ * component export.
  *
- * Behaviour/skin of every member is carried over VERBATIM from its old folder;
- * this is an API refactor, not a visual one. Synced to `src` later. No
- * `@/components` imports (design-spec ports stay self-contained).
- *
- * HISTORY — `.Container` was moved to `Container` (`@sb-components/frames/Container/Container`)
- * on 2026-07-26: the old frame had no `mx-auto`, no `max-w`, only right padding —
- * a half-baked version of the "content width" concept that `Container` already
- * does correctly (§13c: a duplicate frame gets deleted).
- *
- * COMPOSITE-8 — both `PageHeader` and `PageBottomBar` own an `isSkeleton` of
- * their own, so every slot they render is a COMPONENT reference
- * (`ComponentType<{ isSkeleton?: boolean }>`), never a pre-built node: the
- * frame calls it itself so it can forward `isSkeleton` into it. Text the
- * frame renders directly through `Typography` (`title`/`description`) is a
- * plain `string` instead — the frame wraps it in the atom itself.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Both members own their own `isSkeleton`, so every slot they render is a component
+ * reference (`ComponentType<{ isSkeleton?: boolean }>`) the frame calls itself to
+ * forward the flag; text the frame renders directly through `Typography`
+ * (`title`/`description`) is a plain `string`.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

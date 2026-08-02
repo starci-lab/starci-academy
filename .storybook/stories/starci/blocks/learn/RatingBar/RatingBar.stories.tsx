@@ -3,25 +3,12 @@ import { RatingBar } from "@sb-components/starci/blocks/learn/RatingBar/RatingBa
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `RatingBar`: how well did you remember it. Four tiles tapped after an
- * answer is revealed, feeding the spaced-repetition schedule.
- *
- * SHARED between flashcard review and quiz recap: what it knows is what a RECALL
- * GRADE is — four of them, weakest to strongest, and the answer decides when the
- * card comes back.
- *
- * ⭐ GRADING IS AN ACTION, NOT A SELECTION. Nothing stays lit after the tap: no
- * ring, no checked skin. The learner answers once and moves on rather than
- * adjusting a setting they might return to, and a persistent selected state
- * would invite them to sit and reconsider.
- *
- * ⭐ THE COLOUR RAMP IS A TIER, NOT A STATUS. Grades run rose → emerald like a
- * difficulty scale, because "I forgot" is not an ERROR and "easy" is not a
- * SUCCESS — they are positions on one axis. The status palette here would tell
- * the learner they got something wrong by being honest.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): the hint line and the pending lock are data ⇒
- * states. The caller flipping `isSkeleton` is a leaf.
+ * `RatingBar` — how well did you remember it: four tiles tapped after an answer is
+ * revealed, feeding the spaced-repetition schedule. Shared between flashcard review
+ * and quiz recap. Grading is an action, not a selection — nothing stays lit after
+ * the tap. The colour ramp (rose → emerald) is a tier, not a status: "I forgot" is
+ * not an error and "easy" is not a success, just positions on one axis. The hint
+ * line and the pending lock are states; `isSkeleton` is its own leaf.
  */
 const meta: Meta<typeof RatingBar> = {
     title: "StarCi/Blocks/Learn/RatingBar/RatingBar",

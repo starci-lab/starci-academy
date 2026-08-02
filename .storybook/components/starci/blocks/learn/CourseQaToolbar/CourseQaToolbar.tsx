@@ -5,49 +5,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseQaToolbar`: the control strip above a course Q&A board's
- * question list — status/scope filter tabs, a search field, and a live match
- * count. Ports `src`'s `CourseQa/index.tsx` "C · toolbar" region verbatim: a
- * `TabsCard` (filter tabs, no right group) stacked over a
- * `justify-between` row of `SearchInput` + a count `Typography`.
- *
- * WHY TWO STACKED ROWS, NOT ONE `Toolbar` CALL: `Toolbar`'s KHUNG API (§13b)
- * only has TWO content channels — `leftTabs`/`rightTabs` as controlled TAB
- * GROUPS, plus `leftEnd` as a free-node slot that renders right AFTER the left
- * tab group (not pinned to the row's trailing edge). A search field is not a
- * tab group, and `leftEnd` is the wrong position for it (it would crowd right
- * next to the filter tabs instead of sitting on its own, `justify-between`
- * with the count). So the filter row uses `Toolbar` (leftTabs only — this
- * board has no second tab group) and the search+count row is hand-composed
- * from `InputSearch` + `Typography` in a `StackH`, the exact move
- * `LeaderboardToolbar`'s header already documents for "the composite covers
- * one piece of this strip, not all of it."
- *
- * OWNS THE FILTER → LABEL TABLE (§14d.1), same precedent as `ContentModeNav`'s
- * `MODE_LABEL`: the caller says which {@link CourseQaFilter} is active, it
- * never hands over a pre-built tab list — this block is the one place that
- * knows a course Q&A filter is called "Unanswered" / "Answered" / etc.
- * Order and wording are ported verbatim from `vi.json`'s `courseQa.filter.*`.
- *
- * OWNS THE COUNT'S WORDING too, same `${count} questions` template as `src`'s
- * `courseQa.count` — the caller hands over a bare `resultCount` number, never
- * a formatted string.
- *
- * ⭐ JUDGEMENT CALL — `isSkeleton` reaches ONLY the result count, not the
- * filter tabs or the search field. The five filters are a fixed enum known
- * before any question ever loads (same "never skeletonised, static known-
- * upfront chrome" call `ContentModeNav` documents), and the search field is a
- * plain controlled text box that is already interactive with nothing to wait
- * on (the same call `FlashcardDeckList`'s header makes for its own query
- * field, "never skeletonised, same reasoning as `ContentModeNav`"). The
- * result count is the one fact here that is genuinely unknown until the
- * board's first fetch resolves, so it is the only part that shimmers.
- *
- * ONE LEAF (`Default`). Whether the count is still loading and which filter
- * is selected are DATA conditions on the exact same two-row structure — no
- * node appears or disappears — so they stay STATES, not separate leaves.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `CourseQaToolbar` — the control strip above a course Q&A question list: status/scope
+ * filter tabs (via `Toolbar`), a search field, and a live match count, in two stacked
+ * rows. Owns the filter → label table and the count wording (`${count} questions`);
+ * callers pass a {@link CourseQaFilter} key and a bare `resultCount`, never pre-built
+ * tabs or strings. `isSkeleton` reaches only the count (filters and search field are
+ * known/interactive upfront). One leaf.
  */
 
 /** Status/scope filter for the course-wide Q&A roll-up. Mirrors `src`'s `CourseQuestionFilter`. */

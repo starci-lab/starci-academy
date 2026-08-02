@@ -3,19 +3,12 @@ import { MindMapRail, type MindMapRailItem } from "@sb-components/starci/blocks/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `MindMapRail`: the keyword lookup pane beside a mind-map canvas —
- * search a term, narrow by popularity tier, pick a result. See the
- * component's own file header for the full reuse/leaf/judgement-call ledger.
- *
- * 📐 LEAF by STRUCTURE (§14d.2), two of them: `Default` (funnel popover
- * closed — loading/empty/populated are STATES of this one tree, since
- * `AsyncContent` already swaps the single region below the header row) and
- * `FilterOpen` (the popover panel is open, so the tier `ButtonRadioGroup`
- * becomes a real node — a structural difference, not a data condition).
- *
- * ⚠️ `FilterOpen`'s panel renders through a portal, outside the render box
- * `BlockAnatomy` scans — its `annotate` entries stay for honesty, they just
- * never reach the Structure tab (same limit `Popover`'s own story documents).
+ * `MindMapRail` — the keyword lookup pane beside a mind-map canvas: search a term,
+ * narrow by popularity tier, pick a result. Two shapes: `Default` (funnel popover
+ * closed — loading/empty/populated are states of the single region below the header
+ * row, swapped by `AsyncContent`) and `FilterOpen` (the popover panel open, so the
+ * tier `ButtonRadioGroup` becomes a real node). The open panel renders through a
+ * portal, outside the box `BlockAnatomy` scans.
  */
 const meta: Meta<typeof MindMapRail> = {
     title: "StarCi/Blocks/Learn/MindMapRail/MindMapRail",

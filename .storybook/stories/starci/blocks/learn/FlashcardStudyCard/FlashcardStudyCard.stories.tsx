@@ -3,29 +3,14 @@ import { FlashcardStudyCard } from "@sb-components/starci/blocks/learn/Flashcard
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FlashcardStudyCard`: one card of a review run, shared by BOTH
- * due-review and deck-review (near-identical in the real source), the way
- * `QuizQuestion` is shared by the quiz surfaces.
- *
- * ⭐ REUSE FIRST: this composes `SurfaceCard` · `MarkdownContent` · `Chip`/`ChipGroup`
- * · `Button` · the shared `RatingBar` block UNCHANGED. The only hand-rolled part
- * is the locked-premium notice — sized for one card face, not a whole pane, so
- * `EmptyState` is the wrong weight for it.
- *
- * ⭐ ONE CHIP PER META ROW (`starci-fe/no-adjacent-chip`). `levelLabel` gets the
- * lone classifying `Chip`; `tags` ride `ChipGroup` instead of a second run of
- * bare `<Chip>` siblings.
- *
- * 📐 THREE LEAVES BY STRUCTURE: `revealed` swaps the question-only body for the
- * answer body (real structural change). Within revealed, `isLocked` swaps the
- * answer for a lock notice — the answer, explanation and `RatingBar` all
- * disappear together, so it earns its own leaf too. `levelLabel`/`tags`/
- * `explanation` only change what shows INSIDE an already-existing leaf, so they
- * stay STATES (§14d.2) rather than doubling the leaf count.
- *
- * ⭐ PREV/NEXT NEVER GATE ON GRADING. They fire regardless of `revealed`/
- * `isLocked` — walking away from an ungraded card is a real action this block
- * does not get to block.
+ * `FlashcardStudyCard` — one card of a review run, shared by both due-review and
+ * deck-review. Composes `SurfaceCard`, `MarkdownContent`, `Chip`/`ChipGroup`,
+ * `Button`, and the shared `RatingBar`; only the locked-premium notice is
+ * hand-rolled. One chip per meta row (`starci-fe/no-adjacent-chip`): `levelLabel`
+ * takes the lone chip, `tags` ride `ChipGroup`. Three leaves: `revealed` swaps
+ * question-only for answer body, and within revealed `isLocked` swaps the answer
+ * for a lock notice; `levelLabel`/`tags`/`explanation` stay states. Prev/next
+ * never gate on grading.
  */
 const meta: Meta<typeof FlashcardStudyCard> = {
     title: "StarCi/Blocks/Learn/FlashcardStudyCard/FlashcardStudyCard",

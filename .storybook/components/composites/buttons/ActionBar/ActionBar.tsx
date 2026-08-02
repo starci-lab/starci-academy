@@ -5,42 +5,19 @@ import { ResponsiveCluster, type ResponsiveClusterItem } from "@sb-components/fr
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE — `ActionBar`: the `primary` · `secondary` · `dismiss` row that ends
- * a form, a modal, a drawer. THREE DIFFERENT ROLES, never N of the same kind —
- * that is the whole reason this is not `ButtonGroup`. `examples/composite.md`'s
- * own test: "is the content N elements of the SAME kind repeating?" A filter
- * row answers yes → `ButtonGroup.items`. Submit / Save draft / Cancel answers
- * NO → three named slots, here.
+ * `ActionBar` — the `primary` · `secondary` · `dismiss` row that ends a form,
+ * modal, or drawer. Three different ROLES, never N of the same kind — that is why
+ * it is not `ButtonGroup` (a homogeneous list).
  *
- * NAMED SLOTS, NOT A LIST. `primary` is the one slot every caller must fill;
- * `secondary`/`dismiss` are optional. A list has no way to say "at most one of
- * these is primary" — two primary actions would just be two items with the
- * same variant. A named slot makes that unrepresentable instead of merely
- * discouraged: there is exactly one prop called `primary`, so a second one has
- * nowhere to go.
+ * Named slots, not a list: `primary` is required, `secondary`/`dismiss` optional.
+ * The slot decides the variant — `primary` → `"primary"`, `secondary` →
+ * `"secondary"`, `dismiss` → `"ghost"` — never the caller.
  *
- * THE SLOT DECIDES THE VARIANT — never the caller. `primary` → variant
- * `"primary"`, `secondary` → `"secondary"`, `dismiss` → `"ghost"`. Two screens
- * cannot disagree about what a cancel button looks like, because there is
- * nowhere on this component to tell it otherwise.
- *
- * LAYOUT, BUILT ON `ResponsiveCluster` (Wave 3, 2026-08-01) — the same frame
- * `ButtonGroup` was just rebuilt on, offered by that change for exactly this
- * second caller: a full-width column below the named container step in `at`,
- * a packed row from it up, ONE gap on both sides (FRAME-10: the threshold is a
- * prop the frame reads, never a class string). Step `3` (`gap-2`) is the
- * fixed, internal seam — see `principles/gap.md`'s own canonical case for this
- * exact component: "`primary`, `secondary` and `dismiss` at step `3` in a row
- * while the container is wide, stacking full-width when it is narrow." `gap`
- * is not a prop here for the same reason it is not one on `ButtonGroup`: the
- * seam between action roles is not a call-site decision.
- *
- * ORDER: `dismiss`, `secondary`, `primary`, left to right, with the row pinned
- * to the end (`justify="end"`) — the exit action reads first, the strongest
- * action sits last, closest to the edge the reading eye lands on. Not
- * specified upstream; recorded here as the decision this file makes.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Layout is built on `ResponsiveCluster`: a full-width column below the container
+ * threshold in `at`, a packed row from it up, with a fixed internal `gap-2` seam
+ * (not a call-site prop). Order is `dismiss`, `secondary`, `primary`, left to
+ * right, pinned to the end (`justify="end"`) — exit reads first, the strongest
+ * action sits last.
  */
 
 /** One action slot of an {@link ActionBar} — `primary`, `secondary`, or `dismiss`. */

@@ -3,20 +3,13 @@ import { PlaygroundDeviceSnapshot, type PlaygroundDeviceInfo } from "@sb-compone
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundDeviceSnapshot`: "Your machine" — the paired agent's raw
- * hardware report turned into the same 4-cell `StatRibbon` the Lab route shows,
- * so setup and the live lab never disagree about what the machine can run.
- *
- * REUSED, NOT REBUILT. `StatRibbon` already draws N stat cells with dividers;
- * this block's whole job is the domain judgement `StatRibbon` cannot hold —
- * bytes → GB rounding, the `win32`/`darwin`/`linux` → "Windows"/"macOS"/"Linux"
- * table, and the three different sentences a GPU cell can say depending on
- * which of `gpu`/`vramTotalMb`/`vramFreeMb` came back from the agent.
- *
- * 📐 ONE LEAF (§14d.2). Every `deviceInfo` combination is the same 4-cell shape
- * (OS → CPU → RAM → GPU) with different numbers inside — a STATE, not a new
- * leaf. `isSkeleton` stays a state too: the ribbon's shape never changes, only
- * which half of each cell shimmers.
+ * `PlaygroundDeviceSnapshot` — "Your machine": the paired agent's raw hardware
+ * report turned into the same 4-cell `StatRibbon` the Lab route shows, so setup and
+ * the live lab agree about what the machine can run. Reuses `StatRibbon`; the block
+ * owns the domain judgement — bytes → GB rounding, the `win32`/`darwin`/`linux` →
+ * "Windows"/"macOS"/"Linux" table, and the three sentences a GPU cell can say
+ * depending on which of `gpu`/`vramTotalMb`/`vramFreeMb` came back. Every
+ * `deviceInfo` combination and `isSkeleton` are states of the 4-cell shape.
  */
 const meta: Meta<typeof PlaygroundDeviceSnapshot> = {
     title: "StarCi/Blocks/Learn/PlaygroundDeviceSnapshot/PlaygroundDeviceSnapshot",

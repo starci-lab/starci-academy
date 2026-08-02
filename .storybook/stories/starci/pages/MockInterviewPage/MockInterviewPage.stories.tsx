@@ -3,19 +3,11 @@ import { MockInterviewPage } from "@sb-components/starci/pages/MockInterviewPage
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `MockInterviewPage`: get ready for a mock interview, work through
- * it live, then read the debrief. See the component's own file header for the
- * full phase model and the three marked GAPs it leaves rather than fakes
- * (the confirm dialog on leave/end-early, the "Customize" config body, and the
- * docked whiteboard/code workspace pane).
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. Seven blocks — three
- * reused (`WorkSessionHeader`, `PlaygroundSetupHeader`, `SubmissionResultHeader`),
- * four new this run — arranged by `phase`.
- *
- * 📐 THREE LEAVES, matching the one structural fork (`phase`) — the same
- * granularity `QuizPage`/`FlashcardReviewPage`'s own stories keep:
- * `Setup` (identity header + green-room card, several data states) ·
+ * `MockInterviewPage` — the screen to get ready for a mock interview, work
+ * through it live, then read the debrief. A screen owns a list of functions:
+ * seven blocks — three reused (`WorkSessionHeader`, `PlaygroundSetupHeader`,
+ * `SubmissionResultHeader`), four new — arranged by `phase`. Three leaves
+ * matching the `phase` fork: `Setup` (identity header + green-room card) ·
  * `Live` (session band + interviewer + answer composer + submit action) ·
  * `Result` (debrief identity header + scorecard, pass/borderline/fail).
  */

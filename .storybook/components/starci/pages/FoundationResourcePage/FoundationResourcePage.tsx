@@ -15,40 +15,15 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `FoundationResourcePage`: one foundation resource's own page
- * (external link / video / document), reached from a category list.
+ * `FoundationResourcePage` — one foundation resource's own page (external link,
+ * video, or document), reached from a category list. It composes blocks in frames and
+ * hands each typed data.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. THREE FUNCTIONS, in the order
- * the reader meets them: say if the learner is on a trial and should upgrade ·
- * what this resource is · the resource itself.
- *
- * ⭐ THE TRIAL BANNER IS ORTHOGONAL TO WHETHER THE RESOURCE WAS FOUND. It sits
- * OUTSIDE the `isEmpty` switch, not inside it — a trial learner who followed a
- * stale link still deserves the "upgrade" nudge. `TrialEnrollBanner` takes a
- * single resolved `isVisible` — the screen computes it from its own
- * `isEnrollmentKnown`/`isEnrolled` (`isEnrollmentKnown && !isEnrolled`) so the
- * block never has to know the raw shape, and also forwards the screen's own
- * `isSkeleton` so the banner reserves its shape while enrollment resolves.
- *
- * `isEmpty` REPLACES ONLY THE IDENTITY + BODY PAIR, via `FoundationResourceEmpty`
- * — a one-node block wrapping `AsyncContentEmpty`, not the composite itself.
- * §0's import boundary is exact: a screen calls blocks and frames, never a
- * composite directly (the one documented exception, `CourseContents`'s own
- * `AsyncContentEmpty`, replaces the ENTIRE screen, not one phase's one node —
- * see `FoundationResourceEmpty`'s own file header for the full rationale).
- *
- * ⭐ TWO DIFFERENT `FoundationKind` TYPES COLLIDE ON PURPOSE. `FoundationHeader`
- * exports a closed 3-value ENUM (nominal, used for the kind chip's color/label
- * lookup); `FoundationResourceBody` exports a plain 3-value STRING UNION (used
- * to switch which shape the body draws). Same 3 underlying strings, same name,
- * but TypeScript keeps a string enum nominally distinct from a plain string
- * union — a bare cast would silently paper over a future 4th kind landing in
- * one file and not the other. `KIND_TO_RESOURCE_KIND` is the one, EXHAUSTIVE,
- * typed bridge between them: the compiler refuses a build that adds a kind to
- * the enum and forgets its entry here.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Three functions: a trial-upgrade banner (`TrialEnrollBanner`, orthogonal to whether
+ * the resource was found — visibility derived from `isEnrollmentKnown && !isEnrolled`),
+ * what this resource is, and the resource itself. `isEmpty` replaces only the
+ * identity + body pair. `KIND_TO_RESOURCE_KIND` is the exhaustive typed bridge between
+ * `FoundationHeader`'s kind enum and `FoundationResourceBody`'s kind union.
  */
 
 /**

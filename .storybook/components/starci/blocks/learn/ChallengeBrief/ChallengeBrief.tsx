@@ -15,73 +15,26 @@ import { stripMarkdown } from "@sb-components/atoms/text/_markdown"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ChallengeBrief`: the READING column of a challenge — everything a
- * learner reads before they submit, ported from `src`'s `ChallengeView` reading
- * sections (`.storybook/components/README.md` §"app-folder split" — this file
- * owns none of the submit/score aside, only the brief).
+ * `ChallengeBrief` — a BLOCK: the reading column of a challenge — everything a
+ * learner reads before they submit. Owns none of the submit/score aside.
  *
- * FIVE CONDITIONAL SECTIONS, not five leaves. `src/.../ChallengeView/index.tsx`
- * gates each section on `items.length > 0` (`prerequisites.length > 0 ? … : null`,
- * same for requirements/steps/outputs, `hint.length > 0 ? … : null`) and so does
- * this block — but which sections are present is DATA, not structure: a
- * challenge with no prerequisites is still the same shape of thing as one with
- * three, so this stays ONE leaf (`ChallengeBrief`) with a "some sections empty"
- * STATE, per `feedback-anatomy-tree-granularity-rule.md` / §14d.2. Losing a
- * whole DIFFERENT shape (the whole block replaced by something else) would be a
- * leaf; losing one of its own five sections is not.
+ * Five conditional sections (prerequisites, requirements, guided steps, expected
+ * outputs, hint), each gated on its data being non-empty — but which sections are
+ * present is DATA, so this stays ONE leaf with a "some sections empty" state.
  *
- * REUSE, NOT REBUILD (per this run's mandate). `src`'s five sections are two
- * shapes, already ported into `SurfaceCard`:
- *   - prerequisites / expected outputs / hint → `SurfaceCardList` free-form rows
- *     (was `CheckListCard`/`CheckListItem` — `showCheck=false` for prerequisites,
- *     `showCheck=true` for outputs). `SurfaceCardList`'s FIXED row shape has no
- *     "leading check icon" slot, so these sections go through `item.content`
- *     (free-form) and this block builds the row body itself: prerequisites =
- *     plain stripped text, outputs = a leading `CheckCircleIcon` + text, hint =
- *     one markdown paragraph.
- *   - requirements / guided steps → `SurfaceCardAccordion` (was
- *     `LabeledAccordionCard`), `titleEnd` carrying the per-requirement
- *     `ScoreValue` (accent text, never a chip — §2a: a point count is a
- *     free-form scalar, not an enum/status/badge), steps numbered `"1. …"` by
- *     this block (the caller never hands over
- *     a pre-numbered string, per §14d.1 — it hands `title?` and an index, this
- *     block composes the sentence).
+ * Reuses two shapes: prerequisites / outputs / hint → `SurfaceCardList` free-form
+ * rows (this block builds the row body: plain text, a leading `CheckCircleIcon` +
+ * text, or one markdown paragraph); requirements / guided steps →
+ * `SurfaceCardAccordion`, with `titleEnd` carrying the per-requirement `ScoreValue`
+ * (accent text, never a chip) and steps numbered "1. …" by this block.
  *
- * ⭐ HINT WAS THE THIRD SHAPE, until round-12 collapsed it into the first. It
- * used to be a bare `SurfaceCardAccordion` (no `label`, one item titled "Hint"
- * with a lightbulb in `titleStart`), a faithful port of `src`'s un-labelled hint
- * accordion. The teacher finalized (2026-07-30): a labelled card like its four siblings, no
- * icon, content always visible — see the `hintItems` comment for the full why.
- *
- * ⚠️ SKELETON GOTCHA THAT SHAPED THIS FILE. `SurfaceCardList`'s `isSkeleton`
- * flag only reaches the FIXED row shape (`ListRow`) — its free-form path
- * (`ListFreeRow`, what `item.content` renders through) ignores the flag
- * entirely (see `SurfaceCard.tsx`'s `List` body: `isSkeleton` is passed to
- * `ListRow` only). Since prerequisites/outputs must go through `item.content`
- * (no leading-check slot on the fixed row), this block cannot lean on that
- * built-in mirror for those two sections — it builds its OWN placeholder rows
- * (`skeletonRows`) instead, each a bare `Typography isSkeleton` bar. The
- * `SurfaceCardAccordion` sections (requirements/steps/hint) do NOT have this
- * problem — their real row shape (title + optional subtitle) already flows
- * through the composite's own mirror, so this block just forwards `isSkeleton`
- * for those three.
- *
- * ⭐ SKELETON SHAPE IS A JUDGEMENT CALL, spelled out in case it needs revisiting:
- * while `isSkeleton`, every section renders (the caller has not told us which
- * sections a challenge will end up having), each with a fixed placeholder row
- * count — 2 for the two list sections, and exactly 1 for hint (never the
- * accordion composite's own 3-row default, since a hint section is always
- * exactly one collapsible row, real or not). Once real data lands and
- * `isSkeleton` drops, a section disappears entirely if its array/string came
- * back empty — the loading guess and the settled truth are allowed to disagree
- * in COUNT, never in which five things could appear.
- *
- * ⭐ THE OUTPUTS SKELETON ROW HAS NO CHECK ICON, on purpose. The check icon
- * asserts "this is met" — showing it before any data has confirmed that would
- * be a promise this block cannot back up yet. A plain shimmer bar makes no such
- * claim; the icon only appears once the real row does.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Skeleton note: `SurfaceCardList`'s `isSkeleton` reaches only its fixed row shape,
+ * not the free-form path, so the list sections build their own placeholder rows
+ * (bare `Typography isSkeleton` bars); the accordion sections forward `isSkeleton`.
+ * While loading every section renders with a fixed placeholder count (2 for the
+ * list sections, 1 for hint); a section disappears once its real data comes back
+ * empty. The outputs skeleton row has no check icon (it would assert an unconfirmed
+ * "this is met").
  */
 
 /** One "before you start" line — plain, unchecked (needed, not achieved). */

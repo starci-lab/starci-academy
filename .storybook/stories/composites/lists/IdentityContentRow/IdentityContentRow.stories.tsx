@@ -6,19 +6,10 @@ import { IdentityContentRow } from "@sb-components/composites/lists/IdentityCont
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `IdentityContentRow`: avatar + byline + whatever content sits
- * under it. Extracted from `ContentCommentThread` (teacher, 2026-07-29: "group
- * the recurring shape into its own block") — a second real occurrence
- * (`QaQuestionThread`'s own avatar+byline+body row) made it a genuine repeat,
- * not a premature abstraction.
- *
- * ⭐⭐ BOTH SEAMS `gap={2}` ON PURPOSE — a deliberate denser standalone treatment,
- * not a `src`-fidelity port. See the component's own file header.
- *
- * 2026-07-31 (COMPOSITE-8 fix): `byline` and `body` take a COMPONENT reference
- * each, not a built node — the row calls them itself and forwards `isSkeleton`,
- * so `Byline`/`CommentBody` below can shimmer along with the avatar instead of
- * only the avatar mirroring.
+ * `IdentityContentRow` — avatar + byline + whatever content sits under it, as one row.
+ * `byline` and `body` each take a component reference, not a built node — the row calls them
+ * itself and forwards `isSkeleton` so both shimmer along with the avatar. Both seams use
+ * `gap={2}` for a denser standalone treatment.
  */
 const meta: Meta<typeof IdentityContentRow> = {
     title: "Composites/Lists/IdentityContentRow/IdentityContentRow",

@@ -3,25 +3,13 @@ import { TaskBriefBody } from "@sb-components/starci/blocks/learn/TaskBriefBody/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `TaskBriefBody`: the reading column of a personal-project milestone
- * task, ported from `src`'s `Task` + `TaskBrief` + `TaskLockedAlert` +
- * `TaskCriteriaList`/`TaskCodeImplementations`.
- *
- * ⚠️ TWO LEAVES, NOT ONE — a real structural fork (§14d.2), not a data STATE.
- * `src` resolves a task into exactly one of two shapes depending on whether it
- * carries a SCHEMA V2 brief: `SchemaV2Brief` (the modern per-language markdown
- * instructions) or `LegacySchemaV1` (the old public criteria accordion + code
- * guides, for tasks authored before the brief system existed). A single task
- * is never both, so this is the same kind of fork `ContentRelatedList` draws
- * between its `Full` and `Hidden` leaves — a different render SHAPE, not a
- * variant of one shape. `Skeleton` is its own third leaf: the block cannot
- * know which of the two shapes a loading task will resolve to (see the
- * component's own file header for why it guesses SCHEMA V2).
- *
- * Within each of the two schema leaves, `isLocked` toggling the notice IS a
- * plain data state (the tree's SHAPE does not change kind, only whether one
- * optional section mounts) — same treatment `ContentArticle` gives its own
- * `isLocked`.
+ * `TaskBriefBody` — the reading column of a personal-project milestone task. A task
+ * resolves into exactly one of two shapes depending on whether it carries a Schema
+ * V2 brief: `SchemaV2Brief` (modern per-language markdown instructions) or
+ * `LegacySchemaV1` (the older public criteria accordion + code guides). A task is
+ * never both, so these are two leaves; `Skeleton` is a third (the block guesses
+ * Schema V2 while loading). Within each schema shape, `isLocked` toggling the notice
+ * is a plain data state.
  */
 const meta: Meta<typeof TaskBriefBody> = {
     title: "StarCi/Blocks/Learn/TaskBriefBody/TaskBriefBody",

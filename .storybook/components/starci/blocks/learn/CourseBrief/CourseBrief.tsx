@@ -4,32 +4,11 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseBrief`: the COURSE IDENTITY block.
- *
- * WHY IT EXISTS (teacher's call 2026-07-25): **on a SCREEN, never reach for an
- * atom directly — only blocks.** Before this, the `/learn/content` screen called
- * the `PageHeader` frame (layout) itself and stuffed `Breadcrumbs` (atom)
- * straight in — wrong tier. This block is what the screen calls INSTEAD of both.
- * It exists for the TIER BOUNDARY, not because it has its own state.
- *
- * ⚠️ NO status chip (teacher eyeballed it 2026-07-25 and dropped it). The
- * course's learning status is already told by `ContinueCard` below it; repeating
- * it here is redundant.
- *
- * Named for FUNCTION, not for POSITION: NOT `CourseContentsPageHeader` (that's
- * both a position and locks it to one screen). `CourseBrief` = "course summary",
- * so the course-sales page / `/learn` page can both reuse it.
- *
- * CONTRACT: the block takes **DATA**, not a pre-built atom — `breadcrumbItems` is
- * an array of crumbs, the block builds `Breadcrumbs` itself. If the prop
- * were `breadcrumb?: ReactNode` the caller (screen) would have to hold an atom
- * again → breaking exactly this rule.
- *
- * COMPOSE: `PageHeader` frame (layout) + `Breadcrumbs` (atom) + `Typography`.
- * The block does NOT draw its own frame — it PLACES business content into an
- * existing frame.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `CourseBrief` — the course-identity block at the top of a learn surface: breadcrumb
+ * trail, title, description. Named for function (a course summary reusable across the
+ * sales page and `/learn`), not position. Takes crumb DATA and builds `Breadcrumbs`
+ * itself; composes the `PageHeader` frame + `Breadcrumbs` + `Typography` without
+ * drawing its own frame. No status chip.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

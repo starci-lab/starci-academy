@@ -4,24 +4,12 @@ import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcit
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentPaywall`: the offer at the point the lesson stops.
- *
- * ⚠️ FLAT ON PURPOSE — no card of its own. It lives INSIDE the reading card,
- * right under the faded tail of the body, so the page reads as one surface that
- * runs out rather than as a second card interrupting a first.
- *
- * ⭐ BLOCK IMPORTS BLOCK, and this is the case that justifies the rule. Price and
- * scarcity are already blocks built for the course page, and the same WHY —
- * "sell this course" — turns up here on a different screen. Rebuilding either
- * would fork the pricing vocabulary, and two forks WILL drift.
- *
- * It EARNS its own layer by owning the frame the offer arrives in: the lock, the
- * sentence, the ORDER, and exactly one call to action. What it does not do is
- * re-decide what a price looks like.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). Losing the scarcity line changes the shape ⇒ its
- * own leaf; so does the caller flipping `isSkeleton`. Whether there is an
- * original price to strike through is data ⇒ a state.
+ * `ContentPaywall` — the offer at the point the lesson stops. Flat, with no card
+ * of its own, so it sits inside the reading card under the faded body tail as
+ * one surface that runs out. It reuses the course page's price and scarcity
+ * blocks and owns only the frame the offer arrives in: the lock, the sentence,
+ * the order, and one call to action. Losing the scarcity line and `isSkeleton`
+ * are each their own leaf; whether an original price strikes through is data.
  */
 const meta: Meta<typeof ContentPaywall> = {
     title: "StarCi/Blocks/Learn/ContentPaywall/ContentPaywall",

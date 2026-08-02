@@ -8,41 +8,12 @@ import { ButtonBase } from "@sb-components/atoms/buttons/Button/ButtonBase"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `MindMapFullscreenButton`: the floating zoom + fullscreen cluster that
- * sits bottom-right over a mind-map canvas.
- *
- * ⭐ REUSE FIRST, checked before writing this file (per the run's own warning
- * about `ContentTabBar` reaching past `Toolbar`): there is no existing
- * composite that draws a vertical rail of icon-only buttons over a canvas —
- * `ButtonGroup` is a single connected row/segment for ONE choice, not three
- * independent actions stacked with a gap, so it is the wrong shape here. This
- * block is a thin, DOMAIN-flavoured composition of `ButtonBase` (iconOnly) ×3
- * inside `StackV` — nothing here is hand-rolled that an atom or frame already
- * owns.
- *
- * WHY A BLOCK AND NOT A BARE CLUSTER OF ATOMS: it fixes the ORDER (zoom in →
- * zoom out → fullscreen), the ICON PER SLOT, and — the one real decision —
- * which of two opposite icons the fullscreen button shows. That last part is
- * DOMAIN knowledge (what "currently fullscreen" looks like on a canvas
- * control), so it belongs here rather than on the mind-map screen.
- *
- * LEAF vs STATE (§14d.2): there is exactly one LEAF — the three-button rail
- * never loses or gains a button, so its structure never changes. `isFullscreen`
- * only swaps which glyph + aria-label the third button carries, which is a
- * DATA condition inside that one leaf, not a new shape — so it is a STATE, not
- * a second leaf.
- *
- * §7 — THIS BLOCK NEVER SWALLOWS A PRESS. All three handlers fire on every
- * press regardless of `isFullscreen`; the block does not guess what "cannot
- * zoom further" means, because it has no zoom-bounds data to guess from. Any
- * min/max clamping is the CALLER's concern (it owns the canvas transform).
- *
- * `ariaLabels` is a caller-supplied, per-button table rather than three loose
- * string props, because the three labels are one COHESIVE piece of data (the
- * localized names for this one control cluster) and a named shape beats three
- * parallel strings that could silently get passed in the wrong order.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `MindMapFullscreenButton` — the floating zoom + fullscreen cluster bottom-right over a
+ * mind-map canvas: three icon-only `ButtonBase` in a `StackV`. Fixes the order (zoom in →
+ * zoom out → fullscreen), the icon per slot, and which of two icons the fullscreen button
+ * shows (the one real decision). One leaf — `isFullscreen` only swaps the third button's
+ * glyph/aria-label. All three handlers fire on every press (min/max clamping is the
+ * caller's job). `ariaLabels` is a caller-supplied per-button table.
  */
 
 /** Localized accessible names, one per button this block renders. */

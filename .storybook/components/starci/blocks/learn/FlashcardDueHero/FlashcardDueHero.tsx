@@ -8,60 +8,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FlashcardDueHero`: the flashcard landing's single focal card — how
- * many cards are due today across every enrolled course, and the ONE primary
- * action that follows from that number. Maps to the real `DueReviewHero`.
+ * `FlashcardDueHero` — the flashcard landing's single focal card: how many cards are
+ * due today across all enrolled courses and the one primary action that follows.
+ * Composes `SurfaceCard`, `ContinueCardHero`, and `EmptyState`.
  *
- * ⭐ REUSE-FIRST, the reason this run exists at all (file header of
- * `ContentModeNav` names the sibling mistake this is written against): the
- * job here is "point a domain hero at existing shapes", not "draw a stat
- * card + a CTA row from scratch". Three composites already draw everything
- * this block needs — `SurfaceCard`'s `label` slot for the section frame,
- * `ContinueCardHero` for "resume something already in flight", and
- * `EmptyState` for "there is nothing here" — so this file contains no new
- * card chrome, no new empty-state layout, no hand-rolled `flex gap-*`.
- *
- * ⚠️ `EmptyState` WASN'T in this task's compose-from list but IS the
- * canonical composite the same block family already reaches for — see
- * `ContinueCardHero.{Progress,NoProgress}.stories.tsx`'s `LoadError` leaf,
- * which drops `EmptyState` straight inside a `SurfaceCard`. "Nothing due"
- * is that exact shape (frame stays, body swaps to a message), so building a
- * second hand-rolled empty state next to an existing one would be the same
- * mistake this run exists to correct, just aimed at a different composite.
- *
- * 📐 THREE LEAVES BY STRUCTURE (§14d.2), not one leaf with two booleans:
- *
- *   1. **No resume in progress** — `SurfaceCard` (labelled "Review today")
- *      ⊃ the due-count text cluster + a primary `Button` that starts a fresh
- *      batch.
- *   2. **Resume in progress** — the due summary steps ASIDE and
- *      `ContinueCardHero` becomes the WHOLE card. This mirrors
- *      `ContinueLearningBase` (`components/starci/blocks/learn/ContinueLearning`):
- *      once a batch is paused mid-way, "how many are due overall" is
- *      redundant next to "finish what you started" — the reader is already
- *      inside the queue. Nesting `ContinueCardHero` (which renders its OWN
- *      `isHighlight` `SurfaceCard`) *inside* this block's `SurfaceCard`
- *      would double the card chrome for no reason; swapping the whole shape
- *      is what `ContinueLearningBase` already does for the identical reason.
- *   3. **Nothing due** — the due-count cluster and the Start button both
- *      disappear; `SurfaceCard`'s frame stays (so the section never
- *      vanishes), and `EmptyState` replaces the body with a "you're
- *      caught up" message. No `action` — there is nothing left to start.
- *
- * `isSkeleton` is a STATE inside leaf 1, not a fourth leaf: before the load
- * resolves the caller does not yet know whether a resume batch exists or
- * whether today is empty, so the block always shimmers the "No resume in
- * progress" shape (same call `ContinueCardHero.NoProgress`'s own `Skeleton`
- * story makes for the identical reason) and swaps once real data lands.
- *
- * ⭐ THE HEADLINE SENTENCE IS BUILT HERE (§14d.1). The caller hands over
- * three numbers (`dueCount`/`dueReviewCount`/`newCount`); this block decides
- * the copy, the split, and which of the two sub-counts get news value. A
- * zero sub-count is dropped from the breakdown line rather than printed as
- * "0 new cards" — same "a zero is not news" rule `ContentModeNav` applies to
- * its own tab counts.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Three structural leaves: no resume in progress (due count + a start button); resume
+ * in progress (`ContinueCardHero` becomes the whole card); nothing due (`EmptyState`
+ * fills the card body, no action). Builds the headline sentence from three numbers
+ * (`dueCount`/`dueReviewCount`/`newCount`), dropping a zero sub-count; `isSkeleton`
+ * shimmers the "no resume" shape.
  */
 
 /** `EmptyState` takes its icon as a COMPONENT ref and forces `size-8` itself (§4/§5) — `weight="duotone"` can't ride along on a bare import, so it's pinned here. */

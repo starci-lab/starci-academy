@@ -5,28 +5,15 @@ import type { SubmissionAttemptRecord } from "@sb-components/starci/overlays/dra
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `ChallengeResultPage`: what came back from grading ONE challenge
- * submission.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * FOUR FUNCTIONS, in the order the reader meets them: where am I / how do I
- * leave · which attempt am I looking at · how did THIS attempt do · what should
- * I fix, plus a quiet nudge toward more reading when the attempt failed.
- *
- * ⭐ THE SCORE CLUSTER IS CONDITIONAL, AND THE CONDITION IS THE POINT. Nothing
- * about "how did it go" can render before an attempt is actually selected —
- * `NoSelection` below is what that looks like: two blocks, not four.
- *
- * ⭐ THE RELATED-READING NUDGE ONLY APPEARS ON A FAILING ATTEMPT. A passing
- * attempt has nothing left to fix; `Passing` vs `Failing` below is that one
- * block, present or absent.
- *
- * ⭐ THE "+N" OVERFLOW TRIGGER OPENS A REAL DRAWER (corrected 2026-07-29 —
- * `SubmissionResultHistoryDrawer` DOES exist in `src`; the earlier claim that
- * it didn't was wrong). `WithHistory` below is that flow end to end.
+ * `ChallengeResultPage` — the screen showing what came back from grading one
+ * challenge submission. A screen owns a list of functions: it calls blocks,
+ * places them in frames, and hands each typed data. Four functions, in reading
+ * order: where am I / how do I leave · which attempt am I looking at · how did
+ * this attempt do · what should I fix, plus a nudge toward more reading on a
+ * failing attempt. The score cluster is conditional on an attempt being
+ * selected (`NoSelection` shows two blocks, not four); the related-reading
+ * nudge appears only on a failing attempt (`Passing` vs `Failing`); the "+N"
+ * overflow trigger opens `SubmissionResultHistoryDrawer` (`WithHistory`).
  */
 const meta: Meta<typeof ChallengeResultPage> = {
     title: "StarCi/Pages/ChallengeResultPage/ChallengeResultPage",

@@ -3,37 +3,11 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FoundationCategoryHeader`: the FOUNDATIONS-HUB IDENTITY cluster —
- * trail above a title + description, nothing else.
- *
- * WHY NEW rather than reusing `ContentHeader`: `ContentHeader` is the wrong
- * SHAPE for this domain, not just a bigger version of it. It always carries a
- * read-state chip, a reading-time/challenge-count meta row, and an "outcomes"
- * list — a Foundations category has none of those facts, and forcing those
- * slots empty on every call site would leave three dead branches nobody
- * exercises. This block is the narrow shape: trail, title, description, done.
- *
- * STILL EARNS ITS OWN LAYER (not a bare `PageHeader` passthrough), because it
- * composes TWO things itself, the exact reason `ContentHeader` gets to exist
- * on top of the same frame:
- *   1. it builds the `Breadcrumbs` atom from crumb DATA (the caller never
- *      hands over a pre-built node — §14d.1);
- *   2. it conditionally OMITS the whole breadcrumb slot when there is no
- *      trail yet (skeleton) or no trail at all (a root category reached
- *      directly, with nothing above it) — a `PageHeader` passthrough could
- *      not make that call, because it does not know what "empty" means for
- *      this domain's crumb data.
- *
- * SIBLING OF `ContentHeader`, NOT A COPY — same frame (`PageHeader`), same
- * "block builds `Breadcrumbs` from data" contract, but this one stops at
- * description: no meta row, no chip, no outcomes card, because the Foundations
- * hub carries none of those facts.
- *
- * CONTRACT — `title`/`description` are the block's only text inputs; there is
- * no `heading` or pre-joined string to accept, so there is nothing left for
- * the block to format (§14d.1 is satisfied trivially here, not bypassed).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `FoundationCategoryHeader` — the Foundations-hub identity cluster: breadcrumb trail,
+ * title, description. Builds `Breadcrumbs` from crumb DATA and omits the trail slot
+ * when there is none (skeleton, or a root category reached directly). Sibling of
+ * `ContentHeader` on the same `PageHeader` frame, but stops at description — no meta
+ * row, chip, or outcomes.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

@@ -13,22 +13,18 @@ import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Choice.*` — the boolean / single-select control atom namespace (wraps
- * HeroUI Checkbox · Radio · Switch).
+ * `Choice.*` — the boolean / single-select control atom namespace (wraps HeroUI
+ * Checkbox · Radio · Switch).
  *
  * These are inline controls: the label sits beside the control (Checkbox.Content /
  * Radio.Content own the native label; Switch's label is a sibling `<Label>`). Each
  * is a bare field with no group heading, hint, or error — `FieldShell` composes
  * this atom to add those.
  *
- * There is no `children` prop: the label goes via the `label` prop. `isSkeleton`
- * renders a control-shaped skeleton sized to match, without importing the
- * `Skeleton.*` compound.
- *
- * `ChoiceRadio` is one option row and stops here — the group that rebuilds one
- * `ChoiceRadio` per entry moved to `composites/form/ChoiceRadioGroup` (ATOM-8:
- * rendering another house atom once per item is the composite signal, not the
- * atom one).
+ * There is no `children` prop; the label goes via `label`. `isSkeleton` renders a
+ * control-shaped skeleton without importing the `Skeleton.*` compound. `ChoiceRadio`
+ * is one option row; the group that repeats it lives in
+ * `composites/form/ChoiceRadioGroup`.
  */
 
 /**

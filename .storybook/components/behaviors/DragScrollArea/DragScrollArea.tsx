@@ -5,22 +5,13 @@ import { ScrollShadow, cn } from "@heroui/react"
 import { motion, type PanInfo } from "framer-motion"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `DragScrollArea.*`, the pointer-pan scroll
- * region FRAME namespace (teacher 2026-07-25, canon §13a). Authored in Storybook
- * (not `src`); synced to `src` later. No `@/components` imports (design-spec
- * ports stay self-contained).
+ * `DragScrollArea.*` — the pointer-pan scroll-region frame namespace.
  *
- * KHUNG API LAW (§13b): `.Base` is a WRAPPER frame holding ONE region (the
- * scrollable content) — nothing is crammed into a single slot, so it keeps
- * plain `children`, no `header`/`footer`, no `items`.
- *
- * §13c check — is this just "an atom wearing a coat" over `ScrollShadow`? No:
- * it adds the Framer-Motion pointer-pan behaviour (drag → `scrollTop`) that
- * makes a hidden-scrollbar region usable on Windows, plus the grab/grabbing
- * cursor state. That behaviour is the reason the frame exists.
- * Namespace only — no bare component export.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `.Base` is a wrapper frame holding ONE region (the scrollable content), so it
+ * keeps plain `children` — no `header`/`footer`, no `items`. Over a plain
+ * `ScrollShadow` it adds Framer-Motion pointer-pan behaviour (drag → `scrollTop`)
+ * that makes a hidden-scrollbar region usable on Windows, plus the grab/grabbing
+ * cursor state. Namespace only — no bare component export.
  */
 
 /** Props for {@link DragScrollArea}. */

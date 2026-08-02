@@ -4,32 +4,17 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE — `AuthorByline`: name + optional verified/pinned glyphs + a
- * relative timestamp, as ONE inline row — the "status+text" line that sits
- * under an avatar (see `IdentityContentRow`'s own `byline` slot, which this is
- * a real implementation of).
+ * `AuthorByline` — name + optional verified/pinned glyphs + a relative timestamp,
+ * as ONE inline row: the "status+text" line that sits under an avatar (a real
+ * implementation of `IdentityContentRow`'s `byline` slot).
  *
- * Scanned from `blocks/feed/CommunityPostCard`, which hand-rolled this exact
- * shape twice (name+`SealCheckIcon` on one line, `@handle · timeAgo · channel`
- * on the next) at `gap-1`/`gap-2` with a raw `text-accent-soft-foreground`
- * class on each glyph. Flattened here into the ONE row the spec calls for —
- * `verified`/`pinned` are generic booleans (COMPOSITE-2: no domain entity),
- * so the composite owns which fixed glyph each maps to, the same shape
- * `VerdictIcon` already uses for pass/fail in `GradingByline`.
+ * `verified`/`pinned` are generic booleans (no domain entity), so the composite
+ * owns which fixed glyph each maps to. Tone: name is `default`, the
+ * verified/pinned glyphs are `accent`, the separator dot + timestamp are `muted`.
  *
- * TONE — name is `default` (the primary label); the verified/pinned glyphs
- * are `accent` (`text-accent`, the same value `Typography`'s own
- * `color="accent"` resolves to, not the block's non-canon `-soft` variant);
- * the separator dot + timestamp are `muted`.
- *
- * ATOM GAP — no icon-shaped shimmer atom exists yet (the same gap
- * `InlineIconLabel` documents), so the glyphs render only when NOT skeleton.
- * The `·` separator is fixed chrome, not a value being loaded, so — per
- * COMPOSITE-10's "the frame stays real throughout: … separators, gaps" — it
- * renders in BOTH states unconditionally; only `name` and `timestamp` shimmer,
- * each via `Typography isSkeleton`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * No icon-shaped shimmer atom exists yet, so the glyphs render only when not
+ * skeleton; the `·` separator is fixed chrome and renders in both states. Only
+ * `name` and `timestamp` shimmer, each via `Typography isSkeleton`.
  */
 
 /** Props for {@link AuthorByline}. */

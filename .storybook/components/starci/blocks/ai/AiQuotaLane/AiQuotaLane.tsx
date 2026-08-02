@@ -3,35 +3,21 @@ import { QuotaBar } from "@sb-components/starci/blocks/ai/QuotaBar/QuotaBar"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `AiQuotaLane`: one lane's pair of rolling-window quota bars — "next 5
- * hours" above "this week" — both counting usage against the same lane's cap.
+ * `AiQuotaLane` — a BLOCK: one lane's pair of rolling-window quota bars ("next 5
+ * hours" above "this week"), both counting usage against the same lane's cap.
  *
- * WHY A BLOCK, AND A SHARED ONE: ported faithfully from `@/components/modals/
- * AiQuotaModal/QuotaLane` (plus its `QuotaBar` leaf). `src`'s `QuotaLane` is
- * SHARED between the Auto tab (fed by `useQueryMyCreditUsageSwr`) and the
- * Premium branch of the Subscription tab (fed by `useQueryMyAiQuotaSwr`) — same
- * two bars, different numbers, decided entirely by WHICH query the caller wires
- * up. Storybook decouples the fetch on purpose: `data` is a plain typed prop
- * (§13 — a block never owns its own SWR/mutation), so the screen mounting each
- * tab is the one that picks the query, exactly like `src`'s `variant` prop did.
+ * Shared between the Auto tab and the Premium branch of the Subscription tab —
+ * same two bars, different numbers, decided by which query the caller wires up.
+ * `data` is a plain typed prop (a block never owns its own SWR/mutation), so the
+ * mounting screen picks the query.
  *
- * ⭐ TWO CALLS OF THE SAME BLOCK, NOT A SECOND `QuotaBar` (mentor finalized
- * 2026-07-29): this file used to carry its OWN private `QuotaBar` leaf plus its
- * own `resolveFillTone`/`resolveFillPercent` — the exact same shape, and the
- * exact same 75%/90% ramp, that `blocks/ai/QuotaBar` already owns as a public
- * block with its own story. Two ports of `src`'s `QuotaBar` leaf were living
- * side by side with nothing keeping them in sync. This lane now calls THAT
- * block twice — label/used/limit/resetLabel swapped, nothing else — instead of
- * re-drawing it. The fill-tone ramp (accent ≤75% · warning >75% · danger >90%)
- * lives in `QuotaBar` alone now; a caller here never sees it.
+ * Renders the public `QuotaBar` block twice (label/used/limit/resetLabel swapped);
+ * the fill-tone ramp (accent ≤75% · warning >75% · danger >90%) lives in
+ * `QuotaBar` alone.
  *
- * JUDGEMENT CALL — `isLoading` is REQUIRED (not defaulted, unlike the usual
- * `isSkeleton?`) because "no data yet" and "mid-fetch" render IDENTICALLY from
- * the outside (`data` is unset either way). Forcing the caller to say which one
- * it is stops a genuinely-empty response from silently reading as a shimmer
- * that never resolves.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `isLoading` is REQUIRED (not defaulted) because "no data yet" and "mid-fetch"
+ * render identically from the outside — forcing the caller to say which stops a
+ * genuinely-empty response from reading as a shimmer that never resolves.
  */
 
 /** One rolling-window quota reading, ready to draw as a single {@link ProgressBar}. */

@@ -3,19 +3,12 @@ import { FlashcardDueHero } from "@sb-components/starci/blocks/learn/FlashcardDu
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FlashcardDueHero`: the flashcard landing's single focal card — how
- * many cards are due today, the primary Start CTA, and — when a batch was
- * left mid-way — the resume card instead. See the component's own file
- * header for why each shape below is its own LEAF rather than one shape with
- * flags, and why `EmptyState` joined the reuse list beyond what this run
- * was handed.
- *
- * 📐 THREE LEAVES BY STRUCTURE (§14d.2): "No resume in progress" (due count +
- * Start button), "Resume in progress" (the whole card becomes
- * `ContinueCardHero`), "Nothing due" (the due count + button vanish, an empty
- * message takes their place). `isSkeleton` stays a STATE inside the first
- * leaf — before data lands the caller doesn't know which of the other two
- * leaves it will be, so the block always shimmers the base shape.
+ * `FlashcardDueHero` — the flashcard landing's single focal card: how many cards
+ * are due today with the primary Start CTA, or a resume card when a batch was
+ * left mid-way. Three leaves: no resume (due count + Start), resume in progress
+ * (the card becomes `ContinueCardHero`), and nothing due (empty message).
+ * `isSkeleton` stays a state of the first leaf — before data lands the block
+ * shimmers the base shape.
  */
 const meta: Meta<typeof FlashcardDueHero> = {
     title: "StarCi/Blocks/Learn/FlashcardDueHero/FlashcardDueHero",

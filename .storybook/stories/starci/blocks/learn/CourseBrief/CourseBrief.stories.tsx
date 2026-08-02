@@ -3,21 +3,11 @@ import { CourseBrief } from "@sb-components/starci/blocks/learn/CourseBrief/Cour
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `CourseBrief`: the COURSE-IDENTITY cluster at the top of a page.
- *
- * Exists because of a TIER BOUNDARY: a screen must not hold the `PageHeader`
- * frame (layout) or the `Breadcrumbs` atom directly. The block takes **DATA**
- * (`breadcrumbItems` is a crumb array) and builds the atom itself — leaving it
- * as `breadcrumb?: ReactNode` would force the screen to hold an atom again.
- *
- * ⚠️ Meta is a **muted text strip joined by `·`**, NOT a chip (confirmed by
- * eyeballing it).
- *
- * 📐 **LEAF by STRUCTURE** (§14d.2): the two leaves below are REAL leaves because
- * they **lose a node**. A long trail only changes the crumb count ⇒ a STATE,
- * rendered together inside the full-set leaf's `states[]` (mentor's call, layout
- * C, 2026-07-27) — `leafShell` was removed since it only existed to arrange
- * states by hand.
+ * `CourseBrief` — the course-identity cluster atop a page. It takes crumb DATA
+ * (`breadcrumbItems`) and builds the `Breadcrumbs` atom itself, so a screen
+ * never holds the `PageHeader` frame or the atom directly. Meta is a muted text
+ * strip joined by `·`, not a chip. The two leaves lose a node; a long trail only
+ * changes the crumb count, so it is a state.
  */
 const meta: Meta<typeof CourseBrief> = {
     title: "StarCi/Blocks/Learn/CourseBrief/CourseBrief",

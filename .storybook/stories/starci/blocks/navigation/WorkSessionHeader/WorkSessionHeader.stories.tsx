@@ -3,29 +3,15 @@ import { WorkSessionHeader } from "@sb-components/starci/blocks/navigation/WorkS
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `WorkSessionHeader`: the band that says "you are inside a session".
- *
- * SHARED, not owned by one screen: quiz, flashcard review and mock interview all
- * run sessions, and what this block knows is what a SESSION is — a length, a
- * position, steps that can be graded, and two ways out.
- *
- * ⭐ TWO WAYS TO LEAVE, AND THEY ARE NOT THE SAME. The back link LEAVES and keeps
- * the run resumable; the finish button ENDS it and goes to results. Collapsing
- * them into one control would make one of the two silently destructive.
- *
- * ⭐ DONE AND CURRENT ARE INDEPENDENT SIGNALS. Filled means GRADED, taller means
- * VIEWING. Letting "done" win over "current" is exactly how "which step am I on"
- * disappears the moment the learner revisits a graded step — so `current` is a
- * taller bar and nothing else: no ring, no dot, no second colour. The
- * `RevisitingGraded` leaf below is the case that proves it.
- *
- * ⛔ NO `ReactNode` SLOT. The band takes typed data — a counter string, an
- * optional time-left string. A slot is how a caller starts putting its own
- * shapes into a shared band, and two callers then drift.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): losing the finish control, and losing the rail's
- * interactivity, each change the shape. Where the learner is, and which steps are
- * graded, are data ⇒ states.
+ * `WorkSessionHeader` — the band that signals "you are inside a session",
+ * shared across quiz, flashcard review, and mock interview. Knows what a
+ * session is: a length, a position, steps that can be graded, and two distinct
+ * exits — a back link that leaves and keeps the run resumable, and a finish
+ * button that ends it and goes to results. "Done" (graded, filled) and
+ * "current" (viewing, a taller bar) are independent signals. Takes typed data
+ * (counter string, optional time-left string), no `ReactNode` slot. Leaf by
+ * structure: losing the finish control or the rail's interactivity changes the
+ * shape; position and which steps are graded are states.
  */
 const meta: Meta<typeof WorkSessionHeader> = {
     title: "StarCi/Blocks/Navigation/WorkSessionHeader/WorkSessionHeader",

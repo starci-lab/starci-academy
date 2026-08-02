@@ -4,22 +4,12 @@ import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcit
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `EnrollGate`: the conversion card shown in place of an
- * enrollment-required learn surface (currently only personal-project) for a
- * trial viewer. See the component file header for the full contract,
- * including why it stays a SEPARATE file from `ContentPaywall` despite
- * composing the same two commerce blocks.
- *
- * FOUR LEAVES BY STRUCTURE (§14d.2):
- *   - `Standalone`  — no `preview` ⇒ the card renders centered alone.
- *   - `WithPreview` — `preview` given ⇒ the card FLOATS over a faded teaser,
- *     a whole extra visual layer (the fade + the overlap), not just a prop
- *     flip on one existing part.
- *   - `NoScarcity`  — `price.currentPhase` omitted ⇒ **loses** the
- *     `PhaseScarcityNote` node entirely (an unlimited phase has no honest
- *     "rises when" milestone to state).
- *   - `Loading`     — `isSkeleton` ⇒ the price region falls to the
- *     `AsyncContent` shimmer branch; lock/title/description/CTA stay real.
+ * `EnrollGate` — the conversion card shown in place of an enrollment-required
+ * learn surface (currently personal-project) for a trial viewer. Kept separate
+ * from `ContentPaywall` despite composing the same two commerce blocks. Four
+ * leaves: `Standalone` (no `preview`, centered), `WithPreview` (floats over a
+ * faded teaser), `NoScarcity` (no `price.currentPhase`, drops
+ * `PhaseScarcityNote`), and `Loading` (`isSkeleton`, price region shimmers).
  */
 const meta: Meta<typeof EnrollGate> = {
     title: "StarCi/Blocks/Learn/EnrollGate/EnrollGate",

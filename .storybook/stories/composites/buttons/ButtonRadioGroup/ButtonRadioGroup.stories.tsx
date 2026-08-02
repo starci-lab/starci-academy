@@ -6,46 +6,10 @@ import { DotsThreeVerticalIcon, TrashIcon } from "@phosphor-icons/react"
 import { ButtonRadioGroup, type ButtonRadioGroupItem } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * COMPOSITE — `Button.RadioGroup`: the system's ONE flex-wrap row of selectable
- * buttons (single or multi). Folded into the `Button` namespace 2026-07-26
- * (previously `atoms/navigation/FlexWrapButtonRadio`, old name
- * `FlexWrapButtonRadio`), then moved out of that namespace into the composite
- * tier — see the JSDoc of `ButtonRadioGroup.tsx` for why it stays a SEPARATE
- * MEMBER (props not folded into `ButtonGroup`).
- *
- * 📐 **1 PROP = 1 LEAF** (§12g):
- * - `items` — data that builds N child buttons ⇒ **leaf `Default`** (§12g.2).
- *   `isDisabled` is an OPTIONAL field of ONE item, i.e. a shape `items` itself
- *   can take, not a separate axis ⇒ lives TOGETHER inside `Default` — do NOT
- *   spawn a separate `Disabled`/`WithDisabled` leaf.
- * - `multiple` — changes REAL pixels that a single `items`/`value` can never
- *   produce: ≥2 buttons in the selected (filled) state at once, versus
- *   single-select which always resolves to EXACTLY ONE selected button by the
- *   `value: T` structure ⇒ **leaf `Multiple`**.
- * - `trailing` — adds one button that is NOT an option to the end of the row
- *   (e.g. a "+N" button) ⇒ **leaf `Trailing`**.
- * - `itemAction` — changes each item's shape entirely: from a single
- *   `<Button>` into one fused `ButtonGroup` `[select | 🗑 | ⋮]` ⇒ **leaf
- *   `ItemAction`**.
- * - `value`/`onChange`, `values`/`onToggle` — control wiring, not a union that
- *   needs enumerating; the selected/unselected contrast is already present in
- *   EVERY leaf ⇒ no separate leaf.
- * - `ariaLabel` — ONLY feeds the `aria-label` of `role="group"`, changes zero
- *   pixels ⇒ **NO leaf** (§12g.1).
- * - `className` — escape hatch, not a shape of the atom ⇒ no leaf.
- *
- * Four leaves carried over from the prior audit as-is (not re-audited this
- * namespace-consolidation round): `Default` / `Multiple` / `Trailing` /
- * `ItemAction`.
- *
- * Leaf atom wrapping HeroUI `Button`/`ButtonGroup` directly — no component in
- * the tree has its OWN story, but the HeroUI renders themselves now get tagged
- * (2026-07-27, heroui tier): `Button`/`ButtonGroup`/`ButtonGroup.Separator`,
- * matching the identifiers imported from `@heroui/react`. No `storyId` — there's
- * no story of ours to jump to for a library component.
- *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`), demo labels, and
- * JSDoc/comments are all written in ENGLISH.
+ * `Button.RadioGroup` — a flex-wrap row of selectable buttons, single- or multi-select.
+ * Leaves: `items` builds N child buttons (`Default`, with per-item `isDisabled`); `multiple`
+ * allows ≥2 selected at once; `trailing` appends a non-option button (e.g. "+N"); `itemAction`
+ * turns each item into a fused `ButtonGroup` [select | delete | more].
  */
 const meta: Meta<typeof ButtonRadioGroup> = {
     title: "Composites/Buttons/ButtonRadioGroup",

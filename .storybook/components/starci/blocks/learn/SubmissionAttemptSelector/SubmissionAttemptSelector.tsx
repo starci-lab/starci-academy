@@ -11,53 +11,15 @@ import {
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `SubmissionAttemptSelector`: which GRADED ATTEMPT the reader is looking
- * at. A flex-wrap row of attempt buttons — verdict + "Attempt N" + score — plus an
- * optional "+N" trigger for whatever else holds the rest of the history.
- *
- * WHY A BLOCK: turning `{ attemptNumber, score, isPassing }` into "Attempt 3 · 82"
- * with a pass/fail glyph is DOMAIN wording (§14d.1) — the caller hands over
- * attempt data, never a pre-built label or icon. That composition, plus the
- * few-vs-many decision (does an overflow trigger even belong on this row), is
- * the entire reason this sits above the atoms it wraps.
- *
- * ⭐ REUSE, NOT A NEW SHAPE (the exact mistake this task exists to avoid — see
- * `ContentModeNav`'s header). Two atoms already draw everything this row needs:
- *   • `ButtonRadioGroup` — the SELECT semantics (`role="group"`, `aria-pressed`,
- *     flex-wrap, filled-vs-ghost on selection). This block does not hand-roll a
- *     pressable pill.
- *   • `Chip` — the verdict+label LAYOUT (icon slot, `tone` colour, text). Each
- *     attempt's `Chip` rides *inside* a `ButtonRadioGroup` item's `content`, so
- *     two independent signals stay on two independent channels instead of one
- *     prop trying to carry both: the OUTER button variant says "is this the one
- *     I'm viewing", the INNER chip's tone says "did this attempt pass" — neither
- *     fact would survive being folded into the other (a selected-but-failing
- *     attempt needs both true at once).
- *   • The "+N" trigger is `ButtonRadioGroup`'s own documented `trailing` slot
- *     ("optional trailing node … e.g. a '+N' overflow button") — not a node this
- *     block invented next to it.
- *
- * ⛔ SCOPE (out of reach this pass, per the task's own risk note): pressing "+N"
- * only fires `onOverflowPress`. What it opens — a history drawer, a modal, a
- * route — is a SCREEN decision (Rule 7: a block never swallows an event on
- * business grounds), so this row does not know or care what "+N" leads to.
- *
- * JUDGEMENT CALLS:
- *   • `isSkeleton` (the canon-standard prop every component carries) and
- *     `isLoading` (this widget's own async fetch) both fall to `AsyncContent`'s
- *     ONE loading branch — `AsyncContent` only exposes a single loading concept,
- *     so a parent forcing an all-skeleton paint and this row's own in-flight
- *     fetch are the same branch, not two the block would have to reconcile.
- *   • `selectedId` is OPTIONAL (nothing picked yet is a real state — first
- *     paint, before the reader has looked at any attempt) but the atom's
- *     `value` is not; a sentinel `""` stands in for "none", safe because no
- *     attempt id is ever the empty string.
- *   • ONE leaf, `AttemptRow` — every difference below (loading / empty / error
- *     / few attempts / many attempts) is the SAME chip strip wearing a
- *     different piece of content, never a different structure, so none of them
- *     earns its own leaf.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `SubmissionAttemptSelector` — which graded attempt the reader is viewing: a
+ * flex-wrap row of attempt buttons (verdict + "Attempt N" + score) plus an
+ * optional "+N" overflow trigger. Composes attempt data into labels/icons (owned
+ * wording). Reuses `ButtonRadioGroup` for select semantics and `Chip` for the
+ * verdict inside each item — the outer button variant says "viewing", the inner
+ * chip tone says "passed", two independent signals. "+N" fires `onOverflowPress`
+ * only; what it opens is a screen decision. `isSkeleton` and `isLoading` share
+ * `AsyncContent`'s one loading branch; `selectedId` is optional (sentinel `""`
+ * for none). One leaf, `AttemptRow`.
  */
 
 /** One graded attempt the reader can switch to. */

@@ -3,19 +3,11 @@ import { ContinueLearning, type ContinueLearningItem } from "@sb-components/star
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContinueLearning` (dashboard): the "Continue learning" content slot on
- * the dashboard — up to 3 resume targets (lessons lead, at most one
- * in-progress challenge as a nudge), or an onboarding CTA when there is
- * nothing to resume. See the component's own file header for the full
- * matrix trail (`Grid` for the reflowing tile track, `AsyncContentEmpty` for
- * the onboarding message) and the two ABSENT states (`error`, `pending`) with
- * their reasons.
- *
- * THREE LEAVES BY STRUCTURE (§14d.2):
- *   - `Content` — 1–3 `ContinueCardItem` tiles inside a `Grid`.
- *   - `Empty`   — the whole track becomes `AsyncContentEmpty`; wording forks
- *     on `hasCourses`, the shape never forks.
- *   - `Loading` — a guessed 3-tile grid, each tile its own skeleton mirror.
+ * `ContinueLearning` (dashboard) — the "Continue learning" slot: up to 3 resume
+ * targets (lessons lead, at most one in-progress challenge as a nudge), or an
+ * onboarding CTA when there is nothing to resume. Three leaves: `Content`
+ * (1–3 tiles in a `Grid`), `Empty` (`AsyncContentEmpty`, wording forks on
+ * `hasCourses`), and `Loading` (a 3-tile skeleton grid).
  */
 const meta: Meta<typeof ContinueLearning> = {
     title: "StarCi/Blocks/Dashboard/ContinueLearning/ContinueLearning",

@@ -7,19 +7,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE — `UserCell`: an avatar leading a name + optional `@handle`.
- * Promoted from the atom tier (ATOM-3: a component that renders both `Avatar`
- * and `Typography` is assembling the vocabulary, not being a word in it — the
- * vendor-swap guarantee an atom exists for breaks the moment one atom starts
- * importing another). Moved to `composites/lists/`, beside `IdentityContentRow`
- * — the other "a face beside content" shape in this folder — because an avatar
- * plus a name/handle IS an identity pairing, never a domain entity of its own
- * (COMPOSITE-2/7): `username`/`handle` are strings the caller already resolved,
- * not a `user` object this component reaches into.
- *
- * Ported from `@/components/blocks/identity/UserCell`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `UserCell` — an avatar leading a name + optional `@handle`. An identity pairing,
+ * not a domain entity: `username`/`handle` are strings the caller already resolved,
+ * not a `user` object this component reaches into. Sits in `composites/lists/`
+ * beside `IdentityContentRow`.
  */
 
 /** Props for {@link UserCell}. */

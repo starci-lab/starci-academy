@@ -6,13 +6,12 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * ATOM — `SelectMulti`: MULTI-select dropdown, wrapping HeroUI `Select` directly
  * (`selectionMode="multiple"`).
- *
- * Leaf atom: the trigger summarizes with TEXT ("n selected" — a string hardcoded
- * in `Select.tsx`, not a `Chip`). Verified by READING the source: it does NOT
- * compose `Chip` or `Select.Value` for the picked values (just a bare `<span>`),
- * so there's no real dep ⇒ `annotate` carries no `storyId`. But
- * `Select.Trigger`/`Label`/`Skeleton` ARE real heroui and still need the `heroui`
- * tier so the two-rule panel doesn't silently miss them (2026-07-28).
+ * 
+ * Leaf atom: the trigger summarizes with text ("n selected", hardcoded in `Select.tsx`, not
+ * a `Chip`). It does not compose `Chip` or `Select.Value` for the picked values (just a bare
+ * `<span>`), so there's no real dep ⇒ `annotate` carries no `storyId`. But
+ * `Select.Trigger`/`Label`/`Skeleton` are real HeroUI and get the `heroui` tier so the
+ * two-rule panel doesn't silently miss them.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Select.Trigger": { tier: "heroui", role: "dropdown trigger button" },

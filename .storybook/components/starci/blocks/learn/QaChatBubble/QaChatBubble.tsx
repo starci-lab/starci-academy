@@ -2,21 +2,12 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QaChatBubble`: the one-note surface every message in a
- * `QaQuestionThread` conversation renders inside — accent-tinted and
- * right-aligned for the viewer's own messages, neutral and left-aligned for
- * everyone else's. `rounded-2xl` (not the usual card `rounded-3xl`) because
- * chat bubbles are one of the named exceptions to that rule (alongside
- * group/popover/media/field surfaces).
- *
- * Deliberately DUMB: it owns only the surface + one corner clip that reads as
- * a speech-bubble tail toward its own side. Alignment (`justify-end` vs
- * `justify-start`) and the author/time line above it are the CALLER's job
- * (`QaQuestionThread` already wraps each message in its own aligned column) —
- * this block would otherwise have to know who the viewer is, which is a
- * domain fact it has no business holding.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QaChatBubble` — the surface every message in a `QaQuestionThread` renders
+ * inside: accent-tinted and right-aligned for the viewer's own messages, neutral
+ * and left-aligned otherwise. `rounded-2xl` (a named exception to the card
+ * `rounded-3xl` rule). Deliberately dumb — it owns only the surface and a corner
+ * clip reading as a speech-bubble tail; alignment and the author/time line are
+ * the caller's job.
  */
 
 /** Props for {@link QaChatBubble}. */

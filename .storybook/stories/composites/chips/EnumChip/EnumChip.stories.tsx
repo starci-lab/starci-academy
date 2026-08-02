@@ -4,23 +4,10 @@ import type { EnumChipEntry } from "@sb-components/composites/chips/EnumChip/Enu
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `EnumChip`: a `Chip` whose tone / label / optional tooltip / optional
- * leading icon come from a per-value lookup (`map[value]`), so a domain badge shrinks
- * to just its map table plus this delegate.
- *
- * 📐 **1 PROP = 1 LEAF**, adapted for a generic composite: `EnumChip`'s own props are
- * `value`, `map`, `className`, `classNames`, `isSkeleton`. `value` and `map`
- * are two halves of ONE lookup mechanism — a `value` means nothing without the `map` it
- * is resolved against, and a `map` shows nothing without a `value` picking an entry out
- * of it — so they share ONE leaf below, the same call already made for `Chip`'s own
- * `dotColor`/`dotClassName` pair (two props, one look). That leaf renders every state
- * the resolved entry can take: every `EnumChipColor` (= `ChipTone`, 5 members), every
- * `EnumChipIcon` (2 members), and an entry carrying a `tooltip`. `isSkeleton` gets its
- * own leaf, a real boolean toggle on `EnumChip` itself.
- *
- * `className` (deprecated legacy escape) and `classNames` get **no leaf**, same call as
- * every other composite/atom story in this system: neither ever changes how the chip
- * looks, only where it sits.
+ * `EnumChip` — a `Chip` whose tone / label / optional tooltip / optional leading icon come
+ * from a per-value lookup (`map[value]`), so a domain badge shrinks to just its map table plus
+ * this delegate. Props: `value`, `map` (two halves of one lookup), `isSkeleton`,
+ * `className`/`classNames`.
  */
 const meta: Meta<typeof EnumChip> = {
     title: "Composites/Chips/EnumChip",

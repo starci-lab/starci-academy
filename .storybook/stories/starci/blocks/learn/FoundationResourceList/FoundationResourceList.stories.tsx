@@ -3,24 +3,12 @@ import { FoundationResourceList, type FoundationResourceItem } from "@sb-compone
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FoundationResourceList`: the resource browse list — numbered rows
- * of supplementary material the learner can search and page through.
- *
- * REUSE, NOT A NEW SHAPE: `AsyncContent` owns the error/loading/empty/content
- * switch, `SurfaceCardList` owns the bounded row surface and its own loading
- * mirror, `IconTile` already falls back from a cover image to a glyph on its
- * own, `EnumChip`/`Chip` own the two chip shapes, `Pagination` owns the page
- * nav. This block only decides which of them fire and what their words mean —
- * the numbering, the kind labels, the recommended text, and the choice
- * between "no resources yet" and `no matches for "X"`.
- *
- * 📐 LEAF BOUNDARY (canon `2-leaf-states.md` §0 R0 — "who flips the prop that
- * changes the tree?"): `isLoading` and `error` are CALLER-set switches that
- * swap the whole region ⇒ each its own leaf. `resources.length === 0` is DATA
- * returning `0` (R0's own worked example) ⇒ a STATE inside `Default`, not a
- * leaf of its own — even though `AsyncContent` still swaps the rendered
- * branch for it, the thing deciding the swap is the `resources` array the
- * caller was already required to pass, not a prop flipped on purpose.
+ * `FoundationResourceList` — the resource browse list: numbered rows of
+ * supplementary material the learner can search and page through. Composes
+ * `AsyncContent` (error/loading/empty/content switch), `SurfaceCardList` (bounded
+ * rows + loading mirror), `IconTile` (cover image falling back to a glyph),
+ * `EnumChip`/`Chip`, and `Pagination`; the block owns the numbering, kind labels,
+ * recommended text, and the "no resources yet" vs `no matches for "X"` wording.
  */
 const meta: Meta<typeof FoundationResourceList> = {
     title: "StarCi/Blocks/Learn/FoundationResourceList/FoundationResourceList",

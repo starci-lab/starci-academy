@@ -3,25 +3,12 @@ import { ContentReaction } from "@sb-components/starci/blocks/learn/ContentReact
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentReaction`: say how the lesson landed. A Facebook-style
- * six-emotion picker on the left, the quiet view count on the right.
- *
- * ⭐⭐ REBUILT 2026-07-28 (teacher: "over-engineered it" — the first cut was a single
- * boolean like/unlike toggle; real `src`'s `ReactionBar` is a six-emotion
- * picker reused for both the content reaction and every comment). See the
- * component's own file header for the full port + why the animated 6-button
- * row lives in a separate atom (`ReactionPicker`), not hand-rolled here.
- *
- * TWO WEIGHTS, ON PURPOSE. Reacting is an ACTION, so it is a button; the view
- * count is a FACT the reader can only observe, so it is muted text.
- *
- * COUNTS ARE DATA, THE VOCABULARY IS NOT (§14d.1). The caller hands over
- * `counts` (one entry per emotion actually reacted); the block owns the six
- * fixed labels/emoji and does the sort/cap/total work itself.
- *
- * 📐 LEAF by STRUCTURE (§14d.2). Which emotion is picked, whether the summary
- * is empty, and waiting for the server all keep the same two-slot shape ⇒
- * states. The caller flipping `isSkeleton` is its own leaf.
+ * `ContentReaction` — say how the lesson landed: a six-emotion picker on the
+ * left, the quiet view count on the right. Reacting is a button; the view count
+ * is muted text. The caller hands over `counts` (one entry per emotion reacted);
+ * the block owns the six fixed labels/emoji and does the sort/cap/total. Which
+ * emotion is picked, empty summary, and the server wait are states; `isSkeleton`
+ * is its own leaf.
  */
 const meta: Meta<typeof ContentReaction> = {
     title: "StarCi/Blocks/Learn/ContentReaction/ContentReaction",

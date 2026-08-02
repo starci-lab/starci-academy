@@ -11,54 +11,21 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `DailyQuest` (dashboard): "Today's Quests" content — a fixed
- * 3-task checklist (read content · pass a challenge · review flashcards),
- * each row showing today's progress, plus a claim action once every task is
- * done. Content only — the PAGE frames it with a label; this block never
- * draws its own title (mirrors the real
- * `src/components/features/dashboard/DailyQuest`'s own file header).
+ * `DailyQuest` — a BLOCK (dashboard): "Today's Quests" content — a fixed 3-task
+ * checklist (read content · pass a challenge · review flashcards), each row showing
+ * today's progress, plus a claim action once every task is done. Content only — the
+ * page frames it with a label.
  *
- * ⭐ AUDITED FROM `src` 2026-07-31 (matrix-driven build). Data shape in hand:
- * ONE entity, `{ claimed, allDone, reward, tasks[] }`, `tasks` a FIXED-length
- * (3) array of `{ key, current, target }` — `key` a closed 3-value enum, both
- * numbers small integers, nothing free-text. `node scripts/matrix.mjs` on
- * `"An array of READ-ONLY rows carrying a check / cross / pending mark"`
- * answers `SurfaceCardCrossList` (composites/cards/SurfaceCard) — confirmed
- * BUILT (exported member of `SurfaceCard.tsx`, real usage already at
- * `MockInterviewScorecard.tsx`). Its `mark` union (`check`/`pending`/`cross`/`none`)
- * lines up with the real row exactly: done → `mark="check"` (default tone
- * `success`, the ✓), not-yet-done → `mark="pending"` (default tone `neutral`,
- * a plain circle — the SAME visual as the real `CircleIcon text-foreground`).
- * No `cross` row exists in this checklist (nothing is ever "excluded").
+ * Data: one entity `{ claimed, allDone, reward, tasks[] }`, `tasks` a fixed-length
+ * (3) array of `{ key, current, target }`. Rows render via `SurfaceCardCrossList`:
+ * done → `mark="check"`, not-yet-done → `mark="pending"`; no `cross` row exists.
+ * Each row's body (title ↔ current/target) is composed with the `Split` frame.
  *
- * Each row's BODY (title ↔ current/target) is two PEERS on one line — the
- * `Split` frame ("EXACTLY TWO NAMED SIDES: leading ↔ trailing") composes it;
- * this block never hand-writes a flex row for it.
- *
- * LEAF BY STRUCTURE (§14d.2), three claim-state leaves nested inside Content,
- * plus the three async leaves:
- *   1. Loading — `SurfaceCardCrossList`'s own `isSkeleton` mirror, 3 rows (the
- *      REAL task count — the real src's skeleton guesses 5 rows, which this
- *      block does not repeat since the true shape is known to be exactly 3).
- *   2. Error   — `AsyncContent`'s error branch + retry.
- *   3. Empty   — `quest` is `null` with no error (the query resolved to
- *      "nothing issued today"), mirroring the real src's `isEmpty: !data`.
- *   4. Content, three further leaves by claim state:
- *      4a. `!allDone`  — a muted progress-prompt sentence.
- *      4b. `allDone && !claimed` — a primary claim `Button` (`isPending` while
- *          the claim mutation is in flight — THAT is this block's `pending` state).
- *      4c. `claimed`   — a success `Chip`, no further action possible.
- *
- * FULL STATE SET (nothing left unstated):
- *   • empty   → leaf 3.
- *   • loading → leaf 1.
- *   • error   → leaf 2.
- *   • content → leaf 4 (three claim-state sub-leaves, 4a/4b/4c).
- *   • pending → leaf 4b's `isClaiming` — the ONLY place a mutation is in
- *     flight (claiming the reward); nothing else in this block is ever
- *     mid-mutation.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Leaves: Loading (`SurfaceCardCrossList`'s own skeleton, 3 rows), Error
+ * (`AsyncContent` + retry), Empty (`quest` is null with no error), and Content —
+ * which forks by claim state: `!allDone` → a muted progress prompt; `allDone &&
+ * !claimed` → a primary claim `Button` (`isPending` while the claim mutation is in
+ * flight, this block's only pending state); `claimed` → a success `Chip`.
  */
 
 /** The three fixed daily tasks — closed set, real BE vocabulary (see file header). */

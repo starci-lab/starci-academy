@@ -14,11 +14,9 @@ export default meta
 type Story = StoryObj<typeof ProgressCircle>
 
 /**
- * `ProgressCircle.Track`/`ProgressCircle.FillCircle` are direct HeroUI
- * compound-component renders (`tier: "heroui"`, no `storyId`). `Skeleton` is
- * HeroUI's own `Skeleton`, same reasoning. Renamed from the role-words
- * `Track`/`Fill` (§ naming pass, 2026-07-28) — `Fill` was doubly wrong here since
- * the element it tagged is actually `FillCircle`, not `Fill`.
+ * `ProgressCircle.Track`/`ProgressCircle.FillCircle` are direct HeroUI compound-component
+ * renders (`tier: "heroui"`, no `storyId`). `Skeleton` is HeroUI's own `Skeleton`, same
+ * reasoning.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ProgressCircle.Track": {

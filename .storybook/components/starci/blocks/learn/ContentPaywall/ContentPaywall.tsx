@@ -9,27 +9,18 @@ import type { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseSc
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentPaywall`: the offer at the point the lesson stops. Lock glyph,
- * what is behind it, the price, and one way forward.
+ * `ContentPaywall` — a BLOCK: the offer at the point the lesson stops — a lock
+ * glyph, what is behind it, the price, and one way forward.
  *
- * FLAT ON PURPOSE — no card of its own. It lives INSIDE the reading card, right
- * under the faded tail of the body, so the page reads as one surface that runs
- * out rather than as a second card interrupting a first (a card inside a card).
+ * Flat on purpose — no card of its own. It lives inside the reading card, under the
+ * faded tail of the body, so the page reads as one surface that runs out rather than
+ * a card inside a card.
  *
- * ⭐ BLOCK IMPORTS BLOCK, and this is the case that justifies the rule. Price and
- * scarcity are already blocks built for the course page (`PriceTagProminent`,
- * `PhaseScarcityNote`), and the same WHY — "sell this course" — turns up here in
- * a different screen. Rebuilding either would fork the pricing vocabulary in two
- * places, and they WILL drift.
- *
- * IT EARNS ITS OWN LAYER by deciding the frame the offer arrives in: the lock,
- * the sentence, the ORDER, and the single call to action. What it does not do is
- * re-decide what a price looks like.
- *
- * ONE WAY FORWARD. There is exactly one button. A second control here would ask a
- * reader who just hit a wall to also make a choice.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Imports other blocks: price and scarcity are already `PriceTagProminent` and
+ * `PhaseScarcityNote` (built for the course page), reused here so the pricing
+ * vocabulary does not fork. It earns its layer by deciding the frame the offer
+ * arrives in — the lock, the sentence, the order, and the single call to action —
+ * not by re-deciding what a price looks like. Exactly one button.
  */
 
 /** Props for {@link ContentPaywall}. */

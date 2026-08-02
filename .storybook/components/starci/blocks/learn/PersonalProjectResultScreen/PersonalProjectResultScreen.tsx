@@ -12,73 +12,13 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PersonalProjectResultScreen`: what came back from grading ONE
- * capstone (personal-project) task attempt, quality-gated the same way a
- * challenge submission is.
- *
- * ⭐⭐ NEAR-TOTAL REUSE OF `ChallengeResultPage` — read that file
- * (`components/starci/pages/ChallengeResultPage/ChallengeResultPage.tsx`)
- * first. FIVE of six composed leaves are the EXACT SAME blocks that page
- * already calls (`SubmissionResultHeader`, `SubmissionAttemptSelector`,
- * `SubmissionScoreCard`, `SubmissionFindingsList`, `ContentRelatedList`) —
- * this file does not fork a single one of them, it imports the real thing.
- * The only new material is the capstone-specific "what's next" handoff.
- *
- * ⚠️ FILED AS A BLOCK, NOT A PAGE, PER THIS TASK'S OWN INSTRUCTION — even
- * though the name ends in `…Screen` and the top-level frame
- * (`Container` + `StackV`) is the same shape `ChallengeResultPage` (a page)
- * uses. The task scoped this build to `components/starci/blocks/<group>/`
- * and named it a BLOCK explicitly, so that is where it lives; a future thin
- * page/route can mount this directly the same way a page would mount
- * `ChallengeResultPage`. Using `Container`/`StackV` here is not a tier
- * violation either way — those are FRAMES, and nothing in rules/1 forbids a
- * block from reaching for a frame, only from reaching for a bare `div`.
- *
- * ⭐ THE ONE NEW LEAF — `MilestoneUpNextCard` — IS DELIBERATELY LOCAL TO THIS
- * FILE, NOT A THIRD FILE. The task explicitly scoped this pass to exactly
- * two files (this component + its story) while sibling agents build other
- * blocks concurrently in the same run, so promoting this small card to its
- * own `components/starci/blocks/<group>/MilestoneUpNextCard/` directory would
- * both violate that scope and risk a name/file collision with a sibling
- * agent's own pass. It is written here the same way `ContinueCard.tsx`
- * shares its internal `CardBody` between `.Hero`/`.Item` — a private
- * composition helper.
- *
- * ⭐ WHY A NEW CARD INSTEAD OF REUSING `ContinueCardHero`: different WHY,
- * per §14d. `ContinueCardHero` is for resuming something IN PROGRESS — it
- * optionally shows a progress bar and its CTA always reads "Continue". This
- * card fires exactly ONCE, at the moment a milestone task is marked passing,
- * to hand the learner forward to the NEXT one — there is no progress to show
- * (the just-finished task is done, the next one has not started), and the
- * CTA is a different, forward-only sentence ("Go to the next task").
- * Reaching for `ContinueCardHero` would have bought a progress-bar slot this
- * moment never uses and a CTA wording that means the wrong thing here.
- *
- * ⭐ THE SCORE CLUSTER IS CONDITIONAL, AND THE CONDITION IS THE POINT — SAME
- * pattern `ChallengeResultPage` documents for its own score/findings
- * cluster. Nothing about "how did it go" can render before an attempt is
- * actually selected, so the whole cluster (score, findings, related reading,
- * and the next-task handoff) gates on `selectedAttemptId != null`.
- *
- * ⭐ THE NEXT-TASK HANDOFF IS CONDITIONAL ON `isPassing && nextTask`, WITH NO
- * `isSkeleton` OVERRIDE — the same treatment `ChallengeResultPage` gives
- * its related-reading nudge (`!isPassing`, no override either), not the
- * treatment it gives the always-reserved score/findings cluster. The
- * reasoning is the same: this is an optional addendum to the verdict, not
- * the reason the page exists, so a skeleton paint simply follows whatever
- * `isPassing`/`nextTask` the caller hands it (see the Skeleton story for how
- * that looks in practice) rather than forcing the section to always reserve
- * height.
- *
- * ⚠️ SCOPE OF THIS PASS (§B3), CARRIED OVER FROM `ChallengeResultPage`:
- * this prop list is deliberately the SHORTER one the task specified, not
- * `ChallengeResultPage`'s full surface. It drops the attempt-row and
- * findings-list loading/empty/error axes, `overflowLabel`, `passScore`, and
- * the two byline-label overrides — none of those are in the task's own prop
- * list, so nothing here fakes support for them. A caller needing those axes
- * on the capstone result page is a real gap, not invented here.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PersonalProjectResultScreen` — the graded result of one capstone
+ * (personal-project) task attempt. Reuses `ChallengeResultPage`'s blocks
+ * (`SubmissionResultHeader`, `SubmissionAttemptSelector`, `SubmissionScoreCard`,
+ * `SubmissionFindingsList`, `ContentRelatedList`) and adds one local
+ * `MilestoneUpNextCard` for the forward handoff to the next task. The score
+ * cluster gates on `selectedAttemptId != null`; the next-task handoff renders
+ * only when `isPassing && nextTask`.
  */
 
 /** One milestone task waiting once the current one is marked passing. */

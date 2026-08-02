@@ -3,24 +3,21 @@ import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Tooltip`: the ONE hover-hint atom, wrapping HeroUI Tooltip.
- *
- * Keeping `children` here is CORRECT (§12b, rationale documented in `Tooltip.tsx`'s own
- * header): the atom wrapper must wrap an arbitrary element so react-aria can attach
- * hover/focus/`aria-describedby` straight onto it. It shares the same PORTAL limitation
- * as Menu/Popover, `Tooltip.Content`/`Tooltip.Arrow` render into `body`, so `BlockAnatomy`
- * (which walks the ancestor chain inside the render box) can never reach them.
- *
- * 🌿 `annotate` (2026-07-28): every HeroUI import `Tooltip.tsx` renders directly is
- * declared `tier: "heroui"` — real import names (`Tooltip.Trigger`/`Tooltip.Content`/
- * `Tooltip.Arrow`, the real dot-access on the compound `HeroTooltip`), not the role each
- * used to be labelled by (`"Trigger"`/`"Content"`/`"Arrow"` alone). `Tooltip.Trigger` is
- * the only one that stays inside the render box (it wraps the `children` trigger, here
- * the demo `TriggerBox`); `Tooltip.Content`/`Tooltip.Arrow` portal outside, so — same as
- * Menu/Popover — declaring them is honesty about the DATA, not a promise they'll be SEEN.
- *
- * Two leaves cover the props that actually have a shape: `Default` (bare baseline) and
- * `Placements` (the full `placement` union rendered in ONE leaf, not split per value).
+ * ATOM — `Tooltip`: the one hover-hint atom, wrapping HeroUI Tooltip.
+ * 
+ * Keeping `children` here is correct (rationale in `Tooltip.tsx`'s header): the atom wrapper
+ * must wrap an arbitrary element so react-aria can attach hover/focus/`aria-describedby`
+ * straight onto it. It shares the Menu/Popover portal limitation — `Tooltip.Content`/
+ * `Tooltip.Arrow` render into `body`, so `BlockAnatomy` can never reach them.
+ * 
+ * `annotate`: every HeroUI import `Tooltip.tsx` renders directly declares `tier: "heroui"`,
+ * named by the real import (`Tooltip.Trigger`/`Tooltip.Content`/`Tooltip.Arrow`).
+ * `Tooltip.Trigger` is the only one inside the render box (it wraps the `children` trigger);
+ * `Tooltip.Content`/`Tooltip.Arrow` portal outside, so declaring them is data honesty, not a
+ * visibility promise.
+ * 
+ * Two leaves cover the props with a shape: `Default` (bare baseline) and `Placements` (the full
+ * `placement` union rendered in one leaf, not split per value).
  */
 
 /**

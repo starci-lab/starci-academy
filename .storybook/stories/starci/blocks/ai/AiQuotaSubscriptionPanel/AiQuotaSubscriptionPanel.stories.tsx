@@ -4,17 +4,10 @@ import type { AiQuotaLaneData } from "@sb-components/starci/blocks/ai/AiQuotaLan
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `AiQuotaSubscriptionPanel`: body of the "Plan" tab inside
- * `AiQuotaModal` — ported from `src`'s `SubscriptionTab`.
- *
- * ⭐ BLOCK REUSES BLOCK — the Premium branch is this plan's `AiQuotaLane`
- * (see that block's own story), unchanged; this panel only owns the leaf
- * switch on `tier` plus the CTA/caption wording around it.
- *
- * 📐 LEAF by STRUCTURE (§14d.2): `tier === null` vs. `tier` set is a real
- * shape difference (CTA-in-a-card vs. lane-plus-caption) ⇒ two leaves. Which
- * tier is active, and whether the Premium lane's own fetch is still running,
- * are DATA ⇒ states inside the `ActiveLane` leaf, not separate leaves.
+ * `AiQuotaSubscriptionPanel` — the "Plan" tab body inside `AiQuotaModal`. The
+ * Premium branch reuses `AiQuotaLane` unchanged; this panel owns the switch on
+ * `tier` (no plan: CTA-in-a-card; active plan: lane-plus-caption) and the
+ * surrounding CTA/caption wording.
  */
 const meta: Meta<typeof AiQuotaSubscriptionPanel> = {
     title: "StarCi/Blocks/Ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel",

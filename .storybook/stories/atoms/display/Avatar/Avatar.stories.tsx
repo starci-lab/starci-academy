@@ -3,36 +3,16 @@ import { UserIcon } from "@phosphor-icons/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Avatar`: the system's ONE avatar, wrapping HeroUI Avatar directly.
+ * ATOM — `Avatar`: the system's one avatar, wrapping HeroUI `Avatar` directly.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Rewritten 2026-07-26 after `AvatarBase` folded
- * DiceBear into its fallback chain (see the header of `AvatarBase.tsx`):
+ * One prop = one leaf, each of the props with a shape: `Default` · `Source` (the
+ * src → generated → initials → icon fallback chain, including the failed-load case) ·
+ * `Fallback` · `Status` (4 tones) · `Sizes` (3 tiers) · `Colors` (5 tints) ·
+ * `Skeleton`. A prop with no shape (`className`) gets no leaf. Each `states[]` entry
+ * renders exactly one `Avatar` instance.
  *
- * The OLD version split 4 leaves (`Image`/`Initials`/`Fallback`/`Empty`) by IMAGE
- * SOURCE, that's ONE axis, not four, so they fold into one `Source` leaf.
- * In exchange, the old version was flat-out MISSING a leaf for `size` and `color`
- * even though both produce their own shape (size changes the box, the status dot,
- * and the glyph weight; color changes the fallback background).
- *
- * The new leaf set, exactly the props of `AvatarBaseProps` that HAVE a shape:
- *   `Default` (bare) · `Source` (the src→generated→initials→icon chain, including
- *   the failed-load-src case) · `Fallback` (which face to show without a src) ·
- *   `Status` (4 tones) · `Sizes` (3 tiers) · `Colors` (5 tints) · `Skeleton`
- *   (skeleton leaf, hybrid C).
- *
- * A prop that produces no shape (`className`) gets no leaf.
- *
- * 🎨 Icon = Phosphor (§5.0), pass the COMPONENT (`icon={UserIcon}`) not JSX,
- * the atom forces the scale + weight itself based on `size` (§5.0a).
- *
- * ⚙️ Every `states[]` entry below renders EXACTLY ONE `Avatar` instance
- * (2026-07-27 pass): a state that used to sweep several props/values side by
- * side inside one manually-wrapped `<div className="flex ...">` is split so
- * each individual value gets its own tab, its own `why`, and its own one-line
- * `code`. Nothing here is real multi-row DATA (a list, a divider needing two
- * blocks), it was always a comparison sweep across this atom's own prop values.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Icon = Phosphor — pass the component (`icon={UserIcon}`), not JSX; the atom forces
+ * the scale and weight from `size`.
  */
 /**
  * Every part this atom renders is a DIRECT HeroUI import (no member of ours has its

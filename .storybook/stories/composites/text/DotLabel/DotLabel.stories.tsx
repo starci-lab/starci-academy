@@ -3,33 +3,10 @@ import { DotLabel } from "@sb-components/composites/text/DotLabel/DotLabel"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `DotLabel`: a colour dot + an inline text label, as ONE unit —
- * no pill/background around it. Use it where a coloured dot reads faster than
- * the word alone but a full chip's padding/background would be too heavy for
- * the surface it sits in (a status line inside a card, an "Online" row beside
- * a name, a category line in a dense list).
- *
- * TWO-CANDIDATES AUDIT (build brief): checked against `Chip`'s dot variant
- * (`dotColor`/`dotClassName`) — that variant always renders inside a real
- * `HeroChip` (background + padding + rounded-full pill), so it answers "a
- * status chip", not a bare dot + label. Also checked against `Legend`
- * (`composites/stats/Legend`), which already renders this exact bare shape
- * per-entry — but only as one row of a repeated `items` list scoped to chart
- * legends, not a standalone single-instance composite. Genuinely absent
- * either way, so `DotLabel` is new.
- *
- * 📐 1 PROP = 1 LEAF: `tone` · `color` · `isSkeleton`, each its own leaf, each
- * rendering the FULL set of its values. `label` has no leaf of its own — it
- * is the content every other leaf fills in.
- *
- * Props with NO leaf, and why:
- * - `classNames` — placement inside a parent, appearance is not passable
- *   through it.
- *
- * ATOM GAP (documented in the component's own file header, same gap
- * `Legend`'s swatch and `AuthorByline`'s glyphs already flag): no bare
- * swatch/dot atom exists yet, so the dot stays a plain, unbadged span in
- * `ANNOTATE` — real DOM, no story of its own to jump to.
+ * `DotLabel` — a colour dot + an inline text label as one unit, with no pill/background. Use
+ * where a coloured dot reads faster than the word alone but a full chip's padding would be too
+ * heavy (a status line inside a card, an "Online" row beside a name, a category line in a dense
+ * list). Leaves: `tone`, `color`, `isSkeleton`. The dot is a plain span (no bare-swatch atom yet).
  */
 const meta: Meta<typeof DotLabel> = {
     title: "Composites/Texts/DotLabel",

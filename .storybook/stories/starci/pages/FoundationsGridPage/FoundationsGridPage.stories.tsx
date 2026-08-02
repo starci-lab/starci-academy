@@ -3,25 +3,14 @@ import { FoundationsGridPage } from "@sb-components/starci/pages/FoundationsGrid
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `FoundationsGridPage`: browse the Foundations content library and
- * drill into a category.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * SIX FUNCTIONS, in the order the reader meets them: orient · get nudged to
- * unlock while on trial · see a live match count · search by name · browse and
- * open a category · page through when there's more than one page.
- *
- * ⭐ ONLY `isSkeleton` FORKS INTO ITS OWN LEAF. The trial banner's visibility,
- * an empty search result, and whether a pager is supplied are all DATA the
- * screen hands straight through to a block without branching its OWN render on
- * them — none of them removes a block from the screen's own JSX the way
- * `isLocked` does on `ContentPage`. So they stay STATES of the one `Default`
- * leaf (§14d.2), matching the same "optional slot presence is a state, not a
- * leaf" precedent `FoundationCategoryHeader`'s own story already sets for its
- * breadcrumb slot.
+ * `FoundationsGridPage` — the screen to browse the Foundations content library
+ * and drill into a category. A screen owns a list of functions: it calls
+ * blocks, places them in frames, and hands each typed data. Six functions, in
+ * reading order: orient · get nudged to unlock while on trial · see a live
+ * match count · search by name · browse and open a category · page through when
+ * there's more than one page. Only `isSkeleton` forks into its own leaf; the
+ * trial banner's visibility, an empty search result, and pager presence are
+ * data states of the one `Default` leaf.
  */
 const meta: Meta<typeof FoundationsGridPage> = {
     title: "StarCi/Pages/FoundationsGridPage/FoundationsGridPage",

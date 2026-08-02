@@ -11,49 +11,22 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `JobReadinessWidget`: "My readiness" — the growth-loop
- * self-widget: the viewer's strongest purchased-course track (depth score +
+ * `JobReadinessWidget` — a BLOCK (dashboard): "My readiness" — the growth-loop
+ * self-widget showing the viewer's strongest purchased-course track (depth score +
  * band), the course-independent foundation percentile, its capstone/interview/CV
- * pillar bars (each only when attempted), and a single "do the next real thing"
- * CTA.
+ * pillar bars (each only when attempted), and a single "do the next real thing" CTA.
  *
- * GROUND TRUTH: `src`'s `components/features/dashboard/OverviewTab/
- * JobReadinessWidget/index.tsx`, backed by the real `myJobReadiness` query
- * (`QueryUserJobReadinessData`: `foundation` + one `tracks[]` entry per
- * purchased course, strongest `depthScore` first — this widget only ever
- * renders `tracks[0]`, never blends across tracks, see `.workflows/00-INDEX.md`
- * fairness model referenced in the real component's own file header).
+ * Composed, not rebuilt: the card face is `SurfaceCard` (labeled), the headline is
+ * `StatPair`, the band is `EnumChip`, each pillar bar is `ProgressMeter`.
  *
- * COMPOSED, NOT REBUILT: the card face is `SurfaceCard` (labeled variant), the
- * headline is `StatPair` ("A number+label pair, placed somewhere that ALREADY
- * has a surface" — `node scripts/matrix.mjs "A number+label pair, placed
- * somewhere that ALREADY has a surface"`), the band is `EnumChip`, each pillar
- * bar is `ProgressMeter` ("ONE ratio over ONE total").
+ * Reads only the strongest track — a single `JobReadinessTrack` prop, never an
+ * array; zero tracks is the `isEmpty` branch. `nextAction` is caller-built (a label
+ * + `onPress`, omitted once every pillar has a score) since which pillar to suggest
+ * is a fairness-model business call and route-building needs the viewer's locale.
+ * The foundation line is block wording around a typed `0..100` percentile.
  *
- * ⭐ ONLY THE STRONGEST TRACK, NEVER AN ARRAY. `src` only ever reads `tracks[0]`
- * — this widget is a single-entity self-summary, not a track picker — so the
- * prop is one `JobReadinessTrack`, not `tracks: Array<…>`. Zero tracks (the
- * viewer owns no course yet) is the block's `isEmpty` branch, not an empty array
- * threaded through.
- *
- * ⭐ THE CTA IS FULLY CALLER-BUILT (§14d.1's routing boundary, same convention
- * `LeaderboardBoard.selfRow.profileHref`/`ChallengeDeliverableList.onSubmit`
- * already use): WHICH pillar is still missing (capstone → interview → CV) is a
- * fairness-model business call `src`'s own file header calls out explicitly —
- * "deliberately never suggests buying another course" — and building the actual
- * route needs `pathConfig()` + the viewer's locale, neither of which is generic
- * dashboard-block knowledge. So `nextAction` arrives pre-decided: a label +
- * an `onPress`, or omitted once every pillar has a score.
- *
- * ⭐ THE FOUNDATION LINE IS BLOCK WORDING (same convention as `LeaderboardBoard`'s
- * "Rank #N"): `codingPercentile` is a typed `0..100` number, the
- * sentence around it is built HERE.
- *
- * ⭐ TWO COMPOSITES HAVE NO `isSkeleton` OF THEIR OWN — `ProgressMeter` (same
- * known gap `ChallengeScoreCard`/`MockInterviewScorecard` document). It falls
- * back to a bare `HeroSkeleton` sized to the track height it would have drawn.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ProgressMeter` has no `isSkeleton` of its own; while skeleton it falls back to a
+ * bare `HeroSkeleton` sized to the track height it would have drawn.
  */
 
 /** Band describing how close a track's depth score is to "job ready" (mirrors backend `UserJobReadinessBand`). */

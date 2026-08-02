@@ -12,58 +12,14 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PremiumGateModal`: the value-first buy/register prompt shown when a
- * viewer taps a LOCKED premium tab (`ContentModeNav`, muted-but-clickable —
- * see its own file header) or the "Practice" rail button on a trial-read
- * lesson. What unlocks, the loyalty-aware price, one CTA — nothing else.
+ * `PremiumGateModal` — the dismissable, value-first buy/register prompt shown when a
+ * viewer taps a locked premium tab or the "Practice" button on a trial-read lesson.
+ * Shows what unlocks, the loyalty-aware price, and one CTA. Composes `ModalShell` +
+ * `PriceTagProminent` + `PhaseScarcityNote` + `Button`; owns its header and "what
+ * unlocks" wording (`courseTitle` is interpolated into a fixed template).
  *
- * ⭐ VERIFIED DIFFERENT FROM `ContentPaywall`/`PremiumPaywall` (2026-07-28,
- * per `.claude/fe/steps/11-overlays-layouts-brainstorm.md` §3): those are the
- * INLINE "buy to unlock" panel already built into `ContentPage` — always on
- * the page, no open/close state. This is a DISMISSABLE overlay opened from a
- * click, so it is its own component, not a duplicate.
- *
- * ⚠️ FILED UNDER `overlays/modals`, NOT `blocks/commerce` (a judgement call on
- * this run's own boilerplate, which suggested `blocks/<group>`). Rule 13 names
- * this an `overlay-modal` item, and `components/README.md`'s app-folder split
- * law is explicit: "`overlays/{modals,drawers}` = things that open OVER the
- * screen, mounted ONCE at the app root, callable from ANYWHERE via the store" — exactly this modal's
- * contract. `FoundationModal` was RELOCATED out of `blocks/learn` into
- * `overlays/modals` for this exact reason (see its own file header); building
- * a fresh overlay straight into `blocks/commerce` would repeat the mistake
- * that relocation fixed.
- *
- * RULE 13 CONTRACT — plain `isOpen`/`onOpenChange`, no store wiring. The real
- * app opens this from `useOverlayStore` (or equivalent) on a locked-tab click;
- * that store, and the SWR call resolving `price`, are APP WIRING, out of
- * scope here. `onUpgrade` only fires the callback — the CALLER decides
- * close-then-open-payment (same handoff shape as `TrialConversionStrip`'s
- * `onEnroll`).
- *
- * COMPOSED FROM (verbatim, no rebuilding): `ModalShell` (dialog scaffold) ·
- * `PriceTagProminent` + `PhaseScarcityNote` (the same pricing pair
- * `TrialConversionStrip` uses, same `breakdown` shape) · `Button` · `Typography`
- * · `StackV`/`Cluster` frames · `CheckCircleIcon` (bare Phosphor glyph).
- *
- * ⭐ THE BLOCK OWNS ITS WORDING (§14d.1). Both the header (named-course vs
- * generic) and the "what unlocks" checklist come from FIXED local vocabulary
- * tables (`GATE_HEADER`, `GATE_UNLOCKS`) — the same i18n-key pattern as
- * `ContentModeNav`'s `MODE_LABEL`. `courseTitle` is DATA interpolated into a
- * fixed template (`Unlock "${courseTitle}"`), never a caller-supplied string
- * standing in for the whole sentence.
- *
- * 📐 ONE LEAF (matches `FoundationModal` precedent — no structural kind
- * switch). Three STATES of that one leaf: price resolved (real
- * `PriceTagProminent` + `PhaseScarcityNote`) · `isSkeleton` (Typography-mirror
- * lines in the same box, the exact technique `TrialConversionStrip` uses for
- * its own price region) · price resolved with no saving (`PriceTagProminent`
- * alone; `PhaseScarcityNote` renders nothing on its own `seatsRemaining ===
- * null` contract — it is never told to hide, it decides that itself). Only
- * the price region ever rests; the header, the unlocks list, and the CTA are
- * static chrome and paint immediately, exactly like `TrialConversionStrip`'s
- * `isSkeleton` contract.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Presentational: `isOpen`/`onOpenChange` + `price`/`courseTitle`; `onUpgrade` only
+ * fires the callback. Only the price region skeletons; the rest paints immediately.
  */
 
 /** Minimal price-preview shape this modal needs (mirrors `TrialConversionStripPrice`). */

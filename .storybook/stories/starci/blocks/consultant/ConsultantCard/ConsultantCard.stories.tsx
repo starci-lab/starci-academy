@@ -3,23 +3,10 @@ import { ConsultantCard } from "@sb-components/starci/blocks/consultant/Consulta
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ConsultantCard`: ONE recruiting consultant as a self-contained
- * pressable tile — photo, name, role, company, blurb — opening their profile
- * on press. A domain identity block reusable wherever one consultant needs to
- * be shown (`ConsultantDirectoryGrid`'s tiles today, a profile overlay
- * tomorrow).
- *
- * BUILT ON `SurfaceCard.Pressable` (composite navigation frame), NOT a
- * hand-rolled `<button>` around bare `Image`/`Typography` atoms — the exact
- * regression this run exists to correct (see `ContentModeNav`'s file header).
- *
- * 📐 TWO LEAVES by STRUCTURE (§14d.2). `jobTitle`/`companyTitle`/`description`
- * are each conditionally drawn — losing all three at once removes THREE nodes
- * from the tree, so `Minimal` earns its own leaf rather than being three
- * separate states layered onto `Default`. `isSkeleton`, by contrast, keeps the
- * exact same tree (all three optional rows still render, now as shimmer, same
- * convention as `ContentHeader`'s outcomes card during loading) — so it stays
- * a STATE inside `Default`, not a third leaf.
+ * `ConsultantCard` — one recruiting consultant as a self-contained pressable
+ * tile (photo, name, role, company, blurb) that opens their profile on press.
+ * Built on `SurfaceCard.Pressable`. `Minimal` drops `jobTitle`/`companyTitle`/
+ * `description` together; `isSkeleton` keeps the same tree as shimmer.
  */
 const meta: Meta<typeof ConsultantCard> = {
     title: "StarCi/Blocks/Consultant/ConsultantCard/ConsultantCard",

@@ -6,29 +6,13 @@ import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `RatingBar`: how well did you remember it. Four tiles the learner taps
- * after an answer is revealed, feeding the spaced-repetition schedule.
- *
- * WHY A BLOCK, AND A SHARED ONE: it knows what a RECALL GRADE is — that there are
- * four of them, that they run weakest to strongest, and that the answer decides
- * when the card comes back. Flashcard review and quiz recap both grade recall, so
- * it belongs to neither.
- *
- * ⭐ GRADING IS AN ACTION, NOT A SELECTION. Nothing stays lit after the tap: no
- * ring, no checked state. The learner is not choosing a setting they might come
- * back and change, they are answering once and moving on — a persistent selected
- * skin would invite them to sit and reconsider.
- *
- * ⭐ THE COLOUR RAMP IS A TIER, NOT A STATUS. Grades run rose → emerald like a
- * difficulty scale, because "I forgot" is not an ERROR and "easy" is not a
- * SUCCESS — they are positions on one axis. Using the status palette here would
- * tell the learner they got something wrong by being honest.
- *
- * THE KEY HINT IS A CHIP, THE INTERVAL IS NOT. One chip per tile, and it goes to
- * the keyboard shortcut because that is the classifying mark; the next-interval
- * preview is a quiet fact and rides as muted text.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `RatingBar` — four tiles the learner taps after an answer is revealed, feeding
+ * the spaced-repetition schedule; shared by flashcard review and quiz recap.
+ * Knows what a recall grade is: four of them, weakest to strongest, deciding
+ * when the card returns. Grading is an action, not a selection — nothing stays
+ * lit after the tap. The colour ramp (rose -> emerald) is a difficulty tier, not
+ * the status palette. Each tile's chip carries the keyboard shortcut; the
+ * next-interval preview rides as muted text.
  */
 
 /** One recall grade offered to the learner. */

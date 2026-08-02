@@ -8,68 +8,14 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * OVERLAY (drawer) — `ContentAiChatDrawer`: the global "ask StarCi AI" chat
- * panel, drawer presentation — forced on mobile, and an optional stand-in for
- * the rail-mode panel on desktop (the layout that mounts this decides which
- * one shows and passes `placement="bottom"` on a phone; this block never
- * computes `isMobile` itself). Filed under `starci/overlays/drawers/**` per
- * `components/README.md`'s app-folder split — an overlay mounts once at the
- * app root and opens from anywhere via a store, so it is not a screen's own
- * content — next to the existing `E2eResultDrawer` precedent.
+ * `ContentAiChatDrawer` — the global "ask StarCi AI" chat panel in drawer
+ * presentation: forced on mobile, and an optional desktop stand-in for the rail-mode
+ * panel. Composes `DrawerShell` plus a custom header row — the lesson/course title
+ * beside a rail⇄drawer mode switch built on `Button.RadioGroup`.
  *
- * OVERLAY, PRESENTATIONAL ONLY (Rule 13 / canon §11a "screen owns overlay
- * store"). The real app opens this through `useOverlayStore` + a per-key hook
- * (mirroring `useContentAiChatOverlayState`-style wiring already used by the
- * FAB this drawer answers, `ContentAiFab`) — that store, and any real chat
- * fetch/mutation hooks, are APP-LEVEL, same discipline as a page never wiring
- * its own router. This block only takes `isOpen`/`onOpenChange` as plain props;
- * the caller supplies both.
- *
- * WHAT THIS BLOCK OWNS: the open-state scaffold (composed from `DrawerShell`,
- * not rebuilt — Backdrop/Content/Dialog/CloseTrigger stay the shell's job);
- * and the header IDENTITY row — the lesson/course title beside the
- * rail⇄drawer mode switch, on ONE row. `DrawerShell`'s own `title`/
- * `description` path only stacks two text lines vertically with no room for a
- * trailing control (see its own stories), so this block reaches for the
- * shell's `header` escape hatch instead and builds that one custom row itself
- * — same `pr-8` (room for the close button) convention `DrawerShell`'s own
- * `CustomHeader` story already documents. It does NOT own the chat
- * conversation itself — see the scope-cut note below.
- *
- * ⭐ MODE SWITCH REUSED, NOT HAND-ROLLED. The `_legacy/blocks/overlays/
- * ContentAiChatDrawer` port hand-rolled its own `ModeSwitch` (two bare
- * `<button>`s pressed into a pill) because no reusable icon-toggle row existed
- * yet at the time. `Button.RadioGroup` (now in the catalog) IS that row —
- * single-select, `role="group"` + `aria-pressed` per button — so this build
- * reuses it instead of a second hand-rolled toggle. Same two icons as the
- * legacy version (`SidebarSimpleIcon` for rail, `SquareHalfIcon` for drawer),
- * so a future real chat body keeps recognizing the same glyph vocabulary. Each
- * item renders icon-only (a compact segmented pair, matching the legacy
- * pill's footprint) — `Button.RadioGroup` has no separate per-item label
- * channel, so each item's accessible name rides along as `sr-only` text
- * inside its own `content` node instead.
- *
- * ⭐ `title` OMITTED → FIXED FALLBACK, same idiom as `ContentAiFab`'s
- * `ARIA_LABEL`: this app ships a single locale, so a second caller-supplied
- * "default wording" prop would just repeat one string at its one call site.
- * `mode`/`onModeChange` OMITTED TOGETHER → the switch does not render AT ALL
- * (not disabled) — matches how the real drawer drops the switch entirely on a
- * phone, where there is only one presentation to begin with, so a control that
- * can't do anything would just be dead chrome in the header.
- *
- * ⭐⭐ SCOPE-CUT GAP (§B3) — THE CHAT BODY ITSELF. A real chat panel is
- * `HistoryLink`/`BackLink` + `ChatThread` + `ChatComposer` + `ConversationList`
- * + `ContentSearchList` (see `_legacy/blocks/overlays/ContentAiChatDrawer`'s
- * story for the full four-leaf breakdown) — reusable BLOCKS in their own
- * right, each with its own story, not a detail of THIS shell to redraw. This
- * task's brief is the open-state scaffold + header only, so the body is a
- * clearly-marked placeholder instead of a fake box standing in for a working
- * feature: `SurfaceCard` (a bounded face inside the drawer sheet) wrapping
- * `EmptyState` (icon + honest title/description) — the EXACT pairing
- * `LessonVideoModal`'s `PlayerGap` already established for "the shell around
- * this is real, the runtime inside it isn't yet".
- * ─────────────────────────────────────────────────────────────────────────────
+ * Presentational: `isOpen`/`onOpenChange` control open state; `mode`/`onModeChange`,
+ * when both omitted, drop the switch entirely; `title` falls back to a fixed label.
+ * The chat body itself is a scoped placeholder.
  */
 
 /** Fixed accessible name for the mode switch — see the file header on why this is not a prop. */

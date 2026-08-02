@@ -14,68 +14,14 @@ import {
 } from "@sb-components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `AiQuotaModal`: the root overlay for "how much AI have I used" — a
- * dialog with the current tier next to its title, a 3-way tab strip (Auto /
- * Subscription / History), and one link out to the full-usage page.
+ * `AiQuotaModal` — the root overlay for "how much AI have I used": a dialog with the
+ * current tier beside its title, a 3-way tab strip (Auto / Subscription / History),
+ * and one link out to the full-usage page. Composes `ModalShell` + `Tabs` + the three
+ * sibling `ai` blocks it switches between (`AiQuotaLane`, `AiQuotaSubscriptionPanel`,
+ * `AiQuotaHistoryPanel`).
  *
- * RULE 13 CONTRACT — plain `isOpen`/`onOpenChange`/`activeTab`/`onTabChange`,
- * no store wiring. The real app opens this from `useAiQuotaOverlayState()`
- * (Zustand) and feeds each tab from its own SWR hook; that wiring, plus WHICH
- * tab is selected, is APP STATE the caller owns — this block only renders
- * whatever tab it is told is active, exactly like `ContentModeNav` never
- * decides its own `mode`.
- *
- * ⚠️ FILED UNDER `overlays/modals`, NOT `blocks/ai` (same call as
- * `PremiumGateModal`/`FoundationModal` — see their file headers). This is one
- * of the 21 global modals measured in
- * `.claude/fe/steps/11-overlays-layouts-brainstorm.md` §2A, mounted once at the
- * app root and opened from anywhere; it is not a domain block that belongs
- * beside its own tab panels.
- *
- * COMPOSED FROM: `ModalShell` (dialog scaffold) · `Tabs` atom (3 data-driven
- * items — the same tab-strip atom `ContentModeNav` builds on) · `Typography` +
- * `Chip` atoms (title + tier badge) · `LinkSeeMore` atom ("view full usage") ·
- * three SIBLING BLOCKS under the `ai` group this modal's tabs switch between:
- * `AiQuotaLane` (Auto tab), `AiQuotaSubscriptionPanel` (Subscription tab),
- * `AiQuotaHistoryPanel` (History tab). This modal does not know what a quota
- * bar or a usage chart looks like — it only knows there are three tabs and
- * which one is showing.
- *
- * ⭐ HEADER IS A CUSTOM `header` NODE, NOT `title`. `ModalShell.title` funnels
- * through `Typography`'s `text` prop alone; this header needs a SECOND element
- * beside the title (the tier chip), so it composes its own `StackH` and — per
- * `ModalShell`'s own contract for a caller-built header — supplies its own
- * `pr-8` to leave room for the close button (see `ModalShell`'s `CustomHeader`
- * story).
- *
- * ⭐ THE TIER CHIP IS CONDITIONAL, NOT A FOURTH STATE. `tier: null` reads as the
- * free plan, which carries no badge at all — same "a null/zero fact draws
- * nothing" rule `ContentModeNav` applies to a zero challenge count.
- *
- * 📐 ONE LEAF (matches the `FoundationModal`/`PremiumGateModal` precedent — no
- * structural `kind` switch). The wrapper shape (header, tab strip, panel slot,
- * footer link) never changes; `activeTab` only decides WHICH sibling block
- * fills the one panel slot, exactly the reasoning `FoundationModal`'s own file
- * header spells out for its `kind` prop. `tier` and each tab's `isLoading` are
- * further STATES of that same one leaf.
- *
- * ⭐ NO PASSTHROUGH LEAF FOR THE AUTO TAB. The task brief names an "AutoPanel"
- * leaf, but `src`'s own `AutoTab` was a literal one-line forward to
- * `QuotaLane`/`AiQuotaLane` — porting it as its own file would trip
- * `check-passthrough-block` for no behaviour gained, so the Auto branch below
- * renders `AiQuotaLane` directly wherever the task brief's "AutoPanel" would
- * have sat.
- *
- * ⭐ JUDGEMENT CALL — GROUP + SHARED TYPE OWNERSHIP. `AiQuotaLane`,
- * `AiQuotaSubscriptionPanel` and `AiQuotaHistoryPanel` all live under a
- * sibling `blocks/ai/` group (built as parallel tasks in this same fan-out)
- * and are the real owners of `AiQuotaLaneData` / `AiQuotaHistoryChartPoint` /
- * `AiQuotaHistoryChargeItem` — imported from them here rather than
- * redeclared, so there is exactly one definition of each shape (§5). This
- * modal composes each by import path only, matching that group's own
- * convention; none of the three were built or edited by this task.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Presentational: `isOpen`/`onOpenChange`/`activeTab`/`onTabChange`, plus each tab's
+ * `isLoading`. `tier: null` reads as the free plan and shows no badge.
  */
 
 /** Which paid AI plan the viewer is on. `null` = free plan, no badge shown. */

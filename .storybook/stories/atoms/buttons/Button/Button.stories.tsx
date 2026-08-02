@@ -4,34 +4,13 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Button`: a button with a LABEL.
+ * ATOM — `Button`: a button with a label.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — the rule for the ATOM TIER, teacher's call 2026-07-26).
- * Every prop with a visual gets its own leaf, and that leaf renders the FULL set of
- * the prop's values:
- * `variant` · `size` · `prefixIcon` · `suffixIcon` · `iconSlide` · `isIconOnly` ·
- * `isDisabled` · `isPending` · `isSkeleton`.
+ * One prop = one leaf: each visual prop gets its own leaf rendering that prop's full
+ * value set — `variant` · `size` · `prefixIcon` · `suffixIcon` · `iconSlide` ·
+ * `isIconOnly` · `isDisabled` · `isPending` · `isSkeleton`.
  *
- * ⚠️ Don't confuse this with §14d.2 (leaf = STRUCTURE) — that rule is for
- * design/block/screen. An earlier version of this file invoked §14d.2 to cram
- * variant + disabled + skeleton into one shared `Default` leaf; at the atom tier
- * that's WRONG: an atom is a lookup table, readers come to see "what does this
- * prop do", so every prop must stand on its own.
- *
- * ⚠️ The **States** tab has been REMOVED (teacher's call 2026-07-26, second time —
- * looking at it honestly it just repeated in words what the render frame above
- * already showed). The panel now has two tabs left: Deps · Code. The lesson about
- * `danger` missing from the `VARIANTS` array (before it grew into a stray `Danger`
- * story) still holds — it's just caught by READING the union array carefully when
- * writing a leaf, no more automatic red box to flag it.
- *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`hint`/`code`) is written in
- * ENGLISH; demo labels in the render frame are English too, so the Code tab matches
- * the picture word for word. JSDoc/comments are ENGLISH too, and the § anchors
- * live only here.
- *
- * 🎨 Icons = Phosphor (§5.0). The atom forces both scale and `weight` off `size`
- * (§5.0a) — the story only picks "which glyph", not "what size".
+ * Icons = Phosphor; the atom forces both scale and `weight` off `size`.
  */
 const meta: Meta<typeof Button> = {
     title: "Atoms/Buttons/Button/Button",

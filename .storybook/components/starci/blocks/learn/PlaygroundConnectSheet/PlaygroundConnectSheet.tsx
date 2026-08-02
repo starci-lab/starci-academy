@@ -8,66 +8,13 @@ import { StatRibbon, type StatRibbonItem } from "@sb-components/composites/stats
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `PlaygroundConnectSheet`: the docked connection console for the lab —
- * a peek row that never leaves the screen, and a body the learner opens to
- * actually diagnose the pairing.
- *
- * ⚠️ REUSE CHECK DONE FIRST (this run exists to prevent skipping it). Nothing in
- * `components/composites/**` already draws "always-visible summary row + a
- * region that opens under it": `Disclosure.Base` is the closest shape, but its
- * WHOLE trigger row is one `<button>` — nesting the reconnect `Button` inside
- * that button would be a button-inside-a-button, invalid HTML and a broken hit
- * test. So this block's peek row uses its own toggle affordance (a trailing
- * icon-only `Button`) instead of composing `Disclosure`, and everything else in
- * the peek row (`Chip`, `Typography`, the reconnect `Button`) is real
- * independently-pressable content, not a caption. `StatRibbon` IS reused as-is
- * for the device-spec cells — that shape already exists and this block does not
- * re-decide what a stat cell looks like.
- *
- * ⭐ NO NEW COMPOSITE FILE THIS PASS. A real "docked, resizable, two-snap-point
- * sheet" khung would belong at the composite tier (any screen with a bottom
- * console could reuse it), but this task is scoped to exactly two files
- * (block + story), so the peek/body chrome is built here, directly from
- * `Stack`. Judgement call, not an oversight — if a second caller ever wants
- * this shell, THAT is the moment to lift it into `composites/layout`, not
- * before (extracting from a single call site guesses at an API nobody asked
- * for yet).
- *
- * ⭐ SCOPE DISCIPLINE (§B3) — "drag-resizable" in the brief describes the ideal
- * real widget, but the props this block was handed are a plain
- * `open`/`onOpenChange` boolean, not a drag position. A free-form resize handle
- * needs pointer-drag plumbing that is a DIFFERENT, genuinely out-of-reach
- * capability (like a canvas engine) — so this block draws the two real snap
- * points (peek / expanded) as a controlled toggle and stops there, rather than
- * faking a drag handle that would not actually resize anything.
- *
- * ⭐ RECONNECT IS ALWAYS IN THE PEEK ROW, in every connection state — per the
- * purpose brief ("a peek row (status + reconnect) that's always visible"). It
- * is not gated behind `connection !== "connected"`: a learner troubleshooting a
- * flaky pairing needs to force a reconnect even while the chip still reads
- * "connected".
- *
- * ⭐ WAITING vs DROPPED SHARE ONE HINT BODY, ON PURPOSE. The brief calls this out
- * as "per `everConnected`" — but that fact is already carried by which of the
- * two enum values `connection` holds: `"dropped"` cannot occur unless a
- * connection existed at some point, `"waiting"` is the first-time case. No
- * extra prop is needed to know which one is true; inventing a duplicate
- * `everConnected` boolean next to an enum that already implies it would be two
- * ways to say the same thing (a real source of drift once a caller sets them
- * inconsistently).
- *
- * ⭐ DEVICE SPECS + LOG ONLY RENDER WHILE `connection === "connected"` AND
- * `device` IS PRESENT. A stale spec card under a "disconnected" chip would claim
- * live data that is not live; the not-connected hint is what the learner
- * should act on instead.
- *
- * 📐 LEAF BY STRUCTURE, ONE LEAF. `connected` / `waiting` / `dropped` do not
- * change which NODES exist in the tree (peek row + optional body always have
- * the same shape once the sheet is open) — they change wording, tone and which
- * BRANCH of the body's content is chosen. That is a DATA condition inside one
- * leaf, not three leaves.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PlaygroundConnectSheet` — the docked connection console for the lab: an
+ * always-visible peek row (status chip + reconnect button + expand toggle) over
+ * a body the learner opens to diagnose the pairing. Reconnect is available in
+ * every connection state. `waiting` and `dropped` share one hint body;
+ * `waiting` is the first-time case, `dropped` implies a prior connection. Device
+ * specs and the agent log render only while connected with a `device` present.
+ * One leaf with a two-snap-point (peek/expanded) controlled toggle.
  */
 
 /** How the lab's device pairing currently stands. */

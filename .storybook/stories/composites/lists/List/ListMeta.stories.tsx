@@ -4,14 +4,10 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `ListMeta` is a ONE-LINE inline META
- * frame. What it produces: with/without a leading signal chip, joining `items` segments
- * with a middot, and truncating when the container is narrow. The full list row
- * (leading/title/trailing) belongs to `ListRow` — NOT repeated here.
- *
- * 2026-07-31 (COMPOSITE-8 fix): `chip` now takes a COMPONENT reference instead
- * of a built node, and `items` now takes plain `string` segments instead of
- * `ReactNode` — the frame wraps each segment in `Typography` itself.
+ * `ListMeta` — a one-line inline meta frame: an optional leading signal chip, `items` segments
+ * joined with a middot, truncating when the container is narrow. `chip` takes a component
+ * reference; `items` are plain `string` segments the frame wraps in `Typography` itself. The
+ * full list row (leading/title/trailing) belongs to `ListRow`.
  */
 const meta: Meta<typeof ListMeta> = {
     title: "Composites/Lists/List/ListMeta",

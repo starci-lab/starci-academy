@@ -3,23 +3,14 @@ import { FoundationsCategoryPage } from "@sb-components/starci/pages/Foundations
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SCREEN — `FoundationsCategoryPage`: browse ONE foundations category's
- * resources, reached from the Foundations hub grid.
- *
- * A screen owns a LIST OF FUNCTIONS and nothing else. It calls blocks, places
- * them in frames, and hands each one typed data — every `div` here would be a
- * shape it had no right to decide.
- *
- * FIVE FUNCTIONS, in the order the reader meets them: orient · get nudged to
- * unlock while on trial · see a live match count · search resources by name ·
- * browse the resource list, open one, and page through it.
- *
- * ⭐ ONLY `isSkeleton` FORKS INTO ITS OWN LEAF. The trial nudge's visibility, an
- * empty search result, and whether a pager makes sense are all DATA the
- * screen hands straight through to a block without branching its OWN render
- * on them — none of them removes a block from the screen's own JSX. So they
- * stay STATES of the one `Default` leaf (§14d.2), same precedent
- * `FoundationsGridPage`'s own story already sets one level up the nav.
+ * `FoundationsCategoryPage` — the screen to browse one foundations category's
+ * resources, reached from the Foundations hub grid. A screen owns a list of
+ * functions: it calls blocks, places them in frames, and hands each typed data.
+ * Five functions, in reading order: orient · get nudged to unlock while on
+ * trial · see a live match count · search resources by name · browse the list,
+ * open one, and page through it. Only `isSkeleton` forks into its own leaf; the
+ * trial nudge's visibility, an empty search result, and pager presence are data
+ * states of the one `Default` leaf.
  */
 const meta: Meta<typeof FoundationsCategoryPage> = {
     title: "StarCi/Pages/FoundationsCategoryPage/FoundationsCategoryPage",

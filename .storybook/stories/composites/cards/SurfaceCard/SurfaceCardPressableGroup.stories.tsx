@@ -5,30 +5,11 @@ import { CaretRightIcon, FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 /**
- * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `SurfaceCardPressableGroup` does NOT
- * create new meaning per cell — it only LAYS OUT + rebuilds a `SurfaceCard` tile
- * from `items` (instructor, 2026-07-29: `.Pressable` folded into `SurfaceCard` itself,
- * this group now renders that same composite per cell, not a separate sibling).
- * So the stories here ONLY render state that BELONGS TO THE GROUP: `items` mapping ·
- * `columns` (container query) · group-level `gap` · the `icon` slot whose size/colour
- * the group owns · the 1–N keyboard shortcut · the verdict band · pinning a position
- * in the grid · skeleton for the WHOLE GROUP.
- *
- * State PER CELL (`selected` · `isDisabled` · `href` vs `onPress`) lives in
- * `SurfaceCard`'s own `Pressable*` leaves — NOT repeated here.
- *
- * 2026-07-26 (teacher) — this member's own grid system (`SurfaceCardPressableGroupColumns`,
- * 7 tiers, HALF-SIZE container scale `@sm`/`@md`) was removed; `columns`/`gap` now use
- * the SHARED {@link GridColumns}/`AllowedGap` from `Grid` (§13) — the FULL-SIZE
- * scale `@app-sm`/`@app-md`/`@app-lg`. The anatomy panel also changed: the `parts`/
- * `AnatomyNode` prop (the old path, structure declared by hand) → `annotate` (only
- * annotates WHY, structure is inferred from the DOM), keeping only entries with a REAL
- * `storyId`.
- *
- * 2026-07-27 (teacher, §8/§4a) — migrated every leaf below to the `states[]` API. Two
- * leaves (`Columns`, `Gap`) used to stack two renders side by side inside one `div` with
- * a hand-typed `Typography` label above each; those labels are gone now, their meaning
- * moved into each state's own `why`, and each render is its own selectable state tab.
+ * `SurfaceCardPressableGroup` — lays out and rebuilds a `SurfaceCard` tile per `items` entry.
+ * Owns group-level state: `items` mapping, `columns` (container query) and `gap` (shared
+ * {@link GridColumns}/`AllowedGap` from `Grid`), the icon slot's size/colour, the 1–N keyboard
+ * shortcut, the verdict band, pinning a grid position, and the whole-group skeleton. Per-cell
+ * state (`selected`/`isDisabled`/`href` vs `onPress`) lives in `SurfaceCard`.
  */
 const meta: Meta<typeof SurfaceCardPressableGroup> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardPressableGroup",

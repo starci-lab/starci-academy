@@ -20,67 +20,17 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `TaskSubmissionPanel`: the PROJECT-level (not per-task) sticky console
- * for a GitHub-graded personal project — where the learner points StarCi at
- * their repo, kicks off a re-evaluation, and sees the last verdict, all without
- * leaving the task list underneath it.
- *
- * ⭐ REUSE-FIRST CHECK (this run's mandated read): `ChallengeDeliverableList`
- * already owns a "Submit work" card with a URL field + submit + graded result, but it
- * is PER-REQUIREMENT (one accordion row per deliverable, keyed off `items`) and
- * its settings affordance is a SCOPE-CUT chrome trigger only (`onOpenGradingSettings`
- * fires, content is a declared gap). This block is the opposite shape on both
- * axes: ONE repo URL for the whole project (no accordion, no `items`), and the
- * settings drawer's CONTENT is in scope this pass (`settingsFormProps` hands over
- * real language/branch/token bindings) — so it is a sibling worth its own file,
- * not a bad copy of the same card. `SurfaceCard` (labeled), `Button`, `InputText`/
- * `InputPassword`, `SelectSingle`, and `DrawerShell` are all REUSED as-is; nothing
- * here reaches past them to a bare HeroUI primitive.
- *
- * ⭐ `TaskResultSummary` (below, NOT exported) is a TRIMMED sibling of
- * `SubmissionScoreCard`, kept local because it is one call site. It borrows that
- * block's "hero number + muted `/ maxScore`" idiom but drops everything a
- * project-level summary doesn't need: no `isPassing` tinting (a project isn't a
- * pass/fail gate the way a challenge requirement is), no pass-bar subtraction
- * line, no submission link (the repo URL above IS the submission), no full
- * model-tier byline — just the score, one line of feedback, and a single model
- * badge chip (`aiBadge`) so the learner knows which lane graded them.
- *
- * ⭐ AUTOSAVE + AI STATUS SHARE ONE VOCABULARY SHAPE, mirroring
- * `PlaygroundConnectSheet`'s `STATUS_*` tables and `ChallengeDeliverableList`'s
- * `STATUS_ICON`: each enum value maps to its OWN icon + tone + wording, composed
- * through the existing `InlineIconLabel` composite rather than a new "StatusText"
- * file — the brief's "Spinner/StatusText(new small)" is satisfied by REUSING
- * `InlineIconLabel` (already the icon+text-as-one-unit composite this design
- * system owns) instead of adding a sixth leaf that draws the same shape again.
- * The busy state a caller actually needs a live spinner for — the evaluate
- * action itself — already gets one for free: `Button`'s own `isPending` renders
- * a real `Spinner` atom in place of its icon (see `ButtonBase.tsx`), so no
- * second spinner is hand-rolled here.
- *
- * ⭐ STICKY IS BAKED IN, NOT A PROP. `Navbar` sets the precedent for a block
- * owning its own `sticky` position class rather than exposing it as a prop the
- * caller must remember to add — this panel's whole reason to exist ("stays
- * visible while the task list scrolls underneath it") is not optional per
- * call-site, so `sticky top-4 z-10` lives on the root here.
- *
- * ⭐ `latestResult` OMITTED IS A REAL, NAMED STATE (§2), not a loading placeholder:
- * a project with no evaluation yet (first visit) has nothing to summarize, so
- * `TaskResultSummary`'s subtree drops entirely and a single muted line takes its
- * place — the same "whole node lost" treatment `ContentHeader` gives a lesson
- * with no `outcomes`.
- *
- * ⭐ `autosaveStatus` GATES ON `"idle"`, mirroring `gradedByModel` in
- * `SubmissionScoreCard`: with nothing worth reporting yet (the URL hasn't
- * changed since the last save, or saving hasn't started) the whole status row
- * drops rather than sitting there blank.
- *
- * ⛔ THIS BLOCK NEVER DECIDES WHAT A LOCKED/DISABLED EVALUATE MEANS (§7). It
- * always renders the button pressable and forwards `onPress` to `onEvaluate` —
- * whether an empty/invalid URL should actually block the press is the caller's
- * call, made through `urlError`/`isEvaluating`, not a business rule baked in here.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `TaskSubmissionPanel` — the project-level sticky console for a GitHub-graded
+ * personal project: point StarCi at the repo, kick off a re-evaluation, and see
+ * the last verdict without leaving the task list. Reuses `SurfaceCard`,
+ * `Button`, inputs, `SelectSingle`, and `DrawerShell` (settings drawer content
+ * is in scope: language/branch/token bindings). A local `TaskResultSummary`
+ * (trimmed sibling of `SubmissionScoreCard`) shows score + one feedback line +
+ * model badge. Autosave and AI status map each enum value to icon + tone +
+ * wording through `InlineIconLabel`; the evaluate button gets a live spinner via
+ * `Button`'s `isPending`. `sticky top-4 z-10` is baked in. An omitted
+ * `latestResult` and an `idle` `autosaveStatus` each drop their row. Never
+ * decides what a locked evaluate means — always forwards `onEvaluate`.
  */
 
 /** Where the repo-URL field's autosave currently stands. */

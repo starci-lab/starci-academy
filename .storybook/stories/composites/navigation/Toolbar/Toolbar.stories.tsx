@@ -9,19 +9,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Toolbar` — the nav/control-ROW frame sitting ABOVE a panel: the primary tab
- * group pinned left (+ an action cluster `leftEnd` right after it), a secondary
- * tab group pinned right, collapsing into a dropdown below `@app-sm`. No chrome
- * (no fill/border/radius/padding), root is `flex items-center justify-between gap-3`.
- *
- * ⚠️ RENAMED (2026-07-25): this used to be `TabsCard` — the WRONG name, since there
- * is no card in it at all. Behavior/visuals stay UNCHANGED; only the name changed
- * + it moved into the `Toolbar.*` namespace (§13a).
- *
- * ⚠️ STATE SCOPE (§12f/§13): tab groups come in as DATA (`items`/`selectedKey`/
- * `onSelectionChange`), so the display state of EACH tab (disabled/muted) is drawn
- * by this frame → its home is here. The panel content below is NOT this frame's
- * state — the stories only attach a card face so the tab switch reads as real.
+ * `Toolbar` — the nav/control-row frame sitting above a panel: the primary tab group pinned
+ * left (+ an action cluster `leftEnd` right after it), a secondary tab group pinned right,
+ * collapsing into a dropdown below `@app-sm`. No chrome; root is
+ * `flex items-center justify-between gap-3`. Tab groups come in as data
+ * (`items`/`selectedKey`/`onSelectionChange`), and each tab's display state (disabled/muted) is drawn here.
  */
 const meta: Meta<typeof Toolbar> = {
     title: "Composites/Navigation/Toolbar/Toolbar",

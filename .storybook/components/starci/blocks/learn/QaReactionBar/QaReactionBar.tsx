@@ -3,22 +3,11 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QaReactionBar`: the like-and-count control under a question or
- * answer bubble in `QaQuestionThread`. Split out because `QaQuestionThread`'s
- * own file header names it as one of four siblings it composes but does not
- * itself build (§"ASSUMED CONTRACTS").
- *
- * ⭐ SCOPE CUT, DOCUMENTED: the backend's `QaReactionType` carries six kinds
- * (`like`/`love`/`haha`/`wow`/`sad`/`angry`), matching `src`'s own reaction
- * picker. Nothing in `QaQuestionThread`'s task brief named a six-way picker
- * UI, and its own call site only ever toggles a single reaction on and off
- * (`applyReaction` treats "pressed again" as "clear"). This block renders ONE
- * heart toggle — pressing it sends `"like"` when the viewer had no reaction,
- * or `null` (clear) when they already reacted with anything — rather than
- * guess a six-glyph popover no caller asked for. The full type stays on the
- * wire so a future picker can widen this without a prop-shape change.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QaReactionBar` — the like-and-count control under a question or answer bubble
+ * in `QaQuestionThread`. Renders one heart toggle: pressing sends `"like"` when
+ * the viewer had no reaction, or `null` (clear) when they already reacted. The
+ * full six-kind `QaReactionType` stays on the wire so a future picker can widen
+ * this without a prop-shape change.
  */
 
 /** Mirrors `QaQuestionThread`'s own `QaReactionType` (kept local — see that file's ASSUMED CONTRACTS note). */

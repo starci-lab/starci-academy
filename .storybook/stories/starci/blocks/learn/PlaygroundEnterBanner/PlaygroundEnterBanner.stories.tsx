@@ -3,17 +3,11 @@ import { PlaygroundEnterBanner } from "@sb-components/starci/blocks/learn/Playgr
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundEnterBanner`: the playground page's single primary
- * decision card. Reuses `FlashcardDueHero`'s leaf-1 shape verbatim
- * (`SurfaceCard` ⊃ `StackV` ⊃ status line + primary `Button`) — no new card
- * chrome invented here.
- *
- * ⭐ §14d.1 — the block builds its own readiness sentence from `allReady` +
- * `pendingCount`; the caller never hands a pre-formatted string.
- *
- * ONE LEAF (`Default`). Ready vs pending are DATA STATES inside it (§11f):
- * neither swap adds or removes a composed node, only the status text/color
- * and the CTA's `isDisabled` flip.
+ * `PlaygroundEnterBanner` — the playground page's single primary decision card.
+ * Reuses `FlashcardDueHero`'s card shape (`SurfaceCard` ⊃ `StackV` ⊃ status line +
+ * primary `Button`). The block builds its own readiness sentence from `allReady` +
+ * `pendingCount`. One shape: ready vs pending are data states — the swap only
+ * changes the status text/color and the CTA's `isDisabled`.
  */
 const meta: Meta<typeof PlaygroundEnterBanner> = {
     title: "StarCi/Blocks/Learn/PlaygroundEnterBanner/PlaygroundEnterBanner",

@@ -4,25 +4,9 @@ import { FloatingActionButton } from "@sb-components/composites/buttons/Floating
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE — `FloatingActionButton`: a bottom-right floating action button —
- * a round, shadowed accent circle. Composes the base icon-only `Button` (icon
- * sized by §5a) then pins itself to the corner with `fixed` — it hugs the
- * screen edge instead of flowing inline, so don't wrap it in another element
- * to position it (the render frames below still show it inside the fixture's
- * `p-8` box only because the fixture itself does not scroll the viewport).
- *
- * 📐 **1 PROP = 1 LEAF.** `icon` and `isSkeleton` each get their own leaf,
- * covering the full set of values either can take. `onPress` and `ariaLabel`
- * have no leaf of their own — they carry no visual, just the press handler
- * and the accessible name every state needs to render at all. `classNames`
- * has no leaf either: appearance is not passable, it is already a prop.
- *
- * ⚠️ No `annotate` table: `FloatingActionButton` does not accept `anatPart` /
- * and the `_legacy` `Button` primitive it composes only emits
- * `data-anat-part` when handed an explicit `anatPart` string, which this
- * block never forwards — there is nothing for a structure tree to pick up
- * yet. Every leaf below still renders the full `BlockAnatomy` panel for its
- * states/why/code.
+ * `FloatingActionButton` — a bottom-right floating action button: a round, shadowed accent
+ * circle composing the icon-only `Button`, pinned to the corner with `fixed`. Leaves: `icon`,
+ * `isSkeleton`. `onPress`/`ariaLabel` carry the press handler and accessible name only.
  */
 const meta: Meta<typeof FloatingActionButton> = {
     title: "Composites/Buttons/FloatingActionButton",

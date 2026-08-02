@@ -6,51 +6,25 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ChallengeHeader`: the CHALLENGE IDENTITY block, answering "what is
- * this challenge, and where do I stand on it" at the top of the solve page.
+ * `ChallengeHeader` — a BLOCK: the challenge identity block at the top of the solve
+ * page, answering "what is this challenge, and where do I stand on it".
  *
- * SIBLING OF `ContentHeader`, NOT AN EDIT OF IT. Both place identity into the
- * same `PageHeader` frame, but they answer different questions with different
- * domain fields: a lesson header carries read state / reading time / challenge
- * count / outcomes, a challenge header carries score / difficulty / pass-fail
- * status. Same frame, different domain — reaching into `ContentHeader` and
- * bolting on `difficulty` would have blurred two distinct identities into one
- * prop union; a new block is the correct move (task brief, 2026-07-28).
+ * A sibling of `ContentHeader`, not an edit of it: both place identity into the
+ * same `PageHeader` frame, but a challenge header carries score / difficulty /
+ * pass-fail status rather than a lesson's read state and outcomes.
  *
- * TWO CHIPS ON PURPOSE — a deliberate departure from `ContentHeader`'s "one
- * chip per cluster" (`starci-fe/no-adjacent-chip`, ≥2 sibling `<Chip>` in one
- * cluster). That rule exists to stop ONE fact from getting weighed twice next
- * to unrelated quiet facts. Here `difficulty` and `status` are two SEPARATE
- * classifying axes of the same challenge — difficulty is a property of the
- * CHALLENGE itself (fixed, always known), status is a property of the
- * LEARNER's attempt (may not exist yet) — neither is a duplicate of the
- * other, so both earn a chip. The lint rule itself only matches literal
- * `<Chip>` siblings; composing through two `<EnumChip>` elements does not
- * trip it, and the judgement call above is the actual reason it is safe to.
- * `scoreValue` stays quiet muted text (§14d.1: the block adds "points" itself)
- * because a raw number is not a classifying fact.
+ * Two chips on purpose — a deliberate departure from the "one chip per cluster"
+ * rule — because `difficulty` (a property of the challenge) and `status` (a
+ * property of the learner's attempt) are two separate classifying axes, not
+ * duplicates. `scoreValue` stays quiet muted text (the block adds "points" itself).
  *
- * BACK LINK, NOT BREADCRUMBS. `ContentHeader` shows a full trail because a
- * lesson is always reached through its course's outline. A challenge is
- * reached from exactly one place — the lesson that owns it — so a single
- * `LinkBack` ("← Back to {lesson}") is the correct affordance, not a chain
- * component built for N-deep navigation.
+ * A single `LinkBack` ("← Back to {lesson}"), not breadcrumbs, since a challenge is
+ * reached from exactly one place. `LinkBack` has no `isSkeleton`, so its shimmer is
+ * a directly-called `Typography` fed into `PageHeader`'s `breadcrumb` slot.
  *
- * SKELETON MIRROR FOR `LinkBack` — `LinkBack` (unlike `Breadcrumbs`) has no
- * `isSkeleton` of its own (§12g: it has no data-shaped prop that would need
- * one). Same move `ContentHeader` uses for its title: this block calls
- * `Typography` directly, sized to approximate the real link's box, and feeds
- * the shimmer into `PageHeader`'s `breadcrumb` slot — the flag still reaches
- * a real atom, just from a different caller.
- *
- * DIFFICULTY SIMPLIFIED TO THREE TIERS (`easy`/`medium`/`hard`). The source
- * app's `ChallengeDifficulty` enum also carries `insane`/`expert` for a small
- * minority of challenges with a bespoke palette (cyan/yellow/red/purple/
- * fuchsia) outside `EnumChip`'s five-tone vocabulary. This compose-only spec
- * keeps the three tiers `EnumChip` can express cleanly; extend the map the
- * day a screen actually needs the top two tiers.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Difficulty is simplified to three tiers (`easy`/`medium`/`hard`) that `EnumChip`
+ * can express cleanly; extend the map when a screen needs the source app's
+ * `insane`/`expert` tiers.
  */
 
 /** How hard the challenge is — a property of the CHALLENGE, always known. */

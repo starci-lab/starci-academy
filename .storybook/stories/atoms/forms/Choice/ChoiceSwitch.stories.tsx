@@ -4,11 +4,10 @@ import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Switch`/`Label` — heroui's OWN components (imported `Switch as HeroSwitch` and
- * `Label as HeroLabel`, rendered directly), so they enter the tree as tier
- * `heroui` with no `storyId` (§ two-law pass, 2026-07-28). `Skeleton` is the same
- * heroui `Skeleton` this atom's `isSkeleton` branch renders directly, so it gets
- * the same treatment (2026-07-28 orphan-part pass).
+ * `Switch`/`Label` — HeroUI's own components (imported `Switch as HeroSwitch` and `Label
+ * as HeroLabel`, rendered directly), so they enter the tree as tier `heroui` with no
+ * `storyId`. `Skeleton` is the same HeroUI `Skeleton` this atom's `isSkeleton` branch
+ * renders directly, so it gets the same treatment.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Switch": { tier: "heroui", role: "toggle track + thumb" },

@@ -8,22 +8,8 @@ export default meta
 type Story = StoryObj
 
 /**
- * THE ONE REAL DEP — each token in the box is a removable `Chip` (see
- * `.storybook/components/composites/form/InputTags/InputTags.tsx`: `<Chip
- * onRemove … />` — the node name is the REAL component name,
- * no longer the "Chip" role of the old wrapping span, § two-law pass
- * 2026-07-28). `storyId` points at the `Removable` export of
- * `Atoms/Chips/Chip/Chip` (matches the exact shape rendered here — it has `onRemove`).
- *
- * `Field` is `FieldFrame`'s own INTERNAL (atom-internal, no story of its own)
- * so it is NOT declared here — "no dep, no entry" (teacher confirmed
- * 2026-07-26, second pass). But `FieldFrame`'s `Label`/`Skeleton` ARE real
- * heroui components (`Label`/`Skeleton` from `@heroui/react`), so they still
- * need the `heroui` tier so the panel doesn't silently drop them (2026-07-28).
- *
- * 2026-07-31: `InputTags` moved from the atom tier (`atoms/forms/Input/Input.tsx`)
- * to the composite tier (ATOM-8 — it rebuilds one `Chip` per tag). This story
- * moved in the same pass, only `title`/import/`tier` changed, the shape didn't.
+ * `InputTags` — a tag-input field where each token is a removable `Chip` (`<Chip onRemove … />`),
+ * rebuilt one per tag. Wraps `FieldFrame`, whose `Label`/`Skeleton` are real heroui components.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Chip": { tier: "atom", role: "each tag renders as a removable Chip", storyId: "atoms-chips-chip-chip--removable" },

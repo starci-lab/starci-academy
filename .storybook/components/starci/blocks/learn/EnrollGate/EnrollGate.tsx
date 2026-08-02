@@ -12,62 +12,16 @@ import { PhaseScarcityNote, type PricingPhase } from "@sb-components/starci/bloc
 import { PriceTagProminent, type PriceBreakdown } from "@sb-components/starci/blocks/commerce/PriceTag/PriceTag"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `EnrollGate`: shown IN PLACE OF an enrollment-required learn surface
- * (currently only personal-project — see the real
- * `src/app/[locale]/courses/[courseId]/learn/layout.tsx` → `LearnShell`, which
- * mounts this alongside `GithubLinkGate` and `PersonalProjectGatePreview`) when
- * the viewer is on a trial (not enrolled). Ported faithfully from
- * `src/components/features/learn/shared/EnrollGate/index.tsx`.
+ * `EnrollGate` — shown in place of an enrollment-required learn surface when the viewer
+ * is on a trial (not enrolled): lock identity, price, scarcity, and one CTA. Shares the
+ * commerce blocks `PriceTagProminent` + `PhaseScarcityNote` with `ContentPaywall` but
+ * is a standalone/overlay surface card of its own.
  *
- * ⭐ SAME CONVERSION VOCABULARY AS `ContentPaywall`, deliberately kept separate.
- * Both draw a lock identity + price + scarcity + one CTA, and both compose the
- * SAME two commerce blocks (`PriceTagProminent`, `PhaseScarcityNote`) so the two
- * places selling a course never drift apart. They stay two files because the
- * FRAME differs (`ContentPaywall` is flat, glued under a locked article's faded
- * tail, no card of its own; `EnrollGate` is a real surface card that either
- * stands alone or floats OVER a faded teaser) and because their neighbour in
- * the real tree differs (`ContentPaywall` sits beside `QuizEnrollGate`, which
- * asks for enrolment with no price at all — see that file's own header).
- *
- * ⭐ THE `price` PROP IS A NEW NAME, NOT A REUSE OF `PriceBreakdown` (judgement
- * call). `PriceBreakdown` (from `PriceTag`) only carries the breakdown-popover
- * STEPS (phase/loyalty) — it has no `discounted`/`original` amount, so it can't
- * describe "the price of this gate" on its own. `EnrollGatePrice` below bundles
- * exactly the flat fields `ContentPaywall` already takes as separate props
- * (`discountedPriceVnd`/`originalPriceVnd`/`currentPhase`/`seatsRemaining`/
- * `nextPhasePriceVnd`) PLUS the breakdown, into the one named shape the caller
- * passes as `price` — satisfying §5 ("every data shape has a name") while
- * matching the single-prop surface this run's spec asked for.
- *
- * ⭐ WHY `AsyncContent` (a real LEAF here, not decoration): `price` is OPTIONAL —
- * `undefined` means "not resolved yet" (the real component's SWR price-preview
- * query hasn't returned). `PriceTagProminent.discounted` is a REQUIRED number,
- * so there is no value to hand it while `price` is unresolved; only
- * `AsyncContent`'s generic shimmer slot can stand in for that gap. `isSkeleton`
- * (the caller-level force-loading flag, e.g. this block's own Storybook
- * "Loading" state) folds into the SAME condition — both mean "no price to
- * render yet". The lock identity, headline, description and CTA are already
- * known before any price request, so — same call as `ContentPaywall` — they
- * stay REAL under `isSkeleton` and only the price region shimmers.
- *
- * ⭐ `preview?: ReactNode` IS A DELIBERATE, NAMED SLOT (not a content string) —
- * mirrors the real prop 1:1. It takes a whole non-interactive teaser BLOCK
- * (e.g. `PersonalProjectGatePreview`), rendered `aria-hidden` behind a bottom
- * fade with the enroll card floating over the faded tail (Medium-style) — same
- * fade band (`h-72`, `via-surface/70 to-surface`) as `ContentArticle`'s locked
- * body, and the SAME judgement call: fade, never truncate, so the reader sees
- * the surface continues. Omit `preview` → the card renders centered alone.
- *
- * The `-mt-32` overlap and the `relative`/`absolute` fade layer are
- * hand-written (not a `StackV`/`Cluster` gap) on purpose: this is a one-off
- * VISUAL COMPOSITING effect (two layers overlapping), not a seam between
- * siblings — the same idiom as `SurfaceCard.Pressable`'s highlight sweep
- * layer and `ContentArticle`'s own locked-tail fade. The surrounding inset
- * (`px-4 pb-6` in the real component) goes through `StackH`'s own `padding`
- * prop instead (§10c scale, `"roomy"` = `p-6`) — the one deviation from a
- * byte-for-byte port, since the scale has no asymmetric step.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `price` (`EnrollGatePrice`) bundles the flat price fields plus the breakdown; while
+ * it is unresolved (or `isSkeleton`), `AsyncContent` shimmers only the price region
+ * while identity/headline/CTA stay real. `preview?: ReactNode` takes a non-interactive
+ * teaser block rendered `aria-hidden` behind a bottom fade, with the enroll card
+ * floating over the faded tail; omit it and the card renders centered alone.
  */
 
 /**

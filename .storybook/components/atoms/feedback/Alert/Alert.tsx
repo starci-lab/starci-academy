@@ -4,21 +4,17 @@ import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, XIcon } from "@pho
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Alert.Base` — the single "message with a valence and an exit" atom. It is
- * the only component that imports `Alert` from `@heroui/react`; `Callout`
- * (placed inside a surface) and `Toast` (floating) both compose from it.
+ * `Alert.Base` — the single "message with a valence and an exit" atom, and the
+ * only component that imports `Alert` from `@heroui/react`. `Callout` (inside a
+ * surface) and `Toast` (floating) both compose from it.
  *
- * Owns: `status` → tint mapping, default icon per valence, glyph scale, ×
- * button skin per status, Indicator/Content/Action/Close layout, and this
- * shape's own skeleton.
- * Consumer supplies: content (`title`/`description`/`body`), `action`, `onClose`.
+ * Owns: `status` → tint mapping, default icon per valence, glyph scale, close
+ * button skin, Indicator/Content/Action/Close layout, and its own skeleton.
+ * The consumer supplies content (`title`/`description`/`body`), `action`, `onClose`.
  *
- * Icon set: `@phosphor-icons/react`. Weight follows size — the indicator glyph
- * at `size-5` stays regular; the × glyph inside `Button size="sm"` is forced
- * down to `size-3.5`, so it is set to `weight="bold"` to match.
- *
- * Namespace: no bare component export — every member is reached through `Alert.*`.
- * No `children` prop — use `body` for free-form content under `description`.
+ * Icons are `@phosphor-icons/react`; weight follows size. Every member is reached
+ * through `Alert.*` (no bare export). No `children` — use `body` for free-form
+ * content under `description`.
  */
 
 /**

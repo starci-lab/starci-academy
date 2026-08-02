@@ -5,33 +5,10 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * COMPOSITE (§13) — `Callout`: a FLAT tint strip placed INSIDE a
- * surface (surface-in-surface), not a floating card. The shell owns the tint
- * + icon per `status`; content goes through the named slots
- * `title`/`description`/`body` (+`children`)/`action` + an optional close button.
- *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) — this shell was
- * `Feedback.Callout` / `FeedbackCallout`. Props/behaviour UNCHANGED.
- *
- * ⚠️ STATE SCOPE (§12f): every story below only renders state that THIS shell
- * itself produces — `status`, with/without `description`, `body`, `action`,
- * `onClose`, `icon`. The CTA button's own state (pending/disabled) lives in
- * the `Atoms/Buttons/Button` story — this shell only accepts
- * `actionLabel`/`onAction`, never a node.
- *
- * 📐 LEAF = STRUCTURE (§14d.2, holds for a shell — unlike an atom, see the
- * warning in `Alert.stories.tsx`): `status` does NOT change the DOM tree — every
- * tone shares the same `Icon · Content(Title · Description)`, only the tint +
- * default glyph + Title colour differ ⇒ those are STATE, merged into ONE leaf.
- * The remaining leaves stay separate because each one adds/removes a REAL node
- * (drops `Description`, adds `Body`/`Action`/`Close`).
- *
- * Real deps: `Action` (the shell builds its own `Button` from `actionLabel`)
- * and `Close` (the shell forwards `onClose` down to the `Alert` atom, which
- * builds its own `Button` for the × button) — both are OTHER components with
- * their own story that the shell rebuilds. `Icon`/`Content`/`Title`/
- * `Description`/`Body` are the `Alert` atom's own internals (this shell
- * composes from it), NOT deps.
+ * `Callout` — a flat tint strip placed inside a surface (surface-in-surface), not a floating
+ * card. The shell owns the tint + icon per `status`; content goes through the named slots
+ * `title`/`description`/`body` (+`children`)/`action` plus an optional close button. Builds its own
+ * `Button` from `actionLabel`/`onAction` and forwards `onClose` to the underlying `Alert` atom.
  */
 const meta: Meta<typeof Callout> = {
     title: "Composites/Feedback/Callout",

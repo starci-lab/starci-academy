@@ -5,22 +5,15 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `ChoiceRadioGroup` — a mutually-exclusive pick-one row, built from `options` DATA.
+ * It renders one `ChoiceRadio` per entry and adds the group's layout,
+ * heading/hint/error frame, and row count; `ChoiceRadio` itself owns each row's
+ * checked/skeleton state.
  *
- * Moved out of `atoms/forms/Choice/Choice.tsx` (ATOM-8, 2026-07-31): it rebuilt one
- * `ChoiceRadio` per entry, which is the composite signal (rendering another house
- * atom once per item), not the atom one. `ChoiceRadio` itself stayed behind — it is
- * still one radio row and still owns its own checked/skeleton state; this file only
- * adds the group's layout, heading/hint/error frame, and row count.
- *
- * `HeroRadioGroup` is the one vendor import this file keeps. A bare HeroUI `Radio`
- * has no selection/name context of its own — it reads that from the surrounding
- * `RadioGroup`, so `ChoiceRadio` cannot act as a mutually-exclusive set without it
- * (confirmed by `ChoiceRadio.stories.tsx`, which has to stand up a bare
- * `HeroRadioGroup` itself just to run ONE row in isolation). No house atom wraps
- * that context alone today, so this is the same documented exception
- * `composites/buttons/ButtonRadioGroup` already takes with raw HeroUI `Button` —
- * a composite reaching past the atom tier because the atom genuinely cannot
- * express the vendor's grouping behaviour, not because the wrapper was skipped.
+ * `HeroRadioGroup` is the one vendor import kept here: a bare HeroUI `Radio` reads
+ * its selection/name context from the surrounding `RadioGroup`, so `ChoiceRadio`
+ * cannot form a mutually-exclusive set without it, and no house atom wraps that
+ * context alone today. This is the same documented exception
+ * `composites/buttons/ButtonRadioGroup` takes with raw HeroUI `Button`.
  */
 
 /** One selectable option for {@link ChoiceRadioGroup}'s `options` shorthand. */

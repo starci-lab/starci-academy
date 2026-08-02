@@ -3,27 +3,12 @@ import { ContentRelatedList } from "@sb-components/starci/blocks/learn/ContentRe
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContentRelatedList`: what else in this course is worth reading after
- * this lesson. A quiet list, never a call to action.
- *
- * ⚠️ SELF-HIDES, AND THAT IS THE WHOLE POINT. With nothing related it draws
- * NOTHING — no card, no label, no empty state. This is the exact opposite of
- * `ContentDiscussion`, whose empty state MUST be drawn because silence there is
- * an invitation to write. Here silence only means the course has nothing else on
- * the subject, and announcing that absence is noise.
- *
- * Same state NAME, opposite behaviour: worth reading both blocks together before
- * touching either.
- *
- * ⚠️ NO SNIPPET (teacher, 2026-07-28, "over-engineered"): real `src` never quotes a
- * passage in this row — see the component's own file header. `breadcrumb`
- * (course trail, above the title) and `isLocked` (a quiet lock line, below)
- * replace it.
- *
- * 📐 LEAVES by STRUCTURE (§14d.2). Row count is DATA ⇒ a state of `Full`.
- * Rendering nothing (`Hidden`), the caller flipping `isSkeleton` (`Skeleton`),
- * and a row gaining the lock line (`Locked`) each add/remove a real node ⇒
- * their own leaf.
+ * `ContentRelatedList` — what else in this course is worth reading after this
+ * lesson: a quiet list, never a call to action. Self-hides with nothing related
+ * — no card, no label, no empty state (the opposite of `ContentDiscussion`).
+ * `breadcrumb` shows a course trail above the title; `isLocked` adds a quiet
+ * lock line below. Row count is a state of `Full`; hidden, `isSkeleton`, and a
+ * locked row are each their own leaf.
  */
 const meta: Meta<typeof ContentRelatedList> = {
     title: "StarCi/Blocks/Learn/ContentRelatedList/ContentRelatedList",

@@ -3,35 +3,12 @@ import { FoundationHeader, FoundationKind } from "@sb-components/starci/blocks/l
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `FoundationHeader`: the FOUNDATION-RESOURCE-IDENTITY cluster at the
- * top of a foundation resource's own page (ported from `src`
- * `FoundationResourceLayout` + `FoundationMeta`). It answers one question,
- * "what is this resource", and the screen calls this one block instead of
- * holding a header frame plus loose atoms.
- *
- * SIBLING OF `ContentHeader`/`ModuleHeader`, NOT A COPY. All three place
- * identity into `PageHeader`, but a lesson header carries read state / reading
- * time / challenge count / outcomes, a module header carries a tier plus three
- * counts, and this block carries a resource's kind, its recommended flag, its
- * tags, and its author attribution — different domain, same identity shape.
- *
- * ⚠️ TWO CHIPS ON PURPOSE. Kind and "recommended" both classify the resource
- * (what it is / whether it is singled out), so both take a chip — this does
- * not collapse to `no-adjacent-chip`'s "one chip, rest as text" idiom, the
- * same call `ModuleHeader` makes for its tier + count chips.
- *
- * 📐 ONE LEAF (§14d.2). Every prop change here — losing the recommended chip,
- * losing the tag row, losing the author line, swapping to `isSkeleton` — is a
- * DATA condition inside the same identity cluster, not a different shape of
- * the block: the header always resolves to trail → title → description →
- * meta row. That is why this block has a single leaf with several states,
- * unlike `ContentHeader` where losing the whole outcomes card earns its own
- * leaf — here nothing this optional ever pulls in a structurally different
- * region.
- *
- * ⛔ There is deliberately NO "no breadcrumb" state. A foundation resource is
- * always reached through its category, so the trail always exists — building
- * that state would be inventing a case no screen asks for (§14d.3).
+ * `FoundationHeader` — the identity cluster at the top of a foundation resource's
+ * page: breadcrumb trail, title, description, and a meta row carrying the
+ * resource's kind, its recommended flag, its tags, and its author attribution.
+ * Two chips (kind and "recommended") both classify the resource. Every optional
+ * part — recommended chip, tag row, author line, skeleton — is a data condition
+ * on the same trail → title → description → meta shape.
  */
 const meta: Meta<typeof FoundationHeader> = {
     title: "StarCi/Blocks/Learn/FoundationHeader/FoundationHeader",

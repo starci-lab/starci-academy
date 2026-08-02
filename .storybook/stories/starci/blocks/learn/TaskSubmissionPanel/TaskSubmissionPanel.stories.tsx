@@ -7,21 +7,14 @@ import {
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `TaskSubmissionPanel`: the PROJECT-level (not per-task) sticky console
- * for a GitHub-graded personal project — repo URL, evaluate action + AI status,
- * latest result summary, and a settings drawer for language/branch/token.
- *
- * SIBLING OF `ChallengeDeliverableList`, NOT A COPY — see the component file's
- * header for the reuse ledger (ONE repo URL for the whole project vs. one row
- * per requirement; the settings drawer's CONTENT is in scope here, where the
- * sibling scope-cuts it to a bare trigger).
- *
- * 📐 LEAF by STRUCTURE (§14d.2): autosave wording, the AI status line, and the
- * evaluate button's busy state never change which NODES the panel composes —
- * they are DATA, so `Default` carries all of them as states. Losing the whole
- * `TaskResultSummary` score subtree (`latestResult` omitted) and mounting the
- * settings drawer's form (closed → open) each change the tree shape, so those
- * get their own leaf.
+ * `TaskSubmissionPanel` — the project-level (not per-task) sticky console for a
+ * GitHub-graded personal project: repo URL, an evaluate action + AI status, the
+ * latest result summary, and a settings drawer for language/branch/token. Sibling of
+ * `ChallengeDeliverableList` (one repo URL for the whole project vs. one row per
+ * requirement; the settings drawer's content is in scope here). Autosave wording,
+ * the AI status line, and the evaluate button's busy state are states of `Default`;
+ * losing the `TaskResultSummary` subtree (no `latestResult`) and opening the settings
+ * drawer each get their own leaf.
  */
 const meta: Meta<typeof TaskSubmissionPanel> = {
     title: "StarCi/Blocks/Learn/TaskSubmissionPanel/TaskSubmissionPanel",

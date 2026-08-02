@@ -7,39 +7,10 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * SHELL (composite tier) — `EmptyState`: a CENTERED vertical stack that
- * fills an empty spot (empty list, no results found) OR a broken spot
- * (`tone="danger"` + a retry button). Merges 3 deleted old shells:
- * `ErrorState` (tone danger) · `ErrorPageState` (`size="page"` + `code`) ·
- * `SimpleEmptyState` (`size="compact"`).
- *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) — this shell was
- * `Feedback.Empty` / `FeedbackEmpty`. Props/behaviour UNCHANGED.
- *
- * ⚠️ STATE SCOPE (§12f): each story only renders state that THIS shell itself
- * produces — which slots are on/off (`code`/`icon`/`description`/`body`/
- * `action`), `tone`, `size`. The button inside `action`'s own state
- * (pending/disabled) lives in the `Atoms/Buttons/Button` story.
- *
- * ⚠️ There is NO "loading" leaf here: this shell IS the empty/error state — the
- * skeleton for a region that's still loading is the job of that region's own
- * block/shell (§11f).
- *
- * 📐 LEAF = STRUCTURE (§14d.2, holds for a shell — unlike an atom, see the
- * warning in `Alert.stories.tsx`): a leaf only splits when the DOM tree
- * adds/removes a node (`Icon` · `Description` · `Body` · `Action` · `Code`).
- * `tone` only changes the icon's COLOUR, and the button count inside `action`
- * is the slot's own content ⇒ both are STATE, staying WITHIN one leaf.
- *
- * `icon`/`body`/`action` are NOT badged (2026-07-28, §11a.1 CASE 3): those are
- * ARBITRARY nodes the caller supplies (`icon` changes completely on every
- * call, `body`/`action` are free slots), so there is no ONE fixed component to
- * point to — the component has DROPPED `data-anat-part` on these three nodes
- * entirely. `Title`/`Description`/`Code` are the OPPOSITE — they are always
- * our own `Typography` or HeroUI `Typography` (the two heading slots at
- * `size="page"`, the §9 gap is noted at the end of the file), so they ARE
- * declared, via `annotate` (the current path — `parts` is the old API, see
- * `@deprecated` on `BlockAnatomyProps.parts`).
+ * `EmptyState` — a centered vertical stack that fills an empty spot (empty list, no results)
+ * or a broken spot (`tone="danger"` + a retry button). Slots: `code`, `icon`, `description`,
+ * `body`, `action`; axes `tone` and `size` (`compact`/`page`). This shell IS the empty/error
+ * state, so it has no loading leaf of its own.
  */
 const meta: Meta<typeof EmptyState> = {
     title: "Composites/Feedback/EmptyState",

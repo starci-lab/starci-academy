@@ -4,55 +4,31 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (frame) — `Container.*`: CONTENT MEASURE. One member, `Container`
- * (one measure has one shape; width and padding are PROPS, §6b).
+ * `Container` — a LAYOUT frame for CONTENT MEASURE. One member; width and padding
+ * are props. A wrapping frame ⇒ one named slot `body` (`children` is shorthand
+ * for it); no repeating list, so no `items`.
  *
- * FRAME API LAW (§13b): a wrapping frame ⇒ ONE named slot `body`
- * are the main road, `children` is a shorthand for `body`. No repeating list, so
- * no `items`.
+ * Applies `mx-auto` + `max-w` so pages don't hand-roll their own measure.
  *
- * ⭐ WHY THIS FRAME EXISTS (teacher's call, 2026-07-26). The old `Page.Container`
- * had NO `mx-auto`, NO `max-w`, and padded only on the RIGHT side — so every page
- * hand-rolled its own measure: `mx-auto flex w-full max-w-3xl flex-col gap-6`
- * repeated 14 times, `mx-auto w-full max-w-3xl` 12 times, and `max-w-3xl` appeared
- * 72 times across `src`. Content measure is a REAL concept, so it deserves a named
- * frame, not a hand-copied class string.
+ * Opens its OWN `@container`: `@app-sm/md/lg/xl` variants inside it measure this
+ * measure, not the app column, so a grid in a narrow measure knows it is narrow.
  *
- * ⭐⭐ THIS FRAME OPENS `@container` (teacher's call, 2026-07-26) — the single most
- * important decision in this file, read carefully before touching it:
+ * `size` speaks the same language as the breakpoints — both come from the
+ * `--container-app-*` token set in `globals.css`:
  *
- * `@app-sm/md/lg/xl` are container queries — they measure the NEAREST `@container`.
- * Before this, only the shell (`InnerLayout`) opened one, so every grid in the app
- * listened to the APP COLUMN width — even a grid sitting inside a much narrower
- * `max-w-3xl` measure. Result: a `Grid` asking for 4 columns at the `lg` tier still
- * jumped to 4 columns even though its containing measure was only 48rem wide.
- *
- * This frame opens its OWN `@container` ⇒ every `@app-*` inside it measures **this
- * measure**, not the shell anymore. A grid in a narrow measure knows it's narrow.
- *
- * ⭐ THE NICE PAYOFF — `size` speaks the SAME LANGUAGE as the breakpoint. Both come
- * from ONE token set, `--container-app-*`, declared in `globals.css` (Tailwind v4
- * `@theme`): that same token produces both the `@app-md:` variant AND the
- * `max-w-app-md` utility. So:
- *
- * | `size` | width | `@app-*` tiers still reachable INSIDE |
+ * | `size` | width | `@app-*` tiers reachable inside |
  * |---|---|---|
- * | `sm` | 40rem | `@app-sm` (exact edge) |
- * | `md` | 48rem | `@app-sm` · `@app-md` (exact edge) |
+ * | `sm` | 40rem | `@app-sm` |
+ * | `md` | 48rem | `@app-sm` · `@app-md` |
  * | `lg` | 64rem | plus `@app-lg` |
  * | `xl` | 80rem | plus `@app-xl` |
  * | `full` | unbounded | up to the parent |
  *
- * Reading this table BACKWARDS also holds, and that's where it's actually useful:
- * asking for `columns={{ lg: 4 }}` inside `size="md"` is **asking for a tier that
- * never fires** — the grid will sit still at the `md` tier. Not a bug, just a
- * measure too narrow for 4 columns.
+ * Asking for `columns={{ lg: 4 }}` inside `size="md"` requests a tier that never
+ * fires — the grid stays at the `md` tier; the measure is just too narrow.
  *
- * `padding` is a {@link Responsive}<{@link PaddingValue}> — off-scale is a tsc error at
- * the call site, not something caught in review.
- * §13: no domain content, no behavior — layout only.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `padding` is a {@link Responsive}<{@link PaddingValue}> — off-scale is a tsc
+ * error at the call site. No domain content, no behavior — layout only.
  */
 
 /**

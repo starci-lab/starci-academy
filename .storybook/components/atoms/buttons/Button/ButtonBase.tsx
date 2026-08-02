@@ -18,20 +18,15 @@ import {
 } from "./button-tokens"
 
 /**
- * `ButtonBase` — the one button in the system. Wraps HeroUI's `Button`.
+ * `ButtonBase` — the one button in the system, wrapping HeroUI's `Button`.
  *
- * An icon-only button is not a different shape — it's the same button with the
- * label dropped, selected via `isIconOnly` rather than a separate component.
+ * An icon-only button is the same button with the label dropped, selected via
+ * `isIconOnly` (which requires `prefixIcon` + `ariaLabel`) rather than a separate
+ * component. Props stay narrow with no `children` — the label goes through `label`.
  *
- * Rules:
- *   - Props stay narrow; no `children` — the label goes through the `label` prop.
- *   - `isIconOnly` requires `prefixIcon` + `ariaLabel` (a screen reader needs a
- *     name when there is no visible text); `label` is meaningless in that mode.
- *   - `isSkeleton` renders a shimmer co-located with the real button: a pill when
- *     labeled, a square when icon-only.
- *   - `isPending`: react-aria does not draw its own spinner, so the atom renders
- *     one itself and locks the press handler.
- *   - Glyph scale and stroke weight are derived from `size`; the caller only picks which icon.
+ * `isSkeleton` renders a shimmer co-located with the real button (a pill when
+ * labeled, a square when icon-only). `isPending` draws its own spinner and locks
+ * the press handler. Glyph scale and stroke weight derive from `size`.
  */
 
 /** Props shared across all three shapes below — see {@link ButtonBaseProps} for the `label`/`isIconOnly`/`isSkeleton` union. */

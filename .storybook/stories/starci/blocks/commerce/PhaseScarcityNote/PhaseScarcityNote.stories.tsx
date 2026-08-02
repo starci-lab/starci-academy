@@ -3,16 +3,9 @@ import { PhaseScarcityNote, PricingPhase } from "@sb-components/starci/blocks/co
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * DESIGN — `PhaseScarcityNote`: the REAL scarcity line for a pricing phase.
- *
- * EVERY number comes from the backend's `coursePricePreview`. This component
- * ABSOLUTELY does not fabricate a countdown or a seat count — fake scarcity is a
- * forbidden dark pattern. Consequence: a phase with no seat cap stays **silent**.
- *
- * ONE LEAF (teacher, 2026-07-27). Every difference this line can show comes from BACKEND
- * DATA — the seat count, whether a next-phase price exists, whether the phase is capped —
- * so they are STATES stacked inside a single leaf. A leaf is earned by an axis the CALLER
- * toggles, and the caller here always passes the same three props.
+ * `PhaseScarcityNote` — the scarcity line for a pricing phase. Every number
+ * comes from the backend's `coursePricePreview`; it never fabricates a
+ * countdown or seat count, and a phase with no seat cap renders nothing.
  */
 const meta: Meta<typeof PhaseScarcityNote> = {
     title: "StarCi/Blocks/Commerce/PhaseScarcityNote/PhaseScarcityNote",

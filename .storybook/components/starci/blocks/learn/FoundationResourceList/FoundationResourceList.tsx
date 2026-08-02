@@ -14,83 +14,20 @@ import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `FoundationResourceList`: the resource BROWSE list — numbered rows of
- * supplementary material (articles, videos, exercises, reference docs) the
- * learner can search and page through.
+ * `FoundationResourceList` — the resource browse list: numbered rows of supplementary
+ * material (articles, videos, exercises, reference docs) the learner can search and
+ * page through.
  *
- * REUSE, NOT A NEW SHAPE (the exact mistake this task exists to avoid — see
- * `ContentModeNav`'s file header). Nothing here is hand-rolled:
- *   • `AsyncContent` (composite)  — the error → loading → empty → content
- *     switch. This block does not track its own "which message am I showing"
- *     state, it just feeds the four branches.
- *   • `SurfaceCardList` (composite) — the bounded row surface, dividers, and
- *     its OWN row mirror while `isSkeleton`. This block never builds a row box
- *     by hand.
- *   • `IconTile` (atom)  — the leading thumbnail. It ALREADY falls back from a
- *     cover image to an icon glyph on its own (`src` fails/absent → `icon`
- *     renders instead), so this block does not need a second "thumbnail or
- *     glyph" component — it just always hands `IconTile` both `src` and a
- *     fallback `icon={StackIcon}` and lets the atom decide which one shows.
- *   • `EnumChip` (composite) — the kind chip. This block only supplies the
- *     kind → label/color map; the composite owns the chip's own shape.
- *   • `Chip` (atom) — the "recommended" chip, `tone="accent"`, plain text.
- *   • `Pagination` (atom) — the page nav, verbatim.
- * None of these get reshaped; this block only decides WHICH ones fire for a
- * given resource and WHAT their numbers/words mean.
+ * Composes `AsyncContent` (error → loading → empty → content), `SurfaceCardList`,
+ * `IconTile` (cover image with icon-glyph fallback), `EnumChip` (kind), `Chip`
+ * ("Recommended"), and `Pagination`. Owns position numbering, the kind → chip-label
+ * map, the recommended text, and the choice between "no resources yet" and
+ * `no matches for "X"` from the typed `searchQuery`.
  *
- * WHAT THIS BLOCK OWNS (§14d.1 — domain wording the caller must not hand in):
- *   • Position numbering ("1. Title") — see the judgement call below for what
- *     "position" means across pages.
- *   • The kind → chip label lookup (`KIND_CHIP_MAP`).
- *   • The "Recommended" recommended-chip text.
- *   • Choosing between "no resources yet" and `no matches for "X"` from the
- *     typed `searchQuery` prop — never a pre-formatted empty-state string
- *     (§14d.1's exact trap: a caller handing over `emptyMessage: string`
- *     would smuggle domain wording past the block that is supposed to own it).
- *
- * LEAF BOUNDARY (canon `2-leaf-states.md` §0's R0 test — "who flips the prop
- * that changes the tree?"):
- *   • `isLoading` — the CALLER sets this boolean and it swaps the whole region
- *     for a skeleton mirror ⇒ its own LEAF (`Prop \`isLoading\``), same
- *     reasoning §1's table gives `isSkeleton` at every tier.
- *   • `error` — optional, and its PRESENCE alone swaps the whole region for a
- *     message ⇒ its own LEAF (`Prop \`error\``, §2②: "optional + presence
- *     grows/removes a node ⇒ exactly one leaf").
- *   • `resources.length === 0` (with or without `searchQuery`) is DATA
- *     returning `0` — R0's own worked example ("0 · 1-3 · many · null ⇒
- *     STATE") — so the two empty messages are STATES of the same `Default`
- *     leaf as a populated page, not leaves of their own. `AsyncContent` still
- *     swaps the rendered branch for this case, same as it does for
- *     `isLoading`/`error` — but the thing DECIDING the swap is the `resources`
- *     array the caller was already required to pass, not a prop the caller
- *     flips on purpose, which is what R0 keys off.
- *
- * ⭐ JUDGEMENT CALL — position numbers are LOCAL to the current page (`1..N`
- * for whatever `resources` holds), not a running count across pages. There is
- * no `pageSize` prop to derive an offset from, and guessing one from
- * `resources.length` would silently break on a short last page. Documented
- * here rather than invented quietly.
- *
- * ⭐ JUDGEMENT CALL — the pager sits INSIDE the same `content` branch as the
- * list, not behind its own extra condition. "Shown only once results exist"
- * is exactly what reaching the content branch already means — `AsyncContent`
- * only renders `content` when it is neither loading, erroring, nor empty — so
- * a second `resources.length > 0` check on top would just repeat the switch
- * `AsyncContent` already made.
- *
- * ⭐ JUDGEMENT CALL — no retry action on the error branch. The prop surface
- * this block was asked for carries no `onRetry`/`retryLabel` pair, so
- * `errorContent` is a bare message; a caller that needs a retry button wraps
- * this block with one at the screen tier instead of this block inventing an
- * unused prop.
- *
- * ⭐ JUDGEMENT CALL — `ariaLabel` names the whole region (`role="region"`) on
- * the block's own root. Unlike sibling list blocks, this one has no visible
- * `label` heading (`SurfaceCardList`'s own `label`/`labelEnd` slots are left
- * unused on purpose — the caller's page already carries a heading for this
- * section), so `ariaLabel` is the only accessible name the region gets.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Leaves: `isLoading` and `error` each their own; a zero-length `resources` (with or
+ * without a query) is a data STATE of `Default`. Position numbers are local to the
+ * current page (no `pageSize` to offset from). `ariaLabel` names the region, which has
+ * no visible heading.
  */
 
 /** The kind of resource a row points at — drives the kind chip's label/color. */

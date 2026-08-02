@@ -6,35 +6,14 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `WorkSessionHeader`: the band that says "you are inside a session".
- * A way out, what the session is, where you are in it, and a progress rail along
- * the bottom edge.
- *
- * WHY A BLOCK, AND A SHARED ONE: it knows what a SESSION is — that it has a
- * length, a position, steps that can be graded, and two different ways to leave.
- * Quiz, flashcard review and mock interview all run sessions, so this belongs to
- * none of them.
- *
- * ⭐ TWO WAYS TO LEAVE, AND THEY ARE NOT THE SAME. The back link means LEAVE,
- * keeping the run resumable. The finish button means END IT NOW and go to the
- * results. Collapsing them into one control would make one of the two silently
- * destructive.
- *
- * ⭐ DONE AND CURRENT ARE INDEPENDENT SIGNALS. A segment is filled because it was
- * GRADED; a segment is taller because it is the one being VIEWED. Letting "done"
- * win over "current" is exactly how "which step am I on" disappears the moment
- * the learner revisits a graded step. Current is a taller bar and nothing else —
- * no ring, no dot, no second colour.
- *
- * THE RAIL IS TAPPABLE, NOT JUST VISIBLE. A 4px bar is not a touch target, so
- * each segment sits inside a taller transparent hit zone. Without it the rail
- * looks interactive and refuses to respond.
- *
- * ⛔ NO `ReactNode` SLOT. The band takes typed data — a counter string, an
- * optional time-left string — never a node. A slot here is how a caller starts
- * putting its own shapes into a shared band, and two callers then drift.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `WorkSessionHeader` — the band that says "you are inside a session": a way out,
+ * what the session is, where you are in it, and a progress rail along the bottom.
+ * Shared by quiz, flashcard review, and mock interview — it knows a session has a
+ * length, a position, and gradable steps. Two distinct ways to leave: the back
+ * link leaves (resumable), the finish button ends now and goes to results. Done
+ * (graded, filled) and current (viewed, taller) are independent signals. The rail
+ * is tappable via a taller transparent hit zone per segment. Takes typed data
+ * (counter string, optional time-left), never a `ReactNode` slot.
  */
 
 /** Props {@link WorkSessionHeader} carries regardless of loading state. */

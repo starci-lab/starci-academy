@@ -9,43 +9,27 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * VIEWER — `MarkdownContent`: paint an authored markdown document faithfully.
+ * `MarkdownContent` — a VIEWER that paints an authored markdown document
+ * faithfully. Unlike other composites it does not know its shape before render:
+ * the shape is decided by the payload it receives.
  *
- * WHY IT IS A VIEWER AND NOT A COMPOSITE OF ITS OWN SHAPE (§4b): every other
- * composite KNOWS its shape before it renders — a card has a label and rows, a
- * header has a title and meta. This one CANNOT: the shape is decided by the
- * payload. It receives a document written somewhere else and repeats it without
- * understanding what it says.
+ * Handles: Shiki syntax-highlighted fenced code, mermaid diagrams (SVG,
+ * click-to-zoom, caption pairing, streaming-safe truncation), `:::tab`/`:::code`/
+ * `:::preview` → Preview↔Code tabs, GFM tables → HeroUI `Table`,
+ * `::::accordion`/`:::panel` → HeroUI `Accordion` with surface chrome, `:::muted`,
+ * `:::chip`, image captions, link routing, heading anchors. Not handled:
+ * `arcSections`, `plain` mode, the ` ```mdx ` live-render fence, the ` ```layout `
+ * fence.
  *
- * SCOPE OF THIS PASS (teacher's call 2026-07-29, in priority order): Shiki
- * syntax-highlighted fenced code · mermaid diagrams (SVG, click-to-zoom, caption
- * pairing, streaming-safe truncation) · `:::tab`/`:::code`/`:::preview` →
- * Preview↔Code tabs (confirmed used in authored lesson content) · GFM tables →
- * real HeroUI `Table` · `::::accordion`/`:::panel` → the CORRECT HeroUI
- * `Accordion` compound with surface chrome · `:::muted` + `:::chip` + image
- * captions + link routing + heading anchors. Still NOT ported: `arcSections`
- * (flashcard/mock-interview answer boxing), `plain` mode (raw render, no
- * markdown processing), the ` ```mdx ` live-render fence, the ` ```layout ` fence
- * — each is a viewer/runtime of its own and half-porting one leaves a body that
- * looks finished and renders wrong, which every gate here would pass.
+ * Hand-written spacing lives in `map.tsx`: a viewer never sees its own children as
+ * nodes, only as whatever the parser returns, so it cannot reach for frames.
  *
- * ⚠️ THE CLASSES IN `map.tsx` ARE THE ONE PLACE HAND-WRITTEN SPACING IS CORRECT. A
- * viewer cannot reach for frames: it never sees its own children as nodes, only
- * as whatever the parser hands back. This is the same exemption §13z gives the
- * atom tier, for the same reason — there is no seam to own when the tree is not
- * yours.
+ * Two measures: `reading` is the lesson body (bigger type, generous rhythm);
+ * `compact` is for markdown quoted inside another surface (a chat answer, a card).
  *
- * TWO MEASURES. `reading` is the lesson body: bigger type, generous rhythm.
- * `compact` is for markdown quoted inside another surface, such as a chat answer
- * or a card, where the document is a passenger rather than the page.
- *
- * COMPOSITE-4: only `classNames: Array<AllowedClassName>` is a public prop here.
- * A caller that needs an arbitrary-selector reset (e.g. `[&_p]:m-0`) wraps this
- * component in its own `<div>` carrying that class instead of handing this
- * composite a free string — the selector reaches the same descendant `p`
- * elements either way, one level higher.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The only public styling prop is `classNames: Array<AllowedClassName>`. A caller
+ * needing an arbitrary-selector reset wraps this component in its own `<div>`
+ * carrying that class.
  */
 
 /** How much room the document gets. */

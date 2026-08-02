@@ -3,27 +3,13 @@ import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/bl
 import { BlockAnatomy, type AnatomyAnnotation, type AnatomyState } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * DESIGN — `VariantChipDifficulty`: applies the **DIFFICULTY** semantic role
- * onto the `Chip` atom.
- *
- * ⚠️ 2026-07-26: the atom dropped the `Chip.Dot` member — the dot is now a
- * PROP of the single chip (`dotClassName`). This design doesn't change shape,
- * only what it calls down into.
- *
- * Members of the `VariantChip.*` family split by **ROLE** (§14d), not by
- * shape — that's where the design tier differs from the atom tier.
- *
- * ⛔ **NO `custom`, NO `bare`** (teacher's call 2026-07-26): from the design
- * tier up, nothing opens a lane for picking your own label or changing shape.
- * Open one lane and callers exploit it, and the standard stops being a
- * standard. Want a free-form chip → call the `Chip.*` atom directly.
- *
- * 📐 **ONE SINGLE LEAF** (§11f): leaves split by STRUCTURE. All four difficulty
- * levels share the same DOM tree, differing only in content ⇒ they're STATES,
- * not four leaves. So one leaf, with every difficulty level as its own state.
- *
- * Skeleton is ALSO not a separate leaf — same structure, just swaps text for
- * bars. (The `isSkeleton` prop still exists, §12c — two different things.)
+ * `VariantChipDifficulty` — a design-tier chip that applies the DIFFICULTY
+ * semantic role onto the `Chip` atom. Members of the `VariantChip.*` family
+ * split by role, not by shape; there is no `custom`/`bare` lane, so callers
+ * wanting a free-form chip use the `Chip.*` atom directly. The dot is a prop
+ * (`dotClassName`) of the single chip. All four difficulty levels share one
+ * DOM tree and differ only in content, so they are states of one leaf; the
+ * skeleton (`isSkeleton`) swaps text for bars within that same structure.
  */
 const meta: Meta<typeof VariantChipDifficulty> = {
     title: "StarCi/Blocks/Learn/VariantChip/VariantChipDifficulty",

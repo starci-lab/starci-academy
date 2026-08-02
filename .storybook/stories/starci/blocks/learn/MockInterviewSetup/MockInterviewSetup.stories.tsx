@@ -3,27 +3,13 @@ import { MockInterviewSetup } from "@sb-components/starci/blocks/learn/MockInter
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `MockInterviewSetup`: the green-room card. Who is interviewing, what
- * to call this run, how hard it should be, and the button(s) that start it.
- *
- * SIBLING OF `QuizSetup` (same resumable-banner-leads-the-form shape) — reused
- * on purpose rather than inventing a new green-room layout, per this run's
- * reuse-first mandate.
- *
- * ⭐ TWO START BUTTONS ARE TWO DIFFERENT INTERVIEWS. Q&A always exists; Design
- * only shows once the CALLER says the course offers it (`isDesignAvailable`) —
- * the block never infers a course kind on its own.
- *
- * ⭐ PERSONA ≠ `UserCell`. The identity row is built straight from
- * `Avatar`+`Typography` because the second line is a ROLE, not an `@handle`.
- *
- * 📐 ONE LEAF THIS PASS (task-scoped call, spelled out in the block's own file
- * header): resumable on/off and Design-mode on/off each add or remove a real
- * node, which by §14d.2 alone would read as separate leaves — but this pass's
- * brief pins scope to "one leaf: identity + tier + name + start", so every
- * combination below is a STATE of that one leaf. The "Customize" deep-config
- * body (languages / kinds / answer-mode / AI model) is a SECOND leaf, deferred
- * out of scope — not rendered anywhere in this story.
+ * `MockInterviewSetup` — the green-room card: who is interviewing, what to call
+ * this run, how hard it should be, and the button(s) that start it. Sibling of
+ * `QuizSetup` (same resumable-banner-leads-the-form shape). Two start buttons are
+ * two different interviews — Q&A always exists; Design shows only when the caller
+ * sets `isDesignAvailable`. The persona row is built from `Avatar` + `Typography`
+ * (the second line is a role, not a handle). The "Customize" deep-config body is a
+ * separate, deferred leaf.
  */
 const meta: Meta<typeof MockInterviewSetup> = {
     title: "StarCi/Blocks/Learn/MockInterviewSetup/MockInterviewSetup",

@@ -10,22 +10,13 @@ import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcit
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `PremiumGateModal` — the value-first buy/register prompt opened when a
- * viewer taps a LOCKED premium tab or the "Practice" rail button on a
- * trial-read lesson. Opened from anywhere via the app's global overlay store;
- * this port takes plain `isOpen`/`onOpenChange` props instead of reading
- * Zustand directly (Rule 13), same as its sibling `FoundationModal`.
- *
- * ⚠️ FILED UNDER `StarCi/Overlays/Modals`, not `StarCi/Blocks/Commerce` — see
- * the component's own file header for why (Rule 13 + `components/README.md`'s
- * app-folder split law, matching the `FoundationModal` relocation precedent).
- *
- * ONE LEAF (`Default`). The wrapper shape never changes — only the price
- * region's content changes across states (resolving / landed with a saving /
- * landed with no saving), so those are STATES of this one leaf, not separate
- * leaves. The header wording (named course vs generic) is shown as a fourth
- * state; it only swaps the fixed-vocabulary row `GATE_HEADER` picks, not the
- * tree shape.
+ * `PremiumGateModal` — the value-first buy/register prompt opened when a viewer
+ * taps a locked premium tab or the "Practice" rail button on a trial-read
+ * lesson. Opened via the app's global overlay store; this port takes plain
+ * `isOpen`/`onOpenChange` props. One leaf (`Default`): the wrapper shape never
+ * changes — only the price region's content (resolving / landed with a saving /
+ * landed with no saving) and the header wording (named course vs generic) vary,
+ * all states.
  */
 const meta: Meta<typeof PremiumGateModal> = {
     title: "StarCi/Overlays/Modals/PremiumGateModal/PremiumGateModal",

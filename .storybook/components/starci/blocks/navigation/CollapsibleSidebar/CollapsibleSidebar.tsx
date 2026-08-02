@@ -11,53 +11,15 @@ import { DragScrollArea } from "@sb-components/behaviors/DragScrollArea/DragScro
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE (PREREQUISITE) — `CollapsibleSidebar`: the content-agnostic shell that the
- * real `src` `LearnSidebar` (and any future left-nav sidebar) mounts into. Owns
- * ONLY the chrome — collapse/expand, the width animation, persisting the choice
- * to `localStorage`, and handing `collapsed` down via context — and knows NOTHING
- * about what a nav row is. Ported near-verbatim from
- * `src/components/blocks/navigation/CollapsibleSidebar/index.tsx` (read-only
- * reference); this pass only re-homes it as a Storybook-driven port.
- *
- * ⚠️ FOLDER JUDGMENT CALL: per the team's §5b architecture call (see
- * `.claude/fe/steps/11-overlays-layouts-brainstorm.md` §5b) this is genuinely
- * COMPOSITE tier — a shared, domain-blind shell — and belongs under
- * `components/composites/`. This run's write scope is restricted to
- * `components/starci/**`/`stories/starci/**` (STARCI app only), and
- * `components/composites/` is read-only reference for this agent. It is filed
- * here, next to `WorkSessionHeader`/`NavLinks` (the existing `navigation` group),
- * built to composite discipline regardless of folder (no domain knowledge, no
- * feature wording, no business decision) — flag for a follow-up move to
- * `components/composites/layout/` by whichever pass owns that folder.
- *
- * REUSE, not hand-roll (per this run's REUSE FIRST rule):
- *   • `DragScrollArea` (frame/behavior tier) for the nav's scroll region instead
- *     of a bare HeroUI `ScrollShadow` — it already hides the scrollbar AND adds
- *     the Windows-safe pointer-pan fallback, exactly the "hidden scrollbar region
- *     usable on Windows" need a nav rail has. It does not itself lay out children
- *     in a column, so a `StackV` sits inside it for the `gap={4}` rhythm the
- *     real component wrote by hand as `flex flex-col gap-3`.
- *   • `ButtonBase` (`isIconOnly`) for the toggle instead of raw HeroUI `Button`.
- *   • `Typography` (`size="h5"` `weight="bold"` `truncate`) for the title instead
- *     of raw HeroUI `Typography`.
- *
- * The outer `motion.aside` stays a bespoke element (not `Container`/`Stack`):
- * no frame in this tree can express an ANIMATED width or the collapsed-vs-
- * expanded ASYMMETRIC padding (`px-3 py-6` rail vs `p-6` panel — `Stack`/`Flex`
- * padding is a single uniform `InsetScale` step). Same precedent as `Toolbar` /
- * `ModalShell` / `DrawerShell`, which also hand-write their own root chrome
- * classes rather than nesting themselves inside another frame.
- *
- * `SidebarCollapsedContext` is inlined here (not a sibling `context.ts`, unlike
- * the `src` original) so the whole port stays the two files this run asked for;
- * `useSidebarCollapsed` is exported for whatever nav-row block eventually
- * consumes it (that block is out of scope this pass).
- *
- * NO `isSkeleton` — chrome only, not requested in this pass's prop list, and
- * `title` is caller-owned copy known synchronously, same reasoning as
- * `ContentModeNav`'s "never skeletonised, on purpose".
- * ─────────────────────────────────────────────────────────────────────────────
+ * `CollapsibleSidebar` — the content-agnostic left-nav shell (composite tier)
+ * that a `LearnSidebar` mounts into. Owns only the chrome: collapse/expand, the
+ * width animation, persisting the choice to `localStorage`, and handing
+ * `collapsed` down via `SidebarCollapsedContext` (with an exported
+ * `useSidebarCollapsed`). Knows nothing about what a nav row is. Reuses
+ * `DragScrollArea` (Windows-safe pointer-pan scroll region), `ButtonBase`, and
+ * `Typography`; the animated-width `motion.aside` root is bespoke since no frame
+ * expresses an animated width or the asymmetric collapsed/expanded padding. No
+ * `isSkeleton` — chrome only.
  */
 
 /** Expanded panel width (full nav). */

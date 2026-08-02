@@ -10,60 +10,16 @@ import { ContentRelatedList, type ContentRelatedItem } from "@sb-components/star
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `TaskBriefBody`: the READING column of a personal-project milestone
- * task, ported from `src/components/features/learn/PersonalProject/index.tsx`
- * (`Task`) + its three reading children `TaskBrief`, `TaskLockedAlert`,
- * `TaskCriteriaList`/`TaskCodeImplementations` — everything a learner reads
- * before they submit. The submit/evaluate/result actions live in the
- * persistent SUBMISSION PANEL (right side of the split workspace, out of
- * scope here — this column only swaps per task).
- *
- * TWO SCHEMA GENERATIONS, NEVER BOTH AT ONCE. `src` resolves this with
- * `(displayTask?.briefs?.length ?? 0) === 0`: a SCHEMA V2 task has a resolved
- * per-language `briefBody` and hides its rubric; a SCHEMA V1 (legacy) task has
- * no brief at all and falls back to a public criteria accordion + per-language
- * implementation guides. This block mirrors that exact test — `briefBody`
- * present (non-blank) ⇒ `BriefMarkdown`; blank ⇒ `LegacyCriteriaCard` — so
- * `legacyCriteria`/`legacyCodeImplementations` are read ONLY on a task that
- * carries no brief, exactly as `src` scopes its own legacy fallback.
- *
- * ⭐ SKELETON JUDGEMENT CALL: while `isSkeleton`, the schema generation is not
- * yet known (the milestone-task query hasn't resolved), so this block must
- * pick ONE guess rather than shimmering both mutually-exclusive shapes at
- * once. It guesses SCHEMA V2 (`BriefMarkdown`'s own shimmer paragraph) — new
- * tasks are authored in V2 and V1 only survives on old, unedited tasks, so the
- * common case is the correct default. `LegacyCriteriaCard` never renders while
- * `isSkeleton`; if the real task turns out to be legacy, the swap from
- * shimmer-paragraph to real criteria/code card is a shape change the same way
- * `ChallengeBrief`'s five sections are allowed to settle differently once data
- * lands (§14d.2 — the GUESS and the SETTLED TRUTH may disagree).
- *
- * REUSE, NOT REBUILD. `TitleDesc` is a `Typography` pair (own leaf, no
- * existing block matched this exact title+description shape). `LockedAlert`
- * composes `Callout` (the ONE alert-in-a-surface frame, §"Alert atom"
- * — `src`'s raw HeroUI `Alert` is exactly what that frame already wraps).
- * `LegacyCriteriaCard`'s two sub-sections both go through `SurfaceCardAccordion`
- * (criteria rows + per-language guide/example rows) instead of hand-rolling
- * `ImplementationCard`'s raw bordered `<article>` — one accordion vocabulary
- * for both, rather than two different card idioms stacked under one label.
- * `RelatedList` is the existing `ContentRelatedList` block untouched (it
- * already self-hides on an empty course match, so this block adds no gating
- * of its own around it).
- *
- * ⭐ `TaskLockedAlert`'s "go to current task" BUTTON ALWAYS SHOWS WHEN LOCKED
- * (judgement call). `src`'s alert also gates the button on
- * `canGoToCurrentTask` (a SECOND derived fact — is there even a different
- * "current" task to jump to). This block's prop surface only carries
- * `isLocked` + `onGoToCurrentTask`, matching this run's spec; deciding whether
- * the jump is reachable is progress-lookup DOMAIN LOGIC the screen already
- * computes to produce `isLocked` in the first place; it is not this
- * presentational block's job to re-derive a second boolean for it (§7 — a
- * block never re-decides what a locked interaction means on its own).
- * ⚠️ FOR A FUTURE PASS: add `canGoToCurrentTask?: boolean` here (default
- * `true`) the day a screen needs to suppress the button while still showing
- * the locked notice — right now every caller of this spec wants both together.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `TaskBriefBody` — the reading column of a personal-project milestone task:
+ * everything a learner reads before submitting (the submit/evaluate actions live
+ * in a separate persistent panel). Handles two schema generations, never both:
+ * a V2 task has a resolved per-language `briefBody` (-> `BriefMarkdown`); a V1
+ * task has none and falls back to a public criteria + per-language code-guide
+ * accordion. While `isSkeleton`, the generation isn't known yet, so it guesses
+ * V2 (the common case). Composes `Callout` for the locked alert,
+ * `SurfaceCardAccordion` for legacy criteria/guides, and reuses
+ * `ContentRelatedList`. The locked "go to current task" button always shows when
+ * locked (the screen owns whether a jump target exists).
  */
 
 /** One pass criterion of a SCHEMA V1 (legacy) task — `src`'s `MilestoneTaskCriteriaEntity`. */

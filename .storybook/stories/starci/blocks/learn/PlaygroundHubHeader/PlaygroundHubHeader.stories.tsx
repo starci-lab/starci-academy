@@ -3,21 +3,11 @@ import { PlaygroundHubHeader } from "@sb-components/starci/blocks/learn/Playgrou
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `PlaygroundHubHeader`: the HUB-IDENTITY cluster at the top of the
- * Docker/Kubernetes exercise grid. It answers one question, "what is this
- * playground hub", via a title and an optional one-sentence purpose line.
- *
- * SIBLING OF `ContentHeader`/`FoundationsHeader`, NOT A COPY of either. All
- * three place identity into the same `PageHeader` frame, but this one is
- * deliberately THINNEST: no breadcrumb, no meta row, no secondary card — the
- * real `PlaygroundHub` renders only an h5 title and a muted body-sm subtitle,
- * nothing else.
- *
- * 📐 ONE LEAF (§14d.2), unlike its siblings' `Full`/`Skeleton` split. Those
- * blocks lose a whole outcomes card or breadcrumb row under `isSkeleton`; this
- * block has nothing else to lose — the flag only swaps which state the
- * composed `Typography` renders inside the same `PageHeader` shape, so real
- * vs. loading stays a STATE of `Default` rather than its own leaf.
+ * `PlaygroundHubHeader` — the hub-identity cluster at the top of the
+ * Docker/Kubernetes exercise grid: a title and an optional one-sentence purpose
+ * line. Sibling of `ContentHeader`/`FoundationsHeader` but thinnest — no breadcrumb,
+ * meta row, or secondary card. One shape: `isSkeleton` only swaps which state the
+ * `Typography` renders inside the same `PageHeader`.
  */
 const meta: Meta<typeof PlaygroundHubHeader> = {
     title: "StarCi/Blocks/Learn/PlaygroundHubHeader/PlaygroundHubHeader",

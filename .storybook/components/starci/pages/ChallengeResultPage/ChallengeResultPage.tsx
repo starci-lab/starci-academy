@@ -9,49 +9,16 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * SCREEN — `ChallengeResultPage`: what came back from grading ONE challenge
- * submission.
+ * `ChallengeResultPage` — the screen showing what came back from grading one
+ * challenge submission. It composes blocks in frames and hands each typed data,
+ * drawing no shape of its own.
  *
- * A screen owns a LIST OF FUNCTIONS and nothing else: it calls blocks, places
- * them in frames, and hands each one typed data. It draws no shape of its own —
- * every `div` here would be a shape it had no right to decide.
- *
- * FOUR FUNCTIONS, in the order the reader meets them: where am I / how do I
- * leave · which attempt am I looking at · how did THIS attempt do · what should
- * I fix, plus a quiet nudge toward more reading when the attempt failed.
- *
- * ⭐ THE SCORE SECTION IS CONDITIONAL, AND THE CONDITION IS THE POINT — same
- * pattern `ContentPage` uses for its footer. Nothing about "how did it go" can
- * render before an attempt is actually selected: `SubmissionScoreCard` and
- * `SubmissionFindingsList` both need one attempt's own data, not the row of
- * attempts itself. So the screen gates that whole cluster on
- * `selectedAttemptId != null` (or `isSkeleton`, so the loading shape still
- * reserves its height — see `isSkeleton` below) rather than handing either
- * block empty/placeholder data to paint around.
- *
- * ⭐ THE RELATED-READING NUDGE IS CONDITIONAL TOO, ON `isPassing`. A passing
- * attempt has nothing left to fix — more reading would be noise. A failing one
- * is exactly the moment a pointer to relevant material earns its place. This
- * mirrors `ContentRelatedList`'s own self-hide-when-empty rule one level up: the
- * block already hides itself when there is nothing related, and the screen adds
- * the domain condition (`!isPassing`) for when there is nothing WORTH surfacing
- * even if there were related items to show.
- *
- * ⭐ THE FULL-HISTORY DRAWER IS MOUNTED HERE (corrected 2026-07-29 — the
- * teacher pointed out: "that page does exist" — the previous claim that
- * `SubmissionResultHistoryDrawer` had no real counterpart was FALSE, it lives at `src/components/drawers/
- * SubmissionResultHistoryDrawer`). `SubmissionAttemptSelector`'s "+N" trigger
- * still only REPORTS `onOverflowPress` (Rule 7 — a block never decides what its
- * own overflow opens), but the SCREEN now owns rendering the drawer itself,
- * same as real `src`'s `SubmissionResult` mounting its own
- * `SubmissionResultHistoryDrawer` at the bottom of the same component. Open
- * state (`isHistoryOpen`/`onHistoryOpenChange`) and the FULL attempt list
- * (`historyAttempts` — distinct from `attempts`, which is only the visible
- * chip-row subset the caller already sliced) are controlled props; wiring
- * `onOverflowPress` to open the drawer is still the caller's call, exactly the
- * degree of control Rule 7 asks for.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Four functions in reading order: where am I / how to leave, which attempt this is,
+ * how this attempt did, and what to fix — plus a related-reading nudge shown only on
+ * a failing attempt. The score cluster (`SubmissionScoreCard` +
+ * `SubmissionFindingsList`) renders only once an attempt is selected (or while
+ * skeleton). Mounts the full-history drawer, opened from the attempt selector's
+ * overflow.
  */
 
 /** Props for {@link ChallengeResultPage}. */

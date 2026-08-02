@@ -5,20 +5,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * DESIGN — `PhaseScarcityNote`: a phase's REAL scarcity line.
- *
- * Carries WHY (§14d): "N seats left at the {phase} price · price rises to {X}
- * after that" — pushes purchase with REAL facts from the backend, not a made-up
- * countdown.
- *
- * Single-component namespace ⇒ `.Base` (teacher's call 2026-07-25).
- *
- * The `_legacy` version's own note said it composed no lower-tier component at
- * all — it hand-rolled `<span className="text-sm">` for both text parts. This port
- * FIXES that: text goes through the `Typography` atom (§9 — size/weight is the
- * atom's job, not classes scattered here).
- * ─────────────────────────────────────────────────────────────────────────────
+ * `PhaseScarcityNote` — a BLOCK: a phase's real scarcity line, "N seats left at
+ * the {phase} price · price rises to {X} after that". Pushes purchase with real
+ * backend facts, not a made-up countdown. Text goes through the `Typography` atom.
  */
 
 /** The course's pricing phases (inlined from `@/modules/types/enums/pricing-phase`). */

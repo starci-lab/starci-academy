@@ -7,29 +7,22 @@ import { Flex } from "@sb-components/frames/Flex/Flex"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (frame) — `Stack.*`: the base one-axis track. Two members = two AXES,
- * the only real shapes a stack has:
- *   • `StackV` — stacks VERTICALLY (column).
- *   • `StackH` — stacks HORIZONTALLY (row); only this axis takes `at` (FRAME-10:
- *     the container step it wraps below, never a bare boolean).
+ * `Stack` — a LAYOUT frame: the base one-axis track. Two members = two axes:
+ *   • `StackV` — stacks vertically (column).
+ *   • `StackH` — stacks horizontally (row); only this axis takes `at` (the
+ *     container step it wraps below, never a bare boolean).
  *
- * FRAME API LAW (§13b): a stack WRAPS arbitrary content — it is not a repeating
- * list — so `children` is the road (there is no `header`/`body`/`footer` trio to
- * name: a track has exactly ONE slot, its content). `items` would be wrong here;
- * see `Cluster`/`Grid` for the repeat-list frames of this folder.
+ * A stack wraps arbitrary content (not a repeating list), so `children` is the
+ * road — a track has exactly one slot. Use `Cluster`/`Grid` for repeat-list
+ * frames.
  *
- * ⭐ WHY THIS FRAME EXISTS: `gap` is typed {@link Responsive}<{@link AllowedGap}> — a
- * CLOSED index into the house gap table. Off-scale (`gap-4.5`, `gap-[13px]`) cannot even
- * be typed, so the scale is enforced by the COMPILER instead of by review.
- * `gap` is REQUIRED for the same reason: an implicit default would let the seam
- * be chosen by accident, and §10a says a seam has exactly one deliberate owner.
+ * `gap` is typed {@link Responsive}<{@link AllowedGap}> — a closed index into the
+ * house gap table, so off-scale cannot be typed. It is REQUIRED so the seam is
+ * never chosen by accident.
  *
- * §13 boundaries respected: no domain content, no feature behaviour — the track
- * only decides direction / gap / alignment / an optional rule between children.
- * `divider` COMPOSES the existing `Divider` atom (§13c: a frame never
- * hand-rolls what an atom already owns).
- * ─────────────────────────────────────────────────────────────────────────────
+ * No domain content, no feature behaviour — the track only decides direction /
+ * gap / alignment / an optional rule between children. `divider` composes the
+ * existing `Divider` atom.
  */
 
 /** Props shared by both axes of {@link Stack}. */

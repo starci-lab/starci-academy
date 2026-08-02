@@ -4,29 +4,10 @@ import type { EnumChipEntry } from "@sb-components/composites/chips/EnumChip/Enu
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Chip.*` — a compound namespace gathering the COMPOSITE-tier chips under one
- * root (same pattern as `Skeleton.*`). The base HeroUI pill uses the alias
- * `HeroChip`; DESIGN-tier chips (Difficulty/AiCategory/Language) do NOT live
- * here.
- *
- * ⚠️ 2026-07-26: two rows, `Chip.Status` and `Chip.Tags`, left this index. The
- * status chip is now `Chip tone=…` and the tag row is `ChipGroup`, both at the
- * ATOM tier — see `Atoms/Chips/Chip`. This index only keeps chips at its own tier.
- *
- * 📐 Adapted retrofit (2026-08-01): `Chip.tsx` has no Props interface of its own — the
- * file only re-exports three OTHER composites under new names (`EnumChip` → `ChipEnum`,
- * `HighlightChip` → `ChipHighlight`, `RemovableToken` → `ChipRemovable`), so there is no
- * single prop set to map "one prop = one leaf" onto. Retrofitted instead as one
- * `BlockAnatomy` leaf PER MEMBER: each leaf's `storyId` (via `annotate`, where the member
- * renders the `Chip` atom) or its own JSDoc points at that member's real story
- * (`Composites/Chips/EnumChip`, `Composites/Chips/HighlightChip`,
- * `Composites/Chips/RemovableToken`), where its actual props are already mapped one leaf
- * each. This index only has to show that the alias renders identically to the thing it
- * aliases.
- *
- * None of the three underlying composites forward `showAnatomy` down to the atoms they
- * render, so the Structure tab stays empty on every leaf here — same documented caveat
- * as `Atoms/Media/QRCode` and `Composites/Chips/EnumChip`, not a bug in this story.
+ * `Chip.*` — a compound namespace gathering the composite-tier chips under one root (same
+ * pattern as `Skeleton.*`). The base HeroUI pill uses the alias `HeroChip`; design-tier chips
+ * (Difficulty/AiCategory/Language) do not live here. `Chip.tsx` re-exports three composites
+ * under new names: `EnumChip`→`ChipEnum`, `HighlightChip`→`ChipHighlight`, `RemovableToken`→`ChipRemovable`.
  */
 const meta: Meta = {
     title: "Composites/Chips/Chip",

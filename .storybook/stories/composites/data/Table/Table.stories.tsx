@@ -5,18 +5,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE (§12f/§13) — `Table` is a table FRAME: it OWNS the column
- * configuration (`columns`: alignment + width), building rows from `items`, and
- * the three FRAME states of a list: EMPTY (`emptyContent`) · LOADING (`isSkeleton`)
- * · PRESSABLE ROWS (`onRowPress`). That is exactly the state set that must render
- * in full here (§11g).
- *
- * No state here belongs to content: the frame does not format money/dates/status
- * — every cell is a `ReactNode` the consumer passes in (below, a `Chip` atom).
- * `Chip`'s own state lives in the `Chip` story, not repeated here.
- *
- * 2026-07-27: migrated every leaf to the `states[]` API (§8/§4a). Panel-facing
- * text (`why`/`reason`/`role`) is written in English per rule B.
+ * `Table` — a table frame. Owns the column configuration (`columns`: alignment + width),
+ * building rows from `items`, and the three frame states of a list: empty (`emptyContent`),
+ * loading (`isSkeleton`), and pressable rows (`onRowPress`). Does not format content — every
+ * cell is a `ReactNode` the consumer passes in.
  */
 const meta: Meta<typeof Table> = {
     title: "Composites/Data/Table/Table",

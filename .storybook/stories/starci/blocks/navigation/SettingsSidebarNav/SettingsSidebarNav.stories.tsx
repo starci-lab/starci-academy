@@ -3,24 +3,13 @@ import { SettingsSidebarNav, type SettingsNavGroup } from "@sb-components/starci
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `SettingsSidebarNav`: the account-settings destination list, drawn as
- * a collapsible desktop rail and, below `@app-md`, a sticky horizontal pill bar.
- * See the component file header for the reused `CollapsibleSidebar` gap, the
- * two still-inlined gaps (`SidebarNavGroup`/`SidebarNavItem`), and why the
- * enum-owned destination vocabulary diverges from `src`'s `ReactNode`+i18n-key
- * table.
- *
- * 📐 TWO LEAVES, by STRUCTURE — unlike `NavLinks` (whose narrow width only
- * HIDES the same row, staying one leaf), here a genuinely different shape
- * replaces the rail below `@app-md`, which earns a second leaf:
- *   • `DesktopRail`    — the collapsible rail, `Link`-shaped rows, a divider
- *     between groups.
- *   • `MobilePillBar`  — the flattened, rounded-full chip row.
- * Both leaves render the SAME component; only the demo container's WIDTH
- * differs, so each story shows the branch its own `@app-md` query resolves to
- * (a fresh `@container` per story — see each leaf's `renderClassName`).
- * `activeHref` is DATA, so within each leaf it is a state, not a leaf of its
- * own — same split `NavLinks`'s `Row` leaf uses for `isActive`.
+ * `SettingsSidebarNav` — the account-settings destination list, drawn as a
+ * collapsible desktop rail and, below `@app-md`, a sticky horizontal pill bar.
+ * Two structural leaves — `DesktopRail` (collapsible `Link`-shaped rows with a
+ * divider between groups) and `MobilePillBar` (a flattened rounded-full chip
+ * row). Both render the same component; only the container width differs, so
+ * each story shows the branch its own `@app-md` query resolves to. `activeHref`
+ * is data, so within each leaf it is a state.
  */
 const meta: Meta<typeof SettingsSidebarNav> = {
     title: "StarCi/Blocks/Navigation/SettingsSidebarNav/SettingsSidebarNav",

@@ -4,9 +4,8 @@ import { ImageDropzone } from "@sb-components/atoms/forms/ImageDropzone/ImageDro
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Typography` — OUR OWN atom, with its own story to jump to (the label and,
- * when set, the `hint` line both mount one each — see `ImageDropzone.tsx` passing
- * `` explicitly, § two-law pass, 2026-07-28).
+ * `Typography` — our own atom, with its own story to jump to (the label and, when set, the
+ * `hint` line each mount one — see `ImageDropzone.tsx`).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Typography": { tier: "atom", role: "label / hint text", storyId: "atoms-text-typography-typography--plain" },

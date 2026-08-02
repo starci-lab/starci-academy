@@ -6,21 +6,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `QaConversationHeader`: the top of an EXPANDED `QaQuestionThread` —
- * a collapse control, the asker's identity, who else joined in (an
- * {@link AvatarGroup}), and the reply count (or a "be first" nudge when
- * nobody has answered yet). Split out of `QaQuestionThread` rather than
- * inlined because that block's own header notes it is one of four siblings
- * `QaQuestionThread` composes but does not itself build (§"ASSUMED CONTRACTS").
- *
- * ⚠️ `canFollow`/`isFollowing`/`onToggleFollow`/`isFollowPending` are on the
- * contract but UNUSED by `QaQuestionThread`'s current call site — kept
- * optional so a future caller (or a later pass wiring the real follow
- * toggle back in) can light it up without a prop-shape change. Rendering
- * nothing when `canFollow` is falsy/absent is the correct default, not a
- * missing feature.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `QaConversationHeader` — the top of an expanded `QaQuestionThread`: a collapse
+ * control, the asker's identity, an {@link AvatarGroup} of other participants,
+ * and the reply count (or a "be first" nudge when there are no answers).
+ * `canFollow`/`isFollowing`/`onToggleFollow`/`isFollowPending` are optional and
+ * render nothing when `canFollow` is falsy, reserved for a future follow toggle.
  */
 
 /** Minimal identity this header needs for the asker or a participant. */

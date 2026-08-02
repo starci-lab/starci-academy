@@ -5,25 +5,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `Tabs` wraps HeroUI `Tabs` directly. The `data-anat-part`s it emits
- * (`Tabs.Tab`/`Tabs.Indicator`/`Badge.Anchor`/`Badge`/`Skeleton`) are all
- * sub-parts of a REAL HeroUI compound — 2026-07-27 (heroui tier added to
- * canon): each one still declares `tier: "heroui"` in `ANNOTATE` below, with
- * its name matching the import identifier EXACTLY (no `storyId` needed).
- * Renamed from `Tab`/`Badge`/`Indicator` (role names, not real component
- * names) to dotted names matching the actual compound. The `Icon` span
- * wrapping the caller-supplied Phosphor glyph is NOT tagged — it isn't a real
- * component of ours or of heroui's.
- *
- * The `Skeleton` leaf was renamed from `Loading` (2026-07-27, teacher's call:
- * a leaf carries the PROP NAME — the prop that produces this leaf is
- * `isSkeleton`). §12g: the `isSkeleton` leaf must render every step that has a
- * KNOWN VISIBLE SHAPE, and `variant` ("primary"/"secondary") is exactly that
- * axis — known ahead of time at call, not data-dependent. Before the fix
- * (2026-07-27) the component ignored `variant` in the `isSkeleton` branch,
- * always producing the same pill regardless of variant — a real bug of the
- * same shape as `Button`'s skeleton hard-locking `w-24` for every size (§12g).
- * `TabsBase.tsx` has been fixed: `secondary` now produces a label+underline
- * shimmer instead of a solid pill.
+ * (`Tabs.Tab`/`Tabs.Indicator`/`Badge.Anchor`/`Badge`/`Skeleton`) are sub-parts of a real
+ * HeroUI compound — each declares `tier: "heroui"` in `ANNOTATE` with its name matching the
+ * import identifier exactly (no `storyId`). The `Icon` span wrapping the caller-supplied
+ * Phosphor glyph is not tagged — it isn't a real component.
+ * 
+ * The `Skeleton` leaf carries the prop's name (`isSkeleton`) and renders every step with a
+ * known visible shape; `variant` ("primary"/"secondary") is that axis, known ahead of time
+ * at call. `secondary` produces a label+underline shimmer instead of a solid pill.
  */
 
 const meta: Meta<typeof Tabs> = {

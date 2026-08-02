@@ -328,8 +328,8 @@ const ContentCommentThread = ({
             // only needs to hand it back.
             body={() => (
                 /* `grouped` — separates [body+actions, tight together] from whatever
-                    comes after a reply composer/toggle/subtree, teacher 2026-07-29 "orange
-                    still gap-3": the seam right before a reply composer appears needs more
+                    comes after a reply composer/toggle/subtree: the seam right before
+                    a reply composer appears needs more
                     room than the tight identity block above it (also where the
                     Facebook-style connector line will run). */
                 <StackV gap={4} body={threadBody} />

@@ -158,8 +158,8 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
      * chrome inside the card.
      *
      * This is the DATA PATH (§4): the caller passes a string, the FRAME wraps
-     * `Typography` itself and picks the size + tone (`xs` muted). Before 2026-07-26
-     * it took a `ReactNode`, so the call-site had to hand-write
+     * `Typography` itself and picks the size + tone (`xs` muted); it takes a string, not
+     * a `ReactNode`, so the call-site had to hand-write
      * `<Typography type="body-xs" color="muted">…` — the caller holding
      * scale/tone is exactly what §4 forbids, and it also blocked `isSkeleton`
      * from flowing through (the frame had to branch off to build a separate
@@ -1260,9 +1260,7 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
     /**
      * `"surface"` (default) `shadow-surface`, or `"nested"` — border INSTEAD OF
      * shadow when this face sits INSIDE another face (§1a).
-     *
-     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
-     */
+     *     */
     variant?: SurfaceCardVariant
     /** Caption text under the list, `gap-2` — the DATA path, the frame wraps `Typography` itself (§4). */
     description?: string
@@ -1591,9 +1589,7 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
     /**
      * `"surface"` (default) `shadow-surface`, or `"nested"` — border INSTEAD OF
      * shadow when this face sits INSIDE another face (§1a).
-     *
-     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
-     */
+     *     */
     variant?: SurfaceCardVariant
     /**
      * Shown (padded, centered) INSIDE the surface when `items` is empty — so an empty
@@ -1607,8 +1603,8 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
      * chrome inside the card.
      *
      * This is the DATA PATH (§4): the caller passes a string, the FRAME wraps
-     * `Typography` itself and picks the size + tone (`xs` muted). Before 2026-07-26
-     * it took a `ReactNode`, so the call-site had to hand-write
+     * `Typography` itself and picks the size + tone (`xs` muted); it takes a string, not
+     * a `ReactNode`, so the call-site had to hand-write
      * `<Typography type="body-xs" color="muted">…` — the caller holding
      * scale/tone is exactly what §4 forbids, and it also blocked `isSkeleton`
      * from flowing through (the frame had to branch off to build a separate

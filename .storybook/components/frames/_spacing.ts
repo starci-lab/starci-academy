@@ -316,7 +316,7 @@ export function paddingClassNames(padding: Responsive<PaddingValue>): Array<stri
 /**
  * Cross-axis alignment of a track.
  *
- * `baseline` was added on 2026-07-27 for rows carrying text at SEVERAL sizes: a price in `h4`
+ * `baseline` is for rows carrying text at SEVERAL sizes: a price in `h4`
  * beside a struck-through price in `sm` beside a chip in `xs` must line up on the LETTER FEET
  * rather than on the centre of each box, because `center` leaves the three numbers sitting at
  * different heights. The frame could not express that before, so `PriceTag` hand-typed

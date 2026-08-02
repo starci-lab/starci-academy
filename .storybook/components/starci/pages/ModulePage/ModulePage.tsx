@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { StackIcon } from "@phosphor-icons/react"
 import { ModuleHeader, CourseContentTier, type ModuleHeaderCrumb } from "@sb-components/starci/blocks/learn/ModuleHeader/ModuleHeader"
 import { ModuleContinueBand } from "@sb-components/starci/blocks/learn/ModuleContinueBand/ModuleContinueBand"
@@ -236,7 +237,7 @@ const ModulePage = ({
         </>
     )
 
-    const moduleBody = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+    const moduleBody = ({ isSkeleton }: SkeletonProps) => (
         <StackV gap={7} isSkeleton={isSkeleton} items={[() => moduleSections]} />
     )
 

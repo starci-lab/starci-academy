@@ -1,4 +1,5 @@
 import { cn } from "@heroui/react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { XIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button, type IconComponent } from "@sb-components/atoms/buttons/Button/Button"
@@ -95,7 +96,7 @@ export const RemovableToken = ({
             classNames={["shrink-0"]}
             isSkeleton={isSkeleton}
             items={[
-                ...(onEdit ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ...(onEdit ? [({ isSkeleton }: SkeletonProps) => (
                     <Button isSkeleton={isSkeleton} variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit} prefixIcon={XIcon} label={editLabel} />
                 )] : []),
                 ...(onRemove ? [() => (

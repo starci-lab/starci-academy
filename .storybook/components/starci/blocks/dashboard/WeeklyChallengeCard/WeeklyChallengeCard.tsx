@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
@@ -138,7 +139,7 @@ const finisherItem = (entry: WeeklyChallengeLeaderboardEntry, isSkeleton: boolea
             <UserCell
                 username={entry.username}
                 avatar={entry.avatar}
-                trailing={({ isSkeleton: slotSkeleton }: { isSkeleton?: boolean }) => (
+                trailing={({ isSkeleton: slotSkeleton }: SkeletonProps) => (
                     <Typography
                         size="xs"
                         color="muted"

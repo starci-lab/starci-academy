@@ -3,7 +3,7 @@ import { cn } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -135,7 +135,7 @@ const Base = ({
                         <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={title} />
                     </button>
                 ),
-                ...(open && !isSkeleton && Content ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ...(open && !isSkeleton && Content ? [({ isSkeleton }: SkeletonProps) => (
                     <StackV gap={4} isSkeleton={isSkeleton} items={[() => <Content isSkeleton={isSkeleton} />]} />
                 )] : []),
             ]}

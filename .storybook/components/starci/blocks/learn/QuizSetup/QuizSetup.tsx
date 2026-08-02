@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { PlayIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { ButtonRadioGroup } from "@sb-components/composites/buttons/ButtonRadioGroup/ButtonRadioGroup"
@@ -99,8 +100,8 @@ const QuizSetup = ({
             gap={3}
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Session name" />,
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Session name" />,
+                ({ isSkeleton }: SkeletonProps) => (
                     <InputText
                         value={name}
                         onValueChange={onNameChange}
@@ -119,7 +120,7 @@ const QuizSetup = ({
             gap={3}
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Length" />,
+                ({ isSkeleton }: SkeletonProps) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Length" />,
                 () => (
                     <ButtonRadioGroup
                         ariaLabel="Session length"
@@ -141,7 +142,7 @@ const QuizSetup = ({
             gap={3}
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Level" />,
+                ({ isSkeleton }: SkeletonProps) => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Level" />,
                 () => (
                     <ButtonRadioGroup
                         ariaLabel="Question level"
@@ -164,7 +165,7 @@ const QuizSetup = ({
             justify="end"
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <Button
                         label={`Start · ${LENGTH_CARDS[length]} questions`}
                         variant="primary"

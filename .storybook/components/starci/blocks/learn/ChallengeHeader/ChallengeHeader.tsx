@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -171,7 +172,7 @@ const ChallengeHeader = ({
                 // already typed/documented as a plain one-sentence summary, never markdown,
                 // and `PageHeader` now owns the muted styling + skeleton swap itself.
                 description={description}
-                meta={({ isSkeleton }: { isSkeleton?: boolean }) =>
+                meta={({ isSkeleton }: SkeletonProps) =>
                     <StackH gap={3} align="center" isSkeleton={isSkeleton} items={[() => metaRow]} />
                 }
             />

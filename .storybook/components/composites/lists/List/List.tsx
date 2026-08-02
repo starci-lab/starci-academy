@@ -6,7 +6,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
 
 /**
  * `List.*` — the row/list frame namespace, arranging elements into a ROW or a LIST.
@@ -298,7 +298,7 @@ const Labeled = ({
             isSkeleton={isSkeleton}
             classNames={classNames}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <StackH
                         gap={3}
                         isSkeleton={isSkeleton}
@@ -308,7 +308,7 @@ const Labeled = ({
                         ]}
                     />
                 ),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={3} isSkeleton={isSkeleton} items={[() => rows]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} items={[() => rows]} />,
                 // `isSkeleton`-gated: while loading there is no data behind the CTA yet,
                 // same reasoning as the `meta`/`trailing` omission on `Row` above.
                 ...(!isSkeleton && Action ? [() => <div><Action /></div>] : []),

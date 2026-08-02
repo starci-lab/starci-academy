@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import {
     cn,
     Button as HeroButton,
@@ -363,7 +364,7 @@ const Navbar = ({
         <ListRow
             key={item.id}
             leading={!item.isRead ? (
-                ({ isSkeleton }: { isSkeleton?: boolean }) =>
+                ({ isSkeleton }: SkeletonProps) =>
                     isSkeleton ? null : <CircleIcon weight="fill" aria-hidden focusable="false" className="size-2 text-accent-soft-foreground" />
             ) : undefined}
             title={item.title}

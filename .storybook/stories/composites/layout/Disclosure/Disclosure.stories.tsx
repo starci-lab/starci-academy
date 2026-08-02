@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
 import { Disclosure } from "@sb-components/composites/layout/Disclosure/Disclosure"
@@ -23,7 +24,7 @@ export default meta
 
 type Story = StoryObj<typeof Disclosure>
 
-const SampleContent = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+const SampleContent = ({ isSkeleton }: SkeletonProps) => (
     <Typography data-tier="fixture" type="body-sm" color="muted" isSkeleton={isSkeleton}>
         Choose the question count, answer style, and language for the interview session.
     </Typography>

@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { PriceBreakdown, PriceTagProminent } from "@sb-components/starci/blocks/commerce/PriceTag/PriceTag"
@@ -87,7 +88,7 @@ const TrialConversionStripBase = ({
 
     const headerRow = (
         <StackH gap={4} align="center" isSkeleton={isSkeleton} items={[
-            ({ isSkeleton }: { isSkeleton?: boolean }) => (
+            ({ isSkeleton }: SkeletonProps) => (
                 <IconTile
                     isSkeleton={isSkeleton}
                     icon={LockIcon}
@@ -136,7 +137,7 @@ const TrialConversionStripBase = ({
                 () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
                 () => <Typography size="xs" isSkeleton classNames={["w-1/2"]} />,
             ] : price?.discountedPriceVnd != null ? [
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <PriceTagProminent
                         isSkeleton={isSkeleton}
                         discounted={price.discountedPriceVnd}
@@ -145,7 +146,7 @@ const TrialConversionStripBase = ({
 
                     />
                 ),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <PhaseScarcityNote
                         isSkeleton={isSkeleton}
                         currentPhase={price.currentPhase}
@@ -176,7 +177,7 @@ const TrialConversionStripBase = ({
                 // ATOM `Button`, NOT the `_legacy` version: going around the port is drift —
                 // fixing the atom in one place won't propagate here.
                 // `suffixIcon` takes a COMPONENT REF, the atom forces scale + weight.
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <Button
                         isSkeleton={isSkeleton}
                         variant="primary"
@@ -198,7 +199,7 @@ const TrialConversionStripBase = ({
         // `padding` defaults to `3` — the system's actual `p-3` card rule.
         <SurfaceCard
             classNames={classNames}
-            body={({ isSkeleton }: { isSkeleton?: boolean }) => (
+            body={({ isSkeleton }: SkeletonProps) => (
                 <StackV gap={6} isSkeleton={isSkeleton} items={[
                     () => headerRow,
                     () => footerRow,

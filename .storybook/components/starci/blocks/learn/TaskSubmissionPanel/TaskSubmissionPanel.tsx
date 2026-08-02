@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import {
     CheckCircleIcon,
     CloudArrowUpIcon,
@@ -164,7 +165,7 @@ const GithubUrlField = ({
 
                     />
                 ),
-                ...(!isSkeleton && AutosaveIcon != null ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ...(!isSkeleton && AutosaveIcon != null ? [({ isSkeleton }: SkeletonProps) => (
                     <InlineIconLabel
                         icon={AutosaveIcon}
                         tone={AUTOSAVE_TONE[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
@@ -194,7 +195,7 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
         isSkeleton={isSkeleton}
 
         items={[
-            ({ isSkeleton }: { isSkeleton?: boolean }) => (
+            ({ isSkeleton }: SkeletonProps) => (
                 <StackH
                     gap={3}
                     align="center"
@@ -344,7 +345,7 @@ const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps) => {
             isSkeleton={isSkeleton}
 
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackH gap={4} align="baseline" wrap isSkeleton={isSkeleton} items={[() => scoreRow]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} align="baseline" wrap isSkeleton={isSkeleton} items={[() => scoreRow]} />,
                 ...(result.shortFeedback != null ? [() => (
                     <Typography
                         size="sm"

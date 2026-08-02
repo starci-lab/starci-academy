@@ -1,4 +1,5 @@
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { type SkeletonProps } from "@/components/composites/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
 import { ResponsiveCluster, type ResponsiveClusterItem } from "@/components/frames/ResponsiveCluster"
@@ -75,7 +76,7 @@ const renderSlot = (
     const { label, prefixIcon, onPress, isDisabled, isPending } = slot
     return {
         key,
-        content: ({ isSkeleton }: { isSkeleton?: boolean }) => (
+        content: ({ isSkeleton }: SkeletonProps) => (
             <Button
                 label={label}
                 prefixIcon={prefixIcon}

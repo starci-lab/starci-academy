@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { Popover } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
@@ -158,12 +159,12 @@ const PriceTagBase = ({
         // `grouped`, not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
         <StackV gap={4} className="p-3" isSkeleton={isSkeleton} items={[
-            ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" color="muted" text="Price breakdown" isSkeleton={isSkeleton} />,
+            ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text="Price breakdown" isSkeleton={isSkeleton} />,
             // No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
             // is the §10b `grouped` step). Passing one from here overrides the composite's
             // spacing from OUTSIDE, which §10 forbids — a composite owns its internal
             // spacing and must not receive it.
-            ({ isSkeleton }: { isSkeleton?: boolean }) => (
+            ({ isSkeleton }: SkeletonProps) => (
                 <KeyValueList
                     isSkeleton={isSkeleton}
                     items={[

@@ -18,7 +18,7 @@ import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/compos
 import { HighlightChip } from "@sb-components/composites/chips/HighlightChip/HighlightChip"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
 import { Breadcrumbs, type BreadcrumbItem } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
 import { ChipBase } from "@sb-components/atoms/chips/Chip/ChipBase"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
@@ -133,9 +133,9 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             gap={3}
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <HighlightChip isSkeleton={isSkeleton} icon={StackIcon} value={8} label="chapters" />,
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <HighlightChip isSkeleton={isSkeleton} icon={ClockIcon} value="~14" label="hours" />,
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <HighlightChip isSkeleton={isSkeleton} icon={UsersIcon} value="2,481" label="learners" />,
+                ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={StackIcon} value={8} label="chapters" />,
+                ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={ClockIcon} value="~14" label="hours" />,
+                ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={UsersIcon} value="2,481" label="learners" />,
             ]}
         />
     )
@@ -149,7 +149,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                     gap={3}
                     isSkeleton={isSkeleton}
                     items={[
-                        ...(difficulty != null ? [({ isSkeleton }: { isSkeleton?: boolean }) => <ChipBase isSkeleton={isSkeleton} tone={DIFFICULTY_TONE[difficulty]} text={difficulty} />] : []),
+                        ...(difficulty != null ? [({ isSkeleton }: SkeletonProps) => <ChipBase isSkeleton={isSkeleton} tone={DIFFICULTY_TONE[difficulty]} text={difficulty} />] : []),
                         ...(isPremium ? [() => <LockIcon aria-label="Premium lesson" focusable="false" className="size-5 text-muted" />] : []),
                     ]}
                 />
@@ -198,7 +198,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                                                 ]}
                                             />
                                         ),
-                                        ...(!isSkeleton ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
+                                        ...(!isSkeleton ? [({ isSkeleton }: SkeletonProps) => (
                                             <Button
                                                 isSkeleton={isSkeleton}
                                                 label="Resume"

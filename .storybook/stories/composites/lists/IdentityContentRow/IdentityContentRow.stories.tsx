@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { SealCheckIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
@@ -33,7 +34,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * The byline slot's component. Forwards `isSkeleton` into its own `Typography`
  * atoms so the row's shimmer covers the byline too, not only the avatar.
  */
-const Byline = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+const Byline = ({ isSkeleton }: SkeletonProps) => (
     <StackH
         gap={2}
         align="center"
@@ -65,7 +66,7 @@ const Byline = ({ isSkeleton }: { isSkeleton?: boolean }) => (
 )
 
 /** The body slot's component — here, a plain comment line. Same `isSkeleton`-forwarding contract as {@link Byline}. */
-const CommentBody = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+const CommentBody = ({ isSkeleton }: SkeletonProps) => (
     <Typography
         size="sm"
         isSkeleton={isSkeleton}

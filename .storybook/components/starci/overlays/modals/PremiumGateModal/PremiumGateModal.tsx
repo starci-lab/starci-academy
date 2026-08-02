@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
 import {
@@ -186,20 +187,20 @@ const PremiumGateModal = ({
     const gateBody = [
         // "What unlocks" — static chrome, never skeletonised: known before
         // any price data lands, exactly like `ContentModeNav`'s own row.
-        ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={3} isSkeleton={isSkeleton} items={unlockItems} />,
+        ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} items={unlockItems} />,
 
         // Price + scarcity — the ONLY region `isSkeleton` reaches, same
         // `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
         // `TrialConversionStrip` uses for its own price region.
         ...(isSkeleton && !price
-            ? [({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonPrice} />]
+            ? [({ isSkeleton }: SkeletonProps) => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonPrice} />]
             : price?.discountedPriceVnd != null
-                ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ? [({ isSkeleton }: SkeletonProps) => (
                     <StackV
                         gap={4}
                         isSkeleton={isSkeleton}
                         items={[
-                            ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                            ({ isSkeleton }: SkeletonProps) => (
                                 <PriceTagProminent
                                     discounted={price.discountedPriceVnd}
                                     original={price.originalPriceVnd}

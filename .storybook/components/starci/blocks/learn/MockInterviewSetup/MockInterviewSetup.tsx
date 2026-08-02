@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { FlowArrowIcon, PlayIcon } from "@phosphor-icons/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -166,7 +167,7 @@ const MockInterviewSetup = ({
                         />
                     </div>
                 ),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={1} isSkeleton={isSkeleton} items={[() => personaDetails]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackV gap={1} isSkeleton={isSkeleton} items={[() => personaDetails]} />,
             ]}
         />
     )
@@ -176,7 +177,7 @@ const MockInterviewSetup = ({
             gap={3}
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography isSkeleton={isSkeleton} size="sm" weight="medium" text="Session name" />,
+                ({ isSkeleton }: SkeletonProps) => <Typography isSkeleton={isSkeleton} size="sm" weight="medium" text="Session name" />,
                 () => (
                     <InputText
                         value={sessionName}
@@ -196,7 +197,7 @@ const MockInterviewSetup = ({
             gap={3}
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography isSkeleton={isSkeleton} size="sm" weight="medium" text="Level" />,
+                ({ isSkeleton }: SkeletonProps) => <Typography isSkeleton={isSkeleton} size="sm" weight="medium" text="Level" />,
                 () => (
                     <ButtonRadioGroup
                         ariaLabel="Interview level"
@@ -219,7 +220,7 @@ const MockInterviewSetup = ({
             justify="end"
             isSkeleton={isSkeleton}
             items={[
-                ...(showDesignStart ? [({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ...(showDesignStart ? [({ isSkeleton }: SkeletonProps) => (
                     <Button
                         isSkeleton={isSkeleton}
                         label="Start Design"
@@ -231,7 +232,7 @@ const MockInterviewSetup = ({
 
                     />
                 )] : []),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <Button
                         isSkeleton={isSkeleton}
                         label="Start Q&A"
@@ -282,7 +283,7 @@ const MockInterviewSetup = ({
                 label={label}
                 isSkeleton={isSkeleton}
 
-                body={({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={6} isSkeleton={isSkeleton} items={[() => setupBody]} />}
+                body={({ isSkeleton }: SkeletonProps) => <StackV gap={6} isSkeleton={isSkeleton} items={[() => setupBody]} />}
             />
         </div>
     )

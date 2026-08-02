@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
@@ -117,7 +118,7 @@ const E2eResultDrawer = ({
     const items: Array<AccordionItem> = visible.map((flow) => {
         const isPass = flow.status === "passed"
         const chipAndTitle = [
-            ({ isSkeleton }: { isSkeleton?: boolean }) => (
+            ({ isSkeleton }: SkeletonProps) => (
                 <ChipBase
                     isSkeleton={isSkeleton}
                     tone={isPass ? "success" : "danger"}
@@ -125,7 +126,7 @@ const E2eResultDrawer = ({
 
                 />
             ),
-            ({ isSkeleton }: { isSkeleton?: boolean }) => (
+            ({ isSkeleton }: SkeletonProps) => (
                 <Typography
                     isSkeleton={isSkeleton}
                     text={flow.title}
@@ -157,7 +158,7 @@ const E2eResultDrawer = ({
     })
 
     const countFilterAndAccordion = [
-        ({ isSkeleton }: { isSkeleton?: boolean }) => (
+        ({ isSkeleton }: SkeletonProps) => (
             <Typography
                 isSkeleton={isSkeleton}
                 text={`${passed}/${visible.length} flows passed — real logs recorded from an actual E2E run against the backend and UI.`}
@@ -178,7 +179,7 @@ const E2eResultDrawer = ({
                 />
             </div>
         )] : []),
-        ({ isSkeleton }: { isSkeleton?: boolean }) => (
+        ({ isSkeleton }: SkeletonProps) => (
             <Accordion
                 isSkeleton={isSkeleton}
                 items={items}

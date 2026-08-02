@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import type { ReactNode } from "react"
 import { Grid } from "@sb-components/frames/Grid/Grid"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -30,7 +31,7 @@ type Story = StoryObj<typeof Grid>
 const cellItems = (labels: ReadonlyArray<string>) =>
     labels.map((label) => ({
         key: label,
-        content: ({ isSkeleton }: { isSkeleton?: boolean }) => (
+        content: ({ isSkeleton }: SkeletonProps) => (
             <SurfaceCard isSkeleton={isSkeleton} body={() => <Typography size="sm" text={label} />} />
         ),
     }))

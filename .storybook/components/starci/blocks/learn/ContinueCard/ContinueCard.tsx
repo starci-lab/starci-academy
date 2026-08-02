@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
@@ -133,7 +134,7 @@ const CardBody = ({
                 className="relative"
                 isSkeleton={isSkeleton}
                 items={[
-                    ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={3} classNames={["min-w-0", "flex-1"]} isSkeleton={isSkeleton} items={[() => titleAndMeta]} />,
+                    ({ isSkeleton }: SkeletonProps) => <StackV gap={3} classNames={["min-w-0", "flex-1"]} isSkeleton={isSkeleton} items={[() => titleAndMeta]} />,
                 ]}
             />
             {/* Progress SITS right under the text cluster, BEFORE the button:

@@ -1,4 +1,5 @@
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { type SkeletonProps } from "@/components/composites/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import { type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
 import { ResponsiveCluster, type ResponsiveClusterItem } from "@/components/frames/ResponsiveCluster"
@@ -87,7 +88,7 @@ export const ButtonGroup = ({
             if (label != null) {
                 return {
                     key: item.key,
-                    content: ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                    content: ({ isSkeleton }: SkeletonProps) => (
                         <Button label={label} prefixIcon={prefixIcon} isSkeleton={isSkeleton} {...shared} />
                     ),
                 }
@@ -95,7 +96,7 @@ export const ButtonGroup = ({
             if (prefixIcon != null) {
                 return {
                     key: item.key,
-                    content: ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                    content: ({ isSkeleton }: SkeletonProps) => (
                         <Button
                             isIconOnly
                             prefixIcon={prefixIcon}

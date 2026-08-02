@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Chip, Typography } from "@heroui/react"
 // ONE ICON SET ONLY = Phosphor (§5.0). Size scale per §5a: leading ↔ title
@@ -112,7 +113,7 @@ export const TitleOnly: Story = {
  * this one leaf.
  */
 /** Leading icon component (COMPOSITE-8): `ListRow` calls this itself and forwards `isSkeleton`. */
-const FileTextLeading = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+const FileTextLeading = ({ isSkeleton }: SkeletonProps) => (
     isSkeleton ? null : <FileTextIcon data-tier="fixture" className="size-5 text-muted" aria-hidden focusable="false" />
 )
 

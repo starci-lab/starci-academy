@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import {
     FoundationHeader,
     FoundationKind,
@@ -153,7 +154,7 @@ const FoundationResourcePage = ({
         </>
     )
 
-    const resourceBody = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+    const resourceBody = ({ isSkeleton }: SkeletonProps) => (
         <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSections]} />
     )
 

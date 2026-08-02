@@ -21,7 +21,7 @@ export type ComponentTypeWithSkeleton<P = Record<never, never>> = ComponentType<
 /**
  * The props a slot/item component receives — the skeleton flag, plus any extra `P`. Use it to type
  * the destructured param of an INLINE item so it stays assignable to `ComponentTypeWithSkeleton`
- * (an untyped `({ isSkeleton }: { isSkeleton?: boolean }) =>` infers implicit-any and fails):
+ * (an untyped `({ isSkeleton }: SkeletonProps) =>` infers implicit-any and fails):
  *
  *   items={[({ isSkeleton }: SkeletonProps) => <A isSkeleton={isSkeleton} />]}
  */

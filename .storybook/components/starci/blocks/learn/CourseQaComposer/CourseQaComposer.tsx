@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputTextarea } from "@sb-components/atoms/forms/Input/Input"
@@ -208,7 +209,7 @@ const CourseQaComposer = ({
                 isSkeleton={isSkeleton}
                 items={[
                     () => avatar,
-                    ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={3} isSkeleton={isSkeleton} classNames={["min-w-0", "flex-1"]} items={[() => form]} />,
+                    ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} classNames={["min-w-0", "flex-1"]} items={[() => form]} />,
                 ]}
             />
         </div>

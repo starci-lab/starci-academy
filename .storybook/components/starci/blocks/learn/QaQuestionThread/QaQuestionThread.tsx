@@ -13,7 +13,7 @@ import { QaReactionBar } from "@sb-components/starci/blocks/learn/QaReactionBar/
 import { QaMessageBubble } from "@sb-components/starci/blocks/learn/QaMessageBubble/QaMessageBubble"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
 
 /**
  * `QaQuestionThread` — one course-Q&A conversation. Collapsed, it is a
@@ -394,14 +394,14 @@ const QaQuestionThread = ({
             isSkeleton={isSkeleton}
 
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" weight="medium" isSkeleton={isSkeleton} text={askerDisplayName} />,
+                ({ isSkeleton }: SkeletonProps) => <Typography size="xs" weight="medium" isSkeleton={isSkeleton} text={askerDisplayName} />,
                 ...(question.isFounderAuthor ? [() => (
                     <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                 )] : []),
                 ...(question.isPinned ? [() => (
                     <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
                 )] : []),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={question.createdTimeAgo} />,
+                ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={question.createdTimeAgo} />,
             ]}
         />
     )
@@ -421,7 +421,7 @@ const QaQuestionThread = ({
 
                     />
                 ),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <QaReactionBar
                         count={questionReaction.count}
                         myReaction={questionReaction.myReaction}
@@ -444,7 +444,7 @@ const QaQuestionThread = ({
 
                 items={[
                     () => questionMetaRow,
-                    ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                    ({ isSkeleton }: SkeletonProps) => (
                         <QaChatBubble role={isMineQuestion ? "user" : "assistant"} isSkeleton={isSkeleton}>
                             <div className="[&_p]:m-0">
                                 <MarkdownContent
@@ -501,7 +501,7 @@ const QaQuestionThread = ({
             isSkeleton={isSkeleton}
 
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <QaConversationHeader
                         asker={{
                             id: question.author.id,
@@ -518,7 +518,7 @@ const QaQuestionThread = ({
                 ),
                 () => conversationBody,
                 // bottom composer — the only way to answer a course-general question
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <CourseQaComposer
                         mode="plain"
                         currentUser={currentUser ? { name: currentUser.username, avatarSrc: currentUser.avatar } : undefined}

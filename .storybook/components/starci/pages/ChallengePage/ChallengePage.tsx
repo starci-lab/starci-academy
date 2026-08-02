@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import {
     ChallengeHeader,
     type ChallengeDifficulty,
@@ -157,11 +158,11 @@ const ChallengePage = ({
         ),
     ]
 
-    const challengeBody = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+    const challengeBody = ({ isSkeleton }: SkeletonProps) => (
         <SplitWorkspace
             isSkeleton={isSkeleton}
-            main={({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={7} isSkeleton={isSkeleton} items={readColumn} />}
-            aside={({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={6} isSkeleton={isSkeleton} items={actColumn} />}
+            main={({ isSkeleton }: SkeletonProps) => <StackV gap={7} isSkeleton={isSkeleton} items={readColumn} />}
+            aside={({ isSkeleton }: SkeletonProps) => <StackV gap={6} isSkeleton={isSkeleton} items={actColumn} />}
         />
     )
 

@@ -3,7 +3,7 @@ import { cn } from "@heroui/react"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH } from "@/components/frames/Stack"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@/components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -117,7 +117,7 @@ export const SurfaceCardHeader = ({
             justify="between"
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackH gap={3} classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => labelSlot]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackH gap={3} classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => labelSlot]} />,
                 () => endSlot,
             ]}
         />

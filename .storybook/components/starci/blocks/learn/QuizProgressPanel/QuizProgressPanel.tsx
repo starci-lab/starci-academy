@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import type { ComponentType, SVGProps } from "react"
 import { ChartBarIcon, ChartLineIcon, ClockCounterClockwiseIcon } from "@phosphor-icons/react"
 import { Tabs, type TabItem } from "@sb-components/atoms/navigation/Tabs/Tabs"
@@ -108,7 +109,7 @@ const statCell = (stat: QuizProgressStat, isSkeleton: boolean): StatGridCardItem
                 gap={2}
                 isSkeleton={isSkeleton}
                 items={[
-                    ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                    ({ isSkeleton }: SkeletonProps) => (
                         <StackH
                             gap={2}
                             align="center"

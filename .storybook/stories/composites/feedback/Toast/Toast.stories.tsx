@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { Button as HeroButton } from "@heroui/react"
 import { Toast } from "@sb-components/composites/feedback/Toast/Toast"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
@@ -85,7 +86,7 @@ export const Statuses: Story = {
 }
 
 /** A component REFERENCE (never a built node, COMPOSITE-8) — the composite calls it itself with `isSkeleton` forwarded. */
-const UndoAction = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+const UndoAction = ({ isSkeleton }: SkeletonProps) => (
     <HeroButton data-tier="fixture" size="sm" variant="tertiary" isDisabled={isSkeleton}>
         Undo
     </HeroButton>

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import type { ReactNode } from "react"
 import { Tabs } from "@heroui/react"
 import {
@@ -259,7 +260,7 @@ const PlaygroundSetupSteps = ({
                     ? <CommandSkeleton />
                     : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" />),
                 ...(!isSkeleton ? [() => pairingCodeNote] : []),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <StackH
                         gap={3}
                         wrap
@@ -333,7 +334,7 @@ const PlaygroundSetupSteps = ({
 
                     />
                 )] : []),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackH gap={3} isSkeleton={isSkeleton} items={[() => renderVerifyButton()]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackH gap={3} isSkeleton={isSkeleton} items={[() => renderVerifyButton()]} />,
             ]}
         />
     )
@@ -347,7 +348,7 @@ const PlaygroundSetupSteps = ({
             gap={2}
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <Typography
                         isSkeleton={isSkeleton}
                         size="xs"
@@ -366,7 +367,7 @@ const PlaygroundSetupSteps = ({
             gap={2}
             isSkeleton={isSkeleton}
             items={[
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <Typography
                         isSkeleton={isSkeleton}
                         size="xs"
@@ -437,7 +438,7 @@ const PlaygroundSetupSteps = ({
                 ) : (
                     modelsCommandsSection
                 )),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <StackH gap={3} isSkeleton={isSkeleton} items={[() => renderVerifyButton()]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackH gap={3} isSkeleton={isSkeleton} items={[() => renderVerifyButton()]} />,
             ]}
         />
     )

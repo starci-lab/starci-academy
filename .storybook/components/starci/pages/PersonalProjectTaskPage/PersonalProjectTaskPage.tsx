@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { CaretRightIcon, GearSixIcon, SparkleIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Breadcrumbs, type BreadcrumbItem } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
@@ -163,7 +164,7 @@ export interface PersonalProjectTaskPageProps {
 const LEGACY_SKELETON_ROWS = 2
 
 /** `ListRow.leading` for the grading-settings summary row — a gear icon, hidden while skeleton. */
-const SettingsLeading = ({ isSkeleton }: { isSkeleton?: boolean }) =>
+const SettingsLeading = ({ isSkeleton }: SkeletonProps) =>
     isSkeleton ? null : <GearSixIcon aria-hidden focusable="false" className="size-4" />
 
 /** `ListRow.trailing` for the grading-settings summary row — the disclosure chevron. */

@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { SearchAutocomplete, type SearchAutocompleteItem } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
@@ -83,7 +84,7 @@ const FoundationCategorySearchBar = ({
                         ? [() => <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} />]
                         : count !== undefined
                             ? [
-                                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                                ({ isSkeleton }: SkeletonProps) => (
                                     <Typography
                                         isSkeleton={isSkeleton}
                                         size="sm"

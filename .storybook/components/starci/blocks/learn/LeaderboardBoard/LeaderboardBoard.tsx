@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { TrophyIcon } from "@phosphor-icons/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
@@ -305,7 +306,7 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
                             username={row.username}
                             avatar={row.avatar}
                             isOwnRow={row.isMe}
-                            trailing={({ isSkeleton: slotSkeleton }: { isSkeleton?: boolean }) => (
+                            trailing={({ isSkeleton: slotSkeleton }: SkeletonProps) => (
                                 <Typography
                                     size="sm"
                                     weight="medium"
@@ -436,7 +437,7 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
                 ...(podiumEntries.length > 0 ? [() => (
                     <Podium entries={podiumEntries} meLabel={meLabel} isSkeleton={isSkeleton} />
                 )] : []),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <SurfaceCardList
                         items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton)}
                         isSkeleton={isSkeleton}

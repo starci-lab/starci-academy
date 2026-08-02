@@ -1,4 +1,5 @@
 import React from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
@@ -86,7 +87,7 @@ const ContentPager = ({
                     // (`SurfaceCard.tsx`) already forces for icons in this exact tile shape.
                     // Weight omitted → Phosphor default `regular`, correct at `size-5`.
                     () => <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
-                    ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={1} isSkeleton={isSkeleton} items={[() => previousLabel]} />,
+                    ({ isSkeleton }: SkeletonProps) => <StackV gap={1} isSkeleton={isSkeleton} items={[() => previousLabel]} />,
                 ]}
             />
         )
@@ -110,7 +111,7 @@ const ContentPager = ({
                 justify="end"
                 isSkeleton={isSkeleton}
                 items={[
-                    ({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={1} align="end" isSkeleton={isSkeleton} items={[() => nextLabel]} />,
+                    ({ isSkeleton }: SkeletonProps) => <StackV gap={1} align="end" isSkeleton={isSkeleton} items={[() => nextLabel]} />,
                     // Same DIV position/size reasoning as the mirrored left caret above.
                     () => <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
                 ]}

@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { Button as HeroButton, Popover as HeroPopover, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ReactionPicker } from "@sb-components/atoms/feedback/ReactionPicker/ReactionPicker"
@@ -132,7 +133,7 @@ const ReactionButton = ({
                         ))}
                     </span>
                 ),
-                ({ isSkeleton }: { isSkeleton?: boolean }) => <Typography isSkeleton={isSkeleton} size="sm" text={String(total)} />,
+                ({ isSkeleton }: SkeletonProps) => <Typography isSkeleton={isSkeleton} size="sm" text={String(total)} />,
             ]}
         />
     ) : null

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { type SkeletonProps } from "@sb-components/composites/_slot"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -158,11 +159,11 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** `leading` slot fixture (COMPOSITE-8): the meter calls this itself and forwards `isSkeleton`. */
-const SprintLabel = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+const SprintLabel = ({ isSkeleton }: SkeletonProps) => (
     <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Sprint 4" />
 )
 /** `trailing` slot fixture (COMPOSITE-8): the meter calls this itself and forwards `isSkeleton`. */
-const OnTrackChip = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+const OnTrackChip = ({ isSkeleton }: SkeletonProps) => (
     <Chip tone="success" text="On track" isSkeleton={isSkeleton} />
 )
 
@@ -196,10 +197,10 @@ export const SlotRow: Story = {
                     {
                         name: "leading = SprintLabel, trailing = OnTrackChip",
                         why: "A second row mounts just above the track, independent of the `label`/`showValue` row above it — a left region and a right region, each a component the meter calls itself and forwards `isSkeleton` to. Useful when the row needs more than plain text: a status chip, an icon, a custom-formatted unit.",
-                        code: `const SprintLabel = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                        code: `const SprintLabel = ({ isSkeleton }: SkeletonProps) => (
     <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Sprint 4" />
 )
-const OnTrackChip = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+const OnTrackChip = ({ isSkeleton }: SkeletonProps) => (
     <Chip tone="success" text="On track" isSkeleton={isSkeleton} />
 )
 

@@ -4,15 +4,12 @@ import { ReactionButton, type ReactionType, type ReactionCount } from "@sb-compo
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentReaction` — a BLOCK: say how the lesson landed. A `ReactionButton` on the
- * left, the quiet view count on the right, at the foot of the reading card.
- *
- * A Facebook-style six-emotion picker (the same control used for the content
- * reaction and every comment). The trigger+picker+summary control is extracted into
- * its own `ReactionButton` block, shared with `ContentDiscussion`'s comment rows.
- *
- * Counts are data, the wording is not: the caller hands `counts`/`viewCount`, the
- * block adds the thousands separator and the words.
+ * `ContentReaction` — say how the lesson landed: a six-emotion picker on the
+ * left, the quiet view count on the right. Reacting is a button; the view count
+ * is muted text. The caller hands over `counts` (one entry per emotion reacted);
+ * the block owns the six fixed labels/emoji and does the sort/cap/total. Which
+ * emotion is picked, empty summary, and the server wait are states; `isSkeleton`
+ * is its own leaf.
  */
 
 export type { ReactionType, ReactionCount as ContentReactionCount }

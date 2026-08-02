@@ -8,16 +8,14 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `LeaderboardPage` — the screen for seeing rankings sorted by whichever XP category
- * the reader cares about. It composes blocks in frames and hands each typed data,
- * drawing no shape of its own.
- *
- * Five functions: what this page is, a self-hiding trial-enroll nudge, which category
- * to rank by (`LeaderboardCategoryNav`, the mobile half only — the desktop rail lives
- * in the shared learn layout), the toolbar (ranking + last-refresh), and the ranking
- * board. `categoryLabel` arrives pre-worded. `isSkeleton` (a background revalidate)
- * reaches only the header and board, separate from the board's own first-load async
- * lifecycle.
+ * `LeaderboardPage` — the screen to see who's ranked where, sorted by whichever
+ * XP category the reader cares about. A screen owns a list of functions: it
+ * calls blocks, places them in frames, and hands each typed data. Five
+ * functions, in reading order: what this page is · a quiet nudge toward
+ * enrolling · which category to rank by · what that ranking is and when it last
+ * refreshed · the ranking itself. Reuses `TrialEnrollBanner` (not a new block).
+ * The `Enrolled` leaf is a real structural difference: the banner self-hides
+ * once enrolled, removing a whole node from the tree.
  */
 
 /** Props for {@link LeaderboardPage}. */

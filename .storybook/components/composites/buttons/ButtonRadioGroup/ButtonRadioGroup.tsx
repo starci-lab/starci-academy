@@ -4,17 +4,10 @@ import { Button, ButtonGroup as HeroButtonGroup, cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Button.RadioGroup` — a row of select buttons (single or multi), flex-wrap.
- *
- * A stateful control (`value`/`onChange` for single-select, `values`/`onToggle` for
- * multi-select) with `role="group"` + `aria-pressed` per button, distinct from
- * `ButtonGroup`'s stateless row of independent action buttons. Each item can also
- * expand into its own connected `ButtonGroup` via `itemAction`.
- *
- * Renders raw HeroUI `Button`/`ButtonGroup` directly rather than through the
- * design system's own `Button` atom: `Button` does not forward arbitrary
- * attributes (no `...rest`), so using it here would drop `aria-pressed` from
- * assistive tech.
+ * `Button.RadioGroup` — a flex-wrap row of selectable buttons, single- or multi-select.
+ * Leaves: `items` builds N child buttons (`Default`, with per-item `isDisabled`); `multiple`
+ * allows ≥2 selected at once; `trailing` appends a non-option button (e.g. "+N"); `itemAction`
+ * turns each item into a fused `ButtonGroup` [select | delete | more].
  */
 
 /** One selectable button in a {@link ButtonRadioGroup}. */

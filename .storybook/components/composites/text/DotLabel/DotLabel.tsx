@@ -5,17 +5,10 @@ import type { TypographyColor } from "@sb-components/atoms/text/Typography/Typog
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `DotLabel` — a colour swatch + an inline text label, as ONE unit with NO
- * pill/background around it (a status line inside a card, an "Online" row beside a
- * name, a category line in a dense list — anywhere a coloured dot reads faster than
- * the word, but a chip's padding/background would be too heavy).
- *
- * Distinct from `Chip`'s dot variant, which is still a `HeroChip` with the chip's
- * background/padding/pill shell and cannot render a bare dot + label. It reuses the
- * same swatch mechanism as `Legend` (`resolveDotColor`, a size-2.5 flat circle,
- * neutral skeleton fill) but exposes it as a standalone single-instance composite,
- * whereas `Legend` only takes a repeated `items` array. No swatch/dot atom exists
- * yet, so the dot stays a plain non-animated `<span>`.
+ * `DotLabel` — a colour dot + an inline text label as one unit, with no pill/background. Use
+ * where a coloured dot reads faster than the word alone but a full chip's padding would be too
+ * heavy (a status line inside a card, an "Online" row beside a name, a category line in a dense
+ * list). Leaves: `tone`, `color`, `isSkeleton`. The dot is a plain span (no bare-swatch atom yet).
  */
 
 /** Label tone — the 6-value scale every composite text draws from. Default `muted` (a status line reads as secondary text; the swatch already carries the emphasis). */

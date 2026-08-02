@@ -6,19 +6,12 @@ import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentPager` — a BLOCK: the step-to-the-next-lesson block at the foot of the
- * reading screen. Two pressable cards, "previous lesson" on the left and "next
- * lesson" on the right.
- *
- * A block rather than a frame because it knows what a LESSON is — the neighbour
- * cards carry a lesson title and link, and the block words the labels itself
- * ("Previous content" / "Next content"). Self-hides when neither neighbour exists.
- *
- * Asymmetric on purpose: "previous" reads left-to-right behind a back caret, "next"
- * is mirrored and right-aligned behind a forward caret, so the pair reads as a
- * direction. The right card pins to the second column only where the grid has two,
- * via a container query. The caller hands the two neighbours as DATA (`title` +
- * `href`).
+ * `ContentPager` — step to the neighbouring lesson at the foot of the reading
+ * screen. It owns the "previous lesson" / "next lesson" labels and the lesson
+ * title + link on each card. The right card mirrors the left so the pair reads
+ * as a direction, pinning to a second column only where the grid has two (a
+ * container query). Losing either card, and `isSkeleton`, are each their own
+ * leaf; having no neighbour renders nothing.
  */
 
 /** One neighbouring lesson — plain data, the block builds the card from it. */

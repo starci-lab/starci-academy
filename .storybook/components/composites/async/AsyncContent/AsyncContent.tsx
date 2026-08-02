@@ -14,20 +14,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `AsyncContent.*` — the async-state frame namespace holding the lifecycle of ONE
- * async data region (error → loading → empty → content).
- *
- * | Member | Role | Content channel |
- * |---|---|---|
- * | `.Base`  | the state-switch frame (4-branch switch) | slot `content`, `skeleton`, `emptyContent`, `errorContent` |
- * | `.Empty` | the empty-message frame | props `title`/`description`/`action` |
- * | `.Error` | the error-message frame | props `title`/`description`/`action` |
- *
- * `.Base` is a wrapper frame: `content` is the main path,
- * the other three branches each get their own named slot. `.Empty`/`.Error` are
- * props-only message frames with NO `children` — they lay out an
- * icon/title/description/action message the caller passes in, carrying no domain
- * text of their own. Namespace only — no bare component export.
+ * STATE SCOPE: `AsyncContent` is a state-transition scaffold — its own asset is BRANCH
+ * SELECTION (error → loading → empty → content), not the shape of each message. Every story
+ * is one branch, and the empty/error branches take only the minimal shape to prove the switch
+ * runs; the full set of message variants lives in `AsyncContentEmpty` / `AsyncContentError`,
+ * not repeated here.
  */
 
 // ─────────────────────────────────────────────────────────────────────────────

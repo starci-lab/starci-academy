@@ -3,18 +3,11 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `ReactionPicker` — a row of image buttons, each scaling up and lifting with its
- * name floating above on hover, and popping in with a slight stagger when the row
- * first appears (Facebook-style reaction picker).
- *
- * Owns all of the interaction CSS; callers supply only data (`items`, `activeKey`,
- * `onSelect`), so it is reusable for any small labeled-icon picker with this
- * interaction. `reactionPop` is a `@keyframes` defined in `src/app/globals.css`.
- *
- * @noSkeleton the reactions are a fixed set the caller declares, not a value
- * fetched behind this component — there is nothing to wait for, and the row
- * already animates itself in. A product that loads its reaction set over the wire
- * owns that async decision in the block that owns the fetch, not here.
+ * ATOM — `ReactionPicker`: a row of image buttons, each scaling up and lifting
+ * with its name floating above on hover, staggered pop-in on mount. Genuinely
+ * generic — no "reaction"/"lesson" domain knowledge, only `items`/`activeKey`/
+ * `onSelect`. Real consumer: `ContentReaction` (block), which supplies the six
+ * emotion images.
  */
 
 /** One pickable item in a {@link ReactionPicker} row. */

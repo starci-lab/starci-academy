@@ -3,15 +3,10 @@ import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 /**
- * `ChipGroup` — a row of chips described by `items` data, truncated when it overflows.
- *
- * The only member of the chip family with dependencies: it imports `Chip` and
- * `Tooltip`. Shows up to `maxVisible` chips; the rest collapse into a single `+N` chip
- * whose tooltip lists the full set.
- *
- * The group carries no meaning of its own — just layout gap plus `Chip` instances.
- * Per-chip state (`icon`/`onRemove`/dot color) belongs to `Chip`; the group's story
- * doesn't repeat it.
+ * `ChipGroup` — a row of chips built from `items` data, cut at `maxVisible`, the overflow
+ * gathered into a `+N` chip that opens a Tooltip. Owns cluster-level state (`items`,
+ * `maxVisible`, `tone`, `isSkeleton`); each pill is a real `Chip`, whose per-chip state (glyph,
+ * color dot, × button) lives in the `Chip` story.
  */
 /** One chip in {@link ChipGroup} — described as data, not JSX. */
 export interface ChipGroupItem {

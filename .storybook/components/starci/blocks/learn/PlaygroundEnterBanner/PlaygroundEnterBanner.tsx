@@ -6,12 +6,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundEnterBanner` — the playground page's single primary decision: a
- * labeled `SurfaceCard` holding a status line and the one button that enters the
- * lab. The block builds the status sentence from `allReady`/`pendingCount`
- * rather than a caller-supplied string. One leaf, two data states (ready vs
- * pending); the CTA disables via the button's own `isDisabled` while steps
- * remain.
+ * `PlaygroundEnterBanner` — the playground page's single primary decision card.
+ * Reuses `FlashcardDueHero`'s card shape (`SurfaceCard` ⊃ `StackV` ⊃ status line +
+ * primary `Button`). The block builds its own readiness sentence from `allReady` +
+ * `pendingCount`. One shape: ready vs pending are data states — the swap only
+ * changes the status text/color and the CTA's `isDisabled`.
  */
 
 /** Props for {@link PlaygroundEnterBanner}. */

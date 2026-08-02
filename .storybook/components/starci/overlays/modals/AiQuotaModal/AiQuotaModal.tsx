@@ -15,14 +15,12 @@ import {
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `AiQuotaModal` — the root overlay for "how much AI have I used": a dialog with the
- * current tier beside its title, a 3-way tab strip (Auto / Subscription / History),
- * and one link out to the full-usage page. Composes `ModalShell` + `Tabs` + the three
- * sibling `ai` blocks it switches between (`AiQuotaLane`, `AiQuotaSubscriptionPanel`,
- * `AiQuotaHistoryPanel`).
- *
- * Presentational: `isOpen`/`onOpenChange`/`activeTab`/`onTabChange`, plus each tab's
- * `isLoading`. `tier: null` reads as the free plan and shows no badge.
+ * `AiQuotaModal` — the root overlay for "how much AI have I used": dialog shell
+ * + title/tier-chip header + 3-tab strip + the active tab's panel + "view full
+ * usage" link. Opened via the app's global overlay store; this port takes plain
+ * `isOpen`/`onOpenChange`/`activeTab` props. One leaf (`Default`): the wrapper
+ * shape never changes — only which `ai`-group block fills the panel slot. `tier`
+ * (the header chip) and each tab's `isLoading` are further states.
  */
 
 /** Which paid AI plan the viewer is on. `null` = free plan, no badge shown. */

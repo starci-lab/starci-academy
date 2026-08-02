@@ -7,23 +7,10 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `Section.*` — the frame of a REGION inside a page: a titled band ("My courses",
- * "Recent activity") that owns NO chrome of its own (no surface fill, border,
- * radius, or padding). It stacks a header, a body, and an optional footer at ONE
- * rhythm.
- *
- * Not `SectionCard` (that IS a card — HeroUI `Card` chrome, `accent` skin,
- * `withVerdict` band); `Section` is the bare frame around it. Not `PageHeader`
- * (route chrome, one per page); `SectionHeader` is a region header, many per page,
- * scaling down via `level`.
- *
- * `.Base` is a wrapper frame with named slots `header`/`body`/`footer`, each a
- * COMPONENT reference the frame calls itself (COMPOSITE-8) so `isSkeleton` can
- * reach inside it. `.Header` owns semantic slots (`eyebrow`/`title`/`description`/`action`)
- * and takes no `children`. Namespace only — no bare component export. The vertical
- * rhythm is a typed token ({@link AllowedGap}); `title`/`description`/`eyebrow` are
- * plain text the frame wraps in `Typography.*` itself; `action` takes a
- * `Button.*`-composing COMPONENT reference from the caller.
+ * `Section` — the frame for one region of a page: it stacks `header` / `body` / `footer` along
+ * one vertical rhythm (`gap`) and nothing else. No chrome (no background, border, radius, or
+ * padding) — the surface lives inside it (`SurfaceCard.*`/`SectionCard`). Distinct from
+ * `SectionCard`, which is an actual card with chrome. Owns only slot combination and `gap`.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

@@ -3,18 +3,15 @@ import { Badge as HeroBadge, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * ATOM — `Badge`: the ONE constrained badge atom over HeroUI Badge.
+ * ATOM — `Badge`: wraps HeroUI `Badge` directly (+ `Badge.Anchor` when it has
+ * `children`). A leaf atom — it composes none of our own storied atoms, so it has no
+ * atom-tier deps; `Content` is an internal slot for free-form `children`, not a dep.
+ * `Badge`/`Badge.Anchor`/`Skeleton` are direct `@heroui/react` renders (`tier:
+ * "heroui"`), and `Badge` is a valid atom-wrapper holding `children`.
  *
- * Every badge variant lives on this ONE atom, distinguished by PROP:
- *   • count                  → `<Badge count={3}>{icon}</Badge>`
- *   • dot                    → `<Badge dot>{icon}</Badge>`
- *   • capped count           → `<Badge count={128} max={99}>{icon}</Badge>`
- *   • standalone (no anchor) → `<Badge count={5} />`
- *
- * With `children`, the atom wraps in HeroUI's `Badge.Anchor` (badge hangs off
- * the corner of the child); without, it renders inline. The atom caps the
- * count at `max` and draws its own leaf skeleton (`isSkeleton`). `count <= 0`
- * (without `showZero` or `dot`) hides the badge, rendering only the anchor content.
+ * Uses the `states[]` API: each prop value (`count`/`dot`/`max` for `Anchored`, each
+ * tone for `Colors`, each size for `Sizes`, each corner for `Placement`) is its own
+ * state, so the deps tree and code snippet belong to it alone.
  */
 
 /** Badge tone (HeroUI Badge `color`). */

@@ -6,11 +6,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `QaConversationHeader` — the top of an expanded `QaQuestionThread`: a collapse
- * control, the asker's identity, an {@link AvatarGroup} of other participants,
- * and the reply count (or a "be first" nudge when there are no answers).
- * `canFollow`/`isFollowing`/`onToggleFollow`/`isFollowPending` are optional and
- * render nothing when `canFollow` is falsy, reserved for a future follow toggle.
+ * BLOCK — `QaConversationHeader`: the top of an EXPANDED question thread —
+ * collapse control, asker identity, who joined in, reply count.
  */
 
 /** Minimal identity this header needs for the asker or a participant. */

@@ -7,15 +7,14 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FoundationsCategoryPage` — the screen for browsing one foundations category's
- * resources, reached from the Foundations hub. It composes blocks in frames and hands
- * each typed data, drawing no shape of its own.
- *
- * Five functions: header (breadcrumb + category title/description), a self-hiding
- * trial-enroll banner, a live match count, name search with autocomplete, and the
- * resource list with paging. The trial banner resolves `isSkeleton` vs `isVisible`
- * itself; the screen's `isSkeleton` folds into the list's own
- * `isLoading` (`isSkeleton || isResourcesLoading`).
+ * `FoundationsCategoryPage` — the screen to browse one foundations category's
+ * resources, reached from the Foundations hub grid. A screen owns a list of
+ * functions: it calls blocks, places them in frames, and hands each typed data.
+ * Five functions, in reading order: orient · get nudged to unlock while on
+ * trial · see a live match count · search resources by name · browse the list,
+ * open one, and page through it. Only `isSkeleton` forks into its own leaf; the
+ * trial nudge's visibility, an empty search result, and pager presence are data
+ * states of the one `Default` leaf.
  */
 
 /** Props for {@link FoundationsCategoryPage}. */

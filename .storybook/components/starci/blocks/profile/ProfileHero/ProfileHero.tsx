@@ -26,15 +26,15 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ProfileHero` — the identity sidebar for a profile page: a rank-framed avatar,
- * name/@handle/role, bio, location + work-mode, follower and badge social proof,
- * one primary CTA + share, and a github/linkedin/website/joined meta list.
- * Composes `SurfaceCard`/frames/atoms plus the domain leaves `ProfileRankAvatar`,
- * `ProfileFollowers`, `ProfileBadges`, `ShareProfileButton`. Rank is a number;
- * "Rank #N" is the block's own sentence, and the rank ring is a `className` on
- * `Avatar`, not a new shape. `onHire` fires the `canHire`-gated CTA. Social links
- * render as `Typography isLink`; `InlineIconLabel` is used only for the
- * plain-text meta rows. `isSkeleton` flows into every content atom.
+ * `ProfileHero` — the identity sidebar for a person's profile page:
+ * rank-framed avatar, name/@handle/role, bio, location + work-mode, follower
+ * and badge social proof, one primary CTA (hire/follow/edit) + share, and a
+ * github/linkedin/website/joined meta list. Composed from `SurfaceCard` around
+ * `StackV`/`StackH`/`Cluster` holding `Avatar`/`Typography`/`Chip`/`Button`/
+ * `Divider` plus `EnumChip`/`InlineIconLabel`. Two leaves: `Default` (every
+ * optional row present; CTA/skeleton/follow-state are content states) and
+ * `Minimal` (no rank/role/bio/location/work-mode/badges/social links — losing
+ * those removes real nodes, earning its own leaf).
  */
 
 /** An icon passed as a COMPONENT (e.g. a Phosphor `*Icon`), rendered at the tile's own scale. Declared locally per atom convention (§5.0) rather than importing one library's type. */

@@ -15,13 +15,12 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * `ProfileTabsBar` — the public-profile route strip (overview / projects /
- * challenges / skills / cv / activity). Takes already-computed props
- * (`activeTab`, `visibleTabs`, `onTabChange`, `hiddenTabs`); routing and the
- * URL<->tab derivation are app wiring done by the screen. `hiddenTabs` is the
- * owner-only "· hidden" marker on a subset of `visibleTabs`, not tabs to remove.
- * Uses `TabsExtended` (icon stays visible while the label + marker drop below
- * `@app-md` — two independently-toggled regions per tab). The destination
- * vocabulary is a block-owned enum. Never skeletonised. One leaf.
+ * challenges / skills / cv / activity). Draws the already-gated tab list the
+ * caller hands it and reports a pick back via `onTabChange`; visibility gating
+ * stays upstream. Uses `TabsExtended` (composing the `Tabs.*` children
+ * directly) so one region (icon) can stay visible while another (label + owner
+ * marker) drops below `@app-md`. One leaf: which tabs show, which is active,
+ * and which carries the "· hidden" marker are data.
  */
 
 /** Every public-profile destination this strip can offer — ported from the real `ProfileTab`. */

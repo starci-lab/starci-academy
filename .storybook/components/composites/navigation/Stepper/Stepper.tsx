@@ -5,12 +5,7 @@ import { CheckIcon } from "@phosphor-icons/react"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
-/**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — full port of `@/components/blocks/navigation/Stepper`.
- * Authored in Storybook (not `src`); synced to `src` later.
- * ─────────────────────────────────────────────────────────────────────────────
- */
+/** Horizontal, mid-flow: done = check, current = accent ring, upcoming = muted. */
 
 /** One step on the {@link Stepper}. */
 export interface StepperStep {

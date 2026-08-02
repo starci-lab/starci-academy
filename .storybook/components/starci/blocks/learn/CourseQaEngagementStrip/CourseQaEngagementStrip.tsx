@@ -3,11 +3,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CourseQaEngagementStrip` — the reassurance aggregate under `CourseQaHeader` on a
- * course Q&A board: two muted lines, enrolled learners and answered/total questions.
- * `enrollmentCount` is optional — the line is dropped when unknown but printed as-is
- * for a real `0`. Zero questions asked reads as "no questions yet" rather than a
- * hollow "0/0 answered". One two-line `StackV` leaf, `gap={1}`.
+ * BLOCK — `CourseQaEngagementStrip`: the "you're not learning alone" honest
+ * aggregate under `CourseQaHeader` on a course Q&A board — enrolled learners,
+ * then answered/total questions. See the component file header for the full
+ * real-numbers-only contract and the leaf/state judgement call.
  */
 
 /** Props for {@link CourseQaEngagementStrip}. */

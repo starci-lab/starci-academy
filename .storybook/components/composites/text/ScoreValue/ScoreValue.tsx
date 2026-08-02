@@ -2,11 +2,11 @@ import React from "react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * `ScoreValue` — renders "N points", the free-form point value a grading row is
- * worth. A rubric point count has no closed set of values, so it renders as
- * TEXT, never a `Chip`. Callers pass only a number; this composite is the single
- * owner of the "N points" shape. Uses default color (a raw number attached to an
- * active control is not a classifying fact, so neither `accent` nor `muted`).
+ * COMPOSITE — "N points", the free-form point value a grading row is worth. Renders as
+ * accent TEXT, never a `Chip` (§2a: a point count has no closed set of values, so it is
+ * not a chip-shaped enum). See the component's own file header for the §2d neo this
+ * composite exists to close — two blocks used to render the same info-type as two
+ * different elements before this became the single owner of the shape.
  */
 
 /** Props for the {@link ScoreValue} composite. */

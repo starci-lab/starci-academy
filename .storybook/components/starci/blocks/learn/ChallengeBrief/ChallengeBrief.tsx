@@ -15,26 +15,11 @@ import { stripMarkdown } from "@sb-components/atoms/text/_markdown"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ChallengeBrief` — a BLOCK: the reading column of a challenge — everything a
- * learner reads before they submit. Owns none of the submit/score aside.
- *
- * Five conditional sections (prerequisites, requirements, guided steps, expected
- * outputs, hint), each gated on its data being non-empty — but which sections are
- * present is DATA, so this stays ONE leaf with a "some sections empty" state.
- *
- * Reuses two shapes: prerequisites / outputs / hint → `SurfaceCardList` free-form
- * rows (this block builds the row body: plain text, a leading `CheckCircleIcon` +
- * text, or one markdown paragraph); requirements / guided steps →
- * `SurfaceCardAccordion`, with `titleEnd` carrying the per-requirement `ScoreValue`
- * (accent text, never a chip) and steps numbered "1. …" by this block.
- *
- * Skeleton note: `SurfaceCardList`'s `isSkeleton` reaches only its fixed row shape,
- * not the free-form path, so the list sections build their own placeholder rows
- * (bare `Typography isSkeleton` bars); the accordion sections forward `isSkeleton`.
- * While loading every section renders with a fixed placeholder count (2 for the
- * list sections, 1 for hint); a section disappears once its real data comes back
- * empty. The outputs skeleton row has no check icon (it would assert an unconfirmed
- * "this is met").
+ * `ChallengeBrief` — the reading column of a challenge: prerequisites,
+ * requirements (points-per-row), guided steps, expected outputs, and a hint,
+ * each present only when the challenge carries it. One leaf: which of the five
+ * sections show up is data. States: every section present, some genuinely
+ * absent, and the loading mirror.
  */
 
 /** One "before you start" line — plain, unchecked (needed, not achieved). */

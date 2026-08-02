@@ -3,16 +3,14 @@ import { Pagination as HeroPagination, Skeleton as HeroSkeleton, cn } from "@her
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Pagination` — the single page-nav atom wrapping HeroUI `Pagination`.
- *
- * Controlled and presentational: pass `currentPage` / `totalPages` and a raw
- * `onPageChange`; the atom renders the full HeroUI compound and owns prev/next
- * clamping and windowing. A large page count collapses distant pages behind
- * `Pagination.Ellipsis` (first · … · current±siblings · … · last); a short list
- * shows every page.
- *
- * Only `Pagination` is exported. No `children` — the pager is fully data-driven.
- * `isSkeleton` renders a co-located control skeleton.
+ * ATOM — `Pagination` wraps HeroUI `Pagination` directly (`Pagination.Previous`/
+ * `Pagination.Link`/`Pagination.Ellipsis`/`Pagination.Next` are sub-parts of the HeroUI
+ * compound). Each is a real import, so they declare `tier: "heroui"` in `ANNOTATE`, the name
+ * matching the import identifier exactly (no `storyId`).
+ * 
+ * The `Skeleton` leaf carries the prop's name (`isSkeleton`). The windowing axis (Default =
+ * every page shown; ManyPages = far pages collapsed into "…") depends on `totalPages`, which
+ * is not available while loading, so one representative shape (a row of squares) is enough.
  */
 
 /** A rendered slot: a concrete 1-based page, or a collapsed gap. */

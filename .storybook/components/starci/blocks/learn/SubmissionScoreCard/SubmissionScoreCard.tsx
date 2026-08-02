@@ -8,16 +8,14 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `SubmissionScoreCard` — the top signal after the attempt selector on a
- * graded-result page (challenge, mock interview): how well this attempt did and
- * who said so. Owns pass/fail tinting (hero number and verdict chip flip the
- * same success/danger tone) and the "need N more points" sub-line (computes
- * `passScore - score` itself). Maps the 5 model categories onto the 5 semantic
- * chip tones locally (free->default, economy->success, balanced->accent,
- * premium->warning, frontier->danger). One leaf; every optional row is a
- * presence/absence of data. The model byline gates on `gradedByModel`;
- * `gradedByLabel` is an optional override of the leading word (default "Graded
- * by").
+ * `SubmissionScoreCard` — the headline signal after the attempt selector on a
+ * graded-result page: a tinted pass/fail score hero, a verdict chip + "needs N more
+ * points" sub-line, optional short feedback, an optional submission link, and an
+ * optional model-byline row (who graded it, its tier, when). Sibling of
+ * `SubmissionResultHeader` — the header answers "what was I graded on", this card
+ * answers "how did it go". Pass/fail drives both the hero number's color and the
+ * verdict chip's tone together. Every optional part and `isSkeleton` are states of
+ * one shape.
  */
 
 /** Cost/quality tier of the model that produced the grade. */

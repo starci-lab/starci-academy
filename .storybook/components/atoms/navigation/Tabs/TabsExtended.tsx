@@ -4,16 +4,24 @@ import { Tabs as HeroTabs, cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `TabsExtended` — wrapper atom over HeroUI `Tabs`, for callers that build the
- * `Tabs.*` compound tree themselves (e.g. `Toolbar`, where each tab carries
- * chrome — accent/muted styling, responsive label hiding, size — that a
- * `TabItem` data shape cannot carry). Use `Tabs` (`items`) instead when tabs
- * are pure content. Same wrapper-atom shape as `Tooltip` (wraps an arbitrary
- * trigger) / `Badge`.
- *
- * The `variant="secondary"` look depends on the `.extended-tabs` class defined
- * in `src/app/globals.css`, not in this file — it renders correctly in
- * Storybook only when those globals are loaded.
+ * ATOM — `TabsExtended`: the StarCi tab strip, wrapping the HeroUI `Tabs` root. Lives in the
+ * `Tabs.*` namespace (see the `TabsExtended.tsx` header for why `children` here is a valid
+ * exception rather than debt).
+ * 
+ * 1 PROP THAT PRODUCES A SHAPE = 1 LEAF. Leaf set = `Default` (bare) + one leaf per
+ * shape-producing prop: `variant` · `size`. `selectedKey`/`onSelectionChange` is the
+ * controlled mechanism (no leaf), `className` is an escape hatch (no leaf).
+ * 
+ * `children` is a named exception (atom-wrapper): consumers like `Toolbar` attach an
+ * `accent`/`muted` class to each tab and hide responsive labels — something a data-only
+ * `TabItem` can't carry. A "builds N children" prop has a leaf, and that leaf is `Default`.
+ * The `Size` leaf covers the two values of `size` (truncates w-full vs sizes-to-label w-fit);
+ * `Variant` covers the variant union.
+ * 
+ * `annotate`: the atom wraps HeroUI `Tabs` directly (aliased `HeroTabs`), and the only DOM
+ * node it owns is the root `<Tabs>` — the `Tabs.ListContainer > Tabs.List > Tabs.Tab` tree
+ * below belongs to the story that builds `children`, so only the root `<Tabs>` is tagged
+ * (`"Tabs"`, heroui tier).
  */
 
 /** Props for {@link TabsExtended}. */

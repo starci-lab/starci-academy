@@ -3,11 +3,9 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * `QaReactionBar` — the like-and-count control under a question or answer bubble
- * in `QaQuestionThread`. Renders one heart toggle: pressing sends `"like"` when
- * the viewer had no reaction, or `null` (clear) when they already reacted. The
- * full six-kind `QaReactionType` stays on the wire so a future picker can widen
- * this without a prop-shape change.
+ * BLOCK — `QaReactionBar`: the like-and-count control under a message
+ * bubble. Renders one heart toggle rather than the full six-reaction picker
+ * — see the component's own file header for why.
  */
 
 /** Mirrors `QaQuestionThread`'s own `QaReactionType` (kept local — see that file's ASSUMED CONTRACTS note). */

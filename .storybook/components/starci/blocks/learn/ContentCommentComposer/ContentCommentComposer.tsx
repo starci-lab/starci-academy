@@ -7,16 +7,15 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentCommentComposer` — a BLOCK: the textarea + submit control used for new
- * comments, replies, and edits — one component, three call shapes.
+ * BLOCK — `ContentCommentComposer`: the textarea + submit control for new
+ * comments, replies, and edits — ONE component, three call shapes, ported
+ * verbatim from real `src`'s `CommentComposer`. See the component's own file
+ * header for why `variant="primary"` (real `Discussion` is frameless — no
+ * card ever wraps this field) and why the avatar-led row is top-level only.
  *
- * `collapsible` (top-level composer only) starts as a slim avatar + placeholder
- * pill and expands to the full field on click, so an empty box never dominates the
- * discussion zone. Reply and edit composers omit `collapsible`, render expanded,
- * and show no avatar.
- *
- * Uses `variant="primary"`: the discussion is frameless (no card wraps it), so this
- * field sits directly on the page canvas rather than inside a card.
+ * 📐 LEAVES by STRUCTURE (§14d.2). Collapsed-pill vs expanded-field is a real
+ * node swap ⇒ separate leaves. Avatar present/absent is also a node swap
+ * (top-level vs reply/edit) ⇒ its own leaf.
  */
 
 /** Minimal identity for the avatar-led top-level composer. */

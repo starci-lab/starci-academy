@@ -3,10 +3,14 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * `CourseQaHeader` — the page-identity cluster at the top of a course Q&A screen:
- * breadcrumb trail, title, description. Builds `Breadcrumbs` from crumb DATA and drives
- * `PageHeader`'s title slot with the `isSkeleton` → `Typography` swap. No meta row
- * (the toolbar below owns question count / filter / sort).
+ * BLOCK — `CourseQaHeader`: the PAGE-IDENTITY cluster at the top of a course
+ * Q&A screen — trail, title, description, nothing else.
+ *
+ * SIBLING OF `LeaderboardHeader`/`FoundationsHeader`, NOT A COPY. Every ported
+ * screen wraps `PageHeader` in its own domain-named block rather than the
+ * screen touching the composite directly (rule 1). This board carries no meta
+ * row for the same reason `LeaderboardHeader` doesn't: the facts (question
+ * count, filter, sort) live in the honest-strip/toolbar below, not the header.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

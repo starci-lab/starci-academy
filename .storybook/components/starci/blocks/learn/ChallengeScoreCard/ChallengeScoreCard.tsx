@@ -6,21 +6,12 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * `ChallengeScoreCard` — a BLOCK: "Your results" — the one aggregate fact for a
- * finished challenge attempt, the earned/max score read against the pass line.
- *
- * A sibling of `ChallengeDeliverableList`, not part of it: the list owns one row per
- * requirement, this card owns the roll-up across all of them. Composed, not rebuilt:
- * the card face + label is `SurfaceCard` (labeled), the bar is `ProgressMeter` with
- * its `target` prop for the pass line.
- *
- * One leaf: `earnedScore`/`maxScore`/`passThreshold` change only the numbers, never
- * the tree shape, and even `isSkeleton` stays a state. The caption ("Passing needs
- * every requirement, not just the total") is fixed, wired into `SurfaceCard`'s
- * `description` slot rather than a prop.
- *
- * `ProgressMeter` has no `isSkeleton` of its own; while skeleton this block
- * substitutes a bar-shaped `HeroSkeleton` sized to the meter's track height (`h-1`).
+ * `ChallengeScoreCard` — "Your result": the aggregate earned/max score for a
+ * finished challenge attempt, read against the pass line. The roll-up sibling of
+ * `ChallengeDeliverableList`. The card face is `SurfaceCard` (labeled, its
+ * `description` slot the pass-condition caption); the bar is `ProgressMeter` with
+ * a `target` for the pass line. `earnedScore`/`maxScore`/`passThreshold` and
+ * `isSkeleton` only change the numbers.
  */
 
 /** Props for {@link ChallengeScoreCard}. */

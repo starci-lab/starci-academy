@@ -6,15 +6,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `VoiceHero` — the voice-first answer composer: a big push-to-talk mic with its
- * live transcript as the hero, and a quiet typed textarea fallback for browsers
- * without speech-to-text (or text-only lessons). Two leaves by structure,
- * `MicHero` and `TypedFallback`. Which renders is computed from `sttSupported`
- * and `answerMode` (`voice`/`text`/`both`); in `both`, which input is on screen
- * is ephemeral UI state, not a prop. The transcript is one line — interim text
- * reads muted+italic, committed text plain. Mic colour (`danger` while
- * listening) carries the recording state. No `isSkeleton` (the composer mounts
- * once `sttSupported` is known).
+ * `VoiceHero` — the voice-first answer composer. A large push-to-talk mic with
+ * its live transcript is the hero; a quiet typed textarea is the fallback for
+ * browsers without speech-to-text, or lessons that only want typed answers.
+ * Two structural leaves — `MicHero` (circular button + transcript) and
+ * `TypedFallback` (textarea + switch-back link) — chosen from `sttSupported`
+ * and `answerMode`, plus an ephemeral toggle reachable only when both input
+ * methods are offered (`answerMode="both"` with STT supported). The
+ * "type instead" / "use voice" link is a state inside each leaf, tracking the
+ * `canToggle` boolean. No `isSkeleton` — nothing to mirror.
  */
 
 /** How the caller wants an answer collected. */

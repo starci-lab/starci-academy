@@ -6,21 +6,10 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ConsultantCard` — a BLOCK: one recruiting consultant as a self-contained
- * pressable tile (photo, name, role, company, blurb). Opening it is the whole
- * point, so it reuses `SurfaceCard.Pressable` rather than hand-rolling a
- * `<button>` around bare atoms. A domain identity block: it knows what a
- * "consultant" is, reusable wherever one consultant is shown.
- *
- * Does NOT forward `isSkeleton` into `SurfaceCard.Pressable`'s own flag: that
- * built-in skeleton is a horizontal leading-avatar row, which would flip this
- * top-aligned photo tile's layout on every load. Instead the block keeps
- * `.Pressable` on its real branch (only dropping `onPress` via `isDisabled`) and
- * pushes `isSkeleton` straight into `Image` and `Typography`. During loading every
- * optional row (role / company / blurb) is drawn as a shimmer bar.
- *
- * Company is plain text with a leading icon, never a nested link — the card is
- * already one press target.
+ * `ConsultantCard` — one recruiting consultant as a self-contained pressable
+ * tile (photo, name, role, company, blurb) that opens their profile on press.
+ * Built on `SurfaceCard.Pressable`. `Minimal` drops `jobTitle`/`companyTitle`/
+ * `description` together; `isSkeleton` keeps the same tree as shimmer.
  */
 
 /** One recruiting consultant — plain data, the block builds the tile from it. */

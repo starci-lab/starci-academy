@@ -3,14 +3,10 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
- * `ProfileNotFoundState` — the 404-style whole-route message shown when a public
- * profile cannot be read (not found, soft-deleted, or a failed fetch). Composes
- * `EmptyState` in its icon/title/description/action shape; renders card-free and
- * without a skeleton (a resolved-lookup terminal state).
- *
- * @param title Pre-translated heading.
- * @param description Pre-translated body.
- * @param onGoHome Fired by the CTA; the "Back to home" label is owned here.
+ * `ProfileNotFoundState` — the 404-style whole-route message for a profile
+ * that cannot be read (not found, soft-deleted, or a failed fetch). Composes
+ * `EmptyState` in its plain icon+title+description+action form. One leaf: the
+ * shape never branches, so different inputs are states.
  */
 
 /** Props for {@link ProfileNotFoundState}. */

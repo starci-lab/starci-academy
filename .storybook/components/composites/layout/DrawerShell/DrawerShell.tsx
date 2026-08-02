@@ -6,20 +6,11 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `DrawerShell.*` — the panel-scaffold frame namespace, sibling of `ModalShell`.
- * Same slot contract (`header`/`body`/`footer`), same
- * seam rule (`gap-3` on the Dialog owns the rhythm; the body cancels HeroUI's own
- * `mt-*` with `mt-0!`), same tier-3 presentational contract (no state of its own —
- * the caller threads `isOpen`/`onOpenChange` plus content via props).
- *
- * Differs from `ModalShell` only where the HeroUI primitive does: `Modal.Container`
- * takes `size` (centered dialog width); `Drawer.Content` takes `placement` (which
- * edge the full-bleed panel slides from).
- *
- * COMPOSITE-8: `title`/`description` are TEXT the frame renders itself (wrapped
- * in `Typography` here, with `isSkeleton`); `header`/`body`/`footer` are CONTENT
- * REGIONS — component references the frame mounts itself
- * (`<Header isSkeleton={isSkeleton} />`), never already-built nodes.
+ * `DrawerShell` — the panel scaffold frame:
+ * `Drawer > Backdrop > Content > Dialog > CloseTrigger + Header? + Body + Footer?`.
+ * Sibling of `ModalShell` — same named slots (`header`/`body`/`footer`,
+ * `children` = body shorthand), differing only where the HeroUI primitive
+ * differs: `placement` (which edge it slides from) instead of `size`.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

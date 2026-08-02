@@ -37,16 +37,13 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `Navbar` — the sticky top app bar. Owns the header vocabulary: brand + home
- * link, primary route nav, the search entry point, locale + theme,
- * cart/notifications/account, and one local drawer standing in for the desktop
- * row on narrow viewports. Composes real atoms/composites where they exist
- * (`InputButtonLike`, `Button.RadioGroup`, `ListRow`, `AsyncContent`, `UserCell`,
- * `DrawerShell`) and drops to raw HeroUI where none fits (theme switch, the
- * dropdown menus, and the badge/avatar-anchored icon triggers). The mobile drawer
- * is caller-controlled (`isMobileDrawerOpen`/`onMobileDrawerOpenChange`); the
- * popover/menus stay uncontrolled. Ctrl/Cmd+K fires `onSearchPress`. Every list
- * is typed domain data — no `ReactNode` slots.
+ * `Navbar` — the sticky top app bar. Two structural leaves: the desktop row
+ * (route pills + inline language/theme) and the mobile collapsed row (icon bar
+ * + drawer trigger) are different compositions. Signed-in vs guest, empty vs
+ * busy badges, and drawer open vs closed are data, so they are states inside
+ * the matching leaf. Both leaves render the same component (the `@app-md:`
+ * rules live in its className), so the mobile leaf pins a narrow
+ * `renderClassName` frame to force the collapsed row into view.
  */
 
 /** One top-level desktop/mobile route entry. */

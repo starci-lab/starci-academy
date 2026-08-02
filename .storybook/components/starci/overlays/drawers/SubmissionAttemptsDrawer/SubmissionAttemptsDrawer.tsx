@@ -16,15 +16,11 @@ import { MODEL_CATEGORY_MAP, type AiModelCategory } from "@sb-components/starci/
 import { Pagination } from "@sb-components/atoms/navigation/Pagination/Pagination"
 
 /**
- * `SubmissionAttemptsDrawer` — the full graded history of one challenge requirement:
- * every past attempt, client-paginated (6 per page), opened over the result screen.
- * Tapping any row both selects that attempt and closes the drawer. Composes
- * `DrawerShell` + `AsyncContent` + `SurfaceCard.List`, reusing the model-byline
- * recipe (`EnumChip`/`InlineIconLabel`/`MODEL_CATEGORY_MAP`).
- *
- * Takes the whole `attempts` array and slices it client-side (page resets to 1 on
- * open). One `AttemptRow` leaf; pass/fail, model present/absent, and time-ago
- * present/absent are states of it.
+ * `SubmissionAttemptsDrawer` — a presentational overlay drawer listing every
+ * past graded attempt at one challenge requirement, client-paginated. A row is
+ * the select action: tapping it both picks that attempt and closes the drawer.
+ * Pagination is owned inside this block (the full attempt list in, sliced
+ * 6-at-a-time), not a caller-controlled `currentPage`/`totalPages` pair.
  */
 
 /** One past graded attempt at this challenge requirement. */

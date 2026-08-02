@@ -7,8 +7,10 @@ import type { ChipTone, IconComponent } from "@sb-components/atoms/chips/Chip/Ch
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/chips/EnumChip`. Authored in Storybook (not `src`); synced later.
+ * `EnumChip` — a `Chip` whose tone / label / optional tooltip / optional leading icon come
+ * from a per-value lookup (`map[value]`), so a domain badge shrinks to just its map table plus
+ * this delegate. Props: `value`, `map` (two halves of one lookup), `isSkeleton`,
+ * `className`/`classNames`.
  */
 
 /**

@@ -6,8 +6,11 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — the target `InputButtonLike`. Authored in
- * Storybook (not `src`); synced to `src` later. NO `@/components` imports.
+ * `InputButtonLike` — a button disguised as an input field: it carries the native HeroUI
+ * field look (rounded shell, field background + border, muted placeholder) but behaves as a
+ * single press target with no inner dividers, so it can trigger an overlay (a global search
+ * dialog, a command palette) instead of accepting typed input. Leaves: `icon`, `suffix`,
+ * `size`, `isSkeleton`, `placeholder`.
  */
 
 export type InputButtonLikeSize = "sm" | "md" | "lg"

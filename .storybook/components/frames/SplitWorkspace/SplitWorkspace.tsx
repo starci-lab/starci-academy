@@ -4,20 +4,9 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `SplitWorkspace` — a FRAME: the read-column + sticky-aside workspace shape — a
- * brief/content column that grows, beside a fixed-width action column that pins to
- * the viewport once there is room for both side by side.
- *
- * `flex-col` (mobile/tablet) → `@app-xl:flex-row` (desktop). Distinct from a
- * responsive `Stack`: `StackH` is a fixed horizontal axis that, with `wrap` and
- * the main column's `min-w-0 flex-1`, almost never actually wraps and so renders
- * side-by-side at every width; this named shape stacks cleanly below its
- * breakpoint instead.
- *
- * `at` names the switch breakpoint (a `ResponsiveRowSwitch` prop, default `xl`);
- * `gap`, `w-[360px]`, `top-24`, and `max-h-[calc(100dvh-7rem)]` stay hard-owned.
- *
- * Two distinct roles ⇒ two named slots (`main`/`aside`), not a single `children`.
+ * `SplitWorkspace` — the read-column + sticky-aside workspace layout frame.
+ * Every size is hard-owned. `main`/`aside` stack full-width below `@app-xl`
+ * (mobile/tablet) and go side-by-side only from `@app-xl` (1280px) up.
  */
 
 /** Props for {@link SplitWorkspace}. */

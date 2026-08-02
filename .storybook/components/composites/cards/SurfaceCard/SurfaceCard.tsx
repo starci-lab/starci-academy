@@ -17,35 +17,11 @@ import { PADDING_CLASS, type AllowedGap, type AllowedPadding } from "@sb-compone
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 /**
- * `SurfaceCard.*` — the card frame namespace whose members lay out content within
- * one card face. Members include `.Base`, `.Nested`, `.List`, `.PressableGroup`,
- * `.SelectableGroup`, `.Accordion`, and `.CrossList`.
- *
- * Frame API law:
- * - Named slots are the main road: `header` / `body` / `footer`, each a COMPONENT
- *   reference the frame calls itself so `isSkeleton` can reach inside it.
- * - A repeating list takes DATA via `items`; elements are forbidden there
- *   (`.List` · `.PressableGroup` · `.SelectableGroup` · `.Accordion` · `.CrossList`).
- * - Namespace only — no bare component export.
- *
- * `.Base` derives `isPressable = Boolean(onPress || href)` internally and owns the
- * press capabilities (`onPress`/`href`/`isDisabled`/`isSelected`/`actions`/
- * `ariaLabel`, ripple, `active:scale-[0.97]`, stretched-link `actions`).
- *
- * `.PressableGroup` vs `.SelectableGroup` are both grids of cards differing in one
- * axis: `.PressableGroup` is an ACTIONS grid of independent press targets
- * (`role="group"`, each tile its own `<button>`/`<a>`, optional decorative
- * `selected` ring, no enforced exclusivity); `.SelectableGroup` is a real
- * single-select control (`role="radiogroup"` via HeroUI `RadioGroup`/`Radio`,
- * roving tabindex, arrow-key nav, enforced one-of-N value).
- *
- * Three independent axes on the card face:
- *
- * | Prop | Union | Default | Present on member |
- * |---|---|---|---|
- * | `variant` | `"surface" \| "nested"` | `"surface"` | `.Base` `.Nested` `.List` `.Accordion` `.CrossList` |
- * | `padding` | `AllowedPadding` (from `_spacing`) | `{4}` | `.Base` |
- * | `radius` | `"xl" \| "3xl"` | `"3xl"` | `.Nested` |
+ * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
+ * (`SurfaceCardHeader`: label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer`
+ * slot set, the `description` outside the card, and two independent frame axes `variant`
+ * (`"surface" | "nested"`) and `padding`. Each slot is a component reference the frame calls
+ * itself, so `isSkeleton` can reach inside it.
  */
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "SurfaceCard" } as const

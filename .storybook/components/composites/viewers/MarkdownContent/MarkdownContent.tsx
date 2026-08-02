@@ -9,27 +9,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `MarkdownContent` — a VIEWER that paints an authored markdown document
- * faithfully. Unlike other composites it does not know its shape before render:
- * the shape is decided by the payload it receives.
- *
- * Handles: Shiki syntax-highlighted fenced code, mermaid diagrams (SVG,
- * click-to-zoom, caption pairing, streaming-safe truncation), `:::tab`/`:::code`/
- * `:::preview` → Preview↔Code tabs, GFM tables → HeroUI `Table`,
- * `::::accordion`/`:::panel` → HeroUI `Accordion` with surface chrome, `:::muted`,
- * `:::chip`, image captions, link routing, heading anchors. Not handled:
- * `arcSections`, `plain` mode, the ` ```mdx ` live-render fence, the ` ```layout `
- * fence.
- *
- * Hand-written spacing lives in `map.tsx`: a viewer never sees its own children as
- * nodes, only as whatever the parser returns, so it cannot reach for frames.
- *
- * Two measures: `reading` is the lesson body (bigger type, generous rhythm);
- * `compact` is for markdown quoted inside another surface (a chat answer, a card).
- *
- * The only public styling prop is `classNames: Array<AllowedClassName>`. A caller
- * needing an arbitrary-selector reset wraps this component in its own `<div>`
- * carrying that class.
+ * `MarkdownContent` — a viewer that paints an authored markdown document faithfully. Unlike
+ * other composites it cannot know its shape before rendering — the payload decides it. Handles
+ * Shiki-highlighted fenced code, mermaid diagrams (click-to-zoom, caption pairing),
+ * `:::tab`/`:::code`/`:::preview` → Preview↔Code tabs, GFM tables → HeroUI `Table`,
+ * `::::accordion`/`:::panel` → HeroUI `Accordion`, plus `:::muted`/`:::chip`, image captions,
+ * link routing, and heading anchors. Leaves by structure are the two spacing measures.
  */
 
 /** How much room the document gets. */

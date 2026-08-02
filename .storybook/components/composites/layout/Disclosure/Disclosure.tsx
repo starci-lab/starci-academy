@@ -7,19 +7,10 @@ import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/c
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `Disclosure.*` — the collapsible frame namespace.
- *
- * `.Base` is a wrapper frame: `title` names the trigger slot and `body` names the
- * revealed region. It reveals ONE region, not
- * a repeating list, so there is no `items` member — a multi-panel accordion is a
- * different frame (`SurfaceCardAccordion`, items-driven). Namespace only — no bare
- * component export.
- *
- * The trigger is a hug-width (`w-fit`) `<button aria-expanded>` with a leading
- * caret that rotates 180° when open (`text-muted hover:text-foreground`); the body
- * renders below only while open. It generalises that hand-rolled shape rather than
- * building on HeroUI's headless `Disclosure`, whose default trailing,
- * `justify-between` trigger is a different shape.
+ * `Disclosure` — the generic collapsible frame: a trigger row (leading caret + title) toggling
+ * one content region below it (caret rotates 180° on open, `w-fit` trigger). A multi-panel
+ * accordion is a different frame (`SurfaceCardAccordion`). `body`/`children` take a component
+ * reference, not a built node, so the composite can forward `isSkeleton`.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

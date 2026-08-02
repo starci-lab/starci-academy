@@ -5,12 +5,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CourseQaToolbar` — the control strip above a course Q&A question list: status/scope
- * filter tabs (via `Toolbar`), a search field, and a live match count, in two stacked
- * rows. Owns the filter → label table and the count wording (`${count} questions`);
- * callers pass a {@link CourseQaFilter} key and a bare `resultCount`, never pre-built
- * tabs or strings. `isSkeleton` reaches only the count (filters and search field are
- * known/interactive upfront). One leaf.
+ * `CourseQaToolbar` — the control strip above a course Q&A question list:
+ * status/scope filter tabs, a search field, and a live match count. Two stacked
+ * rows — the filter tabs go through `Toolbar` (leftTabs only), while the search
+ * field + count are hand-composed in a `StackH` beside them. One leaf: active
+ * filter, search text, and count loading are all data on the same two-row shape.
  */
 
 /** Status/scope filter for the course-wide Q&A roll-up. Mirrors `src`'s `CourseQuestionFilter`. */

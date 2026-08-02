@@ -5,18 +5,18 @@ import { CaretDownIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Accordion` — the single accordion atom wrapping HeroUI `DisclosureGroup` +
- * `Disclosure`.
- *
- * Data-driven: pass `items` (id + title + content); the atom renders the full
- * `DisclosureGroup > Disclosure` compound (`Heading > Trigger (+ Indicator)`
- * and `Content > Body`). `allowsMultiple` switches single-open vs multi-open;
- * `defaultExpandedKeys` seeds an initially-open panel.
- *
- * Only `Accordion` is exported — no bare component. `items`/`title`/`content`
- * are data props, not `children`. The atom owns the trigger row, rotating
- * indicator, and expand/collapse animation. `isSkeleton` renders a co-located
- * collapsed-row skeleton.
+ * ATOM — `Accordion` wraps HeroUI `DisclosureGroup` + `Disclosure` directly; it composes no
+ * atom of ours with a story. Every sub-part is a real `@heroui/react` import, so each node
+ * declares `tier: "heroui"` in `ANNOTATE` with the name matching the import identifier
+ * exactly (`DisclosureGroup`/`Disclosure`/`Disclosure.Trigger`/`Disclosure.Indicator`/
+ * `Disclosure.Content`/`Skeleton`), with no `storyId`.
+ * 
+ * Leaf set = `Default` (bare, prop `items`) + `Single`/`Multiple` (prop `allowsMultiple`,
+ * each cell uses `defaultExpandedKeys` to open a panel up front, since `allowsMultiple` only
+ * changes behavior on interaction) + `Skeleton` (prop `isSkeleton`).
+ * 
+ * `Skeleton` carries the prop's name (`isSkeleton`). The atom has no other size/variant axis
+ * for the skeleton, so one rendering is enough.
  */
 
 /** One panel in an {@link AccordionBase}. */

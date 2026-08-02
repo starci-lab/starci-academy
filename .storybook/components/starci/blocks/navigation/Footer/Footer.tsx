@@ -8,14 +8,14 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `Footer` — the marketing site footer: brand + tagline + founder socials on the
- * left, two quiet link columns (explore/support) on the right, and a bottom bar
- * with copyright + legal stubs. Rendered only on opted-in routes (landing,
- * `/home`). Static chrome (tagline, column titles, made-by/copyright line) is
- * hardcoded; the link entries (`exploreLinks`/`supportLinks`/`socials`) are typed
- * domain props. The brand lockup is folded inline; social icons use
- * `react-icons/fa6` (brand glyphs, not Phosphor UI icons). The top-region/
- * bottom-bar seam uses `StackV`'s `divider` prop.
+ * BLOCK — `Footer`: the marketing site footer. See the component's own file
+ * header for the full port/reuse ledger; this story only exercises what a
+ * caller actually configures.
+ *
+ * ONE LEAF — the footer has a single structural shape (brand column, two link
+ * columns, bottom bar); nothing about its composition ever drops or gains a
+ * whole node. Longer vs. shorter link lists are DATA, so they live as states
+ * inside this one leaf rather than separate leaves.
  */
 
 /** One row inside a footer link column, or one of the two bottom-bar legal links. */

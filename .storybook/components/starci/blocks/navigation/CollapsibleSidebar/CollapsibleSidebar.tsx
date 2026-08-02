@@ -11,15 +11,12 @@ import { DragScrollArea } from "@sb-components/behaviors/DragScrollArea/DragScro
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CollapsibleSidebar` — the content-agnostic left-nav shell (composite tier)
- * that a `LearnSidebar` mounts into. Owns only the chrome: collapse/expand, the
- * width animation, persisting the choice to `localStorage`, and handing
- * `collapsed` down via `SidebarCollapsedContext` (with an exported
- * `useSidebarCollapsed`). Knows nothing about what a nav row is. Reuses
- * `DragScrollArea` (Windows-safe pointer-pan scroll region), `ButtonBase`, and
- * `Typography`; the animated-width `motion.aside` root is bespoke since no frame
- * expresses an animated width or the asymmetric collapsed/expanded padding. No
- * `isSkeleton` — chrome only.
+ * `CollapsibleSidebar` — a content-agnostic shell for a left navigation sidebar
+ * that collapses in place (no overlay/Drawer). Owns collapse/expand, the width
+ * animation, persisting the choice to `localStorage`, and a `useSidebarCollapsed`
+ * context so nav-row content can self-adapt to the icon-only rail. It never
+ * inspects `children`. One leaf: `topSlot` presence and the collapsed flag are
+ * data, so they are states, not separate leaves.
  */
 
 /** Expanded panel width (full nav). */

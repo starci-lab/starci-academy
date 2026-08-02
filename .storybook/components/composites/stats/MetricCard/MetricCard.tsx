@@ -4,11 +4,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/MetricCard`. Authored in Storybook (not `src`);
- * synced to `src` later.
- */
+/** `hint` is the only optional slot — omit it when value + label already explain themselves. */
 
 /**
  * Inlined faithful local copy of `@/components/blocks/cards/SectionCard` (the

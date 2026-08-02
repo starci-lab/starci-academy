@@ -6,11 +6,11 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `InnerLayout` — the root wrapper for every route: a sticky Navbar on top, the
- * routed page in between, and a marketing Footer shown or hidden per route via
- * `showFooter`. `main` grows to push the footer down on short pages. Takes a
- * mandatory `children`; Navbar and Footer draw their own edges, so the stack sits
- * flush against them.
+ * `InnerLayout` — the wrapper for every route in the app. `children` is a real
+ * slot: the shell stays mounted while the routed page underneath changes. Two
+ * structural leaves: `showFooter` gains or loses a whole composed node (the
+ * Footer), so it is a leaf rather than a state — the Footer's own shape never
+ * changes, it is simply present or gone.
  */
 
 /** Props for {@link InnerLayout}. */

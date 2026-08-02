@@ -13,15 +13,15 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentPage` — the screen for reading one lesson. It composes blocks in frames and
- * hands each typed data, drawing no shape of its own.
- *
- * Seven functions in reader order: what this lesson is, how to view it, read it, react
- * to it, what else to read, discuss it, step to the next one. The footer cluster
- * (reaction, related reading, discussion, pager) appears only on an open lesson —
- * under the paywall the reader has one decision to make. A mobile/tablet practice
- * nudge mounts when the lesson has challenges and hides above `@app-lg` via CSS. The
- * sandbox/challenges/AI-lab tab bodies are their own blocks, not built here.
+ * `ContentPage` — the screen to read one lesson. A screen owns a list of
+ * functions: it calls blocks, places them in frames, and hands each typed data.
+ * Seven functions, in reading order: what this lesson is · how to look at it ·
+ * read it · say how it landed · what else to read · talk about it · step to the
+ * next one. The footer (reaction, related reading, discussion, pager) is
+ * conditional — it appears only on an open lesson; a reader stopped by the
+ * paywall sees one decision (the `Locked` leaf). The sandbox / challenges / AI
+ * lab tab bodies are their own not-yet-built blocks and are deliberately left
+ * unrendered rather than stubbed.
  */
 
 /** Props for {@link ContentPage}. */

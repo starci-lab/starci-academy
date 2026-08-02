@@ -4,22 +4,11 @@ import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
- * `Toolbar.*` — the frame of a nav/control ROW above a panel. It has no card, fill,
- * border, radius, or padding: a `flex items-center justify-between gap-3` row that
- * pins one tab group left, an optional inline action cluster (`leftEnd`) after it,
- * and an optional second tab group right — collapsing that right group into a
- * compact dropdown below `@app-sm`.
- *
- * Every channel is a named slot: the two tab groups arrive as DATA (`items` +
- * `selectedKey` + `onSelectionChange`, {@link ToolbarTabGroup}), never as children;
- * only `leftEnd` is a free node slot. Namespace only — no bare component export.
- *
- * It does not compose the `Tabs.Base` / `Select.Single` atoms because their locked
- * APIs can't express what this row needs: the tab groups render through
- * `ExtendedTabs` (hug-content variant, `sm` strip, neutral `border-b-2
- * border-foreground` selection, `muted` tone, icon-only-on-mobile labels), and the
- * collapsed right group uses the HeroUI `Select` compound (a compact icon-only
- * trigger that must not stretch).
+ * `Toolbar` — the nav/control-row frame sitting above a panel: the primary tab group pinned
+ * left (+ an action cluster `leftEnd` right after it), a secondary tab group pinned right,
+ * collapsing into a dropdown below `@app-sm`. No chrome; root is
+ * `flex items-center justify-between gap-3`. Tab groups come in as data
+ * (`items`/`selectedKey`/`onSelectionChange`), and each tab's display state (disabled/muted) is drawn here.
  */
 /** One tab in a {@link ToolbarTabGroup}. */
 export interface ToolbarTabItem {

@@ -5,19 +5,11 @@ import {
 } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
 
 /**
- * `ConsultantDirectoryCompanySearch` — a BLOCK: a typed, debounced deep-link to
- * one recruiting company's page, not a filter on the consultant grid below it (the
- * real query has no server-side consultant search, only an ES company-suggester).
- *
- * Owns the placeholder wording and the mapping from a `ConsultantCompanySuggestion`
- * onto the atom's generic `SearchAutocompleteItem` shape. Nothing else — no
- * debouncing, no fetch, no `router.push`; those stay the screen's job, matching
- * `SearchAutocomplete`'s controlled, no-fetch contract.
- *
- * Never skeletonised — static chrome, known before any company data loads, so
- * there is no `isSkeleton` prop. One leaf (`Default`): the loading flag only swaps
- * content inside the same popover shell, a data condition rather than a structural
- * one.
+ * `ConsultantDirectoryCompanySearch` — a typed, debounced deep-link to one
+ * recruiting company's page, sitting above the consultant grid on the directory
+ * screen. It is not a grid filter: there is no server-side search over
+ * consultants, only a company suggester, so it jumps straight to a known
+ * company page. `isLoadingSuggestions` swaps the popover's content.
  */
 
 /** One company the ES suggester matched against the typed query. */

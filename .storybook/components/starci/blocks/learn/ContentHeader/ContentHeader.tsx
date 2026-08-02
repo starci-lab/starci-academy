@@ -8,21 +8,12 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentHeader` — a BLOCK: the lesson identity block at the top of the reading
- * screen — the single thing the screen calls for the whole identity cluster: trail,
- * title, description, the quiet meta strip, and the "what you'll learn" list.
- *
- * A sibling of `CourseBrief`, not a copy: both place identity into `PageHeader`, but
- * a lesson header carries read state, reading time, challenge count, and learning
- * outcomes rather than a course's module/hour/learner counts.
- *
- * Receives DATA and does all the wording itself — no `meta` string, no `heading`:
- * the caller hands numbers and the block decides units, separator, and order.
- *
- * One chip per cluster: the read state is the classifying axis and gets the chip;
- * reading time and challenge count ride as muted text with an inline icon. The seam
- * from the header proper to the outcomes list is `section` (two regions of one
- * thing).
+ * `ContentHeader` — the lesson-identity cluster atop the reading screen: a
+ * `PageHeader` cluster carrying read state, reading time, challenge count, and
+ * learning outcomes. One chip per cluster (`starci-fe/no-adjacent-chip`): read
+ * state takes the chip, reading time and challenge count ride as muted text with
+ * an inline icon. `isRead` is a state; losing the outcomes card and `isSkeleton`
+ * are each their own leaf. The breadcrumb trail always exists.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

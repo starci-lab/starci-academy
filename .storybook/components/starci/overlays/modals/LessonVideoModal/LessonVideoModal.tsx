@@ -12,15 +12,12 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `LessonVideoModal` — the fullscreen "watch this lesson video" dialog, opened from
- * anywhere. It owns the domain shape of a lesson video — a kind (raw/edited/premium)
- * chip, duration, host platform, player, external link, and two optional markdown
- * fields — and their reading order: meta row, then player, then commentary. The kind
- * chip is always `warning` tone (a production-stage badge). The player engine is out
- * of scope and stands in as a placeholder.
- *
- * Presentational: `isOpen`/`onOpenChange` + a typed `video`, plus optional `isLoading`
- * (withholds the two markdown fields while loading; other leaves skeleton).
+ * `LessonVideoModal` — fullscreen "watch this lesson video" dialog: kind chip,
+ * duration, host platform, the player chrome (engine out of scope — see the
+ * component file header), the external link, and optional description/caption.
+ * Opened from anywhere via the app's global overlay store; this port takes
+ * plain `isOpen`/`onOpenChange`/`video` props instead of reading Zustand/Redux
+ * directly (Rule 13).
  */
 
 /** Production stage / quality tier of a lesson video (mirrors `src`'s `LessonVideoKind`). */

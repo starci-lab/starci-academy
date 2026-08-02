@@ -21,17 +21,14 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `TaskSubmissionPanel` — the project-level sticky console for a GitHub-graded
- * personal project: point StarCi at the repo, kick off a re-evaluation, and see
- * the last verdict without leaving the task list. Reuses `SurfaceCard`,
- * `Button`, inputs, `SelectSingle`, and `DrawerShell` (settings drawer content
- * is in scope: language/branch/token bindings). A local `TaskResultSummary`
- * (trimmed sibling of `SubmissionScoreCard`) shows score + one feedback line +
- * model badge. Autosave and AI status map each enum value to icon + tone +
- * wording through `InlineIconLabel`; the evaluate button gets a live spinner via
- * `Button`'s `isPending`. `sticky top-4 z-10` is baked in. An omitted
- * `latestResult` and an `idle` `autosaveStatus` each drop their row. Never
- * decides what a locked evaluate means — always forwards `onEvaluate`.
+ * `TaskSubmissionPanel` — the project-level (not per-task) sticky console for a
+ * GitHub-graded personal project: repo URL, an evaluate action + AI status, the
+ * latest result summary, and a settings drawer for language/branch/token. Sibling of
+ * `ChallengeDeliverableList` (one repo URL for the whole project vs. one row per
+ * requirement; the settings drawer's content is in scope here). Autosave wording,
+ * the AI status line, and the evaluate button's busy state are states of `Default`;
+ * losing the `TaskResultSummary` subtree (no `latestResult`) and opening the settings
+ * drawer each get their own leaf.
  */
 
 /** Where the repo-URL field's autosave currently stands. */

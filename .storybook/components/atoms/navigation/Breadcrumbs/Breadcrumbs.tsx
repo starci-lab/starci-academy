@@ -5,21 +5,18 @@ import { ArrowLeftIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Breadcrumbs` — the single breadcrumb-trail atom wrapping HeroUI `Breadcrumbs`.
- *
- * Data-driven: pass `items` (root → current). The last item is the current page,
- * usually read-only (no `onPress`). `maxItems` truncates a longer trail to a
- * single non-pressable "…" crumb in the middle (first + ellipsis + tail).
- *
- * Responsive collapse lives here too: the atom can swap the whole trail for a
- * single "← Back" affordance pointing at the deepest pressable ancestor —
- * `collapseOnMobile` (back link below `@app-sm`) or `collapseFrom={n}` (back link
- * once the trail has ≥ n crumbs). The back link is built inline (HeroUI `Link` +
- * Phosphor `ArrowLeftIcon`) since an atom must not import `blocks/`.
- *
- * Only `Breadcrumbs` is exported. The atom owns separators, truncation, and
- * current-crumb styling; `isSkeleton` renders a trail skeleton whose shape follows
- * `collapseFrom`/`collapseOnMobile`.
+ * ATOM — `Breadcrumbs` wraps HeroUI `Breadcrumbs` directly, composing no other atom with a
+ * story. Every sub-part is a real `@heroui/react` import, so each declares `tier: "heroui"`
+ * in `ANNOTATE`, named after the identifier it renders — `Breadcrumbs` (the trail) ·
+ * `Breadcrumbs.Item` (one crumb or the "…" placeholder) · `Link` (the collapsed back
+ * affordance) · `Skeleton` (a shimmer bar). No `storyId`.
+ * 
+ * The `Skeleton` leaf carries the prop's name (`isSkeleton`) and renders every
+ * shape-bearing state known before data: `collapseFrom`/`collapseOnMobile` — plain trail
+ * bars · back-link (trail about to collapse) · both responsive variants. The `isSkeleton`
+ * branch computes `collapseAlways`/`collapseMobile` from `items.length` and picks the right
+ * shape. `maxItems` (Truncated) needs no separate state — the bar count depends on the real
+ * item count, unknown while loading.
  */
 
 /** One crumb in a {@link BreadcrumbsBase} trail. */

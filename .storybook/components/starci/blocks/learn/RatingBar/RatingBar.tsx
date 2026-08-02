@@ -6,13 +6,12 @@ import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `RatingBar` — four tiles the learner taps after an answer is revealed, feeding
- * the spaced-repetition schedule; shared by flashcard review and quiz recap.
- * Knows what a recall grade is: four of them, weakest to strongest, deciding
- * when the card returns. Grading is an action, not a selection — nothing stays
- * lit after the tap. The colour ramp (rose -> emerald) is a difficulty tier, not
- * the status palette. Each tile's chip carries the keyboard shortcut; the
- * next-interval preview rides as muted text.
+ * `RatingBar` — how well did you remember it: four tiles tapped after an answer is
+ * revealed, feeding the spaced-repetition schedule. Shared between flashcard review
+ * and quiz recap. Grading is an action, not a selection — nothing stays lit after
+ * the tap. The colour ramp (rose → emerald) is a tier, not a status: "I forgot" is
+ * not an error and "easy" is not a success, just positions on one axis. The hint
+ * line and the pending lock are states; `isSkeleton` is its own leaf.
  */
 
 /** One recall grade offered to the learner. */

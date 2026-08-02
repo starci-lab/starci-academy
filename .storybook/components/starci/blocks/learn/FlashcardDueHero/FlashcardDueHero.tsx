@@ -8,15 +8,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FlashcardDueHero` — the flashcard landing's single focal card: how many cards are
- * due today across all enrolled courses and the one primary action that follows.
- * Composes `SurfaceCard`, `ContinueCardHero`, and `EmptyState`.
- *
- * Three structural leaves: no resume in progress (due count + a start button); resume
- * in progress (`ContinueCardHero` becomes the whole card); nothing due (`EmptyState`
- * fills the card body, no action). Builds the headline sentence from three numbers
- * (`dueCount`/`dueReviewCount`/`newCount`), dropping a zero sub-count; `isSkeleton`
- * shimmers the "no resume" shape.
+ * `FlashcardDueHero` — the flashcard landing's single focal card: how many cards
+ * are due today with the primary Start CTA, or a resume card when a batch was
+ * left mid-way. Three leaves: no resume (due count + Start), resume in progress
+ * (the card becomes `ContinueCardHero`), and nothing due (empty message).
+ * `isSkeleton` stays a state of the first leaf — before data lands the block
+ * shimmers the base shape.
  */
 
 /** `EmptyState` takes its icon as a COMPONENT ref and forces `size-8` itself (§4/§5) — `weight="duotone"` can't ride along on a bare import, so it's pinned here. */

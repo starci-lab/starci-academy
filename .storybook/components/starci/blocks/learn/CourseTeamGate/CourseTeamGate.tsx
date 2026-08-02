@@ -4,10 +4,11 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
- * `CourseTeamGate` — reminds a learner to join the course's GitHub team. Show
- * condition: PAID learners not yet in the team see the warning; trial learners or
- * those already in the team self-hide. A thin block that assembles a `Callout` and
- * owns the show condition; it draws nothing itself.
+ * `CourseTeamGate` — a nudge to join the course's GitHub team. The backend
+ * scopes the team by `is_enrolled = true`, so the block self-hides for trial
+ * viewers and for anyone already in the team. Two leaves — shown vs. hidden (a
+ * node vs. an empty tree); the two hiding reasons produce the same empty tree,
+ * so they are states of the hidden leaf.
  */
 
 /** Props for {@link CourseTeamGate}. */

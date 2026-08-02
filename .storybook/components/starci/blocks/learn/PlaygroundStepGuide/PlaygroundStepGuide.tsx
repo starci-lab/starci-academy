@@ -9,16 +9,13 @@ import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundStepGuide` — the left pane of a playground run: the current step's
- * instructions and the exact command to run, then a verify action asking the
- * connected agent to check it. Owns the "all steps done" completion state too
- * (it replaces this pane via `EmptyState`). The command renders through
- * `MarkdownContent` (one code path for prose and the command fence). The action
- * slot has four data states — `waitingForConnection` (hint, no button), `ready`
- * (the Verify button), `pending` (a manual `Spinner` + status line, since the
- * command runs open-ended on a remote machine), and `missed` (button returns
- * with a hint). Three leaves: `Step` (has a command), `StepNoCommand`, and
- * `Complete`. The block owns all its wording.
+ * `PlaygroundStepGuide` — the left pane of a playground run: read the current step,
+ * run its command on your own machine, ask the agent to verify it. Three shapes:
+ *   • `Step` — a step with a command fence; `verifyState` moves through its four
+ *     data states inside the one action slot.
+ *   • `StepNoCommand` — a read-only explainer step with `commandHint` missing, so the
+ *     second `MarkdownContent` node is gone.
+ *   • `Complete` — `step` is `undefined`, so the pane is replaced end to end by `EmptyState`.
  */
 
 /** Fenced-code wrapper so the command reuses `MarkdownContent`'s own code-block skin. */

@@ -5,20 +5,12 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /**
- * `ChipButtonList` — a shared list of chip-shaped buttons (leading bare icon +
- * label, `justify-start text-start`) used for suggestion chips, retrieval-skill
- * chips, quick-asks, and skill menus.
+ * DESIGN — a row of secondary "suggestion" chips OR a vertical ghost "menu" list,
+ * both composing the base `Button` (leading bare icon + label, `justify-start
+ * text-start`).
  *
- * Composes the base {@link Button} for every item (not HeroUI directly) —
- * press/pending/disabled live on the Button; this composite owns only LAYOUT
- * (cluster vs column) and icon size (the leading icon is forced to
- * `size-4 shrink-0 text-muted`, not routed through Button's trailing icon slot).
- *
- * `direction`:
- * - `"wrap"` — a cluster of suggestion chips: default variant `secondary`,
- *   `flex-wrap gap-2`, auto-width, label as Button's own bare children.
- * - `"column"` — a vertical skill-menu list: default variant `ghost`, full-width
- *   `px-3 py-2` rows, label through {@link Typography} (`weight="medium"`, `truncate`).
+ * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis reflecting the parts THAT leaf composes.
  */
 
 /** One chip/row item. */

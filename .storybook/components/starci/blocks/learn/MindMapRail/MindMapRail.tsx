@@ -12,20 +12,12 @@ import type { VerdictBandVariant } from "@sb-components/composites/cards/verdict
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MindMapRail` — the keyword lookup pane beside a mind-map canvas: search a term, narrow
- * by how popular it is in the map, pick a result. Picking a result fires `onPick` only;
- * drawing/centering the graph is the canvas engine's job.
- *
- * Composed from `InputSearch`, `Popover` (funnel trigger + panel), `ButtonRadioGroup`
- * (popularity tier inside the popover), `Badge` (a dot on the funnel when a non-default
- * tier is active), `AsyncContent`, and a bare `SurfaceCardList`. Owns the tier vocabulary
- * and the popularity → row-tone map (two bands only — `accent` for a hub term, `warning`
- * for a middling one; the common case stays bare).
- *
- * Two leaves: default (funnel closed; loading/empty/populated are states) and filter-open
- * (the tier radio group becomes a real node). `defaultFilterOpen` pins the popover open
- * for stories. The search field and funnel are never skeletonised; `isLoading` and
- * `isSkeleton` both feed `AsyncContent`'s one loading branch.
+ * `MindMapRail` — the keyword lookup pane beside a mind-map canvas: search a term,
+ * narrow by popularity tier, pick a result. Two shapes: `Default` (funnel popover
+ * closed — loading/empty/populated are states of the single region below the header
+ * row, swapped by `AsyncContent`) and `FilterOpen` (the popover panel open, so the
+ * tier `ButtonRadioGroup` becomes a real node). The open panel renders through a
+ * portal, outside the box `BlockAnatomy` scans.
  */
 
 /** The popularity-tier filter this rail's result list is narrowed by. */

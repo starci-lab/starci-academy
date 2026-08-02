@@ -6,9 +6,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
- * `PhaseScarcityNote` — a BLOCK: a phase's real scarcity line, "N seats left at
- * the {phase} price · price rises to {X} after that". Pushes purchase with real
- * backend facts, not a made-up countdown. Text goes through the `Typography` atom.
+ * `PhaseScarcityNote` — the scarcity line for a pricing phase. Every number
+ * comes from the backend's `coursePricePreview`; it never fabricates a
+ * countdown or seat count, and a phase with no seat cap renders nothing.
  */
 
 /** The course's pricing phases (inlined from `@/modules/types/enums/pricing-phase`). */

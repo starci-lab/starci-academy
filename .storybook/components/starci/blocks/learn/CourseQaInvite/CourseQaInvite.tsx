@@ -5,13 +5,12 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
- * `CourseQaInvite` — the whole-page "nobody has asked anything yet" invitation for a
- * course's Q&A tab: icon, headline, a hint nudging the learner to read the content
- * first, and one CTA. Distinct from a search/filter-empty state (whose fix is "try a
- * different search"; this one's is "go read the content and be the first to ask").
- * Composes `SurfaceCard` + `EmptyState` + `Button`. `isSkeleton` flows only into the
- * CTA button (its destination may still be resolving); the caller-supplied title/hint
- * copy stays legible.
+ * `CourseQaInvite` — the whole-page "nobody has asked anything yet" invitation
+ * for a course's Q&A tab: icon, headline, hint, one way forward. Distinct from a
+ * search-empty branch: true zero (never a single question) reads as an
+ * invitation with a "go read the content" remedy, versus a filtered miss's "try
+ * something else". `isSkeleton` only swaps the CTA's render, so it stays a state
+ * of the one `Default` leaf.
  */
 
 /** Props for {@link CourseQaInvite}. */

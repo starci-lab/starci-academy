@@ -3,11 +3,10 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/cards/HighlightCard`. Authored in Storybook (not `src`);
- * synced back to `src` later. The sweeping-light effect lives in the global
- * `.highlight-card-sweep` class (globals.css), so this block adds no chrome of
- * its own beyond that layer.
+ * `HighlightCard` — wraps a card with a single accent-colored arc sweeping around it, on its
+ * own layer behind the card (peeking 2px past the edges). A pure standout decoration, not a
+ * data signal. Use for the one card that must stand out on a surface; multiple highlighted
+ * cards cancel each other's emphasis. Leaf: `isSkeleton`.
  */
 
 /** Props for {@link HighlightCard}. */

@@ -14,7 +14,18 @@ import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFr
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `SearchAutocomplete` — suggest-as-you-type search field on HeroUI `ComboBox`.
+ * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Anatomy:
+ * `ComboBox.InputGroup` (Input + leading icon) plus `ComboBox.Popover` (ListBox of
+ * suggestion rows / spinner / empty state).
+ * 
+ * Leaf atom: `ComboBox.InputGroup`/`ComboBox.Popover`/`Skeleton` are real HeroUI components
+ * (not hand-rolled slots) — none has its own story here, so `annotate` carries no `storyId`,
+ * but they get the `heroui` tier so the two-law panel doesn't silently skip them.
+ * 
+ * ANATOMY IS PER-LEAF: each story is its own leaf wrapping its render in its own BlockAnatomy
+ * reflecting the parts that leaf composes — the field + dropdown shape is constant across
+ * WithSuggestions/Loading/NoResults (only the dropdown's internal content changes);
+ * `Skeleton` collapses to a single field-box mirror with no dropdown.
  */
 
 /** One suggestion row in a {@link SearchAutocomplete} dropdown. */

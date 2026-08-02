@@ -18,16 +18,16 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundPreparePage` — the screen for getting one playground exercise ready:
- * pair the local agent, install the engine, pull models when the flavor needs them,
- * then press one CTA once every step is done. It composes blocks in frames and hands
- * each typed data, drawing no shape of its own.
- *
- * Five functions: what this exercise is + how to leave, the enter banner (the one
- * primary decision), the device snapshot (conditional on a reported snapshot), the
- * ordered setup steps, and a readiness checklist. `checklistItems` is the single
- * source of truth — the enter banner's readiness, the per-step ready flags, and the
- * checklist all derive from it. `isEmpty` swaps the whole body for `AsyncContentEmpty`.
+ * `PlaygroundPreparePage` — the screen to get one playground exercise ready
+ * before entering it: pair the local agent, install the engine, pull models
+ * when the flavor needs them, then press one CTA once every step is done. A
+ * screen owns a list of functions: it calls blocks, places them in frames, and
+ * hands each typed data. Five functions, in reading order: what exercise this
+ * is and how to leave · the one primary decision (enter, once ready) · what
+ * machine this runs on · the ordered setup work · a glance-back checklist.
+ * `checklistItems` is the single source of truth — the enter banner's readiness
+ * and each step's per-kind status are all derived from it. Uses
+ * `AsyncContentEmpty` as a whole-screen swap, never the four-branch `.Base`.
  */
 
 /** kind → readiness, read off {@link PlaygroundPreparePageProps.checklistItems}. */

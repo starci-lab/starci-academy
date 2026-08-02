@@ -11,16 +11,13 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `QuizPage` — the screen for drilling against written questions one run at a time:
- * set the run up, work through it, then look back over every card. It composes blocks
- * in frames and hands each typed data, drawing no shape of its own.
- *
- * Three phases, never two at once: `setup` (a mode switch plus either `QuizEnrollGate`
- * when not enrolled, or `QuizSetup` + `QuizProgressPanel` when enrolled), `active`
- * (answer one question at a time), `recap` (self-grade the whole run).
- * `WorkSessionHeader` is shared between `active` and `recap` with its own data each
- * time; the mode switch is absent once a run starts. `isSkeleton` reaches only
- * `QuizSetup`, `QuizProgressPanel`, and `QuizQuestion`.
+ * `QuizPage` — the screen to drill yourself against written questions, one run
+ * at a time: set the run up, work through it, then look back over every card. A
+ * screen owns a list of functions: eight blocks — seven reused, one new
+ * (`QuizProgressPanel`) — arranged by `phase`. Five leaves matching the two
+ * structural forks (`isEnrolled`, `phase`) plus the setup-only `isSkeleton`
+ * prop-flip: `SetupEnrolled` · `SetupTrial` (enroll gate replaces
+ * setup+progress) · `SetupLoading` · `Active` · `Recap`.
  */
 
 /** Which part of a drill the learner is in. */

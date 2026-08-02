@@ -13,14 +13,11 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PersonalProjectTaskAttemptsDrawer` — the AI-review history for one personal-
- * project milestone task: every attempt the learner submitted, each with its score,
- * a line of grader feedback, and when it was processed. Composes `DrawerShell` +
- * `AsyncContent` + `SurfaceCardList` (free-form rows). One `AttemptRow` leaf with a
- * co-located skeleton mirror; a `null` score renders a neutral "Grading" chip. No
- * pagination or footer action.
- *
- * Presentational: `isOpen`/`onOpenChange`.
+ * `PersonalProjectTaskAttemptsDrawer` — presentational-only overlay drawer
+ * listing the AI-review attempts for ONE personal-project milestone task: an
+ * attempt-number label + sparkle/score chip, a short feedback line, and a
+ * clock + processed-time line per attempt. No pagination, no footer —
+ * genuinely simpler than the challenge-side `SubmissionAttemptsDrawer`.
  */
 
 /** One AI-graded attempt at a personal-project milestone task. */

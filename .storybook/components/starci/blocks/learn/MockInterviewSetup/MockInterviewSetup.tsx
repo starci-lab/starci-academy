@@ -11,18 +11,13 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MockInterviewSetup` — the green-room card: who is interviewing, a name for the run, a
- * difficulty tier, and the button(s) that start it. Sibling of `QuizSetup` (resumable
- * banner leads, form body, action row trailing).
- *
- * Two start buttons are two different interviews — Q&A always, plus a Design round only
- * when `isDesignAvailable`; availability is the caller's to pass, never guessed from the
- * course kind. A resumable run leads the card above the form. Persona identity is
- * `Avatar` + `Typography` (not `UserCell`, whose second line is a handle, not a role).
- *
- * One leaf this pass (identity + tier + name + start); the "Customize" deep-config
- * disclosure is a deferred second leaf and is not composed here. The error sits next to
- * the action row.
+ * `MockInterviewSetup` — the green-room card: who is interviewing, what to call
+ * this run, how hard it should be, and the button(s) that start it. Sibling of
+ * `QuizSetup` (same resumable-banner-leads-the-form shape). Two start buttons are
+ * two different interviews — Q&A always exists; Design shows only when the caller
+ * sets `isDesignAvailable`. The persona row is built from `Avatar` + `Typography`
+ * (the second line is a role, not a handle). The "Customize" deep-config body is a
+ * separate, deferred leaf.
  */
 
 /** How hard the interviewer's questions run. The block owns the label (§14d.1). */

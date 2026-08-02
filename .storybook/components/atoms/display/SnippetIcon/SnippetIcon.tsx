@@ -7,12 +7,15 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * The trigger has no `classNames` hook into its internal icons — only the root
- * takes `classNames`.
- *
- * Renders a single fixed-size glyph (`w-5 h-5`, see `CopyIcon`/`CheckCircleIcon`
- * below), not text, so there is no `skeletonWidth` prop — nothing here scales
- * with content length, unlike a line of text.
+ * ATOM — `SnippetIcon`: the system's one single-click copy affordance.
+ * 
+ * 1 PROP = 1 LEAF. `copyString` is required but produces no visual difference — every
+ * value renders the same copy glyph, only the clipboard content changes — so it gets no
+ * leaf. `className` gets no leaf. The one prop with a shape is `isCopied`, which pins the
+ * ✓ glyph from the outside.
+ * 
+ * Leaf set: `Default` (idle) + `Copied` (prop `isCopied`). The atom exposes `showAnatomy`
+ * so both leaves can carry an anatomy badge.
  */
 
 /** Props shared, excluding the `copyString`/`isSkeleton` pair — see {@link SnippetIconProps}. */

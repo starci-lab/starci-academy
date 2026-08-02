@@ -19,17 +19,13 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { CollapsibleSidebar, useSidebarCollapsed } from "@sb-components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar"
 
 /**
- * `SettingsSidebarNav` — owns the account-settings destination vocabulary (which
- * grouped destinations exist, their icon, their order) and renders it as two
- * surfaces: a collapsible desktop rail and a mobile pill-bar below `@app-md`.
- * Reuses the ported `CollapsibleSidebar` (with `useSidebarCollapsed`) for the
- * rail chrome; the per-row shape (`DesktopNavRow`) and per-group dividers are
- * private here (a future `SidebarNavItem` composite should absorb them). The
- * destination vocabulary is a block-owned enum keyed by a closed
- * {@link SettingsDestinationKey}; `groups`/`items` carry only `key` + `href`.
- * The mobile pill row is a plain `<button>` with `StackH`/`Typography` inside.
- * Never skeletonised. Two leaves by structure (rail vs pill bar), both always in
- * the DOM and CSS-toggled.
+ * `SettingsSidebarNav` — the account-settings destination list, drawn as a
+ * collapsible desktop rail and, below `@app-md`, a sticky horizontal pill bar.
+ * Two structural leaves — `DesktopRail` (collapsible `Link`-shaped rows with a
+ * divider between groups) and `MobilePillBar` (a flattened rounded-full chip
+ * row). Both render the same component; only the container width differs, so
+ * each story shows the branch its own `@app-md` query resolves to. `activeHref`
+ * is data, so within each leaf it is a state.
  */
 
 /** Every account-settings destination this rail can offer — the closed vocabulary the block owns. */

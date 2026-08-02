@@ -2,9 +2,10 @@ import React from "react"
 import { ContinueCardHero } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 
 /**
- * `ContinueLearning.*` — the "jump back to where you left off" feature of the learning
- * page. Takes progress numbers (`lessonsRead`/`lessonsTotal`…) and writes the summary
- * sentence itself, handing an already-built node down to the design tier for shape.
+ * `ContinueLearning` — the "jump back to where you left off" feature. It owns
+ * the domain wording (e.g. "Read 8/23 lessons"); the screen hands over only
+ * numbers. There is one structure, so `isSkeleton` is a state of that leaf, not
+ * a second leaf.
  */
 
 /** Props for {@link ContinueLearning}. */

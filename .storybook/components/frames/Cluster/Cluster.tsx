@@ -6,17 +6,10 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
- * `Cluster` — a LAYOUT frame: the wrapping row of same-kind small things (chips,
- * tags, filter pills, a bar of buttons). One member, `Cluster`.
- *
- * A repeating list, so the API is `items` DATA and `children` is forbidden — a
- * chip row is N elements of the same kind, like `ButtonGroup items`.
- *
- * `Cluster` vs `StackH`: `StackH` wraps arbitrary children on a row; `Cluster`
- * repeats ONE kind and always wraps.
- *
- * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED. No domain
- * content, no behaviour — the items' own components carry those.
+ * `Cluster` — a repeating-list frame: a wrapping row of N elements of the same kind
+ * (chip/tag/button). Produces `gap`, `justify`, `align`. A cluster always wraps by definition
+ * (a row that may or may not wrap is `StackH`); an empty list just leaves an empty track, since
+ * a frame carries no content.
  */
 
 /** Props for {@link Cluster}. */

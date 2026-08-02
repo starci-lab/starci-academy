@@ -9,12 +9,13 @@ import { RatingBar, type RatingOption } from "@sb-components/starci/blocks/learn
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `QuizRecapList` — after a run ends, go back over each answer and rate how well
- * you actually knew it. This grade is the learner's self-assessment for the
- * spaced-repetition schedule, distinct from the run's automatic right/wrong
- * verdict. Already-graded cards keep their rating bar (a learner can change
- * their mind). Progress is a quiet count of unrated cards — no score, no
- * confetti.
+ * `QuizRecapList` — the run is over: go back over what you answered and say how well
+ * you actually knew each one. This learner-supplied grade is not the run's verdict —
+ * a card can be marked correct yet be one the learner wants back tomorrow (the
+ * `CorrectButShaky` case), which the spaced-repetition schedule needs. Already-graded
+ * cards keep their rating bar — nothing locks after a tap, so a changed mind still
+ * counts. Card count and which are rated are states of one shape; finishing changes
+ * only the counter line.
  */
 
 /** One answered card in the recap. */

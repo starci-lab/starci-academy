@@ -12,21 +12,11 @@ import { ScoreValue } from "@sb-components/composites/text/ScoreValue/ScoreValue
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ChallengeDeliverableList` — a BLOCK: the "Submit" card — one accordion row per
- * challenge requirement, each row's trigger a live status, and its panel the
- * submission form plus, once graded, the verdict and the reasons behind it.
- *
- * Reaches for the `SurfaceCard.Accordion` composite rather than hand-rolling an
- * accordion on HeroUI, and folds the ungraded form and the graded result into ONE
- * component — the graded block is a STATE toggling on `graded`, not a second leaf.
- *
- * The status icon rides `titleStart` (needing its own status colour independent of
- * the title text) while `title` stays plain text. The trailing slot shows "N points"
- * before an attempt and switches to "earned/required" once graded — never both.
- *
- * `onOpenGradingSettings` is chrome only (a header trigger); the grading-lane picker
- * itself is out of this scope. Auto-expand opens the first requirement that has not
- * passed. No empty-state leaf — every real screen has at least one requirement.
+ * `ChallengeDeliverableList` — the "Submit assignment" card: one
+ * `SurfaceCard.Accordion` row per challenge requirement, its trigger a live
+ * status, its panel the submission form plus, once graded, the verdict and its
+ * reasons. `graded` toggles a state inside the same leaf. How many requirements,
+ * which are graded, and whether a submission is mid-flight are all data.
  */
 
 /** Where one requirement stands. */

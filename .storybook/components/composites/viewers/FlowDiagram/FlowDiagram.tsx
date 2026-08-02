@@ -16,15 +16,7 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
-/**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — faithful port of
- * `@/components/blocks/rendering/FlowDiagram`. Authored in Storybook (not `src`);
- * synced back to `src` later. The `@xyflow/react` base CSS is loaded globally via
- * `src/app/globals.css` (imported by `.storybook/preview.tsx`), so the canvas
- * lays out correctly here without a per-story import.
- * ─────────────────────────────────────────────────────────────────────────────
- */
+/** 6 basic web architecture concepts, connected along a real request flow. */
 
 /** React Flow node-type id for {@link FlowDiagram}'s built-in labeled card node. */
 export const FLOW_DIAGRAM_CARD_NODE_TYPE = "card" as const

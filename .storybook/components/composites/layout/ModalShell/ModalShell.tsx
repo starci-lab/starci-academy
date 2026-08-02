@@ -6,20 +6,12 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `ModalShell.*` — the dialog-scaffold frame namespace.
- *
- * `.Base` is a wrapper frame: named slots `header`/`body`/`footer` are the main
- * road. `footer` is a real slot (rendered as
- * HeroUI `Modal.Footer`) so the CTA row is no longer hand-rolled inside the body.
- * Nothing repeats, so no `items` member. Namespace only — no bare component export.
- *
- * A tier-3 presentational frame: it owns no state of its own — the caller threads
- * open/close state plus header and body content via props.
- *
- * COMPOSITE-8: `title`/`description` are TEXT the frame renders itself (wrapped
- * in `Typography` here, with `isSkeleton`); `header`/`body`/`footer` are CONTENT
- * REGIONS — component references the frame mounts itself
- * (`<Header isSkeleton={isSkeleton} />`), never already-built nodes.
+ * `ModalShell` — the dialog scaffold frame:
+ * `Modal > Backdrop > Container > Dialog > CloseTrigger + Header? + Body + Footer?`.
+ * Named slots `header`/`body`/`footer` are the main road; `children` is
+ * shorthand for `body`. `footer` replaces the hand-rolled
+ * `<div className="flex justify-end gap-2">` every caller used to nest inside
+ * the body.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

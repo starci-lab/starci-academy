@@ -5,7 +5,10 @@ import { useDropzone } from "react-dropzone"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Dropzone` — drag-and-drop single-file input built on `react-dropzone`.
+ * `Skeleton` — HeroUI's own component (imported `Skeleton as HeroSkeleton` and rendered
+ * directly in the `isSkeleton` branch), so it enters the tree as tier `heroui` with no
+ * `storyId`. The drag box and the error line are not badged — they're plain hand-rolled
+ * `<div>`s, not real components.
  */
 
 /**

@@ -4,9 +4,17 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/StatGridCard`. Authored in Storybook (not `src`);
- * synced to `src` later.
+ * COMPOSITE — a bounded surface whose cells sit in a 2-col grid, divided by thin
+ * seams (the grid sibling of `SurfaceListCard`'s vertical list). The block owns
+ * only the grid/border/span structure — cell content is free-form (`ReactNode`).
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis. Each grid cell is this frame's own internal geometry
+ * (border/col-span placement, §13z) wrapping `items[].content`, an opaque
+ * caller-built slot (icon + label + count + mini progress bar assembled by the
+ * STORY, not this component). Neither has a dedicated sub-story to link to, so
+ * the cell carries no badge (a link-less node is worse than none) — the
+ * structure tab stays empty for every leaf below.
  */
 
 /** One cell of a {@link StatGridCard} — free-form content (icon + label + value + meter, or anything else). */

@@ -6,14 +6,11 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 
 /**
- * `FoundationResourceBody` — renders one foundation resource by its `kind` (external
- * link / video / document); owns the dispatch. Composes `SurfaceCard` + `MarkdownContent`
- * for the document kind. Video draws only the card chrome plus an honestly-labelled
- * `EmptyState` gap (no video-playback primitive exists in the inventory). The external-
- * link branch renders a button and hands the URL to `onOpenLink` — the caller decides
- * what "open" means (the block never calls `window.open` itself); `linkUrl` carries the
- * destination. Leaves are the three kinds (structurally different trees); a link with
- * no URL renders nothing.
+ * `FoundationResourceBody` — renders one foundation resource by `kind`: a markdown
+ * article, a video slot (drawn as the card chrome plus an honest `EmptyState` gap,
+ * since no video-playback primitive exists), or an "open link" button. `onOpenLink`
+ * hands the resolved URL up to the screen rather than opening it here. Three
+ * structural shapes, one per kind; `isSkeleton` is a state inside each.
  */
 
 /** Kind of resource this body renders — mirrors backend `FoundationKind` values 1:1. */

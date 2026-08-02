@@ -9,18 +9,12 @@ import type { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseSc
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentPaywall` — a BLOCK: the offer at the point the lesson stops — a lock
- * glyph, what is behind it, the price, and one way forward.
- *
- * Flat on purpose — no card of its own. It lives inside the reading card, under the
- * faded tail of the body, so the page reads as one surface that runs out rather than
- * a card inside a card.
- *
- * Imports other blocks: price and scarcity are already `PriceTagProminent` and
- * `PhaseScarcityNote` (built for the course page), reused here so the pricing
- * vocabulary does not fork. It earns its layer by deciding the frame the offer
- * arrives in — the lock, the sentence, the order, and the single call to action —
- * not by re-deciding what a price looks like. Exactly one button.
+ * `ContentPaywall` — the offer at the point the lesson stops. Flat, with no card
+ * of its own, so it sits inside the reading card under the faded body tail as
+ * one surface that runs out. It reuses the course page's price and scarcity
+ * blocks and owns only the frame the offer arrives in: the lock, the sentence,
+ * the order, and one call to action. Losing the scarcity line and `isSkeleton`
+ * are each their own leaf; whether an original price strikes through is data.
  */
 
 /** Props for {@link ContentPaywall}. */

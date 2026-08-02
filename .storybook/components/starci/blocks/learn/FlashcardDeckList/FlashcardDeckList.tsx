@@ -19,19 +19,13 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
 /**
- * `FlashcardDeckList` — the course's deck picker: search decks, toggle between a grid
- * of tiles and a scan-friendly line list, and open any deck. Shared by plain browse
- * and the spaced-repetition entry point (`dueCount`/`showProgress` mark decks with
- * cards due).
- *
- * Composed from `InputSearch`, icon-only `Tabs` (view toggle), `SurfaceCard`/
- * `SurfaceCardList`, `VariantChipDifficulty`, `Chip`, `Pagination`, `ProgressGauge`,
- * and `Grid`. `totalPages` is required — `decks` is only the current page's slice.
- *
- * Four leaves: grid, line, search-empty, loading; the search field and view toggle are
- * never skeletonised. A grid tile's accessible name is the deck title alone, its footer
- * CTA is decorative (the whole tile is the press target), and a `dueCount` of 0 shows
- * no chip.
+ * `FlashcardDeckList` — the course's deck picker: search, switch between a grid
+ * of tiles and a scan-friendly line list, page through results, and open any
+ * deck. Four leaves: `GridView` (tiles in a responsive `Grid`), `LineView`
+ * (rows in one `SurfaceCardList`), `SearchEmpty` (`AsyncContentEmpty`,
+ * view-agnostic), and `Loading` (a guessed tile count through each composite's
+ * mirror). Toggling `view` or `isSkeleton` on a populated list repaints the same
+ * tree.
  */
 
 /** How the deck track is currently laid out. Persisted by the caller, not a leaf-driving prop by itself (see file header). */

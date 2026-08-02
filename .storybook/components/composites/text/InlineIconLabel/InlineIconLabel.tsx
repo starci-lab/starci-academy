@@ -6,16 +6,10 @@ import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `InlineIconLabel` — a leading icon + an inline text label as ONE composite. An
- * "icon + text" row (a count, an eyebrow, a tab label, a toned caption) is a
- * semantic unit, so it owns the icon size (sitting with the text scale) instead of
- * every call-site hand-rolling `flex items-center gap-1` + a bare icon + Typography.
- *
- * Tone: neutral (`default`) flows through Typography's `color="muted"`;
- * `accent`/`success` flow through `color="accent-soft"`/`"success-soft"`.
- * `warning`/`danger`/`info` have no matching soft token, so they ride Typography's
- * full-strength colour instead. The leading icon gets the same tone via a className
- * on its own span (currentColor), so icon and text stay in lockstep.
+ * `InlineIconLabel` — a leading icon + an inline text label as one unit (a count, an eyebrow, a
+ * tab label, a toned caption). Owns the icon size (per the text scale) and the tone colour, so a
+ * call-site never hand-rolls `flex items-center gap-1` + a bare icon + a `Typography`. Leaves:
+ * `icon`, `tone`, `size`, `truncate`, `isSkeleton`, `skeletonWidth`.
  */
 
 /**

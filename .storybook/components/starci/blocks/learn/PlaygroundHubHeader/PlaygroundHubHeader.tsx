@@ -2,13 +2,11 @@ import React from "react"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * `PlaygroundHubHeader` — the hub identity block at the top of the
- * Docker/Kubernetes exercise grid. Sibling of
- * `ContentHeader`/`FoundationsHeader`/`ModuleHeader`, placing identity into the
- * same `PageHeader` frame. The thinnest of the four: only a title and a muted
- * subtitle — no breadcrumb, meta row, or chip, since a hub is a flat entry
- * point. Owns the skeleton-vs-real decision for the title/description slots
- * (`PageHeader` has no `isSkeleton`). One leaf.
+ * `PlaygroundHubHeader` — the hub-identity cluster at the top of the
+ * Docker/Kubernetes exercise grid: a title and an optional one-sentence purpose
+ * line. Sibling of `ContentHeader`/`FoundationsHeader` but thinnest — no breadcrumb,
+ * meta row, or secondary card. One shape: `isSkeleton` only swaps which state the
+ * `Typography` renders inside the same `PageHeader`.
  */
 
 /** Props for {@link PlaygroundHubHeader}. */

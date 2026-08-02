@@ -3,11 +3,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/StatPair`. Authored in Storybook (not `src`);
- * synced to `src` later.
- */
+/** The four stats reused across the layout stories below. */
 
 /** Value (title) typography size — `h4` (default) · `h5` · `body` (text-base). */
 export type StatPairValueType = "h4" | "h5" | "body"

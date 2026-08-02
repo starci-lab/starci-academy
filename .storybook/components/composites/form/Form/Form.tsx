@@ -7,26 +7,16 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 /**
- * `Form.*` — the form composite namespace. Because each form atom carries its own
- * `label`/`hint`/`errorMessage`/`isRequired`, the shell's job is LAYOUT ONLY:
- * build a real `<form>`, group fields under a heading, and lay out the closing
- * button row.
+ * SHELL (composite tier §13) — `Form`: a REAL `<form>` shell (submit on ENTER)
+ * + a content column following the `gap` rhythm (§10c) + an `actions` slot at
+ * the bottom.
  *
- * | Member | Shell | Content channel |
- * |---|---|---|
- * | `.Base`    | `<form>` shell + content column + button row | slot `body` · `actions` |
- * | `.Section` | a titled group of fields | `title`/`description` + slot `body` |
- * | `.Actions` | the closing button row | `items` — children forbidden |
- *
- * `.Base`/`.Section` are wrapping shells (`body` is the main path, a COMPONENT
- * reference the shell calls itself so `isSkeleton` can reach inside it —
- * COMPOSITE-8); `.Actions` is a repeated list requiring `items` and composing the
- * `ButtonGroup` atom. Namespace only — no bare component export.
- *
- * The shell carries no behaviour: no validation, field state, or business rule
- * (that is the block tier); it knows only "locked or not" (`isDisabled`) and
- * "submit". Every gap goes through {@link AllowedGap} (`1..8`); spacing comes from
- * the parent's gap, never a child's margin.
+ * ⚠️ STATE SCOPE (§12f): the stories here only render state that the shell
+ * ITSELF produces — `isDisabled` (locks the whole form via `<fieldset
+ * disabled>`) and how it lays out `body`/`actions`. A field's label/hint/error/
+ * required is the ATOM's state (`Atoms/Forms/Input/*`, §12e) — NOT repeated
+ * here. Each button's pending state belongs to `Atoms/Buttons/Button` — here it
+ * only shows up as ONE PART of the "submitting" state the shell owns.
  */
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "Form" } as const

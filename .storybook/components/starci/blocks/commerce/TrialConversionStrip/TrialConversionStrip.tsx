@@ -15,15 +15,17 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
- * `@/components/page/CourseContents/TrialConversionStrip`, made
- * TIER-3 PRESENTATIONAL: `src` reads `useQueryCoursePricePreviewSwr` (SWR) +
- * `usePaymentOverlayState` (zustand) itself; this port takes the same data as
- * PLAIN PROPS (`price`, `isSkeleton`, `onEnroll`) so it renders standalone
- * with no store/SWR wiring. The `next-intl` strings are INLINED locally (vi).
- * Composed from lower-tier locals — {@link IconTile} (lock icon, accent tone,
- * sm) + {@link PriceTag} + {@link PhaseScarcityNote} + {@link Skeleton.Typography}
- * (price-loading mirror) + {@link Button} (enroll CTA). Synced to `src` later.
+ * BLOCK — the trial → enroll conversion strip on the content-home. Bundles a
+ * loss-aversion line (free lessons remaining), the real price (+ phase-scarcity
+ * note), and an enroll CTA. `src` is STORE-COUPLED (SWR price fetch + zustand
+ * payment overlay) — this port takes the SAME data as PLAIN PROPS (`price`,
+ * `isSkeleton`, `onEnroll`) so it renders standalone. Leaves differ by
+ * SHAPE: price loading (skeleton mirror) vs price landed (PriceTag +
+ * PhaseScarcityNote), and by content (free lessons remaining vs none left).
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Diagram + Tree) reflecting the parts THAT leaf composes —
+ * there is no separate consolidated "Anatomy" story.
  */
 
 /** Minimal price-preview shape this block needs (mirrors `coursePricePreview` fields actually read). */

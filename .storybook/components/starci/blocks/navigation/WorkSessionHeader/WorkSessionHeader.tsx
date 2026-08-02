@@ -6,14 +6,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `WorkSessionHeader` — the band that says "you are inside a session": a way out,
- * what the session is, where you are in it, and a progress rail along the bottom.
- * Shared by quiz, flashcard review, and mock interview — it knows a session has a
- * length, a position, and gradable steps. Two distinct ways to leave: the back
- * link leaves (resumable), the finish button ends now and goes to results. Done
- * (graded, filled) and current (viewed, taller) are independent signals. The rail
- * is tappable via a taller transparent hit zone per segment. Takes typed data
- * (counter string, optional time-left), never a `ReactNode` slot.
+ * `WorkSessionHeader` — the band that signals "you are inside a session",
+ * shared across quiz, flashcard review, and mock interview. Knows what a
+ * session is: a length, a position, steps that can be graded, and two distinct
+ * exits — a back link that leaves and keeps the run resumable, and a finish
+ * button that ends it and goes to results. "Done" (graded, filled) and
+ * "current" (viewing, a taller bar) are independent signals. Takes typed data
+ * (counter string, optional time-left string), no `ReactNode` slot. Leaf by
+ * structure: losing the finish control or the rail's interactivity changes the
+ * shape; position and which steps are graded are states.
  */
 
 /** Props {@link WorkSessionHeader} carries regardless of loading state. */

@@ -3,13 +3,13 @@ import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * `PlaygroundSetupHeader` — the identity cluster atop the playground Setup
- * screen: a `LinkBack` to the hub, the exercise title, and its one-line intro.
- * Sibling of `ContentHeader`/`CourseBrief` on the same `PageHeader` frame, but
- * carries no meta cluster (a playground exercise has no read state, outcomes, or
- * counts). The back link stays live through loading (its data is caller-supplied
- * synchronously); only `title`/`description` switch to their `Typography`
- * skeleton mirror.
+ * `PlaygroundSetupHeader` — the identity cluster at the top of the playground Setup
+ * screen: a way back to the playground hub, the exercise title, and its one-line
+ * intro. Sibling of `ContentHeader` / `CourseBrief` but carries no meta cluster —
+ * a playground exercise has no read state, outcomes, or counts. The single hop back
+ * is a `LinkBack` placed directly in `PageHeader.breadcrumb`. One shape:
+ * `isSkeleton` swaps `title`/`description` to their shimmer mirror in the same
+ * slots; the back link never waits on the fetch, so it gets no skeleton.
  */
 
 /** Props for {@link PlaygroundSetupHeader}. */

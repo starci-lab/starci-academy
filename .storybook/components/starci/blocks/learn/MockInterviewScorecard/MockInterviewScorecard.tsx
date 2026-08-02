@@ -12,18 +12,12 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MockInterviewScorecard` — a read-only render of one graded mock-interview run: verdict,
- * score breakdown, attribute breakdown, strengths, gaps, the interviewer's follow-up
- * question, and the CTAs that turn the result into a next action. Verdict/score/attribute
- * vocabulary matches the `MockInterviewGradeResult` contract (`verdict: "pass" |
- * "borderline" | "fail"`, `phaseScores`, `attributeScores`).
- *
- * Composes `Callout` (verdict), `ProgressMeter` (scores), `SurfaceCardCrossList`
- * (strengths/gaps rows), and a `Chip` tagging the weak area beside the primary CTA.
- * `Callout` and `ProgressMeter` have no skeleton of their own, so they fall back to a
- * sized `HeroSkeleton` while loading. `weakAreaLabel` arrives already resolved (which
- * phase counts as weak is a screen-level call). One leaf — every optional field is a data
- * state. The per-question model-answer review is out of scope this pass.
+ * `MockInterviewScorecard` — read-only render of one graded mock-interview run:
+ * a verdict banner (`Callout`), hand-laid `ProgressMeter` rows for the score and
+ * attribute breakdowns, and strengths/gaps via `SurfaceCard.CrossList`. Every
+ * optional section — byline, attribute breakdown, strengths, gaps, follow-up,
+ * weak-area tag, retry — is a state of one shape. Per-question model-answer review
+ * is out of scope (no primitive for it yet).
  */
 
 /** Pass / borderline / fail — reuses the interview verdict vocabulary verbatim from the BE contract. */

@@ -3,11 +3,7 @@ import { ProgressCircle, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/ProgressRing`. Authored in Storybook (not `src`);
- * synced to `src` later.
- */
+/** Custom label overrides the centered percentage with a fraction when the count reads clearer. */
 /** Ring diameter + label type scale that one size step resolves to. */
 interface ProgressRingSizeStyle {
     /** Diameter class of the ring. */

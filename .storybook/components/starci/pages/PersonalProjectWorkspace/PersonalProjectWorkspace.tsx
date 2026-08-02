@@ -13,16 +13,17 @@ import {
 } from "@sb-components/starci/blocks/learn/PersonalProjectResultScreen/PersonalProjectResultScreen"
 
 /**
- * `PersonalProjectWorkspace` — the personal-project route group's content switch
- * (`/personal-project`, `/personal-project/tasks/[taskId]`, and its `/result`). A thin
- * discriminated dispatch: a `view` tag selects which of three already-built screens
- * renders — `PersonalProjectDashboard`, `PersonalProjectTaskPage`, or
- * `PersonalProjectResultScreen` — and each screen's own prop surface passes through
- * untouched.
+ * SCREEN — `PersonalProjectWorkspace`: the personal-project route group's own
+ * content switch. See the component's file header for the full RULE 12
+ * investigation (why this is a `pages/` screen, not a `layouts/` wrapper) and
+ * for why this file is a thin dispatch rather than a rebuild of any content.
  *
- * Renders no DOM of its own; the chosen child owns its own anatomy. `view` stands in
- * for the router state (`taskId` present? pathname ends in `/result`?) the caller has
- * already resolved.
+ * THREE LEAVES, one per `view` — a STRUCTURAL fork (which of three disjoint
+ * screens mounts), not a data state of one shape: `Dashboard` (`/personal-
+ * project`), `Task` (`/personal-project/tasks/[taskId]`), `Result`
+ * (`…/result`). Each leaf hands the real, untouched prop surface of the screen
+ * it dispatches to straight through — this file invents no data shape of its
+ * own.
  */
 
 /** Props for {@link PersonalProjectWorkspace} — see the file header for the `view` split. */

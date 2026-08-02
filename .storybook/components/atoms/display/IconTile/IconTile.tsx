@@ -7,9 +7,16 @@ import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/identity/IconTile`. Authored in Storybook (not `src`);
- * synced to `src` later.
+ * ATOM — `IconTile`: the avatar frame of a thing (course, project, section…).
+ *
+ * One prop = one leaf, each rendering every state the prop produces: `tone` · `size` ·
+ * `src` (a cover image over the icon) · `isSkeleton`. Props with no visual (`alt`,
+ * `className`) get no leaf. The tile is always round. `icon` has no leaf of its own —
+ * it is required content (except while `isSkeleton`), not a caller-toggled axis.
+ *
+ * The icon takes a component (`icon={GraduationCapIcon}`), not JSX; the atom forces
+ * its scale per `size`. In the anatomy, `Tile`/`Cover`/`Icon` are plain elements
+ * (unnamed); only `Skeleton` is a nameable HeroUI node.
  */
 
 /**

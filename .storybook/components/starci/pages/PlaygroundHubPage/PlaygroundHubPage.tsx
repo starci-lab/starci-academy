@@ -5,13 +5,12 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundHubPage` — the screen for landing on a course's Playground hub, seeing
- * what it's for, and opening a hands-on exercise. It composes blocks in frames and
- * hands each typed data, drawing no shape of its own.
- *
- * Two functions: `PlaygroundHubHeader` (orient) and `PlaygroundExerciseGrid` (browse
- * and open). An empty course is a state of the grid, not its own block.
- * `onSelectExercise` fires an exercise id; resolving it to a route is the caller's job.
+ * `PlaygroundHubPage` — the screen to land on the course's Playground hub, see
+ * what it is for, and open a hands-on exercise. A screen owns a list of
+ * functions: it calls blocks, places them in frames, and hands each typed data.
+ * Two functions, in reading order: orient · browse the course's exercises and
+ * open one. Only `isSkeleton` forks into its own leaf; having no exercises yet
+ * is data handed to `PlaygroundExerciseGrid`, a state of the one `Default` leaf.
  */
 
 /** Props for {@link PlaygroundHubPage}. */

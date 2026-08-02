@@ -5,11 +5,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentRelatedList` — a quiet list of other lessons in the course worth reading
- * after this one, surfaced by searching the course on this lesson's subject.
- * Self-hides entirely (no card, no label, no empty state) when nothing is related.
- * Each row shows the item's course breadcrumb above the title and, when the viewer
- * must enrol first, a lock line below it; never a snippet.
+ * `ContentRelatedList` — what else in this course is worth reading after this
+ * lesson: a quiet list, never a call to action. Self-hides with nothing related
+ * — no card, no label, no empty state (the opposite of `ContentDiscussion`).
+ * `breadcrumb` shows a course trail above the title; `isLocked` adds a quiet
+ * lock line below. Row count is a state of `Full`; hidden, `isSkeleton`, and a
+ * locked row are each their own leaf.
  */
 
 /** One related lesson — plain data, the block builds the row. */

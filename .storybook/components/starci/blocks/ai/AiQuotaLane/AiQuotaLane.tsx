@@ -3,21 +3,11 @@ import { QuotaBar } from "@sb-components/starci/blocks/ai/QuotaBar/QuotaBar"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `AiQuotaLane` — a BLOCK: one lane's pair of rolling-window quota bars ("next 5
- * hours" above "this week"), both counting usage against the same lane's cap.
- *
- * Shared between the Auto tab and the Premium branch of the Subscription tab —
- * same two bars, different numbers, decided by which query the caller wires up.
- * `data` is a plain typed prop (a block never owns its own SWR/mutation), so the
- * mounting screen picks the query.
- *
- * Renders the public `QuotaBar` block twice (label/used/limit/resetLabel swapped);
- * the fill-tone ramp (accent ≤75% · warning >75% · danger >90%) lives in
- * `QuotaBar` alone.
- *
- * `isLoading` is REQUIRED (not defaulted) because "no data yet" and "mid-fetch"
- * render identically from the outside — forcing the caller to say which stops a
- * genuinely-empty response from reading as a shimmer that never resolves.
+ * `AiQuotaLane` — one lane's pair of rolling-window quota bars ("next 5 hours"
+ * above "this week"), shared by the Auto tab and the Premium branch of the
+ * Subscription tab inside `AiQuotaModal`. Both rows are the same `QuotaBar`
+ * composition reading a different window. Unset `data`/`isLoading` shimmers
+ * both bars.
  */
 
 /** One rolling-window quota reading, ready to draw as a single {@link ProgressBar}. */

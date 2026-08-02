@@ -6,13 +6,13 @@ import {
 } from "@sb-components/starci/blocks/learn/FoundationResourceBody/FoundationResourceBody"
 
 /**
- * `FoundationModal` — the overlay that shows one foundation resource (document,
- * video, or external link) full-screen. It owns the frame decision per kind: a video
- * gets a narrower, non-scrolling container; every other kind gets the full-size
- * container with inside scroll. The resource itself is drawn by
- * `FoundationResourceBody`, which owns the three-way kind dispatch.
- *
- * Presentational: `isOpen`/`onOpenChange` + the resolved resource fields.
+ * `FoundationModal` — a fullscreen overlay showing one foundation resource
+ * (document / video / external link). Opened via the app's global overlay
+ * store; this port takes plain `isOpen`/`onOpenChange` props. One leaf
+ * (`Default`): the wrapper shape never changes across `kind` — only the
+ * container width/scroll and which `FoundationResourceBody` leaf renders
+ * inside, so `kind` is a state; the three structurally-different trees live one
+ * level down inside `FoundationResourceBody`.
  */
 
 /** Props for {@link FoundationModal}. */

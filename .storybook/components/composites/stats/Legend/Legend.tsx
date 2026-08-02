@@ -4,11 +4,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/Legend`. Authored in Storybook (not `src`); synced
- * to `src` later.
- */
+/** Many items in a narrow block wrap to a new line instead of overflowing. */
 
 /**
  * Resolve a swatch `color` into the right paint channel: a Tailwind `bg-*`

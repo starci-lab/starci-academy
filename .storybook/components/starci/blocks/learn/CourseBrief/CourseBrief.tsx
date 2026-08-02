@@ -5,11 +5,11 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * `CourseBrief` — the course-identity block at the top of a learn surface: breadcrumb
- * trail, title, description. Named for function (a course summary reusable across the
- * sales page and `/learn`), not position. Takes crumb DATA and builds `Breadcrumbs`
- * itself; composes the `PageHeader` frame + `Breadcrumbs` + `Typography` without
- * drawing its own frame. No status chip.
+ * `CourseBrief` — the course-identity cluster atop a page. It takes crumb DATA
+ * (`breadcrumbItems`) and builds the `Breadcrumbs` atom itself, so a screen
+ * never holds the `PageHeader` frame or the atom directly. Meta is a muted text
+ * strip joined by `·`, not a chip. The two leaves lose a node; a long trail only
+ * changes the crumb count, so it is a state.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

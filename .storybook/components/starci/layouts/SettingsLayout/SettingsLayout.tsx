@@ -4,12 +4,12 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `SettingsLayout` — the chrome wrapping every route under `/profile/(settings)`
- * (edit profile, appearance, security, privacy, sessions, course history, AI
- * settings, bookmarks, membership, installments). `SettingsSidebarNav` (which owns
- * both its desktop rail and mobile strip) sits beside a `Container` content column;
- * the layout is column-first on narrow screens, a row from `@app-md`. Takes a
- * mandatory `children`. Every settings-nav prop passes straight through unmodified.
+ * `SettingsLayout` — the chrome around every `/profile/(settings)` route: a nav
+ * rail beside a centered content column, column-first on a narrow screen and a
+ * row from `@app-md`. `children` is a real slot — the shell stays put while the
+ * active page changes underneath. One leaf: the nav-plus-content arrangement
+ * never loses a region on data, so which page is active and what it renders are
+ * states.
  */
 
 /** Props for {@link SettingsLayout}. */

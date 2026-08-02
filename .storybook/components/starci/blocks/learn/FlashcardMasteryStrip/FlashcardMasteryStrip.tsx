@@ -7,14 +7,12 @@ import { SegmentBar, type SegmentBarSegment } from "@sb-components/composites/st
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FlashcardMasteryStrip` — a mastery-first progress readout for a deck ("how much do
- * I own", not "how many are left today"). Composes `SurfaceCard` + `SegmentBar`, using
- * the bar's own `caption` slot for the retention / first-review line.
- *
- * Owns the 5-review retention floor and the wording for low-review states: below 1
- * review a nudge replaces the caption, between 1–4 the caption is omitted. Streak
- * rides in `SurfaceCard`'s `action` slot. `SegmentBar` has no skeleton of its own, so
- * it stays mounted flat/uncoloured while the two `Typography` numbers above it shimmer.
+ * `FlashcardMasteryStrip` — mastery-first progress readout for a deck ("how much
+ * of this do I own", not "how many cards are left today"); maps to
+ * `FlashcardStatsStrip`. Reuses `SegmentBar`'s own `caption` slot for the
+ * retention/first-review line; loading feeds one flat uncoloured segment with
+ * the legend hidden. Four leaves across two axes: the streak chip appearing, and
+ * the caption switching between a retention number and a first-review nudge.
  */
 
 /** Props for {@link FlashcardMasteryStrip}. */

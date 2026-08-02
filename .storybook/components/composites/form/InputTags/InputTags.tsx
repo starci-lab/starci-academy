@@ -6,11 +6,8 @@ import { FieldSkeleton, type FrameProps } from "@sb-components/atoms/forms/Input
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `InputTags` — a token input row: `value` is a `string[]`, add with Enter, remove
- * with ×. It carries the same label/hint/error frame as every other `Input.*`
- * member via {@link FrameProps} and draws the same field-box shimmer via
- * `FieldSkeleton` while loading (both imported from the atom tier). Renders one
- * `Chip` per tag.
+ * `InputTags` — a tag-input field where each token is a removable `Chip` (`<Chip onRemove … />`),
+ * rebuilt one per tag. Wraps `FieldFrame`, whose `Label`/`Skeleton` are real heroui components.
  */
 export interface InputTagsProps extends FrameProps {
     /** Tags in order. */

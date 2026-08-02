@@ -8,15 +8,14 @@ import { ListRow } from "@sb-components/composites/lists/List/List"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundResourcePanel` — the right pane of the playground screen (the live
- * workspace): nothing until the paired machine reports in, then the socket's
- * resource snapshot grouped by kind in a `SurfaceCard.Accordion`. Owns the
- * domain: `groupByKind` (first-seen kind order), `toneForStatus` (a heuristic
- * over free-form CLI status text, degrading to `neutral` — hence a bare `Chip`,
- * not `EnumChip`), and the fixed "Resources" header. One leaf, three states
- * (not-connected / connected-empty / connected-with-resources) sharing one
- * header-over-body shape, with distinct `EmptyState` copy per empty case. No
- * `isSkeleton` — the waiting `EmptyState` is the loading state.
+ * `PlaygroundResourcePanel` — the right pane of the playground screen, the live
+ * workspace: nothing until the paired machine reports in, then the resource
+ * snapshot the socket sent, grouped by kind. Reuses `SurfaceCard.Accordion`,
+ * `List.Row`, and `EmptyState` rather than inventing its own. Status uses `Chip`,
+ * not `EnumChip`, because it is free-form CLI text ("Up 2 hours", "Exited (0)"): a
+ * `toneForStatus` heuristic degrades to neutral on anything unrecognized. One shape,
+ * three states (not-connected, connected-empty, connected-with-resources) — a header
+ * row over a body region whose fill changes.
  */
 
 /** Whether the playground's paired machine is reachable right now. */

@@ -11,22 +11,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `JobReadinessWidget` — a BLOCK (dashboard): "My readiness" — the growth-loop
- * self-widget showing the viewer's strongest purchased-course track (depth score +
- * band), the course-independent foundation percentile, its capstone/interview/CV
- * pillar bars (each only when attempted), and a single "do the next real thing" CTA.
+ * BLOCK — `JobReadinessWidget`: "My Job Readiness" — the self job-readiness
+ * summary for the viewer's strongest purchased-course track. See the
+ * component's own file header for the full contract; this file only adds the
+ * states.
  *
- * Composed, not rebuilt: the card face is `SurfaceCard` (labeled), the headline is
- * `StatPair`, the band is `EnumChip`, each pillar bar is `ProgressMeter`.
- *
- * Reads only the strongest track — a single `JobReadinessTrack` prop, never an
- * array; zero tracks is the `isEmpty` branch. `nextAction` is caller-built (a label
- * + `onPress`, omitted once every pillar has a score) since which pillar to suggest
- * is a fairness-model business call and route-building needs the viewer's locale.
- * The foundation line is block wording around a typed `0..100` percentile.
- *
- * `ProgressMeter` has no `isSkeleton` of its own; while skeleton it falls back to a
- * bare `HeroSkeleton` sized to the track height it would have drawn.
+ * 📐 LEAF by STRUCTURE (§14d.2): which pillar bars render is a DATA condition
+ * (a pillar with no score is omitted, never zero-filled), not a different
+ * shape this block draws — so loading / empty / error / content-with-various-
+ * pillars are all states of the same one leaf ("Content").
  */
 
 /** Band describing how close a track's depth score is to "job ready" (mirrors backend `UserJobReadinessBand`). */

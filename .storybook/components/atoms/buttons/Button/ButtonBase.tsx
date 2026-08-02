@@ -18,15 +18,13 @@ import {
 } from "./button-tokens"
 
 /**
- * `ButtonBase` — the one button in the system, wrapping HeroUI's `Button`.
+ * ATOM — `Button`: a button with a label.
  *
- * An icon-only button is the same button with the label dropped, selected via
- * `isIconOnly` (which requires `prefixIcon` + `ariaLabel`) rather than a separate
- * component. Props stay narrow with no `children` — the label goes through `label`.
+ * One prop = one leaf: each visual prop gets its own leaf rendering that prop's full
+ * value set — `variant` · `size` · `prefixIcon` · `suffixIcon` · `iconSlide` ·
+ * `isIconOnly` · `isDisabled` · `isPending` · `isSkeleton`.
  *
- * `isSkeleton` renders a shimmer co-located with the real button (a pill when
- * labeled, a square when icon-only). `isPending` draws its own spinner and locks
- * the press handler. Glyph scale and stroke weight derive from `size`.
+ * Icons = Phosphor; the atom forces both scale and `weight` off `size`.
  */
 
 /** Props shared across all three shapes below — see {@link ButtonBaseProps} for the `label`/`isIconOnly`/`isSkeleton` union. */

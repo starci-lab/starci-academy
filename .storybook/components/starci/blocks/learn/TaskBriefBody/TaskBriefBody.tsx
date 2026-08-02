@@ -10,16 +10,13 @@ import { ContentRelatedList, type ContentRelatedItem } from "@sb-components/star
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `TaskBriefBody` — the reading column of a personal-project milestone task:
- * everything a learner reads before submitting (the submit/evaluate actions live
- * in a separate persistent panel). Handles two schema generations, never both:
- * a V2 task has a resolved per-language `briefBody` (-> `BriefMarkdown`); a V1
- * task has none and falls back to a public criteria + per-language code-guide
- * accordion. While `isSkeleton`, the generation isn't known yet, so it guesses
- * V2 (the common case). Composes `Callout` for the locked alert,
- * `SurfaceCardAccordion` for legacy criteria/guides, and reuses
- * `ContentRelatedList`. The locked "go to current task" button always shows when
- * locked (the screen owns whether a jump target exists).
+ * `TaskBriefBody` — the reading column of a personal-project milestone task. A task
+ * resolves into exactly one of two shapes depending on whether it carries a Schema
+ * V2 brief: `SchemaV2Brief` (modern per-language markdown instructions) or
+ * `LegacySchemaV1` (the older public criteria accordion + code guides). A task is
+ * never both, so these are two leaves; `Skeleton` is a third (the block guesses
+ * Schema V2 while loading). Within each schema shape, `isLocked` toggling the notice
+ * is a plain data state.
  */
 
 /** One pass criterion of a SCHEMA V1 (legacy) task — `src`'s `MilestoneTaskCriteriaEntity`. */

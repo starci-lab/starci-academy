@@ -7,25 +7,12 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ChallengeHeader` — a BLOCK: the challenge identity block at the top of the solve
- * page, answering "what is this challenge, and where do I stand on it".
- *
- * A sibling of `ContentHeader`, not an edit of it: both place identity into the
- * same `PageHeader` frame, but a challenge header carries score / difficulty /
- * pass-fail status rather than a lesson's read state and outcomes.
- *
- * Two chips on purpose — a deliberate departure from the "one chip per cluster"
- * rule — because `difficulty` (a property of the challenge) and `status` (a
- * property of the learner's attempt) are two separate classifying axes, not
- * duplicates. `scoreValue` stays quiet muted text (the block adds "points" itself).
- *
- * A single `LinkBack` ("← Back to {lesson}"), not breadcrumbs, since a challenge is
- * reached from exactly one place. `LinkBack` has no `isSkeleton`, so its shimmer is
- * a directly-called `Typography` fed into `PageHeader`'s `breadcrumb` slot.
- *
- * Difficulty is simplified to three tiers (`easy`/`medium`/`hard`) that `EnumChip`
- * can express cleanly; extend the map when a screen needs the source app's
- * `insane`/`expert` tiers.
+ * `ChallengeHeader` — the challenge-identity cluster atop the solve page: back
+ * link, title, optional description, and a meta row carrying score, difficulty,
+ * and the learner's pass-fail status. A `PageHeader` cluster. Two chips on
+ * purpose — `difficulty` (a property of the challenge) and `status` (a property
+ * of the attempt) are separate axes. Whether the status chip draws, and loading,
+ * are data.
  */
 
 /** How hard the challenge is — a property of the CHALLENGE, always known. */

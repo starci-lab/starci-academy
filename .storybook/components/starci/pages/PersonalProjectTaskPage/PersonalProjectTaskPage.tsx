@@ -28,16 +28,16 @@ import {
 } from "@sb-components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard"
 
 /**
- * `PersonalProjectTaskPage` — the screen for solving one personal-project task. It
- * composes blocks/composites in frames and hands each typed data.
- *
- * Two columns via `SplitWorkspace`: a reading column that swaps per task (task brief,
- * criteria, code implementations, related content) beside a persistent sticky act
- * column (submission field, grading-settings summary row, actions, results). The
- * locked-preview banner is a `warning` `Callout`; the brief is a `SurfaceCard` around
- * `MarkdownContent`; the settings summary reuses `ListRow`. The grading-settings
- * drawer content is out of scope (`onOpenSettings` is a chrome trigger). The
- * Evaluate ↔ Re-evaluate label is owned here, flipped by `hasAttempts`.
+ * `PersonalProjectTaskPage` — the screen to solve one personal-project task. A
+ * screen owns a list of functions. Split workspace: a reading column that swaps
+ * per task (task identity, the locked-preview banner, the authored brief or the
+ * legacy rubric/implementation guides, and related lessons) beside a
+ * persistent, sticky act column (repo URL, the settings-drawer trigger,
+ * evaluate/secondary actions, and the latest graded result). Two columns
+ * composed with `SplitWorkspace`: a `min-w-0 flex-1` reading column beside a
+ * `shrink-0 w-[360px]` sticky aside, stacked on mobile/tablet →
+ * `@app-xl:flex-row` on desktop. The grading-settings drawer content is not
+ * built — `onOpenSettings` is a chrome trigger only.
  */
 
 /** One personal-project schema-v1 evaluation criterion — the legacy rubric row. */

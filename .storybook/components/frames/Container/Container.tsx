@@ -4,31 +4,12 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
- * `Container` — a LAYOUT frame for CONTENT MEASURE. One member; width and padding
- * are props. A wrapping frame ⇒ one named slot `body` (`children` is shorthand
- * for it); no repeating list, so no `items`.
+ * `Container` — the content-column layout frame: centered, width-capped, padded.
  *
- * Applies `mx-auto` + `max-w` so pages don't hand-roll their own measure.
- *
- * Opens its OWN `@container`: `@app-sm/md/lg/xl` variants inside it measure this
- * measure, not the app column, so a grid in a narrow measure knows it is narrow.
- *
- * `size` speaks the same language as the breakpoints — both come from the
- * `--container-app-*` token set in `globals.css`:
- *
- * | `size` | width | `@app-*` tiers reachable inside |
- * |---|---|---|
- * | `sm` | 40rem | `@app-sm` |
- * | `md` | 48rem | `@app-sm` · `@app-md` |
- * | `lg` | 64rem | plus `@app-lg` |
- * | `xl` | 80rem | plus `@app-xl` |
- * | `full` | unbounded | up to the parent |
- *
- * Asking for `columns={{ lg: 4 }}` inside `size="md"` requests a tier that never
- * fires — the grid stays at the `md` tier; the measure is just too narrow.
- *
- * `padding` is a {@link Responsive}<{@link PaddingValue}> — off-scale is a tsc
- * error at the call site. No domain content, no behavior — layout only.
+ * The `ContainerQuery` leaf opens an `@container`, so a grid inside measures the
+ * COLUMN width rather than the app column — two columns of different `size`
+ * wrapping the same `Grid` with the same `columns` resolve to different column
+ * counts.
  */
 
 /**

@@ -6,15 +6,15 @@ import { ReactionPicker } from "@sb-components/atoms/feedback/ReactionPicker/Rea
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ReactionButton` — the Facebook-style six-emotion reaction control: a pill
- * trigger (current pick's emoji + label, or a neutral invitation) that opens a
- * Popover with the six reactions in a row, plus a compact summary (top-3 reacted
- * emoji stacked + total) beside it. Shared by the content-level reaction and
- * individual comments. Uses raw HeroUI Popover/Button (the constrained atom's
- * fixed chrome can't do `rounded-full`/`overflow-visible`); the six-button row
- * itself is the `ReactionPicker` atom. Counts are data; the six labels/emoji are
- * block-owned. With no reactions yet the summary is dropped so the trigger reads
- * as an invitation.
+ * BLOCK — `ReactionButton`: the Facebook-style six-emotion reaction control —
+ * pill trigger + Popover picker + compact summary. Shared verbatim between
+ * `ContentReaction` (the lesson-level reaction) and each comment row in
+ * `ContentDiscussion`'s thread — the SAME control real `src`'s `ReactionBar`
+ * is, reused between `InteractionBar` and `CommentItem`.
+ *
+ * 📐 LEAF by STRUCTURE (§14d.2). Which emotion is picked and whether the
+ * summary is empty keep the same two-part shape ⇒ states. The caller
+ * flipping `isSkeleton` is its own leaf.
  */
 
 /** The six reactions, in the fixed display order real `src` uses. */

@@ -8,16 +8,13 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ModuleHeader` — the module-identity block at the top of a module page: tier plus three
- * counts (lessons, minutes, challenges). Sibling of `ContentHeader`/`CourseBrief` on the
- * same `PageHeader` frame.
- *
- * `tier` gets the one classifying `EnumChip`; the three counts are the module's headline
- * figures, kept as `HighlightChip`s. A count of 0 renders no pill. Takes raw enum/numbers
- * and owns the tier→label/tone table and the chip words ("lessons"/"minutes of study"/
- * "challenges"). `tier` skeletons through `EnumChip`; `HighlightChip` has no skeleton, so
- * its mirror calls `Chip` directly with the same icon, and all four pills render during
- * `isSkeleton` so the row does not resize.
+ * `ModuleHeader` — the module-identity cluster at the top of a module's page,
+ * answering "what is this module, and how big is it". Sibling of `ContentHeader`
+ * and `CourseBrief`: places identity into `PageHeader`, but carries a module's tier
+ * plus three `HighlightChip` counts (lessons, minutes, challenges) — the counts are
+ * the headline figures, so they keep their chip shape while `tier` classifies the
+ * module. Which chips draw stays states of one shape; losing the whole meta row
+ * drops a `PageHeader` region and earns its own shape.
  */
 
 /** Learning tier of a module — mirrors the `src` `CourseContentTier` enum (GraphQL / DB, shared across every course). */

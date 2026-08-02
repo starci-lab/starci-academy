@@ -5,19 +5,10 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentAiSelectionAsk` — a BLOCK: the "Ask AI about this passage" pill that
- * appears next to a text selection inside lesson content.
- *
- * Scope: tracking which text is selected and where the pill should sit (portalling,
- * following the selection rect, repositioning, dismissing) is pure DOM behaviour
- * with no reusable surface, so it belongs to the screen. This block owns exactly
- * one thing: given a point, render the pill there. `anchor` is a plain `{ x, y }`
- * the caller supplies (a `getBoundingClientRect()` viewport point in the real app).
- *
- * Earns its layer over a bare `Button` by fixing the pill at a viewport point,
- * choosing the "ask AI" wording + glyph, and layering an optional "New" chip badge.
- * Uses `position: fixed` (a viewport point), not `absolute`. Never skeletonised —
- * it only exists because a real, current selection triggered it.
+ * `ContentAiSelectionAsk` — the "Ask AI" pill that pops up next to a text
+ * selection inside lesson content. Selection tracking and portal positioning are
+ * DOM behaviour handled outside the block; it takes an `anchor` point. `isNew`
+ * toggles a "New" chip beside the pill.
  */
 
 /** A viewport point (already resolved by the caller — e.g. a selection rect). */

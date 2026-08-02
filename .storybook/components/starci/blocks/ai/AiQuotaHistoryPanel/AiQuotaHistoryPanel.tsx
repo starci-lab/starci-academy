@@ -17,13 +17,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `AiQuotaHistoryPanel` — the "History" tab body of `AiQuotaModal`: a 7-day
- * credit-usage bar chart over a scrollable list of recent AI charges
- * (model · purpose · time · credit delta).
- *
- * The chart always renders from `chartPoints`. The charges list is the one async
- * region — a 3-row skeleton while `isLoading`, the real rows otherwise, falling
- * to an empty message when `items` is empty.
+ * `AiQuotaHistoryPanel` — the "History" tab body inside `AiQuotaModal`: a 7-day
+ * usage bar chart plus a scrollable, bordered list of recent AI charges.
+ * `isLoading` swaps the whole `ChargesList` region for its shimmer mirror; an
+ * empty `items` array renders the list's own empty state. The chart draws from
+ * `chartPoints` regardless of either.
  */
 
 /** What an AI charge was for — the block owns the display label per surface. */

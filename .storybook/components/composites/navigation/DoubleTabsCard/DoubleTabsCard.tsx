@@ -6,14 +6,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `DoubleTabsCard` — a `Toolbar` (two tab groups) living inside a `SurfaceCard`
- * face, rather than sitting bare on the page canvas the way `ContentModeNav` does.
- * It is the named combination of `SurfaceCard`+`Toolbar` so every caller that needs
- * "tabs inside a card" reaches for the same shape.
- *
- * Owns the seam between the tab row and the body (`Toolbar`'s row sits inside the
- * card's `header`; `padding` on the card governs the body). Does not own what the
- * tabs ARE — that vocabulary stays with whichever block calls it.
+ * `DoubleTabsCard` — a `Toolbar` (two tab groups) living inside a `SurfaceCard` face instead of
+ * sitting bare on the page canvas. Composes `SurfaceCard`'s `header` slot rather than reinventing
+ * it. Leaves by structure: a second tab group appearing, or the card face switching to `nested`;
+ * which tab is selected is data.
  */
 
 /** Props for {@link DoubleTabsCard}. */

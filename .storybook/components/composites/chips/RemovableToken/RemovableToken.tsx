@@ -7,18 +7,12 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — the target `RemovableToken`. Authored in
- * Storybook (not `src`); synced to `src` later. NO `@/components` imports.
+ * `RemovableToken` — a bordered, single-line selected-item row: an optional leading icon, a
+ * label, and up to two trailing affordances (edit / remove). Leaves: `icon`, `onEdit`
+ * (+`editLabel`), `onRemove` (+`removeLabel`), `isDisabled`, `isSkeleton`.
  *
- * Grounded in the hand-rolled "picked company" row in
- * `CompanySection` (`src/components/features/careers/Jobs/JobPostForm/CompanySection/index.tsx`):
- * a bordered `rounded-2xl` flex row — a label on the left, a tertiary
- * `Button` (× icon + "Change" text) on the right that clears the pick. This
- * composite generalises that ONE hand-rolled row into a reusable
- * selected-item token: any label/icon in, an optional remove (×) and/or
- * edit ("Change"-style) affordance out.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `icon` takes a component reference (`IconComponent`), never a built element — the row calls
+ * it itself at a fixed `size-4` so it also renders during `isSkeleton`.
  */
 
 /** Props for the {@link RemovableToken} composite. */

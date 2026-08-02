@@ -29,16 +29,13 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MockInterviewPage` — the screen for getting ready for a mock interview, working
- * through it live, then reading the debrief. It composes blocks in frames and hands
- * each typed data, drawing no shape of its own.
- *
- * Three phases, never two at once: `setup` (the green room, identity via
- * `PlaygroundSetupHeader` + `MockInterviewSetup`), `live` (`WorkSessionHeader` +
- * `InterviewerPresence` + `VoiceHero` + `MockInterviewAnswerAction`, in one
- * reading-width column), `result` (identity via `SubmissionResultHeader` +
- * `MockInterviewScorecard`). `isSkeleton` reaches only the blocks that can mirror
- * themselves (the setup and result headers/bodies).
+ * `MockInterviewPage` — the screen to get ready for a mock interview, work
+ * through it live, then read the debrief. A screen owns a list of functions:
+ * seven blocks — three reused (`WorkSessionHeader`, `PlaygroundSetupHeader`,
+ * `SubmissionResultHeader`), four new — arranged by `phase`. Three leaves
+ * matching the `phase` fork: `Setup` (identity header + green-room card) ·
+ * `Live` (session band + interviewer + answer composer + submit action) ·
+ * `Result` (debrief identity header + scorecard, pass/borderline/fail).
  */
 
 /** Which part of the mock interview the candidate is in. */

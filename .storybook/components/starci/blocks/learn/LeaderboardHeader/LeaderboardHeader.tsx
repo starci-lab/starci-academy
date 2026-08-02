@@ -3,11 +3,10 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * `LeaderboardHeader` — the page-identity cluster at the top of the leaderboard screen:
- * breadcrumb trail, title, subtitle. Thinner than sibling headers by design — no meta
- * chips, since ranking position and score live in the list below. Builds `Breadcrumbs`
- * from crumb DATA and drives `PageHeader`'s title slot with the `isSkeleton` →
- * `Typography` swap.
+ * `LeaderboardHeader` — the page-identity cluster at the top of the leaderboard
+ * screen: trail, title, subtitle, nothing else. Wraps `PageHeader` in a
+ * domain-named block; it carries no meta chips because rank and score live in the
+ * list below. A missing subtitle is a data condition on the same three-part cluster.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

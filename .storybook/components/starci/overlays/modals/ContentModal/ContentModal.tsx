@@ -5,13 +5,10 @@ import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShe
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 
 /**
- * `ContentModal` — the fullscreen read view of a content entity (a lesson, a support
- * article), opened from anywhere. Renders the markdown title inline in the header
- * and the markdown body at full reading measure, scrolling independently (the shell
- * caps at 85vh, the body's `ScrollShadow` scrolls). The header renders only when a
- * title is present; the body always renders.
- *
- * Presentational: `isOpen`/`onOpenChange` + `content`.
+ * `ContentModal` — fullscreen, presentational-only READ view of a content
+ * entity (a lesson, a support article). Opened from anywhere via the app's
+ * global overlay store; this port takes plain `isOpen`/`onOpenChange`/`content`
+ * props instead of reading Zustand/Redux directly (Rule 13).
  */
 
 /** The content entity `ContentModal` reads — a title and a body, both markdown. */

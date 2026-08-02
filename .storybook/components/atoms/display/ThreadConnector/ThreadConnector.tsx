@@ -2,16 +2,9 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * @noSkeleton draws a guide line, not a value — there is nothing behind it to wait for.
- *
- * The curved line linking a comment's avatar down into a reply composer's avatar. Same idea as
- * `Stack.nested`'s straight indent guide, bent into a corner, so no block hand-writes
- * `border-l` / `border-b` / `rounded-bl-*` of its own.
- *
- * The height is fixed at `h-4` and must not become `self-stretch`. The reply composer's avatar is
- * `size="sm"` (32px) and top-aligned, so its centre is 16px down and that is where the bottom
- * border has to land. Stretching makes the line track the whole composer, textarea and buttons
- * included, and the curve stops meeting the avatar.
+ * ATOM — `ThreadConnector`: the curved guide line linking a comment's avatar down into a
+ * reply composer's own avatar (Facebook-style nested reply). Same family as `Stack.nested`'s
+ * straight indent-guide border, bent into a corner instead of a straight drop.
  */
 
 /** Props for {@link ThreadConnector}. */

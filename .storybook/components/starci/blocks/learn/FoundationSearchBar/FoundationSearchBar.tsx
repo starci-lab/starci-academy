@@ -3,12 +3,16 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FoundationSearchBar` — the resource-list search row: a debounced typeahead field
- * left, a live match count right, `justify-between`. Sibling of
- * `FoundationCategorySearchBar`, but `resultCount` comes from a separate read than the
- * suggestions, so `isCountLoading` lets the count shimmer independently of the field.
- * Owns the count wording from a bare `resultCount` (including the newsworthy "no
- * matches" zero). One leaf.
+ * BLOCK — `FoundationSearchBar`: the search row — debounced-typeahead field
+ * left, a live match count right, one `StackH` seam apart. See the component
+ * file header for why this is a SIBLING of `FoundationCategorySearchBar`
+ * (not a reach past it) and for the independent-count-loading axis that makes
+ * it a distinct block rather than the same one reused.
+ *
+ * 📐 ONE LEAF (§14d.2). `isSkeleton`, `isCountLoading`, an empty vs. populated
+ * suggestion list, and every value `resultCount` can take (unknown / zero / N)
+ * are all DATA on the same fixed structure — no node appears or disappears —
+ * so they are STATES inside the single `Default` leaf, not leaves of their own.
  */
 
 /** One autocomplete suggestion row (id + label only — the generic shape this bar needs). */

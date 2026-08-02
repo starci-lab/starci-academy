@@ -3,16 +3,29 @@ import { Link as HeroLink, Skeleton as HeroSkeleton, Typography as HeroTypograph
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Typography` — text atom (not HeroUI's `Typography`, though it wraps it internally).
- *
- * One component, one `size` prop that spans body scale (`xs`–`lg`), headings (`h1`–`h5`,
- * wrapping HeroUI's `Typography.Heading`), and `code` (wrapping `HeroTypography
- * type="code"`).
- *
- * Content goes through the `text` prop, not children (matches `Chip`). Other axes:
- * `color`, `weight`, `isItalic`, `isLink`/`isButton` for interactive text,
- * `prefixIcon`/`suffixIcon` as components (the atom controls their size and weight),
- * `truncate`/`lineClamp`, `tabularNums`, and `isSkeleton` for a self-drawn loading bar.
+ * ATOM — `Typography`: the one text atom in the system (custom, not HeroUI's own
+ * `Typography`, though it wraps it internally for headings/code/links).
+ * 
+ * 1 PROP = 1 LEAF. Every prop with a visual effect gets its own leaf rendering the full set
+ * of that prop's values: `size` · `color` · `weight` · `isItalic` · `isStruck` · `align` ·
+ * `tabularNums` · `truncate` · `lineClamp` · `noWrap` · `preserveWhitespace` · `isInline` ·
+ * `parseInlineCode` · `prefixIcon` · `suffixIcon` · `iconSlide` · `isLink` ·
+ * `underlineOnHover` · `underlineOnGroupHover` · `isButton` · `hoverColor` · `isSkeleton`.
+ * 
+ * Not leafed (wiring/placement props with no enumerable visual state of their own):
+ *   - `text` — freeform content; every leaf supplies its own.
+ *   - `href` / `target` / `rel` — HeroUI `Link` passthrough, demonstrated inline in the
+ *     `Link` leaf's second state.
+ *   - `onPress` — a callback, wired as a no-op into the `Link` and `IsButton` leaves.
+ *   - `classNames` — placement inside a parent, not an appearance choice.
+ *   - `showAnatomy` — the dev-only overlay flag every leaf turns on for its state.
+ * 
+ * Two props are wired more narrowly than the type/JSDoc implies; the leaves render what the
+ * source does: `underlineOnHover` is only consumed inside the `isLink` branch, so its leaf
+ * only shows `isLink` states; `weight`/`tabularNums` are not wired into the `size="code"`
+ * branch, so those leaves stay at body/heading sizes.
+ * 
+ * Panel text (`leaf`/`reason`/`name`/`why`/`code`), demo labels, and JSDoc are all English.
  */
 
 /**

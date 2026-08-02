@@ -1,4 +1,12 @@
-/** @noSkeleton renders the brand mark, which is always present and never loading. */
+/**
+ * ATOM — `Logo`: the system's one and only brand mark (a "C" glyph in pink stroke
+ * plus two dotted corner marks), inline SVG, no background, one fixed colour.
+ *
+ * Its only prop is `className`, which produces no shape of its own — so the atom has
+ * no leaf other than `Default`, no union to enumerate. The side-by-side tiles (three
+ * heights + a dark background) are `states[]` entries of that one leaf, not separate
+ * leaves.
+ */
 import React from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"

@@ -5,24 +5,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `Table.*` — the data-table frame, wrapping the HeroUI `Table`.
- *
- * | Member | Shape | Content channel |
- * |---|---|---|
- * | `.Base` | 1 column–row table | `columns` + `items` DATA — children forbidden |
- *
- * A table is a repeated list, so `items` is required and `children` forbidden;
- * columns are configured through `columns`, not a JSX `<Column>` child. The frame
- * carries no domain content — it does NOT format money/dates/status (the consumer
- * passes an already-formatted `ReactNode` per cell) — and grows no
- * sort/filter/paginate/select; an interactive cell is a node the consumer passes in.
- *
- * Uses the HeroUI `Table` compound directly (alias `HeroTable`); the skeleton
- * mirror uses `Typography.isSkeleton` bars.
- *
- * Alignment is applied via a wrapping span, not a class on `<th>/<td>`: HeroUI's
- * un-layered `.table__column { text-align: left }` beats Tailwind v4 utilities, but
- * declaring `text-align` on the child span always wins over the inherited value.
+ * `Table` — a table frame. Owns the column configuration (`columns`: alignment + width),
+ * building rows from `items`, and the three frame states of a list: empty (`emptyContent`),
+ * loading (`isSkeleton`), and pressable rows (`onRowPress`). Does not format content — every
+ * cell is a `ReactNode` the consumer passes in.
  */
 
 /** Which edge a column's content aligns to (reading start, or the right edge for numbers/actions). */

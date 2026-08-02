@@ -10,21 +10,11 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
- * `DailyQuest` — a BLOCK (dashboard): "Today's Quests" content — a fixed 3-task
- * checklist (read content · pass a challenge · review flashcards), each row showing
- * today's progress, plus a claim action once every task is done. Content only — the
- * page frames it with a label.
- *
- * Data: one entity `{ claimed, allDone, reward, tasks[] }`, `tasks` a fixed-length
- * (3) array of `{ key, current, target }`. Rows render via `SurfaceCardCrossList`:
- * done → `mark="check"`, not-yet-done → `mark="pending"`; no `cross` row exists.
- * Each row's body (title ↔ current/target) is composed with the `Split` frame.
- *
- * Leaves: Loading (`SurfaceCardCrossList`'s own skeleton, 3 rows), Error
- * (`AsyncContent` + retry), Empty (`quest` is null with no error), and Content —
- * which forks by claim state: `!allDone` → a muted progress prompt; `allDone &&
- * !claimed` → a primary claim `Button` (`isPending` while the claim mutation is in
- * flight, this block's only pending state); `claimed` → a success `Chip`.
+ * `DailyQuest` (dashboard) — "Today's quests": a fixed 3-task checklist plus a
+ * claim action once every task clears its target. Four async leaves — `Loading`,
+ * `Error`, `Empty`, and `Content`, the last forking on claim state: incomplete
+ * (prompt), all-done unclaimed (claim button, `isPending` while claiming), or
+ * already claimed (chip, no action left).
  */
 
 /** The three fixed daily tasks — closed set, real BE vocabulary (see file header). */

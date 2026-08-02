@@ -8,14 +8,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundExerciseGrid` — the Playground hub's core: browse the course's
- * hands-on exercises and open one. Wraps `SurfaceCardPressableGroup` and owns
- * what the composite doesn't: the fixed `TerminalWindowIcon`, the stacked
- * icon + title + step-count-chip tile body, a decorative "Enter playground ->"
- * cue row (plain text, not a nested target — the whole tile is one press
- * target), and the empty branch via `EmptyState`. Two leaves: `Default` (grid,
- * with `isSkeleton` as a state; four guessed placeholder tiles) and `Empty`.
- * Columns `{ base: 1, sm: 2 }`.
+ * `PlaygroundExerciseGrid` — the core of the Playground hub screen: a grid of
+ * hands-on exercises the learner opens one of. Wraps `SurfaceCardPressableGroup`;
+ * the cue row at the bottom of each tile stays decorative text, not a nested button.
+ * Two shapes: `Default` (a bounded press-target grid of real tiles, or the
+ * composite's own tile mirror while loading) and `Empty` (the grid replaced by
+ * `EmptyState` when the course has no Playground exercises).
  */
 
 /** One hands-on exercise offered by the course. */

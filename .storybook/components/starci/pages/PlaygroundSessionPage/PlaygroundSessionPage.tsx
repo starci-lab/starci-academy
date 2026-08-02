@@ -19,17 +19,17 @@ import {
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundSessionPage` — the screen for running one playground exercise: read the
- * current step, run its command on your own machine, watch your live workspace report
- * back, and monitor the pairing. It composes blocks in frames and hands each typed
- * data, drawing no shape of its own.
+ * SCREEN — `PlaygroundSessionPage`: run one playground exercise. See the
+ * component's file header for the full function list and the two-pane layout's
+ * precedent; this file only builds on top of that.
  *
- * Four functions: `WorkSessionHeader` (position + two ways to leave),
- * `PlaygroundStepGuide` (read and verify the step), `PlaygroundResourcePanel` (the
- * live workspace snapshot), and `PlaygroundConnectSheet` (the pairing, docked and
- * floating over the two-pane workspace). Two-pane workspace, no `Container`. One
- * `connection` prop drives both the sheet's three-state wording and the panel's binary
- * reading. No `isSkeleton` (no composed block accepts one).
+ * ONE LEAF, THREE DATA STATES (§14d.2/§11f) — every state renders the SAME four
+ * blocks in the SAME two-pane-plus-docked-sheet shape; only what each block is
+ * told changes (a step vs. no step left, a live pairing vs. a first-time wait).
+ * None of the three removes or adds a node at the SCREEN's own tier — the
+ * structural forks that exist (the guide's completion leaf, the sheet's device
+ * body) already live one tier down, inside `PlaygroundStepGuide` and
+ * `PlaygroundConnectSheet`'s own leaf/state splits.
  */
 
 /** Props for {@link PlaygroundSessionPage}. */

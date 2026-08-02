@@ -4,20 +4,15 @@ import type { TypographyIcon } from "@sb-components/atoms/text/Typography/Typogr
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `IconLabelValueRow` — a leading icon beside a flex-1 label with a trailing value
- * pinned to the row's end: the flat "spec line" shape (a permission row, a
- * plan-limit line, a settings line reporting its value). One seam, not two —
- * icon↔label and label↔value both ride the same `content-row` gap (step 4, 12px),
- * with no sub-grouping inside the row.
+ * COMPOSITE — `IconLabelValueRow`: a leading icon + flex-1 label + trailing
+ * value, one `content-row` seam (12px) across all three segments. For a flat
+ * "spec line" — a permission row, a plan-limit line, a settings line reporting
+ * its current value — where `ListRow`'s own title↔subtitle column would be one
+ * text line too many.
  *
- * `label`/`value` are `string`: the row wraps each in its own `Typography` and owns
- * the tone — `label` is the row's own text (`default`, medium weight), `value` is
- * the fact it reports (`muted`). `icon` is a bare `ComponentType` (a Phosphor
- * `*Icon`), sized `size-5` and coloured to follow the label (`text-foreground`).
- *
- * No bare icon-shaped skeleton atom exists yet, so while `isSkeleton` the icon slot
- * shimmers as a flat `bg-default` placeholder span, and `label`/`value` shimmer
- * through `Typography`'s own `isSkeleton` bar.
+ * `label` reads as the row's own text (`default`, medium weight); `value`
+ * reads as the fact the row reports (`muted`), pinned to the trailing end —
+ * the same foreground/muted split `ListRow`'s title/meta pairing already uses.
  */
 
 /** Props for {@link IconLabelValueRow}. */

@@ -15,15 +15,16 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `HeadhuntingsPage` — the screen for browsing a course's consultant directory and
- * jumping either to a consultant's profile or a recruiting company's page. It composes
- * blocks in frames and hands each typed data, drawing no shape of its own.
- *
- * Three functions: header (breadcrumb + directory title/description), a company
- * deep-link search, and the consultant grid. The company search is a deep-link, not a
- * grid filter — it never narrows the roster. Both `onOpenConsultant` and
- * `onSelectCompany` bubble a bare id up for the screen to route. `isSkeleton` flows to
- * every block except the static company search.
+ * `HeadhuntingsPage` — the screen to browse the consultant directory for a
+ * course and jump either to a listed consultant's profile or to a recruiting
+ * company's page. A screen owns a list of functions: it calls blocks, places
+ * them in frames, and hands each typed data. Three functions, in reading order:
+ * orient · deep-link to a company already in mind · browse the consultant
+ * roster and open one. The company search is not a grid filter — picking a
+ * suggestion fires `onSelectCompany` with an id, which the real page turns into
+ * a route push, and never changes `consultants`/`consultantCount`. Only
+ * `isSkeleton` forks into its own leaf; everything else is a data state of the
+ * one `Default` leaf.
  */
 
 /** Props for {@link HeadhuntingsPage}. */

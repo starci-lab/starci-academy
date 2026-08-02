@@ -7,15 +7,14 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FoundationsGridPage` — the screen for browsing the Foundations content library and
- * drilling into a category. It composes blocks in frames and hands each typed data,
- * drawing no shape of its own.
- *
- * Six functions: header (breadcrumb + hub title/description), a self-hiding
- * trial-enroll banner, a live category count, name search with autocomplete, the
- * category list, and its pager. An empty result is a state of the list, not its own
- * block. `isSkeleton` flows to every block, including the trial banner (which treats
- * it as a state that wins over `isVisible`).
+ * `FoundationsGridPage` — the screen to browse the Foundations content library
+ * and drill into a category. A screen owns a list of functions: it calls
+ * blocks, places them in frames, and hands each typed data. Six functions, in
+ * reading order: orient · get nudged to unlock while on trial · see a live
+ * match count · search by name · browse and open a category · page through when
+ * there's more than one page. Only `isSkeleton` forks into its own leaf; the
+ * trial banner's visibility, an empty search result, and pager presence are
+ * data states of the one `Default` leaf.
  */
 
 /** Props for {@link FoundationsGridPage}. */

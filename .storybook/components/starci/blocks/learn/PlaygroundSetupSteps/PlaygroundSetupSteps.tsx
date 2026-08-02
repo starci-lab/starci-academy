@@ -19,17 +19,17 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundSetupSteps` — the ordered work of getting a playground ready: pair
- * the local agent, install the engine (an OS-tabbed guide via `TabsExtended`),
- * and — RAG flavor only — pull the VRAM-sized models. Each step is one
- * `SurfaceCard.Base` (title + status chip header) whose body carries a
- * why-it-matters line, commands rendered through `MarkdownContent` (fenced
- * blocks get copy + monospace chrome), and a re-check action. Two leaves by
- * `flavor` (2 steps for infra, 3 for ollama). Builds its own `CommandSkeleton`
- * and `OsTabsSkeleton` mirrors since `MarkdownContent`/`TabsExtended` have no
- * `isSkeleton`. The embedding model name is a block-owned constant; only the
- * generation model varies by VRAM. Rotating the pairing code confirms via
- * `ConfirmDialog` (tone `default`) only when an agent is attached.
+ * BLOCK — `PlaygroundSetupSteps`: the ordered setup guide for a playground — pair
+ * the local agent, install the engine (an OS-tabbed guide), and — Ollama flavor
+ * only — pull the VRAM-sized models. Each step carries its own status chip,
+ * why-it-matters line, runnable command(s), and re-check action.
+ *
+ * TWO LEAVES, ONE PER `flavor` (§14d.2 — see the component's file header for why
+ * this differs from `ChallengeBrief`'s single "one leaf, N optional sections"):
+ * `flavor` is chosen once per PLAYGROUND KIND, not per render, so a caller wired
+ * to `"infra"` never even carries the model-readiness props the third step
+ * needs — the third `SurfaceCard` is a structural fact of the ollama leaf, not a
+ * data condition that could show up on the infra one.
  */
 
 /** The three OS guides a `flavor="infra"`/`"ollama"` engine install can offer. */

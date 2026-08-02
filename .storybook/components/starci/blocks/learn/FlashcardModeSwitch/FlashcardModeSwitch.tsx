@@ -3,10 +3,12 @@ import { CardsIcon, LightningIcon } from "@phosphor-icons/react"
 import { Tabs, type TabItem } from "@sb-components/atoms/navigation/Tabs/Tabs"
 
 /**
- * `FlashcardModeSwitch` — a one-row toggle between studying the deck and drilling
- * yourself, built on the `Tabs` atom. Owns the practice-mode vocabulary. Never
- * skeletonised (the row is known before any deck/session loads). The screen removes
- * the row entirely once a session starts rather than disabling it.
+ * `FlashcardModeSwitch` — study the deck, or drill yourself. Same shape as
+ * `ContentModeNav` (a row, a `Tabs` atom, no skeleton) but owns a different
+ * vocabulary: practice modes rather than reading modes. The screen stops
+ * rendering it once a session starts, since a mid-session switch would throw the
+ * run away. Selected mode is data — one leaf, two states; there is no skeleton
+ * prop.
  */
 
 /** The two ways to work a deck. */

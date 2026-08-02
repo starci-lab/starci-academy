@@ -4,16 +4,10 @@ import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `ChoiceRadioGroup` — a mutually-exclusive pick-one row, built from `options` DATA.
- * It renders one `ChoiceRadio` per entry and adds the group's layout,
- * heading/hint/error frame, and row count; `ChoiceRadio` itself owns each row's
- * checked/skeleton state.
- *
- * `HeroRadioGroup` is the one vendor import kept here: a bare HeroUI `Radio` reads
- * its selection/name context from the surrounding `RadioGroup`, so `ChoiceRadio`
- * cannot form a mutually-exclusive set without it, and no house atom wraps that
- * context alone today. This is the same documented exception
- * `composites/buttons/ButtonRadioGroup` takes with raw HeroUI `Button`.
+ * `ChoiceRadioGroup` — a radio group that rebuilds the house `ChoiceRadio` atom once per
+ * `options` entry. `ChoiceRadio` takes no name-prop of its own, so the composite badges the
+ * wrapping `<span>` around each one to link the dep to `ChoiceRadio`'s story. The internal
+ * `FieldFrame`'s `Label` (heroui) shows only when `groupLabel` is passed.
  */
 
 /** One selectable option for {@link ChoiceRadioGroup}'s `options` shorthand. */

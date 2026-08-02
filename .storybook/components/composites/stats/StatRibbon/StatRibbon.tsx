@@ -4,11 +4,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StatPair, type StatPairValueType } from "@sb-components/composites/stats/StatPair/StatPair"
 import { ResponsiveRow } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/StatRibbon`. Authored in Storybook (not `src`);
- * synced to `src` later.
- */
+/** Same parts for every leaf: N StatPair cells inside one Card — the real `StatPair` composite. */
 
 /** One statistic in a {@link StatRibbon} — a headline value with its caption. */
 export interface StatRibbonItem {

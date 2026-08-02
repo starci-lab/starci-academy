@@ -4,16 +4,14 @@ import { CircleIcon, XIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `ChipBase` — the single chip in this design system. Wraps HeroUI's `Chip`.
+ * ATOM — `Chip`: the only chip in the system.
  *
- * The status dot is not a separate chip shape: pass `dotColor`/`dotClassName` for a
- * leading dot instead of `icon` (same idea as `Button`'s `isIconOnly`). Label content
- * goes through the `text` prop, not `children`.
+ * One prop = one leaf, each rendering every state the prop can produce: `tone` ·
+ * `icon` · colour dot · `onRemove` · `isSkeleton`. Props that produce no visual
+ * (`removeLabel`, `className`, `showAnatomy`) get no leaf.
  *
- * The leading-glyph cell holds only one thing: `icon` and `dotColor`/`dotClassName`
- * are mutually exclusive, enforced at compile time rather than left to the caller.
- * `isSkeleton` draws its own shimmer, sized to the chip's real box and cell count.
- * Glyph scale and weight are controlled by the atom — the caller only picks which icon.
+ * Icon = Phosphor; the atom pins both the scale (`size-3`, matching the chip's text)
+ * and the `weight`.
  */
 
 /**

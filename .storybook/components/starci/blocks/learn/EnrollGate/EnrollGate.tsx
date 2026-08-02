@@ -13,16 +13,12 @@ import { PriceTagProminent, type PriceBreakdown } from "@sb-components/starci/bl
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `EnrollGate` — shown in place of an enrollment-required learn surface when the viewer
- * is on a trial (not enrolled): lock identity, price, scarcity, and one CTA. Shares the
- * commerce blocks `PriceTagProminent` + `PhaseScarcityNote` with `ContentPaywall` but
- * is a standalone/overlay surface card of its own.
- *
- * `price` (`EnrollGatePrice`) bundles the flat price fields plus the breakdown; while
- * it is unresolved (or `isSkeleton`), `AsyncContent` shimmers only the price region
- * while identity/headline/CTA stay real. `preview?: ReactNode` takes a non-interactive
- * teaser block rendered `aria-hidden` behind a bottom fade, with the enroll card
- * floating over the faded tail; omit it and the card renders centered alone.
+ * `EnrollGate` — the conversion card shown in place of an enrollment-required
+ * learn surface (currently personal-project) for a trial viewer. Kept separate
+ * from `ContentPaywall` despite composing the same two commerce blocks. Four
+ * leaves: `Standalone` (no `preview`, centered), `WithPreview` (floats over a
+ * faded teaser), `NoScarcity` (no `price.currentPhase`, drops
+ * `PhaseScarcityNote`), and `Loading` (`isSkeleton`, price region shimmers).
  */
 
 /**

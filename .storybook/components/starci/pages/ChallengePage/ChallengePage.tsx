@@ -22,16 +22,17 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { SplitWorkspace } from "@sb-components/frames/SplitWorkspace/SplitWorkspace"
 
 /**
- * `ChallengePage` — the screen for solving one challenge. It composes blocks in
- * frames and hands each typed data, drawing no shape of its own.
- *
- * A read column and an act column, split with `SplitWorkspace` (`Container size="xl"`,
- * stacked on mobile/tablet, side-by-side from `@app-xl`). READ: what this challenge
- * is (score, difficulty, the learner's status) and the brief (prerequisites,
- * requirements, guided steps, expected outputs, hint). ACT: submit each requirement's
- * repo URL and see its graded verdict + feedback, a grading-settings trigger, and the
- * roll-up score against the pass line. The grading-settings drawer content is out of
- * scope; `onOpenGradingSettings` is a chrome trigger only.
+ * `ChallengePage` — the screen to solve one challenge. A screen owns a list of
+ * functions: it calls blocks, places them in frames, and hands each typed data.
+ * Five functions across a read column and an act column: (1) what this
+ * challenge is — score, difficulty, the learner's status; (2) the brief; (3)
+ * submit each requirement and see its graded verdict; (4) reopen grading
+ * settings (chrome trigger only); (5) the roll-up score against the pass line.
+ * Two columns composed with `SplitWorkspace`: a `min-w-0 flex-1` reading column
+ * beside a `shrink-0 w-[360px]` sticky aside, stacked on mobile/tablet →
+ * `@app-xl:flex-row` on desktop, inside a `Container size="xl"`. The
+ * grading-settings drawer is not built — `onOpenGradingSettings` is a chrome
+ * trigger only.
  */
 
 /** Props for {@link ChallengePage}. */

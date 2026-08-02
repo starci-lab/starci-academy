@@ -10,15 +10,14 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * `ChallengeResultPage` — the screen showing what came back from grading one
- * challenge submission. It composes blocks in frames and hands each typed data,
- * drawing no shape of its own.
- *
- * Four functions in reading order: where am I / how to leave, which attempt this is,
- * how this attempt did, and what to fix — plus a related-reading nudge shown only on
- * a failing attempt. The score cluster (`SubmissionScoreCard` +
- * `SubmissionFindingsList`) renders only once an attempt is selected (or while
- * skeleton). Mounts the full-history drawer, opened from the attempt selector's
- * overflow.
+ * challenge submission. A screen owns a list of functions: it calls blocks,
+ * places them in frames, and hands each typed data. Four functions, in reading
+ * order: where am I / how do I leave · which attempt am I looking at · how did
+ * this attempt do · what should I fix, plus a nudge toward more reading on a
+ * failing attempt. The score cluster is conditional on an attempt being
+ * selected (`NoSelection` shows two blocks, not four); the related-reading
+ * nudge appears only on a failing attempt (`Passing` vs `Failing`); the "+N"
+ * overflow trigger opens `SubmissionResultHistoryDrawer` (`WithHistory`).
  */
 
 /** Props for {@link ChallengeResultPage}. */

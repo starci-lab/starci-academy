@@ -7,17 +7,11 @@ import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLi
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CourseQaComposer` — one writing-shape reused three ways on a course Q&A board: the
- * root "ask the whole course" composer (a collapsible avatar pill that opens into a
- * textarea), an inline answer-EDIT form, and an inline REPLY form.
- *
- * Text is strictly controlled (`value`/`onValueChange`); `initialValue` is read once
- * only to decide how a `mode="collapsible"` composer boots. After submit/cancel the
- * pill folds itself back down but never clears the draft (the caller owns `value`).
- * Cancel shows when `mode === "collapsible"` or when `onCancel` is passed.
- *
- * Two structural leaves: `CollapsedPrompt` (avatar + pill) and `ExpandedForm`
- * (avatar + textarea + action row).
+ * BLOCK — `CourseQaComposer`: the ONE writing shape reused three ways on a
+ * course Q&A board — the root "ask the whole course" collapsible pill, an
+ * answer's inline edit form, and an inline reply form. See the component file
+ * header for the full mode/`initialValue`/fold-back contract and why this is
+ * genuinely new rather than a duplicate of `_legacy/blocks/feed/Composer`.
  */
 
 /** Which of the block's two writing shapes to render. */

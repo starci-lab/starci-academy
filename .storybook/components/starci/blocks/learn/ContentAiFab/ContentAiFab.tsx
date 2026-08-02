@@ -5,18 +5,11 @@ import { FloatingActionButton } from "@sb-components/composites/buttons/Floating
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `ContentAiFab` — a BLOCK: the floating "ask StarCi AI" trigger mounted once in
- * `learn/layout.tsx`, bottom-right over every `/learn/**` route.
- *
- * Reuses `FloatingActionButton` (which owns the round accent circle, fixed
- * placement, shadow, and icon-only press affordance) and adds only the domain
- * decisions: which icon it shows (a sparkle), its fixed accessible name, and when it
- * should not be there. It does not own chat state, drag position, or panel mode —
- * it only calls `onOpen()`.
- *
- * `isOpen` HIDES rather than disables: when the AI chat panel is already open a
- * second trigger on top of it is dead chrome, so it returns `null`. Never
- * skeletonised — static layout chrome with no data dependency.
+ * `ContentAiFab` — the floating "ask StarCi AI" trigger mounted once by
+ * `learn/layout.tsx`, bottom-right over every `/learn/**` route. Composes the
+ * `FloatingActionButton` composite, fixing the icon + accessible name. `isOpen`
+ * decides whether it renders at all, not its shape. No `isSkeleton` — it is
+ * static chrome.
  */
 
 /** Fixed accessible name — see the file header on why this is not a prop. */

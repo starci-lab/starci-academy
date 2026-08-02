@@ -16,15 +16,13 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FoundationResourcePage` — one foundation resource's own page (external link,
- * video, or document), reached from a category list. It composes blocks in frames and
- * hands each typed data.
- *
- * Three functions: a trial-upgrade banner (`TrialEnrollBanner`, orthogonal to whether
- * the resource was found — visibility derived from `isEnrollmentKnown && !isEnrolled`),
- * what this resource is, and the resource itself. `isEmpty` replaces only the
- * identity + body pair. `KIND_TO_RESOURCE_KIND` is the exhaustive typed bridge between
- * `FoundationHeader`'s kind enum and `FoundationResourceBody`'s kind union.
+ * `FoundationResourcePage` — the screen for one foundation resource's own page.
+ * Three functions, in reading order: say if this trial learner should upgrade ·
+ * what the resource is · the resource itself. The trial banner sits outside the
+ * `isEmpty` switch — it answers whether the learner is on a trial, unrelated to
+ * whether the resource id resolved, and self-hides on its own grounds. Three
+ * leaves: `Resource` (identity + body, kind switched as data inside
+ * `FoundationResourceBody`) · `Empty` (the id resolved to nothing) · `Skeleton`.
  */
 
 /**

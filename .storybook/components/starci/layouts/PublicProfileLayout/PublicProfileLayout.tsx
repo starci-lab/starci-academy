@@ -9,16 +9,14 @@ import { ProfileLockedState } from "@sb-components/starci/blocks/profile/Profile
 
 /**
  * `PublicProfileLayout` — the wrapper mounted once per `/profile/[username]/**`
- * scope. It owns the loading → not-found → locked → main state switch (checked in
- * that priority order); only the main branch renders the two-column shell (identity
- * aside beside the active tab's content) with the tab strip as chrome above it.
- * Body switches column-first to row at `@app-md`.
- *
- * Computes `visibleTabs`/`hiddenTabs` (from `isSelf`/`hasPublicCv`/`sectionVisibility`)
- * and `canHire` here, then hands the results down. `PublicProfileUser` extends
- * `ProfileHeroUser` with `profileLocked`, `sectionVisibility`, and `openToWork`.
- * Not-found copy is fixed; `onGoHome`/`onHire`/`onShare`/`onEditProfile`/`onGoCourses`
- * are the exits.
+ * scope. Four structural leaves, in the "loading → not-found → locked →
+ * content" branch order, each swapping the whole composed body:
+ *   - `Loading`  — `ProfileLoadingState` alone.
+ *   - `NotFound` — `ProfileNotFoundState` alone.
+ *   - `Locked`   — `ProfileLockedState` alone (identity visible, tabs withheld).
+ *   - `Content`  — `ProfileTabsBar` chrome above a two-column `ProfileHero` +
+ *     route-panel body; owner-vs-visitor tab gating and the `canHire` CTA fork
+ *     are data states within this leaf.
  */
 
 /** Per-section tab visibility for a VISITOR (the owner always sees every tab) — feeds the `visibleTabs`/`hiddenTabs` computation below. */

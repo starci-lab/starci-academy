@@ -8,12 +8,11 @@ import { ButtonBase } from "@sb-components/atoms/buttons/Button/ButtonBase"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MindMapFullscreenButton` — the floating zoom + fullscreen cluster bottom-right over a
- * mind-map canvas: three icon-only `ButtonBase` in a `StackV`. Fixes the order (zoom in →
- * zoom out → fullscreen), the icon per slot, and which of two icons the fullscreen button
- * shows (the one real decision). One leaf — `isFullscreen` only swaps the third button's
- * glyph/aria-label. All three handlers fire on every press (min/max clamping is the
- * caller's job). `ariaLabels` is a caller-supplied per-button table.
+ * `MindMapFullscreenButton` — the floating zoom + fullscreen rail over a mind-map
+ * canvas, bottom-right: three `ButtonBase` (iconOnly) actions in a `StackV`, fixed
+ * order, always present. `isFullscreen` swaps only the third button's glyph and
+ * label between "enter" and "exit". The block never disables at a zoom limit —
+ * that judgement belongs to the screen holding the canvas transform.
  */
 
 /** Localized accessible names, one per button this block renders. */

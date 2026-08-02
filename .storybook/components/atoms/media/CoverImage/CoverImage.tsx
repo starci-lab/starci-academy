@@ -3,8 +3,10 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * Storybook-local port of `src/components/blocks/media/CoverImage`. Does not
- * import from `@/components`.
+ * Annotation shared across all three leaves: only `Skeleton` (a real HeroUI import,
+ * `tier: "heroui"`) earns a name — `WithImage`/`NoImage` render a bare div/img with no
+ * sub-part that's a real component worth naming, so the Deps tab for those two leaves is
+ * naturally empty. Do not self-declare a `"CoverImage"` key pointing at the root itself.
  */
 
 /** Props for the {@link CoverImage} block. */

@@ -3,12 +3,12 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * `FoundationsHeader` — the category-identity block at the top of a foundations category
- * screen: breadcrumb trail, title, description. Sibling of `ContentHeader`/`CourseBrief`/
- * `ModuleHeader` on the same `PageHeader` frame, but thinner — no meta row or secondary
- * card (a foundations category is a navigational hub, not a graded unit). Builds
- * `Breadcrumbs` from `breadcrumbItems` DATA; the trail always exists in the real screen
- * (optional only for skeleton/story).
+ * `FoundationsHeader` — the category-identity cluster at the top of a foundations
+ * category screen: a breadcrumb trail (home → courses → course → foundations hub →
+ * this category), a title, and an optional description. Deliberately thin — a
+ * foundations category is a navigational hub, so no read-state chip, meta row, or
+ * secondary card. The description may drop out; `isSkeleton` swaps every composed
+ * atom for its mirror.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

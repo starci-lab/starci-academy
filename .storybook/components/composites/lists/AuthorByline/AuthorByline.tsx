@@ -4,17 +4,10 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `AuthorByline` — name + optional verified/pinned glyphs + a relative timestamp,
- * as ONE inline row: the "status+text" line that sits under an avatar (a real
- * implementation of `IdentityContentRow`'s `byline` slot).
- *
- * `verified`/`pinned` are generic booleans (no domain entity), so the composite
- * owns which fixed glyph each maps to. Tone: name is `default`, the
- * verified/pinned glyphs are `accent`, the separator dot + timestamp are `muted`.
- *
- * No icon-shaped shimmer atom exists yet, so the glyphs render only when not
- * skeleton; the `·` separator is fixed chrome and renders in both states. Only
- * `name` and `timestamp` shimmer, each via `Typography isSkeleton`.
+ * `AuthorByline` — name + optional verified/pinned glyphs + a relative timestamp, as one
+ * inline row; a concrete implementation of `IdentityContentRow`'s `byline` slot. Leaves:
+ * `verified`, `pinned` (each its own on/off shape). The verified/pinned glyphs render only
+ * outside `isSkeleton` (no icon-shaped shimmer atom yet); the `·` separator is fixed chrome.
  */
 
 /** Props for {@link AuthorByline}. */

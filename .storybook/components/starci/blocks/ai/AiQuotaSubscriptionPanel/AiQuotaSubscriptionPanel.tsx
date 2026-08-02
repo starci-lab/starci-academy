@@ -7,21 +7,10 @@ import { AiQuotaLane, type AiQuotaLaneData } from "@sb-components/starci/blocks/
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `AiQuotaSubscriptionPanel` — a BLOCK: the body of the "Package" (Subscription)
- * tab inside `AiQuotaModal` — either a "no paid tier yet" CTA, or the Premium
- * `AiQuotaLane` plus a caption naming the active tier.
- *
- * `tier` and `premiumLane` arrive as plain typed props and `onSubscribe` is a bare
- * callback; data fetching and routing stay app wiring, out of scope. Two leaves,
- * branching on whether `tier` is set:
- *   - `NoTierCta` — a muted sentence + one button inside a bordered `SurfaceCard`
- *     (`variant="nested"`) so the offer reads as its own inset region.
- *   - `ActiveLane` — the reused `AiQuotaLane` block plus a caption naming the
- *     tier; `data`/`isLoading` pass straight through.
- *
- * The block owns its own wording (CTA label, "no tier" sentence, "active tier"
- * caption are hardcoded, not string props). "No tier" is modelled as
- * `tier: AiQuotaTier | null` rather than folding null into the tier union.
+ * `AiQuotaSubscriptionPanel` — the "Plan" tab body inside `AiQuotaModal`. The
+ * Premium branch reuses `AiQuotaLane` unchanged; this panel owns the switch on
+ * `tier` (no plan: CTA-in-a-card; active plan: lane-plus-caption) and the
+ * surrounding CTA/caption wording.
  */
 
 /** Paid AI subscription tier (mirrors `src`'s `AiSubTier`). */

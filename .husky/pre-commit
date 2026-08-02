@@ -9,3 +9,8 @@ node scripts/check-story-ids.mjs
 # de xep hang. Cong chi do khi mang duoc `.map` la mang CHUOI (gia tri prop); mang OBJECT
 # la du lieu that, duoc phep nhieu hang (rules/2 §8).
 node scripts/check-one-instance-per-state.mjs
+
+# Doc-parity: block /** */ dau file COMPONENT (impl, khong tinh barrel) phai TRUNG
+# block dau STORY (.stories.tsx) — story la nguon-su-that (thanh autodocs). Drift =
+# doc code va doc thiet ke lech nhau, khong tsc/eslint nao bat. Sua: npm run check:doc-parity -- --fix
+node scripts/check-doc-parity.mjs

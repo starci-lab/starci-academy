@@ -9,21 +9,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `WeeklyChallengeCard` — a BLOCK (dashboard): "Weekly Challenge" — the featured
- * challenge of the week: a routable title, a countdown, the viewer's pass/claim
- * status, the total pass count, and a short leaderboard of recent finishers.
+ * BLOCK — `WeeklyChallengeCard`: "Weekly Challenge" — the featured challenge of
+ * the week. See the component's own file header for the full contract; this
+ * file only adds the states.
  *
- * Backed by a `QueryWeeklyChallengeData | null` shape, where `null` is a real state
- * ("no event active"), not loading/error. Composed: `SurfaceCard` (labeled) wraps
- * `AsyncContent`, so the label renders once above whichever branch is active and the
- * dashboard slot never disappears. The finisher list is `SurfaceCardList` (nested),
- * each row's identity from the `UserCell` atom.
- *
- * `onOpenChallenge` arrives pre-resolved (routing is screen wiring) and covers both
- * the title link and the "Do it now" prompt; omitted → both render as plain text.
- * `endsInLabel` and each `passedAtLabel` are caller-built strings (no date/locale
- * math here). The passed-count and reward lines are block wording around typed
- * numbers. Adds an error branch (retry) that `src` left unwired.
+ * 📐 LEAF by STRUCTURE (§14d.2): whether the viewer already passed, already
+ * claimed, or the leaderboard is short, are all DATA conditions of the same
+ * status row/list — never a different shape this block draws — so this block
+ * has exactly ONE leaf ("Content"), the same shape `LeaderboardBoard`'s single
+ * `Board` leaf uses.
  */
 
 /** One leaderboard row: a finisher who already passed this week's challenge. */

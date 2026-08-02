@@ -13,14 +13,13 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
- * `PremiumGateModal` — the dismissable, value-first buy/register prompt shown when a
- * viewer taps a locked premium tab or the "Practice" button on a trial-read lesson.
- * Shows what unlocks, the loyalty-aware price, and one CTA. Composes `ModalShell` +
- * `PriceTagProminent` + `PhaseScarcityNote` + `Button`; owns its header and "what
- * unlocks" wording (`courseTitle` is interpolated into a fixed template).
- *
- * Presentational: `isOpen`/`onOpenChange` + `price`/`courseTitle`; `onUpgrade` only
- * fires the callback. Only the price region skeletons; the rest paints immediately.
+ * `PremiumGateModal` — the value-first buy/register prompt opened when a viewer
+ * taps a locked premium tab or the "Practice" rail button on a trial-read
+ * lesson. Opened via the app's global overlay store; this port takes plain
+ * `isOpen`/`onOpenChange` props. One leaf (`Default`): the wrapper shape never
+ * changes — only the price region's content (resolving / landed with a saving /
+ * landed with no saving) and the header wording (named course vs generic) vary,
+ * all states.
  */
 
 /** Minimal price-preview shape this modal needs (mirrors `TrialConversionStripPrice`). */

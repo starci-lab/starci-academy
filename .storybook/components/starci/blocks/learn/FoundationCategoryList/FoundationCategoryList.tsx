@@ -7,21 +7,12 @@ import { Pagination } from "@sb-components/atoms/navigation/Pagination/Paginatio
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FoundationCategoryList` — the browse-and-drill-in list of the Foundations library:
- * every category on the current page as a navigation row, plus a pager. Wraps
- * `SurfaceCardList` and `Pagination`.
- *
- * Owns three domain decisions:
- *   1. The thumbnail-priority chain — `logoSrc` wins, `thumbnailUrl` rides as the
- *      `Image` atom's own `fallbackSrc`, else the atom's built-in glyph.
- *   2. Two empty reasons — a blank query reads "the library has nothing yet" (no icon);
- *      a non-blank query reads "no matches for X" (magnifier icon), quoting the query.
- *   3. A trailing caret on every row (all rows navigate; there is no lock/disabled
- *      concept, so every real row is a plain press target).
- *
- * Two leaves — populated/loading fold into `Default`; empty gets its own leaf split by
- * its two wordings, rendered through `SurfaceCardList`'s bounded `emptyState` slot. The
- * pager renders only once there are real rows to page.
+ * `FoundationCategoryList` — the Foundations content library's browse-and-drill-in
+ * list: joined rows with a thumbnail, title, one-line description and a trailing
+ * caret, plus a pager once there is more than one page. Loading swaps row content
+ * to shimmer; the `Empty` state replaces the rows with an `EmptyState` (worded by
+ * whether a search query drove the empty result), both bounded inside the same
+ * `SurfaceCardList` surface.
  */
 
 /** One category row — plain data; the block resolves the thumbnail chain and builds the wording. */

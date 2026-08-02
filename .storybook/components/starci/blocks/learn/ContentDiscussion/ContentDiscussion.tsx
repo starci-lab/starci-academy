@@ -8,21 +8,12 @@ import { ContentCommentComposer, type ContentCommentComposerViewer } from "@sb-c
 import { ContentCommentThread, type ContentCommentNode, type ContentCommentThreadCallbacks } from "@sb-components/starci/blocks/learn/ContentCommentThread/ContentCommentThread"
 
 /**
- * `ContentDiscussion` — a BLOCK: talk about this lesson — a label + honest archive
- * line, an avatar-led collapsible composer, and the threaded comment list.
- *
- * No card of its own: the discussion is frameless so it never stacks a second
- * bordered surface under the reading card above it — which is also why the
- * composer's field stays `variant="primary"`.
- *
- * The archive line is honest: `answeredCount` is computed from the comments this
- * caller already loaded (`replyCount > 0`), never a made-up aggregate. The empty
- * state is drawn on purpose (an invitation to be the first to write), opposite of
- * `ContentRelatedList` which hides itself. The composer never hides — it sits above
- * the list in every state.
- *
- * Loading is a single `isSkeleton` prop (matching every sibling block), rendering
- * two placeholder threads that mirror the real row shape.
+ * `ContentDiscussion` — talk about this lesson: a label + archive line, an
+ * avatar-led collapsible composer, and the threaded comment list, frameless on
+ * the page canvas. The empty state is drawn on purpose — no comments yet is an
+ * invitation. The composer never hides, and an error replaces the list only.
+ * Comment count, archive line, and `hasMore` are states of `Full`; empty, error,
+ * and the loading mirror are each their own leaf.
  */
 
 /** Props for {@link ContentDiscussion}. */

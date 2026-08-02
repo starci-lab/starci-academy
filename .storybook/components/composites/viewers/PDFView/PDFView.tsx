@@ -15,18 +15,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — faithful port of
- * `@/components/blocks/rendering/PDFView` (+ its colocated `PdfViewportPage` and
- * `constants`, inlined here as sibling helpers). Authored in Storybook (not
- * `src`); synced back to `src` later.
- *
- * NOTE: like the real component, the pdf.js worker is loaded from the unpkg CDN
- * (below) and each rendered page needs a reachable PDF file — so the actual
- * canvas rendering requires NETWORK access in Storybook. The `Empty` story
- * (`src=""`) renders fully offline; the file-backed stories use a tiny inline
- * data-URI PDF and only paint when the worker CDN is reachable.
- * ─────────────────────────────────────────────────────────────────────────────
+ * A tiny, valid single-page PDF encoded as a data URI — an INLINE sample so the
+ * file-backed stories have something real to load without a live storage URL.
+ * NOTE: pdf.js still fetches its worker from the unpkg CDN (see PDFView.tsx), so
+ * these canvas-rendering stories only paint when Storybook has network access.
  */
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`

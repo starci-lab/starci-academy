@@ -10,13 +10,12 @@ import { StatGridCard, type StatGridCardItem } from "@sb-components/composites/s
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `QuizProgressPanel` — how a learner has been drilling: lifetime numbers and
- * the sessions behind them, beside `QuizSetup` in the setup pane. Turns
- * `QuizProgressStat`/`QuizProgressSession` into two views — "how am I doing"
- * (`StatGridCard`) vs "what did I run" (`SurfaceCardList`) — switched by a
- * block-owned `Tabs`, sharing one `SurfaceCard` face across the switch. Empty is
- * its own leaf: with no history, the whole panel is replaced by one invitation.
- * Forwards `sessions[].onPress` straight through without swallowing it.
+ * `QuizProgressPanel` — how has this learner been drilling: lifetime numbers and the
+ * sessions behind them. Sits beside `QuizSetup` in the setup pane. `Empty` is its
+ * own shape — with zero sessions both views would be empty, so the whole panel
+ * collapses to one invitation rather than letting the learner flip between two empty
+ * views. The `stats` ⇄ `history` view switch is a state inside `Content` (swapping
+ * `StatGridCard` vs `SurfaceCardList`) since both read the same already-loaded data.
  */
 
 /** Which half of the panel is showing. */

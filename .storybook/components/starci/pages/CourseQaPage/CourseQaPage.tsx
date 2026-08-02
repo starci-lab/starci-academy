@@ -9,15 +9,14 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CourseQaPage` — the course-wide Q&A roll-up: every top-level learner question
- * across the course's lessons, with a filter/search toolbar and pagination. It
- * composes blocks in frames and hands each typed data, drawing no shape of its own.
- *
- * Owns one branch, `isInvitationEmpty` — a true zero (only under the `all`/`engagement`
- * filters, which don't narrow by answered-status) earns the whole-page invitation;
- * every narrower empty is the question list's own empty leaf. Defines its own
- * `CourseQaViewer` type and adapts it into each block's user shape, and holds the
- * composer's draft text as screen-local state (`onAskQuestion` fires the finished body).
+ * `CourseQaPage` — the screen for the course-wide Q&A roll-up. A screen owns a
+ * list of functions: it calls blocks, places them in frames, and hands each
+ * typed data. Six functions, in reading order: what this board is · the
+ * "you're not learning alone" readout · ask a new question · filter/search the
+ * board · the questions themselves, paged. The screen owns one branch,
+ * `isInvitationEmpty`: only `all`/`engagement` with no search proves a true
+ * zero (the `Invitation` leaf); every other empty result is
+ * `CourseQaQuestionList`'s own `Empty` leaf one layer down.
  */
 
 /** The signed-in viewer, in this screen's own vocabulary. Adapted into each composed block's own shape below. */

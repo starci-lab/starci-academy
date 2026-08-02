@@ -4,24 +4,12 @@ import { AsyncContent, type AsyncContentErrorProps } from "@sb-components/compos
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * `ChangelogList` — a BLOCK: the dashboard right-rail "What's new" list — dated
- * changelog rows (an optional category, a title that opens the entry when it has a
- * destination, an optional one-line body).
- *
- * Composes rather than rebuilds: `SurfaceCardNested` (the card-in-card frame with
- * an inside header bar; `title` carries "What's new", `items` carries the divided
- * rows), `AsyncContent` (error → loading → empty → content, with `emptyContent`
- * left unset so its silent empty branch fires), and `Typography` (the body line).
- *
- * Owns: the `vi-VN` date format, the category → label lookup (`CATEGORY_LABEL`),
- * and the meta line ("{date} · {category label}").
- *
- * Leaves: `isLoading` and `error` each swap the whole region; `entries.length === 0`
- * is a state (the section hides itself via `AsyncContent`'s silent empty branch).
- *
- * The meta line reads as plain muted text, not a colored pill (each row has one
- * `eyebrow` slot). A row with `linkUrl` becomes a whole-row link. `body` renders as
- * plain text, not markdown, mirroring what `src` draws.
+ * `ChangelogList` — the dashboard right-rail "What's new" list: dated rows with
+ * an optional category, a title that links to the entry when it has a
+ * destination, and an optional one-line body. `SurfaceCardNested` owns the
+ * card-in-card frame; `AsyncContent` owns the error/loading/empty/content
+ * switch. `isLoading` and `error` each swap the whole region; an empty
+ * `entries` array renders nothing.
  */
 
 /** Category of a changelog entry — mirrors `ChangelogCategory` (backend-sourced enum). */

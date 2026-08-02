@@ -7,15 +7,12 @@ import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FoundationHeader` — the foundation-resource identity block at the top of a resource
- * page: kind, recommended flag, tags, and author attribution. Sibling of `ContentHeader`/
- * `ModuleHeader`/`CourseBrief` on the same `PageHeader` frame.
- *
- * `kind` is a required closed 3-value enum (external link / video / document) mapped
- * through an exhaustive `Record` `EnumChip`. The kind chip and a "Recommended" pill can
- * both show; tags render as untoned chips; author is plain muted text ("Author: {name}",
- * the block owns the prefix). `kind` skeletons through `EnumChip`; the optional
- * recommended/tags/author render a fixed placeholder shape while loading.
+ * `FoundationHeader` — the identity cluster at the top of a foundation resource's
+ * page: breadcrumb trail, title, description, and a meta row carrying the
+ * resource's kind, its recommended flag, its tags, and its author attribution.
+ * Two chips (kind and "recommended") both classify the resource. Every optional
+ * part — recommended chip, tag row, author line, skeleton — is a data condition
+ * on the same trail → title → description → meta shape.
  */
 
 /** Resource kind of a foundation item — mirrors `src`'s `FoundationKind` enum (closed to 3 values). */

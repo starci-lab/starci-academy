@@ -6,27 +6,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ConsultantCard, type ConsultantCardConsultant } from "@sb-components/starci/blocks/consultant/ConsultantCard/ConsultantCard"
 
 /**
- * `ConsultantDirectoryGrid` — a BLOCK: the browse surface of the consultant
- * directory — how many consultants matched, then the cards, across the
- * loading → empty → content lifecycle.
- *
- * Composes rather than rebuilds: `AsyncContent` (the error → loading → empty →
- * content switch), `Grid` (the responsive tile track), `Typography` (the count
- * line), and `ConsultantCard` (one tile, unchanged). It decides how many tiles, in
- * what shape, and what the count line says — never how one card looks.
- *
- * Owns the count-line wording ("N consultants"); the caller passes a bare `count`
- * number. `emptyTitle` stays a caller prop because the "nothing matched" copy
- * depends on context this block never receives.
- *
- * `isLoading` is a separate prop from `consultants` (never inferred from content
- * presence). `count` is separate from `consultants.length` — it is the directory
- * total, not the fetched page size; `count === undefined` renders no count line.
- *
- * One leaf (`Default`): `isLoading`/`isEmpty` swap the `AsyncContent` branch but
- * the shape never changes. The count line lives inside the `content` slot beside
- * the grid, not as permanent chrome. Skeleton tiles carry a blank placeholder
- * `consultant`, never a live press handler.
+ * `ConsultantDirectoryGrid` — the consultant directory's browse surface: a
+ * match count above the cards, across the loading → empty → content lifecycle.
+ * `AsyncContent` owns the branch switch, `Grid` the responsive track,
+ * `ConsultantCard` one tile. The count line renders inside the `content` branch
+ * only, beside real cards.
  */
 
 /** Props for {@link ConsultantDirectoryGrid}. */

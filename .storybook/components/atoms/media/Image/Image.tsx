@@ -4,14 +4,19 @@ import { ImageIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Image` — framed image wrapping `<img>` (HeroUI v3 has no Image component).
- * Manages its own load state:
- *   - loading → skeleton overlay, image hidden until `onLoad`.
- *   - loaded  → image shown.
- *   - error/empty → `fallbackSrc` if given, otherwise a placeholder glyph.
- *
- * `isSkeleton` forces the skeleton from outside (e.g. while a parent is still
- * fetching data), in addition to the internal loading state.
+ * ATOM — `Image`: framed image wrapping `<img>`, handling its own skeleton while fetching +
+ * a fallback on error/empty. Icon lib = `@phosphor-icons/react`. It composes no atom with its
+ * own story ⇒ LEAF ATOM. `Frame`/`Img`/`Fallback` are internal slots, not components with a
+ * home to jump to — no badge. `Skeleton` is HeroUI's own `Skeleton` rendered straight
+ * through, so it gets a badge + `annotate: { "Skeleton": { tier: "heroui" } }` — the panel
+ * only accepts a node with a `storyId` or `tier: "heroui"`.
+ * 
+ * TWO LEAVES (split by structure):
+ *   • `WithImage` — the tree has an `Img` node. Loaded · loading (skeleton overlay) · using
+ *     `fallbackSrc` · every `ratio`/`radius`/`fit` share the same DOM tree ⇒ states/variants
+ *     inside ONE leaf, not separate stories.
+ *   • `FallbackGlyph` — the `Img` node disappears, replaced by a `Fallback` node. A lost node
+ *     ⇒ genuinely the second leaf.
  */
 
 /** Common frame ratios → aspect class. */

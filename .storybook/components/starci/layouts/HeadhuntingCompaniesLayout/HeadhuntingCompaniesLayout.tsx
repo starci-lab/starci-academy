@@ -7,10 +7,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `HeadhuntingCompaniesLayout` — the wrapper for every route under
- * `courses/[courseId]/headhunting-companies/**`: a sticky desktop course-nav rail
- * beside the routed content, and nothing else. The rail disappears below the
- * desktop tier; the layout owns no reading-column padding. Takes a mandatory
- * `children`.
+ * `courses/[courseId]/headhunting-companies/**`, a thinner sibling of
+ * `LearnShell`. `@app-lg` is a container query measuring the nearest
+ * `@container`, not the viewport. One leaf: the layout takes no prop besides
+ * `children`/`className`, so the ambient container width is a state, not a
+ * second shape.
  */
 
 /** Props for {@link HeadhuntingCompaniesLayout}. */

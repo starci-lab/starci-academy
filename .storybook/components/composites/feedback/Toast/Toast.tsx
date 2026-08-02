@@ -3,18 +3,9 @@ import { Alert as AtomAlert } from "@sb-components/atoms/feedback/Alert/Alert"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 /**
- * `Toast` — the floating notification surface, built entirely from the `Alert`
- * atom (which owns the HeroUI port). Toast and Callout share the same alert
- * primitive and differ only in PLACEMENT (toast floats, callout sits inside a
- * surface). Uses `tone="plain"` with `sm` glyphs. A static surface — a feature
- * uses it as the body of a toast or inline alert.
- *
- * All exports go through `Toast.*` (currently only `Base`). No `children`: it is
- * data-driven — `title`/`description` are `string`; `action` is a component
- * reference the composite calls itself with `isSkeleton` forwarded. `status`
- * selects the tone (success/warning/danger/info) and the atom picks the matching
- * icon, so a caller cannot pass a mismatched one. `action` (optional) sits before
- * the close button; `onClose` enables it.
+ * `Toast` — the one notification surface, composed from `Alert` (`tone="plain"` + glyph `sm`);
+ * the HeroUI port lives entirely in `Alert`. Leaves: `Statuses` (the full `ToastStatus` union)
+ * and `WithAction` (adds `Action`/`Close` nodes).
  */
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "Toast" } as const

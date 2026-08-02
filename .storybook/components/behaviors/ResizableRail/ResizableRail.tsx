@@ -10,11 +10,8 @@ import React, {
 import { cn } from "@heroui/react"
 
 /**
- * `ResizableRail.*` — the drag-to-resize side-rail frame namespace.
- *
- * `.Base` is a wrapper frame holding ONE region (the rail body), so it keeps plain
- * `children` and grows no `header`/`footer`; no repeating list, so no `items`.
- * Namespace only — no bare component export.
+ * `ResizableRail` — a side rail whose width the reader drags, persisted to `localStorage`.
+ * One region (the rail body) → plain `children`, no named slots.
  */
 
 /** Props for {@link ResizableRail}. */

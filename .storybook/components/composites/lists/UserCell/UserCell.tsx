@@ -7,10 +7,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `UserCell` — an avatar leading a name + optional `@handle`. An identity pairing,
- * not a domain entity: `username`/`handle` are strings the caller already resolved,
- * not a `user` object this component reaches into. Sits in `composites/lists/`
- * beside `IdentityContentRow`.
+ * `UserCell` — the system's one person row: avatar + name + optional `@handle`. Leaves: `size`,
+ * `handle`, `trailing`, `leadingIcon`, `isOwnRow`, `isSkeleton`. `leadingIcon`/`leadingTone` let
+ * the row lead with a framed `IconTile` instead of `Avatar`, for rows that aren't a person
+ * (a course/org/resource). `avatar` swaps the image inside `Avatar`; `username`/`displayName`
+ * are the content each leaf fills in. Deps `Avatar` and `Typography` link to their own stories.
  */
 
 /** Props for {@link UserCell}. */

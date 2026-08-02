@@ -7,24 +7,11 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ConsultantProfileBody` — a BLOCK: the full detail content of one consultant's
- * profile — photo, name+role, a pressable company row, the full bio, and a fork on
- * the way out: real contact links once unlocked, or a locked callout with a way to
- * unlock them.
- *
- * The detail sibling of `ConsultantCard` (same `Consultant` entity, different job).
- * Shapes differ deliberately: here the company row is a real `Button`
- * (`onOpenCompany`) since the whole-card press is spent, and the bio renders in
- * full rather than clamped.
- *
- * The contact fork reuses the `Callout` composite (a status alert + one CTA) rather
- * than a hand-rolled `Alert` + `Button`. Contact links carry no callback — they are
- * plain navigable data (`href`) rendered via `Typography`'s `isLink` + `href`; the
- * two callbacks are `onOpenCompany` and `onImproveCv`.
- *
- * One leaf: `contactUnlocked` is a state (only the last slot's content changes).
- * During `isSkeleton` the contact fork shimmers neutrally rather than asserting
- * either branch. The locked callout's title/description are block-owned text.
+ * `ConsultantProfileBody` — the full detail content of one consultant's profile:
+ * photo, name+role, a pressable company row, the full bio, and either real
+ * contact links once unlocked or a locked callout with a way to unlock them.
+ * The detail sibling of `ConsultantCard`. `contactUnlocked` only changes which
+ * content fills the last slot, not the outer frame.
  */
 
 /** One way to reach this consultant once contact is unlocked — plain navigable data. */

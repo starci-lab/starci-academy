@@ -12,15 +12,16 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 
 /**
- * `ProfileLoadingState` — the first-load skeleton for the public profile screen,
- * so nothing jumps once real data resolves: the tab strip, identity column, and
- * every overview section already sit in their final box. A block (not a
- * design/composite) because it hard-codes the screen's section order
- * (job-readiness -> courses -> contributions -> skills). No props beyond
- * `className`; one leaf. Each spot uses its atom's own `isSkeleton` (`Tabs`,
- * `Avatar`, `AvatarGroup`, `Grid`...) so footprints match; five spots with no
- * matching atom (a 128px hero avatar, three 20px leading-icon boxes, a 160px
- * heatmap) build a raw HeroUI `Skeleton` directly.
+ * BLOCK — `ProfileLoadingState`: the public-profile first-load skeleton. It
+ * takes no data props (see the component's own file header) so it has exactly
+ * ONE leaf and ONE state — there is no prop to vary it by.
+ *
+ * `annotate` (flat map, not a nested `parts` tree) is the right shape here for
+ * the same reason `ContinueCard`'s own `Skeleton` leaf uses it: every text/pill/
+ * progress/tile spot renders through an atom's OWN `isSkeleton` branch, so the
+ * DOM this leaf produces really is flat repeats of a handful of part names
+ * (`Typography`, `Chip`, `Button`, `IconTile`, `Avatar`, `Skeleton`…), not a
+ * meaningfully nested composition tree.
  */
 
 /** Props for {@link ProfileLoadingState}. Pure skeleton — no data props (see file header). */

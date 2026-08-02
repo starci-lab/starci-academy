@@ -5,16 +5,13 @@ import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/compos
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
 /**
- * `ModuleLessonList` — the full, ordered lesson table of contents of one module. Wraps
- * `SurfaceCardList` + `VariantChipDifficulty`. Sibling of `KeepGoingPath` but shows the
- * whole module with no heading of its own and never trims to "what's next".
- *
- * Uses distinct bare glyphs (`PlayIcon`/`CheckIcon`/`CircleIcon`) for a checklist reading
- * rhythm. The premium lock is a trailing marker beside the difficulty chip and never
- * replaces the state icon (premium is orthogonal to progress). `resumeLessonId` outranks
- * `isRead` for the leading icon. Owns the subtitle sentence ("N min read · M challenges")
- * from two numbers. A premium row is not disabled — `onSelectLesson` fires for every row;
- * what a locked tap means is the caller's decision.
+ * `ModuleLessonList` — the full, ordered lesson table of contents for one module —
+ * every lesson, not just what's next. Sibling of `KeepGoingPath` (which trims to
+ * the continue-learning queue and owns a heading); this block takes no heading of
+ * its own. The block owns the per-row status icon (`resume`/`read`/`unread`), the
+ * "N min read · M challenges" subtitle, and whether a difficulty chip and premium
+ * lock ride on the trailing side. Row-level differences are states of one
+ * `SurfaceCardList` tree; `isSkeleton` is its own leaf.
  */
 
 /** Where this lesson sits in the reader's progress through the module. */

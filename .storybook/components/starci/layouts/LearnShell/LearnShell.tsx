@@ -11,15 +11,15 @@ import {
 } from "@sb-components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk"
 
 /**
- * `LearnShell` — the wrapper mounted once per `/learn/**` scope. It owns the chrome
- * every learn route shares: the resizable side rail (when the active surface has
- * one), the enrollment gate that can replace the whole body, and the two AI
- * triggers (chat FAB + selection-ask). Takes a mandatory `children`.
- *
- * `enrollGateProps` relays `title`/`description`/`preview`/`price`/`onEnroll` down to
- * `EnrollGate`; `onOpenAiChat`/`isAiChatOpen`/`selectionAsk`/`onOpenSelectionAsk`
- * drive the AI triggers. The gate replaces the rail+children body when
- * `isEnrollGated`; the AI triggers also suppress while an assessment is live.
+ * `LearnShell` — the wrapper mounted once per `/learn/**` scope. Five
+ * structural leaves, each gaining or losing a whole node:
+ *   - `RailSurface`        — rail mounted beside `children`, one floating FAB.
+ *   - `NoRailSurface`      — no rail; `children` fills the width.
+ *   - `SelectionAskActive` — gains the `ContentAiSelectionAsk` pill alongside
+ *     the FAB.
+ *   - `AiSuppressed`       — `isAssessmentLive` loses both AI trigger nodes.
+ *   - `EnrollGated`        — the whole rail+children row is replaced by
+ *     `EnrollGate`.
  */
 
 /** Which `/learn/**` surface is currently active — drives whether a rail mounts. */

@@ -8,8 +8,8 @@ import { useDropzone } from "react-dropzone"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `ImageDropzone` — single-image drop target (react-dropzone): dashed-border
- * box with an icon, CTA label, and format hint.
+ * `Typography` — our own atom, with its own story to jump to (the label and, when set, the
+ * `hint` line each mount one — see `ImageDropzone.tsx`).
  */
 
 /**

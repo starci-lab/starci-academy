@@ -5,14 +5,12 @@ import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
- * `TrialEnrollBanner` — the ambient "you're on a trial" nudge, reused as-is
- * across every free surface a trial learner reaches (foundations, leaderboard).
- * Composes `Callout` with a title, description, and an explicit `Button` CTA.
- * Self-gating: `isVisible` is the caller's resolved "enrolled/known non-trial"
- * answer, and `isVisible=false` is a real structural leaf (the node disappears);
- * `isSkeleton` reserves the footprint while the enrollment check is in flight and
- * wins over `isVisible`. The Vietnamese copy is fixed and block-owned, not a
- * prop, so screens can't drift into different nudges for the same fact.
+ * `TrialEnrollBanner` — the ambient "you're on a trial" nudge, reused across every
+ * free surface a trial learner can reach (foundations resource page and grid, and
+ * leaderboard). A caller-resolved `isVisible` drives shown vs hidden; it renders
+ * both a title and a description, and `isSkeleton` covers the enrollment check still
+ * being in flight. Three leaves: "shown"/"hidden" differ in structure (a node vs an
+ * empty tree), and the skeleton (two text bars, no CTA) is a third structure.
  */
 
 /** Props for {@link TrialEnrollBanner}. */

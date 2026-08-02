@@ -5,13 +5,12 @@ import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/Sur
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
 /**
- * `ModuleChallengeList` — every challenge across this module's lessons flattened into one
- * list of solve-me rows. A separate block from a lesson list, not a `kind` switch: a
- * challenge row means "solve this", always uses `PuzzlePieceIcon` recoloured by
- * solved/not-solved, and navigates to the owning lesson's challenges tab
- * (`onSelectChallenge` is called with the `lessonId`). Composes `SurfaceCardList` +
- * `VariantChipDifficulty`. The leading icon is hand-rolled via the `leading` node slot
- * so "solved" keeps its own success colour, outside the frame's text rule.
+ * `ModuleChallengeList` — every challenge across this module's lessons, flattened
+ * into one solve-me list. Distinct from a lesson list: a challenge row means "go
+ * solve", shows the same `PuzzlePieceIcon` recoloured by solved state (no
+ * in-progress state), and a press opens the owning lesson's Challenges tab (there
+ * is no standalone challenge route). Solved/unsolved and all four difficulty steps
+ * are states of one `SurfaceCardList` → rows tree.
  */
 
 /** One challenge row — plain DATA, the block builds the row shape itself. */

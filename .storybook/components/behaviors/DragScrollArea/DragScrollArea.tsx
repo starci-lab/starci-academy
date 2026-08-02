@@ -5,13 +5,9 @@ import { ScrollShadow, cn } from "@heroui/react"
 import { motion, type PanInfo } from "framer-motion"
 
 /**
- * `DragScrollArea.*` — the pointer-pan scroll-region frame namespace.
- *
- * `.Base` is a wrapper frame holding ONE region (the scrollable content), so it
- * keeps plain `children` — no `header`/`footer`, no `items`. Over a plain
- * `ScrollShadow` it adds Framer-Motion pointer-pan behaviour (drag → `scrollTop`)
- * that makes a hidden-scrollbar region usable on Windows, plus the grab/grabbing
- * cursor state. Namespace only — no bare component export.
+ * `DragScrollArea` — a vertical scroll region with a hidden scrollbar plus
+ * Framer-Motion pointer pan (drag → `scrollTop`), so a hidden-bar region is
+ * still scrollable on Windows. One region → plain `children`, no named slots.
  */
 
 /** Props for {@link DragScrollArea}. */

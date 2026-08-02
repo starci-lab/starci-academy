@@ -8,18 +8,13 @@ import type { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseSc
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ContentArticle` — a BLOCK: the lesson itself, on the page it is read from.
- * Over the `MarkdownContent` viewer it knows the document is a LESSON — that it can
- * be locked, and that a first-time reader should be told they can ask AI about a
- * passage.
- *
- * When locked the body still renders and its tail fades into the surface (rather
- * than truncating), with the paywall flat underneath it — one surface that runs out,
- * which is why `ContentPaywall` draws no frame of its own. Text is unselectable
- * while locked, so a reader cannot select through the fade.
- *
- * The ask-AI hint shows once, only when the lesson is open (unlocked), leading the
- * body — it teaches a feature that needs a selection to be discovered at all.
+ * `ContentArticle` — the lesson body on the page it is read from. Over the bare
+ * `MarkdownContent` viewer, it knows the document is a lesson: it can be locked,
+ * and it offers a first-time reader the hint that they can ask AI about a
+ * passage, placed under the text. When locked, the body stays mounted and its
+ * tail fades into the surface (selection disabled) with `ContentPaywall` flat
+ * beneath it in the same card. Locking and `isSkeleton` are each their own leaf;
+ * the open-lesson hint is a state.
  */
 
 /** Everything the offer under a locked lesson needs, as typed data. */

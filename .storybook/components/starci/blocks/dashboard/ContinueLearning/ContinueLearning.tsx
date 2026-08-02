@@ -5,24 +5,11 @@ import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
- * `ContinueLearning` — a BLOCK (dashboard): the "Continue learning" content slot —
- * a capped set of resume targets (recently-read lessons mixed with at most one
- * in-progress challenge), or an onboarding CTA when there is nothing to resume yet.
- * Content only — the page frames it with a label; this block never draws its own
- * title.
- *
- * Data: a capped array (≤3, sliced upstream) of `{ globalId, label, kind }`, `kind`
- * a closed `"lesson" | "challenge"` enum that only changes a subtitle word. The
- * resume cards reflow 1 → 2 → 3 columns via the `Grid` frame; the onboarding CTA is
- * `AsyncContentEmpty` (message + one button). Each card is the existing
- * `ContinueCardItem`, unchanged — this block only picks which `kind` word becomes
- * the subtitle.
- *
- * Three leaves by structure: Content (1–3 tiles in a `Grid`), Empty (whole track
- * replaced by `AsyncContentEmpty`; wording forks on `hasCourses`, shape does not),
- * Loading (a guessed 3-tile grid of `ContinueCardItem` skeletons). No error branch
- * (the source hook never surfaces one) and no pending state (route-resolve pending
- * is the caller's, not this block's).
+ * `ContinueLearning` (dashboard) — the "Continue learning" slot: up to 3 resume
+ * targets (lessons lead, at most one in-progress challenge as a nudge), or an
+ * onboarding CTA when there is nothing to resume. Three leaves: `Content`
+ * (1–3 tiles in a `Grid`), `Empty` (`AsyncContentEmpty`, wording forks on
+ * `hasCourses`), and `Loading` (a 3-tile skeleton grid).
  */
 
 /** Resume target kind — the ONLY thing that changes the card's subtitle wording. */

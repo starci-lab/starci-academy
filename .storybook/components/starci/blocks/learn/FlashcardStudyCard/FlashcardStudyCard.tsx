@@ -11,16 +11,14 @@ import { RatingBar, type RatingOption } from "@sb-components/starci/blocks/learn
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FlashcardStudyCard` — one card of a review run: question, then reveal to grade.
- * Shared by both the due-review and deck-review surfaces.
- *
- * Composes `SurfaceCard`, `MarkdownContent`, `Chip`/`ChipGroup`, `Button`, and the
- * shared `RatingBar` for grading; a locked-premium card face is hand-rolled. One
- * classifying `Chip` per meta row (`levelLabel`), with `tags` in a `ChipGroup`.
- *
- * Three structural leaves: question-only, revealed (answer + explanation + `RatingBar`),
- * and locked. Prev/Next always fire regardless of reveal/lock state. No running score
- * or streak — that belongs to the session header wrapping a run of these cards.
+ * `FlashcardStudyCard` — one card of a review run, shared by both due-review and
+ * deck-review. Composes `SurfaceCard`, `MarkdownContent`, `Chip`/`ChipGroup`,
+ * `Button`, and the shared `RatingBar`; only the locked-premium notice is
+ * hand-rolled. One chip per meta row (`starci-fe/no-adjacent-chip`): `levelLabel`
+ * takes the lone chip, `tags` ride `ChipGroup`. Three leaves: `revealed` swaps
+ * question-only for answer body, and within revealed `isLocked` swaps the answer
+ * for a lock notice; `levelLabel`/`tags`/`explanation` stay states. Prev/next
+ * never gate on grading.
  */
 
 /** Props for {@link FlashcardStudyCard}. */

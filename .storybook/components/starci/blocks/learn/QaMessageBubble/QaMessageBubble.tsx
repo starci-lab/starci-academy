@@ -10,12 +10,10 @@ import { QaChatBubble } from "@sb-components/starci/blocks/learn/QaChatBubble/Qa
 import { QaReactionBar, type QaReactionType } from "@sb-components/starci/blocks/learn/QaReactionBar/QaReactionBar"
 
 /**
- * `QaMessageBubble` — one answer in a `QaQuestionThread`: author line,
- * {@link QaChatBubble} body, an accept-answer toggle (asker only, top-level
- * answers only), a {@link QaReactionBar}, and — recursing internally — every
- * flattened reply to this answer as a sibling bubble beneath it. Replies are
- * read-only (no accept/react controls), since the thread threads
- * `onReact`/`onAcceptAnswer` only for top-level answers.
+ * BLOCK — `QaMessageBubble`: one answer (plus its flattened replies) in a Q&A
+ * conversation — author line, chat bubble body, an accept toggle (asker
+ * only, top-level only), a reaction bar, and every reply beneath it,
+ * read-only (see the component's own file header for why).
  */
 
 /** Minimal identity carried by whoever wrote an answer. */

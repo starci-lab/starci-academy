@@ -5,15 +5,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `Callout` — a tinted flat strip that lives INSIDE a surface
- * (`title`/`description`/`body`/`action`).
- *
- * Text goes through `Typography.*`, buttons through `Button.*`, icons from
- * `@phosphor-icons/react` passed as a component ref (the frame forces size/weight).
- * Deliberate exception: it keeps HeroUI's `Alert.Title`/`Alert.Description`
- * because HeroUI itself carries the color-by-status contract; swapping in
- * `Typography` would mean hand-feeding a color table. Switch to the atom once an
- * `Alert` atom exists.
+ * `Callout` — a flat tint strip placed inside a surface (surface-in-surface), not a floating
+ * card. The shell owns the tint + icon per `status`; content goes through the named slots
+ * `title`/`description`/`body`/`action` plus an optional close button. Builds its own
+ * `Button` from `actionLabel`/`onAction` and forwards `onClose` to the underlying `Alert` atom.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

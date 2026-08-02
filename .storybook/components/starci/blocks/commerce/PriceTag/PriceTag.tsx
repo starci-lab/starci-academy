@@ -9,12 +9,14 @@ import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
- * `@/components/blocks/commerce/PriceTag`. The `next-intl` `useTranslations` strings are
- * INLINED locally (vi). The `−X%` saving chip — a raw `<Chip variant="soft"
- * color="success">` in `src` — is COMPOSED from the local `Chip` atom
- * (`tone="success"` yields the byte-identical soft-success chip), so the design genuinely
- * composes an atom instead of re-drawing one. Synced to `src` later.
+ * DESIGN — a single course/product price: the amount to pay (bold), the struck
+ * list price, a `−X%` success chip, and a breakdown popover.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
+ * its OWN BlockAnatomy (Diagram + Tree) reflecting the parts THAT leaf composes —
+ * there is no separate consolidated "Anatomy" story. The composition shifts with
+ * the shape: no-discount shows only the amount; on-sale adds the struck price,
+ * chip, popover, and saving line; `showSavingLine={false}` drops that last line.
  */
 
 /** Currency a price is shown in. */

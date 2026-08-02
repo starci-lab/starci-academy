@@ -5,14 +5,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { TypographySize as AtomTypographySize } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
-/**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — faithful port of
- * `@/components/blocks/rendering/RichText`. Authored in Storybook (not `src`);
- * synced back to `src` later. A tiny INLINE-only markdown renderer — NOT a full
- * markdown renderer (that is `MarkdownContent`).
- * ─────────────────────────────────────────────────────────────────────────────
- */
+/** Empty `text` → renders nothing (Typography with no children), takes no unexpected space. */
 
 /**
  * Typography scale token — kept as the VENDOR HeroUI `Typography`'s own `type`

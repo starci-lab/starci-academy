@@ -4,18 +4,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `IdentityContentRow` — an avatar leading a byline line plus whatever content sits
- * under it (comment body, actions, nested replies). Used by `ContentCommentThread`
- * and `QaQuestionThread`.
- *
- * `byline` and `body` are free-form slots — the composite has no opinion on what a
- * byline or body IS, only on the SHAPE: avatar beside a column, byline on top of
- * whatever comes after it. Both are COMPONENT references
- * (`ComponentType<{ isSkeleton?: boolean }>`) the row calls itself and forwards
- * `isSkeleton` to, so it can shimmer them rather than only mirroring the `Avatar`.
- *
- * Gaps: root `StackH` (avatar↔column) = `grouped` (`gap-3`), inner `StackV`
- * (byline↔children) = `tight`.
+ * `IdentityContentRow` — avatar + byline + whatever content sits under it, as one row.
+ * `byline` and `body` each take a component reference, not a built node — the row calls them
+ * itself and forwards `isSkeleton` so both shimmer along with the avatar. Both seams use
+ * `gap={2}` for a denser standalone treatment.
  */
 
 /** Props for {@link IdentityContentRow}. */

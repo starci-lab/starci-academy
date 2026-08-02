@@ -5,11 +5,16 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FoundationCategorySearchBar` — the Foundations-hub search row: a debounced
- * autocomplete field left, a live "N topics" count right, one `StackH` apart. Maps the
- * `FoundationCategorySuggestion` (`{ id, label }`) entity into `SearchAutocomplete`'s
- * generic item shape and owns the count wording (0 → "No topics yet", N → "N topics");
- * `count` undefined renders nothing (not known yet). One leaf, `isSkeleton` a state.
+ * BLOCK — `FoundationCategorySearchBar`: the Foundations hub's search row —
+ * a debounced autocomplete field plus a live "N topics" count riding beside
+ * it, one `StackH` seam apart. See the component file header for why this
+ * earns its own layer over the bare `SearchAutocomplete` atom (domain
+ * mapping + count wording, §14d.1).
+ *
+ * 📐 ONE LEAF (§14d.2). `isSkeleton`, an empty vs. populated suggestion list,
+ * and every value `count` can take (unknown / zero / N) are all DATA — no
+ * node appears or disappears across them — so they are STATES inside the
+ * single `Default` leaf, not leaves of their own.
  */
 
 /** One foundation-category autocomplete suggestion (from `foundationCategorySuggestions`). */

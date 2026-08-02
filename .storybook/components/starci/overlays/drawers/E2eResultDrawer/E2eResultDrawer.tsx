@@ -11,13 +11,11 @@ import { ChipBase } from "@sb-components/atoms/chips/Chip/ChipBase"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 
 /**
- * `E2eResultDrawer` — the recorded Playwright E2E proof for the active lesson: a
- * per-flow pass/fail list (status chip + title) that expands to the full proof
- * markdown, with a language filter that appears only when the flows span more than
- * one stack. Passed/total counts the currently visible set, not the whole array.
- *
- * Presentational: `isOpen`/`onOpenChange` + a resolved `flows` array; the whole
- * overlay stays inert when nothing is recorded.
+ * `E2eResultDrawer` — presentational-only overlay drawer showing the recorded
+ * Playwright E2E proof for a lesson (pass/fail chip + title per flow,
+ * expandable to the full proof markdown), with a language filter when the
+ * flow set spans multiple stacks. Collapses the real `E2eResultDrawer` +
+ * `E2eBody` pair into one block (Rule 13 + the task's ContentModal precedent).
  */
 
 /** One recorded Playwright proof flow (mirrors the seeded `content.e2eFlows` jsonb shape). */

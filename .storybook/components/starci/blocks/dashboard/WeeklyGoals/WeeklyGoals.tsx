@@ -17,25 +17,15 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `WeeklyGoals` — a BLOCK (dashboard): "Weekly Goals" — the composite weekly-goal
- * summary plus the fixed six-metric breakdown (lessons / study-days / challenges /
- * coding / flashcards / milestones), each with a bar once it has an effective
- * target, plus an optional coin-reward hint.
+ * BLOCK — `WeeklyGoals`: "Weekly Goals" — the composite summary + six-metric
+ * breakdown. See the component's own file header for the full contract; this
+ * file only adds the states.
  *
- * Backed by a `QueryMyKpisData` shape (`items[]` + server-computed `composite` +
- * `resetAt`). Composed: the six-cell grid is `StatGridCard`, each bar is
- * `ProgressMeter`, the card face is `SurfaceCard` (labeled).
- *
- * `items` is the full, fixed six-KPI set and every cell always has something to
- * show, so there is no `isEmpty` branch — only loading / error / content. The
- * `composite` field is read straight from the server, not re-derived from `items`.
- * `resetInLabel` is a caller-built string (no date math here). The summary sentence
- * and ratio/reward lines are block wording around typed numbers; each item's
- * `label` is a caller string but the icon-per-key mapping is a local constant.
- *
- * `ProgressMeter` has no usable `isSkeleton`; while skeleton this block substitutes
- * a bar-shaped `HeroSkeleton` sized to the meter's track height. No `isPending`
- * state — this is a read-only snapshot; claiming happens in the `/kpi` editor.
+ * 📐 LEAF by STRUCTURE (§14d.2): the six metrics never change the SHAPE of the
+ * tree, only the numbers inside it, so this block has exactly ONE leaf
+ * ("Content") — loading / error / content are states of that one leaf, the
+ * same shape `ChallengeScoreCard`'s single leaf uses. No `isEmpty` state:
+ * `items` is always the fixed six-metric set (see the component file header).
  */
 
 /** The six weekly metrics this block always renders, in display order (mirrors backend `KpiKey`). */

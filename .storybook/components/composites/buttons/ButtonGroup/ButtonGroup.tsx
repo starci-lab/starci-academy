@@ -6,14 +6,9 @@ import { ResponsiveCluster, type ResponsiveClusterItem } from "@sb-components/fr
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * `ButtonGroup` — a row of buttons described by `items` data: the HOMOGENEOUS case
- * (a filter row, a toolbar of icon buttons, N elements of the same kind). The
- * heterogeneous case (Submit / Save draft / Cancel, three different ROLES) is
- * `ActionBar`, a separate composite.
- *
- * Built on `ResponsiveCluster`: it imports `Button`, renders one per item, and
- * hands the row itself to the frame below — this composite adds no arrangement of
- * its own.
+ * `ButtonGroup` — a layout cluster that arranges buttons built from `items`, with a
+ * cluster-level `size`. Composes `ButtonBase`; per-button props
+ * (`variant`/`prefixIcon`/`isPending`/`isDisabled`) belong to `Button`, not the cluster.
  */
 
 /** One button in a {@link ButtonGroup} — described as data, not JSX. */

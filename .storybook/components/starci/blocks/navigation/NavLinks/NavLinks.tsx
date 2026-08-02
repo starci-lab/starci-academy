@@ -4,13 +4,13 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `NavLinks` — the desktop primary-route row inside `Navbar` (Home / Courses /
- * Community / Contact, one pinned active). The presentational half:
- * `items` (resolved label/path/isActive) + `onNavigate`, with route reading and
- * localization left to the caller/container. Each item is a plain HeroUI `Link`
- * (real routes, not tab panels), so no tab semantics are claimed. No
- * icon/label table — a nav item isn't a closed enum this block owns. Desktop-only
- * (`hidden @app-md:flex`).
+ * `NavLinks` — the desktop primary-route row inside the site's top nav
+ * ("Home / Courses / Community / Contact"), one pinned as current. The
+ * presentational half of a container: it takes `items` already resolved
+ * (label/path/isActive) and an `onNavigate` callback, leaving router wiring to
+ * the caller. Rendered with `Link` (HeroUI), not a tab compound — these are
+ * real routes, not panels under one ARIA tablist. One leaf, `Row`; the current
+ * route is data, so it is a state.
  */
 
 /** One route entry in the nav row — TYPED DOMAIN DATA, never a pre-formatted node. */

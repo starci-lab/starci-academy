@@ -5,21 +5,16 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `QuotaBar` — a BLOCK: one labelled used/limit AI-credit row ("Next 5 hours" over
- * "12 / 50") whose fill colour steps through a 3-tier ramp as the window fills, with
- * an optional reset-time caption underneath.
+ * BLOCK — `QuotaBar`: one labelled used/limit AI-credit row whose fill colour
+ * steps through a 3-tier ramp (accent ≤75% · warning >75% · danger >90%) as the
+ * window fills up, with an optional reset-time caption underneath.
  *
- * A block because the thresholds are DOMAIN knowledge — crossing 75% means "getting
- * close" and 90% means "about to run out" (an AI-credit policy), which the generic
- * `ProgressMeter` composite does not know. So this block owns the ramp itself
- * (`resolveQuotaBarFillTone`). Belongs to the `ai` group.
+ * Two of these stack inside `QuotaLane` (a 5-hour window, a 7-day window), which
+ * itself sits inside the `AiQuotaModal` overlay.
  *
- * `resolveQuotaBarFillTone` is an inlined local pure function. Fill tone and the
- * 0–100 bar value both derive from one `ratio` (`used/limit` clamped to `[0, 1]`,
- * or `used > 0 ? 1 : 0` when `limit <= 0`) so the two never drift.
- *
- * The skeleton always reserves the caption line (rendered while `isSkeleton` even
- * if `resetLabel` is null) so the box doesn't pop in once the reset time resolves.
+ * LEAF by STRUCTURE: the fill tone, the unit suffix, and the reset caption are all
+ * DATA ⇒ states of one leaf. The caller flipping `isSkeleton` is its own leaf, same
+ * convention as `RatingBar`/`PriceTag`.
  */
 
 /** Usage ratio above which the bar shows warning colour (>75%). */

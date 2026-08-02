@@ -8,13 +8,13 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
  * `ContentAiChatDrawer` — the global "ask StarCi AI" chat panel in drawer
- * presentation: forced on mobile, and an optional desktop stand-in for the rail-mode
- * panel. Composes `DrawerShell` plus a custom header row — the lesson/course title
- * beside a rail⇄drawer mode switch built on `Button.RadioGroup`.
- *
- * Presentational: `isOpen`/`onOpenChange` control open state; `mode`/`onModeChange`,
- * when both omitted, drop the switch entirely; `title` falls back to a fixed label.
- * The chat body itself is a scoped placeholder.
+ * presentation. Presentational overlay only: `isOpen`/`onOpenChange` are plain
+ * props, the overlay-store wiring lives in the mounting layout. Two structural
+ * leaves by header shape: the mode switch present (desktop, where rail⇄drawer
+ * is a real choice) versus absent (forced mobile). Which title text shows
+ * (caller-supplied vs the block's fallback) is a data state. The chat body is a
+ * placeholder (`SurfaceCard` + `EmptyState`) standing in for the real
+ * `ChatThread`/`ChatComposer` blocks.
  */
 
 /** Fixed accessible name for the mode switch — see the file header on why this is not a prop. */

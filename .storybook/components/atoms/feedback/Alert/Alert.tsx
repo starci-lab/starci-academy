@@ -4,17 +4,14 @@ import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, XIcon } from "@pho
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Alert.Base` — the single "message with a valence and an exit" atom, and the
- * only component that imports `Alert` from `@heroui/react`. `Callout` (inside a
- * surface) and `Toast` (floating) both compose from it.
- *
- * Owns: `status` → tint mapping, default icon per valence, glyph scale, close
- * button skin, Indicator/Content/Action/Close layout, and its own skeleton.
- * The consumer supplies content (`title`/`description`/`body`), `action`, `onClose`.
- *
- * Icons are `@phosphor-icons/react`; weight follows size. Every member is reached
- * through `Alert.*` (no bare export). No `children` — use `body` for free-form
- * content under `description`.
+ * ATOM — `Alert`: the one port down to HeroUI Alert (`Callout` and `Toast` both compose from here).
+ * 
+ * 1 PROP = 1 LEAF. At the atom tier, `tone`/`icon`/`body`/`action`/`onClose` each change a
+ * real shape (a different fill, a different added node), so each gets its own leaf.
+ * 
+ * The one true DEP: the `Close` node — the atom builds the × button itself from `Button`
+ * (not a caller slot), so it's clickable through to its story. `action` is a slot where the
+ * caller supplies any node, so it does not count as a dep.
  */
 
 /**

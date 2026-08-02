@@ -8,13 +8,11 @@ import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `ProfileLockedState` — the non-owner view of a profile whose owner has turned it
- * private. `ProfileHero` still renders the full identity (name, avatar, headline)
- * exactly as on a public profile; only the tabbed activity region is replaced by a
- * single notice. Presentation guard only — the server withholds the tab data.
- *
- * @param user Same identity shape `ProfileHero` takes.
- * @param onGoCourses Fired by the notice's one CTA.
+ * `ProfileLockedState` — the non-owner view of a profile its owner has turned
+ * private. The identity hero stays visible; the tabbed activity region is
+ * replaced by a single "private profile" notice with one way out (browse
+ * courses instead). One leaf: the block always renders the same
+ * hero-then-notice shape, so different `user` values are states.
  */
 
 /** Props for {@link ProfileLockedState}. */

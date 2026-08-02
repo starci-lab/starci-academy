@@ -2,14 +2,16 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `TaskLockedAlert` — the warning shown while previewing a personal-project task
- * that isn't unlocked yet, with a "go to current task" CTA. The presentational
- * half only: plain props in, one callback out (the real component's redux/SWR
- * wiring is out of scope). Composed from `Callout` (an alert + one CTA it skins
- * itself), not a hand-rolled Alert+Button. The title is block-owned copy;
- * `message` is the caller-supplied reason. No self-hide and no skeleton — the
- * screen mounts it only while the task is locked, and the CTA renders only when
- * `onGoToCurrentTask` is supplied.
+ * BLOCK — `TaskLockedAlert`: warning shown while previewing a personal-project
+ * task that isn't unlocked yet, with a "go to current task" CTA.
+ *
+ * Composed from `Callout` (which itself is an `Alert` + one owned CTA
+ * `Button`) rather than hand-rolled — see the component's file header for why
+ * (the `CourseTeamGate` precedent + the `ContentTabBar` cautionary tale).
+ *
+ * 📐 LEAF by STRUCTURE: whether the CTA button exists is a real structural
+ * difference (`Callout` renders no action node at all without it), so
+ * "with CTA" vs "no CTA" are two leaves, not one leaf with a toggled prop.
  */
 
 /** Default CTA copy — matches `task.previewLockedGoToCurrentTaskButton` in `vi.json`. */

@@ -1,4 +1,23 @@
-/** @noSkeleton renders a floating surface; the content is handed in and shimmers on its own. */
+/**
+ * ATOM — `Popover`: the one click-panel atom, wraps HeroUI `Popover` directly + a `Button` as
+ * its pressable trigger (react-aria's `DialogTrigger` requires one). No child atom splits into
+ * its own story — `heading`/`triggerIcon`/`triggerVariant`/`placement`/`showArrow` are all
+ * prop-driven leaves of `Popover` itself.
+ * 
+ * `annotate`: every HeroUI import `Popover.tsx` renders directly declares `tier: "heroui"`
+ * (no `storyId`). Node names match the real import name (`Button` for the trigger;
+ * `Popover.Content`/`Popover.Arrow`/`Popover.Heading` for the panel).
+ * 
+ * PORTAL LIMIT: `Popover.Content` and its nested `Popover.Arrow`/`Popover.Heading` render into
+ * `document.body`, outside the render-box {@link BlockAnatomy} scans, so they do not show up in
+ * the Structure tree — declaring the right name is data honesty, not a visibility promise. Only
+ * `Button` (the trigger) lands in the tree.
+ * 
+ * The `Placement`/`ShowArrow` leaves open the panel through a portal, so they need `defaultOpen`
+ * to be seen, and lay their popovers out in a vertical column so each can open in any direction
+ * without overlapping. The `TriggerVariant` leaf's difference lives in the closed button, so it
+ * needn't open the panel. UI text (`triggerLabel`, `content`, `reason`/`why`) is English.
+ */
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import { Popover as HeroPopover, Button as HeroButton, cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"

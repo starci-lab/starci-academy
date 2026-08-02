@@ -4,11 +4,7 @@ import { Legend } from "@sb-components/composites/stats/Legend/Legend"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/CourseProgressBar`. Authored in Storybook (not
- * `src`); synced to `src` later.
- */
+/** Multiple dimensions at wildly different scales — each lane fills to its OWN ratio. */
 
 /** One dimension of course progress (content / challenge / milestone). */
 export interface CourseProgressDimension {

@@ -16,21 +16,12 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
- * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async lifecycle
- * (loading → error → search-empty → content) wrapped around a flush divide-y list of
- * questions plus a pager.
- *
- * Composes `AsyncContent` (branch switch), `SurfaceCardList` (flush list shell, fed
- * rows via its free-form `content` slot), `Pagination`, and per-row atoms
- * (`Avatar`/`Chip`/`Typography`) with a hand-rolled answered/unanswered status dot.
- * The per-question row renders real question data in a COLLAPSED preview only
- * (no expand/reply).
- *
- * Four leaves; "empty" here means the current filter/search matched nothing (the true
- * zero-questions case belongs to `CourseQaInvite`). Each row keeps exactly one status
- * `Chip`, the scope tag riding as inline text. `isSkeleton` and the internal
- * `isLoading` fetch flag both route to the loading branch; `currentUserId`/
- * `currentUser`/`onAnswered` are threaded for the per-question row.
+ * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async
+ * lifecycle (loading → error → search-empty → content) around a flush divide-y
+ * question list plus a pager. The Content leaf renders `QuestionPreviewRow`, a
+ * marked collapsed-look stand-in with real data, until the real per-question
+ * thread block lands. Four leaves: `Loading`, `Error`, `Empty` (filter matched
+ * nothing; true zero-ever is `CourseQaInvite` a layer up), `Content`.
  */
 
 /** One asker — plain data, the row builds the avatar + name from it. */

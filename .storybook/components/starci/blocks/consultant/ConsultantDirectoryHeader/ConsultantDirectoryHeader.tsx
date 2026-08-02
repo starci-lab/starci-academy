@@ -3,21 +3,11 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * `ConsultantDirectoryHeader` — a BLOCK: the directory identity block at the top
- * of the consultant directory screen — a course-scoped breadcrumb trail, a title,
- * and an optional one-line summary.
- *
- * A sibling of `ContentHeader`/`FoundationsHeader`: all three place identity into
- * the same `PageHeader` frame with a `Breadcrumbs` trail built from crumb DATA, but
- * this one is deliberately thin — no read-state chip, no meta row, no outcomes card,
- * because a consultant directory carries no per-item progress. It earns its layer
- * by building the `Breadcrumbs` atom itself from `breadcrumbItems` and driving
- * `PageHeader`'s title/description slots with the skeleton-vs-real decision.
- *
- * No "no breadcrumb" leaf — the directory is always reached through its course;
- * `breadcrumbItems` is optional only so a Storybook/skeleton consumer can omit it.
- * Losing `description` is a state of the `Default` leaf; `isSkeleton` is its own
- * leaf.
+ * `ConsultantDirectoryHeader` — the directory-identity cluster atop the
+ * consultant directory screen: a course-scoped breadcrumb trail, a title, and an
+ * optional one-line description. A thin `PageHeader` cluster with no read-state
+ * chip or meta row. `description` is optional; `isSkeleton` swaps every atom for
+ * its mirror. The breadcrumb trail always exists.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

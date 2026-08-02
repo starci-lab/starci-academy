@@ -13,15 +13,14 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `SubmissionFindingsList` — "Feedback": the quality-gate findings for one
- * graded attempt, one finding per `SurfaceCard.Accordion` row. Owns the domain:
- * `SEVERITY_VISUAL` (severity -> icon, tone, sort rank), `sortFindings` (high ->
- * low then authored order), and `buildLocationHref` (`repositoryUrl` + relative
- * `location` -> a `blob/HEAD` deep link). One leaf; loading/empty/error/populated
- * are states. Loading and empty route through the accordion's own
- * `isSkeleton`/`emptyState` axes to keep one bounded frame alive; error reuses
- * `AsyncContent`'s message frames as `emptyState` and outranks a stale loading
- * flag. `isLoading` and `isSkeleton` fold into one branch.
+ * `SubmissionFindingsList` — "Feedback": one accordion row per quality-gate finding
+ * on a graded attempt — severity icon + plain-text message (backtick code only) +
+ * location chip in the trigger; markdown detail, a linked file location, and a
+ * markdown suggestion in the panel. The frame is `SurfaceCard.Accordion` end to end;
+ * the block supplies the domain (severity → icon/tone/sort-rank, the high→low sort,
+ * the repo-URL → file-link builder). Loading, empty, error, and populated are all
+ * states of the one accordion card, routed through its own `isSkeleton`/`emptyState`
+ * axes.
  */
 
 /** Severity a finding carries — drives the trigger icon/tone and the sort rank (high sorts first). */

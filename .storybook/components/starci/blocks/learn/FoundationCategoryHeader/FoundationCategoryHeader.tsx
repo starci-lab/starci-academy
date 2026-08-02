@@ -3,11 +3,11 @@ import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcr
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * `FoundationCategoryHeader` — the Foundations-hub identity cluster: breadcrumb trail,
- * title, description. Builds `Breadcrumbs` from crumb DATA and omits the trail slot
- * when there is none (skeleton, or a root category reached directly). Sibling of
- * `ContentHeader` on the same `PageHeader` frame, but stops at description — no meta
- * row, chip, or outcomes.
+ * `FoundationCategoryHeader` — the Foundations-hub identity cluster: a breadcrumb
+ * trail above a title and description, nothing more. Sibling of `ContentHeader`
+ * but thinner — a Foundations category carries no read state, reading time, or
+ * outcomes, so it stops at the description. The breadcrumb slot is optional and
+ * simply drops out when absent.
  */
 
 /** One breadcrumb link — plain data, the block builds the atom from it. */

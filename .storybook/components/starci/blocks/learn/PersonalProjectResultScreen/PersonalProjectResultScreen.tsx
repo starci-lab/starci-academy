@@ -12,13 +12,14 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PersonalProjectResultScreen` — the graded result of one capstone
- * (personal-project) task attempt. Reuses `ChallengeResultPage`'s blocks
+ * `PersonalProjectResultScreen` — what came back from grading one capstone task
+ * attempt: near-total reuse of `ChallengeResultPage`'s blocks
  * (`SubmissionResultHeader`, `SubmissionAttemptSelector`, `SubmissionScoreCard`,
- * `SubmissionFindingsList`, `ContentRelatedList`) and adds one local
- * `MilestoneUpNextCard` for the forward handoff to the next task. The score
- * cluster gates on `selectedAttemptId != null`; the next-task handoff renders
- * only when `isPassing && nextTask`.
+ * `SubmissionFindingsList`, `ContentRelatedList`), plus an inline capstone
+ * "what's next" handoff card. The score cluster is conditional on an attempt being
+ * selected (`NoSelection` shows two blocks, not five). The related-reading nudge
+ * appears only on a failing attempt; the next-task handoff only on a passing one
+ * with a `nextTask` set — the two never overlap.
  */
 
 /** One milestone task waiting once the current one is marked passing. */

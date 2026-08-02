@@ -6,20 +6,16 @@ import { Avatar as HeroAvatar, AvatarImage as HeroAvatarImage, AvatarFallback as
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Avatar` — the constrained avatar atom over HeroUI Avatar.
+ * ATOM — `Avatar`: the system's one avatar, wrapping HeroUI `Avatar` directly.
  *
- * Fallback chain, in order: real image (`src`) → generated image (DiceBear,
- * seeded by `seed ?? name`) → initials (`name`) → icon. `fallback` selects what
- * shows when there is no `src`: `"generated"` (default) joins DiceBear to the
- * image chain; `"initials"`/`"icon"` skip it and show directly.
+ * One prop = one leaf, each of the props with a shape: `Default` · `Source` (the
+ * src → generated → initials → icon fallback chain, including the failed-load case) ·
+ * `Fallback` · `Status` (4 tones) · `Sizes` (3 tiers) · `Colors` (5 tints) ·
+ * `Skeleton`. A prop with no shape (`className`) gets no leaf. Each `states[]` entry
+ * renders exactly one `Avatar` instance.
  *
- * The image chain advances on load ERROR: HeroUI/Radix mounts the `<img>` only
- * after it loads, so the atom listens to `onLoadingStatusChange` rather than
- * `onError`. It forces size (sm/md/lg), draws its own status dot and leaf
- * skeleton (`isSkeleton`), and takes `icon` as a COMPONENT (e.g. `icon={UserIcon}`).
- *
- * Icons are `@phosphor-icons/react` only; glyph weight is derived from size
- * (`bold` below `size-5` to keep the stroke visible), never set by callers.
+ * Icon = Phosphor — pass the component (`icon={UserIcon}`), not JSX; the atom forces
+ * the scale and weight from `size`.
  */
 
 /**

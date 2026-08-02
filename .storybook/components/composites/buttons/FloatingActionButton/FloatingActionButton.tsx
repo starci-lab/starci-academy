@@ -6,8 +6,9 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — the target `FloatingActionButton`. Authored in
- * Storybook (not `src`); synced to `src` later. NO `@/components` imports.
+ * `FloatingActionButton` — a bottom-right floating action button: a round, shadowed accent
+ * circle composing the icon-only `Button`, pinned to the corner with `fixed`. Leaves: `icon`,
+ * `isSkeleton`. `onPress`/`ariaLabel` carry the press handler and accessible name only.
  */
 
 /** Props for the {@link FloatingActionButton} block. */

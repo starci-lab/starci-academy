@@ -2,12 +2,10 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 
 /**
- * `QaChatBubble` — the surface every message in a `QaQuestionThread` renders
- * inside: accent-tinted and right-aligned for the viewer's own messages, neutral
- * and left-aligned otherwise. `rounded-2xl` (a named exception to the card
- * `rounded-3xl` rule). Deliberately dumb — it owns only the surface and a corner
- * clip reading as a speech-bubble tail; alignment and the author/time line are
- * the caller's job.
+ * BLOCK — `QaChatBubble`: the one surface every message in a Q&A
+ * conversation renders inside — accent+right for the viewer's own message,
+ * neutral+left for anyone else's. `rounded-2xl`, the documented chat
+ * exception to the usual card `rounded-3xl`.
  */
 
 /** Props for {@link QaChatBubble}. */

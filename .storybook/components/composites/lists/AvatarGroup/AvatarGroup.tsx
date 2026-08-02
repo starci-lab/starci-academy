@@ -4,16 +4,10 @@ import type { AvatarSize, IconComponent } from "@sb-components/atoms/display/Ava
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `AvatarGroup` — an overlapping row of avatars ("who follows"), each
- * ringed, with a "+N" chip for the overflow.
- *
- * The only component in the Avatar family with dependencies of its own — it
- * imports `Avatar`.
- *
- *   • `items` is DATA, not `children`; the composite builds each `Avatar` itself.
- *   • `size` is set at the GROUP level (the row is always one size); items
- *     do not carry their own size.
- *   • `isSkeleton` passes down so each item mirrors it, keeping the row's footprint stable.
+ * `AvatarGroup` — a row of edge-overlapping avatars ("who follows") plus a "+N" chip. Leaves:
+ * `Default` (items mapping), `Overflow` (`max` and `total`, both producing the "+N" chip),
+ * `Sizes` (cluster-level `size`), and the `isSkeleton` mirror. Per-avatar state
+ * (status/colors/fallback) lives in `Avatar`; `AvatarGroup` imports `Avatar` to build each one.
  */
 
 /** One avatar in an {@link AvatarGroup} row. */

@@ -15,20 +15,12 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FoundationResourceList` — the resource browse list: numbered rows of supplementary
- * material (articles, videos, exercises, reference docs) the learner can search and
- * page through.
- *
- * Composes `AsyncContent` (error → loading → empty → content), `SurfaceCardList`,
- * `IconTile` (cover image with icon-glyph fallback), `EnumChip` (kind), `Chip`
- * ("Recommended"), and `Pagination`. Owns position numbering, the kind → chip-label
- * map, the recommended text, and the choice between "no resources yet" and
- * `no matches for "X"` from the typed `searchQuery`.
- *
- * Leaves: `isLoading` and `error` each their own; a zero-length `resources` (with or
- * without a query) is a data STATE of `Default`. Position numbers are local to the
- * current page (no `pageSize` to offset from). `ariaLabel` names the region, which has
- * no visible heading.
+ * `FoundationResourceList` — the resource browse list: numbered rows of
+ * supplementary material the learner can search and page through. Composes
+ * `AsyncContent` (error/loading/empty/content switch), `SurfaceCardList` (bounded
+ * rows + loading mirror), `IconTile` (cover image falling back to a glyph),
+ * `EnumChip`/`Chip`, and `Pagination`; the block owns the numbering, kind labels,
+ * recommended text, and the "no resources yet" vs `no matches for "X"` wording.
  */
 
 /** The kind of resource a row points at — drives the kind chip's label/color. */

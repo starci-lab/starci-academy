@@ -5,13 +5,12 @@ import { Typography, type TypographyIcon } from "@sb-components/atoms/text/Typog
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `LeaderboardCategoryNav` — the mobile chip strip selecting which XP category the board
- * is sorted by (the `variant="chips"` half of the source `LeaderboardCategoryRail`; the
- * desktop rail lives in the shared learn layout). A facet toggle, not navigation, so it
- * reuses `Button.RadioGroup` (selected renders neutral `tertiary`) and the chips
- * flex-wrap rather than horizontally scroll. Owns the category → icon/label table and
- * the XP wording ("{label} · {xp} pts") from typed `{ key, xp }` items. Never
- * skeletonised — categories/icons are static; only `xp` depends on the fetch.
+ * `LeaderboardCategoryNav` — the mobile chip row for switching which XP category
+ * the leaderboard is sorted by (the `variant="chips"` half of `LeaderboardCategoryRail`;
+ * the desktop `ListBox` rail lives in the learn-shell `leftRail` slot). Picking a
+ * category re-sorts the same board — a facet toggle, not navigation — so it wraps
+ * `Button.RadioGroup`. Which category is selected and each XP count are data on the
+ * same chip row.
  */
 
 /** The XP categories the leaderboard can be sorted by — mirrors the src's ranking keys. */

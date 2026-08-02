@@ -6,13 +6,17 @@ import {
 } from "@sb-components/starci/blocks/consultant/ConsultantProfileBody/ConsultantProfileBody"
 
 /**
- * `HeadhunterModal` — the global overlay that shows one recruiting consultant's
- * profile: avatar, name, role, company link, blurb, and contact links (or a CV-score
- * gate). Owns the modal chrome — a narrow container with inside scroll and a fixed
- * title; the profile layout itself is drawn by `ConsultantProfileBody`.
+ * `HeadhunterModal` — global overlay that shows ONE recruiting consultant's
+ * profile (avatar, name, role, company link, blurb, contact links or a
+ * CV-score gate). Opened from anywhere via the app's global overlay store;
+ * this port takes plain `isOpen`/`onOpenChange` props instead of reading
+ * Zustand/Redux directly (Rule 13).
  *
- * Presentational: `isOpen`/`onOpenChange` + the resolved `consultant`, plus
- * `onOpenCompany`/`onImproveCv` callbacks. An absent consultant renders nothing.
+ * ONE LEAF (`Default`). The wrapper shape never changes — only whether a
+ * consultant is present (renders the profile body vs. an empty modal body,
+ * mirroring `src`'s own `{headhunter ? (...) : null}` guard) is a STATE of
+ * this one leaf, not a second leaf, since the wrapper tree itself never
+ * changes shape.
  */
 
 /** Real product copy (`headhuntings.modalTitle`) — the block owns this wording, not the caller. */

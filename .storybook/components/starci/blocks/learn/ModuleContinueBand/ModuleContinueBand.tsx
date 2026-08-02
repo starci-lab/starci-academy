@@ -7,15 +7,12 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
 
 /**
- * `ModuleContinueBand` — the flat (no card frame) "resume + progress" cluster that opens
- * both course-home and module-home. Deliberately unframed — no `SurfaceCard`, streak, or
- * watermark — which is why it is not `ContinueCardHero`.
- *
- * Owns the summary sentence ("Read X/Y lessons · Completed Z/W challenges") from plain
- * numbers. The resume title + `Button` disappear together when `resumeLessonTitle` is
- * unset (the "all done" state); `onResume` is optional and only forwarded, never
- * inspected to decide rendering. Skeleton paints the fuller shape (title bar + button);
- * `ProgressMeter` has no skeleton of its own, so a bare `h-1` bar stands in.
+ * `ModuleContinueBand` — the flat "resume + progress" cluster that opens both
+ * course-home and module-home. A flat cluster, not a card (distinct from
+ * `ContinueLearning` / `ContinueCardHero`). `resumeLessonTitle` presence drops two
+ * nodes together (the title and the resume button), so "resume available" vs "all
+ * done" are separate shapes; `isSkeleton` is its own too. Which numbers show in the
+ * meter/sentence are data states inside the resume-available shape.
  */
 
 /** Resume label — a block-owned wording constant (§14d.1), not a caller prop. */

@@ -2,15 +2,13 @@ import React from "react"
 import { StatRibbon, type StatRibbonItem } from "@sb-components/composites/stats/StatRibbon/StatRibbon"
 
 /**
- * `PlaygroundDeviceSnapshot` — "Your machine": the paired agent's `device:info`
- * report as a 4-cell stat ribbon (OS, CPU, RAM, GPU). Owns the domain judgement
- * on top of `StatRibbon`: unit math (bytes -> whole GB, MiB -> GB for VRAM,
- * matching the model-recommendation tiers), the `win32`/`darwin`/`linux` ->
- * "Windows"/"macOS"/"Linux" name table, and the three VRAM phrasings ("no GPU" /
- * "GPU with no VRAM read" / "X GB VRAM · Y MB free"). `StatRibbonItem.value`/
- * `.label` are plain `string` (the ribbon wraps them in `Typography` itself),
- * so each cell's caption + computed detail are joined into one label string;
- * loading state is `StatRibbon`'s own `isSkeleton`, not a per-cell shimmer.
+ * `PlaygroundDeviceSnapshot` — "Your machine": the paired agent's raw hardware
+ * report turned into the same 4-cell `StatRibbon` the Lab route shows, so setup and
+ * the live lab agree about what the machine can run. Reuses `StatRibbon`; the block
+ * owns the domain judgement — bytes → GB rounding, the `win32`/`darwin`/`linux` →
+ * "Windows"/"macOS"/"Linux" table, and the three sentences a GPU cell can say
+ * depending on which of `gpu`/`vramTotalMb`/`vramFreeMb` came back. Every
+ * `deviceInfo` combination and `isSkeleton` are states of the 4-cell shape.
  */
 
 /**

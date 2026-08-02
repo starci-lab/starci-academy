@@ -6,15 +6,13 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `LeaderboardToolbar` — the strip above the ranking, outside its async region:
- * "Ranked by X" left, a quiet last-updated fact beside it, a plain refresh button right.
- * It renders even while the board loads or errors, so it is hand-composed from atoms
- * (no `Toolbar` — there are no tabs).
- *
- * Owns the "Ranked by …" template and the relative-time phrasing built from `updatedAt`
- * (a `Date`); `refreshLabel` is handed in already localized. Relative time is computed
- * at render, not live-ticking. One leaf; `Button`'s own `isPending` skin is the
- * refresh-in-flight idiom.
+ * `LeaderboardToolbar` — the strip above the ranking: "ranked by X" on the left, a
+ * quiet last-updated fact beside it, a plain refresh button on the right. It sits
+ * outside the board's async region, hence its own block. Hand-composed from atoms —
+ * no composite draws this "label · muted timestamp · secondary button" shape. Owns
+ * the "Ranked by …" template and the relative-time phrasing built from a plain
+ * `updatedAt: Date`. Whether the timestamp has landed and whether a refresh is in
+ * flight are states on the same three-slot row.
  */
 
 /** Props for {@link LeaderboardToolbar}. */

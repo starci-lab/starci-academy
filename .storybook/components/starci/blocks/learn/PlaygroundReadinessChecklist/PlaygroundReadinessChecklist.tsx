@@ -5,13 +5,12 @@ import { IconTile, type IconComponent } from "@sb-components/atoms/display/IconT
 import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 
 /**
- * `PlaygroundReadinessChecklist` — the compact "Machine status" list: every
- * playground prerequisite (agent, engine, generation model, embedding model) as
- * one `SurfaceCardList` row — leading tile (check when ready, else the item's
- * kind icon), title, ready/pending subtitle, trailing status chip. Owns its own
- * vocabulary: the ready/pending chip table (`READINESS_CHIP_MAP`) and the
- * `kind` -> icon lookup (`KIND_ICON`); `ready` overrides the icon with a check.
- * Two leaves: `Default` and `isSkeleton`.
+ * `PlaygroundReadinessChecklist` — the consolidated "Machine status" list: every
+ * playground prerequisite at a glance, one row each. Reuses `SurfaceCardList`'s row
+ * shape (leading tile · title · subtitle · trailing chip), `IconTile` for the
+ * leading glyph, and `EnumChip` for the trailing status. The block owns the
+ * ready/pending wording and maps `kind` (domain vocabulary) to an icon. Two shapes:
+ * `Default` (N real rows) and the `isSkeleton` skeleton.
  */
 
 /** The four prerequisites a playground session checks. Closed set — see file header. */

@@ -5,11 +5,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/SegmentBar`. Authored in Storybook (not `src`);
- * synced to `src` later.
- */
+/** No shared total — slices always fill 100% as shares of each other. */
 
 /** One slice of a {@link SegmentBar}. */
 export interface SegmentBarSegment {

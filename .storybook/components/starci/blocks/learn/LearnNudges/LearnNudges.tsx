@@ -3,9 +3,10 @@ import { ArrowRightIcon, CardsIcon, MicrophoneStageIcon, TrophyIcon } from "@pho
 import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
- * `LearnNudges` — the "what to do today" block: a list of suggested actions rendered
- * through `SurfaceCardList`, the same layout as `KeepGoingPath` below it. Takes `kind`
- * as an enum and owns the `kind → icon` table; the caller supplies only data.
+ * `LearnNudges` — the "things to do today" list. The caller passes only `kind`
+ * (an enum); the block owns the `kind → icon` table. Shares its `SurfaceCardList`
+ * layout with `KeepGoingPath`. Full/single/bordered are all states of one tree;
+ * `isSkeleton` gets its own leaf even though the DOM is identical.
  */
 /** Task type — a data ENUM; the block alone decides how it looks. */
 export type LearnNudgeKind = "flashcards" | "interview" | "league"

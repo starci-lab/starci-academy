@@ -4,19 +4,12 @@ import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `Grid` — a LAYOUT frame: the responsive grid of equal cells. One member;
- * density is a prop. A repeating list ⇒ `items` DATA, `children` forbidden (every
- * cell is the same kind of thing).
- *
- * Uses container queries, not viewport: `@app-sm/md/lg` are pinned to the same
- * pixel values as the viewport scale but measure the nearest `@container` ancestor
- * (which the app shell and Storybook preview provide), so a grid answers to its
- * own column width, not the viewport. This frame deliberately does NOT open its
- * own container. (Tailwind's built-in `@sm/@md/@lg` are a different, half-size
- * scale.)
- *
- * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED. No domain
- * content, no behaviour — placement only.
+ * ⚠️ STATE SCOPE: `Grid` is a two-dimensional REPEATED-LIST FRAME. The state it
+ * produces = `columns` (column count by CONTAINER breakpoint — a distinctive state no
+ * other frame has), and `gap` (§10). No `align`/`justify`: a grid cell stretches to
+ * fill by default, aligning content inside the cell is the job of the component
+ * inside it. An empty list → an empty track, the "nothing here yet" copy belongs to
+ * the caller (§13 — a frame carries no content).
  */
 
 /** One cell of a {@link Grid}. */

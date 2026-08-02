@@ -4,16 +4,11 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * `MindMapContinueButton` — the single primary next-step action floating over the course
- * mind-map: a resume pill, or a quiet "all done" note. Precedence: `resumeHref` present →
- * resume pill (regardless of `allContentDone`); null + `allContentDone` → the note; null
- * + not done → renders nothing. `resumeHref` is the single source of truth for "is there
- * something to resume", so the CTA never goes nowhere.
- *
- * Two leaves with two different atoms — the resume state is a pressable `Button` (with
- * arrow), the done state an inert `Typography`. Both carry `shadow-lg` (this floats over
- * the canvas). Skeleton mirrors the resume pill (the more common returning-learner
- * shape). Panel positioning stays with whatever embeds this into `ReactFlow`.
+ * `MindMapContinueButton` — the single floating "what's next" action over the
+ * course mind-map. `resumeHref` swaps the whole node from a pressable `Button`
+ * (with arrow) to an inert `Typography` note — two different atoms — so "resume
+ * available" and "all done" are separate shapes; `isSkeleton` is its own too. The
+ * real component renders nothing for a guest whose progress has not resolved.
  */
 
 /** Label the block writes itself (§14d.1) — not opened to the caller. */

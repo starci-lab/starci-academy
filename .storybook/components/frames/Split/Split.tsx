@@ -4,16 +4,11 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
- * `Split` — a LAYOUT frame: the left ↔ right row (`items-center
- * justify-between`). One member; a split has no second form.
- *
- * Two NAMED sides with different width strategies: `start` may truncate
- * (`min-w-0`), `end` must never be squeezed (`shrink-0`). Naming the sides makes
- * that rule enforceable in one place. Two named slots (`start`/`end`) are the
- * whole content contract ⇒ no `children`.
- *
- * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED (off-scale is a
- * type error). No domain content, no behaviour — placement only.
+ * ⚠️ STATE SCOPE: `Split` is a LEFT ↔ RIGHT row FRAME. The state it produces is
+ * the relationship BETWEEN THE TWO NAMED SIDES: the seam `gap`, the cross-axis
+ * alignment `align`. No `wrap`/`justify` — `justify-between` is this frame's
+ * DEFINITION, not an option; a row with many items should use `StackH`/`Cluster`
+ * instead.
  */
 
 /** Props for {@link Split}. */

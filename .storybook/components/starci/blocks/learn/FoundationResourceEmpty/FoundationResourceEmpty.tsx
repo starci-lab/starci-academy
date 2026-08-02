@@ -2,11 +2,8 @@ import React from "react"
 import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 
 /**
- * `FoundationResourceEmpty` — the message shown when a foundation-resource id resolved
- * to nothing (a stale link, a removed resource). A one-node block holding
- * `AsyncContentEmpty` so the page's partial-empty branch need not reach a composite
- * directly; owns its own fixed copy. No `isSkeleton` — either the id resolved or it
- * didn't.
+ * `FoundationResourceEmpty` — the message shown when a foundation resource id
+ * resolved to nothing. A single fixed message, no props to vary it by.
  */
 
 /** Props for {@link FoundationResourceEmpty}. */

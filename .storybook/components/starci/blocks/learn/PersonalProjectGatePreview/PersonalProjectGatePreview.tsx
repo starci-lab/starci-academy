@@ -8,12 +8,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PersonalProjectGatePreview` — the capstone teaser fed into `EnrollGate`'s
- * `preview` slot, showing a trial viewer the real shape of the personal-project
- * workspace behind the gate's lock chrome. Non-interactive: a `ContinueCardHero`
- * headline, a `ProgressMeter` of overall completion, and a labeled `SurfaceCard`
- * listing the milestone-0 task titles. The block owns the section label; only
- * the task titles are domain data.
+ * `PersonalProjectGatePreview` — the capstone teaser dropped into `EnrollGate`'s
+ * `preview` slot inside `LearnShell`: what a trial viewer sees of the
+ * personal-project workspace, behind the gate's fade/lock. Composes
+ * `ContinueCardHero` for the headline, a standalone `ProgressMeter` for capstone
+ * completion, and `SurfaceCard` with a `label`. Non-interactive — the fade/lock
+ * affordance belongs to `EnrollGate`. Task count and names are data on one shape.
  */
 
 /** One milestone-0 task title shown in the teaser's task list. */

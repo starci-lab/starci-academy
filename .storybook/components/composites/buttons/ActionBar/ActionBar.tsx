@@ -5,19 +5,18 @@ import { ResponsiveCluster, type ResponsiveClusterItem } from "@sb-components/fr
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * `ActionBar` — the `primary` · `secondary` · `dismiss` row that ends a form,
- * modal, or drawer. Three different ROLES, never N of the same kind — that is why
- * it is not `ButtonGroup` (a homogeneous list).
+ * ⚠️ STATE SCOPE: `ActionBar` does not grow new meaning — it composes `Button` per
+ * role and hands the row to `ResponsiveCluster`. Stories here render only state that
+ * BELONGS TO THE ROW: which roles are present (`primary`/`secondary`/`dismiss`),
+ * the row-level `isSkeleton`, and the row-level `at` threshold. Per-button state
+ * (`prefixIcon`, `isPending`, `isDisabled`, what a variant looks like) lives on the
+ * `Button` story, not repeated here — same split `ButtonGroup`'s stories already draw.
  *
- * Named slots, not a list: `primary` is required, `secondary`/`dismiss` optional.
- * The slot decides the variant — `primary` → `"primary"`, `secondary` →
- * `"secondary"`, `dismiss` → `"ghost"` — never the caller.
- *
- * Layout is built on `ResponsiveCluster`: a full-width column below the container
- * threshold in `at`, a packed row from it up, with a fixed internal `gap-2` seam
- * (not a call-site prop). Order is `dismiss`, `secondary`, `primary`, left to
- * right, pinned to the end (`justify="end"`) — exit reads first, the strongest
- * action sits last.
+ * 📐 1 PROP = 1 LEAF, with one deliberate exception: `primary`/`secondary`/`dismiss`
+ * share ONE leaf ("Slots") rather than three, because they are not independent
+ * axes — they are the one shape decision this component exists to make (which
+ * roles are in the row), so the states under that leaf vary which slots are
+ * present rather than one prop's value in isolation.
  */
 
 /** One action slot of an {@link ActionBar} — `primary`, `secondary`, or `dismiss`. */

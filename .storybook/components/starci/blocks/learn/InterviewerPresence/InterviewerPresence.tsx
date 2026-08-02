@@ -7,15 +7,12 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `InterviewerPresence` — the "someone is interviewing you" surface: the persona reading
- * the current question, a TTS mute toggle, and the question itself. The identity row is
- * composed from `Avatar` + `Typography` (not `UserCell`, whose second line is a handle,
- * not a job role).
- *
- * Two independent signals: `speaking` (TTS audio voicing now — drives the avatar pulse
- * ring and status line) and `isAsking` (the question text still streaming — drives the
- * typing-dots cue). One leaf; the question region's presence/absence is a state. No
- * `isSkeleton` — `questionMarkdown`/`isAsking` already model "not arrived yet".
+ * `InterviewerPresence` — "someone is interviewing you": persona, live-speaking
+ * cue, TTS toggle, and the question underneath. Whether the question region
+ * exists is presence/absence data on the same shape — an idle and a mid-question
+ * interviewer are one block with different data. `speaking` (audio) and `isAsking`
+ * (text still streaming) are independent props; the identity row composes `Avatar`
+ * + `Typography` directly (role, not a handle, plus a pulse ring).
  */
 
 /** Who is interviewing — identity only, no session state. */

@@ -5,16 +5,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — TitledText: a primary line + optional muted
- * secondary (and optional hint) stacked vertically as ONE composite. A
- * "title↔subtitle" pair is a semantic UNIT, so it is a single component (one
- * anatomy node), NOT two/three raw `<Typography>` hand-rolled at every row.
- *
- * This is the single most-recurring composite in the app (≥16 call-sites, ≥6
- * lanes: SettingToggleRow, ListRow, Stepper, PageHeader, EmptyState,
- * RewardItemCard, PersonaIdentityChip name/role, SummaryCard stat…). The
- * composite OWNS the type scale per `size`; the caller passes nodes only.
- * NO `@/components` imports.
+ * `TitledText` — a primary line + optional muted secondary (and optional hint) stacked
+ * vertically as one composite; a title↔subtitle pair is a single semantic unit rather than raw
+ * `<Typography>` hand-rolled at every row. The composite owns the type scale per `size`; the
+ * caller passes nodes only. Leaves: `subtitle`, `hint`, `size`, `weight`, `truncate`, `isSkeleton`.
  */
 
 /**

@@ -12,13 +12,17 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import { ContinueCardHero, ContinueCardItem } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 
 /**
- * `PersonalProjectDashboard` — the capstone landing overview shown when the
- * personal-project route carries no `taskId`: a header (breadcrumb + title +
- * GitHub-status chip), a "next task" continue hero over a completion meter and
- * stats line, and a two-column grid of the current milestone's task tiles.
- * The header sits outside the async boundary; only the milestone-dependent
- * leaves wait on the fetch. The block owns its own wording, deriving labels from
- * the numbers/entities/enum members the caller hands over.
+ * `PersonalProjectDashboard` — the capstone landing overview ("where am I + what's
+ * next"), shown when the personal-project route carries no `taskId`: breadcrumb →
+ * title/description/GitHub-status header, over a continue hero + completion meter,
+ * over the current milestone's tasks as a two-column grid.
+ *
+ * Shapes:
+ *   • `Full` — a next task exists, so the continue hero renders; GitHub connected
+ *     vs not are states inside it.
+ *   • `AllDone` — no `currentTask`, so the hero is gone, replaced by an "all done" line.
+ *   • `Loading` — `AsyncContent` falls to the shimmer mirror.
+ *   • `Empty` — `AsyncContent` falls to the empty message; the header is unaffected.
  */
 
 /** One breadcrumb link above the dashboard title — plain data, the block builds the atom. */

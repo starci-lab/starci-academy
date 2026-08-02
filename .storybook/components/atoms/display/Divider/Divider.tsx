@@ -1,4 +1,13 @@
-/** @noSkeleton renders a rule between two things — there is no value behind it to wait for. */
+/**
+ * ATOM — `Divider`: wraps HeroUI `Separator` directly (HeroUI has no "Divider";
+ * renamed for the app's vocabulary). A leaf atom — it builds none of our own storied
+ * atoms, so it has no atom-tier dep; `Label` is an internal slot for the free-form
+ * label, not a dep. Every rule it draws is a direct `Separator` render (`tier:
+ * "heroui"`).
+ *
+ * One prop = one leaf: `orientation` · `variant` · `label`, each leaf rendering every
+ * value in full. Each value is a `states[]` entry with its own `why` and `code`.
+ */
 import type { ReactNode } from "react"
 import { Separator as HeroSeparator, cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"

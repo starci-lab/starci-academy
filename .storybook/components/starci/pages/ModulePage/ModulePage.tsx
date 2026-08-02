@@ -12,15 +12,14 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ModulePage` — one module's own page: orient, resume, then browse everything it
- * contains. It composes blocks in frames and hands each typed data, drawing no shape
- * of its own.
- *
- * Five functions: `ModuleHeader` (what this module is, its tier, its size);
- * `ContentPaywall` (reused, only while `isLocked`); `ModuleContinueBand` (resume +
- * completion); `ModuleLessonList`; and `ModuleChallengeList` (only when the module has
- * challenges). The paywall replaces functions 3–5 rather than sitting above them — a
- * locked learner has one decision, nothing competing with it.
+ * `ModulePage` — the screen for one module's own page: orient, resume, then
+ * browse everything it contains. A screen owns a list of functions: it calls
+ * blocks, places them in frames, and hands each typed data. Five functions, in
+ * reading order: orient · gate (paywall, reused from `ContentPaywall`) · resume
+ * + completion · browse lessons · browse challenges. The paywall replaces
+ * browsing rather than sitting above it (the `Locked` leaf). The challenge list
+ * is a screen-owned structural switch worth its own leaf (`NoChallenges`), on
+ * the `challenges.length > 0` branch the screen itself makes.
  */
 
 /** Props for {@link ModulePage}. */

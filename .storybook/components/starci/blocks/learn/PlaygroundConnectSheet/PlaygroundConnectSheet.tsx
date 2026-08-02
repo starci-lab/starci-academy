@@ -8,13 +8,15 @@ import { StatRibbon, type StatRibbonItem } from "@sb-components/composites/stats
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PlaygroundConnectSheet` — the docked connection console for the lab: an
- * always-visible peek row (status chip + reconnect button + expand toggle) over
- * a body the learner opens to diagnose the pairing. Reconnect is available in
- * every connection state. `waiting` and `dropped` share one hint body;
- * `waiting` is the first-time case, `dropped` implies a prior connection. Device
- * specs and the agent log render only while connected with a `device` present.
- * One leaf with a two-snap-point (peek/expanded) controlled toggle.
+ * BLOCK — `PlaygroundConnectSheet`: the docked connection console under the lab
+ * canvas — a peek row (status + reconnect) that never leaves the screen, and a
+ * body the learner opens to see device specs and the live agent log.
+ *
+ * ONE LEAF, THREE DATA STATES (see the component's file header for the full
+ * reasoning): `connected` shows the real device panel, `waiting` and `dropped`
+ * share the same not-connected hint body and differ only in the peek chip's
+ * wording/tone — `dropped` cannot happen without a prior connection, so no
+ * extra `everConnected` prop is needed to tell the two apart.
  */
 
 /** How the lab's device pairing currently stands. */

@@ -3,20 +3,13 @@ import { BookOpenIcon, CodeIcon, FlaskIcon, PlayIcon, PuzzlePieceIcon } from "@p
 import { Toolbar, type ToolbarTabItem } from "@sb-components/composites/navigation/Toolbar/Toolbar"
 
 /**
- * `ContentModeNav` — a BLOCK: how to look at this lesson. Reading modes on the left,
- * the code language on the right.
- *
- * Switching mode changes the ROUTE (`router.replace(?tab=…)`), so this is
- * NAVIGATION, not a tab/panel pair — the body it switches to is a separate block
- * (`ContentArticle` and siblings), the content of a different route.
- *
- * A locked mode is clickable (rendered muted but still firing `onModeChange`); the
- * caller decides what a locked tap means (e.g. open the paywall). Over `Toolbar`
- * the block owns the modes' order, words, icons, and which a lesson offers. `mode`
- * is an enum; the caller never hands over labels.
- *
- * Never skeletonised — static chrome known before any lesson data lands, so there
- * is no `isSkeleton` prop.
+ * `ContentModeNav` — how to view this lesson: modes on the left, code language
+ * on the right. Switching mode changes the route, so this is navigation, not a
+ * tab/panel pair. A locked mode renders muted but still fires `onModeChange` —
+ * the screen decides a locked tap opens the paywall. The mode group carries the
+ * one accent; the language group is neutral. No `isSkeleton` — it is static
+ * chrome. The right group appearing is its own leaf; selected mode and lock
+ * state are data.
  */
 
 /** The ways a lesson can be looked at. */

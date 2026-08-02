@@ -11,15 +11,14 @@ import {
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
- * `SubmissionAttemptSelector` — which graded attempt the reader is viewing: a
- * flex-wrap row of attempt buttons (verdict + "Attempt N" + score) plus an
- * optional "+N" overflow trigger. Composes attempt data into labels/icons (owned
- * wording). Reuses `ButtonRadioGroup` for select semantics and `Chip` for the
- * verdict inside each item — the outer button variant says "viewing", the inner
- * chip tone says "passed", two independent signals. "+N" fires `onOverflowPress`
- * only; what it opens is a screen decision. `isSkeleton` and `isLoading` share
- * `AsyncContent`'s one loading branch; `selectedId` is optional (sentinel `""`
- * for none). One leaf, `AttemptRow`.
+ * `SubmissionAttemptSelector` — which graded attempt the reader is looking at: a
+ * flex-wrap row of attempt buttons (verdict + "Attempt N" + score) plus an optional
+ * "+N" trigger for the rest of the history. The select chrome is `ButtonRadioGroup`
+ * and each button's content is a `Chip`; the block turns `{ attemptNumber, score,
+ * isPassing }` into that composition, and the "+N" trigger uses the group's own
+ * `trailing` slot. Pressing "+N" only fires `onOverflowPress` — what it opens is a
+ * screen decision. Loading, empty, error, few, and many attempts are all states of
+ * the one chip strip.
  */
 
 /** One graded attempt the reader can switch to. */

@@ -16,16 +16,11 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
 
 /**
- * `QaQuestionThread` — one course-Q&A conversation. Collapsed, it is a
- * pressable inbox row (`SurfaceCard.Pressable`: asker, preview, scope + status,
- * reply count, status dot). Pressing it swaps in the full conversation inside a
- * `SurfaceCard`: a {@link QaConversationHeader}, the question as the first chat
- * bubble, every answer as a {@link QaMessageBubble} (recursing for replies), and
- * a bottom {@link CourseQaComposer}. Chips route through `Cluster`. Everything
- * but `onAnswered` is local ephemeral UI state — expand, drafts, react/accept/
- * post all mutate a local copy of `question.answers` seeded once per
- * `key={question.id}` mount. Leaves by structure: `Collapsed` | `Expanded`;
- * zero answers is a state within `Expanded`, not a third leaf.
+ * BLOCK — `QaQuestionThread`: ONE course-Q&A conversation — a collapsed social
+ * inbox row that presses open into the full conversation (header, question
+ * bubble, every answer, a bottom composer). See the component file header for
+ * the full contract, the local-state judgement call, and the assumed-contract
+ * risk on the four sibling blocks that did not exist yet when this was written.
  */
 
 /** Reaction kinds a message in this thread can carry (mirrors backend `ReactionType`). */

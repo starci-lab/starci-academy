@@ -8,17 +8,14 @@ import { ContentCommentComposer, type ContentCommentComposerViewer } from "@sb-c
 import { ReactionButton, type ReactionType, type ReactionCount } from "@sb-components/starci/blocks/learn/ReactionButton/ReactionButton"
 
 /**
- * `ContentCommentThread` — a BLOCK: one threaded comment — author, reactions,
- * reply/edit/delete actions, and its recursively-rendered replies.
+ * BLOCK — `ContentCommentThread`: one threaded comment — author, reaction,
+ * reply/edit/delete actions, and its recursively-rendered replies. Ported
+ * verbatim from real `src`'s `CommentItem`. See the component's own file
+ * header for the massive gap this fills against the earlier flat-list cut.
  *
- * Owns nested replies (capped visual indent via a left guide border), a
- * `ReactionButton` (the same control `ContentReaction` uses), owner-only
- * edit/delete, and a collapsible reply composer.
- *
- * A reply is just another `ContentCommentThread` one `depth` deeper — recursion,
- * not a separate "reply" component. `depth` drives only the indent guide
- * (`border-l`, capped nesting), a plain on-scale utility rather than a composed
- * layout, so it stays here rather than needing a frame.
+ * 📐 LEAVES by STRUCTURE (§14d.2). Owner-only actions appearing, the body
+ * swapping for an edit composer or a deleted placeholder, and the reply
+ * subtree expanding each add/remove real nodes ⇒ separate leaves.
  */
 
 /** Minimal identity for a comment's author. */

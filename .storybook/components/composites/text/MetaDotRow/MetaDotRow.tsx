@@ -5,15 +5,17 @@ import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `MetaDotRow` — a row of small text fragments separated by a `·` mark
- * ("12 lessons · 3 hours · Free", "12 minutes ago · Edited").
+ * COMPOSITE — `MetaDotRow`: a row of muted text fragments separated by a `·`
+ * mark ("12 lessons · 3 hours · Free"). Replaces the hand-rolled `flex
+ * flex-wrap items-center gap-* text-muted` + a bare `<span aria-hidden>·</span>`
+ * seen at `PostRow` and `ProfileHero`'s sidebar meta — the composite owns the
+ * mark (`Divider` atom, `shape="inline"`), the seam (`separator-dot`, 4px),
+ * and the tone (`muted`, on every fragment AND the root, so the marks inherit
+ * it).
  *
- * `items` is a plain `string[]`: each fragment is TEXT the composite renders through
- * `Typography` itself, so it can shimmer the fragment. The gap is the registry's
- * `separator-dot` token (step 2, 4px / `gap-1`). Every fragment is `muted`; the `·`
- * is `Divider`'s `shape="inline"` glyph (paints `text-current`), so the row's root
- * carries a fixed `text-muted` class the mark inherits, keeping fragment and mark
- * on the same tone.
+ * 📐 **1 PROP = 1 LEAF.** `items`, `isSkeleton`, `skeletonCount` each get their
+ * own leaf. `classNames` gets none — a pure placement prop with no visible
+ * shape of its own to demonstrate.
  */
 
 /** Props {@link MetaDotRow} carries regardless of loading state. */

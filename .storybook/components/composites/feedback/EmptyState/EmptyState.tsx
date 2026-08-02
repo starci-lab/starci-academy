@@ -6,11 +6,10 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `EmptyState` — a CENTERED vertical stack that fills an empty/error spot
- * (`code`/`icon`/`title`/`description`/`body`/`action`).
- *
- * Text goes through `Typography.*`; icons come from `@phosphor-icons/react` passed
- * as a component ref, with the frame forcing size/weight itself.
+ * `EmptyState` — a centered vertical stack that fills an empty spot (empty list, no results)
+ * or a broken spot (`tone="danger"` + a retry button). Slots: `code`, `icon`, `description`,
+ * `body`, `action`; axes `tone` and `size` (`compact`/`page`). This shell IS the empty/error
+ * state, so it has no loading leaf of its own.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

@@ -4,12 +4,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ButtonGroup } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 
 /**
- * `ConfirmDialog` — a blocking dialog shell for an action that can't be undone
- * (`title`/`description` + `confirmLabel`/`cancelLabel`).
- *
- * The shell builds a full header/body/footer (footer = `ButtonGroup` cancel +
- * confirm), so it does not open up `children` — content goes through
- * `title`/`description` only.
+ * `ConfirmDialog` — a blocking dialog shell for an irreversible action (unenroll, delete a
+ * submission). Builds Header/Body/Footer; content goes through `title`/`description` + the two
+ * button labels, not `children`. Purely presentational: `isOpen` and every callback come via
+ * props. The Confirm button does not close the dialog — the caller closes it through
+ * `onOpenChange` once the action finishes, so `isConfirming` keeps it open while waiting.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

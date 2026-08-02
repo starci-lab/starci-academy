@@ -9,15 +9,17 @@ import { ResizableRail } from "@sb-components/behaviors/ResizableRail/ResizableR
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MindMapPage` — the course keyword graph, in two shapes: `workspace` (a rail-plus-
- * canvas pane embedded in the learn shell) and `standalone` (the full-bleed public
- * route with floating chrome). It composes blocks in frames and hands each typed data.
+ * SCREEN — `MindMapPage`: the course keyword graph, in its two real shapes.
+ * See the component's own file header for the full function list, the two
+ * corrections against the planner's proposed tree (`MindMapBackButton` and
+ * `FloatingActionButton` are both absent, on purpose), and why the canvas
+ * region is a documented §B3 gap rather than a faked ReactFlow mount.
  *
- * The ReactFlow canvas engine is out of scope; `MindMapCanvasGap` (an
- * `AsyncContentEmpty`) stands in for it. `standalone` floats three chrome pieces over
- * the gap — continue button, legend, fullscreen/zoom — positioned via placement-only
- * classNames; `workspace` has one function, a resizable keyword rail. No `Container`
- * (both variants are full-bleed). `isEmpty` is `workspace`-only.
+ * FIVE LEAVES, by STRUCTURE — `workspace` and `standalone` are different
+ * compositions (not one shape with a variant flag flipping paint), so each
+ * gets its own leaves; `Empty` and `Loading` each lose or swap real nodes
+ * (rail's shimmer vs. its populated list; the three floating blocks present
+ * vs. absent), which is a structural change, not a data condition of one leaf.
  */
 
 /** Which shape of the mind map this screen renders — see the file header. */

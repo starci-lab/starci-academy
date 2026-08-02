@@ -4,21 +4,12 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
 import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
- * `RailShell` — a FRAME: a LEADING rail that introduces the page, beside a body
- * column that grows. The rail comes first in reading order and never shrinks
- * (`shrink-0`); the body follows and absorbs every remaining pixel (`min-w-0`).
- * The two sides are NAMED (`rail`/`body`) so those width rules live in one file.
- *
- * Mirror image of `SplitWorkspace`, whose reading column comes first and whose
- * aside is a pinned action rail — opposite reading order, opposite shrink
- * strategy, so it is a separate frame rather than a `railFirst` flag.
- *
- * `at` names the switch breakpoint (a `ResponsiveRowSwitch` prop, default `md`);
- * the 288px rail width stays a hard-owned constant. `isRailSticky` is a prop
- * because real consumers disagree (a scrolling identity rail vs. a viewport-pinned
- * settings rail). No `wrap` — the breakpoint is declared, not hoped for.
- *
- * Two distinct roles ⇒ two named slots, never a single `children`.
+ * ⚠️ STATE SCOPE: `RailShell` is a frame with a LEADING rail + a shrinking body. The
+ * state it produces is the relationship between the TWO NAMED SIDES across the
+ * `@app-md` threshold: stacked when narrow, two columns when wide, and whether the
+ * rail is pinned or not. The rail width (288px) and the threshold (`@app-md`) are
+ * SELF-OWNED by the frame, not a prop — the two real `src` sources agree on both
+ * numbers, disagreeing only on sticky.
  */
 
 /** Props for {@link RailShell}. */

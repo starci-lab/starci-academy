@@ -6,11 +6,23 @@ import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allo
 import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
 
 /**
- * Storybook-local port of `@/components/blocks/navigation/SeeMoreLink`.
- * Authored here, synced to `src` separately.
- *
- * Reused by the surface-card header ("See more →") and by ContinueCard's item
- * CTA (`decorative`), so both read as the same control.
+ * ATOM — `LinkSeeMore`: the system's one "See more →" / "Continue →" affordance, shared by
+ * `SurfaceCard`'s header (`onSeeMore`) and `ContinueCard`'s item CTA (`decorative`). Lives
+ * in the `Link.*` namespace alongside `LinkBack` — two shapes of the same "text-link + arrow"
+ * concept.
+ * 
+ * 1 PROP = 1 LEAF. `decorative` and `size` have visual form → each gets its own leaf
+ * rendering the full union. `label` is text, so no leaf. Props with no visual form
+ * (`className`, `onPress`) get no leaf. `href` changes the rendered tag (`<a>` vs HeroUI
+ * `Link`) but not the pixels, so there's no separate `WithHref` leaf.
+ * 
+ * The bare leaf is `Default`. `SurfaceCard` pins this leaf's story id into its `ANNOTATE`
+ * deps; renaming the export here must update the `storyId` there, or the Deps link breaks
+ * silently.
+ * 
+ * `annotate`: the root is HeroUI `Link` only on the `onPress`/no-`href`/non-`decorative`
+ * branch — that's the only branch tagged `"Link"` (tier heroui). The `href` branch renders a
+ * plain `<a>` and the `decorative` branch a plain `<span>`; neither gets a fallback tag.
  */
 
 /**

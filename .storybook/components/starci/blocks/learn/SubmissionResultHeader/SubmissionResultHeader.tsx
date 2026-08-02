@@ -4,14 +4,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 
 /**
- * `SubmissionResultHeader` — the identity of a graded-result page: a `LinkBack`
- * to the challenge plus the requirement's title/description, placed in the same
- * `PageHeader` frame `ContentHeader` uses. Sibling of `ContentHeader`, not a
- * copy — a result page has left the material, so no read-state chip, minutes, or
- * outcomes. The breadcrumb slot holds a single back-link (`backLabel` + `onBack`
- * -> `LinkBack`), not a trail. `title`/`description` are the requirement's own
- * strings, unreshaped. Skeleton mirrors each part with a `Typography` bar at the
- * matching scale (`LinkBack`/`PageHeader` have no `isSkeleton`).
+ * `SubmissionResultHeader` — the identity band of a graded-result page: a way back
+ * to the challenge, plus the requirement's title and description. Sibling of
+ * `ContentHeader`, but a result page has left the material — no read-state chip,
+ * minutes, or outcomes card, just "where am I, what is this, how do I leave". The
+ * breadcrumb slot holds a `LinkBack` composed from `backLabel` + `onBack`. One
+ * shape: `isSkeleton` is a state, since only the data changes.
  */
 
 /** Props for {@link SubmissionResultHeader}. */

@@ -10,16 +10,12 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `FlashcardReviewPage` — the screen for browsing decks and clearing today's due
- * queue one card at a time. Two phases, `overview` and `session`, never both at once.
- * It composes blocks in frames and hands each typed data, drawing no shape of its own.
- *
- * `overview` has three blocks answering different questions: `FlashcardDueHero` (what's
- * owed today across courses), `FlashcardMasteryStrip` (how much of this deck is owned),
- * `FlashcardDeckList` (which deck to open). `session` is one shape
- * (`WorkSessionHeader` + `FlashcardStudyCard`) for both the due queue and a picked
- * deck. The mode switch is absent once a session starts; `isSessionSkeleton` reaches
- * only the study card.
+ * `FlashcardReviewPage` — the screen to browse decks and clear today's due
+ * queue, one card at a time. A screen owns a list of functions: six blocks —
+ * two reused (`FlashcardModeSwitch`, `WorkSessionHeader`), four new — arranged
+ * by `phase`. Three leaves matching the `phase` fork plus the overview-only
+ * `isSkeleton` prop-flip: `Overview` (resume-in-progress vs plain due queue) ·
+ * `OverviewLoading` · `Session` (question vs graded).
  */
 
 /** Which part of the flashcard flow is on screen. */

@@ -5,16 +5,16 @@ import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allo
 import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
 
 /**
- * Storybook-local port of `@/components/blocks/navigation/BackLink`. Authored
- * here, synced to `src` separately.
- *
- * The real block derives its label from next-intl (`common.goBack` /
- * `common.goBackTo`); this copy inlines the English defaults ("Back") so it
- * renders standalone without the i18n provider.
- *
- * The atom owns its own resting shape, so the `isSkeleton` shimmer is
- * co-located here rather than hand-rolled by callers — same icon + text row,
- * same `text-sm` line box, so the row does not move once the real label lands.
+ * ATOM — `LinkBack`: the only "← Back" button in the system, wrapping HeroUI `Link`
+ * directly. A leaf atom — it builds on no other atom, but the HeroUI `Link` it renders is a
+ * real import, so its root is tagged `"Link"` and declared `tier: "heroui"` in `ANNOTATE`,
+ * no `storyId`. Lives in the `Link.*` namespace alongside `LinkSeeMore` — two shapes of the
+ * same "text-link + arrow" concept.
+ * 
+ * 1 PROP = 1 LEAF. No prop earns its own leaf: `label`/`target` only swap the text inside
+ * one existing `<span>` (no element added or removed), and `onPress`/`className` produce no
+ * visual. Result: one leaf, `Default`, which demonstrates all three call shapes (bare /
+ * `target` / `label`) in one frame.
  */
 
 /** Props shared by both variants — excludes `onPress`, see {@link LinkBackProps}. */

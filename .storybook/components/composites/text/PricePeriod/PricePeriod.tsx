@@ -3,18 +3,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * PricePeriod: a price shown as one baseline-aligned unit — a prominent amount, an
- * optional struck original/list price, and an optional billing period ("/month").
- *
- * This is a COMPOSITE, not an atom: a price is a CLUSTER of distinct values (a
- * `value-row`), not one atom's single concern. It replaces the retired `PricePoint`
- * atom, which reached ATOM-3 by rendering raw spans instead of the house `Typography`
- * atom — this component fixes that by composing `Typography` for all three parts, so
- * each part draws its own tone AND its own skeleton bar.
- *
- * Distinct from `commerce/PriceTag`, which is a product-discount price (VND/USD
- * numbers + a −X% chip + a breakdown popover). `PricePeriod` takes pre-formatted
- * strings plus a billing `/period`.
+ * `PricePeriod` — a price shown as one baseline-aligned unit: a prominent amount, an optional
+ * struck original/list price, and an optional billing period ("/month"). Composes `Typography`
+ * for all three parts, so each draws its own tone and skeleton bar. Takes pre-formatted strings
+ * plus a billing `/period` (distinct from `commerce/PriceTag`). Leaves: `original`, `period`,
+ * `size`, `isSkeleton`.
  */
 
 /** Amount type scale — drives the main amount's size, and (via {@link SIZE_TO_TOKENS}) the original/period sizes riding along with it. */

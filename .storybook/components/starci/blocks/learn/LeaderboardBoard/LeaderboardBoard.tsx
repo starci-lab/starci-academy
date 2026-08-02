@@ -13,19 +13,13 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `LeaderboardBoard` — the ranked board: async lifecycle, the viewer's own standing, a
- * top-3 podium, ranked rows with a pinned self-row + ellipsis, and top-3 confetti.
+ * BLOCK — `LeaderboardBoard`: the ranked board itself. See the component's own
+ * file header for the full reuse contract; this file only adds the states.
  *
- * Reuses `AsyncContent` (branch switch), `SurfaceCard.List` (rows), and `UserCell` (row
- * identity + `isOwnRow` accent). Two internal-only parts: `Podium` (a raised dais of
- * `Avatar` + `Typography`) and `Confetti` (a fixed decorative particle overlay pulsed by
- * `celebrateKey`).
- *
- * One leaf, many states. Two skeleton knobs: `isLoading` drives `AsyncContent`'s branch
- * from fixed placeholder counts (no data yet); `isSkeleton` flows into the real atoms
- * during a background revalidate. Builds the "Rank #N" sentence from typed
- * `standing.rank`; `primaryLabel`/`secondaryLabel` arrive pre-worded. `meLabel` rides as
- * an `sr-only` tag on the viewer's own rows.
+ * 📐 LEAF by STRUCTURE (§14d.2): loading / empty / error / how many rows / whether
+ * the viewer needs pinning are all DATA — `AsyncContent`'s own branch switch
+ * already reads that way — so this block has exactly ONE leaf ("Board") and five
+ * states inside it, the same shape `QuizRecapList`'s single `Full` leaf uses.
  */
 
 /** The viewer's own standing, shown above the podium. */

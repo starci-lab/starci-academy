@@ -6,14 +6,17 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MilestoneUpNextCard` — the passed-attempt handoff to the next unlocked milestone task
- * on a linear capstone track: one focal action, `isHighlight` default `true`. Reused for
- * `ContentPage`'s mobile/tablet practice nudge, where the caller sets `isHighlight` off
- * for a plain inline aside.
+ * BLOCK — `MilestoneUpNextCard`: the passed-attempt handoff to the NEXT
+ * unlocked milestone task on a capstone track. Distinct from the challenge
+ * flow (no such fixed handoff exists there) — see the component file header.
  *
- * `showCheck` places a check glyph beside the eyebrow (a state, not a leaf). `eyebrow`/
- * `title`/`description`/`ctaLabel` are caller strings; the block owns layout, the check
- * placement, the highlight treatment, and the CTA arrow.
+ * 📐 TWO LEAVES (§14d.2). `showCheck` and `isSkeleton` only toggle a glyph or
+ * mirror the existing shape — neither changes what is composed, so both are
+ * STATES of `Default`. `isHighlight` is different: it adds/removes the
+ * highlight streak, a real DOM node, so its two values are the `Default`
+ * (highlighted, the milestone screen's original shape) and `Plain` (reused by
+ * `ContentPage`'s mobile/tablet nudge — see that component's file header for
+ * why the default doesn't fit there) leaves.
  */
 
 /** Props for {@link MilestoneUpNextCard}. */

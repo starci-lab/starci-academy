@@ -4,12 +4,11 @@ import { CheckCircleIcon, CircleIcon, LockIcon, PlayCircleIcon } from "@phosphor
 import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 /**
- * `KeepGoingPath` — the continue-learning path for the current module: content rows
- * inside a `SurfaceCardList`, sharing the same layout as `LearnNudges` above it. Owns
- * the content-state → leading-icon map, the difficulty chip, the premium lock mark, and
- * the heading sentence itself (built from the `module` entity — there is no `heading`
- * prop). Uses the term `contents`, not `lessons`. The heading renders through
- * `SurfaceCard`'s `label` slot.
+ * `KeepGoingPath` — the continue-learning path for the current chapter, answering
+ * "where am I + what's next". Deliberately does not redraw the full module tree
+ * (that lives in the left rail). The block owns the shape — state icon
+ * (play/check/circle), difficulty chip, lock — while the caller supplies only data.
+ * Every variant shares one `SurfaceCardList` → rows tree, differing only in content.
  */
 /** Learning state of a content item in the path. */
 export type KeepGoingContentState = "done" | "active" | "todo"

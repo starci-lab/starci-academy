@@ -7,7 +7,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * `Callout` — a flat tint strip placed inside a surface (surface-in-surface), not a floating
  * card. The shell owns the tint + icon per `status`; content goes through the named slots
- * `title`/`description`/`body` (+`children`)/`action` plus an optional close button. Builds its own
+ * `title`/`description`/`body`/`action` plus an optional close button. Builds its own
  * `Button` from `actionLabel`/`onAction` and forwards `onClose` to the underlying `Alert` atom.
  */
 const meta: Meta<typeof Callout> = {
@@ -143,7 +143,7 @@ export const TitleOnly: Story = {
     ),
 }
 
-/** `body` (≡ `children`) — a FREE slot below the description, for content that isn't a single line of text. */
+/** `body` — a FREE slot below the description, for content that isn't a single line of text. */
 export const WithBody: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

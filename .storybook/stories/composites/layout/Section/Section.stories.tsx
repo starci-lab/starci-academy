@@ -55,7 +55,7 @@ const BODY_ONLY_PARTS: Array<AnatomyNode> = []
 // shorthand) — like `body`/`footer`, it stays unbadged.
 const FULL_PARTS: Array<AnatomyNode> = []
 
-/** `children` = shorthand for `body`: a wrapping frame that accepts any content, no header. */
+/** A wrapping frame that accepts any content, no header. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -65,11 +65,11 @@ export const Default: Story = {
                 leaf="Default"
                 parts={BODY_ONLY_PARTS}
                 renderClassName="max-w-2xl"
-                reason="The frame for one region of a page, it only stacks header/body/footer along one vertical rhythm. It does NOT draw a surface (no background/border/radius/padding), the surface is `SurfaceCard.*` living INSIDE `body`. Because it is a wrapping frame, `children` is still valid (the shorthand for `body`, §13b)."
+                reason="The frame for one region of a page, it only stacks header/body/footer along one vertical rhythm. It does NOT draw a surface (no background/border/radius/padding), the surface is `SurfaceCard.*` living INSIDE `body`."
                 states={[
                     {
-                        name: "children set, no header",
-                        why: "Only the body region renders: a SurfaceCard profile row sits directly inside the frame with no header above it. `children` is accepted here as the shorthand for `body`, since the frame is a pure wrapper with nothing of its own to draw around the content.",
+                        name: "body set, no header",
+                        why: "Only the body region renders: a SurfaceCard profile row sits directly inside the frame with no header above it. The frame is a pure wrapper with nothing of its own to draw around the content.",
                         code: "<Section>\n  <SurfaceCard body={() => <ProfileRow />} />\n</Section>",
                         render: (
                             <Section body={<CardBody />} />
@@ -135,7 +135,7 @@ export const Slots: Story = {
                 states={[
                     {
                         name: "header (node) + body + footer",
-                        why: "All three regions are filled at once, and `header` here is a free-form node (a `SectionHeader` built by hand) rather than the object shorthand, useful when the top row is something other than a title, such as a toolbar or a tab row. `body` wins over `children` whenever both are passed, which is what lets this leaf also demonstrate the `footer` region.",
+                        why: "All three regions are filled at once, and `header` here is a free-form node (a `SectionHeader` built by hand) rather than the object shorthand, useful when the top row is something other than a title, such as a toolbar or a tab row. This leaf also demonstrates the `footer` region.",
                         code: `<Section
   header={<SectionHeader level={3} title="Saved posts" />}
   body={<SurfaceCard body={() => <ProfileRow />} />}

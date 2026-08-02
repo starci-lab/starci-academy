@@ -6,7 +6,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * `EmptyState` — a CENTERED vertical stack that fills an empty/error spot
- * (`code`/`icon`/`title`/`description`/`body`(+`children`)/`action`).
+ * (`code`/`icon`/`title`/`description`/`body`/`action`).
  *
  * Text goes through `Typography.*`; icons come from `@phosphor-icons/react` passed
  * as a component ref, with the frame forcing size/weight itself.
@@ -36,7 +36,7 @@ export interface EmptyStateProps {
     description?: ReactNode
     /**
      * Optional free-form body under `description` (a hint list, an illustration).
-     * Equivalent to `children`; wins over it. Ignored in `size="compact"`.
+     * Ignored in `size="compact"`.
      */
     body?: ReactNode
     /**

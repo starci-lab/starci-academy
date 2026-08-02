@@ -7,7 +7,7 @@ import { StackV } from "@/components/frames/Stack"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `EmptyState`, a CENTERED vertical stack that
- * fills an empty/error spot (`code`/`icon`/`title`/`description`/`body`(+`children`)/`action`).
+ * fills an empty/error spot (`code`/`icon`/`title`/`description`/`body`/`action`).
  *
  * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
  * file — the 2026-07-25 consolidation grouped `Callout`/`Empty`/`Confirm` under
@@ -46,7 +46,7 @@ export interface EmptyStateProps {
     description?: ReactNode
     /**
      * Optional free-form body under `description` (a hint list, an illustration).
-     * Equivalent to `children`; wins over it. Ignored in `size="compact"`.
+     * Ignored in `size="compact"`.
      */
     body?: ReactNode
     /**

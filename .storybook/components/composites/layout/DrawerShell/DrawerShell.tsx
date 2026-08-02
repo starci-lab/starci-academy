@@ -7,8 +7,8 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * `DrawerShell.*` — the panel-scaffold frame namespace, sibling of `ModalShell`.
- * Same slot contract (`header`/`body`/`footer`, `children` = body shorthand), same
- * seam rule (`gap-3` on the Dialog owns the rhythm; children cancel HeroUI's own
+ * Same slot contract (`header`/`body`/`footer`), same
+ * seam rule (`gap-3` on the Dialog owns the rhythm; the body cancels HeroUI's own
  * `mt-*` with `mt-0!`), same tier-3 presentational contract (no state of its own —
  * the caller threads `isOpen`/`onOpenChange` plus content via props).
  *
@@ -179,6 +179,6 @@ const Base = ({
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Base` | `title`+`description` (or `header`) / `body` / `footer` (+ `children` = body) |
+ * | `.Base` | `title`+`description` (or `header`) / `body` / `footer` |
  */
 export { Base as DrawerShell }

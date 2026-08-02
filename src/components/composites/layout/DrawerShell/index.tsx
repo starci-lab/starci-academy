@@ -9,8 +9,8 @@ import { StackV } from "@/components/frames/Stack"
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `DrawerShell.*`, the panel-scaffold KHUNG
  * namespace. Sibling of `ModalShell` (canon §13a/§13b) — same slot contract
- * (`header`/`body`/`footer`, `children` = body shorthand), same seam rule
- * (`gap-3` on the Dialog owns the rhythm, children only cancel HeroUI's own
+ * (`header`/`body`/`footer`), same seam rule
+ * (`gap-3` on the Dialog owns the rhythm, the body only cancels HeroUI's own
  * `mt-*` with `mt-0!`), same tier-3 presentational contract (no state of its
  * own — caller threads `isOpen`/`onOpenChange` plus content via props).
  *
@@ -168,6 +168,6 @@ const Base = ({
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Base` | `title`+`description` (or `header`) / `body` / `footer` (+ `children` = body) |
+ * | `.Base` | `title`+`description` (or `header`) / `body` / `footer` |
  */
 export { Base as DrawerShell }

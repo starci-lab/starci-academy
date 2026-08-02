@@ -190,7 +190,7 @@ export const Action: Story = {
         ),
 }
 
-/** `body` (≡ `children`) — a free slot between the description and the CTA, for content that isn't a single line of text. */
+/** `body` — a free slot between the description and the CTA, for content that isn't a single line of text. */
 export const WithBody: Story = {
     render: () =>
         shell(
@@ -199,7 +199,7 @@ export const WithBody: Story = {
                 tier="composite"
                 leaf="WithBody"
                 annotate={ANNOTATE}
-                reason="The frame wraps (§13b): `body` is the free-form body slot and `children` is its shorthand, sitting between the description and the action so a caller can drop in anything richer than one more line of text."
+                reason="The frame wraps (§13b): `body` is the free-form body slot, sitting between the description and the action so a caller can drop in anything richer than one more line of text."
                 states={[
                     {
                         name: "body set to a hint list",

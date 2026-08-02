@@ -19,13 +19,13 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  *
  * | Member | Shell | Content channel |
  * |---|---|---|
- * | `.Base`    | `<form>` shell + content column + button row | slot `body` (+`children`) · `actions` |
- * | `.Section` | a titled group of fields                     | `title`/`description` + slot `body` (+`children`) |
+ * | `.Base`    | `<form>` shell + content column + button row | slot `body` · `actions` |
+ * | `.Section` | a titled group of fields                     | `title`/`description` + slot `body` |
  * | `.Actions` | the closing button row                        | **`items` — children FORBIDDEN** |
  *
  * SHELL API LAW (§13b):
  * - `.Base` / `.Section` are WRAPPING shells → the named slot (`body`) is the
- *   main path, `children` stays as a shorthand for `body`.
+ *   main path.
  * - `.Actions` is a REPEATED LIST (N buttons of the same kind) → `items` DATA
  *   is REQUIRED, children FORBIDDEN — exactly like `ButtonGroup.items` (§12b).
  * - Namespace only — does NOT export a bare component (§13a).
@@ -201,7 +201,7 @@ const Section = ({
                     </>
                 }
             />
-            {/* No `` here either: `body`/`children` is arbitrary
+            {/* No `` here either: `body` is arbitrary
                 caller-supplied field content (§11a.1 CASE 3 — caller slot). */}
             {main != null ? (
                 <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>

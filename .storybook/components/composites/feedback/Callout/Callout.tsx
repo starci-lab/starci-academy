@@ -5,7 +5,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `Callout` — a tinted flat strip that lives INSIDE a surface
- * (`title`/`description`/`body`(+`children`)/`action`).
+ * (`title`/`description`/`body`/`action`).
  *
  * Text goes through `Typography.*`, buttons through `Button.*`, icons from
  * `@phosphor-icons/react` passed as a component ref (the frame forces size/weight).
@@ -50,7 +50,7 @@ export interface CalloutProps {
     description?: ReactNode
     /**
      * Optional free-form body under `description` (a short list, a meta row).
-     * Equivalent to `children`; wins over it when both are passed.
+     * 
      */
     body?: ReactNode
     /** Optional custom indicator icon as a COMPONENT; omit for the status default. */

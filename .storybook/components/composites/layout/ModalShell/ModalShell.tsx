@@ -9,7 +9,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * `ModalShell.*` — the dialog-scaffold frame namespace.
  *
  * `.Base` is a wrapper frame: named slots `header`/`body`/`footer` are the main
- * road, `children` a shorthand for `body`. `footer` is a real slot (rendered as
+ * road. `footer` is a real slot (rendered as
  * HeroUI `Modal.Footer`) so the CTA row is no longer hand-rolled inside the body.
  * Nothing repeats, so no `items` member. Namespace only — no bare component export.
  *
@@ -206,6 +206,6 @@ const Base = ({
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Base` | `title`+`description` (or `header`) / `body` / `footer` (+ `children` = body) |
+ * | `.Base` | `title`+`description` (or `header`) / `body` / `footer` |
  */
 export { Base as ModalShell }

@@ -51,7 +51,7 @@ const AccountFields = () => {
     )
 }
 
-/** Default — `children` is the shorthand for `body`; `actions` is its own slot at the bottom. */
+/** Default — `body` holds the fields; `actions` is its own slot at the bottom. */
 export const Default: Story = {
     render: () => {
         const Demo = () => (
@@ -62,8 +62,8 @@ export const Default: Story = {
                 reason="The form frame of the composite tier: it builds a real `<form>` (ENTER inside a field submits, a11y), stacks content into a column on the `gap` rhythm (§10c), and keeps one `actions` slot at the bottom. The frame knows nothing about the fields inside, no validation, no values, no errors (that is the block tier); labels and errors come from the form atoms themselves (§12e)."
                 states={[
                     {
-                        name: "isDisabled not set, children shorthand fills body",
-                        why: "The frame renders as a live, editable form: the fieldset stays enabled and `children` fills the `body` slot as the shorthand for it, while `actions` sits in its own slot at the bottom. This is the resting shape a reader lands on before anything is submitted or locked.",
+                        name: "isDisabled not set, body fills the form",
+                        why: "The frame renders as a live, editable form: the fieldset stays enabled and `body` holds the fields, while `actions` sits in its own slot at the bottom. This is the resting shape a reader lands on before anything is submitted or locked.",
                         code: `<Form
   gap={6}
   onSubmit={() => save()}

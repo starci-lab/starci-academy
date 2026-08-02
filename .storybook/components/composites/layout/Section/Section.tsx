@@ -17,8 +17,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * (route chrome, one per page); `SectionHeader` is a region header, many per page,
  * scaling down via `level`.
  *
- * `.Base` is a wrapper frame with named slots `header`/`body`/`footer` (`children`
- * = shorthand for `body`). `.Header` owns semantic slots
+ * `.Base` is a wrapper frame with named slots `header`/`body`/`footer`. `.Header` owns semantic slots
  * (`eyebrow`/`title`/`description`/`action`) and takes no `children`. Namespace
  * only — no bare component export. The vertical rhythm is a typed token
  * ({@link AllowedGap}); text goes through `Typography.*`; `action` takes a
@@ -230,7 +229,7 @@ const Base = ({
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Base` | `header`/`body`/`footer` slots (+ `children` = body), `gap` on the §10 scale |
+ * | `.Base` | `header`/`body`/`footer` slots, `gap` on the §10 scale |
  * | `.Header` | `eyebrow`/`title`/`description`/`action` + `level` (no children) |
  */
 export { Base as Section, Header as SectionHeader }

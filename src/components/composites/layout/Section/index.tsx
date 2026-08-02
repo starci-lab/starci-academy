@@ -28,7 +28,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
  *
  * KHUNG API LAW (§13b):
  * - `.Base` is a WRAPPER frame → named slots `header`/`body`/`footer` are the
- *   main road; `children` stays as shorthand for `body`.
+ *   main road.
  * - `.Header` is NOT a generic wrapper — it owns semantic slots
  *   (`eyebrow`/`title`/`description`/`action`) and takes no `children`.
  * - No repeating list here, so no `items` member (§13b list clause N/A).
@@ -242,7 +242,7 @@ const Base = ({
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Base` | `header`/`body`/`footer` slots (+ `children` = body), `gap` on the §10 scale |
+ * | `.Base` | `header`/`body`/`footer` slots, `gap` on the §10 scale |
  * | `.Header` | `eyebrow`/`title`/`description`/`action` + `level` (no children) |
  */
 export { Base as Section, Header as SectionHeader }

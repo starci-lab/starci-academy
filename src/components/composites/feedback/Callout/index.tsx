@@ -6,7 +6,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `Callout`, a tinted flat strip LIVING INSIDE a
- * surface (`title`/`description`/`body`(+`children`)/`action`).
+ * surface (`title`/`description`/`body`/`action`).
  *
  * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
  * file — the 2026-07-25 consolidation grouped `Callout`/`Empty`/`Confirm` under
@@ -60,7 +60,7 @@ export interface CalloutProps {
     description?: ReactNode
     /**
      * Optional free-form body under `description` (a short list, a meta row).
-     * Equivalent to `children`; wins over it when both are passed.
+     * 
      */
     body?: ReactNode
     /** Optional custom indicator icon as a COMPONENT; omit for the status default. */

@@ -13,12 +13,11 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  *
  * | Member | Shell | Content channel |
  * |---|---|---|
- * | `.Base`    | `<form>` shell + content column + button row | slot `body` (+`children`) · `actions` |
- * | `.Section` | a titled group of fields | `title`/`description` + slot `body` (+`children`) |
+ * | `.Base`    | `<form>` shell + content column + button row | slot `body` · `actions` |
+ * | `.Section` | a titled group of fields | `title`/`description` + slot `body` |
  * | `.Actions` | the closing button row | `items` — children forbidden |
  *
- * `.Base`/`.Section` are wrapping shells (`body` is the main path, `children` a
- * shorthand); `.Actions` is a repeated list requiring `items` and composing the
+ * `.Base`/`.Section` are wrapping shells (`body` is the main path); `.Actions` is a repeated list requiring `items` and composing the
  * `ButtonGroup` atom. Namespace only — no bare component export.
  *
  * The shell carries no behaviour: no validation, field state, or business rule
@@ -185,7 +184,7 @@ const Section = ({
                     </>
                 }
             />
-            {/* No `` here either: `body`/`children` is arbitrary
+            {/* No `` here either: `body` is arbitrary
                 caller-supplied field content (§11a.1 CASE 3 — caller slot). */}
             {main != null ? (
                 <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
